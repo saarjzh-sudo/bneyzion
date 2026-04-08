@@ -1,0 +1,433 @@
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&display=swap');
+
+/* Kedem Serif */
+@font-face {
+  font-family: 'Kedem';
+  src: url('/fonts/kedem-serif-ultralight-aaa.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kedem';
+  src: url('/fonts/kedem-serif-light-aaa.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kedem';
+  src: url('/fonts/kedem-serif-regular-aaa.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kedem';
+  src: url('/fonts/kedem-serif-bold-aaa.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Kedem';
+  src: url('/fonts/kedem-serif-black-aaa.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ploni Sans */
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-ultralight-aaa.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-light-aaa.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-regular-aaa.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-medium-aaa.otf') format('opentype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-demibold-aaa.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-bold-aaa.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Ploni';
+  src: url('/fonts/ploni-ultrabold-aaa.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Spring-bright palette — airy, warm, glass-forward
+       Keeps Bney Zion brand DNA but lifts everything lighter */
+    --background: 40 40% 98%;
+    --foreground: 25 30% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 25 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 25 30% 15%;
+
+    --primary: 25 75% 18%;
+    --primary-foreground: 40 40% 98%;
+
+    --secondary: 170 25% 94%;
+    --secondary-foreground: 25 30% 15%;
+
+    --muted: 35 25% 94%;
+    --muted-foreground: 25 15% 45%;
+
+    --accent: 36 60% 62%;
+    --accent-foreground: 25 50% 12%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 35 20% 90%;
+    --input: 35 20% 90%;
+    --ring: 36 60% 62%;
+
+    --radius: 0.75rem;
+
+    --gold: 36 60% 62%;
+    --gold-light: 40 55% 78%;
+    --teal: 175 30% 85%;
+    --sage: 140 25% 82%;
+    --cream: 38 45% 95%;
+    --cream-warm: 35 40% 92%;
+    --mahogany: 25 75% 18%;
+
+    /* Extended brand shades for gradients */
+    --brand-mahogany: 25 75% 18%;
+    --brand-mahogany-light: 25 50% 30%;
+    --brand-gold: 36 60% 62%;
+    --brand-gold-bright: 40 65% 72%;
+    --brand-gold-deep: 32 55% 48%;
+    --brand-amber: 38 65% 58%;
+    --brand-copper: 20 50% 42%;
+    --brand-bronze: 24 40% 35%;
+    --brand-teal: 175 30% 85%;
+    --brand-teal-deep: 175 35% 42%;
+    --brand-sage: 140 25% 82%;
+    --brand-sage-deep: 150 25% 42%;
+    --brand-olive: 90 20% 48%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    direction: rtl;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Ploni', sans-serif;
+    font-weight: 700;
+  }
+
+  .font-heading {
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+    font-weight: 900;
+  }
+
+  /* ─── Brand text gradients ─── */
+  
+  /* Primary: warm mahogany → bright gold (softer, spring-like) */
+  .gradient-warm {
+    background: linear-gradient(135deg, hsl(25, 50%, 30%) 0%, hsl(36, 55%, 58%) 55%, hsl(42, 60%, 72%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold: bright amber sweep */
+  .gradient-gold {
+    background: linear-gradient(120deg, hsl(32, 50%, 48%) 0%, hsl(40, 65%, 68%) 50%, hsl(36, 55%, 58%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Gold smooth: soft copper → amber → light gold */
+  .gradient-gold-smooth {
+    background: linear-gradient(145deg, hsl(22, 45%, 42%) 0%, hsl(36, 55%, 58%) 40%, hsl(42, 60%, 68%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Teal: spring teal → sage green (brighter, airier) */
+  .gradient-teal {
+    background: linear-gradient(135deg, hsl(175, 35%, 40%) 0%, hsl(155, 28%, 50%) 50%, hsl(140, 25%, 48%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Earth: warm brown → olive → sage (lighter) */
+  .gradient-earth {
+    background: linear-gradient(135deg, hsl(28, 40%, 38%) 0%, hsl(90, 22%, 48%) 50%, hsl(150, 25%, 50%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Royal: mahogany → copper → bright amber */
+  .gradient-royal {
+    background: linear-gradient(150deg, hsl(25, 65%, 20%) 0%, hsl(22, 50%, 38%) 35%, hsl(40, 65%, 58%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Sunset: soft copper → amber → golden (spring warmth) */
+  .gradient-sunset {
+    background: linear-gradient(120deg, hsl(18, 45%, 40%) 0%, hsl(32, 55%, 52%) 40%, hsl(42, 60%, 65%) 80%, hsl(48, 50%, 72%) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .icon-gradient {
+    background: linear-gradient(135deg, hsl(25, 60%, 25%), hsl(36, 60%, 62%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Section gradient backgrounds (spring-bright) ─── */
+  .section-gradient-warm {
+    background: linear-gradient(180deg, hsl(40, 40%, 98%) 0%, hsl(38, 35%, 96%) 50%, hsl(36, 30%, 94%) 100%);
+  }
+
+  .section-gradient-cool {
+    background: linear-gradient(180deg, hsl(170, 22%, 97%) 0%, hsl(140, 18%, 96%) 50%, hsl(175, 20%, 95%) 100%);
+  }
+
+  .section-gradient-brand {
+    background: linear-gradient(135deg, hsl(25, 65%, 15%) 0%, hsl(28, 55%, 22%) 50%, hsl(32, 45%, 28%) 100%);
+  }
+
+  /* ─── Glass / frosted containers (spring-bright) ─── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(20px) saturate(1.3);
+    -webkit-backdrop-filter: blur(20px) saturate(1.3);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  }
+
+  .glass-card-light {
+    background: hsla(40, 40%, 99%, 0.75);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid hsla(36, 60%, 62%, 0.15);
+    box-shadow: 0 8px 32px hsla(25, 50%, 20%, 0.04), 0 1px 0 hsla(0, 0%, 100%, 0.6) inset;
+  }
+
+  .glass-card-teal {
+    background: hsla(175, 30%, 92%, 0.5);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid hsla(175, 30%, 85%, 0.35);
+    box-shadow: 0 8px 32px hsla(175, 30%, 40%, 0.06), 0 1px 0 hsla(0, 0%, 100%, 0.4) inset;
+  }
+
+  .glass-card-sage {
+    background: hsla(140, 25%, 90%, 0.45);
+    backdrop-filter: blur(24px) saturate(1.4);
+    -webkit-backdrop-filter: blur(24px) saturate(1.4);
+    border: 1px solid hsla(140, 25%, 82%, 0.3);
+    box-shadow: 0 8px 32px hsla(140, 25%, 40%, 0.05), 0 1px 0 hsla(0, 0%, 100%, 0.35) inset;
+  }
+
+  .glass-card-gold {
+    background: hsla(40, 55%, 80%, 0.18);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
+    border: 1px solid hsla(36, 60%, 62%, 0.2);
+    box-shadow: 0 8px 32px hsla(36, 50%, 30%, 0.06), 0 1px 0 hsla(40, 50%, 100%, 0.35) inset;
+  }
+
+  /* Spring glass — very light, airy */
+  .glass-spring {
+    background: hsla(0, 0%, 100%, 0.6);
+    backdrop-filter: blur(28px) saturate(1.6);
+    -webkit-backdrop-filter: blur(28px) saturate(1.6);
+    border: 1px solid hsla(0, 0%, 100%, 0.5);
+    box-shadow: 0 8px 40px hsla(25, 40%, 20%, 0.05), 0 1px 0 hsla(0, 0%, 100%, 0.7) inset;
+  }
+
+  /* ─── Text shadows ─── */
+  .hero-text-shadow {
+    text-shadow: 0 2px 20px rgba(52, 25, 0, 0.4);
+  }
+
+  .hero-text-shadow-strong {
+    text-shadow: 0 4px 30px rgba(52, 25, 0, 0.5), 0 1px 8px rgba(52, 25, 0, 0.3);
+  }
+
+  /* ─── Noise texture overlay ─── */
+  .noise-overlay {
+    position: relative;
+  }
+  .noise-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* ─── Brand gradient border (decorative) ─── */
+  .border-gradient-gold {
+    border-image: linear-gradient(135deg, hsl(32, 42%, 60%), hsl(29, 100%, 10%)) 1;
+  }
+
+  /* ─── Shimmer / glow effects (softer) ─── */
+  .glow-gold {
+    box-shadow: 0 0 24px hsla(36, 60%, 62%, 0.2), 0 0 60px hsla(36, 60%, 62%, 0.08);
+  }
+
+  .glow-teal {
+    box-shadow: 0 0 24px hsla(175, 30%, 85%, 0.25), 0 0 60px hsla(175, 30%, 85%, 0.1);
+  }
+
+  /* ─── Parasha / Shabbat sheet styles ─── */
+
+  .parasha-drop-cap > p:first-of-type::first-letter {
+    float: right;
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+    font-size: 3.8em;
+    line-height: 0.8;
+    padding-left: 0.12em;
+    padding-top: 0.05em;
+    color: hsl(29, 100%, 10%);
+    font-weight: 900;
+  }
+
+  .ornamental-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: hsl(32, 42%, 60%);
+    opacity: 0.6;
+  }
+  .ornamental-divider::before,
+  .ornamental-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(32, 42%, 60%), transparent);
+  }
+
+  .pull-quote {
+    position: relative;
+    border-right: 4px solid hsl(32, 42%, 60%);
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+    font-size: 1.2em;
+    line-height: 1.8;
+    color: hsl(29, 80%, 15%);
+    background: hsla(32, 42%, 60%, 0.06);
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+}
+
+/* Conference Theme Colors */
+.kenes-theme {
+  --kenes-parchment: 38 50% 90%;
+  --kenes-olive: 85 35% 35%;
+  --kenes-olive-light: 85 30% 75%;
+  --kenes-brown: 30 40% 25%;
+  --kenes-brown-light: 30 30% 45%;
+  --kenes-gold: 43 70% 47%;
+  --kenes-gold-light: 43 55% 70%;
+}
+
+.font-kedem-hollow {
+  font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+  font-weight: 100;
+}
+
+/* Mudgash - highlighted emphasis paragraphs from Umbraco content */
+.prose .mudgash,
+.mudgash {
+  display: block;
+  font-size: 1.15em;
+  line-height: 1.9;
+  font-weight: 500;
+  color: hsl(var(--foreground));
+  border-top: 3px solid hsl(var(--primary));
+  border-bottom: 3px solid hsl(var(--primary));
+  padding: 1rem 0.5rem;
+  margin: 1.5rem 0;
+}

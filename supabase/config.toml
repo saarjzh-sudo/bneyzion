@@ -1,0 +1,34 @@
+project_id = "fhdcmsmwvssjzhqocaai"
+
+[functions.scan-audio-duration]
+verify_jwt = false
+
+[functions.migrate-content]
+verify_jwt = false
+
+[functions.migrate-html]
+verify_jwt = false
+
+[functions.enrich-products]
+verify_jwt = false
+
+[functions.import-parasha-articles]
+verify_jwt = false
+
+[functions.scan-umbraco-gaps]
+verify_jwt = false
+
+[functions.import-series-content]
+verify_jwt = false
+
+[functions.import-riddles]
+verify_jwt = false
+
+[functions.compare-content]
+verify_jwt = false
+
+[functions.ai-chat]
+verify_jwt = false
+
+[functions.ai-teacher-tools]
+verify_jwt = false
