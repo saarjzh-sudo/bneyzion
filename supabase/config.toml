@@ -1,4 +1,4 @@
-project_id = "fhdcmsmwvssjzhqocaai"
+project_id = "pzvmwfexeiruelwiujxn"
 
 [functions.scan-audio-duration]
 verify_jwt = false

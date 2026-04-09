@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag } from "lucide-react";
@@ -156,7 +157,7 @@ const ProductPage = () => {
 
             {/* Description */}
             {product.description && (
-              <p className="text-foreground/80 leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description.replace(/&hellip;/g, '…').replace(/&amp;/g, '&') }} />
+              <p className="text-foreground/80 leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.description.replace(/&hellip;/g, '…').replace(/&amp;/g, '&')) }} />
             )}
 
             {product.page_count && (
@@ -190,7 +191,7 @@ const ProductPage = () => {
             {product.content && (
               <div
                 className="prose prose-sm max-w-none text-foreground/80 mt-6"
-                dangerouslySetInnerHTML={{ __html: product.content }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.content ?? "") }}
               />
             )}
           </motion.div>

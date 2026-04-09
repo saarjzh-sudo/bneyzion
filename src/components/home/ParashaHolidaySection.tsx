@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { motion } from "framer-motion";
 import { FileText, ChevronLeft, BookOpen, Star } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -162,7 +163,7 @@ const ParashaHolidaySection = () => {
                     prose-p:mb-2 prose-p:text-foreground
                     prose-strong:text-foreground prose-strong:font-bold"
                   dir="rtl"
-                  dangerouslySetInnerHTML={{ __html: firstArticle.lessonContent! }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(firstArticle.lessonContent ?? "") }}
                 />
                 <Link
                   to="/parasha"

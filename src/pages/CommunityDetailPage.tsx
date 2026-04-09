@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -190,7 +191,7 @@ const CommunityDetailPage = () => {
                   <audio controls className="w-full" src={selectedLesson.audio_url} />
                 )}
                 {selectedLesson.content_html && (
-                  <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: selectedLesson.content_html }} />
+                  <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedLesson.content_html ?? "") }} />
                 )}
                 {selectedLesson.description && !selectedLesson.content_html && (
                   <p className="text-muted-foreground">{selectedLesson.description}</p>

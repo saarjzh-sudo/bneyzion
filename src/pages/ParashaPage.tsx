@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FileText, Headphones, ScrollText, Printer, Sparkles } from "lucide-react";
@@ -155,7 +156,7 @@ const ParashaPage = () => {
                         prose-blockquote:border-accent/40 prose-blockquote:text-foreground/80 prose-blockquote:font-serif
                         print:prose-base print:leading-snug"
                       dir="rtl"
-                      dangerouslySetInnerHTML={{ __html: firstHalf }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(firstHalf) }}
                     />
                     {quote && secondHalf && (
                       <aside className="pull-quote print:border-r-2 print:bg-transparent my-6" aria-label="ציטוט מודגש">
@@ -171,7 +172,7 @@ const ParashaPage = () => {
                           prose-blockquote:border-accent/40 prose-blockquote:text-foreground/80 prose-blockquote:font-serif
                           print:prose-base print:leading-snug"
                         dir="rtl"
-                        dangerouslySetInnerHTML={{ __html: secondHalf }}
+                        dangerouslySetInnerHTML={{ __html: sanitizeHtml(secondHalf) }}
                       />
                     )}
                   </>
@@ -207,7 +208,7 @@ const ParashaPage = () => {
                   prose-ol:pr-6 prose-ul:pr-6
                   print:prose-base print:leading-snug"
                 dir="rtl"
-                dangerouslySetInnerHTML={{ __html: riddle.content }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(riddle.content ?? "") }}
               />
             </motion.div>
           )}

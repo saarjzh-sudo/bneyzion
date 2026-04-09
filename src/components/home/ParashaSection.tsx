@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { FileText, Headphones, ScrollText, ChevronLeft, BookOpen } from "lucide-react";
@@ -80,7 +81,7 @@ const ParashaSection = () => {
                 prose-p:mb-3 prose-p:text-[#000000]
                 prose-strong:text-[#000000] prose-strong:font-bold"
               dir="rtl"
-              dangerouslySetInnerHTML={{ __html: firstArticle.lessonContent! }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(firstArticle.lessonContent ?? "") }}
             />
 
             <Link

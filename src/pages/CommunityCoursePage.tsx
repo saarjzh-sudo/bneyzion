@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCourseLessons, useMemberAccess } from "@/hooks/useCommunity";
@@ -160,7 +161,7 @@ const CommunityCoursePage = () => {
               {selectedLesson.content_html && (
                 <div
                   className="prose prose-sm md:prose-base max-w-none text-foreground prose-headings:font-heading prose-headings:text-primary leading-relaxed"
-                  dangerouslySetInnerHTML={{ __html: selectedLesson.content_html }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedLesson.content_html ?? "") }}
                 />
               )}
             </>

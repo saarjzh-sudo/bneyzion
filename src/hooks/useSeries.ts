@@ -6,6 +6,7 @@ export interface Series {
   title: string;
   description: string | null;
   rabbi_id: string | null;
+  parent_id: string | null;
   image_url: string | null;
   lesson_count: number;
   status: string;
