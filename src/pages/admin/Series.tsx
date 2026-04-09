@@ -24,18 +24,18 @@ export default function SeriesPage() {
   const [search, setSearch] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<any>(null);
-  const [form, setForm] = useState({ title: "", description: "", rabbi_id: "", image_url: "", status: "draft" });
+  const [form, setForm] = useState({ title: "", description: "", rabbi_id: "", parent_id: "", image_url: "", status: "draft" });
 
-  const resetForm = () => { setForm({ title: "", description: "", rabbi_id: "", image_url: "", status: "draft" }); setEditing(null); };
+  const resetForm = () => { setForm({ title: "", description: "", rabbi_id: "", parent_id: "", image_url: "", status: "draft" }); setEditing(null); };
 
   const openEdit = (s: any) => {
     setEditing(s);
-    setForm({ title: s.title, description: s.description || "", rabbi_id: s.rabbi_id || "", image_url: s.image_url || "", status: s.status });
+    setForm({ title: s.title, description: s.description || "", rabbi_id: s.rabbi_id || "", parent_id: s.parent_id || "", image_url: s.image_url || "", status: s.status });
     setDialogOpen(true);
   };
 
   const handleSubmit = async () => {
-    const payload = { title: form.title, description: form.description || null, rabbi_id: form.rabbi_id || null, image_url: form.image_url || null, status: form.status };
+    const payload = { title: form.title, description: form.description || null, rabbi_id: form.rabbi_id || null, parent_id: form.parent_id || null, image_url: form.image_url || null, status: form.status };
     try {
       if (editing) { await updateSeries.mutateAsync({ id: editing.id, ...payload }); toast({ title: "הסדרה עודכנה" }); }
       else { await createSeries.mutateAsync(payload); toast({ title: "הסדרה נוצרה" }); }
@@ -67,6 +67,16 @@ export default function SeriesPage() {
                   <Select value={form.rabbi_id} onValueChange={(v) => setForm({ ...form, rabbi_id: v })}>
                     <SelectTrigger><SelectValue placeholder="בחר רב" /></SelectTrigger>
                     <SelectContent>{rabbis?.map((r) => <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>)}</SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label>סדרת אב (היררכיה)</Label>
+                  <Select value={form.parent_id} onValueChange={(v) => setForm({ ...form, parent_id: v === "_none" ? "" : v })}>
+                    <SelectTrigger><SelectValue placeholder="ללא — סדרה עליונה" /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="_none">ללא — סדרה עליונה</SelectItem>
+                      {seriesList?.filter((s: any) => s.id !== editing?.id).map((s: any) => <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>)}
+                    </SelectContent>
                   </Select>
                 </div>
                 <div><Label>קישור תמונה</Label><Input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} /></div>

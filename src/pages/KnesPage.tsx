@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { Play, MessageCircle, ExternalLink, BookOpen, ChevronDown, ChevronUp, Heart } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -83,7 +84,7 @@ function RecordingCard({ recording, index }: { recording: Recording; index: numb
         {recording.summary && summaryOpen && (
           <div
             className="mt-4 pt-4 border-t border-[hsl(38_50%_82%)] font-ploni font-bold text-[hsl(30_30%_30%)] leading-relaxed text-sm [&_h3]:font-kedem [&_h3]:font-bold [&_h4]:font-kedem [&_h4]:font-bold"
-            dangerouslySetInnerHTML={{ __html: recording.summary }}
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(recording.summary ?? "") }}
           />
         )}
       </div>

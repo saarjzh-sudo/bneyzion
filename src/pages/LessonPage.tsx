@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Clock, BookOpen, Calendar, ChevronLeft, Volume2, Headphones, ListPlus, LogIn } from "lucide-react";
@@ -288,7 +289,7 @@ const LessonPage = () => {
                   [&_strong]:text-foreground [&_strong]:font-bold
                   [&_a]:text-primary [&_a]:underline
                   [&_blockquote]:border-r-4 [&_blockquote]:border-primary/30 [&_blockquote]:pr-4 [&_blockquote]:mr-0 [&_blockquote]:italic [&_blockquote]:text-muted-foreground"
-                dangerouslySetInnerHTML={{ __html: (lesson as any).content }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml((lesson as any).content ?? "") }}
               />
             ) : lesson.description ? (
               <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{lesson.description}</p>

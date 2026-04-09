@@ -1,3 +1,4 @@
+import { sanitizeHtml } from "@/lib/sanitize";
 import { useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
@@ -490,7 +491,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                   [&_strong]:text-foreground [&_strong]:font-bold
                   [&_blockquote]:border-r-4 [&_blockquote]:border-primary/30 [&_blockquote]:pr-4 [&_blockquote]:mr-0 [&_blockquote]:italic [&_blockquote]:text-muted-foreground"
                 dir="rtl"
-                dangerouslySetInnerHTML={{ __html: (lesson as any).content }}
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml((lesson as any).content ?? "") }}
               />
             ) : lesson.description ? (
               <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">{lesson.description}</p>
