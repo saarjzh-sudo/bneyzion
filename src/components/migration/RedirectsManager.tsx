@@ -65,7 +65,7 @@ export function RedirectsManager() {
 
   const handleExportSitemap = () => {
     if (!redirects?.length) return;
-    const baseUrl = "https://e23.lovable.app";
+    const baseUrl = "https://bneyzion.vercel.app";
     const urls = redirects
       .filter((r) => r.status === "active" && r.new_path)
       .map((r) => {

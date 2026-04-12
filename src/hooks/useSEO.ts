@@ -16,7 +16,7 @@ export function useSEO({ title, description, image, url, type = "website", jsonL
   useEffect(() => {
     const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
     const desc = description || DEFAULT_DESC;
-    const img = image || `${window.location.origin}/lovable-uploads/logo-bney-zion.png`;
+    const img = image || `${window.location.origin}/logo.png`;
     const pageUrl = url || window.location.href;
 
     document.title = fullTitle;
