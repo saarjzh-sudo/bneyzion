@@ -1,16 +1,14 @@
-import { useMemo } from "react";
 import { motion } from "framer-motion";
 import PageHero from "@/components/layout/PageHero";
 import Layout from "@/components/layout/Layout";
-import { useRabbis } from "@/hooks/useRabbis";
+import { usePublicRabbis } from "@/hooks/useRabbis";
 import { Skeleton } from "@/components/ui/skeleton";
 import RabbiCard from "@/components/cards/RabbiCard";
 import { useSEO } from "@/hooks/useSEO";
 
 const RabbisList = () => {
   useSEO({ title: "רבנים ומרצים", description: "כל הרבנים והמרצים של בני ציון – מאות שיעורי תנ״ך חינמיים" });
-  const { data: rabbis, isLoading } = useRabbis();
-  const activeRabbis = useMemo(() => rabbis?.filter((r) => r.status === "active"), [rabbis]);
+  const { data: activeRabbis, isLoading } = usePublicRabbis();
 
   return (
     <Layout>
