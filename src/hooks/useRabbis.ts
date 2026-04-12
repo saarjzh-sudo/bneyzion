@@ -24,6 +24,22 @@ export function useRabbis() {
   });
 }
 
+export function usePublicRabbis() {
+  return useQuery({
+    queryKey: ["rabbis-public"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("rabbis")
+        .select("*")
+        .eq("status", "active")
+        .gt("lesson_count", 0)
+        .order("lesson_count", { ascending: false });
+      if (error) throw error;
+      return data as Rabbi[];
+    },
+  });
+}
+
 export function useCreateRabbi() {
   const qc = useQueryClient();
   return useMutation({
