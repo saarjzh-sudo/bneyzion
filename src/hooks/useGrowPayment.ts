@@ -146,16 +146,29 @@ export function useGrowPayment() {
 
         const data = await response.json();
 
-        if (!response.ok || !data.authCode) {
+        if (!response.ok || (!data.authCode && !data.url)) {
           throw new Error(data.error || "Failed to create payment");
         }
 
-        // Step 2: Open Grow wallet with authCode
-        return new Promise<GrowSuccessResponse>((resolve, reject) => {
-          resolveRef.current = resolve;
-          rejectRef.current = reject;
-          window.growPayment.renderPaymentOptions(data.authCode);
-        });
+        // Step 2a: Wallet flow (products) — open SDK overlay
+        if (data.authCode) {
+          return new Promise<GrowSuccessResponse>((resolve, reject) => {
+            resolveRef.current = resolve;
+            rejectRef.current = reject;
+            window.growPayment.renderPaymentOptions(data.authCode);
+          });
+        }
+
+        // Step 2b: Redirect flow (donations/direct debit) — open in new window
+        const paymentWindow = window.open(data.url, "_blank", "width=600,height=700");
+        setIsLoading(false);
+        return {
+          payment_sum: String(params.sum),
+          full_name: params.fullName,
+          payment_method: "redirect",
+          number_of_payments: "1",
+          confirmation_number: String(data.processId),
+        } as GrowSuccessResponse;
       } catch (err: any) {
         setIsLoading(false);
         setError(err.message);

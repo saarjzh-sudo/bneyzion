@@ -132,7 +132,7 @@ const Donate = () => {
               orderId: donation.id,
             });
 
-            toast({ title: "התרומה בוצעה בהצלחה!", description: "תודה רבה על תמיכתכם!" });
+            toast({ title: "חלון תשלום נפתח!", description: "השלימו את התשלום בחלון שנפתח. תודה רבה!" });
             // Reset form
             setSelectedAmount(180);
             setCustomAmount("");
