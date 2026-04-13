@@ -23,22 +23,22 @@ export default {
   		],
   		serif: [
   			'Kedem',
-  			'Frank Ruhl Libre"',
+  			'Frank Ruhl Libre',
   			'serif'
   		],
   		heading: [
   			'Kedem',
-  			'Frank Ruhl Libre"',
+  			'Frank Ruhl Libre',
   			'serif'
   		],
   		antidot: [
-  			'OS Antidot TR"',
+  			'OS Antidot TR',
   			'Ploni',
   			'sans-serif'
   		],
   		kedem: [
   			'Kedem',
-  			'Frank Ruhl Libre"',
+  			'Frank Ruhl Libre',
   			'serif'
   		],
   		ploni: [

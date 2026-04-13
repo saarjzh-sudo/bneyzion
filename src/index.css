@@ -182,7 +182,7 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: var(--font-sans, ui-sans-serif, system-ui, sans-serif);
+    font-family: 'Ploni', sans-serif;
   }
 }
 

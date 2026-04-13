@@ -27,23 +27,10 @@ import LessonDialog from "@/components/lesson/LessonDialog";
 
 type MediaFilter = "all" | "video" | "audio" | "text";
 
-const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
-  "תורה": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
-  "נביאים": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
-  "כתובים": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
-  'נושאים כלליים בתנ"ך': { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
-  "המועדים": { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" },
-  "הפטרות": { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
-};
-
-const defaultCategoryColor = { bg: "bg-secondary/40", text: "text-foreground", border: "border-transparent" };
-
-const getCategoryColor = (title: string) => {
-  for (const key of Object.keys(categoryColors)) {
-    if (title === key || title.includes(key)) return categoryColors[key];
-  }
-  return defaultCategoryColor;
-};
+// All categories use the same brand styling
+const getCategoryColor = (_title: string) => ({
+  bg: "bg-secondary/40", text: "text-foreground", border: "border-transparent"
+});
 
 const SeriesList = () => {
   const {
