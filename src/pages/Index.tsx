@@ -10,6 +10,7 @@ import RabbisSlider from "@/components/home/RabbisSlider";
 import DedicationSection from "@/components/home/DedicationSection";
 import WhatsAppCommunitySection from "@/components/home/WhatsAppCommunitySection";
 import MemorialSection from "@/components/home/MemorialSection";
+import DailyVerseSection from "@/components/home/DailyVerseSection";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <LearningDashboard />
       <RecommendationsSection />
       <PopularSection />
+      <DailyVerseSection />
       <ParashaHolidaySection />
       <QuizSection />
       <StrengthSection />
