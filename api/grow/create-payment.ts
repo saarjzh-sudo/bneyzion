@@ -89,8 +89,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       });
     }
 
+    // Wallet (products) returns authCode, redirect (donations) returns url
     return res.status(200).json({
-      authCode: data.data.authCode,
+      authCode: data.data.authCode || null,
+      url: data.data.url || null,
       processId: data.data.processId,
       processToken: data.data.processToken,
     });
