@@ -1,0 +1,1215 @@
+{
+  "timestamp": "2026-04-13T01:38:33.699Z",
+  "totalLessons": 10971,
+  "totalIssues": 1448,
+  "healthScore": 87,
+  "issuesByType": {
+    "NO_SERIES": 1164,
+    "NO_RABBI": 265,
+    "BROKEN_LINK": 7,
+    "BAD_TITLE": 2,
+    "SHORT_CONTENT": 10
+  },
+  "issues": [
+    {
+      "lessonId": "4bfc38ec-599b-45f1-8ea0-5005a0b09ed2",
+      "title": "נגע הצרעת והחיבור ללב",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "4f42e59c-6e2f-4fe0-bdd0-7ddd5bbc78c1",
+      "title": "צרעת - קירבה לה'",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "d1bf4f48-b31a-4c5d-85ef-21fcda939297",
+      "title": "המלכת שלמה",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e55e8f8d-1bc1-4a3d-8b99-96e019fd69b0",
+      "title": "מגילת אסתר – מגילת הַסֵתֶר",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "0057d89e-aa4c-4997-a0e6-66c59a082578",
+      "title": "גדולת מלכות שלמה, בנין המקדש",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "988dc590-ea95-480e-b497-ffd9ee2174d4",
+      "title": "בִּגְדֵי הַשְּׂרָד - פרשת כי תשא",
+      "type": "BROKEN_LINK",
+      "detail": "Contains unresolved umb://document links"
+    },
+    {
+      "lessonId": "f9da767c-8452-4c9d-9c7f-27886752f5a5",
+      "title": "איסורי אונאה - פרשות בהר בחוקותי",
+      "type": "BROKEN_LINK",
+      "detail": "Contains unresolved umb://document links"
+    },
+    {
+      "lessonId": "8935db42-d7ef-4706-ad2b-9612303cab75",
+      "title": "קנאות טובה - פרשת פנחס",
+      "type": "BROKEN_LINK",
+      "detail": "Contains unresolved umb://document links"
+    },
+    {
+      "lessonId": "3e4816b9-8c36-44ca-ad96-d320f2515e23",
+      "title": "שנה ולא קרא – עם הארץ",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "11fc33b2-d588-4d5b-8a88-4f170fce7b95",
+      "title": "התנאי ללימוד תורה ברבים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "31eb42b6-629a-4cbb-9096-4f8ac170116b",
+      "title": "אשריכם לומדי כלל תחומי התורה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "95f0653c-d024-4eca-9a34-11f2d8990cf2",
+      "title": "במה עוסקים המלאכים והצדיקים בגן עדן?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "bbe57f41-70cf-46ef-830a-b20b7c4933d2",
+      "title": "חידות לילדים - פרשת תצוה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1680b919-2b73-43e1-b5c8-b78bab009b7b",
+      "title": "שליש בתורה שבכתב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1bb66cf0-8b9e-4ab4-8a6c-4edb65554031",
+      "title": "חובת כ\"ד הקישוטים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "a542da14-8a01-4ebf-a479-8aade88abca0",
+      "title": "הבסיס ללימוד תורה: גם לקרוא וגם לשנות",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "170b4685-c153-4ff4-b022-161f4c21f8c9",
+      "title": "קרא תורה? – יקרא נביאים.",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "27bc1223-78c9-4e2a-9fd7-bdea69236593",
+      "title": "הקב\"ה עוסק במקרא ביום",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b5114c86-33e5-4180-97f6-681d163e071a",
+      "title": "המלאך השומר על לומדי התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "23ef4139-274f-4eab-bca3-51cee7709599",
+      "title": "צדקתו של המשאיל ספרי תנ\"ך לאחרים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "ee6e4ab1-dd5d-4395-b03f-d91e6d510d65",
+      "title": "שערי החכמה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "83f14d1a-b20b-4da8-a589-717417c90811",
+      "title": "מעלת היכולת להשיב על שאלות בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c1ac4bf7-929d-4502-a4f8-83ab5d589589",
+      "title": "מה ללמוד: תהלים או משלי?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "54872f29-771d-438f-adfa-d571d002eb46",
+      "title": "מא' ועד ת' - או מא' ועד ב'?",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "c6c6f304-8de2-4ce4-a3b3-39c971594ff3",
+      "title": "הקריאה של הראב\"ע",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "120e3fb8-1059-4a6a-9044-786dacd20e5c",
+      "title": "על ידי ספרי התנ\"ך ה' מאיר לישראל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "38e8503c-3bd4-44e2-acdb-19dc4460168f",
+      "title": "דורות שעיקר פלפולם היה בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "fff96157-9cde-458c-b895-5045d7c85161",
+      "title": "האש והשמחה של לומדי התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "030274ab-ca99-46c8-8336-d30422c47d8a",
+      "title": "חובת לימוד ספרי התנ\"ך זה אחר זה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "6e5f7f49-8b0a-410e-8d59-c9636898ed82",
+      "title": "כ\"ד הספרים הם מקדש ה'",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c025ba21-4d1f-4f8f-9e9b-e08f348a779e",
+      "title": "החולי החזק",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "7c20574f-0183-465f-ad9a-502dce53d5c6",
+      "title": "על שליח הציבור להיות בקיא בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "976e46d4-728e-4bb3-875a-ffc8c10dfd66",
+      "title": "כ\"ד דרכי ההתגלות של הקב\"ה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "76e3ffa9-762d-43de-b504-71a5fd035986",
+      "title": "הפעולה הגדולה של הבנת מעשי אבותינו",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "ec6e0371-3b05-490a-90ce-5bbc70729afd",
+      "title": "שלושת סודות ה'",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d75683e6-d686-4371-b702-4ed856788939",
+      "title": "ללמוד תנ\"ך בעקביות על פי הסדר",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "a8406d68-4819-4c23-87f4-4a5212a8e6ca",
+      "title": "הרמח\"ל: תנ\"ך תחילה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d1618f75-1af9-4440-8f9d-208c1a4fac2d",
+      "title": "לימוד תנ\"ך כל יום ובתחילת כל שבוע",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c8bc07cb-3958-4bc0-8b2f-7040d63b4561",
+      "title": "תשובת הרב קלוגר לשאלה: האם ראוי ללמוד תנ\"ך?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "79ceb46a-2587-4d50-8085-161f60d4ce83",
+      "title": "על המורה להיות בקי בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "fca7c791-c520-4f96-84f6-ef5e92b73554",
+      "title": "הדרכת הרא\"ש ללמוד לפי הסדר - מקרא תחילה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "edcd7fbe-06b9-465e-abfa-1db929b12d12",
+      "title": "דבר ה'",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "6b19a151-ec93-464e-b2ec-52d3f345f271",
+      "title": "מדוע לא מופיעה אש מסביב ללומד תנ\"ך?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4b7cd491-9e63-4419-a110-b67060964ba8",
+      "title": "כ\"ד הספרים מביעים את נשמת ישראל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "2a919549-f7e6-4dc4-a792-92ff64ed9806",
+      "title": "מנהג סיום התנ\"ך כל שנה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4f1d2bc6-bd3a-4ab2-a926-edf97f086e26",
+      "title": "חובת לימוד תנ\"ך היא ברורה ופשוטה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "7ea79395-1753-4d0a-83be-d00ae15cc9f8",
+      "title": "בין דוד המלך לבניהו בן יהוידע",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4ca786d1-f6c8-4ecc-8c2f-98bdbb02169a",
+      "title": "ללמוד את הנביאים מחדש לאחר שהשכל התחזק",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "085e8eb7-66b9-4f92-a412-4cc8d64f925e",
+      "title": "להבין מה שקוראים במגילות",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e74bac72-4b91-4013-a6c0-4717af78a69a",
+      "title": "התלמוד נובע מן המקרא",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "9fa9927a-c924-4717-b5c8-37536d4c2e06",
+      "title": "על מה היה הגר\"א בוחן את תלמידיו?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "a933f2d2-ebd4-4f67-8f77-871f3a175472",
+      "title": "מן המקרא לומדים את גדולת ה'",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "32c5205a-fe1a-45ac-921a-d7ca18c1601f",
+      "title": "על מה ציווה בעל ה'נתיבות' בצוואתו?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "f063226a-73f0-4b68-9087-d416d653aa23",
+      "title": "הזקנים שעסקו בקביעות בתורה שבכתב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "37cd6baf-d4b4-4568-bc8f-334a0a84ad14",
+      "title": "לעבור על התנ\"ך לפחות פעם בשנה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "684ae401-38ac-4f2d-9911-b2d1fddaea06",
+      "title": "האם זו בושה ללמוד תנ\"ך?!",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000254",
+      "title": "\"האנשים אשר הכה ביד גדליהו\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "5cd7458a-f963-4f86-8e18-592eac85e684",
+      "title": "המינון הראוי בלימוד תורה שבכתב ותורה שבעל פה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "6347e78f-4d50-4556-8749-50d59895b20b",
+      "title": "פסוק בדברי הימים עם רש\"י",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "6bd6b379-08cc-4597-954e-029bcaef605e",
+      "title": "הנצי\"ב: לא רק בקיאות בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e9b0bd9c-7124-4cd2-898e-541b88ff6b55",
+      "title": "ה'לחם' קודם ל'מים'",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "09a95b4c-8cb2-40fc-96ba-3bdc91f31057",
+      "title": "בישיבה ילמדו תורה שבכתב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5e048127-9864-42cd-9126-8d22480e2924",
+      "title": "\"לקבוע עת ללימוד נביאים וכתובים\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "022b2479-145e-423f-828b-956ce77632c0",
+      "title": "\"אין קץ למתן שכרו\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d1976c90-1e31-4097-801e-c4f8eba7b322",
+      "title": "הלימוד המקורי החי לעולמים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "52edd025-233b-4218-965e-a8fb2a681876",
+      "title": "התורה שבכתב פתוחה בפני כל בני העם",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "f256f8ca-9c2c-4d96-95ab-ed7942e54cbe",
+      "title": "באמצעות התורה שבכתב יאירו ישראל את העולם כולו",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "62a09731-2cdc-439e-919e-2f81a4bd8c2a",
+      "title": "המנהג הראוי להיות בכל תפוצות ישראל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "2c868eb7-4ff4-4fb6-b1f5-9fcab3ac16db",
+      "title": "ההכרח להקדים לימוד מקרא",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5709bf88-ed3c-4ec1-ba2a-228ae55e63b2",
+      "title": "ללכת בעקבות הנביאים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "62685ac2-de7c-43ed-aae4-14bd2a3d9b14",
+      "title": "התנ\"ך – מורה דרכו של החפץ חיים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d50177bf-47b4-479d-bf2b-8eadf94a51c9",
+      "title": "המקרא - יסוד מוסד ולא ארעי",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4210d5bb-07eb-4a97-895e-753880e8d0f8",
+      "title": "מן הקל אל הכבד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "fd5f0cd7-8b00-4f25-87c7-11b413723f50",
+      "title": "תורה נביאים וכתובים הם שורשי המחשבה, הדיבור והמעשה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b70f486c-1fc0-4297-8751-4b799f4055cb",
+      "title": "שנה של לימוד תנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "95705e67-e434-4008-9338-4a744281ec16",
+      "title": "המקרא והמשנה - יסוד בית הלימוד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "52ed3fd1-02f9-4264-9937-6589e27ef67f",
+      "title": "על האדם לנהל את כל קורותיו לאור חיי גדולי התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "3b8baf74-d194-41cd-8564-d13a2cd5ff30",
+      "title": "כל סיפור בתנ\"ך הוא שער  חדש של ישועה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "f1cde502-3722-4cc2-b12b-0f0d775dcba7",
+      "title": "לימוד התנ\"ך בימי התשובה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "cc0893af-023a-479b-b3d3-21d6ccd8e51f",
+      "title": "סיכום דברי המפרשים לאורך פסוקי פרשת ניצבים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "3803572a-d0c0-4355-8d53-27fbcb76a789",
+      "title": "בימי חז\"ל כל המקרא היה שגור בפי כל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "a0c2bdd7-d369-4990-99ed-8c194449c303",
+      "title": "לתנ\"ך יש דין קדימה על הכל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "66d9542e-0ecd-4fd4-8202-b78c631b1d52",
+      "title": "חומת האנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "169ac472-dbaf-406d-9078-98d39f4dd2db",
+      "title": "האור נגנז בכ\"ד ספרים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "515ecfef-a8ea-4273-a0de-e64a7f8e83a2",
+      "title": "תיקון כ\"ד התכשיטים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "60e4f397-7f14-42ff-bc92-3f2e2c856089",
+      "title": "התנ\"ך מביא לידי ענווה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "dc5a3648-dd13-4bcf-9226-c55552d2bfff",
+      "title": "אין בישראל פסולת",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c94caa4a-87cd-48c4-b93d-a06ecc4dce11",
+      "title": "אין לזלזל בתלמידי חכמים גדולים שאינם בקיאים בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "810d736a-4f31-4a54-96c5-956b43dc01d9",
+      "title": "המקרא הוא תחילת הדרך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "f2010000-0001-4000-8000-000000000186",
+      "title": "\"אחד היה אברהם\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "a0ff3c0e-75cd-4325-9d05-3998b4363977",
+      "title": "כח פעולת הנבואה לדורות",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "f5c1b743-ecd7-4344-bb49-33622d6123e9",
+      "title": "המתקת הדין",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5e7cdba4-fdfa-4538-b676-0b4cc6301273",
+      "title": "לקט מקורות על 'בעלי המקרא'",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1a955054-c7cf-4c0f-894a-d613379ed710",
+      "title": "הגפן הפוריה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1b732c94-a9e6-4a83-a8d7-d97444d28bf2",
+      "title": "אין להצטמצם בלימוד מקרא בלבד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "8e77249a-0d08-4d4f-b4d3-b30ddda290ca",
+      "title": "אדם גדול איננו יודע לפרש פסוק בתנ\"ך?!",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "016762cc-f6b8-4c43-bb47-7344171930b9",
+      "title": "רוח הקודש והתורה ניתנו במשקל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1b00ea65-ca4d-4638-8be6-679a6f335fc6",
+      "title": "הגפן הסמדר והרימונים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000073",
+      "title": "\"זית רענן יפה פרי תאר\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000076",
+      "title": "מדוע דרך רשעים צלחה?",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "01c79568-59a9-4cc0-aea1-35784da61c89",
+      "title": "\"אם בעלי מקרא הם\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d331148c-e6b7-436b-921f-7a188f1e357b",
+      "title": "השותפות בין החבורות השונות של תלמידי החכמים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b0e7d87c-46cb-41c7-b438-3f5409b1fb1c",
+      "title": "משה וחבורות לומדי התורה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000259",
+      "title": "\"ד' אלקיך\" ו\"ד' אלקינו\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "528489f5-a46b-4547-b633-5a505510d0ea",
+      "title": "אחד מאלף",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "9267bdd1-9582-40f2-9f77-f316230e6c98",
+      "title": "הישאבות לתנ\"ך מחמת הקלות והברק שבו",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "7b6fafd8-9f5c-4b04-b924-b1d84ba7e2d8",
+      "title": "ללמוד מקרא באימה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000038",
+      "title": "\"הנה אנכי מביא רעה אל העם הזה\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "21d640c6-e0f1-4110-bd59-fb6dc31776c2",
+      "title": "המרחק שלנו מהשגת דבר ה' שבתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "6a421d24-6c97-42d0-a524-86857491c9ba",
+      "title": "כל באיה לא ישובון – הדרכת הרא\"ש",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5d72afbb-2518-4880-b9d4-9ea6270271b4",
+      "title": "הגישה היסודית: איננו מבינים כלום בתורה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "46177d7c-d324-4b69-8d97-ff29a2f187ac",
+      "title": "זהירות מהבנה שלא על פי חז\"ל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5889bb1e-2e0e-4dd6-9204-fab25e3f6504",
+      "title": "\"באימה וביראה\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4cdacf00-51c3-45cd-9859-8542a4160fff",
+      "title": "לא לפרש מקרא לפני בקיאות בתלמוד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "8cec0aa5-fa93-43da-bc71-16007649ba96",
+      "title": "אין לפרש מצוות על דרך השכל בלבד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "966a79a6-560e-4f11-8861-6e0dde703d67",
+      "title": "הרמב\"ם: זהירות ממעילה בדברי התורה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "860fcdd7-e472-482c-acd3-bf87ab4e6e08",
+      "title": "אין להשען על בינתנו בהבנת פסוקי הנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e3d2ebe6-a689-47c3-879b-70d1e3a32c69",
+      "title": "\"חזק ואמץ!\" - מינוי יהושע",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "665be9fa-de56-482d-a68c-8e9dbc3bfadf",
+      "title": "לא תמיד אנו מבינים את האמור בתורה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b61dbd43-64f7-40dd-8c25-e35d71bddae9",
+      "title": "אין לבחון את האמור בתנ\"ך בקנה מידה היסטורי",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "2dad2bbd-cd5b-4b20-8f0d-f4c80d8aa625",
+      "title": "לא כל פירוש שאדם מוצא בנפשו הוא פירוש לגיטימי",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "631746dc-8357-44a7-bf14-6bb678be4a0e",
+      "title": "מאיזה גיל הלויים התחילו לעבוד?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "cb35401e-0c9d-4263-a135-27f919056755",
+      "title": "פרשת כי תבוא - קריאה בטעמים אשכנזי",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "9f96d37f-8696-43f9-b425-d8cd3235eaad",
+      "title": "אין לפרש פסוקים בניגוד לדעת חז\"ל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1a89c16e-6c90-49e3-bdac-85f49b8e617d",
+      "title": "איסור ללמוד פסוק כצורתו",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "8eea77ce-2ed6-4d32-a8c6-3ff130eee5b3",
+      "title": "גדולת התורה שבעל פה שקובעת את האמת שבפסוקים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5e2eda7f-31d0-48c8-9cf1-a36621633e9e",
+      "title": "כל התורה שבעל פה מוטמעת בלשון התורה שבכתב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "aa82c4b9-500e-41f8-8862-ce8436ce39f3",
+      "title": "אין לפרש בניגוד למה שפירשו כל המפרשים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000018",
+      "title": "\"זכרתי לך חסד נעוריך\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "858c1964-8efc-4d62-83ef-fe17cacbf8bc",
+      "title": "דרך התנ\"ך לכתוב מאורעות שהתקיימו ברובד רוחני, גם אם לא תמיד הופיעו בעולם הגשמי",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "ce3593de-ae37-4a99-9814-fee8f036aa5d",
+      "title": "'קלקול החשבונות' ההיסטוריים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b753e263-27eb-4ba7-8ce4-bac9acee0fc3",
+      "title": "עצם האמונה בצורך בתורה שבעל פה, מצילה מטעויות בהבנת התורה שבכתב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "ad5029a8-6644-406e-8ab5-e0c53933d88f",
+      "title": "אין יחס בין ענייני התורה לתופעות המתגלות במחקר המדעי",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "0aefaf58-b12d-4934-be5e-37bfe74d3abb",
+      "title": "אין ספר היסטורי שיכול לעורר קושיות על התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "07ecbc3c-6cc2-4ee1-8a0b-62eaac304c49",
+      "title": "\"אל תעשו עצמכם רעים וחברים לנביאי\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "804e9398-68f5-4754-9e42-98ce32dd94f6",
+      "title": "כל מילה בתנ\"ך מדויקת",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "cdf081cb-4784-42a0-81ee-9c4fc1b14026",
+      "title": "גדולתם של אבות האומה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "beffa76d-e25b-4bdb-9242-fc4faefad75f",
+      "title": "מפגש עם אלוקים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "8616e1e8-1fda-4736-a778-f10e7e542ab0",
+      "title": "לימוד המקרא והמדרש כדבר אחד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "0a17236d-564d-4db2-a071-235ef8192014",
+      "title": "הנביאים תולים את הקלקלה במקולקל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000203",
+      "title": "\"עבדי הם\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "c1010001-0001-4000-8000-000000000116",
+      "title": "אבני חפץ",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "28eb7563-604f-4e17-88d5-f72784ea17c6",
+      "title": "בלי תורה שבכתב אין קיום לתורה שבעל פה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "fb3f0cdc-1119-485e-b52d-7fb2c52df0a4",
+      "title": "השל\"ה: באמת אין הקדמה ואיחור בתורה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "81d703c1-6c7e-4f2f-a142-5c9b6409ce88",
+      "title": "עובדות התנ\"ך אינן אלא מה שחז\"ל מבינים בחכמתן",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "bec04290-c798-4fae-852d-4969e4da6eb8",
+      "title": "\"אל תהרהר אחריו\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "1f08d947-a2e6-4bd2-9415-553dcbc8378b",
+      "title": "מגילת אסתר אינה ספר היסטוריה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "71975ce7-7cdb-409b-a52b-2aa230aa4752",
+      "title": "הראב\"ע: קבלת שתי התורות כאחד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b1010001-0001-4000-8000-000000000105",
+      "title": "ישעיהו מוקלט - פרק כ | ללא טעמים",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e2261f82-6d45-421e-b25f-d7aab29059ca",
+      "title": "לתורה שבכתב אין פשר אלא על פי תורה שבעל פה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "81d3cd12-83ab-4eed-a343-c9a084cd74ef",
+      "title": "ראשונים כמלאכים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e19ccdb8-ee31-4ac0-bbb5-d54c1d8221e7",
+      "title": "על פי הפשט, כל התנ\"ך מלא בסודות",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "515c1195-2d54-492d-ae6d-aa11df58d6d2",
+      "title": "דוגמה: התייחסות ברורה מאליה למעשה ראובן",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "91d32c7c-3075-403a-a136-308e2b1dc866",
+      "title": "התורה שבעל פה היא החיות והנשמה של התורה שבכתב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "de06d6fd-681d-4610-843a-c76d5b9ac45e",
+      "title": "רוח הקודש חורגת מן הסדר ההיסטורי",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000067",
+      "title": "מדוע דרך רשעים צלחה?",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "9de08b75-7a9e-466c-ba52-7b6ebc5ebbaa",
+      "title": "עבד עברי",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000084",
+      "title": "\"סתם תפילתי\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "1437fe00-f18d-4aed-9d84-6818e80c328b",
+      "title": "שנת השמיטה",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000189",
+      "title": "\"קנה לך את השדה\"",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "ea77f221-90a9-4f5b-95cd-7b7e86951aad",
+      "title": "ה'פשט' של עץ הדעת ועץ החיים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c1010001-0001-4000-8000-000000000069",
+      "title": "ישעיהו מוקלט - פרק מד | ללא טעמים",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000030",
+      "title": "אובדן המוסר המינימלי הנחוץ לקיום העולם",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "2fc2d461-3182-4aba-9e26-11949b6a00f5",
+      "title": "הפשט והדרש גם יחד",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "b501a7c4-8193-4bd4-b710-597a09d4f13e",
+      "title": "חטאי גדולים - נטייה זעירה בכוונת הלב",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "5de59866-7145-4f6d-a554-94acf217f7ef",
+      "title": "חטאים זעירים שנכתבו בתנ\"ך כקשים וחמורים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "7700376a-7025-4971-9b92-33b4deb254d0",
+      "title": "אין להיבהל מסתירות בתנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000037",
+      "title": "אזהרה מפני בוא האויב",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "dfcfaf6b-a553-496b-bac4-9e6964c58b35",
+      "title": "כוונת הבורא בפשט התנ\"ך שנדרוש ככל האפשר בשבח הצדיקים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "221e1d7b-a8fd-4a87-b7b7-69f9e26846f6",
+      "title": "כל חטאי הגדולים לא נכתבו אלא לשם שבחם",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c2678f3a-cacc-468c-a9e9-d287310f1e50",
+      "title": "הסכנה של לימוד מקרא מסברא, בלי המסורת",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "20ae6841-73bb-419d-854e-31fc75fce823",
+      "title": "כל דברי התנ\"ך הן הלבשות של סודות עליונים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e8b2bb46-16fa-4545-904c-5e893125347c",
+      "title": "\"מדובר במלאכים\"",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "8f0a075f-22bb-4dfe-910a-e1118a694edd",
+      "title": "פשט סיפורי התורה – כאור היוצא מן השמש",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "8b376c21-8efc-4858-9085-6467eaec9c90",
+      "title": "התורה נקראת שירה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "2de99f46-f0b7-4064-819a-a4c9ef890785",
+      "title": "כל תיאור של חטא מתפרש לפי גודל האדם שמדובר בו",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "9815e9df-a733-49d1-92a3-dc6096578e9e",
+      "title": "התורה שבכתב היא משל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "19b76adb-fcf2-49db-85a2-a3095f011265",
+      "title": "איך להבין את מעשה יהודה ותמר?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d9fcfe0e-0472-4657-a409-47fb48b4ab8b",
+      "title": "החיסרון הגדול שבלימוד הדרש ללא פשט",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "cd48b944-7a41-4b3e-8766-95f1d7b22f09",
+      "title": "מדוע נאמר על גדולים שלא חטאו בפועל, כאילו שחטאו?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "31462435-7ab5-4e39-860b-e97dc1c80791",
+      "title": "לימוד הפשט הוא הדרך העיקרית",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "ba18d68a-2527-4c84-a207-62c76845709c",
+      "title": "זהירות מלימוד זכות על עם ישראל יתר על המידה בניגוד לפשט הפסוקים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "31e92b0a-a00f-4123-9e38-6edea8931359",
+      "title": "הרשב\"ם: לא לשכוח את הפשט",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "f2010000-0001-4000-8000-000000000249",
+      "title": "איחוד שלושת המקדשים",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "e1010001-0001-4000-8000-000000000139",
+      "title": "אלוקי מקרוב ולא אלוקי מרחוק",
+      "type": "NO_SERIES",
+      "detail": "Published lesson without series assignment"
+    },
+    {
+      "lessonId": "1401395f-29ee-4554-be56-388b90f7dade",
+      "title": "איסור השוואת עצמנו אפילו לרשעי התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "d12bca9b-a46e-4d82-8bd1-c3d5fd402a9c",
+      "title": "אין להגדיל את חטאי הקדמונים משום נימוק",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "19ea2d68-2614-48b6-9ed7-3f4251412688",
+      "title": "חובת הבקיאות בפשט פסוקי התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "0e55f6c9-1dd9-4b1e-a2f4-0433f0c947ea",
+      "title": "שלושת רבדי ההבנה של התנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4c7a46e2-7938-40a0-9933-4d4de0f0cd47",
+      "title": "לעתים צריך לדקדק כדי למצוא את המעשים הטובים של הצדיקים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "c4e9db7d-2e84-4c38-8e46-3b31e9ee485c",
+      "title": "המבינים יודעים כיצד הדרשות התמוהות כתובות בפסוקים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "7a0c6108-f10f-4809-85b6-7d37433eeb9f",
+      "title": "אין רשות לפרש מדעתנו מה שלא נמצא בחז\"ל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "7748a0c7-209a-482c-92a5-5297643e030e",
+      "title": "אין רשות לפרש כנגד הפשט שנקבע על ידי חז\"ל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "081576f9-4417-4340-99c2-7c4b4f82c654",
+      "title": "ביאור הכוזרי לריחוק בין הפשט המובן לנו לדרשות חז\"ל",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "0c3ab65e-5198-4e09-8e51-c68cbbb28bb2",
+      "title": "המפרשים פירשו על פי פשט הפסוקים, ולא תמיד על פי שיטת ההלכה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "4c445968-46d1-4145-8cf5-81c61ba24442",
+      "title": "השיגעון של תליית שפלות מוסרית בגדולי האומה",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "365bcaab-3ef5-48b2-92e8-2f8b59aeae16",
+      "title": "המהר\"ל: הדרשות מכוונות תמיד לעומק הפשט",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "03aedf7f-3f13-43a7-8931-651dc64439bc",
+      "title": "קרבה נפשית ללימוד תנ\"ך",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "e4725482-e2e5-4f49-9758-d7c0e4bb2a82",
+      "title": "הדרכה מבית הגר\"א: לשים לב לפשוטי הדברים בכל העניינים",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    },
+    {
+      "lessonId": "88c989a8-ce64-436a-8b4e-e2cf94f72950",
+      "title": "מתי מותר למפרשים להציע דרכי פירוש חדשות שלא נאמרו בחז\"ל?",
+      "type": "NO_RABBI",
+      "detail": "Published lesson without rabbi assignment"
+    }
+  ]
+}
