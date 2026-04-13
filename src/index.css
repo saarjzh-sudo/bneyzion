@@ -159,6 +159,42 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
+    --background: 25 20% 10%;
+    --foreground: 40 20% 90%;
+
+    --card: 25 20% 13%;
+    --card-foreground: 40 20% 90%;
+
+    --popover: 25 20% 13%;
+    --popover-foreground: 40 20% 90%;
+
+    --primary: 175 40% 45%;
+    --primary-foreground: 25 20% 10%;
+
+    --secondary: 25 15% 18%;
+    --secondary-foreground: 40 20% 90%;
+
+    --muted: 25 15% 20%;
+    --muted-foreground: 40 10% 60%;
+
+    --accent: 38 60% 55%;
+    --accent-foreground: 25 20% 10%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 25 15% 20%;
+    --input: 25 15% 20%;
+    --ring: 175 40% 45%;
+
+    --gold: 38 60% 55%;
+    --gold-light: 40 50% 40%;
+    --teal: 175 30% 25%;
+    --sage: 140 20% 22%;
+    --cream: 25 20% 14%;
+    --cream-warm: 25 18% 16%;
+    --mahogany: 25 50% 30%;
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;

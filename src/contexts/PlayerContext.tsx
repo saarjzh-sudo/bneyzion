@@ -18,6 +18,7 @@ interface PlayerContextType {
   duration: number;
   queue: PlayerTrack[];
   playbackRate: number;
+  resumeTime: number | null;
   play: (track: PlayerTrack) => void;
   togglePlay: () => void;
   seek: (time: number) => void;
@@ -28,6 +29,7 @@ interface PlayerContextType {
   removeFromQueue: (id: string) => void;
   playNext: () => void;
   close: () => void;
+  clearResumeTime: () => void;
 }
 
 const PlayerContext = createContext<PlayerContextType | undefined>(undefined);
@@ -69,6 +71,45 @@ async function loadProgress(trackId: string): Promise<number> {
   return data?.progress_seconds || 0;
 }
 
+// localStorage position helpers
+const POSITION_PREFIX = "bneyzion_position_";
+const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
+
+function saveLocalPosition(trackId: string, position: number, dur: number) {
+  try {
+    localStorage.setItem(`${POSITION_PREFIX}${trackId}`, JSON.stringify({
+      position,
+      duration: dur,
+      timestamp: Date.now(),
+    }));
+  } catch { /* quota errors */ }
+}
+
+function loadLocalPosition(trackId: string): number {
+  try {
+    const raw = localStorage.getItem(`${POSITION_PREFIX}${trackId}`);
+    if (!raw) return 0;
+    const saved = JSON.parse(raw);
+    return saved.position || 0;
+  } catch { return 0; }
+}
+
+function cleanupOldPositions() {
+  try {
+    const now = Date.now();
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      if (!key?.startsWith(POSITION_PREFIX)) continue;
+      const raw = localStorage.getItem(key);
+      if (!raw) continue;
+      try {
+        const { timestamp } = JSON.parse(raw);
+        if (now - timestamp > THIRTY_DAYS_MS) localStorage.removeItem(key);
+      } catch { localStorage.removeItem(key!); }
+    }
+  } catch { /* ignore */ }
+}
+
 export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentTrack, setCurrentTrack] = useState<PlayerTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -76,14 +117,19 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
   const [duration, setDuration] = useState(0);
   const [queue, setQueue] = useState<PlayerTrack[]>([]);
   const [playbackRate, setPlaybackRateState] = useState(1);
+  const [resumeTime, setResumeTime] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const saveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const localSaveTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const currentTrackRef = useRef<PlayerTrack | null>(null);
 
   // Keep ref in sync
   useEffect(() => { currentTrackRef.current = currentTrack; }, [currentTrack]);
 
-  // Auto-save progress every 10 seconds while playing
+  // Clean up old localStorage positions on mount
+  useEffect(() => { cleanupOldPositions(); }, []);
+
+  // Auto-save progress every 10 seconds while playing (DB)
   useEffect(() => {
     saveTimerRef.current = setInterval(() => {
       const audio = audioRef.current;
@@ -93,6 +139,18 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }, 10000);
     return () => { if (saveTimerRef.current) clearInterval(saveTimerRef.current); };
+  }, []);
+
+  // Auto-save position to localStorage every 5 seconds while playing
+  useEffect(() => {
+    localSaveTimerRef.current = setInterval(() => {
+      const audio = audioRef.current;
+      const track = currentTrackRef.current;
+      if (audio && track && !audio.paused && audio.currentTime > 0) {
+        saveLocalPosition(track.id, audio.currentTime, audio.duration || 0);
+      }
+    }, 5000);
+    return () => { if (localSaveTimerRef.current) clearInterval(localSaveTimerRef.current); };
   }, []);
 
   // Create a persistent audio element
@@ -133,10 +191,11 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     const onPlay = () => setIsPlaying(true);
     const onPause = () => {
       setIsPlaying(false);
-      // Save on pause
+      // Save on pause (DB + localStorage)
       const track = currentTrackRef.current;
       if (track && audio.currentTime > 0) {
         saveProgress(track.id, audio.currentTime);
+        saveLocalPosition(track.id, audio.currentTime, audio.duration || 0);
       }
     };
 
@@ -160,7 +219,7 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
   const playTrack = useCallback(async (track: PlayerTrack) => {
     const audio = audioRef.current;
     if (!audio) return;
-    
+
     // If same track, just resume
     if (currentTrackRef.current?.id === track.id && audio.src) {
       audio.play();
@@ -170,15 +229,20 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     audio.src = track.audioUrl;
     setCurrentTrack(track);
     setCurrentTime(0);
+    setResumeTime(null);
 
-    // Load saved position and seek to it after metadata loads
-    const savedPos = await loadProgress(track.id);
+    // Check localStorage first (instant), then DB (async)
+    const localPos = loadLocalPosition(track.id);
+    const dbPos = await loadProgress(track.id);
+    const savedPos = Math.max(localPos, dbPos);
+
     if (savedPos > 0) {
       const onCanPlay = () => {
         // Don't resume if near the end (within 10 seconds)
         if (savedPos < (audio.duration || Infinity) - 10) {
           audio.currentTime = savedPos;
           setCurrentTime(savedPos);
+          setResumeTime(savedPos);
         }
         audio.removeEventListener("canplay", onCanPlay);
       };
@@ -247,9 +311,10 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
   const close = useCallback(() => {
     const audio = audioRef.current;
     const track = currentTrackRef.current;
-    // Save progress before closing
+    // Save progress before closing (DB + localStorage)
     if (audio && track && audio.currentTime > 0) {
       saveProgress(track.id, audio.currentTime);
+      saveLocalPosition(track.id, audio.currentTime, audio.duration || 0);
     }
     if (audio) {
       audio.pause();
@@ -261,11 +326,13 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     setDuration(0);
   }, []);
 
+  const clearResumeTime = useCallback(() => setResumeTime(null), []);
+
   return (
     <PlayerContext.Provider value={{
-      currentTrack, isPlaying, currentTime, duration, queue, playbackRate,
+      currentTrack, isPlaying, currentTime, duration, queue, playbackRate, resumeTime,
       play, togglePlay, seek, skipForward, skipBackward, setPlaybackRate,
-      addToQueue, removeFromQueue, playNext, close
+      addToQueue, removeFromQueue, playNext, close, clearResumeTime
     }}>
       {children}
     </PlayerContext.Provider>
