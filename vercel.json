@@ -120,6 +120,7 @@
     { "source": "/%D7%9B%D7%A0%D7%A1/", "destination": "/kenes", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/preview.html", "destination": "/preview.html" },
+    { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
   ]
 }
