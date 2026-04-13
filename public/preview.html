@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>בני ציון — בחירת Hero + פלטה</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;700;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Frank Ruhl Libre', serif; background: #1a1a1a; color: #fff; }
+
+  .section-title {
+    text-align: center; padding: 40px 20px 20px;
+    font-size: 28px; font-weight: 900;
+    background: linear-gradient(135deg, #c4a265, #8b6f47);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .section-sub {
+    text-align: center; color: #999; font-size: 14px; margin-bottom: 30px;
+  }
+
+  .grid { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
+  @media (min-width: 768px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+  .hero-card {
+    position: relative; border-radius: 16px; overflow: hidden;
+    height: 400px; cursor: pointer; border: 3px solid transparent;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .hero-card:hover { border-color: #c4a265; transform: scale(1.02); }
+  .hero-card video, .hero-card img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  }
+  .hero-card .overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px; text-align: center; z-index: 2;
+  }
+  .hero-card .label {
+    position: absolute; top: 12px; right: 12px; z-index: 3;
+    background: rgba(0,0,0,0.7); color: #fff; padding: 4px 12px;
+    border-radius: 20px; font-size: 12px; font-weight: 700;
+  }
+  .hero-card .sub { font-size: 18px; letter-spacing: 0.3em; opacity: 0.85; margin-bottom: 8px; }
+  .hero-card h2 { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 4px; }
+  .hero-card .gold { background: linear-gradient(135deg, #d4a843, #b8943e, #c9a84c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+  /* Palette cards */
+  .palette-section { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
+  .palette-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 768px) { .palette-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .palette-card {
+    border-radius: 16px; overflow: hidden; border: 2px solid #333;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .palette-card:hover { border-color: #c4a265; transform: scale(1.02); }
+  .palette-header { padding: 24px; text-align: center; }
+  .palette-header h3 { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+  .palette-header p { font-size: 13px; opacity: 0.7; }
+  .palette-colors { display: flex; height: 50px; }
+  .palette-colors div { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+  .palette-sample { padding: 20px; }
+  .palette-sample .btn {
+    display: inline-block; padding: 10px 24px; border-radius: 12px;
+    font-weight: 700; font-size: 14px; margin-top: 8px; border: none; cursor: pointer;
+  }
+  .palette-sample p { font-size: 14px; line-height: 1.8; margin-top: 8px; }
+
+  .divider { height: 1px; background: #333; max-width: 1200px; margin: 0 auto; }
+</style>
+</head>
+<body>
+
+<h1 class="section-title">בחירת סרטון רקע + פלטת צבעים</h1>
+<p class="section-sub">לחץ על מה שמדבר אליך ותגיד לי</p>
+
+<!-- VIDEO OPTIONS -->
+<h1 class="section-title">סרטונים לרקע Hero</h1>
+<p class="section-sub">כל הסרטונים חינמיים מ-Pexels / Pixabay</p>
+
+<div class="grid">
+
+  <!-- Video 1: Jerusalem Golden Hour -->
+  <div class="hero-card">
+    <span class="label">1. ירושלים golden hour</span>
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/5765371/5765371-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));z-index:1;"></div>
+    <div class="overlay">
+      <div class="sub">בני ציון</div>
+      <h2>אתר התנ״ך<br><span class="gold">של ישראל</span></h2>
+    </div>
+  </div>
+
+  <!-- Video 2: Desert Landscape -->
+  <div class="hero-card">
+    <span class="label">2. מדבר יהודה</span>
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));z-index:1;"></div>
+    <div class="overlay">
+      <div class="sub">בני ציון</div>
+      <h2>אתר התנ״ך<br><span class="gold">של ישראל</span></h2>
+    </div>
+  </div>
+
+  <!-- Video 3: Cinematic Clouds -->
+  <div class="hero-card">
+    <span class="label">3. עננים דרמטיים</span>
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/1542302/1542302-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.5));z-index:1;"></div>
+    <div class="overlay">
+      <div class="sub">בני ציון</div>
+      <h2>אתר התנ״ך<br><span class="gold">של ישראל</span></h2>
+    </div>
+  </div>
+
+  <!-- Video 4: Candle / Light -->
+  <div class="hero-card">
+    <span class="label">4. נרות ואור רך</span>
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/3723387/3723387-uhd_2560_1440_24fps.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));z-index:1;"></div>
+    <div class="overlay">
+      <div class="sub">בני ציון</div>
+      <h2>אתר התנ״ך<br><span class="gold">של ישראל</span></h2>
+    </div>
+  </div>
+
+  <!-- Video 5: Ancient Book -->
+  <div class="hero-card">
+    <span class="label">5. ספר עתיק</span>
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/5765467/5765467-hd_1920_1080_30fps.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));z-index:1;"></div>
+    <div class="overlay">
+      <div class="sub">בני ציון</div>
+      <h2>אתר התנ״ך<br><span class="gold">של ישראל</span></h2>
+    </div>
+  </div>
+
+  <!-- Video 6: Sunrise Mountains -->
+  <div class="hero-card">
+    <span class="label">6. זריחה בהרים</span>
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/1448735/1448735-hd_1920_1080_24fps.mp4" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.5));z-index:1;"></div>
+    <div class="overlay">
+      <div class="sub">בני ציון</div>
+      <h2>אתר התנ״ך<br><span class="gold">של ישראל</span></h2>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- PALETTE OPTIONS -->
+<h1 class="section-title">פלטות צבעים</h1>
+<p class="section-sub">בחר את הפלטה שמרגישה לך הכי פרימיום</p>
+
+<div class="palette-section">
+<div class="palette-grid">
+
+  <!-- Palette A -->
+  <div class="palette-card">
+    <div class="palette-header" style="background: #FAF6F0; color: #2D1F0E;">
+      <h3>A. כתב יד על קלף</h3>
+      <p>חם, אקדמי, כמו בית מדרש</p>
+    </div>
+    <div class="palette-colors">
+      <div style="background:#8B6F47;color:#fff;">Primary</div>
+      <div style="background:#C4A265;color:#fff;">Accent</div>
+      <div style="background:#FAF6F0;color:#2D1F0E;">Background</div>
+      <div style="background:#2D1F0E;color:#fff;">Text</div>
+      <div style="background:#A69882;color:#fff;">Muted</div>
+    </div>
+    <div class="palette-sample" style="background:#FAF6F0; color:#2D1F0E;">
+      <button class="btn" style="background:#8B6F47;color:#fff;">התחילו ללמוד</button>
+      <button class="btn" style="background:transparent;color:#8B6F47;border:2px solid #8B6F47;margin-right:8px;">פרשת השבוע</button>
+      <p>הבמה המרכזית ללימוד תנ״ך בדרך מסורת ישראל</p>
+      <p style="color:#A69882; font-size:12px;">הרב אליעזר קשתיאל · 45 דקות · אודיו</p>
+    </div>
+  </div>
+
+  <!-- Palette B -->
+  <div class="palette-card">
+    <div class="palette-header" style="background: #F8F5EF; color: #1A1A2E;">
+      <h3>B. ירושלים של זהב</h3>
+      <p>מלכותי, רציני, premium</p>
+    </div>
+    <div class="palette-colors">
+      <div style="background:#1B3A5C;color:#fff;">Primary</div>
+      <div style="background:#D4A843;color:#fff;">Accent</div>
+      <div style="background:#F8F5EF;color:#1A1A2E;">Background</div>
+      <div style="background:#1A1A2E;color:#fff;">Text</div>
+      <div style="background:#7C8DA6;color:#fff;">Muted</div>
+    </div>
+    <div class="palette-sample" style="background:#F8F5EF; color:#1A1A2E;">
+      <button class="btn" style="background:#1B3A5C;color:#fff;">התחילו ללמוד</button>
+      <button class="btn" style="background:transparent;color:#1B3A5C;border:2px solid #1B3A5C;margin-right:8px;">פרשת השבוע</button>
+      <p>הבמה המרכזית ללימוד תנ״ך בדרך מסורת ישראל</p>
+      <p style="color:#7C8DA6; font-size:12px;">הרב אליעזר קשתיאל · 45 דקות · אודיו</p>
+    </div>
+  </div>
+
+  <!-- Palette C -->
+  <div class="palette-card">
+    <div class="palette-header" style="background: #FBF8F3; color: #2B2118;">
+      <h3>C. הר הבית (שדרוג)</h3>
+      <p>אותו כיוון, יותר עמוק</p>
+    </div>
+    <div class="palette-colors">
+      <div style="background:#1D6B6B;color:#fff;">Primary</div>
+      <div style="background:#C4973D;color:#fff;">Accent</div>
+      <div style="background:#FBF8F3;color:#2B2118;">Background</div>
+      <div style="background:#2B2118;color:#fff;">Text</div>
+      <div style="background:#8C9B8E;color:#fff;">Muted</div>
+    </div>
+    <div class="palette-sample" style="background:#FBF8F3; color:#2B2118;">
+      <button class="btn" style="background:#1D6B6B;color:#fff;">התחילו ללמוד</button>
+      <button class="btn" style="background:transparent;color:#1D6B6B;border:2px solid #1D6B6B;margin-right:8px;">פרשת השבוע</button>
+      <p>הבמה המרכזית ללימוד תנ״ך בדרך מסורת ישראל</p>
+      <p style="color:#8C9B8E; font-size:12px;">הרב אליעזר קשתיאל · 45 דקות · אודיו</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div style="text-align:center;padding:40px;color:#666;font-size:14px;">
+  תגיד לי: מספר סרטון (1-6) + אות פלטה (A/B/C)<br>
+  ואני מיישם הכל באתר
+</div>
+
+</body>
+</html>
