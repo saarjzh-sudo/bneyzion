@@ -133,7 +133,22 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border mt-6 pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
+        {/* Stats bar */}
+        <div className="border-t border-border mt-6 pt-4 flex items-center justify-center gap-8 md:gap-12 pb-4">
+          {[
+            { value: "11,000+", label: "שיעורים" },
+            { value: "200+", label: "רבנים ומרצים" },
+            { value: "1,300+", label: "סדרות" },
+            { value: "24/7", label: "גישה חופשית" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-lg md:text-xl font-heading text-primary">{stat.value}</p>
+              <p className="text-[10px] text-muted-foreground">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="border-t border-border pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} בני ציון – כל הזכויות שמורות</p>
           <p className="text-xs text-muted-foreground">
             נבנה ב<span className="text-accent mx-0.5">♥</span> ע״י{" "}

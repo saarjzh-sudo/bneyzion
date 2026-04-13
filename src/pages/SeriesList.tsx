@@ -27,6 +27,24 @@ import LessonDialog from "@/components/lesson/LessonDialog";
 
 type MediaFilter = "all" | "video" | "audio" | "text";
 
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
+  "תורה": { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
+  "נביאים": { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
+  "כתובים": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
+  'נושאים כלליים בתנ"ך': { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
+  "המועדים": { bg: "bg-rose-50", text: "text-rose-700", border: "border-rose-200" },
+  "הפטרות": { bg: "bg-teal-50", text: "text-teal-700", border: "border-teal-200" },
+};
+
+const defaultCategoryColor = { bg: "bg-secondary/40", text: "text-foreground", border: "border-transparent" };
+
+const getCategoryColor = (title: string) => {
+  for (const key of Object.keys(categoryColors)) {
+    if (title === key || title.includes(key)) return categoryColors[key];
+  }
+  return defaultCategoryColor;
+};
+
 const SeriesList = () => {
   const {
     categories,
@@ -324,17 +342,19 @@ const SeriesList = () => {
                           ))}
 
                         {/* תורה / נביאים / כתובים */}
-                        {categories.map((cat) => (
+                        {categories.map((cat) => {
+                          const colors = getCategoryColor(cat.title);
+                          return (
                           <div key={cat.id}>
                             <button
                               onClick={() => {
                                 toggleCategory(cat.title);
                                 selectNode(cat.id, cat.title);
                               }}
-                              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors ${
+                              className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-colors border ${
                                 expandedCategory === cat.title
-                                  ? "bg-primary/10 text-primary"
-                                  : "bg-secondary/40 text-foreground hover:bg-secondary/70"
+                                  ? `${colors.bg} ${colors.text} ${colors.border}`
+                                  : `${colors.bg} ${colors.text} ${colors.border} hover:opacity-80`
                               }`}
                             >
                               <span>{cat.title}</span>
@@ -431,12 +451,15 @@ const SeriesList = () => {
                               )}
                             </AnimatePresence>
                           </div>
-                        ))}
+                          );
+                        })}
 
                         {/* Remaining extra sections (נושאים כלליים, מועדים, הפטרות, כלי עזר, ליווי ת"תים) */}
                         {extraSections
                           .filter((s) => !s.title.includes("איך לומדים"))
-                          .map((section) => (
+                          .map((section) => {
+                            const colors = getCategoryColor(section.title);
+                            return (
                             <div key={section.id}>
                               <button
                                 onClick={() => {
@@ -446,10 +469,10 @@ const SeriesList = () => {
                                   }
                                   selectNode(section.id, section.title);
                                 }}
-                                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg transition-colors ${
+                                className={`w-full flex items-center justify-between px-3 py-2 text-xs font-medium rounded-lg transition-colors border ${
                                   expandedExtra === section.id || selectedNode === section.id
-                                    ? "bg-primary/10 text-primary"
-                                    : "bg-secondary/40 text-foreground hover:bg-secondary/70"
+                                    ? `${colors.bg} ${colors.text} ${colors.border}`
+                                    : `${colors.bg} ${colors.text} ${colors.border} hover:opacity-80`
                                 }`}
                               >
                                 <span>{section.title}</span>
@@ -500,7 +523,8 @@ const SeriesList = () => {
                                 </AnimatePresence>
                               )}
                             </div>
-                          ))}
+                            );
+                          })}
 
 
                         {isLoading && (

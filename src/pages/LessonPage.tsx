@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -19,6 +20,7 @@ import AIChatWidget from "@/components/ai/AIChatWidget";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
 import { useMediaProgress } from "@/hooks/useMediaProgress";
+import { saveLocalLastLesson } from "@/hooks/useLastLesson";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -83,6 +85,19 @@ const LessonPage = () => {
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
 
   const rabbiName = rabbi?.title ? `${rabbi.title} ${rabbi.name}` : rabbi?.name;
+
+  // Save last lesson to localStorage for non-authenticated users (continue where you left off)
+  useEffect(() => {
+    if (!lesson || user) return;
+    saveLocalLastLesson({
+      lessonId: lesson.id,
+      title: lesson.title,
+      rabbiName: rabbiName || null,
+      progressSeconds: null,
+      duration: lesson.duration,
+      timestamp: Date.now(),
+    });
+  }, [lesson, user, rabbiName]);
 
   useSEO({
     title: lesson?.title,

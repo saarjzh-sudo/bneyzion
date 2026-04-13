@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
+import ContinueLearningBar from "@/components/home/ContinueLearningBar";
 import LearningDashboard from "@/components/home/LearningDashboard";
 import RecommendationsSection from "@/components/home/RecommendationsSection";
 import PopularSection from "@/components/home/PopularSection";
@@ -16,6 +17,7 @@ const Index = () => {
   return (
     <Layout>
       <HeroSection />
+      <ContinueLearningBar />
       <LearningDashboard />
       <RecommendationsSection />
       <PopularSection />
