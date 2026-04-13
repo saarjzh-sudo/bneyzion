@@ -1,6 +1,8 @@
 import Layout from "@/components/layout/Layout";
 import HeroSection from "@/components/home/HeroSection";
 import ContinueLearningBar from "@/components/home/ContinueLearningBar";
+import DorHaplaotSection from "@/components/home/DorHaplaotSection";
+import DailyVerseSection from "@/components/home/DailyVerseSection";
 import LearningDashboard from "@/components/home/LearningDashboard";
 import RecommendationsSection from "@/components/home/RecommendationsSection";
 import PopularSection from "@/components/home/PopularSection";
@@ -11,17 +13,17 @@ import RabbisSlider from "@/components/home/RabbisSlider";
 import DedicationSection from "@/components/home/DedicationSection";
 import WhatsAppCommunitySection from "@/components/home/WhatsAppCommunitySection";
 import MemorialSection from "@/components/home/MemorialSection";
-import DailyVerseSection from "@/components/home/DailyVerseSection";
 
 const Index = () => {
   return (
     <Layout>
       <HeroSection />
       <ContinueLearningBar />
+      <DorHaplaotSection />
+      <DailyVerseSection />
       <LearningDashboard />
       <RecommendationsSection />
       <PopularSection />
-      <DailyVerseSection />
       <ParashaHolidaySection />
       <QuizSection />
       <StrengthSection />

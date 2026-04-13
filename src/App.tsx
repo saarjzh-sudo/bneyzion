@@ -43,12 +43,14 @@ const SeriesPagePublic = lazy(() => import("./pages/SeriesPagePublic"));
 const Portal = lazy(() => import("./pages/Portal"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const KnesPage = lazy(() => import("./pages/KnesPage"));
+const DorHaplaot = lazy(() => import("./pages/DorHaplaot"));
 const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
 const CommunityPage = lazy(() => import("./pages/CommunityPage"));
 const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
+import GlobalAIChat from "./components/ai/GlobalAIChat";
 
 // Lazy-loaded admin pages
 const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
@@ -100,6 +102,7 @@ const App = () => (
           <FloatingPlayer />
           <ScrollToTop />
           <InstallPrompt />
+          <GlobalAIChat />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWing /></Suspense>} />
@@ -124,6 +127,7 @@ const App = () => (
             <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><Donate /></Suspense>} />
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
+            <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
             <Route path="/series" element={<SeriesList />} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
             <Route path="/pricing" element={<Suspense fallback={<LazyFallback />}><PricingPage /></Suspense>} />
