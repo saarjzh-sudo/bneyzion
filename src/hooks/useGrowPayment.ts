@@ -78,6 +78,25 @@ export function useGrowPayment() {
   }, []);
 
   function initSDK() {
+    if (!window.growPayment) {
+      // SDK may initialize asynchronously — retry briefly
+      let retries = 0;
+      const interval = setInterval(() => {
+        retries++;
+        if (window.growPayment) {
+          clearInterval(interval);
+          doInit();
+        } else if (retries > 20) {
+          clearInterval(interval);
+          setError("Payment SDK failed to initialize");
+        }
+      }, 200);
+      return;
+    }
+    doInit();
+  }
+
+  function doInit() {
     if (!window.growPayment) return;
 
     window.growPayment.init({
