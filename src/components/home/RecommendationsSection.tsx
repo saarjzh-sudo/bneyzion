@@ -5,7 +5,7 @@ import { useRecommendations } from "@/hooks/useRecommendations";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePlayer } from "@/contexts/PlayerContext";
 import LessonDialog from "@/components/lesson/LessonDialog";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonLessonCard } from "@/components/ui/skeleton-card";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -40,7 +40,7 @@ const RecommendationsSection = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {Array.from({ length: 3 }).map((_, i) => (
-                <Skeleton key={i} className="h-32 rounded-xl" />
+                <SkeletonLessonCard key={i} />
               ))}
             </div>
           ) : (
