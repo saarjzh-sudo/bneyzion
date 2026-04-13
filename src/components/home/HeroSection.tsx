@@ -10,13 +10,17 @@ const HeroSection = () => {
   return (
     <>
       <section className="relative min-h-[85vh] flex flex-col items-center justify-start overflow-hidden -mt-24">
-        {/* Background Image */}
-        <img
-          src={heroBg}
-          alt=""
+        {/* Video Background with image fallback */}
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
           className="absolute inset-0 w-full h-full object-cover"
-          loading="eager"
-        />
+          poster={heroBg}
+        >
+          <source src="/video/hero-bg.mp4" type="video/mp4" />
+        </video>
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/50" />
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/60 to-transparent" />
