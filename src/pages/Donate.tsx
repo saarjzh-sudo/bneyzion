@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Star, Gift, BookOpen, Sparkles, Users, Flame, Clock, Crown, Award, Trophy, Gem } from "lucide-react";
+import { Heart, Star, Gift, BookOpen, Sparkles, Users, Flame, Clock, Crown, Award, Trophy, Gem, Loader2, ShieldCheck } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useRecentDonations, useCreateDonation } from "@/hooks/useDonations";
 import { useAuth } from "@/contexts/AuthContext";
+import { useGrowPayment } from "@/hooks/useGrowPayment";
 
 // ─── Fake donation toasts ───
 const fakeNames = [
@@ -73,22 +74,36 @@ const Donate = () => {
   const [dedicationName, setDedicationName] = useState("");
   const [donorName, setDonorName] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
   const [donationType, setDonationType] = useState<"regular" | "iluy_neshama" | "refua">("regular");
   const { toast } = useToast();
   const { user } = useAuth();
   const { data: recentDonations } = useRecentDonations();
   const createDonation = useCreateDonation();
+  const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError } = useGrowPayment();
 
   useFakeDonationToasts();
 
   const finalAmount = selectedAmount ?? (customAmount ? parseInt(customAmount) : 0);
+  const isProcessing = createDonation.isPending || paymentLoading;
 
-  const handleDonate = useCallback(() => {
+  const handleDonate = useCallback(async () => {
     if (!finalAmount || finalAmount < 1) {
       toast({ title: "נא לבחור סכום תרומה", variant: "destructive" });
       return;
     }
 
+    if (!donorName || !donorName.trim().includes(" ")) {
+      toast({ title: "נא להזין שם מלא (שם פרטי ומשפחה)", variant: "destructive" });
+      return;
+    }
+
+    if (!donorPhone || !/^05\d{8}$/.test(donorPhone.replace(/[-\s]/g, ""))) {
+      toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
+      return;
+    }
+
+    // Step 1: Create donation record in Supabase
     createDonation.mutate(
       {
         amount: finalAmount,
@@ -100,16 +115,40 @@ const Donate = () => {
         user_id: user?.id,
       },
       {
-        onSuccess: () => {
-          toast({
-            title: "התרומה נרשמה!",
-            description: "מערכת התשלומים בהקמה. נציג ייצור איתך קשר להשלמת התשלום.",
-          });
+        onSuccess: async (donation) => {
+          try {
+            // Step 2: Open Grow payment
+            const dedicationText = donationType !== "regular" && dedicationName
+              ? ` - ${donationType === "iluy_neshama" ? "לעילוי נשמת" : "לרפואת"} ${dedicationName}`
+              : "";
+
+            await startPayment({
+              sum: finalAmount,
+              description: `תרומה לבני ציון${dedicationText}`,
+              fullName: donorName,
+              phone: donorPhone,
+              email: donorEmail,
+              type: "donation",
+              orderId: donation.id,
+            });
+
+            toast({ title: "התרומה בוצעה בהצלחה!", description: "תודה רבה על תמיכתכם!" });
+            // Reset form
+            setSelectedAmount(180);
+            setCustomAmount("");
+            setDedicationName("");
+            setDonorName("");
+            setDonorPhone("");
+            setDonorEmail("");
+            setDonationType("regular");
+          } catch (err: any) {
+            toast({ title: "התשלום לא הושלם", description: err.message, variant: "destructive" });
+          }
         },
         onError: (err: any) => toast({ title: "שגיאה", description: err.message, variant: "destructive" }),
       }
     );
-  }, [finalAmount, isMonthly, donationType, dedicationName, donorName, donorEmail, user]);
+  }, [finalAmount, isMonthly, donationType, dedicationName, donorName, donorPhone, donorEmail, user]);
 
   return (
     <Layout>
@@ -274,38 +313,51 @@ const Donate = () => {
               <div className="glass-card-light rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Heart className="h-5 w-5 text-primary" />
-                  <h2 className="text-lg font-display text-foreground">פרטי התורם (רשות)</h2>
+                  <h2 className="text-lg font-display text-foreground">פרטי התורם</h2>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label>שם</Label>
-                    <Input value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="שמך..." className="mt-1" />
+                    <Label>שם מלא *</Label>
+                    <Input value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="שם פרטי ומשפחה..." className="mt-1" />
                   </div>
                   <div>
-                    <Label>אימייל</Label>
-                    <Input type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="email@..." dir="ltr" className="mt-1" />
+                    <Label>טלפון *</Label>
+                    <Input value={donorPhone} onChange={(e) => setDonorPhone(e.target.value)} placeholder="05XXXXXXXX" type="tel" dir="ltr" className="mt-1" />
                   </div>
+                </div>
+                <div className="mt-4">
+                  <Label>אימייל (רשות)</Label>
+                  <Input type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="email@..." dir="ltr" className="mt-1" />
                 </div>
               </div>
 
               {/* CTA */}
+              {paymentError && (
+                <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive text-center">
+                  {paymentError}
+                </div>
+              )}
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleDonate}
-                disabled={!finalAmount || createDonation.isPending}
+                disabled={!finalAmount || isProcessing || !paymentReady}
                 className="w-full py-4 bg-primary text-primary-foreground rounded-2xl font-display text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
-                <Heart className="h-5 w-5" />
-                {createDonation.isPending
-                  ? "שולח..."
-                  : finalAmount > 0
-                  ? `תרמו ₪${finalAmount.toLocaleString()}${isMonthly ? " בחודש" : ""}`
-                  : "בחרו סכום לתרומה"}
+                {isProcessing ? (
+                  <><Loader2 className="h-5 w-5 animate-spin" />מעבד תשלום...</>
+                ) : !paymentReady ? (
+                  <><Loader2 className="h-5 w-5 animate-spin" />טוען מערכת תשלום...</>
+                ) : finalAmount > 0 ? (
+                  <><Heart className="h-5 w-5" />תרמו ₪{finalAmount.toLocaleString()}{isMonthly ? " בחודש" : ""}</>
+                ) : (
+                  <><Heart className="h-5 w-5" />בחרו סכום לתרומה</>
+                )}
               </motion.button>
 
-              <p className="text-center text-xs text-muted-foreground">
-                סליקה מאובטחת בקרוב — נציג ייצור קשר להשלמת התשלום
+              <p className="text-center text-xs text-muted-foreground flex items-center justify-center gap-1">
+                <ShieldCheck className="h-3 w-3" />
+                סליקה מאובטחת באמצעות Grow — אשראי, ביט, Apple Pay, Google Pay
                 <br />
                 תרומות מעל ₪100 מזכות באישור לפי סעיף 46
               </p>

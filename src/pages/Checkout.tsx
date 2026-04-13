@@ -9,11 +9,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingBag, CreditCard, Receipt, FileText, ArrowRight } from "lucide-react";
+import { ShoppingBag, CreditCard, Receipt, FileText, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { Link } from "react-router-dom";
 
 export default function Checkout() {
@@ -21,6 +22,7 @@ export default function Checkout() {
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError } = useGrowPayment();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", phone: "",
@@ -29,6 +31,7 @@ export default function Checkout() {
   });
 
   const needsShipping = productItems.some((i) => !i.product.is_digital);
+  const isProcessing = loading || paymentLoading;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,8 +44,8 @@ export default function Checkout() {
     try {
       // Create separate orders for products vs donations
       const orderGroups = [
-        { items: productItems, invoiceType: "invoice" as const },
-        { items: donationItems, invoiceType: "receipt_46" as const },
+        { items: productItems, invoiceType: "invoice" as const, type: "product" as const },
+        { items: donationItems, invoiceType: "receipt_46" as const, type: "donation" as const },
       ].filter((g) => g.items.length > 0);
 
       for (const group of orderGroups) {
@@ -81,13 +84,26 @@ export default function Checkout() {
 
         const { error: itemsErr } = await supabase.from("order_items").insert(orderItems);
         if (itemsErr) throw itemsErr;
+
+        // Open Grow payment for this order
+        const description = group.items.map((i) => i.product.title).join(", ");
+        await startPayment({
+          sum: groupTotal,
+          description,
+          fullName: form.name,
+          phone: form.phone,
+          email: form.email,
+          type: group.type,
+          orderId: order.id,
+          installments: Number(form.installments),
+        });
       }
 
       clearCart();
-      toast({ title: "ההזמנה נקלטה בהצלחה!", description: "נציג ייצור איתך קשר לתשלום" });
-      navigate("/");
+      toast({ title: "התשלום בוצע בהצלחה!" });
+      navigate("/thank-you");
     } catch (err: any) {
-      toast({ title: "שגיאה ביצירת ההזמנה", description: err.message, variant: "destructive" });
+      toast({ title: "שגיאה בתהליך התשלום", description: err.message, variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -157,13 +173,18 @@ export default function Checkout() {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="p-4 rounded-xl bg-accent/10 border border-accent/20 text-sm text-muted-foreground flex items-start gap-3">
-                  <CreditCard className="h-5 w-5 text-accent shrink-0 mt-0.5" />
+                <div className="p-4 rounded-xl bg-green-50 border border-green-200 text-sm text-green-800 flex items-start gap-3">
+                  <ShieldCheck className="h-5 w-5 text-green-600 shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-display text-foreground mb-1">סליקה מאובטחת בקרוב</p>
-                    <p>מערכת הסליקה של גרואו בהקמה. לאחר ביצוע ההזמנה, נציג ייצור איתך קשר להשלמת התשלום.</p>
+                    <p className="font-display text-foreground mb-1">סליקה מאובטחת</p>
+                    <p>התשלום מתבצע באמצעות מערכת Grow המאובטחת. תוכלו לשלם באשראי, ביט, Apple Pay או Google Pay.</p>
                   </div>
                 </div>
+                {paymentError && (
+                  <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive">
+                    {paymentError}
+                  </div>
+                )}
                 <div><Label>הערות</Label><Textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} rows={2} /></div>
               </CardContent>
             </Card>
@@ -217,8 +238,17 @@ export default function Checkout() {
                   </p>
                 )}
 
-                <Button type="submit" size="lg" className="w-full font-display" disabled={loading || !user}>
-                  {loading ? "שולח..." : !user ? "יש להתחבר" : "אישור הזמנה"}
+                <Button type="submit" size="lg" className="w-full font-display" disabled={isProcessing || !user || !paymentReady}>
+                  {isProcessing ? (
+                    <><Loader2 className="h-4 w-4 animate-spin ml-2" />מעבד תשלום...</>
+                  ) : !user ? "יש להתחבר" : !paymentReady ? (
+                    <><Loader2 className="h-4 w-4 animate-spin ml-2" />טוען מערכת תשלום...</>
+                  ) : (
+                    <>
+                      <CreditCard className="h-4 w-4 ml-2" />
+                      לתשלום ₪{subtotal.toFixed(0)}
+                    </>
+                  )}
                 </Button>
                 {!user && (
                   <p className="text-xs text-center text-muted-foreground">

@@ -6,7 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { usePlayer } from "@/contexts/PlayerContext";
 import LessonDialog from "@/components/lesson/LessonDialog";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonLessonCard } from "@/components/ui/skeleton-card";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -74,7 +74,7 @@ const PopularSection = () => {
           {isLoading ? (
             <div className="flex gap-4 overflow-hidden">
               {Array.from({ length: 3 }).map((_, i) => (
-                <Skeleton key={i} className="h-48 w-72 rounded-xl shrink-0" />
+                <SkeletonLessonCard key={i} className="w-72 md:w-80 shrink-0" />
               ))}
             </div>
           ) : (

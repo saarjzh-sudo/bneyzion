@@ -9,8 +9,30 @@ const DailyVerseSection = () => {
     return (
       <section className="py-16 bg-gradient-to-b from-[hsl(38_50%_96%)] to-background" dir="rtl">
         <div className="container max-w-4xl mx-auto px-4">
-          <Skeleton className="h-10 w-64 mx-auto mb-6" />
-          <Skeleton className="h-40 w-full" />
+          {/* Header skeleton */}
+          <div className="text-center mb-10 space-y-3">
+            <Skeleton className="h-8 w-32 mx-auto rounded-full" />
+            <Skeleton className="h-9 w-64 mx-auto rounded" />
+            <Skeleton className="h-5 w-40 mx-auto rounded" />
+          </div>
+          {/* Verse block skeleton */}
+          <div className="bg-white/80 backdrop-blur rounded-2xl border border-[hsl(38_50%_85%)] p-6 md:p-8 mb-8 space-y-3">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Skeleton key={i} className={`h-4 rounded ${i % 2 === 0 ? "w-full" : "w-5/6"}`} />
+            ))}
+          </div>
+          {/* Quick links skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex items-center gap-3 p-4 rounded-xl bg-white/60 border border-[hsl(38_50%_85%)]">
+                <Skeleton className="h-10 w-10 rounded-lg shrink-0" />
+                <div className="space-y-2 flex-1">
+                  <Skeleton className="h-3.5 w-20 rounded" />
+                  <Skeleton className="h-3 w-28 rounded" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     );

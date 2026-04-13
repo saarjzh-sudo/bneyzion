@@ -44,6 +44,7 @@ const Portal = lazy(() => import("./pages/Portal"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const KnesPage = lazy(() => import("./pages/KnesPage"));
 const DorHaplaot = lazy(() => import("./pages/DorHaplaot"));
+const DevPages = lazy(() => import("./pages/DevPages"));
 const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
 const PricingPage = lazy(() => import("./pages/PricingPage"));
 const CommunityPage = lazy(() => import("./pages/CommunityPage"));
@@ -128,6 +129,7 @@ const App = () => (
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
+            {import.meta.env.DEV && <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />}
             <Route path="/series" element={<SeriesList />} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
             <Route path="/pricing" element={<Suspense fallback={<LazyFallback />}><PricingPage /></Suspense>} />

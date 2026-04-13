@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import PageHero from "@/components/layout/PageHero";
 import Layout from "@/components/layout/Layout";
 import { usePublicRabbis } from "@/hooks/useRabbis";
-import { Skeleton } from "@/components/ui/skeleton";
+import { SkeletonCard } from "@/components/ui/skeleton-card";
 import RabbiCard from "@/components/cards/RabbiCard";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -24,7 +24,7 @@ const RabbisList = () => {
           {isLoading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {Array.from({ length: 8 }).map((_, i) => (
-                <Skeleton key={i} className="h-48 rounded-xl" />
+                <SkeletonCard key={i} avatar lines={2} />
               ))}
             </div>
           ) : (

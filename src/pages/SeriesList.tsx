@@ -522,8 +522,11 @@ const SeriesList = () => {
 
                         {isLoading && (
                           <div className="space-y-1.5 pt-1">
-                            {[1, 2, 3].map((i) => (
-                              <div key={i} className="h-8 bg-secondary/50 rounded animate-pulse" />
+                            {[1, 2, 3, 4, 5].map((i) => (
+                              <div key={i} className="flex items-center gap-2 px-3 py-2">
+                                <div className="h-4 w-4 bg-muted animate-pulse rounded shrink-0" />
+                                <div className={`h-3 bg-muted animate-pulse rounded ${i % 2 === 0 ? "w-24" : "w-20"}`} />
+                              </div>
                             ))}
                           </div>
                         )}
@@ -595,9 +598,16 @@ const SeriesList = () => {
                     </p>
                   </motion.div>
                 ) : isSeriesLoading ? (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {[1, 2, 3, 4, 5].map((i) => (
-                      <div key={i} className="h-14 bg-secondary/30 rounded-lg animate-pulse" />
+                      <div key={i} className="flex items-center gap-3 bg-card border border-border rounded-lg p-4">
+                        <div className="h-10 w-10 bg-muted animate-pulse rounded-lg shrink-0" />
+                        <div className="flex-1 space-y-2">
+                          <div className={`h-3.5 bg-muted animate-pulse rounded ${i % 2 === 0 ? "w-3/5" : "w-2/5"}`} />
+                          <div className="h-3 bg-muted animate-pulse rounded w-1/4" />
+                        </div>
+                        <div className="h-6 w-14 bg-muted animate-pulse rounded-full shrink-0" />
+                      </div>
                     ))}
                   </div>
                 ) : (useMixed ? mixedContent.length === 0 : (filteredSeries.length === 0 && filteredLessons.length === 0)) ? (
