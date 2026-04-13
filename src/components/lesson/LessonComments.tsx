@@ -88,7 +88,7 @@ const LessonComments = ({ lessonId }: { lessonId: string }) => {
           className="flex items-start gap-3"
         >
           {user.user_metadata?.avatar_url ? (
-            <img src={user.user_metadata.avatar_url} alt="" className="h-8 w-8 rounded-full object-cover shrink-0 mt-1" referrerPolicy="no-referrer" />
+            <img src={user.user_metadata.avatar_url} alt="" className="h-8 w-8 rounded-full object-cover shrink-0 mt-1" referrerPolicy="no-referrer" loading="lazy" />
           ) : (
             <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-1">
               <User className="h-4 w-4 text-primary" />
@@ -127,7 +127,7 @@ const LessonComments = ({ lessonId }: { lessonId: string }) => {
               className="flex items-start gap-3 group"
             >
               {c.avatar_url ? (
-                <img src={c.avatar_url} alt="" className="h-7 w-7 rounded-full object-cover shrink-0 mt-0.5" referrerPolicy="no-referrer" />
+                <img src={c.avatar_url} alt="" className="h-7 w-7 rounded-full object-cover shrink-0 mt-0.5" referrerPolicy="no-referrer" loading="lazy" />
               ) : (
                 <div className="h-7 w-7 rounded-full bg-secondary flex items-center justify-center shrink-0 mt-0.5">
                   <User className="h-3.5 w-3.5 text-muted-foreground" />

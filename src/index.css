@@ -433,3 +433,30 @@
   padding: 1rem 0.5rem;
   margin: 1.5rem 0;
 }
+
+/* Umbraco imported content styles */
+.mudgash {
+  font-weight: 700;
+  color: hsl(var(--primary));
+}
+
+.umbraco-content h2,
+.umbraco-content h3 {
+  font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+  font-weight: 700;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.umbraco-content p {
+  margin-bottom: 0.75em;
+  line-height: 1.9;
+}
+
+.umbraco-content blockquote {
+  border-right: 4px solid hsl(var(--primary) / 0.3);
+  padding-right: 1rem;
+  margin-right: 0;
+  font-style: italic;
+  color: hsl(var(--muted-foreground));
+}

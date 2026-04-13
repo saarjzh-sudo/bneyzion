@@ -35,7 +35,7 @@ const LessonCard = memo(function LessonCard({
       <div className="relative z-10">
         <div className="flex items-start gap-3 mb-3">
           {thumbnailUrl ? (
-            <img src={thumbnailUrl} alt="" width={64} height={64} className="w-16 h-16 rounded-xl object-cover shrink-0" />
+            <img src={thumbnailUrl} alt="" width={64} height={64} className="w-16 h-16 rounded-xl object-cover shrink-0" loading="lazy" />
           ) : (
             <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
               {hasVideo ? <Play className="h-6 w-6 text-primary" /> : hasAudio ? <Volume2 className="h-6 w-6 text-primary" /> : <BookOpen className="h-6 w-6 text-primary" />}
@@ -45,7 +45,7 @@ const LessonCard = memo(function LessonCard({
             <h3 className="text-sm font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">{title}</h3>
             {rabbiName && (
               <div className="flex items-center gap-1.5 mt-1.5">
-                {rabbiImageUrl && <img src={rabbiImageUrl} alt="" width={16} height={16} className="w-4 h-4 rounded-full object-cover" />}
+                {rabbiImageUrl && <img src={rabbiImageUrl} alt="" width={16} height={16} className="w-4 h-4 rounded-full object-cover" loading="lazy" />}
                 <span className="text-xs text-muted-foreground">{rabbiName}</span>
               </div>
             )}

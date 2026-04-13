@@ -259,7 +259,7 @@ export default function KnesPage() {
             <div className="flex flex-col items-center gap-5">
               <PhoneMockup headerColor="bg-[hsl(142_70%_30%)]" headerText="📜 פסוק יומי – בני ציון">
                 <div className="p-3">
-                  <img src={watercolorBook} alt="ספר תנ״ך מאויר" className="w-full rounded-lg mb-3" />
+                  <img src={watercolorBook} alt="ספר תנ״ך מאויר" className="w-full rounded-lg mb-3" loading="lazy" />
                   <div className="bg-white rounded-xl p-3 shadow-sm text-right">
                     <p className="font-kedem font-bold text-sm text-[hsl(30_40%_25%)] mb-2">
                       להפוך את הגזירה, לא למחוק אותה

@@ -132,7 +132,7 @@ const CommunityPage = () => {
                     <Card className="hover:shadow-lg hover:border-primary/30 transition-all group overflow-hidden">
                       {e.community_courses?.image_url && (
                         <div className="h-32 overflow-hidden">
-                          <img src={e.community_courses.image_url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <img src={e.community_courses.image_url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                         </div>
                       )}
                       <CardContent className="p-4">
@@ -242,7 +242,7 @@ const CourseCard = ({ course, enrolled, isMember, index }: { course: any; enroll
           {/* Image */}
           <div className="relative h-40 overflow-hidden bg-muted">
             {course.image_url ? (
-              <img src={course.image_url} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <img src={course.image_url} alt={course.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5">
                 <GraduationCap className="h-12 w-12 text-primary/30" />
@@ -292,7 +292,7 @@ const CourseCard = ({ course, enrolled, isMember, index }: { course: any; enroll
               {rabbi && (
                 <div className="flex items-center gap-1.5">
                   {rabbi.image_url ? (
-                    <img src={rabbi.image_url} alt="" className="h-6 w-6 rounded-full object-cover border border-border" />
+                    <img src={rabbi.image_url} alt="" className="h-6 w-6 rounded-full object-cover border border-border" loading="lazy" />
                   ) : (
                     <div className="h-6 w-6 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-bold text-primary">{rabbi.name?.[0]}</div>
                   )}
