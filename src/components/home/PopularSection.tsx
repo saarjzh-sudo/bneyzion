@@ -128,7 +128,7 @@ const PopularSection = () => {
                           {rabbi?.name && (
                             <div className="flex items-center gap-1.5 mt-1.5">
                               {rabbi.image_url && (
-                                <img src={rabbi.image_url} alt="" width={16} height={16} className="w-4 h-4 rounded-full object-cover" />
+                                <img src={rabbi.image_url} alt="" width={16} height={16} className="w-4 h-4 rounded-full object-cover" loading="lazy" />
                               )}
                               <span className="text-xs text-muted-foreground">{rabbi.name}</span>
                             </div>

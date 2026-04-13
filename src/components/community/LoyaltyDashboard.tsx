@@ -191,7 +191,7 @@ const LoyaltyDashboard = () => {
                     {entry.rank}
                   </span>
                   {entry.profile?.avatar_url ? (
-                    <img src={entry.profile.avatar_url} alt="" className="h-8 w-8 rounded-full object-cover" referrerPolicy="no-referrer" />
+                    <img src={entry.profile.avatar_url} alt="" className="h-8 w-8 rounded-full object-cover" referrerPolicy="no-referrer" loading="lazy" />
                   ) : (
                     <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
                       <User className="h-4 w-4 text-muted-foreground" />

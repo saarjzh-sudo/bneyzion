@@ -16,7 +16,7 @@ const SeriesCard = memo(function SeriesCard({ id, title, lessonCount, rabbiName,
     <div className="bg-card border border-border rounded-xl p-4 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer group">
       <div className="flex items-start gap-3">
         {imageUrl ? (
-          <img src={imageUrl} alt="" width={48} height={48} className="w-12 h-12 rounded-lg object-cover shrink-0" />
+          <img src={imageUrl} alt="" width={48} height={48} className="w-12 h-12 rounded-lg object-cover shrink-0" loading="lazy" />
         ) : (
           <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
             <FolderOpen className="h-5 w-5 text-primary" />

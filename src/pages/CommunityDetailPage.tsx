@@ -69,7 +69,7 @@ const CommunityDetailPage = () => {
       <section className="relative overflow-hidden py-14 md:py-20">
         <div className="absolute inset-0">
           {course.image_url ? (
-            <img src={course.image_url} alt="" className="w-full h-full object-cover" />
+            <img src={course.image_url} alt="" className="w-full h-full object-cover" loading="lazy" />
           ) : (
             <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
           )}
@@ -100,7 +100,7 @@ const CommunityDetailPage = () => {
               {rabbi && (
                 <div className="flex items-center gap-2">
                   {rabbi.image_url ? (
-                    <img src={rabbi.image_url} alt="" className="h-8 w-8 rounded-full object-cover border-2 border-white/30" />
+                    <img src={rabbi.image_url} alt="" className="h-8 w-8 rounded-full object-cover border-2 border-white/30" loading="lazy" />
                   ) : (
                     <div className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white">{rabbi.name?.[0]}</div>
                   )}

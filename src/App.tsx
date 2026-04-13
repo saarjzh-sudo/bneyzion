@@ -11,39 +11,42 @@ import CartDrawer from "@/components/cart/CartDrawer";
 import FloatingPlayer from "@/components/player/FloatingPlayer";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
+// Eager-loaded: frequently visited pages
 import Index from "./pages/Index";
-import TeachersWing from "./pages/TeachersWing";
-import ChapterWeekly from "./pages/ChapterWeekly";
-import MegilatEsther from "./pages/MegilatEsther";
-import Proposal from "./pages/Proposal";
-import ThankYou from "./pages/ThankYou";
-import Roadmap from "./pages/Roadmap";
-import Auth from "./pages/Auth";
 import LessonPage from "./pages/LessonPage";
 import RabbiPage from "./pages/RabbiPage";
 import SeriesList from "./pages/SeriesList";
-import About from "./pages/About";
-import Profile from "./pages/Profile";
-import CommunityCoursePage from "./pages/CommunityCoursePage";
-import Favorites from "./pages/Favorites";
-import HistoryPage from "./pages/HistoryPage";
-import Memorial from "./pages/Memorial";
-import MemorialSaadia from "./pages/MemorialSaadia";
-import StorePage from "./pages/StorePage";
-import ProductPage from "./pages/ProductPage";
-import Contact from "./pages/Contact";
-import Donate from "./pages/Donate";
 import RabbisList from "./pages/RabbisList";
-import ParashaPage from "./pages/ParashaPage";
-import SeriesPagePublic from "./pages/SeriesPagePublic";
-import Portal from "./pages/Portal";
+import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
-import Checkout from "./pages/Checkout";
-import KnesPage from "./pages/KnesPage";
-import BibleBookPage from "./pages/BibleBookPage";
-import PricingPage from "./pages/PricingPage";
-import CommunityPage from "./pages/CommunityPage";
-import CommunityDetailPage from "./pages/CommunityDetailPage";
+
+// Lazy-loaded: less frequently visited pages
+const TeachersWing = lazy(() => import("./pages/TeachersWing"));
+const ChapterWeekly = lazy(() => import("./pages/ChapterWeekly"));
+const MegilatEsther = lazy(() => import("./pages/MegilatEsther"));
+const Proposal = lazy(() => import("./pages/Proposal"));
+const ThankYou = lazy(() => import("./pages/ThankYou"));
+const Roadmap = lazy(() => import("./pages/Roadmap"));
+const About = lazy(() => import("./pages/About"));
+const Profile = lazy(() => import("./pages/Profile"));
+const CommunityCoursePage = lazy(() => import("./pages/CommunityCoursePage"));
+const Favorites = lazy(() => import("./pages/Favorites"));
+const HistoryPage = lazy(() => import("./pages/HistoryPage"));
+const Memorial = lazy(() => import("./pages/Memorial"));
+const MemorialSaadia = lazy(() => import("./pages/MemorialSaadia"));
+const StorePage = lazy(() => import("./pages/StorePage"));
+const ProductPage = lazy(() => import("./pages/ProductPage"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Donate = lazy(() => import("./pages/Donate"));
+const ParashaPage = lazy(() => import("./pages/ParashaPage"));
+const SeriesPagePublic = lazy(() => import("./pages/SeriesPagePublic"));
+const Portal = lazy(() => import("./pages/Portal"));
+const Checkout = lazy(() => import("./pages/Checkout"));
+const KnesPage = lazy(() => import("./pages/KnesPage"));
+const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
+const PricingPage = lazy(() => import("./pages/PricingPage"));
+const CommunityPage = lazy(() => import("./pages/CommunityPage"));
+const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 
@@ -67,6 +70,12 @@ const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
+
+const LazyFallback = () => (
+  <div className="flex items-center justify-center min-h-screen">
+    <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
+  </div>
+);
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -93,37 +102,37 @@ const App = () => (
           <InstallPrompt />
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/teachers" element={<TeachersWing />} />
-            <Route path="/chapter-weekly" element={<ChapterWeekly />} />
-            <Route path="/megilat-esther" element={<MegilatEsther />} />
-            <Route path="/proposal" element={<Proposal />} />
-            <Route path="/thank-you" element={<ThankYou />} />
-            <Route path="/portal" element={<Portal />} />
-            <Route path="/portal/course/:id" element={<CommunityCoursePage />} />
-            <Route path="/roadmap" element={<Roadmap />} />
+            <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWing /></Suspense>} />
+            <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
+            <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
+            <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
+            <Route path="/thank-you" element={<Suspense fallback={<LazyFallback />}><ThankYou /></Suspense>} />
+            <Route path="/portal" element={<Suspense fallback={<LazyFallback />}><Portal /></Suspense>} />
+            <Route path="/portal/course/:id" element={<Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense>} />
+            <Route path="/roadmap" element={<Suspense fallback={<LazyFallback />}><Roadmap /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/lessons/:id" element={<LessonPage />} />
             <Route path="/rabbis" element={<RabbisList />} />
             <Route path="/rabbis/:id" element={<RabbiPage />} />
-            <Route path="/parasha" element={<ParashaPage />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/history" element={<HistoryPage />} />
-            <Route path="/memorial" element={<Memorial />} />
-            <Route path="/memorial/saadia" element={<MemorialSaadia />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/donate" element={<Donate />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/kenes" element={<KnesPage />} />
+            <Route path="/parasha" element={<Suspense fallback={<LazyFallback />}><ParashaPage /></Suspense>} />
+            <Route path="/profile" element={<Suspense fallback={<LazyFallback />}><Profile /></Suspense>} />
+            <Route path="/favorites" element={<Suspense fallback={<LazyFallback />}><Favorites /></Suspense>} />
+            <Route path="/history" element={<Suspense fallback={<LazyFallback />}><HistoryPage /></Suspense>} />
+            <Route path="/memorial" element={<Suspense fallback={<LazyFallback />}><Memorial /></Suspense>} />
+            <Route path="/memorial/saadia" element={<Suspense fallback={<LazyFallback />}><MemorialSaadia /></Suspense>} />
+            <Route path="/contact" element={<Suspense fallback={<LazyFallback />}><Contact /></Suspense>} />
+            <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><Donate /></Suspense>} />
+            <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
+            <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/series" element={<SeriesList />} />
-            <Route path="/bible/:book" element={<BibleBookPage />} />
-            <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/community" element={<CommunityPage />} />
-            <Route path="/community/:id" element={<CommunityDetailPage />} />
-            <Route path="/series/:id" element={<SeriesPagePublic />} />
-            <Route path="/store" element={<StorePage />} />
-            <Route path="/store/:slug" element={<ProductPage />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
+            <Route path="/pricing" element={<Suspense fallback={<LazyFallback />}><PricingPage /></Suspense>} />
+            <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
+            <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />
+            <Route path="/series/:id" element={<Suspense fallback={<LazyFallback />}><SeriesPagePublic /></Suspense>} />
+            <Route path="/store" element={<Suspense fallback={<LazyFallback />}><StorePage /></Suspense>} />
+            <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
+            <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />
             <Route path="/admin" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
             <Route path="/admin/lessons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Lessons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/rabbis" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Rabbis /></Suspense></ProtectedRoute>} />

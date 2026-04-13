@@ -16,6 +16,9 @@ import JoinCommunityDialog from "@/components/community/JoinCommunityDialog";
 import LearningStatsCard from "@/components/community/LearningStatsCard";
 import { useMembership } from "@/hooks/useMembership";
 import LoyaltyDashboard from "@/components/community/LoyaltyDashboard";
+import StreakDisplay from "@/components/gamification/StreakDisplay";
+import WeeklyChallenges from "@/components/gamification/WeeklyChallenges";
+import Leaderboard from "@/components/gamification/Leaderboard";
 
 const Profile = () => {
   const { user, isLoading: authLoading } = useAuth();
@@ -242,10 +245,13 @@ const Profile = () => {
         </div>
       </section>
 
-      {/* Learning Stats */}
+      {/* Streak & Gamification */}
       <section className="py-6">
-        <div className="container">
+        <div className="container space-y-4">
+          <StreakDisplay />
           <LearningStatsCard />
+          <WeeklyChallenges />
+          <Leaderboard />
         </div>
       </section>
 

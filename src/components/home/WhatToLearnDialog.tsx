@@ -256,7 +256,7 @@ const WhatToLearnDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
                             }}
                           >
                             {lesson.thumbnail_url ? (
-                              <img src={lesson.thumbnail_url} alt="" className="w-14 h-14 rounded-xl object-cover shrink-0" />
+                              <img src={lesson.thumbnail_url} alt="" className="w-14 h-14 rounded-xl object-cover shrink-0" loading="lazy" />
                             ) : (
                               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/15 to-accent/15 flex items-center justify-center shrink-0">
                                 {hasVideo ? <Play className="h-5 w-5 text-primary" /> : hasAudio ? <Volume2 className="h-5 w-5 text-primary" /> : <BookOpen className="h-5 w-5 text-primary" />}

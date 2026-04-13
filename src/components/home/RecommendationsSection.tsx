@@ -91,7 +91,7 @@ const RecommendationsSection = () => {
                           {rabbi?.name && (
                             <span className="flex items-center gap-1">
                               {rabbi.image_url && (
-                                <img src={rabbi.image_url} alt="" width={16} height={16} className="w-4 h-4 rounded-full object-cover" />
+                                <img src={rabbi.image_url} alt="" width={16} height={16} className="w-4 h-4 rounded-full object-cover" loading="lazy" />
                               )}
                               {rabbi.name}
                             </span>

@@ -205,7 +205,7 @@ const MegilatEsther = () => {
                   </div>
                 </div>
                 <div className="flex justify-center pt-4 mb-4">
-                  <img src={bookSet} alt="סדרת ספרי מכלל יופי" className="w-full max-w-[200px] h-auto rounded-lg" />
+                  <img src={bookSet} alt="סדרת ספרי מכלל יופי" className="w-full max-w-[200px] h-auto rounded-lg" loading="lazy" />
                 </div>
                 <h3 className="text-lg font-bold text-foreground mb-2">סדרת מכלל יופי</h3>
                 <p className="text-muted-foreground text-sm mb-4">חמש מגילות + שופטים</p>
