@@ -1,0 +1,35 @@
+[
+  {
+    "id": "cb87eda3-01dc-4766-a1a1-e4b51e67f036",
+    "title": "אחדות",
+    "updates": {
+      "audio_url": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%A2%D7%96%D7%A8%D7%90/Audio+(6).mp3",
+      "source_type": "audio",
+      "status": "published"
+    }
+  },
+  {
+    "id": "f72a9f37-97dc-4ded-9592-42818297f034",
+    "title": "בין אלימלך לבועז בהנהגת האומה",
+    "updates": {
+      "attachment_url": "https://www.bneyzion.co.il/media/144376/הרב-יהושע-שפירא-התבוללות-מולידה-משיח-גברים-שלישי.pdf",
+      "status": "published"
+    }
+  },
+  {
+    "id": "607b2eb6-0d0e-4438-b6f9-5e5fb63dee0a",
+    "title": "כריתת  אמנה",
+    "updates": {
+      "attachment_url": "https://www.bneyzion.co.il/media/1051/24652.pdf",
+      "status": "published"
+    }
+  },
+  {
+    "id": "140383ea-73ec-424f-87e4-010a4cf2b8a4",
+    "title": "סודו של ראש השנה",
+    "updates": {
+      "attachment_url": "https://www.bneyzion.co.il/media/1057/24768.pdf",
+      "status": "published"
+    }
+  }
+]
