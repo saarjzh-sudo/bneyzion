@@ -2,7 +2,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
-import { Clock, Calendar, BookOpen, Volume2, Video, Printer, Share2, FileDown, Heart, LogIn } from "lucide-react";
+import { Clock, Calendar, BookOpen, Volume2, Video, Printer, Share2, FileDown, Heart, LogIn, ChevronLeft } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import { useIsFavorite, useAddFavorite, useRemoveFavorite } from "@/hooks/useFav
 import { supabase } from "@/integrations/supabase/client";
 import { useAwardPoints } from "@/hooks/usePoints";
 import { useMediaProgress } from "@/hooks/useMediaProgress";
+import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -132,6 +133,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
 
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
   const series = lesson?.series as { id: string; title: string } | null;
+  const { data: breadcrumb } = useSeriesBreadcrumb(series?.id);
 
   const lessonUrl = `${window.location.origin}/lessons/${lessonId}`;
   const shareText = lesson ? `${lesson.title}${rabbi ? ` - ${rabbi.name}` : ""}` : "";
@@ -418,6 +420,31 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                 </Link>
               )}
             </DialogHeader>
+
+            {/* Breadcrumbs */}
+            <nav aria-label="breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">
+              <Link to="/" className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>ראשי</Link>
+              <ChevronLeft className="h-3 w-3" />
+              <Link to="/series" className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>מאגר השיעורים</Link>
+              {breadcrumb && breadcrumb.length > 0 && breadcrumb.map((ancestor) => (
+                <span key={ancestor.id} className="flex items-center gap-1.5">
+                  <ChevronLeft className="h-3 w-3" />
+                  <Link to={`/series/${ancestor.id}`} className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>
+                    {ancestor.title}
+                  </Link>
+                </span>
+              ))}
+              {lesson.bible_book && (
+                <>
+                  <ChevronLeft className="h-3 w-3" />
+                  <Link to={`/bible/${encodeURIComponent(lesson.bible_book)}`} className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>
+                    {lesson.bible_book}
+                  </Link>
+                </>
+              )}
+              <ChevronLeft className="h-3 w-3" />
+              <span className="text-foreground truncate max-w-[200px]">{lesson.title}</span>
+            </nav>
 
             <Separator />
 

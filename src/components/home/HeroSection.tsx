@@ -60,13 +60,34 @@ const HeroSection = () => {
             </motion.span>
           </Link>
 
+          {/* Social proof counters */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.8 }}
+            className="flex items-center justify-center gap-6 md:gap-10 mt-10"
+          >
+            {[
+              { value: "11,000+", label: "שיעורים" },
+              { value: "200+", label: "רבנים" },
+              { value: "1,300+", label: "סדרות" },
+            ].map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="text-2xl md:text-3xl font-heading text-white" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.3)" }}>
+                  {stat.value}
+                </p>
+                <p className="text-xs md:text-sm text-white/60 font-display">{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
+
           {/* Scroll hint */}
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.4 }}
             onClick={() => contentRef.current?.scrollIntoView({ behavior: "smooth" })}
-            className="mt-10 inline-flex flex-col items-center gap-1 text-white/40 hover:text-white/70 transition-colors"
+            className="mt-6 inline-flex flex-col items-center gap-1 text-white/40 hover:text-white/70 transition-colors"
           >
             <ChevronDown className="h-5 w-5 animate-float" />
           </motion.button>

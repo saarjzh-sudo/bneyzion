@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, SkipForward, X, ListMusic, ChevronUp, ChevronDown, RotateCcw, RotateCw } from "lucide-react";
+import { Play, Pause, SkipForward, X, ListMusic, ChevronUp, ChevronDown } from "lucide-react";
 import { usePlayer } from "@/contexts/PlayerContext";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
-const SPEED_OPTIONS = [0.75, 1, 1.25, 1.5, 2];
+const SPEED_OPTIONS = [1, 1.25, 1.5, 2] as const;
 
 function formatTime(seconds: number): string {
   if (!seconds || isNaN(seconds)) return "0:00";
@@ -13,6 +13,26 @@ function formatTime(seconds: number): string {
   const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, "0")}`;
 }
+
+/** Skip backward icon with "15" label */
+const SkipBack15Icon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0-8 8" />
+    <polyline points="3 7 3 3 7 3" />
+    <path d="M3 3l4 4" />
+    <text x="9" y="14.5" fontSize="7" fontWeight="700" fill="currentColor" stroke="none" textAnchor="middle" fontFamily="system-ui">15</text>
+  </svg>
+);
+
+/** Skip forward icon with "15" label */
+const SkipFwd15Icon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M13 19a8 8 0 1 1 0-16 8 8 0 0 1 8 8" />
+    <polyline points="21 7 21 3 17 3" />
+    <path d="M21 3l-4 4" />
+    <text x="15" y="14.5" fontSize="7" fontWeight="700" fill="currentColor" stroke="none" textAnchor="middle" fontFamily="system-ui">15</text>
+  </svg>
+);
 
 const FloatingPlayer = () => {
   const { currentTrack, isPlaying, currentTime, duration, queue, playbackRate, togglePlay, seek, skipForward, skipBackward, setPlaybackRate, playNext, close } = usePlayer();
@@ -37,7 +57,7 @@ const FloatingPlayer = () => {
       >
         {/* Progress bar - clickable */}
         <div
-          className="h-1 bg-muted cursor-pointer group relative"
+          className="h-1.5 bg-muted cursor-pointer group relative"
           onClick={(e) => {
             const rect = e.currentTarget.getBoundingClientRect();
             // RTL: progress goes right-to-left
@@ -56,79 +76,89 @@ const FloatingPlayer = () => {
           />
         </div>
 
-        {/* Mini player bar */}
-        <div className="flex items-center gap-3 px-4 py-3">
+        {/* Main player bar */}
+        <div className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3">
           {/* Track info */}
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-foreground truncate">{currentTrack.title}</p>
-            {currentTrack.rabbiName && (
-              <p className="text-xs text-muted-foreground truncate">{currentTrack.rabbiName}</p>
-            )}
+            <div className="flex items-center gap-2">
+              {currentTrack.rabbiName && (
+                <p className="text-xs text-muted-foreground truncate">{currentTrack.rabbiName}</p>
+              )}
+              <span className="text-[10px] text-muted-foreground tabular-nums sm:hidden">
+                {formatTime(currentTime)} / {formatTime(duration)}
+              </span>
+            </div>
           </div>
 
-          {/* Time */}
+          {/* Time - desktop */}
           <span className="text-xs text-muted-foreground tabular-nums hidden sm:block">
             {formatTime(currentTime)} / {formatTime(duration)}
           </span>
 
-          {/* Controls */}
-          <div className="flex items-center gap-1">
+          {/* Playback controls */}
+          <div className="flex items-center gap-0.5 sm:gap-1">
             {/* Skip backward 15s */}
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 rounded-full hidden sm:flex"
+              className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
               onClick={skipBackward}
               title="15 שניות אחורה"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <SkipBack15Icon className="h-5 w-5" />
             </Button>
 
+            {/* Play / Pause */}
             <Button
               variant="ghost"
               size="icon"
-              className="h-9 w-9 rounded-full"
+              className="h-10 w-10 rounded-full bg-primary/10 hover:bg-primary/20 text-primary"
               onClick={togglePlay}
             >
-              {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 mr-[-1px]" />}
+              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 mr-[-2px]" />}
             </Button>
 
             {/* Skip forward 15s */}
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 rounded-full hidden sm:flex"
+              className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
               onClick={skipForward}
               title="15 שניות קדימה"
             >
-              <RotateCw className="h-3.5 w-3.5" />
+              <SkipFwd15Icon className="h-5 w-5" />
             </Button>
 
             {queue.length > 0 && (
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 rounded-full"
+                className="h-8 w-8 rounded-full hidden sm:flex"
                 onClick={playNext}
               >
                 <SkipForward className="h-3.5 w-3.5" />
               </Button>
             )}
 
-            {/* Playback speed */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 px-1.5 rounded-full text-xs font-mono tabular-nums text-muted-foreground hover:text-foreground"
-              onClick={() => {
-                const idx = SPEED_OPTIONS.indexOf(playbackRate);
-                const next = SPEED_OPTIONS[(idx + 1) % SPEED_OPTIONS.length];
-                setPlaybackRate(next);
-              }}
-              title="מהירות השמעה"
-            >
-              {playbackRate}x
-            </Button>
+            {/* Speed pills */}
+            <div className="flex items-center gap-0.5 mr-1 sm:mr-2">
+              {SPEED_OPTIONS.map((speed) => (
+                <button
+                  key={speed}
+                  onClick={() => setPlaybackRate(speed)}
+                  className={cn(
+                    "h-6 px-1.5 sm:px-2 rounded-full text-[10px] sm:text-xs font-semibold tabular-nums transition-all duration-150",
+                    playbackRate === speed
+                      ? "bg-primary text-primary-foreground shadow-sm"
+                      : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
+                  )}
+                  title={`מהירות ${speed}x`}
+                >
+                  {speed}x
+                </button>
+              ))}
+            </div>
 
             {queue.length > 0 && (
               <Button
