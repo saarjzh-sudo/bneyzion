@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -60,6 +61,11 @@ function matchesContentType(
 }
 
 const TeachersWing = () => {
+  useSEO({
+    title: "אגף המורים",
+    description: "חומרי לימוד, עזרי הוראה ותכנים למורי תנ״ך – דפי עבודה, מבחנים, מאגר שיעורים ועוד.",
+    url: "https://bneyzion.co.il/teachers",
+  });
   const {
     categories,
     extraSections,

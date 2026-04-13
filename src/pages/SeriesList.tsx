@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { TOOLS_ORDER, getOrderIndex } from "@/lib/sidebarOrder";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,6 +34,11 @@ const getCategoryColor = (_title: string) => ({
 });
 
 const SeriesList = () => {
+  useSEO({
+    title: "מאגר שיעורים ומאמרים",
+    description: "אלפי שיעורים ומאמרים בתנ״ך – תורה, נביאים, כתובים, מועדים, פרשת השבוע ועוד. חינם לגמרי.",
+    url: "https://bneyzion.co.il/series",
+  });
   const {
     categories,
     extraSections,
