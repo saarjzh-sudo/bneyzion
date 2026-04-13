@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Play, Pause, SkipForward, X, ListMusic, ChevronUp, ChevronDown } from "lucide-react";
 import { usePlayer } from "@/contexts/PlayerContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 
@@ -35,8 +35,23 @@ const SkipFwd15Icon = ({ className }: { className?: string }) => (
 );
 
 const FloatingPlayer = () => {
-  const { currentTrack, isPlaying, currentTime, duration, queue, playbackRate, togglePlay, seek, skipForward, skipBackward, setPlaybackRate, playNext, close } = usePlayer();
+  const { currentTrack, isPlaying, currentTime, duration, queue, playbackRate, resumeTime, togglePlay, seek, skipForward, skipBackward, setPlaybackRate, playNext, close, clearResumeTime } = usePlayer();
   const [expanded, setExpanded] = useState(false);
+  const [showResumeToast, setShowResumeToast] = useState(false);
+
+  // Show resume toast for 3 seconds when resuming from a saved position
+  useEffect(() => {
+    if (resumeTime && resumeTime > 0) {
+      setShowResumeToast(true);
+      const timer = setTimeout(() => {
+        setShowResumeToast(false);
+        clearResumeTime();
+      }, 3000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowResumeToast(false);
+    }
+  }, [resumeTime, clearResumeTime]);
 
   if (!currentTrack) return null;
 
@@ -75,6 +90,21 @@ const FloatingPlayer = () => {
             style={{ right: `${progress}%`, transform: `translate(50%, -50%)` }}
           />
         </div>
+
+        {/* Resume toast */}
+        <AnimatePresence>
+          {showResumeToast && resumeTime && (
+            <motion.div
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-full mb-1 bg-primary text-primary-foreground text-xs px-3 py-1 rounded-t-md shadow-md z-10"
+            >
+              ממשיך מ-{formatTime(resumeTime)}
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Main player bar */}
         <div className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3">

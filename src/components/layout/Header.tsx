@@ -7,6 +7,7 @@ import GlobalSearch from "@/components/search/GlobalSearch";
 import UserMenu from "@/components/layout/UserMenu";
 import CartButton from "@/components/cart/CartButton";
 import NotificationBell from "@/components/layout/NotificationBell";
+import DarkModeToggle from "@/components/ui/dark-mode-toggle";
 
 const navItems = [
   { label: "ראשי", href: "/" },
@@ -94,6 +95,7 @@ const Header = () => {
           >
             <Search className="h-5 w-5" />
           </button>
+          <DarkModeToggle isTransparent={isTransparent} />
           <NotificationBell isTransparent={isTransparent} />
           <CartButton isTransparent={isTransparent} />
           <UserMenu isTransparent={isTransparent} />
