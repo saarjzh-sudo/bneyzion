@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSEO } from "@/hooks/useSEO";
 import { motion } from "framer-motion";
 import { Send, Phone, Mail, MessageCircle } from "lucide-react";
 import Layout from "@/components/layout/Layout";
@@ -10,6 +11,11 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
+  useSEO({
+    title: "צור קשר",
+    description: "צרו קשר עם עמותת בני ציון – שאלות, הצעות, שיתופי פעולה.",
+    url: "https://bneyzion.co.il/contact",
+  });
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });

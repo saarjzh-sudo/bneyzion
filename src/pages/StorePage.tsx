@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, Monitor, FileText } from "lucide-react";
@@ -101,6 +102,11 @@ const defaultCategories = [
 ];
 
 const StorePage = () => {
+  useSEO({
+    title: "חנות הספרים",
+    description: "ספרי תנ״ך, מגילות ומוצרי לימוד של עמותת בני ציון – הוצאת מכלל יופי.",
+    url: "https://bneyzion.co.il/store",
+  });
   const [activeCategory, setActiveCategory] = useState<string | undefined>();
   const { data: categories, isLoading: catLoading } = useProductCategories();
   const { data: products, isLoading } = useProducts(activeCategory);

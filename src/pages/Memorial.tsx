@@ -1,4 +1,5 @@
 import { motion, type Easing } from "framer-motion";
+import { useSEO } from "@/hooks/useSEO";
 import { Flame, Star, Heart, BookOpen, Quote } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { useSiteSetting } from "@/hooks/useSiteSettings";
@@ -15,6 +16,11 @@ const fadeUp = {
 };
 
 const Memorial = () => {
+  useSEO({
+    title: "בן ציון חיים הנמן היד",
+    description: "לזכרו של בן ציון חיים הנמן ז״ל – יד ושם לאיש שחי את התנ״ך.",
+    url: "https://bneyzion.co.il/memorial",
+  });
   const { data: name } = useSiteSetting("memorial_name");
   const { data: subtitle } = useSiteSetting("memorial_subtitle");
   const { data: dedication } = useSiteSetting("memorial_dedication");

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useSEO } from "@/hooks/useSEO";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Star, Gift, BookOpen, Sparkles, Users, Flame, Clock, Crown, Award, Trophy, Gem } from "lucide-react";
 import Layout from "@/components/layout/Layout";
@@ -61,6 +62,11 @@ function timeAgo(dateStr: string) {
 }
 
 const Donate = () => {
+  useSEO({
+    title: "תרומות",
+    description: "תרמו לעמותת בני ציון ותסייעו בהפצת תנ״ך בישראל. כל תרומה מקדמת לימוד תנ״ך לאלפי אנשים.",
+    url: "https://bneyzion.co.il/donate",
+  });
   const [selectedAmount, setSelectedAmount] = useState<number | null>(180);
   const [customAmount, setCustomAmount] = useState("");
   const [isMonthly, setIsMonthly] = useState(false);
