@@ -25,6 +25,39 @@ import LessonDialog from "@/components/lesson/LessonDialog";
 import AITeacherTools from "@/components/teachers/AITeacherTools";
 
 type MediaFilter = "all" | "video" | "audio" | "text";
+type ContentTypeFilter = "all" | "tests" | "worksheets" | "vocabulary" | "lessonPlans" | "recorded";
+
+const CONTENT_TYPE_CHIPS: { key: ContentTypeFilter; label: string }[] = [
+  { key: "all", label: "הכל" },
+  { key: "tests", label: "מבחנים" },
+  { key: "worksheets", label: "דפי עבודה" },
+  { key: "vocabulary", label: "ביאורי מילים" },
+  { key: "lessonPlans", label: "מערכי שיעור" },
+  { key: "recorded", label: "שיעורים מוקלטים" },
+];
+
+function matchesContentType(
+  title: string,
+  sourceType: string | null,
+  filter: ContentTypeFilter,
+): boolean {
+  switch (filter) {
+    case "all":
+      return true;
+    case "tests":
+      return title.includes("מבחן") || title.includes("שאלות חזרה");
+    case "worksheets":
+      return title.includes("דף עבודה") || title.includes("דפי עבודה");
+    case "vocabulary":
+      return title.includes("ביאורי מילים");
+    case "lessonPlans":
+      return title.includes("מערך שיעור");
+    case "recorded":
+      return sourceType === "audio" || sourceType === "video";
+    default:
+      return true;
+  }
+}
 
 const TeachersWing = () => {
   const {
@@ -48,6 +81,7 @@ const TeachersWing = () => {
   const [activeTab, setActiveTab] = useState<"books" | "topics" | "creators">("books");
   const [mediaFilter, setMediaFilter] = useState<MediaFilter>("all");
   const [worksheetMode, setWorksheetMode] = useState(false);
+  const [contentTypeFilter, setContentTypeFilter] = useState<ContentTypeFilter>("all");
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
 
   const seriesQuery = useSeriesForNode(selectedRabbi ? null : selectedNode);
@@ -78,12 +112,14 @@ const TeachersWing = () => {
     setSelectedRabbi(null);
     setSelectedTitle(title);
     setWorksheetMode(false);
+    setContentTypeFilter("all");
   };
 
   const selectRabbi = (id: string, name: string) => {
     setSelectedRabbi(id);
     setSelectedNode(null);
     setSelectedTitle(`סדרות של ${name}`);
+    setContentTypeFilter("all");
   };
 
   const getMediaType = (title: string): "video" | "audio" | "text" => {
@@ -104,6 +140,7 @@ const TeachersWing = () => {
 
   const filteredSeries = seriesList.filter((s) => {
     if (worksheetMode && !isWorksheetRelated(s.title)) return false;
+    if (contentTypeFilter !== "all" && !matchesContentType(s.title, s.sourceType, contentTypeFilter)) return false;
     if (mediaFilter !== "all" && getMediaType(s.title) !== mediaFilter) return false;
     if (searchQuery && !s.title.includes(searchQuery) && !(s.rabbiName && s.rabbiName.includes(searchQuery))) return false;
     return true;
@@ -111,13 +148,14 @@ const TeachersWing = () => {
 
   const filteredLessons = useMemo(() => lessonsList.filter((l) => {
     if (worksheetMode && !isWorksheetRelated(l.title)) return false;
+    if (contentTypeFilter !== "all" && !matchesContentType(l.title, l.sourceType, contentTypeFilter)) return false;
     if (mediaFilter !== "all") {
       const lType = l.sourceType === "audio" ? "audio" : l.sourceType === "text" ? "text" : "video";
       if (lType !== mediaFilter) return false;
     }
     if (searchQuery && !l.title.includes(searchQuery) && !(l.rabbiName && l.rabbiName.includes(searchQuery))) return false;
     return true;
-  }), [lessonsList, mediaFilter, searchQuery, worksheetMode]);
+  }), [lessonsList, mediaFilter, searchQuery, worksheetMode, contentTypeFilter]);
 
   const formatDuration = (seconds: number | null) => {
     if (!seconds) return null;
@@ -552,6 +590,23 @@ const TeachersWing = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.2 }}
                 >
+                  {/* Content type filter chips */}
+                  <div className="flex gap-1.5 overflow-x-auto pb-2 mb-4 scrollbar-hide -mx-1 px-1">
+                    {CONTENT_TYPE_CHIPS.map((chip) => (
+                      <button
+                        key={chip.key}
+                        onClick={() => setContentTypeFilter(chip.key)}
+                        className={`shrink-0 px-3 py-1.5 text-xs font-medium rounded-full border transition-colors ${
+                          contentTypeFilter === chip.key
+                            ? "bg-primary text-primary-foreground border-primary"
+                            : "border-border text-muted-foreground hover:bg-primary/10 hover:text-primary hover:border-primary/30"
+                        }`}
+                      >
+                        {chip.label}
+                      </button>
+                    ))}
+                  </div>
+
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
                     <h2 className="text-xl md:text-2xl font-heading text-foreground">{selectedTitle}</h2>
                     {/* Inline media filter pills */}
