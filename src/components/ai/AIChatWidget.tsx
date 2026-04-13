@@ -5,7 +5,7 @@ import { X, Send, Sparkles, BookOpen } from "lucide-react";
 type Msg = { role: "user" | "model"; content: string };
 
 const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:streamGenerateContent?key=${GEMINI_KEY}&alt=sse`;
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:streamGenerateContent?key=${GEMINI_KEY}&alt=sse`;
 
 const SYSTEM_PROMPT = `אתה עוזר לימוד מומחה בתנ"ך, פרשנות יהודית מסורתית, פרשת השבוע ושיעורי תורה.
 אתה שייך לאתר "בני ציון" — פלטפורמת לימוד תנ"ך מקוונת.
@@ -58,7 +58,7 @@ const AIChatWidget = ({ context }: { context?: string }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents,
-          generationConfig: { temperature: 0.7, maxOutputTokens: 800 },
+          generationConfig: { temperature: 0.7, maxOutputTokens: 2048 },
         }),
       });
 
