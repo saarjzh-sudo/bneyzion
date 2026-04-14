@@ -197,7 +197,7 @@ const LessonPage = () => {
             {/* Compact media player */}
             {lesson.video_url ? (
               isDirectVideo(lesson.video_url) ? (
-                <div className="aspect-video rounded-lg overflow-hidden bg-foreground/5 border border-border max-w-2xl">
+                <div className="aspect-video rounded-lg overflow-hidden bg-black border border-border">
                   <video
                     ref={mediaProgressRef}
                     src={lesson.video_url}
@@ -209,7 +209,7 @@ const LessonPage = () => {
                   />
                 </div>
               ) : (
-                <div className="aspect-video rounded-lg overflow-hidden bg-foreground/5 border border-border max-w-2xl">
+                <div className="aspect-video rounded-lg overflow-hidden bg-black border border-border">
                   <iframe
                     src={lesson.video_url}
                     className="w-full h-full"
@@ -307,7 +307,9 @@ const LessonPage = () => {
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml((lesson as any).content ?? "") }}
               />
             ) : lesson.description ? (
-              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{lesson.description}</p>
+              <div className="rounded-lg bg-secondary/30 border border-border p-5 max-w-3xl">
+                <p className="text-foreground leading-relaxed whitespace-pre-line">{lesson.description}</p>
+              </div>
             ) : null}
 
             {/* Bible reference */}

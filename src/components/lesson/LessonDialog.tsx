@@ -333,7 +333,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
             <Skeleton className="h-16 w-full" />
           </div>
         ) : lesson ? (
-          <>
+          <div className="space-y-5">
             <DialogHeader className="text-right">
               <div className="flex items-start justify-between gap-4 flex-row-reverse">
                 {/* Action buttons - left side in RTL */}
@@ -451,7 +451,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
             {/* Compact media player */}
             {lesson.video_url ? (
               isDirectVideo(lesson.video_url) ? (
-              <div className="aspect-video rounded-lg overflow-hidden bg-foreground/5 border border-border">
+              <div className="aspect-video rounded-lg overflow-hidden bg-black border border-border">
                   <video
                     ref={mediaProgressRef}
                     src={lesson.video_url}
@@ -463,7 +463,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                   />
                 </div>
               ) : (
-                <div className="aspect-video rounded-lg overflow-hidden bg-foreground/5 border border-border">
+                <div className="aspect-video rounded-lg overflow-hidden bg-black border border-border">
                   <iframe
                     src={lesson.video_url}
                     className="w-full h-full"
@@ -521,7 +521,9 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml((lesson as any).content ?? "") }}
               />
             ) : lesson.description ? (
-              <p className="text-muted-foreground text-sm leading-relaxed whitespace-pre-line">{lesson.description}</p>
+              <div className="rounded-lg bg-secondary/30 border border-border p-4">
+                <p className="text-foreground text-sm leading-relaxed whitespace-pre-line">{lesson.description}</p>
+              </div>
             ) : null}
 
             {/* Bible reference */}
@@ -550,7 +552,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                 </Button>
               </div>
             )}
-          </>
+          </div>
         ) : (
           <div className="py-8 text-center text-muted-foreground">השיעור לא נמצא</div>
         )}
