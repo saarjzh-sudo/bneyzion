@@ -29,3 +29,11 @@ yarn-error.log*
 # PWA
 dev-dist/
 .vercel
+
+# Scraper worker logs (transient)
+scripts/row-w*.log
+scripts/row2-w*.log
+scripts/scrape-output-w*.log
+scripts/scrape-log-w*.json
+scripts/row-scrape-log-w*.json
+scripts/media-map-w*.json

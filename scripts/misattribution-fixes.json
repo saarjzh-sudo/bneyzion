@@ -1,0 +1,3218 @@
+[
+  {
+    "id": "d1bf4f48-b31a-4c5d-85ef-21fcda939297",
+    "title": "המלכת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+4-+%D7%A4%D7%A8%D7%A7+%D7%90+4-+%D7%94%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "dba2fb2a-d48c-428f-8102-da65e654d182",
+    "title": "גדעון בן יואש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+8.mp3",
+    "newAudioFile": "rarik_shoftim_22_741317.mp3"
+  },
+  {
+    "id": "9dee567d-1a68-4f44-bceb-fcad84c69c2a",
+    "title": "תהליך הטהרה של ישראל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24573.mp3"
+  },
+  {
+    "id": "96634915-d9de-4547-bd1b-d00dd8eb28c5",
+    "title": "פילגש בגבעה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+16.mp3",
+    "newAudioFile": "01+-+%D7%94%D7%A8%D7%94%D7%92+%D7%99%D7%A2%D7%A7%D7%91+%D7%90%D7%A8%D7%99%D7%90%D7%9C+-+%D7%A4%D7%99%D7%9C%D7%92%D7%A9+%D7%91%D7%92%D7%91%D7%A2%D7%94.mp3"
+  },
+  {
+    "id": "c322a0e6-853a-40ae-971c-191f8eb6ae5b",
+    "title": "פילגש בגבעה - סיום",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+17.mp3",
+    "newAudioFile": "049+-+%D7%9B%D7%98+%D7%90%D7%93%D7%A8+%D7%91+-+%D7%A1%D7%95%D7%A3+%D7%A4%D7%99%D7%9C%D7%92%D7%A9+%D7%91%D7%92%D7%91%D7%A2%D7%94+%D7%95%D7%A1%D7%A4%D7%A8+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.MP3"
+  },
+  {
+    "id": "ebfc8774-ee05-4335-9b17-48131473c673",
+    "title": "תפקיד הנביא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "05+%D7%A4%D7%A8%D7%A7+%D7%94.MP3",
+    "newAudioFile": "Audio+(4).mp3"
+  },
+  {
+    "id": "8c7cc021-6967-45d7-935b-87594fdb37e7",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "8e7ca0ce-4d04-42fd-9591-ab132be09bb2",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000136",
+    "title": "פניה ישירה למלכי יהודה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23568.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000143",
+    "title": "תוכחה לרועי העם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23579.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000183",
+    "title": "קיבוץ הגלויות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23655.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000267",
+    "title": "הוויכוח בין ירמיהו לבין יושבי מצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23872.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000280",
+    "title": "נבואת פורענות על מצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23874.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000293",
+    "title": "נבואת פורענות על דמשק קדר ועילם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23986.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000299",
+    "title": "המשך פורענות בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23988.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000263",
+    "title": "העם יורד למצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23871.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000173",
+    "title": "נביאי השקר בבבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23637.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000230",
+    "title": "טיב היחסים בין ירמיהו וצדקיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23717.mp3"
+  },
+  {
+    "id": "57c4c7bf-85b7-4e52-a01a-73cb0519428c",
+    "title": "עזרא פרק ט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "16%D7%A4%D7%A8%D7%A7+%D7%98.MP3",
+    "newAudioFile": "29-ezra-09.mp3"
+  },
+  {
+    "id": "a7465627-4a72-4cd1-bfcd-8db16b38b18f",
+    "title": "משלי פרק יח",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21-mishlei-10.mp3",
+    "newAudioFile": "21-mishlei-18.mp3"
+  },
+  {
+    "id": "06c90fb1-2992-4e15-9a9d-a395cf38b5db",
+    "title": "משלי פרק כה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21-mishlei-20.mp3",
+    "newAudioFile": "21-mishlei-25.mp3"
+  },
+  {
+    "id": "7bc9f715-3efb-4066-9131-0d22cd0df23a",
+    "title": "משלי פרק כח",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21-mishlei-20.mp3",
+    "newAudioFile": "21-mishlei-28.mp3"
+  },
+  {
+    "id": "601801a1-a195-491b-8903-f08db7cbd04d",
+    "title": "פרשת המרגלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21%D7%A9%D7%9C%D7%97.MP3",
+    "newAudioFile": "0802-20160912-21034247675-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%A9%D7%9C%D7%97-+004+%D7%A8%D7%A0%D7%A8+%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%9E%D7%A8%D7%92%D7%9C%D7%99%D7%9D+%D7%A8%D7%95%D7%91%D7%A2+%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99-+%D7%A9%D7%9C%D7%97.mp3"
+  },
+  {
+    "id": "fb40df25-bea1-40c4-a051-12016f191811",
+    "title": "פרשת המרגלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21%D7%A9%D7%9C%D7%97.MP3",
+    "newAudioFile": "0802-20160912-21034247675-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%A9%D7%9C%D7%97-+004+%D7%A8%D7%A0%D7%A8+%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%9E%D7%A8%D7%92%D7%9C%D7%99%D7%9D+%D7%A8%D7%95%D7%91%D7%A2+%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99-+%D7%A9%D7%9C%D7%97.mp3"
+  },
+  {
+    "id": "ef77df7d-c3ac-4c8b-846b-6c154f1c2a42",
+    "title": "תוכחה לרועי העם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23579.mp3"
+  },
+  {
+    "id": "f98b016a-4d5b-4e36-b2ac-f96aef782d10",
+    "title": "נבואת פורענות על דמשק קדר ועילם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23986.mp3"
+  },
+  {
+    "id": "1ed9531f-61ed-46cc-9534-d6a08001dffd",
+    "title": "תפילת נחמיה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "01%D7%A0%D7%97%D7%9E%D7%99%D7%94+%D7%A4%D7%A8%D7%A7+%D7%90.MP3",
+    "newAudioFile": "22124.mp3"
+  },
+  {
+    "id": "2f51d9c8-7f76-445c-8bbe-971e1f4351d1",
+    "title": "צרי יהודה ממשיכים להפריע",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "08%D7%A4%D7%A8%D7%A7+%D7%92.MP3",
+    "newAudioFile": "24698.mp3"
+  },
+  {
+    "id": "9e30c2d5-5e03-4f0a-aab9-07447ad4f492",
+    "title": "תקנות בטחוניות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24716.mp3"
+  },
+  {
+    "id": "621870cf-5a54-45ac-a1f9-69e16d73c943",
+    "title": "קריאת התורה וחגיגת חגי תשרי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24768.mp3"
+  },
+  {
+    "id": "7725854e-746d-47f6-ace3-6c27994af924",
+    "title": "קיבוץ הגלויות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23655.mp3"
+  },
+  {
+    "id": "b5a2980e-8959-4e37-b18e-dbba6df5aec2",
+    "title": "המשך פורענות בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23988.mp3"
+  },
+  {
+    "id": "8e17e3b3-a055-4354-b37b-520dcc8eb304",
+    "title": "השנה הרביעית ליהויקים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23589.mp3"
+  },
+  {
+    "id": "772d8c5a-1dfe-45e7-b4ae-919fbac54c5e",
+    "title": "פסל מיכה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+15.mp3",
+    "newAudioFile": "041+-+%D7%99%D7%91+%D7%A9%D7%91%D7%98+-+%D7%94%D7%AA%D7%97%D7%9C%D7%AA+%D7%A4%D7%A1%D7%9C+%D7%9E%D7%99%D7%9B%D7%94.MP3"
+  },
+  {
+    "id": "14b42df7-1ba7-4a06-8c5a-2e587fee286e",
+    "title": "יפתח הגלעדי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_shoftim_38_750824.mp3",
+    "newAudioFile": "%D7%94%D7%A8%D7%91%20%D7%90%D7%99%D7%9C%D7%9F%20%D7%90%D7%9C%D7%A4%D7%95%D7%A0%D7%98%D7%94%20-%20%D7%99%D7%A4%D7%AA%D7%97%20%D7%94%D7%92%D7%9C%D7%A2%D7%93%D7%99%2000_00_24-.mp3"
+  },
+  {
+    "id": "e6060601-c005-4000-8000-000000000001",
+    "title": "חזון העצמות היבשות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+31+2.mp3",
+    "newAudioFile": "20%D7%A4%D7%A8%D7%A7+%D7%9C%D7%96.mp3"
+  },
+  {
+    "id": "e6060601-c004-4000-8000-000000000001",
+    "title": "חזון העצמות היבשות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+31+2.mp3",
+    "newAudioFile": "20%D7%A4%D7%A8%D7%A7+%D7%9C%D7%96.mp3"
+  },
+  {
+    "id": "49ce2050-bd30-434f-9fb0-f4c9b69d3c20",
+    "title": "נביאי השקר בבבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23637.mp3"
+  },
+  {
+    "id": "e6060601-c003-4000-8000-000000000001",
+    "title": "קיבוץ הגלויות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23655.mp3"
+  },
+  {
+    "id": "e6060601-d002-4000-8000-000000000001",
+    "title": "התפשטות ירושלים לעתיד לבוא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_35_721225.mp3",
+    "newAudioFile": "RavBaruchSlae_tanach_760814.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000215",
+    "title": "חזון העצמות היבשות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+31+2.mp3",
+    "newAudioFile": "20%D7%A4%D7%A8%D7%A7+%D7%9C%D7%96.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000214",
+    "title": "חזון העצמות היבשות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+31+2.mp3",
+    "newAudioFile": "20%D7%A4%D7%A8%D7%A7+%D7%9C%D7%96.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000224",
+    "title": "מלחמת גוג ומגוג",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+32.mp3",
+    "newAudioFile": "22%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%9C%D7%97-%D7%9C%D7%98+%D7%92%D7%95%D7%92+%D7%95%D7%9E%D7%92%D7%95%D7%92.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000223",
+    "title": "מלחמת גוג ומגוג",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+32.mp3",
+    "newAudioFile": "22%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%9C%D7%97-%D7%9C%D7%98+%D7%92%D7%95%D7%92+%D7%95%D7%9E%D7%92%D7%95%D7%92.mp3"
+  },
+  {
+    "id": "890633f2-95fd-4574-a86f-df7db7e2d302",
+    "title": "הקדמה לספר יונה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%95%D7%A0%D7%94%20000%20%D7%94%D7%A7%D7%93%D7%9E%D7%94.mp3",
+    "newAudioFile": "01.mp3"
+  },
+  {
+    "id": "ef010001-0004-4000-8000-000000000005",
+    "title": "עתניאל בן קנז",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "002+-+%D7%98%D7%95+%D7%A1%D7%99%D7%95%D7%95%D7%9F+-+%D7%A4%D7%A8%D7%A7+%D7%91+-+%D7%A2%D7%AA%D7%A0%D7%99%D7%90%D7%9C+%D7%91%D7%9F+%D7%A7%D7%A0%D7%96.MP3",
+    "newAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+4.mp3"
+  },
+  {
+    "id": "096d3c50-8f60-413c-ae5a-5971d83d1534",
+    "title": "יהויקים שורף את המגילה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23714.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000117",
+    "title": "אדישות ומעשיות בעת צרה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+23-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%91-+%D7%90%D7%93%D7%99%D7%A9%D7%95%D7%AA+%D7%95%D7%9E%D7%A2%D7%A9%D7%99%D7%95%D7%AA+%D7%91%D7%A2%D7%AA+%D7%A6%D7%A8%D7%94.mp3"
+  },
+  {
+    "id": "14fcb53a-d5b0-41f7-a155-cc1b1ca0d8d4",
+    "title": "ערי המקלט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_46_720602.mp3",
+    "newAudioFile": "02+-+%D7%94%D7%A8%D7%91+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%D7%9C%D7%99%D7%94%D7%95+-+%D7%A2%D7%A8%D7%99+%D7%9E%D7%A7%D7%9C%D7%98.mp3"
+  },
+  {
+    "id": "70fc1e45-3f62-4a05-ad09-0e72ce66db79",
+    "title": "ערי המקלט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_46_720602.mp3",
+    "newAudioFile": "02+-+%D7%94%D7%A8%D7%91+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%D7%9C%D7%99%D7%94%D7%95+-+%D7%A2%D7%A8%D7%99+%D7%9E%D7%A7%D7%9C%D7%98.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000042",
+    "title": "מראה התועבות הגדולות שבירושלים והפורענות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_35_721225.mp3",
+    "newAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+6.mp3"
+  },
+  {
+    "id": "66886062-7423-4ceb-8c87-2c441aad0192",
+    "title": "המלכת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+4-+%D7%A4%D7%A8%D7%A7+%D7%90+4-+%D7%94%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000148",
+    "title": "משל התאנים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23583.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000130",
+    "title": "בקשת צדקיהו מירמיהו להתפלל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23544.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000247",
+    "title": "שלטון גדליה בן אחיקם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23808.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000037",
+    "title": "יחזקאל פרק ז'",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "07-yehezkel-07.mp3",
+    "newAudioFile": "%D7%96+-+%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+%D7%96.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000117",
+    "title": "שמואל א' פרק כ'",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%9B+-+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%2C+%D7%9B.mp3",
+    "newAudioFile": "%D7%9B+-+%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+%D7%9B.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000173",
+    "title": "יחזקאל פרק ל\"",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%9C%D7%90+-+%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+%D7%9C%D7%90.mp3",
+    "newAudioFile": "%D7%9C+-+%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+%D7%9C.mp3"
+  },
+  {
+    "id": "5274535e-35c6-4fe0-9c80-571533eb445a",
+    "title": "שמואל א' פרק כ'",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%9B+-+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%2C+%D7%9B.mp3",
+    "newAudioFile": "%D7%9B+-+%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+%D7%9B.mp3"
+  },
+  {
+    "id": "4bb3bd15-e905-458a-bcbd-51386ad51502",
+    "title": "אהוד בן גרא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+5.mp3",
+    "newAudioFile": "012+-+%D7%99%D7%98+%D7%98%D7%91%D7%AA+-+%D7%90%D7%94%D7%95%D7%93+%D7%91%D7%9F+%D7%92%D7%A8%D7%90.mp3"
+  },
+  {
+    "id": "0a810643-8dd9-4450-bd1e-9b79f50755b3",
+    "title": "שלמה המלך וחירם מלך צור",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+16-+%D7%A4%D7%A8%D7%A7+%D7%94+3-+%D7%A9%D7%9C%D7%9E%D7%94+%D7%94%D7%9E%D7%9C%D7%9A+%D7%95%D7%97%D7%99%D7%A8%D7%9D+%D7%9E%D7%9C%D7%9A+%D7%A6%D7%95%D7%A8+1.mp3"
+  },
+  {
+    "id": "50d17aab-c808-4be1-ba06-3272f6f21057",
+    "title": "קניית השדה מחנמאל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23690.mp3"
+  },
+  {
+    "id": "56f20abd-88d6-4d3e-8c17-fae14b569b5d",
+    "title": "הוויכוח בין ירמיהו לבין יושבי מצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23872.mp3"
+  },
+  {
+    "id": "4a307078-a6e6-4318-868a-06804cced147",
+    "title": "נבואת פורענות על פלישתים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23875.mp3"
+  },
+  {
+    "id": "2fce5c5f-9e70-400f-8edf-c3a224339dc1",
+    "title": "שמואל א' פרק כ'",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%9B+-+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%2C+%D7%9B.mp3",
+    "newAudioFile": "%D7%9B+-+%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+%D7%9B.mp3"
+  },
+  {
+    "id": "5fe41e55-d9b4-4270-aa3c-27352ff0d506",
+    "title": "מלכת שבא ומלכות שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+22-+%D7%A4%D7%A8%D7%A7+%D7%99-+%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%91%D7%90+%D7%95%D7%9E%D7%9C%D7%9B%D7%95%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "15a4ab08-7397-4a0c-8f3b-8cb2bda49468",
+    "title": "נבואת ההקדשה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%A2%D7%95%D7%A8+5+%D7%A0%D7%91%D7%95%D7%90%D7%AA+%D7%94%D7%94%D7%A7%D7%93%D7%A9%D7%94.mp3",
+    "newAudioFile": "Audio+(3).mp3"
+  },
+  {
+    "id": "2cf56616-0815-4890-bfae-f7c48a18e6ae",
+    "title": "העלאת ארון ד' לירושלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_35_721225.mp3",
+    "newAudioFile": "%D7%A9%D7%9E%D7%95%D7%90%D7%9C+29.mp3"
+  },
+  {
+    "id": "56f432f2-dd3e-4a16-ac25-a023ee8aff00",
+    "title": "שמשון",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+14.mp3",
+    "newAudioFile": "037+-+%D7%9B%D7%91+%D7%9B%D7%A1%D7%9C%D7%99%D7%95+-+%D7%94%D7%9E%D7%A9%D7%9A+%D7%A9%D7%9E%D7%A9%D7%95%D7%9F.mp3"
+  },
+  {
+    "id": "b63c302c-b231-47a9-8842-8442c378e313",
+    "title": "בגדי הכהונה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "8%D7%AA%D7%A6%D7%95%D7%95%D7%94+%D7%9E%D7%95%D7%A6%D7%90%D7%99+%D7%A9%D7%91%D7%AA.mp3",
+    "newAudioFile": "ra_sic5e_691210_tetsave.mp3"
+  },
+  {
+    "id": "ed8d40e9-35bb-45ac-98eb-f5a49a64344a",
+    "title": "חטא המרגלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "4%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%9C%D7%97+%D7%9C%D7%9A.mp3",
+    "newAudioFile": "ra_sic5e_690320_shlachlecha.mp3"
+  },
+  {
+    "id": "01986969-afa8-4f3a-9161-11ea3ffd5b0b",
+    "title": "פרה אדומה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "hoad_cukat5769.mp3",
+    "newAudioFile": "%D7%97%D7%A7%D7%AA.mp3"
+  },
+  {
+    "id": "e2f7b68d-b966-4528-9f4e-0a9dc942aecb",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "02dea258-340d-48e4-b37f-37b636ede7cd",
+    "title": "מדרגת \"ואשפוך רוחי על כל בשר\" והשלכותיה על מלחמת גוג ומגוג",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": true,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+32.mp3",
+    "newAudioFile": "kas_yoel05_5774.mp3",
+    "oldVideoFile": "kas_yoel05_5774.mp4"
+  },
+  {
+    "id": "99d4e348-e78e-458a-a544-583920412069",
+    "title": "פרשת המרגלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21%D7%A9%D7%9C%D7%97.MP3",
+    "newAudioFile": "0802-20160912-21034247675-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%A9%D7%9C%D7%97-+004+%D7%A8%D7%A0%D7%A8+%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%9E%D7%A8%D7%92%D7%9C%D7%99%D7%9D+%D7%A8%D7%95%D7%91%D7%A2+%D7%94%D7%99%D7%94%D7%95%D7%93%D7%99-+%D7%A9%D7%9C%D7%97.mp3"
+  },
+  {
+    "id": "a584e152-2c5d-487e-83a4-a9046ca8c6fb",
+    "title": "קורח ועדתו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "105%D7%A7%D7%95%D7%A8%D7%97.MP3",
+    "newAudioFile": "korach+-+harav+ohad.mp3"
+  },
+  {
+    "id": "5e848938-66b0-4d3d-8a42-bc57ff5f99ae",
+    "title": "פרה אדומה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "23%D7%97%D7%A7%D7%AA+(%D7%A4%D7%A8%D7%94).MP3",
+    "newAudioFile": "%D7%97%D7%A7%D7%AA.mp3"
+  },
+  {
+    "id": "6eed1e0c-f99a-4f33-bf4f-ebf1de1ed6cc",
+    "title": "הברית",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "116%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D.MP3",
+    "newAudioFile": "ohad_noch_5770.mp3"
+  },
+  {
+    "id": "9f2cb59a-2c24-4536-8f02-6461f2737247",
+    "title": "פרשת התשובה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "70%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D-%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%AA%D7%A9%D7%95%D7%91%D7%94.MP3",
+    "newAudioFile": "ohad_nitzavhm-vayelch_5769.mp3"
+  },
+  {
+    "id": "637d9a64-24ef-4853-9f31-19bec91a2b25",
+    "title": "פילגש בגבעה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "017+-+%D7%99%D7%91+%D7%9B%D7%A1%D7%9C%D7%99%D7%95+-+%D7%A4%D7%99%D7%9C%D7%92%D7%A9+%D7%91%D7%92%D7%91%D7%A2%D7%94.MP3",
+    "newAudioFile": "01+-+%D7%94%D7%A8%D7%94%D7%92+%D7%99%D7%A2%D7%A7%D7%91+%D7%90%D7%A8%D7%99%D7%90%D7%9C+-+%D7%A4%D7%99%D7%9C%D7%92%D7%A9+%D7%91%D7%92%D7%91%D7%A2%D7%94.mp3"
+  },
+  {
+    "id": "f13c995b-3d82-494a-9fff-f986bb7128d4",
+    "title": "ברית עולם",
+    "was": {
+      "hadOldAudio": false,
+      "hadOldVideo": true,
+      "hadOldPdf": true
+    },
+    "oldVideoFile": "%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA+%D7%93%D7%A0%D7%94+%D7%A1%D7%9C%D7%99%D7%99+-+%D7%91%D7%A8%D7%99%D7%AA+%D7%A2%D7%95%D7%9C%D7%9D+-+%D7%99%D7%9E%D7%99+%D7%9C%D7%99%D7%9E%D7%95%D7%93+%D7%AA%D7%A0_%D7%9A+%D7%AA%D7%A9_%D7%A4+(%D7%9E%D7%99%D7%95%D7%A2%D7%93+%D7%9C%D7%A0%D7%A9%D7%99%D7%9D+%D7%91%D7%9C%D7%91%D7%93).mp4"
+  },
+  {
+    "id": "aedd98da-45a8-4f56-8154-1cde0abb2431",
+    "title": "הברית",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "noach+5769+-+harav+ohad.mp3",
+    "newAudioFile": "ohad_noch_5770.mp3"
+  },
+  {
+    "id": "008c3918-2b3e-4973-8d2d-dfad1f92df48",
+    "title": "העולם שלאחר המבול",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "119%D7%A0%D7%97.MP3",
+    "newAudioFile": "134%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A0%D7%97%5B%D7%A4%D7%A8%D7%A7+%D7%98%5D.mp3"
+  },
+  {
+    "id": "7446b9c8-5d6d-4099-a944-660910366fb5",
+    "title": "תולע בן פואה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "027+-+%D7%95+%D7%90%D7%9C%D7%95%D7%9C+-+%D7%97%D7%96%D7%A8%D7%94+%D7%A2%D7%9C+%D7%AA%D7%95%D7%9C%D7%A2+%D7%91%D7%9F+%D7%A4%D7%95%D7%90%D7%94+%D7%95%D7%94%D7%A1%D7%91%D7%A8+%D7%A2%D7%9C+%D7%99%D7%A9%D7%A9%D7%9B%D7%A8.MP3",
+    "newAudioFile": "%D7%94%D7%A8%D7%91+%D7%97%D7%A0%D7%A0%D7%90%D7%9C+%D7%90%D7%AA%D7%A8%D7%95%D7%92+%D7%AA%D7%95%D7%9C%D7%A2+%D7%91%D7%9F+%D7%A4%D7%95%D7%90%D7%94+%D7%A9%D7%9C%D7%99%D7%A9%D7%99+%D7%92%D7%91%D7%A8%D7%99%D7%9D.MP3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000019",
+    "title": "הסרת השביסים והעכסים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+4-+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%92+-+%D7%93-+%D7%94%D7%A1%D7%A8%D7%AA+%D7%94%D7%A9%D7%91%D7%99%D7%A1%D7%99%D7%9D+%D7%95%D7%94%D7%A2%D7%9B%D7%A1%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000112",
+    "title": "נפלאות גלות וגאולה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+22-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%90-+%D7%A0%D7%A4%D7%9C%D7%90%D7%95%D7%AA+%D7%92%D7%9C%D7%95%D7%AA+%D7%95%D7%92%D7%90%D7%95%D7%9C%D7%94.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000073",
+    "title": "נחמת ישראל בפורענות בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+15-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%92-+%D7%A0%D7%97%D7%9E%D7%AA+%D7%99%D7%A9%D7%A8%D7%90%D7%9C+%D7%91%D7%A4%D7%95%D7%A8%D7%A2%D7%A0%D7%95%D7%AA+%D7%91%D7%91%D7%9C.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000028",
+    "title": "תוכחה ונחמה בהוי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+6-+%D7%A4%D7%A8%D7%A7+%D7%94+2-+%D7%AA%D7%95%D7%9B%D7%97%D7%94+%D7%95%D7%A0%D7%97%D7%9E%D7%94+%D7%91%D7%94%D7%95%D7%99.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000123",
+    "title": "מפלת צור בניין ליושבים לפני ה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+24-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%92-+%D7%9E%D7%A4%D7%9C%D7%AA+%D7%A6%D7%95%D7%A8+%D7%91%D7%A0%D7%99%D7%99%D7%9F+%D7%9C%D7%99%D7%95%D7%A9%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A0%D7%99+%D7%94'.mp3"
+  },
+  {
+    "id": "dee6a094-ae0c-443f-9b42-69b9c9fec66f",
+    "title": "חלום פרעה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "10%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9E%D7%A7%D7%A5+%D7%99%D7%95%D7%9D+%D7%97%D7%9E%D7%99%D7%A9%D7%99.mp3",
+    "newAudioFile": "ra_sic5e_701001_mikets.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000103",
+    "title": "משא מצרים על כל העמים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+20-+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D-+%D7%99%D7%98-+%D7%9B+%D7%9E%D7%A9%D7%90+%D7%9E%D7%A6%D7%A8%D7%99%D7%9D+%D7%A2%D7%9C+%D7%9B%D7%9C+%D7%94%D7%A2%D7%9E%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "3eb76f2e-0b45-44f2-8479-06151b836281",
+    "title": "יפתח הגלעדי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+12.mp3",
+    "newAudioFile": "%D7%94%D7%A8%D7%91%20%D7%90%D7%99%D7%9C%D7%9F%20%D7%90%D7%9C%D7%A4%D7%95%D7%A0%D7%98%D7%94%20-%20%D7%99%D7%A4%D7%AA%D7%97%20%D7%94%D7%92%D7%9C%D7%A2%D7%93%D7%99%2000_00_24-.mp3"
+  },
+  {
+    "id": "d47fa646-b675-4e02-9e16-93cc62c02512",
+    "title": "גלות החרש והמסגר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%93.MP3",
+    "newAudioFile": "kas_tn_mel_b_38.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000145",
+    "title": "גלות החרש והמסגר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "21+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%93.MP3",
+    "newAudioFile": "kas_tn_mel_b_38.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000029",
+    "title": "תפקיד הנביא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "05+%D7%A4%D7%A8%D7%A7+%D7%94.MP3",
+    "newAudioFile": "Audio+(4).mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000038",
+    "title": "תפקיד הנביא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "05+%D7%A4%D7%A8%D7%A7+%D7%94.MP3",
+    "newAudioFile": "Audio+(4).mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000091",
+    "title": "תפילת משה ושמואל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23408.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000026",
+    "title": "ירמיהו מזהיר מפני נבוכדנצר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23232.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000033",
+    "title": "תאור השחיתות החברתית",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23234.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000164",
+    "title": "נבואת ירמיהו אל הגויים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23602.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000037",
+    "title": "נבואת ההקדשה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%A2%D7%95%D7%A8+5+-+%D7%A0%D7%91%D7%95%D7%90%D7%AA+%D7%94%D7%94%D7%A7%D7%93%D7%A9%D7%94.mp3",
+    "newAudioFile": "Audio+(3).mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000060",
+    "title": "ירמיהו מבקש לפרוש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23365.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000178",
+    "title": "הגאולה העתידה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23638.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000253",
+    "title": "הריגת גדליה וכוונת שארית העם לרדת למצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23809.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000194",
+    "title": "קניית השדה מחנמאל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23690.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000200",
+    "title": "עוד ישמע ששון ושמחה בירושלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23691.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000208",
+    "title": "נבואה אישית לצדקיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23697.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000288",
+    "title": "נבואת פורענות על מואב",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23984.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000223",
+    "title": "כתיבת ספר הקינות והקראתו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23707.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000285",
+    "title": "נבואת פורענות על פלישתים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23875.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000298",
+    "title": "נבואות פורענות על בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23987.mp3"
+  },
+  {
+    "id": "59701a92-c22c-4d2c-b562-5ecdb65f068c",
+    "title": "גיבורי דוד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%91+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%92.mp3",
+    "newAudioFile": "shmuel+b+24.mp3"
+  },
+  {
+    "id": "d6013cdf-3a58-4cdd-b2eb-e64051e617d8",
+    "title": "בגדי הכהונה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "8%D7%AA%D7%A6%D7%95%D7%95%D7%94+%D7%9E%D7%95%D7%A6%D7%90%D7%99+%D7%A9%D7%91%D7%AA.mp3",
+    "newAudioFile": "ra_sic5e_691210_tetsave.mp3"
+  },
+  {
+    "id": "a1ca2245-0424-4d0f-a344-41a9336d0a39",
+    "title": "עזרא הסופר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24570.mp3"
+  },
+  {
+    "id": "3445fa06-b76c-482a-ab26-294c78c4de2d",
+    "title": "תפילת נחמיה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "01%D7%A0%D7%97%D7%9E%D7%99%D7%94+%D7%A4%D7%A8%D7%A7+%D7%90.MP3",
+    "newAudioFile": "22124.mp3"
+  },
+  {
+    "id": "a1c6b6a0-49b7-4109-b8bb-152de1e7a04a",
+    "title": "הצהרת כורש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24412.mp3"
+  },
+  {
+    "id": "5c8062c0-74b7-4f5c-89f4-1d436bd93bd9",
+    "title": "הקדמה לספר שופטים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "24936.mp3",
+    "newAudioFile": "rarik_shoftim_02_730405.mp3"
+  },
+  {
+    "id": "7463112c-0c25-456c-b263-a87d65925886",
+    "title": "הכנות גדעון למלחמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "23041.mp3",
+    "newAudioFile": "rarik_shoftim_27_740311.mp3"
+  },
+  {
+    "id": "a1722452-f6c5-4c40-8161-7b955dfa9317",
+    "title": "משל הבקבוק ולקחו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23530.mp3"
+  },
+  {
+    "id": "ad80244a-3b03-40af-ac53-2b59b8d53559",
+    "title": "חטא בני עלי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%99%D7%A2%D7%95%D7%A8+%D7%9E%D7%A1%D7%A4%D7%A8+7+-+%D7%91-2+-+%D7%A4%D7%A1_+%D7%99%D7%90-%D7%99%D7%98+-+_%D7%A9%D7%97%D7%99%D7%AA%D7%95%D7%AA+%D7%91%D7%A0%D7%99%D7%95+%D7%A9%D7%9C+%D7%A2%D7%9C%D7%99_.mp3",
+    "newAudioFile": "%D7%A9%D7%A2%D7%95%D7%A8+5+%D7%97%D7%98%D7%90+%D7%91%D7%A0%D7%99+%D7%A2%D7%9C%D7%99+%D7%A4%D7%A8%D7%A7+%D7%91.mp3"
+  },
+  {
+    "id": "d4600349-177e-4e56-9755-6842467ec4fb",
+    "title": "ערי המקלט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_46_720602.mp3",
+    "newAudioFile": "02+-+%D7%94%D7%A8%D7%91+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%D7%9C%D7%99%D7%94%D7%95+-+%D7%A2%D7%A8%D7%99+%D7%9E%D7%A7%D7%9C%D7%98.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000026",
+    "title": "משל הכרם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "04+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%93%2C%D7%94.MP3",
+    "newAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94%D7%95+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%94-%D7%96.mp3"
+  },
+  {
+    "id": "23465290-f432-480c-869c-4c64977a5f31",
+    "title": "משלי פרק כד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "22-iyov-24.mp3",
+    "newAudioFile": "21-mishlei-24.mp3"
+  },
+  {
+    "id": "cad0e49e-2947-4ec3-9c26-a66cc70b37b8",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "1c782fb9-b317-4c6f-8f6b-1633518efc11",
+    "title": "כי תבואו אל הארץ",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+%D7%AA%D7%91%D7%95%D7%90%D7%95+%D7%90%D7%9C+%D7%94%D7%90%D7%A8%D7%A5+%D7%A9%D7%9C%D7%99%D7%A9%D7%99+%D7%A0%D7%A9%D7%99%D7%9D.MP3"
+  },
+  {
+    "id": "436be2b2-0f19-4b12-bc6d-be059f122cbf",
+    "title": "התשובה בספר שופטים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%93%D7%A0%D7%99+%D7%A1%D7%98%D7%99%D7%A1%D7%A7%D7%99%D7%9F+%D7%94%D7%AA%D7%A9%D7%95%D7%91%D7%94+%D7%91%D7%A1%D7%A4%D7%A8+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+%D7%A8%D7%91%D7%99%D7%A2%D7%99+%D7%A0%D7%A9%D7%99%D7%9D.MP3"
+  },
+  {
+    "id": "18d9f78f-a6da-48e4-a6b1-49f244dd68ca",
+    "title": "ירמיהו הנביא ומגילת איכה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA+%D7%93%D7%A0%D7%94+%D7%A1%D7%9C%D7%99%D7%99+%D7%99%D7%A8%D7%9E%D7%99%D7%94+%D7%94%D7%A0%D7%91%D7%99%D7%90+%D7%95%D7%9E%D7%92%D7%99%D7%9C%D7%AA+%D7%90%D7%99%D7%9B%D7%94+%D7%A0%D7%A9%D7%99%D7%9D+%D7%A9%D7%A0%D7%99.MP3"
+  },
+  {
+    "id": "211bc157-d5a3-4779-b5af-b266b2cb352a",
+    "title": "בני ישראל מבקשים מלך",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%9E%D7%95%D7%90%D7%9C+8.mp3",
+    "newAudioFile": "21422.mp3"
+  },
+  {
+    "id": "7c09139b-c103-4456-b0d4-31ae73ae38d3",
+    "title": "בניית חומת ירושלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24681.mp3"
+  },
+  {
+    "id": "e5441bc2-4c6d-4e86-a4d4-a99b83054cc2",
+    "title": "תפילת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+21-+%D7%A4%D7%A8%D7%A7+%D7%97-+%D7%AA%D7%A4%D7%99%D7%9C%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "314aa1b2-7a8d-4de2-b5a1-3855dbf4d378",
+    "title": "חטא הנשים הנכריות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+23-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%90-+%D7%97%D7%98%D7%90+%D7%A9%D7%9C%D7%9E%D7%94+%D7%91%D7%A0%D7%A9%D7%99%D7%9D+%D7%A0%D7%95%D7%9B%D7%A8%D7%99%D7%95%D7%AA.mp3"
+  },
+  {
+    "id": "8503b880-b079-49cf-9df0-85a2eaa8082b",
+    "title": "השלמת בניין בית המקדש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+19-+%D7%94%D7%A9%D7%9C%D7%9E%D7%AA+%D7%91%D7%A0%D7%99%D7%99%D7%9F+%D7%91%D7%99%D7%AA+%D7%94%D7%9E%D7%A7%D7%93%D7%A9.mp3"
+  },
+  {
+    "id": "c5121071-0590-44d0-973e-ff3ce061531e",
+    "title": "חכמת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+15-+%D7%A4%D7%A8%D7%A7+%D7%94+2-+%D7%97%D7%9B%D7%9E%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "02a0fc6b-d7e6-4898-8774-60e961f9d33d",
+    "title": "משפט שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+11-+%D7%A4%D7%A8%D7%A7+%D7%92+2-+%D7%9E%D7%A9%D7%A4%D7%98+%D7%A9%D7%9C%D7%9E%D7%94+1.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000145",
+    "title": "נחמה בחסד ובדין",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+27-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%96'-+%D7%A0%D7%97%D7%9E%D7%94+%D7%91%D7%97%D7%A1%D7%93+%D7%95%D7%91%D7%93%D7%99%D7%9F.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000106",
+    "title": "כאשר הלך עבדי ישעיהו ערום ויחף שלוש שנים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+21-+%D7%A4%D7%A8%D7%A7+%D7%9B-+%D7%9B%D7%90%D7%A9%D7%A8+%D7%94%D7%9C%D7%9A+%D7%A2%D7%91%D7%93%D7%99+%D7%99%D7%A9%D7%A2%D7%99%D7%94%D7%95+%D7%A2%D7%A8%D7%95%D7%9D+%D7%95%D7%99%D7%97%D7%A3+%D7%A9%D7%9C%D7%95%D7%A9+%D7%A9%D7%A0%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000078",
+    "title": "ונהפוכו של מלך בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+16-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%93-+%D7%94+%D7%95%D7%A0%D7%94%D7%A4%D7%95%D7%9B%D7%95+%D7%A9%D7%9C+%D7%9E%D7%9C%D7%9A+%D7%91%D7%91%D7%9C.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000084",
+    "title": "משא מואב מבפנים החוצה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+17-+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%98%D7%95-+%D7%98%D7%96+%D7%9E%D7%A9%D7%90+%D7%9E%D7%95%D7%90%D7%91+%D7%9E%D7%91%D7%A4%D7%A0%D7%99%D7%9D+%D7%94%D7%97%D7%95%D7%A6%D7%94.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000042",
+    "title": "נבואת נחמה למלך רשע",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+8-+%D7%A4%D7%A8%D7%A7+%D7%96-+%D7%A0%D7%91%D7%95%D7%90%D7%AA+%D7%A0%D7%97%D7%9E%D7%94+%D7%9C%D7%9E%D7%9C%D7%9A+%D7%A8%D7%A9%D7%A2.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000049",
+    "title": "קשר של חולשה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+9-+%D7%A4%D7%A8%D7%A7+%D7%97+1-+%D7%A7%D7%A9%D7%A8+%D7%A9%D7%9C+%D7%97%D7%95%D7%9C%D7%A9%D7%94.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000134",
+    "title": "עצות מרחוק אמונה אמן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+25-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%94'-+%D7%A2%D7%A6%D7%95%D7%AA+%D7%9E%D7%A8%D7%97%D7%95%D7%A7+%D7%90%D7%9E%D7%95%D7%A0%D7%94+%D7%90%D7%9E%D7%9F.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000150",
+    "title": "גאווה שיכורה מיין",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+28-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%97'-+%D7%92%D7%90%D7%95%D7%95%D7%94+%D7%A9%D7%99%D7%9B%D7%95%D7%A8%D7%94+%D7%9E%D7%99%D7%99%D7%9F.mp3"
+  },
+  {
+    "id": "35f448c0-2f77-4f76-9e9d-7fbdb07df3c1",
+    "title": "איוב פרק כה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "22-iyov-20.mp3",
+    "newAudioFile": "22-iyov-25.mp3"
+  },
+  {
+    "id": "367266c3-605c-437b-9eed-0106dfc2f815",
+    "title": "איוב פרק כח",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "22-iyov-20.mp3",
+    "newAudioFile": "22-iyov-28.mp3"
+  },
+  {
+    "id": "9d1e9158-2b51-474a-95f1-a63a75e152a3",
+    "title": "איוב פרק יח",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "22-iyov-10.mp3",
+    "newAudioFile": "22-iyov-18.mp3"
+  },
+  {
+    "id": "18e1955e-f16b-4224-ab87-1e6b291bb1f0",
+    "title": "בניין המקדש מכח דוד המלך",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+18-+%D7%93%D7%95%D7%93+%D7%94%D7%9E%D7%9C%D7%9A+%D7%95%D7%91%D7%A0%D7%99%D7%99%D7%9F+%D7%91%D7%99%D7%AA+%D7%94%D7%9E%D7%A7%D7%93%D7%A9.mp3"
+  },
+  {
+    "id": "6769110f-6f6d-4890-bafe-df66c3268369",
+    "title": "מלכת שבא ומלכות שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+22-+%D7%A4%D7%A8%D7%A7+%D7%99-+%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%91%D7%90+%D7%95%D7%9E%D7%9C%D7%9B%D7%95%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "7dd235f3-7876-48e7-b9ca-6edf5c2578fb",
+    "title": "הסדר של ממלכת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+13-+%D7%A4%D7%A8%D7%A7+%D7%93-+%D7%A1%D7%93%D7%A8+%D7%9E%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "3ac8d679-fe5f-4e77-b363-83a7abda8ff1",
+    "title": "לו או לא הגדלת השמחה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+11-+%D7%A4%D7%A8%D7%A7+%D7%98-+%D7%9C%D7%95+%D7%90%D7%95+%D7%9C%D7%90+%D7%94%D7%92%D7%93%D7%9C%D7%AA+%D7%94%D7%A9%D7%9E%D7%97%D7%94.mp3"
+  },
+  {
+    "id": "892d45a1-9d72-453c-93e3-309291b48c0c",
+    "title": "נחמת ישראל בפורענות בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+15-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%92-+%D7%A0%D7%97%D7%9E%D7%AA+%D7%99%D7%A9%D7%A8%D7%90%D7%9C+%D7%91%D7%A4%D7%95%D7%A8%D7%A2%D7%A0%D7%95%D7%AA+%D7%91%D7%91%D7%9C.mp3"
+  },
+  {
+    "id": "7072d075-5946-481a-8246-afc58daf151a",
+    "title": "ביום ההוא יעשה האדם אל עושהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+18-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%96-+%D7%91%D7%99%D7%95%D7%9D+%D7%94%D7%94%D7%95%D7%90+%D7%99%D7%A2%D7%A9%D7%94+%D7%94%D7%90%D7%93%D7%9D+%D7%90%D7%9C+%D7%A2%D7%95%D7%A9%D7%94%D7%95.mp3"
+  },
+  {
+    "id": "a67cd443-ee6b-4f21-897b-2f811ecb9785",
+    "title": "נפלאות גלות וגאולה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+22-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%90-+%D7%A0%D7%A4%D7%9C%D7%90%D7%95%D7%AA+%D7%92%D7%9C%D7%95%D7%AA+%D7%95%D7%92%D7%90%D7%95%D7%9C%D7%94.mp3"
+  },
+  {
+    "id": "ee713121-4b4c-4e03-a88c-2dc7c1f4639a",
+    "title": "ברית עם השאול או משל לצמיחה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+29-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%97'+2-+%D7%91%D7%A8%D7%99%D7%AA+%D7%A2%D7%9D+%D7%94%D7%A9%D7%90%D7%95%D7%9C+%D7%90%D7%95+%D7%9E%D7%A9%D7%9C+%D7%9C%D7%A6%D7%9E%D7%99%D7%97%D7%94.mp3"
+  },
+  {
+    "id": "3e2ac3fb-6521-4e2c-baa6-60f2d36945b2",
+    "title": "אדישות ומעשיות בעת צרה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+23-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%91-+%D7%90%D7%93%D7%99%D7%A9%D7%95%D7%AA+%D7%95%D7%9E%D7%A2%D7%A9%D7%99%D7%95%D7%AA+%D7%91%D7%A2%D7%AA+%D7%A6%D7%A8%D7%94.mp3"
+  },
+  {
+    "id": "39b57bb8-98fa-4ff9-bd1a-d0b80a15ee14",
+    "title": "נבואה לגאולה העתידה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+19-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%97-+%D7%A0%D7%91%D7%95%D7%90%D7%94+%D7%9C%D7%92%D7%90%D7%95%D7%9C%D7%94+%D7%94%D7%A2%D7%AA%D7%99%D7%93%D7%94.mp3"
+  },
+  {
+    "id": "eb03f385-ca03-4064-a5d1-c03beaeb601b",
+    "title": "מפלת צור בניין ליושבים לפני ה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+24-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%92-+%D7%9E%D7%A4%D7%9C%D7%AA+%D7%A6%D7%95%D7%A8+%D7%91%D7%A0%D7%99%D7%99%D7%9F+%D7%9C%D7%99%D7%95%D7%A9%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A0%D7%99+%D7%94'.mp3"
+  },
+  {
+    "id": "45e03be0-bca9-44c6-9383-0c748ced4122",
+    "title": "משפחתו של ירמיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23418.mp3"
+  },
+  {
+    "id": "e53ca8a4-f4ec-4418-85f8-156042734314",
+    "title": "אזהרה מפני בוא האויב",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23239.mp3"
+  },
+  {
+    "id": "99a87db9-49db-4ef3-b45e-2da11f3f1c40",
+    "title": "תאור זוועות החורבן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23249.mp3"
+  },
+  {
+    "id": "a803b86f-f487-4468-a1e4-5c8998fb46c7",
+    "title": "נחמיה פרק ז",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "13%D7%A0%D7%97%D7%9E%D7%99%D7%94+%D7%A4%D7%A8%D7%A7+%D7%96.MP3",
+    "newAudioFile": "30-nechemiah-07.mp3"
+  },
+  {
+    "id": "90a3eb13-3a69-44eb-8012-41ae03917eb4",
+    "title": "ספר נחמה לגולי בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23621.mp3"
+  },
+  {
+    "id": "87d33f62-6326-4ea2-9f92-a4e44f2bc62a",
+    "title": "הגאולה העתידה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23638.mp3"
+  },
+  {
+    "id": "f04831a8-2d09-4546-a339-5c9ce881a022",
+    "title": "נבואה אישית לצדקיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23697.mp3"
+  },
+  {
+    "id": "d5f9fd00-6719-478a-b19e-84f6994b9b0f",
+    "title": "עוד ישמע ששון ושמחה בירושלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23691.mp3"
+  },
+  {
+    "id": "64414103-62c0-4f9d-82b7-1349962bd74b",
+    "title": "בני יונדב בן רכב",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23698.mp3"
+  },
+  {
+    "id": "973f457a-5654-44f2-a0f1-ae4c98a1162e",
+    "title": "כתיבת ספר הקינות והקראתו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23707.mp3"
+  },
+  {
+    "id": "608988d1-6ba8-4718-8463-d94a35d94677",
+    "title": "משל  התאנים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23583.mp3"
+  },
+  {
+    "id": "75be326d-252d-4dd1-a39c-6ece14f4ab50",
+    "title": "הכאת ירמיהו וכליאתו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23535.mp3"
+  },
+  {
+    "id": "a13f83c1-bc86-46d6-942c-1a442ee91bf5",
+    "title": "נבואות פורענות על בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23987.mp3"
+  },
+  {
+    "id": "9e2a4cbd-ff88-4fa0-bc35-81788df89714",
+    "title": "וגם את הגוי אשר יעבודו דן אנוכי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23989.mp3"
+  },
+  {
+    "id": "e2baa51d-789a-4351-97a6-f5abde93ee8b",
+    "title": "הריגת גדליה וכוונת שארית העם לרדת למצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23809.mp3"
+  },
+  {
+    "id": "07fb368d-c11d-4558-a92d-37c80744996c",
+    "title": "ברוך בן נריה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23873.mp3"
+  },
+  {
+    "id": "1c50c88e-cfa7-481b-b2c4-ffc6f8e35974",
+    "title": "התנגדות יושבי  הארץ",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24682.mp3"
+  },
+  {
+    "id": "57e29f1e-4490-4d2d-9a49-c6409f212a40",
+    "title": "נשואי תערובת",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24572.mp3"
+  },
+  {
+    "id": "f914fc29-bdf4-4038-b4ae-30bd889616b3",
+    "title": "נחמיה פרק ו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "11%D7%A0%D7%97%D7%9E%D7%99%D7%94+%D7%95+.MP3",
+    "newAudioFile": "30-nechemiah-06.mp3"
+  },
+  {
+    "id": "751347a0-a10d-4f1d-9b98-fe2b76cffa66",
+    "title": "משל הכרם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "04+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%93%2C%D7%94.MP3",
+    "newAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94%D7%95+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%94-%D7%96.mp3"
+  },
+  {
+    "id": "955af4a9-da9d-4285-84ea-756363b63c27",
+    "title": "ונחה עליו רוח ה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+13-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%90-+%D7%95%D7%A0%D7%97%D7%94+%D7%A2%D7%9C%D7%99%D7%95+%D7%A8%D7%95%D7%97+%D7%94'.mp3"
+  },
+  {
+    "id": "eb444806-8da4-4a56-b007-cc8f91918de2",
+    "title": "בניית חומת ירושלים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24681.mp3"
+  },
+  {
+    "id": "eba42b24-b084-417b-ae5b-5af25ac506ea",
+    "title": "קריאת התורה וחגיגת חגי  תשרי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24768.mp3"
+  },
+  {
+    "id": "36ad9352-ab55-49e8-bce2-b06d8d2220de",
+    "title": "ערי המקלט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "rarik_yehoshua_46_720602.mp3",
+    "newAudioFile": "02+-+%D7%94%D7%A8%D7%91+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90%D7%9C%D7%99%D7%94%D7%95+-+%D7%A2%D7%A8%D7%99+%D7%9E%D7%A7%D7%9C%D7%98.mp3"
+  },
+  {
+    "id": "4ed50096-894c-4314-9c4a-972aa7feb581",
+    "title": "עצות מרחוק אמונה אמן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+25-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%94'-+%D7%A2%D7%A6%D7%95%D7%AA+%D7%9E%D7%A8%D7%97%D7%95%D7%A7+%D7%90%D7%9E%D7%95%D7%A0%D7%94+%D7%90%D7%9E%D7%9F.mp3"
+  },
+  {
+    "id": "17db3dff-ba58-4603-9e7a-57fbbbc52375",
+    "title": "גאווה שיכורה מיין",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+28-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%97'-+%D7%92%D7%90%D7%95%D7%95%D7%94+%D7%A9%D7%99%D7%9B%D7%95%D7%A8%D7%94+%D7%9E%D7%99%D7%99%D7%9F.mp3"
+  },
+  {
+    "id": "d6f11030-19f9-4860-a9c4-f79634e27626",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "5e658624-a548-4bc5-ae03-b972478a0d70",
+    "title": "התארגנות לעלייה לארץ",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24491.mp3"
+  },
+  {
+    "id": "6e8ad4a4-156f-46e5-a73a-c48eb02b0814",
+    "title": "נדר יפתח",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "ohad_midot+09_5769.mp3",
+    "newAudioFile": "rarik_shoftim_40_750916.mp3"
+  },
+  {
+    "id": "a6a785dd-9283-4a78-bad9-a26948482a7e",
+    "title": "שירת דבורה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+7.mp3",
+    "newAudioFile": "rarik_shoftim_19_741127.mp3"
+  },
+  {
+    "id": "abe2e147-c0fe-4012-8eae-026cbea44293",
+    "title": "הברית",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%91+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%92+%D7%97%D7%9C%D7%A7+%D7%90+%D7%99%D7%90%D7%A9%D7%99%D7%94%D7%95.+%D7%94%D7%91%D7%A8%D7%99%D7%AA..mp3",
+    "newAudioFile": "ohad_noch_5770.mp3"
+  },
+  {
+    "id": "8a9c987d-360c-402f-9a32-1dc2b72f5148",
+    "title": "חלום פרעה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "10%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9E%D7%A7%D7%A5+%D7%99%D7%95%D7%9D+%D7%97%D7%9E%D7%99%D7%A9%D7%99.mp3",
+    "newAudioFile": "ra_sic5e_701001_mikets.mp3"
+  },
+  {
+    "id": "2cb0f3af-4463-4974-bca9-805d94bc2789",
+    "title": "בגדי הכהונה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "8%D7%AA%D7%A6%D7%95%D7%95%D7%94+%D7%9E%D7%95%D7%A6%D7%90%D7%99+%D7%A9%D7%91%D7%AA.mp3",
+    "newAudioFile": "ra_sic5e_691210_tetsave.mp3"
+  },
+  {
+    "id": "f8784540-6f80-4703-b215-0de3cf94b9c4",
+    "title": "תפילת נחמיה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "01%D7%A0%D7%97%D7%9E%D7%99%D7%94+%D7%A4%D7%A8%D7%A7+%D7%90.MP3",
+    "newAudioFile": "22124.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000089",
+    "title": "יחזקאל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "05+-+%D7%90%D7%97%D7%99%D7%A0%D7%95%D7%A2%D7%9D+%D7%91%D7%A8%D7%A7%D7%95+-+%D7%94%D7%A0%D7%91%D7%95%D7%90%D7%95%D7%AA+%D7%90%D7%9C+%D7%94%D7%94%D7%A8%D7%99%D7%9D+%D7%91%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C.mp3",
+    "newAudioFile": "%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%99%D7%96-%D7%99%D7%97+%D7%A8%D7%A7+%D7%A1%D7%95%D7%A3+%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8.mp3"
+  },
+  {
+    "id": "a1010101-0001-4000-8000-000000000003",
+    "title": "מלוכה וכהונה בספר דברי הימים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": true,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%AA%D7%94%D7%99%D7%9C%D7%94%20%D7%94%D7%A8%D7%A5%20-%20%D7%A9%D7%91%D7%98%20%D7%93%D7%9F%20%D7%91%D7%93%D7%91%D7%A8%D7%99%20%D7%94%D7%99%D7%9E%D7%99%D7%9D%2000_01_03-.mp3",
+    "oldVideoFile": "%D7%AA%D7%94%D7%9C%D7%94+%D7%94%D7%A8%D7%A5+-+%D7%9E%D7%9C%D7%95%D7%9B%D7%94+%D7%95%D7%9B%D7%94%D7%95%D7%A0%D7%94+%D7%91%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99+%D7%94%D7%99%D7%9E%D7%99%D7%9D+-+%D7%99%D7%9E%D7%99+%D7%9C%D7%99%D7%9E%D7%95%D7%93+%D7%AA%D7%A0_%D7%9A+%D7%AA%D7%A9_%D7%A4+(%D7%9E%D7%99%D7%95%D7%A2%D7%93+%D7%9C%D7%A0%D7%A9%D7%99%D7%9D+%D7%91%D7%9C%D7%91%D7%93).mp4"
+  },
+  {
+    "id": "4508b0c4-efe2-47ca-9cce-08405e5aa9e4",
+    "title": "הריגת נוב עיר הכהנים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%9C%D7%A4%D7%A9%D7%99%D7%A5+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90&#39;.+%D7%9B%D7%91.mp3",
+    "newAudioFile": "%D7%94%D7%A8%D7%91+%D7%9C%D7%A4%D7%A9%D7%99%D7%A5+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%90'.+%D7%9B%D7%91.mp3"
+  },
+  {
+    "id": "0c09e8af-1e21-462f-940d-7416cc718d0a",
+    "title": "מרדפי שאול ודוד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%A7%D7%9C%D7%9E%D7%9F+%D7%91%D7%A8+%D7%9E%D7%A8%D7%93%D7%A4%D7%99+%D7%A9%D7%90%D7%95%D7%9C+%D7%95%D7%93%D7%95%D7%93.MP3"
+  },
+  {
+    "id": "7e6221bd-0d64-4631-b748-17357894cb4a",
+    "title": "מרדפי שאול ודוד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%A7%D7%9C%D7%9E%D7%9F+%D7%91%D7%A8+%D7%9E%D7%A8%D7%93%D7%A4%D7%99+%D7%A9%D7%90%D7%95%D7%9C+%D7%95%D7%93%D7%95%D7%93.MP3"
+  },
+  {
+    "id": "b213e472-216c-4183-a9b1-5ba51c5d796f",
+    "title": "נשים חכמות בספר שמואל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA+%D7%91%D7%A8%D7%95%D7%A8%D7%99%D7%94+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8+%D7%A0%D7%A9%D7%99%D7%9D+%D7%97%D7%9B%D7%9E%D7%95%D7%AA+%D7%91%D7%A1%D7%A4%D7%A8+%D7%A9%D7%9E%D7%95%D7%90%D7%9C+%D7%A0%D7%A9%D7%99%D7%9D+%D7%A9%D7%A0%D7%99.MP3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000013",
+    "title": "עליה וירידה בדמות אדם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+3-+%D7%A4%D7%A8%D7%A7+%D7%91-+%D7%A2%D7%9C%D7%99%D7%94+%D7%95%D7%99%D7%A8%D7%99%D7%93%D7%94+%D7%91%D7%93%D7%9E%D7%95%D7%AA+%D7%90%D7%93%D7%9D.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000027",
+    "title": "כרם הענבים הבאושים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+5-+%D7%A4%D7%A8%D7%A7+%D7%94+1-+%D7%9B%D7%A8%D7%9D+%D7%94%D7%A2%D7%A0%D7%91%D7%99%D7%9D+%D7%94%D7%91%D7%90%D7%95%D7%A9%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "6d38ba8a-9ee6-4fcb-86a1-3ea4bae84473",
+    "title": "עליה וירידה בדמות אדם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+3-+%D7%A4%D7%A8%D7%A7+%D7%91-+%D7%A2%D7%9C%D7%99%D7%94+%D7%95%D7%99%D7%A8%D7%99%D7%93%D7%94+%D7%91%D7%93%D7%9E%D7%95%D7%AA+%D7%90%D7%93%D7%9D.mp3"
+  },
+  {
+    "id": "ad6fde61-bbe6-48c2-9c8a-c3ab8b63d73a",
+    "title": "הסרת השביסים והעכסים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+4-+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%92+-+%D7%93-+%D7%94%D7%A1%D7%A8%D7%AA+%D7%94%D7%A9%D7%91%D7%99%D7%A1%D7%99%D7%9D+%D7%95%D7%94%D7%A2%D7%9B%D7%A1%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "8342be51-4562-4c39-9db7-84a68af50dba",
+    "title": "כרם הענבים הבאושים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+5-+%D7%A4%D7%A8%D7%A7+%D7%94+1-+%D7%9B%D7%A8%D7%9D+%D7%94%D7%A2%D7%A0%D7%91%D7%99%D7%9D+%D7%94%D7%91%D7%90%D7%95%D7%A9%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "39448b81-99fa-47d4-90ae-9adb553c3459",
+    "title": "תוכחה ונחמה בהוי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+6-+%D7%A4%D7%A8%D7%A7+%D7%94+2-+%D7%AA%D7%95%D7%9B%D7%97%D7%94+%D7%95%D7%A0%D7%97%D7%9E%D7%94+%D7%91%D7%94%D7%95%D7%99.mp3"
+  },
+  {
+    "id": "f7136195-0889-4f8e-8082-265796e5b220",
+    "title": "נבואת נחמה למלך רשע",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+8-+%D7%A4%D7%A8%D7%A7+%D7%96-+%D7%A0%D7%91%D7%95%D7%90%D7%AA+%D7%A0%D7%97%D7%9E%D7%94+%D7%9C%D7%9E%D7%9C%D7%9A+%D7%A8%D7%A9%D7%A2.mp3"
+  },
+  {
+    "id": "24ee4a0e-ce9a-49c3-b912-258be1d2c4b9",
+    "title": "קשר של חולשה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+9-+%D7%A4%D7%A8%D7%A7+%D7%97+1-+%D7%A7%D7%A9%D7%A8+%D7%A9%D7%9C+%D7%97%D7%95%D7%9C%D7%A9%D7%94.mp3"
+  },
+  {
+    "id": "93b46ed8-3012-4e32-bf45-a6cf23ce3484",
+    "title": "לתורה ולתעודה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+10-+%D7%A4%D7%A8%D7%A7+%D7%97+2-+%D7%9C%D7%AA%D7%95%D7%A8%D7%94+%D7%95%D7%9C%D7%AA%D7%A2%D7%95%D7%93%D7%94.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000066",
+    "title": "ונחה עליו רוח ה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+13-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%90-+%D7%95%D7%A0%D7%97%D7%94+%D7%A2%D7%9C%D7%99%D7%95+%D7%A8%D7%95%D7%97+%D7%94'.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000097",
+    "title": "נבואה לגאולה העתידה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+19-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%97-+%D7%A0%D7%91%D7%95%D7%90%D7%94+%D7%9C%D7%92%D7%90%D7%95%D7%9C%D7%94+%D7%94%D7%A2%D7%AA%D7%99%D7%93%D7%94.mp3"
+  },
+  {
+    "id": "01699e2f-ac73-4ac2-92f3-f276b3d55194",
+    "title": "הוי אשור שבט אפי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+12-+%D7%A4%D7%A8%D7%A7+%D7%99-+%D7%94%D7%95%D7%99+%D7%90%D7%A9%D7%95%D7%A8+%D7%A9%D7%91%D7%98+%D7%90%D7%A4%D7%99.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000092",
+    "title": "ביום ההוא יעשה האדם אל עושהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+18-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%96-+%D7%91%D7%99%D7%95%D7%9D+%D7%94%D7%94%D7%95%D7%90+%D7%99%D7%A2%D7%A9%D7%94+%D7%94%D7%90%D7%93%D7%9D+%D7%90%D7%9C+%D7%A2%D7%95%D7%A9%D7%94%D7%95.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000151",
+    "title": "ברית עם השאול או משל לצמיחה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+29-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%97'+2-+%D7%91%D7%A8%D7%99%D7%AA+%D7%A2%D7%9D+%D7%94%D7%A9%D7%90%D7%95%D7%9C+%D7%90%D7%95+%D7%9E%D7%A9%D7%9C+%D7%9C%D7%A6%D7%9E%D7%99%D7%97%D7%94.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000050",
+    "title": "לתורה ולתעודה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+10-+%D7%A4%D7%A8%D7%A7+%D7%97+2-+%D7%9C%D7%AA%D7%95%D7%A8%D7%94+%D7%95%D7%9C%D7%AA%D7%A2%D7%95%D7%93%D7%94.mp3"
+  },
+  {
+    "id": "5e76bf36-edbf-4cb5-bc31-dff49740221f",
+    "title": "משא מצרים על כל העמים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+20-+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D-+%D7%99%D7%98-+%D7%9B+%D7%9E%D7%A9%D7%90+%D7%9E%D7%A6%D7%A8%D7%99%D7%9D+%D7%A2%D7%9C+%D7%9B%D7%9C+%D7%94%D7%A2%D7%9E%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000055",
+    "title": "לו או לא הגדלת השמחה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+11-+%D7%A4%D7%A8%D7%A7+%D7%98-+%D7%9C%D7%95+%D7%90%D7%95+%D7%9C%D7%90+%D7%94%D7%92%D7%93%D7%9C%D7%AA+%D7%94%D7%A9%D7%9E%D7%97%D7%94.mp3"
+  },
+  {
+    "id": "3ef6ba76-6eb4-47db-a153-0cc3240eed8e",
+    "title": "ונהפוכו של מלך בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+16-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%93-+%D7%94+%D7%95%D7%A0%D7%94%D7%A4%D7%95%D7%9B%D7%95+%D7%A9%D7%9C+%D7%9E%D7%9C%D7%9A+%D7%91%D7%91%D7%9C.mp3"
+  },
+  {
+    "id": "52b8d733-2fa6-410d-bd3b-d92eec9745ca",
+    "title": "כאשר הלך עבדי ישעיהו ערום ויחף שלוש שנים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+21-+%D7%A4%D7%A8%D7%A7+%D7%9B-+%D7%9B%D7%90%D7%A9%D7%A8+%D7%94%D7%9C%D7%9A+%D7%A2%D7%91%D7%93%D7%99+%D7%99%D7%A9%D7%A2%D7%99%D7%94%D7%95+%D7%A2%D7%A8%D7%95%D7%9D+%D7%95%D7%99%D7%97%D7%A3+%D7%A9%D7%9C%D7%95%D7%A9+%D7%A9%D7%A0%D7%99%D7%9D.mp3"
+  },
+  {
+    "id": "18575c2d-a2ec-4523-b938-9cb9815a39c5",
+    "title": "נחמה בחסד ובדין",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+27-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%96'-+%D7%A0%D7%97%D7%9E%D7%94+%D7%91%D7%97%D7%A1%D7%93+%D7%95%D7%91%D7%93%D7%99%D7%9F.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000060",
+    "title": "הוי אשור שבט אפי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+12-+%D7%A4%D7%A8%D7%A7+%D7%99-+%D7%94%D7%95%D7%99+%D7%90%D7%A9%D7%95%D7%A8+%D7%A9%D7%91%D7%98+%D7%90%D7%A4%D7%99.mp3"
+  },
+  {
+    "id": "6c4a99ea-44d2-4767-bcdd-ef2f05927e42",
+    "title": "משא מואב מבפנים החוצה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+17-+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%98%D7%95-+%D7%98%D7%96+%D7%9E%D7%A9%D7%90+%D7%9E%D7%95%D7%90%D7%91+%D7%9E%D7%91%D7%A4%D7%A0%D7%99%D7%9D+%D7%94%D7%97%D7%95%D7%A6%D7%94.mp3"
+  },
+  {
+    "id": "59a4f499-0260-4052-8df4-9f22ace58c8d",
+    "title": "ואבדה חכמת חכמיו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+30-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%98-+%D7%95%D7%90%D7%91%D7%93%D7%94+%D7%97%D7%9B%D7%9E%D7%AA+%D7%97%D7%9B%D7%9E%D7%99%D7%95.mp3"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000161",
+    "title": "ואבדה חכמת חכמיו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%99%D7%A9%D7%A2%D7%99%D7%94+30-+%D7%A4%D7%A8%D7%A7+%D7%9B%D7%98-+%D7%95%D7%90%D7%91%D7%93%D7%94+%D7%97%D7%9B%D7%9E%D7%AA+%D7%97%D7%9B%D7%9E%D7%99%D7%95.mp3"
+  },
+  {
+    "id": "83372d50-9dec-4beb-bb29-0c923c65598a",
+    "title": "החסד והאמת בספר משלי",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%9E%D7%99%D7%A9%D7%90%D7%9C+%D7%A8%D7%95%D7%91%D7%99%D7%9F+%D7%94%D7%97%D7%A1%D7%93+%D7%95%D7%94%D7%90%D7%9E%D7%AA+%D7%91%D7%A1%D7%A4%D7%A8+%D7%9E%D7%A9%D7%9C%D7%99+%D7%A9%D7%A0%D7%99+%D7%92%D7%91%D7%A8%D7%99%D7%9D.MP3"
+  },
+  {
+    "id": "3ed586ea-dec8-4a77-89e6-af89e286f473",
+    "title": "בת שבע ונתן הנביא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+2-+%D7%A4%D7%A8%D7%A7+%D7%90+2+-+%D7%91%D7%AA+%D7%A9%D7%91%D7%A2+%D7%95%D7%A0%D7%AA%D7%9F+%D7%94%D7%A0%D7%91%D7%99%D7%90.mp3"
+  },
+  {
+    "id": "c6ea2bb8-f75c-4071-a778-dd7856db1a8a",
+    "title": "בת שבע ונתן הנביא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+2-+%D7%A4%D7%A8%D7%A7+%D7%90+2+-+%D7%91%D7%AA+%D7%A9%D7%91%D7%A2+%D7%95%D7%A0%D7%AA%D7%9F+%D7%94%D7%A0%D7%91%D7%99%D7%90.mp3"
+  },
+  {
+    "id": "e69079d9-83a0-4e65-83aa-3fb644c7031e",
+    "title": "בקשת המלוכה של אדוניהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+3-+%D7%A4%D7%A8%D7%A7+%D7%90+3+-+%D7%91%D7%A7%D7%A9%D7%AA+%D7%94%D7%9E%D7%9C%D7%95%D7%9B%D7%94+%D7%A9%D7%9C+%D7%90%D7%93%D7%95%D7%A0%D7%99%D7%94.mp3"
+  },
+  {
+    "id": "25b872e3-48ba-42e2-a94f-627deedfac86",
+    "title": "בקשת המלוכה של אדוניהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+3-+%D7%A4%D7%A8%D7%A7+%D7%90+3+-+%D7%91%D7%A7%D7%A9%D7%AA+%D7%94%D7%9E%D7%9C%D7%95%D7%9B%D7%94+%D7%A9%D7%9C+%D7%90%D7%93%D7%95%D7%A0%D7%99%D7%94.mp3"
+  },
+  {
+    "id": "d6b0fdd7-03e4-4dbd-85d3-2bd44474f970",
+    "title": "פתיחה לצוואת דוד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+5-+%D7%A4%D7%A8%D7%A7+%D7%91+1-+%D7%A6%D7%95%D7%95%D7%90%D7%AA+%D7%93%D7%95%D7%93+-+%D7%A4%D7%AA%D7%99%D7%97%D7%94.mp3"
+  },
+  {
+    "id": "7fa9fec3-22ed-4883-bca2-0dcdd1241e8d",
+    "title": "פתיחה לצוואת דוד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+5-+%D7%A4%D7%A8%D7%A7+%D7%91+1-+%D7%A6%D7%95%D7%95%D7%90%D7%AA+%D7%93%D7%95%D7%93+-+%D7%A4%D7%AA%D7%99%D7%97%D7%94.mp3"
+  },
+  {
+    "id": "5e421697-55f1-4566-9464-b1edda0b7416",
+    "title": "ציווי דוד על יואב בן צרויה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+6-+%D7%A4%D7%A8%D7%A7+%D7%91+2-+%D7%A6%D7%95%D7%95%D7%90%D7%AA+%D7%93%D7%95%D7%93+-+%D7%99%D7%95%D7%90%D7%91+%D7%91%D7%9F+%D7%A6%D7%A8%D7%95%D7%99%D7%94+1.mp3"
+  },
+  {
+    "id": "785f45cb-d01e-43e7-a9d2-3812d1f0cc01",
+    "title": "משפט שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+11-+%D7%A4%D7%A8%D7%A7+%D7%92+2-+%D7%9E%D7%A9%D7%A4%D7%98+%D7%A9%D7%9C%D7%9E%D7%94+1.mp3"
+  },
+  {
+    "id": "10754da3-4c87-4384-b2cb-1710e40e9644",
+    "title": "ירמיהו מזהיר מפני נבוכדנצר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23232.mp3"
+  },
+  {
+    "id": "452fa27c-3573-49b2-81c7-e458b56dc9a3",
+    "title": "מעשה האזור והנמשל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23399.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000123",
+    "title": "הכאת ירמיהו וכליאתו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23535.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000155",
+    "title": "השנה הרביעית ליהויקים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23589.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000208",
+    "title": "קיבוץ הגלויות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23655.mp3"
+  },
+  {
+    "id": "5686d969-acd2-4b98-b85a-be283dd6fea1",
+    "title": "ציווי דוד על יואב בן צרויה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+6-+%D7%A4%D7%A8%D7%A7+%D7%91+2-+%D7%A6%D7%95%D7%95%D7%90%D7%AA+%D7%93%D7%95%D7%93+-+%D7%99%D7%95%D7%90%D7%91+%D7%91%D7%9F+%D7%A6%D7%A8%D7%95%D7%99%D7%94+1.mp3"
+  },
+  {
+    "id": "514c4acb-7e68-4eb9-b638-9b2570da8c85",
+    "title": "כיפור וכפרה בחנוכת המקדש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+20-+%D7%9B%D7%99%D7%A4%D7%95%D7%A8+%D7%95%D7%9B%D7%A4%D7%A8%D7%94+%D7%91%D7%97%D7%A0%D7%95%D7%9B%D7%AA+%D7%94%D7%9E%D7%A7%D7%93%D7%A9.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000082",
+    "title": "מעשה האזור והנמשל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23399.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000234",
+    "title": "ירמיהו מושלך לבור הטיט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23806.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000272",
+    "title": "ברוך בן נריה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23873.mp3"
+  },
+  {
+    "id": "6107214f-2adf-427e-adb4-9a89a4d69db7",
+    "title": "המשך ציווי דוד על יואב בן צרויה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+7-+%D7%A4%D7%A8%D7%A7+%D7%91+3-+%D7%A6%D7%95%D7%95%D7%90%D7%AA+%D7%93%D7%95%D7%93+-+%D7%99%D7%95%D7%90%D7%91+%D7%91%D7%9F+%D7%A6%D7%A8%D7%95%D7%99%D7%94+2.mp3"
+  },
+  {
+    "id": "73346e7f-ce3e-4aa0-9200-990c7a2bbf73",
+    "title": "חטא הנשים הנכריות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+23-+%D7%A4%D7%A8%D7%A7+%D7%99%D7%90-+%D7%97%D7%98%D7%90+%D7%A9%D7%9C%D7%9E%D7%94+%D7%91%D7%A0%D7%A9%D7%99%D7%9D+%D7%A0%D7%95%D7%9B%D7%A8%D7%99%D7%95%D7%AA.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000037",
+    "title": "אזהרה מפני בוא האויב",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23239.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000099",
+    "title": "משפחתו של ירמיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23418.mp3"
+  },
+  {
+    "id": "f5558a69-2750-47fe-b60a-67d04efc7ff9",
+    "title": "נבואת פורענות על מצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23874.mp3"
+  },
+  {
+    "id": "16977ec4-6f00-43e6-8d17-c93312ab4c02",
+    "title": "המשך ציווי דוד על יואב בן צרויה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+7-+%D7%A4%D7%A8%D7%A7+%D7%91+3-+%D7%A6%D7%95%D7%95%D7%90%D7%AA+%D7%93%D7%95%D7%93+-+%D7%99%D7%95%D7%90%D7%91+%D7%91%D7%9F+%D7%A6%D7%A8%D7%95%D7%99%D7%94+2.mp3"
+  },
+  {
+    "id": "92b4aeaf-f63f-49a2-9185-669eb2236bde",
+    "title": "פניה ישירה למלכי יהודה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23568.mp3"
+  },
+  {
+    "id": "5f65d75c-4eee-4cc5-adeb-199e4ae2b26e",
+    "title": "נבואת ירמיהו אל הגויים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23602.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000292",
+    "title": "נבואת פורענות על עמון ואדום",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23985.mp3"
+  },
+  {
+    "id": "9c4a9453-1c30-4d4d-a0d6-29485cba78a3",
+    "title": "ממלכת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+14-+%D7%A4%D7%A8%D7%A7+%D7%94+1-+%D7%9E%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "68c589e5-2e9a-4b73-97fb-cac047d9d26b",
+    "title": "ריבוי הסוסים של שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+24-+%D7%A8%D7%99%D7%91%D7%95%D7%99+%D7%94%D7%A1%D7%95%D7%A1%D7%99%D7%9D+%D7%A9%D7%9C%D7%A7%D7%97+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "a074d4b9-84ef-4201-aa8e-5a61361aedf5",
+    "title": "עשרת  השבטים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23191.mp3"
+  },
+  {
+    "id": "d19f0e41-e891-472e-b772-2dc1750d30da",
+    "title": "משל בית היוצר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23524.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000224",
+    "title": "יהויקים שורף את המגילה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23714.mp3"
+  },
+  {
+    "id": "935846fa-7efb-480a-83f6-e9aa49a3de34",
+    "title": "העם יורד למצרים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23871.mp3"
+  },
+  {
+    "id": "bdee7598-024a-4982-ad68-2d7c86b33d0c",
+    "title": "נבואת פורענות על מואב",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23984.mp3"
+  },
+  {
+    "id": "5c893c9b-4b57-45e4-a592-3ecff638e753",
+    "title": "חכמת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+15-+%D7%A4%D7%A8%D7%A7+%D7%94+2-+%D7%97%D7%9B%D7%9E%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "f30c9114-da31-41b5-8d66-58be4be9191a",
+    "title": "כיפור וכפרה בחנוכת המקדש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+20-+%D7%9B%D7%99%D7%A4%D7%95%D7%A8+%D7%95%D7%9B%D7%A4%D7%A8%D7%94+%D7%91%D7%97%D7%A0%D7%95%D7%9B%D7%AA+%D7%94%D7%9E%D7%A7%D7%93%D7%A9.mp3"
+  },
+  {
+    "id": "90764924-0716-4504-8e07-69523662646d",
+    "title": "תפילת משה ושמואל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23408.mp3"
+  },
+  {
+    "id": "8d195ca0-4194-4ae7-b98f-39355b29a157",
+    "title": "בקשת צדקיהו מירמיהו להתפלל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23544.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000156",
+    "title": "התביעה להרוג את ירמיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23601.mp3"
+  },
+  {
+    "id": "cf1bd860-6bca-494c-916a-6200a41d7091",
+    "title": "ירמיהו מושלך לבור הטיט",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23806.mp3"
+  },
+  {
+    "id": "f1e2d0d7-b667-4f57-a854-d5eca8559627",
+    "title": "הסדר של ממלכת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+13-+%D7%A4%D7%A8%D7%A7+%D7%93-+%D7%A1%D7%93%D7%A8+%D7%9E%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "b7b1af4a-4fe9-4a44-b84a-51432f5b43cb",
+    "title": "בניין המקדש מכח דוד המלך",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+18-+%D7%93%D7%95%D7%93+%D7%94%D7%9E%D7%9C%D7%9A+%D7%95%D7%91%D7%A0%D7%99%D7%99%D7%9F+%D7%91%D7%99%D7%AA+%D7%94%D7%9E%D7%A7%D7%93%D7%A9.mp3"
+  },
+  {
+    "id": "178ac76a-84b0-4c94-b72c-721fb522a709",
+    "title": "תאור השחיתות החברתית",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23234.mp3"
+  },
+  {
+    "id": "8a8ef741-0c27-44ca-bb0b-403c6014e7ed",
+    "title": "התביעה להרוג את ירמיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23601.mp3"
+  },
+  {
+    "id": "8999f4ba-a723-465a-ba8d-3cbb55bda543",
+    "title": "שלמה המלך וחירם מלך צור",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+16-+%D7%A4%D7%A8%D7%A7+%D7%94+3-+%D7%A9%D7%9C%D7%9E%D7%94+%D7%94%D7%9E%D7%9C%D7%9A+%D7%95%D7%97%D7%99%D7%A8%D7%9D+%D7%9E%D7%9C%D7%9A+%D7%A6%D7%95%D7%A8+1.mp3"
+  },
+  {
+    "id": "ff12439d-f518-476b-813c-5443bfe821bd",
+    "title": "תפילת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+21-+%D7%A4%D7%A8%D7%A7+%D7%97-+%D7%AA%D7%A4%D7%99%D7%9C%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "3d2835aa-fd05-4efa-a23c-7508de0a416a",
+    "title": "הרקע המדיני לנבואת ירמיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23157.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000053",
+    "title": "תאור זוועות החורבן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23249.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000112",
+    "title": "משל בית היוצר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23524.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000172",
+    "title": "ספר נחמה לגולי בבל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23621.mp3"
+  },
+  {
+    "id": "8a1602c7-2928-48fd-a12a-f62c57ce284d",
+    "title": "טיב היחסים בין ירמיהו וצדקיהו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23717.mp3"
+  },
+  {
+    "id": "8d6ad1b5-79ae-4f5d-aed4-57bb92f27f0c",
+    "title": "נבואת פורענות על עמון ואדום",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23985.mp3"
+  },
+  {
+    "id": "be74eb2d-f3e0-46e4-83b6-94c2f745dd0a",
+    "title": "ממלכת שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+14-+%D7%A4%D7%A8%D7%A7+%D7%94+1-+%D7%9E%D7%9E%D7%9C%D7%9B%D7%AA+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "67ac78ab-96cb-4d3b-9a36-4eabff332531",
+    "title": "השלמת בניין בית המקדש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+19-+%D7%94%D7%A9%D7%9C%D7%9E%D7%AA+%D7%91%D7%A0%D7%99%D7%99%D7%9F+%D7%91%D7%99%D7%AA+%D7%94%D7%9E%D7%A7%D7%93%D7%A9.mp3"
+  },
+  {
+    "id": "409af94d-27dd-446f-8417-d0a160f3a9ad",
+    "title": "ריבוי הסוסים של שלמה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%9E%D7%9C%D7%9B%D7%99%D7%9D+%D7%90+24-+%D7%A8%D7%99%D7%91%D7%95%D7%99+%D7%94%D7%A1%D7%95%D7%A1%D7%99%D7%9D+%D7%A9%D7%9C%D7%A7%D7%97+%D7%A9%D7%9C%D7%9E%D7%94.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000023",
+    "title": "עשרת השבטים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "kas_tn_mel_b_24.mp3",
+    "newAudioFile": "23191.mp3"
+  },
+  {
+    "id": "5c497fcc-0aa4-4e5e-93a5-b0d0b6fa924c",
+    "title": "ירמיהו מבקש לפרוש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23365.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000118",
+    "title": "משל הבקבוק ולקחו",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23530.mp3"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000217",
+    "title": "בני יונדב בן רכב",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23698.mp3"
+  },
+  {
+    "id": "c1101bdd-eac3-4f36-8365-5b1c98efa22d",
+    "title": "שלטון גדליה בן אחיקם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "23808.mp3"
+  },
+  {
+    "id": "b84cf996-3db1-4908-8a17-5f125a3e4453",
+    "title": "הצהרת דריוש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24549.mp3"
+  },
+  {
+    "id": "1f2b9afa-401b-405c-a19d-6bed84cc73bd",
+    "title": "הקדמה שניה לספר עזרא",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24411.mp3"
+  },
+  {
+    "id": "4d87b9a2-fe11-4f01-8fde-ff191ef5fc81",
+    "title": "הצהרת כורש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24412.mp3"
+  },
+  {
+    "id": "6a9abe51-5b3b-4919-b037-2c06857af187",
+    "title": "הצהרת כורש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24412.mp3"
+  },
+  {
+    "id": "8324cde0-89d5-440c-b7c6-d15d345d8afd",
+    "title": "הצהרת כורש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24412.mp3"
+  },
+  {
+    "id": "ceb3f862-e6cb-44e0-a586-98b6029c1049",
+    "title": "התארגנות לעלייה לארץ",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24491.mp3"
+  },
+  {
+    "id": "a7fc09cf-5e36-445c-9c78-96777444946b",
+    "title": "פרוט העולים לארץ",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24517.mp3"
+  },
+  {
+    "id": "ea11a5cd-c804-423f-828d-65a43f4050f4",
+    "title": "התחלת בניית המקדש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24518.mp3"
+  },
+  {
+    "id": "3ccee30c-14ff-49e4-8245-2a3057062e69",
+    "title": "התחלת בניית המקדש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24518.mp3"
+  },
+  {
+    "id": "bf3a3ab2-cc91-47fc-ae52-ac30e3d90930",
+    "title": "צרי יהודה ובנימין",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24548.mp3"
+  },
+  {
+    "id": "e8010fbb-0ebb-4313-a7ee-6a9a20ce332b",
+    "title": "צרי יהודה ובנימין",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24548.mp3"
+  },
+  {
+    "id": "58ed6c5c-6b5c-4a00-a1a0-6fa8bc3bf78a",
+    "title": "הצהרת דריוש",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24549.mp3"
+  },
+  {
+    "id": "722f5ef4-a79e-4f4e-a0d0-ad16e6a820e3",
+    "title": "צרי יהודה  ממשיכים להפריע",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24698.mp3"
+  },
+  {
+    "id": "5736aab3-4b8e-4d2b-b3e4-903eafc1307a",
+    "title": "עזרא הסופר",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24570.mp3"
+  },
+  {
+    "id": "fd2f0126-23ee-4c1f-aad8-b5353423256f",
+    "title": "ייחוס ראשי האבות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24571.mp3"
+  },
+  {
+    "id": "47cb5292-5b8a-444c-9ec2-17c8a244dcef",
+    "title": "תקנות  בטחוניות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24716.mp3"
+  },
+  {
+    "id": "c2912bca-cd7e-4032-b3f5-9c47550ca922",
+    "title": "ייחוס ראשי האבות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24571.mp3"
+  },
+  {
+    "id": "c5d63f10-37b0-4f15-8f84-7b00a8e08f07",
+    "title": "נשואי תערובת",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24572.mp3"
+  },
+  {
+    "id": "e467a71b-7bd8-4a3b-97a1-9e54faad5c51",
+    "title": "התנגדות יושבי הארץ",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24682.mp3"
+  },
+  {
+    "id": "55f8ce08-38a7-49d8-a4b8-2a8c63d1edab",
+    "title": "תהליך הטהרה של ישראל",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24573.mp3"
+  },
+  {
+    "id": "cbc84264-60d0-4c67-99b2-2f1c2b636b44",
+    "title": "תסיסה פנימית בתוך העם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24683.mp3"
+  },
+  {
+    "id": "d0a8ca00-f8b7-4539-9b92-c47f7242e65c",
+    "title": "תסיסה פנימית בתוך העם",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "24683.mp3"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000212",
+    "title": "חזון העצמות היבשות",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+31+2.mp3",
+    "newAudioFile": "20%D7%A4%D7%A8%D7%A7+%D7%9C%D7%96.mp3"
+  },
+  {
+    "id": "03b93278-884f-4011-a7e7-c20101dfdf0d",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "256c7dea-02a1-4dd1-94dd-3feb352e092d",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "d88c0bbe-ab1b-4c70-8b34-06c01730c386",
+    "title": "בני גד ובני ראובן",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A.mp3",
+    "newAudioFile": "130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99%2C%D7%91%D7%A0%D7%99+%D7%92%D7%93+%D7%95%D7%91%D7%A0%D7%99+%D7%A8%D7%90%D7%95%D7%91%D7%9F.mp3"
+  },
+  {
+    "id": "efd392d4-0a7d-4805-8b1a-7ba9d40b9511",
+    "title": "קינת דוד",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": true,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "shmuel+b+01.mp3",
+    "newAudioFile": "%D7%A9%D7%9E%D7%95%D7%90%D7%9C+26.mp3",
+    "oldVideoFile": "%D7%A7%D7%99%D7%A0%D7%AA+%D7%93%D7%95%D7%93+%D7%9E%D7%95%D7%A7%D7%98%D7%9F.mp4"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000221",
+    "title": "מלחמת גוג ומגוג",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": false
+    },
+    "oldAudioFile": "%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C+32.mp3",
+    "newAudioFile": "22%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%9C%D7%97-%D7%9C%D7%98+%D7%92%D7%95%D7%92+%D7%95%D7%9E%D7%92%D7%95%D7%92.mp3"
+  },
+  {
+    "id": "1a95e6ac-b740-4cb9-a7f1-0b414b0bc500",
+    "title": "מלוכה וכהונה בספר דברי הימים",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": true,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%AA%D7%94%D7%99%D7%9C%D7%94%20%D7%94%D7%A8%D7%A5%20-%20%D7%A9%D7%91%D7%98%20%D7%93%D7%9F%20%D7%91%D7%93%D7%91%D7%A8%D7%99%20%D7%94%D7%99%D7%9E%D7%99%D7%9D%2000_01_03-.mp3",
+    "oldVideoFile": "%D7%AA%D7%94%D7%9C%D7%94+%D7%94%D7%A8%D7%A5+-+%D7%9E%D7%9C%D7%95%D7%9B%D7%94+%D7%95%D7%9B%D7%94%D7%95%D7%A0%D7%94+%D7%91%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99+%D7%94%D7%99%D7%9E%D7%99%D7%9D+-+%D7%99%D7%9E%D7%99+%D7%9C%D7%99%D7%9E%D7%95%D7%93+%D7%AA%D7%A0_%D7%9A+%D7%AA%D7%A9_%D7%A4+(%D7%9E%D7%99%D7%95%D7%A2%D7%93+%D7%9C%D7%A0%D7%A9%D7%99%D7%9D+%D7%91%D7%9C%D7%91%D7%93).mp4"
+  },
+  {
+    "id": "a9e7b9c5-847d-4783-a068-700e7c061bb7",
+    "title": "אין מוקדם ומאוחר בתורה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93%D7%95+%D7%9E%D7%AA%D7%95%D7%A7%D7%99+%D7%90%D7%99%D7%9F+%D7%9E%D7%95%D7%A7%D7%93%D7%9D+%D7%95%D7%9E%D7%90%D7%95%D7%97%D7%A8+%D7%91%D7%AA%D7%95%D7%A8%D7%94+%D7%A8%D7%91%D7%99%D7%A2%D7%99+%D7%A0%D7%A9%D7%99%D7%9D.MP3"
+  },
+  {
+    "id": "53bf452f-fe17-40a4-a2b8-f7ef3f75b786",
+    "title": "אין מוקדם ומאוחר בתורה",
+    "was": {
+      "hadOldAudio": true,
+      "hadOldVideo": false,
+      "hadOldPdf": true
+    },
+    "oldAudioFile": "%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93%D7%95+%D7%9E%D7%AA%D7%95%D7%A7%D7%99+%D7%90%D7%99%D7%9F+%D7%9E%D7%95%D7%A7%D7%93%D7%9D+%D7%95%D7%9E%D7%90%D7%95%D7%97%D7%A8+%D7%91%D7%AA%D7%95%D7%A8%D7%94+%D7%A8%D7%91%D7%99%D7%A2%D7%99+%D7%A0%D7%A9%D7%99%D7%9D.MP3"
+  }
+]
