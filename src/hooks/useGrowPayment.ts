@@ -43,8 +43,15 @@ export interface StartPaymentParams {
   phone: string;
   email?: string;
   type: "product" | "donation";
-  orderId: string;
+  orderId?: string; // Optional — donations create it server-side
   installments?: number;
+  donationMeta?: {
+    is_monthly?: boolean;
+    dedication_type?: string;
+    dedication_name?: string;
+    donor_email?: string;
+    user_id?: string;
+  };
 }
 
 const SDK_URL = "https://cdn.meshulam.co.il/sdk/gs.min.js";
