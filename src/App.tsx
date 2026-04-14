@@ -129,7 +129,7 @@ const App = () => (
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
-            {import.meta.env.DEV && <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />}
+            <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
             <Route path="/series" element={<SeriesList />} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
             <Route path="/pricing" element={<Suspense fallback={<LazyFallback />}><PricingPage /></Suspense>} />
