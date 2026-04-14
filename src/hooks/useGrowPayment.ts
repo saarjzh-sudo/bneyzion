@@ -185,16 +185,12 @@ export function useGrowPayment() {
           });
         }
 
-        // Step 2b: Redirect flow (donations/direct debit) — open in new window
-        const paymentWindow = window.open(data.url, "_blank", "width=600,height=700");
-        setIsLoading(false);
-        return {
-          payment_sum: String(params.sum),
-          full_name: params.fullName,
-          payment_method: "redirect",
-          number_of_payments: "1",
-          confirmation_number: String(data.processId),
-        } as GrowSuccessResponse;
+        // Step 2b: Redirect flow (donations/direct debit) — navigate current tab
+        // Cannot use window.open from async callback (popup blocker).
+        // Grow will redirect back to successUrl after payment.
+        window.location.href = data.url;
+        // Return never resolves — page navigates away
+        return new Promise<GrowSuccessResponse>(() => {});
       } catch (err: any) {
         setIsLoading(false);
         setError(err.message);
