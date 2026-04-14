@@ -132,7 +132,7 @@ const CommunityCoursePage = () => {
               </DialogHeader>
 
               {selectedLesson.video_url && (
-                <div className="aspect-video rounded-lg overflow-hidden bg-foreground/5 border border-border">
+                <div className="aspect-video rounded-lg overflow-hidden bg-black border border-border">
                   <iframe src={selectedLesson.video_url} className="w-full h-full" allowFullScreen />
                 </div>
               )}
