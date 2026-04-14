@@ -1,9 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
+import { createClient } from "@supabase/supabase-js";
 
 const GROW_API_URL = process.env.GROW_API_URL!;
 const GROW_USER_ID = process.env.GROW_USER_ID!;
 const GROW_PAGECODE_PRODUCTS = process.env.GROW_PAGECODE_PRODUCTS!;
 const GROW_PAGECODE_DONATIONS = process.env.GROW_PAGECODE_DONATIONS!;
+const SUPABASE_URL = process.env.SUPABASE_URL!;
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 
 interface CreatePaymentBody {
   sum: number;
@@ -12,10 +15,18 @@ interface CreatePaymentBody {
   phone: string;
   email?: string;
   type: "product" | "donation";
-  orderId: string;
+  orderId?: string;
   installments?: number;
   successUrl: string;
   cancelUrl: string;
+  // Donation-specific fields (when orderId is missing, we create it here)
+  donationMeta?: {
+    is_monthly?: boolean;
+    dedication_type?: string;
+    dedication_name?: string;
+    donor_email?: string;
+    user_id?: string;
+  };
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -32,14 +43,47 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       phone,
       email,
       type,
-      orderId,
       installments,
       successUrl,
       cancelUrl,
+      donationMeta,
     } = body;
+    let { orderId } = body;
 
-    if (!sum || !description || !fullName || !phone || !type || !orderId) {
+    if (!sum || !description || !fullName || !phone || !type) {
       return res.status(400).json({ error: "Missing required fields" });
+    }
+
+    // For donations without an existing orderId, create the donation record server-side
+    // (RLS blocks anonymous client inserts — we use service role here)
+    if (type === "donation" && !orderId) {
+      const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+      const { data: donation, error: donationErr } = await supabase
+        .from("donations")
+        .insert({
+          amount: sum,
+          donor_name: fullName,
+          donor_email: email || donationMeta?.donor_email || null,
+          is_monthly: donationMeta?.is_monthly || false,
+          dedication_type: donationMeta?.dedication_type || "regular",
+          dedication_name: donationMeta?.dedication_name || null,
+          user_id: donationMeta?.user_id || null,
+          payment_status: "pending",
+        })
+        .select("id")
+        .single();
+
+      if (donationErr) {
+        console.error("Donation insert error:", donationErr);
+        return res
+          .status(500)
+          .json({ error: "Failed to create donation record", details: donationErr.message });
+      }
+      orderId = donation.id;
+    }
+
+    if (!orderId) {
+      return res.status(400).json({ error: "Missing orderId" });
     }
 
     const pageCode =
@@ -95,6 +139,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       url: data.data.url || null,
       processId: data.data.processId,
       processToken: data.data.processToken,
+      orderId,
     });
   } catch (error: any) {
     console.error("create-payment error:", error);

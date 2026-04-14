@@ -103,51 +103,41 @@ const Donate = () => {
       return;
     }
 
-    // Step 1: Create donation record in Supabase
-    createDonation.mutate(
-      {
-        amount: finalAmount,
-        is_monthly: isMonthly,
-        dedication_type: donationType,
-        dedication_name: dedicationName || undefined,
-        donor_name: donorName || undefined,
-        donor_email: donorEmail || undefined,
-        user_id: user?.id,
-      },
-      {
-        onSuccess: async (donation) => {
-          try {
-            // Step 2: Open Grow payment
-            const dedicationText = donationType !== "regular" && dedicationName
-              ? ` - ${donationType === "iluy_neshama" ? "לעילוי נשמת" : "לרפואת"} ${dedicationName}`
-              : "";
+    try {
+      // Donation record is created server-side by /api/grow/create-payment
+      // (RLS blocks anonymous client inserts)
+      const dedicationText = donationType !== "regular" && dedicationName
+        ? ` - ${donationType === "iluy_neshama" ? "לעילוי נשמת" : "לרפואת"} ${dedicationName}`
+        : "";
 
-            await startPayment({
-              sum: finalAmount,
-              description: `תרומה לבני ציון${dedicationText}`,
-              fullName: donorName,
-              phone: donorPhone,
-              email: donorEmail,
-              type: "donation",
-              orderId: donation.id,
-            });
-
-            toast({ title: "חלון תשלום נפתח!", description: "השלימו את התשלום בחלון שנפתח. תודה רבה!" });
-            // Reset form
-            setSelectedAmount(180);
-            setCustomAmount("");
-            setDedicationName("");
-            setDonorName("");
-            setDonorPhone("");
-            setDonorEmail("");
-            setDonationType("regular");
-          } catch (err: any) {
-            toast({ title: "התשלום לא הושלם", description: err.message, variant: "destructive" });
-          }
+      await startPayment({
+        sum: finalAmount,
+        description: `תרומה לבני ציון${dedicationText}`,
+        fullName: donorName,
+        phone: donorPhone,
+        email: donorEmail,
+        type: "donation",
+        // No orderId — server will create the donation record and return it
+        donationMeta: {
+          is_monthly: isMonthly,
+          dedication_type: donationType,
+          dedication_name: dedicationName || undefined,
+          donor_email: donorEmail || undefined,
+          user_id: user?.id,
         },
-        onError: (err: any) => toast({ title: "שגיאה", description: err.message, variant: "destructive" }),
-      }
-    );
+      });
+
+      toast({ title: "חלון תשלום נפתח!", description: "השלימו את התשלום בחלון שנפתח. תודה רבה!" });
+      setSelectedAmount(180);
+      setCustomAmount("");
+      setDedicationName("");
+      setDonorName("");
+      setDonorPhone("");
+      setDonorEmail("");
+      setDonationType("regular");
+    } catch (err: any) {
+      toast({ title: "שגיאה", description: err.message, variant: "destructive" });
+    }
   }, [finalAmount, isMonthly, donationType, dedicationName, donorName, donorPhone, donorEmail, user]);
 
   return (
