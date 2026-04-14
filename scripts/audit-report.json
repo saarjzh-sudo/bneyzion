@@ -1,0 +1,61 @@
+{
+  "total": 300,
+  "perfect_match": 235,
+  "title_not_in_scrape": 58,
+  "audio_mismatch": 6,
+  "video_mismatch": 0,
+  "audio_only_in_supabase": 1,
+  "video_only_in_supabase": 0,
+  "extra_media_on_old_site": 0,
+  "mismatches": [
+    {
+      "id": "ebfc8774-ee05-4335-9b17-48131473c673",
+      "title": "תפקיד הנביא",
+      "issues": [
+        "AUDIO_MISMATCH: ours=05+%D7%A4%D7%A8%D7%A7+%D7%94.MP3 vs theirs=Audio+(4).mp3"
+      ]
+    },
+    {
+      "id": "b1010001-0001-4000-8000-000000000026",
+      "title": "משל הכרם",
+      "issues": [
+        "AUDIO_MISMATCH: ours=04+%D7%A4%D7%A8%D7%A7%D7%99%D7%9D+%D7%93 vs theirs=%D7%99%D7%A9%D7%A2%D7%99%D7%94%D7%95+%D7"
+      ]
+    },
+    {
+      "id": "9f5e981a-92f2-4fe1-8abf-76f094779884",
+      "title": "בסוף הצדיקים מנצחים",
+      "issues": [
+        "AUDIO_ONLY_SUPABASE: we have audio, old site doesn't"
+      ]
+    },
+    {
+      "id": "772d8c5a-1dfe-45e7-b4ae-919fbac54c5e",
+      "title": "פסל מיכה",
+      "issues": [
+        "AUDIO_MISMATCH: ours=%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+15. vs theirs=041+-+%D7%99%D7%91+%D7%A9%D7%91%D7%98+-+"
+      ]
+    },
+    {
+      "id": "1ed9531f-61ed-46cc-9534-d6a08001dffd",
+      "title": "תפילת נחמיה",
+      "issues": [
+        "AUDIO_MISMATCH: ours=01%D7%A0%D7%97%D7%9E%D7%99%D7%94+%D7%A4% vs theirs=22124.mp3"
+      ]
+    },
+    {
+      "id": "8e7ca0ce-4d04-42fd-9591-ab132be09bb2",
+      "title": "בני גד ובני ראובן",
+      "issues": [
+        "AUDIO_MISMATCH: ours=3%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7 vs theirs=130%D7%9E%D7%98%D7%95%D7%AA-%D7%9E%D7%A1"
+      ]
+    },
+    {
+      "id": "367266c3-605c-437b-9eed-0106dfc2f815",
+      "title": "איוב פרק כח",
+      "issues": [
+        "AUDIO_MISMATCH: ours=22-iyov-20.mp3 vs theirs=22-iyov-28.mp3"
+      ]
+    }
+  ]
+}
