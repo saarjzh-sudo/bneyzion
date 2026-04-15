@@ -56,15 +56,7 @@ const ParashaPage = () => {
     <Layout>
       {/* ═══ Narrow Hero with biblical landscape ═══ */}
       <section className="relative overflow-hidden py-8 md:py-10 print:py-4 print:border-none">
-        <div className="absolute inset-0">
-          <img
-            src="/images/hero-biblical-landscape.jpg"
-            alt=""
-            className="w-full h-full object-cover"
-            loading="eager"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2D1F0E] via-[#3D2A12] to-[#2D1F0E]" />
 
         <div className="container max-w-4xl relative z-10">
           {/* Breadcrumb + print */}

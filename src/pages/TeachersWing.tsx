@@ -199,10 +199,7 @@ const TeachersWing = () => {
     <Layout>
       {/* Compact Hero */}
       <section className="relative py-10 md:py-14 overflow-hidden">
-        <div className="absolute inset-0">
-          <img src="/images/hero-biblical-landscape.jpg" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-l from-[hsl(var(--brand-mahogany)/0.88)] via-[hsl(var(--brand-mahogany)/0.75)] to-[hsl(var(--brand-mahogany)/0.55)]" />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-l from-[#2D1F0E] via-[#5B3A1A] to-[#8B6F47]" />
         <div className="container relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full mb-3">
             <GraduationCap className="h-3.5 w-3.5 text-accent" />

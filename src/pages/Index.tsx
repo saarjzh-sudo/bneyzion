@@ -17,7 +17,6 @@ import MemorialSection from "@/components/home/MemorialSection";
 
 const Index = () => {
   useSEO({
-    title: "בני ציון – אתר התנ״ך של ישראל",
     description: "פורטל מרכזי ללימוד תנ״ך – שיעורים, סדרות, רבנים ועוד. למעלה מ-1,000 שיעורים חינמיים בספרי נביאים, כתובים, תורה ומועדים.",
     url: "https://bneyzion.co.il/",
   });
