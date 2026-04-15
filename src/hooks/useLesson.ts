@@ -10,7 +10,8 @@ export function useLesson(id: string | undefined) {
         .from("lessons")
         .select("*, rabbis(id, name, image_url, title), series(id, title)")
         .eq("id", id!)
-        .single();
+        .eq("status", "published")
+        .maybeSingle();
       if (error) throw error;
       return data;
     },
