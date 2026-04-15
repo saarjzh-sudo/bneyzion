@@ -71,6 +71,8 @@ const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
 const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
+const DesignPreviewHome = lazy(() => import("./pages/DesignPreviewHome"));
+const DesignPreviewLesson = lazy(() => import("./pages/DesignPreviewLesson"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -158,6 +160,9 @@ const App = () => (
             <Route path="/admin/orders" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/coupons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-health" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
+            <Route path="/design-home" element={<Suspense fallback={<LazyFallback />}><DesignPreviewHome /></Suspense>} />
+            <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
+            <Route path="/design-lesson/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </PlayerProvider>
