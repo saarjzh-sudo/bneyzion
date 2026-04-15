@@ -88,9 +88,46 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Paamon';
+  src: url('/fonts/paamon-light-aaa.otf') format('opentype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Paamon';
+  src: url('/fonts/paamon-regular-aaa.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Paamon';
+  src: url('/fonts/paamon-bold-aaa.otf') format('opentype');
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Mugrabi';
+  src: url('/fonts/mugrabi-light-aaa.otf') format('opentype');
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'Mugrabi';
+  src: url('/fonts/mugrabi-regular-aaa.otf') format('opentype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-shimmer { animation: shimmer 8s ease-in-out infinite; }
+.animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; }
 
 @layer base {
   :root {

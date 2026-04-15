@@ -44,6 +44,19 @@ export default {
   		ploni: [
   			'Ploni',
   			'sans-serif'
+  		],
+  		paamon: [
+  			'"Paamon"',
+  			'serif'
+  		],
+  		mugrabi: [
+  			'"Mugrabi"',
+  			'sans-serif'
+  		],
+  		'kedem-black': [
+  			'"Kedem"',
+  			'Frank Ruhl Libre',
+  			'serif'
   		]
   	},
   	extend: {
