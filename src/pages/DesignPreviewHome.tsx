@@ -1,8 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLessons } from "@/hooks/useLessons";
 import { useSeries } from "@/hooks/useSeries";
 import { usePublicRabbis } from "@/hooks/useRabbis";
+import { useParasha } from "@/hooks/useParasha";
+import { getParashaVerse } from "@/lib/parashaCalendar";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK    = "#8B6F47";
@@ -239,6 +244,248 @@ function StatsBar() {
   );
 }
 
+// ── DesignParashaHolidaySection ────────────────────────────────────────────
+const HOLIDAYS_5786 = [
+  { name: "פורים",         hebrewDate: "י״ד אדר",  date: new Date(2026, 2, 3),  terms: ["פורים","אסתר"] },
+  { name: "פסח",           hebrewDate: "ט״ו ניסן", date: new Date(2026, 3, 2),  terms: ["פסח","הגדה"] },
+  { name: "יום העצמאות",   hebrewDate: "ה׳ אייר",  date: new Date(2026, 3, 22), terms: ["יום העצמאות","עצמאות"] },
+  { name: "ל״ג בעומר",     hebrewDate: "י״ח אייר", date: new Date(2026, 4, 5),  terms: ["ל\"ג בעומר"] },
+  { name: "שבועות",        hebrewDate: "ו׳ סיוון", date: new Date(2026, 4, 22), terms: ["שבועות","רות"] },
+  { name: "תשעה באב",      hebrewDate: "ט׳ באב",   date: new Date(2026, 6, 23), terms: ["תשעה באב","איכה"] },
+  { name: "ראש השנה",      hebrewDate: "א׳ תשרי",  date: new Date(2026, 8, 12), terms: ["ראש השנה"] },
+  { name: "יום כיפור",     hebrewDate: "י׳ תשרי",  date: new Date(2026, 8, 21), terms: ["יום כיפור","כיפור"] },
+  { name: "סוכות",         hebrewDate: "ט״ו תשרי", date: new Date(2026, 8, 26), terms: ["סוכות"] },
+  { name: "חנוכה",         hebrewDate: "כ״ה כסלו", date: new Date(2026, 11, 5), terms: ["חנוכה"] },
+];
+
+function DesignParashaHolidaySection() {
+  const { parasha, chumash, articleSeries } = useParasha();
+  const verse = getParashaVerse(parasha);
+  const navigate = useNavigate();
+
+  const holiday = useMemo(() => {
+    const now = new Date();
+    const cutoff = new Date(now.getTime() + 45 * 864e5);
+    return HOLIDAYS_5786.find(h => h.date >= now && h.date <= cutoff) ?? null;
+  }, []);
+
+  const daysUntil = holiday
+    ? Math.ceil((holiday.date.getTime() - Date.now()) / 864e5)
+    : 0;
+
+  const { data: holidaySeries = [] } = useQuery({
+    queryKey: ["design-holiday-series", holiday?.name],
+    enabled: !!holiday,
+    staleTime: 1000 * 60 * 60,
+    queryFn: async () => {
+      if (!holiday) return [];
+      const seen = new Set<string>();
+      const out: Array<{ id: string; title: string; lesson_count: number; rabbi_name: string | null }> = [];
+      for (const term of holiday.terms) {
+        const { data } = await supabase
+          .from("series").select("id, title, lesson_count, rabbis(name)")
+          .eq("status", "active").gt("lesson_count", 0)
+          .ilike("title", `%${term}%`).limit(5);
+        for (const s of data ?? []) {
+          if (!seen.has(s.id)) {
+            seen.add(s.id);
+            out.push({ id: s.id, title: s.title, lesson_count: s.lesson_count,
+              rabbi_name: (s.rabbis as any)?.name ?? null });
+          }
+        }
+      }
+      return out.sort((a, b) => b.lesson_count - a.lesson_count).slice(0, 6);
+    },
+  });
+
+  const firstArticle = articleSeries.find(s => s.lessonContent);
+
+  return (
+    <section dir="rtl" style={{
+      background: `linear-gradient(160deg, #2C3A1E 0%, #3A4D28 45%, #2C3A1E 100%)`,
+      padding: "5.5rem 1.5rem", position: "relative", overflow: "hidden",
+    }}>
+      {/* Grain texture */}
+      <svg style={{ position: "absolute", inset: 0, opacity: 0.04, pointerEvents: "none" }} width="100%" height="100%">
+        <filter id="g3"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" /><feColorMatrix type="saturate" values="0" /></filter>
+        <rect width="100%" height="100%" filter="url(#g3)" />
+      </svg>
+      {/* Subtle dot pattern */}
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
+        backgroundImage: "radial-gradient(circle, rgba(232,213,160,0.07) 1px, transparent 1px)",
+        backgroundSize: "30px 30px" }} />
+
+      <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative" }}>
+        <div style={{ display: "grid", gridTemplateColumns: holiday && holidaySeries.length > 0 ? "1fr 1fr" : "1fr",
+                      gap: "4rem", alignItems: "start" }}>
+
+          {/* ── LEFT: Parasha ── */}
+          <div>
+            {/* Header */}
+            <div style={{ marginBottom: "2rem" }}>
+              <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem", fontWeight: 700,
+                letterSpacing: "0.2em", color: GOLD_LIGHT, textTransform: "uppercase",
+                marginBottom: "0.5rem" }}>
+                הדף לשולחן שבת
+              </div>
+              <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                fontSize: "clamp(1.6rem, 3vw, 2.2rem)", color: "white", margin: "0 0 0.25rem",
+                lineHeight: 1.15 }}>
+                פרשת {parasha || "..."}
+              </h2>
+              {chumash && (
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
+                  color: "rgba(255,255,255,0.45)" }}>חומש {chumash}</div>
+              )}
+            </div>
+
+            {/* Verse blockquote */}
+            {verse && (
+              <div style={{ borderRight: `3px solid ${GOLD_LIGHT}`, paddingRight: "1.25rem",
+                marginBottom: "1.75rem" }}>
+                <blockquote style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 400,
+                  fontSize: "1.05rem", fontStyle: "italic", color: "rgba(255,255,255,0.85)",
+                  margin: 0, lineHeight: 1.7 }}>
+                  ״{verse.text}״
+                </blockquote>
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
+                  color: "rgba(255,255,255,0.35)", marginTop: "0.4rem" }}>
+                  [{verse.reference}]
+                </div>
+              </div>
+            )}
+
+            {/* Article preview */}
+            {firstArticle && (
+              <div style={{ background: "rgba(255,255,255,0.06)", borderRadius: "1.1rem",
+                border: "1px solid rgba(232,213,160,0.12)", padding: "1.25rem 1.5rem",
+                marginBottom: "1.75rem" }}>
+                <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
+                  fontSize: "0.95rem", color: GOLD_SHIMMER, marginBottom: "0.4rem" }}>
+                  {firstArticle.title}
+                </div>
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
+                  color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>
+                  מאת {firstArticle.rabbi}
+                </div>
+                <div
+                  className="line-clamp-3"
+                  style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem",
+                    color: "rgba(255,255,255,0.65)", lineHeight: 1.7,
+                    display: "-webkit-box", WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(
+                    firstArticle.lessonContent?.replace(/<[^>]+>/g, " ").slice(0, 200) ?? ""
+                  ) }}
+                />
+              </div>
+            )}
+
+            <button onClick={() => navigate("/parasha")}
+              style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem", border: "none",
+                background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
+                color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
+                fontSize: "0.95rem", cursor: "pointer",
+                boxShadow: "0 4px 20px rgba(139,111,71,0.35)" }}>
+              לדף פרשת השבוע ←
+            </button>
+          </div>
+
+          {/* ── RIGHT: Holiday ── */}
+          {holiday && holidaySeries.length > 0 && (
+            <div>
+              {/* Header */}
+              <div style={{ marginBottom: "2rem" }}>
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem", fontWeight: 700,
+                  letterSpacing: "0.2em", color: GOLD_LIGHT, textTransform: "uppercase",
+                  marginBottom: "0.5rem" }}>
+                  החג הקרוב
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", flexWrap: "wrap" }}>
+                  <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                    fontSize: "clamp(1.6rem, 3vw, 2.2rem)", color: "white", margin: 0,
+                    lineHeight: 1.15 }}>
+                    {holiday.name}
+                  </h2>
+                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                    padding: "0.2rem 0.65rem", borderRadius: "2rem",
+                    background: "rgba(196,162,101,0.15)",
+                    border: `1px solid rgba(196,162,101,0.4)` }}>
+                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e",
+                      boxShadow: "0 0 6px #22c55e" }} />
+                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.7rem",
+                      fontWeight: 700, color: GOLD_LIGHT }}>
+                      עוד {daysUntil} ימים
+                    </span>
+                  </div>
+                </div>
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
+                  color: "rgba(255,255,255,0.45)", marginTop: "0.25rem" }}>
+                  {holiday.hebrewDate} • שיעורים והכנה לחג
+                </div>
+              </div>
+
+              {/* Series list */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem",
+                marginBottom: "1.75rem" }}>
+                {holidaySeries.map((s) => (
+                  <div key={s.id}
+                    onClick={() => navigate(`/series/${s.id}`)}
+                    style={{ display: "flex", alignItems: "center", gap: "0.9rem",
+                      padding: "0.8rem 1rem", borderRadius: "0.9rem",
+                      background: "rgba(255,255,255,0.06)",
+                      border: "1px solid rgba(232,213,160,0.1)",
+                      cursor: "pointer", transition: "all 0.2s" }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.1)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(196,162,101,0.3)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(232,213,160,0.1)";
+                    }}
+                  >
+                    <div style={{ width: 7, height: 7, borderRadius: "50%",
+                      background: GOLD_LIGHT, flexShrink: 0, opacity: 0.7 }} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontFamily: "Ploni, sans-serif", fontWeight: 600,
+                        fontSize: "0.88rem", color: "rgba(255,255,255,0.9)",
+                        whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {s.title}
+                      </div>
+                      <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
+                        color: "rgba(255,255,255,0.38)" }}>
+                        {s.rabbi_name ? `${s.rabbi_name} • ` : ""}{s.lesson_count} שיעורים
+                      </div>
+                    </div>
+                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
+                      color: GOLD_LIGHT, flexShrink: 0 }}>←</span>
+                  </div>
+                ))}
+              </div>
+
+              <button onClick={() => navigate("/series")}
+                style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem",
+                  border: `1.5px solid ${GOLD_LIGHT}`, background: "transparent",
+                  color: GOLD_LIGHT, fontFamily: "Paamon, serif", fontWeight: 700,
+                  fontSize: "0.95rem", cursor: "pointer", transition: "all 0.2s" }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.background = "rgba(196,162,101,0.1)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.background = "transparent";
+                }}
+              >
+                כל שיעורי {holiday.name} ←
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── PopularLessonsSection ──────────────────────────────────────────────────
 function PopularLessonsSection() {
   const { data: lessonsRaw } = useLessons();
@@ -383,7 +630,7 @@ function WarMiraclesSection() {
     <section style={{ background: NAVY_DEEP, padding: "5.5rem 1.5rem", position: "relative", overflow: "hidden" }}>
       {/* Background image with overlay */}
       <div style={{ position: "absolute", inset: 0 }}>
-        <img src="/images/war-miracles-bg.png" alt=""
+        <img src="/images/war-miracles-bg.jpg" alt=""
           style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.22 }} />
         <div style={{ position: "absolute", inset: 0,
                       background: "linear-gradient(135deg, rgba(26,39,68,0.92) 0%, rgba(26,39,68,0.85) 100%)" }} />
@@ -599,7 +846,7 @@ function KenesBanner() {
         >
           {/* Image */}
           <div style={{ position: "absolute", inset: 0 }}>
-            <img src="/images/kenes-banner.png" alt=""
+            <img src="/images/kenes-banner.jpg" alt=""
               style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.35 }} />
             <div style={{ position: "absolute", inset: 0,
                           background: "linear-gradient(90deg, rgba(45,31,14,0.95) 40%, rgba(45,31,14,0.6) 100%)" }} />
@@ -874,6 +1121,7 @@ export default function DesignPreviewHome() {
       <DesignNavBar />
       <DesignHero />
       <StatsBar />
+      <DesignParashaHolidaySection />
       <PopularLessonsSection />
       <WarMiraclesSection />
       <TopSeriesSection />
