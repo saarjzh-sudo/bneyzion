@@ -965,7 +965,7 @@ function WhatsAppCTASection() {
                   margin: 0,
                 }}
               >
-                "הִנֵּה לֹא יָנוּם וְלֹא יִישָׁן שׁוֹמֵר יִשְׂרָאֵל"
+                "הנה לא ינום ולא יישן שומר ישראל"
               </blockquote>
             </div>
           </div>
