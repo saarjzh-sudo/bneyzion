@@ -5,10 +5,10 @@ import { BookOpen, Home, Search, Library } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 
 const bookPages = [
-  { text: "בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים", opacity: 0.15, y: -20 },
-  { text: "אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ", opacity: 0.12, y: 10 },
-  { text: "וְהָאָ֗רֶץ הָיְתָ֥ה תֹ֙הוּ֙ וָבֹ֔הוּ", opacity: 0.1, y: 40 },
-  { text: "וְר֣וּחַ אֱלֹהִ֔ים מְרַחֶ֖פֶת", opacity: 0.08, y: 70 },
+  { text: "בראשית ברא אלהים", opacity: 0.15, y: -20 },
+  { text: "את השמים ואת הארץ", opacity: 0.12, y: 10 },
+  { text: "והארץ היתה תהו ובהו", opacity: 0.1, y: 40 },
+  { text: "ורוח אלהים מרחפת", opacity: 0.08, y: 70 },
 ];
 
 const NotFound = () => {
@@ -114,7 +114,7 @@ const NotFound = () => {
             className="mt-12 flex items-center justify-center gap-3 text-accent/40"
           >
             <span className="h-px w-16 bg-accent/30" />
-            <span className="font-serif text-xs text-muted-foreground">״כִּ֤י נֵ֣ר מִ֭צְוָה וְת֣וֹרָה א֑וֹר״</span>
+            <span className="font-serif text-xs text-muted-foreground">״כי נר מצוה ותורה אור״</span>
             <span className="h-px w-16 bg-accent/30" />
           </motion.div>
         </div>
