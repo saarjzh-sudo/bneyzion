@@ -169,10 +169,7 @@ const Profile = () => {
     <Layout>
       {/* Profile Header */}
       <section className="relative overflow-hidden py-10 md:py-14">
-        <div className="absolute inset-0">
-          <img src="/images/hero-biblical-landscape.jpg" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2D1F0E] via-[#3D2A12] to-[#2D1F0E]" />
         <div className="container relative z-10 flex items-center gap-6">
           {/* Avatar with upload */}
           <div className="relative group">

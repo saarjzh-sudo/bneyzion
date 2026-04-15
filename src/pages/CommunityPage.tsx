@@ -35,10 +35,7 @@ const CommunityPage = () => {
     <Layout>
       {/* Hero */}
       <section className="relative overflow-hidden py-16 md:py-24">
-        <div className="absolute inset-0">
-          <img src="/images/hero-biblical-landscape.jpg" alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2D1F0E] via-[#3D2A12] to-[#1A1208]" />
         <div className="container relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <motion.div
