@@ -9,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Search, Pencil, Trash2 } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Wand2, ImageOff, ExternalLink } from "lucide-react";
 import { useLessons, useCreateLesson, useUpdateLesson, useDeleteLesson } from "@/hooks/useLessons";
 import { useRabbis } from "@/hooks/useRabbis";
 import { useSeries } from "@/hooks/useSeries";
@@ -37,10 +37,12 @@ export default function Lessons() {
   const [form, setForm] = useState({
     title: "", description: "", rabbi_id: "", series_id: "", video_url: "", audio_url: "",
     duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "",
+    thumbnail_url: "",
   });
+  const [generatingImage, setGeneratingImage] = useState(false);
 
   const resetForm = () => {
-    setForm({ title: "", description: "", rabbi_id: "", series_id: "", video_url: "", audio_url: "", duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "" });
+    setForm({ title: "", description: "", rabbi_id: "", series_id: "", video_url: "", audio_url: "", duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "", thumbnail_url: "" });
     setEditingLesson(null);
   };
 
@@ -51,8 +53,29 @@ export default function Lessons() {
       series_id: lesson.series_id || "", video_url: lesson.video_url || "", audio_url: lesson.audio_url || "",
       duration: lesson.duration?.toString() || "", source_type: lesson.source_type, status: lesson.status,
       bible_book: lesson.bible_book || "", bible_chapter: lesson.bible_chapter?.toString() || "", bible_verse: lesson.bible_verse?.toString() || "",
+      thumbnail_url: lesson.thumbnail_url || "",
     });
     setDialogOpen(true);
+  };
+
+  const generateImage = async () => {
+    if (!form.title) return toast({ title: "יש להזין כותרת קודם", variant: "destructive" });
+    setGeneratingImage(true);
+    try {
+      const res = await fetch("/api/generate-lesson-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: form.title, description: form.description }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "שגיאה בייצור תמונה");
+      setForm(f => ({ ...f, thumbnail_url: data.url }));
+      toast({ title: "התמונה נוצרה בהצלחה ✨" });
+    } catch (e: any) {
+      toast({ title: "שגיאה בייצור תמונה", description: e.message, variant: "destructive" });
+    } finally {
+      setGeneratingImage(false);
+    }
   };
 
   const handleSubmit = async () => {
@@ -65,6 +88,7 @@ export default function Lessons() {
       bible_book: form.bible_book || null,
       bible_chapter: form.bible_chapter ? parseInt(form.bible_chapter) : null,
       bible_verse: form.bible_verse ? parseInt(form.bible_verse) : null,
+      thumbnail_url: form.thumbnail_url || null,
     };
     try {
       if (editingLesson) {
@@ -113,6 +137,65 @@ export default function Lessons() {
                     <Label>תיאור</Label>
                     <Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} />
                   </div>
+
+                  {/* ── Thumbnail ──────────────────────────────────────── */}
+                  <div className="col-span-2 space-y-2">
+                    <Label>תמונה ממוזערת (thumbnail)</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        value={form.thumbnail_url}
+                        onChange={(e) => setForm({ ...form, thumbnail_url: e.target.value })}
+                        placeholder="https://... או לחץ על ״צור תמונה AI״"
+                        className="flex-1 text-xs"
+                        dir="ltr"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="sm"
+                        onClick={generateImage}
+                        disabled={generatingImage || !form.title}
+                        className="shrink-0 gap-1.5 font-display text-xs"
+                      >
+                        <Wand2 className="h-3.5 w-3.5" />
+                        {generatingImage ? "מייצר..." : "צור תמונה AI"}
+                      </Button>
+                    </div>
+
+                    {/* Preview */}
+                    {form.thumbnail_url ? (
+                      <div className="relative rounded-lg overflow-hidden border border-border bg-muted h-32 w-full">
+                        <img
+                          src={form.thumbnail_url}
+                          alt="thumbnail preview"
+                          className="w-full h-full object-cover"
+                          onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                        />
+                        <a
+                          href={form.thumbnail_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-2 left-2 bg-black/50 text-white rounded p-1 hover:bg-black/70 transition-colors"
+                        >
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => setForm(f => ({ ...f, thumbnail_url: "" }))}
+                          className="absolute top-2 right-2 bg-black/50 text-white rounded p-1 hover:bg-destructive transition-colors text-xs leading-none"
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="rounded-lg border border-dashed border-border bg-muted/40 h-16 flex items-center justify-center gap-2 text-muted-foreground text-xs">
+                        <ImageOff className="h-4 w-4" />
+                        אין תמונה — הכנס URL או לחץ ״צור תמונה AI״
+                      </div>
+                    )}
+                  </div>
+                  {/* ────────────────────────────────────────────────────── */}
+
                   <div>
                     <Label>רב</Label>
                     <Select value={form.rabbi_id} onValueChange={(v) => setForm({ ...form, rabbi_id: v })}>
@@ -187,6 +270,7 @@ export default function Lessons() {
               <Table>
                 <TableHeader>
                   <TableRow>
+                    <TableHead className="text-right w-12">🖼</TableHead>
                     <TableHead className="text-right">כותרת</TableHead>
                     <TableHead className="text-right">רב</TableHead>
                     <TableHead className="text-right">סדרה</TableHead>
@@ -198,6 +282,12 @@ export default function Lessons() {
                 <TableBody>
                   {filtered?.map((lesson: any) => (
                     <TableRow key={lesson.id}>
+                      <TableCell>
+                        {lesson.thumbnail_url
+                          ? <img src={lesson.thumbnail_url} alt="" className="w-10 h-7 rounded object-cover" />
+                          : <div className="w-10 h-7 rounded bg-muted flex items-center justify-center"><ImageOff className="h-3 w-3 text-muted-foreground" /></div>
+                        }
+                      </TableCell>
                       <TableCell className="font-medium">{lesson.title}</TableCell>
                       <TableCell>{lesson.rabbis?.name || "—"}</TableCell>
                       <TableCell>{lesson.series?.title || "—"}</TableCell>
