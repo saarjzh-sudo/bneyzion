@@ -407,7 +407,7 @@ const AIChatWidget = ({ context }: { context?: string }) => {
             onClick={() => setOpen(true)}
             className="fixed bottom-24 left-4 z-40 flex items-center gap-2 px-4 py-3 rounded-2xl
               bg-primary text-primary-foreground shadow-lg hover:shadow-xl transition-all
-              duration-300 hover:scale-105 relative"
+              duration-300 hover:scale-105"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
