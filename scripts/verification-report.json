@@ -1,10 +1,33 @@
 {
-  "timestamp": "2026-04-13T06:18:43.864Z",
-  "duration": "12s",
-  "umbLessonsCount": 0,
-  "matched": 0,
-  "unmatched": 0,
-  "mismatchCount": 0,
-  "issuesByType": {},
-  "mismatches": []
+  "timestamp": "2026-04-14T16:02:12.468Z",
+  "summary": {
+    "old_site_unique_titles": 2997,
+    "db_updates_applied": 494
+  },
+  "before_row_scrape": {
+    "total_lessons": 11818,
+    "published": 11289,
+    "draft": 529,
+    "with_audio": 6450,
+    "with_video": 858,
+    "with_attachment": 1133
+  },
+  "after_row_scrape": {
+    "published": 11289,
+    "draft": 529,
+    "with_audio": 6450,
+    "with_video": 858,
+    "with_attachment": 1133,
+    "delta_audio": 0,
+    "delta_video": 0,
+    "delta_attachment": 0
+  },
+  "breakdown_of_updates": {
+    "audio_added": 18,
+    "video_added": 45,
+    "pdf_added": 341,
+    "republished_from_draft": 28,
+    "source_type_corrected": 125
+  },
+  "still_empty_sample": []
 }

@@ -1,0 +1,2382 @@
+[
+  {
+    "id": "c152409f-3efc-4225-9ad0-05af6846daa3",
+    "title": "ביאור הפסוקים - פרשת מקץ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0614df34-e690-440e-aabf-a1aa4b9964e0",
+    "title": "החנוכה המודרגת של הכהנים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "73f611ed-4c4c-486e-af5e-7da3955e5294",
+    "title": "מנהגי אבלות של מצורע מוחלט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4a0c53a2-35d7-41df-8eae-88b5f8253a70",
+    "title": "כי אעלה ארכה לך ומכותייך ארפאך",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e55e8f8d-1bc1-4a3d-8b99-96e019fd69b0",
+    "title": "מגילת אסתר – מגילת הַסֵתֶר",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "608f2689-ef74-4594-b884-08d569bf8e27",
+    "title": "שמחה של מצווה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e45ff914-ef82-4a4b-b517-0d40e1a82cb1",
+    "title": "חידות לילדים - פרשת תרומה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7a0b7649-e320-4b67-ba8d-6e35ce806a63",
+    "title": "קדושה בכפייה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "cb35401e-0c9d-4263-a135-27f919056755",
+    "title": "פרשת כי תבוא - קריאה בטעמים אשכנזי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e51191ea-a1cf-4100-9c64-3fcb83e0ccda",
+    "title": "\"כי לי הארץ\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9fd2f242-9b0f-412e-be0f-b9225c1f0813",
+    "title": "\"וזכרתי את בריתי יעקוב... והארץ אזכור\" - מה הפירוש?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0a2a8a83-3c04-4667-918c-4ffbce668bc1",
+    "title": "החצי המאוחד",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "10b10b4f-2632-4668-b0d1-4648149dc75d",
+    "title": "הודאה על הניצחונות והנסים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a4a59b19-fe58-43cb-b736-2935439e66b4",
+    "title": "ביאור הפסוקים - פרשת בראשית",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b3cdc635-64a8-4b60-85bd-02cedd81b235",
+    "title": "\"מצא אשה - מצא טוב\" פרקים יח-יט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "162bf6b2-1664-4a1e-a2b9-43df26b4f394",
+    "title": "ביאורי מילים ושאלות - פרשת בראשית",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8dec67b6-5003-4759-9bf6-7cb0de616223",
+    "title": "ביאור הפסוקים - פרשת נח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e5c53bc9-71e3-40b8-926a-9b6efb5ac200",
+    "title": "דגשים - פרשת נח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1c376872-691d-4418-84de-90e2049810e5",
+    "title": "\"ולשמחה מה זה עֹשָׂה\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0b646dd8-4793-491d-b0f6-ea5a3ec035d1",
+    "title": "חלום נבוכדנצאר הראשון",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "864e57ba-6208-4412-9616-196b00964a0d",
+    "title": "\"כי סתומים וחתומים הדברים עד עת קץ\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f5050501-c001-4000-a000-000000000001",
+    "title": "וזה מעשה המנורה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "53eba5fe-9eb4-4eb7-93de-b99b0f0e306e",
+    "title": "ביאורי מילים ושאלות - פרשת נח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c7070701-0001-4000-8000-000000000001",
+    "title": "המנורה המאוחדת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c3d40001-0003-4000-8000-000000000003",
+    "title": "ניסיון בדרגה שלגבה אין התחשבות בטבע",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c3d40001-0003-4000-8000-000000000001",
+    "title": "הכנות לכניסה לארץ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e9100001-0005-4000-8000-000000000002",
+    "title": "הניצחון על חמשת מלכי האמורי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "05858b88-cff8-40de-89f5-dc6785a030b4",
+    "title": "ביאור פשט הפסוקים - פרשת נח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ee230001-0001-4000-8000-000000000002",
+    "title": "יהושע סוקר את ההיסטוריה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000015",
+    "title": "מידת הגאווה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000021",
+    "title": "הסכנה במידת הגאווה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1ed31b08-c5e9-4875-82c3-075296406f56",
+    "title": "פרשת וירא",
+    "status": "umbraco_has_no_content",
+    "propKeys": [
+      "title"
+    ]
+  },
+  {
+    "id": "e3eba713-d64a-43e4-a65b-556a51c414bb",
+    "title": "פרשת לך לך",
+    "status": "umbraco_has_no_content",
+    "propKeys": [
+      "title"
+    ]
+  },
+  {
+    "id": "4f934c7e-a49e-4887-898c-6458dde7b2ed",
+    "title": "ביאור הפסוקים - פרשת וירא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c5349309-ca8e-49aa-9066-3d5d6ee81244",
+    "title": "שאלות מקיפות - פרשת וירא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f4d5dacf-3fc1-4085-a488-fc16939ecacb",
+    "title": "דגשים - פרשת וירא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000119",
+    "title": "נקמת ד' מצור וצידון",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f8803712-fbe3-4dc0-93cf-a44a567f2d0e",
+    "title": "ביאורי מילים ושאלות - פרשת וירא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b85427b8-8847-46c2-b1d4-3fb7d1c43f44",
+    "title": "ביאור פשט הפסוקים - פרשת וירא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5e568f85-1069-468b-965b-57ad853961df",
+    "title": "שאלות חזרה על פרשת וירא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000137",
+    "title": "אמונת ישראל- גאולתם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000047",
+    "title": "חזון הנחמה (א)",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000028",
+    "title": "ישעיהו בבקיאות פרקים לז-לח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000043",
+    "title": "ישעיהו בבקיאות פרקים מ-מא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000054",
+    "title": "ישעיהו בבקיאות פרקים מב-מג",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000067",
+    "title": "ישעיהו בבקיאות פרקים מד-מה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000075",
+    "title": "ישעיהו בבקיאות פרקים מו-מז",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000078",
+    "title": "גורלה המר של בבל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000082",
+    "title": "ישעיהו בבקיאות פרקים מח-מט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000091",
+    "title": "ישעיהו בבקיאות פרקים נ-נא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000103",
+    "title": "הנה ישכיל עבדי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000111",
+    "title": "ישעיהו בבקיאות פרקים נד-נה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000127",
+    "title": "ישעיהו בבקיאות פרקים נו-נז",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000136",
+    "title": "ישעיהו בבקיאות פרקים נח-נט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000157",
+    "title": "ישעיהו בבקיאות פרקים סד-סה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000151",
+    "title": "ישעיהו בבקיאות פרקים סב-סג",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000157",
+    "title": "שליחות נבוכדנאצר ועונשו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000268",
+    "title": "חורבן ובניין",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000207",
+    "title": "גאולת ישראל למען שם ה'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a41366e1-ca6b-48f8-ad83-8159f6f7e35e",
+    "title": "גדולת מלכות שלמה, בניין המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2c04a0e7-0462-4c22-ac60-23321b9cef11",
+    "title": "מה הייתה טעותו של יואב בעניין עמלק?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "947277d1-ec99-4e51-9107-784c0528a4a3",
+    "title": "גדולת מלכות שלמה - חלק א' ו-ב'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "04197371-4450-44c8-9076-380c7fd83dd7",
+    "title": "ביאור פשט הפסוקים - פרשת תולדות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "234b90c7-27fb-490d-8025-5ca517daddad",
+    "title": "בריחת אליהו להר חורב - חלק א' וב'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "717756d7-4485-496b-a5fc-f9aa9d8c7819",
+    "title": "ביאור \"ושננתם\" לפרק א'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d4076a5f-3615-4a05-bf3e-9888cdb1ce81",
+    "title": "ביאור \"ושננתם\" לפרק ב'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7733312f-0348-4d8d-8e79-8253cb7ef4c0",
+    "title": "שמואל ב' פרק ב'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b86d4ee7-4a3d-4c0c-8f80-dbf04b44c429",
+    "title": "ביאור \"ושננתם\" לפרק ג'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "fb7be118-dde0-4ed2-b0f7-b3ef0b635a0a",
+    "title": "שאלות חזרה על פרשת תולדות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8bcd439c-4646-4cd8-afc7-2c84821a8e35",
+    "title": "פרשת חיי שרה",
+    "status": "umbraco_has_no_content",
+    "propKeys": [
+      "title"
+    ]
+  },
+  {
+    "id": "3a013db8-fb53-49c4-b40f-ea46354e4456",
+    "title": "ביאור הפסוקים - פרשת חיי שרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "359960e1-31c3-41ed-9e57-19482a3c4489",
+    "title": "שאלות מקיפות - פרשת חיי שרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8d6a33b8-e75e-491f-b998-d56345c7de90",
+    "title": "דגשים - פרשת חיי שרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "25591cc3-a59f-40d9-a59c-e62e2e9a7d89",
+    "title": "ביאורי מילים ושאלות - פרשת חיי שרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c9938350-e3fe-4e15-ace7-47de2284d455",
+    "title": "ביאור פשט הפסוקים - פרשת חיי שרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f04459c1-ae9a-40a1-8640-c403b8eacfa0",
+    "title": "שאלות חזרה על פרשת חיי שרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2e71d4ad-76bb-4cc0-a6d2-c334ceb05229",
+    "title": "פרשת תולדות",
+    "status": "umbraco_has_no_content",
+    "propKeys": [
+      "title"
+    ]
+  },
+  {
+    "id": "04d2a595-0318-4933-9b54-246ed84cebe5",
+    "title": "ביאור הפסוקים - פרשת תולדות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5794c180-8eb2-4644-a144-ff63452f0d8d",
+    "title": "שמואל ב' פרק ג'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1ed8fc0-369e-4634-ba6e-6b8c206340aa",
+    "title": "שמואל ב' מוקלט - פרק ג' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "48cb225f-4294-4d73-8da2-86f2a09a43f4",
+    "title": "שמואל ב' פרק ד'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "567be536-65f4-4149-9ec5-a059f104bcc8",
+    "title": "שמואל ב' מוקלט - פרק ד' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e4addce3-451c-498c-b593-32cf32774153",
+    "title": "ביאור \"ושננתם\" לפרק ה'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8edaa0dd-25a1-4ab8-a877-120a83eede29",
+    "title": "\"ותבן לו בלבה\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "935de4e5-cf0b-47e0-99be-42fbab93b1cc",
+    "title": "שמואל ב' מוקלט - פרק ה' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c42e7bb8-8b1b-4329-9c93-f9fb8185c431",
+    "title": "שמואל ב' פרק ה'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2ad35bb7-1e9c-44d7-95e4-1c7473b97aa8",
+    "title": "זהירות - פחז!",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "07322821-fc61-4ea2-88cf-5b2076584f01",
+    "title": "שמואל ב' מוקלט - פרק ו' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1488c990-f973-4c8e-9ca6-2813687f3b90",
+    "title": "שמואל ב' פרק ו'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7a849cec-d9cc-4c00-8123-785465d4b556",
+    "title": "שמואל ב' פרק ח'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "68a26e14-6e73-470f-8b84-77fb8044b2d3",
+    "title": "גדולה מכוח הניסים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9b68d185-e727-4c21-a927-7851a3d1499d",
+    "title": "יהואחז ויהואש מלכי ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7974b79b-0f15-43ca-8dbe-1e2a01182f54",
+    "title": "הצירים האפשריים לתיקון באומה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "02a747ff-ed65-4fd4-8d7f-ba143c167dc8",
+    "title": "שאלות מקיפות - פרשת תולדות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ba49c777-0eaa-4fa8-905d-810d49564337",
+    "title": "השיבה אל \"אישי הראשון\" - שיבה אל הקב\"ה וחידוש האהבה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5daa7b53-753f-49b4-ab18-1ff80f1451e2",
+    "title": "חזרתם בתשובה של אנשי נינוה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d30cee0b-fd58-4e76-a0a3-8ca3758f22e6",
+    "title": "דגשים - פרשת תולדות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c3030301-0002-4000-8000-000000000001",
+    "title": "מדוע נקבע יום הכיפורים ליום סליחה ומחילה?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c3030301-0002-4000-8000-000000000002",
+    "title": "חלוקת ספר יונה וזמן נבואתו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a12d8fb9-7432-4d12-98c3-153ff30772c8",
+    "title": "איוב - ייסורים של אהבה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c3030301-0002-4000-8000-000000000003",
+    "title": "מעשיו של יונה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a12d657c-995e-4936-9809-f2403b34129e",
+    "title": "גניבת נשי האבות ונסיונות חטיפה נוספים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a9f3b7aa-a2df-42a7-acf5-2edb3e899864",
+    "title": "ביאורי מילים ושאלות - פרשת תולדות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "bc87a5e3-d6f0-4259-b276-87ac62c6c7bf",
+    "title": "פרשת ויצא",
+    "status": "umbraco_has_no_content",
+    "propKeys": [
+      "title"
+    ]
+  },
+  {
+    "id": "57665b95-bad4-49b9-b0a6-bb6b6d89363a",
+    "title": "הכרת תודה לכל",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "88f8d609-847a-4fd2-b205-c071491a1e4e",
+    "title": "פרשת שלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d4040401-1006-4000-a000-000000000006",
+    "title": "אך בחמישה עשר יום",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3749b5b0-ec30-4891-b22f-3a305a68c208",
+    "title": "למה כעס יעקב על רחל?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "039b95ee-e6c9-4f64-820d-fc5f1b7eccbd",
+    "title": "\"ויעתר יצחק לד' לנוכח אשתו\" – כוחה של תפילה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "61f20778-519d-4e50-a1bc-2b7749527388",
+    "title": "\"ראה ריח בני כריח שדה אשר ברכו ה'\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2c6b5fd5-ddb6-4f5d-8306-d4d38ac56f02",
+    "title": "בחירתו החופשית של עשו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "aefd7e7b-a8f3-4c8a-8353-45f7e507e3fa",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f34f0f65-157d-4dac-a13f-21b38e4c6930",
+    "title": "שרטוט בית המקדש ביחזקאל על פי שיטות המלבי\"ם רש\"י ומצודות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ca4c937f-a556-4bf5-81fb-b8eca3b90f0c",
+    "title": "עמוס עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1e5aceb-0b54-4930-b872-4610e9cffe84",
+    "title": "נחום עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b311d57b-de97-4166-82b1-bf24e97c1ae3",
+    "title": "\"פקוד יפקוד\" – שתי פקידות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "cde451e6-c535-47e5-b92c-23fab92da2c3",
+    "title": "מה היה בראיית העגלות – חלק שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4d801c7f-24f2-4a1f-92bd-aa53a4c4b7d3",
+    "title": "מה היה בראיית העגלות – חלק ראשון",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "49705453-5d41-44fa-bd09-97c30b6187f8",
+    "title": "ארץ גושן – בחזרה לגן עדן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0c5ca0aa-1838-41e8-9650-fe2fdf9504e3",
+    "title": "נוהג כצאן יוסף – משמעות נסיונותיו של יוסף",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "dc30f6ac-8093-4d02-8e90-b95e809f371c",
+    "title": "מצוות היבום – יחודה ודרכי ההשגחה הפועלת באמצעותה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "fd3c1ac0-e970-42ce-b9b7-dc09bc661bd3",
+    "title": "עדות ביהוסף שמו – מחלוקת יוסף והאחים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000236",
+    "title": "מתי הוקעה החומה?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d94a81dd-7d22-4a0a-bb1e-452ea183d5e8",
+    "title": "ביאור הפסוקים - פרשת ויצא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000248",
+    "title": "\"וְיָשְׁבוּ כָל הַיְּהוּדִים מִכָּל הַמְּקוֹמוֹת אֲשֶׁר נִדְּחוּ שָׁם\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d4b00f9b-c2b1-4d92-843f-44c3001a3e55",
+    "title": "שאלות מקיפות - פרשת ויצא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000294",
+    "title": "\"אין שני נביאים מתנבאין בסגנון אחד\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "49638634-5603-4e46-b450-87c14114278b",
+    "title": "כי זה משה האיש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9c2f5f66-4428-4eb4-8878-d25b21a0754f",
+    "title": "משה רבינו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "699110ee-bfbd-46d6-a0d1-4e4e1d13706d",
+    "title": "משה רבינו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000302",
+    "title": "וגם את הגוי אשר יעבודו דן אנכי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "03ab321a-2cce-4bd0-ac77-a71e9355edba",
+    "title": "חוקת פרה מזה טהור וטמאת מת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "92d91366-0018-4355-817a-e21bbe52d143",
+    "title": "נדר בהמשכנו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a3dc9cb9-b425-4135-add2-66dbc9a689a8",
+    "title": "פרשת תצווה - קריאה בטעמים אשכנזי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5b4bdc52-2d1f-4404-98c0-1046dd0e9c77",
+    "title": "דגשים לפרשת ויצא - ויעקב איש תם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d7bd2ec2-b17c-43e9-9903-f50e011976e1",
+    "title": "דגשים - פרשת ויצא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "48547b2d-6461-41ad-90f8-c4cc562708ac",
+    "title": "ביאור פשט הפסוקים - פרשת ויצא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0e2f2aa7-6e37-41ae-b411-cb1af043c953",
+    "title": "שאלות חזרה על פרשת ויצא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "fdfc569b-332d-42f4-a650-8d4dfd5cd06b",
+    "title": "פרשת וישלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2ee3c6de-176b-4c7c-bc20-a095064507f3",
+    "title": "ביאור הפסוקים - פרשת וישלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "46a7cfb6-8a09-4cc1-9707-401901da4338",
+    "title": "שאלות מקיפות - פרשת וישלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f87625f5-9400-4d4e-9127-cdf2332f9628",
+    "title": "פרשת שלח - קריאה בטעמים אשכנזי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "21912d84-f4bd-4719-8a79-54a7cdb4c1d3",
+    "title": "ביאורי מילים ושאלות - פרשת וישלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9d1c201e-6c71-4fa3-8761-b379b294e523",
+    "title": "ביאור פשט הפסוקים - פרשת וישלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ddf4bbf4-19ee-4827-8b7f-969274b997bb",
+    "title": "עונשם של דור המדבר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e3ea9ee8-788f-42c8-b35e-157fb5ae8371",
+    "title": "תריס חופרים ומרגלים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "64e8cb38-642b-4dd2-876b-a4b41fe66ddc",
+    "title": "דורון, תפילה ומלחמה במגילת אסתר",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "ec831943-4aee-4160-9f98-ebe20c21e826",
+    "title": "כוח הדיבור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "33b094a9-bf23-4a9b-9203-db191c6c9c5d",
+    "title": "השולחן והמנורה - כביטוי לשתי בחינות בעבודת ה'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "811021c2-22fb-4d34-b9e0-932f4710401f",
+    "title": "משה רבינו - הנהגה מתוך ענווה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "973953c9-d2e2-4497-bd77-4442fcaccd57",
+    "title": "התפתחות הקשר בין ישראל למשה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b9692c45-dd9f-447d-b1cc-9f4e73a4887c",
+    "title": "מאבקי יצחק על הבארות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "bb141792-7c95-495f-9dd2-99a08d50d60f",
+    "title": "התגלות ה' למשה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "bd1c132f-3478-4974-82f4-18efc39a9661",
+    "title": "פירוש אונקלוס – להמון העם או לאליטה של תלמידי החכמים?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d130048f-08de-4424-9e7b-a04cfd386578",
+    "title": "דגשים לפרשת קרח - בירור הבחירה באהרון ובשבט לוי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "db8dc43e-a25b-479b-be9c-bddc026f9b37",
+    "title": "משה ואהרון: שני מנהיגים לעם אחד",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e44f8ca9-4a14-47a8-badb-3bf95493c3ee",
+    "title": "תאריך לבריאת העולם של הציווי \"לך לך\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e78e36ab-0b32-4a31-9f1f-a14b8deeb523",
+    "title": "שמואל ב' פרק ז'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ee842c42-adff-4b39-8687-9046b8bcc4de",
+    "title": "דגשים לפרשת קרח - מתנות כהונה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f8b375bc-02c5-462c-92b4-3311f183315a",
+    "title": "מאבק יעקב במלאך – מניין הכח של מלכות אדום",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b76bbd0c-91c3-4df5-b8c7-aaf6b4ac6692",
+    "title": "ביאורי מילים ושאלות - פרשת ויגש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c0cf5ced-8397-4850-bdd5-cdd9ba2041a2",
+    "title": "איוב פרק ג",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "22f2cd80-f94a-40cc-ab48-cb72079336e4",
+    "title": "נשיקת יעקב לרחל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "29264852-b07d-4545-847e-102ddbcbb86b",
+    "title": "גניבת התרפים על ידי רחל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a83b316e-6d71-4d90-b28f-9a28844fb323",
+    "title": "לבן ביקש להשמיד את הכל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "946650c8-87c6-4429-88b7-ee2fb58c03c4",
+    "title": "מדוע התלוננו בני ישראל בפרשת בהעלותך שאין להם בשר? והרי היה להם שלו!",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "be2de58e-21b0-411c-b7ac-5a4f0bf0d6ac",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת מצורע",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "86105fcf-6da5-4ea6-8cb9-4fbd2db879a6",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת אחרי מות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6f03c34d-d0f5-4598-bbd9-eaaf23a8a60c",
+    "title": "שאלות בפרשת שמות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000100",
+    "title": "ישעיהו בבקיאות פרקים נב-נג",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0e33c058-2714-4747-a552-31766460d9bd",
+    "title": "שירתו של למך לשתי נשיו",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "4e585c3d-a8b8-4955-8728-d98bae45a248",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת אמור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6092b968-4e6f-48ec-92be-7acc4339e770",
+    "title": "חוברת עבודה לתלמיד - שמות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c23f921f-c0f9-49b5-a84f-a05f6f979577",
+    "title": "שמות הילדים והטוב",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "97d736a6-031c-4d49-9489-4365438f75a4",
+    "title": "ביאורי מילים ושאלות - פרשת שמות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e7bb4b3b-e0cc-43f2-98de-bebd3c4b6357",
+    "title": "חידות לילדים - פרשת שמות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6a56633a-5eed-4e6a-a05e-cd1bf31f8de3",
+    "title": "שיעור פרשת וארא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c9bbe1d9-74b1-40ce-9504-fde1a313b089",
+    "title": "ביאורי מילים ושאלות - פרשת וארא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a56bdadc-3fda-4325-8a61-ce18c513861f",
+    "title": "ביאורי מילים ושאלות - פרשת בא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "cbba00eb-5582-4316-b6b4-4ebaac4d7726",
+    "title": "שמואל ב' מוקלט - פרק א' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d80b628f-1d90-4bda-8adc-739b489d355f",
+    "title": "שמואל ב' פרק א'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f6da5dc2-5711-447b-bd23-689bdf382aee",
+    "title": "שמואל ב' מוקלט - פרק ב' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2e640768-7cd0-4988-bcbf-29ca8ae290ac",
+    "title": "ביאורי מילים ושאלות - פרשת בשלח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "28aab590-fc0e-42da-af39-a6fb84e7f4cd",
+    "title": "פרשת כי תבוא - קריאה עם ביאור פשוט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ddc1210d-af51-4631-8c28-83f09427af2a",
+    "title": "ביאורי מילים ושאלות - פרשת משפטים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "70f0fb42-9009-4e18-8b69-70b6eba63ddf",
+    "title": "ביאורי מילים ושאלות - פרשת תרומה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8916b312-eab1-4e81-a3ed-713d0c066dd7",
+    "title": "ביאור פשט הפסוקים - פרשת תרומה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "237f5d28-45a8-41e4-a6b7-b28652515886",
+    "title": "שאלות מקיפות - פרשת תצוה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "bddc536e-3bb1-43fd-ab3b-b39ec4117971",
+    "title": "לימוד הלכה דאורייתא מדיבור ישיר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9253bf48-aed6-409b-9363-4ed97c201616",
+    "title": "ביאורי מילים ושאלות - פרשת תצוה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e73eb4d4-ff34-4968-81ff-38cac83ed7d5",
+    "title": "סקירה: ימי יאשיהו",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "eaa1c6eb-9574-408a-91c9-d9f73fec02b8",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת בהר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "221cf3df-c1e8-4b3a-8274-18fcba342be8",
+    "title": "ביאורי מילים ושאלות - פרשת פקודי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "931de24d-a3fe-45df-8d35-a9c0ae102eb2",
+    "title": "ביאור הפסוקים - פרשת בהר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2169fcaf-987a-4383-9366-1595a82e835a",
+    "title": "פרשת בהר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "87fb4d79-db97-4c71-a54d-2ef5fc83596e",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת בחקתי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2ff007d8-5b9d-4609-8708-d703b03076e3",
+    "title": "ביאור הפסוקים - פרשת בחוקותי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8fe34726-da3b-4147-bd10-dfece47e5156",
+    "title": "פרשת נשא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5483d19d-dc11-4aba-832e-38d86b0cc97d",
+    "title": "פרשת קרח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1d21bc0-a4b3-44ee-973b-019869ede7f7",
+    "title": "פרשת חוקת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "364b77fc-31c3-495a-b7b6-421564e5b140",
+    "title": "קדושים תהיו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5a083573-42d2-430b-8726-e67223262394",
+    "title": "לאו ה'לא' ולאו ה'אל'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2fd8c967-b53d-464a-a6be-b4ce5cb1cb9b",
+    "title": "מומי הכהנים - לבוש הנפש בגוף",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d27be35b-4a73-4161-be57-d012cbb93514",
+    "title": "פרשת בלק",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "81aa9ebd-81d1-4de5-9853-5ba77d31ac80",
+    "title": "דגשים לפרשת מטות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "37f539ad-1de0-4360-a179-f0da90424be7",
+    "title": "פרשת מטות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a8127edf-51ff-487a-b76e-cbd484b74e54",
+    "title": "פרשת מסעי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a1e16d8f-13e3-4578-9d4c-fdea078038d8",
+    "title": "מעבר לשיעורים קצרים על מגילת רות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c92a0fd7-b39d-43c9-960a-d8a372c70e91",
+    "title": "ואהבו כצאת השמש בגברתו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "672523a8-97e4-4eee-836a-0ccaff638fbe",
+    "title": "ביאורי מילים ושאלות - פרשת כי תשא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2a7d74e4-fc48-4217-8c01-35e25093cb2f",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "41a88e9b-990c-49bc-a2ff-7987152f0a3a",
+    "title": "מגילת אסתר עם ביאור ושננתם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "904c4576-5c9c-4c05-8b8f-29da252a4fa5",
+    "title": "אופי קדושת הכהנים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ba522130-0efc-4a6d-9780-c6b38ce63508",
+    "title": "מדוע ציוותה התורה על ספירת העומר?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "395cffb0-a4fd-4164-a42a-1c3ec754a03a",
+    "title": "\"מחטוב עציך עד שואב מימיך\"?!",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "85de0a4d-624e-453a-afd2-3edfc296c776",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "765bcc23-6d22-495f-b767-e6e7bdbeec52",
+    "title": "ספר דניאל עם תרגום וביאור ושננתם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f347a4a4-eeb6-4476-b910-091c3df7b2e1",
+    "title": "ומצדיקי הרבים ככוכבים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000143",
+    "title": "ישעיהו בבקיאות פרקים ס-סא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000164",
+    "title": "ישעיהו בבקיאות פרק סו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "22f7874a-6d73-4ccd-97d4-66c05e911b71",
+    "title": "מבחיר הרבים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b7129fe2-06ac-4ccf-9027-c39b6da22538",
+    "title": "חיבור ו' החיבור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8fe77ca1-1d10-4268-8c36-33719045443e",
+    "title": "רועה צאן?!",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "26d25003-cb5a-4d19-b516-1bf3c15c4041",
+    "title": "מדוע יש תולדות יצחק ותולדות יעקב אך לא תולדות אברהם?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6b0f29c0-3401-448d-9d54-c0bb1f30f76e",
+    "title": "גדולת מלכות שלמה, בניין המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c15d297f-1358-4929-b0dd-db675ebd77f7",
+    "title": "קרבנות בני הגולה, חנוכת המשכן, ולעתיד לבוא",
+    "status": "recovered",
+    "hasContent": true,
+    "hasAudio": false,
+    "hasVideo": false,
+    "hasPdf": false
+  },
+  {
+    "id": "f42d196d-dd61-45ba-a9b4-379d22cc5583",
+    "title": "משה ואהרון לפני פרעה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "18693f40-1235-4de4-a815-f43a4d45a897",
+    "title": "נצחיות שבט יהודה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7baffa4d-a711-46b1-8b03-31a3a20fb414",
+    "title": "(מצגת) קבלת הייסורים, ובמיוחד במלכות בית דוד",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2837abed-6ee3-490d-99aa-c8140f2940cf",
+    "title": "\"אל תירא אתו\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "768dbd56-7d77-4320-83e8-77182146f558",
+    "title": "בני עשין",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "77958400-4127-49fb-b0aa-aaf13448f547",
+    "title": "אחת דיבר אלוהים - שתיים זו שמעתי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7fa759cc-f890-45ce-8927-58e4f480abdb",
+    "title": "מצות הענווה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6bb06ac2-b8b4-42eb-83f6-037f23c2c3ff",
+    "title": "אבני שהם ואבני מלאים לאפוד ולחושן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "782125ea-1835-437f-83d0-5899f92a62b0",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9e61be09-6a78-47a1-a976-43676223df65",
+    "title": "ספר עזרא עם תרגום וביאור ושננתם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4725a5fb-1bf7-4eb3-a254-f9b7cc7a3775",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5ea7dee7-b52f-4498-a35a-14c04cd7d68f",
+    "title": "לבלתי ידח ממנו נדח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c241dce6-4ae7-4532-9397-e672c32814e8",
+    "title": "לך ולך",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d165961f-8979-48b1-9ef9-ec58492370e3",
+    "title": "\"כי ד' אלקיכם ההלך עמכם להלחם לכם\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "68319ba0-b543-4c4b-a3df-d0a009991363",
+    "title": "דיברה תורה כנגד יצר הרע",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7c802ba3-6921-4049-8d77-1c148daaf148",
+    "title": "אשת יפת תואר - היתר או מצווה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8226389a-6583-480f-b57e-18607d6f371c",
+    "title": "מדוע נצטווינו לזכור את מעשה עמלק?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "555a50c8-923c-41f8-a638-352fe55a4aaa",
+    "title": "ולא יזח החושן מעל האפוד",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e583aba0-8e25-47f8-aed5-e29187fa6151",
+    "title": "שיר והודאה על בניין בית המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2451fb42-f36d-4745-98f8-ddb83a253573",
+    "title": "חוברת עבודה והכוונה ללימוד עצמי על ספר יהושע",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3200cd0f-4415-40e4-89bd-70f881a29b1b",
+    "title": "שמואל ב' מוקלט - פרק ז' | ללא טעמים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f4ccffdf-5ea2-4a73-b5f7-9993803c4430",
+    "title": "ההבדל בין שמעון ללוי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "28dc393c-aea2-4743-83c9-6ec09ff4eeca",
+    "title": "ביאורי מילים ושאלות - פרשת ויקהל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3e28705a-8296-4974-96fa-c32855e6040d",
+    "title": "רעת העצל, הלץ והפתני פרקים יט-כ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b3194c97-d360-4c03-a1d9-eeb81accd25e",
+    "title": "זהירות משבועת לחינם פרקים כב-כג",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "24815137-ba77-4c5b-9289-38e32517b773",
+    "title": "תשובת ישראל לאומות העולם - \"אנה הלך דודך?\" פרקים ה-ו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "52a1e6a1-71ba-4efe-9c43-c58f65c43cc0",
+    "title": "שאלות על מגילת רות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b4fdc01a-0d3b-4d83-a85c-2418cdafcb7b",
+    "title": "\"ליהודים הייתה אורה ושמחה וששון ויקר\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3419cac1-e443-4811-8958-08443056c04c",
+    "title": "מימוש החסדים האלוקיים בעולם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1fbb25be-609c-4839-a700-0968015631c4",
+    "title": "דניאל וחבריו בבית נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9e5ab4df-e609-4d2a-a333-90619e4ff6bc",
+    "title": "הילד דניאל בארמון נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "508f0b84-9932-444b-8a94-78be6486b511",
+    "title": "פתרון חלום נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "645d1348-95ac-4505-a894-8e1b84ff793d",
+    "title": "חלומות של נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f00b346a-2ace-4987-bef1-b60ab155cc2d",
+    "title": "חלום נבוכדנצאר ומשמעו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "93194c79-e20e-40ae-929c-61ef7a7bcea6",
+    "title": "חלום האבן של נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "72046aa3-3600-4cba-b175-380a23c6e317",
+    "title": "הפסל של נבוכדנצאר, השלכת חנניה מישאל ועזריה לכבשן האש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "77df61c7-3929-431c-938c-5a51e76b7a31",
+    "title": "פסלו של נבוכדנצאר - לשם מה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b32792fd-2469-4d28-b21b-fb65b00bb0a2",
+    "title": "חלום האילן של נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "90a4f8f6-a152-4ccd-b208-16de90941197",
+    "title": "אגרת נבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "90d996d0-2cb0-4c3a-8dc0-e947c213b085",
+    "title": "חלום העץ - הפיכת נבוכדנצאר לחיה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9ea52302-3bc2-48c0-8432-2903e0c3618d",
+    "title": "העצה שנתן דניאל לנבוכדנצאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "20756611-3325-45f3-9d73-9ce2c9db61c2",
+    "title": "כתב היד שראה בלשאצר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d8884232-d58e-4e06-af4f-a3d5946946b1",
+    "title": "פירוט העולים לארץ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7ca664d3-fd65-42b6-a71b-acfb472bc1fe",
+    "title": "מגמת העלייה לארץ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "92c3c402-556c-4a56-8645-5147dafcb93d",
+    "title": "בקשת האישור לבניין המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a374126f-77bc-44d6-ae3a-7d4acd37f866",
+    "title": "יופי כח לעזרא לעלות לארץ ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b943cbd5-7f97-4cab-80b7-00ababb621a1",
+    "title": "השפעת עזרא על ההתיישבות בארץ ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9dc19dc1-401c-4ae4-993d-07b4d415d1a9",
+    "title": "רק בנין!",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a1010101-0001-4000-8000-000000000016",
+    "title": "בעניין מועד גילוי מקום המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b2020201-0001-4000-8000-000000000005",
+    "title": "מצוות הוידוי או מצות התשובה?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f5050501-a004-4000-a000-000000000001",
+    "title": "פורים | מה פשר כפילות שם החג 'פורים'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e6060601-e001-4000-8000-000000000001",
+    "title": "עשרת הדיבורים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d5e60001-0002-4000-8000-000000000001",
+    "title": "וַיֹּאכְלוּ מֵעֲבוּר הָאָרֶץ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d5e60001-0002-4000-8000-000000000002",
+    "title": "ויהי ביום השביעי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d7e80001-0001-4000-8000-000000000001",
+    "title": "מדוע נכתב מעמד הר גריזים והר עיבל שלא במקומו?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e9100001-0005-4000-8000-000000000003",
+    "title": "ניצחון האדם על הטבע והקרב כנגד שיטת המלוכה של עמי כנען",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ec160001-0001-4000-8000-000000000002",
+    "title": "נחלת שבטי שמעון, זבולון ויששכר ותכונותיהם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ef010001-0004-4000-8000-000000000001",
+    "title": "כיבוש נחלת יהודה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ef010001-0004-4000-8000-000000000004",
+    "title": "ספר שופטים - שיעור 1",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000004",
+    "title": "התשובה הוודאית של ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000048",
+    "title": "גאולת ישראל מול תהליכים עולמיים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000057",
+    "title": "לב הפטרה בראשית",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000059",
+    "title": "חזון הנחמה (ב)",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000065",
+    "title": "בחירת ישראל ומפלת ע\"ז",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000066",
+    "title": "כורש - משיח ה'?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000070",
+    "title": "הכרת ה' בעולם על ידי כורש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000073",
+    "title": "מפלת אלילי בבל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000074",
+    "title": "חולשת אלילי בבל לעומת נצח ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000104",
+    "title": "עבד ה' המיוסר - עם ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000124",
+    "title": "דרשו ד' בהמצאו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000125",
+    "title": "עשיית משפט וצדקה כתנאי לגאולה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000126",
+    "title": "ההכנה לגאולה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000130",
+    "title": "שלום שלום לרחוק ולקרוב",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000134",
+    "title": "משמעות הצום האמיתי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000135",
+    "title": "עבודת ה' - צום או צדקה?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1010001-0001-4000-8000-000000000156",
+    "title": "גאולת ישראל בדרך הטבע או בנס",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000066",
+    "title": "\"שפך חמתך על הגוים אשר לא ידעוך\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000100",
+    "title": "החודש העברי והחדשים האחרים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000174",
+    "title": "\"ודרשו את שלום העיר אשר הגליתי אתכם שמה, והתפללו בעדה אל ד'\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000179",
+    "title": "\"ציון היא דורש אין לה\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000180",
+    "title": "תהליך התחייה הגשמית והרוחנית של עם ישראל עד שיאו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e1010001-0001-4000-8000-000000000221",
+    "title": "תהליך התחייה הגשמית והרוחנית של עם ישראל עד שיאו (5)",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000091",
+    "title": "משל הנשר הגדול והגפן הסורחת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000255",
+    "title": "עבודת הכהנים בבית המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f2010000-0001-4000-8000-000000000257",
+    "title": "עבודת הכהנים בבית המקדש השלישי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "52c3c4e6-d76b-4c69-a901-d4c0339ec448",
+    "title": "שמן וקטורת ישמח לב",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6948fbde-f6ed-4f51-b7d5-ab5ceeb3c250",
+    "title": "מבצע יונתן / איסור האכילה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "78726413-7856-42a8-8275-11e1c9f210e1",
+    "title": "המשך בניית בית המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ccdd5a3a-a797-43b5-9f5c-bbc9acc39002",
+    "title": "חובת הדיוק בתפילה ומקורה בפרשת חוקת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "af166852-8050-4bd8-a8cb-24d1542b22c1",
+    "title": "שלושה פיות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "cfa75180-196b-4235-b3f9-299874b09a7f",
+    "title": "חצוצרות שופרות ובטחון במלחמה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e3465c8c-e2e6-492b-a8d9-3ac687f3138b",
+    "title": "מדוע ציווה ה' להכות את מדין ולא את מואב?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "75c7ab4d-1a2a-4927-8bcf-309922f5d64d",
+    "title": "ארבעים ושתיים תחנות ממצרים לארץ ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9ad815d6-9255-408c-8006-a5940de8bad4",
+    "title": "\"ניצבים היום כולכם\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "51a70257-c4ec-4f11-ab0d-cb9f509b42bc",
+    "title": "ומצדיקי הרבים ככוכבים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "304ec273-48a1-423d-88b2-0fe34fccdc74",
+    "title": "חטא העם ודין יהונתן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d5cfe02a-dcbc-476a-9695-cd5a60edd35c",
+    "title": "תכונותיו של דוד המלך",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2acd6921-013f-4361-856f-bcc49fb77128",
+    "title": "סימן החצים בין דוד ויונתן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "59e885b0-595b-45a2-993d-5b0313c057f3",
+    "title": "תחילת בניין בית המקדש, ציר זמן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8dff801a-0225-4904-ba33-67cf5ac18bfd",
+    "title": "כיצד ייתכן ששלמה המלך כרת ברית עם חירם מלך צור?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f803d3b6-dc7b-4d22-b4dd-72d59691202c",
+    "title": "האם הייתה פרוכת בבית המקדש הראשון?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d814c62c-93eb-4c82-8312-9ca5893c3cf9",
+    "title": "תחילת בניין בית המקדש, ציר זמן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e6115865-2c9f-40ab-9eb1-4c7b023aa655",
+    "title": "לִשְׁמֹעַ אֶל הָרִנָּה וְאֶל הַתְּפִלָּה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6ba2c394-e8c3-4bff-9d91-a692e36d34f5",
+    "title": "אחאב - אח לשמיים ואב לעבודה זרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "560986b3-d84f-4149-9751-07a2fec3204e",
+    "title": "ביאור \"ושננתם\" לפרק ד'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d5612037-425b-4807-bda8-6d2483b69e71",
+    "title": "קבלת הייסורים במלכות בית דוד",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "41af6e9c-b0db-42f8-8c47-11059ae467ad",
+    "title": "כבושי דוד / חסד עם מפיבושת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "21ed110b-3650-432c-b315-a7f92e2bd041",
+    "title": "בקשת בניין המקדש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0494119d-e1f7-4a6e-bede-c03b3f892252",
+    "title": "נעמן והגאוותן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3727dff7-c08c-460f-83ca-0e33952a7db3",
+    "title": "מראות המגילה העפה והאיפה המושכלת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c7179515-cecd-4e9f-9086-6767d09e86b7",
+    "title": "מה שמועה שמעו הגוים?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "df3a9704-f453-406b-b640-6f9dfcec1795",
+    "title": "עובדיה - מוקלט | ללא טעמים",
+    "status": "umbraco_has_no_content",
+    "propKeys": [
+      "title",
+      "promo",
+      "author",
+      "tags",
+      "dedication",
+      "teachersSectionSep",
+      "creator",
+      "teachersSubjects",
+      "tbsep",
+      "TB_bg",
+      "TB_title",
+      "TB_subTitle",
+      "TB_link",
+      "TB_height",
+      "bbsep",
+      "BB_bg",
+      "BB_title",
+      "BB_subTitle",
+      "BB_link",
+      "BB_height",
+      "umbracoNaviHide",
+      "umbracoRedirect",
+      "ExtRedirect",
+      "umbracoUrlAlias",
+      "umbracoDisableDelete",
+      "showAlsoUnder",
+      "seoTitle",
+      "seoMetaDescription",
+      "seoMetaKeywords",
+      "SEOpreview"
+    ]
+  },
+  {
+    "id": "873a0194-4796-4bdc-b60c-2ba49b6da3e1",
+    "title": "נקמה בגויים דרך תהליך היסטורי טבעי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7f01ed9c-b7cf-4031-a27d-80bb1094d6f7",
+    "title": "נפילת נינוה - מידה כנגד מידה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e7f6d4e6-4d87-4e47-a8e8-c5cb1a2dbe9d",
+    "title": "סקירה נבואית היסטורית של גדולת ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4251d878-5489-4b02-8649-bef9f7813a97",
+    "title": "\"וז' נתן קולו\" - קולות ד' מול קולות האדם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6aa32970-1f39-4669-801a-52dc9ae919f8",
+    "title": "התחייה והזיכרון שמעורבבים יחדיו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5b06b309-bac6-4d95-a7dc-766703ee6547",
+    "title": "פלג של שתיקה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8e014f6d-6b4a-4080-86b5-1761913effec",
+    "title": "ער המקלט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2c502e01-d484-4983-accd-131fff6471e6",
+    "title": "\"ארובות השמיים\" בפרשת נח ובספרי הנביאים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "95174705-3c21-4917-95bf-e2d69e837d5d",
+    "title": "\"צחוק עשה לי אלקים\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4a127732-1870-4010-84fe-5e95577e0c8d",
+    "title": "שכונה בתוך החיים - ספר ויקרא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "21e420c1-b8be-47af-b62e-56f80acfde5a",
+    "title": "בחירה חופשית במגילת קהלת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "80ef60cc-f73e-44a6-9cc4-4e9d8f29d155",
+    "title": "עמידה בניסיונות במזמורי התהלים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e02a1451-ff93-4be6-9c25-2385b2e5a924",
+    "title": "בשרה ועל הבאר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f074c1c7-d32e-4278-ba72-da5bb2ae9c7d",
+    "title": "מסע ומריבה (ויבא עמלק)",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d24f683a-0579-4324-85d9-268152dcbf9b",
+    "title": "יחי המלך - בירור שכלי או נבואי?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "33e642f1-452f-4764-a31e-c08ab18c9160",
+    "title": "מחשון למציאות בתנ\"ך",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "05325480-5800-46eb-b66f-3c3411e4767d",
+    "title": "התחוללות מולידה משיח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b4c952b8-4e58-4d61-bd17-07d73d63fe1a",
+    "title": "\"ותבן לו בלבה\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a22dd789-653c-4dad-a65a-830f1e3a7782",
+    "title": "פסוקי דזמרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7af9607b-8423-40e1-94ae-212886191352",
+    "title": "מדוע התורה לא כתבה על צדקותו של אברהם אבינו ומה ניתן ללמוד על כך לדורות?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "920a33c4-9381-4d9c-8c79-57be64e2c72f",
+    "title": "על מה נכרתה ברית בין הבתרים ומה משמעותה לדורות?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0777e228-2b5d-409c-a613-9333c8ac9a38",
+    "title": "\"ותענה שרי\" – היאך יתכן שאשה צדקת כשרה אמנו עשתה כך?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c8e60446-5f36-4b01-8035-c1ce9c24eb65",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת ויקרא",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2a97c276-f460-4aba-a833-c64737c02cc4",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת צו",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2f0560c4-8b96-4746-bb88-12af3a357cdf",
+    "title": "ביאורי מילים ושאלות חזרה - פרשת שמיני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "88f715c5-06d9-466c-90a2-982b3201df6d",
+    "title": "מבחנים לפי פרקים ספר מלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8166aa67-5391-4184-9702-c26c0ce94592",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e2c2a2df-8209-4c64-a9d2-9821cb7f6521",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "bfcced0f-f574-4d43-9dae-dc2d69fe234b",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9239a4c4-6873-42c5-b460-27a50cdf7f8e",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר יחזקאל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1d83723-700c-41e5-8470-036d5e1047a5",
+    "title": "מפת מקומות ונחלות בארץ ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "da194c45-9cb3-4b23-ab84-94f0cf6168c9",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "541a1049-27f6-4d4d-9e31-84c3bbca3a3a",
+    "title": "הושע עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9d395061-113c-4ce3-9455-93964fef4459",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר הושע",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2c313882-17e4-4ae6-bdae-ec64d049a8a4",
+    "title": "יואל עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "64acf6ab-a4e7-45b2-8441-63cb3c85ee8d",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר יואל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b80bef7f-4695-489d-bc8d-fbedf052a725",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "883ca4ad-02ce-4ced-8ad3-2942ecc8d47a",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר עמוס",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4713d2cd-95d2-498c-86df-96e502551ab4",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "57391844-e31a-4f78-b3c3-e9a5a23a3501",
+    "title": "עובדיה עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d906b70f-cc77-4510-9211-3dd9708be95a",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר עובדיה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "9ffbc8a9-ebea-4bc6-ab98-38d76de073f9",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ab44173d-82ad-44be-bc56-41e0fd9d32c8",
+    "title": "יונה עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "df4f79cd-a971-4b51-8559-bb5d6fc01eea",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר יונה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "4c14bc17-616a-414b-9172-8832130dbd48",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "44116531-a24e-480a-861c-b5cc9e9fb770",
+    "title": "מיכה עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1270fbb5-ff91-47a9-9a73-b8b26f327bae",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר מיכה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "609b0fa6-1da1-4703-b2e1-1f7ae36db927",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר נחום",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "541d1339-1e06-4ed5-a4fe-f66733b0d2f8",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "70d6193c-1795-4f8a-8430-e0b7e0615a42",
+    "title": "חבקוק עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a7fb5602-0133-47e1-aec6-464b37c2a3b2",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר חבקוק",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7ba68ce4-7c06-4527-8bd8-ab4d72945830",
+    "title": "ציר זמן תקופת המלכים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c3cc0fd6-792b-43ac-9c09-31a78b6eb287",
+    "title": "צפניה עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1fd74381-846c-4e85-ac28-079722389104",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר צפניה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "a145f4cf-9397-4c62-9403-8cc805026789",
+    "title": "\"יעקב\" ו־\"ישראל\"",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c1fbed28-bbe4-406c-8643-bc6c3cee0601",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e00981bf-9ef1-4a76-8a38-dbe38b7b0e8a",
+    "title": "חגי עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e6389825-59f7-4d25-ba74-d16aaf8ab752",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר חגי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1e20befc-0174-4d18-acd6-6a85e429cf0c",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "5b170e5a-a91a-4c1b-895b-6d2795a5fafe",
+    "title": "זכריה עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8a285f00-81c0-4308-9b82-782e925b78e0",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר זכריה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "67fca432-bf62-4e1d-90e0-9d592303961f",
+    "title": "ציר זמן גלות בבל ותחילת בית שני",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "1f430a55-e56a-4fa7-a080-347d58d02513",
+    "title": "מלאכי עם ביאור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "999df697-23c3-4212-8df5-ff97a70faa48",
+    "title": "מעבר לקריאה וביאור בקצרה של ספר מלאכי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "27753016-e11b-486e-b04a-a6cbe111f487",
+    "title": "ביאור הפסוקים - פרשת וישב",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f0a31e36-e3ff-4357-a71d-3fa60cf4e86d",
+    "title": "ביאורי מילים ושאלות - פרשת וישב",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ba132d79-c504-4467-9c86-e9ce467c3e7c",
+    "title": "ההבדל בין אבות לאומה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "bab038e8-3600-4272-9cb7-8e0c80bdc735",
+    "title": "כבד פה וכבד לשון",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e0c27070-9524-4cb1-a0ae-a47b678feafd",
+    "title": "קריאת שמות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "05277efb-7054-4854-af98-065b2be88ce5",
+    "title": "נשים צדקניות בגאולת מצרים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "107cc12f-f136-40d8-b25e-b63b009ba8b0",
+    "title": "הסנה בוער באש",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3e59649d-1ce2-4acb-801d-334ae0f03f15",
+    "title": "במעלה ההר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "67c51e2d-82d6-4375-bc86-c2d9f994cbe6",
+    "title": "שכרן של נשים צדקניות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "08e361fe-f60b-43f9-9b9d-d360c5ddc914",
+    "title": "ענווה בהנהגה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0e5a643a-9610-483e-a471-cb38e1f2361d",
+    "title": "לידתו של מושיע",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2cb0d28a-663b-4070-8da0-af2e907a1e68",
+    "title": "הנהגה בעת צרה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6b6f7016-2def-46c2-84f5-a651dc220946",
+    "title": "נס הצמיחה מתוך הקושי",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7b91efe6-185b-4089-b14a-f494d4329210",
+    "title": "ואלה שמות בני ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e44b7c3f-c88b-420d-8a6a-1c464c1c7890",
+    "title": "שמות: גלות וגאולה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b0b37452-a65c-4f17-836a-1cee84a449bc",
+    "title": "התחלת השליחות",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b5f825a3-c611-4520-9bb9-8af7c008d995",
+    "title": "הכנה לגאולה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "fb58f038-860f-4ae1-a22c-0931d0230537",
+    "title": "תחילת גאולת מצרים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "fb9edf26-e16a-4786-b9ab-cb6ab9a2a26f",
+    "title": "מינוי מנהיג",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "febc4236-1383-4fa8-aafb-a52420a9c4b1",
+    "title": "מנהיג ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "046a2dfd-493e-4ad8-90ae-9f7ce678375e",
+    "title": "מה משמעות הכינוי \"אדון\" כלפי ה'?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "fa68a33a-d83b-4b7e-90cf-6c5ac2d671ce",
+    "title": "הגודל שבקטן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "382e4b4e-f41a-45a5-8bab-7e87a3d2ecd7",
+    "title": "מבין שני הכרובים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "294b3be5-7ea0-42c5-8352-0154f41d90f2",
+    "title": "בנין המשכן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2c9bfb8f-46f9-4c36-86a8-950d26b64c43",
+    "title": "נתניה מלב טהור",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "06c901f5-ed89-4e1e-9420-86e33275423e",
+    "title": "מה בין תרומה לגבוה ובין נדבה לניזקקים ועניים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "57a63d44-bd74-45a5-a2e6-39121463ed25",
+    "title": "פרשת תצווה - קריאה עם ביאור פשוט",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "594f3e14-2daf-42f2-a155-d7801f586604",
+    "title": "עניינו של מזבח הקטורת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "49a7edb0-2529-4332-b537-c4f3622e0bf2",
+    "title": "שמן וקטורת ישמח לב",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "8b791461-97ae-4175-a84a-3228a2deda6a",
+    "title": "שני לחת אבנים כראשונים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "c64708dd-cb97-447e-b9b2-f0d71aea2900",
+    "title": "מניין בני ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "355f7335-3780-44bb-8b93-357190fc1db0",
+    "title": "ברכת כהנים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "574dd2f3-59b2-44cb-8699-a4c18823dd27",
+    "title": "רגשות בכבודו של הזולת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "ef416c1a-d718-4877-9228-2a4162c8d8a4",
+    "title": "האידיאל והדרך הארוכה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "968b9594-7a72-47ae-815b-07e9d36fdb8a",
+    "title": "פרשת המתאווים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "de42ba49-0276-4194-89ed-0eaf596a31e4",
+    "title": "האם בני ישראל חטאו כה הרבה?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f2ff5cce-e980-4365-bfb6-8e57e4c986be",
+    "title": "בין נרים למרגלים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "d11a2070-3335-4a3c-9c5e-ce59cbe27817",
+    "title": "הוצאת דיבה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2a867b93-af8b-41f7-a4b1-ee15ba6466a8",
+    "title": "התירים את הארץ",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "12c1d461-7767-4284-8e08-46e39850e4fa",
+    "title": "ויהי ערב ויהי בוקר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "2dd980ab-2a0b-44c7-a93d-0a4b1305adeb",
+    "title": "עבודת מתנה אתן את כהנתכם",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7ee9ea7c-6256-4e75-a150-501edc20e71e",
+    "title": "מטה אהרן",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e7ee6e59-cbb3-4c52-b11e-627f13b167ab",
+    "title": "העזר כמתנת כהונה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6ecea281-8a01-43b7-b166-7ed538ef3cd9",
+    "title": "חוקת פרה מזה טהור וטמאת מת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "81b7c4d4-dd37-4993-a6db-69454c439462",
+    "title": "חובת הדיוק בתפילה ומקורה בפרשת חוקת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "cdf5487f-9bbd-4cdc-adf3-acae9cf8f6c6",
+    "title": "אויב גלוי ואויב נסתר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "e98290db-db03-42ce-acf0-448812087261",
+    "title": "תולדות הכניסה לארץ: מדרום או ממזרח",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "0d71ad82-dafa-4a8e-a865-5a85f023f6a2",
+    "title": "'אֶתֶם' או 'עִמָּם'",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3c86f029-3a5e-4c73-b856-a4934ce7576c",
+    "title": "כן בנות צלפחד דוברת",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "620cecad-d480-41f5-ad3b-66c15bf01edc",
+    "title": "המחנה ואנשי השלום",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b1bd821d-feed-4577-9528-9f9e7cbf3168",
+    "title": "המינין החסר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "b74ce1c2-da03-4b29-9aa7-80fd68261d35",
+    "title": "השלמת השנה הארבעים במדבר",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "06f0388d-21a5-49e3-80db-7f8bfae15b69",
+    "title": "מדוע ציווה ד' להכות את מדין ולא את מואב?",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3accfae5-5599-450a-a996-f50f0a78589f",
+    "title": "חצוצרות שופרות וביטחון במלחמה",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6eeb0240-78d6-44c6-8815-836a254071a8",
+    "title": "מהותה של הנדר לכלל וליחידים",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "6e6f60c6-9804-4724-941a-65dd8d8c3f5d",
+    "title": "ארבעים ושתיים תחנות ממצרים לארץ ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "3edc9eeb-21c6-4d6b-92be-d146fdffd0a7",
+    "title": "משמעויות הכניסה לארץ ישראל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "7a8417b4-6dd7-4896-ba74-173c92386a36",
+    "title": "חזרה בני ישראל אל משה בתחילת ויקהל",
+    "status": "not_in_umbraco"
+  },
+  {
+    "id": "f65daf3d-2d7d-4824-a4c7-d39c0758598e",
+    "title": "מלכים א מוקלט (ללא טעמים) פרקים ד-ה",
+    "status": "not_in_umbraco"
+  }
+]

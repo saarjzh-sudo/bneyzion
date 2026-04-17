@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { MessageCircle, Share2, ChevronDown, ArrowRight, ArrowLeft, Search, X, Copy, Check, BookOpen } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import heroBg from "@/assets/hero-bg-bney-zion.jpg";
 import MemorialFooter from "@/components/dor-haplaot/MemorialFooter";
 import DonationPopup from "@/components/dor-haplaot/DonationPopup";
 import Layout from "@/components/layout/Layout";
@@ -66,7 +65,7 @@ function ShareButtons({ miracle }: { miracle: Miracle }) {
       <button onClick={shareFacebook} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[hsl(220_60%_50%)] text-white font-ploni font-bold text-sm transition-all hover:bg-[hsl(220_60%_42%)] hover:scale-105">
         <Share2 className="w-4 h-4" /> Facebook
       </button>
-      <button onClick={copyLink} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[hsl(38_40%_85%)] text-[hsl(30_40%_20%)] font-ploni font-bold text-sm transition-all hover:bg-[hsl(38_40%_78%)] hover:scale-105">
+      <button onClick={copyLink} className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[#E8D5A0] text-[hsl(30_40%_20%)] font-ploni font-bold text-sm transition-all hover:bg-[#FAF6F0] hover:scale-105">
         {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
         {copied ? "הועתק!" : "העתק קישור"}
       </button>
@@ -79,7 +78,7 @@ function MiracleCard({ miracle, onClick, chapters }: { miracle: Miracle; onClick
   return (
     <button
       onClick={onClick}
-      className="group text-right rounded-2xl border border-[hsl(30_30%_82%)] bg-[hsl(38_50%_95%)] overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[rgba(180,50,50,0.3)] w-full"
+      className="group text-right rounded-2xl border border-[hsl(30_30%_82%)] bg-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#C4A265]/50 w-full"
     >
       {miracle.image_url && (
         <img
@@ -91,11 +90,11 @@ function MiracleCard({ miracle, onClick, chapters }: { miracle: Miracle; onClick
       )}
       <div className="p-5 md:p-6">
         <div className="flex items-start gap-4">
-          <span className="flex items-center justify-center w-12 h-12 rounded-full bg-[hsl(0_60%_35%)] text-white font-kedem font-bold text-lg shrink-0 group-hover:scale-110 transition-transform">
+          <span className="flex items-center justify-center w-12 h-12 rounded-full bg-[#1A2744] text-white font-kedem font-bold text-lg shrink-0 group-hover:scale-110 transition-transform">
             {miracle.number}
           </span>
           <div className="flex-1 min-w-0">
-            <h3 className="font-kedem font-bold text-base md:text-lg text-[hsl(0_60%_25%)] mb-1 leading-tight">
+            <h3 className="font-kedem font-bold text-base md:text-lg text-[#1A2744] mb-1 leading-tight">
               {miracle.title}
             </h3>
             {chapter && (
@@ -109,7 +108,7 @@ function MiracleCard({ miracle, onClick, chapters }: { miracle: Miracle; onClick
           </div>
         </div>
         <div className="mt-3 flex justify-end">
-          <span className="font-ploni font-bold text-xs text-[hsl(0_60%_35%)] group-hover:underline">
+          <span className="font-ploni font-bold text-xs text-[#C4A265] group-hover:underline">
             קראו עוד ←
           </span>
         </div>
@@ -130,7 +129,7 @@ function MiracleDetail({ miracle, onClose, onPrev, onNext, hasPrev, hasNext, cha
   const chapter = getChapterForMiracle(miracle.number, chapters);
   return (
     <div className="max-h-[85vh] overflow-y-auto">
-      <div className="bg-gradient-to-l from-[hsl(0_60%_25%)] to-[hsl(0_50%_18%)] relative overflow-hidden">
+      <div className="bg-gradient-to-l from-[#1A2744] to-[#0A1224] relative overflow-hidden">
         {miracle.image_url && (
           <img src={withCacheBustedImage(miracle.image_url, miracle.updated_at)} alt={miracle.title} className="absolute inset-0 w-full h-full object-cover opacity-30" />
         )}
@@ -173,7 +172,7 @@ function MiracleDetail({ miracle, onClose, onPrev, onNext, hasPrev, hasNext, cha
           {miracle.body_miracle}
         </p>
         {miracle.body_biblical && (
-          <div className="bg-[hsl(38_40%_92%)] rounded-xl p-5 border-r-4 border-[hsl(0_60%_35%)]">
+          <div className="bg-[hsl(38_40%_92%)] rounded-xl p-5 border-r-4 border-[#C4A265]">
             <p className="font-ploni font-bold text-[hsl(30_25%_20%)] leading-[1.9] text-base">
               {miracle.body_biblical}
             </p>
@@ -186,7 +185,7 @@ function MiracleDetail({ miracle, onClose, onPrev, onNext, hasPrev, hasNext, cha
         )}
         {miracle.verse_text && (
           <div className="bg-[hsl(38_45%_90%)] rounded-xl p-5 text-center">
-            <p className="font-kedem font-bold text-lg md:text-xl text-[hsl(0_60%_25%)] leading-relaxed mb-2">
+            <p className="font-kedem font-bold text-lg md:text-xl text-[#1A2744] leading-relaxed mb-2">
               ״{miracle.verse_text}״
             </p>
             <p className="font-ploni text-sm text-[hsl(30_30%_45%)]">
@@ -202,14 +201,14 @@ function MiracleDetail({ miracle, onClose, onPrev, onNext, hasPrev, hasNext, cha
             <ShareButtons miracle={miracle} />
           </div>
         )}
-        <div className="flex items-center justify-between pt-4 border-t border-[hsl(38_40%_85%)]">
+        <div className="flex items-center justify-between pt-4 border-t border-[#E8D5A0]">
           {hasPrev ? (
-            <button onClick={onPrev} className="flex items-center gap-2 font-ploni font-bold text-sm text-[hsl(0_60%_35%)] hover:underline">
+            <button onClick={onPrev} className="flex items-center gap-2 font-ploni font-bold text-sm text-[#C4A265] hover:underline">
               <ArrowRight className="w-4 h-4" /> נס קודם
             </button>
           ) : <div />}
           {hasNext ? (
-            <button onClick={onNext} className="flex items-center gap-2 font-ploni font-bold text-sm text-[hsl(0_60%_35%)] hover:underline">
+            <button onClick={onNext} className="flex items-center gap-2 font-ploni font-bold text-sm text-[#C4A265] hover:underline">
               נס הבא <ArrowLeft className="w-4 h-4" />
             </button>
           ) : <div />}
@@ -304,12 +303,12 @@ export default function DorHaplaot() {
 
   return (
     <Layout>
-      <div dir="rtl" className="min-h-screen bg-[hsl(38_50%_93%)]">
+      <div dir="rtl" className="min-h-screen bg-[#FAF6F0]">
 
         {/* ===== HERO ===== */}
         <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden -mt-24">
-          <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover object-[30%_center] md:object-center" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-[hsl(38_50%_93%)]" />
+          <img src="/images/war-miracles-bg.jpg" alt="" className="absolute inset-0 w-full h-full object-cover object-[30%_center] md:object-center" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1A2744]/90 via-[#1A2744]/70 to-[#FAF6F0]" />
           <div className="relative z-10 text-center px-4 py-20 md:py-24 max-w-3xl mx-auto">
             <img
               src="/lovable-uploads/logo-bney-zion.png"
@@ -341,7 +340,7 @@ export default function DorHaplaot() {
             <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-3">
               <a
                 href="#miracles-grid"
-                className="flex flex-row-reverse items-center gap-2 px-5 py-2.5 md:px-7 md:py-3.5 rounded-xl bg-[hsl(0_60%_35%)] text-white font-kedem font-bold text-sm md:text-base transition-all duration-300 hover:bg-[hsl(0_60%_28%)] hover:shadow-xl hover:scale-105"
+                className="flex flex-row-reverse items-center gap-2 px-5 py-2.5 md:px-7 md:py-3.5 rounded-xl bg-[#1A2744] text-white font-kedem font-bold text-sm md:text-base transition-all duration-300 hover:bg-[#0A1224] hover:shadow-xl hover:scale-105"
               >
                 התחילו לקרוא
                 <ChevronDown className="w-4 h-4 md:w-5 md:h-5" />
@@ -362,12 +361,12 @@ export default function DorHaplaot() {
         {/* ===== INTRODUCTION ===== */}
         {introduction && (
           <section className="py-12 md:py-16 px-4 md:px-8 max-w-4xl mx-auto">
-            <div className="bg-[hsl(38_50%_97%)] rounded-2xl shadow-lg overflow-hidden border border-[hsl(30_30%_82%)]">
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-[hsl(30_30%_82%)]">
               {introduction.image_url && (
                 <img src={introduction.image_url} alt="הקדמה לדור הפלאות" className="w-full h-48 md:h-64 object-cover" />
               )}
               <div className="p-6 md:p-10">
-                <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(0_60%_25%)] text-center mb-6 leading-tight">
+                <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[#1A2744] text-center mb-6 leading-tight">
                   {introduction.title}
                 </h2>
                 <div className="font-ploni text-[hsl(30_25%_20%)] leading-[2] text-base md:text-lg space-y-4">
@@ -377,7 +376,7 @@ export default function DorHaplaot() {
                     return (
                       <p key={i}>
                         {parts.map((p, j) =>
-                          j % 2 === 1 ? <strong key={j} className="font-bold text-[hsl(0_60%_25%)]">{p}</strong> : <span key={j}>{p}</span>
+                          j % 2 === 1 ? <strong key={j} className="font-bold text-[#1A2744]">{p}</strong> : <span key={j}>{p}</span>
                         )}
                       </p>
                     );
@@ -401,7 +400,7 @@ export default function DorHaplaot() {
 
         {/* ===== FILTERS & GRID ===== */}
         <section id="miracles-grid" className="py-12 md:py-20 px-4 md:px-8 max-w-6xl mx-auto">
-          <h2 className="font-kedem font-bold text-3xl md:text-4xl text-[hsl(0_60%_25%)] text-center mb-3">
+          <h2 className="font-kedem font-bold text-3xl md:text-4xl text-[#1A2744] text-center mb-3">
             ניסי המלחמה
           </h2>
           <p className="font-ploni text-[hsl(30_30%_45%)] text-center mb-10 text-lg">
@@ -417,7 +416,7 @@ export default function DorHaplaot() {
                 placeholder="חיפוש לפי כותרת או תוכן..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-[hsl(38_40%_82%)] bg-[hsl(38_50%_97%)] font-ploni text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(180,50,50,0.3)] text-right"
+                className="w-full pr-10 pl-4 py-2.5 rounded-xl border border-[hsl(38_40%_82%)] bg-white font-ploni text-sm focus:outline-none focus:ring-2 focus:ring-[rgba(180,50,50,0.3)] text-right"
               />
               {searchQuery && (
                 <button onClick={() => setSearchQuery("")} className="absolute left-3 top-1/2 -translate-y-1/2">
@@ -427,7 +426,7 @@ export default function DorHaplaot() {
             </div>
             <button
               onClick={() => setSortAsc(!sortAsc)}
-              className="px-4 py-2.5 rounded-xl border border-[hsl(38_40%_82%)] bg-[hsl(38_50%_97%)] font-ploni font-bold text-sm text-[hsl(30_30%_35%)] hover:bg-[hsl(38_40%_92%)] transition-colors shrink-0"
+              className="px-4 py-2.5 rounded-xl border border-[hsl(38_40%_82%)] bg-white font-ploni font-bold text-sm text-[hsl(30_30%_35%)] hover:bg-[hsl(38_40%_92%)] transition-colors shrink-0"
             >
               {sortAsc ? `1 → ${filteredMiracles.length}` : `${filteredMiracles.length} → 1`}
             </button>
@@ -439,8 +438,8 @@ export default function DorHaplaot() {
               onClick={() => setSelectedChapter(null)}
               className={`px-4 py-2 rounded-full font-ploni font-bold text-sm transition-all ${
                 selectedChapter === null
-                  ? "bg-[hsl(0_60%_35%)] text-white shadow-md"
-                  : "bg-[hsl(38_40%_90%)] text-[hsl(30_30%_35%)] hover:bg-[hsl(38_40%_85%)]"
+                  ? "bg-[#1A2744] text-white shadow-md"
+                  : "bg-[#E8D5A0] text-[hsl(30_30%_35%)] hover:bg-[#E8D5A0]"
               }`}
             >
               הכל
@@ -459,10 +458,10 @@ export default function DorHaplaot() {
                   onClick={() => chapterHasMiracles ? setSelectedChapter(isSelected ? null : ch.number) : undefined}
                   className={`px-4 py-2 rounded-full font-ploni font-bold text-xs md:text-sm transition-all ${
                     isSelected
-                      ? "bg-[hsl(0_60%_35%)] text-white shadow-md"
+                      ? "bg-[#1A2744] text-white shadow-md"
                       : chapterHasMiracles
-                        ? "bg-[hsl(38_40%_90%)] text-[hsl(30_30%_35%)] hover:bg-[hsl(38_40%_85%)]"
-                        : "bg-[hsl(38_40%_93%)] text-[hsl(30_30%_60%)] cursor-default opacity-70"
+                        ? "bg-[#E8D5A0] text-[hsl(30_30%_35%)] hover:bg-[#E8D5A0]"
+                        : "bg-[#F5F0E8] text-[hsl(30_30%_60%)] cursor-default opacity-70"
                   }`}
                 >
                   {ch.subtitle}: {ch.title}
@@ -492,16 +491,16 @@ export default function DorHaplaot() {
 
           {miracles.length === 0 && (
             <div className="text-center py-16">
-              <BookOpen className="w-12 h-12 text-[hsl(0_60%_35%)/30] mx-auto mb-4" />
+              <BookOpen className="w-12 h-12 text-[#C4A265]/30 mx-auto mb-4" />
               <p className="font-ploni text-[hsl(30_30%_50%)] text-lg">טוען ניסים...</p>
             </div>
           )}
         </section>
 
         {/* ===== CTA ===== */}
-        <section className="py-12 md:py-16 px-4 bg-gradient-to-b from-[hsl(38_50%_93%)] to-[hsl(38_40%_88%)]">
+        <section className="py-12 md:py-16 px-4 bg-gradient-to-b from-[hsl(38_50%_93%)] to-[#F5F0E8]">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(0_60%_25%)] mb-4">
+            <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[#1A2744] mb-4">
               הצטרפו לפרויקט דור הפלאות
             </h2>
             <p className="font-ploni text-[hsl(30_30%_40%)] text-base mb-6">
@@ -521,7 +520,7 @@ export default function DorHaplaot() {
 
         <MemorialFooter />
 
-        <footer className="py-8 px-4 bg-[hsl(0_50%_12%)] text-center">
+        <footer className="py-8 px-4 bg-[#0A1224] text-center">
           <p className="font-ploni text-[hsl(38_40%_85%)] text-sm">
             תנועת בני ציון — דור הפלאות © {new Date().getFullYear()}
           </p>
@@ -531,7 +530,7 @@ export default function DorHaplaot() {
 
         {/* Miracle Detail Dialog */}
         <Dialog open={!!selectedMiracle} onOpenChange={open => !open && setSelectedMiracle(null)}>
-          <DialogContent className="max-w-2xl w-[95vw] p-0 overflow-hidden bg-[hsl(38_50%_97%)] border-none" dir="rtl">
+          <DialogContent className="max-w-2xl w-[95vw] p-0 overflow-hidden bg-white border-none" dir="rtl">
             {selectedMiracle && (
               <MiracleDetail
                 miracle={selectedMiracle}

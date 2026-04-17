@@ -1,6 +1,7 @@
 import { BookOpen, Calendar, ScrollText } from "lucide-react";
 import { useDailyLearning } from "@/hooks/useDailyVerse";
 import { Skeleton } from "@/components/ui/skeleton";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 const DailyVerseSection = () => {
   const { data, isLoading } = useDailyLearning();
@@ -67,7 +68,7 @@ const DailyVerseSection = () => {
           <div className="bg-white/80 backdrop-blur rounded-2xl border border-[hsl(38_50%_85%)] p-6 md:p-8 mb-8 shadow-sm">
             <div className="prose prose-lg max-w-none text-right leading-[2.2] font-serif text-foreground/90">
               {mainVerse.text.slice(0, 8).map((verse, i) => (
-                <p key={i} className="mb-2" dangerouslySetInnerHTML={{ __html: verse }} />
+                <p key={i} className="mb-2" dangerouslySetInnerHTML={{ __html: sanitizeHtml(verse) }} />
               ))}
               {mainVerse.text.length > 8 && (
                 <p className="text-muted-foreground text-center mt-4 font-display text-base">
