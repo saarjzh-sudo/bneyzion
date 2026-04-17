@@ -51,6 +51,7 @@ export function useParasha() {
         .from("lessons")
         .select("id, title, description, source_type, audio_url, video_url, content, duration, rabbi_id")
         .eq("series_id", series.id)
+        .eq("status", "published")
         .order("title");
 
       if (!lessons || lessons.length === 0) return [];
@@ -102,6 +103,7 @@ export function useParasha() {
         .from("lessons")
         .select("id, title, description, source_type, audio_url, video_url, content, duration, rabbi_id")
         .in("series_id", seriesIds)
+        .eq("status", "published")
         .ilike("title", `%${parasha}%`);
 
       if (!lessons) return [];
@@ -146,6 +148,7 @@ export function useParasha() {
             .from("lessons")
             .select("id, title, content")
             .eq("series_id", series.id)
+            .eq("status", "published")
             .ilike("title", `%${parasha}%`)
             .limit(1);
           const lesson = lessons?.[0] || null;
@@ -179,6 +182,7 @@ export function useParasha() {
         .from("lessons")
         .select("id, title, content, description")
         .eq("series_id", RIDDLES_SERIES_ID)
+        .eq("status", "published")
         .ilike("title", `%${parasha}%`)
         .limit(1);
 

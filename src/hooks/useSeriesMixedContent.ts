@@ -124,6 +124,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
           .from("lessons")
           .select("id, title, description, duration, video_url, audio_url, rabbi_id, source_type, series_id, rabbis(name)")
           .in("series_id", chunk)
+          .eq("status", "published")
           .order("published_at", { ascending: true })
           .limit(1000);
         if (error) throw error;
@@ -162,8 +163,9 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         if (matchingTopic) {
           const { data: taggedLessons } = await supabase
             .from("lesson_topics")
-            .select("lesson_id, lessons(id, title, description, duration, video_url, audio_url, source_type, rabbis(name))")
+            .select("lesson_id, lessons!inner(id, title, description, duration, video_url, audio_url, source_type, status, rabbis(name))")
             .eq("topic_id", matchingTopic.id)
+            .eq("lessons.status", "published")
             .limit(500);
 
           for (const tl of taggedLessons ?? []) {

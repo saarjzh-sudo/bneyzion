@@ -26,6 +26,7 @@ export function useSeriesLessonsList(seriesId: string | undefined) {
         .from("lessons")
         .select("id, title, duration, published_at, thumbnail_url, video_url, audio_url, rabbi_id, rabbis(name)")
         .eq("series_id", seriesId!)
+        .eq("status", "published")
         .order("published_at", { ascending: true });
       if (error) throw error;
       return data;

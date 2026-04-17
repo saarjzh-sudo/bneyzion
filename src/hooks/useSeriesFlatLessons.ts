@@ -60,6 +60,7 @@ export function useSeriesFlatLessons(seriesId: string | undefined) {
           .from("lessons")
           .select("id, title, duration, video_url, audio_url, rabbi_id, series_id, rabbis(name)")
           .in("series_id", chunk)
+          .eq("status", "published")
           .order("published_at", { ascending: true })
           .limit(1000);
 
