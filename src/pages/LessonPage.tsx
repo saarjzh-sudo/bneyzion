@@ -348,7 +348,7 @@ const LessonPage = () => {
           )}
 
           {/* AI Chat Widget */}
-          <AIChatWidget context={`שיעור: ${lesson?.title}${rabbi ? ` מאת ${rabbiName}` : ""}`} />
+          {/* <AIChatWidget context={`שיעור: ${lesson?.title}${rabbi ? ` מאת ${rabbiName}` : ""}`} /> */}
 
           {/* Related Lessons */}
           {relatedLessons && relatedLessons.length > 0 && (

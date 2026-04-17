@@ -12,7 +12,7 @@ import FloatingPlayer from "@/components/player/FloatingPlayer";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 // Eager-loaded: frequently visited pages
-import Index from "./pages/Index";
+import Index from "./pages/DesignPreviewHome";
 import LessonPage from "./pages/LessonPage";
 import RabbiPage from "./pages/RabbiPage";
 import SeriesList from "./pages/SeriesList";
@@ -105,7 +105,7 @@ const App = () => (
           <FloatingPlayer />
           <ScrollToTop />
           <InstallPrompt />
-          <GlobalAIChat />
+          {/* <GlobalAIChat /> */}
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWing /></Suspense>} />
