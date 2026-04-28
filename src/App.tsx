@@ -75,6 +75,8 @@ const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
 const DesignPreviewLesson = lazy(() => import("./pages/DesignPreviewLesson"));
 const DesignPreviewLayout = lazy(() => import("./pages/DesignPreviewLayout"));
+const DesignPreviewSeriesPage = lazy(() => import("./pages/DesignPreviewSeriesPage"));
+const DesignPreviewLessonPopup = lazy(() => import("./pages/DesignPreviewLessonPopup"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -170,6 +172,8 @@ const App = () => (
                 <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
                 <Route path="/design-lesson/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
                 <Route path="/design-layout" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLayout /></Suspense>} />
+                <Route path="/design-series-page" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPage /></Suspense>} />
+                <Route path="/design-lesson-popup" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLessonPopup /></Suspense>} />
               </>
             )}
             <Route path="*" element={<NotFound />} />
