@@ -82,6 +82,12 @@ const DesignPreviewStore = lazy(() => import("./pages/DesignPreviewStore"));
 const DesignPreviewProduct = lazy(() => import("./pages/DesignPreviewProduct"));
 const DesignPreviewPortal = lazy(() => import("./pages/DesignPreviewPortal"));
 const DesignPreviewChapterWeekly = lazy(() => import("./pages/DesignPreviewChapterWeekly"));
+const DesignPreviewRabbisList = lazy(() => import("./pages/DesignPreviewRabbisList"));
+const DesignPreviewRabbi = lazy(() => import("./pages/DesignPreviewRabbi"));
+const DesignPreviewTeachersWing = lazy(() => import("./pages/DesignPreviewTeachersWing"));
+const DesignPreviewCommunity = lazy(() => import("./pages/DesignPreviewCommunity"));
+const DesignPreviewBibleBook = lazy(() => import("./pages/DesignPreviewBibleBook"));
+const DesignPreviewDonate = lazy(() => import("./pages/DesignPreviewDonate"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -186,6 +192,14 @@ const App = () => (
             <Route path="/design-product/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewProduct /></Suspense>} />
             <Route path="/design-portal" element={<Suspense fallback={<LazyFallback />}><DesignPreviewPortal /></Suspense>} />
             <Route path="/design-chapter-weekly" element={<Suspense fallback={<LazyFallback />}><DesignPreviewChapterWeekly /></Suspense>} />
+            <Route path="/design-rabbis-list" element={<Suspense fallback={<LazyFallback />}><DesignPreviewRabbisList /></Suspense>} />
+            <Route path="/design-rabbi" element={<Suspense fallback={<LazyFallback />}><DesignPreviewRabbi /></Suspense>} />
+            <Route path="/design-rabbi/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewRabbi /></Suspense>} />
+            <Route path="/design-teachers-wing" element={<Suspense fallback={<LazyFallback />}><DesignPreviewTeachersWing /></Suspense>} />
+            <Route path="/design-community" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCommunity /></Suspense>} />
+            <Route path="/design-bible-book" element={<Suspense fallback={<LazyFallback />}><DesignPreviewBibleBook /></Suspense>} />
+            <Route path="/design-bible-book/:book" element={<Suspense fallback={<LazyFallback />}><DesignPreviewBibleBook /></Suspense>} />
+            <Route path="/design-donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
