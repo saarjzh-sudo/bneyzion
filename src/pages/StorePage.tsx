@@ -104,7 +104,7 @@ const defaultCategories = [
 const StorePage = () => {
   useSEO({
     title: "חנות הספרים",
-    description: "ספרי תנ״ך, מגילות, קורסים וימי עיון של עמותת בני ציון – הוצאת מכלל יופי.",
+    description: "ספרי תנ״ך, מגילות ומוצרי לימוד של עמותת בני ציון – הוצאת מכלל יופי.",
     url: "https://bneyzion.co.il/store",
   });
   const [activeCategory, setActiveCategory] = useState<string | undefined>();
@@ -130,12 +130,51 @@ const StorePage = () => {
               החנות של בני ציון
             </div>
             <h1 className="text-4xl md:text-5xl font-heading text-foreground mb-4">
-              ספרי תנ״ך מבית בני ציון
+              ספרים, דיסקים ומוצרי לימוד
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              ספרי פרשנות מקוריים, מגילות, קורסים דיגיטליים וימי עיון — הכל מבית בני ציון
+              מגוון ספרי פרשנות מקורית על התנ״ך, הרצאות מוקלטות וכלי עזר ללימוד — הכל ממכון בני ציון
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Category Cards */}
+      <section className="py-10 bg-background">
+        <div className="container">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {(categories && categories.length > 0 ? categories.map(cat => ({
+              key: cat.slug,
+              label: cat.name,
+              icon: categoryIcons[cat.slug] || BookOpen,
+              desc: categoryDescriptions[cat.slug] || cat.description || "",
+            })) : defaultCategories).map((cat, i) => {
+              const Icon = cat.icon;
+              const isActive = activeCategory === cat.key;
+              return (
+                <motion.button
+                  key={cat.key}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  onClick={() => setActiveCategory(isActive ? undefined : cat.key)}
+                  className={`p-6 rounded-2xl border text-right transition-all ${
+                    isActive
+                      ? "bg-primary/10 border-primary/30 shadow-md"
+                      : "bg-card border-border/50 hover:border-primary/20 hover:shadow-sm"
+                  }`}
+                >
+                  <div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 ${
+                    isActive ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"
+                  }`}>
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="font-heading text-lg text-foreground mb-1">{cat.label}</h3>
+                  <p className="text-sm text-muted-foreground">{cat.desc}</p>
+                </motion.button>
+              );
+            })}
+          </div>
         </div>
       </section>
 
