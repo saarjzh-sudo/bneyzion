@@ -13,6 +13,7 @@ import {
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { useGlobalSearch } from "@/hooks/useGlobalSearch";
+import { formatRabbiName } from "@/lib/rabbi-name";
 
 interface GlobalSearchProps {
   open: boolean;
@@ -144,7 +145,7 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
                   <AvatarFallback className="text-xs"><Users className="h-3.5 w-3.5" /></AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col flex-1">
-                  <span className="font-medium">{rabbi.title ? `${rabbi.title} ${rabbi.name}` : rabbi.name}</span>
+                  <span className="font-medium">{formatRabbiName(rabbi)}</span>
                   <span className="text-xs text-muted-foreground">{rabbi.lesson_count} שיעורים</span>
                 </div>
               </CommandItem>

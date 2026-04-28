@@ -9,6 +9,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useSEO } from "@/hooks/useSEO";
+import { formatRabbiName } from "@/lib/rabbi-name";
 import { useMemo } from "react";
 
 function formatDuration(seconds: number | null) {
@@ -22,18 +23,20 @@ const RabbiPage = () => {
   const { data: seriesList } = useRabbiSeries(id);
   const { data: lessons } = useRabbiLessons(id);
 
+  const displayName = useMemo(() => formatRabbiName(rabbi), [rabbi]);
+
   const jsonLd = useMemo(() => rabbi ? {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: rabbi.name,
+    name: displayName || rabbi.name,
     jobTitle: rabbi.title || "רב ומרצה",
     description: rabbi.bio || undefined,
     image: rabbi.image_url || undefined,
-  } : undefined, [rabbi]);
+  } : undefined, [rabbi, displayName]);
 
   useSEO({
-    title: rabbi?.name,
-    description: rabbi?.bio ?? `שיעורי ${rabbi?.name ?? "הרב"} באתר בני ציון`,
+    title: displayName || rabbi?.name,
+    description: rabbi?.bio ?? `שיעורי ${displayName || rabbi?.name || "הרב"} באתר בני ציון`,
     image: rabbi?.image_url ?? undefined,
     type: "profile",
     jsonLd,
@@ -86,8 +89,7 @@ const RabbiPage = () => {
             </Avatar>
             <div className="flex-1">
               <h1 className="text-3xl md:text-4xl font-heading text-foreground">
-                {rabbi.title && <span className="text-muted-foreground text-xl md:text-2xl ml-2">{rabbi.title}</span>}
-                {rabbi.name}
+                {displayName}
               </h1>
               {rabbi.specialty && <Badge variant="secondary" className="mt-3">{rabbi.specialty}</Badge>}
               {rabbi.bio && (
