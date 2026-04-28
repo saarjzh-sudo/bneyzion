@@ -78,6 +78,10 @@ const DesignPreviewLayout = lazy(() => import("./pages/DesignPreviewLayout"));
 const DesignPreviewSeriesList = lazy(() => import("./pages/DesignPreviewSeriesList"));
 const DesignPreviewSeriesPage = lazy(() => import("./pages/DesignPreviewSeriesPage"));
 const DesignPreviewLessonPopup = lazy(() => import("./pages/DesignPreviewLessonPopup"));
+const DesignPreviewStore = lazy(() => import("./pages/DesignPreviewStore"));
+const DesignPreviewProduct = lazy(() => import("./pages/DesignPreviewProduct"));
+const DesignPreviewPortal = lazy(() => import("./pages/DesignPreviewPortal"));
+const DesignPreviewChapterWeekly = lazy(() => import("./pages/DesignPreviewChapterWeekly"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -177,6 +181,11 @@ const App = () => (
             <Route path="/design-series-page" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPage /></Suspense>} />
             <Route path="/design-series-page/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPage /></Suspense>} />
             <Route path="/design-lesson-popup" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLessonPopup /></Suspense>} />
+            <Route path="/design-store" element={<Suspense fallback={<LazyFallback />}><DesignPreviewStore /></Suspense>} />
+            <Route path="/design-product" element={<Suspense fallback={<LazyFallback />}><DesignPreviewProduct /></Suspense>} />
+            <Route path="/design-product/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewProduct /></Suspense>} />
+            <Route path="/design-portal" element={<Suspense fallback={<LazyFallback />}><DesignPreviewPortal /></Suspense>} />
+            <Route path="/design-chapter-weekly" element={<Suspense fallback={<LazyFallback />}><DesignPreviewChapterWeekly /></Suspense>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
