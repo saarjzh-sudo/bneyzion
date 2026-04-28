@@ -1,27 +1,52 @@
 import "@/styles/chapter-weekly.css";
 
 import { AnimatedSection } from "@/components/ui/animated-section";
+import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
 import heroDesktop from "@/assets/esther-hero-desktop.png";
 import heroMobile from "@/assets/esther-hero-mobile.png";
 import estherBook from "@/assets/esther-book.png";
 import bookSet from "@/assets/book-set.png";
 import { Crown, ScrollText, Eye, Sparkles, Shield, Users, Star, ChevronLeft, Gift, Library, Download, BookOpen, Target } from "lucide-react";
 
-const CTA_LINK = "https://pay.grow.link/268ca602ec0ce15bdc64d38155d09679-MzA4MjY0NA";
 const SAMPLE_PDF = "/files/megillat-esther-sample.pdf";
 
-const CtaButton = ({ className = "", large = false }: { className?: string; large?: boolean }) => (
-  <a
-    href={CTA_LINK}
-    className={`inline-flex items-center gap-3 bg-gradient-to-l from-gold to-gold-light text-navy-deep rounded-xl font-bold transition-all duration-300 hover:shadow-gold hover:scale-105 ${
-      large ? "px-10 py-5 text-xl" : "px-8 py-4 text-lg"
-    } ${className}`}
-  >
-    <Crown className={large ? "w-6 h-6" : "w-5 h-5"} />
-    לרכישת הספר
-    <ChevronLeft className={large ? "w-5 h-5" : "w-4 h-4"} />
-  </a>
-);
+interface CtaButtonProps {
+  className?: string;
+  large?: boolean;
+  /** Tier — single book (default), two-pack, or full series */
+  tier?: "single" | "double" | "set";
+}
+
+const TIERS = {
+  single: { amount: 70,  label: "מגילה אחת",            description: "מגילת אסתר – מכלל יופי (עותק אחד)" },
+  double: { amount: 120, label: "2 מגילות",              description: "מגילת אסתר – מכלל יופי (זוג)" },
+  set:    { amount: 350, label: "סדרת מכלל יופי",        description: "סדרת מכלל יופי – חמש מגילות + שופטים" },
+} as const;
+
+const CtaButton = ({ className = "", large = false, tier = "single" }: CtaButtonProps) => {
+  const t = TIERS[tier];
+  return (
+    <QuickBuyDialog
+      product="book-megilat-esther"
+      amount={t.amount}
+      description={t.description}
+      title={`רכישת ${t.label}`}
+      subtitle={`₪${t.amount.toLocaleString("he-IL")} · ${t.description}`}
+      maxInstallments={3}
+    >
+      <button
+        type="button"
+        className={`inline-flex items-center gap-3 bg-gradient-to-l from-gold to-gold-light text-navy-deep rounded-xl font-bold transition-all duration-300 hover:shadow-gold hover:scale-105 ${
+          large ? "px-10 py-5 text-xl" : "px-8 py-4 text-lg"
+        } ${className}`}
+      >
+        <Crown className={large ? "w-6 h-6" : "w-5 h-5"} />
+        לרכישת הספר
+        <ChevronLeft className={large ? "w-5 h-5" : "w-4 h-4"} />
+      </button>
+    </QuickBuyDialog>
+  );
+};
 
 const SampleButton = ({ light = false, className = "" }: { light?: boolean; className?: string }) => (
   <a
@@ -177,7 +202,7 @@ const MegilatEsther = () => {
                 <p className="text-muted-foreground mb-4">עותק אחד לבית שלך</p>
                 <div className="text-4xl font-bold text-foreground mb-1">₪70</div>
                 <p className="text-sm text-muted-foreground mb-6">בלבד</p>
-                <CtaButton />
+                <CtaButton tier="single" />
               </div>
 
               <div className="premium-card text-center relative overflow-hidden border-2 border-gold/40">
@@ -194,7 +219,7 @@ const MegilatEsther = () => {
                 <p className="text-muted-foreground mb-4">אחד לך ואחד ׳משלוח מנות׳ למישהו קרוב</p>
                 <div className="text-4xl font-bold text-foreground mb-1">₪120</div>
                 <p className="text-sm text-muted-foreground mb-6">במקום ₪140</p>
-                <CtaButton />
+                <CtaButton tier="double" />
               </div>
 
               <div className="premium-card text-center relative overflow-hidden border-2 border-accent/40">
@@ -211,7 +236,7 @@ const MegilatEsther = () => {
                 <p className="text-muted-foreground text-sm mb-4">חמש מגילות + שופטים</p>
                 <div className="text-4xl font-bold text-foreground mb-1">₪350</div>
                 <p className="text-sm text-muted-foreground mb-6">במקום ₪420</p>
-                <CtaButton />
+                <CtaButton tier="set" />
               </div>
             </div>
           </div>
