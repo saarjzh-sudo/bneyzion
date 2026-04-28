@@ -197,3 +197,50 @@ export const seriesFamilies = {
 } as const;
 
 export type SeriesFamily = keyof typeof seriesFamilies;
+
+// ── Auto-categorization helpers ────────────────────────────────────────────
+// Map a series title (Hebrew) to the right design family.
+// Used until we add a `series.family` column in Supabase.
+export function getSeriesFamily(title: string, description?: string | null): SeriesFamily {
+  const t = (title || "") + " " + (description || "");
+  if (/פלאות|נס\b|ניסי|הצלה|השגחה/u.test(t)) return "miraculous";
+  if (/לעילוי|זכר|נשמת|אבל|יזכור|הי״ד/u.test(t)) return "remembrance";
+  if (/פרשה|פרשת|מועד|חג\b|ר.ח|זמני\s|שבוע/u.test(t)) return "weeklyObservance";
+  if (/ילד|חידה|חידות|נוער|צעיר/u.test(t)) return "youth";
+  if (/כנס|קהילת|קהילה|מורים|מלמדים|מדרשת/u.test(t)) return "assembly";
+  if (/מפ\b|מפות|טיימליין|דף עבודה|כלי עזר/u.test(t)) return "reference";
+  return "sacredCanon";
+}
+
+// Map a series title to a placeholder cover image from /public/images/.
+// Returns null if no good match — caller should render a gradient fallback.
+export function getSeriesCoverImage(title: string): string | null {
+  const t = title || "";
+  if (/ננצח|תנ.?ך|בכוח|בכח/u.test(t)) return "/images/series-tanach-victory.png";
+  if (/לשון|הקודש|דקדוק/u.test(t)) return "/images/series-lashon-hakodesh.png";
+  if (/איוב|משלי|כתובים/u.test(t)) return "/images/series-iyov.png";
+  if (/מידות|מוסר|אופי/u.test(t)) return "/images/series-middot.png";
+  if (/חומש|בראשית|שמות|ויקרא|במדבר|דברים|פרשה|פרשת|מאמר/u.test(t))
+    return "/images/series-lashon-hakodesh.png";
+  if (/יהושע|שופטים|שמואל|מלכים|נביא|ישעיהו|ירמיהו|יחזקאל/u.test(t))
+    return "/images/series-tanach-victory.png";
+  return null;
+}
+
+// Lesson type → Hebrew label
+export function lessonTypeLabel(t: string | null | undefined): string {
+  if (t === "video") return "וידאו";
+  if (t === "audio") return "אודיו";
+  if (t === "text" || t === "pdf") return "טקסט";
+  return "שיעור";
+}
+
+// Format duration (seconds) → Hebrew label
+export function formatDuration(seconds: number | null | undefined): string {
+  if (!seconds) return "—";
+  const min = Math.round(seconds / 60);
+  if (min < 60) return `${min} דק׳`;
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  return m > 0 ? `${h}:${String(m).padStart(2, "0")} שעות` : `${h} שעות`;
+}

@@ -1,75 +1,49 @@
 /**
- * /design-series-page — Full simulation of a single-series detail page.
+ * /design-series-page — Single-series detail page, redesigned.
  *
- * Card patterns lifted 1:1 from DesignPreviewHome.tsx:
- *   - PopularLessonCard (lessons grid)
- *   - TopSeriesCard    (related series)
- *   - RabbisAvatar     (rabbis row)
+ * Pulls REAL data from Supabase:
+ *   - Top series by lesson_count (or specific :id from URL)
+ *   - All published lessons of that series
+ *   - Other series by the same rabbi (related)
  *
- * Mock data is hardcoded here so we don't need Supabase auth; once approved
- * we'll replace the mock blocks with the real `useLessons`, `useSeries`,
- * `usePublicRabbis` hooks (already used by DesignPreviewHome).
- *
- * Dev-only (gated by import.meta.env.DEV in App.tsx).
+ * Card patterns lifted 1:1 from DesignPreviewHome.tsx.
  */
-import { Play, Heart, Share2, Flame, BookmarkPlus, Volume2 } from "lucide-react";
+import { useMemo } from "react";
+import { useParams } from "react-router-dom";
+import { Play, Heart, Share2, Flame, BookmarkPlus, Volume2, Loader2 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
-import { colors, fonts, gradients, shadows, radii, seriesFamilies } from "@/lib/designTokens";
+import {
+  colors,
+  fonts,
+  gradients,
+  shadows,
+  radii,
+  seriesFamilies,
+  getSeriesFamily,
+  getSeriesCoverImage,
+  lessonTypeLabel,
+  formatDuration,
+} from "@/lib/designTokens";
+import { useTopSeries } from "@/hooks/useTopSeries";
+import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 
 // ────────────────────────────────────────────────────────────────────────
-// Mock series data — represents a typical Sacred-Canon family series
-// (mahogany hero, gold accents, scholarly tone)
+// Hero — full-bleed mahogany w/ family-aware accent
 // ────────────────────────────────────────────────────────────────────────
-const SERIES = {
-  id: "sample-series",
-  family: "sacredCanon" as const,
-  title: 'סדרת "אגדות חז״ל בספר בראשית"',
-  rabbi: { name: "הרב יואב אוריאל", lessons: 287, avatar: null },
-  description:
-    "מסע לעומקי האגדות החז״ליות שמלוות את ספר בראשית — איך חז״ל קוראים את הסיפורים, איזה מסר הם רואים בכל פסוק, ומה זה אומר לחיים שלנו היום. סדרת לימוד שיטתית בארבעים ושבעה שיעורים, מבראשית עד וזאת הברכה.",
-  pullQuote:
-    '"וְהָאָדָם יָדַע אֶת חַוָּה אִשְׁתּוֹ — דע, שהאהבה היא ידיעה, וההכרה היא בריאה." (חז״ל על בראשית ד׳)',
-  lessonCount: 47,
-  totalDuration: "32 שעות",
-  status: "מתעדכנת",
-  imageUrl: "/images/series-tanach-victory.png",
-};
-
-const LESSONS = [
-  { id: 1, title: 'שיעור 1: "בְּרֵאשִׁית בָּרָא" — בריאת העולם בעיני חז״ל', duration: 47, type: "video", thumb: "/images/series-tanach-victory.png" },
-  { id: 2, title: 'גן עדן: מה איבדנו ומה נשאר?', duration: 38, type: "audio", thumb: "/images/lesson-audio.png" },
-  { id: 3, title: "קין והבל — סיפור הקנאה הראשון", duration: 52, type: "video", thumb: "/images/lesson-video.png" },
-  { id: 4, title: "תיבת נח: כשהעולם מתחיל מחדש", duration: 41, type: "video", thumb: "/images/series-iyov.png" },
-  { id: 5, title: "מגדל בבל ופיזור הלשונות", duration: 33, type: "audio", thumb: "/images/series-lashon-hakodesh.png" },
-  { id: 6, title: "אברהם — הניסיונות העשרה", duration: 56, type: "video", thumb: "/images/series-middot.png" },
-];
-
-const RELATED = [
-  { id: "r1", family: "sacredCanon", title: "אגדות חז״ל בספר שמות", lessonCount: 38, image: "/images/series-lashon-hakodesh.png" },
-  { id: "r2", family: "weeklyObservance", title: "פרשת השבוע — עיון מעמיק", lessonCount: 54, image: "/images/series-tanach-victory.png" },
-  { id: "r3", family: "miraculous", title: "דור הפלאות — סיפורי השגחה", lessonCount: 70, image: "/images/series-iyov.png" },
-  { id: "r4", family: "youth", title: "חידות תנ״ך לילדים", lessonCount: 24, image: "/images/series-middot.png" },
-];
-
-const RABBIS_FROM_SERIES = [
-  { name: "הרב יואב אוריאל", lessons: 287 },
-  { name: "הרב אריה כהנא", lessons: 142 },
-  { name: "הרב יצחק חיון", lessons: 88 },
-  { name: "הרב מנחם בורשטיין", lessons: 195 },
-  { name: "הרב חיים נבון", lessons: 60 },
-  { name: "הרב ישראל מאיר לאו", lessons: 73 },
-];
-
-// ────────────────────────────────────────────────────────────────────────
-function typeLabel(t: string) {
-  return t === "video" ? "וידאו" : t === "audio" ? "אודיו" : "טקסט";
-}
-
-// Custom hero for this page — matches home-page DesignHero pattern
-// (full-bleed mahogany gradient, shimmer text, gold divider, italic H1)
-function SeriesHero() {
-  const fam = seriesFamilies[SERIES.family];
+function SeriesHero({
+  series,
+  totalLessons,
+  totalDuration,
+  imageUrl,
+}: {
+  series: any;
+  totalLessons: number;
+  totalDuration: string;
+  imageUrl: string;
+}) {
+  const fam = seriesFamilies[getSeriesFamily(series.title, series.description)];
+  const rabbiName = series.rabbis?.name || "";
 
   return (
     <div
@@ -77,46 +51,28 @@ function SeriesHero() {
         minHeight: 480,
         position: "relative",
         overflow: "hidden",
-        marginTop: -96, // overlap header
+        marginTop: -96,
         background: gradients.mahoganyHero,
       }}
     >
-      {/* Background image with overlay */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `url(${SERIES.imageUrl})`,
+          backgroundImage: `url(${imageUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center 35%",
           opacity: 0.32,
           filter: "brightness(0.7) saturate(1.1)",
         }}
       />
-
-      {/* Vignette */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background:
-            "radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(0,0,0,0.55) 100%)",
+          background: "radial-gradient(ellipse at 50% 50%, transparent 25%, rgba(0,0,0,0.55) 100%)",
         }}
       />
-
-      {/* Grain */}
-      <svg
-        style={{ position: "absolute", inset: 0, opacity: 0.03, pointerEvents: "none" }}
-        width="100%"
-        height="100%"
-        aria-hidden
-      >
-        <filter id="series-grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#series-grain)" />
-      </svg>
 
       <div
         dir="rtl"
@@ -133,7 +89,6 @@ function SeriesHero() {
           margin: "0 auto",
         }}
       >
-        {/* Family badge */}
         <div
           style={{
             display: "inline-block",
@@ -155,28 +110,12 @@ function SeriesHero() {
           {fam.label}
         </div>
 
-        {/* Gold divider */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.65rem",
-            marginBottom: "1rem",
-          }}
-        >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "1rem" }}>
           <div style={{ width: 50, height: 1, background: "rgba(232,213,160,0.45)" }} />
-          <div
-            style={{
-              width: 7,
-              height: 7,
-              background: colors.goldShimmer,
-              transform: "rotate(45deg)",
-            }}
-          />
+          <div style={{ width: 7, height: 7, background: colors.goldShimmer, transform: "rotate(45deg)" }} />
           <div style={{ width: 50, height: 1, background: "rgba(232,213,160,0.45)" }} />
         </div>
 
-        {/* Title */}
         <h1
           style={{
             fontFamily: fonts.display,
@@ -189,10 +128,9 @@ function SeriesHero() {
             fontStyle: "italic",
           }}
         >
-          {SERIES.title}
+          {series.title}
         </h1>
 
-        {/* Rabbi line + meta */}
         <div
           style={{
             display: "flex",
@@ -203,21 +141,26 @@ function SeriesHero() {
             fontFamily: fonts.body,
             fontSize: "0.95rem",
             color: "rgba(255,255,255,0.85)",
-            marginBottom: "1.25rem",
+            marginBottom: "1.5rem",
           }}
         >
-          <span style={{ fontFamily: fonts.display, fontWeight: 700, color: colors.goldShimmer }}>
-            {SERIES.rabbi.name}
-          </span>
-          <span style={{ opacity: 0.5 }}>·</span>
-          <span>{SERIES.lessonCount} שיעורים</span>
-          <span style={{ opacity: 0.5 }}>·</span>
-          <span>{SERIES.totalDuration}</span>
-          <span style={{ opacity: 0.5 }}>·</span>
-          <span style={{ color: colors.goldLight }}>{SERIES.status}</span>
+          {rabbiName && (
+            <>
+              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: colors.goldShimmer }}>
+                {rabbiName}
+              </span>
+              <span style={{ opacity: 0.5 }}>·</span>
+            </>
+          )}
+          <span>{totalLessons} שיעורים</span>
+          {totalDuration !== "—" && (
+            <>
+              <span style={{ opacity: 0.5 }}>·</span>
+              <span>{totalDuration}</span>
+            </>
+          )}
         </div>
 
-        {/* CTAs */}
         <div style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap", justifyContent: "center" }}>
           <button
             style={{
@@ -283,8 +226,11 @@ function SeriesHero() {
   );
 }
 
-// Description block with pull-quote
-function DescriptionBlock() {
+// ────────────────────────────────────────────────────────────────────────
+// Description block — pulls real description; if empty, hides the section
+// ────────────────────────────────────────────────────────────────────────
+function DescriptionBlock({ series, totalLessons }: { series: any; totalLessons: number }) {
+  const description = series.description?.trim();
   return (
     <section style={{ background: colors.parchment, padding: "5rem 1.5rem 3rem" }}>
       <div style={{ maxWidth: 880, margin: "0 auto" }} dir="rtl">
@@ -310,7 +256,7 @@ function DescriptionBlock() {
             margin: "0 0 1.25rem",
           }}
         >
-          על מה הסדרה הזאת
+          {description ? "על מה הסדרה הזאת" : `${totalLessons} שיעורים מאת ${series.rabbis?.name || "המרצה"}`}
         </h2>
         <p
           style={{
@@ -321,33 +267,35 @@ function DescriptionBlock() {
             margin: 0,
           }}
         >
-          {SERIES.description}
+          {description ||
+            `סדרת לימוד שיטתית בת ${totalLessons} שיעורים. אפשר להתחיל מהשיעור הראשון ולעבור לפי הסדר, או לבחור שיעור ספציפי לפי הנושא. כל שיעור עומד בפני עצמו, אבל המכלול בונה תמונה שלמה ומעמיקה.`}
         </p>
-
-        {/* Pull-quote */}
-        <div
-          style={{
-            marginTop: "2rem",
-            padding: "1.5rem 1.75rem",
-            borderInlineEnd: `4px solid ${colors.goldLight}`,
-            background: "rgba(196,162,101,0.08)",
-            borderRadius: radii.md,
-            fontFamily: fonts.display,
-            fontStyle: "italic",
-            fontSize: "1.1rem",
-            color: colors.textDark,
-            lineHeight: 1.7,
-          }}
-        >
-          {SERIES.pullQuote}
-        </div>
       </div>
     </section>
   );
 }
 
-// Lessons grid — copies PopularLessonsSection card pattern from home
-function LessonsGrid() {
+// ────────────────────────────────────────────────────────────────────────
+// Lessons grid — same card pattern as PopularLessonsSection on home
+// ────────────────────────────────────────────────────────────────────────
+function LessonsGrid({
+  lessons,
+  rabbi,
+  isLoading,
+  totalCount,
+}: {
+  lessons: any[];
+  rabbi: string;
+  isLoading: boolean;
+  totalCount: number;
+}) {
+  const LESSON_PLACEHOLDER: Record<string, string> = {
+    video: "/images/lesson-video.png",
+    audio: "/images/lesson-audio.png",
+    text: "/images/lesson-text.png",
+    pdf: "/images/lesson-text.png",
+  };
+
   return (
     <section style={{ background: colors.parchment, padding: "3rem 1.5rem 5rem" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -372,7 +320,7 @@ function LessonsGrid() {
                 marginBottom: "0.3rem",
               }}
             >
-              {SERIES.lessonCount} שיעורים בסדרה
+              {totalCount} שיעורים בסדרה
             </div>
             <h2
               style={{
@@ -386,295 +334,189 @@ function LessonsGrid() {
               שיעורי הסדרה
             </h2>
           </div>
-          <span
-            style={{
-              fontFamily: fonts.body,
-              fontSize: "0.88rem",
-              color: colors.goldDark,
-              borderBottom: `1px solid ${colors.goldDark}`,
-              paddingBottom: 1,
-              cursor: "pointer",
-            }}
-          >
-            הצג הכל ←
-          </span>
-        </div>
-
-        <div
-          dir="rtl"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-            gap: "1.5rem",
-          }}
-        >
-          {LESSONS.map((lesson) => (
-            <div
-              key={lesson.id}
-              style={{
-                borderRadius: radii.xl,
-                overflow: "hidden",
-                border: `1px solid rgba(139,111,71,0.1)`,
-                background: "white",
-                cursor: "pointer",
-                transition: "all 0.28s ease",
-                boxShadow: shadows.cardSoft,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-4px)";
-                e.currentTarget.style.boxShadow = shadows.cardHover;
-                e.currentTarget.style.borderColor = colors.goldDark;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = shadows.cardSoft;
-                e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
-              }}
-            >
-              <div
-                style={{
-                  height: 180,
-                  overflow: "hidden",
-                  position: "relative",
-                  background: colors.parchmentDark,
-                }}
-              >
-                <img
-                  src={lesson.thumb}
-                  alt={lesson.title}
-                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                />
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)",
-                  }}
-                />
-                <span
-                  style={{
-                    position: "absolute",
-                    top: 10,
-                    insetInlineEnd: 10,
-                    padding: "0.2rem 0.65rem",
-                    borderRadius: radii.sm,
-                    background: gradients.goldButton,
-                    color: "white",
-                    fontFamily: fonts.body,
-                    fontSize: "0.68rem",
-                    fontWeight: 700,
-                  }}
-                >
-                  {typeLabel(lesson.type)}
-                </span>
-                {/* Play icon overlay */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: 10,
-                    insetInlineStart: 10,
-                    width: 36,
-                    height: 36,
-                    borderRadius: "50%",
-                    background: "rgba(255,255,255,0.95)",
-                    color: colors.textDark,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  {lesson.type === "audio" ? (
-                    <Volume2 style={{ width: 16, height: 16 }} />
-                  ) : (
-                    <Play style={{ width: 16, height: 16 }} fill="currentColor" />
-                  )}
-                </div>
-              </div>
-
-              <div style={{ padding: "1rem 1.1rem 1.25rem" }}>
-                <div
-                  style={{
-                    fontFamily: fonts.body,
-                    fontWeight: 700,
-                    fontSize: "0.72rem",
-                    color: colors.goldDark,
-                    marginBottom: "0.3rem",
-                  }}
-                >
-                  {SERIES.rabbi.name}
-                </div>
-                <div
-                  style={{
-                    fontFamily: fonts.display,
-                    fontWeight: 700,
-                    fontSize: "0.95rem",
-                    color: colors.textDark,
-                    lineHeight: 1.45,
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                    marginBottom: "0.5rem",
-                    minHeight: "2.7em",
-                  }}
-                >
-                  {lesson.title}
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontFamily: fonts.body,
-                      fontSize: "0.72rem",
-                      color: colors.textSubtle,
-                    }}
-                  >
-                    {lesson.duration} דקות
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: fonts.body,
-                      fontSize: "0.72rem",
-                      color: colors.goldDark,
-                      fontWeight: 600,
-                    }}
-                  >
-                    {lesson.type === "audio" ? "האזן ←" : "צפה ←"}
-                  </span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// Rabbis row — circular avatars (same pattern as home RabbisSection)
-function RabbisRow() {
-  return (
-    <section style={{ background: colors.oliveBg, padding: "4rem 1.5rem" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div
-          dir="rtl"
-          style={{
-            display: "flex",
-            alignItems: "flex-end",
-            justifyContent: "space-between",
-            marginBottom: "2.5rem",
-          }}
-        >
-          <div>
-            <div
+          {totalCount > 12 && (
+            <span
               style={{
                 fontFamily: fonts.body,
-                fontSize: "0.78rem",
-                fontWeight: 700,
-                color: colors.oliveMain,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                marginBottom: "0.3rem",
-              }}
-            >
-              למדו עוד מ-200 רבנים ומרצים
-            </div>
-            <h2
-              style={{
-                fontFamily: fonts.display,
-                fontWeight: 900,
-                fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
-                color: colors.textDark,
-                margin: 0,
-              }}
-            >
-              רבנים שיעורם בסדרה
-            </h2>
-          </div>
-        </div>
-
-        <div
-          dir="rtl"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))",
-            gap: "1.25rem",
-          }}
-        >
-          {RABBIS_FROM_SERIES.map((r) => (
-            <div
-              key={r.name}
-              style={{
-                textAlign: "center",
+                fontSize: "0.88rem",
+                color: colors.goldDark,
+                borderBottom: `1px solid ${colors.goldDark}`,
+                paddingBottom: 1,
                 cursor: "pointer",
               }}
             >
-              <div
-                style={{
-                  width: 88,
-                  height: 88,
-                  margin: "0 auto 0.65rem",
-                  borderRadius: "50%",
-                  background: gradients.goldButton,
-                  border: `2.5px solid white`,
-                  boxShadow: shadows.cardSoft,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontFamily: fonts.display,
-                  fontWeight: 900,
-                  fontSize: "1.6rem",
-                  color: "white",
-                  transition: "all 0.28s ease",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "scale(1.08)";
-                  e.currentTarget.style.boxShadow = shadows.cardHover;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "scale(1)";
-                  e.currentTarget.style.boxShadow = shadows.cardSoft;
-                }}
-              >
-                {r.name.split(" ").pop()?.[0] ?? "ר"}
-              </div>
-              <div
-                style={{
-                  fontFamily: fonts.display,
-                  fontWeight: 700,
-                  fontSize: "0.82rem",
-                  color: colors.textDark,
-                  lineHeight: 1.3,
-                }}
-              >
-                {r.name}
-              </div>
-              <div
-                style={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.7rem",
-                  color: colors.oliveMain,
-                  marginTop: 2,
-                }}
-              >
-                {r.lessons} שיעורים
-              </div>
-            </div>
-          ))}
+              הצג את כל ה-{totalCount} ←
+            </span>
+          )}
         </div>
+
+        {isLoading ? (
+          <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+            <Loader2 style={{ width: 28, height: 28, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+          </div>
+        ) : (
+          <div
+            dir="rtl"
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+              gap: "1.5rem",
+            }}
+          >
+            {lessons.slice(0, 12).map((lesson) => {
+              const thumbUrl =
+                lesson.thumbnail_url || LESSON_PLACEHOLDER[lesson.source_type] || "/images/series-default.png";
+              return (
+                <div
+                  key={lesson.id}
+                  style={{
+                    borderRadius: radii.xl,
+                    overflow: "hidden",
+                    border: `1px solid rgba(139,111,71,0.1)`,
+                    background: "white",
+                    cursor: "pointer",
+                    transition: "all 0.28s ease",
+                    boxShadow: shadows.cardSoft,
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-4px)";
+                    e.currentTarget.style.boxShadow = shadows.cardHover;
+                    e.currentTarget.style.borderColor = colors.goldDark;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = shadows.cardSoft;
+                    e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
+                  }}
+                >
+                  <div style={{ height: 180, overflow: "hidden", position: "relative", background: colors.parchmentDark }}>
+                    <img
+                      src={thumbUrl}
+                      alt={lesson.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)",
+                      }}
+                    />
+                    <span
+                      style={{
+                        position: "absolute",
+                        top: 10,
+                        right: 10,
+                        padding: "0.2rem 0.65rem",
+                        borderRadius: radii.sm,
+                        background: gradients.goldButton,
+                        color: "white",
+                        fontFamily: fonts.body,
+                        fontSize: "0.68rem",
+                        fontWeight: 700,
+                      }}
+                    >
+                      {lessonTypeLabel(lesson.source_type)}
+                    </span>
+                    <div
+                      style={{
+                        position: "absolute",
+                        bottom: 10,
+                        left: 10,
+                        width: 36,
+                        height: 36,
+                        borderRadius: "50%",
+                        background: "rgba(255,255,255,0.95)",
+                        color: colors.textDark,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                      }}
+                    >
+                      {lesson.source_type === "audio" ? (
+                        <Volume2 style={{ width: 16, height: 16 }} />
+                      ) : (
+                        <Play style={{ width: 16, height: 16 }} fill="currentColor" />
+                      )}
+                    </div>
+                  </div>
+                  <div style={{ padding: "1rem 1.1rem 1.25rem" }}>
+                    <div
+                      style={{
+                        fontFamily: fonts.body,
+                        fontWeight: 700,
+                        fontSize: "0.72rem",
+                        color: colors.goldDark,
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      {lesson.rabbis?.name || rabbi}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: fonts.display,
+                        fontWeight: 700,
+                        fontSize: "0.95rem",
+                        color: colors.textDark,
+                        lineHeight: 1.45,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        marginBottom: "0.5rem",
+                        minHeight: "2.7em",
+                      }}
+                    >
+                      {lesson.title}
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <span
+                        style={{
+                          fontFamily: fonts.body,
+                          fontSize: "0.72rem",
+                          color: colors.textSubtle,
+                        }}
+                      >
+                        {formatDuration(lesson.duration)}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: fonts.body,
+                          fontSize: "0.72rem",
+                          color: colors.goldDark,
+                          fontWeight: 600,
+                        }}
+                      >
+                        {lesson.source_type === "audio" ? "האזן ←" : "צפה ←"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
 }
 
-// Related series — TopSeriesCard pattern, color-coded by family
-function RelatedSeries() {
+// ────────────────────────────────────────────────────────────────────────
+// Related series — other series by same rabbi or in same family
+// ────────────────────────────────────────────────────────────────────────
+function RelatedSeries({ allSeries, currentSeries }: { allSeries: any[]; currentSeries: any }) {
+  const related = useMemo(() => {
+    if (!allSeries?.length) return [];
+    return allSeries
+      .filter((s) => s.id !== currentSeries.id)
+      .filter((s) => (s.rabbi_id && s.rabbi_id === currentSeries.rabbi_id) || s.lesson_count > 30)
+      .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0))
+      .slice(0, 4);
+  }, [allSeries, currentSeries]);
+
+  if (related.length === 0) return null;
+
   return (
     <section style={{ background: colors.parchmentDark, padding: "5rem 1.5rem" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -723,8 +565,9 @@ function RelatedSeries() {
             gap: "1.25rem",
           }}
         >
-          {RELATED.map((s) => {
-            const fam = seriesFamilies[s.family as keyof typeof seriesFamilies];
+          {related.map((s) => {
+            const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
+            const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
             return (
               <div
                 key={s.id}
@@ -749,32 +592,19 @@ function RelatedSeries() {
                   e.currentTarget.style.boxShadow = "0 2px 12px rgba(45,31,14,0.04)";
                 }}
               >
-                <div
-                  style={{
-                    width: "38%",
-                    flexShrink: 0,
-                    position: "relative",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    src={s.image}
-                    alt={s.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                  {/* Family stripe (left edge) */}
+                <div style={{ width: "38%", flexShrink: 0, position: "relative", overflow: "hidden" }}>
+                  <img src={cover} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   <div
                     style={{
                       position: "absolute",
                       top: 0,
                       bottom: 0,
-                      insetInlineEnd: 0,
+                      left: 0,
                       width: 4,
                       background: fam.accent,
                     }}
                   />
                 </div>
-
                 <div
                   style={{
                     padding: "1.1rem 1.25rem",
@@ -814,14 +644,8 @@ function RelatedSeries() {
                     >
                       {s.title}
                     </div>
-                    <div
-                      style={{
-                        fontFamily: fonts.body,
-                        fontSize: "0.72rem",
-                        color: colors.textSubtle,
-                      }}
-                    >
-                      {s.lessonCount} שיעורים
+                    <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle }}>
+                      {s.lesson_count} שיעורים{s.rabbis?.name && ` · ${s.rabbis.name}`}
                     </div>
                   </div>
                   <div
@@ -836,7 +660,7 @@ function RelatedSeries() {
                       style={{
                         height: 3,
                         flex: 1,
-                        marginInlineStart: "0.75rem",
+                        marginLeft: "0.75rem",
                         background: "rgba(139,111,71,0.1)",
                         borderRadius: 2,
                         overflow: "hidden",
@@ -878,26 +702,14 @@ function RelatedSeries() {
   );
 }
 
-// Memorial / dedication strip
+// ────────────────────────────────────────────────────────────────────────
+// Dedication strip
+// ────────────────────────────────────────────────────────────────────────
 function DedicationStrip() {
   return (
-    <section
-      style={{
-        background: gradients.warmDark,
-        padding: "3rem 1.5rem",
-        textAlign: "center",
-      }}
-      dir="rtl"
-    >
+    <section style={{ background: gradients.warmDark, padding: "3rem 1.5rem", textAlign: "center" }} dir="rtl">
       <div style={{ maxWidth: 720, margin: "0 auto" }}>
-        <Flame
-          style={{
-            width: 24,
-            height: 24,
-            color: colors.goldShimmer,
-            margin: "0 auto 0.75rem",
-          }}
-        />
+        <Flame style={{ width: 24, height: 24, color: colors.goldShimmer, margin: "0 auto 0.75rem" }} />
         <div
           style={{
             fontFamily: fonts.body,
@@ -911,15 +723,7 @@ function DedicationStrip() {
         >
           הקדישו שיעור
         </div>
-        <h3
-          style={{
-            fontFamily: fonts.display,
-            fontWeight: 700,
-            fontSize: "1.5rem",
-            color: "white",
-            margin: "0 0 1rem",
-          }}
-        >
+        <h3 style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.5rem", color: "white", margin: "0 0 1rem" }}>
           הקדישו את אחד השיעורים בסדרה לזכר יקיריכם
         </h3>
         <p
@@ -957,15 +761,75 @@ function DedicationStrip() {
   );
 }
 
+// ────────────────────────────────────────────────────────────────────────
 export default function DesignPreviewSeriesPage() {
+  const { id } = useParams<{ id?: string }>();
+  const { data: allSeries, isLoading: seriesLoading } = useTopSeries(150);
+
+  // If no :id passed, default to top series by lesson_count
+  const series = useMemo(() => {
+    if (!allSeries?.length) return null;
+    if (id) return allSeries.find((s: any) => s.id === id) || null;
+    return [...(allSeries as any[])]
+      .filter((s) => s.status === "active" && (s.lesson_count || 0) > 0)
+      .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0))[0];
+  }, [allSeries, id]);
+
+  const { data: lessons = [], isLoading: lessonsLoading } = useLessonsBySeries(series?.id);
+
+  if (seriesLoading) {
+    return (
+      <DesignLayout>
+        <div style={{ padding: "8rem 0", display: "flex", justifyContent: "center" }}>
+          <Loader2 style={{ width: 32, height: 32, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+        </div>
+      </DesignLayout>
+    );
+  }
+
+  if (!series) {
+    return (
+      <DesignLayout>
+        <div
+          style={{
+            padding: "8rem 1.5rem",
+            textAlign: "center",
+            fontFamily: fonts.body,
+            color: colors.textMuted,
+          }}
+        >
+          לא נמצאה סדרה. <a href="/design-series-list" style={{ color: colors.goldDark }}>חזור לרשימת הסדרות</a>
+        </div>
+      </DesignLayout>
+    );
+  }
+
+  const totalLessons = (lessons as any[]).length || series.lesson_count || 0;
+  const totalDurationSec = (lessons as any[]).reduce((sum, l) => sum + (l.duration || 0), 0);
+  const totalDuration = formatDuration(totalDurationSec);
+  const imageUrl = series.image_url || getSeriesCoverImage(series.title) || "/images/series-default.png";
+
   return (
     <DesignLayout transparentHeader overlapHero>
-      <SeriesHero />
-      <DescriptionBlock />
-      <LessonsGrid />
-      <RabbisRow />
-      <RelatedSeries />
+      <SeriesHero
+        series={series}
+        totalLessons={totalLessons}
+        totalDuration={totalDuration}
+        imageUrl={imageUrl}
+      />
+      <DescriptionBlock series={series} totalLessons={totalLessons} />
+      <LessonsGrid
+        lessons={lessons as any[]}
+        rabbi={series.rabbis?.name || ""}
+        isLoading={lessonsLoading}
+        totalCount={totalLessons}
+      />
+      <RelatedSeries allSeries={(allSeries as any[]) || []} currentSeries={series} />
       <DedicationStrip />
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+      `}</style>
     </DesignLayout>
   );
 }
