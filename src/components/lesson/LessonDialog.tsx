@@ -16,6 +16,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAwardPoints } from "@/hooks/usePoints";
 import { useMediaProgress } from "@/hooks/useMediaProgress";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
+import { formatRabbiName } from "@/lib/rabbi-name";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -143,7 +144,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
     if (!printWindow || !lesson) return;
     const content = (lesson as any).content || lesson.description || "";
     const logoUrl = `${window.location.origin}/assets/logo-horizontal-color.png`;
-    const rabbiLine = rabbi ? `מאת: ${rabbi.title ? rabbi.title + " " : ""}${rabbi.name}` : "";
+    const rabbiLine = rabbi ? `מאת: ${formatRabbiName(rabbi)}` : "";
     const dateLine = formatDate(lesson.published_at) || "";
     const durationLine = formatDuration(lesson.duration) || "";
     const metaParts = [rabbiLine, dateLine, durationLine].filter(Boolean).join(" · ");
@@ -397,7 +398,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                       className="text-primary font-semibold hover:underline"
                       onClick={() => onOpenChange(false)}
                     >
-                      {rabbi.title ? `${rabbi.title} ${rabbi.name}` : rabbi.name}
+                      {formatRabbiName(rabbi)}
                     </Link>
                   </span>
                 )}
