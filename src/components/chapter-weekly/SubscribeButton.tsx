@@ -16,6 +16,10 @@ import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
  * NOT via API params. The marketing copy in Pricing.tsx and the actual
  * Grow page configuration must be reconciled by whoever administers the
  * Grow account.
+ *
+ * UX: even though the HOK pageCode returns a redirect URL (not authCode),
+ * useGrowPayment now opens it in an iframe modal on the bnei zion site
+ * (per Grow's official iframe + postMessage docs). The user never leaves.
  */
 export function SubscribeButton({ children }: { children: React.ReactNode }) {
   return (
