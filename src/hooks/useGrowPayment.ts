@@ -67,6 +67,162 @@ export interface StartPaymentParams {
 
 const SDK_URL = "https://cdn.meshulam.co.il/sdk/gs.min.js";
 
+// Both production and sandbox post messages from these origins to the parent
+// window. We accept either so test transactions in sandbox work too.
+const GROW_TRUSTED_ORIGINS = new Set([
+  "https://meshulam.co.il",
+  "https://www.meshulam.co.il",
+  "https://sandbox.meshulam.co.il",
+  "https://pay.grow.link",
+]);
+
+// ───────────────────────── Iframe overlay (HOK / redirect flow) ─────────────────────────
+// Grow's standard payment flow returns a `url` instead of `authCode`. Per the
+// official Grow docs at https://grow-il.readme.io/reference/postmassage,
+// that url can be embedded in an iframe and the inner frame posts these
+// messages back via window.postMessage:
+//   { action: 'close' } — user dismissed
+//   { action: 'payment', status: 1 } — payment succeeded
+//   { action: 'payment', status: 0 } — payment failed
+//   { action: 'failed_to_load_page' } — error loading checkout
+//
+// We mount a fullscreen-iframe + postMessage listener so the user never
+// leaves bnei zion. resolves/rejects the Promise from startPayment so the
+// caller's try/catch works the same as the SDK overlay flow.
+
+interface IframeOverlayHandlers {
+  onSuccess: (data: any) => void;
+  onCancel: () => void;
+  onFailure: (msg: string) => void;
+}
+
+function openIframeOverlay(url: string, handlers: IframeOverlayHandlers) {
+  // Build the overlay
+  const overlay = document.createElement("div");
+  overlay.setAttribute("data-grow-iframe-overlay", "true");
+  Object.assign(overlay.style, {
+    position: "fixed",
+    inset: "0",
+    background: "rgba(0,0,0,0.65)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: "9999",
+    padding: "16px",
+    backdropFilter: "blur(4px)",
+  } as CSSStyleDeclaration);
+
+  // Wrapper makes a phone-sized white card
+  const card = document.createElement("div");
+  Object.assign(card.style, {
+    position: "relative",
+    background: "white",
+    borderRadius: "16px",
+    width: "100%",
+    maxWidth: "520px",
+    height: "min(90vh, 720px)",
+    boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+    overflow: "hidden",
+  } as CSSStyleDeclaration);
+
+  // Close button — Saar wanted users to be able to dismiss
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.setAttribute("aria-label", "סגור חלון תשלום");
+  closeBtn.innerHTML = "&times;";
+  Object.assign(closeBtn.style, {
+    position: "absolute",
+    top: "8px",
+    right: "8px",
+    width: "32px",
+    height: "32px",
+    border: "none",
+    background: "rgba(255,255,255,0.95)",
+    borderRadius: "50%",
+    fontSize: "22px",
+    lineHeight: "30px",
+    cursor: "pointer",
+    zIndex: "1",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+  } as CSSStyleDeclaration);
+
+  const iframe = document.createElement("iframe");
+  iframe.src = url;
+  iframe.title = "תשלום מאובטח דרך Grow";
+  iframe.allow = "payment";
+  Object.assign(iframe.style, {
+    width: "100%",
+    height: "100%",
+    border: "none",
+    display: "block",
+  } as CSSStyleDeclaration);
+
+  card.appendChild(closeBtn);
+  card.appendChild(iframe);
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+
+  // Lock background scroll while modal is open
+  const previousOverflow = document.body.style.overflow;
+  document.body.style.overflow = "hidden";
+
+  let settled = false;
+  const cleanup = () => {
+    if (settled) return;
+    settled = true;
+    window.removeEventListener("message", onMessage);
+    document.body.style.overflow = previousOverflow;
+    overlay.remove();
+  };
+
+  const onMessage = (event: MessageEvent) => {
+    if (!GROW_TRUSTED_ORIGINS.has(event.origin)) return;
+    const data = event.data;
+    if (!data || typeof data !== "object") return;
+    switch (data.action) {
+      case "close": {
+        cleanup();
+        handlers.onCancel();
+        break;
+      }
+      case "payment": {
+        const status = Number(data.status ?? 0);
+        if (status === 1) {
+          cleanup();
+          handlers.onSuccess(data);
+        } else {
+          cleanup();
+          handlers.onFailure(data.message || "התשלום נכשל");
+        }
+        break;
+      }
+      case "failed_to_load_page": {
+        cleanup();
+        handlers.onFailure("שגיאה בטעינת דף התשלום");
+        break;
+      }
+    }
+  };
+  window.addEventListener("message", onMessage);
+
+  closeBtn.addEventListener("click", () => {
+    cleanup();
+    handlers.onCancel();
+  });
+
+  // ESC also closes
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      cleanup();
+      handlers.onCancel();
+      window.removeEventListener("keydown", onKey);
+    }
+  };
+  window.addEventListener("keydown", onKey);
+}
+
+// ───────────────────────────── React hook ─────────────────────────────
+
 export function useGrowPayment() {
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +230,7 @@ export function useGrowPayment() {
   const resolveRef = useRef<((value: GrowSuccessResponse) => void) | null>(null);
   const rejectRef = useRef<((reason: any) => void) | null>(null);
 
-  // Load SDK script
+  // Load SDK script (still needed for the wallet/authCode flow used by books)
   useEffect(() => {
     if (window.growPayment) {
       initSDK();
@@ -97,7 +253,6 @@ export function useGrowPayment() {
 
   function initSDK() {
     if (!window.growPayment) {
-      // SDK may initialize asynchronously — retry briefly
       let retries = 0;
       const interval = setInterval(() => {
         retries++;
@@ -187,7 +342,7 @@ export function useGrowPayment() {
           throw new Error(data.error || "Failed to create payment");
         }
 
-        // Step 2a: Wallet flow (products) — open SDK overlay
+        // Step 2a: Wallet flow (products / books) — open SDK overlay
         if (data.authCode) {
           return new Promise<GrowSuccessResponse>((resolve, reject) => {
             resolveRef.current = resolve;
@@ -196,12 +351,38 @@ export function useGrowPayment() {
           });
         }
 
-        // Step 2b: Redirect flow (donations/direct debit) — navigate current tab
-        // Cannot use window.open from async callback (popup blocker).
-        // Grow will redirect back to successUrl after payment.
-        window.location.href = data.url;
-        // Return never resolves — page navigates away
-        return new Promise<GrowSuccessResponse>(() => {});
+        // Step 2b: HOK / standard flow — open URL in an iframe modal so the
+        // user never leaves bnei zion. Communicate via postMessage per Grow's
+        // official iframe docs.
+        return new Promise<GrowSuccessResponse>((resolve, reject) => {
+          openIframeOverlay(data.url, {
+            onSuccess: (msg) => {
+              setIsLoading(false);
+              // Grow's postMessage payload differs from the SDK's onSuccess
+              // payload — synthesise a comparable shape for callers.
+              resolve({
+                payment_sum: String(msg.sum ?? params.sum ?? ""),
+                full_name: params.fullName,
+                payment_method: msg.payment_method || "credit",
+                number_of_payments: String(
+                  msg.paymentsNum ?? params.installments ?? 1
+                ),
+                confirmation_number: String(
+                  msg.transactionId ?? msg.asmachta ?? ""
+                ),
+              });
+            },
+            onCancel: () => {
+              setIsLoading(false);
+              reject(new Error("התשלום בוטל"));
+            },
+            onFailure: (msg) => {
+              setIsLoading(false);
+              setError(msg);
+              reject(new Error(msg));
+            },
+          });
+        });
       } catch (err: any) {
         setIsLoading(false);
         setError(err.message);
