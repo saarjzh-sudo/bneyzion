@@ -1,4 +1,5 @@
 import { ArrowLeft, Calendar, BookOpen } from "lucide-react";
+import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const FutureProgram = () => (
   <section className="py-20 md:py-28 px-4 bg-background">
@@ -41,13 +42,12 @@ const FutureProgram = () => (
       </div>
 
       <div className="mt-10">
-        <a
-          href="https://pay.grow.link/714ddd3db06f5aabeaecb107064b431f-MjcwODI0Ng"
-          className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 md:px-10 md:py-5 rounded-xl font-bold text-lg md:text-xl transition-all duration-300 hover:shadow-premium-lg hover:scale-105"
-        >
+        <SubscribeButton>
+      <button type="button" className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 md:px-10 md:py-5 rounded-xl font-bold text-lg md:text-xl transition-all duration-300 hover:shadow-premium-lg hover:scale-105">
           אני רוצה להצטרף למסע
           <ArrowLeft className="w-5 h-5" />
-        </a>
+        </button>
+    </SubscribeButton>
       </div>
     </div>
   </section>

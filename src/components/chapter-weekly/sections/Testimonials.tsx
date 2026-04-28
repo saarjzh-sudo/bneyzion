@@ -1,4 +1,5 @@
 import { ArrowLeft, Quote } from "lucide-react";
+import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const testimonials = [
   {
@@ -69,13 +70,12 @@ const Testimonials = () => {
         </div>
 
         <div className="text-center mt-12">
-          <a
-            href="https://pay.grow.link/714ddd3db06f5aabeaecb107064b431f-MjcwODI0Ng"
-            className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-premium-lg hover:scale-105"
-          >
+          <SubscribeButton>
+      <button type="button" className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:shadow-premium-lg hover:scale-105">
             אשמח להצטרף
             <ArrowLeft className="w-5 h-5" />
-          </a>
+          </button>
+    </SubscribeButton>
         </div>
       </div>
     </section>

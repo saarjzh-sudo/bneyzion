@@ -42,9 +42,20 @@ export interface StartPaymentParams {
   fullName: string;
   phone: string;
   email?: string;
-  type: "product" | "donation";
-  orderId?: string; // Optional — donations create it server-side
+  // Legacy values ('product' | 'donation') still work; new callers can also
+  // send 'wallet' or 'directDebit' but the server resolves the real flow
+  // from `meta.product` when present.
+  type: "product" | "donation" | "wallet" | "directDebit";
+  orderId?: string;
   installments?: number;
+  meta?: {
+    product?: string;
+    session_title?: string;
+    user_id?: string;
+    quantity?: number;
+    tos_accepted?: boolean;
+    tos_accepted_at?: string;
+  };
   donationMeta?: {
     is_monthly?: boolean;
     dedication_type?: string;
