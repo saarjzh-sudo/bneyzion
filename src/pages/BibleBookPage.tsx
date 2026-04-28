@@ -5,6 +5,7 @@ import { BookOpen, ChevronLeft, Clock, Headphones, Video, FileText, Volume2, Sea
 import Layout from "@/components/layout/Layout";
 import { useBibleBook, useBibleChapterLessons } from "@/hooks/useBible";
 import { useSEO } from "@/hooks/useSEO";
+import { formatRabbiName } from "@/lib/rabbi-name";
 import { usePlayer } from "@/contexts/PlayerContext";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -205,7 +206,7 @@ const BibleBookPage = () => {
                   <div className="divide-y divide-border/40">
                     {chapterLessons?.map((lesson) => {
                       const rabbi = lesson.rabbis as { id: string; name: string; title: string | null } | null;
-                      const rabbiLabel = rabbi?.title ? `${rabbi.title} ${rabbi.name}` : rabbi?.name;
+                      const rabbiLabel = formatRabbiName(rabbi);
 
                       return (
                         <button
