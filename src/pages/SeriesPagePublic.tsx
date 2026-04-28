@@ -49,12 +49,17 @@ const SeriesPagePublic = () => {
     title: series?.title,
     description: series?.description ?? `סדרת שיעורים ${series?.title ?? ""}${rabbiName ? ` מאת ${rabbiName}` : ""}`,
     image: series?.image_url ?? undefined,
+    url: id ? `https://bneyzion.co.il/series/${id}` : undefined,
     jsonLd: series ? {
       "@context": "https://schema.org",
       "@type": "Course",
       name: series.title,
       description: series.description || undefined,
-      provider: { "@type": "Organization", name: "בני ציון" },
+      image: series.image_url || undefined,
+      url: id ? `https://bneyzion.co.il/series/${id}` : undefined,
+      inLanguage: "he",
+      provider: { "@type": "Organization", name: "בני ציון", url: "https://bneyzion.co.il" },
+      ...(rabbiName ? { instructor: { "@type": "Person", name: rabbiName } } : {}),
     } : undefined,
   });
 
