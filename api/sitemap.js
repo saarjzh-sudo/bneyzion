@@ -65,6 +65,7 @@ export default async function handler(req, res) {
 
   const supabase = createClient(supabaseUrl, supabaseKey);
 
+  // series and rabbis don't have updated_at — only created_at. lessons has both.
   const [lessonsRes, seriesRes, rabbisRes] = await Promise.all([
     supabase
       .from('lessons')
@@ -74,14 +75,19 @@ export default async function handler(req, res) {
       .limit(40000),
     supabase
       .from('series')
-      .select('id, updated_at')
+      .select('id, created_at')
       .eq('status', 'published')
       .limit(2000),
     supabase
       .from('rabbis')
-      .select('id, updated_at')
+      .select('id, created_at')
+      .eq('status', 'published')
       .limit(500),
   ]);
+
+  if (lessonsRes.error) console.error('[sitemap] lessons error:', lessonsRes.error);
+  if (seriesRes.error) console.error('[sitemap] series error:', seriesRes.error);
+  if (rabbisRes.error) console.error('[sitemap] rabbis error:', rabbisRes.error);
 
   const entries = [];
 
@@ -100,7 +106,7 @@ export default async function handler(req, res) {
   for (const s of seriesRes.data ?? []) {
     entries.push(urlEntry({
       loc: `/series/${s.id}`,
-      lastmod: s.updated_at ? new Date(s.updated_at).toISOString() : undefined,
+      lastmod: s.created_at ? new Date(s.created_at).toISOString() : undefined,
       changefreq: 'weekly',
       priority: '0.7',
     }));
@@ -109,7 +115,7 @@ export default async function handler(req, res) {
   for (const r of rabbisRes.data ?? []) {
     entries.push(urlEntry({
       loc: `/rabbis/${r.id}`,
-      lastmod: r.updated_at ? new Date(r.updated_at).toISOString() : undefined,
+      lastmod: r.created_at ? new Date(r.created_at).toISOString() : undefined,
       changefreq: 'weekly',
       priority: '0.6',
     }));
