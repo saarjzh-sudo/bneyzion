@@ -56,8 +56,17 @@ const BibleBookPage = () => {
   const maxChapters = BOOK_CHAPTER_COUNTS[decodedBook] || 0;
 
   useSEO({
-    title: `${decodedBook} – שיעורים לפי פרק | בני ציון`,
+    title: `${decodedBook} – שיעורים לפי פרק`,
     description: `${data?.total || 0} שיעורים בספר ${decodedBook} – ניווט לפי פרקים ופסוקים`,
+    url: `https://bneyzion.co.il/bible/${encodeURIComponent(decodedBook)}`,
+    jsonLd: {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      name: `${decodedBook} – שיעורים לפי פרק`,
+      description: `${data?.total || 0} שיעורים בספר ${decodedBook}`,
+      isPartOf: { "@type": "WebSite", name: "בני ציון", url: "https://bneyzion.co.il" },
+      about: { "@type": "Book", name: decodedBook, inLanguage: "he" },
+    },
   });
 
   const chaptersWithCounts = data?.chapters || [];
