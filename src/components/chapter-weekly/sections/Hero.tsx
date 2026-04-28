@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import jerusalemWalls from "@/assets/jerusalem-walls.jpg";
+import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const Hero = () => (
   <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
@@ -27,14 +28,13 @@ const Hero = () => (
         <span className="text-cream/80">לא כי זה לא חשוב לי – פשוט כי אף אחד לא הראה לי איך לגעת בזה באמת.</span>
       </p>
 
-      <a
-        href="https://pay.grow.link/714ddd3db06f5aabeaecb107064b431f-MjcwODI0Ng"
-        className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-l from-primary via-primary to-teal-600 text-white px-6 py-3 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-xl transition-all duration-300 hover:shadow-xl hover:scale-105 animate-fade-up"
-        style={{ animationDelay: "0.3s" }}
-      >
+      <SubscribeButton>
+      <button type="button" className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-l from-primary via-primary to-teal-600 text-white px-6 py-3 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-xl transition-all duration-300 hover:shadow-xl hover:scale-105 animate-fade-up"
+ style={{ animationDelay: "0.3s" }}>
         אשמח להצטרף עכשיו
         <ArrowLeft className="w-5 h-5" />
-      </a>
+      </button>
+    </SubscribeButton>
 
       <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-12 text-sm animate-fade-up" style={{ animationDelay: "0.4s" }}>
         <div className="flex items-center gap-2 bg-black/50 backdrop-blur-sm px-4 py-2 rounded-full border border-gold/30">

@@ -1,4 +1,5 @@
 import { ArrowLeft, Check, Shield } from "lucide-react";
+import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const Pricing = () => (
   <section className="py-20 md:py-28 px-4 bg-cream-warm">
@@ -40,13 +41,15 @@ const Pricing = () => (
             ))}
           </ul>
 
-          <a
-            href="https://pay.grow.link/714ddd3db06f5aabeaecb107064b431f-MjcwODI0Ng"
-            className="w-full inline-flex items-center justify-center gap-2 md:gap-3 bg-accent text-accent-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 hover:shadow-gold hover:scale-105"
-          >
-            אני רוצה להצטרף במחיר מבצע!
-            <ArrowLeft className="w-5 h-5" />
-          </a>
+          <SubscribeButton>
+            <button
+              type="button"
+              className="w-full inline-flex items-center justify-center gap-2 md:gap-3 bg-accent text-accent-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 hover:shadow-gold hover:scale-105"
+            >
+              אני רוצה להצטרף במחיר מבצע!
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+          </SubscribeButton>
         </div>
       </div>
 

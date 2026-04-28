@@ -1,4 +1,5 @@
 import { ArrowLeft, Phone, Mail } from "lucide-react";
+import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const FinalCTA = () => (
   <section className="py-20 md:py-28 px-4 bg-background">
@@ -13,13 +14,12 @@ const FinalCTA = () => (
         <span className="text-sm">ללא התחייבות • ביטול בכל עת</span>
       </p>
 
-      <a
-        href="https://pay.grow.link/714ddd3db06f5aabeaecb107064b431f-MjcwODI0Ng"
-        className="inline-flex items-center gap-2 md:gap-3 bg-accent text-accent-foreground px-6 py-3 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-xl transition-all hover:shadow-gold hover:scale-105 mb-12"
-      >
+      <SubscribeButton>
+      <button type="button" className="inline-flex items-center gap-2 md:gap-3 bg-accent text-accent-foreground px-6 py-3 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-xl transition-all hover:shadow-gold hover:scale-105 mb-12">
         אני רוצה להצטרף במחיר מבצע!
         <ArrowLeft className="w-5 h-5" />
-      </a>
+      </button>
+    </SubscribeButton>
 
       <div className="flex flex-wrap justify-center gap-6 text-foreground mb-8">
         <a href="https://wa.me/972527203221" className="flex items-center gap-2 hover:text-primary transition-colors">

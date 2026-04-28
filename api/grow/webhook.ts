@@ -1,14 +1,105 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
 
-const GROW_API_URL = process.env.GROW_API_URL!;
-const SUPABASE_URL = process.env.SUPABASE_URL!;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+// .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
+// which silently breaks string routing/comparisons.
+const GROW_API_URL = (process.env.GROW_API_URL || "").trim();
+const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim();
+const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
+const SMOOVE_API_KEY = (process.env.SMOOVE_API_KEY || "").trim();
 
-// Server-side Supabase client with admin privileges
+// Disable Vercel's automatic body parser. Grow webhooks arrive as
+// application/x-www-form-urlencoded (and occasionally multipart/form-data)
+// with bracket-notation keys like data[transactionId] and
+// data[customFields][cField1]. The default parser leaves req.body broken
+// for our needs, so we read the raw body and parse it ourselves.
+export const config = {
+  api: { bodyParser: false },
+};
+
 function getSupabaseAdmin() {
   return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 }
+
+// ───────────────────────────── Body parsing ─────────────────────────────
+
+async function readRawBody(req: VercelRequest): Promise<Buffer> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of req as any) {
+    chunks.push(typeof chunk === "string" ? Buffer.from(chunk) : chunk);
+  }
+  return Buffer.concat(chunks);
+}
+
+function assignBracket(out: Record<string, any>, key: string, value: string) {
+  // Support data[transactionId]=... and data[customFields][cField1]=...
+  const m = key.match(/^(\w+)\[(\w+)\](?:\[(\w+)\])?$/);
+  if (m) {
+    out[m[1]] = out[m[1]] || {};
+    if (m[3]) {
+      out[m[1]][m[2]] = out[m[1]][m[2]] || {};
+      out[m[1]][m[2]][m[3]] = value;
+    } else {
+      out[m[1]][m[2]] = value;
+    }
+  } else {
+    out[key] = value;
+  }
+}
+
+function parseUrlEncoded(body: string): Record<string, any> {
+  const out: Record<string, any> = {};
+  for (const pair of body.split("&")) {
+    if (!pair) continue;
+    const [k, v = ""] = pair.split("=");
+    const key = decodeURIComponent(k.replace(/\+/g, " "));
+    const val = decodeURIComponent(v.replace(/\+/g, " "));
+    assignBracket(out, key, val);
+  }
+  return out;
+}
+
+function parseMultipart(body: Buffer, boundary: string): Record<string, any> {
+  const out: Record<string, any> = {};
+  const text = body.toString("utf8");
+  const parts = text.split(`--${boundary}`);
+  for (const part of parts) {
+    const nameMatch = part.match(/name="([^"]+)"/);
+    if (!nameMatch) continue;
+    const idx = part.indexOf("\r\n\r\n");
+    if (idx < 0) continue;
+    const value = part.slice(idx + 4).replace(/\r\n$/, "").replace(/--\s*$/, "");
+    assignBracket(out, nameMatch[1], value);
+  }
+  return out;
+}
+
+async function parseBody(req: VercelRequest): Promise<any> {
+  // KEEP raw Content-Type — boundary extraction is case-sensitive, while
+  // the body delimiters keep their original case.
+  const contentTypeRaw = String(req.headers["content-type"] || "");
+  const contentType = contentTypeRaw.toLowerCase();
+  const raw = await readRawBody(req);
+  if (!raw.length) return null;
+
+  if (contentType.includes("application/json")) {
+    try { return JSON.parse(raw.toString("utf8")); } catch { return null; }
+  }
+  if (contentType.includes("application/x-www-form-urlencoded")) {
+    return parseUrlEncoded(raw.toString("utf8"));
+  }
+  if (contentType.includes("multipart/form-data")) {
+    const bm = contentTypeRaw.match(/boundary=("?)([^";]+)\1/);
+    if (bm) return parseMultipart(raw, bm[2].trim());
+  }
+
+  // Fallback: try JSON, then urlencoded
+  const text = raw.toString("utf8");
+  try { return JSON.parse(text); } catch {}
+  return parseUrlEncoded(text);
+}
+
+// ───────────────────────────── Webhook handler ─────────────────────────────
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
@@ -16,18 +107,20 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const payload = req.body;
-    console.log("Grow webhook received:", JSON.stringify(payload));
+    const contentType = req.headers["content-type"];
+    const payload = await parseBody(req);
+    console.log("Grow webhook received. Content-Type:", contentType);
+    console.log("Parsed payload:", JSON.stringify(payload));
 
-    // Grow sends { err, status, data: { ... } }
     if (!payload || payload.status !== "1") {
       console.error("Webhook: invalid or failed transaction", payload);
       return res.status(200).json({ received: true, processed: false });
     }
 
-    const txData = payload.data;
-    const orderId = txData.customFields?.cField1;
-    const type = txData.customFields?.cField2; // 'product' or 'donation'
+    const txData = payload.data || {};
+    const orderId: string | undefined = txData.customFields?.cField1;
+    const flowType: string | undefined = txData.customFields?.cField2; // 'product' | 'donation' | 'directDebit' | 'wallet'
+    const productSlug: string | undefined = txData.customFields?.cField3; // payment_products.id
     const transactionId = txData.transactionId;
     const statusCode = txData.statusCode; // "2" = paid
 
@@ -38,48 +131,331 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const supabase = getSupabaseAdmin();
 
-    // Update the right table based on type
-    if (type === "donation") {
-      const { error } = await supabase
-        .from("donations")
-        .update({
-          payment_status: statusCode === "2" ? "completed" : "failed",
-        })
-        .eq("id", orderId);
+    // Decide which table to update. Donations stay in `donations`, everything
+    // else (products + subscriptions) lives in `orders`.
+    const targetTable = flowType === "donation" ? "donations" : "orders";
 
-      if (error) console.error("Webhook: failed to update donation", error);
-    } else {
-      // Product order
-      const { error } = await supabase
-        .from("orders")
-        .update({
-          payment_status: statusCode === "2" ? "completed" : "failed",
-          payment_method: txData.cardBrand || "credit",
-          payment_id: String(transactionId),
-          status: statusCode === "2" ? "confirmed" : "payment_failed",
-        })
-        .eq("id", orderId);
-
-      if (error) console.error("Webhook: failed to update order", error);
+    // Preserve existing raw_payload (e.g. consent audit from create-payment)
+    let mergedPayload: any = { webhook: payload };
+    try {
+      const { data: existing } = await supabase
+        .from(targetTable)
+        .select("raw_payload")
+        .eq("id", orderId)
+        .maybeSingle();
+      if (existing?.raw_payload && typeof existing.raw_payload === "object") {
+        mergedPayload = { ...existing.raw_payload, webhook: payload };
+      }
+    } catch (e) {
+      console.warn("Webhook: failed to read existing raw_payload, will overwrite", e);
     }
 
-    // Approve the transaction (required by Grow)
-    await approveTransaction(txData);
+    // Capture Grow-issued receipt fields if present — Grow handles invoicing
+    // for bnei zion (no Morning/Paperless), so whatever it returns about the
+    // document URL/number we want stored.
+    const invoiceNumber =
+      txData.invoiceNumber || txData.invoice_number || txData.documentNumber || null;
+    const invoiceUrl =
+      txData.invoiceUrl || txData.invoice_url || txData.documentUrl || null;
+    const invoiceId = txData.invoiceId || txData.invoice_id || txData.documentId || null;
+
+    // Update the row with all transaction details + receipt links
+    const updateRow: Record<string, any> = {
+      payment_status: statusCode === "2" ? "completed" : "failed",
+      payment_method: txData.cardBrand || "credit",
+      payment_id: String(transactionId),
+      transaction_type_id: txData.transactionTypeId
+        ? Number(txData.transactionTypeId)
+        : null,
+      asmachta: txData.asmachta || null,
+      card_suffix: txData.cardSuffix || null,
+      raw_payload: mergedPayload,
+      invoice_number: invoiceNumber,
+      invoice_url: invoiceUrl,
+      invoice_id: invoiceId,
+    };
+    // `orders` has a `status` column that Lovable used for fulfilment
+    // tracking — flip it on success so old admin views keep working.
+    if (targetTable === "orders") {
+      updateRow.status = statusCode === "2" ? "confirmed" : "payment_failed";
+    }
+
+    const { error: updateErr } = await supabase
+      .from(targetTable)
+      .update(updateRow)
+      .eq("id", orderId);
+
+    if (updateErr) {
+      console.error(`Webhook: failed to update ${targetTable}`, updateErr);
+    }
+
+    // Approve the transaction (REQUIRED by Grow — חנה actively monitors and
+    // flags integrations that don't approve within seconds of the webhook).
+    // Explicit logging so we have proof for live-approval review.
+    console.log(
+      "[Grow ApproveTransaction] Starting for orderId:",
+      orderId,
+      "txId:",
+      transactionId,
+      "flow:",
+      flowType
+    );
+    await approveTransaction(txData, productSlug, supabase);
+    console.log("[Grow ApproveTransaction] Completed for orderId:", orderId);
+
+    // Post-purchase side effects (only on successful payment)
+    if (statusCode === "2") {
+      try {
+        await runPostPurchaseSideEffects({
+          supabase,
+          targetTable,
+          orderId,
+          productSlug,
+        });
+      } catch (e) {
+        console.error("Post-purchase side effects exception:", e);
+      }
+    }
 
     return res.status(200).json({ received: true, processed: true });
   } catch (error: any) {
     console.error("Webhook error:", error);
-    // Return 200 to prevent Grow from retrying
+    // Always 200 so Grow doesn't retry forever
     return res.status(200).json({ received: true, error: error.message });
   }
 }
 
-async function approveTransaction(txData: any) {
+// ───────────────────────────── Side effects ─────────────────────────────
+
+const FALLBACK_PRODUCTS: Record<string, any> = {
+  "weekly-chapter-subscription": {
+    id: "weekly-chapter-subscription",
+    display_name: "מנוי הפרק השבועי",
+    type: "directDebit",
+    page_code_env: "SUBSCRIPTION",
+    smoove_list_id: 1045078,
+    smoove_list_name: "הפרק השבועי - תכנית מנויים",
+  },
+  "book-megilat-esther": {
+    id: "book-megilat-esther",
+    display_name: "מגילת אסתר",
+    type: "wallet",
+    page_code_env: "PRODUCTS",
+    smoove_list_id: 1131982,
+    smoove_list_name: "מגילת אסתר",
+  },
+};
+
+async function loadProductConfig(
+  supabase: ReturnType<typeof getSupabaseAdmin>,
+  productSlug: string | undefined
+) {
+  if (!productSlug) return null;
   try {
-    const pageCode =
-      txData.customFields?.cField2 === "donation"
-        ? process.env.GROW_PAGECODE_DONATIONS!
-        : process.env.GROW_PAGECODE_PRODUCTS!;
+    const { data } = await supabase
+      .from("payment_products")
+      .select(
+        "id, display_name, type, page_code_env, smoove_list_id, smoove_list_name, target_table"
+      )
+      .eq("id", productSlug)
+      .maybeSingle();
+    if (data) return data;
+  } catch (e) {
+    console.warn("payment_products table unavailable, using fallback wiring", e);
+  }
+  return FALLBACK_PRODUCTS[productSlug] || null;
+}
+
+async function runPostPurchaseSideEffects(args: {
+  supabase: ReturnType<typeof getSupabaseAdmin>;
+  targetTable: string;
+  orderId: string;
+  productSlug: string | undefined;
+}) {
+  const { supabase, targetTable, orderId, productSlug } = args;
+
+  // Load buyer details from the row we just updated
+  const buyerCols =
+    targetTable === "donations"
+      ? "id, donor_name, donor_email, amount"
+      : "id, customer_name, customer_email, customer_phone, total";
+  const { data: row, error: rowErr } = await supabase
+    .from(targetTable)
+    .select(buyerCols)
+    .eq("id", orderId)
+    .maybeSingle();
+  if (rowErr || !row) {
+    console.warn("Post-purchase: failed to reload row", rowErr);
+    return;
+  }
+
+  const fullName =
+    (row as any).customer_name || (row as any).donor_name || "";
+  const email =
+    (row as any).customer_email || (row as any).donor_email || "";
+  const phone = (row as any).customer_phone || "";
+
+  if (!email) {
+    console.log("Post-purchase: no email — skipping Smoove subscribe");
+    return;
+  }
+
+  const productCfg = await loadProductConfig(supabase, productSlug);
+  if (!productCfg?.smoove_list_id) {
+    console.log("Post-purchase: no smoove_list_id wired — skipping subscribe");
+    return;
+  }
+
+  const ok = await subscribeToSmoove({
+    email,
+    fullName,
+    phone,
+    company: productCfg.display_name || productSlug || "רכישה",
+    listId: productCfg.smoove_list_id,
+  });
+
+  try {
+    await supabase
+      .from(targetTable)
+      .update({
+        smoove_subscribed: ok,
+        smoove_list_id: productCfg.smoove_list_id,
+      })
+      .eq("id", orderId);
+  } catch (e) {
+    // Column may not exist yet — try a minimal update
+    try {
+      await supabase
+        .from(targetTable)
+        .update({ smoove_subscribed: ok })
+        .eq("id", orderId);
+    } catch {}
+  }
+}
+
+// ───────────────────────────── Smoove ─────────────────────────────
+
+// Smoove POST /v1/Contacts returns 409 for any email already in Smoove
+// (any list). `updateIfExists: true` does NOT bypass this. We must lookup
+// the contact and PUT the list subscription onto the existing record.
+async function subscribeToSmoove(params: {
+  email: string;
+  fullName: string;
+  phone: string;
+  company: string;
+  listId: number;
+}): Promise<boolean> {
+  if (!SMOOVE_API_KEY) {
+    console.warn("SMOOVE_API_KEY not configured — skipping subscribe");
+    return false;
+  }
+  const firstName = params.fullName.split(/\s+/)[0] || params.fullName;
+  const lastName = params.fullName.split(/\s+/).slice(1).join(" ") || "";
+  const email = params.email.toLowerCase().trim();
+  const headers = {
+    Authorization: `Bearer ${SMOOVE_API_KEY}`,
+    "Content-Type": "application/json",
+  };
+
+  try {
+    const createRes = await fetch("https://rest.smoove.io/v1/Contacts", {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        email,
+        firstName,
+        lastName,
+        cellPhone: params.phone,
+        company: params.company,
+        canReceiveEmails: true,
+        canReceiveSms: true,
+        lists_ToSubscribe: [params.listId],
+      }),
+    });
+
+    if (createRes.ok) return true;
+
+    const createText = await createRes.text();
+    const alreadyExists =
+      createRes.status === 409 ||
+      createText.toLowerCase().includes("already exists");
+
+    if (!alreadyExists) {
+      console.error("Smoove create failed:", createRes.status, createText);
+      return false;
+    }
+
+    const lookupRes = await fetch(
+      `https://rest.smoove.io/v1/Contacts/${encodeURIComponent(email)}?by=email`,
+      { method: "GET", headers }
+    );
+    if (!lookupRes.ok) {
+      console.error(
+        "Smoove lookup-after-409 failed:",
+        lookupRes.status,
+        await lookupRes.text()
+      );
+      return false;
+    }
+    const contact = await lookupRes.json();
+    if (!contact?.id) {
+      console.error("Smoove lookup-after-409 returned no id:", contact);
+      return false;
+    }
+
+    const updateRes = await fetch(
+      `https://rest.smoove.io/v1/Contacts/${contact.id}`,
+      {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({ lists_ToSubscribe: [params.listId] }),
+      }
+    );
+    if (!updateRes.ok) {
+      console.error(
+        "Smoove PUT (add to list) failed:",
+        updateRes.status,
+        await updateRes.text()
+      );
+      return false;
+    }
+    return true;
+  } catch (e) {
+    console.error("Smoove subscribe error:", e);
+    return false;
+  }
+}
+
+// ───────────────────────────── Approve transaction ─────────────────────────
+
+async function approveTransaction(
+  txData: any,
+  productSlug: string | undefined,
+  supabase: ReturnType<typeof getSupabaseAdmin>
+) {
+  try {
+    // Resolve pageCode dynamically: each product has a `page_code_env`
+    // (e.g. "PRODUCTS") and we read process.env["GROW_PAGECODE_PRODUCTS"].
+    const productCfg = await loadProductConfig(supabase, productSlug);
+    let pageCode: string | undefined;
+    if (productCfg?.page_code_env) {
+      const envKey = `GROW_PAGECODE_${productCfg.page_code_env}`;
+      pageCode = (process.env[envKey] || "").trim();
+    }
+    // Last-resort fallback so approve still fires even without product wiring
+    if (!pageCode) {
+      const flowType = txData.customFields?.cField2;
+      pageCode =
+        flowType === "donation"
+          ? (process.env.GROW_PAGECODE_DONATIONS || "").trim()
+          : (process.env.GROW_PAGECODE_PRODUCTS || "").trim();
+    }
+    if (!pageCode) {
+      console.error(
+        "[Grow ApproveTransaction] No pageCode available — cannot approve"
+      );
+      return;
+    }
 
     const formData = new FormData();
     formData.append("pageCode", pageCode);
@@ -104,15 +480,38 @@ async function approveTransaction(txData: any) {
     formData.append("processId", String(txData.processId));
     formData.append("processToken", txData.processToken);
 
-    const response = await fetch(
+    console.log(
+      "[Grow ApproveTransaction] POST to:",
       `${GROW_API_URL}/approveTransaction`,
-      { method: "POST", body: formData }
+      {
+        transactionId: txData.transactionId,
+        processId: txData.processId,
+        asmachta: txData.asmachta,
+        sum: txData.sum,
+        pageCode,
+      }
     );
 
+    const response = await fetch(`${GROW_API_URL}/approveTransaction`, {
+      method: "POST",
+      body: formData,
+    });
     const result = await response.json();
-    console.log("approveTransaction result:", result);
+    console.log(
+      "[Grow ApproveTransaction] Response status:",
+      result?.status,
+      "err:",
+      result?.err,
+      "full:",
+      JSON.stringify(result)
+    );
+    if (result?.status !== 1) {
+      console.error(
+        "[Grow ApproveTransaction] FAILED — Grow did not confirm the transaction",
+        result
+      );
+    }
   } catch (error) {
-    console.error("approveTransaction error:", error);
-    // Non-critical — transaction processes even if approve fails
+    console.error("[Grow ApproveTransaction] EXCEPTION:", error);
   }
 }

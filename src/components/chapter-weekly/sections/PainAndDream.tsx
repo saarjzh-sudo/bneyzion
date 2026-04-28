@@ -1,4 +1,5 @@
 import { ArrowLeft } from "lucide-react";
+import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const PainAndDream = () => (
   <>
@@ -136,13 +137,12 @@ const PainAndDream = () => (
 
           <p className="text-2xl md:text-3xl font-bold text-accent mt-12 mb-8">זה לא חלום – זה בהישג יד.</p>
 
-          <a
-            href="https://pay.grow.link/714ddd3db06f5aabeaecb107064b431f-MjcwODI0Ng"
-            className="inline-flex items-center gap-3 bg-accent text-accent-foreground px-8 py-4 md:px-10 md:py-5 rounded-xl font-bold text-lg md:text-xl transition-all duration-300 hover:shadow-gold hover:scale-105"
-          >
+          <SubscribeButton>
+      <button type="button" className="inline-flex items-center gap-3 bg-accent text-accent-foreground px-8 py-4 md:px-10 md:py-5 rounded-xl font-bold text-lg md:text-xl transition-all duration-300 hover:shadow-gold hover:scale-105">
             אני רוצה להצטרף
             <ArrowLeft className="w-5 h-5" />
-          </a>
+          </button>
+    </SubscribeButton>
         </div>
       </div>
     </section>

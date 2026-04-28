@@ -10,6 +10,8 @@ import { PlayerProvider } from "@/contexts/PlayerContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import FloatingPlayer from "@/components/player/FloatingPlayer";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { RequireAuth } from "@/components/auth/RequireAuth";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 // Eager-loaded: frequently visited pages
 import Index from "./pages/DesignPreviewHome";
@@ -71,7 +73,6 @@ const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
 const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
-const DesignPreviewHome = lazy(() => import("./pages/DesignPreviewHome"));
 const DesignPreviewLesson = lazy(() => import("./pages/DesignPreviewLesson"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
@@ -106,6 +107,7 @@ const App = () => (
           <ScrollToTop />
           <InstallPrompt />
           {/* <GlobalAIChat /> */}
+          <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWing /></Suspense>} />
@@ -113,17 +115,17 @@ const App = () => (
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
             <Route path="/thank-you" element={<Suspense fallback={<LazyFallback />}><ThankYou /></Suspense>} />
-            <Route path="/portal" element={<Suspense fallback={<LazyFallback />}><Portal /></Suspense>} />
-            <Route path="/portal/course/:id" element={<Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense>} />
+            <Route path="/portal" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />
+            <Route path="/portal/course/:id" element={<RequireAuth><Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<Suspense fallback={<LazyFallback />}><Roadmap /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/lessons/:id" element={<LessonPage />} />
             <Route path="/rabbis" element={<RabbisList />} />
             <Route path="/rabbis/:id" element={<RabbiPage />} />
             <Route path="/parasha" element={<Suspense fallback={<LazyFallback />}><ParashaPage /></Suspense>} />
-            <Route path="/profile" element={<Suspense fallback={<LazyFallback />}><Profile /></Suspense>} />
-            <Route path="/favorites" element={<Suspense fallback={<LazyFallback />}><Favorites /></Suspense>} />
-            <Route path="/history" element={<Suspense fallback={<LazyFallback />}><HistoryPage /></Suspense>} />
+            <Route path="/profile" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Profile /></Suspense></RequireAuth>} />
+            <Route path="/favorites" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Favorites /></Suspense></RequireAuth>} />
+            <Route path="/history" element={<RequireAuth><Suspense fallback={<LazyFallback />}><HistoryPage /></Suspense></RequireAuth>} />
             <Route path="/memorial" element={<Suspense fallback={<LazyFallback />}><Memorial /></Suspense>} />
             <Route path="/memorial/saadia" element={<Suspense fallback={<LazyFallback />}><MemorialSaadia /></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<LazyFallback />}><Contact /></Suspense>} />
@@ -131,7 +133,9 @@ const App = () => (
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
-            <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
+            {import.meta.env.DEV && (
+              <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
+            )}
             <Route path="/series" element={<SeriesList />} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
             <Route path="/pricing" element={<Suspense fallback={<LazyFallback />}><PricingPage /></Suspense>} />
@@ -160,11 +164,15 @@ const App = () => (
             <Route path="/admin/orders" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/coupons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-health" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
-            <Route path="/design-home" element={<Suspense fallback={<LazyFallback />}><DesignPreviewHome /></Suspense>} />
-            <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
-            <Route path="/design-lesson/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
+            {import.meta.env.DEV && (
+              <>
+                <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
+                <Route path="/design-lesson/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
+              </>
+            )}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </ErrorBoundary>
         </PlayerProvider>
         </CartProvider>
         </AuthProvider>
