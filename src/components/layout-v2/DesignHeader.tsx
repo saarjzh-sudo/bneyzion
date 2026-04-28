@@ -43,9 +43,17 @@ const NAV_ITEMS: { label: string; href: string }[] = [
 interface DesignHeaderProps {
   /** When true, header is transparent before scroll (use on pages with a dark hero). */
   transparentOnTop?: boolean;
+  /** When provided, shows a sidebar-toggle burger that calls this on click.
+   *  On desktop, the sidebar is always visible; the burger is only useful on
+   *  mobile. We render it whenever sidebar mode is enabled and let CSS hide
+   *  it on desktop. */
+  onSidebarToggle?: () => void;
 }
 
-export default function DesignHeader({ transparentOnTop = false }: DesignHeaderProps) {
+export default function DesignHeader({
+  transparentOnTop = false,
+  onSidebarToggle,
+}: DesignHeaderProps) {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -110,10 +118,11 @@ export default function DesignHeader({ transparentOnTop = false }: DesignHeaderP
           />
         </Link>
 
-        {/* Nav — CENTER (hidden on mobile) */}
+        {/* Nav — CENTER (hidden on mobile, AND hidden when sidebar is in use) */}
         <nav
           className="hidden md:flex"
           style={{
+            display: onSidebarToggle ? "none" : undefined,
             gap: "1.25rem",
             alignItems: "center",
             flex: 1,
@@ -223,7 +232,10 @@ export default function DesignHeader({ transparentOnTop = false }: DesignHeaderP
           <UserMenu isTransparent={isTransparent} />
           <button
             className="design-header-burger"
-            onClick={() => setMobileOpen((v) => !v)}
+            onClick={() => {
+              if (onSidebarToggle) onSidebarToggle();
+              else setMobileOpen((v) => !v);
+            }}
             aria-label="תפריט"
             style={{
               width: 40,
