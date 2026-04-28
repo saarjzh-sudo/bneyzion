@@ -1,13 +1,11 @@
 /**
- * /design-lesson-popup — Lesson popup/dialog demo.
+ * /design-lesson-popup — Lesson popup/dialog demo with REAL data.
  *
- * Shows the redesigned LessonDialog floating over a faux blurred series page,
- * so we can review the popup in context. Replaces the existing dialog used
- * across SeriesList, BibleBookPage, etc.
- *
- * Dev-only.
+ * Pulls the top series from Supabase + the first published lesson of that
+ * series. The popup floats over a faux blurred series page so you can see
+ * how it looks in context. Click the backdrop to dismiss; "פתח שוב" reopens.
  */
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
   Play,
   Volume2,
@@ -18,32 +16,67 @@ import {
   Download,
   ChevronDown,
   Star,
+  Loader2,
 } from "lucide-react";
 
-import { colors, fonts, gradients, radii, shadows, seriesFamilies } from "@/lib/designTokens";
-
-const LESSON = {
-  title: 'בְּרֵאשִׁית בָּרָא — בריאת העולם בעיני חז״ל',
-  series: 'אגדות חז״ל בספר בראשית',
-  family: "sacredCanon" as const,
-  rabbi: { name: "הרב יואב אוריאל", role: "ראש מדרשת הקהילה" },
-  duration: "47:23",
-  type: "video" as "video" | "audio",
-  publishedAt: "כ״ג ניסן תשפ״ו",
-  thumbnail: "/images/series-tanach-victory.png",
-  description:
-    "השיעור הראשון בסדרה. נצלול אל ההלכה הראשונה של רש״י על התורה — \"לא היה צריך להתחיל את התורה אלא מהחֹדש הזה לכם\" — ונבחן את עומק המסר. למה התורה נפתחת בסיפור הבריאה, ומה זה אומר עלינו ועל היחס שלנו אל הארץ.",
-  notes: [
-    "פתיחה — הקושיה של רש״י",
-    "מדרש בראשית רבה: \"בראשית — בשביל\"",
-    "המהר״ל: בריאה כסיבה תכליתית",
-    "סיכום והשלכות לימינו",
-  ],
-};
+import {
+  colors,
+  fonts,
+  gradients,
+  radii,
+  shadows,
+  seriesFamilies,
+  getSeriesFamily,
+  getSeriesCoverImage,
+  formatDuration,
+} from "@/lib/designTokens";
+import { useTopSeries } from "@/hooks/useTopSeries";
+import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 
 export default function DesignPreviewLessonPopup() {
   const [open, setOpen] = useState(true);
-  const fam = seriesFamilies[LESSON.family];
+
+  const { data: allSeries } = useTopSeries(20);
+  const topSeries = useMemo(() => {
+    if (!allSeries?.length) return null;
+    return [...(allSeries as any[])]
+      .filter((s) => s.status === "active" && (s.lesson_count || 0) > 0)
+      .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0))[0];
+  }, [allSeries]);
+
+  const { data: lessons = [] } = useLessonsBySeries(topSeries?.id);
+
+  const lesson = (lessons as any[])[0];
+  const cover = topSeries
+    ? topSeries.image_url || getSeriesCoverImage(topSeries.title) || "/images/series-default.png"
+    : "/images/series-default.png";
+
+  if (!topSeries || !lesson) {
+    return (
+      <div
+        dir="rtl"
+        style={{
+          minHeight: "100vh",
+          background: colors.parchment,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Loader2 style={{ width: 32, height: 32, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
+  const fam = seriesFamilies[getSeriesFamily(topSeries.title, topSeries.description)];
+  const rabbiName = topSeries.rabbis?.name || "";
+  const rabbiInitial = rabbiName ? (rabbiName.replace(/^הרב /, "")[0] || "ר") : "ר";
+  const lessonType: "video" | "audio" = lesson.source_type === "audio" ? "audio" : "video";
+  const lessonImage = lesson.thumbnail_url || cover;
+  const publishedAt = lesson.published_at
+    ? new Date(lesson.published_at).toLocaleDateString("he-IL")
+    : null;
 
   return (
     <div
@@ -55,12 +88,12 @@ export default function DesignPreviewLessonPopup() {
         overflow: "hidden",
       }}
     >
-      {/* ─── Faux background: blurred series page below the modal ─── */}
+      {/* ─── Faux blurred background ─── */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          backgroundImage: `url(${LESSON.thumbnail})`,
+          backgroundImage: `url(${cover})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           opacity: 0.5,
@@ -75,8 +108,8 @@ export default function DesignPreviewLessonPopup() {
         }}
       />
 
-      {/* Faux content lines (just to give context) */}
       <div
+        dir="rtl"
         style={{
           position: "absolute",
           inset: 0,
@@ -91,13 +124,14 @@ export default function DesignPreviewLessonPopup() {
           textShadow: "0 2px 8px rgba(0,0,0,0.3)",
         }}
       >
-        רקע: דף הסדרה (מטושטש)
+        רקע: {topSeries.title} (מטושטש)
       </div>
 
-      {/* ─── Modal backdrop ─── */}
+      {/* ─── Modal ─── */}
       {open && (
         <div
           onClick={() => setOpen(false)}
+          dir="rtl"
           style={{
             position: "fixed",
             inset: 0,
@@ -112,9 +146,9 @@ export default function DesignPreviewLessonPopup() {
             overflowY: "auto",
           }}
         >
-          {/* Modal */}
           <div
             onClick={(e) => e.stopPropagation()}
+            dir="rtl"
             style={{
               background: colors.parchment,
               borderRadius: radii.xl,
@@ -122,12 +156,11 @@ export default function DesignPreviewLessonPopup() {
               width: "100%",
               maxHeight: "92vh",
               overflowY: "auto",
-              boxShadow:
-                "0 25px 80px rgba(45,31,14,0.45), 0 0 0 1px rgba(232,213,160,0.25)",
+              boxShadow: "0 25px 80px rgba(45,31,14,0.45), 0 0 0 1px rgba(232,213,160,0.25)",
               position: "relative",
             }}
           >
-            {/* ─── Hero region (thumbnail + play overlay) ─── */}
+            {/* Hero region */}
             <div
               style={{
                 position: "relative",
@@ -137,21 +170,15 @@ export default function DesignPreviewLessonPopup() {
               }}
             >
               <img
-                src={LESSON.thumbnail}
-                alt={LESSON.title}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  opacity: 0.65,
-                }}
+                src={lessonImage}
+                alt={lesson.title}
+                style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.65 }}
               />
               <div
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background:
-                    "radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%)",
+                  background: "radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%)",
                 }}
               />
 
@@ -161,8 +188,8 @@ export default function DesignPreviewLessonPopup() {
                 style={{
                   position: "absolute",
                   top: "50%",
-                  insetInlineStart: "50%",
-                  transform: "translate(50%, -50%)",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
                   width: 80,
                   height: 80,
                   borderRadius: "50%",
@@ -174,28 +201,28 @@ export default function DesignPreviewLessonPopup() {
                   alignItems: "center",
                   justifyContent: "center",
                   boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
-                  transition: "all 0.2s",
+                  transition: "transform 0.2s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translate(50%, -50%) scale(1.05)";
+                  e.currentTarget.style.transform = "translate(-50%, -50%) scale(1.05)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translate(50%, -50%) scale(1)";
+                  e.currentTarget.style.transform = "translate(-50%, -50%) scale(1)";
                 }}
               >
-                {LESSON.type === "audio" ? (
+                {lessonType === "audio" ? (
                   <Volume2 style={{ width: 32, height: 32 }} />
                 ) : (
                   <Play style={{ width: 32, height: 32 }} fill="currentColor" />
                 )}
               </button>
 
-              {/* Type + duration badges */}
+              {/* Type + duration badges (top-right in RTL = visual right) */}
               <div
                 style={{
                   position: "absolute",
                   top: 14,
-                  insetInlineEnd: 14,
+                  right: 14,
                   display: "flex",
                   gap: "0.5rem",
                 }}
@@ -211,7 +238,7 @@ export default function DesignPreviewLessonPopup() {
                     fontWeight: 700,
                   }}
                 >
-                  {LESSON.type === "video" ? "וידאו" : "אודיו"}
+                  {lessonType === "video" ? "וידאו" : "אודיו"}
                 </span>
                 <span
                   style={{
@@ -226,18 +253,18 @@ export default function DesignPreviewLessonPopup() {
                     WebkitBackdropFilter: "blur(8px)",
                   }}
                 >
-                  {LESSON.duration}
+                  {formatDuration(lesson.duration)}
                 </span>
               </div>
 
-              {/* Close */}
+              {/* Close button (top-left in RTL = visual left) */}
               <button
                 onClick={() => setOpen(false)}
                 aria-label="סגור"
                 style={{
                   position: "absolute",
                   top: 14,
-                  insetInlineStart: 14,
+                  left: 14,
                   width: 36,
                   height: 36,
                   borderRadius: "50%",
@@ -254,9 +281,8 @@ export default function DesignPreviewLessonPopup() {
               </button>
             </div>
 
-            {/* ─── Body ─── */}
-            <div style={{ padding: "1.75rem 2rem 1rem" }}>
-              {/* Family badge + breadcrumb */}
+            {/* Body */}
+            <div style={{ padding: "1.75rem 2rem 1rem" }} dir="rtl">
               <div
                 style={{
                   display: "flex",
@@ -281,36 +307,31 @@ export default function DesignPreviewLessonPopup() {
                 >
                   {fam.label}
                 </span>
-                <span
-                  style={{
-                    fontFamily: fonts.body,
-                    fontSize: "0.78rem",
-                    color: colors.textSubtle,
-                  }}
-                >
-                  סדרה: <a style={{ color: colors.goldDark, textDecoration: "underline", textUnderlineOffset: 2 }}>{LESSON.series}</a>
+                <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textSubtle }}>
+                  סדרה: <span style={{ color: colors.goldDark, fontWeight: 600 }}>{topSeries.title}</span>
                 </span>
               </div>
 
-              {/* Title */}
               <h2
                 style={{
                   fontFamily: fonts.display,
                   fontWeight: 700,
                   fontSize: "1.5rem",
                   color: colors.textDark,
-                  margin: "0 0 0.85rem",
+                  margin: "0 0 1rem",
                   lineHeight: 1.3,
                   fontStyle: "italic",
                 }}
               >
-                {LESSON.title}
+                {lesson.title}
               </h2>
 
-              {/* Rabbi line */}
+              {/* Rabbi row — fixed: explicit RTL flow with avatar on RIGHT */}
               <div
+                dir="rtl"
                 style={{
                   display: "flex",
+                  flexDirection: "row",
                   alignItems: "center",
                   gap: "0.85rem",
                   paddingBottom: "1.25rem",
@@ -320,6 +341,7 @@ export default function DesignPreviewLessonPopup() {
               >
                 <div
                   style={{
+                    flexShrink: 0,
                     width: 48,
                     height: 48,
                     borderRadius: "50%",
@@ -335,9 +357,9 @@ export default function DesignPreviewLessonPopup() {
                     color: "white",
                   }}
                 >
-                  {LESSON.rabbi.name.split(" ").pop()?.[0] ?? "ר"}
+                  {rabbiInitial}
                 </div>
-                <div style={{ flex: 1 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
                   <div
                     style={{
                       fontFamily: fonts.display,
@@ -346,87 +368,114 @@ export default function DesignPreviewLessonPopup() {
                       color: colors.textDark,
                     }}
                   >
-                    {LESSON.rabbi.name}
+                    {rabbiName}
                   </div>
-                  <div
-                    style={{
-                      fontFamily: fonts.body,
-                      fontSize: "0.78rem",
-                      color: colors.textMuted,
-                    }}
-                  >
-                    {LESSON.rabbi.role}
+                  <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}>
+                    מרצה הסדרה
                   </div>
                 </div>
-                <span
-                  style={{
-                    fontFamily: fonts.body,
-                    fontSize: "0.72rem",
-                    color: colors.textSubtle,
-                  }}
-                >
-                  פורסם {LESSON.publishedAt}
-                </span>
+                {publishedAt && (
+                  <span
+                    style={{
+                      flexShrink: 0,
+                      fontFamily: fonts.body,
+                      fontSize: "0.72rem",
+                      color: colors.textSubtle,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    פורסם {publishedAt}
+                  </span>
+                )}
               </div>
 
-              {/* Description */}
-              <p
-                style={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.98rem",
-                  lineHeight: 1.85,
-                  color: colors.textMid,
-                  margin: "0 0 1.25rem",
-                }}
-              >
-                {LESSON.description}
-              </p>
-
-              {/* Notes block */}
-              <details
-                open
-                style={{
-                  background: "rgba(196,162,101,0.06)",
-                  borderRadius: radii.md,
-                  padding: "1rem 1.2rem",
-                  marginBottom: "1.5rem",
-                }}
-              >
-                <summary
+              {lesson.description && (
+                <p
                   style={{
-                    cursor: "pointer",
-                    listStyle: "none",
-                    fontFamily: fonts.display,
-                    fontWeight: 700,
-                    fontSize: "0.88rem",
-                    color: colors.goldDark,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <span>נקודות עיקריות בשיעור</span>
-                  <ChevronDown style={{ width: 16, height: 16 }} />
-                </summary>
-                <ol
-                  style={{
-                    margin: "0.85rem 0 0",
-                    paddingInlineStart: "1.25rem",
                     fontFamily: fonts.body,
-                    fontSize: "0.88rem",
+                    fontSize: "0.98rem",
                     lineHeight: 1.85,
                     color: colors.textMid,
+                    margin: "0 0 1.25rem",
                   }}
                 >
-                  {LESSON.notes.map((n) => (
-                    <li key={n}>{n}</li>
-                  ))}
-                </ol>
-              </details>
+                  {lesson.description}
+                </p>
+              )}
+
+              {!lesson.description && (
+                <p
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.92rem",
+                    lineHeight: 1.85,
+                    color: colors.textMuted,
+                    fontStyle: "italic",
+                    margin: "0 0 1.25rem",
+                    padding: "0.85rem 1rem",
+                    background: "rgba(196,162,101,0.06)",
+                    borderRadius: radii.sm,
+                    borderInlineStart: `3px solid ${colors.goldLight}`,
+                  }}
+                >
+                  שיעור מתוך הסדרה <b>{topSeries.title}</b> — {(lessons as any[]).length} שיעורים בסך הכל מאת {rabbiName}.
+                </p>
+              )}
+
+              {/* Other lessons in the series (mini-list) */}
+              {(lessons as any[]).length > 1 && (
+                <details
+                  style={{
+                    background: "rgba(196,162,101,0.06)",
+                    borderRadius: radii.md,
+                    padding: "1rem 1.2rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  <summary
+                    style={{
+                      cursor: "pointer",
+                      listStyle: "none",
+                      fontFamily: fonts.display,
+                      fontWeight: 700,
+                      fontSize: "0.88rem",
+                      color: colors.goldDark,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span>עוד שיעורים בסדרה ({(lessons as any[]).length - 1})</span>
+                    <ChevronDown style={{ width: 16, height: 16 }} />
+                  </summary>
+                  <ol
+                    style={{
+                      margin: "0.85rem 0 0",
+                      paddingInlineStart: "1.25rem",
+                      fontFamily: fonts.body,
+                      fontSize: "0.88rem",
+                      lineHeight: 1.85,
+                      color: colors.textMid,
+                    }}
+                  >
+                    {(lessons as any[]).slice(1, 8).map((l) => (
+                      <li key={l.id}>
+                        {l.title}{" "}
+                        {l.duration && (
+                          <span style={{ color: colors.textSubtle, fontSize: "0.78rem" }}>
+                            · {formatDuration(l.duration)}
+                          </span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                </details>
+              )}
             </div>
 
-            {/* ─── Footer (sticky-feel actions) ─── */}
+            {/* Footer */}
             <div
+              dir="rtl"
               style={{
                 padding: "1rem 2rem 1.5rem",
                 borderTop: `1px solid rgba(139,111,71,0.12)`,
@@ -439,57 +488,25 @@ export default function DesignPreviewLessonPopup() {
               }}
             >
               <div style={{ display: "flex", gap: "0.5rem" }}>
-                <button
-                  aria-label="הוסף למועדפים"
-                  style={{
-                    width: 42,
-                    height: 42,
-                    borderRadius: radii.md,
-                    border: `1.5px solid rgba(139,111,71,0.25)`,
-                    background: "white",
-                    color: colors.textMuted,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Heart style={{ width: 16, height: 16 }} />
-                </button>
-                <button
-                  aria-label="שתף"
-                  style={{
-                    width: 42,
-                    height: 42,
-                    borderRadius: radii.md,
-                    border: `1.5px solid rgba(139,111,71,0.25)`,
-                    background: "white",
-                    color: colors.textMuted,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Share2 style={{ width: 16, height: 16 }} />
-                </button>
-                <button
-                  aria-label="הורד"
-                  style={{
-                    width: 42,
-                    height: 42,
-                    borderRadius: radii.md,
-                    border: `1.5px solid rgba(139,111,71,0.25)`,
-                    background: "white",
-                    color: colors.textMuted,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Download style={{ width: 16, height: 16 }} />
-                </button>
+                {[Heart, Share2, Download].map((Icon, i) => (
+                  <button
+                    key={i}
+                    style={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: radii.md,
+                      border: `1.5px solid rgba(139,111,71,0.25)`,
+                      background: "white",
+                      color: colors.textMuted,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Icon style={{ width: 16, height: 16 }} />
+                  </button>
+                ))}
               </div>
 
               <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap" }}>
@@ -538,14 +555,13 @@ export default function DesignPreviewLessonPopup() {
         </div>
       )}
 
-      {/* "Reopen" floating button when closed */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
           style={{
             position: "fixed",
             bottom: 32,
-            insetInlineEnd: 32,
+            right: 32,
             zIndex: 50,
             padding: "0.85rem 1.5rem",
             borderRadius: radii.lg,
@@ -563,19 +579,19 @@ export default function DesignPreviewLessonPopup() {
         </button>
       )}
 
-      {/* Hint at top-right */}
       <div
+        dir="rtl"
         style={{
           position: "fixed",
           top: 24,
-          insetInlineEnd: 24,
+          right: 24,
           zIndex: 90,
           padding: "0.6rem 1rem",
           borderRadius: radii.md,
           background: "rgba(255,255,255,0.92)",
           border: `1px solid rgba(139,111,71,0.2)`,
           fontFamily: fonts.body,
-          fontSize: "0.8rem",
+          fontSize: "0.78rem",
           color: colors.textMuted,
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
@@ -588,8 +604,10 @@ export default function DesignPreviewLessonPopup() {
           <Star style={{ width: 14, height: 14, color: colors.goldDark }} />
           <b style={{ color: colors.textDark, fontFamily: fonts.display }}>פופאפ שיעור</b>
         </div>
-        זה הפופאפ שמופיע כשלוחצים על שיעור ברשימת הסדרה. לחץ מחוץ לחלון לסגירה.
+        דאטה אמיתית: שיעור מסדרת "{topSeries.title}". לחץ מחוץ לחלון לסגירה.
       </div>
+
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </div>
   );
 }
