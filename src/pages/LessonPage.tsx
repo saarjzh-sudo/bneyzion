@@ -14,6 +14,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useSEO } from "@/hooks/useSEO";
+import { formatRabbiName } from "@/lib/rabbi-name";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
 import LessonComments from "@/components/lesson/LessonComments";
 import AIChatWidget from "@/components/ai/AIChatWidget";
@@ -84,7 +85,7 @@ const LessonPage = () => {
   const mediaProgressRef = useMediaProgress(id);
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
 
-  const rabbiName = rabbi?.title ? `${rabbi.title} ${rabbi.name}` : rabbi?.name;
+  const rabbiName = formatRabbiName(rabbi);
 
   // Save last lesson to localStorage for non-authenticated users (continue where you left off)
   useEffect(() => {
@@ -99,20 +100,36 @@ const LessonPage = () => {
     });
   }, [lesson, user, rabbiName]);
 
+  const lessonUrl = lesson?.id ? `https://bneyzion.co.il/lessons/${lesson.id}` : undefined;
+  const hasVideo = Boolean(lesson?.video_url);
+
   useSEO({
     title: lesson?.title,
     description: lesson?.description ?? undefined,
     image: lesson?.thumbnail_url ?? undefined,
-    type: "article",
+    url: lessonUrl,
+    type: hasVideo ? "video.other" : "article",
     jsonLd: lesson ? {
       "@context": "https://schema.org",
-      "@type": "Article",
-      headline: lesson.title,
-      description: lesson.description || undefined,
-      image: lesson.thumbnail_url || undefined,
+      "@type": hasVideo ? "VideoObject" : "Article",
+      ...(hasVideo
+        ? {
+            name: lesson.title,
+            description: lesson.description || undefined,
+            thumbnailUrl: lesson.thumbnail_url || undefined,
+            contentUrl: lesson.video_url || undefined,
+            uploadDate: lesson.published_at || undefined,
+          }
+        : {
+            headline: lesson.title,
+            description: lesson.description || undefined,
+            image: lesson.thumbnail_url || undefined,
+            datePublished: lesson.published_at || undefined,
+          }),
+      url: lessonUrl,
+      inLanguage: "he",
       author: rabbiName ? { "@type": "Person", name: rabbiName } : undefined,
-      publisher: { "@type": "Organization", name: "בני ציון" },
-      datePublished: lesson.published_at || undefined,
+      publisher: { "@type": "Organization", name: "בני ציון", url: "https://bneyzion.co.il" },
     } : undefined,
   });
 
@@ -162,7 +179,7 @@ const LessonPage = () => {
                   <span className="flex items-center gap-1">
                     <span className="text-muted-foreground">מאת</span>
                     <Link to={`/rabbis/${rabbi.id}`} className="text-primary font-semibold hover:underline">
-                      {rabbi.title ? `${rabbi.title} ${rabbi.name}` : rabbi.name}
+                      {formatRabbiName(rabbi)}
                     </Link>
                   </span>
                 )}

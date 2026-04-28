@@ -74,6 +74,14 @@ const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
 const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
 const DesignPreviewLesson = lazy(() => import("./pages/DesignPreviewLesson"));
+const DesignPreviewLayout = lazy(() => import("./pages/DesignPreviewLayout"));
+const DesignPreviewSeriesList = lazy(() => import("./pages/DesignPreviewSeriesList"));
+const DesignPreviewSeriesPage = lazy(() => import("./pages/DesignPreviewSeriesPage"));
+const DesignPreviewLessonPopup = lazy(() => import("./pages/DesignPreviewLessonPopup"));
+const DesignPreviewStore = lazy(() => import("./pages/DesignPreviewStore"));
+const DesignPreviewProduct = lazy(() => import("./pages/DesignPreviewProduct"));
+const DesignPreviewPortal = lazy(() => import("./pages/DesignPreviewPortal"));
+const DesignPreviewChapterWeekly = lazy(() => import("./pages/DesignPreviewChapterWeekly"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -164,12 +172,21 @@ const App = () => (
             <Route path="/admin/orders" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/coupons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-health" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
-            {import.meta.env.DEV && (
-              <>
-                <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
-                <Route path="/design-lesson/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
-              </>
-            )}
+            {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
+                Available in dev AND production (so Vercel previews work for review). */}
+            <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
+            <Route path="/design-lesson/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
+            <Route path="/design-layout" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLayout /></Suspense>} />
+            <Route path="/design-series-list" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesList /></Suspense>} />
+            <Route path="/design-series-page" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPage /></Suspense>} />
+            <Route path="/design-series-page/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPage /></Suspense>} />
+            <Route path="/design-lesson-popup" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLessonPopup /></Suspense>} />
+            <Route path="/design-store" element={<Suspense fallback={<LazyFallback />}><DesignPreviewStore /></Suspense>} />
+            <Route path="/design-product" element={<Suspense fallback={<LazyFallback />}><DesignPreviewProduct /></Suspense>} />
+            <Route path="/design-product/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewProduct /></Suspense>} />
+            <Route path="/design-portal" element={<Suspense fallback={<LazyFallback />}><DesignPreviewPortal /></Suspense>} />
+            <Route path="/design-chapter-weekly" element={<Suspense fallback={<LazyFallback />}><DesignPreviewChapterWeekly /></Suspense>} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
           </ErrorBoundary>

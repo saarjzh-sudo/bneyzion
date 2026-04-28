@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
+Allow: /api/sitemap
 Disallow: /admin/
 Disallow: /api/
-Sitemap: https://bneyzion.co.il/sitemap.xml
+Disallow: /auth
+Disallow: /dev-pages
+Disallow: /design-lesson
+
+Sitemap: https://bneyzion.co.il/api/sitemap

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { formatRabbiName } from "@/lib/rabbi-name";
 
 const LS_KEY = "bneyzion_last_lesson";
 
@@ -52,7 +53,7 @@ export function useLastLesson() {
         if (!lesson) return null;
 
         const rabbi = lesson.rabbis as { name: string; title: string | null } | null;
-        const rabbiName = rabbi ? (rabbi.title ? `${rabbi.title} ${rabbi.name}` : rabbi.name) : null;
+        const rabbiName = rabbi ? (formatRabbiName(rabbi) || null) : null;
 
         return {
           lessonId: data.lesson_id,
