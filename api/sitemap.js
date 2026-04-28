@@ -78,10 +78,11 @@ export default async function handler(req, res) {
       .select('id, created_at')
       .eq('status', 'published')
       .limit(2000),
+    // Rabbis: no status filter — match the public RabbisList behavior
+    // (`useRabbis` hook just selects * with no filter).
     supabase
       .from('rabbis')
       .select('id, created_at')
-      .eq('status', 'published')
       .limit(500),
   ]);
 
