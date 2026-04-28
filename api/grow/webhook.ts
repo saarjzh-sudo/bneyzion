@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { subscribeToSmoove, splitFullName } from "../lib/smoove";
 
 // .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
 // which silently breaks string routing/comparisons.
@@ -215,6 +216,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e) {
         console.error("Post-purchase side effects exception:", e);
       }
+    }
+
+    // Donations: subscribe the donor to the Smoove marketing list. Skips
+    // silently if SMOOVE_API_KEY is unset, the email is empty, or the call
+    // fails — donation completion is never blocked on this.
+    if (type === "donation" && statusCode === "2") {
+      const { firstName, lastName } = splitFullName(txData.fullName);
+      await subscribeToSmoove({
+        email: txData.payerEmail,
+        firstName,
+        lastName,
+        phone: txData.payerPhone,
+      });
     }
 
     return res.status(200).json({ received: true, processed: true });
