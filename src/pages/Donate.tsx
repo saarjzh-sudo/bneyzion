@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Star, Gift, BookOpen, Sparkles, Users, Flame, Clock, Crown, Award, Trophy, Gem, Loader2, ShieldCheck } from "lucide-react";
@@ -10,28 +10,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useRecentDonations, useCreateDonation } from "@/hooks/useDonations";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
-
-// ─── Fake donation toasts ───
-const fakeNames = [
-  "משפחת כהן", "אברהם י.", "שרה ל.", "דוד מ.", "רחל ב.", "יוסף ש.",
-  "מרים ע.", "משה ד.", "חנה ר.", "אליהו פ.", "נעמי ח.", "יעקב ת.",
-  "משפחת לוי", "משפחת ישראלי", "אנונימי",
-];
-const fakeAmounts = [18, 36, 52, 100, 180, 260, 360, 520, 1800];
-
-const useFakeDonationToasts = () => {
-  const { toast } = useToast();
-  useEffect(() => {
-    const show = () => {
-      const name = fakeNames[Math.floor(Math.random() * fakeNames.length)];
-      const amount = fakeAmounts[Math.floor(Math.random() * fakeAmounts.length)];
-      toast({ title: `${name} תרמ/ה ₪${amount}`, description: "תודה רבה על התמיכה!", duration: 4000 });
-    };
-    const t = setTimeout(show, 4000 + Math.random() * 4000);
-    const i = setInterval(show, 12000 + Math.random() * 10000);
-    return () => { clearTimeout(t); clearInterval(i); };
-  }, []);
-};
 
 const presetAmounts = [
   { value: 36, label: "ל״ו", subtitle: "חי כפול", Icon: Heart },
@@ -81,8 +59,6 @@ const Donate = () => {
   const { data: recentDonations } = useRecentDonations();
   const createDonation = useCreateDonation();
   const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError } = useGrowPayment();
-
-  useFakeDonationToasts();
 
   const finalAmount = selectedAmount ?? (customAmount ? parseInt(customAmount) : 0);
   const isProcessing = createDonation.isPending || paymentLoading;
