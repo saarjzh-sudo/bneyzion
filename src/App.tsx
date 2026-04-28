@@ -88,6 +88,7 @@ const DesignPreviewTeachersWing = lazy(() => import("./pages/DesignPreviewTeache
 const DesignPreviewCommunity = lazy(() => import("./pages/DesignPreviewCommunity"));
 const DesignPreviewBibleBook = lazy(() => import("./pages/DesignPreviewBibleBook"));
 const DesignPreviewDonate = lazy(() => import("./pages/DesignPreviewDonate"));
+const DesignPreviewMemorialSaadia = lazy(() => import("./pages/DesignPreviewMemorialSaadia"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -200,6 +201,7 @@ const App = () => (
             <Route path="/design-bible-book" element={<Suspense fallback={<LazyFallback />}><DesignPreviewBibleBook /></Suspense>} />
             <Route path="/design-bible-book/:book" element={<Suspense fallback={<LazyFallback />}><DesignPreviewBibleBook /></Suspense>} />
             <Route path="/design-donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
+            <Route path="/design-memorial-saadia" element={<Suspense fallback={<LazyFallback />}><DesignPreviewMemorialSaadia /></Suspense>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
