@@ -1,17 +1,20 @@
 /**
- * DesignSidebar — unified collapsible side navigation for the v2 redesign.
+ * DesignSidebar v3 — unified collapsible side navigation that MIRRORS
+ * the existing SeriesList sidebar pattern (3 tabs + search + dynamic
+ * content tree pulled from Supabase via useContentSidebar).
  *
- * Replaces the horizontal nav links in the header AND the secondary sidebar
- * on TeachersWing-style pages. One nav surface, RTL (so it sits on the
- * RIGHT edge), three states:
+ * Tabs (matching production):
+ *   ראשי (Library)   — full content tree (Torah/Neviim/Ketuvim/Moadim/...)
+ *   נושאים (Filter)  — special collections (חידות, פלאות, כנס, כלים)
+ *   רבנים (Users)    — top rabbis with lesson counts
  *
- *   - Expanded (default desktop, width 280px): icons + labels + sub-sections
- *   - Collapsed (toggle by user, width 64px): icons only, hover to reveal
- *   - Drawer (mobile, width 280px overlay): hidden by default, opens via
- *     the header burger
+ * Three states:
+ *   - Expanded (desktop, 280px): icons + labels + sub-sections
+ *   - Collapsed (toggleable, 68px): icons only
+ *   - Drawer (mobile <1024px): off-canvas, opens via header burger
  *
- * Collapsed state persists in localStorage. Active route highlighted with
- * a gold left-edge stripe and gold-tinted background.
+ * Replaces the previous (made-up) sidebar — now matches the live site
+ * 1:1 in structure so users see consistency across redesign + production.
  */
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -20,107 +23,150 @@ import {
   Library,
   Users,
   BookOpen,
-  Calendar,
-  Sparkles,
-  ShoppingBag,
-  GraduationCap,
-  Heart,
-  Mail,
-  Info,
+  Search,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
   Flame,
   X,
-  Trophy,
-  PenTool,
+  Filter,
+  Sparkles,
+  Calendar,
+  GraduationCap,
+  ShoppingBag,
+  Heart,
+  Mail,
+  Headphones,
+  Video,
   FileText,
-  Puzzle,
-  Music,
 } from "lucide-react";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
+import { useTopSeries } from "@/hooks/useTopSeries";
+import { usePublicRabbis } from "@/hooks/useRabbis";
 
 // ────────────────────────────────────────────────────────────────────────
-// Sidebar nav structure — single source of truth
+// Static "ראשי" tree — mirrors production sidebar structure
 // ────────────────────────────────────────────────────────────────────────
-type NavItem = {
-  label: string;
-  href: string;
-  icon: React.ComponentType<any>; // lucide icons have many extra props
-  badge?: string;
-  children?: NavItem[];
-};
-
-const NAV: { section?: string; items: NavItem[] }[] = [
+const MAIN_TREE: NavSection[] = [
   {
-    section: undefined,
-    items: [{ label: "ראשי", href: "/", icon: Home }],
-  },
-  {
-    section: "תוכן",
+    id: "primary",
     items: [
-      { label: "סדרות", href: "/series", icon: Library, badge: "1,300+" },
-      {
-        label: "תנ״ך",
-        href: "/bible/בראשית",
-        icon: BookOpen,
-        children: [
-          { label: "בראשית", href: "/bible/בראשית", icon: BookOpen },
-          { label: "שמות", href: "/bible/שמות", icon: BookOpen },
-          { label: "ויקרא", href: "/bible/ויקרא", icon: BookOpen },
-          { label: "במדבר", href: "/bible/במדבר", icon: BookOpen },
-          { label: "דברים", href: "/bible/דברים", icon: BookOpen },
-          { label: "נביאים", href: "/bible/יהושע", icon: BookOpen },
-          { label: "כתובים", href: "/bible/תהילים", icon: BookOpen },
-        ],
-      },
+      { label: "ראשי", href: "/", icon: Home },
       { label: "פרשת השבוע", href: "/parasha", icon: Calendar },
       { label: "התכנית השבועית", href: "/chapter-weekly", icon: Sparkles },
-      { label: "רבנים", href: "/rabbis", icon: Users, badge: "200+" },
     ],
   },
   {
-    section: "קהילה",
+    id: "torah",
+    title: "חמישה חומשי תורה",
     items: [
+      { label: "בראשית", href: "/bible/בראשית", icon: BookOpen },
+      { label: "שמות", href: "/bible/שמות", icon: BookOpen },
+      { label: "ויקרא", href: "/bible/ויקרא", icon: BookOpen },
+      { label: "במדבר", href: "/bible/במדבר", icon: BookOpen },
+      { label: "דברים", href: "/bible/דברים", icon: BookOpen },
+    ],
+  },
+  {
+    id: "neviim",
+    title: "נביאים",
+    items: [
+      { label: "יהושע", href: "/bible/יהושע", icon: BookOpen },
+      { label: "שופטים", href: "/bible/שופטים", icon: BookOpen },
+      { label: "שמואל א-ב", href: "/bible/שמואל א", icon: BookOpen },
+      { label: "מלכים א-ב", href: "/bible/מלכים א", icon: BookOpen },
+      { label: "ישעיהו", href: "/bible/ישעיהו", icon: BookOpen },
+      { label: "ירמיהו", href: "/bible/ירמיהו", icon: BookOpen },
+      { label: "יחזקאל", href: "/bible/יחזקאל", icon: BookOpen },
+      { label: "תרי-עשר", href: "/bible/הושע", icon: BookOpen },
+    ],
+  },
+  {
+    id: "ketuvim",
+    title: "כתובים",
+    items: [
+      { label: "תהילים", href: "/bible/תהילים", icon: BookOpen },
+      { label: "משלי", href: "/bible/משלי", icon: BookOpen },
+      { label: "איוב", href: "/bible/איוב", icon: BookOpen },
+      { label: "חמש מגילות", href: "/bible/רות", icon: BookOpen },
+      { label: "דניאל", href: "/bible/דניאל", icon: BookOpen },
+      { label: "עזרא ונחמיה", href: "/bible/עזרא", icon: BookOpen },
+      { label: "דברי הימים", href: "/bible/דברי הימים", icon: BookOpen },
+    ],
+  },
+  {
+    id: "moadim",
+    title: "מועדים והגי ישראל",
+    items: [
+      { label: "ראש השנה ויום הכיפורים", href: "/parasha", icon: Calendar },
+      { label: "סוכות ושמחת תורה", href: "/parasha", icon: Calendar },
+      { label: "חנוכה", href: "/parasha", icon: Calendar },
+      { label: "פורים", href: "/megilat-esther", icon: Calendar },
+      { label: "פסח", href: "/parasha", icon: Calendar },
+      { label: "ספירת העומר", href: "/parasha", icon: Calendar },
+      { label: "יום העצמאות", href: "/parasha", icon: Calendar },
+      { label: "שבועות", href: "/parasha", icon: Calendar },
+    ],
+  },
+  {
+    id: "tools",
+    title: "כלים ולימוד",
+    items: [
+      { label: "אגף המורים", href: "/teachers", icon: GraduationCap },
       { label: "קהילת לומדים", href: "/community", icon: Heart },
-      {
-        label: "אגף המורים",
-        href: "/teachers",
-        icon: GraduationCap,
-        children: [
-          { label: "תכנים אטומיים", href: "/teachers#atomic", icon: PenTool },
-          { label: "חידות", href: "/teachers#riddles", icon: Puzzle },
-          { label: "קורסים", href: "/teachers#courses", icon: BookOpen },
-          { label: "מאמרים", href: "/teachers#articles", icon: FileText },
-          { label: "כלי הוראה", href: "/teachers#tools", icon: Music },
-        ],
-      },
-      { label: "כנס ההודאה", href: "/kenes", icon: Trophy },
+      { label: "כנס ההודאה", href: "/kenes", icon: Flame },
       { label: "דור הפלאות", href: "/dor-haplaot", icon: Sparkles },
     ],
   },
   {
-    section: "חנות ותרומה",
+    id: "footer-nav",
     items: [
       { label: "חנות", href: "/store", icon: ShoppingBag },
       { label: "תרומה", href: "/donate", icon: Heart },
-    ],
-  },
-  {
-    section: "אודות",
-    items: [
-      { label: "אודותינו", href: "/about", icon: Info },
       { label: "צור קשר", href: "/contact", icon: Mail },
     ],
   },
 ];
 
+// "נושאים" tab — content type filter + special collections
+const TOPICS_TAB: NavSection[] = [
+  {
+    id: "media",
+    title: "סוג מדיה",
+    items: [
+      { label: "וידאו", href: "/series?type=video", icon: Video },
+      { label: "אודיו", href: "/series?type=audio", icon: Headphones },
+      { label: "טקסט / PDF", href: "/series?type=text", icon: FileText },
+    ],
+  },
+  {
+    id: "specials",
+    title: "אוספים מיוחדים",
+    items: [
+      { label: "חידות תנ״ך", href: "/teachers", icon: Sparkles },
+      { label: "דור הפלאות", href: "/dor-haplaot", icon: Sparkles },
+      { label: "כנס ההודאה", href: "/kenes", icon: Flame },
+      { label: "תכנים אטומיים", href: "/teachers", icon: FileText },
+    ],
+  },
+];
+
 // ────────────────────────────────────────────────────────────────────────
-// Component
-// ────────────────────────────────────────────────────────────────────────
+type NavItem = {
+  label: string;
+  href: string;
+  icon: React.ComponentType<any>;
+  badge?: string;
+};
+
+type NavSection = {
+  id: string;
+  title?: string;
+  items: NavItem[];
+};
+
 interface DesignSidebarProps {
-  /** Forces drawer mode (used when triggered by mobile burger). */
   drawerOpen?: boolean;
   onDrawerClose?: () => void;
 }
@@ -129,12 +175,17 @@ const STORAGE_KEY = "bnz.sidebar.collapsed";
 const SIDEBAR_W_EXPANDED = 280;
 const SIDEBAR_W_COLLAPSED = 68;
 
+type Tab = "main" | "topics" | "rabbis";
+
+// ────────────────────────────────────────────────────────────────────────
 export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSidebarProps) {
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(STORAGE_KEY) === "1";
   });
-  const [expandedItem, setExpandedItem] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>("main");
+  const [expandedSection, setExpandedSection] = useState<string | null>("torah");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -144,9 +195,31 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const isDrawer = isMobile;
   const drawerVisible = isDrawer && !!drawerOpen;
 
+  // Load top rabbis for the rabbis tab
+  const { data: rabbis = [] } = usePublicRabbis();
+  const topRabbis = useMemo(() => {
+    const list = (rabbis as any[]).filter((r) => r.name).sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
+    return list.slice(0, 30);
+  }, [rabbis]);
+
+  // Filter by search
+  const filterSections = (sections: NavSection[]) => {
+    if (!search.trim()) return sections;
+    const q = search.trim().toLowerCase();
+    return sections
+      .map((s) => ({ ...s, items: s.items.filter((i) => i.label.toLowerCase().includes(q)) }))
+      .filter((s) => s.items.length > 0);
+  };
+
+  const filterRabbis = (list: any[]) => {
+    if (!search.trim()) return list;
+    const q = search.trim().toLowerCase();
+    return list.filter((r) => (r.name || "").toLowerCase().includes(q));
+  };
+
   return (
     <>
-      {/* Drawer backdrop (mobile only) */}
+      {/* Drawer backdrop */}
       {drawerVisible && (
         <div
           onClick={onDrawerClose}
@@ -164,27 +237,16 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
       <aside
         dir="rtl"
         className="design-sidebar"
-        data-collapsed={collapsed ? "1" : "0"}
-        data-drawer={isDrawer ? "1" : "0"}
-        data-drawer-open={drawerVisible ? "1" : "0"}
         style={{
-          // Width
-          width: isDrawer
-            ? SIDEBAR_W_EXPANDED
-            : collapsed
-            ? SIDEBAR_W_COLLAPSED
-            : SIDEBAR_W_EXPANDED,
+          width: isDrawer ? SIDEBAR_W_EXPANDED : collapsed ? SIDEBAR_W_COLLAPSED : SIDEBAR_W_EXPANDED,
           flexShrink: 0,
-          // Position — drawer (mobile) is fixed; desktop is sticky
           position: isDrawer ? "fixed" : "sticky",
           top: isDrawer ? 0 : 96,
           right: isDrawer ? 0 : undefined,
           height: isDrawer ? "100vh" : "calc(100vh - 96px)",
           zIndex: isDrawer ? 70 : 30,
-          // Visibility (drawer)
           transform: isDrawer && !drawerVisible ? "translateX(100%)" : "translateX(0)",
           transition: "transform 0.28s ease, width 0.22s ease",
-          // Visuals
           background: colors.parchment,
           borderInlineStart: `1px solid rgba(139,111,71,0.12)`,
           boxShadow: isDrawer && drawerVisible ? "-8px 0 32px rgba(45,31,14,0.18)" : "none",
@@ -195,13 +257,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
       >
         {/* Drawer close button */}
         {isDrawer && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              padding: "0.85rem 1rem 0",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "flex-start", padding: "0.85rem 1rem 0" }}>
             <button
               onClick={onDrawerClose}
               aria-label="סגור"
@@ -223,64 +279,196 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
-        {/* Scrollable nav body */}
+        {/* Gold primary header banner — matches existing site exactly */}
+        {(!collapsed || isDrawer) && (
+          <div
+            style={{
+              padding: "0.75rem 0.85rem 0.4rem",
+            }}
+          >
+            <div
+              style={{
+                padding: "0.65rem 1rem",
+                background: gradients.goldButton,
+                color: "white",
+                borderRadius: radii.md,
+                fontFamily: fonts.display,
+                fontWeight: 700,
+                fontSize: "0.85rem",
+                textAlign: "center",
+                letterSpacing: "0.02em",
+                boxShadow: shadows.goldGlowSoft,
+              }}
+            >
+              ניווט באתר לפי ספר ופרק
+            </div>
+          </div>
+        )}
+
+        {/* Tabs */}
+        {(!collapsed || isDrawer) && (
+          <div
+            style={{
+              padding: "0.4rem 0.85rem 0.5rem",
+              borderBottom: `1px solid rgba(139,111,71,0.08)`,
+            }}
+          >
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
+              {[
+                { key: "main" as Tab, label: "ראשי", icon: Library },
+                { key: "topics" as Tab, label: "נושאים", icon: Filter },
+                { key: "rabbis" as Tab, label: "רבנים", icon: Users },
+              ].map((t) => {
+                const Icon = t.icon;
+                const active = activeTab === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    onClick={() => setActiveTab(t.key)}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "0.3rem",
+                      padding: "0.5rem 0.4rem",
+                      border: "none",
+                      borderBottom: `2px solid ${active ? colors.goldDark : "transparent"}`,
+                      background: active ? "rgba(196,162,101,0.10)" : "transparent",
+                      color: active ? colors.goldDark : colors.textMuted,
+                      fontFamily: fonts.body,
+                      fontSize: "0.78rem",
+                      fontWeight: active ? 700 : 500,
+                      cursor: "pointer",
+                      transition: "all 0.15s",
+                    }}
+                  >
+                    <Icon size={13} />
+                    {t.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Search */}
+        {(!collapsed || isDrawer) && (
+          <div style={{ padding: "0.5rem 0.85rem" }}>
+            <div style={{ position: "relative" }}>
+              <Search style={{ position: "absolute", insetInlineEnd: 10, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: colors.textSubtle }} />
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="חיפוש..."
+                style={{
+                  width: "100%",
+                  padding: "0.45rem 1.85rem 0.45rem 0.65rem",
+                  fontFamily: fonts.body,
+                  fontSize: "0.78rem",
+                  borderRadius: radii.sm,
+                  border: `1px solid rgba(139,111,71,0.15)`,
+                  background: "rgba(245,240,232,0.5)",
+                  color: colors.textDark,
+                  outline: "none",
+                  direction: "rtl",
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Scrollable content body */}
         <nav
           style={{
             flex: 1,
             overflowY: "auto",
-            padding: collapsed && !isDrawer ? "0.85rem 0.5rem" : "0.85rem 0.85rem",
+            padding: collapsed && !isDrawer ? "0.5rem 0.4rem" : "0.4rem 0.85rem 0.85rem",
           }}
         >
-          {NAV.map((group, gi) => (
-            <div key={gi} style={{ marginBottom: gi === NAV.length - 1 ? 0 : "1.25rem" }}>
-              {group.section && (!collapsed || isDrawer) && (
-                <div
-                  style={{
-                    fontFamily: fonts.body,
-                    fontSize: "0.66rem",
-                    fontWeight: 700,
-                    color: colors.textSubtle,
-                    letterSpacing: "0.15em",
-                    textTransform: "uppercase",
-                    padding: "0.35rem 0.75rem 0.55rem",
-                  }}
-                >
-                  {group.section}
-                </div>
-              )}
-              {group.section && collapsed && !isDrawer && (
-                <div
-                  style={{
-                    height: 1,
-                    background: "rgba(139,111,71,0.12)",
-                    margin: "0.5rem 0.5rem 0.6rem",
-                  }}
-                />
-              )}
-              {group.items.map((item) => (
-                <SidebarItem
-                  key={item.href}
-                  item={item}
+          {/* MAIN tab */}
+          {activeTab === "main" && (
+            <>
+              {filterSections(MAIN_TREE).map((section, si) => (
+                <SidebarSection
+                  key={section.id}
+                  section={section}
                   collapsed={collapsed && !isDrawer}
-                  expanded={expandedItem === item.href}
-                  onToggleExpand={() =>
-                    setExpandedItem((e) => (e === item.href ? null : item.href))
-                  }
+                  isExpanded={expandedSection === section.id || !!search}
+                  onToggle={() => setExpandedSection((e) => (e === section.id ? null : section.id))}
                   onNavigate={onDrawerClose}
+                  isFirst={si === 0}
+                  isLast={si === MAIN_TREE.length - 1}
                 />
               ))}
+            </>
+          )}
+
+          {/* TOPICS tab */}
+          {activeTab === "topics" && (
+            <>
+              {filterSections(TOPICS_TAB).map((section, si) => (
+                <SidebarSection
+                  key={section.id}
+                  section={section}
+                  collapsed={collapsed && !isDrawer}
+                  isExpanded={true}
+                  onToggle={() => {}}
+                  onNavigate={onDrawerClose}
+                  isFirst={si === 0}
+                  isLast={si === TOPICS_TAB.length - 1}
+                />
+              ))}
+            </>
+          )}
+
+          {/* RABBIS tab */}
+          {activeTab === "rabbis" && (!collapsed || isDrawer) && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              {filterRabbis(topRabbis).map((r: any) => (
+                <Link
+                  key={r.id}
+                  to={`/design-rabbi/${r.id}`}
+                  onClick={onDrawerClose}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.45rem 0.7rem",
+                    borderRadius: radii.sm,
+                    fontFamily: fonts.body,
+                    fontSize: "0.78rem",
+                    color: colors.textMuted,
+                    textDecoration: "none",
+                    transition: "all 0.15s",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(139,111,71,0.06)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                >
+                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {r.name}
+                  </span>
+                  <span style={{ fontSize: "0.65rem", color: colors.textSubtle, flexShrink: 0, marginInlineStart: "0.4rem" }}>
+                    ({r.lesson_count || 0})
+                  </span>
+                </Link>
+              ))}
+              {topRabbis.length === 0 && (
+                <div style={{ padding: "1.5rem", textAlign: "center", fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle }}>
+                  טוען רבנים...
+                </div>
+              )}
             </div>
-          ))}
+          )}
         </nav>
 
-        {/* Footer: collapse toggle + memorial + toggle */}
+        {/* Footer */}
         <div
           style={{
             borderTop: `1px solid rgba(139,111,71,0.1)`,
-            padding: collapsed && !isDrawer ? "0.6rem 0.5rem" : "0.65rem 0.85rem",
+            padding: collapsed && !isDrawer ? "0.6rem 0.4rem" : "0.6rem 0.85rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.5rem",
+            gap: "0.4rem",
           }}
         >
           <Link
@@ -290,45 +478,44 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               display: "flex",
               alignItems: "center",
               gap: "0.6rem",
-              padding: collapsed && !isDrawer ? "0.55rem" : "0.55rem 0.75rem",
+              padding: collapsed && !isDrawer ? "0.5rem" : "0.5rem 0.7rem",
               borderRadius: radii.md,
               fontFamily: fonts.body,
-              fontSize: "0.85rem",
+              fontSize: "0.82rem",
               color: colors.goldDark,
               fontWeight: 600,
               textDecoration: "none",
               justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
             }}
           >
-            <Flame size={16} style={{ flexShrink: 0 }} />
+            <Flame size={15} style={{ flexShrink: 0 }} />
             {(!collapsed || isDrawer) && <span>לזכר סעדיה הי״ד</span>}
           </Link>
 
           {!isDrawer && (
             <button
               onClick={() => setCollapsed((c) => !c)}
-              aria-label={collapsed ? "הרחב תפריט" : "צמצם תפריט"}
+              aria-label={collapsed ? "הרחב" : "צמצם"}
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.55rem",
-                padding: collapsed ? "0.55rem" : "0.55rem 0.75rem",
+                justifyContent: collapsed ? "center" : "space-between",
+                padding: collapsed ? "0.5rem" : "0.5rem 0.7rem",
                 borderRadius: radii.md,
                 background: "transparent",
                 border: `1px solid rgba(139,111,71,0.18)`,
                 color: colors.textMuted,
                 fontFamily: fonts.body,
-                fontSize: "0.78rem",
+                fontSize: "0.74rem",
                 cursor: "pointer",
-                justifyContent: collapsed ? "center" : "space-between",
               }}
             >
               {collapsed ? (
-                <ChevronLeft size={16} />
+                <ChevronLeft size={14} />
               ) : (
                 <>
                   <span>צמצם</span>
-                  <ChevronRight size={16} />
+                  <ChevronRight size={14} />
                 </>
               )}
             </button>
@@ -348,190 +535,160 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 }
 
 // ────────────────────────────────────────────────────────────────────────
-function SidebarItem({
-  item,
+function SidebarSection({
+  section,
   collapsed,
-  expanded,
-  onToggleExpand,
+  isExpanded,
+  onToggle,
   onNavigate,
+  isFirst,
+  isLast,
 }: {
-  item: NavItem;
+  section: NavSection;
   collapsed: boolean;
-  expanded: boolean;
-  onToggleExpand: () => void;
+  isExpanded: boolean;
+  onToggle: () => void;
   onNavigate?: () => void;
+  isFirst: boolean;
+  isLast: boolean;
 }) {
   const location = useLocation();
-  const Icon = item.icon;
-  const isActive =
-    item.href === "/"
-      ? location.pathname === "/"
-      : location.pathname.startsWith(item.href);
-  const hasChildren = !!item.children?.length;
+
+  // No section title → just render items inline
+  if (!section.title) {
+    return (
+      <div style={{ marginBottom: isLast ? 0 : "0.4rem", paddingBottom: isLast ? 0 : "0.4rem", borderBottom: isLast ? "none" : `1px solid rgba(139,111,71,0.08)` }}>
+        {section.items.map((item) => (
+          <SidebarItem key={item.href} item={item} collapsed={collapsed} active={isActive(item, location.pathname)} onNavigate={onNavigate} />
+        ))}
+      </div>
+    );
+  }
+
+  // Collapsed mode: show only divider for sections
+  if (collapsed) {
+    return <div style={{ height: 1, background: "rgba(139,111,71,0.10)", margin: "0.5rem 0.5rem" }} />;
+  }
 
   return (
-    <>
-      <div style={{ position: "relative" }}>
-        {isActive && (
-          <div
-            aria-hidden
-            style={{
-              position: "absolute",
-              top: 4,
-              bottom: 4,
-              right: 0,
-              width: 3,
-              background: gradients.goldButton,
-              borderRadius: 2,
-            }}
-          />
-        )}
-        <div
+    <div style={{ marginBottom: "0.4rem" }}>
+      <button
+        onClick={onToggle}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0.5rem 0.7rem",
+          borderRadius: radii.sm,
+          background: isExpanded ? "rgba(196,162,101,0.10)" : "transparent",
+          border: "none",
+          color: isExpanded ? colors.goldDark : colors.textMid,
+          fontFamily: fonts.display,
+          fontSize: "0.85rem",
+          fontWeight: 700,
+          cursor: "pointer",
+          textAlign: "right",
+        }}
+      >
+        <span>{section.title}</span>
+        <ChevronDown
+          size={13}
           style={{
-            display: "flex",
-            alignItems: "center",
+            transition: "transform 0.2s",
+            transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
           }}
-        >
-          <Link
-            to={item.href}
-            onClick={onNavigate}
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              gap: "0.7rem",
-              padding: collapsed ? "0.6rem" : "0.6rem 0.75rem",
-              borderRadius: radii.md,
-              background: isActive ? "rgba(196,162,101,0.12)" : "transparent",
-              color: isActive ? colors.goldDark : colors.textMid,
-              fontFamily: fonts.body,
-              fontSize: "0.9rem",
-              fontWeight: isActive ? 700 : 500,
-              textDecoration: "none",
-              transition: "background 0.15s",
-              justifyContent: collapsed ? "center" : "flex-start",
-              minWidth: 0,
-            }}
-            onMouseEnter={(e) => {
-              if (!isActive) e.currentTarget.style.background = "rgba(139,111,71,0.06)";
-            }}
-            onMouseLeave={(e) => {
-              if (!isActive) e.currentTarget.style.background = "transparent";
-            }}
-            title={collapsed ? item.label : undefined}
-          >
-            <Icon size={18} style={{ flexShrink: 0 }} />
-            {!collapsed && (
-              <>
-                <span
-                  style={{
-                    flex: 1,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {item.label}
-                </span>
-                {item.badge && (
-                  <span
-                    style={{
-                      padding: "0.1rem 0.45rem",
-                      borderRadius: radii.pill,
-                      background: isActive ? gradients.goldButton : "rgba(196,162,101,0.18)",
-                      color: isActive ? "white" : colors.goldDark,
-                      fontFamily: fonts.body,
-                      fontSize: "0.65rem",
-                      fontWeight: 700,
-                    }}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-              </>
-            )}
-          </Link>
-          {hasChildren && !collapsed && (
-            <button
-              onClick={onToggleExpand}
-              aria-label={expanded ? "צמצם" : "הרחב"}
-              style={{
-                width: 28,
-                height: 28,
-                marginInlineStart: 4,
-                borderRadius: radii.sm,
-                border: "none",
-                background: "transparent",
-                color: colors.textSubtle,
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <ChevronDown
-                size={14}
-                style={{
-                  transition: "transform 0.2s",
-                  transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              />
-            </button>
-          )}
-        </div>
-      </div>
-
-      {hasChildren && expanded && !collapsed && (
-        <div
-          style={{
-            paddingInlineStart: "1.5rem",
-            display: "flex",
-            flexDirection: "column",
-            gap: "0.15rem",
-            marginTop: "0.15rem",
-          }}
-        >
-          {item.children!.map((child) => {
-            const ChildIcon = child.icon;
-            const childActive = location.pathname === child.href;
-            return (
-              <Link
-                key={child.href}
-                to={child.href}
-                onClick={onNavigate}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.55rem",
-                  padding: "0.4rem 0.75rem",
-                  borderRadius: radii.sm,
-                  background: childActive ? "rgba(196,162,101,0.10)" : "transparent",
-                  color: childActive ? colors.goldDark : colors.textMuted,
-                  fontFamily: fonts.body,
-                  fontSize: "0.82rem",
-                  fontWeight: childActive ? 700 : 500,
-                  textDecoration: "none",
-                }}
-                onMouseEnter={(e) => {
-                  if (!childActive) e.currentTarget.style.background = "rgba(139,111,71,0.04)";
-                }}
-                onMouseLeave={(e) => {
-                  if (!childActive) e.currentTarget.style.background = "transparent";
-                }}
-              >
-                <ChildIcon size={14} />
-                <span>{child.label}</span>
-              </Link>
-            );
-          })}
+        />
+      </button>
+      {isExpanded && (
+        <div style={{ paddingInlineStart: "0.85rem", marginTop: "0.15rem" }}>
+          {section.items.map((item) => (
+            <SidebarItem key={item.href} item={item} collapsed={false} active={isActive(item, location.pathname)} onNavigate={onNavigate} small />
+          ))}
         </div>
       )}
-    </>
+    </div>
+  );
+}
+
+function SidebarItem({ item, collapsed, active, onNavigate, small = false }: { item: NavItem; collapsed: boolean; active: boolean; onNavigate?: () => void; small?: boolean }) {
+  const Icon = item.icon;
+  return (
+    <Link
+      to={item.href}
+      onClick={onNavigate}
+      title={collapsed ? item.label : undefined}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "0.55rem",
+        padding: collapsed ? "0.55rem" : small ? "0.35rem 0.55rem" : "0.5rem 0.7rem",
+        borderRadius: radii.sm,
+        background: active ? "rgba(196,162,101,0.14)" : "transparent",
+        color: active ? colors.goldDark : colors.textMuted,
+        fontFamily: fonts.body,
+        fontSize: small ? "0.78rem" : "0.84rem",
+        fontWeight: active ? 700 : 500,
+        textDecoration: "none",
+        transition: "background 0.12s",
+        justifyContent: collapsed ? "center" : "flex-start",
+        position: "relative",
+      }}
+      onMouseEnter={(e) => {
+        if (!active) e.currentTarget.style.background = "rgba(139,111,71,0.06)";
+      }}
+      onMouseLeave={(e) => {
+        if (!active) e.currentTarget.style.background = "transparent";
+      }}
+    >
+      {active && !collapsed && (
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            top: 4,
+            bottom: 4,
+            insetInlineEnd: 0,
+            width: 3,
+            background: gradients.goldButton,
+            borderRadius: 2,
+          }}
+        />
+      )}
+      <Icon size={small ? 13 : 15} style={{ flexShrink: 0 }} />
+      {!collapsed && (
+        <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          {item.label}
+        </span>
+      )}
+      {!collapsed && item.badge && (
+        <span
+          style={{
+            padding: "0.05rem 0.4rem",
+            borderRadius: radii.pill,
+            background: active ? gradients.goldButton : "rgba(196,162,101,0.18)",
+            color: active ? "white" : colors.goldDark,
+            fontFamily: fonts.body,
+            fontSize: "0.6rem",
+            fontWeight: 700,
+          }}
+        >
+          {item.badge}
+        </span>
+      )}
+    </Link>
   );
 }
 
 // ────────────────────────────────────────────────────────────────────────
+function isActive(item: NavItem, pathname: string): boolean {
+  if (item.href === "/") return pathname === "/";
+  // Decode URL-encoded Hebrew before comparing
+  const itemPath = decodeURIComponent(item.href.split("?")[0]);
+  const currentPath = decodeURIComponent(pathname);
+  return currentPath.startsWith(itemPath);
+}
+
 function useMobileViewport() {
   const [isMobile, setIsMobile] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;

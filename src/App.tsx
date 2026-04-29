@@ -90,6 +90,9 @@ const DesignPreviewBibleBook = lazy(() => import("./pages/DesignPreviewBibleBook
 const DesignPreviewDonate = lazy(() => import("./pages/DesignPreviewDonate"));
 const DesignPreviewMemorialSaadia = lazy(() => import("./pages/DesignPreviewMemorialSaadia"));
 const DesignPreviewResearch = lazy(() => import("./pages/DesignPreviewResearch"));
+const DesignPreviewLessonPage = lazy(() => import("./pages/DesignPreviewLessonPage"));
+const DesignPreviewMegillatEsther = lazy(() => import("./pages/DesignPreviewMegillatEsther"));
+const DesignPreviewPortalSubscriber = lazy(() => import("./pages/DesignPreviewPortalSubscriber"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -204,6 +207,10 @@ const App = () => (
             <Route path="/design-donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
             <Route path="/design-memorial-saadia" element={<Suspense fallback={<LazyFallback />}><DesignPreviewMemorialSaadia /></Suspense>} />
             <Route path="/design-research" element={<Suspense fallback={<LazyFallback />}><DesignPreviewResearch /></Suspense>} />
+            <Route path="/design-lesson-page" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLessonPage /></Suspense>} />
+            <Route path="/design-lesson-page/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLessonPage /></Suspense>} />
+            <Route path="/design-megilat-esther" element={<Suspense fallback={<LazyFallback />}><DesignPreviewMegillatEsther /></Suspense>} />
+            <Route path="/design-portal-subscriber" element={<Suspense fallback={<LazyFallback />}><DesignPreviewPortalSubscriber /></Suspense>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
