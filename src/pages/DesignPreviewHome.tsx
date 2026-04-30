@@ -249,13 +249,13 @@ function DesignHero() {
                      boxShadow: "0 4px 24px rgba(139,111,71,0.4)" }}>
             התחילו ללמוד
           </button>
-          <button onClick={() => navigate("/series")}
+          <button onClick={() => navigate("/design-chapter-weekly")}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem",
                      border: "1.5px solid rgba(255,255,255,0.35)",
                      background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
                      color: "white", fontFamily: "Paamon, serif", fontSize: "0.95rem",
                      fontWeight: 700, cursor: "pointer" }}>
-            גלה את הסדרות
+            לתכנית הפרק השבועי
           </button>
         </div>
 
@@ -381,6 +381,7 @@ const HOLIDAYS_5786 = [
   { name: "פסח",           hebrewDate: "ט״ו ניסן", date: new Date(2026, 3, 2),  terms: ["פסח","הגדה"] },
   { name: "יום העצמאות",   hebrewDate: "ה׳ אייר",  date: new Date(2026, 3, 22), terms: ["יום העצמאות","עצמאות"] },
   { name: "ל״ג בעומר",     hebrewDate: "י״ח אייר", date: new Date(2026, 4, 5),  terms: ["ל\"ג בעומר"] },
+  { name: "יום ירושלים",   hebrewDate: "כ״ח אייר", date: new Date(2026, 4, 15), terms: ["יום ירושלים","ירושלים","בית המקדש"] },
   { name: "שבועות",        hebrewDate: "ו׳ סיוון", date: new Date(2026, 4, 22), terms: ["שבועות","רות"] },
   { name: "תשעה באב",      hebrewDate: "ט׳ באב",   date: new Date(2026, 6, 23), terms: ["תשעה באב","איכה"] },
   { name: "ראש השנה",      hebrewDate: "א׳ תשרי",  date: new Date(2026, 8, 12), terms: ["ראש השנה"] },

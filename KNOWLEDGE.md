@@ -1034,5 +1034,14 @@ Active for the 5 missing parashiot.
 
 ---
 
+### 2026-04-30 — Hero button swap + יום ירושלים to holidays (sandbox only)
+
+- `src/pages/DesignPreviewHome.tsx` line 252: second CTA button changed from "גלה את הסדרות → /series" to "לתכנית הפרק השבועי → /design-chapter-weekly" (sandbox link, not production)
+- `src/pages/DesignPreviewHome.tsx` line 384: added `יום ירושלים` (כ״ח אייר, 15.5.2026) to `HOLIDAYS_5786` between ל״ג בעומר and שבועות
+- Holiday logic uses `find` on a chronologically sorted array — shows the FIRST holiday within a 45-day window. Order: ל״ג בעומר (5.5) → יום ירושלים (15.5) → שבועות (22.5)
+- Both changes are sandbox-only (`/design-home`). Production hero and holidays untouched.
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
