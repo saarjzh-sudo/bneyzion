@@ -5,20 +5,11 @@ import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
 import GlobalSearch from "@/components/search/GlobalSearch";
 import UserMenu from "@/components/layout/UserMenu";
-import CartButton from "@/components/cart/CartButton";
-import NotificationBell from "@/components/layout/NotificationBell";
-import DarkModeToggle from "@/components/ui/dark-mode-toggle";
 
 const navItems = [
-  { label: "ראשי", href: "/" },
-  { label: "אגף המורים", href: "/teachers" },
-  { label: "רבנים", href: "/rabbis" },
-  { label: "סדרות", href: "/series" },
-  { label: "תנ״ך", href: "/bible/בראשית" },
-  { label: "קהילה", href: "/community" },
-  { label: "חנות", href: "/store" },
-  { label: "פרשת השבוע", href: "/parasha" },
-  { label: "אודותינו", href: "/about" },
+  { label: "ראשי",             href: "/"                 },
+  { label: "פרשת השבוע",       href: "/parasha"          },
+  { label: "אודותינו",         href: "/about"            },
 ];
 
 const Header = () => {
@@ -48,7 +39,8 @@ const Header = () => {
           : "bg-card/80 backdrop-blur-lg border-b border-border"
       }`}
     >
-      <div className="container flex items-center h-24 mx-auto">
+      <div className="container flex items-center h-24 mx-auto relative">
+        {/* Logo — rightmost (start in RTL) */}
         <Link to="/" className="flex items-center gap-2 shrink-0 md:w-40">
           <img
             src={isTransparent ? logoBright : logoColor}
@@ -57,12 +49,13 @@ const Header = () => {
           />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-1 flex-1 justify-center">
+        {/* Nav — absolutely centered so it stays centered regardless of logo/actions width */}
+        <nav className="hidden md:flex items-center gap-6 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           {navItems.map((item) => (
             <Link
               key={item.href}
               to={item.href}
-              className={`px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+              className={`text-sm font-medium transition-colors whitespace-nowrap ${
                 isTransparent
                   ? "text-white/80 hover:text-white"
                   : "text-muted-foreground hover:text-primary"
@@ -73,7 +66,7 @@ const Header = () => {
           ))}
           <Link
             to="/memorial/saadia"
-            className={`px-3 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-1.5 ${
+            className={`text-sm font-medium transition-all flex items-center gap-1.5 whitespace-nowrap ${
               isTransparent
                 ? "text-accent/90 hover:text-accent"
                 : "text-accent hover:text-accent/80"
@@ -84,7 +77,8 @@ const Header = () => {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-1 md:w-40 justify-end">
+        {/* Actions — leftmost (end in RTL) */}
+        <div className="flex items-center gap-1 md:w-40 justify-end ms-auto">
           <button
             className={`p-2.5 rounded-xl transition-all ${
               isTransparent
@@ -95,9 +89,6 @@ const Header = () => {
           >
             <Search className="h-5 w-5" />
           </button>
-          <DarkModeToggle isTransparent={isTransparent} />
-          <NotificationBell isTransparent={isTransparent} />
-          <CartButton isTransparent={isTransparent} />
           <UserMenu isTransparent={isTransparent} />
           <button
             className={`p-2.5 md:hidden ${
@@ -110,6 +101,7 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Mobile nav */}
       {mobileOpen && (
         <nav className="md:hidden border-t border-border bg-card/95 backdrop-blur-lg p-4 space-y-1 animate-fade-in">
           {navItems.map((item) => (
@@ -123,12 +115,12 @@ const Header = () => {
             </Link>
           ))}
           <Link
-            to="/memorial"
+            to="/memorial/saadia"
             className="flex items-center gap-2 px-4 py-3 text-sm font-medium text-accent hover:bg-secondary rounded-lg transition-colors"
             onClick={() => setMobileOpen(false)}
           >
             <Flame className="h-4 w-4" />
-            לזכר סעדיה ז״ל
+            לזכר סעדיה הי״ד
           </Link>
         </nav>
       )}
