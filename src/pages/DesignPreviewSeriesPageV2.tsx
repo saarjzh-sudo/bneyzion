@@ -164,7 +164,10 @@ function CompactSeriesHero({
            when minHeight:280 was set with justifyContent:flex-end. */
       }}
     >
-      {/* Background image — subtle */}
+      {/* Background image — visible but not overwhelming.
+          opacity: 0.55 (was 0.22 — too dark/subtle, illustrations barely visible)
+          brightness: 0.9 (was 0.6 — was crushing the image, making it look like a dark screen)
+          Goal: "beautiful illustration in background", not "dark overlay with text" */}
       <div
         style={{
           position: "absolute",
@@ -172,28 +175,28 @@ function CompactSeriesHero({
           backgroundImage: `url(${imageUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center 35%",
-          opacity: 0.22,
-          filter: "brightness(0.6) saturate(0.9)",
+          opacity: 0.55,
+          filter: "brightness(0.9) saturate(0.95)",
         }}
       />
 
-      {/* Bottom gradient (existing) */}
+      {/* Bottom gradient — subtle text contrast only */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%)",
+            "linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.40) 100%)",
         }}
       />
 
-      {/* TOP gradient — light vignette. */}
+      {/* TOP gradient — very light vignette for header readability */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 40%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%)",
           pointerEvents: "none",
         }}
       />
@@ -205,11 +208,10 @@ function CompactSeriesHero({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          /* padding-top: 2rem — visible spacer below the solid header (96px).
-             The header is outside this component and doesn't overlap.
-             Bottom: 1rem — tight but breathable gap after the meta row (~16px).
-             Result: hero height = 2rem + content-height + 1rem — no empty space. */
-          padding: "2rem 2rem 1rem",
+          /* padding-top: 2.75rem — slightly more breathing room below the header.
+             Bottom: 1.75rem — comfortable gap after the meta row.
+             Saar feedback: "2rem top was too tight, expand a bit". */
+          padding: "2.75rem 2rem 1.75rem",
           maxWidth: 1100,
           margin: "0 auto",
         }}
