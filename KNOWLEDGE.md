@@ -926,6 +926,46 @@ Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (
 
 **Rule:** TeacherContentBadge must appear on EVERY surface that displays a lesson with a title — card, popup, modal, page header, and sidebar rail. When adding new lesson display components, always check and include badge.
 
+### 2026-04-30 — Portal v4 + Courses v2.1 — 5 fixes (commit 870c3e1)
+
+**Trigger:** Saar requested 5 fixes before production rollout + asked about rollout strategy.
+
+**Fix 1 — CTA diverge by previewMode (PortalSubscriber):**
+- subscriber primary tile: "כנס ללימוד הפרק השבועי — לחיות תנ״ך" (gold, links to weekly chapter)
+- member primary tile: "המשך מאיפה שהפסקת" (teal, links to free series)
+- guest: unchanged
+- member stats: 3 tiles only (hoursLearned / lessonsWatched / favorites — NO streak)
+- subscriber stats: 4 tiles (added streakWeeks with orange flame at 7+)
+- weekly-chapter card + gamification section: shown only for subscribers (`{hasSubscription && <section>...</section>}`)
+- upsell CTA for member: olive green card "בוא ללמוד תנ״ך כל שבוע" + ₪5 offer + 280+ social proof + "הצטרף עכשיו" button
+
+**Fix 2 — hardcoded subscriber whitelist:**
+- `src/lib/hardcodedSubscribers.ts` (NEW): HARDCODED_SUBSCRIBERS array + `isHardcodedSubscriber(email)` helper
+- saar.j.z.h@gmail.com is in the list
+- `src/hooks/useUserAccess.ts` updated: `hasAccess = dbAccess || hardcodedGrant` — DB RPC takes precedence once migration runs. Interim solution until Saar applies DB migration and imports 280 subscribers.
+
+**Fix 3 — Lock overlay in CatalogCourses:**
+- `src/pages/DesignPreviewCoursesCatalog.tsx` — previewMode toggle added (subscriber / חבר רשום)
+- `MainCourseCard(isSubscriber)`: if `!isSubscriber` and `slug === "weekly-chapter"` → shows locked overlay (blurred cover + Lock icon + subscribe CTA)
+- `CourseTile(isSubscriber, isLocked)`: available courses for member show "זמין בחבילת מנוי" + "רכוש קורס" → `/design-store`
+
+**Fix 4 — RTL progress bars:**
+- All progress bar track containers got `dir="ltr"` so fill runs right-to-left in RTL context
+- Affected: level XP bar (PortalSubscriber), 8-book progress bar (CatalogCourses MainCourseCard + CourseTile)
+
+**Fix 5 — Unused imports removed:**
+- `useMemo` and `ArrowLeft` removed from PortalSubscriber imports (TS was passing but ESLint would warn)
+
+**TS:** 0 errors before and after all changes.
+**Push:** `HTTP_PROXY="" HTTPS_PROXY="" git push origin main` → success (5ca862e → 870c3e1)
+
+**Rollout decision (pending Saar):** 3 options presented:
+- (א) Full replacement: `/portal`, `/courses`, `/course/:slug` → new versions
+- (ב) Parallel routes: `/portal-new`, `/courses-new` etc.
+- (ג) Keep as `/design-*` sandbox, link from main nav
+
+**Iron rule learned:** `{condition && <section>...</section>}` is clean JSX for conditional sections. But when condition applies to a whole block that spans many lines — keep `{condition && <section>` + `</section>}` on same visual level. Don't mix open-tag and close-tag in JSX fragments.
+
 ### 2026-04-30 — Global DesignSidebar rollout to production Layout (commit b88c631)
 
 **Saar approved rollout via option A — global Layout wrapper.**
