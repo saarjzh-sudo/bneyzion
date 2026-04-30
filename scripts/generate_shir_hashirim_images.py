@@ -20,6 +20,7 @@ import os
 import sys
 import json
 import base64
+import time
 import urllib.request
 import urllib.error
 import concurrent.futures
@@ -38,7 +39,8 @@ SERVICE_KEY    = (
 )
 BUCKET         = "lesson-images"
 MODEL          = "imagen-4.0-fast-generate-001"   # fast = $0.02/image
-MAX_WORKERS    = 4   # 4 parallel generation threads
+MAX_WORKERS    = 2   # 2 parallel generation threads (rate-limit safe)
+DELAY_BETWEEN  = 2.0  # seconds between generations to avoid 429
 
 STYLE = """Minimalist watercolor painting on white textured paper.
 Ultra-clean, gentle, soft, ethereal, atmospheric, meditative, spiritually evocative.
@@ -442,17 +444,34 @@ def generate_image(item: dict) -> tuple[dict, bytes | None]:
         headers={"Content-Type": "application/json"},
         method="POST",
     )
-    try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
-            result = json.loads(resp.read().decode())
-        predictions = result.get("predictions", [])
-        if not predictions or "bytesBase64Encoded" not in predictions[0]:
-            log(f"  SKIP {item['label']} — filtered by safety")
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                result = json.loads(resp.read().decode())
+            predictions = result.get("predictions", [])
+            if not predictions or "bytesBase64Encoded" not in predictions[0]:
+                log(f"  SKIP {item['label']} — filtered by safety")
+                return item, None
+            return item, base64.b64decode(predictions[0]["bytesBase64Encoded"])
+        except urllib.error.HTTPError as e:
+            if e.code == 429:
+                wait = 30 * (attempt + 1)
+                log(f"  RATE_LIMIT {item['label']} — waiting {wait}s (attempt {attempt+1}/3)")
+                time.sleep(wait)
+                # Rebuild request body (consumed)
+                req = urllib.request.Request(
+                    url, data=body,
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+            else:
+                log(f"  ERROR {item['label']}: HTTP {e.code}")
+                return item, None
+        except Exception as e:
+            log(f"  ERROR {item['label']}: {e}")
             return item, None
-        return item, base64.b64decode(predictions[0]["bytesBase64Encoded"])
-    except Exception as e:
-        log(f"  ERROR {item['label']}: {e}")
-        return item, None
+    log(f"  FAILED {item['label']} — exhausted retries")
+    return item, None
 
 
 # ─── SUPABASE UPLOAD ────────────────────────────────────────────────────────
@@ -529,6 +548,7 @@ def process_item(item: dict) -> tuple[str, bool]:
         image_bytes = output_path.read_bytes()
     else:
         log(f"  GEN     {label}")
+        time.sleep(DELAY_BETWEEN)  # rate-limit cushion
         item_result, image_bytes = generate_image(item)
         if image_bytes is None:
             return label, False
