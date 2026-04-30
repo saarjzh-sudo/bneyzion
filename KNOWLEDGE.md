@@ -986,6 +986,31 @@ Saar reported the sales page was "פי אלף עדיף הקודם" (previous was
 
 **Iron rule confirmed:** `parashaSeriesId` may be null (series title format mismatch in DB). CTA falls back to `/series` if null — never show broken routes.
 
+### 2026-04-30 — Riddles INSERT — 18 lessons inserted to Supabase
+
+**Script:** `scripts/insert-riddles.mjs` (NEW) — idempotent (skips existing titles)
+**Source:** `scripts/riddles-scraped.json` (18 rows checkpoint from earlier session)
+**Series:** `c852edd8-d959-4c8d-bf7e-17b5881275fa` ("חידות לילדים - פרשת השבוע")
+**Result:** 18/18 inserted, 0 failed. Total published in series: 50.
+
+**Parashiot inserted:**
+וישלח, וישב, מקץ, ויגש, ויחי, שמות, וארא, בא, בשלח, יתרו, משפטים, תרומה,
+כי תשא, ויקרא, מצורע, במדבר, מסעי, נצבים
+
+**Verification (ilike query, same as useParasha hook):**
+- מצורע → "חידות לילדים - פרשת מצורע" (MATCH)
+- ויצא → NULL (no riddle — expected, not in checkpoint)
+- נצבים → "חידות לילדים - פרשת נצבים" (MATCH — spelling without יו"ד confirmed correct)
+
+**5 missing parashiot (NOT inserted — Saar decides later):**
+ויצא, ויקהל, פקודי, אחרי מות, וזאת הברכה
+
+**Fallback (already live in ParashaPage.tsx):** when `riddle === null`,
+CTA "חידות לשולחן השבת" links to `/series/c852edd8-d959-4c8d-bf7e-17b5881275fa` (full series overview).
+Active for the 5 missing parashiot.
+
+**Content stat update:** riddles series now has 50 published lessons (was 32 before).
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
