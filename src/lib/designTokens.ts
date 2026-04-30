@@ -218,7 +218,9 @@ export function getSeriesCoverImage(title: string): string | null {
   const t = title || "";
   if (/ננצח|תנ.?ך|בכוח|בכח/u.test(t)) return "/images/series-tanach-victory.png";
   if (/לשון|הקודש|דקדוק/u.test(t)) return "/images/series-lashon-hakodesh.png";
-  if (/איוב|משלי|כתובים/u.test(t)) return "/images/series-iyov.png";
+  // Ketuvim / poetic books — aicha, shir hashirim, iyov, mishlei, tehilim, etc.
+  if (/איוב|משלי|כתובים|איכה|שיר השירים|שיר.השירים|קהלת|תהלים|דניאל|עזרא|נחמיה|אסתר/u.test(t))
+    return "/images/series-iyov.png";
   if (/מידות|מוסר|אופי/u.test(t)) return "/images/series-middot.png";
   if (/חומש|בראשית|שמות|ויקרא|במדבר|דברים|פרשה|פרשת|מאמר/u.test(t))
     return "/images/series-lashon-hakodesh.png";
