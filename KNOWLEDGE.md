@@ -841,6 +841,27 @@ Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (
 
 **כלל שנלמד:** כשכל הסדרות מתויגות, אין טעם בפילטור query נפרד. הטאב "מורים" = אותו עץ ניווט + banner ייחודי. זה ה-merge האמיתי שסער ביקש.
 
+### 2026-04-30 — Print PDF bug fix (commit 9402313)
+
+**Bug:** `/parasha` Cmd+P → Save as PDF produced a blank PDF: only masthead titles on page 1, a lone column-rule on page 2, footer on page 3. All article content (verse, articles, riddle) was invisible.
+
+**Root causes (3 compounding Chrome print bugs):**
+
+1. **Framer Motion + column-count = zero-height columns.** Framer Motion sets `transform: translateY(0px)` and `will-change: transform` as inline styles on every animated `<motion.article>`. In Chrome print mode, these inline styles create a new stacking context inside `column-count: 2`, causing Chrome to collapse element heights to zero. Content was rendered but had 0px height — invisible in the PDF.
+
+2. **`column-count: 2` + `direction: rtl` is unreliable in Chrome print.** Even with the transform fix, Chrome's RTL multi-column print rendering has a known stability issue. Single column always works correctly.
+
+3. **`overflow: hidden` on ancestors clips column content.** The hero `<section>` had Tailwind's `overflow-hidden`. The old CSS only fixed `section:first-of-type` overflow but not the `#root`/main wrappers. Chrome clips column content on any ancestor with `overflow: hidden`.
+
+**Fix strategy applied to `src/styles/parasha-print.css`:**
+- `* { transform: none !important; will-change: auto !important; }` — kills Framer Motion inline styles
+- `html, body, #root, main, div, section, article, ... { overflow: visible !important; height: auto !important; opacity: 1 !important; }` — kills all clipping
+- `.print-columns { column-count: 1 !important; }` — single column; content over aesthetics
+- Narrowed all `display: none` rules to specific named selectors only (never `section`, `div`, `main` generically)
+- Removed overly broad `[aria-hidden]` and `section:first-of-type` rules
+
+**Iron rule:** Never use `column-count` in print CSS for RTL content without verifying Chrome doesn't collapse heights. If Framer Motion is present on the page, `transform: none !important` MUST appear in the `@media print` block. When in doubt — single column, full content, then add aesthetics.
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
