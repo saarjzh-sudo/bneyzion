@@ -1043,5 +1043,32 @@ Active for the 5 missing parashiot.
 
 ---
 
+### 2026-04-30 — Parasha print stylesheet — bulletin-quality PDF output (commit ac7c52d)
+
+- **New file:** `src/styles/parasha-print.css` — full `@media print` block for `/parasha`
+- **Changed:** `src/pages/ParashaPage.tsx` — import + semantic CSS classes added to JSX
+- **Goal:** pressing Ctrl+P on `/parasha` outputs a synagogue-bulletin-quality PDF, not a browser screenshot
+
+**What the stylesheet does:**
+- A4 portrait, 15mm margins, alternating left/right page margins
+- `print-masthead`: title block becomes bulletin masthead — Kedem 36pt, bordered bottom
+- `print-verse`: verse blockquote becomes parchment-background bordered box with italic serif
+- `print-columns`: articles + riddle flow in 2 columns (column-count:2, column-rule hairline)
+- `print-article-header`: article headers get 14pt Kedem bold title + small-caps amber rabbi byline
+- Drop cap: 42pt Kedem on first letter of each article (`float: right` for RTL)
+- Pull-quotes: right-bordered parchment aside, italic
+- Ornamental ◆ dividers between articles
+- `@page` margin-box footer: "תנועת בני ציון ללימוד תנ״ך | bneyzion.co.il" + page counter
+- `body::after` fallback footer for PDF viewers that skip `@page` margin boxes
+- All site chrome hidden: nav, TOC, CTA cards, audio grid, loading skeleton, buttons
+- `print-color-adjust: exact` ensures backgrounds print (user must enable "Background graphics" in Chrome)
+- Animations/shadows/backdrop-filter suppressed
+
+**Known constraint:** Chrome requires user to tick "Background graphics" in More settings for colored backgrounds to appear. Without it, the parchment-tint pull-quotes print white — still readable.
+
+**RTL drop-cap note:** Chrome has a known bug where `column-span: all` + RTL breaks layout. We avoid `column-span` entirely — use the 2-column flow without any spanning elements.
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
