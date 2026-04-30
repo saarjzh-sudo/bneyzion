@@ -42,9 +42,7 @@ import {
 } from "lucide-react";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
-import { useTopSeries } from "@/hooks/useTopSeries";
 import { usePublicRabbis } from "@/hooks/useRabbis";
-import { useTeacherSeries } from "@/hooks/useTeacherSeries";
 
 // ────────────────────────────────────────────────────────────────────────
 // Static "ראשי" tree — mirrors production sidebar structure
@@ -184,7 +182,9 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
     return localStorage.getItem(STORAGE_KEY) === "1";
   });
   const [activeTab, setActiveTab] = useState<Tab>("main");
-  const [expandedSection, setExpandedSection] = useState<string | null>("torah");
+  // Separate expanded-section state per tab so "ראשי" and "מורים" don't clash
+  const [expandedMain, setExpandedMain] = useState<string | null>("torah");
+  const [expandedTeachers, setExpandedTeachers] = useState<string | null>("torah");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -198,8 +198,6 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   // Load top rabbis for the rabbis tab
   const { data: rabbis = [] } = usePublicRabbis();
 
-  // Load teacher-tagged series for the teachers tab
-  const { data: teacherSeries = [] } = useTeacherSeries();
   const topRabbis = useMemo(() => {
     const list = (rabbis as any[]).filter((r) => r.name).sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
     return list.slice(0, 30);
@@ -219,13 +217,6 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
     const q = search.trim().toLowerCase();
     return list.filter((r) => (r.name || "").toLowerCase().includes(q));
   };
-
-  const filteredTeacherSeries = useMemo(() => {
-    const list = teacherSeries as any[];
-    if (!search.trim()) return list;
-    const q = search.trim().toLowerCase();
-    return list.filter((s) => (s.title || "").toLowerCase().includes(q));
-  }, [teacherSeries, search]);
 
   return (
     <>
@@ -404,8 +395,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                   key={section.id}
                   section={section}
                   collapsed={collapsed && !isDrawer}
-                  isExpanded={expandedSection === section.id || !!search}
-                  onToggle={() => setExpandedSection((e) => (e === section.id ? null : section.id))}
+                  isExpanded={expandedMain === section.id || !!search}
+                  onToggle={() => setExpandedMain((e) => (e === section.id ? null : section.id))}
                   onNavigate={onDrawerClose}
                   isFirst={si === 0}
                   isLast={si === MAIN_TREE.length - 1}
@@ -432,117 +423,46 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             </>
           )}
 
-          {/* TEACHERS tab */}
+          {/* TEACHERS tab — same hierarchical tree as "ראשי", filtered to teacher-tagged content */}
           {activeTab === "teachers" && (!collapsed || isDrawer) && (
             <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {/* Hero banner */}
+              {/* Teacher banner */}
               <div
                 style={{
-                  padding: "0.75rem 0.85rem",
-                  marginBottom: "0.25rem",
+                  padding: "0.6rem 0.75rem",
+                  marginBottom: "0.5rem",
                   borderRadius: radii.md,
-                  background: "rgba(196,162,101,0.1)",
-                  border: `1px solid rgba(139,111,71,0.15)`,
+                  background: "linear-gradient(135deg, rgba(74,90,46,0.12) 0%, rgba(196,162,101,0.1) 100%)",
+                  border: `1px solid rgba(74,90,46,0.2)`,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
                 }}
               >
-                <div
-                  style={{
-                    fontFamily: fonts.display,
-                    fontWeight: 700,
-                    fontSize: "0.82rem",
-                    color: colors.textDark,
-                    marginBottom: "0.2rem",
-                  }}
-                >
-                  אגף המורים
+                <GraduationCap size={14} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                <div>
+                  <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.78rem", color: colors.textDark }}>
+                    תכנים למורים — כל האתר מתויג
+                  </div>
+                  <div style={{ fontFamily: fonts.body, fontSize: "0.67rem", color: colors.textMuted, marginTop: "0.1rem" }}>
+                    אותו עץ ניווט · כל 1,374 הסדרות מסומנות "למורים"
+                  </div>
                 </div>
-                <div
-                  style={{
-                    fontFamily: fonts.body,
-                    fontSize: "0.7rem",
-                    color: colors.textMuted,
-                    lineHeight: 1.4,
-                  }}
-                >
-                  כל התכנים המתאימים להוראה
-                </div>
-                <Link
-                  to="/design-teachers-wing"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.25rem",
-                    marginTop: "0.5rem",
-                    fontFamily: fonts.body,
-                    fontSize: "0.68rem",
-                    color: colors.goldDark,
-                    fontWeight: 600,
-                    textDecoration: "none",
-                  }}
-                >
-                  <GraduationCap size={11} />
-                  הצטרפו לקהילת המורים ←
-                </Link>
               </div>
 
-              {/* Series list */}
-              {filteredTeacherSeries.length === 0 ? (
-                <div
-                  style={{
-                    padding: "1.5rem",
-                    textAlign: "center",
-                    fontFamily: fonts.body,
-                    fontSize: "0.8rem",
-                    color: colors.textSubtle,
-                  }}
-                >
-                  {(teacherSeries as any[]).length === 0 ? "טוען..." : "לא נמצאו תוצאות"}
-                </div>
-              ) : (
-                filteredTeacherSeries.map((s: any) => (
-                  <Link
-                    key={s.id}
-                    to={`/design-series-page-v2/${s.id}`}
-                    onClick={onDrawerClose}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "0.45rem 0.7rem",
-                      borderRadius: radii.sm,
-                      fontFamily: fonts.body,
-                      fontSize: "0.78rem",
-                      color: colors.textMuted,
-                      textDecoration: "none",
-                      transition: "all 0.15s",
-                      gap: "0.5rem",
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(139,111,71,0.06)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                  >
-                    <GraduationCap size={12} style={{ flexShrink: 0, color: colors.goldDark }} />
-                    <span
-                      style={{
-                        flex: 1,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {s.title}
-                    </span>
-                    <span
-                      style={{
-                        fontSize: "0.65rem",
-                        color: colors.textSubtle,
-                        flexShrink: 0,
-                      }}
-                    >
-                      ({s.lesson_count || 0})
-                    </span>
-                  </Link>
-                ))
-              )}
+              {/* Identical hierarchical tree — same structure as MAIN_TREE tab */}
+              {filterSections(MAIN_TREE).map((section, si) => (
+                <SidebarSection
+                  key={`teachers-${section.id}`}
+                  section={section}
+                  collapsed={false}
+                  isExpanded={expandedTeachers === section.id || !!search}
+                  onToggle={() => setExpandedTeachers((e) => (e === section.id ? null : section.id))}
+                  onNavigate={onDrawerClose}
+                  isFirst={si === 0}
+                  isLast={si === MAIN_TREE.length - 1}
+                />
+              ))}
             </div>
           )}
 
