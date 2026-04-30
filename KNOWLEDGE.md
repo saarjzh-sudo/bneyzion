@@ -712,6 +712,33 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 - `has_role()` RPC קיים ב-Supabase ומבדיל admin ממשתמש רגיל — admin ניתוב שמור לקומפוננטות `ProtectedRoute`
 - Google OAuth: `signInWithGoogle()` קורא ל-`supabase.auth.signInWithOAuth({ provider: "google" })` עם redirect חזרה לאתר
 
+### 2026-04-30 — /design-parasha sandbox page (commit 0ba551a)
+
+**Files added/changed:**
+- `src/pages/DesignPreviewParasha.tsx` — NEW sandbox at `/design-parasha`
+- `src/App.tsx` — route added: `/design-parasha`
+
+**What was built:**
+- Mahogany dark hero (brand identity) replacing the production parchment hero
+- 3 interactive CTA cards replacing the old static image banner:
+  1. **קריאה בטעמים** — anchor-jump to audio section (audioLessons from useParasha)
+  2. **חידות לשולחן השבת** — anchor-jump to riddle section (RIDDLES_SERIES_ID)
+  3. **חומרי לימוד למורים** — link to `/teachers` (TeachersWing)
+- Sticky horizontal TOC with IntersectionObserver: chips highlight the active section as user scrolls
+  - TOC chips: one per article (PARASHA_ARTICLE_SERIES filtered to those with content), + חידות, + שיעורי שמע
+  - Chips become sticky at y=96 (header height) using scroll listener + `position:sticky`
+- Back-to-top button ("חזרה לראש הדף") after each article section
+- Pull-quote aside with gold left border (RTL = border-right in physical)
+- Editorial gold-accent section headers with colored rule bars
+- Audio/lesson cards with hover shadow + duration pill
+- All data from existing `useParasha()` hook — NO mock data
+- Production `/parasha` untouched
+
+**3 CTA button destinations (confirmed from useParasha hook analysis):**
+- קריאה בטעמים → in-page anchor `#audio` (audioLessons from series "קריאה בטעמים"/"קריאה עם ביאור")
+- חידות לשולחן השבת → in-page anchor `#riddle` (lessons from RIDDLES_SERIES_ID `c852edd8-d959-4c8d-bf7e-17b5881275fa`)
+- חומרי לימוד למורים → `/teachers` route
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
