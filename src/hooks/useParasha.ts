@@ -190,10 +190,25 @@ export function useParasha() {
     },
   });
 
+  // Get the series ID for the current parasha (for the "כל תכני הפרשה" CTA)
+  const parashaSeriesIdQuery = useQuery({
+    queryKey: ["parasha-series-id", seriesTitle],
+    queryFn: async () => {
+      if (!seriesTitle) return null;
+      const { data: series } = await supabase
+        .from("series")
+        .select("id")
+        .eq("title", seriesTitle)
+        .maybeSingle();
+      return series?.id || null;
+    },
+  });
+
   return {
     parasha,
     chumash,
     seriesTitle,
+    parashaSeriesId: parashaSeriesIdQuery.data || null,
     lessons: parashaLessonsQuery.data || [],
     audioLessons: audioLessonsQuery.data || [],
     articleSeries: articleSeriesQuery.data || PARASHA_ARTICLE_SERIES.map(s => ({ title: s.title, rabbi: s.rabbi, seriesId: null, lessonId: null, lessonTitle: null, lessonContent: null })),

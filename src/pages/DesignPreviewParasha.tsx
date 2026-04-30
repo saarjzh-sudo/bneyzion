@@ -22,9 +22,56 @@ import {
   ChevronUp,
   ArrowLeft,
   Printer,
-  GraduationCap,
-  Music,
 } from "lucide-react";
+
+// ── Biblical SVG icons (24px, line-art, fill=currentColor) ────────────────
+
+/** Shofar — curved ram's horn with sound lines */
+const ShofarIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    {/* Horn body */}
+    <path d="M3 18 C5 15, 10 11, 16 8 C19 6.5, 21 5, 21 5 L19 9 C17 11, 13 13, 9 16 L6 20 Z" />
+    {/* Mouthpiece */}
+    <path d="M19 5 C21 4, 22 4.5, 22 6" />
+    {/* Sound waves */}
+    <path d="M4 13 C3 12, 3 11, 4 10" strokeWidth="1.4" />
+    <path d="M6 10 C5 9, 5 8, 6 7" strokeWidth="1.4" />
+  </svg>
+);
+
+/** Scroll/Megillah — Torah scroll with handles */
+const ScrollIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    {/* Scroll body */}
+    <rect x="4" y="5" width="16" height="14" rx="2" />
+    {/* Left handle */}
+    <line x1="4" y1="5" x2="4" y2="19" strokeWidth="2.5" />
+    {/* Right handle */}
+    <line x1="20" y1="5" x2="20" y2="19" strokeWidth="2.5" />
+    {/* Text lines */}
+    <line x1="7.5" y1="9" x2="16.5" y2="9" />
+    <line x1="7.5" y1="12" x2="16.5" y2="12" />
+    <line x1="7.5" y1="15" x2="14" y2="15" />
+  </svg>
+);
+
+/** Open book — library / parasha collection */
+const OpenBookIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    {/* Spine */}
+    <line x1="12" y1="4" x2="12" y2="20" />
+    {/* Left page */}
+    <path d="M12 5 C9 4.5, 4 5, 3 7 L3 19 C4 17.5, 9 17, 12 17.5" />
+    {/* Right page */}
+    <path d="M12 5 C15 4.5, 20 5, 21 7 L21 19 C20 17.5, 15 17, 12 17.5" />
+    {/* Left text lines */}
+    <line x1="5.5" y1="10" x2="10" y2="9.5" />
+    <line x1="5.5" y1="13" x2="10" y2="12.5" />
+    {/* Right text lines */}
+    <line x1="14" y1="9.5" x2="18.5" y2="10" />
+    <line x1="14" y1="12.5" x2="18.5" y2="13" />
+  </svg>
+);
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { useParasha } from "@/hooks/useParasha";
 import { getParashaVerse } from "@/lib/parashaCalendar";
@@ -77,7 +124,7 @@ interface CtaCard {
 // ── Component ──────────────────────────────────────────────────────────────
 
 const DesignPreviewParasha = () => {
-  const { parasha, chumash, lessons, audioLessons, articleSeries, riddle, isLoading } =
+  const { parasha, chumash, lessons, audioLessons, articleSeries, riddle, parashaSeriesId, isLoading } =
     useParasha();
 
   const verse = getParashaVerse(parasha);
@@ -128,7 +175,7 @@ const DesignPreviewParasha = () => {
     const cards: CtaCard[] = [
       {
         id: "kriaa",
-        icon: <Music className="h-7 w-7" />,
+        icon: <ShofarIcon className="h-7 w-7" />,
         title: "קריאה בטעמים",
         subtitle: hasAudio
           ? `${audioLessons.length} הקלטות קריאה`
@@ -138,23 +185,25 @@ const DesignPreviewParasha = () => {
       },
       {
         id: "riddle",
-        icon: <Sparkles className="h-7 w-7" />,
+        icon: <ScrollIcon className="h-7 w-7" />,
         title: "חידות לשולחן השבת",
         subtitle: hasRiddle ? "חידות מגרות לילדים ולמבוגרים" : "חידות לפרשת השבוע",
         anchor: hasRiddle ? "riddle" : undefined,
+        // When no riddle exists for this parasha, link to the riddle series overview
+        href: hasRiddle ? undefined : `/series/c852edd8-d959-4c8d-bf7e-17b5881275fa`,
         color: colors.tealMain,
       },
       {
-        id: "teachers",
-        icon: <GraduationCap className="h-7 w-7" />,
-        title: "חומרי לימוד למורים",
-        subtitle: "כלי הוראה ותכנים אטומיים",
-        href: "/teachers",
+        id: "all-parasha",
+        icon: <OpenBookIcon className="h-7 w-7" />,
+        title: "כל תכני הפרשה",
+        subtitle: "כל השיעורים, המאמרים והחידות לפרשה",
+        href: parashaSeriesId ? `/series/${parashaSeriesId}` : "/series",
         color: colors.oliveDark,
       },
     ];
     return cards;
-  }, [hasAudio, hasRiddle, audioLessons.length]);
+  }, [hasAudio, hasRiddle, audioLessons.length, parashaSeriesId]);
 
   // Sticky TOC on scroll
   useEffect(() => {
