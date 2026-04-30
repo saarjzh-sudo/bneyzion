@@ -158,7 +158,9 @@ function CompactSeriesHero({
         position: "relative",
         overflow: "hidden",
         background: gradients.mahoganyHero,
-        minHeight: 280,
+        /* NO minHeight — hero height = padding + content only.
+           This prevents the ~150px empty gap below the meta row that appeared
+           when minHeight:280 was set with justifyContent:flex-end. */
       }}
     >
       {/* Background image — subtle */}
@@ -184,10 +186,7 @@ function CompactSeriesHero({
         }}
       />
 
-      {/* TOP gradient — light vignette. Now that the header is solid (not transparent),
-          we only need gentle contrast for the title text — 0.25 max.
-          Previously 0.55 was required when transparentHeader=true so the logo was readable;
-          that's no longer needed. Keep it light so the book-illustration image shows through. */}
+      {/* TOP gradient — light vignette. */}
       <div
         style={{
           position: "absolute",
@@ -204,13 +203,12 @@ function CompactSeriesHero({
           position: "relative",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "flex-end",
-          /* padding-top was 130px to compensate overlapHero -96. Now that
-             overlapHero is removed, the hero starts below the header naturally.
-             4rem top-padding keeps it spacious without the large overhead.
-             Bottom: 1.5rem — just enough breathing room after the meta row.
-             Saar: "close the hero right after the meta row." */
-          padding: "4rem 2rem 1.5rem",
+          justifyContent: "flex-start",
+          /* padding-top: 2rem — visible spacer below the solid header (96px).
+             The header is outside this component and doesn't overlap.
+             Bottom: 1rem — tight but breathable gap after the meta row (~16px).
+             Result: hero height = 2rem + content-height + 1rem — no empty space. */
+          padding: "2rem 2rem 1rem",
           maxWidth: 1100,
           margin: "0 auto",
         }}
