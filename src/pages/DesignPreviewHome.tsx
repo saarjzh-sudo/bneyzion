@@ -9,6 +9,7 @@ import { getParashaVerse } from "@/lib/parashaCalendar";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { useAuth } from "@/contexts/AuthContext";
 import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
 
@@ -29,18 +30,30 @@ const TEAL_MAIN    = "#2D7D7D";
 
 // ── DesignNavBar ───────────────────────────────────────────────────────────
 const FULL_NAV_LINKS: { label: string; path: string }[] = [
-  { label: "ראשי",           path: "/"         },
-  { label: "רבנים",          path: "/rabbis"   },
-  { label: "סדרות",          path: "/series"   },
-  { label: "תנ״ך",           path: "/series"   },
-  { label: "קהילה",          path: "/community"},
-  { label: "פרשת השבוע",     path: "/parasha"  },
-  { label: "אודותינו",       path: "/about"    },
+  { label: "ראשי",           path: "/"                 },
+  { label: "פרשת השבוע",     path: "/parasha"          },
+  { label: "אודותינו",       path: "/about"            },
+  { label: "לזכר סעדיה הי״ד", path: "/memorial/saadia" },
 ];
 
 function DesignNavBar() {
   const [scrolled, setScrolled] = useState(false);
   const navigate = useNavigate();
+  const { user, isLoading: authLoading, signInWithGoogle, signOut } = useAuth();
+  const [signingIn, setSigningIn] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleSignIn = async () => {
+    setSigningIn(true);
+    try {
+      await signInWithGoogle();
+    } finally {
+      setSigningIn(false);
+    }
+  };
+
+  const avatarUrl = user?.user_metadata?.avatar_url || user?.user_metadata?.picture;
+  const displayName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split("@")[0];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -59,7 +72,8 @@ function DesignNavBar() {
   return (
     <nav dir="rtl" style={{ position: "sticky", top: 0, zIndex: 50, transition: "all 0.3s ease", ...navBg }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", height: 96,
-                    display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
+                    position: "relative" }}>
         {/* Logo — RIGHT side (start in RTL) */}
         <div onClick={() => navigate("/")} style={{ cursor: "pointer", flexShrink: 0 }}>
           <img
@@ -69,8 +83,10 @@ function DesignNavBar() {
           />
         </div>
 
-        {/* Nav links — CENTER */}
-        <div className="hidden md:flex" style={{ gap: "1.5rem", alignItems: "center", flex: 1, justifyContent: "center" }}>
+        {/* Nav links — absolutely centered to viewport */}
+        <div className="hidden md:flex" style={{ position: "absolute", left: "50%",
+                    top: "50%", transform: "translate(-50%, -50%)",
+                    gap: "1.75rem", alignItems: "center" }}>
           {FULL_NAV_LINKS.map(({ label, path }) => (
             <span key={label} onClick={() => navigate(path)}
               style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: linkColor,
@@ -95,21 +111,72 @@ function DesignNavBar() {
               <line x1="21" y1="21" x2="16.65" y2="16.65" />
             </svg>
           </div>
-          <button onClick={() => navigate("/auth")}
-            style={{ padding: "0.4rem 1rem", border: `1.5px solid ${scrolled ? GOLD_DARK : "rgba(255,255,255,0.5)"}`,
-                     borderRadius: "0.75rem", background: "transparent",
-                     color: scrolled ? TEXT_DARK : "white", fontFamily: "Ploni, sans-serif",
-                     fontSize: "0.82rem", cursor: "pointer", transition: "all 0.2s", whiteSpace: "nowrap" }}>
-            כניסה
-          </button>
-          <button onClick={() => navigate("/auth")}
-            style={{ padding: "0.4rem 1rem", borderRadius: "0.75rem", border: "none",
-                     background: `linear-gradient(135deg, ${OLIVE_DARK}, ${OLIVE_MAIN})`,
-                     color: "white", fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
-                     fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap",
-                     boxShadow: "0 2px 12px rgba(74,90,46,0.35)" }}>
-            הצטרף חינם
-          </button>
+
+          {!user ? (
+            <button onClick={handleSignIn} disabled={signingIn || authLoading}
+              style={{ padding: "0.4rem 1rem", border: `1.5px solid ${scrolled ? GOLD_DARK : "rgba(255,255,255,0.5)"}`,
+                       borderRadius: "0.75rem", background: "transparent",
+                       color: scrolled ? TEXT_DARK : "white", fontFamily: "Ploni, sans-serif",
+                       fontSize: "0.82rem", cursor: signingIn ? "wait" : "pointer",
+                       transition: "all 0.2s", whiteSpace: "nowrap",
+                       opacity: signingIn || authLoading ? 0.6 : 1 }}>
+              {signingIn ? "מתחבר..." : "כניסה"}
+            </button>
+          ) : (
+            <div style={{ position: "relative" }}>
+              <button onClick={() => setMenuOpen(o => !o)}
+                style={{ display: "flex", alignItems: "center", gap: "0.4rem",
+                         padding: "0.25rem 0.5rem 0.25rem 0.25rem",
+                         borderRadius: "999px", border: "none", cursor: "pointer",
+                         background: scrolled ? "rgba(139,111,71,0.08)" : "rgba(255,255,255,0.15)",
+                         backdropFilter: "blur(8px)" }}>
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt={displayName} referrerPolicy="no-referrer"
+                    style={{ width: 30, height: 30, borderRadius: "50%", objectFit: "cover",
+                             border: `1.5px solid ${scrolled ? GOLD_DARK : "rgba(255,255,255,0.6)"}` }} />
+                ) : (
+                  <div style={{ width: 30, height: 30, borderRadius: "50%",
+                                background: `linear-gradient(135deg, ${OLIVE_DARK}, ${OLIVE_MAIN})`,
+                                color: "white", display: "flex", alignItems: "center",
+                                justifyContent: "center", fontSize: "0.8rem", fontWeight: 600 }}>
+                    {displayName?.charAt(0)?.toUpperCase()}
+                  </div>
+                )}
+              </button>
+              {menuOpen && (
+                <div style={{ position: "absolute", top: "calc(100% + 8px)", left: 0,
+                              minWidth: 200, background: "white",
+                              border: "1px solid rgba(139,111,71,0.18)", borderRadius: "0.75rem",
+                              boxShadow: "0 8px 32px rgba(45,31,14,0.12)", overflow: "hidden",
+                              zIndex: 60, fontFamily: "Ploni, sans-serif" }}>
+                  <div style={{ padding: "0.75rem 1rem", borderBottom: "1px solid rgba(139,111,71,0.12)" }}>
+                    <div style={{ fontSize: "0.85rem", color: TEXT_DARK, fontWeight: 600 }}>{displayName}</div>
+                    <div style={{ fontSize: "0.72rem", color: TEXT_MUTED, marginTop: 2 }}>{user.email}</div>
+                  </div>
+                  <button onClick={() => { setMenuOpen(false); navigate("/profile"); }}
+                    style={{ display: "block", width: "100%", textAlign: "right",
+                             padding: "0.6rem 1rem", border: "none", background: "transparent",
+                             color: TEXT_DARK, fontSize: "0.82rem", cursor: "pointer" }}>
+                    האזור האישי
+                  </button>
+                  <button onClick={() => { setMenuOpen(false); navigate("/favorites"); }}
+                    style={{ display: "block", width: "100%", textAlign: "right",
+                             padding: "0.6rem 1rem", border: "none", background: "transparent",
+                             color: TEXT_DARK, fontSize: "0.82rem", cursor: "pointer" }}>
+                    שיעורים שמורים
+                  </button>
+                  <button onClick={async () => { setMenuOpen(false); await signOut(); }}
+                    style={{ display: "block", width: "100%", textAlign: "right",
+                             padding: "0.6rem 1rem", border: "none",
+                             borderTop: "1px solid rgba(139,111,71,0.12)",
+                             background: "transparent", color: "#a23a3a",
+                             fontSize: "0.82rem", cursor: "pointer" }}>
+                    התנתקות
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </nav>

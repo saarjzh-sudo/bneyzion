@@ -375,6 +375,47 @@ public/
 - `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
 - This file (`KNOWLEDGE.md`) created — full site knowledge
 
+### 2026-04-30 — Weekly chapter program — open questions resolved (Saar answers)
+
+**Subscription model (single tier — direct debit / הוראת קבע):**
+- Month 1: ₪5 (intro offer, campaign-only)
+- Month 2+: ₪110/month auto-charge
+- When there's no promo: ₪110 from day 1
+- NO annual, NO lifetime, NO multiple tiers. One subscription, one price.
+
+**Existing subscribers:**
+- Smoove list: `"בני ציון מנויים הפרק השבועי"` (need to find list ID)
+- Import strategy: upsert all emails → `user_access_tags` with `tag = "program:weekly-chapter"`
+- No Supabase auth user for old subscribers → create user shell or mark `pending_user_link`
+
+**Google Drive content:**
+- Drive root: `https://drive.google.com/drive/folders/0AFz55knVlI2BUk9PVA`
+- Must scan with Google Drive API to understand folder structure per book/chapter
+- credentials.json: `/Users/saarj/Downloads/saar-workspace/the-system-v8/T-tools/04-mcp-servers/youtube/credentials.json`
+- Rule: scan only, don't import until Saar approves mapping
+
+**Base content architecture (dual-source):**
+- Default: dynamic pull from `lessons` table with `bible_book + bible_chapter` matching
+- Override: optional row in `community_course_lessons` with `layer_type = 'base'` for content created specifically for the program
+- When override exists — show BOTH (program-specific base + site content)
+
+**Access levels:**
+- Existing site content (already in `lessons` table) — open to everyone
+- New base content created specifically for the program — subscribers only
+- Enrichment layers (audio summary, commentary, exercises) — subscribers only
+
+**WhatsApp automation (document only, don't build yet):**
+- Group: "לחיות תנ"ך"
+- Weekly cadence: שישי (base content ready), שני (enrichment ready), רביעי (lesson reminder + link),
+  שיעור day (link + reminder), מחרת (recording + summary + presentation + link)
+- Future: automate WhatsApp + email + site notifications. Build AFTER base infrastructure.
+
+**Sales page:**
+- NOT an external iframe — use `useGrowPayment` locally in our React app
+- Located at `/design-megilat-esther` (sandbox) / `/megilat-esther` (live to be redesigned)
+- Content: חגי + זכריה + מלאכי from Drive
+- Flow: ₪5 intro charge → Grow direct debit → ₪110/month auto
+
 ### 2026-04-30 — audience_tags migration + Admin Series UI expansion
 
 **Decision:** TeachersWing's 6 categories (חידות / תכנים אטומיים / כלי הוראה / פודקאסט / קורסים / מאמרים)
