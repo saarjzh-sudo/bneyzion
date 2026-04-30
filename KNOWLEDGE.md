@@ -712,6 +712,48 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 - `has_role()` RPC קיים ב-Supabase ומבדיל admin ממשתמש רגיל — admin ניתוב שמור לקומפוננטות `ProtectedRoute`
 - Google OAuth: `signInWithGoogle()` קורא ל-`supabase.auth.signInWithOAuth({ provider: "google" })` עם redirect חזרה לאתר
 
+### 2026-04-30 — Series page v2 — round 4 fixes (4 Saar feedback points)
+
+**Saar feedback → what was fixed:**
+
+1. **List/Grid toggle added to sub-series section** — `SubSeriesGroup` now has its own
+   List/Grid toggle. Separate localStorage key `bnz.subseries.view` (distinct from
+   lessons toggle `bnz.lesson.view`). No media chips — sub-series are categories, not media.
+   Reasoning: media chips (audio/video/pdf) apply to leaf content (lessons), not to series
+   which are grouping constructs. Adding them to sub-series would be misleading.
+
+2. **Hero meta row shows sub-series count** — `CompactSeriesHero` now accepts `totalSubSeries`
+   prop. Meta row format: `X שיעורים · Y חלקי סדרה`. If only lessons → `X שיעורים`.
+   If only sub-series → `Y חלקי סדרה`. If both → both with `·` separator.
+   Duration shown only when there are direct lessons.
+
+3. **Hero closes right after meta row** — bottom padding reduced from `2.5rem` → `1.5rem`.
+   The hero no longer has empty space below the meta row.
+
+4. **Hero overlay lighter** — top gradient reduced from `rgba(0,0,0,0.55)` → `rgba(0,0,0,0.25)`.
+   The header is now solid (not transparent), so the heavy overlay was no longer needed for
+   contrast. Book-illustration images are now clearly visible through the background.
+   Also extended the gradient fade distance from 30% → 40% of hero height.
+
+**New iron rule:** When `transparentHeader` is removed (solid header), reduce the hero top
+gradient to ≤0.25 opacity. The 0.55 value was only justified to ensure the transparent
+header's logo/links were readable. With a solid header, the gradient serves only as
+subtle title text contrast.
+
+**File changed:** `src/pages/DesignPreviewSeriesPageV2.tsx`
+
+### 2026-04-30 — Series redesign rollout plan written
+
+`bneyzion/rollout-series-redesign.md` created — actionable 3-phase rollout plan.
+Contents: list of production files to replace (with line counts), what is already
+done in v2 vs what still needs work before production, smoke tests, rollback strategy,
+time estimate (4-5 sessions total), and 3 open questions for Saar.
+
+Key finding: all hooks needed by v2 already exist in production DB.
+No DB migrations required for Phase 1 (series page only).
+Main pre-production gaps: favorites toggle needs real Supabase hooks, need `useSEO`,
+need `useAwardPoints` + `useMediaProgress`, need `SmartAuthCTA`.
+
 ### 2026-04-30 — /design-parasha sandbox page (commit 0ba551a)
 
 **Files added/changed:**

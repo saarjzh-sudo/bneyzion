@@ -84,8 +84,9 @@ import { useSeriesChildren, useSeriesBreadcrumb } from "@/hooks/useSeriesHierarc
 // Stable default series for no-param route: "איכה" — has 9 active sub-series
 const SUB_SERIES_DEMO_ID = "35781f30-76a7-4fc6-aa06-52a1db4a4054";
 
-// localStorage key for view preference
+// localStorage keys for view preferences
 const VIEW_PREF_KEY = "bnz.lesson.view";
+const SUBSERIES_VIEW_PREF_KEY = "bnz.subseries.view";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -138,11 +139,13 @@ function WhatsAppIcon() {
 function CompactSeriesHero({
   series,
   totalLessons,
+  totalSubSeries,
   totalDuration,
   imageUrl,
 }: {
   series: any;
   totalLessons: number;
+  totalSubSeries: number;
   totalDuration: string;
   imageUrl: string;
 }) {
@@ -181,15 +184,16 @@ function CompactSeriesHero({
         }}
       />
 
-      {/* TOP gradient — CRITICAL for header readability when transparentHeader=true.
-          Without this, the header logo/links blend into the hero background and appear
-          "missing" even though the header element is there (sticky, 96px tall). */}
+      {/* TOP gradient — light vignette. Now that the header is solid (not transparent),
+          we only need gentle contrast for the title text — 0.25 max.
+          Previously 0.55 was required when transparentHeader=true so the logo was readable;
+          that's no longer needed. Keep it light so the book-illustration image shows through. */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 30%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 40%)",
           pointerEvents: "none",
         }}
       />
@@ -203,8 +207,10 @@ function CompactSeriesHero({
           justifyContent: "flex-end",
           /* padding-top was 130px to compensate overlapHero -96. Now that
              overlapHero is removed, the hero starts below the header naturally.
-             4rem top-padding keeps it spacious without the large overhead. */
-          padding: "4rem 2rem 2.5rem",
+             4rem top-padding keeps it spacious without the large overhead.
+             Bottom: 1.5rem — just enough breathing room after the meta row.
+             Saar: "close the hero right after the meta row." */
+          padding: "4rem 2rem 1.5rem",
           maxWidth: 1100,
           margin: "0 auto",
         }}
@@ -310,8 +316,16 @@ function CompactSeriesHero({
               <span style={{ opacity: 0.45 }}>·</span>
             </>
           )}
-          <span>{totalLessons} שיעורים</span>
-          {totalDuration !== "—" && (
+          {/* Show lesson count only when there are direct lessons */}
+          {totalLessons > 0 && <span>{totalLessons} שיעורים</span>}
+          {/* Show sub-series count when they exist */}
+          {totalSubSeries > 0 && (
+            <>
+              {totalLessons > 0 && <span style={{ opacity: 0.45 }}>·</span>}
+              <span>{totalSubSeries} חלקי סדרה</span>
+            </>
+          )}
+          {totalDuration !== "—" && totalLessons > 0 && (
             <>
               <span style={{ opacity: 0.45 }}>·</span>
               <span>{totalDuration} סה"כ</span>
@@ -329,10 +343,33 @@ function CompactSeriesHero({
  * - If >6 children: show 6, then "הצג עוד" toggle
  * - If children span >1 unique rabbi: group by rabbi with small heading
  * - If single rabbi or all same: flat grid (no group noise)
+ *
+ * Round 4 (Saar feedback):
+ * - Added List/Grid toggle for sub-series cards.
+ *   Key: bnz.subseries.view (separate from lessons toggle bnz.lesson.view).
+ *   No media chips — sub-series are categories, not media.
  */
 function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
   const [expanded, setExpanded] = useState(false);
   const INITIAL_SHOW = 6;
+
+  // View mode — persisted in its own localStorage key (separate from lessons)
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    try {
+      return (localStorage.getItem(SUBSERIES_VIEW_PREF_KEY) as ViewMode) || "grid";
+    } catch {
+      return "grid";
+    }
+  });
+
+  const handleViewChange = (v: ViewMode) => {
+    setViewMode(v);
+    try {
+      localStorage.setItem(SUBSERIES_VIEW_PREF_KEY, v);
+    } catch {
+      /* blocked */
+    }
+  };
 
   if (!childSeries.length) return null;
 
@@ -371,7 +408,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }} dir="rtl">
-        {/* Section header */}
+        {/* Section header + view toggle */}
         <div
           style={{
             display: "flex",
@@ -396,11 +433,51 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
               fontFamily: fonts.body,
               fontSize: "0.75rem",
               color: colors.textSubtle,
-              marginRight: "auto",
+              flex: 1,
             }}
           >
             {childSeries.length} חלקים
           </span>
+          {/* List/Grid toggle — view only, no media chips for sub-series */}
+          <div
+            style={{
+              display: "flex",
+              border: `1.5px solid rgba(139,111,71,0.2)`,
+              borderRadius: radii.md,
+              overflow: "hidden",
+              flexShrink: 0,
+            }}
+          >
+            {(["grid", "list"] as ViewMode[]).map((v) => {
+              const isActive = viewMode === v;
+              return (
+                <button
+                  key={v}
+                  onClick={() => handleViewChange(v)}
+                  aria-label={v === "grid" ? "תצוגת כרטיסים" : "תצוגת רשימה"}
+                  title={v === "grid" ? "תצוגת כרטיסים" : "תצוגת רשימה"}
+                  style={{
+                    width: 36,
+                    height: 32,
+                    border: "none",
+                    background: isActive ? colors.goldDark : "transparent",
+                    color: isActive ? "white" : colors.textMuted,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    transition: "all 0.15s",
+                  }}
+                >
+                  {v === "grid" ? (
+                    <LayoutGrid style={{ width: 15, height: 15 }} />
+                  ) : (
+                    <List style={{ width: 15, height: 15 }} />
+                  )}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Groups */}
@@ -423,115 +500,214 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                 {group.rabbi}
               </div>
             )}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
-                gap: "1.25rem",
-              }}
-            >
-              {group.items.map((child) => {
-                const cover =
-                  child.image_url ||
-                  getSeriesCoverImage(child.title) ||
-                  "/images/series-default.png";
-                return (
-                  <Link
-                    key={child.id}
-                    to={`/design-series-page-v2/${child.id}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <div
-                      style={{
-                        borderRadius: radii.xl,
-                        overflow: "hidden",
-                        background: "white",
-                        border: `1px solid rgba(139,111,71,0.1)`,
-                        boxShadow: shadows.cardSoft,
-                        cursor: "pointer",
-                        transition: "all 0.25s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "translateY(-3px)";
-                        e.currentTarget.style.boxShadow = shadows.cardHover;
-                        e.currentTarget.style.borderColor = colors.goldDark;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "translateY(0)";
-                        e.currentTarget.style.boxShadow = shadows.cardSoft;
-                        e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
-                      }}
+
+            {/* Grid view */}
+            {viewMode === "grid" ? (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                  gap: "1.25rem",
+                }}
+              >
+                {group.items.map((child) => {
+                  const cover =
+                    child.image_url ||
+                    getSeriesCoverImage(child.title) ||
+                    "/images/series-default.png";
+                  return (
+                    <Link
+                      key={child.id}
+                      to={`/design-series-page-v2/${child.id}`}
+                      style={{ textDecoration: "none" }}
                     >
-                      {/* Image */}
                       <div
                         style={{
-                          height: 180,
+                          borderRadius: radii.xl,
                           overflow: "hidden",
-                          position: "relative",
-                          background: colors.parchmentDeep,
+                          background: "white",
+                          border: `1px solid rgba(139,111,71,0.1)`,
+                          boxShadow: shadows.cardSoft,
+                          cursor: "pointer",
+                          transition: "all 0.25s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = "translateY(-3px)";
+                          e.currentTarget.style.boxShadow = shadows.cardHover;
+                          e.currentTarget.style.borderColor = colors.goldDark;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = "translateY(0)";
+                          e.currentTarget.style.boxShadow = shadows.cardSoft;
+                          e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
                         }}
                       >
-                        <img
-                          src={cover}
-                          alt={child.title}
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
+                        {/* Image */}
                         <div
                           style={{
-                            position: "absolute",
-                            inset: 0,
-                            background:
-                              "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)",
-                          }}
-                        />
-                      </div>
-
-                      <div style={{ padding: "1rem 1.25rem 1.25rem" }}>
-                        <div
-                          style={{
-                            fontFamily: fonts.display,
-                            fontWeight: 700,
-                            fontSize: "1rem",
-                            color: colors.textDark,
-                            lineHeight: 1.35,
-                            marginBottom: "0.4rem",
+                            height: 180,
+                            overflow: "hidden",
+                            position: "relative",
+                            background: colors.parchmentDeep,
                           }}
                         >
-                          {child.title}
+                          <img
+                            src={cover}
+                            alt={child.title}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          />
+                          <div
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              background:
+                                "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)",
+                            }}
+                          />
                         </div>
+
+                        <div style={{ padding: "1rem 1.25rem 1.25rem" }}>
+                          <div
+                            style={{
+                              fontFamily: fonts.display,
+                              fontWeight: 700,
+                              fontSize: "1rem",
+                              color: colors.textDark,
+                              lineHeight: 1.35,
+                              marginBottom: "0.4rem",
+                            }}
+                          >
+                            {child.title}
+                          </div>
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              marginTop: "0.5rem",
+                            }}
+                          >
+                            <span
+                              style={{
+                                fontFamily: fonts.body,
+                                fontSize: "0.72rem",
+                                color: colors.textSubtle,
+                              }}
+                            >
+                              {child.lesson_count || 0} שיעורים
+                              {child.rabbis?.name && !shouldGroup ? ` · ${child.rabbis.name}` : ""}
+                            </span>
+                            <ChevronRight
+                              style={{
+                                width: 16,
+                                height: 16,
+                                color: colors.goldDark,
+                                transform: "rotate(180deg)",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              /* List view — compact rows with thumbnail */
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {group.items.map((child) => {
+                  const cover =
+                    child.image_url ||
+                    getSeriesCoverImage(child.title) ||
+                    "/images/series-default.png";
+                  return (
+                    <Link
+                      key={child.id}
+                      to={`/design-series-page-v2/${child.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "1rem",
+                          padding: "0.75rem 1rem",
+                          borderRadius: radii.lg,
+                          background: "white",
+                          border: "1px solid rgba(139,111,71,0.08)",
+                          cursor: "pointer",
+                          transition: "all 0.18s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = colors.goldDark;
+                          e.currentTarget.style.boxShadow = shadows.cardSoft;
+                          e.currentTarget.style.background = colors.parchmentDark;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "rgba(139,111,71,0.08)";
+                          e.currentTarget.style.boxShadow = "none";
+                          e.currentTarget.style.background = "white";
+                        }}
+                      >
+                        {/* Thumbnail */}
                         <div
                           style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginTop: "0.5rem",
+                            width: 72,
+                            height: 52,
+                            borderRadius: radii.md,
+                            overflow: "hidden",
+                            flexShrink: 0,
+                            background: colors.parchmentDeep,
                           }}
                         >
-                          <span
+                          <img
+                            src={cover}
+                            alt={child.title}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          />
+                        </div>
+                        {/* Text */}
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div
+                            style={{
+                              fontFamily: fonts.display,
+                              fontWeight: 700,
+                              fontSize: "0.9rem",
+                              color: colors.textDark,
+                              whiteSpace: "nowrap",
+                              overflow: "hidden",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {child.title}
+                          </div>
+                          <div
                             style={{
                               fontFamily: fonts.body,
-                              fontSize: "0.72rem",
+                              fontSize: "0.7rem",
                               color: colors.textSubtle,
+                              marginTop: "0.2rem",
                             }}
                           >
                             {child.lesson_count || 0} שיעורים
                             {child.rabbis?.name && !shouldGroup ? ` · ${child.rabbis.name}` : ""}
-                          </span>
-                          <ChevronRight
-                            style={{
-                              width: 16,
-                              height: 16,
-                              color: colors.goldDark,
-                              transform: "rotate(180deg)",
-                            }}
-                          />
+                          </div>
                         </div>
+                        <ChevronRight
+                          style={{
+                            width: 16,
+                            height: 16,
+                            color: colors.goldDark,
+                            flexShrink: 0,
+                            transform: "rotate(180deg)",
+                          }}
+                        />
                       </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
           </div>
         ))}
 
@@ -1982,6 +2158,7 @@ export default function DesignPreviewSeriesPageV2() {
         <CompactSeriesHero
           series={series}
           totalLessons={totalLessons}
+          totalSubSeries={(childSeries as any[]).length}
           totalDuration={totalDuration}
           imageUrl={heroImageUrl}
         />
