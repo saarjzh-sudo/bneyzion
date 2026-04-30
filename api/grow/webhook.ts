@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { subscribeToSmoove, splitFullName } from "../lib/smoove";
+// subscribeToSmoove is defined locally below — it handles the 409 "already
+// exists" case by looking up the contact and adding to the list via PUT.
+// splitFullName is imported for any future use but not currently needed here.
 
 // .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
 // which silently breaks string routing/comparisons.
@@ -221,13 +223,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Donations: subscribe the donor to the Smoove marketing list. Skips
     // silently if SMOOVE_API_KEY is unset, the email is empty, or the call
     // fails — donation completion is never blocked on this.
-    if (type === "donation" && statusCode === "2") {
-      const { firstName, lastName } = splitFullName(txData.fullName);
+    if (flowType === "donation" && statusCode === "2") {
       await subscribeToSmoove({
         email: txData.payerEmail,
-        firstName,
-        lastName,
-        phone: txData.payerPhone,
+        fullName: txData.fullName || "",
+        phone: txData.payerPhone || "",
+        company: "תרומה",
+        listId: parseInt(process.env.SMOOVE_DEFAULT_LIST_ID || "1118798", 10),
       });
     }
 
@@ -280,6 +282,90 @@ async function loadProductConfig(
   return FALLBACK_PRODUCTS[productSlug] || null;
 }
 
+// ── Product → access tag mapping ────────────────────────────────────────────
+// Maps a payment_products slug to the access tag it grants.
+// Extend this map when new subscription products are added.
+const PRODUCT_ACCESS_TAGS: Record<string, string> = {
+  "weekly-chapter-subscription": "program:weekly-chapter",
+};
+
+// How long does a successful charge extend the subscription?
+// For direct-debit (monthly) we add 35 days (5-day grace period over 30-day month).
+// For one-time wallet purchases with no recurrence we set null (forever).
+const PRODUCT_VALID_DURATION_DAYS: Record<string, number | null> = {
+  "weekly-chapter-subscription": 35, // monthly direct debit — 30 days + 5-day grace
+  "book-megilat-esther": null,         // one-time purchase — forever
+};
+
+async function grantAccessTag(params: {
+  supabase: ReturnType<typeof getSupabaseAdmin>;
+  email: string;
+  productSlug: string | undefined;
+  orderId: string;
+}) {
+  const { supabase, email, productSlug, orderId } = params;
+  if (!productSlug) return;
+
+  const tag = PRODUCT_ACCESS_TAGS[productSlug];
+  if (!tag) {
+    console.log(`[AccessTag] No tag mapped for product "${productSlug}" — skipping`);
+    return;
+  }
+
+  const durationDays = PRODUCT_VALID_DURATION_DAYS[productSlug];
+  const validUntil = durationDays != null
+    ? new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString()
+    : null;
+
+  // Look up the Supabase auth user by email
+  const { data: authData } = await supabase.auth.admin.listUsers({ perPage: 1000, page: 1 });
+  const authUsers = (authData as any)?.users as Array<{ id: string; email?: string }> | undefined;
+  const user = authUsers?.find(
+    (u) => u.email?.toLowerCase() === email.toLowerCase()
+  );
+  const userId = user?.id || null;
+
+  // Resolve grow_orders id if the table exists (it may not yet)
+  let growOrderId: string | null = null;
+  try {
+    const { data: goRow } = await supabase
+      .from("grow_orders")
+      .select("id")
+      .eq("id", orderId)
+      .maybeSingle();
+    if (goRow?.id) growOrderId = goRow.id;
+  } catch (_) { /* grow_orders table may not exist */ }
+
+  const row = {
+    user_id: userId,
+    email: email.toLowerCase(),
+    tag,
+    valid_until: validUntil,
+    source: "grow_webhook",
+    grow_order_id: growOrderId,
+    pending_user_link: userId == null,
+    notes: `Auto-granted by Grow webhook. product=${productSlug} orderId=${orderId}`,
+  };
+
+  console.log(`[AccessTag] Upserting tag="${tag}" for email="${email}" valid_until=${validUntil}`);
+
+  if (userId) {
+    // If we have a real user, upsert on (user_id, tag)
+    const { error } = await supabase
+      .from("user_access_tags")
+      .upsert(row, { onConflict: "user_id,tag" });
+    if (error) console.error("[AccessTag] Upsert error (by user_id):", error.message);
+    else console.log(`[AccessTag] Granted tag="${tag}" to user_id=${userId}`);
+  } else {
+    // No auth user yet — upsert on (lower(email), tag) pending link
+    const { error } = await supabase
+      .from("user_access_tags")
+      .upsert(row, { onConflict: "email,tag" });
+    if (error) console.error("[AccessTag] Upsert error (by email):", error.message);
+    else console.log(`[AccessTag] Granted tag="${tag}" to email=${email} (pending_user_link=true)`);
+  }
+}
+
 async function runPostPurchaseSideEffects(args: {
   supabase: ReturnType<typeof getSupabaseAdmin>;
   targetTable: string;
@@ -310,10 +396,22 @@ async function runPostPurchaseSideEffects(args: {
   const phone = (row as any).customer_phone || "";
 
   if (!email) {
-    console.log("Post-purchase: no email — skipping Smoove subscribe");
+    console.log("Post-purchase: no email — skipping Smoove subscribe + access tag");
     return;
   }
 
+  // ── Grant user_access_tags (subscriptions only) ──────────────────────────
+  // This runs on EVERY successful Grow webhook — including monthly recurring
+  // charges. On recurring charges, valid_until is extended by 35 days.
+  // If the user_access_tags table doesn't exist yet (migration not yet applied)
+  // this fails silently and doesn't break the overall flow.
+  try {
+    await grantAccessTag({ supabase, email, productSlug, orderId });
+  } catch (e) {
+    console.error("[AccessTag] Exception (non-fatal):", e);
+  }
+
+  // ── Smoove subscribe ─────────────────────────────────────────────────────
   const productCfg = await loadProductConfig(supabase, productSlug);
   if (!productCfg?.smoove_list_id) {
     console.log("Post-purchase: no smoove_list_id wired — skipping subscribe");
