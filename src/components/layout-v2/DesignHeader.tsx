@@ -118,11 +118,14 @@ export default function DesignHeader({
           />
         </Link>
 
-        {/* Nav — CENTER (hidden on mobile, AND hidden when sidebar is in use) */}
+        {/* Nav — CENTER (hidden on mobile; always visible on desktop even when sidebar is active).
+             Previously `display: onSidebarToggle ? "none" : undefined` would hide the entire
+             nav whenever a sidebar was present — that hid the logo/nav on desktop too.
+             Fix: never hide on desktop; the sidebar is a separate panel that doesn't
+             conflict with the header nav. */}
         <nav
           className="hidden md:flex"
           style={{
-            display: onSidebarToggle ? "none" : undefined,
             gap: "1.25rem",
             alignItems: "center",
             flex: 1,

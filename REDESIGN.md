@@ -326,6 +326,14 @@ When Saar approves the sandbox for production:
   visual identity (Saar's repeated critique).
 - ❌ Don't introduce mock data when real Supabase data is available via
   hooks.
+- ❌ Don't use `transparentHeader` on pages that have `sidebar={true}` (default).
+  Sidebar pages always get solid header. `transparentHeader` is for fully-immersive
+  hero pages only (home, memorial, navy-theme pages).
+  Reason: any inline `display` override on the nav that depends on `onSidebarToggle`
+  will collide with Tailwind's `hidden md:flex` and hide the entire nav on desktop.
+- ❌ Don't add `display: X ? "none" : undefined` inline styles on elements that
+  already have Tailwind responsive display classes (`hidden md:flex` etc.) — inline
+  styles always win over class-based styles and break the responsive breakpoints.
 
 ---
 
