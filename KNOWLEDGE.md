@@ -926,6 +926,30 @@ Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (
 
 **Rule:** TeacherContentBadge must appear on EVERY surface that displays a lesson with a title — card, popup, modal, page header, and sidebar rail. When adding new lesson display components, always check and include badge.
 
+### 2026-04-30 — Global DesignSidebar rollout to production Layout (commit b88c631)
+
+**Saar approved rollout via option A — global Layout wrapper.**
+
+**Files changed:**
+- `src/components/layout/Layout.tsx` — replaced `Header`/`Footer`/`MobileBottomNav` with
+  `DesignHeader`/`DesignFooter`/`DesignMobileBottomNav`. Added `DesignSidebar` as global right-side
+  panel. New prop: `sidebar?: boolean` (default true). Mobile: drawer triggered from header burger.
+- `src/pages/SeriesList.tsx` — inner `<aside>` (357-line sidebar) wrapped in `{false && ...}`.
+  Code preserved per Saar's explicit request for rollback safety. Comment:
+  "Hidden 30.4.2026 — replaced by global DesignSidebar in Layout."
+- `src/pages/DesignPreviewHome.tsx` — wrapped in `<Layout sidebar={false}>`. Removed `<DesignNavBar />`
+  and `<DesignFooter />` from render. Both functions kept in file for reference.
+  Home page uses `sidebar={false}` to keep the landing page full-width and uncluttered.
+
+**Backup tag:** `backup-pre-sidebar-rollout-2026-04-30` (local + remote)
+
+**Effect:** DesignSidebar (4 tabs: ראשי / נושאים / רבנים / מורים) now appears on ALL production routes
+that use Layout.tsx: /series, /lessons/:id, /rabbis, /rabbis/:id, /series/:id, /store, /store/:slug,
+/about, /donate, /contact, /memorial, /memorial/saadia, /parasha, /community, /pricing, and all others.
+Home page (/) is sidebar-free by intent.
+
+**TS check:** 0 new errors introduced (pre-existing DesignPreviewCoursesCatalog.tsx errors unrelated).
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
