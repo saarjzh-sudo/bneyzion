@@ -171,7 +171,7 @@ See **§ 8. Open work** for the full plan.
 | `/design-rabbis-list` | 179 rabbis directory | yes | done |
 | `/design-rabbi` | Single rabbi profile (defaults to top) | yes | done |
 | `/design-rabbi/:id` | Specific rabbi | yes | done |
-| `/design-teachers-wing` | אגף המורים: 6 categories, benefits, recommended series | yes (recommended) | done — needs sidebar merge |
+| `/design-teachers-wing` | אגף המורים: 6 categories, benefits, recommended series | yes (recommended) | **hidden 30.4.2026** — route active, 0 nav links. pending deletion decision |
 | `/design-community` | Community + 3 membership tiers + active courses | yes | done |
 | `/design-bible-book/:book` | Browse a Bible book — chapters with lesson counts | yes | done |
 | `/design-donate` | Donation flow with presets, recurring, dedication | n/a (form only) | done |
@@ -231,7 +231,14 @@ Saar must paste `supabase/migrations/20260430_weekly_program_foundation.sql` in 
 After that: `env -u HTTPS_PROXY -u HTTP_PROXY node scripts/import-weekly-chapter-subscribers.mjs --dry-run` → confirm → run live.
 Only then `useUserAccess` and the gating in `/design-megilat-esther` and `/design-portal-subscriber` will work with real data.
 
-### Priority 1: Sidebar unification with Teachers Wing
+### Priority 1: Teachers Wing decision — delete or repurpose
+
+**30.4.2026 — Saar decided:** hide `/design-teachers-wing`, pending final decision.
+Current state: route exists, 0 nav links from sidebar/header/footer/mobile-nav.
+Code intact at `src/pages/DesignPreviewTeachersWing.tsx`.
+Options: (a) delete the page entirely, (b) repurpose it after audience_tags migration.
+
+### Priority 1b: Sidebar unification with Teachers Wing (on hold pending above)
 **Saar's spec (2026-04-30):**
 1. Add `audience_tags TEXT[]` column to `series` + `lessons` tables
    (Supabase migration). Default `["general"]`.
@@ -295,6 +302,9 @@ When Saar approves the sandbox for production:
   Content will be tagged via `audience_tags TEXT[]` on series/lessons instead.
   Migration file ready at `supabase/migrations/20260430_audience_tags.sql` (not yet applied).
   Admin `/admin/series` expanded with multi-select tags, filter bar, bulk-tag button.
+- **2026-04-30:** `/design-teachers-wing` hidden — route active, 0 nav links.
+  Removed "אגף המורים" from DesignHeader, DesignFooter, DesignSidebar (ראשי + נושאים tabs), DesignMobileBottomNav.
+  Code intact, pending deletion decision from Saar.
 
 ---
 

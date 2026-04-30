@@ -642,6 +642,23 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
 **Rule confirmed:** `Header.tsx` wraps all non-home pages via `Layout.tsx`. `DesignPreviewHome.tsx` (the `/` route) has its own inline `DesignNavBar`. Changes to one do NOT affect the other.
 
+### 2026-04-30 — TeachersWing hidden (not deleted)
+
+**החלטה:** `/design-teachers-wing` נשאר פעיל ב-route (גישה ידנית), אבל לא מקושר מאף מקום בניווט.
+
+**מה הוסר (comment-out עם תאריך):**
+- `DesignHeader.tsx` — "אגף המורים" הוסר מ-`NAV_ITEMS` (desktop + mobile panel)
+- `DesignFooter.tsx` — "אגף המורים" הוסר מ-`COLUMNS["אודותינו"]`
+- `DesignSidebar.tsx` — הוסר מ-"כלים ולימוד" (tab ראשי) + "חידות תנ״ך" ו-"תכנים אטומיים" הוסרו מ-tab "נושאים" (שניהם הצביעו ל-`/teachers`)
+- `DesignMobileBottomNav.tsx` — "אגף המורים" הוסר מ-`NAV_ITEMS`
+
+**מה נשאר:**
+- `src/pages/DesignPreviewTeachersWing.tsx` — קוד שלם, לא נמחק
+- Route ב-`App.tsx` שורה 205 — פעיל, לא שונה
+- 6 קטגוריות mock בקוד — לא נגישות דרך ניווט
+
+**סטטוס:** hidden, not linked. החלטה ממתינה: מחיקה מלאה / שינוי תפקיד.
+
 ### 2026-04-30 — Homepage nav fix: push was missing, changes now live
 
 **Root cause:** `DesignPreviewHome.tsx` שינויים מסשן קודם נשמרו מקומית אבל לא push — לכן לא היה גלוי ב-Vercel ולא בבילדר (שרץ על the-system-v8, לא על bneyzion).

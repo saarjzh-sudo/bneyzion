@@ -11,9 +11,9 @@ import { Home, Search, Heart, Menu, X, Flame } from "lucide-react";
 import GlobalSearch from "@/components/search/GlobalSearch";
 import { colors, fonts } from "@/lib/designTokens";
 
+// Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers" }
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "ראשי", href: "/" },
-  { label: "אגף המורים", href: "/teachers" },
   { label: "רבנים", href: "/rabbis" },
   { label: "סדרות", href: "/series" },
   { label: "תנ״ך", href: "/bible/בראשית" },

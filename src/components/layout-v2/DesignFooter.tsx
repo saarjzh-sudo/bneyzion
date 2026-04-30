@@ -61,7 +61,7 @@ const COLUMNS: { title: string; links: { label: string; href: string; flame?: bo
     links: [
       { label: "החזון", href: "/about" },
       { label: "קהילת לומדים", href: "/community" },
-      { label: "אגף המורים", href: "/teachers" },
+      // Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers" }
       { label: "כנס ההודאה", href: "/kenes" },
       { label: "דור הפלאות", href: "/dor-haplaot" },
       { label: "מסלולים ומחירים", href: "/pricing" },
