@@ -82,17 +82,26 @@ function smooveFetch(path) {
 }
 
 async function fetchAllContacts() {
+  // First, get the list metadata to know the real contact count.
+  // Smoove's /Contacts endpoint doesn't stop at the end — it wraps around
+  // and returns contacts from other lists indefinitely. We must cap manually.
+  const listMeta = await smooveFetch(`/v1/Lists/${SMOOVE_LIST_ID}`);
+  const totalCount = listMeta?.contactsCount ?? Infinity;
+  console.log(`  List reports ${totalCount} total contacts.`);
+
   const contacts = [];
   let offset = 0;
 
-  while (true) {
+  while (contacts.length < totalCount) {
     const page = await smooveFetch(
       `/v1/Lists/${SMOOVE_LIST_ID}/Contacts?limit=${PAGE_SIZE}&offset=${offset}`
     );
     if (!Array.isArray(page) || page.length === 0) break;
-    contacts.push(...page);
-    console.log(`  Fetched ${contacts.length} contacts so far...`);
-    if (page.length < PAGE_SIZE) break; // last page
+    // Only take as many as we still need to reach totalCount
+    const remaining = totalCount - contacts.length;
+    contacts.push(...page.slice(0, remaining));
+    console.log(`  Fetched ${contacts.length}/${totalCount} contacts...`);
+    if (page.length < PAGE_SIZE) break; // genuine last page
     if (contacts.length >= LIMIT) break;
     offset += PAGE_SIZE;
   }
