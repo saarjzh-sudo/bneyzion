@@ -451,6 +451,24 @@ They will NOT be reproduced in the unified sidebar. Instead, content is tagged a
 **New constraint:** Never add audience-tag categories to the UI without a corresponding DB tag value.
 Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
+### 2026-04-30 — Homepage nav fix: push was missing, changes now live
+
+**Root cause:** `DesignPreviewHome.tsx` שינויים מסשן קודם נשמרו מקומית אבל לא push — לכן לא היה גלוי ב-Vercel ולא בבילדר (שרץ על the-system-v8, לא על bneyzion).
+
+**מה ב-commit d22dfcd:**
+- `DesignNavBar`: כפתור "הצטרף חינם" הוסר — נשאר רק "כניסה" (Google OAuth)
+- לינקי ניווט: ראשי / פרשת השבוע / אודותינו / לזכר סעדיה הי"ד בלבד
+- מיקום ניווט: `position: absolute; left: 50%; transform: translate(-50%, -50%)` — מרכוז אמיתי
+- כניסה: `signInWithGoogle()` → לאחר login: אווטאר + תפריט (האזור האישי / שיעורים שמורים / התנתקות)
+- אין ניתוב לאדמין ב-dropdown של משתמש רגיל
+
+**כלל שנלמד:** `DesignPreviewHome.tsx` הוא לא קובץ סנדבוקס — הוא ה-route `/` הפרודקשן האמיתי. `Header.tsx` משמש רק שאר הדפים דרך `Layout.tsx`. שינויים לדף הבית הולכים לאותו קובץ.
+
+**מבנה auth ב-DesignNavBar:**
+- `useAuth()` → `{ user, isLoading, signInWithGoogle, signOut }`
+- `has_role()` RPC קיים ב-Supabase ומבדיל admin ממשתמש רגיל — admin ניתוב שמור לקומפוננטות `ProtectedRoute`
+- Google OAuth: `signInWithGoogle()` קורא ל-`supabase.auth.signInWithOAuth({ provider: "google" })` עם redirect חזרה לאתר
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
