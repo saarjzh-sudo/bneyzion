@@ -12,6 +12,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { useAuth } from "@/contexts/AuthContext";
 import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
+import Layout from "@/components/layout/Layout";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK    = "#8B6F47";
@@ -1319,19 +1320,22 @@ export default function DesignPreviewHome() {
   });
 
   return (
-    <div dir="rtl" style={{ background: PARCHMENT, minHeight: "100vh",
-                             fontFamily: "Ploni, sans-serif" }}>
-      <DesignNavBar />
-      <DesignHero />
-      <StatsBar />
-      <KenesBanner />
-      <DesignParashaHolidaySection />
-      <PopularLessonsSection />
-      <WarMiraclesSection />
-      <TopSeriesSection />
-      <RabbisSection />
-      <WhatsAppCTASection />
-      <DesignFooter />
-    </div>
+    // Layout provides global DesignHeader + DesignSidebar + DesignFooter + DesignMobileBottomNav.
+    // DesignNavBar and DesignFooter defined in this file are no longer rendered here
+    // (kept in file for reference / rollback). sidebar={false} on Home to give full-width
+    // experience on the landing page; the hero overlaps and sections fill edge-to-edge.
+    <Layout sidebar={false}>
+      <div style={{ background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
+        <DesignHero />
+        <StatsBar />
+        <KenesBanner />
+        <DesignParashaHolidaySection />
+        <PopularLessonsSection />
+        <WarMiraclesSection />
+        <TopSeriesSection />
+        <RabbisSection />
+        <WhatsAppCTASection />
+      </div>
+    </Layout>
   );
 }
