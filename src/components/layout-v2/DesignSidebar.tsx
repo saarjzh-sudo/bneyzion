@@ -113,7 +113,7 @@ const MAIN_TREE: NavSection[] = [
     id: "tools",
     title: "כלים ולימוד",
     items: [
-      { label: "אגף המורים", href: "/teachers", icon: GraduationCap },
+      // Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers", icon: GraduationCap }
       { label: "קהילת לומדים", href: "/community", icon: Heart },
       { label: "כנס ההודאה", href: "/kenes", icon: Flame },
       { label: "דור הפלאות", href: "/dor-haplaot", icon: Sparkles },
@@ -144,10 +144,9 @@ const TOPICS_TAB: NavSection[] = [
     id: "specials",
     title: "אוספים מיוחדים",
     items: [
-      { label: "חידות תנ״ך", href: "/teachers", icon: Sparkles },
+      // Hidden 30.4.2026 per Saar — "חידות תנ״ך" + "תכנים אטומיים" pointed to /teachers, removed pending deletion decision
       { label: "דור הפלאות", href: "/dor-haplaot", icon: Sparkles },
       { label: "כנס ההודאה", href: "/kenes", icon: Flame },
-      { label: "תכנים אטומיים", href: "/teachers", icon: FileText },
     ],
   },
 ];
