@@ -138,7 +138,12 @@ const App = () => (
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
             <Route path="/thank-you" element={<Suspense fallback={<LazyFallback />}><ThankYou /></Suspense>} />
-            <Route path="/portal" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />
+            {/* PRODUCTION — new design (2026-04-30 swap) */}
+            <Route path="/portal" element={<RequireAuth><Suspense fallback={<LazyFallback />}><DesignPreviewPortalSubscriber /></Suspense></RequireAuth>} />
+            <Route path="/courses" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCoursesCatalog /></Suspense>} />
+            <Route path="/course/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
+            {/* LEGACY — archived, accessible for rollback comparison */}
+            <Route path="/portal-old" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />
             <Route path="/portal/course/:id" element={<RequireAuth><Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<Suspense fallback={<LazyFallback />}><Roadmap /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
