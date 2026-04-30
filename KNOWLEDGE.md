@@ -536,6 +536,18 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
 **מה זמני (TODO):** תמונות ה-placeholder לשיעורים הן אלמנט עיצוב זמני. המעצב יביא תמונות ייעודיות לכל ספר/סדרה. אל תפנים את ה-placeholder כפתרון קבוע.
 
+### 2026-04-30 — Production Header updated (fc89c00)
+
+**Files changed:**
+- `src/components/layout/Header.tsx` — 4 nav items only (ראשי / פרשת השבוע / אודותינו / לזכר סעדיה הי״ד)
+- Nav positioned with `absolute left-1/2 -translate-x-1/2` for true viewport center
+- CartButton / NotificationBell / DarkModeToggle removed (cleaner auth-only bar)
+- Existing `UserMenu` component kept — handles Google OAuth + avatar + dropdown for regular user
+- Mobile memorial link fixed: `/memorial` → `/memorial/saadia`, "ז״ל" → "הי״ד"
+- TS check: 0 errors
+
+**Rule confirmed:** `Header.tsx` wraps all non-home pages via `Layout.tsx`. `DesignPreviewHome.tsx` (the `/` route) has its own inline `DesignNavBar`. Changes to one do NOT affect the other.
+
 ### 2026-04-30 — Homepage nav fix: push was missing, changes now live
 
 **Root cause:** `DesignPreviewHome.tsx` שינויים מסשן קודם נשמרו מקומית אבל לא push — לכן לא היה גלוי ב-Vercel ולא בבילדר (שרץ על the-system-v8, לא על bneyzion).
