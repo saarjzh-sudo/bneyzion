@@ -1589,6 +1589,12 @@ Must use: `corpora='drive'`, `driveId=DRIVE_ID`, `includeItemsFromAllDrives=True
 
 ---
 
+### 2026-04-30 — DesignNavBar transparent + centered + DesignHeader centering confirmed (commit a3bd797)
+
+- **DesignPreviewHome.tsx `DesignNavBar`**: removed `position:absolute + left:50% + transform` from nav-links container. Replaced with `flex:1 + justifyContent:center + flexWrap:wrap`. Background was already correctly `transparent` pre-scroll; scrolled state gets parchment + backdrop-blur.
+- **DesignHeader.tsx**: already correct (`maxWidth:1280, margin:"0 auto", justifyContent:"space-between"` with inner nav `flex:1 justifyContent:center`). No changes needed.
+- Push: commits `a82adb8 → a3bd797` (9 commits total) pushed to origin/main in one batch after Saar's explicit approval.
+
 ### 2026-04-30 — Session synthesis: series page V2 live + image pilot + open follow-ups (agentId a6b963e004c77dffd)
 
 This entry consolidates the cross-cutting learnings from the full Shir HaShirim session for easy future reference. Specific commits and round-by-round feedback are documented in the entries above (rounds 1-5, commit 58b4f60/1f0784f, cb91a68).
