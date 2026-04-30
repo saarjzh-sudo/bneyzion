@@ -1316,5 +1316,18 @@ as the card container — parchmentDark as the image-slot background. No gradien
 
 ---
 
+### 2026-04-30 — Memorial Saadia real photos deployed (commit f4f189e)
+
+- Replaced 3 placeholder assets with real family-approved photos:
+  - `src/assets/memorial-saadia-hero.jpg` (104KB, full-body in field)
+  - `src/assets/saadia-soldier.png` (2.3MB, dress uniform portrait)
+  - `src/assets/saadia-tefillin.png` (3.5MB, tefillin in Gaza building)
+- Added 4 new gallery photos: `saadia-combat.jpg`, `saadia-rally.jpg`, `saadia-suit.jpg`, `saadia-young-books.jpg`
+- Wired gallery into `src/pages/DesignPreviewMemorialSaadia.tsx`
+- Deployed to production bneyzion.vercel.app (all 6 assets confirmed HTTP 200)
+- PR #5 (pre-launch-fixes) open but no overlap — safe to push directly to main
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
