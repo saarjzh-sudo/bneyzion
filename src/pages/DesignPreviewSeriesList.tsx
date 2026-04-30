@@ -30,6 +30,7 @@ import {
   type SeriesFamily,
 } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 const FAMILIES_ORDER: SeriesFamily[] = [
   "sacredCanon",
@@ -363,23 +364,25 @@ export default function DesignPreviewSeriesList() {
                         }}
                       >
                         <div>
-                          <span
-                            style={{
-                              display: "inline-block",
-                              padding: "0.22rem 0.6rem",
-                              borderRadius: radii.sm,
-                              background: fam.badgeBg,
-                              color: fam.badgeFg,
-                              fontFamily: fonts.body,
-                              fontSize: "0.65rem",
-                              letterSpacing: "0.1em",
-                              fontWeight: 700,
-                              textTransform: "uppercase",
-                              marginBottom: "0.65rem",
-                            }}
-                          >
-                            {fam.label}
-                          </span>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.65rem", flexWrap: "wrap" }}>
+                            <span
+                              style={{
+                                display: "inline-block",
+                                padding: "0.22rem 0.6rem",
+                                borderRadius: radii.sm,
+                                background: fam.badgeBg,
+                                color: fam.badgeFg,
+                                fontFamily: fonts.body,
+                                fontSize: "0.65rem",
+                                letterSpacing: "0.1em",
+                                fontWeight: 700,
+                                textTransform: "uppercase",
+                              }}
+                            >
+                              {fam.label}
+                            </span>
+                            <TeacherContentBadge tags={s.audience_tags} />
+                          </div>
                           <div
                             style={{
                               fontFamily: fonts.display,
@@ -519,22 +522,24 @@ export default function DesignPreviewSeriesList() {
                       e.currentTarget.style.boxShadow = "none";
                     }}
                   >
-                    <div
-                      style={{
-                        display: "inline-block",
-                        padding: "0.15rem 0.5rem",
-                        borderRadius: radii.sm,
-                        background: fam.badgeBg,
-                        color: fam.badgeFg,
-                        fontFamily: fonts.body,
-                        fontSize: "0.6rem",
-                        letterSpacing: "0.08em",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        marginBottom: "0.4rem",
-                      }}
-                    >
-                      {fam.label}
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
+                      <span
+                        style={{
+                          display: "inline-block",
+                          padding: "0.15rem 0.5rem",
+                          borderRadius: radii.sm,
+                          background: fam.badgeBg,
+                          color: fam.badgeFg,
+                          fontFamily: fonts.body,
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.08em",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        {fam.label}
+                      </span>
+                      <TeacherContentBadge tags={s.audience_tags} variant="small" />
                     </div>
                     <div
                       style={{

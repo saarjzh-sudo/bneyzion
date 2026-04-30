@@ -80,6 +80,7 @@ import {
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 import { useSeriesChildren, useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 // Stable default series for no-param route: "איכה" — has 9 active sub-series
 const SUB_SERIES_DEMO_ID = "35781f30-76a7-4fc6-aa06-52a1db4a4054";
@@ -565,17 +566,20 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                         </div>
 
                         <div style={{ padding: "1rem 1.25rem 1.25rem" }}>
-                          <div
-                            style={{
-                              fontFamily: fonts.display,
-                              fontWeight: 700,
-                              fontSize: "1rem",
-                              color: colors.textDark,
-                              lineHeight: 1.35,
-                              marginBottom: "0.4rem",
-                            }}
-                          >
-                            {child.title}
+                          <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "0.4rem", marginBottom: "0.4rem" }}>
+                            <div
+                              style={{
+                                fontFamily: fonts.display,
+                                fontWeight: 700,
+                                fontSize: "1rem",
+                                color: colors.textDark,
+                                lineHeight: 1.35,
+                                flex: 1,
+                              }}
+                            >
+                              {child.title}
+                            </div>
+                            <TeacherContentBadge tags={child.audience_tags} variant="small" />
                           </div>
                           <div
                             style={{
@@ -957,6 +961,10 @@ function LessonCard({
         >
           {lessonTypeLabel(lesson.source_type)}
         </span>
+        {/* Teacher badge */}
+        <div style={{ position: "absolute", top: 9, left: 9 }}>
+          <TeacherContentBadge tags={lesson.audience_tags} variant="small" />
+        </div>
         {/* Play/Listen/PDF button */}
         <div
           style={{
@@ -1157,6 +1165,7 @@ function LessonRow({
       >
         {mediaType === "audio" ? "אודיו" : mediaType === "video" ? "וידאו" : mediaType === "pdf" ? "PDF" : "טקסט"}
       </span>
+      <TeacherContentBadge tags={lesson.audience_tags} variant="small" />
 
       {/* Arrow */}
       <ChevronRight
