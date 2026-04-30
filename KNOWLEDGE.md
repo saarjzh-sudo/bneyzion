@@ -136,6 +136,25 @@ The `env -u HTTPS_PROXY -u HTTP_PROXY` strips NetSpark proxy.
 | `payment_products` | Grow payment configs (DB-driven, with FALLBACK constants) |
 | `grow_orders` | Grow payment session log |
 
+### Weekly program (migration file ready — NOT yet applied)
+| Table | Purpose |
+|-------|---------|
+| `user_access_tags` | Fine-grained access grants per user. `tag` = "program:weekly-chapter" etc. `valid_until` updated on each recurring Grow charge. `pending_user_link=true` when subscriber exists in Smoove but hasn't registered on site yet. |
+| `weekly_program_progress` | Per-user progress tracking (current_book, current_chapter, chapters_completed, streak_weeks) |
+
+#### New columns on existing tables (migration pending)
+- `community_courses`: `program_slug`, `access_type` ('open'|'subscribers_only'|'requires_tag'), `access_tag`
+- `community_course_lessons`: `week_number`, `bible_book`, `bible_chapter`, `layer_type` ('base'|'enrichment'|'exercise'), `summary_html`, `presentation_url`, `drive_folder_url`, `thumbnail_url`
+
+#### New RPC
+- `has_access_tag(p_user_id uuid, p_tag text) → boolean` — SECURITY DEFINER, checks valid non-expired grant
+
+#### Migration file
+`supabase/migrations/20260430_weekly_program_foundation.sql` — NOT yet applied. Apply with:
+```bash
+env -u HTTPS_PROXY -u HTTP_PROXY psql "$SUPABASE_DB_URL" -f supabase/migrations/20260430_weekly_program_foundation.sql
+```
+
 ### Migration / admin
 | Table | Purpose |
 |-------|---------|
@@ -415,6 +434,45 @@ public/
 - Located at `/design-megilat-esther` (sandbox) / `/megilat-esther` (live to be redesigned)
 - Content: חגי + זכריה + מלאכי from Drive
 - Flow: ₪5 intro charge → Grow direct debit → ₪110/month auto
+
+### 2026-04-30 — Weekly program foundation (gal 1 — DB & backend prep)
+
+**Files added/changed:**
+- `supabase/migrations/20260430_weekly_program_foundation.sql` — NEW migration (NOT applied yet)
+  - Creates `user_access_tags`, `weekly_program_progress` tables
+  - Alters `community_courses` (+program_slug, access_type, access_tag)
+  - Alters `community_course_lessons` (+week_number, bible_book, bible_chapter, layer_type, summary_html, presentation_url, drive_folder_url, thumbnail_url)
+  - Adds `has_access_tag(uuid, text)` SECURITY DEFINER RPC
+- `scripts/import-weekly-chapter-subscribers.mjs` — NEW import script (NOT run yet)
+  - Fetches all 280 contacts from Smoove list 1045078 ("הפרק השבועי - תכנית מנויים")
+  - Upserts into `user_access_tags` with `tag = "program:weekly-chapter"`
+  - Handles both linked users and `pending_user_link=true` for unregistered emails
+  - Run: `env -u HTTPS_PROXY -u HTTP_PROXY node scripts/import-weekly-chapter-subscribers.mjs --dry-run`
+- `api/grow/webhook.ts` — UPDATED
+  - Added `grantAccessTag()` — upserts `user_access_tags` on every successful Grow charge
+  - Works for both initial purchase AND monthly recurring charges (extends `valid_until` by 35 days)
+  - PRODUCT_ACCESS_TAGS map: `"weekly-chapter-subscription"` → `"program:weekly-chapter"`
+  - Fixed pre-existing TS bugs: `type` → `flowType`, removed duplicate subscribeToSmoove import
+- `scripts/drive-scan.py` — NEW Python script for Google Drive scanning
+
+**Smoove data discovered:**
+- List 1045078 = "הפרק השבועי - תכנית מנויים" — **280 מנויים**
+- List 1048454 = "הפרק השבועי - מתעניינים שלא רכשו" — 18 leads
+
+**Drive scan: BLOCKED** — Google Drive OAuth token doesn't have Drive scope. Needs browser-auth from Saar.
+Script ready at `scripts/drive-scan.py`. Run `python3 scripts/drive-scan.py` (opens browser for OAuth).
+Drive token will be saved to: `the-system-v8/T-tools/04-mcp-servers/youtube/drive_token.json`
+
+**Subscription model confirmed:**
+- No multi-tier (no annual/lifetime) — single tier: ₪5 intro → ₪110/month direct debit
+- Grow handles recurring billing, webhook fires on every charge
+
+**Next steps (awaiting Saar's approval before applying):**
+1. Run migration on Supabase (`psql "$SUPABASE_DB_URL" -f supabase/migrations/20260430_weekly_program_foundation.sql`)
+2. Run `supabase gen types` to update `types.ts`
+3. Test import script with `--dry-run`, then run live
+4. Saar does Drive OAuth (browser) → run `python3 scripts/drive-scan.py` → review structure
+5. Gal 2: UI — redesign `/design-megilat-esther` + `/design-portal-subscriber` with real access control
 
 ### 2026-04-30 — audience_tags migration + Admin Series UI expansion
 
