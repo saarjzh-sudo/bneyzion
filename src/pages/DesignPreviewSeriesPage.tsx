@@ -27,6 +27,7 @@ import {
 } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 // ────────────────────────────────────────────────────────────────────────
 // Hero — full-bleed mahogany w/ family-aware accent
@@ -464,11 +465,14 @@ function LessonsGrid({
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: "vertical",
                         overflow: "hidden",
-                        marginBottom: "0.5rem",
+                        marginBottom: "0.35rem",
                         minHeight: "2.7em",
                       }}
                     >
                       {lesson.title}
+                    </div>
+                    <div style={{ marginBottom: "0.35rem" }}>
+                      <TeacherContentBadge tags={(lesson as any).audience_tags} variant="small" />
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                       <span

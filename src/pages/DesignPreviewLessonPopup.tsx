@@ -32,6 +32,7 @@ import {
 } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 export default function DesignPreviewLessonPopup() {
   const [open, setOpen] = useState(true);
@@ -312,19 +313,24 @@ export default function DesignPreviewLessonPopup() {
                 </span>
               </div>
 
-              <h2
-                style={{
-                  fontFamily: fonts.display,
-                  fontWeight: 700,
-                  fontSize: "1.5rem",
-                  color: colors.textDark,
-                  margin: "0 0 1rem",
-                  lineHeight: 1.3,
-                  fontStyle: "italic",
-                }}
-              >
-                {lesson.title}
-              </h2>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1rem" }}>
+                <h2
+                  style={{
+                    fontFamily: fonts.display,
+                    fontWeight: 700,
+                    fontSize: "1.5rem",
+                    color: colors.textDark,
+                    margin: 0,
+                    lineHeight: 1.3,
+                    fontStyle: "italic",
+                    flex: 1,
+                    minWidth: 0,
+                  }}
+                >
+                  {lesson.title}
+                </h2>
+                <TeacherContentBadge tags={(lesson as any).audience_tags} variant="small" />
+              </div>
 
               {/* Rabbi row — fixed: explicit RTL flow with avatar on RIGHT */}
               <div

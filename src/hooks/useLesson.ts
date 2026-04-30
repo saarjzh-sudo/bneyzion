@@ -8,7 +8,7 @@ export function useLesson(id: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("*, rabbis(id, name, image_url, title), series(id, title)")
+        .select("*, rabbis(id, name, image_url, title), series(id, title), audience_tags")
         .eq("id", id!)
         .eq("status", "published")
         .maybeSingle();
@@ -25,7 +25,7 @@ export function useSeriesLessons(seriesId: string | undefined | null, excludeId?
     queryFn: async () => {
       let query = supabase
         .from("lessons")
-        .select("id, title, duration, thumbnail_url, published_at, rabbis(name)")
+        .select("id, title, duration, thumbnail_url, published_at, audience_tags, rabbis(name)")
         .eq("series_id", seriesId!)
         .eq("status", "published")
         .order("published_at", { ascending: true })
