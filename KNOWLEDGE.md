@@ -659,6 +659,41 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
 **סטטוס:** hidden, not linked. החלטה ממתינה: מחיקה מלאה / שינוי תפקיד.
 
+### 2026-04-30 — Series page v2 — round 3 fixes (commit 890fbf2)
+
+**Saar feedback → 4 fixes:**
+
+1. **Header visibility (איכה)** — Root cause: `transparentHeader` makes the header
+   transparent before scroll. When the hero background image has low contrast
+   (dark or uniform — e.g. איכה's fallback image), the logo and nav links are
+   invisible against the background. Header was always there structurally.
+   Fix: added top gradient `rgba(0,0,0,0.55)→transparent 30%` inside `CompactSeriesHero`.
+   **Iron rule:** any `transparentHeader` hero MUST have a dark top-gradient overlay.
+
+2. **Sub-series hierarchical organization:**
+   - Show first 6, "הצג עוד (N נוספים)" button reveals rest
+   - Auto-group by rabbi name when children span 2–5 distinct rabbis
+   - If single rabbi or >5 distinct rabbis — flat grid (no noise)
+
+3. **List/Grid toggle + media-type filter chips:**
+   - Toggle persisted in `localStorage['bnz.lesson.view']`
+   - Filter chips: הכל / אודיו / וידאו / PDF
+   - **No `media_type` column in DB** — derived from URL fields:
+     `video_url` → video; `audio_url` (no video) → audio;
+     `attachment_url` (no video/audio) → pdf; else → text
+   - `source_type` = the source system (Umbraco/YouTube/S3), NOT media type
+
+4. **LessonModal full production parity** with `LessonDialog.tsx`:
+   - Icon strip: Heart | Print | WhatsApp | Gmail (top-left in RTL)
+   - Close X top-left on hero image
+   - Meta bar: מאת [rabbi link] + clock + calendar icons
+   - Series pill + Breadcrumb via `useSeriesBreadcrumb` RPC
+   - Real HTML5 `<audio>` / `<video>` / `<iframe>` player
+   - Print: branded print window (same template as production)
+   - WhatsApp: `wa.me?text=` / Gmail: Google Compose URL
+
+**File changed:** `src/pages/DesignPreviewSeriesPageV2.tsx`
+
 ### 2026-04-30 — Homepage nav fix: push was missing, changes now live
 
 **Root cause:** `DesignPreviewHome.tsx` שינויים מסשן קודם נשמרו מקומית אבל לא push — לכן לא היה גלוי ב-Vercel ולא בבילדר (שרץ על the-system-v8, לא על bneyzion).
