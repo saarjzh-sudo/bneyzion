@@ -4,10 +4,17 @@
 **Owner:** Saar (saar.j.z.h@gmail.com)
 **Status:** Sandbox-only · Live site unchanged · 18 design preview routes deployed
 
-This is the canonical reference for the Bnei Zion redesign work. Anyone
-(human or agent) opening a new session on this project should read this
-file BEFORE making any changes. It enforces consistency across separate
-sessions and prevents accidental damage to the live site.
+This is the canonical reference for the Bnei Zion **redesign** work
+specifically. Anyone (human or agent) opening a new session on this
+project should read this file BEFORE making any changes. It enforces
+consistency across separate sessions and prevents accidental damage
+to the live site.
+
+> 📚 **Companion doc:** `KNOWLEDGE.md` (this repo) covers everything
+> ELSE — full site context, migration history (Lovable→Own Supabase),
+> 42-table schema, Umbraco access, WordPress shop, Google OAuth, all
+> integrations, content stats, and the **learning protocol** (every
+> session must append knowledge). Read both files in any new session.
 
 ---
 

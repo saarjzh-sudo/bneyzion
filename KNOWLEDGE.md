@@ -1,0 +1,468 @@
+# Bnei Zion — Full Site Knowledge Base
+
+**Last updated:** 2026-04-30
+**Purpose:** Single source of truth for the bneyzion-designer agent and any
+human/agent working across multiple sessions on this project. Captures
+ALL site knowledge — migration history, content structure, external
+systems, credentials pointers, and a learning protocol so every session
+adds to (not overwrites) institutional memory.
+
+> 📘 **Companion doc:** `REDESIGN.md` (this repo) covers the v2 sandbox
+> redesign work specifically. This file (`KNOWLEDGE.md`) covers
+> *everything else* — site history, content, data, integrations.
+
+---
+
+## 1. Site identity & lineage
+
+**Client:** Rabbi Yoav Oriel (yoavoriel@gmail.com)
+**Audience:** Religious-Zionist Hebrew-speaking Bible learners, rabbis, educators
+**Purpose:** Premium Hebrew Torah/Tanakh learning portal — 11,818 lessons from 200+ rabbis
+
+### Domain timeline
+| Era | Domain | Stack | Status |
+|-----|--------|-------|--------|
+| Old | `www.bneyzion.co.il` | Umbraco CMS (.NET) | Live, source for migration |
+| Old | `club.bneyzion.co.il` | WordPress + WooCommerce | Live, separate shop subdomain |
+| New (sandbox era) | `bneyzion.vercel.app` | Vite + React + Supabase | LIVE — current production |
+| Future | `bneyzion.co.il` | (DNS cutover pending) | Not yet migrated |
+
+### Key paths
+| Where | Path |
+|-------|------|
+| Local repo | `/Users/saarj/Downloads/saar-workspace/bneyzion` |
+| GitHub | `https://github.com/saarjzh-sudo/bneyzion` |
+| Vercel project | `saars-projects-4508d6bb / bneyzion` (`prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x`) |
+| Supabase (current) | `pzvmwfexeiruelwiujxn.supabase.co` |
+| Old Umbraco | `https://www.bneyzion.co.il` |
+| Old shop | `https://club.bneyzion.co.il` |
+
+---
+
+## 2. Migration history (Lovable → Own Supabase)
+
+### What happened (Q1-Q2 2026)
+The site was originally hosted by Lovable (which used their own Supabase
+project `fhdcmsmwvssjzhqocaai`). In April 2026 we migrated everything
+to a Supabase project owned by Saar (`pzvmwfexeiruelwiujxn`) for full
+control over data, RLS, edge functions, and the migration scripts.
+
+### Migration stats
+- **27,145 rows** moved across 42 tables
+- **42 tables** + 3 RPCs + 1 view + 1 enum recreated on new project
+- **18 edge functions** redeployed
+- **FK constraints** dropped during migration, restored after, orphans cleaned
+- **RLS policies** applied: public read on content, user own-row, admin only on migration tables
+
+### Three Supabase projects (CRITICAL — don't confuse them)
+| Project ID | Purpose | Read/Write? |
+|------------|---------|-------------|
+| `pzvmwfexeiruelwiujxn` | **Bnei Zion (CURRENT)** — full ownership | ✅ Read+Write |
+| `fhdcmsmwvssjzhqocaai` | Lovable source (old) — historical reference | Read-only |
+| `eqqrafxdtxpypxdmyyix` | Old bnei-zion-conference — separate project | ⛔ Don't touch |
+
+### Migration scripts (in `scripts/`)
+| Script | Purpose |
+|--------|---------|
+| `create-schema.sql` | Full DDL: 42 tables + 3 RPCs + view + enum |
+| `migrate-data.mjs` | Old Supabase → new Supabase, paginated upserts in FK order |
+| `fix-data-integrity.mjs` | Fixes source_type mismatches, recalcs `lesson_count` |
+| `fix-umbraco-links.mjs` | Strips `umb://document` links from imported HTML |
+| `enrich-from-old-site.mjs` | First-gen scraper from old Umbraco public pages |
+| `mass-scrape.mjs` | 10-worker parallel scraper (row-blind — known limit) |
+| `umbraco-index.json` | Cached tree of 9,566 Umbraco pages |
+| `qa-migration.mjs` | QA report generator (87% health score on last run) |
+| `verify-content.mjs` | Compare Supabase vs Umbraco (limited by editor permissions) |
+| `fix-misattributions.mjs` | 312 URLs corrected (April 2026 audit) |
+| `audit-accuracy.mjs` | Random-sample auditor, paginated |
+| `scrape-drafts-v2.mjs` | 4-strategy draft enrichment (vp4.me + YouTube + HTML5 + direct) |
+
+### Run pattern (MUST use)
+```bash
+cd /Users/saarj/Downloads/saar-workspace/bneyzion
+env -u HTTPS_PROXY -u HTTP_PROXY node scripts/SCRIPT.mjs
+```
+The `env -u HTTPS_PROXY -u HTTP_PROXY` strips NetSpark proxy.
+
+### Open data gaps (from migration)
+- **461 lessons** are still drafts — exist on old site but couldn't be enriched
+- **820 lessons with video** — many videos missed during scraping (table-row layout issue)
+- **Solution path:** when `yoav` Umbraco user gets admin access (pending Avihay@TWB), pull property values directly via GetById API
+- See REDESIGN.md §10 for "What NOT to do" — don't run mass scripts without backup
+
+---
+
+## 3. Database schema (42 tables, organized)
+
+### Content (5 core)
+| Table | Rows | Purpose |
+|-------|------|---------|
+| `lessons` | 11,818 | title, content (HTML), audio_url, video_url, attachment_url, source_type, rabbi_id, series_id, status, bible_book, bible_chapter, duration |
+| `series` | 1,374 | hierarchical (parent_id), lesson_count, rabbi_id, status, image_url |
+| `rabbis` | 203 | name, title, bio, image_url, lesson_count |
+| `topics` | 741 | slug-based navigation categories |
+| `lesson_topics` | 12,907 | many-to-many lessons↔topics |
+
+### Cross-references
+| Table | Purpose |
+|-------|---------|
+| `series_links` | 47 cross-series references |
+| `migration_redirects` | Old Hebrew URLs → new routes (used in vercel.json + sitemap) |
+
+### User / gamification
+| Table | Purpose |
+|-------|---------|
+| `profiles` | Supabase auth profile |
+| `user_roles` | Enum: admin/moderator/user |
+| `user_favorites`, `user_favorite_series`, `user_favorite_rabbis` | Bookmarks |
+| `user_history` | Lesson watch progress |
+| `user_daily_activity` | Streak tracking source |
+| `user_points`, `user_points_log` | Points ledger |
+| `user_challenge_progress`, `weekly_challenges` | Gamification challenges |
+| `weekly_leaderboard` | VIEW — top 10 from user_points + profiles |
+
+### Community / commerce
+| Table | Purpose |
+|-------|---------|
+| `community_courses`, `community_members` | Premium community |
+| `course_enrollments`, `course_sessions` | Live course logistics |
+| `orders`, `order_items` | Storefront orders |
+| `products` (47 active), `product_categories` (10) | Shop catalog (migrated from WooCommerce) |
+| `donations` | Donation receipts |
+| `lesson_dedications` | "Dedicated in memory of..." per-lesson |
+| `lesson_comments` | User comments on lessons |
+| `contact_messages` | Contact form |
+| `coupons` | Promo codes for shop |
+| `payment_products` | Grow payment configs (DB-driven, with FALLBACK constants) |
+| `grow_orders` | Grow payment session log |
+
+### Migration / admin
+| Table | Purpose |
+|-------|---------|
+| `migration_batches`, `migration_items`, `migration_logs` | Migration audit |
+| `site_settings` | Key-value CMS for hero copy, memorial names, etc. |
+
+### RPCs (server-side functions)
+- `get_series_ancestors(series_uuid)` — recursive CTE walking parent_id upward (breadcrumbs)
+- `get_series_descendant_ids(root_id)` — recursive CTE walking children downward
+- `has_role(user_id, role)` — SECURITY DEFINER, checks user_roles
+
+### Enum
+- `app_role` = `admin | moderator | user`
+
+---
+
+## 4. External systems & access
+
+### Umbraco (old site CMS — read-only access)
+**URL:** `https://www.bneyzion.co.il`
+**Login endpoint:** `POST /umbraco/backoffice/UmbracoApi/Authentication/PostLogin`
+**Account:** `yoav` (editor role — see MEMORY.md for password)
+**Returns:** `Set-Cookie: UMB_UCONTEXT=<session>`
+
+#### What works (editor permissions)
+- Tree API: `/umbraco/backoffice/UmbracoTrees/ContentTree/GetNodes?id=<id>&treeAlias=content`
+- Lessons base tree ID: `1069`
+- Total content items under tree: 9,566
+
+#### What's blocked
+- `GetById` API (need admin)
+- Cannot read property values (audioFile, videoUrl) directly
+- Workaround: scrape public HTML pages (see `scripts/mass-scrape.mjs`)
+
+#### Pending: admin access request
+Email sent to `avihay@twb.co.il` + `office@twb.co.il` (TWB hosts the
+Umbraco install). When admin granted → unlock 461 empty drafts via
+GetById API.
+
+### S3 media bucket pattern (legacy)
+```
+Audio: https://s3.us-east-2.amazonaws.com/bneyzion/{rabbi}/{book}/{filename}.mp3
+Video: same bucket, .mp4 extension
+PDF:   https://www.bneyzion.co.il/media/{id}/{filename}.pdf
+Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
+```
+
+### WordPress shop (`club.bneyzion.co.il`)
+- Old WooCommerce store, **separate subdomain**
+- Has its own: GTM-MBQXGFR, Meta pixel, products, orders
+- **Status:** Saar is rebuilding the store flow in the new Supabase. The
+  47 products + 10 categories in our `products` / `product_categories`
+  were imported from this old WooCommerce.
+- **Iron rule:** **Do NOT touch `/store` or `/checkout` on the new site
+  without explicit instruction.** Saar handles store work in a separate
+  session.
+- WordPress source for products is read-only reference now.
+
+### Google OAuth
+- Project: `tidy-rig-466800-d2` in Google Cloud Console
+- Client ID + Secret stored in Supabase Auth provider config
+- Authorized redirect: `https://pzvmwfexeiruelwiujxn.supabase.co/auth/v1/callback`
+- Authorized JS origins: `https://bneyzion.vercel.app`, `https://pzvmwfexeiruelwiujxn.supabase.co`
+- **Mode:** Testing (NOT production-verified yet)
+- Domain migration checklist (when `bneyzion.co.il` cutover happens):
+  1. Add `https://bneyzion.co.il` (and `www`) to JS origins
+  2. Update Branding (home/privacy/ToS URLs)
+  3. Add Supabase Site URL + Redirect URLs for new domain
+  4. Update `vercel.json` if any domain-absolute URLs present
+  5. Submit OAuth consent screen for production verification
+
+### Grow (Meshulam) payment
+- SDK code at `api/grow/` + `src/hooks/useGrowPayment.ts`
+- DB-driven via `payment_products` table + hardcoded FALLBACK constants
+- See `MEMORY.md` "Grow lessons" entry for 10 known gotchas
+
+### Other integrations (live)
+| Service | Purpose | Pointer |
+|---------|---------|---------|
+| Sefaria API | Daily verse / parasha calendar | `useDailyVerse.ts`, `parashaCalendar.ts` |
+| Vercel | Hosting + auto-deploy on push to `main` | Auto |
+| Supabase Edge Functions | 18 functions (create-admin, sitemap, register-challenge, etc.) | `supabase/functions/` |
+| WhatsApp (Green API) | Saar uses for review pings | See MEMORY.md `T-tools/01-skills/shigor-pro/references/clients.md` |
+
+### Credentials policy
+**All credentials live in MEMORY.md** (`/Users/saarj/.claude/projects/...../memory/MEMORY.md`)
+or in client profile files (`B-brain/05-clients/bnei-zion/profile.md`),
+NOT in this repo. The agent reads them from MEMORY.md when needed.
+Never commit raw secrets to git.
+
+---
+
+## 5. Application architecture
+
+### Tech stack
+```
+React 18 + TypeScript + Vite 5 + Tailwind v3 + shadcn/ui
+├── Router: react-router-dom (NOT Next.js — pages/ is just folder naming)
+├── State: React Query (@tanstack/react-query)
+├── Auth: Supabase OAuth (Google) — direct call, no Lovable bridge
+├── Animations: framer-motion
+├── PWA: vite-plugin-pwa (manifest + service worker)
+└── Deploy: Vercel with SPA rewrites
+```
+
+### Iron rule: NOT Next.js
+- `src/pages/` is just folder naming, not file-based routing
+- Never add `"use client"` directives — Vite doesn't understand them
+- The Next.js skill in Claude Code suggests false positives here — ignore
+
+### Key directories
+```
+src/
+├── pages/          (45 routes, eager + lazy mixed)
+├── components/
+│   ├── ui/         (shadcn primitives + custom: empty-state, skeleton-card, dark-mode-toggle)
+│   ├── home/       (HeroSection, ContinueLearningBar, DailyVerseSection, ...)
+│   ├── layout/     (Layout, Header, Footer, MobileBottomNav, PageHero)  [PRODUCTION — DON'T EDIT]
+│   ├── layout-v2/  (Design{Layout,Header,Footer,MobileBottomNav,PageHero,Sidebar})  [SANDBOX]
+│   ├── player/     (FloatingPlayer with speed pills + skip ±15s)
+│   ├── gamification/
+│   └── memorial/
+├── hooks/          (useLessons, useSeries, useRabbis, useTopSeries, useLessonsBySeries, ...)
+├── lib/
+│   ├── designTokens.ts    [SANDBOX design system]
+│   ├── sanitize.ts        [DOMPurify wrapper — ALWAYS use for HTML]
+│   ├── biblicalOrder.ts
+│   ├── parashaCalendar.ts
+│   └── sidebarOrder.ts
+├── contexts/       (AuthContext, PlayerContext, CartContext)
+└── integrations/supabase/  (client + types.ts auto-generated)
+
+scripts/            (migration + scraping + audit scripts)
+supabase/
+├── functions/      (18 edge functions)
+└── migrations/     (SQL migrations)
+public/
+├── fonts/          (Kedem Serif × 5 weights, Ploni × 7 weights, Paamon, Mugrabi)
+├── images/         (real images downloaded from old site)
+├── lovable-uploads/ (legacy — referenced logos)
+└── video/hero-bg.mp4 (9.8MB hero video)
+```
+
+### Routes (45 total — see `src/App.tsx`)
+- **Public eager:** `/`, `/series`, `/lessons/:id`, `/rabbis`, `/rabbis/:id`, `/auth`
+- **Public lazy:** about, contact, donate, store, product, memorial, parasha, teachers, community, favorites, history, profile, pricing, thank-you, portal, checkout, kenes, bible-book, megilat-esther, chapter-weekly, dor-haplaot
+- **Admin (25 routes):** `/admin/*` — gated by `ProtectedRoute` + `user_roles.admin`
+- **Sandbox (18 routes):** `/design-*` — see `REDESIGN.md` §5
+- **Dev:** `/dev-pages` (route navigator), `/preview.html` (static design picker)
+
+### Security non-negotiables
+1. **DOMPurify** sanitization on all `dangerouslySetInnerHTML`
+   (12 occurrences across 9 files — wrapped in `src/lib/sanitize.ts`)
+2. **`useLesson`** filters `.eq("status", "published")` — drafts must
+   never leak to public view
+3. **`useRabbiSeries`** filters `.eq("status", "active")` — same reason
+4. **RLS** on Supabase — public read on content tables, user own-row,
+   admin-only on migration tables
+5. **`useAwardPoints`** uses atomic upsert with `onConflict: "user_id"`
+   to prevent race conditions on points ledger
+
+---
+
+## 6. Content state (as of 2026-04-30)
+
+| Metric | Value |
+|--------|-------|
+| Total lessons | 11,818 |
+| Published | 11,357 (96%) |
+| With audio | 6,432 |
+| With video | 820 |
+| With PDF | 963 |
+| With media (any) | 6,941 |
+| Drafts | 461 (truly empty, awaiting Umbraco admin access) |
+| Active rabbis | 179 (with `lesson_count > 0`) |
+| Active series | 745 (with at least one published lesson) |
+| Total series | 1,374 |
+| Topics | 741 |
+| Products (active) | 47 |
+| Product categories | 10 |
+| Auth users | 2 |
+| Admin users | 1 (`saar.j.z.h@gmail.com`) |
+
+### Health score (last QA run)
+- **87%** — most gaps are missing media URLs that need row-level scraping
+  or Umbraco admin access to GetById API
+
+---
+
+## 7. Major work history (sessions log)
+
+### 2026-04-14 — Migration completion + Google OAuth
+- 312 URLs corrected via `fix-misattributions.mjs`
+- 60/73 missing drafts recovered via vp4.me 4-strategy scraper
+- Google OAuth set up in Supabase (Testing mode)
+- Domain migration checklist documented for future cutover
+
+### 2026-04-15 to 2026-04-16 — Layout fixes + security
+- LessonDialog: video/description overlap bug fixed (commit `2e73725`)
+- Critical security fix: drafts leak via `useLesson` (commit `ded754a`)
+- `lesson_count` recalculation: 179 rabbis + 745 series
+- Admin role granted to `saar.j.z.h@gmail.com`
+- Hero image 404 fix (CSS gradient replacement in 5 files)
+- Index.tsx duplicate page title bug fixed
+- Taamei Mikra (cantillation marks) font bug — strip `U+0591–U+05AF`,
+  keep `U+05B0–U+05C7` (nikud)
+
+### 2026-04-16 — Design system + `/design-home` redesign
+- DesignPreviewHome.tsx built — first iteration of new design language
+- Design tokens introduced (gold/parchment/mahogany/olive/navy)
+- DesignParashaHolidaySection (forest gradient, parasha + holiday)
+- Imagen 4 image generation set up (war-miracles-bg, kenes-banner)
+- Image optimization: PNG → JPEG (88% size reduction)
+- Rolled out: `Index.tsx` replaced with `/design-home`, `/dor-haplaot`
+  redesigned with Navy+Gold
+
+### 2026-04-28 — V2 sandbox kickoff
+- `src/lib/designTokens.ts` created (canonical design tokens)
+- `src/components/layout-v2/` shell created (DesignLayout, DesignHeader,
+  DesignFooter, DesignMobileBottomNav, DesignPageHero, DesignSidebar v1)
+- 8 sandbox pages: layout, series-list, series-page, lesson-popup,
+  store, product, portal, chapter-weekly
+- Iron rule: sandbox-only, never edit production Layout.tsx
+
+### 2026-04-29 — Sidebar v3 + lesson trio + memorial + research
+- Sidebar v3 rebuilt to mirror live SeriesList 1:1 (3 tabs + gold header)
+- Lesson trio: LessonCard → LessonPopup → LessonPage with shared image
+- Megillat Esther sales page + login-to-personal-area path
+- Subscriber portal with progress + completed books
+- Memorial Saadia: real photos + 4 placeholder slots
+- Design research page: 32 patterns, 8 categories, top-10 priority list
+- 18 sandbox routes total at `/design-*`
+
+### 2026-04-30 — Documentation + dedicated agent + this knowledge base
+- Backup tag: `backup-pre-redesign-rollout-2026-04-30`
+- `REDESIGN.md` written (sandbox-focused doc)
+- `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
+- This file (`KNOWLEDGE.md`) created — full site knowledge
+
+---
+
+## 8. Learning protocol — every session adds knowledge
+
+The agent (`bneyzion-designer`) MUST append to this file (or
+`REDESIGN.md` for sandbox work) at the end of any session that
+introduces new knowledge. Keeps institutional memory across separate
+sessions.
+
+### When to update
+- After completing a significant change (new feature, bug fix, refactor)
+- After discovering something not documented (env var, table column,
+  API behavior, gotcha)
+- After Saar provides feedback that changes a rule
+- After a migration / script run
+
+### How to update
+Append a dated entry under §7 "Major work history (sessions log)":
+
+```md
+### YYYY-MM-DD — [Short title]
+- [Bullet 1: what changed, with file paths or commit hashes]
+- [Bullet 2: any new constraint or "iron rule" learned]
+- [Bullet 3: pointer to detail if needed]
+```
+
+For NEW iron rules (cross-cutting constraints): also add to §5 "Security
+non-negotiables" or §10 of `REDESIGN.md` "What NOT to do" — wherever
+it lives long-term.
+
+For NEW external systems: add to §4 "External systems & access".
+
+For NEW database tables/columns: update §3 "Database schema".
+
+### Commit style
+After updating this file:
+```bash
+git add KNOWLEDGE.md
+git commit -m "docs: KNOWLEDGE update — [short summary]
+
+[longer description of what was learned/changed]
+
+Co-Authored-By: Claude ..."
+```
+
+The agent does this automatically as part of "session wrap" — Saar
+doesn't need to remind.
+
+---
+
+## 9. Known issues & open work
+
+See `REDESIGN.md` §8 for redesign-specific open work. Site-wide opens:
+
+### Pending
+- **Umbraco admin access** — waiting on Avihay (TWB)
+- **461 empty draft lessons** — unlock when admin access granted
+- **OAuth production verification** — when custom domain `bneyzion.co.il`
+  is live
+- **Custom domain DNS cutover** — `bneyzion.vercel.app` → `bneyzion.co.il`
+- **CDN for media** — currently S3 us-east-2, latency from Israel ~250ms
+- **Core Web Vitals audit** — LCP/CLS not yet measured
+- **Stripe / Zoom integration** — for paid community courses (blocked)
+
+### Won't fix (intentional)
+- 13 truly broken old-site pages (5×404, 7×500, 1×400 from V2 scraper) —
+  the source pages are gone, content unrecoverable
+- 448 lessons that exist as DB rows but never had Umbraco source — keep
+  as drafts, will not republish
+
+---
+
+## 10. Where the agent should look first
+
+In order of priority for any new session:
+
+1. **`REDESIGN.md`** — current redesign work, sandbox status, open items
+2. **`KNOWLEDGE.md` (this file)** — site context, schema, integrations
+3. **`src/lib/designTokens.ts`** — design system constants
+4. **`src/App.tsx`** — route registry
+5. **`scripts/`** — for any migration or scraping work
+6. **MEMORY.md** at `/Users/saarj/.claude/projects/...../memory/MEMORY.md`
+   — credentials, cross-project context, Saar's preferences
+
+If a question can be answered from these 6 sources, **don't ask Saar**
+— answer it. If it can't, **ask first, do second**.
+
+---
+
+*This is the long-memory file. Every session must read it. Every
+significant change must update it. The agent enforces this.*
