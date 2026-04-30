@@ -642,6 +642,33 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
 **Rule confirmed:** `Header.tsx` wraps all non-home pages via `Layout.tsx`. `DesignPreviewHome.tsx` (the `/` route) has its own inline `DesignNavBar`. Changes to one do NOT affect the other.
 
+### 2026-04-30 — Home: sidebar below hero, smooth scroll from Hero CTA
+
+**Decision (Saar):** Hero = full-width, no sidebar beside it. Below Hero, sidebar appears inline (desktop) or as drawer (mobile).
+
+**Architecture chosen (option A — manual composition):**
+- `DesignPreviewHome.tsx` no longer uses `Layout` or `DesignLayout`. Instead it composes manually:
+  - `DesignHeader` with `transparentOnTop` + `onSidebarToggle` → manages `drawerOpen` state
+  - `DesignHero` — full-width, overlaps header with `marginTop: -96` (unchanged)
+  - `StatsBar` — full-width below hero, no sidebar
+  - `<div id="learn-start">` — flex row: `DesignSidebar` (inline sticky on desktop, drawer on mobile) + `<main>` with all content sections
+  - `DesignFooter` + `DesignMobileBottomNav` at bottom
+
+**CTA scroll:** "התחילו ללמוד" button in `DesignHero` calls `scrollToLearn()` → `document.getElementById('learn-start')?.scrollIntoView({ behavior: 'smooth' })`. No longer navigates to `/series`.
+
+**Sidebar behavior:**
+- Desktop ≥1024px: `DesignSidebar` renders as sticky inline column (290px wide) beside main content
+- Mobile <1024px: `DesignSidebar` renders as off-canvas drawer (always hidden until burger tap)
+- The burger in `DesignHeader` toggles `drawerOpen` state via `onSidebarToggle` prop — same as `DesignLayout sidebar={true}`
+
+**Files changed:** `src/pages/DesignPreviewHome.tsx`
+- Removed: `import Layout from "@/components/layout/Layout"`
+- Added: imports for `DesignHeader`, `DesignFooter`, `DesignMobileBottomNav`, `DesignSidebar`
+- Local `DesignFooter` function renamed to `LegacyDesignFooter` (kept for reference, not rendered)
+- `DesignPreviewHome` component now owns `drawerOpen` state
+
+**Iron rule learned:** On the home page, sidebar must NOT appear beside the hero. Use manual composition — import shell components directly — instead of `DesignLayout` which forces sidebar to be at the same level as all content including the hero.
+
 ### 2026-04-30 — TeachersWing hidden (not deleted)
 
 **החלטה:** `/design-teachers-wing` נשאר פעיל ב-route (גישה ידנית), אבל לא מקושר מאף מקום בניווט.
