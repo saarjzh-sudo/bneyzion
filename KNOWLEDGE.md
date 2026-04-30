@@ -1278,6 +1278,42 @@ Active for the 5 missing parashiot.
 
 **RTL drop-cap note:** Chrome has a known bug where `column-span: all` + RTL breaks layout. We avoid `column-span` entirely — use the 2-column flow without any spanning elements.
 
+### 2026-04-30 — Series page V2 production rollout + 42 Shir HaShirim images (agentId aafb5bb33b089f8f0)
+
+**Production change (commits 58b4f60 + 1f0784f):**
+- `src/App.tsx` line 167: `/series/:id` now serves `DesignPreviewSeriesPageV2` (was `SeriesPagePublic`)
+- `src/pages/DesignPreviewSeriesPageV2.tsx`: internal sub-series links changed from
+  `/design-series-page-v2/:id` → `/series/:id` (production navigation consistency)
+- "Not found" fallback link changed from `/design-series-list` → `/series`
+
+**Image generation (scripts/generate_shir_hashirim_images.py):**
+- 42 watercolor images generated via Imagen 4 Fast ($0.02/image, $0.84 total)
+- 4 sub-series cover images (series.image_url) for: שיעורים / קריאה וביאור / מוקלט / בבקיאות
+- 18 lesson thumbnails for שיעורים על שיר השירים (series 41b62e31)
+- 8 lesson thumbnails for קריאה וביאור בקצרה (series c866f217) — per chapter א-ח
+- 8 lesson thumbnails for שיר השירים מוקלט ללא טעמים (series d963ee27) — dove variations
+- 4 lesson thumbnails for שיר השירים בבקיאות (series a6874e51) — apple ripening stages
+- Uploaded to Supabase Storage bucket `lesson-images` at path `shir-hashirim/`
+- DB patched: `series.image_url` (4 rows) + `lessons.thumbnail_url` (38 rows)
+- Local copies stored in `public/images/shir-hashirim/` (42 PNGs, ~1.3–1.7MB each)
+- Script supports resume: if local file exists, re-upload without re-generating
+- Rate limit handling: 2 workers + 2s delay + 3 retries with 30/60/90s backoff on 429
+
+**Fallback (white): already existed.** All LessonCard and SubSeriesCard have `background: "white"`
+as the card container — parchmentDark as the image-slot background. No gradient system needed.
+
+**New constraint learned:**
+- Imagen 4 Fast rate-limits after ~10-12 consecutive requests. Use ≤2 workers + DELAY_BETWEEN=2s.
+  With retry=3 and wait 30/60/90s, the full 42-image batch completes in ~3 minutes.
+- `series.parent_id` (not `parent_series_id`) is the FK column for hierarchy in this DB.
+
+**Shir HaShirim series IDs (production DB):**
+- Parent: `16b824c5-6cea-4a4f-bda5-6aac870b2689` (שיר השירים — main, 12 children)
+- שיעורים על שיר השירים: `41b62e31-0643-4368-b8ff-04dc25dc2603` (18 lessons)
+- קריאה וביאור בקצרה: `c866f217-16fe-4dc1-8a98-583faad5c4d5` (8 lessons)
+- מוקלט ללא טעמים: `d963ee27-7551-48dd-9204-4de495922e98` (8 lessons)
+- שיר השירים בבקיאות: `a6874e51-86f0-4e11-9739-902233b06eb4` (4 lessons)
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
