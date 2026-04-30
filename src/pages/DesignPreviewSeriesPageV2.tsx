@@ -519,7 +519,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                   return (
                     <Link
                       key={child.id}
-                      to={`/design-series-page-v2/${child.id}`}
+                      to={`/series/${child.id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <div
@@ -627,7 +627,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                   return (
                     <Link
                       key={child.id}
-                      to={`/design-series-page-v2/${child.id}`}
+                      to={`/series/${child.id}`}
                       style={{ textDecoration: "none" }}
                     >
                       <div
@@ -2137,7 +2137,7 @@ export default function DesignPreviewSeriesPageV2() {
           dir="rtl"
         >
           לא נמצאה סדרה.{" "}
-          <a href="/design-series-list" style={{ color: colors.goldDark }}>
+          <a href="/series" style={{ color: colors.goldDark }}>
             חזור לרשימת הסדרות
           </a>
         </div>
