@@ -740,6 +740,53 @@ gradient to ≤0.25 opacity. The 0.55 value was only justified to ensure the tra
 header's logo/links were readable. With a solid header, the gradient serves only as
 subtle title text contrast.
 
+### 2026-04-30 — Portal v3 + Courses v2 + CourseDetail v2 — full gamification + 8-book timeline (commit 8a94c14)
+
+**Saar's 5 answers (design decisions confirmed):**
+1. Portal open to all registered users — only course tab content ("הרחבה" + "שיעור שבועי") locked per subscription
+2. "הקורסים שלי" = one master card for the weekly-chapter program; no per-book separate courses
+3. Gamification = full (streak + badges + level + points), modeled on "לוקחים אחריות"
+4. QuickAction "כנס ללימוד עכשיו" → `/design-course/weekly-chapter#chapter-zechariah-7`
+5. 8-book timeline across ALL pages: דניאל ✅ → איכה ✅ → עזרא-נחמיה ✅ → אסתר ✅ → חגי 🔄 → זכריה ▶️ → מלאכי ⏰ → יהושע ⏰
+
+**DesignPreviewPortalSubscriber.tsx** — full rewrite (v3):
+- `previewMode` toggle at top: subscriber / חבר רשום / אורח (3 states)
+- QuickActions: 2x2 grid on mobile, 4-wide on desktop — primary "כנס ללימוד עכשיו" gold tile (2x wide)
+- Stats: chaptersCompleted / weeksActive / hoursLearned / streakWeeks (with gold flame glow at 7+)
+- Next session banner (navy card with countdown)
+- Master course card: dark header with 8-book mini-timeline + overall progress ring SVG
+- Gamification section (id="achievements"):
+  - Streak heat-map (12-week bar chart, color ramp from muted → #e25822)
+  - Level bar (1247/1500 → "לומד מתקדם רמה 4")
+  - Badges 3x2 grid: 3 earned (gold) / 3 locked (grayscale)
+- Recent + Favorites: 2-column with MiniLessonRow components
+- Suggestions: real series data from `useTopSeries(8)`
+- Membership footer: subscriber state OR join CTA
+
+**DesignPreviewCoursesCatalog.tsx** — v2:
+- Removed Daniel/Esther as locked independent courses
+- Main course: full-width `MainCourseCard` with 8-book mini-timeline inline
+- Secondary courses: "איך ללמוד תנ״ך" (completed), new independent mocks (פרשת השבוע / פרקי אבות / תהילים)
+- Two sections: "הקורסים שלי" + "קורסים שתאהב"
+- Filter tabs: הקורסים שלי / פעיל / הושלם / קורסים נוספים
+
+**DesignPreviewCourseDetail.tsx** — v2:
+- Sidebar expanded: 8 books instead of 3
+- Books 1-4 (done) collapsed by default, expandable in read-only mode
+- Book 5 (חגי) = in_progress, Book 6 (זכריה) = current + expanded + פרק ז active
+- Books 7-8 (מלאכי, יהושע) = upcoming — locked, not clickable
+- Breadcrumb: "< הקורסים שלי" → `/design-courses`
+- Tab labels updated: בסיס / הרחבה / שיעור שבועי (was: תכני בסיס / העמקה / השיעור השבועי)
+
+**Navigation links wired:**
+- Portal "כנס ללימוד עכשיו" → `/design-course/weekly-chapter#chapter-zechariah-7`
+- Portal "הקורסים שלי" → `/design-courses`
+- Courses card "המשך" → `/design-course/weekly-chapter`
+- Course detail breadcrumb → `/design-courses`
+- Courses breadcrumb → `/design-portal-subscriber`
+
+**TypeScript:** 0 errors
+
 **File changed:** `src/pages/DesignPreviewSeriesPageV2.tsx`
 
 ### 2026-04-30 — Series redesign rollout plan written
