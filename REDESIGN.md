@@ -285,6 +285,10 @@ When Saar approves the sandbox for production:
   Facebook scraping** — copyright concerns.
 - **2026-04-30:** Created backup tag `backup-pre-redesign-rollout-2026-04-30`
   before any production changes.
+- **2026-04-30:** TeachersWing 6 categories confirmed as mock — will NOT be ported to sidebar.
+  Content will be tagged via `audience_tags TEXT[]` on series/lessons instead.
+  Migration file ready at `supabase/migrations/20260430_audience_tags.sql` (not yet applied).
+  Admin `/admin/series` expanded with multi-select tags, filter bar, bulk-tag button.
 
 ---
 

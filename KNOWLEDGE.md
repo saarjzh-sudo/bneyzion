@@ -375,6 +375,41 @@ public/
 - `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
 - This file (`KNOWLEDGE.md`) created — full site knowledge
 
+### 2026-04-30 — audience_tags migration + Admin Series UI expansion
+
+**Decision:** TeachersWing's 6 categories (חידות / תכנים אטומיים / כלי הוראה / פודקאסט / קורסים / מאמרים)
+are hardcoded mock data in `DesignPreviewTeachersWing.tsx`. They do NOT map to real DB content.
+They will NOT be reproduced in the unified sidebar. Instead, content is tagged at the series/lesson level.
+
+**Migration file (NOT yet applied):** `supabase/migrations/20260430_audience_tags.sql`
+- Adds `audience_tags TEXT[] DEFAULT ARRAY['general']` to `series` + `lessons`
+- GIN indexes on both tables
+- Keyword backfill on series.title (13 keywords → "teachers" tag)
+- Cascade: lessons inherit their series' teacher tag
+- Helper view `series_with_audience` (non-destructive)
+- Rollback script documented inside the file
+- **Apply command:** `env -u HTTPS_PROXY -u HTTP_PROXY psql "$SUPABASE_DB_URL" -f supabase/migrations/20260430_audience_tags.sql`
+
+**Admin Series page expanded** (`src/pages/admin/Series.tsx`):
+- Edit dialog now has audience_tags multi-select (כללי / מורים / נוער / מתקדמים)
+- Table has new "קהל יעד" badge column
+- Filter bar above table: הכל / מורים / כללי (with live counts)
+- Bulk-tag button: select multiple rows → tag all as "מורים" in one click
+- Direct Supabase update inside bulk handler (bypasses hook, uses `as any` cast until migration runs)
+
+**Hook change:** `src/hooks/useSeries.ts`
+- `Series` interface got `audience_tags?: string[]` (optional until migration)
+- `useUpdateSeries` uses `as any` cast on `.update()` to avoid generated-types mismatch
+
+**Rollout plan — 4 steps:**
+1. ✅ Step 1 (done): Migration file ready + Admin UI expanded
+2. Step 2 (Saar must confirm): Run migration on Supabase → then `supabase gen types` to update `types.ts` → remove `as any` casts
+3. Step 3: Add tab 4 "אגף המורים" to DesignSidebar with teacher-tagged series
+4. Step 4: Remove/replace the standalone `/design-teachers-wing` page (or keep as landing, remove mock categories)
+
+**New constraint:** Never add audience-tag categories to the UI without a corresponding DB tag value.
+Mock counts (like `count: 142`) must be removed or replaced with real queries.
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
