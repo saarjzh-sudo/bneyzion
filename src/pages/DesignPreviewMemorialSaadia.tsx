@@ -10,7 +10,7 @@
  * them by uploading to /public/images/saadia/ once the family approves
  * which photos to use publicly.
  */
-import { Flame, Heart, BookOpen, Camera, Quote, Sparkles, ImageIcon } from "lucide-react";
+import { Flame, Heart, BookOpen, Quote, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -20,6 +20,10 @@ import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 
 import saadiaPortrait from "@/assets/saadia-soldier.png";
 import saadiaTefillin from "@/assets/saadia-tefillin.png";
+import saadiaYoungBooks from "@/assets/saadia-young-books.jpg";
+import saadiaSuit from "@/assets/saadia-suit.jpg";
+import saadiaRally from "@/assets/saadia-rally.jpg";
+import saadiaCombat from "@/assets/saadia-combat.jpg";
 
 // ────────────────────────────────────────────────────────────────────────
 const MEMORIAL = {
@@ -446,43 +450,36 @@ export default function DesignPreviewMemorialSaadia() {
               aspect="4 / 5"
               objectPos="center 20%"
             />
-            <PhotoSlot
-              label="עם המשפחה"
-              hint="תמונה משפחתית של סעדיה, רחלי, הללי וינון"
+            <Photo
+              src={saadiaCombat}
+              caption="בשדה הקרב"
+              subcaption="אפוד, קסדה וחיוך — בדרכו לקרב"
               aspect="4 / 5"
+              objectPos="center 20%"
             />
-            <PhotoSlot
-              label="קריאה בתורה"
-              hint="כבעל קורא בבית הכנסת"
+            <Photo
+              src={saadiaSuit}
+              caption="בחיי היומיום"
+              subcaption="בביתו ביפו — שמחת חיים וחום משפחתי"
               aspect="4 / 5"
+              objectPos="center 15%"
             />
-            <PhotoSlot
-              label="בעת הקרבות"
-              hint="עם הצוות / על הטנק / בנגב"
+            <Photo
+              src={saadiaRally}
+              caption="ביחד"
+              subcaption="עם חברים בעצרת — אהבת ישראל בכל מפגש"
               aspect="4 / 5"
+              objectPos="center 20%"
             />
-            <PhotoSlot
-              label="מתורתו"
-              hint="כתב יד / חידוש תורה / דף לימוד"
+            <Photo
+              src={saadiaYoungBooks}
+              caption="בין ספרי קודש"
+              subcaption="סלפי שחור-לבן — הנוער והתורה"
               aspect="4 / 5"
+              objectPos="center 20%"
             />
           </div>
 
-          <div
-            style={{
-              marginTop: "1.5rem",
-              padding: "1.25rem 1.5rem",
-              borderRadius: radii.md,
-              background: "rgba(196,162,101,0.08)",
-              border: `1px dashed rgba(196,162,101,0.4)`,
-              fontFamily: fonts.body,
-              fontSize: "0.82rem",
-              color: colors.textMuted,
-              lineHeight: 1.7,
-            }}
-          >
-            <strong style={{ color: colors.goldDark }}>הערה למפתח:</strong> ארבעת ה-slots הריקים מציינים מקומות שיוזנו עם תמונות נוספות שתקבל מהמשפחה. ניתן לשמור אותן ב-<code style={{ background: "rgba(0,0,0,0.04)", padding: "0.1rem 0.35rem", borderRadius: 4 }}>/public/images/saadia/</code> ולעדכן את הקובץ.
-          </div>
         </div>
       </section>
 
@@ -831,70 +828,6 @@ function Photo({
           </div>
         )}
       </figcaption>
-    </figure>
-  );
-}
-
-function PhotoSlot({ label, hint, aspect = "4 / 3" }: { label: string; hint: string; aspect?: string }) {
-  return (
-    <figure
-      style={{
-        margin: 0,
-        borderRadius: radii.xl,
-        overflow: "hidden",
-        background: "rgba(196,162,101,0.06)",
-        border: `2px dashed rgba(196,162,101,0.4)`,
-      }}
-    >
-      <div
-        style={{
-          aspectRatio: aspect,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1rem",
-          textAlign: "center",
-        }}
-      >
-        <ImageIcon style={{ width: 36, height: 36, color: colors.goldDark, opacity: 0.5, marginBottom: "0.65rem" }} />
-        <div
-          style={{
-            fontFamily: fonts.display,
-            fontWeight: 700,
-            fontSize: "0.95rem",
-            color: colors.goldDark,
-            marginBottom: "0.4rem",
-          }}
-        >
-          {label}
-        </div>
-        <div
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.78rem",
-            color: colors.textMuted,
-            lineHeight: 1.5,
-          }}
-        >
-          {hint}
-        </div>
-        <div
-          style={{
-            marginTop: "0.85rem",
-            fontFamily: fonts.body,
-            fontSize: "0.7rem",
-            color: colors.goldDark,
-            fontWeight: 700,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.3rem",
-          }}
-        >
-          <Camera size={11} />
-          סלוט לתמונה
-        </div>
-      </div>
     </figure>
   );
 }
