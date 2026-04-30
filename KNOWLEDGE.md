@@ -918,6 +918,33 @@ Saar reported the sales page was "פי אלף עדיף הקודם" (previous was
 
 **Iron rule reinforced:** Never leave staged files from a crashed session. Always run `git status` at session start and clear any unexpected staged changes.
 
+### 2026-04-30 — Parasha page production rollout (commit e2dcde0)
+
+**What changed:**
+- `src/pages/ParashaPage.tsx` — REWRITTEN (production rollout from DesignPreviewParasha sandbox)
+  - Mahogany dark hero replacing old parchment hero
+  - 3 CTA cards with custom biblical SVG icons (line-art, 24px):
+    1. ShofarIcon — "קריאה בטעמים" → in-page #audio anchor
+    2. ScrollIcon — "חידות לשולחן השבת" → in-page #riddle anchor (or riddle series fallback)
+    3. OpenBookIcon — "כל תכני הפרשה" → `/series/:parashaSeriesId` (real DB series for this parasha)
+  - Sticky horizontal TOC with IntersectionObserver
+  - Pull-quote asides with gold right-border
+  - Back-to-top anchors after each section
+  - `useSEO` preserved from old version
+  - Uses production `Layout` (not DesignLayout)
+- `src/pages/DesignPreviewParasha.tsx` — same icon/CTA updates applied
+- `src/hooks/useParasha.ts` — added `parashaSeriesId` query (fetches series.id by title match)
+- Backup tag: `backup-pre-parasha-rollout-2026-04-30` (pushed to GitHub)
+
+**Riddles data gap — findings:**
+- `RIDDLES_SERIES_ID = "c852edd8-d959-4c8d-bf7e-17b5881275fa"` = "חידות לילדים - פרשת השבוע"
+- **32 out of 54 parashiot covered (59%)** — 22 parashiot missing riddles
+- Missing: ויצא, וישלח, וישב, מקץ, ויגש, ויחי, שמות, וארא, בא, בשלח, יתרו, משפטים, תרומה, כי תשא, ויקהל, פקודי, ויקרא, מצורע, אחרי מות, במדבר, מסעי, נצבים, וזאת הברכה
+- UI fallback implemented: when no riddle for current parasha → CTA links to riddle series overview (/series/c852edd8)
+- Recommendation to Saar: Option B (Yoav adds via Umbraco CMS) is lowest-effort
+
+**Iron rule confirmed:** `parashaSeriesId` may be null (series title format mismatch in DB). CTA falls back to `/series` if null — never show broken routes.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
