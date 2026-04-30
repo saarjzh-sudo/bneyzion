@@ -1589,5 +1589,63 @@ Must use: `corpora='drive'`, `driveId=DRIVE_ID`, `includeItemsFromAllDrives=True
 
 ---
 
+### 2026-04-30 — Session synthesis: series page V2 live + image pilot + open follow-ups (agentId a6b963e004c77dffd)
+
+This entry consolidates the cross-cutting learnings from the full Shir HaShirim session for easy future reference. Specific commits and round-by-round feedback are documented in the entries above (rounds 1-5, commit 58b4f60/1f0784f, cb91a68).
+
+#### What shipped to production in this session
+- `/series/:id` now serves `DesignPreviewSeriesPageV2` (was `SeriesPagePublic`). See commit 58b4f60.
+- 42 watercolor images generated + uploaded + DB patched for שיר השירים. See commit 1f0784f.
+- "חנות" nav link added to homepage navbar. See commit a82adb8 + §11 session note above.
+
+#### Image strategy — decisions to carry forward
+
+**Style:** watercolor on white paper, 16:9, 1280×720px, Imagen 4 Fast (`imagen-4.0-generate-001`).
+**Cost:** ~$0.02/image (Imagen 4 Fast). 42 images = $0.84 total.
+**Storage:** Supabase bucket `lesson-images/{book-slug}/`. Local mirror: `public/images/{book-slug}/`.
+**DB fields used:** `series.image_url` (series cover) + `lessons.thumbnail_url` (per-lesson). Both already exist — no migration needed.
+**Fallback (Saar's explicit decision):** white background (`background: "white"`), `parchmentDark` for the image slot. No gradient fallback. White = the canonical fallback for anything without an image.
+**Script base:** `scripts/generate_shir_hashirim_images.py`. Copy + adjust series IDs + palette for each new book.
+**Rate limit:** ≤2 workers + 2s delay + 3 retries (30/60/90s backoff on 429).
+**Resume:** if local PNG exists → re-upload only, no new generation.
+**Per-book palette:** 5 colors + dominant element per sub-series + variation per lesson.
+  - שיר השירים: blush rose / soft lilac / warm cream / sage green / gold-amber.
+**Planning docs** (repo root, not versioned history):
+  - `image-strategy.md` — full palette system + Imagen 4 prompt templates
+  - `rollout-series-redesign.md` — original 3-phase plan (partially superseded)
+  - `rollout-genesis-phase0.md` — Genesis `?v=2` beta plan (dropped, went with full prod rollout)
+  - `rollout-execution-plan.md` — the actual execution plan for today's rollout
+
+#### Pitfalls consolidated (all confirmed in this session)
+
+| # | Pitfall | Rule |
+|---|---------|------|
+| 1 | `transparentHeader=true` + `sidebar={true}` | Nav hidden on desktop. `onSidebarToggle ? "none"` inline style overrides `hidden md:flex`. Removed from `DesignHeader.tsx`. Sidebar pages always get solid header. |
+| 2 | Double `marginTop: -96` | `DesignLayout overlapHero` already applies `-96` to `<main>`. Never add it again inside the hero component. |
+| 3 | Inline `display` vs Tailwind responsive | Inline always wins. Never put `display: X ? "none" : undefined` on elements with Tailwind responsive display classes. |
+| 4 | `transparentHeader` + low-contrast hero | Add top gradient `rgba(0,0,0,0.25–0.55)→transparent 40%` inside the hero. With solid header, max 0.25. |
+| 5 | `min-height` + `justify-content: flex-end` | Empty space trap. Use `flex-start`, let content dictate height. |
+| 6 | `source_type` ≠ media type | `source_type` = scraping origin (Umbraco/YouTube/S3). Derive media type from `video_url`/`audio_url`/`attachment_url`. |
+| 7 | `useTopSeries` misses `status=published` | Filter is `status=active` only. Use `useSeriesDetail(id)` for fetching by ID without status filter. |
+| 8 | Imagen 4 Fast rate-limit | ≤2 workers + 2s delay + 3 retries with backoff. |
+| 9 | `series.parent_id` FK column | Correct name (NOT `parent_series_id`). |
+| 10 | `getSeriesCoverImage` must cover all 24 books | Torah + Neviim + Ketuvim. Ketuvim regex added in this session. Any new book without `image_url` falls back to the matched asset, not mahogany. |
+| 11 | LessonModal parity with `LessonDialog.tsx` | When `LessonDialog` gets new features, check `LessonModal` in `DesignPreviewSeriesPageV2.tsx` too. |
+| 12 | Favorites in V2 = local state only | Heart toggle is local React state, not wired to Supabase. `useUserFavorites` hook exists — wire in Phase Future. |
+
+#### Open follow-ups from this session
+
+| Item | Priority | Action |
+|------|----------|--------|
+| Hide sub-series with `lesson_count = 0` | High | 8 empty Shir HaShirim chapters appear in grid. Filter: `.filter(s => (s.lesson_count ?? 0) > 0)` in `DesignPreviewSeriesPageV2.tsx`. |
+| WebP optimization | Medium | Current PNGs are 1.3–1.7MB each. Run `cwebp -q 85 input.png -o output.webp`. Do before second book pilot. |
+| Favorites Supabase wiring | Medium | `useUserFavorites` hook exists in production. Wire heart toggle in `LessonModal`. |
+| LessonPage V2 (Phase 3) | Medium | `/lessons/:id` still uses old `LessonPage.tsx`. Series page V2 = Phase 1. Phase 3 = lesson page. |
+| Second book image pilot | Low | Next candidate: בראשית (20 active series, ~460 lessons, flat — no sub-series). Copy `generate_shir_hashirim_images.py`. |
+| Cleanup `/design-series-page-v2/*` routes | Low | Old sandbox routes. Remove from `App.tsx` after 30-day production stability window. |
+| Weekly program migration | Blocking | Apply `20260430_weekly_program_foundation.sql` in Supabase SQL Editor. Blocked on `grow_orders` table — verify it exists first. |
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
