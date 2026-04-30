@@ -44,6 +44,7 @@ import {
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { usePublicRabbis } from "@/hooks/useRabbis";
+import { useTeacherSeries } from "@/hooks/useTeacherSeries";
 
 // ────────────────────────────────────────────────────────────────────────
 // Static "ראשי" tree — mirrors production sidebar structure
@@ -174,7 +175,7 @@ const STORAGE_KEY = "bnz.sidebar.collapsed";
 const SIDEBAR_W_EXPANDED = 280;
 const SIDEBAR_W_COLLAPSED = 68;
 
-type Tab = "main" | "topics" | "rabbis";
+type Tab = "main" | "topics" | "rabbis" | "teachers";
 
 // ────────────────────────────────────────────────────────────────────────
 export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSidebarProps) {
@@ -196,6 +197,9 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 
   // Load top rabbis for the rabbis tab
   const { data: rabbis = [] } = usePublicRabbis();
+
+  // Load teacher-tagged series for the teachers tab
+  const { data: teacherSeries = [] } = useTeacherSeries();
   const topRabbis = useMemo(() => {
     const list = (rabbis as any[]).filter((r) => r.name).sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
     return list.slice(0, 30);
@@ -215,6 +219,13 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
     const q = search.trim().toLowerCase();
     return list.filter((r) => (r.name || "").toLowerCase().includes(q));
   };
+
+  const filteredTeacherSeries = useMemo(() => {
+    const list = teacherSeries as any[];
+    if (!search.trim()) return list;
+    const q = search.trim().toLowerCase();
+    return list.filter((s) => (s.title || "").toLowerCase().includes(q));
+  }, [teacherSeries, search]);
 
   return (
     <>
@@ -312,11 +323,12 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               borderBottom: `1px solid rgba(139,111,71,0.08)`,
             }}
           >
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 2 }}>
               {[
                 { key: "main" as Tab, label: "ראשי", icon: Library },
                 { key: "topics" as Tab, label: "נושאים", icon: Filter },
                 { key: "rabbis" as Tab, label: "רבנים", icon: Users },
+                { key: "teachers" as Tab, label: "מורים", icon: GraduationCap },
               ].map((t) => {
                 const Icon = t.icon;
                 const active = activeTab === t.key;
@@ -418,6 +430,120 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 />
               ))}
             </>
+          )}
+
+          {/* TEACHERS tab */}
+          {activeTab === "teachers" && (!collapsed || isDrawer) && (
+            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+              {/* Hero banner */}
+              <div
+                style={{
+                  padding: "0.75rem 0.85rem",
+                  marginBottom: "0.25rem",
+                  borderRadius: radii.md,
+                  background: "rgba(196,162,101,0.1)",
+                  border: `1px solid rgba(139,111,71,0.15)`,
+                }}
+              >
+                <div
+                  style={{
+                    fontFamily: fonts.display,
+                    fontWeight: 700,
+                    fontSize: "0.82rem",
+                    color: colors.textDark,
+                    marginBottom: "0.2rem",
+                  }}
+                >
+                  אגף המורים
+                </div>
+                <div
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.7rem",
+                    color: colors.textMuted,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  כל התכנים המתאימים להוראה
+                </div>
+                <Link
+                  to="/design-teachers-wing"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.25rem",
+                    marginTop: "0.5rem",
+                    fontFamily: fonts.body,
+                    fontSize: "0.68rem",
+                    color: colors.goldDark,
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  <GraduationCap size={11} />
+                  הצטרפו לקהילת המורים ←
+                </Link>
+              </div>
+
+              {/* Series list */}
+              {filteredTeacherSeries.length === 0 ? (
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    textAlign: "center",
+                    fontFamily: fonts.body,
+                    fontSize: "0.8rem",
+                    color: colors.textSubtle,
+                  }}
+                >
+                  {(teacherSeries as any[]).length === 0 ? "טוען..." : "לא נמצאו תוצאות"}
+                </div>
+              ) : (
+                filteredTeacherSeries.map((s: any) => (
+                  <Link
+                    key={s.id}
+                    to={`/design-series-page-v2/${s.id}`}
+                    onClick={onDrawerClose}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.45rem 0.7rem",
+                      borderRadius: radii.sm,
+                      fontFamily: fonts.body,
+                      fontSize: "0.78rem",
+                      color: colors.textMuted,
+                      textDecoration: "none",
+                      transition: "all 0.15s",
+                      gap: "0.5rem",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(139,111,71,0.06)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                  >
+                    <GraduationCap size={12} style={{ flexShrink: 0, color: colors.goldDark }} />
+                    <span
+                      style={{
+                        flex: 1,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {s.title}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "0.65rem",
+                        color: colors.textSubtle,
+                        flexShrink: 0,
+                      }}
+                    >
+                      ({s.lesson_count || 0})
+                    </span>
+                  </Link>
+                ))
+              )}
+            </div>
           )}
 
           {/* RABBIS tab */}
