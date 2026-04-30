@@ -806,6 +806,25 @@ bulk-tags via /admin/series. Intentional for UX testing.
 **DesignSidebar tab 4 hero text:** "אגף המורים — כל התכנים המתאימים להוראה"
 Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (route exists, 0 nav links from elsewhere)
 
+### 2026-04-30 — DesignSidebar v4 — עץ accordion אמיתי (commit 27eb88c)
+
+**הבעיה שתוקנה:** הסיידבר הציג רשימת קישורים סטטיים (MAIN_TREE) שניווטו ל-`/bible/<ספר>` — דפים שבורים. לחיצה על "בראשית" פתחה דף ריק, לא רשימת סדרות.
+
+**מה שונה ב-`src/components/layout-v2/DesignSidebar.tsx`:**
+- מוחק לגמרי את ה-`MAIN_TREE` הסטטי
+- `useContentSidebar()` מגדיר את כל הנתונים (אותו hook כמו SeriesList.tsx)
+- 3 רמות accordion: קטגוריה → ספר → ילד (פרשה/פרק)
+- רמה 4: `SeriesInlineList` — fetch lazy מ-Supabase כשפותחים ילד, מציג סדרות בתוך הסיידבר עצמו
+- לחיצה על סדרה: navigate ל-`/series/:id` (עובד) — אין יותר `/bible/*`
+- טאב "מורים": אותו עץ + banner ייחודי (אין פילטור נפרד)
+- טאב "נושאים": מציג את extraSections (מועדים, הפטרות, כלי עזר...) עם אותו accordion
+- `SeriesInlineList` מוצג עם גבול צד ידני (RTL: border-inline-start) וספירת שיעורים
+- Loading state: skeleton bars בזמן fetch
+
+**כלל שנלמד:** DesignSidebar חייב להשתמש ב-`useContentSidebar` — לא ב-MAIN_TREE סטטי. כל שינוי ב-tree של SeriesList חייב להשתקף גם כאן.
+
+**כלל שנלמד:** אין לנווט ל-`/bible/*` מהסיידבר. דפי `/bible/:book` שבורים — זו משימה נפרדת. כל ניווט מהסיידבר ← `/series/:id` בלבד.
+
 ### 2026-04-30 — Sidebar tab "מורים" — שכפול מבנה היררכי מטאב "ראשי"
 
 **בעיה שתוקנה:** טאב "מורים" הציג רשימה שטוחה של סדרות (flat list) — ריקה למעשה כי ה-query הביא 0 תוצאות (query ישן בטרם migration). סער ביקש שהטאב יציג **אותו מבנה היררכי** של טאב "ראשי".
