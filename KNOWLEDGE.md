@@ -1011,6 +1011,27 @@ Active for the 5 missing parashiot.
 
 **Content stat update:** riddles series now has 50 published lessons (was 32 before).
 
+### 2026-04-30 — Hero overlay fix + Genesis rollout plan (agentId a73ee01a7afaed033)
+
+**Saar feedback (round 5 on series page v2):**
+1. Hero padding too tight → expanded to 2.75rem top / 1.75rem bottom
+2. Background "too dark" → opacity 0.22→0.55, brightness 0.6→0.9, gradients lightened
+3. Root cause of dark background on איכה/שיר השירים: `image_url=null` + `getSeriesCoverImage` had no regex for Ketuvim books → hero showed only mahogany gradient, no illustration
+4. Fix: added Ketuvim regex (17 books) to `getSeriesCoverImage` → `/images/series-iyov.png`
+
+**Files changed (commits c8b6c80, 8ab6839):**
+- `src/pages/DesignPreviewSeriesPageV2.tsx` — overlay + padding
+- `src/lib/designTokens.ts` — Ketuvim coverage in `getSeriesCoverImage`
+
+**Genesis rollout plan (new file: `rollout-genesis-phase0.md`):**
+- 20 active series under "בראשית" (db78e0a3-3bcf-4009-96b8-49c76df555f9), ~460 lessons total
+- No Genesis series has sub-series children — all flat (1 level deep, simple case)
+- 5 beta series chosen: dbcae806 (Yoav's own, 37L), a4a97704 (63L largest), 3d600a33 (audio-only, 46L), 2ca6e16b (8L smallest), 48718218 (women's content, 11L)
+- Recommended approach: `?v=2` query param on `/series/:id` — safe, zero SEO risk
+- Full Phase 0 spec: beta URLs, SEO analysis, smoke tests, rollback, ~35 min dev work
+
+**New iron rule:** `getSeriesCoverImage` must cover ALL biblical books (Torah+Neviim+Ketuvim). Any Ketuvim book with no `image_url` silently gets a plain dark gradient — invisible illustrations.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
