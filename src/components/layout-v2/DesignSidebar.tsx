@@ -1,191 +1,109 @@
 /**
- * DesignSidebar v3 — unified collapsible side navigation that MIRRORS
- * the existing SeriesList sidebar pattern (3 tabs + search + dynamic
- * content tree pulled from Supabase via useContentSidebar).
+ * DesignSidebar v4 — accordion tree pulled from Supabase via useContentSidebar.
  *
- * Tabs (matching production):
- *   ראשי (Library)   — full content tree (Torah/Neviim/Ketuvim/Moadim/...)
- *   נושאים (Filter)  — special collections (חידות, פלאות, כנס, כלים)
- *   רבנים (Users)    — top rabbis with lesson counts
+ * Mirrors the live SeriesList sidebar 1:1:
+ *   - 3 accordion levels: Category → Book → Child (parasha/chapter)
+ *   - 4th level: series list rendered inline on child click
+ *   - No navigation to /bible/* — all interaction stays inside the sidebar
+ *   - Tabs: ראשי / נושאים / רבנים / מורים
+ *   - Gold primary banner + search + sticky
  *
- * Three states:
- *   - Expanded (desktop, 280px): icons + labels + sub-sections
- *   - Collapsed (toggleable, 68px): icons only
- *   - Drawer (mobile <1024px): off-canvas, opens via header burger
- *
- * Replaces the previous (made-up) sidebar — now matches the live site
- * 1:1 in structure so users see consistency across redesign + production.
+ * Tabs: "main" | "topics" | "rabbis" | "teachers"
+ * The "teachers" tab renders the same tree (same data) — future audience_tags
+ * filter will be added once the DB column exists.
  */
-import { useEffect, useMemo, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+
+import { useEffect, useMemo, useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  Home,
   Library,
   Users,
   BookOpen,
   Search,
-  ChevronLeft,
   ChevronRight,
   ChevronDown,
   Flame,
   X,
   Filter,
   Sparkles,
-  Calendar,
   GraduationCap,
-  ShoppingBag,
-  Heart,
-  Mail,
-  Headphones,
-  Video,
-  FileText,
+  FolderOpen,
+  Loader2,
 } from "lucide-react";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
+import { useContentSidebar } from "@/hooks/useContentSidebar";
+import type { SidebarCategory, ExtraSection } from "@/hooks/useContentSidebar";
 import { usePublicRabbis } from "@/hooks/useRabbis";
+import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
 
 // ────────────────────────────────────────────────────────────────────────
-// Static "ראשי" tree — mirrors production sidebar structure
-// ────────────────────────────────────────────────────────────────────────
-const MAIN_TREE: NavSection[] = [
-  {
-    id: "primary",
-    items: [
-      { label: "ראשי", href: "/", icon: Home },
-      { label: "פרשת השבוע", href: "/parasha", icon: Calendar },
-      { label: "התכנית השבועית", href: "/chapter-weekly", icon: Sparkles },
-    ],
-  },
-  {
-    id: "torah",
-    title: "חמישה חומשי תורה",
-    items: [
-      { label: "בראשית", href: "/bible/בראשית", icon: BookOpen },
-      { label: "שמות", href: "/bible/שמות", icon: BookOpen },
-      { label: "ויקרא", href: "/bible/ויקרא", icon: BookOpen },
-      { label: "במדבר", href: "/bible/במדבר", icon: BookOpen },
-      { label: "דברים", href: "/bible/דברים", icon: BookOpen },
-    ],
-  },
-  {
-    id: "neviim",
-    title: "נביאים",
-    items: [
-      { label: "יהושע", href: "/bible/יהושע", icon: BookOpen },
-      { label: "שופטים", href: "/bible/שופטים", icon: BookOpen },
-      { label: "שמואל א-ב", href: "/bible/שמואל א", icon: BookOpen },
-      { label: "מלכים א-ב", href: "/bible/מלכים א", icon: BookOpen },
-      { label: "ישעיהו", href: "/bible/ישעיהו", icon: BookOpen },
-      { label: "ירמיהו", href: "/bible/ירמיהו", icon: BookOpen },
-      { label: "יחזקאל", href: "/bible/יחזקאל", icon: BookOpen },
-      { label: "תרי-עשר", href: "/bible/הושע", icon: BookOpen },
-    ],
-  },
-  {
-    id: "ketuvim",
-    title: "כתובים",
-    items: [
-      { label: "תהילים", href: "/bible/תהילים", icon: BookOpen },
-      { label: "משלי", href: "/bible/משלי", icon: BookOpen },
-      { label: "איוב", href: "/bible/איוב", icon: BookOpen },
-      { label: "חמש מגילות", href: "/bible/רות", icon: BookOpen },
-      { label: "דניאל", href: "/bible/דניאל", icon: BookOpen },
-      { label: "עזרא ונחמיה", href: "/bible/עזרא", icon: BookOpen },
-      { label: "דברי הימים", href: "/bible/דברי הימים", icon: BookOpen },
-    ],
-  },
-  {
-    id: "moadim",
-    title: "מועדים והגי ישראל",
-    items: [
-      { label: "ראש השנה ויום הכיפורים", href: "/parasha", icon: Calendar },
-      { label: "סוכות ושמחת תורה", href: "/parasha", icon: Calendar },
-      { label: "חנוכה", href: "/parasha", icon: Calendar },
-      { label: "פורים", href: "/megilat-esther", icon: Calendar },
-      { label: "פסח", href: "/parasha", icon: Calendar },
-      { label: "ספירת העומר", href: "/parasha", icon: Calendar },
-      { label: "יום העצמאות", href: "/parasha", icon: Calendar },
-      { label: "שבועות", href: "/parasha", icon: Calendar },
-    ],
-  },
-  {
-    id: "tools",
-    title: "כלים ולימוד",
-    items: [
-      // Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers", icon: GraduationCap }
-      { label: "קהילת לומדים", href: "/community", icon: Heart },
-      { label: "כנס ההודאה", href: "/kenes", icon: Flame },
-      { label: "דור הפלאות", href: "/dor-haplaot", icon: Sparkles },
-    ],
-  },
-  {
-    id: "footer-nav",
-    items: [
-      { label: "חנות", href: "/store", icon: ShoppingBag },
-      { label: "תרומה", href: "/donate", icon: Heart },
-      { label: "צור קשר", href: "/contact", icon: Mail },
-    ],
-  },
-];
-
-// "נושאים" tab — content type filter + special collections
-const TOPICS_TAB: NavSection[] = [
-  {
-    id: "media",
-    title: "סוג מדיה",
-    items: [
-      { label: "וידאו", href: "/series?type=video", icon: Video },
-      { label: "אודיו", href: "/series?type=audio", icon: Headphones },
-      { label: "טקסט / PDF", href: "/series?type=text", icon: FileText },
-    ],
-  },
-  {
-    id: "specials",
-    title: "אוספים מיוחדים",
-    items: [
-      // Hidden 30.4.2026 per Saar — "חידות תנ״ך" + "תכנים אטומיים" pointed to /teachers, removed pending deletion decision
-      { label: "דור הפלאות", href: "/dor-haplaot", icon: Sparkles },
-      { label: "כנס ההודאה", href: "/kenes", icon: Flame },
-    ],
-  },
-];
-
-// ────────────────────────────────────────────────────────────────────────
-type NavItem = {
-  label: string;
-  href: string;
-  icon: React.ComponentType<any>;
-  badge?: string;
-};
-
-type NavSection = {
-  id: string;
-  title?: string;
-  items: NavItem[];
-};
-
-interface DesignSidebarProps {
-  drawerOpen?: boolean;
-  onDrawerClose?: () => void;
-}
-
 const STORAGE_KEY = "bnz.sidebar.collapsed";
-const SIDEBAR_W_EXPANDED = 280;
+const SIDEBAR_W_EXPANDED = 290;
 const SIDEBAR_W_COLLAPSED = 68;
 
 type Tab = "main" | "topics" | "rabbis" | "teachers";
 
 // ────────────────────────────────────────────────────────────────────────
+// Hook: series for a specific node ID (book or child)
+function useSeriesForNodeLocal(nodeId: string | null) {
+  return useQuery({
+    queryKey: ["dsb-series", nodeId],
+    queryFn: async () => {
+      if (!nodeId) return [];
+      const { data: descendants } = await supabase.rpc("get_series_descendant_ids", {
+        root_id: nodeId,
+      });
+      const allIds = [nodeId, ...(descendants || []).map((d: { series_id: string }) => d.series_id)];
+      const { data: series } = await supabase
+        .from("series")
+        .select("id, title, lesson_count, rabbi_id")
+        .in("id", allIds)
+        .gt("lesson_count", 0)
+        .order("lesson_count", { ascending: false })
+        .limit(80);
+      if (!series || series.length === 0) return [];
+      const rabbiIds = [...new Set(series.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
+      let rabbiMap = new Map<string, string>();
+      if (rabbiIds.length > 0) {
+        const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
+        rabbiMap = new Map(rabbis?.map((r) => [r.id, r.name]) || []);
+      }
+      return series.map((s) => ({
+        id: s.id,
+        title: s.title,
+        lessonCount: s.lesson_count ?? 0,
+        rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
+      }));
+    },
+    enabled: !!nodeId,
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+// ────────────────────────────────────────────────────────────────────────
+interface DesignSidebarProps {
+  drawerOpen?: boolean;
+  onDrawerClose?: () => void;
+}
+
 export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSidebarProps) {
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(STORAGE_KEY) === "1";
   });
   const [activeTab, setActiveTab] = useState<Tab>("main");
-  // Separate expanded-section state per tab so "ראשי" and "מורים" don't clash
-  const [expandedMain, setExpandedMain] = useState<string | null>("torah");
-  const [expandedTeachers, setExpandedTeachers] = useState<string | null>("torah");
   const [search, setSearch] = useState("");
+
+  // Accordion state (separate per tab so tabs don't clash)
+  // Format: "categoryId" | "categoryId::bookId" | "categoryId::bookId::childId"
+  const [expandedMain, setExpandedMain] = useState<Set<string>>(new Set(["torah"]));
+  const [expandedTeachers, setExpandedTeachers] = useState<Set<string>>(new Set(["torah"]));
+  const [expandedExtras, setExpandedExtras] = useState<Set<string>>(new Set());
+
+  // Which child node is showing its series list inline
+  const [openSeriesNode, setOpenSeriesNode] = useState<string | null>(null);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -195,29 +113,43 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const isDrawer = isMobile;
   const drawerVisible = isDrawer && !!drawerOpen;
 
-  // Load top rabbis for the rabbis tab
-  const { data: rabbis = [] } = usePublicRabbis();
+  const { categories, extraSections, rabbis, riddlesSeriesId, isLoading } = useContentSidebar();
+  const { data: rabbisRaw = [] } = usePublicRabbis();
 
   const topRabbis = useMemo(() => {
-    const list = (rabbis as any[]).filter((r) => r.name).sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
+    const list = (rabbisRaw as { id: string; name?: string; lesson_count?: number }[])
+      .filter((r) => r.name)
+      .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
     return list.slice(0, 30);
-  }, [rabbis]);
+  }, [rabbisRaw]);
 
-  // Filter by search
-  const filterSections = (sections: NavSection[]) => {
-    if (!search.trim()) return sections;
-    const q = search.trim().toLowerCase();
-    return sections
-      .map((s) => ({ ...s, items: s.items.filter((i) => i.label.toLowerCase().includes(q)) }))
-      .filter((s) => s.items.length > 0);
+  // ── Helper: toggle a key in a Set ──
+  const toggle = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, key: string) => {
+    setter((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
   };
 
-  const filterRabbis = (list: any[]) => {
-    if (!search.trim()) return list;
-    const q = search.trim().toLowerCase();
-    return list.filter((r) => (r.name || "").toLowerCase().includes(q));
-  };
+  // ── Search filter ──
+  const matchesSearch = useCallback(
+    (text: string) => !search.trim() || text.includes(search.trim()),
+    [search]
+  );
 
+  const navigate = useNavigate();
+
+  const handleSeriesClick = useCallback(
+    (seriesId: string) => {
+      onDrawerClose?.();
+      navigate(`/series/${seriesId}`);
+    },
+    [navigate, onDrawerClose]
+  );
+
+  // ────────────────────────────────────────────────────────────────────────
   return (
     <>
       {/* Drawer backdrop */}
@@ -280,13 +212,9 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
-        {/* Gold primary header banner — matches existing site exactly */}
+        {/* Gold primary header banner */}
         {(!collapsed || isDrawer) && (
-          <div
-            style={{
-              padding: "0.75rem 0.85rem 0.4rem",
-            }}
-          >
+          <div style={{ padding: "0.75rem 0.85rem 0.4rem" }}>
             <div
               style={{
                 padding: "0.65rem 1rem",
@@ -315,12 +243,14 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             }}
           >
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 2 }}>
-              {[
-                { key: "main" as Tab, label: "ראשי", icon: Library },
-                { key: "topics" as Tab, label: "נושאים", icon: Filter },
-                { key: "rabbis" as Tab, label: "רבנים", icon: Users },
-                { key: "teachers" as Tab, label: "מורים", icon: GraduationCap },
-              ].map((t) => {
+              {(
+                [
+                  { key: "main" as Tab, label: "ראשי", icon: Library },
+                  { key: "topics" as Tab, label: "נושאים", icon: Filter },
+                  { key: "rabbis" as Tab, label: "רבנים", icon: Users },
+                  { key: "teachers" as Tab, label: "מורים", icon: GraduationCap },
+                ] as const
+              ).map((t) => {
                 const Icon = t.icon;
                 const active = activeTab === t.key;
                 return (
@@ -357,7 +287,17 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
         {(!collapsed || isDrawer) && (
           <div style={{ padding: "0.5rem 0.85rem" }}>
             <div style={{ position: "relative" }}>
-              <Search style={{ position: "absolute", insetInlineEnd: 10, top: "50%", transform: "translateY(-50%)", width: 13, height: 13, color: colors.textSubtle }} />
+              <Search
+                style={{
+                  position: "absolute",
+                  insetInlineEnd: 10,
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  width: 13,
+                  height: 13,
+                  color: colors.textSubtle,
+                }}
+              />
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -379,7 +319,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
-        {/* Scrollable content body */}
+        {/* Scrollable nav */}
         <nav
           style={{
             flex: 1,
@@ -387,52 +327,68 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             padding: collapsed && !isDrawer ? "0.5rem 0.4rem" : "0.4rem 0.85rem 0.85rem",
           }}
         >
-          {/* MAIN tab */}
-          {activeTab === "main" && (
-            <>
-              {filterSections(MAIN_TREE).map((section, si) => (
-                <SidebarSection
-                  key={section.id}
-                  section={section}
-                  collapsed={collapsed && !isDrawer}
-                  isExpanded={expandedMain === section.id || !!search}
-                  onToggle={() => setExpandedMain((e) => (e === section.id ? null : section.id))}
-                  onNavigate={onDrawerClose}
-                  isFirst={si === 0}
-                  isLast={si === MAIN_TREE.length - 1}
+          {/* ═══ Loading skeleton ═══ */}
+          {isLoading && (!collapsed || isDrawer) && (
+            <div style={{ paddingTop: "0.5rem" }}>
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div
+                  key={i}
+                  style={{
+                    height: 28,
+                    marginBottom: 4,
+                    borderRadius: radii.sm,
+                    background: "rgba(139,111,71,0.07)",
+                    animation: "pulse 1.5s ease infinite",
+                  }}
                 />
               ))}
-            </>
+            </div>
           )}
 
-          {/* TOPICS tab */}
-          {activeTab === "topics" && (
-            <>
-              {filterSections(TOPICS_TAB).map((section, si) => (
-                <SidebarSection
-                  key={section.id}
-                  section={section}
-                  collapsed={collapsed && !isDrawer}
-                  isExpanded={true}
-                  onToggle={() => {}}
-                  onNavigate={onDrawerClose}
-                  isFirst={si === 0}
-                  isLast={si === TOPICS_TAB.length - 1}
-                />
-              ))}
-            </>
+          {/* ═══ MAIN tab — real accordion tree ═══ */}
+          {activeTab === "main" && !isLoading && (
+            <ContentTree
+              categories={categories}
+              extraSections={extraSections}
+              riddlesSeriesId={riddlesSeriesId}
+              expanded={expandedMain}
+              expandedExtras={expandedExtras}
+              onToggle={(key) => toggle(setExpandedMain, key)}
+              onToggleExtra={(key) => toggle(setExpandedExtras, key)}
+              openSeriesNode={openSeriesNode}
+              onOpenSeriesNode={setOpenSeriesNode}
+              onSeriesClick={handleSeriesClick}
+              collapsed={collapsed && !isDrawer}
+              search={search}
+              matchesSearch={matchesSearch}
+              onDrawerClose={onDrawerClose}
+            />
           )}
 
-          {/* TEACHERS tab — same hierarchical tree as "ראשי", filtered to teacher-tagged content */}
-          {activeTab === "teachers" && (!collapsed || isDrawer) && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {/* Teacher banner */}
+          {/* ═══ TOPICS tab — extra sections only (no book tree) ═══ */}
+          {activeTab === "topics" && !isLoading && (!collapsed || isDrawer) && (
+            <TopicsTab
+              extraSections={extraSections}
+              expandedExtras={expandedExtras}
+              onToggleExtra={(key) => toggle(setExpandedExtras, key)}
+              openSeriesNode={openSeriesNode}
+              onOpenSeriesNode={setOpenSeriesNode}
+              onSeriesClick={handleSeriesClick}
+              search={search}
+              matchesSearch={matchesSearch}
+            />
+          )}
+
+          {/* ═══ TEACHERS tab — same tree, teacher-context banner ═══ */}
+          {activeTab === "teachers" && !isLoading && (!collapsed || isDrawer) && (
+            <div>
               <div
                 style={{
                   padding: "0.6rem 0.75rem",
                   marginBottom: "0.5rem",
                   borderRadius: radii.md,
-                  background: "linear-gradient(135deg, rgba(74,90,46,0.12) 0%, rgba(196,162,101,0.1) 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(74,90,46,0.12) 0%, rgba(196,162,101,0.1) 100%)",
                   border: `1px solid rgba(74,90,46,0.2)`,
                   display: "flex",
                   alignItems: "center",
@@ -441,64 +397,105 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               >
                 <GraduationCap size={14} style={{ color: colors.goldDark, flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.78rem", color: colors.textDark }}>
-                    תכנים למורים — כל האתר מתויג
+                  <div
+                    style={{
+                      fontFamily: fonts.display,
+                      fontWeight: 700,
+                      fontSize: "0.78rem",
+                      color: colors.textDark,
+                    }}
+                  >
+                    תכנים למורים
                   </div>
-                  <div style={{ fontFamily: fonts.body, fontSize: "0.67rem", color: colors.textMuted, marginTop: "0.1rem" }}>
-                    אותו עץ ניווט · כל 1,374 הסדרות מסומנות "למורים"
+                  <div
+                    style={{
+                      fontFamily: fonts.body,
+                      fontSize: "0.67rem",
+                      color: colors.textMuted,
+                      marginTop: "0.1rem",
+                    }}
+                  >
+                    אותו עץ ניווט — סדרות לפי ספר
                   </div>
                 </div>
               </div>
-
-              {/* Identical hierarchical tree — same structure as MAIN_TREE tab */}
-              {filterSections(MAIN_TREE).map((section, si) => (
-                <SidebarSection
-                  key={`teachers-${section.id}`}
-                  section={section}
-                  collapsed={false}
-                  isExpanded={expandedTeachers === section.id || !!search}
-                  onToggle={() => setExpandedTeachers((e) => (e === section.id ? null : section.id))}
-                  onNavigate={onDrawerClose}
-                  isFirst={si === 0}
-                  isLast={si === MAIN_TREE.length - 1}
-                />
-              ))}
+              <ContentTree
+                categories={categories}
+                extraSections={extraSections}
+                riddlesSeriesId={riddlesSeriesId}
+                expanded={expandedTeachers}
+                expandedExtras={expandedExtras}
+                onToggle={(key) => toggle(setExpandedTeachers, key)}
+                onToggleExtra={(key) => toggle(setExpandedExtras, key)}
+                openSeriesNode={openSeriesNode}
+                onOpenSeriesNode={setOpenSeriesNode}
+                onSeriesClick={handleSeriesClick}
+                collapsed={false}
+                search={search}
+                matchesSearch={matchesSearch}
+                onDrawerClose={onDrawerClose}
+              />
             </div>
           )}
 
-          {/* RABBIS tab */}
+          {/* ═══ RABBIS tab ═══ */}
           {activeTab === "rabbis" && (!collapsed || isDrawer) && (
             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
-              {filterRabbis(topRabbis).map((r: any) => (
-                <Link
-                  key={r.id}
-                  to={`/design-rabbi/${r.id}`}
-                  onClick={onDrawerClose}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    padding: "0.45rem 0.7rem",
-                    borderRadius: radii.sm,
-                    fontFamily: fonts.body,
-                    fontSize: "0.78rem",
-                    color: colors.textMuted,
-                    textDecoration: "none",
-                    transition: "all 0.15s",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(139,111,71,0.06)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-                >
-                  <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {r.name}
-                  </span>
-                  <span style={{ fontSize: "0.65rem", color: colors.textSubtle, flexShrink: 0, marginInlineStart: "0.4rem" }}>
-                    ({r.lesson_count || 0})
-                  </span>
-                </Link>
-              ))}
+              {topRabbis
+                .filter((r) => !search.trim() || r.name?.includes(search.trim()))
+                .map((r) => (
+                  <Link
+                    key={r.id}
+                    to={`/design-rabbi/${r.id}`}
+                    onClick={onDrawerClose}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      padding: "0.45rem 0.7rem",
+                      borderRadius: radii.sm,
+                      fontFamily: fonts.body,
+                      fontSize: "0.78rem",
+                      color: colors.textMuted,
+                      textDecoration: "none",
+                      transition: "all 0.15s",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.background = "rgba(139,111,71,0.06)")
+                    }
+                    onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+                  >
+                    <span
+                      style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {r.name}
+                    </span>
+                    <span
+                      style={{
+                        fontSize: "0.65rem",
+                        color: colors.textSubtle,
+                        flexShrink: 0,
+                        marginInlineStart: "0.4rem",
+                      }}
+                    >
+                      ({(r as { lesson_count?: number }).lesson_count || 0})
+                    </span>
+                  </Link>
+                ))}
               {topRabbis.length === 0 && (
-                <div style={{ padding: "1.5rem", textAlign: "center", fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle }}>
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    textAlign: "center",
+                    fontFamily: fonts.body,
+                    fontSize: "0.8rem",
+                    color: colors.textSubtle,
+                  }}
+                >
                   טוען רבנים...
                 </div>
               )}
@@ -556,7 +553,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               }}
             >
               {collapsed ? (
-                <ChevronLeft size={14} />
+                <ChevronRight size={14} />
               ) : (
                 <>
                   <span>צמצם</span>
@@ -569,10 +566,14 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
       </aside>
 
       <style>{`
-        .design-sidebar nav::-webkit-scrollbar { width: 6px; }
+        .design-sidebar nav::-webkit-scrollbar { width: 5px; }
         .design-sidebar nav::-webkit-scrollbar-thumb {
           background: rgba(139,111,71,0.18);
           border-radius: 3px;
+        }
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.45; }
         }
       `}</style>
     </>
@@ -580,43 +581,421 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 }
 
 // ────────────────────────────────────────────────────────────────────────
-function SidebarSection({
-  section,
-  collapsed,
-  isExpanded,
-  onToggle,
-  onNavigate,
-  isFirst,
-  isLast,
-}: {
-  section: NavSection;
+// ContentTree — the full 3-level (+ series) accordion tree
+// ────────────────────────────────────────────────────────────────────────
+interface ContentTreeProps {
+  categories: SidebarCategory[];
+  extraSections: ExtraSection[];
+  riddlesSeriesId: string;
+  expanded: Set<string>;
+  expandedExtras: Set<string>;
+  onToggle: (key: string) => void;
+  onToggleExtra: (key: string) => void;
+  openSeriesNode: string | null;
+  onOpenSeriesNode: (id: string | null) => void;
+  onSeriesClick: (id: string) => void;
   collapsed: boolean;
-  isExpanded: boolean;
-  onToggle: () => void;
-  onNavigate?: () => void;
-  isFirst: boolean;
-  isLast: boolean;
-}) {
-  const location = useLocation();
+  search: string;
+  matchesSearch: (t: string) => boolean;
+  onDrawerClose?: () => void;
+}
 
-  // No section title → just render items inline
-  if (!section.title) {
+function ContentTree({
+  categories,
+  extraSections,
+  riddlesSeriesId,
+  expanded,
+  expandedExtras,
+  onToggle,
+  onToggleExtra,
+  openSeriesNode,
+  onOpenSeriesNode,
+  onSeriesClick,
+  collapsed,
+  search,
+  matchesSearch,
+  onDrawerClose,
+}: ContentTreeProps) {
+  if (collapsed) {
+    // Collapsed mode: show category dividers only
     return (
-      <div style={{ marginBottom: isLast ? 0 : "0.4rem", paddingBottom: isLast ? 0 : "0.4rem", borderBottom: isLast ? "none" : `1px solid rgba(139,111,71,0.08)` }}>
-        {section.items.map((item) => (
-          <SidebarItem key={item.href} item={item} collapsed={collapsed} active={isActive(item, location.pathname)} onNavigate={onNavigate} />
+      <div>
+        {categories.map((cat) => (
+          <div
+            key={cat.id}
+            style={{
+              height: 1,
+              background: "rgba(139,111,71,0.12)",
+              margin: "0.5rem 0.5rem",
+            }}
+          />
         ))}
       </div>
     );
   }
 
-  // Collapsed mode: show only divider for sections
-  if (collapsed) {
-    return <div style={{ height: 1, background: "rgba(139,111,71,0.10)", margin: "0.5rem 0.5rem" }} />;
-  }
+  return (
+    <div>
+      {/* פרשת השבוע — top link */}
+      <Link
+        to="/parasha"
+        onClick={onDrawerClose}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0.5rem 0.75rem",
+          marginBottom: "0.25rem",
+          borderRadius: radii.md,
+          background: gradients.goldButton,
+          color: "white",
+          fontFamily: fonts.body,
+          fontSize: "0.82rem",
+          fontWeight: 600,
+          textDecoration: "none",
+        }}
+      >
+        <span>פרשת השבוע</span>
+        <ChevronRight size={13} />
+      </Link>
+
+      {/* איך לומדים — first extra section */}
+      {extraSections
+        .filter((s) => s.title.includes("איך לומדים"))
+        .map((section) => (
+          <ExtraSectionBlock
+            key={section.id}
+            section={section}
+            isExpanded={expandedExtras.has(section.id)}
+            onToggle={() => onToggleExtra(section.id)}
+            openSeriesNode={openSeriesNode}
+            onOpenSeriesNode={onOpenSeriesNode}
+            onSeriesClick={onSeriesClick}
+            matchesSearch={matchesSearch}
+            variant="gold"
+          />
+        ))}
+
+      {/* ─── תורה / נביאים / כתובים ─── */}
+      {categories.map((cat) => {
+        const catOpen = expanded.has(cat.id);
+        const catVisible =
+          !search.trim() ||
+          cat.books.some(
+            (b) =>
+              matchesSearch(b.title) ||
+              b.children.some((c) => matchesSearch(c.title))
+          );
+        if (!catVisible) return null;
+        return (
+          <div key={cat.id} style={{ marginBottom: "0.2rem" }}>
+            <button
+              onClick={() => onToggle(cat.id)}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0.5rem 0.75rem",
+                borderRadius: radii.sm,
+                background: catOpen ? "rgba(196,162,101,0.12)" : "rgba(139,111,71,0.06)",
+                border: "none",
+                color: catOpen ? colors.goldDark : colors.textMid,
+                fontFamily: fonts.display,
+                fontSize: "0.88rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                textAlign: "right",
+              }}
+            >
+              <span>{cat.title}</span>
+              <ChevronDown
+                size={13}
+                style={{
+                  transition: "transform 0.18s",
+                  transform: catOpen ? "rotate(180deg)" : "rotate(0deg)",
+                  color: catOpen ? colors.goldDark : colors.textSubtle,
+                }}
+              />
+            </button>
+
+            {catOpen && (
+              <div style={{ paddingInlineStart: "0.5rem", paddingTop: "0.15rem" }}>
+                {cat.books
+                  .filter(
+                    (b) =>
+                      !search.trim() ||
+                      matchesSearch(b.title) ||
+                      b.children.some((c) => matchesSearch(c.title))
+                  )
+                  .map((book) => {
+                    const bookKey = `${cat.id}::${book.id}`;
+                    const bookOpen = expanded.has(bookKey);
+                    return (
+                      <div key={book.id} style={{ marginBottom: "0.1rem" }}>
+                        <button
+                          onClick={() => onToggle(bookKey)}
+                          style={{
+                            width: "100%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            padding: "0.4rem 0.65rem",
+                            borderRadius: radii.sm,
+                            background: bookOpen
+                              ? "rgba(196,162,101,0.09)"
+                              : "transparent",
+                            border: "none",
+                            color: bookOpen ? colors.goldDark : colors.textMuted,
+                            fontFamily: fonts.body,
+                            fontSize: "0.82rem",
+                            fontWeight: bookOpen ? 600 : 500,
+                            cursor: "pointer",
+                            textAlign: "right",
+                          }}
+                          onMouseEnter={(e) => {
+                            if (!bookOpen)
+                              e.currentTarget.style.background =
+                                "rgba(139,111,71,0.05)";
+                          }}
+                          onMouseLeave={(e) => {
+                            if (!bookOpen) e.currentTarget.style.background = "transparent";
+                          }}
+                        >
+                          <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                            <BookOpen size={12} style={{ opacity: 0.6 }} />
+                            {book.title}
+                          </span>
+                          {book.children.length > 0 && (
+                            <ChevronDown
+                              size={11}
+                              style={{
+                                transition: "transform 0.15s",
+                                transform: bookOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                color: colors.textSubtle,
+                              }}
+                            />
+                          )}
+                        </button>
+
+                        {bookOpen && (
+                          <div
+                            style={{
+                              paddingInlineStart: "0.75rem",
+                              paddingTop: "0.1rem",
+                              paddingBottom: "0.2rem",
+                            }}
+                          >
+                            {/* "כל השיעורים בספר/בחומש" */}
+                            <button
+                              onClick={() => {
+                                const nodeId = book.id;
+                                onOpenSeriesNode(openSeriesNode === `ALL::${nodeId}` ? null : `ALL::${nodeId}`);
+                              }}
+                              style={{
+                                width: "100%",
+                                textAlign: "right",
+                                padding: "0.35rem 0.55rem",
+                                marginBottom: "0.15rem",
+                                borderRadius: radii.sm,
+                                background:
+                                  openSeriesNode === `ALL::${book.id}`
+                                    ? gradients.goldButton
+                                    : "rgba(196,162,101,0.10)",
+                                border: "none",
+                                color: openSeriesNode === `ALL::${book.id}` ? "white" : colors.goldDark,
+                                fontFamily: fonts.body,
+                                fontSize: "0.74rem",
+                                fontWeight: 600,
+                                cursor: "pointer",
+                              }}
+                            >
+                              כל השיעורים {cat.title === "תורה" ? "בחומש" : "בספר"} {book.title}
+                            </button>
+
+                            {/* Inline series list for "כל" */}
+                            {openSeriesNode === `ALL::${book.id}` && (
+                              <SeriesInlineList
+                                nodeId={book.id}
+                                onSeriesClick={onSeriesClick}
+                              />
+                            )}
+
+                            {/* Children (parshiot / chapters) */}
+                            {book.children
+                              .filter((c) => !search.trim() || matchesSearch(c.title))
+                              .map((child) => {
+                                const childKey = child.id;
+                                const childOpen = openSeriesNode === childKey;
+                                return (
+                                  <div key={child.id}>
+                                    <button
+                                      onClick={() =>
+                                        onOpenSeriesNode(childOpen ? null : childKey)
+                                      }
+                                      style={{
+                                        width: "100%",
+                                        textAlign: "right",
+                                        padding: "0.32rem 0.55rem",
+                                        borderRadius: radii.sm,
+                                        background: childOpen
+                                          ? "rgba(196,162,101,0.14)"
+                                          : "transparent",
+                                        border: "none",
+                                        color: childOpen ? colors.goldDark : colors.textMuted,
+                                        fontFamily: fonts.body,
+                                        fontSize: "0.76rem",
+                                        fontWeight: childOpen ? 600 : 400,
+                                        cursor: "pointer",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        if (!childOpen)
+                                          e.currentTarget.style.background =
+                                            "rgba(139,111,71,0.05)";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        if (!childOpen)
+                                          e.currentTarget.style.background = "transparent";
+                                      }}
+                                    >
+                                      <span>{child.title}</span>
+                                      <ChevronDown
+                                        size={10}
+                                        style={{
+                                          transition: "transform 0.15s",
+                                          transform: childOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                          color: colors.textSubtle,
+                                          flexShrink: 0,
+                                        }}
+                                      />
+                                    </button>
+                                    {childOpen && (
+                                      <SeriesInlineList
+                                        nodeId={child.id}
+                                        onSeriesClick={onSeriesClick}
+                                      />
+                                    )}
+                                  </div>
+                                );
+                              })}
+
+                            {/* חידות לילדים — only under Torah */}
+                            {cat.title === "תורה" &&
+                              book.title === "בראשית" /* show once under first book */ && (
+                                <button
+                                  onClick={() =>
+                                    onOpenSeriesNode(
+                                      openSeriesNode === riddlesSeriesId ? null : riddlesSeriesId
+                                    )
+                                  }
+                                  style={{
+                                    width: "100%",
+                                    textAlign: "right",
+                                    padding: "0.32rem 0.55rem",
+                                    borderRadius: radii.sm,
+                                    background:
+                                      openSeriesNode === riddlesSeriesId
+                                        ? "rgba(196,162,101,0.14)"
+                                        : "transparent",
+                                    border: "none",
+                                    color:
+                                      openSeriesNode === riddlesSeriesId
+                                        ? colors.goldDark
+                                        : colors.textMuted,
+                                    fontFamily: fonts.body,
+                                    fontSize: "0.76rem",
+                                    fontWeight:
+                                      openSeriesNode === riddlesSeriesId ? 600 : 400,
+                                    cursor: "pointer",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "0.3rem",
+                                    marginTop: "0.1rem",
+                                  }}
+                                >
+                                  <Sparkles size={10} />
+                                  חידות לילדים פ״ש
+                                </button>
+                              )}
+                            {openSeriesNode === riddlesSeriesId && cat.title === "תורה" && (
+                              <SeriesInlineList
+                                nodeId={riddlesSeriesId}
+                                onSeriesClick={onSeriesClick}
+                              />
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      {/* ─── Extra sections (מועדים, הפטרות, כלי עזר, ליווי ת"תים...) ─── */}
+      {extraSections
+        .filter((s) => !s.title.includes("איך לומדים"))
+        .map((section) => (
+          <ExtraSectionBlock
+            key={section.id}
+            section={section}
+            isExpanded={expandedExtras.has(section.id)}
+            onToggle={() => onToggleExtra(section.id)}
+            openSeriesNode={openSeriesNode}
+            onOpenSeriesNode={onOpenSeriesNode}
+            onSeriesClick={onSeriesClick}
+            matchesSearch={matchesSearch}
+            variant="neutral"
+          />
+        ))}
+    </div>
+  );
+}
+
+// ────────────────────────────────────────────────────────────────────────
+// ExtraSectionBlock — collapsible section with children + inline series
+// ────────────────────────────────────────────────────────────────────────
+function ExtraSectionBlock({
+  section,
+  isExpanded,
+  onToggle,
+  openSeriesNode,
+  onOpenSeriesNode,
+  onSeriesClick,
+  matchesSearch,
+  variant,
+}: {
+  section: ExtraSection;
+  isExpanded: boolean;
+  onToggle: () => void;
+  openSeriesNode: string | null;
+  onOpenSeriesNode: (id: string | null) => void;
+  onSeriesClick: (id: string) => void;
+  matchesSearch: (t: string) => boolean;
+  variant: "gold" | "neutral";
+}) {
+  const bg =
+    variant === "gold"
+      ? isExpanded
+        ? "rgba(196,162,101,0.12)"
+        : "rgba(196,162,101,0.07)"
+      : isExpanded
+      ? "rgba(139,111,71,0.08)"
+      : "rgba(139,111,71,0.04)";
+
+  const visible =
+    !section.title ||
+    matchesSearch(section.title) ||
+    section.children.some((c) => matchesSearch(c.title));
+  if (!visible) return null;
 
   return (
-    <div style={{ marginBottom: "0.4rem" }}>
+    <div style={{ marginBottom: "0.2rem" }}>
       <button
         onClick={onToggle}
         style={{
@@ -624,116 +1003,263 @@ function SidebarSection({
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "0.5rem 0.7rem",
+          padding: "0.45rem 0.75rem",
           borderRadius: radii.sm,
-          background: isExpanded ? "rgba(196,162,101,0.10)" : "transparent",
+          background: bg,
           border: "none",
           color: isExpanded ? colors.goldDark : colors.textMid,
-          fontFamily: fonts.display,
-          fontSize: "0.85rem",
-          fontWeight: 700,
+          fontFamily: fonts.body,
+          fontSize: "0.82rem",
+          fontWeight: 600,
           cursor: "pointer",
           textAlign: "right",
         }}
       >
         <span>{section.title}</span>
         <ChevronDown
-          size={13}
+          size={12}
           style={{
-            transition: "transform 0.2s",
+            transition: "transform 0.15s",
             transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+            color: colors.textSubtle,
           }}
         />
       </button>
+
       {isExpanded && (
-        <div style={{ paddingInlineStart: "0.85rem", marginTop: "0.15rem" }}>
-          {section.items.map((item) => (
-            <SidebarItem key={item.href} item={item} collapsed={false} active={isActive(item, location.pathname)} onNavigate={onNavigate} small />
-          ))}
+        <div style={{ paddingInlineStart: "0.75rem", paddingTop: "0.1rem" }}>
+          {/* "הכל ב..." button */}
+          <button
+            onClick={() =>
+              onOpenSeriesNode(
+                openSeriesNode === `ALL::${section.id}` ? null : `ALL::${section.id}`
+              )
+            }
+            style={{
+              width: "100%",
+              textAlign: "right",
+              padding: "0.32rem 0.55rem",
+              marginBottom: "0.1rem",
+              borderRadius: radii.sm,
+              background:
+                openSeriesNode === `ALL::${section.id}`
+                  ? "rgba(196,162,101,0.14)"
+                  : "rgba(196,162,101,0.07)",
+              border: "none",
+              color: colors.goldDark,
+              fontFamily: fonts.body,
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              cursor: "pointer",
+            }}
+          >
+            הכל ב{section.title}
+          </button>
+          {openSeriesNode === `ALL::${section.id}` && (
+            <SeriesInlineList nodeId={section.id} onSeriesClick={onSeriesClick} />
+          )}
+
+          {/* Children */}
+          {section.children
+            .filter((c) => matchesSearch(c.title))
+            .map((child) => {
+              const childOpen = openSeriesNode === child.id;
+              return (
+                <div key={child.id}>
+                  <button
+                    onClick={() => onOpenSeriesNode(childOpen ? null : child.id)}
+                    style={{
+                      width: "100%",
+                      textAlign: "right",
+                      padding: "0.32rem 0.55rem",
+                      borderRadius: radii.sm,
+                      background: childOpen ? "rgba(196,162,101,0.12)" : "transparent",
+                      border: "none",
+                      color: childOpen ? colors.goldDark : colors.textMuted,
+                      fontFamily: fonts.body,
+                      fontSize: "0.76rem",
+                      fontWeight: childOpen ? 600 : 400,
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!childOpen)
+                        e.currentTarget.style.background = "rgba(139,111,71,0.04)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!childOpen) e.currentTarget.style.background = "transparent";
+                    }}
+                  >
+                    <span>{child.title}</span>
+                    <ChevronDown
+                      size={10}
+                      style={{
+                        transition: "transform 0.15s",
+                        transform: childOpen ? "rotate(180deg)" : "rotate(0deg)",
+                        color: colors.textSubtle,
+                        flexShrink: 0,
+                      }}
+                    />
+                  </button>
+                  {childOpen && (
+                    <SeriesInlineList nodeId={child.id} onSeriesClick={onSeriesClick} />
+                  )}
+                </div>
+              );
+            })}
         </div>
       )}
     </div>
   );
 }
 
-function SidebarItem({ item, collapsed, active, onNavigate, small = false }: { item: NavItem; collapsed: boolean; active: boolean; onNavigate?: () => void; small?: boolean }) {
-  const Icon = item.icon;
+// ────────────────────────────────────────────────────────────────────────
+// TopicsTab — shows extra sections as the "topics" view
+// ────────────────────────────────────────────────────────────────────────
+function TopicsTab({
+  extraSections,
+  expandedExtras,
+  onToggleExtra,
+  openSeriesNode,
+  onOpenSeriesNode,
+  onSeriesClick,
+  matchesSearch,
+}: {
+  extraSections: ExtraSection[];
+  expandedExtras: Set<string>;
+  onToggleExtra: (key: string) => void;
+  openSeriesNode: string | null;
+  onOpenSeriesNode: (id: string | null) => void;
+  onSeriesClick: (id: string) => void;
+  search: string;
+  matchesSearch: (t: string) => boolean;
+}) {
   return (
-    <Link
-      to={item.href}
-      onClick={onNavigate}
-      title={collapsed ? item.label : undefined}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.55rem",
-        padding: collapsed ? "0.55rem" : small ? "0.35rem 0.55rem" : "0.5rem 0.7rem",
-        borderRadius: radii.sm,
-        background: active ? "rgba(196,162,101,0.14)" : "transparent",
-        color: active ? colors.goldDark : colors.textMuted,
-        fontFamily: fonts.body,
-        fontSize: small ? "0.78rem" : "0.84rem",
-        fontWeight: active ? 700 : 500,
-        textDecoration: "none",
-        transition: "background 0.12s",
-        justifyContent: collapsed ? "center" : "flex-start",
-        position: "relative",
-      }}
-      onMouseEnter={(e) => {
-        if (!active) e.currentTarget.style.background = "rgba(139,111,71,0.06)";
-      }}
-      onMouseLeave={(e) => {
-        if (!active) e.currentTarget.style.background = "transparent";
-      }}
-    >
-      {active && !collapsed && (
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            top: 4,
-            bottom: 4,
-            insetInlineEnd: 0,
-            width: 3,
-            background: gradients.goldButton,
-            borderRadius: 2,
-          }}
+    <div>
+      {extraSections.map((section) => (
+        <ExtraSectionBlock
+          key={section.id}
+          section={section}
+          isExpanded={expandedExtras.has(section.id)}
+          onToggle={() => onToggleExtra(section.id)}
+          openSeriesNode={openSeriesNode}
+          onOpenSeriesNode={onOpenSeriesNode}
+          onSeriesClick={onSeriesClick}
+          matchesSearch={matchesSearch}
+          variant="neutral"
         />
-      )}
-      <Icon size={small ? 13 : 15} style={{ flexShrink: 0 }} />
-      {!collapsed && (
-        <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-          {item.label}
-        </span>
-      )}
-      {!collapsed && item.badge && (
-        <span
-          style={{
-            padding: "0.05rem 0.4rem",
-            borderRadius: radii.pill,
-            background: active ? gradients.goldButton : "rgba(196,162,101,0.18)",
-            color: active ? "white" : colors.goldDark,
-            fontFamily: fonts.body,
-            fontSize: "0.6rem",
-            fontWeight: 700,
-          }}
-        >
-          {item.badge}
-        </span>
-      )}
-    </Link>
+      ))}
+    </div>
   );
 }
 
 // ────────────────────────────────────────────────────────────────────────
-function isActive(item: NavItem, pathname: string): boolean {
-  if (item.href === "/") return pathname === "/";
-  // Decode URL-encoded Hebrew before comparing
-  const itemPath = decodeURIComponent(item.href.split("?")[0]);
-  const currentPath = decodeURIComponent(pathname);
-  return currentPath.startsWith(itemPath);
+// SeriesInlineList — fetches and renders series for a node, inline
+// ────────────────────────────────────────────────────────────────────────
+function SeriesInlineList({
+  nodeId,
+  onSeriesClick,
+}: {
+  nodeId: string;
+  onSeriesClick: (id: string) => void;
+}) {
+  const { data: series = [], isLoading } = useSeriesForNodeLocal(nodeId);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          padding: "0.5rem 0.55rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.4rem",
+          color: colors.textSubtle,
+          fontFamily: fonts.body,
+          fontSize: "0.72rem",
+        }}
+      >
+        <Loader2 size={11} style={{ animation: "spin 1s linear infinite" }} />
+        טוען סדרות...
+      </div>
+    );
+  }
+
+  if (series.length === 0) {
+    return (
+      <div
+        style={{
+          padding: "0.4rem 0.55rem",
+          color: colors.textSubtle,
+          fontFamily: fonts.body,
+          fontSize: "0.72rem",
+        }}
+      >
+        אין סדרות
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        paddingInlineStart: "0.4rem",
+        paddingBottom: "0.2rem",
+        borderInlineStart: `2px solid rgba(196,162,101,0.25)`,
+        marginInlineStart: "0.3rem",
+        marginBottom: "0.2rem",
+      }}
+    >
+      {series.map((s) => (
+        <button
+          key={s.id}
+          onClick={() => onSeriesClick(s.id)}
+          title={s.rabbiName ? `${s.title} — ${s.rabbiName}` : s.title}
+          style={{
+            width: "100%",
+            textAlign: "right",
+            padding: "0.28rem 0.5rem",
+            borderRadius: radii.sm,
+            background: "transparent",
+            border: "none",
+            color: colors.textMuted,
+            fontFamily: fonts.body,
+            fontSize: "0.72rem",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "0.35rem",
+            lineHeight: 1.4,
+          }}
+          onMouseEnter={(e) =>
+            (e.currentTarget.style.background = "rgba(139,111,71,0.06)")
+          }
+          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+        >
+          <FolderOpen size={11} style={{ marginTop: 2, flexShrink: 0, opacity: 0.6 }} />
+          <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {s.title}
+          </span>
+          {s.lessonCount > 0 && (
+            <span
+              style={{
+                fontSize: "0.62rem",
+                color: colors.textSubtle,
+                flexShrink: 0,
+                marginInlineStart: "0.2rem",
+              }}
+            >
+              {s.lessonCount}
+            </span>
+          )}
+        </button>
+      ))}
+    </div>
+  );
 }
 
+// ────────────────────────────────────────────────────────────────────────
 function useMobileViewport() {
   const [isMobile, setIsMobile] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
