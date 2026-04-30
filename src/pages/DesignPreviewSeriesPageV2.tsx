@@ -1,32 +1,41 @@
 /**
  * /design-series-page-v2 — Series detail page, second iteration.
  *
+ * Round 2 fixes (2026-04-30 — Saar feedback):
+ *   1. Header was hidden — DesignLayout already renders it. Removed duplicate
+ *      `marginTop: -96` that was INSIDE CompactSeriesHero (caused double-overlap
+ *      which pushed the hero 192px above the top, hiding the header visually).
+ *      Fixed: hero uses `marginTop: 0`, `overlapHero` on DesignLayout handles it.
+ *   2. Removed "קאנון מקודש" family badge from the hero. Saar doesn't want it.
+ *   3. Removed "שיעורים בסדרה" section title. Cards speak for themselves.
+ *   4. LessonModal enhanced to match existing design parity:
+ *      - Print button
+ *      - Save to favorites button
+ *      - "שיעורים נוספים" grid at bottom (like /design-lesson-page)
+ *   5. Default route (/design-series-page-v2) now shows a real series with
+ *      sub-series (ID: 35781f30-76a7-4fc6-aa06-52a1db4a4054 — "איכה")
+ *      so the sub-series section is always visible on the base route.
+ *   6. /design-series-page-v2/:id continues to work for any real series ID.
+ *
  * What changed vs. /design-series-page (v1):
- *   1. Hero is compact — title + rabbi + count/duration only. No "start series" button.
- *   2. Share/Save are icon-only, shown inline next to the title (hover on desktop,
- *      tap-to-reveal state on mobile).
- *   3. No "על הסדרה" paragraph section — content grid starts immediately after hero.
- *   4. Child-series (sub-series via parent_id) are shown as a top group
- *      "חלקי הסדרה" with larger cards, before the flat lessons grid.
- *   5. Lesson cards carry their cover image (placeholder for now, TODO: real per-lesson images).
- *   6. Click on a lesson card → shadcn Dialog modal. URL gains ?lesson=ID so
- *      direct links work. Modal has large image, player controls area, description,
- *      and "פתח בעמוד מלא" link.
- *   7. Sidebar has the Bnei Zion logo at the top (via DesignLayout's sidebar slot —
- *      implemented directly in DesignSidebar; this page just ensures the logo
- *      is visible by NOT hiding the sidebar).
+ *   - Hero is compact — title + rabbi + count/duration only. No "start series" button.
+ *   - Share/Save are icon-only, shown inline next to the title (hover on desktop).
+ *   - No "על הסדרה" paragraph — lessons grid starts immediately after hero.
+ *   - Child-series shown as top block "חלקי הסדרה" with larger cards, before lessons.
+ *   - Lesson cards carry their cover image (placeholder until per-lesson images ready).
+ *   - Click on lesson → modal with ?lesson=ID in URL for direct links.
+ *
+ * Real series for demo:
+ *   - /design-series-page-v2  →  35781f30... (איכה — has 9 children sub-series)
+ *   - /design-series-page-v2/41b62e31-0643-4368-b8ff-04dc25dc2603  →  שיר השירים (18L, no children)
  *
  * Data sources (all real Supabase):
- *   - useTopSeries(150)       → find the series (by :id param, or top by lesson_count)
+ *   - useTopSeries(150)       → find the series (by :id param, fallback to sub-series demo)
  *   - useSeriesChildren(id)   → child sub-series (parent_id match)
  *   - useLessonsBySeries(id)  → direct lessons of this series
- *
- * IMAGE PLACEHOLDER POLICY (temporary):
- *   lesson.thumbnail_url → series.image_url → getSeriesCoverImage(title) → /images/series-default.png
- *   All lesson cards share the series cover until per-lesson images are provided by the designer.
- *   See KNOWLEDGE.md §7 "Series page redesign — Saar feedback 2026-04-30".
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
+// Note: useMemo still used for openLesson resolution below
 import { useParams, useSearchParams, Link } from "react-router-dom";
 import {
   Share2,
@@ -37,7 +46,8 @@ import {
   X,
   ExternalLink,
   ChevronRight,
-  BookOpen,
+  Printer,
+  Heart,
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -47,15 +57,16 @@ import {
   gradients,
   shadows,
   radii,
-  seriesFamilies,
-  getSeriesFamily,
   getSeriesCoverImage,
   lessonTypeLabel,
   formatDuration,
 } from "@/lib/designTokens";
-import { useTopSeries } from "@/hooks/useTopSeries";
+import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 import { useSeriesChildren } from "@/hooks/useSeriesHierarchy";
+
+// Stable default series for no-param route: "איכה" — has 9 active sub-series
+const SUB_SERIES_DEMO_ID = "35781f30-76a7-4fc6-aa06-52a1db4a4054";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 
@@ -70,9 +81,9 @@ function lessonImage(lesson: any, seriesImageUrl: string | null, seriesTitle: st
 
 // ─── Compact Hero ─────────────────────────────────────────────────────────
 /**
- * Compact hero: no big CTA button, no "start series" noise.
- * Share/Save icons appear inline next to the title on hover (desktop)
- * or after a tap on the title row (mobile).
+ * Compact hero: no big CTA button, no family badge, no "start series" noise.
+ * Share/Save icons appear inline next to the title on hover (desktop).
+ * marginTop is 0 here — DesignLayout's overlapHero prop handles the -96 offset.
  */
 function CompactSeriesHero({
   series,
@@ -85,7 +96,6 @@ function CompactSeriesHero({
   totalDuration: string;
   imageUrl: string;
 }) {
-  const fam = seriesFamilies[getSeriesFamily(series.title, series.description)];
   const rabbiName = series.rabbis?.name || "";
   const [actionsVisible, setActionsVisible] = useState(false);
 
@@ -94,9 +104,9 @@ function CompactSeriesHero({
       style={{
         position: "relative",
         overflow: "hidden",
-        marginTop: -96,
+        // marginTop removed — DesignLayout with overlapHero adds -96 to <main>
         background: gradients.mahoganyHero,
-        // Compact: max 320px tall instead of 480
+        minHeight: 280,
       }}
     >
       {/* Background image — subtle */}
@@ -132,30 +142,7 @@ function CompactSeriesHero({
           margin: "0 auto",
         }}
       >
-        {/* Family badge */}
-        <span
-          style={{
-            display: "inline-block",
-            padding: "0.28rem 0.8rem",
-            borderRadius: radii.pill,
-            background: "rgba(232,213,160,0.13)",
-            border: "1px solid rgba(232,213,160,0.28)",
-            color: colors.goldShimmer,
-            fontFamily: fonts.body,
-            fontSize: "0.68rem",
-            fontWeight: 700,
-            letterSpacing: "0.16em",
-            textTransform: "uppercase",
-            marginBottom: "0.9rem",
-            backdropFilter: "blur(6px)",
-            WebkitBackdropFilter: "blur(6px)",
-            width: "fit-content",
-          }}
-        >
-          {fam.label}
-        </span>
-
-        {/* Title row + inline action icons */}
+        {/* Title row + inline action icons — no family badge */}
         <div
           style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}
           onMouseEnter={() => setActionsVisible(true)}
@@ -176,7 +163,7 @@ function CompactSeriesHero({
             {series.title}
           </h1>
 
-          {/* Share + Bookmark — icon-only, visible on hover/tap */}
+          {/* Share + Bookmark — icon-only, visible on hover */}
           <div
             style={{
               display: "flex",
@@ -189,7 +176,6 @@ function CompactSeriesHero({
           >
             <button
               aria-label="שתף"
-              onClick={() => setActionsVisible((v) => !v)}
               style={{
                 width: 36,
                 height: 36,
@@ -227,29 +213,6 @@ function CompactSeriesHero({
               <Bookmark style={{ width: 14, height: 14 }} />
             </button>
           </div>
-
-          {/* Mobile: tap title area to reveal actions */}
-          <button
-            aria-label="פעולות"
-            onClick={() => setActionsVisible((v) => !v)}
-            style={{
-              display: "none", // shown via media query below
-              width: 36,
-              height: 36,
-              borderRadius: "50%",
-              border: "1.5px solid rgba(255,255,255,0.3)",
-              background: "rgba(255,255,255,0.08)",
-              color: "rgba(255,255,255,0.85)",
-              cursor: "pointer",
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: "0.35rem",
-              flexShrink: 0,
-            }}
-            className="series-hero-mobile-action"
-          >
-            <Share2 style={{ width: 14, height: 14 }} />
-          </button>
         </div>
 
         {/* Rabbi + meta — single line */}
@@ -289,12 +252,6 @@ function CompactSeriesHero({
           )}
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 640px) {
-          .series-hero-mobile-action { display: flex !important; }
-        }
-      `}</style>
     </div>
   );
 }
@@ -324,7 +281,6 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
             marginBottom: "1.5rem",
           }}
         >
-          <BookOpen style={{ width: 18, height: 18, color: colors.goldDark }} />
           <h2
             style={{
               fontFamily: fonts.display,
@@ -351,7 +307,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
             gap: "1.25rem",
           }}
         >
@@ -360,7 +316,6 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
               child.image_url ||
               getSeriesCoverImage(child.title) ||
               "/images/series-default.png";
-            const fam = seriesFamilies[getSeriesFamily(child.title, child.description)];
             return (
               <Link
                 key={child.id}
@@ -391,7 +346,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                   {/* Image — taller for sub-series (more prominent) */}
                   <div
                     style={{
-                      height: 200,
+                      height: 180,
                       overflow: "hidden",
                       position: "relative",
                       background: colors.parchmentDeep,
@@ -410,27 +365,6 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                           "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)",
                       }}
                     />
-                    {/* Family badge */}
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        padding: "0.22rem 0.6rem",
-                        borderRadius: radii.sm,
-                        background: fam.badgeBg,
-                        color: fam.badgeFg,
-                        fontFamily: fonts.body,
-                        fontSize: "0.62rem",
-                        fontWeight: 700,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        backdropFilter: "blur(4px)",
-                        WebkitBackdropFilter: "blur(4px)",
-                      }}
-                    >
-                      {fam.label}
-                    </span>
                   </div>
 
                   <div style={{ padding: "1rem 1.25rem 1.25rem" }}>
@@ -650,6 +584,10 @@ function LessonCard({
 }
 
 // ─── Lessons Grid ─────────────────────────────────────────────────────────
+/**
+ * Section title "שיעורים בסדרה" removed — cards speak for themselves.
+ * Count shown as secondary text next to the grid, not as a bold header.
+ */
 function LessonsGrid({
   lessons,
   seriesImageUrl,
@@ -663,46 +601,34 @@ function LessonsGrid({
   isLoading: boolean;
   onOpenLesson: (lesson: any) => void;
 }) {
-  const totalCount = lessons.length;
-
   return (
     <section
       style={{
         background: colors.parchment,
-        padding: "2.5rem 1.5rem 4rem",
+        padding: "2rem 1.5rem 4rem",
       }}
     >
       <div style={{ maxWidth: 1200, margin: "0 auto" }} dir="rtl">
-        {/* Section header */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "baseline",
-            justifyContent: "space-between",
-            marginBottom: "1.75rem",
-          }}
-        >
-          <h2
+        {/* Count pill — subtle, no section heading */}
+        {!isLoading && lessons.length > 0 && (
+          <div
             style={{
-              fontFamily: fonts.display,
-              fontWeight: 900,
-              fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)",
-              color: colors.textDark,
-              margin: 0,
+              display: "flex",
+              justifyContent: "flex-end",
+              marginBottom: "1rem",
             }}
           >
-            שיעורים בסדרה
-          </h2>
-          <span
-            style={{
-              fontFamily: fonts.body,
-              fontSize: "0.8rem",
-              color: colors.textSubtle,
-            }}
-          >
-            {totalCount} שיעורים
-          </span>
-        </div>
+            <span
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.78rem",
+                color: colors.textSubtle,
+              }}
+            >
+              {lessons.length} שיעורים
+            </span>
+          </div>
+        )}
 
         {isLoading ? (
           <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
@@ -753,21 +679,34 @@ function LessonsGrid({
 
 // ─── Lesson Modal ─────────────────────────────────────────────────────────
 /**
- * Opens as an overlay dialog. URL gets ?lesson=ID so direct links work.
- * SEO: the page's canonical URL stays the same — only the query param changes.
+ * Enhanced modal — parity with the existing LessonPage design:
+ *   - Print button (window.print())
+ *   - Save to favorites button (heart icon)
+ *   - "שיעורים נוספים" grid at the bottom — same pattern as /design-lesson-page aside
+ *   - "פתח בעמוד מלא" link to /lessons/:id
+ *
+ * URL gains ?lesson=ID on open for direct-link support.
  */
 function LessonModal({
   lesson,
   seriesImageUrl,
   seriesTitle,
+  allLessons,
   onClose,
 }: {
   lesson: any;
   seriesImageUrl: string | null;
   seriesTitle: string;
+  allLessons: any[];
   onClose: () => void;
 }) {
   const imgUrl = lessonImage(lesson, seriesImageUrl, seriesTitle);
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  // Other lessons in the same series (excluding current, max 6)
+  const moreLessons = allLessons
+    .filter((l) => l.id !== lesson.id)
+    .slice(0, 6);
 
   // Close on Escape
   useEffect(() => {
@@ -814,7 +753,7 @@ function LessonModal({
           left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 1001,
-          width: "min(680px, 95vw)",
+          width: "min(700px, 95vw)",
           maxHeight: "90vh",
           overflowY: "auto",
           borderRadius: radii.xl,
@@ -933,14 +872,120 @@ function LessonModal({
               fontWeight: 900,
               fontSize: "clamp(1.15rem, 2.5vw, 1.5rem)",
               color: colors.textDark,
-              margin: "0 0 1.25rem",
+              margin: "0 0 1rem",
               lineHeight: 1.3,
             }}
           >
             {lesson.title}
           </h2>
 
-          {/* Player area — placeholder until real player is wired */}
+          {/* Action bar: Print + Favorites + Open full */}
+          <div
+            style={{
+              display: "flex",
+              gap: "0.5rem",
+              marginBottom: "1.25rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              onClick={() => window.print()}
+              aria-label="הדפסה"
+              title="הדפס שיעור"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.45rem 0.85rem",
+                borderRadius: radii.md,
+                border: `1.5px solid rgba(139,111,71,0.25)`,
+                background: "transparent",
+                color: colors.textMid,
+                fontFamily: fonts.body,
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(139,111,71,0.06)";
+                e.currentTarget.style.borderColor = colors.goldDark;
+                e.currentTarget.style.color = colors.goldDark;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "rgba(139,111,71,0.25)";
+                e.currentTarget.style.color = colors.textMid;
+              }}
+            >
+              <Printer style={{ width: 14, height: 14 }} />
+              הדפסה
+            </button>
+
+            <button
+              onClick={() => setIsFavorited((v) => !v)}
+              aria-label={isFavorited ? "הסר ממועדפים" : "שמור למועדפים"}
+              title={isFavorited ? "הסר ממועדפים" : "שמור למועדפים"}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.45rem 0.85rem",
+                borderRadius: radii.md,
+                border: `1.5px solid ${isFavorited ? colors.goldDark : "rgba(139,111,71,0.25)"}`,
+                background: isFavorited ? "rgba(139,111,71,0.08)" : "transparent",
+                color: isFavorited ? colors.goldDark : colors.textMid,
+                fontFamily: fonts.body,
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.15s",
+              }}
+            >
+              <Heart
+                style={{
+                  width: 14,
+                  height: 14,
+                  fill: isFavorited ? colors.goldDark : "none",
+                }}
+              />
+              {isFavorited ? "שמור במועדפים" : "שמור למועדפים"}
+            </button>
+
+            <Link
+              to={`/lessons/${lesson.id}`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.45rem 0.85rem",
+                borderRadius: radii.md,
+                border: `1.5px solid rgba(139,111,71,0.25)`,
+                background: "transparent",
+                color: colors.textMid,
+                fontFamily: fonts.body,
+                fontSize: "0.78rem",
+                fontWeight: 600,
+                textDecoration: "none",
+                transition: "all 0.15s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(139,111,71,0.06)";
+                e.currentTarget.style.borderColor = colors.goldDark;
+                e.currentTarget.style.color = colors.goldDark;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "transparent";
+                e.currentTarget.style.borderColor = "rgba(139,111,71,0.25)";
+                e.currentTarget.style.color = colors.textMid;
+              }}
+            >
+              <ExternalLink style={{ width: 14, height: 14 }} />
+              פתח בעמוד מלא
+            </Link>
+          </div>
+
+          {/* Player area */}
           <div
             style={{
               background: colors.parchmentDark,
@@ -1024,25 +1069,128 @@ function LessonModal({
             </p>
           )}
 
-          {/* "Open full page" link */}
-          <Link
-            to={`/lessons/${lesson.id}`}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              fontFamily: fonts.body,
-              fontSize: "0.82rem",
-              color: colors.goldDark,
-              textDecoration: "none",
-              fontWeight: 700,
-              borderBottom: `1px solid rgba(139,111,71,0.4)`,
-              paddingBottom: "0.15rem",
-            }}
-          >
-            <ExternalLink style={{ width: 13, height: 13 }} />
-            פתח בעמוד מלא
-          </Link>
+          {/* ── שיעורים נוספים בסדרה — grid, like production LessonPage ── */}
+          {moreLessons.length > 0 && (
+            <div
+              style={{
+                marginTop: "1.5rem",
+                paddingTop: "1.5rem",
+                borderTop: `1px solid rgba(139,111,71,0.1)`,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  color: colors.goldDark,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  marginBottom: "0.85rem",
+                }}
+              >
+                שיעורים נוספים מהסדרה
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
+                  gap: "0.75rem",
+                }}
+              >
+                {moreLessons.map((l) => {
+                  const lImg = lessonImage(l, seriesImageUrl, seriesTitle);
+                  return (
+                    <Link
+                      key={l.id}
+                      to={`/lessons/${l.id}`}
+                      style={{ textDecoration: "none" }}
+                    >
+                      <div
+                        style={{
+                          borderRadius: radii.md,
+                          overflow: "hidden",
+                          background: colors.parchmentDark,
+                          border: `1px solid rgba(139,111,71,0.1)`,
+                          transition: "all 0.2s ease",
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = colors.goldDark;
+                          e.currentTarget.style.boxShadow = shadows.cardSoft;
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
+                          e.currentTarget.style.boxShadow = "none";
+                        }}
+                      >
+                        <div
+                          style={{
+                            height: 90,
+                            overflow: "hidden",
+                            position: "relative",
+                          }}
+                        >
+                          <img
+                            src={lImg}
+                            alt={l.title}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          />
+                          {/* Play badge */}
+                          <div
+                            style={{
+                              position: "absolute",
+                              bottom: 6,
+                              left: 6,
+                              width: 24,
+                              height: 24,
+                              borderRadius: "50%",
+                              background: "rgba(255,255,255,0.9)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Play
+                              style={{ width: 10, height: 10, color: colors.textDark }}
+                              fill={colors.textDark}
+                            />
+                          </div>
+                        </div>
+                        <div style={{ padding: "0.6rem 0.75rem 0.75rem" }}>
+                          <div
+                            style={{
+                              fontFamily: fonts.display,
+                              fontWeight: 600,
+                              fontSize: "0.78rem",
+                              color: colors.textDark,
+                              lineHeight: 1.35,
+                              display: "-webkit-box",
+                              WebkitLineClamp: 2,
+                              WebkitBoxOrient: "vertical",
+                              overflow: "hidden",
+                              minHeight: "2.1em",
+                            }}
+                          >
+                            {l.title}
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: fonts.body,
+                              fontSize: "0.65rem",
+                              color: colors.textSubtle,
+                              marginTop: "0.25rem",
+                            }}
+                          >
+                            {formatDuration(l.duration)}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1063,15 +1211,11 @@ export default function DesignPreviewSeriesPageV2() {
   );
 
   // ── Data
-  const { data: allSeries, isLoading: seriesLoading } = useTopSeries(150);
+  // Resolve the series ID: URL param → fallback to sub-series demo
+  const targetId = id || SUB_SERIES_DEMO_ID;
 
-  const series = useMemo(() => {
-    if (!allSeries?.length) return null;
-    if (id) return (allSeries as any[]).find((s: any) => s.id === id) || null;
-    return [...(allSeries as any[])]
-      .filter((s) => s.status === "active" && (s.lesson_count || 0) > 0)
-      .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0))[0];
-  }, [allSeries, id]);
+  // useSeriesDetail fetches by ID with no status filter — works for any series
+  const { data: series, isLoading: seriesLoading } = useSeriesDetail(targetId);
 
   const { data: lessons = [], isLoading: lessonsLoading } = useLessonsBySeries(series?.id);
   const { data: childSeries = [] } = useSeriesChildren(series?.id);
@@ -1156,8 +1300,9 @@ export default function DesignPreviewSeriesPageV2() {
 
   return (
     <>
+      {/* transparentHeader + overlapHero: hero slides under the header cleanly */}
       <DesignLayout transparentHeader overlapHero>
-        {/* 1. Compact hero */}
+        {/* 1. Compact hero — no marginTop inside, DesignLayout handles overlap */}
         <CompactSeriesHero
           series={series}
           totalLessons={totalLessons}
@@ -1188,6 +1333,7 @@ export default function DesignPreviewSeriesPageV2() {
           lesson={openLesson}
           seriesImageUrl={seriesImageUrl}
           seriesTitle={series.title}
+          allLessons={lessons as any[]}
           onClose={handleCloseLesson}
         />
       )}
