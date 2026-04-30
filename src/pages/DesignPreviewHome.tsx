@@ -30,9 +30,10 @@ const NAVY_DEEP    = "#1A2744";
 const TEAL_MAIN    = "#2D7D7D";
 
 // ── DesignNavBar ───────────────────────────────────────────────────────────
-const FULL_NAV_LINKS: { label: string; path: string }[] = [
+const FULL_NAV_LINKS: { label: string; path: string; external?: boolean }[] = [
   { label: "ראשי",           path: "/"                 },
   { label: "פרשת השבוע",     path: "/parasha"          },
+  { label: "חנות",           path: "/store"            },
   { label: "אודותינו",       path: "/about"            },
   { label: "לזכר סעדיה הי״ד", path: "/memorial/saadia" },
 ];
