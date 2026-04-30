@@ -764,6 +764,26 @@ In order of priority for any new session:
 If a question can be answered from these 6 sources, **don't ask Saar**
 — answer it. If it can't, **ask first, do second**.
 
+### 2026-04-30 — Courses Catalog + Access Gate toggle (commit 2c6159b)
+
+**Context:** Previous session agent (a8ca9642) crashed after 23 actions and left
+`DesignPreviewMegillatEsther.tsx` staged with unwanted structural changes.
+Saar reported the sales page was "פי אלף עדיף הקודם" (previous was much better).
+
+**Changes:**
+- A: `git restore --staged + git restore` on `DesignPreviewMegillatEsther.tsx` — reverted to HEAD without new commit (no net change)
+- B: `src/pages/DesignPreviewCoursesCatalog.tsx` created — new catalog grid at `/design-courses`
+  - 4 mock course cards: active (43%), completed (100%), locked x2
+  - Filter tabs: הכל / פעיל / הושלם / זמין לרכישה
+  - Locked cards show lock overlay on cover + "רכוש" CTA → `/design-megilat-esther`
+  - Active/completed cards CTA → `/design-course/<slug>`
+- C: `DesignPreviewCourseDetail.tsx` — added `previewMode` toggle ("מנוי / לא-מנוי") in top bar strip
+  - Toggle overrides `useUserAccess` so Saar can test both views without logging in
+  - In production flow realAccess from hook still takes precedence when user is logged in
+- D: `DesignPreviewPortalSubscriber.tsx` — `courseDetailUrl` changed from `/design-course/zechariah` to `/design-courses`
+
+**Iron rule reinforced:** Never leave staged files from a crashed session. Always run `git status` at session start and clear any unexpected staged changes.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every

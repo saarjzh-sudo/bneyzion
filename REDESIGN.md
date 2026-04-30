@@ -166,7 +166,8 @@ See **§ 8. Open work** for the full plan.
 | `/design-product/:slug` | Specific product by slug | yes | done |
 | `/design-portal` | Generic learner portal | yes | done |
 | `/design-portal-subscriber` ⭐ | Subscriber's personal area with real useUserAccess gate + book progress | yes + real access check | done v2 |
-| `/design-course/:slug` ⭐ | Course detail: 2-col layout, book/chapter sidebar, 3 tabs (base/enrichment/weekly) | yes + access gate | done |
+| `/design-courses` ⭐ | Courses catalog: grid of 4 mock cards (active/completed/locked), filter tabs | mock | done |
+| `/design-course/:slug` ⭐ | Course detail: 2-col layout, book/chapter sidebar, 3 tabs (base/enrichment/weekly), subscriber preview toggle | yes + access gate | done v2 |
 | `/design-chapter-weekly` | התכנית השבועית — 9 books with content | yes | done |
 | `/design-rabbis-list` | 179 rabbis directory | yes | done |
 | `/design-rabbi` | Single rabbi profile (defaults to top) | yes | done |
