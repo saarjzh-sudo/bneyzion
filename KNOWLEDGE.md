@@ -799,6 +799,36 @@ In order of priority for any new session:
 If a question can be answered from these 6 sources, **don't ask Saar**
 — answer it. If it can't, **ask first, do second**.
 
+### 2026-04-30 — DesignHeader nav bug fix + series page v2 header fixes
+
+**Bug found:** `DesignHeader.tsx` had `display: onSidebarToggle ? "none" : undefined` on the
+`<nav>` element. Intended to hide nav on mobile when sidebar is active, but the inline `display:none`
+overrode Tailwind's `hidden md:flex` class entirely — so on desktop the entire nav (logo row,
+all links) was hidden whenever a page used `sidebar={true}` (which is the default).
+Result: `/design-series-page-v2` showed only the right-side action strip (search/dark-mode/cart/login)
+with no logo or nav links visible.
+
+**Root cause chain for the 3 reported symptoms:**
+1. Nav hidden → root: the `onSidebarToggle ? "none"` inline override. Fix: removed that line.
+2. Logo "small and cropped above sidebar" → root: with nav hidden, only action icons remained;
+   the logo appeared isolated and the header looked "like a thin strip". Removing transparentHeader
+   restores the solid parchment background and the logo becomes fully visible.
+3. Header "too thick on scroll" → root: `transparentHeader` adds `transition: all 0.3s ease` and
+   a `boxShadow` + background transition on scroll. Visually, going from transparent → parchment+shadow
+   feels like the header expands even though height stays 96px. Removing transparentHeader makes it
+   always solid — no on-scroll visual change.
+
+**Files changed:**
+- `src/components/layout-v2/DesignHeader.tsx` — removed `display: onSidebarToggle ? "none" : undefined` from `<nav>`
+- `src/pages/DesignPreviewSeriesPageV2.tsx` — removed `transparentHeader overlapHero` from `<DesignLayout>`
+- `src/pages/DesignPreviewSeriesPageV2.tsx` — `CompactSeriesHero` padding-top: 130px → 4rem (was compensating for the removed overlapHero -96)
+
+**Iron rule added:** `transparentHeader` must NEVER be the default on pages that use `sidebar={true}`.
+The `display: onSidebarToggle ? "none"` pattern (now removed) was the trigger, but the broader rule is:
+sidebar pages get solid header. Only fully-immersive hero pages (home, memorial, navy-theme pages) should use transparentHeader.
+If Saar wants the transparent hero effect back on the series page — it can be re-enabled, but requires:
+(a) removing the `display:none` override (already done), (b) testing that nav links are visible against the hero.
+
 ### 2026-04-30 — Courses Catalog + Access Gate toggle (commit 2c6159b)
 
 **Context:** Previous session agent (a8ca9642) crashed after 23 actions and left

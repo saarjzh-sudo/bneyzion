@@ -201,7 +201,10 @@ function CompactSeriesHero({
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-end",
-          padding: "130px 2rem 2.5rem",
+          /* padding-top was 130px to compensate overlapHero -96. Now that
+             overlapHero is removed, the hero starts below the header naturally.
+             4rem top-padding keeps it spacious without the large overhead. */
+          padding: "4rem 2rem 2.5rem",
           maxWidth: 1100,
           margin: "0 auto",
         }}
@@ -1969,7 +1972,12 @@ export default function DesignPreviewSeriesPageV2() {
 
   return (
     <>
-      <DesignLayout transparentHeader overlapHero>
+      {/* transparentHeader + overlapHero removed (2026-04-30 Saar feedback):
+           - transparentHeader hid the full nav whenever a sidebar was present
+           - overlapHero caused double-offset + "thick header on scroll" perception
+           - Series page is "catalog not drama" — solid header is correct here.
+           - Both can be re-enabled if Saar wants the dark-hero overlap back. */}
+      <DesignLayout>
         {/* 1. Compact hero */}
         <CompactSeriesHero
           series={series}
