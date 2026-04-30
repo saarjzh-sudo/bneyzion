@@ -165,7 +165,8 @@ See **§ 8. Open work** for the full plan.
 | `/design-product` | Single product page with HTML content | yes (default first featured) | done |
 | `/design-product/:slug` | Specific product by slug | yes | done |
 | `/design-portal` | Generic learner portal | yes | done |
-| `/design-portal-subscriber` ⭐ | Weekly chapter subscriber's personal area | yes + mock subscriber state | done |
+| `/design-portal-subscriber` ⭐ | Subscriber's personal area with real useUserAccess gate + book progress | yes + real access check | done v2 |
+| `/design-course/:slug` ⭐ | Course detail: 2-col layout, book/chapter sidebar, 3 tabs (base/enrichment/weekly) | yes + access gate | done |
 | `/design-chapter-weekly` | התכנית השבועית — 9 books with content | yes | done |
 | `/design-rabbis-list` | 179 rabbis directory | yes | done |
 | `/design-rabbi` | Single rabbi profile (defaults to top) | yes | done |
@@ -174,7 +175,7 @@ See **§ 8. Open work** for the full plan.
 | `/design-community` | Community + 3 membership tiers + active courses | yes | done |
 | `/design-bible-book/:book` | Browse a Bible book — chapters with lesson counts | yes | done |
 | `/design-donate` | Donation flow with presets, recurring, dedication | n/a (form only) | done |
-| `/design-megilat-esther` ⭐ | Subscription sales + login-to-personal-area path | n/a (sales) | done |
+| `/design-megilat-esther` ⭐ | Subscription sales — single-tier ₪5→₪110 direct debit; real Grow payment; Drive content | yes (access check) | done v2 |
 | `/design-memorial-saadia` | Memorial for סעדיה דרעי הי״ד | yes (existing assets) | done — 4 photo slots empty |
 | `/design-research` | Editorial research doc: 32 design patterns | n/a (data) | done — Saar wants visual examples per pattern |
 
@@ -224,6 +225,11 @@ Subscription tiers (matching the Esther sales page):
 ---
 
 ## 8. Open work — for next sessions
+
+### Priority 0: Weekly program migration + subscriber import (blocking)
+Saar must paste `supabase/migrations/20260430_weekly_program_foundation.sql` in Supabase Dashboard SQL Editor.
+After that: `env -u HTTPS_PROXY -u HTTP_PROXY node scripts/import-weekly-chapter-subscribers.mjs --dry-run` → confirm → run live.
+Only then `useUserAccess` and the gating in `/design-megilat-esther` and `/design-portal-subscriber` will work with real data.
 
 ### Priority 1: Sidebar unification with Teachers Wing
 **Saar's spec (2026-04-30):**

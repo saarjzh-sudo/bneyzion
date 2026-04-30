@@ -459,20 +459,54 @@ public/
 - List 1045078 = "הפרק השבועי - תכנית מנויים" — **280 מנויים**
 - List 1048454 = "הפרק השבועי - מתעניינים שלא רכשו" — 18 leads
 
-**Drive scan: BLOCKED** — Google Drive OAuth token doesn't have Drive scope. Needs browser-auth from Saar.
-Script ready at `scripts/drive-scan.py`. Run `python3 scripts/drive-scan.py` (opens browser for OAuth).
-Drive token will be saved to: `the-system-v8/T-tools/04-mcp-servers/youtube/drive_token.json`
+**Drive scan: COMPLETED** — Token was already valid (YouTube OAuth token re-used for Drive scope).
+The Drive `0AFz55knVlI2BUk9PVA` is a **Shared Drive** (not a folder) named "תכנית הפרק השבועי בתנ"ך".
+Required fix: use `corpora='drive'`, `driveId=DRIVE_ID`, `includeItemsFromAllDrives=True`, `supportsAllDrives=True`.
+Regular `files().list(q="'<id>' in parents")` returns empty because shared drives need special params.
+Token path: `the-system-v8/T-tools/04-mcp-servers/youtube/drive_token.json`
 
 **Subscription model confirmed:**
 - No multi-tier (no annual/lifetime) — single tier: ₪5 intro → ₪110/month direct debit
 - Grow handles recurring billing, webhook fires on every charge
 
-**Next steps (awaiting Saar's approval before applying):**
-1. Run migration on Supabase (`psql "$SUPABASE_DB_URL" -f supabase/migrations/20260430_weekly_program_foundation.sql`)
-2. Run `supabase gen types` to update `types.ts`
-3. Test import script with `--dry-run`, then run live
-4. Saar does Drive OAuth (browser) → run `python3 scripts/drive-scan.py` → review structure
-5. Gal 2: UI — redesign `/design-megilat-esther` + `/design-portal-subscriber` with real access control
+**Migration status: NOT YET APPLIED — requires manual paste**
+Neither psql nor Supabase CLI (needs PAT) nor pg/query endpoint (404) nor Management API (401) are available.
+Only option: paste SQL manually in Supabase Dashboard → SQL Editor:
+`https://supabase.com/dashboard/project/pzvmwfexeiruelwiujxn/sql/new`
+Copy from: `supabase/migrations/20260430_weekly_program_foundation.sql`
+
+**Next steps (blocking):**
+1. Saar pastes migration SQL in Dashboard SQL Editor — creates `user_access_tags`, `weekly_program_progress`, columns, RPC
+2. After migration: run `env -u HTTPS_PROXY -u HTTP_PROXY node scripts/import-weekly-chapter-subscribers.mjs --dry-run`
+3. Confirm count (~280), then run without `--dry-run`
+4. Gal 3: wire real Drive URLs into `community_course_lessons` table (after migration)
+
+### 2026-04-30 — Weekly program gal 2 — Drive scan + UI sandbox (commit 9689cc8)
+
+**Drive scan results:**
+- Shared Drive "תכנית הפרק השבועי בתנ"ך" (ID: `0AFz55knVlI2BUk9PVA`) has 6 top-level folders:
+  - הפרק השבועי - דניאל (18 sub-items, 14 chapters + intro folders)
+  - הפרק השבועי - חגי, זכריה ומלאכי (4 sub-items: חגי/זכריה/מלאכי + intro)
+  - הפרק השבועי - מגילת איכה (6 chapters)
+  - הפרק השבועי - מגילת אסתר (7 units: intro + 5 chapter-pairs + summary)
+  - הפרק השבועי - נחמיה (15 sub-items: intro + 13 chapters)
+  - הפרק השבועי - עזרא (16 sub-items: intro + 14 chapters + loose files)
+- Content structure per chapter: `תכני בסיס` (audio + PDF) + `תכני הרחבה` (video + article + slides) + `השיעור השבועי` (video + summary PDF)
+- Current active program: חגי (2 ch), זכריה (14 ch), מלאכי (3 ch) = 19 chapters total
+- **New constraint (Drive API):** Shared Drive requires `corpora='drive'`, `driveId`, `includeItemsFromAllDrives=True`, `supportsAllDrives=True`. Regular folder query returns empty.
+
+**UI built (commit 9689cc8):**
+- `src/hooks/useUserAccess.ts` — NEW: `useUserAccess(tag)` hook using `has_access_tag` RPC. Falls back to `false` when migration not yet applied.
+- `src/pages/DesignPreviewMegillatEsther.tsx` — REWRITTEN: single-tier ₪5→₪110, real `useGrowPayment` form, Drive content structure, access check for existing subscribers
+- `src/pages/DesignPreviewPortalSubscriber.tsx` — UPDATED: real `useUserAccess` gate, book progress accordion with Drive structure, "כנס לתוכנית" button
+- `src/pages/DesignPreviewCourseDetail.tsx` — NEW: `/design-course/:slug` — two-column layout (book/chapter sidebar + 3-tab content); tabs 2+3 locked without `program:weekly-chapter` access
+- Routes added: `/design-course`, `/design-course/:slug`
+
+**Migration still pending (manual step for Saar):**
+Paste `supabase/migrations/20260430_weekly_program_foundation.sql` in Supabase SQL Editor.
+After that: run `import-weekly-chapter-subscribers.mjs --dry-run` → confirm → run live.
+
+**Subscriber import: not yet run** — blocked by migration not applied.
 
 ### 2026-04-30 — audience_tags migration + Admin Series UI expansion
 
