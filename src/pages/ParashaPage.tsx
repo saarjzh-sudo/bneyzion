@@ -25,6 +25,7 @@ import LessonDialog from "@/components/lesson/LessonDialog";
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
+import "@/styles/parasha-print.css";
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -265,8 +266,8 @@ const ParashaPage = () => {
         />
 
         <div className="container max-w-4xl relative z-10">
-          {/* Breadcrumb */}
-          <div className="flex items-center justify-between mb-6 print:mb-2">
+          {/* Breadcrumb — hidden in print */}
+          <div className="flex items-center justify-between mb-6 print:hidden">
             <nav className="flex items-center gap-1.5 text-sm text-white/55">
               <Link to="/" className="hover:text-white/90 transition-colors">
                 דף הבית
@@ -276,28 +277,28 @@ const ParashaPage = () => {
             </nav>
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-1.5 text-sm text-white/55 hover:text-white transition-colors print:hidden"
+              className="flex items-center gap-1.5 text-sm text-white/55 hover:text-white transition-colors"
             >
               <Printer className="h-3.5 w-3.5" />
               הדפסה
             </button>
           </div>
 
-          {/* Title block */}
+          {/* Title block — becomes print masthead */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
-            className="text-center mb-2"
+            className="text-center mb-2 print-masthead"
           >
             <p
-              className="text-sm uppercase tracking-widest mb-3"
+              className="text-sm uppercase tracking-widest mb-3 print-masthead__super"
               style={{ color: colors.goldShimmer, fontFamily: fonts.body, opacity: 0.75 }}
             >
               פרשת השבוע
             </p>
             <h1
-              className="text-4xl md:text-6xl mb-2 leading-tight"
+              className="text-4xl md:text-6xl mb-2 leading-tight print-masthead__title"
               style={{
                 fontFamily: fonts.display,
                 color: "#fff",
@@ -308,7 +309,7 @@ const ParashaPage = () => {
             </h1>
             {chumash && (
               <p
-                className="text-base mt-1"
+                className="text-base mt-1 print-masthead__chumash"
                 style={{ color: colors.goldShimmer, fontFamily: fonts.body, opacity: 0.75 }}
               >
                 חומש {chumash}
@@ -316,18 +317,18 @@ const ParashaPage = () => {
             )}
           </motion.div>
 
-          {/* Featured verse */}
+          {/* Featured verse — styled box in print */}
           {verse && (
             <motion.blockquote
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="mt-5 max-w-2xl mx-auto text-center text-base md:text-lg leading-relaxed print:mt-3"
+              className="print-verse mt-5 max-w-2xl mx-auto text-center text-base md:text-lg leading-relaxed print:mt-3"
               style={{ fontFamily: fonts.display, color: "rgba(255,255,255,0.78)" }}
             >
               ״{verse.text}״
               <span
-                className="block text-xs mt-2"
+                className="verse-ref block text-xs mt-2"
                 style={{ color: colors.goldShimmer, opacity: 0.65, fontFamily: fonts.body }}
               >
                 [{verse.reference}]
@@ -490,9 +491,9 @@ const ParashaPage = () => {
       >
         <div className="container max-w-3xl" dir="rtl">
 
-          {/* Loading skeleton */}
+          {/* Loading skeleton — hidden in print */}
           {isLoading && (
-            <div className="space-y-10">
+            <div className="space-y-10 print:hidden">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="animate-pulse">
                   <div className="h-6 bg-amber-100 rounded-lg w-1/3 mb-4" />
@@ -528,7 +529,8 @@ const ParashaPage = () => {
               </div>
             )}
 
-          {/* Article sections */}
+          {/* Article sections — wrapped in print-columns for 2-col bulletin layout */}
+          <div className="print-columns">
           {articlesWithContent.map((article, i) => (
             <motion.article
               key={`${article.title}-${i}`}
@@ -550,7 +552,7 @@ const ParashaPage = () => {
 
               {/* Section header */}
               <header
-                className="flex items-start gap-4 mb-6 print:mb-3"
+                className="print-article-header flex items-start gap-4 mb-6 print:mb-3"
                 style={{
                   borderBottom: `2px solid rgba(139,111,71,0.15)`,
                   paddingBottom: "1rem",
@@ -567,7 +569,7 @@ const ParashaPage = () => {
                   >
                     {article.title}
                   </h2>
-                  <p className="text-sm mt-1" style={{ color: colors.textMuted, fontFamily: fonts.body }}>
+                  <p className="rabbi-byline text-sm mt-1" style={{ color: colors.textMuted, fontFamily: fonts.body }}>
                     {article.rabbi}
                   </p>
                 </div>
@@ -731,6 +733,7 @@ const ParashaPage = () => {
               </div>
             </motion.div>
           )}
+          </div>{/* end print-columns */}
 
           {/* Audio & lessons section */}
           {(hasAudio || hasLessons) && (

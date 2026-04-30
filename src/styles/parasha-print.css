@@ -1,0 +1,467 @@
+/*
+ * parasha-print.css
+ * Print / PDF stylesheet for /parasha — produces a polished shabbat bulletin
+ * look, not a browser-printout. Loaded in ParashaPage.tsx.
+ *
+ * Design goals:
+ *   - A4 portrait, 15mm margins (JLREQ / RTL safe)
+ *   - 2-column article body (standard synagogue bulletin layout)
+ *   - Large decorative title, styled verse box, rabbi small-caps bylines
+ *   - Drop-cap on first paragraph of each article
+ *   - Ornamental ◆ dividers between articles
+ *   - Gold accent (printed as warm dark-amber at ~20% opacity so it
+ *     survives B&W printers)
+ *   - Bnei Zion footer on every page
+ *   - Everything that is UI (nav, CTA cards, audio grid, TOC) is hidden
+ *
+ * RTL notes:
+ *   - direction: rtl is set on html already; we re-assert on #print-root
+ *   - column-fill: balance keeps columns even; avoid column-span on RTL
+ *     (Chrome bug with column-span + RTL — we use margin trick instead)
+ *   - drop-cap uses float: right (not float: left) for RTL
+ */
+
+@media print {
+
+  /* ── Page setup ───────────────────────────────────────────────── */
+
+  @page {
+    size: A4 portrait;
+    margin: 15mm 18mm 20mm 18mm;
+  }
+
+  @page :left  { margin-right: 22mm; margin-left: 14mm; }
+  @page :right { margin-left:  22mm; margin-right: 14mm; }
+
+  /* ── Global reset for print ───────────────────────────────────── */
+
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  html {
+    font-size: 10pt;
+    direction: rtl;
+  }
+
+  body {
+    background: #fff !important;
+    color: #1a0f05 !important;
+    font-family: 'Ploni', 'Frank Ruhl Libre', serif !important;
+    line-height: 1.7 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ── Hide everything that is site chrome / UI ─────────────────── */
+
+  /* Production Layout chrome */
+  header,
+  footer,
+  nav,
+  aside,
+  [class*="Header"],
+  [class*="Footer"],
+  [class*="MobileBottom"],
+  [class*="Sidebar"],
+  [class*="sidebar"],
+  [data-radix-toast-viewport],
+  [role="dialog"],
+  [role="alertdialog"],
+  .print\:hidden,
+  /* Sticky TOC */
+  [style*="position: sticky"],
+  /* Framer motion overlays */
+  [data-framer-portal-id] {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* ── Breadcrumb / back-to-top / print button ──────────────────── */
+
+  /* These carry .print:hidden in JSX already, but belt-and-suspenders */
+  a[href="/"],
+  button:not([data-print-keep]) {
+    display: none !important;
+  }
+
+  /* ── Layout container ─────────────────────────────────────────── */
+
+  /* Remove all padding / margin from React wrappers */
+  .container,
+  [class*="container"],
+  main,
+  section,
+  article {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+  }
+
+  /* The hero section becomes the print masthead — no background color */
+  section:first-of-type {
+    background: #fff !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* ── Print masthead ───────────────────────────────────────────── */
+
+  .print-masthead {
+    text-align: center;
+    padding-bottom: 8pt;
+    border-bottom: 2.5pt solid #5a3a12;
+    margin-bottom: 12pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* "פרשת השבוע" super-label */
+  .print-masthead__super {
+    font-family: 'Ploni', sans-serif;
+    font-size: 8pt;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #7a5530;
+    margin-bottom: 4pt;
+    display: block;
+  }
+
+  /* Main parasha title */
+  .print-masthead__title {
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+    font-size: 36pt;
+    font-weight: 900;
+    color: #1a0f05;
+    line-height: 1.1;
+    margin: 0 0 4pt;
+    /* Decorative: light outer glow via text-shadow in print-color-adjust exact */
+    text-shadow: 0 0 0 transparent; /* neutral — we don't rely on shadow in B&W */
+  }
+
+  /* Chumash sub-label */
+  .print-masthead__chumash {
+    font-family: 'Ploni', sans-serif;
+    font-size: 10pt;
+    color: #7a5530;
+    margin-top: 2pt;
+    display: block;
+  }
+
+  /* ── Verse box ────────────────────────────────────────────────── */
+
+  blockquote.print-verse,
+  .print-verse {
+    display: block;
+    margin: 10pt auto 14pt;
+    max-width: 80%;
+    padding: 8pt 14pt;
+    border: 1.5pt solid #8b6f47;
+    border-radius: 3pt;
+    background: #faf6f0 !important;
+    text-align: center;
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+    font-size: 11.5pt;
+    line-height: 1.65;
+    color: #2d1f0e;
+    font-style: italic;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .print-verse .verse-ref {
+    display: block;
+    margin-top: 5pt;
+    font-family: 'Ploni', sans-serif;
+    font-size: 7.5pt;
+    letter-spacing: 0.08em;
+    color: #8b6f47;
+    font-style: normal;
+  }
+
+  /* ── Two-column article body ──────────────────────────────────── */
+
+  .print-columns {
+    column-count: 2;
+    column-gap: 22pt;
+    column-fill: balance;
+    column-rule: 0.5pt solid rgba(139, 111, 71, 0.35);
+    direction: rtl;
+  }
+
+  /* Each article stays together as much as possible */
+  .print-columns > article,
+  .print-columns > .article-block {
+    break-inside: avoid-column;
+    page-break-inside: avoid;
+  }
+
+  /* Article that is long enough should be allowed to flow across columns */
+  .print-columns > article.print-allow-break,
+  .print-columns > .article-block.print-allow-break {
+    break-inside: auto;
+  }
+
+  /* ── Article section header ───────────────────────────────────── */
+
+  .print-article-header {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 6pt;
+    padding-bottom: 4pt;
+    border-bottom: 1pt solid rgba(139, 111, 71, 0.3);
+  }
+
+  .print-article-header h2 {
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+    font-size: 14pt;
+    font-weight: 900;
+    color: #1a0f05;
+    margin: 0 0 2pt;
+    line-height: 1.2;
+  }
+
+  /* Rabbi byline — small-caps style */
+  .print-article-header .rabbi-byline {
+    font-family: 'Ploni', sans-serif;
+    font-size: 7.5pt;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    color: #7a5530;
+    text-transform: uppercase;
+  }
+
+  /* ── Drop cap ─────────────────────────────────────────────────── */
+
+  /* Override the screen drop-cap for print (RTL: float right) */
+  .parasha-drop-cap > p:first-of-type::first-letter,
+  .print-drop-cap > p:first-of-type::first-letter {
+    float: right !important;
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif !important;
+    font-size: 42pt !important;
+    font-weight: 900 !important;
+    line-height: 0.75 !important;
+    padding-left: 5pt !important;
+    padding-top: 2pt !important;
+    padding-bottom: 0 !important;
+    color: #5a3a12 !important;
+    margin-bottom: -2pt !important;
+  }
+
+  /* ── Article body text ────────────────────────────────────────── */
+
+  .prose,
+  .prose-xl,
+  .print-body {
+    font-family: 'Ploni', 'Frank Ruhl Libre', serif !important;
+    font-size: 9.5pt !important;
+    line-height: 1.7 !important;
+    color: #1a0f05 !important;
+    max-width: none !important;
+  }
+
+  .prose p,
+  .print-body p {
+    margin-bottom: 5pt !important;
+    text-align: justify !important;
+    orphans: 2;
+    widows: 2;
+  }
+
+  .prose h2,
+  .prose h3,
+  .print-body h2,
+  .print-body h3 {
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif !important;
+    font-size: 12pt !important;
+    font-weight: 700 !important;
+    color: #1a0f05 !important;
+    margin: 8pt 0 3pt !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  .prose strong,
+  .print-body strong {
+    color: #1a0f05 !important;
+    font-weight: 700 !important;
+  }
+
+  /* ── Pull-quote / aside ───────────────────────────────────────── */
+
+  .print-pullquote,
+  aside[aria-label="ציטוט מודגש"] {
+    background: #faf6f0 !important;
+    border-right: 3pt solid #8b6f47 !important;
+    border-left: none !important;
+    padding: 5pt 9pt !important;
+    margin: 7pt 0 !important;
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif !important;
+    font-size: 9.5pt !important;
+    line-height: 1.65 !important;
+    color: #3d2a14 !important;
+    font-style: italic !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border-radius: 0 !important;
+  }
+
+  /* ── Ornamental dividers ──────────────────────────────────────── */
+
+  /* The ◆ dividers between articles */
+  .print-divider,
+  [aria-hidden="true"]:has(span[style*="color: rgb(139, 111, 71)"]),
+  [aria-hidden] {
+    column-span: none; /* avoid column-span RTL Chrome bug */
+    break-inside: avoid;
+    page-break-inside: avoid;
+    text-align: center;
+    margin: 8pt 0 !important;
+    color: #8b6f47 !important;
+    font-size: 10pt;
+  }
+
+  /* Fallback: style the inline divider divs the JSX renders */
+  .ornamental-divider-print {
+    display: flex;
+    align-items: center;
+    gap: 6pt;
+    margin: 8pt 0;
+    color: #8b6f47;
+    font-size: 10pt;
+  }
+  .ornamental-divider-print::before,
+  .ornamental-divider-print::after {
+    content: '';
+    flex: 1;
+    height: 0.5pt;
+    background: #8b6f47;
+    opacity: 0.5;
+  }
+
+  /* ── Riddle section ───────────────────────────────────────────── */
+
+  #riddle {
+    break-before: avoid;
+    page-break-before: avoid;
+    break-inside: avoid-column;
+  }
+
+  #riddle h2 {
+    font-family: 'Kedem', 'Frank Ruhl Libre', serif !important;
+    font-size: 13pt !important;
+    color: #1a0f05 !important;
+    margin-bottom: 4pt !important;
+  }
+
+  /* The teal riddle header card */
+  #riddle > div:first-of-type {
+    background: #f0f7f7 !important;
+    border: 1pt solid rgba(45, 125, 125, 0.35) !important;
+    border-radius: 3pt !important;
+    padding: 6pt 10pt !important;
+    margin-bottom: 6pt !important;
+  }
+
+  /* ── Page footer (Bnei Zion credit) ──────────────────────────── */
+  /*
+   * CSS @page margin-box for running footer.
+   * Chrome supports @bottom-center in @page — we use it for a clean credit.
+   */
+
+  @page {
+    @bottom-center {
+      content: "תנועת בני ציון ללימוד תנ\"ך  |  bneyzion.co.il";
+      font-family: 'Ploni', sans-serif;
+      font-size: 7pt;
+      color: #8b6f47;
+      border-top: 0.5pt solid rgba(139, 111, 71, 0.35);
+      padding-top: 4pt;
+      width: 100%;
+      text-align: center;
+    }
+
+    @bottom-right-corner {
+      content: counter(page);
+      font-family: 'Ploni', sans-serif;
+      font-size: 7pt;
+      color: #8b6f47;
+    }
+  }
+
+  /* Supplementary in-flow footer (visible in PDF viewers that skip @page margin) */
+  body::after {
+    content: "תנועת בני ציון ללימוד תנ\"ך  |  bneyzion.co.il";
+    display: block;
+    text-align: center;
+    font-family: 'Ploni', sans-serif;
+    font-size: 7pt;
+    color: #8b6f47;
+    border-top: 0.5pt solid rgba(139, 111, 71, 0.35);
+    padding-top: 4pt;
+    margin-top: 16pt;
+  }
+
+  /* ── Page breaks ──────────────────────────────────────────────── */
+
+  article {
+    break-inside: avoid-column;
+    orphans: 3;
+    widows: 3;
+  }
+
+  h1, h2, h3, h4 {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Give enough room so last column doesn't orphan a heading */
+  h2 + p,
+  h3 + p {
+    break-before: avoid;
+    page-break-before: avoid;
+  }
+
+  /* ── Suppress links / interactive chrome ──────────────────────── */
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  a[href]::after {
+    content: none !important; /* no URL printing */
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* ── Remove motion / shadow ───────────────────────────────────── */
+
+  * {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* ── Heading hierarchy for exported PDF bookmarks ─────────────── */
+
+  h1 { font-size: 36pt; }
+  h2 { font-size: 14pt; }
+  h3 { font-size: 11pt; }
+
+}
+/* ── END @media print ─────────────────────────────────────────────────────── */
