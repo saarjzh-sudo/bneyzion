@@ -509,6 +509,33 @@ They will NOT be reproduced in the unified sidebar. Instead, content is tagged a
 **New constraint:** Never add audience-tag categories to the UI without a corresponding DB tag value.
 Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
+### 2026-04-30 — Series page redesign — Saar feedback (8 points)
+
+**Reference:** Previous design at https://bneyzion.vercel.app/design-series-page/b6eac28f-ee7f-4e3b-8b56-3946a00a979a
+**New sandbox route:** `/design-series-page-v2/:id` (production route `/design-series-page` untouched)
+
+**The 8 critique points (verbatim understanding):**
+
+1. **סדרה ≠ דרמה.** "סדרה" היא בסך הכל קטגוריה — העיצוב הקודם היה דרמטי מדי לדבר כל-כך יומיומי. העיצוב החדש צריך להיות נקי, ישיר, קטלוגי — לא מסרט תיעודי.
+
+2. **לוגו בני ציון חסר בסיידבר.** הלוגו צריך להופיע בפינה שמאל-עליונה של הסיידבר וגם לשמש כ-link לדף הבית (`/`).
+
+3. **פחות כפתורים בהירו.** כפתור "התחל את הסדרה" — מיותר, מחוסל. כפתורי "שתף" ו"שמור לרשימה" — הופכים לאייקונים קטנים ב-inline עם כותרת הסדרה, מוצגים על hover (דסקטופ) / tap-to-reveal (מובייל).
+
+4. **הירו מקוצר.** כותרת + רב + X שיעורים · משך בלבד. ללא חלק התחתון הגדול.
+
+5. **ישר מתחת להירו — שיעורים.** לא "על הסדרה" כפסקה, ישר לגריד השיעורים.
+
+6. **סדרות-בנות = היררכיה ויזואלית.** אם לסדרה יש סדרות-בנות (parent_id / series_links), יש להציג אותן כקבוצה נפרדת עליונה ("חלקי הסדרה") בכרטיסים גדולים יותר, ומתחת — השיעורים הישירים של הסדרה הראשית.
+
+7. **כרטיסים עם תמונה לכל שיעור וסדרה.** הסגנון של דף הבית — כרטיס = תמונה למעלה + כותרת + מטא. תמונות שונות לספרים/סדרות שונים. כרגע placeholder זמני עד שסער יביא תמונות סופיות מהמעצב.
+
+8. **לחיצה על שיעור = modal.** שמירה על SEO — ה-URL נשאר, מתעדכן רק עם `?lesson=ID`. ה-modal: תמונת השיעור גדולה למעלה, נגן, כותרת, תיאור, ולינק "פתח בעמוד מלא" → `/lessons/:id`.
+
+**כלל ברזל שנלמד:** "סדרה ≠ קטגוריה דרמטית. סדרה = קטגוריה." — כל דף סדרה עתידי צריך להיות נקי וקטלוגי, לא דרמטי/קולנועי.
+
+**מה זמני (TODO):** תמונות ה-placeholder לשיעורים הן אלמנט עיצוב זמני. המעצב יביא תמונות ייעודיות לכל ספר/סדרה. אל תפנים את ה-placeholder כפתרון קבוע.
+
 ### 2026-04-30 — Homepage nav fix: push was missing, changes now live
 
 **Root cause:** `DesignPreviewHome.tsx` שינויים מסשן קודם נשמרו מקומית אבל לא push — לכן לא היה גלוי ב-Vercel ולא בבילדר (שרץ על the-system-v8, לא על bneyzion).
