@@ -536,6 +536,20 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 
 **מה זמני (TODO):** תמונות ה-placeholder לשיעורים הן אלמנט עיצוב זמני. המעצב יביא תמונות ייעודיות לכל ספר/סדרה. אל תפנים את ה-placeholder כפתרון קבוע.
 
+### 2026-04-30 — audience_tags migration APPLIED + types regenerated
+
+**Migration run:** `supabase/migrations/20260430_audience_tags.sql` — applied via `supabase db push`
+- `audience_tags TEXT[] DEFAULT ARRAY['general']` added to `series` + `lessons`
+- GIN indexes created on both tables
+- Backfill result: **1 series** tagged `["teachers","general"]` — "כלי עזר - טבלאות זמני המאורעות ומפות"
+- All other 1,373 series defaulted to `["general"]` — Yoav bulk-tags via Admin UI
+- `src/integrations/supabase/types.ts` regenerated (`supabase gen types`)
+- `as any` casts removed from `src/hooks/useSeries.ts` + `src/pages/admin/Series.tsx`
+- `Series.audience_tags` changed from optional to required in the local interface
+- TS check: 0 errors
+- **Gotcha:** `supabase gen types` appends CLI update-warning to stdout — strip trailing non-TS lines
+- **Blocked:** `20260430_weekly_program_foundation.sql` still fails — `grow_orders` table missing in DB
+
 ### 2026-04-30 — Production Header updated (fc89c00)
 
 **Files changed:**

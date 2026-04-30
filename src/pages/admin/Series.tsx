@@ -124,13 +124,12 @@ export default function SeriesPage() {
     setBulkTagging(true);
     try {
       // For each selected series, merge "teachers" into existing tags
-      const toUpdate = (seriesList ?? []).filter((s: any) => selectedIds.has(s.id));
-      for (const s of toUpdate as any[]) {
+      const toUpdate = (seriesList ?? []).filter((s) => selectedIds.has(s.id));
+      for (const s of toUpdate) {
         const existing: string[] = s.audience_tags ?? ["general"];
         if (!existing.includes("teachers")) {
           const merged = [...existing, "teachers"];
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          await (supabase.from("series") as any).update({ audience_tags: merged }).eq("id", s.id);
+          await supabase.from("series").update({ audience_tags: merged }).eq("id", s.id);
         }
       }
       await qc.invalidateQueries({ queryKey: ["series"] });

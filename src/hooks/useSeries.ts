@@ -11,8 +11,7 @@ export interface Series {
   lesson_count: number;
   status: string;
   created_at: string;
-  /** Added by migration 20260430_audience_tags — may be absent until migration runs */
-  audience_tags?: string[];
+  audience_tags: string[];
 }
 
 export function useSeries() {
@@ -30,7 +29,7 @@ export function useCreateSeries() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (series: Partial<Series>) => {
-      const { data, error } = await supabase.from("series").insert([series as any]).select().single();
+      const { data, error } = await supabase.from("series").insert([series as { title: string } & Partial<Series>]).select().single();
       if (error) throw error;
       return data;
     },
@@ -42,8 +41,7 @@ export function useUpdateSeries() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...updates }: Partial<Series> & { id: string }) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data, error } = await (supabase.from("series") as any).update(updates).eq("id", id).select().single();
+      const { data, error } = await supabase.from("series").update(updates).eq("id", id).select().single();
       if (error) throw error;
       return data;
     },

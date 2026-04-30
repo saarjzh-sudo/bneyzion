@@ -10,10 +10,34 @@ export type Database = {
   // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "14.1"
+    PostgrestVersion: "14.5"
   }
   public: {
     Tables: {
+      chapters: {
+        Row: {
+          miracle_range: string
+          number: number
+          sort_order: number | null
+          subtitle: string | null
+          title: string
+        }
+        Insert: {
+          miracle_range: string
+          number: number
+          sort_order?: number | null
+          subtitle?: string | null
+          title: string
+        }
+        Update: {
+          miracle_range?: string
+          number?: number
+          sort_order?: number | null
+          subtitle?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       community_course_lessons: {
         Row: {
           attachment_url: string | null
@@ -390,39 +414,102 @@ export type Database = {
       donations: {
         Row: {
           amount: number
+          asmachta: string | null
+          card_suffix: string | null
           created_at: string
           dedication_name: string | null
           dedication_type: string
+          description: string | null
           donor_email: string | null
           donor_name: string | null
           id: string
+          invoice_id: string | null
+          invoice_number: string | null
+          invoice_url: string | null
           is_monthly: boolean
+          payment_id: string | null
+          payment_method: string | null
           payment_status: string
+          phone: string | null
+          product: string | null
+          raw_payload: Json | null
+          smoove_list_id: number | null
+          smoove_subscribed: boolean | null
+          transaction_type_id: number | null
           user_id: string | null
         }
         Insert: {
           amount: number
+          asmachta?: string | null
+          card_suffix?: string | null
           created_at?: string
           dedication_name?: string | null
           dedication_type?: string
+          description?: string | null
           donor_email?: string | null
           donor_name?: string | null
           id?: string
+          invoice_id?: string | null
+          invoice_number?: string | null
+          invoice_url?: string | null
           is_monthly?: boolean
+          payment_id?: string | null
+          payment_method?: string | null
           payment_status?: string
+          phone?: string | null
+          product?: string | null
+          raw_payload?: Json | null
+          smoove_list_id?: number | null
+          smoove_subscribed?: boolean | null
+          transaction_type_id?: number | null
           user_id?: string | null
         }
         Update: {
           amount?: number
+          asmachta?: string | null
+          card_suffix?: string | null
           created_at?: string
           dedication_name?: string | null
           dedication_type?: string
+          description?: string | null
           donor_email?: string | null
           donor_name?: string | null
           id?: string
+          invoice_id?: string | null
+          invoice_number?: string | null
+          invoice_url?: string | null
           is_monthly?: boolean
+          payment_id?: string | null
+          payment_method?: string | null
           payment_status?: string
+          phone?: string | null
+          product?: string | null
+          raw_payload?: Json | null
+          smoove_list_id?: number | null
+          smoove_subscribed?: boolean | null
+          transaction_type_id?: number | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      dor_site_content: {
+        Row: {
+          body: string | null
+          image_url: string | null
+          key: string
+          title: string | null
+        }
+        Insert: {
+          body?: string | null
+          image_url?: string | null
+          key: string
+          title?: string | null
+        }
+        Update: {
+          body?: string | null
+          image_url?: string | null
+          key?: string
+          title?: string | null
         }
         Relationships: []
       }
@@ -544,6 +631,7 @@ export type Database = {
       lessons: {
         Row: {
           attachment_url: string | null
+          audience_tags: string[]
           audio_url: string | null
           bible_book: string | null
           bible_chapter: number | null
@@ -566,6 +654,7 @@ export type Database = {
         }
         Insert: {
           attachment_url?: string | null
+          audience_tags?: string[]
           audio_url?: string | null
           bible_book?: string | null
           bible_chapter?: number | null
@@ -588,6 +677,7 @@ export type Database = {
         }
         Update: {
           attachment_url?: string | null
+          audience_tags?: string[]
           audio_url?: string | null
           bible_book?: string | null
           bible_chapter?: number | null
@@ -621,6 +711,13 @@ export type Database = {
             columns: ["series_id"]
             isOneToOne: false
             referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lessons_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
             referencedColumns: ["id"]
           },
         ]
@@ -802,6 +899,180 @@ export type Database = {
         }
         Relationships: []
       }
+      miracles: {
+        Row: {
+          body_biblical: string | null
+          body_intro: string | null
+          body_miracle: string | null
+          body_personal: string | null
+          chapter_number: number | null
+          cta_text: string | null
+          image_url: string | null
+          number: number
+          publish_at: string | null
+          status: string | null
+          suggested_image_keywords: string | null
+          title: string
+          updated_at: string | null
+          verse_source: string | null
+          verse_text: string | null
+        }
+        Insert: {
+          body_biblical?: string | null
+          body_intro?: string | null
+          body_miracle?: string | null
+          body_personal?: string | null
+          chapter_number?: number | null
+          cta_text?: string | null
+          image_url?: string | null
+          number: number
+          publish_at?: string | null
+          status?: string | null
+          suggested_image_keywords?: string | null
+          title: string
+          updated_at?: string | null
+          verse_source?: string | null
+          verse_text?: string | null
+        }
+        Update: {
+          body_biblical?: string | null
+          body_intro?: string | null
+          body_miracle?: string | null
+          body_personal?: string | null
+          chapter_number?: number | null
+          cta_text?: string | null
+          image_url?: string | null
+          number?: number
+          publish_at?: string | null
+          status?: string | null
+          suggested_image_keywords?: string | null
+          title?: string
+          updated_at?: string | null
+          verse_source?: string | null
+          verse_text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "miracles_chapter_number_fkey"
+            columns: ["chapter_number"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["number"]
+          },
+        ]
+      }
+      ohp_chat_messages: {
+        Row: {
+          content: string
+          created_at: string | null
+          id: string
+          message_id: string | null
+          role: string
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          id?: string
+          message_id?: string | null
+          role: string
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          id?: string
+          message_id?: string | null
+          role?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ohp_chat_messages_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ohp_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ohp_messages: {
+        Row: {
+          created_at: string | null
+          dedication: string | null
+          docx_filename: string | null
+          html_content: string | null
+          id: string
+          message_type: string
+          moreshet_url: string | null
+          parsha_name: string
+          pdf_url: string | null
+          status: string
+          subject: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          dedication?: string | null
+          docx_filename?: string | null
+          html_content?: string | null
+          id?: string
+          message_type?: string
+          moreshet_url?: string | null
+          parsha_name: string
+          pdf_url?: string | null
+          status?: string
+          subject?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          dedication?: string | null
+          docx_filename?: string | null
+          html_content?: string | null
+          id?: string
+          message_type?: string
+          moreshet_url?: string | null
+          parsha_name?: string
+          pdf_url?: string | null
+          status?: string
+          subject?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      ohp_send_logs: {
+        Row: {
+          campaign_id: string | null
+          id: string
+          list_ids: number[] | null
+          message_id: string | null
+          send_type: string
+          sent_at: string | null
+        }
+        Insert: {
+          campaign_id?: string | null
+          id?: string
+          list_ids?: number[] | null
+          message_id?: string | null
+          send_type: string
+          sent_at?: string | null
+        }
+        Update: {
+          campaign_id?: string | null
+          id?: string
+          list_ids?: number[] | null
+          message_id?: string | null
+          send_type?: string
+          sent_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ohp_send_logs_message_id_fkey"
+            columns: ["message_id"]
+            isOneToOne: false
+            referencedRelation: "ohp_messages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       order_items: {
         Row: {
           created_at: string
@@ -855,76 +1126,157 @@ export type Database = {
       }
       orders: {
         Row: {
+          asmachta: string | null
+          card_suffix: string | null
           created_at: string
           currency: string
           customer_email: string | null
           customer_name: string | null
           customer_phone: string | null
+          description: string | null
           discount: number
           id: string
           installments: number
+          invoice_id: string | null
+          invoice_number: string | null
           invoice_type: string
+          invoice_url: string | null
           notes: string | null
           order_number: string
           payment_id: string | null
           payment_method: string | null
           payment_status: string
+          product: string | null
+          raw_payload: Json | null
           shipping_address: string | null
           shipping_city: string | null
           shipping_zip: string | null
+          smoove_list_id: number | null
+          smoove_subscribed: boolean | null
           status: string
           subtotal: number
           total: number
+          transaction_type_id: number | null
           updated_at: string
           user_id: string | null
         }
         Insert: {
+          asmachta?: string | null
+          card_suffix?: string | null
           created_at?: string
           currency?: string
           customer_email?: string | null
           customer_name?: string | null
           customer_phone?: string | null
+          description?: string | null
           discount?: number
           id?: string
           installments?: number
+          invoice_id?: string | null
+          invoice_number?: string | null
           invoice_type?: string
+          invoice_url?: string | null
           notes?: string | null
           order_number?: string
           payment_id?: string | null
           payment_method?: string | null
           payment_status?: string
+          product?: string | null
+          raw_payload?: Json | null
           shipping_address?: string | null
           shipping_city?: string | null
           shipping_zip?: string | null
+          smoove_list_id?: number | null
+          smoove_subscribed?: boolean | null
           status?: string
           subtotal?: number
           total?: number
+          transaction_type_id?: number | null
           updated_at?: string
           user_id?: string | null
         }
         Update: {
+          asmachta?: string | null
+          card_suffix?: string | null
           created_at?: string
           currency?: string
           customer_email?: string | null
           customer_name?: string | null
           customer_phone?: string | null
+          description?: string | null
           discount?: number
           id?: string
           installments?: number
+          invoice_id?: string | null
+          invoice_number?: string | null
           invoice_type?: string
+          invoice_url?: string | null
           notes?: string | null
           order_number?: string
           payment_id?: string | null
           payment_method?: string | null
           payment_status?: string
+          product?: string | null
+          raw_payload?: Json | null
           shipping_address?: string | null
           shipping_city?: string | null
           shipping_zip?: string | null
+          smoove_list_id?: number | null
+          smoove_subscribed?: boolean | null
           status?: string
           subtotal?: number
           total?: number
+          transaction_type_id?: number | null
           updated_at?: string
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      payment_products: {
+        Row: {
+          active: boolean
+          created_at: string
+          default_amount: number | null
+          description: string | null
+          display_name: string
+          id: string
+          max_installments: number
+          page_code_env: string
+          smoove_list_id: number | null
+          smoove_list_name: string | null
+          target_table: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          default_amount?: number | null
+          description?: string | null
+          display_name: string
+          id: string
+          max_installments?: number
+          page_code_env: string
+          smoove_list_id?: number | null
+          smoove_list_name?: string | null
+          target_table?: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          default_amount?: number | null
+          description?: string | null
+          display_name?: string
+          id?: string
+          max_installments?: number
+          page_code_env?: string
+          smoove_list_id?: number | null
+          smoove_list_name?: string | null
+          target_table?: string
+          type?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -1095,8 +1447,36 @@ export type Database = {
         }
         Relationships: []
       }
+      registrations: {
+        Row: {
+          created_at: string | null
+          email: string
+          full_name: string
+          id: number
+          participants: string | null
+          phone: string
+        }
+        Insert: {
+          created_at?: string | null
+          email: string
+          full_name: string
+          id?: never
+          participants?: string | null
+          phone: string
+        }
+        Update: {
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          id?: never
+          participants?: string | null
+          phone?: string
+        }
+        Relationships: []
+      }
       series: {
         Row: {
+          audience_tags: string[]
           created_at: string
           description: string | null
           id: string
@@ -1109,6 +1489,7 @@ export type Database = {
           title: string
         }
         Insert: {
+          audience_tags?: string[]
           created_at?: string
           description?: string | null
           id?: string
@@ -1121,6 +1502,7 @@ export type Database = {
           title: string
         }
         Update: {
+          audience_tags?: string[]
           created_at?: string
           description?: string | null
           id?: string
@@ -1138,6 +1520,13 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "series_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
             referencedColumns: ["id"]
           },
           {
@@ -1180,10 +1569,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "series_links_linked_series_id_fkey"
+            columns: ["linked_series_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "series_links_source_series_id_fkey"
             columns: ["source_series_id"]
             isOneToOne: false
             referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "series_links_source_series_id_fkey"
+            columns: ["source_series_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
             referencedColumns: ["id"]
           },
         ]
@@ -1197,7 +1600,7 @@ export type Database = {
         Insert: {
           key: string
           updated_at?: string
-          value?: string
+          value: string
         }
         Update: {
           key?: string
@@ -1355,6 +1758,13 @@ export type Database = {
             referencedRelation: "series"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "user_enrollments_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_favorite_rabbis: {
@@ -1411,6 +1821,13 @@ export type Database = {
             columns: ["series_id"]
             isOneToOne: false
             referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_favorite_series_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
             referencedColumns: ["id"]
           },
         ]
@@ -1622,6 +2039,27 @@ export type Database = {
       }
     }
     Views: {
+      series_with_audience: {
+        Row: {
+          audience_tags: string[] | null
+          id: string | null
+          lesson_count: number | null
+          rabbi_id: string | null
+          rabbi_name: string | null
+          status: string | null
+          teacher_tagged: boolean | null
+          title: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "series_rabbi_id_fkey"
+            columns: ["rabbi_id"]
+            isOneToOne: false
+            referencedRelation: "rabbis"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       weekly_leaderboard: {
         Row: {
           avatar_url: string | null
