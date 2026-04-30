@@ -584,6 +584,52 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 - **Gotcha:** `supabase gen types` appends CLI update-warning to stdout — strip trailing non-TS lines
 - **Blocked:** `20260430_weekly_program_foundation.sql` still fails — `grow_orders` table missing in DB
 
+### 2026-04-30 — Series page v2 — round 2 fixes (6 feedback points)
+
+**Saar feedback verbatim → what was fixed:**
+
+1. **Header disappeared** — Root cause: `CompactSeriesHero` had its own `marginTop: -96`
+   INSIDE `<main>`, AND `DesignLayout` with `overlapHero` ALSO adds `-96` to `<main>`.
+   Combined = hero flew 192px above the top, visually obscuring the header.
+   Fix: removed the internal `marginTop: -96` from `CompactSeriesHero`. Only `DesignLayout`
+   `overlapHero` controls the overlap now. This is the canonical pattern — match
+   `DesignPreviewLessonPage.tsx` which does the same (hero has no internal marginTop).
+
+2. **"קאנון מקודש" badge removed** — The `seriesFamilies[family].label` in Hebrew shows
+   "קאנון מקודש" for the sacredCanon family. Saar doesn't want family badges on the
+   series page hero. Removed entirely. Family labels stay in `designTokens.ts` for
+   other future use but are not shown on this page.
+
+3. **"שיעורים בסדרה" section title removed** — Cards speak for themselves. Replaced
+   with a small subtle count pill aligned to the right.
+
+4. **LessonModal enhanced — parity with production LessonPage:**
+   - Print button (`window.print()`)
+   - Save to favorites toggle (heart icon, local state — real Supabase hook is future work)
+   - "שיעורים נוספים מהסדרה" grid at bottom (up to 6 cards with thumbnails + title + duration)
+   - "פתח בעמוד מלא" link moved into the action bar alongside Print/Favorites
+   - `allLessons` prop added to `LessonModal` so it has access to sibling lessons
+
+5. **Default route shows real sub-series** — `/design-series-page-v2` (no param) now uses
+   series ID `35781f30-76a7-4fc6-aa06-52a1db4a4054` ("איכה") which has 9 active children.
+   Previously it fell through to the top series by lesson_count which had no sub-series.
+
+6. **Data hook swapped** — Was using `useTopSeries(200)` then searching for the ID.
+   Problem: `useTopSeries` filters `status=active` only; "איכה" parent is `status=published`.
+   Fix: replaced with `useSeriesDetail(targetId)` which fetches by ID with no status filter.
+
+**New real series URLs for demo:**
+- Sub-series demo: `/design-series-page-v2` → ID `35781f30...` ("איכה") — 9 child series visible
+- Regular series: `/design-series-page-v2/41b62e31-0643-4368-b8ff-04dc25dc2603` — "שיר השירים" (18L, no children)
+
+**Iron rule confirmed (from this session):**
+- LessonModal must maintain parity with production `LessonPage.tsx` features:
+  print, favorites, related lessons grid. Don't invent new UX — mirror what exists.
+- Never put `marginTop: -96` inside a component rendered inside `DesignLayout overlapHero`.
+  The layout handles the offset. Double application causes the header to disappear.
+
+**File changed:** `src/pages/DesignPreviewSeriesPageV2.tsx`
+
 ### 2026-04-30 — Production Header updated (fc89c00)
 
 **Files changed:**
