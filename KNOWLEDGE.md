@@ -1356,5 +1356,206 @@ as the card container — parchmentDark as the image-slot background. No gradien
 
 ---
 
+---
+
+## 11. Weekly-chapter program — consolidated architecture reference
+
+Assembled 2026-04-30 to give future sessions a single place that explains
+the full design, prevents repeated misunderstandings, and captures all
+decisions Saar confirmed.
+
+### 11.1 Three separate layers (not one monolithic page)
+
+| Layer | Route | Who can access | Purpose |
+|-------|-------|---------------|---------|
+| **אזור אישי** | `/portal` | Any registered user (no paywall) | Personal dashboard — progress, streak, favorites, suggestions |
+| **הקורסים שלי** | `/courses` | Any registered user (catalog), gated content needs subscription | Catalog of courses the user has or can acquire |
+| **דף קורס** | `/course/:slug` | Any for "בסיס" tab, subscription required for "הרחבה" + "שיעור שבועי" | Course content with per-tab access gate |
+
+**Files (post production-swap commit 1bab02e):**
+- `/portal` → `src/pages/DesignPreviewPortalSubscriber.tsx`
+- `/courses` → `src/pages/DesignPreviewCoursesCatalog.tsx`
+- `/course/:slug` → `src/pages/DesignPreviewCourseDetail.tsx`
+- `/portal-old` → legacy `src/pages/Portal.tsx` (backup, 30-day window)
+
+### 11.2 "הקורסים שלי" is ONE master course card — not per-book
+
+**CRITICAL confusion to avoid in future sessions:**
+חגי / זכריה / מלאכי / דניאל / אסתר / עזרא-נחמיה / איכה / יהושע are
+**NOT separate courses**. They are sub-units inside the single master course
+"הפרק השבועי בתנ״ך — תכנית המנויים, הרב יואב אוריאל".
+
+The catalog at `/courses` shows:
+1. One big "weekly-chapter" master card (8-book mini-timeline, overall progress ring)
+2. Additional independent courses (e.g. "איך ללמוד תנ״ך" completed, future: "פרשת השבוע", "פרקי אבות", "תהילים")
+
+Never break out individual books as separate course cards in the catalog.
+
+### 11.3 Three user states and what each sees
+
+| State | Who | Primary CTA | Stats shown |
+|-------|-----|------------|-------------|
+| **subscriber** | active `program:weekly-chapter` tag | "כנס ללימוד הפרק השבועי — לחיות תנ״ך" (gold tile, large) | 4 tiles: chaptersCompleted / weeksActive / hoursLearned / **streakWeeks** with orange flame glow at 7+ |
+| **member** | registered, no subscription | "המשך מאיפה שהפסקת" (teal, links to free series) | 3 tiles: hoursLearned / lessonsWatched / favorites (NO streak) |
+| **guest** | not logged in | "הירשם בחינם" | landing/marketing only |
+
+Member upsell card (olive green): "בוא ללמוד תנ״ך כל שבוע — ₪5 חודש ראשון" + 280+ social proof.
+
+### 11.4 Eight-book timeline — canonical order
+
+Used across PortalSubscriber (master card), CoursesCatalog (progress ring), CourseDetail (sidebar):
+
+| # | Book | Status |
+|---|------|--------|
+| 1 | דניאל | completed |
+| 2 | איכה | completed |
+| 3 | עזרא-נחמיה | completed |
+| 4 | אסתר | completed |
+| 5 | חגי | in_progress (nearing end) |
+| 6 | זכריה | current (active, chapter ז) |
+| 7 | מלאכי | upcoming |
+| 8 | יהושע | upcoming (from start of program) |
+
+In CourseDetail sidebar: books 1-4 are collapsed/read-only, book 5 is in_progress, book 6 is expanded+active (pרק ז highlighted), books 7-8 are locked.
+
+### 11.5 Three content layers per chapter
+
+| Layer | Tab label | Access | DB source |
+|-------|-----------|--------|----------|
+| **בסיס** | "בסיס" | Open to all | `lessons` table via `bible_book + bible_chapter` filter; override with `community_course_lessons.layer_type = 'base'` |
+| **הרחבה** | "הרחבה" | Subscribers only | `community_course_lessons.layer_type = 'enrichment'` — audio summary + presentation + article |
+| **שיעור שבועי** | "שיעור שבועי" | Subscribers only | `community_course_lessons.layer_type = 'weekly'` — live recording + summary PDF |
+
+Locked tabs show a blurred content preview + lock icon + "הצטרף לתכנית" CTA.
+
+### 11.6 Subscription model (single tier only)
+
+- **Program name:** "לחיות תנ״ך — הפרק השבועי"
+- **Tier structure:** SINGLE TIER — no annual, no lifetime
+- **Promo offer:** ₪5 first month (campaign-only, not always active)
+- **Regular price:** ₪110/month auto-charge via Grow direct debit
+- **Grow product key:** `"weekly-chapter-subscription"` → access tag `"program:weekly-chapter"`
+- **Access tag on DB:** `user_access_tags.tag = "program:weekly-chapter"`, `valid_until` extended 35 days on every Grow webhook charge
+
+### 11.7 Smoove lists
+
+| List ID | Name | Count |
+|---------|------|-------|
+| **1045078** | "הפרק השבועי - תכנית מנויים" | **280 active subscribers** |
+| **1048454** | "הפרק השבועי - מתעניינים שלא רכשו" | 18 leads |
+
+Import script ready: `scripts/import-weekly-chapter-subscribers.mjs`
+— blocked until DB migration `20260430_weekly_program_foundation.sql` is applied.
+
+### 11.8 Hardcoded subscribers fallback
+
+**File:** `src/lib/hardcodedSubscribers.ts`
+**Function:** `isHardcodedSubscriber(email: string) → boolean`
+**How it's used:** `src/hooks/useUserAccess.ts` — `hasAccess = dbAccess || hardcodedGrant`
+DB check takes precedence once migration is applied.
+
+**Current whitelist:**
+- `saar.j.z.h@gmail.com` (Saar)
+
+**This is intentionally temporary.** Remove/replace once:
+1. Migration `20260430_weekly_program_foundation.sql` is applied
+2. Import script runs and populates 280 subscribers in `user_access_tags`
+
+### 11.9 Database migration (not yet applied)
+
+**File:** `supabase/migrations/20260430_weekly_program_foundation.sql`
+
+**Why it's not applied:** `grow_orders` table missing in DB (blocked pre-condition).
+The `weekly_program_foundation` migration references `grow_orders`. Before applying:
+verify `grow_orders` exists, or strip that reference from the migration.
+
+**What the migration creates:**
+- `user_access_tags` table (user_id, tag, valid_until, pending_user_link)
+- `weekly_program_progress` table (current_book, current_chapter, chapters_completed, streak_weeks)
+- New columns on `community_courses`: program_slug, access_type, access_tag
+- New columns on `community_course_lessons`: week_number, bible_book, bible_chapter, layer_type, summary_html, presentation_url, drive_folder_url, thumbnail_url
+- RPC: `has_access_tag(p_user_id uuid, p_tag text) → boolean` SECURITY DEFINER
+
+**Manual apply:**
+Paste SQL in Supabase Dashboard → SQL Editor:
+`https://supabase.com/dashboard/project/pzvmwfexeiruelwiujxn/sql/new`
+
+### 11.10 Gamification (modeled on "לוקחים אחריות")
+
+All of the following is in `DesignPreviewPortalSubscriber.tsx`:
+
+- **Streak:** weekly (not daily). Flame icon, orange glow when ≥7 weeks (`#e25822`)
+- **Level system:** points → level name. Example: 1247/1500 = רמה 4 "לומד מתקדם"
+- **Badges grid:** 3x2 grid. 3 earned (gold, fully saturated), 3 locked (grayscale, muted)
+- **QuickActions:** 2x2 grid on mobile, 4-wide on desktop. Primary tile (gold, 2x wide) = "כנס ללימוד עכשיו"
+- **4 stats** with dynamic coloring (subscriber mode)
+- **Notification banner:** "יש תוכן חדש השבוע" (dismissible)
+- **Next session countdown:** navy card with live countdown to next weekly lesson
+- **Streak heat-map:** 12-week bar chart, color ramp muted→orange
+
+### 11.11 RTL correctness notes for progress bars
+
+All progress bar containers need `dir="ltr"` so the fill direction works correctly in RTL context.
+Affected surfaces (all fixed as of commit 870c3e1):
+- Level XP bar in PortalSubscriber
+- 8-book progress bar in CatalogCourses MainCourseCard
+- 8-book progress bar in CourseTile
+
+Any new progress bar component must also have `dir="ltr"` on the track container.
+
+### 11.12 Google Drive content source
+
+**Shared Drive ID:** `0AFz55knVlI2BUk9PVA`
+**Drive name:** "תכנית הפרק השבועי בתנ״ך"
+
+**Drive API gotcha (critical):** This is a **Shared Drive**, not a regular folder.
+Regular `files().list(q="'<id>' in parents")` returns EMPTY.
+Must use: `corpora='drive'`, `driveId=DRIVE_ID`, `includeItemsFromAllDrives=True`, `supportsAllDrives=True`.
+
+**Token:** re-uses YouTube OAuth token at `the-system-v8/T-tools/04-mcp-servers/youtube/drive_token.json`
+**Scan script:** `scripts/drive-scan.py`
+
+**Folder structure (6 books scanned):**
+- הפרק השבועי - דניאל (18 sub-items, 14 chapters + intro)
+- הפרק השבועי - חגי, זכריה ומלאכי (4 sub-items)
+- הפרק השבועי - מגילת איכה (6 chapters)
+- הפרק השבועי - מגילת אסתר (7 units)
+- הפרק השבועי - נחמיה (15 sub-items)
+- הפרק השבועי - עזרא (16 sub-items)
+
+**Per-chapter content structure (confirmed from Drive):**
+- `תכני בסיס` → audio + PDF
+- `תכני הרחבה` → video + article + slides
+- `השיעור השבועי` → video + summary PDF
+
+**Current program focus:** זכריה פרק ז (active), חגי nearing end, מלאכי upcoming.
+
+### 11.13 WhatsApp notification cadence (currently manual)
+
+**Group name:** "לחיות תנ״ך"
+
+| Day | Content sent |
+|-----|-------------|
+| שישי | "תחילת שבוע — העלינו תכני בסיס" |
+| שני | "העלינו תכני העמקה" |
+| רביעי | תזכורת לשיעור + קישור |
+| יום השיעור | קישור + תזכורת |
+| יום לאחר | הקלטה + סיכום + מצגת + קישור |
+
+**Future goal:** Automate via WhatsApp (Green API) + email (Smoove) + on-site notifications.
+**Status:** Document only — do NOT build until base infrastructure is complete.
+
+### 11.14 Open work — priority order
+
+1. **Run migration** `20260430_weekly_program_foundation.sql` (Saar pastes in SQL Editor)
+   — pre-condition: verify/add `grow_orders` table first
+2. **Import 280 subscribers** from Smoove → `user_access_tags` via `import-weekly-chapter-subscribers.mjs`
+3. **Wire Drive content** into `community_course_lessons` (after migration)
+4. **Sales page light refresh** — only "דחיפה קלה" on fonts/spacing in `DesignPreviewMegillatEsther.tsx`
+5. **Automate weekly notifications** — WhatsApp + email + on-site
+6. **Delete `/portal-old`** after 30 days of stability (deadline: 2026-05-30)
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
