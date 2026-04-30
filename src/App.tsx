@@ -94,6 +94,7 @@ const DesignPreviewLessonPage = lazy(() => import("./pages/DesignPreviewLessonPa
 const DesignPreviewMegillatEsther = lazy(() => import("./pages/DesignPreviewMegillatEsther"));
 const DesignPreviewPortalSubscriber = lazy(() => import("./pages/DesignPreviewPortalSubscriber"));
 const DesignPreviewSeriesPageV2 = lazy(() => import("./pages/DesignPreviewSeriesPageV2"));
+const DesignPreviewCourseDetail = lazy(() => import("./pages/DesignPreviewCourseDetail"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 
@@ -214,6 +215,8 @@ const App = () => (
             <Route path="/design-portal-subscriber" element={<Suspense fallback={<LazyFallback />}><DesignPreviewPortalSubscriber /></Suspense>} />
             <Route path="/design-series-page-v2" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />
             <Route path="/design-series-page-v2/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />
+            <Route path="/design-course" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
+            <Route path="/design-course/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
