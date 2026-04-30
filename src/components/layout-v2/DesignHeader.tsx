@@ -36,6 +36,7 @@ const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "תנ״ך", href: "/bible/בראשית" },
   { label: "קהילה", href: "/community" },
   { label: "חנות", href: "/store" },
+  { label: "תרומות", href: "/donate" },
   { label: "פרשת השבוע", href: "/parasha" },
   { label: "אודותינו", href: "/about" },
 ];

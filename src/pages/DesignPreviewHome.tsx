@@ -12,7 +12,10 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { useAuth } from "@/contexts/AuthContext";
 import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
-import Layout from "@/components/layout/Layout";
+import DesignHeader from "@/components/layout-v2/DesignHeader";
+import DesignFooter from "@/components/layout-v2/DesignFooter";
+import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
+import DesignSidebar from "@/components/layout-v2/DesignSidebar";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK    = "#8B6F47";
@@ -34,6 +37,7 @@ const FULL_NAV_LINKS: { label: string; path: string; external?: boolean }[] = [
   { label: "ראשי",           path: "/"                 },
   { label: "פרשת השבוע",     path: "/parasha"          },
   { label: "חנות",           path: "/store"            },
+  { label: "תרומות",         path: "/donate"           },
   { label: "אודותינו",       path: "/about"            },
   { label: "לזכר סעדיה הי״ד", path: "/memorial/saadia" },
 ];
@@ -189,6 +193,10 @@ function DesignNavBar() {
 function DesignHero() {
   const navigate = useNavigate();
 
+  const scrollToLearn = () => {
+    document.getElementById("learn-start")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div style={{ height: "56vh", minHeight: 420, maxHeight: 520, overflow: "hidden",
                   position: "relative", marginTop: -96 }}>
@@ -243,7 +251,7 @@ function DesignHero() {
 
         {/* CTAs */}
         <div style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap", justifyContent: "center" }}>
-          <button onClick={() => navigate("/series")}
+          <button onClick={scrollToLearn}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem", border: "none",
                      background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
                      color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
@@ -1230,8 +1238,9 @@ function WhatsAppCTASection() {
   );
 }
 
-// ── DesignFooter ───────────────────────────────────────────────────────────
-function DesignFooter() {
+// ── LegacyDesignFooter ─────────────────────────────────────────────────────
+// Kept for reference — no longer rendered. Replaced by DesignFooter from layout-v2.
+function LegacyDesignFooter() {
   const navigate = useNavigate();
 
   const cols = [
@@ -1314,29 +1323,62 @@ function DesignFooter() {
 }
 
 // ── Page ───────────────────────────────────────────────────────────────────
+//
+// Layout strategy (Saar, 30.4.2026):
+//   Hero = full-width, no sidebar beside it.
+//   Everything below Hero starts at #learn-start with inline sidebar on the right (RTL).
+//   Mobile: sidebar is a drawer triggered from DesignHeader burger.
+//   Desktop: sidebar is sticky inline column (290px) beside the content.
+//
 export default function DesignPreviewHome() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   useSEO({
     description: "פורטל מרכזי ללימוד תנ״ך – שיעורים, סדרות, רבנים ועוד. למעלה מ-11,000 שיעורים חינמיים בספרי נביאים, כתובים, תורה ומועדים.",
     url: "https://bneyzion.co.il/",
   });
 
   return (
-    // Layout provides global DesignHeader + DesignSidebar + DesignFooter + DesignMobileBottomNav.
-    // DesignNavBar and DesignFooter defined in this file are no longer rendered here
-    // (kept in file for reference / rollback). sidebar={false} on Home to give full-width
-    // experience on the landing page; the hero overlaps and sections fill edge-to-edge.
-    <Layout sidebar={false}>
-      <div style={{ background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
-        <DesignHero />
-        <StatsBar />
-        <KenesBanner />
-        <DesignParashaHolidaySection />
-        <PopularLessonsSection />
-        <WarMiraclesSection />
-        <TopSeriesSection />
-        <RabbisSection />
-        <WhatsAppCTASection />
+    <div dir="rtl" style={{ display: "flex", flexDirection: "column", minHeight: "100vh",
+                             background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
+      {/* Global header — transparent over hero, burger opens drawer sidebar */}
+      <DesignHeader
+        transparentOnTop={true}
+        onSidebarToggle={() => setDrawerOpen((v) => !v)}
+      />
+
+      {/* Hero — full-width (comes right after header, overlaps it with marginTop:-96) */}
+      <DesignHero />
+
+      {/* Stats bar — full-width, no sidebar */}
+      <StatsBar />
+
+      {/*
+        #learn-start anchor — CTA button in Hero scrolls here.
+        From this point down, the sidebar appears on the right (RTL = inline-start).
+        Desktop: sidebar is sticky inline. Mobile: sidebar is the drawer.
+      */}
+      <div id="learn-start" style={{ display: "flex", flex: 1, alignItems: "flex-start" }}>
+        {/* Sidebar — inline on desktop, drawer on mobile */}
+        <DesignSidebar
+          drawerOpen={drawerOpen}
+          onDrawerClose={() => setDrawerOpen(false)}
+        />
+
+        {/* Main content area */}
+        <main style={{ flex: 1, minWidth: 0 }}>
+          <KenesBanner />
+          <DesignParashaHolidaySection />
+          <PopularLessonsSection />
+          <WarMiraclesSection />
+          <TopSeriesSection />
+          <RabbisSection />
+          <WhatsAppCTASection />
+        </main>
       </div>
-    </Layout>
+
+      <DesignFooter />
+      <DesignMobileBottomNav />
+    </div>
   );
 }
