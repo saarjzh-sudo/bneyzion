@@ -909,6 +909,23 @@ Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (
 
 **Iron rule:** Never use `column-count` in print CSS for RTL content without verifying Chrome doesn't collapse heights. If Framer Motion is present on the page, `transform: none !important` MUST appear in the `@media print` block. When in doubt — single column, full content, then add aesthetics.
 
+### 2026-04-30 — TeacherContentBadge added to all lesson-display surfaces (commit dbce4c2)
+
+**Problem:** badge was present on series cards (sidebar + SeriesList + SeriesPageV2), but missing from lesson-level displays.
+
+**Surfaces fixed:**
+- `src/hooks/useLesson.ts`:
+  - `useLesson` select: added `audience_tags` column
+  - `useSeriesLessons` select: added `audience_tags` column
+  - (`useLessonsBySeries` already uses `select("*")` — no change needed)
+- `src/pages/DesignPreviewLesson.tsx`: badge below title h1 in hero
+- `src/pages/DesignPreviewLessonPage.tsx`: badge below editorial h1 in hero + inline in sidebar "שיעורים בסדרה" rail
+- `src/pages/DesignPreviewLessonPopup.tsx`: badge beside h2 in modal header
+- `src/pages/DesignPreviewSeriesPage.tsx`: badge in lesson card body (between title and footer)
+- `src/pages/DesignPreviewSeriesPageV2.tsx`: already had badge in all 3 lesson surfaces (no change)
+
+**Rule:** TeacherContentBadge must appear on EVERY surface that displays a lesson with a title — card, popup, modal, page header, and sidebar rail. When adding new lesson display components, always check and include badge.
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
