@@ -8,6 +8,11 @@
  *   - Two sections: "הקורסים שלי" (owned/active) + "קורסים נוספים שתאהב".
  *   - Breadcrumb back to portal.
  *
+ * v2.1 (2026-04-30):
+ *   - previewMode toggle (subscriber / member) so Saar can see both states.
+ *   - For "member" mode: weekly-chapter card shows lock overlay + subscribe CTA.
+ *   - Available courses show lock + "רכוש קורס" CTA for member.
+ *
  * Sandbox-only (/design-* route). No production files touched.
  */
 import { useState } from "react";
@@ -26,6 +31,8 @@ import {
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
+
+type PreviewMode = "subscriber" | "member";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface CourseCard {
@@ -128,14 +135,12 @@ const MORE_COURSES: CourseCard[] = [
 
 export default function DesignPreviewCoursesCatalog() {
   const [filter, setFilter] = useState<"all" | "active" | "completed" | "available">("all");
+  const [previewMode, setPreviewMode] = useState<PreviewMode>("subscriber");
 
-  const allCourses = [...MY_COURSES, ...MORE_COURSES];
-  const filtered =
-    filter === "all"
-      ? MY_COURSES // default: show only mine
-      : filter === "available"
-      ? MORE_COURSES
-      : MY_COURSES.filter((c) => c.status === filter);
+  const isSubscriber = previewMode === "subscriber";
+
+  // For member mode: weekly-chapter is visible but locked; completed course stays
+  const visibleMyCourses = MY_COURSES;
 
   const activeCnt = MY_COURSES.filter((c) => c.status === "active").length;
   const completedCnt = MY_COURSES.filter((c) => c.status === "completed").length;
@@ -143,6 +148,49 @@ export default function DesignPreviewCoursesCatalog() {
   return (
     <DesignLayout sidebar={false}>
       <div dir="rtl" style={{ background: colors.parchment, minHeight: "100vh" }}>
+
+        {/* ── Sandbox preview toggle ─────────────────────────────────── */}
+        <div
+          dir="rtl"
+          style={{
+            background: "rgba(45,31,14,0.97)",
+            borderBottom: "1px solid rgba(232,213,160,0.15)",
+            padding: "0.55rem 1.5rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.85rem",
+          }}
+        >
+          <span style={{
+            fontFamily: fonts.body, fontSize: "0.7rem", color: "rgba(232,213,160,0.55)",
+            fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase",
+          }}>
+            תצוגה מקדימה
+          </span>
+          <div style={{
+            display: "inline-flex", background: "rgba(255,255,255,0.07)",
+            borderRadius: 20, padding: "0.2rem", gap: "0.15rem",
+          }}>
+            {([
+              { key: "subscriber" as const, label: "מנוי פעיל" },
+              { key: "member" as const, label: "חבר רשום" },
+            ]).map((opt) => (
+              <button
+                key={opt.key}
+                onClick={() => setPreviewMode(opt.key)}
+                style={{
+                  padding: "0.3rem 0.85rem", borderRadius: 16, border: "none",
+                  cursor: "pointer", fontFamily: fonts.body, fontWeight: 700, fontSize: "0.75rem",
+                  background: previewMode === opt.key ? gradients.goldButton : "transparent",
+                  color: previewMode === opt.key ? "white" : "rgba(232,213,160,0.55)",
+                  transition: "all 0.18s",
+                }}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         {/* ── Page header ─────────────────────────────────────────────── */}
         <section
@@ -291,10 +339,10 @@ export default function DesignPreviewCoursesCatalog() {
             {(filter === "all" || filter === "active" || filter === "completed") && (
               <>
                 {/* Featured main course — full-width card */}
-                {MY_COURSES.filter(
+                {visibleMyCourses.filter(
                   (c) => c.isMain && (filter === "all" || c.status === filter)
                 ).map((course) => (
-                  <MainCourseCard key={course.slug} course={course} />
+                  <MainCourseCard key={course.slug} course={course} isSubscriber={isSubscriber} />
                 ))}
 
                 {/* Secondary courses grid */}
@@ -307,10 +355,10 @@ export default function DesignPreviewCoursesCatalog() {
                   }}
                   className="courses-grid"
                 >
-                  {MY_COURSES.filter(
+                  {visibleMyCourses.filter(
                     (c) => !c.isMain && (filter === "all" || c.status === filter)
                   ).map((course) => (
-                    <CourseTile key={course.slug} course={course} />
+                    <CourseTile key={course.slug} course={course} isSubscriber={isSubscriber} />
                   ))}
                 </div>
               </>
@@ -342,7 +390,7 @@ export default function DesignPreviewCoursesCatalog() {
                   className="courses-grid"
                 >
                   {MORE_COURSES.map((course) => (
-                    <CourseTile key={course.slug} course={course} />
+                    <CourseTile key={course.slug} course={course} isSubscriber={isSubscriber} />
                   ))}
                 </div>
               </>
@@ -416,7 +464,7 @@ export default function DesignPreviewCoursesCatalog() {
                 className="courses-grid"
               >
                 {MORE_COURSES.map((course) => (
-                  <CourseTile key={course.slug} course={course} />
+                  <CourseTile key={course.slug} course={course} isSubscriber={isSubscriber} />
                 ))}
               </div>
             </div>
@@ -434,7 +482,53 @@ export default function DesignPreviewCoursesCatalog() {
 }
 
 // ── Main course card (featured — full width) ──────────────────────────────────
-function MainCourseCard({ course }: { course: CourseCard }) {
+function MainCourseCard({ course, isSubscriber }: { course: CourseCard; isSubscriber: boolean }) {
+  // weekly-chapter is subscriber-only — member sees it locked
+  const isLocked = course.slug === "weekly-chapter" && !isSubscriber;
+
+  if (isLocked) {
+    return (
+      <div
+        style={{
+          background: "white",
+          borderRadius: radii.xl,
+          overflow: "hidden",
+          border: "1px solid rgba(139,111,71,0.12)",
+          boxShadow: "0 8px 32px rgba(139,111,71,0.12)",
+          position: "relative",
+        }}
+      >
+        {/* Blurred cover */}
+        <div style={{ background: course.coverGradient, padding: "2.25rem 2rem", position: "relative", overflow: "hidden", filter: "blur(2px)", opacity: 0.5 }}>
+          <div style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "1.85rem", color: "white", fontStyle: "italic" }}>{course.title}</div>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: "rgba(255,255,255,0.65)", marginTop: "0.3rem" }}>{course.subtitle}</div>
+        </div>
+        {/* Lock overlay */}
+        <div style={{
+          position: "absolute", inset: 0, display: "flex", flexDirection: "column",
+          alignItems: "center", justifyContent: "center",
+          background: "rgba(45,31,14,0.72)", gap: "0.75rem", borderRadius: radii.xl,
+        }}>
+          <Lock size={36} style={{ color: colors.goldShimmer }} />
+          <div style={{ textAlign: "center" }}>
+            <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: "white", marginBottom: "0.25rem" }}>תכנית המנויים</div>
+            <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: "rgba(255,255,255,0.6)", marginBottom: "1rem" }}>₪5 לחודש ראשון · ₪110/חודש לאחר מכן</div>
+            <Link to="/design-megilat-esther" style={{
+              display: "inline-flex", alignItems: "center", gap: "0.5rem",
+              padding: "0.75rem 1.75rem", borderRadius: radii.lg,
+              background: gradients.goldButton, color: "white",
+              fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.9rem",
+              textDecoration: "none", boxShadow: shadows.goldGlow,
+            }}>
+              <Sparkles size={14} />
+              הצטרף למנוי
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <Link to={course.ctaTo} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
       <div
@@ -639,6 +733,7 @@ function MainCourseCard({ course }: { course: CourseCard }) {
               <span style={{ color: colors.goldDark, fontWeight: 700 }}>{course.progressPct}%</span>
             </div>
             <div
+              dir="ltr"
               style={{
                 height: 5,
                 background: "rgba(139,111,71,0.1)",
@@ -664,10 +759,12 @@ function MainCourseCard({ course }: { course: CourseCard }) {
 }
 
 // ── Regular course tile ────────────────────────────────────────────────────────
-function CourseTile({ course }: { course: CourseCard }) {
+function CourseTile({ course, isSubscriber }: { course: CourseCard; isSubscriber: boolean }) {
   const isCompleted = course.status === "completed";
   const isActive = course.status === "active";
   const isAvailable = course.status === "available";
+  // Available courses are locked for non-subscribers (they need to purchase)
+  const isLocked = isAvailable && !isSubscriber;
 
   return (
     <div
@@ -809,6 +906,7 @@ function CourseTile({ course }: { course: CourseCard }) {
               </span>
             </div>
             <div
+              dir="ltr"
               style={{
                 height: 4,
                 background: "rgba(139,111,71,0.1)",
@@ -850,40 +948,71 @@ function CourseTile({ course }: { course: CourseCard }) {
         )}
 
         {/* CTA */}
-        <Link
-          to={course.ctaTo}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "0.45rem",
-            padding: "0.78rem 1.25rem",
-            borderRadius: radii.lg,
-            background: isAvailable ? "transparent" : gradients.goldButton,
-            border: isAvailable ? `1.5px solid ${colors.goldDark}` : "none",
-            color: isAvailable ? colors.goldDark : "white",
-            fontFamily: fonts.accent,
-            fontWeight: 700,
-            fontSize: "0.88rem",
-            textDecoration: "none",
-            boxShadow: isAvailable ? "none" : shadows.goldGlow,
-            transition: "opacity 0.18s",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
-          {isAvailable ? (
-            <>
+        {isLocked ? (
+          /* Locked for member — show subscribe CTA */
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+            <div style={{
+              display: "flex", alignItems: "center", gap: "0.45rem",
+              padding: "0.55rem 0.75rem", borderRadius: radii.md,
+              background: "rgba(139,111,71,0.06)", border: "1px solid rgba(139,111,71,0.12)",
+            }}>
+              <Lock size={13} style={{ color: colors.textMuted, flexShrink: 0 }} />
+              <span style={{ fontFamily: fonts.body, fontSize: "0.76rem", color: colors.textMuted }}>
+                זמין בחבילת מנוי או לרכישה נפרדת
+              </span>
+            </div>
+            <Link
+              to="/design-store"
+              style={{
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                gap: "0.45rem", padding: "0.78rem 1.25rem", borderRadius: radii.lg,
+                background: "transparent", border: `1.5px solid ${colors.goldDark}`,
+                color: colors.goldDark, fontFamily: fonts.accent, fontWeight: 700,
+                fontSize: "0.88rem", textDecoration: "none", transition: "opacity 0.18s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.78")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            >
               <ShoppingBag size={14} />
-              {course.ctaLabel}
-            </>
-          ) : (
-            <>
-              <Play size={14} fill="currentColor" />
-              {course.ctaLabel}
-            </>
-          )}
-        </Link>
+              רכוש קורס
+            </Link>
+          </div>
+        ) : (
+          <Link
+            to={course.ctaTo}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "0.45rem",
+              padding: "0.78rem 1.25rem",
+              borderRadius: radii.lg,
+              background: isAvailable ? "transparent" : gradients.goldButton,
+              border: isAvailable ? `1.5px solid ${colors.goldDark}` : "none",
+              color: isAvailable ? colors.goldDark : "white",
+              fontFamily: fonts.accent,
+              fontWeight: 700,
+              fontSize: "0.88rem",
+              textDecoration: "none",
+              boxShadow: isAvailable ? "none" : shadows.goldGlow,
+              transition: "opacity 0.18s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            {isAvailable ? (
+              <>
+                <ShoppingBag size={14} />
+                {course.ctaLabel}
+              </>
+            ) : (
+              <>
+                <Play size={14} fill="currentColor" />
+                {course.ctaLabel}
+              </>
+            )}
+          </Link>
+        )}
       </div>
     </div>
   );

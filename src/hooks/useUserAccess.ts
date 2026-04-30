@@ -16,11 +16,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { isHardcodedSubscriber } from "@/lib/hardcodedSubscribers";
 
 export function useUserAccess(tag: string) {
   const { user, isLoading: authLoading } = useAuth();
 
-  const { data: hasAccess = false, isLoading: queryLoading } = useQuery({
+  // Hardcoded fallback: if the user's email is in the approved list, grant
+  // access immediately without waiting for the DB migration.
+  const userEmail = user?.email ?? null;
+  const hardcodedGrant = isHardcodedSubscriber(userEmail);
+
+  const { data: dbAccess = false, isLoading: queryLoading } = useQuery({
     queryKey: ["user-access", user?.id ?? "anon", tag],
     queryFn: async () => {
       if (!user?.id) return false;
@@ -31,7 +37,7 @@ export function useUserAccess(tag: string) {
         });
         if (error) {
           // Migration not yet applied — table / function doesn't exist yet.
-          // Return false (safe fallback).
+          // Return false (safe fallback — hardcoded list above still applies).
           if (
             error.code === "42883" ||  // function not found
             error.code === "42P01" ||  // table not found
@@ -49,6 +55,9 @@ export function useUserAccess(tag: string) {
     enabled: !authLoading && !!user?.id,
     staleTime: 1000 * 60 * 5,  // 5 minutes — re-check after a refresh
   });
+
+  // Grant access if either the DB RPC or the hardcoded list says yes
+  const hasAccess = dbAccess || hardcodedGrant;
 
   return {
     hasAccess,

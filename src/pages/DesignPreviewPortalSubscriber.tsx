@@ -13,7 +13,7 @@
  *     tabs inside a course require subscription. This page itself is gated only
  *     for non-authenticated users.
  */
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen,
@@ -27,7 +27,6 @@ import {
   Play,
   TrendingUp,
   Lock,
-  ArrowLeft,
   ChevronRight,
   Flame,
   Trophy,
@@ -98,10 +97,23 @@ const RECENT_LESSONS = [
   { title: "ביטחון בה׳ בעת צרה", series: "שיעורי יסוד", duration: "38 דק'" },
 ];
 
+// Recent lessons for a plain member (not subscriber) — free series they started
+const MEMBER_RECENT_LESSONS = [
+  { title: "מבוא לקריאת תנ״ך — שיעור 1", series: "איך ללמוד תנ״ך", duration: "42 דק'" },
+  { title: "הר סיני — מה באמת קרה שם?", series: "שיעורי יסוד", duration: "35 דק'" },
+  { title: "שיר השירים — קריאה ראשונה", series: "כתובים", duration: "51 דק'" },
+];
+
 const FAVORITES = [
   { title: "מגילת אסתר — פרק ד׳", series: "הפרק השבועי", duration: "48 דק'" },
   { title: "חגי פרק ב׳ — ורוח אביה", series: "הפרק השבועי", duration: "41 דק'" },
   { title: "התפילה כמרחב בינאישי", series: "אמונה ותפילה", duration: "55 דק'" },
+];
+
+// Member favorites (free content only)
+const MEMBER_FAVORITES = [
+  { title: "תהילים פרק כב׳ — ״אלי אלי״", series: "תהילים", duration: "48 דק'" },
+  { title: "בראשית — בריאה ומשמעות", series: "חמישה חומשי תורה", duration: "44 דק'" },
 ];
 
 // ── Main component ──────────────────────────────────────────────────────────
@@ -427,60 +439,118 @@ export default function DesignPreviewPortalSubscriber() {
                 }}
                 className="quick-actions-grid"
               >
-                {/* PRIMARY — biggest tile */}
-                <Link
-                  to="/design-course/weekly-chapter#chapter-zechariah-7"
-                  style={{ textDecoration: "none" }}
-                >
-                  <div
-                    style={{
-                      background: gradients.goldButton,
-                      borderRadius: radii.xl,
-                      padding: "1.75rem 2rem",
-                      boxShadow: "0 12px 40px rgba(139,111,71,0.45)",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.6rem",
-                      height: "100%",
-                      cursor: "pointer",
-                      transition: "transform 0.2s, box-shadow 0.2s",
-                      minHeight: 130,
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 18px 48px rgba(139,111,71,0.55)"; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(139,111,71,0.45)"; }}
+                {/* PRIMARY — biggest tile, changes by mode */}
+                {hasSubscription ? (
+                  /* Subscriber: enter weekly lesson */
+                  <Link
+                    to="/design-course/weekly-chapter#chapter-zechariah-7"
+                    style={{ textDecoration: "none" }}
                   >
                     <div
                       style={{
-                        width: 44,
-                        height: 44,
-                        borderRadius: radii.md,
-                        background: "rgba(255,255,255,0.2)",
+                        background: gradients.goldButton,
+                        borderRadius: radii.xl,
+                        padding: "1.75rem 2rem",
+                        boxShadow: "0 12px 40px rgba(139,111,71,0.45)",
                         display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "white",
+                        flexDirection: "column",
+                        gap: "0.6rem",
+                        height: "100%",
+                        cursor: "pointer",
+                        transition: "transform 0.2s, box-shadow 0.2s",
+                        minHeight: 130,
                       }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 18px 48px rgba(139,111,71,0.55)"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(139,111,71,0.45)"; }}
                     >
-                      <Play size={22} fill="currentColor" />
-                    </div>
-                    <div>
                       <div
                         style={{
-                          fontFamily: fonts.display,
-                          fontWeight: 900,
-                          fontSize: "1.05rem",
+                          width: 44,
+                          height: 44,
+                          borderRadius: radii.md,
+                          background: "rgba(255,255,255,0.2)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                           color: "white",
-                          marginBottom: "0.2rem",
                         }}
                       >
-                        כנס ללימוד עכשיו
+                        <Play size={22} fill="currentColor" />
                       </div>
-                      <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>
-                        {SUBSCRIBER_STATS.currentBook} {SUBSCRIBER_STATS.currentChapter}
+                      <div>
+                        <div
+                          style={{
+                            fontFamily: fonts.display,
+                            fontWeight: 900,
+                            fontSize: "1.05rem",
+                            color: "white",
+                            marginBottom: "0.2rem",
+                          }}
+                        >
+                          כנס ללימוד הפרק השבועי — לחיות תנ״ך
+                        </div>
+                        <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>
+                          {SUBSCRIBER_STATS.currentBook} {SUBSCRIBER_STATS.currentChapter}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
+                  </Link>
+                ) : (
+                  /* Member (not subscriber): "המשך מאיפה שהפסקת" */
+                  <Link
+                    to="/design-series-list"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <div
+                      style={{
+                        background: `linear-gradient(135deg, ${colors.tealMain} 0%, #1A5C5C 100%)`,
+                        borderRadius: radii.xl,
+                        padding: "1.75rem 2rem",
+                        boxShadow: "0 12px 40px rgba(45,125,125,0.4)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.6rem",
+                        height: "100%",
+                        cursor: "pointer",
+                        transition: "transform 0.2s, box-shadow 0.2s",
+                        minHeight: 130,
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; }}
+                    >
+                      <div
+                        style={{
+                          width: 44,
+                          height: 44,
+                          borderRadius: radii.md,
+                          background: "rgba(255,255,255,0.2)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "white",
+                        }}
+                      >
+                        <Play size={22} fill="currentColor" />
+                      </div>
+                      <div>
+                        <div
+                          style={{
+                            fontFamily: fonts.display,
+                            fontWeight: 900,
+                            fontSize: "1.05rem",
+                            color: "white",
+                            marginBottom: "0.2rem",
+                          }}
+                        >
+                          המשך מאיפה שהפסקת
+                        </div>
+                        <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>
+                          מבוא לקריאת תנ״ך — שיעור 1
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                )}
 
                 {/* Quick action tile component */}
                 <QuickTile
@@ -528,46 +598,162 @@ export default function DesignPreviewPortalSubscriber() {
                 maxWidth: 1200,
                 margin: "0 auto",
                 display: "grid",
-                gridTemplateColumns: "repeat(4, 1fr)",
+                gridTemplateColumns: hasSubscription ? "repeat(4, 1fr)" : "repeat(3, 1fr)",
                 gap: "1rem",
               }}
               className="stats-grid"
             >
               <StatCard
                 icon={<BookOpen size={20} />}
-                value={`${SUBSCRIBER_STATS.chaptersCompleted}`}
-                label="פרקים הושלמו"
-                sub="מתוך 64"
+                value={hasSubscription ? `${SUBSCRIBER_STATS.chaptersCompleted}` : "3"}
+                label={hasSubscription ? "פרקים הושלמו" : "שיעורים נצפו"}
+                sub={hasSubscription ? "מתוך 64" : "השבוע"}
                 color={colors.goldDark}
               />
               <StatCard
-                icon={<Calendar size={20} />}
-                value={`${SUBSCRIBER_STATS.weeksActive}`}
-                label="שבועות פעיל"
-                sub="בתכנית"
-                color={colors.oliveMain}
-              />
-              <StatCard
                 icon={<Clock size={20} />}
-                value={`${SUBSCRIBER_STATS.hoursLearned}`}
+                value={hasSubscription ? `${SUBSCRIBER_STATS.hoursLearned}` : "4.5"}
                 label="שעות לימוד"
                 sub="מצטבר"
                 color={colors.tealMain}
               />
               <StatCard
-                icon={<Flame size={20} />}
-                value={`${SUBSCRIBER_STATS.streakWeeks}`}
-                label="שבועות ברצף"
-                sub={`שיא: ${SUBSCRIBER_STATS.streakRecord}`}
-                color="#e25822"
-                gold={SUBSCRIBER_STATS.streakWeeks >= 7}
+                icon={<Heart size={20} />}
+                value={hasSubscription ? "3" : "2"}
+                label="מועדפים שמורים"
+                sub="שיעורים"
+                color={colors.oliveMain}
               />
+              {hasSubscription && (
+                <StatCard
+                  icon={<Flame size={20} />}
+                  value={`${SUBSCRIBER_STATS.streakWeeks}`}
+                  label="שבועות ברצף"
+                  sub={`שיא: ${SUBSCRIBER_STATS.streakRecord}`}
+                  color="#e25822"
+                  gold={SUBSCRIBER_STATS.streakWeeks >= 7}
+                />
+              )}
             </div>
             <style>{`
               @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr) !important; } }
               @media (max-width: 400px) { .stats-grid { grid-template-columns: 1fr !important; } }
             `}</style>
           </section>
+
+          {/* ─── Member upsell CTA (shown only to non-subscribers) ──── */}
+          {!hasSubscription && (
+            <section style={{ background: colors.parchment, padding: "0 1.5rem 3rem" }}>
+              <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
+                <div
+                  style={{
+                    background: `linear-gradient(135deg, ${colors.oliveDark} 0%, ${colors.oliveMain} 60%, #7a9048 100%)`,
+                    borderRadius: radii.xl,
+                    padding: "2.25rem 2.5rem",
+                    position: "relative",
+                    overflow: "hidden",
+                    border: "1px solid rgba(196,162,101,0.2)",
+                    boxShadow: "0 16px 48px rgba(74,90,46,0.3)",
+                  }}
+                >
+                  {/* Ambient shimmer */}
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "radial-gradient(circle at 90% 10%, rgba(232,213,160,0.12) 0%, transparent 55%)",
+                    pointerEvents: "none",
+                  }} />
+                  <div
+                    style={{
+                      position: "relative",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "2rem",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <div style={{ flex: 1 }}>
+                      {/* Eyebrow */}
+                      <div style={{
+                        display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                        padding: "0.22rem 0.75rem", borderRadius: radii.pill,
+                        background: "rgba(232,213,160,0.15)", border: "1px solid rgba(232,213,160,0.3)",
+                        color: colors.goldShimmer, fontFamily: fonts.body,
+                        fontSize: "0.68rem", fontWeight: 700, marginBottom: "0.85rem",
+                      }}>
+                        <Sparkles size={10} />
+                        תכנית המנויים
+                      </div>
+                      <h2 style={{
+                        fontFamily: fonts.display, fontWeight: 900,
+                        fontSize: "clamp(1.3rem, 2.5vw, 1.9rem)",
+                        color: "white", margin: "0 0 0.6rem", fontStyle: "italic", lineHeight: 1.25,
+                      }}>
+                        בוא ללמוד תנ״ך כל שבוע — לחיות תנ״ך
+                      </h2>
+                      <p style={{
+                        fontFamily: fonts.body, fontSize: "0.9rem",
+                        color: "rgba(255,255,255,0.75)", margin: "0 0 1.1rem", lineHeight: 1.75,
+                        maxWidth: 520,
+                      }}>
+                        הצטרף לתכנית של הרב יואב אוריאל. פרק חדש כל שבוע, סיכומים מעוצבים, שיעורים שבועיים וגישה לכל הארכיון.
+                      </p>
+                      {/* Price row */}
+                      <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+                        <div style={{
+                          fontFamily: fonts.display, fontWeight: 900,
+                          fontSize: "1.3rem", color: colors.goldShimmer,
+                        }}>
+                          ₪5 חודש ראשון
+                        </div>
+                        <div style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(255,255,255,0.55)" }}>
+                          אחר כך ₪110/חודש · ביטול חופשי בכל עת
+                        </div>
+                      </div>
+                      {/* Social proof */}
+                      <div style={{
+                        marginTop: "0.75rem",
+                        fontFamily: fonts.body, fontSize: "0.75rem",
+                        color: "rgba(255,255,255,0.5)",
+                        display: "flex", alignItems: "center", gap: "0.4rem",
+                      }}>
+                        <div style={{
+                          display: "flex", gap: "-4px",
+                        }}>
+                          {["#c4a265", "#8b6f47", "#5b6e3a"].map((c, i) => (
+                            <div key={i} style={{
+                              width: 20, height: 20, borderRadius: "50%",
+                              background: c, border: "2px solid rgba(74,90,46,0.8)",
+                              marginInlineStart: i === 0 ? 0 : -6,
+                            }} />
+                          ))}
+                        </div>
+                        280+ לומדים פעילים השבוע
+                      </div>
+                    </div>
+                    {/* CTA button */}
+                    <Link
+                      to="/design-megilat-esther"
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "0.55rem",
+                        padding: "1rem 2.25rem", borderRadius: radii.lg,
+                        background: gradients.goldButton, color: "white",
+                        fontFamily: fonts.accent, fontWeight: 700, fontSize: "1rem",
+                        textDecoration: "none", boxShadow: shadows.goldGlow,
+                        flexShrink: 0, whiteSpace: "nowrap",
+                        transition: "transform 0.2s",
+                      }}
+                      onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.transform = "scale(1.04)")}
+                      onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.transform = "scale(1)")}
+                    >
+                      <Sparkles size={16} />
+                      הצטרף עכשיו
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
 
           {/* ─── Next weekly session banner ────────────────────────────── */}
           {hasSubscription && (
@@ -680,8 +866,8 @@ export default function DesignPreviewPortalSubscriber() {
             </section>
           )}
 
-          {/* ─── Master course card — הפרק השבועי ─────────────────────── */}
-          <section style={{ background: colors.parchmentDark, padding: "3.5rem 1.5rem" }}>
+          {/* ─── Master course card — הפרק השבועי (subscribers only) ── */}
+          {hasSubscription && <section style={{ background: colors.parchmentDark, padding: "3.5rem 1.5rem" }}>
             <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
               <SectionLabel icon={<BookOpen size={16} />} eyebrow="הקורסים שלי" title="הפרק השבועי בתנ״ך" color={colors.goldDark} />
 
@@ -837,10 +1023,10 @@ export default function DesignPreviewPortalSubscriber() {
                 </div>
               </div>
             </div>
-          </section>
+          </section>}
 
-          {/* ─── Achievements / Gamification ─────────────────────────── */}
-          <section
+          {/* ─── Achievements / Gamification (subscribers only) ──────── */}
+          {hasSubscription && <section
             id="achievements"
             style={{ background: colors.parchment, padding: "3.5rem 1.5rem" }}
           >
@@ -957,6 +1143,7 @@ export default function DesignPreviewPortalSubscriber() {
                       </div>
                     </div>
                     <div
+                      dir="ltr"
                       style={{
                         height: 8,
                         background: "rgba(139,111,71,0.1)",
@@ -1086,7 +1273,7 @@ export default function DesignPreviewPortalSubscriber() {
                 @media (max-width: 768px) { .achievements-grid { grid-template-columns: 1fr !important; } }
               `}</style>
             </div>
-          </section>
+          </section>}
 
           {/* ─── Recent + Favorites ────────────────────────────────────── */}
           <section style={{ background: colors.parchmentDark, padding: "3.5rem 1.5rem" }}>
@@ -1101,9 +1288,9 @@ export default function DesignPreviewPortalSubscriber() {
               >
                 {/* Recent */}
                 <div>
-                  <SectionLabel icon={<Clock size={16} />} eyebrow="היסטוריה" title="צפיות אחרונות" color={colors.tealMain} />
+                  <SectionLabel icon={<Clock size={16} />} eyebrow="היסטוריה" title="המשך מאיפה שהפסקת" color={colors.tealMain} />
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                    {RECENT_LESSONS.map((lesson, i) => (
+                    {(hasSubscription ? RECENT_LESSONS : MEMBER_RECENT_LESSONS).map((lesson, i) => (
                       <MiniLessonRow key={i} lesson={lesson} />
                     ))}
                   </div>
@@ -1113,7 +1300,7 @@ export default function DesignPreviewPortalSubscriber() {
                 <div>
                   <SectionLabel icon={<Bookmark size={16} />} eyebrow="מועדפים" title="שיעורים שאהבת" color={colors.oliveMain} />
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                    {FAVORITES.map((lesson, i) => (
+                    {(hasSubscription ? FAVORITES : MEMBER_FAVORITES).map((lesson, i) => (
                       <MiniLessonRow key={i} lesson={lesson} accent={colors.oliveMain} />
                     ))}
                   </div>
