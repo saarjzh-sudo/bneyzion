@@ -806,6 +806,22 @@ bulk-tags via /admin/series. Intentional for UX testing.
 **DesignSidebar tab 4 hero text:** "אגף המורים — כל התכנים המתאימים להוראה"
 Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (route exists, 0 nav links from elsewhere)
 
+### 2026-04-30 — Sidebar tab "מורים" — שכפול מבנה היררכי מטאב "ראשי"
+
+**בעיה שתוקנה:** טאב "מורים" הציג רשימה שטוחה של סדרות (flat list) — ריקה למעשה כי ה-query הביא 0 תוצאות (query ישן בטרם migration). סער ביקש שהטאב יציג **אותו מבנה היררכי** של טאב "ראשי".
+
+**מצב DB (נבדק בפועל):** כל 1,374 הסדרות מתויגות `audience_tags = ["general","teachers"]`. המיגרציה `20260430_audience_tags.sql` רצה בהצלחה. אין בעיה בנתונים — רק בתצוגה.
+
+**מה שונה ב-`src/components/layout-v2/DesignSidebar.tsx`:**
+- הטאב "מורים" מציג כעת **את אותו `MAIN_TREE` בדיוק** (תורה / נביאים / כתובים / מועדים / כלים ולימוד וכו')
+- Banner ייחודי בראש הטאב: "תכנים למורים — כל האתר מתויג" + subtitle
+- `expandedSection` פוצל ל-`expandedMain` + `expandedTeachers` — state נפרד לכל טאב
+- הוסר `useTeacherSeries` hook מה-import (flat list לא בשימוש יותר)
+- 3 הטאבים הקיימים (ראשי / נושאים / רבנים) — ללא שינוי
+- TypeScript: 0 errors
+
+**כלל שנלמד:** כשכל הסדרות מתויגות, אין טעם בפילטור query נפרד. הטאב "מורים" = אותו עץ ניווט + banner ייחודי. זה ה-merge האמיתי שסער ביקש.
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
