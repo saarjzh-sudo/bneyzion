@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLesson } from "@/hooks/useLesson";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK = "#8B6F47";
@@ -211,12 +212,17 @@ function LessonHero({ lesson }: { lesson: any }) {
             fontSize: "clamp(1.75rem, 4vw, 3rem)",
             color: "white",
             textShadow: "0 2px 20px rgba(0,0,0,0.5)",
-            marginBottom: "1.5rem",
+            marginBottom: "0.75rem",
             lineHeight: 1.25,
           }}
         >
           {lesson?.title ?? "טוען..."}
         </h1>
+        {lesson && (
+          <div style={{ marginBottom: "0.75rem" }}>
+            <TeacherContentBadge tags={(lesson as any).audience_tags} variant="small" />
+          </div>
+        )}
 
         {/* Meta row */}
         <div

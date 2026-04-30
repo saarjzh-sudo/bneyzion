@@ -47,6 +47,7 @@ import {
 } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 export default function DesignPreviewLessonPage() {
   const { id } = useParams<{ id?: string }>();
@@ -206,7 +207,7 @@ export default function DesignPreviewLessonPage() {
               fontSize: "clamp(2.4rem, 6vw, 4.5rem)",
               color: "rgba(255,255,255,0.97)",
               textShadow: "0 4px 30px rgba(0,0,0,0.5)",
-              margin: "0 0 1rem",
+              margin: "0 0 0.6rem",
               lineHeight: 1.1,
               fontStyle: "italic",
               maxWidth: 900,
@@ -214,6 +215,10 @@ export default function DesignPreviewLessonPage() {
           >
             {lesson.title}
           </h1>
+          {/* Teacher badge — shown if content is tagged "teachers" */}
+          <div style={{ marginBottom: "0.75rem" }}>
+            <TeacherContentBadge tags={(lesson as any).audience_tags} variant="small" />
+          </div>
 
           {/* Meta row */}
           <div
@@ -559,8 +564,11 @@ export default function DesignPreviewLessonPage() {
                       <Play size={10} fill="currentColor" />
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontFamily: fonts.display, fontWeight: 600, fontSize: "0.82rem", color: colors.textDark, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {l.title}
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", flexWrap: "wrap" }}>
+                        <div style={{ fontFamily: fonts.display, fontWeight: 600, fontSize: "0.82rem", color: colors.textDark, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                          {l.title}
+                        </div>
+                        <TeacherContentBadge tags={(l as any).audience_tags} variant="small" />
                       </div>
                       <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textMuted }}>
                         {formatDuration(l.duration)}
