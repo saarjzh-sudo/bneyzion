@@ -1557,5 +1557,37 @@ Must use: `corpora='drive'`, `driveId=DRIVE_ID`, `includeItemsFromAllDrives=True
 
 ---
 
+### 2026-04-30 — DesignPreviewHome: navbar architecture + hero CTA swap + יום ירושלים (commits 57809ce, a82adb8, e679221)
+
+**CRITICAL: "DesignPreview" prefix does NOT mean sandbox.**
+`DesignPreviewHome.tsx` IS the public production route `/`. Despite its name, it is NOT a sandbox — every change ships live. The filename was inherited when it replaced `Index.tsx` in April 2026 and was never renamed. Future agents: always verify the route in `App.tsx` before assuming production or sandbox status. Never assume from the filename alone.
+
+**Two navbars exist — nav changes require updating BOTH:**
+- `src/components/layout-v2/DesignHeader.tsx` — global header, loaded by `Layout.tsx`. Serves all non-home pages.
+- `src/pages/DesignPreviewHome.tsx` — contains inline `DesignNavBar` component because `/` does NOT use `<Layout>`. Navigation changes to the home page must go here, not in `DesignHeader`.
+- To add a global nav item (e.g., "תרומות"), update both files. To add a home-page-only item, update only `DesignPreviewHome.tsx`.
+- `src/components/layout/Header.tsx` (the old header) is no longer used. `Layout.tsx` now imports `DesignHeader`.
+
+**Changes in this session:**
+- `57809ce`:
+  - `DesignPreviewHome.tsx` second hero CTA button: "גלה את הסדרות" → "לתכנית הפרק השבועי" (link → `/design-chapter-weekly`)
+  - `יום ירושלים` added to `HOLIDAYS_5786`: `{ name: "יום ירושלים", hebrewDate: "כ״ח אייר", date: new Date(2026, 4, 15), terms: ["יום ירושלים","ירושלים","בית המקדש"] }` — between ל״ג בעומר (5.5) and שבועות (22.5). Bug was simply a missing entry, no logic error.
+- `a82adb8`: added "חנות" to `FULL_NAV_LINKS` in `DesignPreviewHome.tsx`. Needed because home's `DesignNavBar` is independent from `DesignHeader` (which already had it).
+- `e679221`: added "תרומות" → `/donate` to both `DesignHeader` and `DesignPreviewHome.tsx`. Final nav order: ראשי / רבנים / סדרות / תנ״ך / קהילה / חנות / פרשת השבוע / אודותינו / תרומות.
+
+**Holiday display note:** `getUpcomingHoliday()` returns one holiday — the nearest within a 45-day window. Causes a visible sequential jump between holidays. Future improvement: show 2 upcoming or add smooth transition.
+
+**Push status at session end:** `57809ce` already on origin/main. `a82adb8` + `e679221` local only — Saar will push.
+
+**6 open design improvements for DesignPreviewHome (none started):**
+1. Hero height expand to 70vh / 580px min
+2. ~~CTA button swap~~ — done in `57809ce`
+3. Gradient divider between Hero and StatsBar
+4. Parasha + holiday grid: 1fr 1fr alignment imbalance
+5. Rabbi cards: `object-fit: cover` + fixed aspect-ratio
+6. WhatsAppCTASection: move directly above footer + WhatsApp-toned background
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
