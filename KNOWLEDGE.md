@@ -1062,6 +1062,17 @@ Active for the 5 missing parashiot.
 
 ---
 
+### 2026-04-30 — Sidebar v4 polish: badge, chrome items, logo, banner removal (commit cc87830)
+
+- **Changed:** `src/components/layout-v2/DesignSidebar.tsx`
+  - Removed gold "ניווט באתר לפי ספר ופרק" banner (per Saar request)
+  - Added quick-links box above tree: ראשי (/) + תכנית הפרק השבועי (/design-chapter-weekly)
+  - Added donate button (gold, `/design-donate`) + לזכר סעדיה flame to footer — both above collapse toggle
+  - `SeriesInlineList` now fetches `audience_tags` and renders `<TeacherContentBadge variant="small">` next to series titles tagged with "teachers"
+- **Changed:** `src/components/layout-v2/DesignHeader.tsx`
+  - Logo uses `className="h-16 md:h-20"` (matches live `Header.tsx`) instead of hardcoded `height:64`
+- **New constraint:** `audience_tags` column must exist on `series` table for badge to appear. If column is missing, badge is silently hidden (TeacherContentBadge returns null on empty/null tags). Once `supabase/migrations/20260430_audience_tags.sql` is applied, badges will show on tagged series.
+
 ### 2026-04-30 — Parasha print stylesheet — bulletin-quality PDF output (commit ac7c52d)
 
 - **New file:** `src/styles/parasha-print.css` — full `@media print` block for `/parasha`
