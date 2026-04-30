@@ -97,8 +97,8 @@ The `env -u HTTPS_PROXY -u HTTP_PROXY` strips NetSpark proxy.
 ### Content (5 core)
 | Table | Rows | Purpose |
 |-------|------|---------|
-| `lessons` | 11,818 | title, content (HTML), audio_url, video_url, attachment_url, source_type, rabbi_id, series_id, status, bible_book, bible_chapter, duration |
-| `series` | 1,374 | hierarchical (parent_id), lesson_count, rabbi_id, status, image_url |
+| `lessons` | 11,818 | title, content (HTML), audio_url, video_url, attachment_url, source_type, rabbi_id, series_id, status, bible_book, bible_chapter, duration, thumbnail_url, **audience_tags TEXT[]** |
+| `series` | 1,374 | hierarchical (parent_id), lesson_count, rabbi_id, status, image_url, **audience_tags TEXT[]** |
 | `rabbis` | 203 | name, title, bio, image_url, lesson_count |
 | `topics` | 741 | slug-based navigation categories |
 | `lesson_topics` | 12,907 | many-to-many lessons↔topics |
@@ -315,6 +315,20 @@ public/
    admin-only on migration tables
 5. **`useAwardPoints`** uses atomic upsert with `onConflict: "user_id"`
    to prevent race conditions on points ledger
+
+### Iron rules added 2026-04-30
+6. **`transparentHeader` + `sidebar={true}` is forbidden.** The old `display: onSidebarToggle ? "none" : undefined` bug (now fixed in DesignHeader.tsx) caused nav to disappear on desktop. Sidebar pages always get a solid header. Only immersive hero pages (home, memorial) may use `transparentHeader`.
+7. **Never put `marginTop: -96` inside a component that is rendered inside `DesignLayout overlapHero`.** The layout already applies the -96 offset to `<main>`. Double application causes the header to vanish.
+8. **`DesignSidebar` must use `useContentSidebar()` — never a hardcoded MAIN_TREE.** Any change to the production sidebar tree (SeriesList.tsx) must be mirrored here.
+9. **Never navigate from sidebar to `/bible/:book`.** Those pages are broken. All sidebar navigation must go to `/series/:id`.
+10. **`source_type` is not media type.** `source_type` (Umbraco/YouTube/S3) is the migration source. Derive media type from presence of `video_url` / `audio_url` / `attachment_url`.
+11. **`useTopSeries` filters `status=active` only.** Use `useSeriesDetail(id)` when you need to fetch a specific series regardless of status (e.g. parent series with status=published).
+12. **`@media print` + Framer Motion = blank PDF.** Add `* { transform: none !important; will-change: auto !important; }` to any print stylesheet on pages with Framer Motion animations. Also: never use `column-count` with RTL without verifying Chrome doesn't collapse heights.
+13. **`getSeriesCoverImage` must cover all 24 biblical books (Torah + Neviim + Ketuvim).** Without a Ketuvim entry, books like Lamentations/Song of Songs/Job fall back to mahogany gradient only — no illustration.
+14. **`DesignPreviewHome.tsx` is production, not sandbox.** Despite the "DesignPreview" prefix, `/` serves this file. It was never renamed after replacing `Index.tsx`. Always verify routes in `App.tsx` before assuming production vs sandbox.
+15. **Two navbars exist and must be updated together.** `src/components/layout-v2/DesignHeader.tsx` (global, all non-home pages) + `src/pages/DesignPreviewHome.tsx` inline `DesignNavBar` (home only). Adding a nav item requires updating both files.
+16. **Route-swap is the safest rollout strategy.** Change the route binding in `App.tsx` only. No file copies, no renames. Instant rollback via `git checkout <backup-tag>`.
+17. **Before any production rollout: `git tag -a backup-pre-X-YYYY-MM-DD -m "..."`.** Current tags: `backup-pre-redesign-rollout-2026-04-30`, `backup-pre-sidebar-rollout-2026-04-30`, `pre-swap-portal-2026-04-30T1652`, `backup-pre-parasha-rollout-2026-04-30`.
 
 ---
 
@@ -575,8 +589,20 @@ Mock counts (like `count: 142`) must be removed or replaced with real queries.
 **Migration run:** `supabase/migrations/20260430_audience_tags.sql` — applied via `supabase db push`
 - `audience_tags TEXT[] DEFAULT ARRAY['general']` added to `series` + `lessons`
 - GIN indexes created on both tables
-- Backfill result: **1 series** tagged `["teachers","general"]` — "כלי עזר - טבלאות זמני המאורעות ומפות"
-- All other 1,373 series defaulted to `["general"]` — Yoav bulk-tags via Admin UI
+- Backfill result: **1 series** tagged `["teachers","general"]` via keyword matching — "כלי עזר - טבלאות זמני המאורעות ומפות"
+- All other 1,373 series defaulted to `["general"]` at this point
+
+**Subsequent Saar decision — bulk UPDATE all content to `["general","teachers"]`:**
+After seeing the keyword backfill result, Saar decided ALL 1,374 series and 11,818 lessons
+should be tagged `["general","teachers"]` immediately ("כל הסדרות רלוונטיות למורים").
+This UPDATE was run manually via Supabase SQL Editor (not in the migration file):
+```sql
+UPDATE series SET audience_tags = ARRAY['general','teachers'];
+UPDATE lessons SET audience_tags = ARRAY['general','teachers'];
+```
+Confirmed by commit `255f096` (DB check: "all 1,374 series already tagged").
+The badge will appear on ALL content until Yoav manually removes the "teachers" tag
+from series that are not teacher-appropriate (via /admin/series bulk-tag UI).
 - `src/integrations/supabase/types.ts` regenerated (`supabase gen types`)
 - `as any` casts removed from `src/hooks/useSeries.ts` + `src/pages/admin/Series.tsx`
 - `Series.audience_tags` changed from optional to required in the local interface
@@ -1035,9 +1061,17 @@ Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (
 - `src/pages/SeriesList.tsx` — inner `<aside>` (357-line sidebar) wrapped in `{false && ...}`.
   Code preserved per Saar's explicit request for rollback safety. Comment:
   "Hidden 30.4.2026 — replaced by global DesignSidebar in Layout."
-- `src/pages/DesignPreviewHome.tsx` — wrapped in `<Layout sidebar={false}>`. Removed `<DesignNavBar />`
-  and `<DesignFooter />` from render. Both functions kept in file for reference.
-  Home page uses `sidebar={false}` to keep the landing page full-width and uncluttered.
+- `src/pages/DesignPreviewHome.tsx` — does NOT use `<Layout>`. Uses manual composition:
+  imports `DesignHeader`, `DesignSidebar`, `DesignFooter`, `DesignMobileBottomNav` directly.
+  `DesignHeader transparentOnTop={true}` + `DesignHero` full-width + `StatsBar` full-width
+  + `<div id="learn-start">` (flex row: sidebar inline-sticky left + main content right).
+  This keeps the hero completely full-width without a sidebar beside it (per Saar's layout decision).
+  The `DesignNavBar` function still exists in the file as the inline nav component used by the home page's DesignHeader.
+
+**CORRECTION NOTE (2026-04-30):** An earlier entry in this file stated the home page was
+"wrapped in `<Layout sidebar={false}>`" — that was the planned approach, but the final
+implementation uses manual composition (verified against source code). When in doubt, check
+`src/pages/DesignPreviewHome.tsx` directly.
 
 **Backup tag:** `backup-pre-sidebar-rollout-2026-04-30` (local + remote)
 
@@ -1047,6 +1081,74 @@ that use Layout.tsx: /series, /lessons/:id, /rabbis, /rabbis/:id, /series/:id, /
 Home page (/) is sidebar-free by intent.
 
 **TS check:** 0 new errors introduced (pre-existing DesignPreviewCoursesCatalog.tsx errors unrelated).
+
+### 2026-04-30 — Session summary: sidebar unification + production rollout (consolidated)
+
+This entry is a cross-reference summary of all the sidebar/rollout work done in the 2026-04-30 session.
+Detailed per-change logs are in the entries above. This summary exists so a future session can get
+the full picture of what changed without reading 40+ individual entries.
+
+#### A. DB schema changes (audience_tags)
+- Migration `supabase/migrations/20260430_audience_tags.sql` applied (commit `6c773ff`)
+- `series.audience_tags TEXT[] DEFAULT ARRAY['general']` — column + GIN index
+- `lessons.audience_tags TEXT[] DEFAULT ARRAY['general']` — column + GIN index
+- Helper view `series_with_audience` (non-destructive, read-only)
+- Keyword backfill auto-tagged 1 series; then Saar ran a manual UPDATE tagging ALL 1,374 series + 11,818 lessons as `["general","teachers"]`
+- `types.ts` regenerated, `as any` casts removed from `useSeries.ts` + `admin/Series.tsx`
+- `audience_tags` is **required** (not optional) in the `Series` TS interface
+
+#### B. Admin Series UI (`src/pages/admin/Series.tsx`)
+- Edit dialog: multi-select for audience_tags (כללי / מורים / נוער / מתקדמים)
+- Table: "קהל יעד" badge column
+- Filter bar: הכל / מורים / כללי with live counts
+- Bulk-tag checkbox + "תייג כמורים" button
+
+#### C. TeacherContentBadge component
+- `src/components/ui/TeacherContentBadge.tsx` — renders only when `tags.includes("teachers")`
+- `variant="full"` (icon + text "למורים") or `variant="small"` (icon + tooltip only)
+- Applied to: DesignPreviewLesson, DesignPreviewLessonPage, DesignPreviewLessonPopup,
+  DesignPreviewSeriesPage, DesignPreviewSeriesPageV2, DesignSidebar (SeriesInlineList)
+- Hooks updated: `useLesson` + `useSeriesLessons` now select `audience_tags`
+
+#### D. DesignSidebar v4 (`src/components/layout-v2/DesignSidebar.tsx`)
+- 4 tabs: ראשי / נושאים / רבנים / מורים (GraduationCap icon)
+- Real accordion tree via `useContentSidebar()` (same hook as production SeriesList.tsx)
+- `SeriesInlineList` component: lazy-fetches series by parent_id, renders inline with badges + lesson count
+- Separate `expandedMain` + `expandedTeachers` state per tab
+- Tab "מורים" = same MAIN_TREE as "ראשי" + unique banner "כל האתר מתויג"
+- Quick-links above tree: ראשי (/) + תכנית הפרק השבועי (/design-chapter-weekly)
+- Footer: donate button (gold) + לזכר סעדיה flame link
+- Logo: `h-16 md:h-20` (matches live Header.tsx)
+- Desktop: sticky inline 290px panel. Mobile: off-canvas drawer (burger in DesignHeader)
+
+#### E. TeachersWing (`/design-teachers-wing`) — hidden, not deleted
+- Removed from: DesignHeader NAV_ITEMS, DesignFooter columns, DesignSidebar tabs, DesignMobileBottomNav
+- Route still active in App.tsx — accessible via direct URL
+- `src/pages/DesignPreviewTeachersWing.tsx` + `src/hooks/useTeacherSeries.ts` kept (no deletion)
+- 6 mock categories (חידות/אטומיים/כלים/פודקאסט/קורסים/מאמרים) are hardcoded, not DB-backed — will not be reproduced
+
+#### F. Production rollout — what shipped
+**Backup tags (both local + GitHub):**
+- `backup-pre-sidebar-rollout-2026-04-30`
+- `pre-swap-portal-2026-04-30T1652`
+- `backup-pre-parasha-rollout-2026-04-30`
+
+**Files changed in production:**
+1. `src/components/layout/Layout.tsx` — now imports DesignHeader/DesignFooter/DesignMobileBottomNav (was Header/Footer/MobileBottomNav). New prop `sidebar?: boolean` (default `true`) — DesignSidebar rendered globally.
+2. `src/pages/SeriesList.tsx` — inner 357-line sidebar wrapped in `{false && ...}` (not deleted). Comment: "Hidden 30.4.2026 — replaced by global DesignSidebar in Layout. Keeping per Saar's request."
+3. `src/pages/DesignPreviewHome.tsx` — manual composition (DesignHeader + DesignSidebar + DesignFooter directly, NO `<Layout>` wrapper). Hero full-width, sidebar inline-sticky below `#learn-start` anchor.
+4. `src/App.tsx` — `/portal` → DesignPreviewPortalSubscriber, `/courses` → DesignPreviewCoursesCatalog, `/course/:slug` → DesignPreviewCourseDetail. `/portal-old` → legacy Portal.tsx.
+5. `src/App.tsx` — `/series/:id` → DesignPreviewSeriesPageV2 (was SeriesPagePublic).
+6. `src/pages/ParashaPage.tsx` — rewritten with mahogany hero, 3 CTA cards, sticky TOC, print stylesheet.
+
+#### G. Open items from this session
+1. **audience_tags fine-tuning** — Yoav must remove "teachers" tag from series that are NOT teacher-appropriate via `/admin/series` bulk UI. Currently everything is tagged (badge appears on all content).
+2. **`/bible/:book` pages broken** — not addressed. Navigation to these was removed from sidebar (sidebar now links to `/series/:id` directly). Future task.
+3. **TeachersWing decision** — delete or repurpose. No timeline set.
+4. **Migration `20260430_weekly_program_foundation.sql`** — still not applied. Blocked by missing `grow_orders` table in DB. Must verify table exists before applying.
+5. **WebP optimization** — current Shir HaShirim images are 1.3–1.7MB PNG. Convert to WebP before second book pilot.
+6. **`/portal-old` cleanup** — delete after 30-day stability window (deadline: 2026-05-30).
+7. **Sandbox cleanup** — `/design-series-page-v2/*` routes can be removed from App.tsx after 30-day production stability window.
 
 ---
 
