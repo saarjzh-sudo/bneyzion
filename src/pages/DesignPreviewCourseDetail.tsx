@@ -1,20 +1,20 @@
 /**
- * /design-course/:slug — Weekly program course detail page.
+ * /design-course/:slug — Weekly program course detail page v2.
  *
- * Layout: two-column
- *   LEFT sidebar: book list → chapter list (collapsible, current chapter highlighted)
- *   RIGHT main: chapter content with 3 tabs:
- *     1. בסיס       — base content: audio reading + orientation sheet (open to all)
- *     2. העמקה      — enrichment: full video + article + slides (subscribers only)
- *     3. שיעור      — weekly lesson recording + summary PDF (subscribers only)
+ * Changes vs v1 (2026-04-30):
+ *   - Sidebar expanded from 3 books to 8-book full timeline
+ *     (דניאל ✅ → איכה ✅ → עזרא-נחמיה ✅ → אסתר ✅ → חגי 🔄 → זכריה ▶️ → מלאכי ⏰ → יהושע ⏰)
+ *   - Default state: זכריה expanded + פרק ז highlighted
+ *   - Completed books: collapsed by default, expandable in read-only mode
+ *   - Future books (מלאכי, יהושע): locked UI, not clickable
+ *   - Breadcrumb updated: "< הקורסים שלי" → /design-courses
+ *   - Tab labels: "בסיס" / "הרחבה" / "שיעור שבועי" (matching Saar's spec)
  *
- * Access:
- *   - "בסיס" tab: always visible
- *   - "העמקה" + "שיעור" tabs: require useUserAccess("program:weekly-chapter")
- *     If no access: show preview + lock + link to /design-megilat-esther
+ * Access gates:
+ *   - "בסיס" tab: open to all
+ *   - "הרחבה" + "שיעור שבועי": require useUserAccess("program:weekly-chapter")
  *
- * Data: Drive-derived structure from scan (0AFz55knVlI2BUk9PVA)
- * Note: actual file URLs from Drive are placeholders until backend serves them.
+ * Sandbox toggle: מנוי / לא-מנוי (preserved from v1)
  */
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -26,12 +26,12 @@ import {
   Headphones,
   FileText,
   Presentation,
-  ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Heart,
   Sparkles,
   Download,
-  ExternalLink,
+  Clock,
   Loader2,
 } from "lucide-react";
 
@@ -39,108 +39,9 @@ import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useUserAccess } from "@/hooks/useUserAccess";
 
-// ── Drive-derived full structure ──────────────────────────────────────────
-const PROGRAM_BOOKS: BookDef[] = [
-  {
-    slug: "chagai",
-    name: "חגי",
-    totalChapters: 2,
-    description: "ספר קצר ועוצמתי — נבואות בית שני, קריאה לחידוש ביהמ\"ק, ורוח גאולה בוקעת.",
-    chapters: [
-      {
-        number: 1,
-        name: "פרק א",
-        completed: true,
-        base: {
-          audioReading: { label: "קריאה מוקלטת עם ביאור", available: true },
-          orientationSheet: { label: "דף הכוונה", available: true },
-        },
-        enrichment: {
-          video: { label: "שיעור וידאו מלא — הרב יואב אוריאל", available: true, durationMin: 45 },
-          article: { label: "מאמר הרחבה", available: true },
-          slides: { label: "מצגת הפרק", available: true },
-        },
-        weeklyLesson: {
-          video: { label: "הקלטת השיעור השבועי", available: true, durationMin: 52 },
-          summary: { label: "סיכום השיעור (PDF)", available: true },
-        },
-      },
-      {
-        number: 2,
-        name: "פרק ב",
-        completed: true,
-        base: {
-          audioReading: { label: "קריאה מוקלטת עם ביאור", available: true },
-          orientationSheet: { label: "דף הכוונה", available: true },
-        },
-        enrichment: {
-          video: { label: "שיעור וידאו מלא — הרב יואב אוריאל", available: true, durationMin: 38 },
-          article: { label: "מאמר הרחבה", available: true },
-          slides: { label: "מצגת הפרק", available: true },
-        },
-        weeklyLesson: {
-          video: { label: "הקלטת השיעור השבועי", available: true, durationMin: 47 },
-          summary: { label: "סיכום השיעור (PDF)", available: true },
-        },
-      },
-    ],
-  },
-  {
-    slug: "zechariah",
-    name: "זכריה",
-    totalChapters: 14,
-    description: "14 פרקים של חזיונות, מלאכים, ומסרים נצחיים על גאולה ויום ה'.",
-    chapters: Array.from({ length: 14 }, (_, i) => {
-      const num = i + 1;
-      const completed = num <= 6;
-      const hasFullContent = num <= 9;
-      return {
-        number: num,
-        name: `פרק ${["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב","יג","יד"][i]}`,
-        completed,
-        base: {
-          audioReading: { label: "קריאה מוקלטת עם ביאור", available: hasFullContent },
-          orientationSheet: { label: "דף הכוונה", available: hasFullContent },
-        },
-        enrichment: {
-          video: { label: "שיעור וידאו מלא — הרב יואב אוריאל", available: completed, durationMin: completed ? 40 + num * 2 : 0 },
-          article: { label: "מאמר הרחבה", available: completed },
-          slides: { label: "מצגת הפרק", available: completed },
-        },
-        weeklyLesson: {
-          video: { label: "הקלטת השיעור השבועי", available: completed, durationMin: completed ? 50 + num : 0 },
-          summary: { label: "סיכום השיעור (PDF)", available: completed },
-        },
-      };
-    }),
-  },
-  {
-    slug: "malachi",
-    name: "מלאכי",
-    totalChapters: 3,
-    description: "הנביא האחרון — ביקורת חריפה, אהבת ה' לישראל, ונבואת אליהו.",
-    chapters: Array.from({ length: 3 }, (_, i) => ({
-      number: i + 1,
-      name: `פרק ${["א","ב","ג"][i]}`,
-      completed: false,
-      base: {
-        audioReading: { label: "קריאה מוקלטת עם ביאור", available: false },
-        orientationSheet: { label: "דף הכוונה", available: false },
-      },
-      enrichment: {
-        video: { label: "שיעור וידאו מלא", available: false, durationMin: 0 },
-        article: { label: "מאמר הרחבה", available: false },
-        slides: { label: "מצגת הפרק", available: false },
-      },
-      weeklyLesson: {
-        video: { label: "הקלטת השיעור השבועי", available: false, durationMin: 0 },
-        summary: { label: "סיכום השיעור (PDF)", available: false },
-      },
-    })),
-  },
-];
-
+// ── Types ──────────────────────────────────────────────────────────────────
 type TabKey = "base" | "enrichment" | "weekly";
+type BookStatus = "done" | "in_progress" | "current" | "upcoming";
 
 interface ContentItem { label: string; available: boolean; durationMin?: number; }
 interface ChapterDef {
@@ -151,25 +52,136 @@ interface ChapterDef {
   enrichment: { video: ContentItem; article: ContentItem; slides: ContentItem; };
   weeklyLesson: { video: ContentItem; summary: ContentItem; };
 }
-interface BookDef { slug: string; name: string; totalChapters: number; description: string; chapters: ChapterDef[]; }
+interface BookDef {
+  slug: string;
+  name: string;
+  status: BookStatus;
+  totalChapters: number;
+  description: string;
+  chapters: ChapterDef[];
+}
 
+// ── Helper ─────────────────────────────────────────────────────────────────
+function makeChapters(
+  count: number,
+  allDone: boolean,
+  partialDone: number = 0,
+  hasContent: boolean = true
+): ChapterDef[] {
+  const hNames = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב","יג","יד","טו","טז","יז","יח","יט","כ","כא","כב","כג","כד"];
+  return Array.from({ length: count }, (_, i) => {
+    const num = i + 1;
+    const done = allDone || i < partialDone;
+    const avail = hasContent && (allDone || i < partialDone + 3);
+    return {
+      number: num,
+      name: `פרק ${hNames[i] ?? String(num)}`,
+      completed: done,
+      base: {
+        audioReading: { label: "קריאה מוקלטת עם ביאור", available: avail },
+        orientationSheet: { label: "דף הכוונה", available: avail },
+      },
+      enrichment: {
+        video: { label: "שיעור וידאו מלא — הרב יואב אוריאל", available: done, durationMin: done ? 40 + num * 2 : 0 },
+        article: { label: "מאמר הרחבה", available: done },
+        slides: { label: "מצגת הפרק", available: done },
+      },
+      weeklyLesson: {
+        video: { label: "הקלטת השיעור השבועי", available: done, durationMin: done ? 50 + num : 0 },
+        summary: { label: "סיכום השיעור (PDF)", available: done },
+      },
+    };
+  });
+}
+
+// ── Full 8-book program ────────────────────────────────────────────────────
+const PROGRAM_BOOKS: BookDef[] = [
+  {
+    slug: "daniel",
+    name: "דניאל",
+    status: "done",
+    totalChapters: 12,
+    description: "12 פרקים של חזיונות וגבורה — דניאל בבל, חוד הגאולה, ועידן הקץ.",
+    chapters: makeChapters(12, true),
+  },
+  {
+    slug: "eicha",
+    name: "איכה",
+    status: "done",
+    totalChapters: 5,
+    description: "קינות ירמיהו על חורבן ירושלים — אבל, תקווה וחידוש.",
+    chapters: makeChapters(5, true),
+  },
+  {
+    slug: "ezra-nehemiah",
+    name: "עזרא-נחמיה",
+    status: "done",
+    totalChapters: 23,
+    description: "שיבת ציון, בניין הבית, חידוש הברית — ספר אחד עם שני גיבורים.",
+    chapters: makeChapters(23, true),
+  },
+  {
+    slug: "esther",
+    name: "אסתר",
+    status: "done",
+    totalChapters: 10,
+    description: "הסתר פנים, נסים נסתרים ותכנית אלוהית — אסתר ומרדכי.",
+    chapters: makeChapters(10, true),
+  },
+  {
+    slug: "chagai",
+    name: "חגי",
+    status: "in_progress",
+    totalChapters: 2,
+    description: "ספר קצר ועוצמתי — נבואות בית שני, קריאה לחידוש ביהמ\"ק.",
+    chapters: makeChapters(2, false, 1, true),
+  },
+  {
+    slug: "zechariah",
+    name: "זכריה",
+    status: "current",
+    totalChapters: 14,
+    description: "14 פרקים של חזיונות, מלאכים, ומסרים נצחיים על גאולה ויום ה'.",
+    chapters: makeChapters(14, false, 6, true),
+  },
+  {
+    slug: "malachi",
+    name: "מלאכי",
+    status: "upcoming",
+    totalChapters: 3,
+    description: "הנביא האחרון — ביקורת חריפה, אהבת ה' לישראל, ונבואת אליהו.",
+    chapters: makeChapters(3, false, 0, false),
+  },
+  {
+    slug: "joshua",
+    name: "יהושע",
+    status: "upcoming",
+    totalChapters: 24,
+    description: "כיבוש הארץ, חלוקתה לשבטים, ואתגרי ממשיך משה.",
+    chapters: makeChapters(24, false, 0, false),
+  },
+];
+
+// ── Component ──────────────────────────────────────────────────────────────
 export default function DesignPreviewCourseDetail() {
   const { slug = "zechariah" } = useParams<{ slug: string }>();
   const { hasAccess: realAccess, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
 
-  // ── Sandbox preview toggle ────────────────────────────────────────────────
-  // Lets Saar review both subscriber and non-subscriber views without login.
-  // In production this will always use realAccess from useUserAccess.
+  // Sandbox preview toggle
   const [previewMode, setPreviewMode] = useState<"subscriber" | "locked">("subscriber");
   const hasAccess = previewMode === "subscriber" || realAccess;
 
-  // Find initial book by slug, default to zechariah
-  const initialBookIdx = PROGRAM_BOOKS.findIndex((b) => b.slug === slug) ?? 1;
-  const [activeBookIdx, setActiveBookIdx] = useState(Math.max(0, initialBookIdx));
-  const [expandedBooks, setExpandedBooks] = useState<Set<number>>(new Set([initialBookIdx >= 0 ? initialBookIdx : 1]));
+  // Default: open on זכריה פרק ז (book index 5, chapter index 6)
+  const defaultBookIdx = Math.max(0, PROGRAM_BOOKS.findIndex((b) => b.slug === slug));
+  const [activeBookIdx, setActiveBookIdx] = useState(defaultBookIdx >= 0 ? defaultBookIdx : 5);
+  const [expandedBooks, setExpandedBooks] = useState<Set<number>>(() => {
+    const initial = defaultBookIdx >= 0 ? defaultBookIdx : 5;
+    return new Set([initial]);
+  });
   const [activeChapterIdx, setActiveChapterIdx] = useState(() => {
-    const book = PROGRAM_BOOKS[Math.max(0, initialBookIdx)];
-    // Default: first incomplete chapter
+    const bIdx = defaultBookIdx >= 0 ? defaultBookIdx : 5;
+    const book = PROGRAM_BOOKS[bIdx];
+    if (book.slug === "zechariah") return 6; // פרק ז = index 6
     const firstIncomplete = book.chapters.findIndex((c) => !c.completed);
     return firstIncomplete >= 0 ? firstIncomplete : 0;
   });
@@ -178,7 +190,15 @@ export default function DesignPreviewCourseDetail() {
   const activeBook = PROGRAM_BOOKS[activeBookIdx];
   const activeChapter = activeBook.chapters[activeChapterIdx];
 
+  const completedCount = PROGRAM_BOOKS.reduce(
+    (sum, b) => sum + b.chapters.filter((c) => c.completed).length,
+    0
+  );
+  const totalCount = PROGRAM_BOOKS.reduce((sum, b) => sum + b.totalChapters, 0);
+
   function toggleBook(idx: number) {
+    const book = PROGRAM_BOOKS[idx];
+    if (book.status === "upcoming") return; // don't expand future books
     setExpandedBooks((prev) => {
       const next = new Set(prev);
       if (next.has(idx)) next.delete(idx);
@@ -188,20 +208,29 @@ export default function DesignPreviewCourseDetail() {
   }
 
   function selectChapter(bookIdx: number, chapterIdx: number) {
+    const book = PROGRAM_BOOKS[bookIdx];
+    if (book.status === "upcoming") return;
     setActiveBookIdx(bookIdx);
     setActiveChapterIdx(chapterIdx);
     setActiveTab("base");
+    // ensure the book is expanded
+    setExpandedBooks((prev) => new Set([...prev, bookIdx]));
   }
 
-  const completedCount = PROGRAM_BOOKS.reduce(
-    (sum, b) => sum + b.chapters.filter((c) => c.completed).length,
-    0
-  );
-  const totalCount = PROGRAM_BOOKS.reduce((sum, b) => sum + b.totalChapters, 0);
+  if (accessLoading) {
+    return (
+      <DesignLayout sidebar={false}>
+        <div style={{ padding: "10rem 0", display: "flex", justifyContent: "center" }}>
+          <Loader2 style={{ width: 32, height: 32, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      </DesignLayout>
+    );
+  }
 
   return (
     <DesignLayout sidebar={false}>
-      {/* ─── Top bar ────────────────────────────────────────────────────── */}
+      {/* ─── Top bar ──────────────────────────────────────────────────── */}
       <div
         dir="rtl"
         style={{
@@ -214,32 +243,52 @@ export default function DesignPreviewCourseDetail() {
           flexWrap: "wrap",
         }}
       >
-        <div>
-          <div
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+          {/* Breadcrumb */}
+          <Link
+            to="/design-courses"
             style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.3rem",
               fontFamily: fonts.body,
-              fontSize: "0.7rem",
-              fontWeight: 700,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: colors.goldShimmer,
-              marginBottom: "0.3rem",
+              fontSize: "0.78rem",
+              color: "rgba(232,213,160,0.6)",
+              textDecoration: "none",
+              flexShrink: 0,
             }}
           >
-            הפרק השבועי בתנ"ך
+            <ChevronLeft size={13} />
+            הקורסים שלי
+          </Link>
+          <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.12)" }} />
+          <div>
+            <div
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.65rem",
+                fontWeight: 700,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: colors.goldShimmer,
+                marginBottom: "0.2rem",
+              }}
+            >
+              הפרק השבועי בתנ״ך
+            </div>
+            <h1
+              style={{
+                fontFamily: fonts.display,
+                fontWeight: 800,
+                fontSize: "1.25rem",
+                color: "white",
+                margin: 0,
+                lineHeight: 1.2,
+              }}
+            >
+              {activeBook.name} — {activeChapter.name}
+            </h1>
           </div>
-          <h1
-            style={{
-              fontFamily: fonts.display,
-              fontWeight: 800,
-              fontSize: "1.4rem",
-              color: "white",
-              margin: 0,
-              lineHeight: 1.2,
-            }}
-          >
-            חגי, זכריה ומלאכי
-          </h1>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "1.25rem" }}>
@@ -249,14 +298,14 @@ export default function DesignPreviewCourseDetail() {
               style={{
                 fontFamily: fonts.display,
                 fontWeight: 900,
-                fontSize: "1.3rem",
+                fontSize: "1.2rem",
                 color: colors.goldShimmer,
                 lineHeight: 1,
               }}
             >
               {completedCount}/{totalCount}
             </div>
-            <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: "rgba(255,255,255,0.55)" }}>
+            <div style={{ fontFamily: fonts.body, fontSize: "0.63rem", color: "rgba(255,255,255,0.5)" }}>
               פרקים
             </div>
           </div>
@@ -264,9 +313,9 @@ export default function DesignPreviewCourseDetail() {
           {/* Progress bar */}
           <div
             style={{
-              width: 100,
-              height: 6,
-              background: "rgba(255,255,255,0.12)",
+              width: 90,
+              height: 5,
+              background: "rgba(255,255,255,0.1)",
               borderRadius: 3,
               overflow: "hidden",
             }}
@@ -284,18 +333,19 @@ export default function DesignPreviewCourseDetail() {
           <Link
             to="/design-portal-subscriber"
             style={{
-              padding: "0.55rem 1.1rem",
+              padding: "0.5rem 1rem",
               borderRadius: radii.md,
               border: "1.5px solid rgba(232,213,160,0.3)",
               background: "rgba(232,213,160,0.08)",
               color: colors.goldShimmer,
               fontFamily: fonts.accent,
               fontWeight: 700,
-              fontSize: "0.78rem",
+              fontSize: "0.75rem",
               textDecoration: "none",
+              whiteSpace: "nowrap",
             }}
           >
-            לאזור האישי
+            האזור האישי
           </Link>
         </div>
       </div>
@@ -306,7 +356,7 @@ export default function DesignPreviewCourseDetail() {
         style={{
           background: "rgba(45,31,14,0.97)",
           borderBottom: "1px solid rgba(232,213,160,0.15)",
-          padding: "0.55rem 1.5rem",
+          padding: "0.5rem 1.5rem",
           display: "flex",
           alignItems: "center",
           gap: "0.85rem",
@@ -315,8 +365,8 @@ export default function DesignPreviewCourseDetail() {
         <span
           style={{
             fontFamily: fonts.body,
-            fontSize: "0.7rem",
-            color: "rgba(232,213,160,0.55)",
+            fontSize: "0.68rem",
+            color: "rgba(232,213,160,0.5)",
             fontWeight: 700,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
@@ -327,37 +377,31 @@ export default function DesignPreviewCourseDetail() {
         <div
           style={{
             display: "inline-flex",
-            background: "rgba(255,255,255,0.07)",
+            background: "rgba(255,255,255,0.06)",
             borderRadius: 20,
-            padding: "0.2rem",
-            gap: "0.15rem",
+            padding: "0.18rem",
+            gap: "0.1rem",
           }}
         >
           {(
             [
-              { key: "subscriber", label: "מנוי" },
-              { key: "locked", label: "לא-מנוי" },
-            ] as { key: typeof previewMode; label: string }[]
+              { key: "subscriber" as const, label: "מנוי" },
+              { key: "locked" as const, label: "לא-מנוי" },
+            ]
           ).map((opt) => (
             <button
               key={opt.key}
               onClick={() => setPreviewMode(opt.key)}
               style={{
-                padding: "0.3rem 0.85rem",
+                padding: "0.28rem 0.8rem",
                 borderRadius: 16,
                 border: "none",
                 cursor: "pointer",
                 fontFamily: fonts.body,
                 fontWeight: 700,
-                fontSize: "0.75rem",
-                background:
-                  previewMode === opt.key
-                    ? gradients.goldButton
-                    : "transparent",
-                color:
-                  previewMode === opt.key
-                    ? "white"
-                    : "rgba(232,213,160,0.55)",
+                fontSize: "0.72rem",
+                background: previewMode === opt.key ? gradients.goldButton : "transparent",
+                color: previewMode === opt.key ? "white" : "rgba(232,213,160,0.5)",
                 transition: "all 0.18s",
               }}
             >
@@ -372,13 +416,13 @@ export default function DesignPreviewCourseDetail() {
         dir="rtl"
         style={{
           display: "grid",
-          gridTemplateColumns: "min(280px, 30%) 1fr",
-          minHeight: "calc(100vh - 200px)",
+          gridTemplateColumns: "min(300px, 32%) 1fr",
+          minHeight: "calc(100vh - 220px)",
           background: colors.parchment,
         }}
         className="course-detail-grid"
       >
-        {/* ─── Sidebar: book + chapter nav ────────────────────────────── */}
+        {/* ─── LEFT Sidebar: book + chapter nav ─────────────────────── */}
         <aside
           style={{
             background: "white",
@@ -400,53 +444,60 @@ export default function DesignPreviewCourseDetail() {
             <div
               style={{
                 fontFamily: fonts.body,
-                fontSize: "0.68rem",
+                fontSize: "0.65rem",
                 fontWeight: 700,
                 color: colors.goldDark,
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                marginBottom: "0.25rem",
+                marginBottom: "0.2rem",
               }}
             >
               תוכן הקורס
             </div>
-            <div
-              style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}
-            >
-              {completedCount} מתוך {totalCount} פרקים
+            <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted }}>
+              {completedCount} מתוך {totalCount} פרקים · 8 ספרים
             </div>
           </div>
 
           {/* Book list */}
           {PROGRAM_BOOKS.map((book, bIdx) => {
-            const bookCompleted = book.chapters.every((c) => c.completed);
-            const bookInProgress = !bookCompleted && book.chapters.some((c) => c.completed);
+            const bookCompleted = book.status === "done";
+            const bookCurrent = book.status === "current";
+            const bookInProgress = book.status === "in_progress";
+            const bookUpcoming = book.status === "upcoming";
             const isExpanded = expandedBooks.has(bIdx);
+            const isActive = activeBookIdx === bIdx;
 
             return (
               <div key={book.slug} style={{ borderBottom: `1px solid rgba(139,111,71,0.06)` }}>
-                {/* Book header */}
+                {/* Book header button */}
                 <button
                   onClick={() => toggleBook(bIdx)}
+                  disabled={bookUpcoming}
                   style={{
                     width: "100%",
                     padding: "0.85rem 1rem",
-                    background: "none",
+                    background: isActive && !bookUpcoming ? "rgba(139,111,71,0.05)" : "none",
                     border: "none",
-                    cursor: "pointer",
+                    cursor: bookUpcoming ? "default" : "pointer",
                     textAlign: "right",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.6rem",
+                    opacity: bookUpcoming ? 0.45 : 1,
+                    borderInlineEnd: isActive ? `3px solid ${colors.goldDark}` : "3px solid transparent",
                   }}
                 >
+                  {/* Status dot */}
                   <div
                     style={{
-                      width: 28,
-                      height: 28,
+                      width: 30,
+                      height: 30,
                       borderRadius: "50%",
                       background: bookCompleted
                         ? "rgba(91,110,58,0.12)"
+                        : bookCurrent
+                        ? gradients.goldButton
                         : bookInProgress
                         ? "rgba(139,111,71,0.12)"
                         : "rgba(139,111,71,0.06)",
@@ -454,52 +505,71 @@ export default function DesignPreviewCourseDetail() {
                       alignItems: "center",
                       justifyContent: "center",
                       flexShrink: 0,
+                      border: bookCurrent ? `2px solid ${colors.goldDark}` : "2px solid transparent",
                     }}
                   >
                     {bookCompleted ? (
                       <CheckCircle2 size={14} style={{ color: colors.oliveMain }} />
+                    ) : bookCurrent ? (
+                      <Play size={12} fill="white" style={{ color: "white" }} />
                     ) : bookInProgress ? (
-                      <BookOpen size={13} style={{ color: colors.goldDark }} />
+                      <BookOpen size={12} style={{ color: colors.goldDark }} />
                     ) : (
-                      <Lock size={12} style={{ color: colors.textSubtle }} />
+                      <Clock size={11} style={{ color: colors.textSubtle }} />
                     )}
                   </div>
 
-                  <span
-                    style={{
-                      fontFamily: fonts.display,
-                      fontWeight: 700,
-                      fontSize: "0.88rem",
-                      color: colors.textDark,
-                      flex: 1,
-                    }}
-                  >
-                    {book.name}
-                  </span>
+                  <div style={{ flex: 1, textAlign: "right" }}>
+                    <div
+                      style={{
+                        fontFamily: fonts.display,
+                        fontWeight: bookCurrent || bookInProgress ? 800 : 700,
+                        fontSize: "0.85rem",
+                        color: bookCurrent ? colors.goldDark : bookCompleted ? colors.oliveMain : colors.textDark,
+                      }}
+                    >
+                      {book.name}
+                    </div>
+                    <div style={{ fontFamily: fonts.body, fontSize: "0.65rem", color: colors.textSubtle }}>
+                      {bookCompleted
+                        ? `${book.totalChapters} פרקים · הושלם`
+                        : bookCurrent
+                        ? `פרק ז מתוך ${book.totalChapters} · נוכחי`
+                        : bookInProgress
+                        ? `1/${book.totalChapters} פרקים`
+                        : `${book.totalChapters} פרקים · בקרוב`}
+                    </div>
+                  </div>
 
-                  <span style={{ color: colors.textSubtle, flexShrink: 0, transition: "transform 0.15s", transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)" }}>
-                    <ChevronRight size={14} />
-                  </span>
+                  {!bookUpcoming && (
+                    <span
+                      style={{
+                        color: colors.textSubtle,
+                        flexShrink: 0,
+                        transition: "transform 0.15s",
+                        transform: isExpanded ? "rotate(90deg)" : "rotate(0deg)",
+                      }}
+                    >
+                      <ChevronRight size={13} />
+                    </span>
+                  )}
                 </button>
 
-                {/* Chapter list */}
-                {isExpanded && (
+                {/* Chapter list (expanded) */}
+                {isExpanded && !bookUpcoming && (
                   <div style={{ paddingBottom: "0.4rem" }}>
                     {book.chapters.map((ch, cIdx) => {
-                      const isActive = activeBookIdx === bIdx && activeChapterIdx === cIdx;
+                      const isChActive = activeBookIdx === bIdx && activeChapterIdx === cIdx;
+                      const isReadOnly = bookCompleted; // completed books = read-only (can browse)
                       return (
                         <button
                           key={ch.number}
                           onClick={() => selectChapter(bIdx, cIdx)}
                           style={{
                             width: "100%",
-                            padding: "0.55rem 1rem 0.55rem 2rem",
-                            background: isActive
-                              ? "rgba(139,111,71,0.1)"
-                              : "none",
-                            borderInlineStart: isActive
-                              ? `3px solid ${colors.goldDark}`
-                              : "3px solid transparent",
+                            padding: "0.5rem 1rem 0.5rem 2rem",
+                            background: isChActive ? "rgba(139,111,71,0.1)" : "none",
+                            borderInlineStart: isChActive ? `3px solid ${colors.goldDark}` : "3px solid transparent",
                             border: "none",
                             borderTop: "none",
                             borderBottom: "none",
@@ -512,21 +582,48 @@ export default function DesignPreviewCourseDetail() {
                           }}
                         >
                           {ch.completed ? (
-                            <CheckCircle2 size={12} style={{ color: colors.oliveMain, flexShrink: 0 }} />
+                            <CheckCircle2 size={11} style={{ color: colors.oliveMain, flexShrink: 0 }} />
                           ) : ch.base.audioReading.available ? (
-                            <div style={{ width: 12, height: 12, borderRadius: "50%", border: `1.5px solid ${colors.goldDark}`, flexShrink: 0 }} />
+                            <div
+                              style={{
+                                width: 11,
+                                height: 11,
+                                borderRadius: "50%",
+                                border: `1.5px solid ${colors.goldDark}`,
+                                flexShrink: 0,
+                              }}
+                            />
                           ) : (
-                            <div style={{ width: 12, height: 12, borderRadius: "50%", border: `1.5px solid rgba(139,111,71,0.2)`, flexShrink: 0 }} />
+                            <div
+                              style={{
+                                width: 11,
+                                height: 11,
+                                borderRadius: "50%",
+                                border: "1.5px solid rgba(139,111,71,0.2)",
+                                flexShrink: 0,
+                              }}
+                            />
                           )}
                           <span
                             style={{
                               fontFamily: fonts.body,
-                              fontSize: "0.8rem",
-                              color: isActive ? colors.goldDark : ch.completed ? colors.oliveMain : ch.base.audioReading.available ? colors.textDark : colors.textSubtle,
-                              fontWeight: isActive ? 700 : 400,
+                              fontSize: "0.78rem",
+                              color: isChActive
+                                ? colors.goldDark
+                                : ch.completed
+                                ? colors.oliveMain
+                                : ch.base.audioReading.available
+                                ? colors.textDark
+                                : colors.textSubtle,
+                              fontWeight: isChActive ? 700 : 400,
                             }}
                           >
                             {ch.name}
+                            {isReadOnly && (
+                              <span style={{ marginInlineStart: "0.3rem", opacity: 0.5, fontSize: "0.6rem" }}>
+                                ✓
+                              </span>
+                            )}
                           </span>
                         </button>
                       );
@@ -538,21 +635,41 @@ export default function DesignPreviewCourseDetail() {
           })}
         </aside>
 
-        {/* ─── Main content ────────────────────────────────────────────── */}
+        {/* ─── RIGHT: Main content ───────────────────────────────────── */}
         <main style={{ padding: "2.5rem 2rem", maxWidth: 860 }}>
           {/* Chapter header */}
           <div style={{ marginBottom: "2rem" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.5rem" }}>
-              <Link
-                to={`/design-course/${activeBook.slug}`}
-                style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.goldDark, textDecoration: "none" }}
-              >
-                {activeBook.name}
-              </Link>
-              <ChevronRight size={13} style={{ color: colors.textSubtle }} />
-              <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}>
-                {activeChapter.name}
-              </span>
+            {/* Book description */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.35rem",
+                padding: "0.22rem 0.65rem",
+                borderRadius: radii.pill,
+                background: activeBook.status === "current"
+                  ? "rgba(139,111,71,0.1)"
+                  : activeBook.status === "done"
+                  ? "rgba(91,110,58,0.1)"
+                  : "rgba(139,111,71,0.06)",
+                color: activeBook.status === "current"
+                  ? colors.goldDark
+                  : activeBook.status === "done"
+                  ? colors.oliveMain
+                  : colors.textMuted,
+                fontFamily: fonts.body,
+                fontSize: "0.7rem",
+                fontWeight: 700,
+                marginBottom: "0.75rem",
+              }}
+            >
+              {activeBook.status === "current" ? (
+                <><Play size={11} fill="currentColor" /> פרק נוכחי</>
+              ) : activeBook.status === "done" ? (
+                <><CheckCircle2 size={11} /> הושלם</>
+              ) : (
+                <><BookOpen size={11} /> בתהליך</>
+              )}
             </div>
 
             <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", flexWrap: "wrap" }}>
@@ -560,7 +677,7 @@ export default function DesignPreviewCourseDetail() {
                 style={{
                   fontFamily: fonts.display,
                   fontWeight: 800,
-                  fontSize: "clamp(1.6rem, 3vw, 2.2rem)",
+                  fontSize: "clamp(1.5rem, 3vw, 2.1rem)",
                   color: colors.textDark,
                   margin: 0,
                 }}
@@ -573,38 +690,49 @@ export default function DesignPreviewCourseDetail() {
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "0.3rem",
-                    padding: "0.25rem 0.65rem",
+                    padding: "0.22rem 0.6rem",
                     borderRadius: radii.pill,
                     background: "rgba(91,110,58,0.1)",
                     color: colors.oliveMain,
                     fontFamily: fonts.body,
-                    fontSize: "0.72rem",
+                    fontSize: "0.7rem",
                     fontWeight: 700,
                   }}
                 >
-                  <CheckCircle2 size={12} />
+                  <CheckCircle2 size={11} />
                   הושלם
                 </span>
               )}
             </div>
+
+            <p
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.85rem",
+                color: colors.textMuted,
+                margin: "0.5rem 0 0",
+                lineHeight: 1.65,
+              }}
+            >
+              {activeBook.description}
+            </p>
           </div>
 
-          {/* ─── 3 Tabs ──────────────────────────────────────────────── */}
+          {/* ─── 3 Tabs ────────────────────────────────────────────── */}
           <div style={{ marginBottom: "1.75rem" }}>
             <div
               style={{
                 display: "flex",
                 gap: "0.25rem",
                 borderBottom: `2px solid rgba(139,111,71,0.1)`,
-                paddingBottom: "0",
               }}
             >
               {(
                 [
-                  { key: "base", label: "תכני בסיס", locked: false },
-                  { key: "enrichment", label: "העמקה", locked: !hasAccess },
-                  { key: "weekly", label: "השיעור השבועי", locked: !hasAccess },
-                ] as { key: TabKey; label: string; locked: boolean }[]
+                  { key: "base" as const, label: "בסיס", locked: false },
+                  { key: "enrichment" as const, label: "הרחבה", locked: !hasAccess },
+                  { key: "weekly" as const, label: "שיעור שבועי", locked: !hasAccess },
+                ]
               ).map((tab) => (
                 <button
                   key={tab.key}
@@ -634,14 +762,14 @@ export default function DesignPreviewCourseDetail() {
                     transition: "color 0.15s",
                   }}
                 >
-                  {tab.locked && <Lock size={12} />}
+                  {tab.locked && <Lock size={11} />}
                   {tab.label}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* ─── Tab: Base ───────────────────────────────────────────── */}
+          {/* ─── Tab: בסיס ──────────────────────────────────────────── */}
           {activeTab === "base" && (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {activeChapter.base.audioReading.available ? (
@@ -649,7 +777,7 @@ export default function DesignPreviewCourseDetail() {
                   <ContentCard
                     icon={<Headphones size={18} />}
                     title="קריאה מוקלטת עם ביאור"
-                    subtitle="הרב יונדב זר"
+                    subtitle="הרב יונדב זר · פתוח לכולם"
                     type="audio"
                     available
                   />
@@ -678,11 +806,11 @@ export default function DesignPreviewCourseDetail() {
             </div>
           )}
 
-          {/* ─── Tab: Enrichment ─────────────────────────────────────── */}
+          {/* ─── Tab: הרחבה ─────────────────────────────────────────── */}
           {activeTab === "enrichment" && (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {!hasAccess ? (
-                <LockedTabPanel />
+                <LockedTabPanel tab="הרחבה" />
               ) : activeChapter.enrichment.video.available ? (
                 <>
                   <ContentCard
@@ -711,18 +839,18 @@ export default function DesignPreviewCourseDetail() {
               ) : (
                 <EmptyTabState
                   icon={<Play size={32} />}
-                  title="תכני ההעמקה טרם פורסמו"
-                  desc="הפרק עדיין לא הגיע בתוכנית — שיעור ההעמקה יפורסם לפי לוח הזמנים."
+                  title="תכני ההרחבה טרם פורסמו"
+                  desc="הפרק עדיין לא הגיע בתוכנית — שיעור ההרחבה יפורסם לפי לוח הזמנים."
                 />
               )}
             </div>
           )}
 
-          {/* ─── Tab: Weekly Lesson ──────────────────────────────────── */}
+          {/* ─── Tab: שיעור שבועי ──────────────────────────────────── */}
           {activeTab === "weekly" && (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
               {!hasAccess ? (
-                <LockedTabPanel />
+                <LockedTabPanel tab="שיעור שבועי" />
               ) : activeChapter.weeklyLesson.video.available ? (
                 <>
                   <ContentCard
@@ -751,7 +879,7 @@ export default function DesignPreviewCourseDetail() {
             </div>
           )}
 
-          {/* ─── Chapter navigation ──────────────────────────────────── */}
+          {/* ─── Chapter navigation ──────────────────────────────── */}
           <div
             style={{
               marginTop: "3rem",
@@ -783,7 +911,9 @@ export default function DesignPreviewCourseDetail() {
               >
                 הפרק הקודם ←
               </button>
-            ) : <div />}
+            ) : (
+              <div />
+            )}
 
             {activeChapterIdx < activeBook.chapters.length - 1 && (
               <button
@@ -815,12 +945,14 @@ export default function DesignPreviewCourseDetail() {
         @media (max-width: 768px) {
           .course-detail-grid { grid-template-columns: 1fr !important; }
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes ring-pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.15); opacity: 0.2; } }
       `}</style>
     </DesignLayout>
   );
 }
 
-// ── Sub-components ──────────────────────────────────────────────────────
+// ── Sub-components ────────────────────────────────────────────────────────
 
 function ContentCard({
   icon,
@@ -875,7 +1007,6 @@ function ContentCard({
       >
         {icon}
       </div>
-
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
           style={{
@@ -883,57 +1014,56 @@ function ContentCard({
             fontWeight: 700,
             fontSize: featured ? "1rem" : "0.9rem",
             color: colors.textDark,
-            marginBottom: "0.15rem",
+            marginBottom: "0.12rem",
           }}
         >
           {title}
         </div>
-        <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}>
+        <div style={{ fontFamily: fonts.body, fontSize: "0.76rem", color: colors.textMuted }}>
           {subtitle}
         </div>
       </div>
-
       {available && (
         <div style={{ display: "flex", gap: "0.4rem", flexShrink: 0 }}>
           {type === "video" || type === "audio" ? (
             <button
               style={{
-                padding: "0.5rem 1rem",
+                padding: "0.48rem 0.95rem",
                 borderRadius: radii.md,
                 background: gradients.goldButton,
                 border: "none",
                 color: "white",
                 fontFamily: fonts.accent,
                 fontWeight: 700,
-                fontSize: "0.8rem",
+                fontSize: "0.78rem",
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.35rem",
+                gap: "0.32rem",
                 boxShadow: shadows.goldGlow,
               }}
             >
-              <Play size={13} fill="currentColor" />
+              <Play size={12} fill="currentColor" />
               {type === "audio" ? "האזן" : "צפה"}
             </button>
           ) : (
             <button
               style={{
-                padding: "0.5rem 0.9rem",
+                padding: "0.48rem 0.85rem",
                 borderRadius: radii.md,
                 background: "transparent",
                 border: `1px solid ${accentColor}40`,
                 color: accentColor,
                 fontFamily: fonts.accent,
                 fontWeight: 700,
-                fontSize: "0.8rem",
+                fontSize: "0.78rem",
                 cursor: "pointer",
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "0.35rem",
+                gap: "0.32rem",
               }}
             >
-              <Download size={13} />
+              <Download size={12} />
               הורד
             </button>
           )}
@@ -943,7 +1073,7 @@ function ContentCard({
   );
 }
 
-function LockedTabPanel() {
+function LockedTabPanel({ tab }: { tab: string }) {
   return (
     <div
       dir="rtl"
@@ -974,24 +1104,24 @@ function LockedTabPanel() {
         style={{
           fontFamily: fonts.display,
           fontWeight: 800,
-          fontSize: "1.2rem",
+          fontSize: "1.15rem",
           color: colors.textDark,
           margin: "0 0 0.5rem",
         }}
       >
-        תוכן זה למנויים בלבד
+        תוכן ה{tab} למנויים בלבד
       </h3>
       <p
         style={{
           fontFamily: fonts.body,
-          fontSize: "0.88rem",
+          fontSize: "0.85rem",
           lineHeight: 1.8,
           color: colors.textMuted,
           maxWidth: 380,
           margin: "0 auto 1.75rem",
         }}
       >
-        שיעורי ההעמקה, המצגות, המאמרים וההקלטות השבועיות פתוחים למנויי הפרק השבועי בלבד.
+        שיעורי ההרחבה, המצגות, המאמרים וההקלטות השבועיות פתוחים למנויי הפרק השבועי בלבד.
       </p>
       <Link
         to="/design-megilat-esther"
@@ -1005,12 +1135,12 @@ function LockedTabPanel() {
           color: "white",
           fontFamily: fonts.accent,
           fontWeight: 700,
-          fontSize: "0.95rem",
+          fontSize: "0.92rem",
           textDecoration: "none",
           boxShadow: shadows.goldGlow,
         }}
       >
-        <Heart size={15} fill="currentColor" />
+        <Heart size={14} fill="currentColor" />
         הצטרף — ₪5 לחודש הראשון
       </Link>
       <div style={{ marginTop: "0.85rem" }}>
@@ -1018,7 +1148,7 @@ function LockedTabPanel() {
           to="/design-portal-subscriber"
           style={{
             fontFamily: fonts.body,
-            fontSize: "0.8rem",
+            fontSize: "0.78rem",
             color: colors.goldDark,
             textDecoration: "underline",
           }}
@@ -1064,7 +1194,7 @@ function EmptyTabState({
       >
         {title}
       </h3>
-      <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textSubtle, maxWidth: 360, margin: "0 auto" }}>
+      <p style={{ fontFamily: fonts.body, fontSize: "0.84rem", color: colors.textSubtle, maxWidth: 360, margin: "0 auto" }}>
         {desc}
       </p>
     </div>
