@@ -781,6 +781,31 @@ need `useAwardPoints` + `useMediaProgress`, need `SmartAuthCTA`.
 - חידות לשולחן השבת → in-page anchor `#riddle` (lessons from RIDDLES_SERIES_ID `c852edd8-d959-4c8d-bf7e-17b5881275fa`)
 - חומרי לימוד למורים → `/teachers` route
 
+### 2026-04-30 — Teacher badge + sidebar tab 4 (commit ce4734d)
+
+**Files added/changed:**
+- `src/components/ui/TeacherContentBadge.tsx` — NEW reusable badge.
+  Props: `tags: string[] | null | undefined`, `variant: "full" | "small"`.
+  Renders only when `tags.includes("teachers")`. Gold/amber subtle pill style.
+  variant="full" = icon + "למורים" text. variant="small" = icon only with tooltip.
+- `src/hooks/useTeacherSeries.ts` — NEW hook. Fetches series where
+  `audience_tags @> ARRAY['teachers']`, status active|published, sorted by lesson_count DESC.
+  Used by DesignSidebar tab 4. Returns `TeacherSeriesRow[]`.
+- `src/components/layout-v2/DesignSidebar.tsx` — Added tab 4 "מורים" (GraduationCap icon).
+  Tab grid changed from 3 → 4 columns (narrower labels, still legible).
+  Tab content: hero banner + link to /design-teachers-wing + teacher-tagged series tree.
+  Existing 3 tabs (ראשי / נושאים / רבנים) completely untouched.
+- `src/pages/DesignPreviewSeriesList.tsx` — badge on top-5 cards (full) + compact grid (small).
+- `src/pages/DesignPreviewSeriesPageV2.tsx` — badge on LessonCard (top-left corner, small),
+  LessonRow (between media badge and arrow), sub-series grid cards (inline with title).
+
+**Known state:** After keyword backfill, only 1 series has `audience_tags=["teachers","general"]`
+("כלי עזר - טבלאות זמני המאורעות ומפות"). Badge will appear on more content after Yoav
+bulk-tags via /admin/series. Intentional for UX testing.
+
+**DesignSidebar tab 4 hero text:** "אגף המורים — כל התכנים המתאימים להוראה"
+Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (route exists, 0 nav links from elsewhere)
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
