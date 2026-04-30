@@ -29,7 +29,11 @@ import {
   GraduationCap,
   FolderOpen,
   Loader2,
+  Heart,
+  Home,
+  CalendarDays,
 } from "lucide-react";
+import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
@@ -58,7 +62,7 @@ function useSeriesForNodeLocal(nodeId: string | null) {
       const allIds = [nodeId, ...(descendants || []).map((d: { series_id: string }) => d.series_id)];
       const { data: series } = await supabase
         .from("series")
-        .select("id, title, lesson_count, rabbi_id")
+        .select("id, title, lesson_count, rabbi_id, audience_tags")
         .in("id", allIds)
         .gt("lesson_count", 0)
         .order("lesson_count", { ascending: false })
@@ -75,6 +79,7 @@ function useSeriesForNodeLocal(nodeId: string | null) {
         title: s.title,
         lessonCount: s.lesson_count ?? 0,
         rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
+        audienceTags: (s.audience_tags as string[] | null) ?? null,
       }));
     },
     enabled: !!nodeId,
@@ -212,24 +217,52 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
-        {/* Gold primary header banner */}
+        {/* Quick links — above the tree */}
         {(!collapsed || isDrawer) && (
-          <div style={{ padding: "0.75rem 0.85rem 0.4rem" }}>
+          <div style={{ padding: "0.65rem 0.85rem 0.3rem" }}>
             <div
               style={{
-                padding: "0.65rem 1rem",
-                background: gradients.goldButton,
-                color: "white",
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                padding: "0.35rem",
+                background: "rgba(196,162,101,0.07)",
                 borderRadius: radii.md,
-                fontFamily: fonts.display,
-                fontWeight: 700,
-                fontSize: "0.85rem",
-                textAlign: "center",
-                letterSpacing: "0.02em",
-                boxShadow: shadows.goldGlowSoft,
+                border: `1px solid rgba(139,111,71,0.1)`,
               }}
             >
-              ניווט באתר לפי ספר ופרק
+              {[
+                { to: "/", label: "ראשי", icon: Home },
+                { to: "/design-chapter-weekly", label: "תכנית הפרק השבועי", icon: CalendarDays },
+              ].map(({ to, label, icon: Icon }) => (
+                <Link
+                  key={to}
+                  to={to}
+                  onClick={onDrawerClose}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    padding: "0.38rem 0.6rem",
+                    borderRadius: radii.sm,
+                    fontFamily: fonts.body,
+                    fontSize: "0.8rem",
+                    fontWeight: 600,
+                    color: colors.textMid,
+                    textDecoration: "none",
+                    transition: "background 0.15s",
+                  }}
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.background = "rgba(139,111,71,0.08)")
+                  }
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.background = "transparent")
+                  }
+                >
+                  <Icon size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                  {label}
+                </Link>
+              ))}
             </div>
           </div>
         )}
@@ -503,16 +536,44 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           )}
         </nav>
 
-        {/* Footer */}
+        {/* Footer chrome — donate + memorial */}
         <div
           style={{
             borderTop: `1px solid rgba(139,111,71,0.1)`,
-            padding: collapsed && !isDrawer ? "0.6rem 0.4rem" : "0.6rem 0.85rem",
+            padding: collapsed && !isDrawer ? "0.6rem 0.4rem" : "0.5rem 0.85rem",
             display: "flex",
             flexDirection: "column",
-            gap: "0.4rem",
+            gap: "0.3rem",
           }}
         >
+          {/* תרומות */}
+          <Link
+            to="/design-donate"
+            onClick={onDrawerClose}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.55rem",
+              padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
+              borderRadius: radii.md,
+              fontFamily: fonts.body,
+              fontSize: "0.8rem",
+              color: "white",
+              fontWeight: 600,
+              textDecoration: "none",
+              justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
+              background: gradients.goldButton,
+              boxShadow: shadows.goldGlowSoft,
+              transition: "opacity 0.15s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            <Heart size={13} style={{ flexShrink: 0 }} />
+            {(!collapsed || isDrawer) && <span>תרומות</span>}
+          </Link>
+
+          {/* לזכר סעדיה */}
           <Link
             to="/memorial/saadia"
             onClick={onDrawerClose}
@@ -520,17 +581,17 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               display: "flex",
               alignItems: "center",
               gap: "0.6rem",
-              padding: collapsed && !isDrawer ? "0.5rem" : "0.5rem 0.7rem",
+              padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
               borderRadius: radii.md,
               fontFamily: fonts.body,
-              fontSize: "0.82rem",
+              fontSize: "0.78rem",
               color: colors.goldDark,
               fontWeight: 600,
               textDecoration: "none",
               justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
             }}
           >
-            <Flame size={15} style={{ flexShrink: 0 }} />
+            <Flame size={14} style={{ flexShrink: 0 }} />
             {(!collapsed || isDrawer) && <span>לזכר סעדיה הי״ד</span>}
           </Link>
 
@@ -1228,7 +1289,7 @@ function SeriesInlineList({
             fontSize: "0.72rem",
             cursor: "pointer",
             display: "flex",
-            alignItems: "flex-start",
+            alignItems: "center",
             gap: "0.35rem",
             lineHeight: 1.4,
           }}
@@ -1237,10 +1298,11 @@ function SeriesInlineList({
           }
           onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
         >
-          <FolderOpen size={11} style={{ marginTop: 2, flexShrink: 0, opacity: 0.6 }} />
+          <FolderOpen size={11} style={{ flexShrink: 0, opacity: 0.6 }} />
           <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {s.title}
           </span>
+          <TeacherContentBadge tags={(s as { audienceTags?: string[] | null }).audienceTags} variant="small" />
           {s.lessonCount > 0 && (
             <span
               style={{

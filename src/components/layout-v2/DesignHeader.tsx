@@ -109,8 +109,8 @@ export default function DesignHeader({
           <img
             src={isTransparent ? logoBright : logoColor}
             alt="בני ציון"
+            className="h-16 md:h-20"
             style={{
-              height: 64,
               width: "auto",
               objectFit: "contain",
               transition: "all 0.3s ease",
