@@ -221,7 +221,8 @@ const SeriesList = () => {
             <div className="flex flex-col md:flex-row-reverse gap-6">
 
               {/* ─── Sidebar ─── */}
-              <aside className="w-full md:w-60 lg:w-64 shrink-0">
+              {/* Hidden 30.4.2026 — replaced by global DesignSidebar in Layout. Code preserved per Saar for rollback. */}
+              {false && <aside className="w-full md:w-60 lg:w-64 shrink-0">
                 <div className="bg-card border border-border rounded-xl overflow-hidden sticky top-20">
                   {/* Tabs */}
                   <div className="flex border-b border-border">
@@ -577,7 +578,7 @@ const SeriesList = () => {
                     )}
                   </div>
                 </div>
-              </aside>
+              </aside>}
 
               {/* ─── Main content area ─── */}
               <div className="flex-1 min-w-0">
