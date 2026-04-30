@@ -5,20 +5,30 @@
  *
  * Design goals:
  *   - A4 portrait, 15mm margins (JLREQ / RTL safe)
- *   - 2-column article body (standard synagogue bulletin layout)
+ *   - Single-column article body (2-col disabled — Chrome RTL print bug collapses content)
  *   - Large decorative title, styled verse box, rabbi small-caps bylines
  *   - Drop-cap on first paragraph of each article
  *   - Ornamental ◆ dividers between articles
- *   - Gold accent (printed as warm dark-amber at ~20% opacity so it
- *     survives B&W printers)
+ *   - Gold accent (printed as warm dark-amber)
  *   - Bnei Zion footer on every page
  *   - Everything that is UI (nav, CTA cards, audio grid, TOC) is hidden
  *
  * RTL notes:
- *   - direction: rtl is set on html already; we re-assert on #print-root
- *   - column-fill: balance keeps columns even; avoid column-span on RTL
- *     (Chrome bug with column-span + RTL — we use margin trick instead)
+ *   - direction: rtl is set on html already; we re-assert on body
  *   - drop-cap uses float: right (not float: left) for RTL
+ *   - column-count is intentionally NOT used — Chrome collapses RTL column
+ *     heights to zero in print when Framer Motion transform: translateY(0px)
+ *     is present on elements (creates stacking context that breaks column flow).
+ *     Content > aesthetics.
+ *
+ * IMPORTANT — Chrome print quirks handled here:
+ *   1. Framer Motion sets transform: translateY(...) on animated elements.
+ *      In print + column-count, this collapses element height to 0.
+ *      Fix: transform: none !important on everything in print.
+ *   2. overflow: hidden on any ancestor clips column content.
+ *      Fix: overflow: visible !important on structural elements.
+ *   3. will-change: transform creates stacking context in print.
+ *      Fix: will-change: auto !important on everything.
  */
 
 @media print {
@@ -33,15 +43,50 @@
   @page :left  { margin-right: 22mm; margin-left: 14mm; }
   @page :right { margin-left:  22mm; margin-right: 14mm; }
 
-  /* ── Global reset for print ───────────────────────────────────── */
+  /* ── STEP 1: Reset Chrome print killers ──────────────────────── */
+  /*
+   * Framer Motion injects transform/will-change/opacity inline styles.
+   * In print mode, these collapse column heights to 0 and clip content.
+   * Reset them all here — content comes first.
+   */
 
-  *,
-  *::before,
-  *::after {
+  * {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
+    /* Kill Framer Motion and any animation inline styles */
+    transform: none !important;
+    will-change: auto !important;
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
   }
+
+  /* ── STEP 2: Make all structural containers visible and block ─── */
+  /*
+   * overflow: hidden on any ancestor clips content in Chrome print.
+   * Reset every structural element to overflow: visible.
+   */
+
+  html,
+  body,
+  #root,
+  main,
+  div,
+  section,
+  article,
+  aside,
+  header:not([class*="Header"]):not([class*="header"]),
+  blockquote {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    opacity: 1 !important;
+  }
+
+  /* ── STEP 3: Base typography ──────────────────────────────────── */
 
   html {
     font-size: 10pt;
@@ -55,15 +100,16 @@
     line-height: 1.7 !important;
     margin: 0 !important;
     padding: 0 !important;
+    display: block !important;
   }
 
-  /* ── Hide everything that is site chrome / UI ─────────────────── */
+  /* ── STEP 4: Hide ONLY site chrome — very specific selectors ─── */
+  /*
+   * Strategy: hide only named elements. Never use generic 'section',
+   * 'div', or 'main' hide rules — they catch content containers too.
+   */
 
-  /* Production Layout chrome */
-  header,
-  footer,
-  nav,
-  aside,
+  /* Site navigation and footer chrome */
   [class*="Header"],
   [class*="Footer"],
   [class*="MobileBottom"],
@@ -72,49 +118,54 @@
   [data-radix-toast-viewport],
   [role="dialog"],
   [role="alertdialog"],
-  .print\:hidden,
-  /* Sticky TOC */
-  [style*="position: sticky"],
-  /* Framer motion overlays */
   [data-framer-portal-id] {
     display: none !important;
-    visibility: hidden !important;
   }
 
-  /* ── Breadcrumb / back-to-top / print button ──────────────────── */
+  /* Tailwind print:hidden utility (explicitly opted-in by JSX) */
+  .print\:hidden {
+    display: none !important;
+  }
 
-  /* These carry .print:hidden in JSX already, but belt-and-suspenders */
-  a[href="/"],
+  /* Sticky TOC strip (has print:hidden in JSX, belt-and-suspenders) */
+  [style*="position: sticky"] {
+    display: none !important;
+  }
+
+  /* All buttons hidden (CTA, back-to-top, audio player buttons)
+     — except elements marked data-print-keep */
   button:not([data-print-keep]) {
     display: none !important;
   }
 
-  /* ── Layout container ─────────────────────────────────────────── */
+  /* Breadcrumb back-link */
+  a[href="/"]:not([class*="print"]) {
+    display: none !important;
+  }
 
-  /* Remove all padding / margin from React wrappers */
+  /* ── STEP 5: Layout container cleanup ────────────────────────── */
+
   .container,
-  [class*="container"],
-  main,
-  section,
-  article {
+  [class*="container"] {
     max-width: 100% !important;
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
     background: transparent !important;
-    box-shadow: none !important;
     border-radius: 0 !important;
   }
 
-  /* The hero section becomes the print masthead — no background color */
-  section:first-of-type {
-    background: #fff !important;
-    padding-top: 0 !important;
+  main {
     padding-bottom: 0 !important;
-    overflow: visible !important;
   }
 
-  /* ── Print masthead ───────────────────────────────────────────── */
+  section {
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+  }
+
+  /* ── STEP 6: Print masthead ───────────────────────────────────── */
 
   .print-masthead {
     text-align: center;
@@ -144,8 +195,6 @@
     color: #1a0f05;
     line-height: 1.1;
     margin: 0 0 4pt;
-    /* Decorative: light outer glow via text-shadow in print-color-adjust exact */
-    text-shadow: 0 0 0 transparent; /* neutral — we don't rely on shadow in B&W */
   }
 
   /* Chumash sub-label */
@@ -157,11 +206,11 @@
     display: block;
   }
 
-  /* ── Verse box ────────────────────────────────────────────────── */
+  /* ── STEP 7: Verse box ────────────────────────────────────────── */
 
   blockquote.print-verse,
   .print-verse {
-    display: block;
+    display: block !important;
     margin: 10pt auto 14pt;
     max-width: 80%;
     padding: 8pt 14pt;
@@ -188,14 +237,25 @@
     font-style: normal;
   }
 
-  /* ── Two-column article body ──────────────────────────────────── */
+  /* ── STEP 8: Single-column article body ──────────────────────── */
+  /*
+   * Two-column layout DISABLED.
+   * Chrome collapses column heights to 0 when:
+   *   - direction: rtl is set on the column container
+   *   - child elements have transform: translateY(...) (Framer Motion)
+   * Even with transform: none reset above, Chrome print column + RTL
+   * is unreliable. Single column always works. Add back 2-col only
+   * after verifying it prints correctly end-to-end.
+   */
 
   .print-columns {
-    column-count: 2;
-    column-gap: 22pt;
-    column-fill: balance;
-    column-rule: 0.5pt solid rgba(139, 111, 71, 0.35);
+    column-count: 1 !important;
+    column-gap: 0 !important;
+    column-fill: auto !important;
+    column-rule: none !important;
     direction: rtl;
+    display: block !important;
+    overflow: visible !important;
   }
 
   /* Each article stays together as much as possible */
@@ -203,15 +263,12 @@
   .print-columns > .article-block {
     break-inside: avoid-column;
     page-break-inside: avoid;
+    display: block !important;
+    overflow: visible !important;
+    opacity: 1 !important;
   }
 
-  /* Article that is long enough should be allowed to flow across columns */
-  .print-columns > article.print-allow-break,
-  .print-columns > .article-block.print-allow-break {
-    break-inside: auto;
-  }
-
-  /* ── Article section header ───────────────────────────────────── */
+  /* ── STEP 9: Article section header ──────────────────────────── */
 
   .print-article-header {
     break-inside: avoid;
@@ -219,6 +276,7 @@
     margin-bottom: 6pt;
     padding-bottom: 4pt;
     border-bottom: 1pt solid rgba(139, 111, 71, 0.3);
+    display: block !important;
   }
 
   .print-article-header h2 {
@@ -240,7 +298,7 @@
     text-transform: uppercase;
   }
 
-  /* ── Drop cap ─────────────────────────────────────────────────── */
+  /* ── STEP 10: Drop cap ────────────────────────────────────────── */
 
   /* Override the screen drop-cap for print (RTL: float right) */
   .parasha-drop-cap > p:first-of-type::first-letter,
@@ -257,7 +315,7 @@
     margin-bottom: -2pt !important;
   }
 
-  /* ── Article body text ────────────────────────────────────────── */
+  /* ── STEP 11: Article body text ───────────────────────────────── */
 
   .prose,
   .prose-xl,
@@ -267,6 +325,8 @@
     line-height: 1.7 !important;
     color: #1a0f05 !important;
     max-width: none !important;
+    display: block !important;
+    overflow: visible !important;
   }
 
   .prose p,
@@ -296,10 +356,10 @@
     font-weight: 700 !important;
   }
 
-  /* ── Pull-quote / aside ───────────────────────────────────────── */
+  /* ── STEP 12: Pull-quote / aside ──────────────────────────────── */
 
-  .print-pullquote,
-  aside[aria-label="ציטוט מודגש"] {
+  aside[aria-label="ציטוט מודגש"],
+  .print-pullquote {
     background: #faf6f0 !important;
     border-right: 3pt solid #8b6f47 !important;
     border-left: none !important;
@@ -313,15 +373,12 @@
     break-inside: avoid;
     page-break-inside: avoid;
     border-radius: 0 !important;
+    display: block !important;
   }
 
-  /* ── Ornamental dividers ──────────────────────────────────────── */
+  /* ── STEP 13: Ornamental dividers ─────────────────────────────── */
 
-  /* The ◆ dividers between articles */
-  .print-divider,
-  [aria-hidden="true"]:has(span[style*="color: rgb(139, 111, 71)"]),
-  [aria-hidden] {
-    column-span: none; /* avoid column-span RTL Chrome bug */
+  .print-divider {
     break-inside: avoid;
     page-break-inside: avoid;
     text-align: center;
@@ -330,30 +387,14 @@
     font-size: 10pt;
   }
 
-  /* Fallback: style the inline divider divs the JSX renders */
-  .ornamental-divider-print {
-    display: flex;
-    align-items: center;
-    gap: 6pt;
-    margin: 8pt 0;
-    color: #8b6f47;
-    font-size: 10pt;
-  }
-  .ornamental-divider-print::before,
-  .ornamental-divider-print::after {
-    content: '';
-    flex: 1;
-    height: 0.5pt;
-    background: #8b6f47;
-    opacity: 0.5;
-  }
-
-  /* ── Riddle section ───────────────────────────────────────────── */
+  /* ── STEP 14: Riddle section ──────────────────────────────────── */
 
   #riddle {
     break-before: avoid;
     page-break-before: avoid;
     break-inside: avoid-column;
+    display: block !important;
+    overflow: visible !important;
   }
 
   #riddle h2 {
@@ -372,11 +413,7 @@
     margin-bottom: 6pt !important;
   }
 
-  /* ── Page footer (Bnei Zion credit) ──────────────────────────── */
-  /*
-   * CSS @page margin-box for running footer.
-   * Chrome supports @bottom-center in @page — we use it for a clean credit.
-   */
+  /* ── STEP 15: Page footer (Bnei Zion credit) ──────────────────── */
 
   @page {
     @bottom-center {
@@ -398,7 +435,7 @@
     }
   }
 
-  /* Supplementary in-flow footer (visible in PDF viewers that skip @page margin) */
+  /* Supplementary in-flow footer */
   body::after {
     content: "תנועת בני ציון ללימוד תנ\"ך  |  bneyzion.co.il";
     display: block;
@@ -411,7 +448,7 @@
     margin-top: 16pt;
   }
 
-  /* ── Page breaks ──────────────────────────────────────────────── */
+  /* ── STEP 16: Page breaks ─────────────────────────────────────── */
 
   article {
     break-inside: avoid-column;
@@ -424,14 +461,13 @@
     page-break-after: avoid;
   }
 
-  /* Give enough room so last column doesn't orphan a heading */
   h2 + p,
   h3 + p {
     break-before: avoid;
     page-break-before: avoid;
   }
 
-  /* ── Suppress links / interactive chrome ──────────────────────── */
+  /* ── STEP 17: Links and images ────────────────────────────────── */
 
   a {
     color: inherit !important;
@@ -439,7 +475,7 @@
   }
 
   a[href]::after {
-    content: none !important; /* no URL printing */
+    content: none !important;
   }
 
   img {
@@ -447,17 +483,7 @@
     page-break-inside: avoid;
   }
 
-  /* ── Remove motion / shadow ───────────────────────────────────── */
-
-  * {
-    animation: none !important;
-    transition: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-
-  /* ── Heading hierarchy for exported PDF bookmarks ─────────────── */
+  /* ── STEP 18: Heading hierarchy for PDF bookmarks ─────────────── */
 
   h1 { font-size: 36pt; }
   h2 { font-size: 14pt; }
