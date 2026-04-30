@@ -104,8 +104,8 @@ export default function DesignPreviewPortalSubscriber() {
   const { data: topSeries = [], isLoading: seriesLoading } = useTopSeries(20);
   const { hasAccess, isLoading: accessLoading, isAuthenticated, user } = useUserAccess("program:weekly-chapter");
   const [expandedBook, setExpandedBook] = useState<number | null>(1); // Start with זכריה open
-  // Quick jump to course detail
-  const courseDetailUrl = "/design-course/zechariah";
+  // Quick jump to course catalog
+  const courseDetailUrl = "/design-courses";
 
   const currentBook = (topSeries as any[])[0];
   const { data: currentBookLessons = [] } = useLessonsBySeries(currentBook?.id);

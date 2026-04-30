@@ -155,7 +155,13 @@ interface BookDef { slug: string; name: string; totalChapters: number; descripti
 
 export default function DesignPreviewCourseDetail() {
   const { slug = "zechariah" } = useParams<{ slug: string }>();
-  const { hasAccess, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
+  const { hasAccess: realAccess, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
+
+  // ── Sandbox preview toggle ────────────────────────────────────────────────
+  // Lets Saar review both subscriber and non-subscriber views without login.
+  // In production this will always use realAccess from useUserAccess.
+  const [previewMode, setPreviewMode] = useState<"subscriber" | "locked">("subscriber");
+  const hasAccess = previewMode === "subscriber" || realAccess;
 
   // Find initial book by slug, default to zechariah
   const initialBookIdx = PROGRAM_BOOKS.findIndex((b) => b.slug === slug) ?? 1;
@@ -291,6 +297,73 @@ export default function DesignPreviewCourseDetail() {
           >
             לאזור האישי
           </Link>
+        </div>
+      </div>
+
+      {/* ─── Sandbox preview toggle ────────────────────────────────────── */}
+      <div
+        dir="rtl"
+        style={{
+          background: "rgba(45,31,14,0.97)",
+          borderBottom: "1px solid rgba(232,213,160,0.15)",
+          padding: "0.55rem 1.5rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.85rem",
+        }}
+      >
+        <span
+          style={{
+            fontFamily: fonts.body,
+            fontSize: "0.7rem",
+            color: "rgba(232,213,160,0.55)",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+          }}
+        >
+          תצוגה מקדימה
+        </span>
+        <div
+          style={{
+            display: "inline-flex",
+            background: "rgba(255,255,255,0.07)",
+            borderRadius: 20,
+            padding: "0.2rem",
+            gap: "0.15rem",
+          }}
+        >
+          {(
+            [
+              { key: "subscriber", label: "מנוי" },
+              { key: "locked", label: "לא-מנוי" },
+            ] as { key: typeof previewMode; label: string }[]
+          ).map((opt) => (
+            <button
+              key={opt.key}
+              onClick={() => setPreviewMode(opt.key)}
+              style={{
+                padding: "0.3rem 0.85rem",
+                borderRadius: 16,
+                border: "none",
+                cursor: "pointer",
+                fontFamily: fonts.body,
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                background:
+                  previewMode === opt.key
+                    ? gradients.goldButton
+                    : "transparent",
+                color:
+                  previewMode === opt.key
+                    ? "white"
+                    : "rgba(232,213,160,0.55)",
+                transition: "all 0.18s",
+              }}
+            >
+              {opt.label}
+            </button>
+          ))}
         </div>
       </div>
 
