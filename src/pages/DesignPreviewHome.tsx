@@ -79,7 +79,7 @@ function DesignNavBar() {
     <nav dir="rtl" style={{ position: "sticky", top: 0, zIndex: 50, transition: "all 0.3s ease", ...navBg }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", height: 96,
                     display: "flex", alignItems: "center", justifyContent: "space-between",
-                    position: "relative" }}>
+                    gap: "1rem" }}>
         {/* Logo — RIGHT side (start in RTL) */}
         <div onClick={() => navigate("/")} style={{ cursor: "pointer", flexShrink: 0 }}>
           <img
@@ -89,10 +89,9 @@ function DesignNavBar() {
           />
         </div>
 
-        {/* Nav links — absolutely centered to viewport */}
-        <div className="hidden md:flex" style={{ position: "absolute", left: "50%",
-                    top: "50%", transform: "translate(-50%, -50%)",
-                    gap: "1.75rem", alignItems: "center" }}>
+        {/* Nav links — flex-centered between logo and actions */}
+        <div className="hidden md:flex" style={{ flex: 1, justifyContent: "center",
+                    gap: "1.75rem", alignItems: "center", flexWrap: "wrap" }}>
           {FULL_NAV_LINKS.map(({ label, path }) => (
             <span key={label} onClick={() => navigate(path)}
               style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: linkColor,
