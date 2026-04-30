@@ -966,6 +966,37 @@ Link: "הצטרפו לקהילת המורים ←" → `/design-teachers-wing` (
 
 **Iron rule learned:** `{condition && <section>...</section>}` is clean JSX for conditional sections. But when condition applies to a whole block that spans many lines — keep `{condition && <section>` + `</section>}` on same visual level. Don't mix open-tag and close-tag in JSX fragments.
 
+### 2026-04-30 — Production swap: portal/courses/course routes → new design (commit 1bab02e)
+
+**Saar approved full production swap of 3 routes.**
+
+**Strategy used:** Option B (route-only swap — no file copies, no renames).
+- `/portal` → `DesignPreviewPortalSubscriber` (with `RequireAuth` wrapper maintained)
+- `/courses` → `DesignPreviewCoursesCatalog` (NEW production route — no prior production page)
+- `/course/:slug` → `DesignPreviewCourseDetail` (NEW production route — no prior production page)
+- `/portal-old` → old `Portal.tsx` (legacy backup, RequireAuth, accessible for rollback comparison)
+- `/portal/course/:id` → `CommunityCoursePage` (unchanged legacy)
+- All `/design-*` sandbox variants remain intact as canonical references
+
+**File changed:** `src/App.tsx` only (6 lines changed)
+
+**Backup tag:** `pre-swap-portal-2026-04-30T1652` (local + remote GitHub)
+
+**Verification (curl):**
+- `/portal` → 200
+- `/courses` → 200
+- `/course/weekly-chapter` → 200
+- `/portal-old` → 200
+- `/design-portal-subscriber` → 200 (sandbox still works)
+- `/design-courses` → 200
+- `/design-course/weekly-chapter` → 200
+
+**Iron rule learned:** Route-swap (Option B) is the safest production rollout strategy:
+- No file copies (avoids content drift)
+- No renames (no import breakage)
+- Instant rollback: revert 1 commit or `git checkout pre-swap-portal-2026-04-30T1652`
+- Legacy URL remains accessible for 30 days before cleanup
+
 ### 2026-04-30 — Global DesignSidebar rollout to production Layout (commit b88c631)
 
 **Saar approved rollout via option A — global Layout wrapper.**
