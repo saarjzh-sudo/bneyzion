@@ -1150,6 +1150,28 @@ the full picture of what changed without reading 40+ individual entries.
 6. **`/portal-old` cleanup** — delete after 30-day stability window (deadline: 2026-05-30).
 7. **Sandbox cleanup** — `/design-series-page-v2/*` routes can be removed from App.tsx after 30-day production stability window.
 
+### 2026-05-03 — Store checkout migrated from WooCommerce redirect to internal Grow flow (commit 3382aa7)
+
+**Decision:** Option A — `products` table queried dynamically on `create-payment.ts` server. No data duplication into `payment_products`. New `store:<slug>` prefix on `meta.product` routes the request to the products table. Products table `source_url` column kept in DB (for reference), no longer used in UI.
+
+**UI decision:** `StoreCheckoutDialog.tsx` (new component) rather than reusing `Checkout.tsx`. Reason: Checkout.tsx requires cart state + auth. Store products are one-click impulse buys that should not require login.
+
+**Files created/changed:**
+- `src/config/shipping.ts` — NEW: `SHIPPING_OPTIONS` (3 options: registered_mail ₪25 / courier ₪60 / pickup free), `getShippingPrice()`, `getShippingLabel()` helpers
+- `src/components/payment/StoreCheckoutDialog.tsx` — NEW: Dialog with first/last name, phone, email, shipping method radio buttons, address fields (conditional on method ≠ pickup), notes, price summary, TOS+18+ checkbox, Grow wallet flow
+- `api/grow/create-payment.ts` — Extended: if `meta.product` starts with `store:`, query `products` table by slug, build synthetic productCfg (`type=wallet`, `page_code_env=PRODUCTS`, `max_installments=12`). Stores `product_source="products"` in `raw_payload`. Creates `order_items` row immediately after order insert.
+- `api/grow/webhook.ts` — Extended: `runPostPurchaseSideEffects` now accepts `mergedPayload`, detects `product_source="products"` or `store:` prefix, logs delivery note (Smoove transactional template TODO — pending Saar creating template)
+- `src/pages/ProductPage.tsx` — Replaced TOS checkbox + `<a href={source_url}>` CTA with `<StoreCheckoutDialog>` wrapper. Removed unused `useState`, `Checkbox` import.
+
+**Grow routing:** all store products use `GROW_PAGECODE_PRODUCTS` env var (same as `book-megilat-esther`). No new Grow pageCode needed. Max installments = 12 (configurable at dialog level — currently 1 because store products show no installments selector).
+
+**TypeScript:** 0 errors (one narrow type comparison fixed by removing redundant `required` inside a narrowed branch).
+
+**TODOs remaining:**
+- Saar must create a Smoove transactional email template for order confirmation — webhook logs delivery note but does not send email yet
+- Shipping method selected in dialog is embedded in `description` field (e.g. "מוצר | משלוח: דואר רשום, הרצל 1, ירושלים") — future: add dedicated `shipping_method` column to `orders` table for easier admin filtering
+- Test with real Grow sandbox transaction before going live
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
