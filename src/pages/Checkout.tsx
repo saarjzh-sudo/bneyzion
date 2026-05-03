@@ -37,10 +37,6 @@ export default function Checkout() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) {
-      toast({ title: "יש להתחבר כדי לבצע הזמנה", variant: "destructive" });
-      return;
-    }
     if (!tosAccepted) {
       toast({ title: "יש לאשר את התקנון לפני המשך לתשלום", variant: "destructive" });
       return;
@@ -60,7 +56,7 @@ export default function Checkout() {
         const { data: order, error: orderErr } = await supabase
           .from("orders")
           .insert({
-            user_id: user.id,
+            user_id: user?.id || null,
             invoice_type: group.invoiceType,
             subtotal: groupTotal,
             total: groupTotal,
@@ -259,10 +255,10 @@ export default function Checkout() {
                   </label>
                 </div>
 
-                <Button type="submit" size="lg" className="w-full font-display" disabled={isProcessing || !user || !paymentReady || !tosAccepted}>
+                <Button type="submit" size="lg" className="w-full font-display" disabled={isProcessing || !paymentReady || !tosAccepted}>
                   {isProcessing ? (
                     <><Loader2 className="h-4 w-4 animate-spin ml-2" />מעבד תשלום...</>
-                  ) : !user ? "יש להתחבר" : !paymentReady ? (
+                  ) : !paymentReady ? (
                     <><Loader2 className="h-4 w-4 animate-spin ml-2" />טוען מערכת תשלום...</>
                   ) : (
                     <>
@@ -271,11 +267,6 @@ export default function Checkout() {
                     </>
                   )}
                 </Button>
-                {!user && (
-                  <p className="text-xs text-center text-muted-foreground">
-                    <Link to="/auth" className="text-primary underline">התחבר</Link> כדי לבצע הזמנה
-                  </p>
-                )}
               </CardContent>
             </Card>
           </div>
