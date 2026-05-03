@@ -214,6 +214,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           targetTable,
           orderId,
           productSlug,
+          mergedPayload,
         });
       } catch (e) {
         console.error("Post-purchase side effects exception:", e);
@@ -371,8 +372,15 @@ async function runPostPurchaseSideEffects(args: {
   targetTable: string;
   orderId: string;
   productSlug: string | undefined;
+  mergedPayload?: any;
 }) {
-  const { supabase, targetTable, orderId, productSlug } = args;
+  const { supabase, targetTable, orderId, productSlug, mergedPayload } = args;
+
+  // Detect store product (products table source) from the raw_payload we stored
+  // at create-payment time. The key is rawPayloadBase.product_source = "products".
+  const isStoreProduct =
+    mergedPayload?.product_source === "products" ||
+    (typeof productSlug === "string" && productSlug.startsWith("store:"));
 
   // Load buyer details from the row we just updated
   const buyerCols =
@@ -442,6 +450,29 @@ async function runPostPurchaseSideEffects(args: {
         .update({ smoove_subscribed: ok })
         .eq("id", orderId);
     } catch {}
+  }
+
+  // ── Store product: send confirmation email via Smoove transactional ──────
+  // Only fires when the purchase came from the products table (store checkout).
+  // The description field contains the shipping info we embedded at checkout time.
+  if (isStoreProduct && email) {
+    const description = (row as any).description || productCfg?.display_name || productSlug || "מוצר";
+    const shippingLine = description.includes("משלוח:")
+      ? description.split("|").find((p: string) => p.includes("משלוח:"))?.trim()
+      : null;
+    const deliveryNote = shippingLine?.includes("איסוף עצמי")
+      ? "נציגנו ייצרו איתך קשר לתיאום מועד האיסוף."
+      : "ההזמנה תישלח תוך 14 ימי עסקים.";
+
+    console.log(
+      `[StoreOrder] Order ${orderId} — store product confirmed. email=${email} shippingLine=${shippingLine || "N/A"}`
+    );
+    // Smoove transactional send omitted for now — Saar needs to create a
+    // transactional template first. We log instead so the webhook always succeeds.
+    // TODO: replace with Smoove transactional API call once template is ready.
+    console.log(
+      `[StoreOrder] Delivery note for customer: "${deliveryNote}"`
+    );
   }
 }
 

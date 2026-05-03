@@ -1,5 +1,4 @@
 import { sanitizeHtml } from "@/lib/sanitize";
-import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag } from "lucide-react";
@@ -8,7 +7,7 @@ import { useProduct, useProducts } from "@/hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { StoreCheckoutDialog } from "@/components/payment/StoreCheckoutDialog";
 
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -16,7 +15,6 @@ const ProductPage = () => {
   const { data: relatedProducts } = useProducts(
     product?.category?.slug
   );
-  const [tosAccepted, setTosAccepted] = useState(false);
 
   const related = relatedProducts?.filter((p) => p.id !== product?.id).slice(0, 4);
   const hasDiscount = product?.original_price && product.original_price > product.price;
@@ -170,65 +168,22 @@ const ProductPage = () => {
               </div>
             )}
 
-            {/* TOS + 18+ guard (required before any purchase action) */}
-            <div className="flex items-start gap-2 pt-1">
-              <Checkbox
-                id="product-tos"
-                checked={tosAccepted}
-                onCheckedChange={(v) => setTosAccepted(!!v)}
-              />
-              <label
-                htmlFor="product-tos"
-                className="text-sm leading-relaxed cursor-pointer select-none text-muted-foreground"
-              >
-                אני קראתי ומאשר/ת את{" "}
-                <Link
-                  to="/terms"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline text-primary hover:opacity-80"
-                >
-                  תקנון האתר ומדיניות הפרטיות
-                </Link>
-                ,{" "}
-                <strong className="text-foreground">מלאו לי 18 שנים ומעלה</strong>
-                , ומסכים/ה לקבלת עדכונים בנוגע לרכישה.
-              </label>
-            </div>
-
-            {/* CTA */}
-            {product.source_url ? (
-              <a
-                href={tosAccepted ? product.source_url : undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-                onClick={!tosAccepted ? (e) => e.preventDefault() : undefined}
-                aria-disabled={!tosAccepted}
-              >
-                <Button
-                  size="lg"
-                  className="w-full text-base gap-2 py-6"
-                  disabled={!tosAccepted}
-                >
-                  <ShoppingCart className="h-5 w-5" />
-                  לרכישה
-                </Button>
-              </a>
-            ) : (
+            {/* CTA — internal Grow flow via StoreCheckoutDialog */}
+            <StoreCheckoutDialog
+              productSlug={product.slug}
+              productTitle={product.title}
+              productPrice={product.price}
+              isPhysical={!product.is_digital}
+            >
               <Button
                 size="lg"
                 className="w-full text-base gap-2 py-6"
-                disabled={!tosAccepted}
               >
                 <ShoppingCart className="h-5 w-5" />
                 לרכישה
               </Button>
-            )}
-            {/* TODO: Convert store to internal Grow payment flow (separate session).
-                Currently uses external source_url (club.bneyzion.co.il/WooCommerce).
-                Each product needs a matching row in payment_products table.
-                Reference: KNOWLEDGE.md §7 entry 2026-05-03 */}
+            </StoreCheckoutDialog>
+            {/* source_url preserved in DB for fallback reference — not used in UI */}
 
             {/* Content */}
             {product.content && (
