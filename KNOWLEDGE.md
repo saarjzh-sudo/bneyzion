@@ -1753,6 +1753,21 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
 | Cleanup `/design-series-page-v2/*` routes | Low | Old sandbox routes. Remove from `App.tsx` after 30-day production stability window. |
 | Weekly program migration | Blocking | Apply `20260430_weekly_program_foundation.sql` in Supabase SQL Editor. Blocked on `grow_orders` table — verify it exists first. |
 
+### 2026-05-03 — Terms page + Grow go-live unblock (commit 23c28ad)
+
+- `src/pages/Terms.tsx` — NEW static RTL page at `/terms`. 8 sections meeting Grow's
+  site-check requirements: identity + contact, service description, payment policy (Grow/Meshulam,
+  PCI, no card storage), cancellation (14-day consumer protection law, written request),
+  content usage + copyright, privacy policy (data collected, not sold, deletion on request),
+  change notice (30 days), jurisdiction (Israeli law, Jerusalem courts). Uses `Layout` +
+  `PageHero` + `useSEO`. No DB queries — purely static.
+- `src/App.tsx` — lazy-load `Terms`; added `<Route path="/terms" />` (next to `/about`).
+- `src/components/payment/QuickBuyDialog.tsx` — label text "תקנון האתר ואת מדיניות הפרטיות"
+  replaced with `<Link to="/terms" target="_blank" rel="noopener noreferrer">`. Added
+  `react-router-dom` `Link` import. `onClick stopPropagation` keeps the payment dialog open
+  when the user clicks through to /terms in a new tab.
+- TS check: 0 errors. Pushed to origin/main.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
