@@ -69,8 +69,8 @@ export function StoreCheckoutDialog({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!firstName || !phone) {
-      toast({ title: "יש למלא שם פרטי וטלפון", variant: "destructive" });
+    if (!firstName || !lastName || !phone) {
+      toast({ title: "יש למלא שם פרטי, שם משפחה וטלפון", variant: "destructive" });
       return;
     }
     if (!tosAccepted) {
@@ -171,12 +171,13 @@ export function StoreCheckoutDialog({
                 />
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="sc-last">שם משפחה</Label>
+                <Label htmlFor="sc-last">שם משפחה *</Label>
                 <Input
                   id="sc-last"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="ישראלי"
+                  required
                   dir="rtl"
                 />
               </div>
