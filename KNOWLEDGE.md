@@ -1781,6 +1781,19 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
   when the user clicks through to /terms in a new tab.
 - TS check: 0 errors. Pushed to origin/main.
 
+### 2026-05-03 — Legal entity correction: מכלל יופי (ע"ר) 580731974 (commit 8def5ed)
+
+- `src/pages/Terms.tsx` — replaced "תנועת בני ציון ללימוד תנ"ך, ע"ר" (incorrect) with the
+  registered legal entity "עמותת מכלל יופי (ע"ר)", number 580731974, address רחוב הרקפת 5,
+  ירושלים, מיקוד 9650515. Registration date 1.12.2021. Source: data.gov.il.
+- Changed in 3 places: section 1 (identity), section 6 (shipping disclaimer), section 10 (ToS update notice).
+- "בני ציון" brand name untouched everywhere else: Footer ©, KnesPage hero, JSON-LD name fields,
+  useSEO descriptions, StorePage, About. Only legal-role occurrences changed.
+- No legalName field exists in JSON-LD yet — not added (no requirement stated).
+- TODO: phone number for the office (hd section 1) — not available in codebase, needs Saar to provide.
+- Iron rule learned: **"בני ציון" = brand/מותג; "מכלל יופי (ע"ר) 580731974" = ישות משפטית.
+  Never use the brand name as the legal entity in ToS, disclaimers, or legal signatures.**
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
