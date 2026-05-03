@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, Shield } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useToast } from "@/hooks/use-toast";
 
@@ -179,8 +180,17 @@ export function QuickBuyDialog({
               htmlFor="qb-tos"
               className="text-sm leading-relaxed cursor-pointer select-none"
             >
-              אני מאשר/ת את תקנון האתר ואת מדיניות הפרטיות, ומסכים/ה לקבלת
-              עדכונים בנוגע לרכישה.
+              אני מאשר/ת את{" "}
+              <Link
+                to="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline text-primary hover:opacity-80"
+                onClick={(e) => e.stopPropagation()}
+              >
+                תקנון האתר ומדיניות הפרטיות
+              </Link>
+              , ומסכים/ה לקבלת עדכונים בנוגע לרכישה.
             </label>
           </div>
 
