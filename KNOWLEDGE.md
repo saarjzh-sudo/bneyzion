@@ -1753,6 +1753,19 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
 | Cleanup `/design-series-page-v2/*` routes | Low | Old sandbox routes. Remove from `App.tsx` after 30-day production stability window. |
 | Weekly program migration | Blocking | Apply `20260430_weekly_program_foundation.sql` in Supabase SQL Editor. Blocked on `grow_orders` table — verify it exists first. |
 
+### 2026-05-03 — Grow go-live compliance pass: TOS + age/delivery terms (commit b5291ba)
+
+- `src/pages/Terms.tsx` — added §5 הגבלת גיל (18+) and §6 מדיניות אספקה (digital
+  instant / registered mail ≤14 biz days / courier ≤7 biz days / pickup). Old §5–8
+  renumbered to §8–11. Now 11 sections total, parity with Aboulafia go-live checklist.
+- `src/components/payment/QuickBuyDialog.tsx` — TOS checkbox already present (confirmed).
+- `src/pages/Checkout.tsx` — added `Checkbox` + `tosAccepted` state. Checkbox with link
+  to /terms + "מאשר/ת מעל גיל 18". `handleSubmit` validates before `setLoading(true)`.
+  Submit button disabled until `tosAccepted`.
+- `src/pages/Donate.tsx` — same TOS checkbox pattern. `handleDonate` validates before
+  `startPayment`. Button disabled until `tosAccepted`. Added `Checkbox` + `Link` imports.
+- TS check: 0 errors. Pushed to origin/main. Vercel deploy confirmed 200 on /terms + /megilat-esther.
+
 ### 2026-05-03 — Terms page + Grow go-live unblock (commit 23c28ad)
 
 - `src/pages/Terms.tsx` — NEW static RTL page at `/terms`. 8 sections meeting Grow's
