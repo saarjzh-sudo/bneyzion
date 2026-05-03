@@ -34,8 +34,8 @@ const Terms = () => {
               דף יצירת קשר
             </Link>
             {" · "}
-            <a href="mailto:yoavoriel@gmail.com" className="underline text-primary hover:opacity-80">
-              yoavoriel@gmail.com
+            <a href="mailto:office@bneyzion.co.il" className="underline text-primary hover:opacity-80">
+              office@bneyzion.co.il
             </a>
           </p>
         </section>
@@ -179,7 +179,10 @@ const Terms = () => {
             <Link to="/contact" className="underline hover:opacity-80">
               צור קשר
             </Link>{" "}
-            · yoavoriel@gmail.com
+            ·{" "}
+            <a href="mailto:office@bneyzion.co.il" className="underline hover:opacity-80">
+              office@bneyzion.co.il
+            </a>
           </p>
         </div>
       </div>
