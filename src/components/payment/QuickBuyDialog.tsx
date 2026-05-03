@@ -180,7 +180,7 @@ export function QuickBuyDialog({
               htmlFor="qb-tos"
               className="text-sm leading-relaxed cursor-pointer select-none"
             >
-              אני מאשר/ת את{" "}
+              אני קראתי ומאשר/ת את{" "}
               <Link
                 to="/terms"
                 target="_blank"
@@ -190,6 +190,8 @@ export function QuickBuyDialog({
               >
                 תקנון האתר ומדיניות הפרטיות
               </Link>
+              ,{" "}
+              <strong>מלאו לי 18 שנים ומעלה</strong>
               , ומסכים/ה לקבלת עדכונים בנוגע לרכישה.
             </label>
           </div>
