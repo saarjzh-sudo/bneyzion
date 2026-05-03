@@ -6,6 +6,8 @@ import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useRecentDonations, useCreateDonation } from "@/hooks/useDonations";
 import { useAuth } from "@/contexts/AuthContext";
@@ -54,6 +56,7 @@ const Donate = () => {
   const [donorEmail, setDonorEmail] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
   const [donationType, setDonationType] = useState<"regular" | "iluy_neshama" | "refua">("regular");
+  const [tosAccepted, setTosAccepted] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
   const { data: recentDonations } = useRecentDonations();
@@ -76,6 +79,11 @@ const Donate = () => {
 
     if (!donorPhone || !/^05\d{8}$/.test(donorPhone.replace(/[-\s]/g, ""))) {
       toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
+      return;
+    }
+
+    if (!tosAccepted) {
+      toast({ title: "יש לאשר את התקנון לפני המשך לתשלום", variant: "destructive" });
       return;
     }
 
@@ -297,6 +305,22 @@ const Donate = () => {
                 </div>
               </div>
 
+              {/* TOS checkbox */}
+              <div className="flex items-start gap-2 pt-1">
+                <Checkbox
+                  id="donate-tos"
+                  checked={tosAccepted}
+                  onCheckedChange={(v) => setTosAccepted(!!v)}
+                />
+                <label htmlFor="donate-tos" className="text-sm leading-relaxed cursor-pointer select-none text-muted-foreground">
+                  אני מאשר/ת את{" "}
+                  <Link to="/terms" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:opacity-80">
+                    תקנון האתר
+                  </Link>
+                  {" "}ומדיניות הפרטיות, ומאשר/ת שאני מעל גיל 18.
+                </label>
+              </div>
+
               {/* CTA */}
               {paymentError && (
                 <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-sm text-destructive text-center">
@@ -307,7 +331,7 @@ const Donate = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleDonate}
-                disabled={!finalAmount || isProcessing || !paymentReady}
+                disabled={!finalAmount || isProcessing || !paymentReady || !tosAccepted}
                 className="w-full py-4 bg-primary text-primary-foreground rounded-2xl font-display text-lg shadow-lg shadow-primary/20 hover:shadow-primary/30 hover:bg-primary/90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"
               >
                 {isProcessing ? (

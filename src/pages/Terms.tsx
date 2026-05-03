@@ -99,9 +99,52 @@ const Terms = () => {
           </ul>
         </section>
 
-        {/* Section 5 — Content usage */}
+        {/* Section 5 — Age restriction */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">5. שימוש בתכנים וזכויות יוצרים</h2>
+          <h2 className="text-2xl font-bold">5. הגבלת גיל וכשירות לרכישה</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            השירותים באתר מיועדים לבני <strong>18 ומעלה</strong>. ביצוע רכישה או הרשמה לאתר
+            מהווה הצהרה של המשתמש כי הוא מלאו לו 18 שנה וכי הוא כשיר משפטית לכרות חוזה
+            מחייב. קטין המבצע רכישה ללא אישור הורה או אפוטרופוס אחראי — הרכישה עלולה
+            להתבטל ולהיות מוחזרת.
+          </p>
+        </section>
+
+        {/* Section 6 — Delivery policy */}
+        <section className="space-y-3">
+          <h2 className="text-2xl font-bold">6. מדיניות אספקת שירותים ומסירת תכנים</h2>
+          <p className="text-muted-foreground leading-relaxed font-semibold">תכנים דיגיטליים ומנויים:</p>
+          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
+            <li>
+              גישה לתכנים דיגיטליים (שיעורים מוקלטים, חוברות, הפרק השבועי וכל מנוי דיגיטלי אחר)
+              מופעלת <strong>באופן מיידי</strong> עם אישור התשלום, דרך אזור אישי מאובטח.
+            </li>
+            <li>
+              אישור המנוי ישלח לכתובת הדוא"ל שסופקה בעת הרכישה תוך מספר דקות.
+            </li>
+          </ul>
+          <p className="text-muted-foreground leading-relaxed font-semibold mt-4">מוצרים פיזיים (ספרים וחוברות):</p>
+          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
+            <li>
+              <strong>דואר רשום:</strong> המשלוח יצא תוך 3 ימי עסקים מאישור ההזמנה; זמן מסירה עד
+              <strong> 14 ימי עסקים</strong> מיום המשלוח. דמי משלוח כמפורט בשלב הסיום של ההזמנה.
+            </li>
+            <li>
+              <strong>שליח עד הבית:</strong> זמן מסירה <strong>עד 7 ימי עסקים</strong> מאישור ההזמנה (בתשלום נפרד).
+            </li>
+            <li>
+              <strong>איסוף עצמי:</strong> ניתן לתיאום מראש עם הצוות דרך דף יצירת קשר.
+            </li>
+            <li>
+              תנועת בני ציון אינה אחראית לעיכובים הנובעים מכוח עליון, שביתות בדואר, או
+              נסיבות שמחוץ לשליטתנו. במקרה כזה ייצור הצוות קשר עם הרוכש.
+            </li>
+          </ul>
+        </section>
+
+        {/* Section 8 — Content usage */}
+        <section className="space-y-3">
+          <h2 className="text-2xl font-bold">8. שימוש בתכנים וזכויות יוצרים</h2>
           <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
             <li>כל התכנים באתר — שיעורים, חוברות, תמלולים — הם רכוש תנועת בני ציון ו/או מרצאיהם ושמורות להם כל הזכויות.</li>
             <li>הגישה לתכנים מוענקת למנוי לשימוש אישי בלבד.</li>
@@ -110,9 +153,9 @@ const Terms = () => {
           </ul>
         </section>
 
-        {/* Section 6 — Privacy */}
+        {/* Section 9 — Privacy */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">6. מדיניות פרטיות</h2>
+          <h2 className="text-2xl font-bold">9. מדיניות פרטיות</h2>
           <p className="text-muted-foreground leading-relaxed font-semibold">
             מידע שאנו אוספים:
           </p>
@@ -152,9 +195,9 @@ const Terms = () => {
           </ul>
         </section>
 
-        {/* Section 7 — Changes */}
+        {/* Section 10 — Changes */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">7. שינויים בתקנון</h2>
+          <h2 className="text-2xl font-bold">10. שינויים בתקנון</h2>
           <p className="text-muted-foreground leading-relaxed">
             תנועת בני ציון שומרת לעצמה את הזכות לעדכן תקנון זה בהתאם לשינויים בשירות או
             בדרישות החוק. שינויים מהותיים יפורסמו באתר ויישלח עדכון למנויים פעילים לפחות
@@ -162,9 +205,9 @@ const Terms = () => {
           </p>
         </section>
 
-        {/* Section 8 — Jurisdiction */}
+        {/* Section 11 — Jurisdiction */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">8. ברירת דין וסמכות שיפוט</h2>
+          <h2 className="text-2xl font-bold">11. ברירת דין וסמכות שיפוט</h2>
           <p className="text-muted-foreground leading-relaxed">
             תקנון זה כפוף לדין הישראלי. כל מחלוקת הנוגעת לשירות תידון בבית המשפט המוסמך
             בירושלים, ישראל, בלעדית.

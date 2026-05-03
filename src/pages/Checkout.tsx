@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, CreditCard, Receipt, FileText, ArrowRight, Loader2, ShieldCheck } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +30,7 @@ export default function Checkout() {
     address: "", city: "", zip: "",
     installments: "1", notes: "",
   });
+  const [tosAccepted, setTosAccepted] = useState(false);
 
   const needsShipping = productItems.some((i) => !i.product.is_digital);
   const isProcessing = loading || paymentLoading;
@@ -37,6 +39,10 @@ export default function Checkout() {
     e.preventDefault();
     if (!user) {
       toast({ title: "יש להתחבר כדי לבצע הזמנה", variant: "destructive" });
+      return;
+    }
+    if (!tosAccepted) {
+      toast({ title: "יש לאשר את התקנון לפני המשך לתשלום", variant: "destructive" });
       return;
     }
     setLoading(true);
@@ -238,7 +244,22 @@ export default function Checkout() {
                   </p>
                 )}
 
-                <Button type="submit" size="lg" className="w-full font-display" disabled={isProcessing || !user || !paymentReady}>
+                <div className="flex items-start gap-2 pt-1">
+                  <Checkbox
+                    id="checkout-tos"
+                    checked={tosAccepted}
+                    onCheckedChange={(v) => setTosAccepted(!!v)}
+                  />
+                  <label htmlFor="checkout-tos" className="text-xs leading-relaxed cursor-pointer select-none text-muted-foreground">
+                    אני מאשר/ת את{" "}
+                    <Link to="/terms" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:opacity-80">
+                      תקנון האתר
+                    </Link>
+                    {" "}ומדיניות הפרטיות, ומאשר/ת שאני מעל גיל 18.
+                  </label>
+                </div>
+
+                <Button type="submit" size="lg" className="w-full font-display" disabled={isProcessing || !user || !paymentReady || !tosAccepted}>
                   {isProcessing ? (
                     <><Loader2 className="h-4 w-4 animate-spin ml-2" />מעבד תשלום...</>
                   ) : !user ? "יש להתחבר" : !paymentReady ? (
