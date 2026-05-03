@@ -23,7 +23,9 @@ interface CreatePaymentBody {
   successUrl: string;
   cancelUrl: string;
   meta?: {
-    product?: string;       // payment_products.id (e.g. 'book-megilat-esther')
+    // payment_products.id (e.g. 'book-megilat-esther')
+    // OR 'store:<products.slug>' for direct products-table items
+    product?: string;
     session_title?: string;
     user_id?: string;
     quantity?: number;
@@ -135,24 +137,68 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 
     // ───── Resolve product config (DB → fallback) ─────
+    // meta.product can be:
+    //   (a) a payment_products.id  e.g. 'book-megilat-esther'
+    //   (b) 'store:<slug>'         e.g. 'store:sefer-bereshit' → reads products table
     const productSlug = meta?.product;
     let productCfg: any = null;
+    let isStoreProduct = false; // true when sourced from products table
+    let storeProductSlug: string | null = null; // the raw products.slug
+
     if (productSlug) {
-      try {
-        const { data, error } = await supabaseAdmin
-          .from("payment_products")
-          .select(
-            "id, display_name, active, type, page_code_env, max_installments, target_table, default_amount"
-          )
-          .eq("id", productSlug)
-          .maybeSingle();
-        if (!error && data) productCfg = data;
-      } catch (e) {
-        console.warn("payment_products table unavailable, using fallback", e);
-      }
-      if (!productCfg) {
-        const fb = FALLBACK_PRODUCTS[productSlug];
-        if (fb) productCfg = { id: productSlug, ...fb };
+      // ── Store product path (products table) ──────────────────────────────
+      if (productSlug.startsWith("store:")) {
+        isStoreProduct = true;
+        storeProductSlug = productSlug.slice("store:".length);
+        try {
+          const { data: storeProduct, error: spErr } = await supabaseAdmin
+            .from("products")
+            .select("id, title, price, is_digital, slug, status")
+            .eq("slug", storeProductSlug)
+            .eq("status", "active")
+            .maybeSingle();
+          if (spErr || !storeProduct) {
+            console.error("Store product not found:", storeProductSlug, spErr);
+            return res.status(400).json({
+              error: "מוצר לא נמצא או לא פעיל",
+              details: { slug: storeProductSlug },
+            });
+          }
+          // Build a synthetic productCfg compatible with the rest of the handler
+          productCfg = {
+            id: productSlug,
+            display_name: storeProduct.title,
+            active: true,
+            type: "wallet" as const,           // all store products use wallet (one-time)
+            page_code_env: "PRODUCTS",
+            max_installments: 12,
+            target_table: "orders",
+            default_amount: storeProduct.price,
+            _store_product_id: storeProduct.id, // extra: used when creating order_items
+            _store_product_slug: storeProduct.slug,
+          };
+        } catch (e) {
+          console.error("products table lookup failed:", e);
+          return res.status(500).json({ error: "שגיאה בקריאת פרטי המוצר" });
+        }
+      } else {
+        // ── payment_products path (existing flow) ──────────────────────────
+        try {
+          const { data, error } = await supabaseAdmin
+            .from("payment_products")
+            .select(
+              "id, display_name, active, type, page_code_env, max_installments, target_table, default_amount"
+            )
+            .eq("id", productSlug)
+            .maybeSingle();
+          if (!error && data) productCfg = data;
+        } catch (e) {
+          console.warn("payment_products table unavailable, using fallback", e);
+        }
+        if (!productCfg) {
+          const fb = FALLBACK_PRODUCTS[productSlug];
+          if (fb) productCfg = { id: productSlug, ...fb };
+        }
       }
     }
 
@@ -253,6 +299,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         orderId = donation.id;
       } else {
         // Product / subscription flow → orders table
+        const rawPayloadBase: Record<string, any> = { consent: consentAudit };
+        // For store products, stash the products-table id so webhook can write order_items
+        if (isStoreProduct && productCfg?._store_product_id) {
+          rawPayloadBase.store_product_id = productCfg._store_product_id;
+          rawPayloadBase.store_product_slug = productCfg._store_product_slug;
+          rawPayloadBase.product_source = "products"; // webhook routing key
+        }
+
         const { data: order, error: orderErr } = await supabaseAdmin
           .from("orders")
           .insert({
@@ -267,7 +321,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             product: productSlug || null,
             description,
             payment_status: "pending",
-            raw_payload: { consent: consentAudit },
+            raw_payload: rawPayloadBase,
           })
           .select("id")
           .single();
@@ -280,6 +334,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           });
         }
         orderId = order.id;
+
+        // For store products, create the order_items row immediately
+        if (isStoreProduct && productCfg?._store_product_id) {
+          try {
+            await supabaseAdmin.from("order_items").insert({
+              order_id: orderId,
+              product_id: productCfg._store_product_id,
+              title: productCfg.display_name,
+              quantity: 1,
+              unit_price: productCfg.default_amount ?? sum,
+              total_price: sum,
+              item_type: "product",
+            });
+          } catch (e) {
+            // Non-fatal — order row is already created. Log and continue.
+            console.warn("create-payment: order_items insert failed (non-fatal):", e);
+          }
+        }
       }
     }
 
