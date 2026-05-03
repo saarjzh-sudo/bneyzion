@@ -38,6 +38,10 @@ const Terms = () => {
             <a href="mailto:office@bneyzion.co.il" className="underline text-primary hover:opacity-80">
               office@bneyzion.co.il
             </a>
+            {" · "}
+            <a href="tel:+972534706610" className="underline text-primary hover:opacity-80">
+              053-470-6610
+            </a>
           </p>
         </section>
 
