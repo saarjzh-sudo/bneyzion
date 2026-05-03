@@ -205,12 +205,12 @@ Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
 ### WordPress shop (`club.bneyzion.co.il`)
 - Old WooCommerce store, **separate subdomain**
 - Has its own: GTM-MBQXGFR, Meta pixel, products, orders
-- **Status:** Saar is rebuilding the store flow in the new Supabase. The
-  47 products + 10 categories in our `products` / `product_categories`
-  were imported from this old WooCommerce.
-- **Iron rule:** **Do NOT touch `/store` or `/checkout` on the new site
-  without explicit instruction.** Saar handles store work in a separate
-  session.
+- **Status:** 47 products + 10 categories imported from WooCommerce into `products` / `product_categories`.
+- The "do not touch /store or /checkout" warning is **REMOVED** (superseded 2026-05-03).
+  Store pages can be edited freely. Compliance audit done — see §7 entry 2026-05-03.
+- **TODO (next session):** Convert `/store/:slug` from `source_url` external redirect
+  to internal Grow payment flow. Each product needs a row in `payment_products` table.
+  See ProductPage.tsx TODO comment for details.
 - WordPress source for products is read-only reference now.
 
 ### Google OAuth
@@ -1793,6 +1793,22 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
 - TODO: phone number for the office (hd section 1) — not available in codebase, needs Saar to provide.
 - Iron rule learned: **"בני ציון" = brand/מותג; "מכלל יופי (ע"ר) 580731974" = ישות משפטית.
   Never use the brand name as the legal entity in ToS, disclaimers, or legal signatures.**
+
+### 2026-05-03 — Payment compliance audit: QuickBuyDialog 18+ + ProductPage TOS guard
+
+- `src/components/payment/QuickBuyDialog.tsx` (שורה 183) — checkbox label updated: הוסף
+  "אני קראתי ומאשר/ת" בפתיחה + "**מלאו לי 18 שנים ומעלה**" לפני ומסכים/ה. פסוק מלא:
+  "אני קראתי ומאשר/ת את [תקנון האתר ומדיניות הפרטיות], **מלאו לי 18 שנים ומעלה**, ומסכים/ה..."
+- `src/pages/ProductPage.tsx` — הוסף `useState` + `Checkbox` import. לפני כפתור "לרכישה"
+  מופיע checkbox זהה (RTL, /terms link, 18+). הכפתור `disabled={!tosAccepted}`. flow
+  חיצוני ל-source_url (WooCommerce) נשמר — המשתמש חייב לסמן לפני שהכפתור נעשה active.
+- `/store` ו-`/checkout` — **אין יותר "do not touch"**: האזהרה הוסרה מ-§4 + KNOWLEDGE.md
+  עודכן בהתאם לבקשת סאר מ-3.5.2026.
+- **Iron rule נוסף:** כל מסלול תשלום (QuickBuyDialog, Checkout, Donate, ProductPage) חייב
+  checkbox עם לינק /terms + הצהרת 18+. זהו חוק ברזל לאחר Grow audit 3.5.2026.
+- **TODO פתוח:** להמיר את `/store/:slug` מ-source_url חיצוני ל-flow Grow פנימי. כל מוצר
+  צריך שורה ב-`payment_products`. ראה TODO comment ב-ProductPage.tsx.
+- TS check: 0 שגיאות.
 
 ---
 
