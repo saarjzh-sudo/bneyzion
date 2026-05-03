@@ -329,6 +329,7 @@ public/
 15. **Two navbars exist and must be updated together.** `src/components/layout-v2/DesignHeader.tsx` (global, all non-home pages) + `src/pages/DesignPreviewHome.tsx` inline `DesignNavBar` (home only). Adding a nav item requires updating both files.
 16. **Route-swap is the safest rollout strategy.** Change the route binding in `App.tsx` only. No file copies, no renames. Instant rollback via `git checkout <backup-tag>`.
 17. **Before any production rollout: `git tag -a backup-pre-X-YYYY-MM-DD -m "..."`.** Current tags: `backup-pre-redesign-rollout-2026-04-30`, `backup-pre-sidebar-rollout-2026-04-30`, `pre-swap-portal-2026-04-30T1652`, `backup-pre-parasha-rollout-2026-04-30`.
+18. **Payment flows are guest-friendly.** No `!user` guard on any checkout/donate flow. `user_id` stored as `user?.id || null` — optional, populated only when logged in. Never add auth requirement for purchasing or donating.
 
 ---
 
@@ -556,6 +557,19 @@ They will NOT be reproduced in the unified sidebar. Instead, content is tagged a
 
 **New constraint:** Never add audience-tag categories to the UI without a corresponding DB tag value.
 Mock counts (like `count: 142`) must be removed or replaced with real queries.
+
+### 2026-05-03 — Remove auth gates from payment flows (guest checkout)
+
+- **Problem:** `Checkout.tsx` blocked form submit if `!user` (toast + early return), disabled submit button when `!user`, and showed "יש להתחבר" link.
+- **Fix (3 edits to `src/pages/Checkout.tsx`):**
+  1. Removed `if (!user) { toast(...); return; }` guard from `handleSubmit`
+  2. Changed `user_id: user.id` → `user_id: user?.id || null` in orders insert (guest-safe)
+  3. Removed `!user` from `disabled` prop and removed the "יש להתחבר" paragraph below button
+- `Donate.tsx` — was already guest-friendly (no change)
+- `StoreCheckoutDialog.tsx` — was already guest-friendly (no change)
+- `api/grow/create-payment.ts` backend — `user_id` was already optional (no change)
+- commit: `ffc1f07`
+- **New iron rule §18:** Payment flows are guest-friendly. No auth required for any purchase or donation. If user is logged in, `user_id` is stored optionally. Never add `!user` as a payment gate.
 
 ### 2026-04-30 — Series page redesign — Saar feedback (8 points)
 
