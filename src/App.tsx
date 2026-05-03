@@ -99,6 +99,7 @@ const DesignPreviewCoursesCatalog = lazy(() => import("./pages/DesignPreviewCour
 const DesignPreviewParasha = lazy(() => import("./pages/DesignPreviewParasha"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
+const Terms = lazy(() => import("./pages/Terms"));
 
 const LazyFallback = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -173,6 +174,7 @@ const App = () => (
             <Route path="/store" element={<Suspense fallback={<LazyFallback />}><StorePage /></Suspense>} />
             <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />
+            <Route path="/terms" element={<Suspense fallback={<LazyFallback />}><Terms /></Suspense>} />
             <Route path="/admin" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
             <Route path="/admin/lessons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Lessons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/rabbis" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Rabbis /></Suspense></ProtectedRoute>} />
