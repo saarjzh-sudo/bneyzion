@@ -147,6 +147,38 @@ const Terms = () => {
           </ul>
         </section>
 
+        {/* Section 7 — Product warranty */}
+        <section className="space-y-3">
+          <h2 className="text-2xl font-bold">7. אחריות על מוצרים פיזיים</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            לכל מוצר פיזי (ספר, חוברת) הנרכש דרך האתר:
+          </p>
+          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
+            <li>
+              <strong>מוצר פגום / שגוי:</strong> ניתן להחזיר תוך <strong>14 ימי עסקים</strong> מיום קבלת המשלוח
+              ולקבל החלפה או החזר מלא, ללא עלות משלוח.
+            </li>
+            <li>
+              <strong>החלפה בשל שינוי דעה:</strong> ניתן להחזיר מוצר שלם ולא-פגום תוך 14 יום מקבלתו;
+              דמי המשלוח בגין ההחזרה יחולו על הרוכש.
+            </li>
+            <li>
+              אחריות אינה חלה על נזק שנגרם בשל שימוש לקוי, רטיבות, או גורמים שמחוץ לשליטתנו.
+            </li>
+            <li>
+              לפניות בנושא אחריות:{" "}
+              <Link to="/contact" className="underline text-primary hover:opacity-80">
+                דף יצירת קשר
+              </Link>{" "}
+              או{" "}
+              <a href="mailto:office@bneyzion.co.il" className="underline text-primary hover:opacity-80">
+                office@bneyzion.co.il
+              </a>
+              .
+            </li>
+          </ul>
+        </section>
+
         {/* Section 8 — Content usage */}
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">8. שימוש בתכנים וזכויות יוצרים</h2>

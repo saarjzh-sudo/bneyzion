@@ -118,7 +118,7 @@ export function useGrowPayment() {
     if (!window.growPayment) return;
 
     window.growPayment.init({
-      environment: "DEV",
+      environment: "PRODUCTION",
       version: 1,
       events: {
         onSuccess: (response) => {

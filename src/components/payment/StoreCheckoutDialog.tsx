@@ -56,6 +56,9 @@ export function StoreCheckoutDialog({
   const [zip, setZip] = useState("");
   const [notes, setNotes] = useState("");
 
+  // Country is hardcoded to Israel — shipping is Israel-only.
+  const country = "ישראל";
+
   const [tosAccepted, setTosAccepted] = useState(false);
   const { startPayment, isLoading, isReady } = useGrowPayment();
   const { toast } = useToast();
@@ -110,7 +113,9 @@ export function StoreCheckoutDialog({
           product: `store:${productSlug}`, // prefixed so webhook knows source=products table
           tos_accepted: true,
           tos_accepted_at: new Date().toISOString(),
-        },
+          // country always Israel — shipping is Israel-only
+          // (sent as string field for Grow audit trail)
+        } as any,
       });
       setOpen(false);
     } catch (err: any) {
@@ -198,6 +203,17 @@ export function StoreCheckoutDialog({
                 placeholder="name@example.com"
                 dir="ltr"
               />
+            </div>
+            <div className="space-y-1.5">
+              <Label htmlFor="sc-country">מדינה</Label>
+              <Input
+                id="sc-country"
+                value={country}
+                readOnly
+                dir="rtl"
+                className="bg-muted/40 text-muted-foreground cursor-not-allowed"
+              />
+              <p className="text-xs text-muted-foreground">משלוח זמין לישראל בלבד</p>
             </div>
           </div>
 
@@ -325,6 +341,7 @@ export function StoreCheckoutDialog({
               <span>סה״כ לתשלום</span>
               <span className="text-primary text-lg">₪{totalPrice.toFixed(0)}</span>
             </div>
+            <p className="text-xs text-muted-foreground text-left">המחיר כולל מע״מ</p>
           </div>
 
           {/* ToS + 18+ */}
