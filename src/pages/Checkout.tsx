@@ -13,7 +13,6 @@ import { ShoppingBag, CreditCard, Receipt, FileText, ArrowRight, Loader2, Shield
 import { Checkbox } from "@/components/ui/checkbox";
 import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { Link } from "react-router-dom";
@@ -44,51 +43,27 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      // Create separate orders for products vs donations
+      // create-payment.ts (server-side, service_role) creates the orders rows.
+      // We do NOT insert from the frontend — anon RLS blocks it and it would be a
+      // duplicate anyway since create-payment.ts already handles the insert.
       const orderGroups = [
-        { items: productItems, invoiceType: "invoice" as const, type: "product" as const },
-        { items: donationItems, invoiceType: "receipt_46" as const, type: "donation" as const },
+        { items: productItems, type: "product" as const },
+        { items: donationItems, type: "donation" as const },
       ].filter((g) => g.items.length > 0);
 
       for (const group of orderGroups) {
         const groupTotal = group.items.reduce((s, i) => s + i.product.price * i.quantity, 0);
 
-        const { data: order, error: orderErr } = await supabase
-          .from("orders")
-          .insert({
-            user_id: user?.id || null,
-            invoice_type: group.invoiceType,
-            subtotal: groupTotal,
-            total: groupTotal,
-            installments: Number(form.installments),
-            customer_name: form.name,
-            customer_email: form.email,
-            customer_phone: form.phone,
-            shipping_address: needsShipping ? form.address : null,
-            shipping_city: needsShipping ? form.city : null,
-            shipping_zip: needsShipping ? form.zip : null,
-            notes: form.notes || null,
-          })
-          .select("id")
-          .single();
+        // Build a description that includes item titles and, for physical products,
+        // the shipping address so the webhook can store it.
+        const itemTitles = group.items.map((i) => i.product.title).join(", ");
+        const shippingPart = needsShipping && group.type === "product"
+          ? ` | משלוח: ${form.address}, ${form.city}${form.zip ? " " + form.zip : ""}`
+          : "";
+        const description = `${itemTitles}${shippingPart}`;
 
-        if (orderErr) throw orderErr;
-
-        const orderItems = group.items.map((i) => ({
-          order_id: order.id,
-          product_id: i.product.id,
-          title: i.product.title,
-          quantity: i.quantity,
-          unit_price: i.product.price,
-          total_price: i.product.price * i.quantity,
-          item_type: i.itemType,
-        }));
-
-        const { error: itemsErr } = await supabase.from("order_items").insert(orderItems);
-        if (itemsErr) throw itemsErr;
-
-        // Open Grow payment for this order
-        const description = group.items.map((i) => i.product.title).join(", ");
+        // create-payment.ts will insert the orders row server-side with service_role.
+        // Pass orderId: undefined so the server creates a fresh row.
         await startPayment({
           sum: groupTotal,
           description,
@@ -96,8 +71,12 @@ export default function Checkout() {
           phone: form.phone,
           email: form.email,
           type: group.type,
-          orderId: order.id,
           installments: Number(form.installments),
+          meta: {
+            user_id: user?.id,
+            tos_accepted: true,
+            tos_accepted_at: new Date().toISOString(),
+          },
         });
       }
 
