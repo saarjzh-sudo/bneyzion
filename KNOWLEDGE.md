@@ -1846,6 +1846,19 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
   צריך שורה ב-`payment_products`. ראה TODO comment ב-ProductPage.tsx.
 - TS check: 0 שגיאות.
 
+### 2026-05-03 — Fix guest checkout RLS error (commit da22a1c)
+
+- **Bug:** אורח שניסה לקנות קיבל "new row violates row-level security policy for table 'orders'".
+- **סיבה:** `Checkout.tsx` עשה `supabase.from("orders").insert(...)` ישירות מה-frontend עם anon key. RLS ל-orders חוסם writes מ-anon.
+- **פתרון (אפשרות A — הסרת INSERT מה-frontend):** `create-payment.ts` (server-side, service_role) כבר יוצר את ה-orders row לפני שמתחיל Grow. ה-INSERT ב-Checkout.tsx היה כפול ושבור.
+- **שינוי ב-`src/pages/Checkout.tsx`:**
+  - הוסר כל ה-INSERT ל-`orders` ו-`order_items` (שורות 56-90 לפי הגרסה הישנה)
+  - הוסר `import { supabase }` (לא נחוץ יותר)
+  - `startPayment()` נקרא עם `meta.user_id`, `meta.tos_accepted`, ו-description שכולל shipping info
+  - `orderId` לא מועבר — `create-payment.ts` יוצר row חדש
+- **כלל חדש §19:** לעולם לא לעשות INSERT ל-`orders` או `donations` מה-frontend. כל כתיבה ל-DB בזמן תשלום חייבת לעבור דרך `api/grow/create-payment.ts` (service_role). ה-frontend מוגבל ל-SELECT בלבד על orders שלו.
+- TS check: 0 שגיאות.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
