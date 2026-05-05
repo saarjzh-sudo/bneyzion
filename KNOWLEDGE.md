@@ -1872,6 +1872,27 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
 - **מה עדיין ב-sandbox:** כל ה-flow (userId, pageCodes, API URL) הוא sandbox. כשGrow יאשרו production: (1) שנה GROW_USER_ID + GROW_PAGECODE_PRODUCTS + GROW_PAGECODE_DONATIONS + GROW_API_URL=`https://meshulam.co.il/api/light/server/1.0` + VITE_GROW_ENVIRONMENT=PRODUCTION ב-Vercel.
 - TS check: 0 שגיאות.
 
+### 2026-05-05 — ThankYou page: type-aware variants (commit 350e8ad)
+
+- **Problem:** `/thank-you` was subscription-only content, shown to all buyers (book, store checkout, donation).
+- **Architecture chosen:** Option A — single `/thank-you` route, switch on `?type=` query param.
+- **ThankYou.tsx** (`src/pages/ThankYou.tsx`) rewritten with 4 variants:
+  - `?type=store` — book/product purchase: shipping timeline, email confirmation, link to store
+  - `?type=subscription` — weekly chapter program: current books (חגי/זכריה/מלאכי), ערב רביעי lessons, portal CTA, WhatsApp group
+  - `?type=donation` — thank-you + receipt-by-email note + link to home
+  - `?type=cart` (default, also bare `/thank-you`) — generic multi-item checkout
+- **Subscription variant updated:** removed stale מגילת אסתר schedule and "2.2.26" hardcoded date. Current books = חגי/זכריה/מלאכי. Lesson day = ערב רביעי.
+- **`useGrowPayment.ts`:** new `thankYouType?: ThankYouType` on `StartPaymentParams`. `successUrl` now `${origin}/thank-you?type=${thankYouType}` (defaults to "cart").
+- **Callers updated:**
+  - `Checkout.tsx` → `navigate("/thank-you?type=cart")`
+  - `Donate.tsx` → `thankYouType: "donation"`
+  - `StoreCheckoutDialog.tsx` → `thankYouType: "store"`
+  - `QuickBuyDialog.tsx` → accepts `thankYouType` prop (default "cart")
+  - `SubscribeButton.tsx` → `thankYouType="subscription"`
+  - `MegilatEsther.tsx` (CtaButton) → `thankYouType="store"`
+
+**Iron rule added:** Every payment flow MUST pass `thankYouType` to `startPayment()`. Any new payment entry point that skips this will land buyers on the generic cart screen — not a crash, but not ideal. Review new flows at code-review time.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
