@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { resolve } from "path";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(() => ({
@@ -49,6 +50,15 @@ export default defineConfig(() => ({
       },
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, "index.html"),
+        checkout: resolve(__dirname, "checkout.html"),
+        terms: resolve(__dirname, "terms.html"),
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
