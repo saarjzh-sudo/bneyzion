@@ -1859,6 +1859,19 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
 - **כלל חדש §19:** לעולם לא לעשות INSERT ל-`orders` או `donations` מה-frontend. כל כתיבה ל-DB בזמן תשלום חייבת לעבור דרך `api/grow/create-payment.ts` (service_role). ה-frontend מוגבל ל-SELECT בלבד על orders שלו.
 - TS check: 0 שגיאות.
 
+### 2026-05-05 — Fix "הלינק שנשלח אינו תקין" on store checkout (commit 421f734)
+
+- **Bug:** לחיצה על "לרכישה" בדף מוצר (`/store/wc-3635`) הציגה toast "התשלום נכשל / הלינק שנשלח אינו תקין".
+- **סיבה:** `useGrowPayment.ts` אותחל Grow SDK עם `environment: "PRODUCTION"` — ה-SDK פתח wallet.meshulam.co.il (production). אבל ה-authCode נוצר על ידי `GROW_API_URL=sandbox.meshulam.co.il` עם `GROW_USER_ID=7fe6a5aebcc4cc26` (sandbox). Production wallet לא מכיר authCode מ-sandbox → שגיאה.
+- **אבחון:** `curl POST /api/grow/create-payment` החזיר authCode תקין. בעיה רק כש-SDK פתח overlay. בדיקה ישירה של `curl POST https://meshulam.co.il/...` (production) עם userId החזיר "פרמטר קוד זיהוי אינו תקין: userId" — מאשר שה-userId הוא sandbox בלבד.
+- **תיקון (`src/hooks/useGrowPayment.ts` שורות 68–73):**
+  - הוסיף `GROW_ENVIRONMENT` constant שקורא מ-`import.meta.env.VITE_GROW_ENVIRONMENT` (default "DEV")
+  - שינה `environment: "PRODUCTION"` → `environment: GROW_ENVIRONMENT` ב-`doInit()`
+- **Vercel env:** הוסיף `VITE_GROW_ENVIRONMENT=DEV` ל-production ע"י `vercel env add VITE_GROW_ENVIRONMENT production`
+- **כלל ברזל חדש §20:** Grow SDK environment חייב להתאים ל-GROW_API_URL: אם API=sandbox → SDK=DEV. אם API=production → SDK=PRODUCTION. Never hardcode PRODUCTION כשה-API הוא sandbox. להעביר דרך VITE_GROW_ENVIRONMENT env var.
+- **מה עדיין ב-sandbox:** כל ה-flow (userId, pageCodes, API URL) הוא sandbox. כשGrow יאשרו production: (1) שנה GROW_USER_ID + GROW_PAGECODE_PRODUCTS + GROW_PAGECODE_DONATIONS + GROW_API_URL=`https://meshulam.co.il/api/light/server/1.0` + VITE_GROW_ENVIRONMENT=PRODUCTION ב-Vercel.
+- TS check: 0 שגיאות.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
