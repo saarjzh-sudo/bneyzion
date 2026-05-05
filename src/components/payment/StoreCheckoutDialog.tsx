@@ -109,6 +109,7 @@ export function StoreCheckoutDialog({
         phone,
         email: email || undefined,
         type: "product",
+        thankYouType: "store",
         meta: {
           product: `store:${productSlug}`, // prefixed so webhook knows source=products table
           tos_accepted: true,

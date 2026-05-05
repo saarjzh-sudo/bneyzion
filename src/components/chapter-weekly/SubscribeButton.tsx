@@ -18,6 +18,7 @@ export function SubscribeButton({ children }: { children: React.ReactNode }) {
       title="הצטרפות למנוי הפרק השבועי"
       subtitle="חודש ראשון 5 ש״ח · לאחר מכן 110 ש״ח לחודש · ביטול בכל עת"
       maxInstallments={1}
+      thankYouType="subscription"
     >
       {children}
     </QuickBuyDialog>

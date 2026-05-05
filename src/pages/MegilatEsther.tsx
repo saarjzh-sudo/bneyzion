@@ -33,6 +33,7 @@ const CtaButton = ({ className = "", large = false, tier = "single" }: CtaButton
       title={`רכישת ${t.label}`}
       subtitle={`₪${t.amount.toLocaleString("he-IL")} · ${t.description}`}
       maxInstallments={3}
+      thankYouType="store"
     >
       <button
         type="button"

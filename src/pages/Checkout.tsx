@@ -82,7 +82,7 @@ export default function Checkout() {
 
       clearCart();
       toast({ title: "התשלום בוצע בהצלחה!" });
-      navigate("/thank-you");
+      navigate("/thank-you?type=cart");
     } catch (err: any) {
       toast({ title: "שגיאה בתהליך התשלום", description: err.message, variant: "destructive" });
     } finally {

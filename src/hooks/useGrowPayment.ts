@@ -36,6 +36,16 @@ interface GrowErrorResponse {
   message: string;
 }
 
+/**
+ * Controls which "thank you" variant is shown after a successful payment.
+ * Maps directly to the ?type= query param on /thank-you.
+ *   store        — book / physical product purchase
+ *   subscription — weekly-chapter or similar recurring subscription
+ *   donation     — one-time or monthly donation
+ *   cart         — generic multi-item cart checkout
+ */
+export type ThankYouType = "store" | "subscription" | "donation" | "cart";
+
 export interface StartPaymentParams {
   sum: number;
   description: string;
@@ -48,6 +58,12 @@ export interface StartPaymentParams {
   type: "product" | "donation" | "wallet" | "directDebit";
   orderId?: string;
   installments?: number;
+  /**
+   * Which /thank-you variant to show after a successful redirect-flow payment.
+   * For wallet-flow (onSuccess callback) the caller must navigate manually.
+   * Defaults to "cart" if omitted.
+   */
+  thankYouType?: ThankYouType;
   meta?: {
     product?: string;
     session_title?: string;
@@ -177,12 +193,13 @@ export function useGrowPayment() {
 
       try {
         // Step 1: Create payment process on our server
+        const thankYouType = params.thankYouType ?? "cart";
         const response = await fetch("/api/grow/create-payment", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             ...params,
-            successUrl: `${window.location.origin}/thank-you`,
+            successUrl: `${window.location.origin}/thank-you?type=${thankYouType}`,
             cancelUrl: window.location.href,
           }),
         });
