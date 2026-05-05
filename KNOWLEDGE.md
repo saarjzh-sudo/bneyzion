@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-04-30
+**Last updated:** 2026-05-05
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -408,6 +408,18 @@ public/
 - `REDESIGN.md` written (sandbox-focused doc)
 - `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
 - This file (`KNOWLEDGE.md`) created — full site knowledge
+
+### 2026-05-05 — Grow payment audit fix: multi-page HTML for /checkout and /terms
+- Grow auditor at grow.business/Site_check fails SPA sites: bot can't read /checkout or /terms
+- Fix: create `checkout.html` + `terms.html` as static bot-readable HTML files at repo root
+- Both include `<script type="module" src="/src/main.tsx">` so React SPA takes over for real users
+- `vite.config.ts`: added `build.rollupOptions.input` with checkout + terms entries (multi-page build)
+- `vercel.json`: added two rewrites BEFORE the SPA catch-all: `/checkout→/checkout.html`, `/terms→/terms.html`
+- `index.html`: added Organization JSON-LD schema (legalName, address הרקפת 5, telephone)
+- `terms.html`: full 11 sections from Terms.tsx, all Grow keywords present in plain HTML: 18 ומעלה, ביטול עסקה, אספקת שירותים, אחריות, מדיניות פרטיות, הרקפת 5, מכלל יופי
+- `checkout.html`: form with 5 fields, checkbox with required 18+ declaration + link to /terms
+- Commits: `54c471f` (main fix) + `5273852` (ביטול עסקה explicit phrase)
+- Pattern confirmed: battle-tested same way on Aboulafia (May 2026). Don't deviate.
 
 ### 2026-04-30 — Weekly chapter program — open questions resolved (Saar answers)
 
