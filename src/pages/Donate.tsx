@@ -101,6 +101,7 @@ const Donate = () => {
         phone: donorPhone,
         email: donorEmail,
         type: "donation",
+        thankYouType: "donation",
         // No orderId — server will create the donation record and return it
         donationMeta: {
           is_monthly: isMonthly,

@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Loader2, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useGrowPayment } from "@/hooks/useGrowPayment";
+import { useGrowPayment, type ThankYouType } from "@/hooks/useGrowPayment";
 import { useToast } from "@/hooks/use-toast";
 
 export interface QuickBuyDialogProps {
@@ -29,6 +29,11 @@ export interface QuickBuyDialogProps {
   subtitle?: string;
   /** Allowed installments (1 disables the field). Capped server-side too. */
   maxInstallments?: number;
+  /**
+   * Which /thank-you variant to show after a successful payment.
+   * Defaults to "cart" if omitted.
+   */
+  thankYouType?: ThankYouType;
   /** Trigger button — anything clickable. */
   children: React.ReactNode;
 }
@@ -40,6 +45,7 @@ export function QuickBuyDialog({
   title,
   subtitle,
   maxInstallments = 1,
+  thankYouType = "cart",
   children,
 }: QuickBuyDialogProps) {
   const [open, setOpen] = useState(false);
@@ -81,6 +87,7 @@ export function QuickBuyDialog({
         email: email || undefined,
         type: "product", // Server resolves real flow from meta.product
         installments: installments > 1 ? installments : undefined,
+        thankYouType,
         meta: {
           product,
           tos_accepted: true,
