@@ -66,6 +66,12 @@ export interface StartPaymentParams {
 }
 
 const SDK_URL = "https://cdn.meshulam.co.il/sdk/gs.min.js";
+// "PRODUCTION" loads the production Grow wallet (requires production userId + pageCodes).
+// "DEV" loads the sandbox Grow wallet (matches sandbox.meshulam.co.il API).
+// Switch via VITE_GROW_ENVIRONMENT env var — defaults to "DEV" so sandbox stays working.
+const GROW_ENVIRONMENT = (
+  import.meta.env.VITE_GROW_ENVIRONMENT || "DEV"
+) as "PRODUCTION" | "DEV";
 
 export function useGrowPayment() {
   const [isReady, setIsReady] = useState(false);
@@ -118,7 +124,7 @@ export function useGrowPayment() {
     if (!window.growPayment) return;
 
     window.growPayment.init({
-      environment: "PRODUCTION",
+      environment: GROW_ENVIRONMENT,
       version: 1,
       events: {
         onSuccess: (response) => {
