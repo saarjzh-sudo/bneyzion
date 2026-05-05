@@ -457,6 +457,14 @@
       "destination": "/preview.html"
     },
     {
+      "source": "/checkout",
+      "destination": "/checkout.html"
+    },
+    {
+      "source": "/terms",
+      "destination": "/terms.html"
+    },
+    {
       "source": "/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/:path+",
       "destination": "/api/legacy-redirect?path=:path"
     },
