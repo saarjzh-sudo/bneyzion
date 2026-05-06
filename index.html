@@ -65,6 +65,57 @@
 
   <body>
     <div id="root"></div>
+    <!-- Static footer for crawlers/bots that don't execute JS.
+         Real users never see this — React mounts into #root and hides it.
+         Required for Grow (Meshulam) audit: כתובת, תקנון, אישור תקנון. -->
+    <noscript>
+      <style>
+        .noscript-footer {
+          font-family: 'Segoe UI', Arial, sans-serif;
+          direction: rtl;
+          background: #1a1a2e;
+          color: #aaa;
+          text-align: center;
+          padding: 20px;
+          font-size: 0.85rem;
+          line-height: 1.7;
+        }
+        .noscript-footer a { color: #d4a843; text-decoration: underline; }
+        .noscript-nav {
+          font-family: 'Segoe UI', Arial, sans-serif;
+          direction: rtl;
+          background: #f8f7f4;
+          padding: 16px 24px;
+          text-align: center;
+          font-size: 0.9rem;
+        }
+        .noscript-nav a { color: #2563eb; text-decoration: underline; margin: 0 8px; }
+      </style>
+      <div class="noscript-nav">
+        <strong>בני ציון – אתר התנ״ך של ישראל</strong><br/>
+        ניווט מהיר:
+        <a href="/series">סדרות</a>
+        <a href="/store">חנות</a>
+        <a href="/donate">תרומה</a>
+        <a href="/megilat-esther">מגילת אסתר</a>
+        <a href="/rabbis">רבנים</a>
+        <a href="/checkout">רכישה</a>
+        <a href="/terms">תקנון האתר</a>
+        <a href="/contact">צור קשר</a>
+      </div>
+      <footer class="noscript-footer">
+        <p><strong>מכלל יופי (ע"ר)</strong> | ח.פ. 580731974</p>
+        <p>הרקפת 5, ירושלים, מיקוד 9650515</p>
+        <p>טלפון: <a href="tel:+972534706610">053-470-6610</a> | דוא"ל: <a href="mailto:office@bneyzion.co.il">office@bneyzion.co.il</a></p>
+        <p style="margin-top:8px;">
+          <a href="/terms">תקנון האתר ומדיניות פרטיות</a>
+          &nbsp;·&nbsp;
+          <a href="/checkout">עמוד תשלום</a>
+          &nbsp;·&nbsp;
+          <a href="/donate">תרומה</a>
+        </p>
+      </footer>
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
     <!-- Grow (Meshulam) Payment SDK — loaded globally for checkout/donate -->
     <script src="https://cdn.meshulam.co.il/sdk/gs.min.js" async></script>

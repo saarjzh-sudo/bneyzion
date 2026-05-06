@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>חנות הספרים – בני ציון</title>
+    <meta name="description" content="רכישת ספרים ומוצרים של מכלל יופי (ע״ר) – תנועת בני ציון ללימוד תנ״ך" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #f8f7f4;
+        color: #1a1a2e;
+        direction: rtl;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      header {
+        background: #1a1a2e;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      header img { height: 40px; }
+      header span {
+        color: #d4a843;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      main {
+        flex: 1;
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 0 20px;
+        width: 100%;
+      }
+      h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #1a1a2e;
+      }
+      .subtitle {
+        color: #666;
+        margin-bottom: 32px;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 28px 32px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        margin-bottom: 24px;
+      }
+      .card p {
+        font-size: 0.95rem;
+        color: #444;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
+      .legal-note {
+        background: #f0f4ff;
+        border: 1px solid #c7d4f8;
+        border-radius: 8px;
+        padding: 16px 18px;
+        font-size: 0.87rem;
+        color: #1e3a80;
+        line-height: 1.65;
+        margin-bottom: 20px;
+      }
+      .legal-note a {
+        color: #2563eb;
+        text-decoration: underline;
+      }
+      .btn-buy {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        background: #d4a843;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: background 0.2s;
+      }
+      .btn-buy:hover { background: #b8913a; }
+      .btn-secondary {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        background: transparent;
+        color: #1a1a2e;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        transition: border-color 0.2s;
+        margin-top: 10px;
+      }
+      .btn-secondary:hover { border-color: #d4a843; }
+      .tos-inline {
+        font-size: 0.82rem;
+        color: #777;
+        text-align: center;
+        margin-top: 12px;
+        line-height: 1.55;
+      }
+      .tos-inline a { color: #2563eb; text-decoration: underline; }
+      footer {
+        background: #1a1a2e;
+        color: #aaa;
+        text-align: center;
+        padding: 20px;
+        font-size: 0.8rem;
+        line-height: 1.6;
+      }
+      footer a { color: #d4a843; text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <!-- Static fallback: shown to bots and pre-JS users. React mounts and replaces. -->
+      <header>
+        <img src="/lovable-uploads/logo-bney-zion.png" alt="לוגו בני ציון" />
+        <span>בני ציון</span>
+      </header>
+
+      <main>
+        <h1>חנות הספרים – בני ציון</h1>
+        <p class="subtitle">
+          ספרי מכלל יופי (ע"ר) – סדרות לימוד תנ״ך על-ידי הרב יואב אוריאל וחכמי ישראל.
+        </p>
+
+        <div class="card">
+          <p>
+            הספרים נמכרים על-ידי עמותת מכלל יופי (ע"ר), ח.פ. 580731974.
+            הרקפת 5, ירושלים, מיקוד 9650515.
+            המוצרים יישלחו לכתובת שתמסרו בשלב התשלום.
+            זמן אספקה: עד 7 ימי עסקים בישראל.
+          </p>
+
+          <div class="legal-note">
+            ביטול עסקה אפשרי עד 14 ימים מיום הרכישה בהתאם לחוק הגנת הצרכן.
+            לפרטים מלאים אנא קראו את <a href="/terms">תקנון האתר ומדיניות הפרטיות</a>.
+            ניתן לפנות אלינו בטלפון 053-470-6610 או בדוא"ל office@bneyzion.co.il.
+          </div>
+
+          <a href="/checkout" class="btn-buy">לרכישה ותשלום</a>
+          <a href="/store" class="btn-secondary">חזרה לחנות</a>
+
+          <p class="tos-inline">
+            בלחיצה על "לרכישה" אתם מאשרים שקראתם את
+            <a href="/terms">תקנון האתר</a>
+            ושמלאו לכם 18 שנים ומעלה.
+          </p>
+        </div>
+      </main>
+
+      <footer>
+        <p>מכלל יופי (ע"ר) | ח.פ. 580731974 | הרקפת 5, ירושלים, מיקוד 9650515</p>
+        <p>טלפון: 053-470-6610 | office@bneyzion.co.il</p>
+        <p style="margin-top:6px;">
+          <a href="/terms">תקנון ומדיניות פרטיות</a>
+          &nbsp;·&nbsp;
+          <a href="/checkout">עמוד רכישה</a>
+          &nbsp;·&nbsp;
+          <a href="/store">חנות הספרים</a>
+          &nbsp;·&nbsp;
+          <a href="/contact">צור קשר</a>
+        </p>
+      </footer>
+    </div>
+
+    <!-- React SPA takes over for real users -->
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Grow (Meshulam) Payment SDK -->
+    <script src="https://cdn.meshulam.co.il/sdk/gs.min.js" async></script>
+  </body>
+</html>
