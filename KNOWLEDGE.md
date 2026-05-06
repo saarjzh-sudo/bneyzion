@@ -1957,6 +1957,28 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
 
 **Iron rule added:** Every payment flow MUST pass `thankYouType` to `startPayment()`. Any new payment entry point that skips this will land buyers on the generic cart screen — not a crash, but not ideal. Review new flows at code-review time.
 
+### 2026-05-07 — TeachersWing v2 sandbox page (commit 0857e5e)
+
+- **New file:** `src/pages/DesignPreviewTeachersWingV2.tsx`
+- **Route:** `/design-teachers-wing-v2` (sandbox only, not linked from nav)
+- **Design decisions:**
+  - Hero: olive variant, eyebrow "אגף המורים", title 'כלים ותכנים למחנכי תנ"ך'
+  - In-page tab navigation (ספרים / כלי הוראה / יוצרים) — Saar preferred this over dedicated sidebar
+  - ספרים tab: Torah/Nevi'im/Ketuvim category tree on the right, series grid/list on the left (RTL)
+  - כלי הוראה tab: extraSections from `useTeachersWing` as pill buttons, series grid/list below
+  - יוצרים tab: rabbi list panel on right (sticky, scrollable 70vh), series for selected rabbi on left
+  - List/Cards toggle: same `ViewToggle` pattern as `DesignPreviewSeriesPageV2`
+    (`localStorage` key `bnz.teachers.view`, gold-active buttons, LayoutGrid/List icons)
+  - All data from `useTeachersWing` hook — no mock data
+  - AITeacherTools component excluded (Saar not familiar — excluded pending decision)
+  - No role gating in sandbox
+- **Old page kept:** `src/pages/DesignPreviewTeachersWing.tsx` intact (hidden, route still active)
+- **TS check:** 0 errors
+- **What AITeacherTools was (for Saar's reference):** A component in the old `/teachers` production page
+  that showed AI-powered helpers (e.g., lesson plan generator, quiz builder). It was never in any
+  sandbox page — only in `TeachersWing.tsx` (production). Excluded from v2 sandbox pending Saar's
+  decision on whether to include AI features in the teacher hub.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every

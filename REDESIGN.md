@@ -173,6 +173,7 @@ See **§ 8. Open work** for the full plan.
 | `/design-rabbi` | Single rabbi profile (defaults to top) | yes | done |
 | `/design-rabbi/:id` | Specific rabbi | yes | done |
 | `/design-teachers-wing` | אגף המורים: 6 categories, benefits, recommended series | yes (recommended) | **hidden 30.4.2026** — route active, 0 nav links. pending deletion decision |
+| `/design-teachers-wing-v2` | אגף המורים v2: in-page tabs (ספרים/כלי הוראה/יוצרים), list/cards toggle | yes (useTeachersWing) | **new 7.5.2026** — pending Saar review |
 | `/design-community` | Community + 3 membership tiers + active courses | yes | done |
 | `/design-bible-book/:book` | Browse a Bible book — chapters with lesson counts | yes | done |
 | `/design-donate` | Donation flow with presets, recurring, dedication | n/a (form only) | done |
@@ -232,24 +233,18 @@ Saar must paste `supabase/migrations/20260430_weekly_program_foundation.sql` in 
 After that: `env -u HTTPS_PROXY -u HTTP_PROXY node scripts/import-weekly-chapter-subscribers.mjs --dry-run` → confirm → run live.
 Only then `useUserAccess` and the gating in `/design-megilat-esther` and `/design-portal-subscriber` will work with real data.
 
-### Priority 1: Teachers Wing decision — delete or repurpose
+### Priority 1: Teachers Wing v2 — pending Saar review
 
-**30.4.2026 — Saar decided:** hide `/design-teachers-wing`, pending final decision.
-Current state: route exists, 0 nav links from sidebar/header/footer/mobile-nav.
-Code intact at `src/pages/DesignPreviewTeachersWing.tsx`.
-Options: (a) delete the page entirely, (b) repurpose it after audience_tags migration.
+**7.5.2026 — Built and deployed:**
+- `/design-teachers-wing-v2` — olive hero, in-page tabs (ספרים / כלי הוראה / יוצרים)
+- Real data from `useTeachersWing`, list/cards toggle (same pattern as SeriesPageV2)
+- No AITeacherTools (excluded — Saar unfamiliar with it, pending decision)
+- Old `/design-teachers-wing` still hidden (route active, 0 nav links)
 
-### Priority 1b: Sidebar unification with Teachers Wing (on hold pending above)
-**Saar's spec (2026-04-30):**
-1. Add `audience_tags TEXT[]` column to `series` + `lessons` tables
-   (Supabase migration). Default `["general"]`.
-2. Backfill existing teacher content with `"teachers"` tag (manual or
-   query-based: anything under TeachersWing categories gets `"teachers"`).
-3. Update `DesignSidebar` to add a "view mode" toggle (general /
-   teachers / both) that filters the visible tree.
-4. OR: keep the 3-tab structure but rename "נושאים" tab to include the
-   teacher tool categories (תכנים אטומיים / חידות / מצגות / מאמרים).
-5. Test that NO content is duplicated when both views are active.
+**Next decisions needed from Saar:**
+- (a) Is v2 the approved direction? If yes → can delete old v1 page
+- (b) Should AITeacherTools be included? (see KNOWLEDGE.md §7 2026-05-07 for what it was)
+- (c) Should this link from the main sidebar or nav?
 
 ### Priority 2: Visual examples in `/design-research`
 Saar's feedback: each of the 32 pattern boxes only has text, no actual
