@@ -1,0 +1,1226 @@
+/**
+ * /design-teachers-wing-v2 — אגף המורים v2
+ *
+ * Design decisions:
+ * - Hero: olive variant, eyebrow "אגף המורים", title "כלים ותכנים למחנכי תנ״ך"
+ * - Navigation: in-page tabs (ספרים / כלי הוראה / יוצרים) — no sidebar
+ * - Data: real data from useTeachersWing hook (same hook as old TeachersWing)
+ * - List/Cards toggle: same pattern as DesignPreviewSeriesPageV2 (bnz.teachers.view)
+ * - No AITeacherTools component (Saar not familiar with it — excluded pending decision)
+ * - No role gating in sandbox
+ * - Sandbox-only — does NOT touch production TeachersWing.tsx
+ */
+import { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import {
+  BookOpen,
+  LayoutGrid,
+  List,
+  Users,
+  Wrench,
+  ChevronDown,
+  ChevronUp,
+  Loader2,
+  Volume2,
+  Play,
+  FileText,
+  ExternalLink,
+} from "lucide-react";
+
+import DesignLayout from "@/components/layout-v2/DesignLayout";
+import DesignPageHero from "@/components/layout-v2/DesignPageHero";
+import {
+  colors,
+  fonts,
+  gradients,
+  radii,
+  shadows,
+  formatDuration,
+} from "@/lib/designTokens";
+import { useTeachersWing, type SeriesRow } from "@/hooks/useTeachersWing";
+
+// ─── localStorage key ──────────────────────────────────────────────────────
+const VIEW_PREF_KEY = "bnz.teachers.view";
+
+// ─── Tab definition ────────────────────────────────────────────────────────
+type TabId = "books" | "tools" | "creators";
+
+const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
+  { id: "books", label: "ספרים", icon: BookOpen },
+  { id: "tools", label: "כלי הוראה", icon: Wrench },
+  { id: "creators", label: "יוצרים", icon: Users },
+];
+
+// ─── View mode ─────────────────────────────────────────────────────────────
+type ViewMode = "grid" | "list";
+
+// ─── Tools section — static categories from the existing TeachersWing hook's extra sections
+// These map to the "how to teach", "general topics", "moadim", "haftarot", "tools", "livuy-tatim"
+// extra sections returned by useTeachersWing.
+const TOOL_SECTION_LABELS: Record<string, string> = {
+  "איך מלמדים תנ\"ך": 'איך מלמדים תנ"ך',
+  'נושאים כלליים בתנ"ך': 'נושאים כלליים בתנ"ך',
+  "מועדים": "מועדים",
+  "הפטרות": "הפטרות",
+  "כלי עזר - טבלאות זמני המאורעות ומפות": "כלי עזר ומפות",
+  'ליווי ת"תים': 'ליווי ת"תים',
+};
+
+// ─── Helpers ───────────────────────────────────────────────────────────────
+function getMediaIcon(series: SeriesRow) {
+  // Series don't have a direct media type; use sourceType if available
+  const st = series.sourceType;
+  if (st === "video")
+    return <Play style={{ width: 12, height: 12 }} />;
+  if (st === "audio")
+    return <Volume2 style={{ width: 12, height: 12 }} />;
+  return <FileText style={{ width: 12, height: 12 }} />;
+}
+
+// ─── View toggle (same visual pattern as SeriesPageV2) ─────────────────────
+function ViewToggle({
+  viewMode,
+  onViewChange,
+}: {
+  viewMode: ViewMode;
+  onViewChange: (v: ViewMode) => void;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        border: `1.5px solid rgba(139,111,71,0.2)`,
+        borderRadius: radii.md,
+        overflow: "hidden",
+      }}
+    >
+      {(["grid", "list"] as ViewMode[]).map((v) => {
+        const isActive = viewMode === v;
+        return (
+          <button
+            key={v}
+            onClick={() => onViewChange(v)}
+            aria-label={v === "grid" ? "תצוגת כרטיסים" : "תצוגת רשימה"}
+            title={v === "grid" ? "תצוגת כרטיסים" : "תצוגת רשימה"}
+            style={{
+              width: 36,
+              height: 32,
+              border: "none",
+              background: isActive ? colors.goldDark : "transparent",
+              color: isActive ? "white" : colors.textMuted,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "all 0.15s",
+            }}
+          >
+            {v === "grid" ? (
+              <LayoutGrid style={{ width: 15, height: 15 }} />
+            ) : (
+              <List style={{ width: 15, height: 15 }} />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Series card (grid view) ───────────────────────────────────────────────
+function SeriesCard({ series }: { series: SeriesRow }) {
+  return (
+    <Link
+      to={`/series/${series.id}`}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+      <div
+        style={{
+          background: "white",
+          borderRadius: radii.xl,
+          border: "1px solid rgba(139,111,71,0.1)",
+          boxShadow: shadows.cardSoft,
+          padding: "1.25rem 1.25rem 1rem",
+          cursor: "pointer",
+          transition: "all 0.22s ease",
+          position: "relative",
+          overflow: "hidden",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.transform = "translateY(-3px)";
+          e.currentTarget.style.boxShadow = shadows.cardHover;
+          e.currentTarget.style.borderColor = colors.goldDark;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "translateY(0)";
+          e.currentTarget.style.boxShadow = shadows.cardSoft;
+          e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
+        }}
+      >
+        {/* Olive accent stripe on the right (RTL start) */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            right: 0,
+            bottom: 0,
+            width: 4,
+            background: gradients.oliveButton,
+          }}
+        />
+
+        {/* Title */}
+        <h3
+          style={{
+            fontFamily: fonts.display,
+            fontWeight: 800,
+            fontSize: "0.95rem",
+            color: colors.textDark,
+            margin: 0,
+            lineHeight: 1.4,
+            paddingInlineEnd: "0.5rem",
+          }}
+        >
+          {series.title}
+        </h3>
+
+        {/* Rabbi */}
+        {series.rabbiName && (
+          <div
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.75rem",
+              color: colors.goldDark,
+              fontWeight: 700,
+            }}
+          >
+            {series.rabbiName}
+          </div>
+        )}
+
+        {/* Description (truncated) */}
+        {series.description && (
+          <p
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.8rem",
+              color: colors.textMuted,
+              margin: 0,
+              lineHeight: 1.55,
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              flex: 1,
+            }}
+          >
+            {series.description}
+          </p>
+        )}
+
+        {/* Footer: lesson count */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            paddingTop: "0.65rem",
+            borderTop: "1px solid rgba(139,111,71,0.08)",
+            marginTop: "auto",
+          }}
+        >
+          <span
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.7rem",
+              color: colors.textSubtle,
+            }}
+          >
+            {series.lessonCount} שיעורים
+          </span>
+          <span
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.7rem",
+              color: colors.oliveMain,
+              fontWeight: 600,
+            }}
+          >
+            לסדרה ←
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+// ─── Series row (list view) ────────────────────────────────────────────────
+function SeriesRow_({ series }: { series: SeriesRow }) {
+  return (
+    <Link
+      to={`/series/${series.id}`}
+      style={{ textDecoration: "none", color: "inherit" }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "1rem",
+          padding: "0.85rem 1rem",
+          borderRadius: radii.lg,
+          background: "white",
+          border: "1px solid rgba(139,111,71,0.08)",
+          cursor: "pointer",
+          transition: "all 0.18s ease",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.borderColor = colors.goldDark;
+          e.currentTarget.style.boxShadow = shadows.cardSoft;
+          e.currentTarget.style.background = colors.parchmentDark;
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.borderColor = "rgba(139,111,71,0.08)";
+          e.currentTarget.style.boxShadow = "none";
+          e.currentTarget.style.background = "white";
+        }}
+      >
+        {/* Olive dot */}
+        <div
+          style={{
+            width: 8,
+            height: 8,
+            borderRadius: "50%",
+            background: gradients.oliveButton,
+            flexShrink: 0,
+          }}
+        />
+
+        {/* Main content */}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div
+            style={{
+              fontFamily: fonts.display,
+              fontWeight: 700,
+              fontSize: "0.88rem",
+              color: colors.textDark,
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            {series.title}
+          </div>
+          {series.rabbiName && (
+            <div
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.7rem",
+                color: colors.goldDark,
+                fontWeight: 600,
+                marginTop: "0.15rem",
+              }}
+            >
+              {series.rabbiName}
+            </div>
+          )}
+        </div>
+
+        {/* Lesson count badge */}
+        <span
+          style={{
+            fontFamily: fonts.body,
+            fontSize: "0.68rem",
+            color: colors.textMuted,
+            background: colors.parchmentDeep,
+            padding: "0.2rem 0.6rem",
+            borderRadius: radii.pill,
+            flexShrink: 0,
+          }}
+        >
+          {series.lessonCount} שיעורים
+        </span>
+
+        <ExternalLink
+          style={{ width: 13, height: 13, color: colors.textSubtle, flexShrink: 0 }}
+        />
+      </div>
+    </Link>
+  );
+}
+
+// ─── Books tab ─────────────────────────────────────────────────────────────
+/**
+ * Shows the Torah/Nevi'im/Ketuvim category tree.
+ * User clicks a book → series for that book load below.
+ */
+function BooksTab() {
+  const { categories, useSeriesForNode, isLoading } = useTeachersWing();
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [selectedNodeTitle, setSelectedNodeTitle] = useState<string>("");
+  const [expandedCats, setExpandedCats] = useState<Set<string>>(
+    () => new Set(["torah"])
+  );
+
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    try {
+      return (localStorage.getItem(VIEW_PREF_KEY) as ViewMode) || "grid";
+    } catch {
+      return "grid";
+    }
+  });
+
+  const handleViewChange = (v: ViewMode) => {
+    setViewMode(v);
+    try {
+      localStorage.setItem(VIEW_PREF_KEY, v);
+    } catch {
+      /* localStorage may be blocked */
+    }
+  };
+
+  const seriesQuery = useSeriesForNode(selectedNodeId);
+
+  const toggleCat = (catId: string) => {
+    setExpandedCats((prev) => {
+      const next = new Set(prev);
+      if (next.has(catId)) next.delete(catId);
+      else next.add(catId);
+      return next;
+    });
+  };
+
+  if (isLoading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", padding: "3rem" }}
+      >
+        <Loader2
+          style={{
+            width: 28,
+            height: 28,
+            color: colors.goldDark,
+            animation: "spin 1s linear infinite",
+          }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      dir="rtl"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "280px 1fr",
+        gap: "2rem",
+        alignItems: "start",
+      }}
+    >
+      {/* ── Left panel: book tree ── */}
+      <nav
+        style={{
+          background: "white",
+          borderRadius: radii.xl,
+          border: "1px solid rgba(139,111,71,0.1)",
+          boxShadow: shadows.cardSoft,
+          overflow: "hidden",
+          position: "sticky",
+          top: "6rem",
+        }}
+      >
+        {categories.map((cat) => {
+          const isExpanded = expandedCats.has(cat.id);
+          return (
+            <div key={cat.id}>
+              {/* Category header */}
+              <button
+                onClick={() => toggleCat(cat.id)}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0.85rem 1rem",
+                  background: colors.parchmentDark,
+                  border: "none",
+                  borderBottom: "1px solid rgba(139,111,71,0.1)",
+                  cursor: "pointer",
+                  fontFamily: fonts.display,
+                  fontWeight: 800,
+                  fontSize: "0.9rem",
+                  color: colors.oliveDark,
+                  textAlign: "right",
+                }}
+              >
+                {cat.title}
+                {isExpanded ? (
+                  <ChevronUp style={{ width: 14, height: 14 }} />
+                ) : (
+                  <ChevronDown style={{ width: 14, height: 14 }} />
+                )}
+              </button>
+
+              {/* Books list */}
+              {isExpanded && (
+                <div>
+                  {cat.books.map((book) => {
+                    const isSelected = selectedNodeId === book.id;
+                    return (
+                      <button
+                        key={book.id}
+                        onClick={() => {
+                          setSelectedNodeId(book.id);
+                          setSelectedNodeTitle(book.title);
+                        }}
+                        style={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          padding: "0.6rem 1rem 0.6rem 1.5rem",
+                          background: isSelected
+                            ? "rgba(74,90,46,0.08)"
+                            : "transparent",
+                          border: "none",
+                          borderBottom: "1px solid rgba(139,111,71,0.06)",
+                          borderRight: isSelected
+                            ? `3px solid ${colors.oliveDark}`
+                            : "3px solid transparent",
+                          cursor: "pointer",
+                          fontFamily: fonts.body,
+                          fontWeight: isSelected ? 700 : 500,
+                          fontSize: "0.83rem",
+                          color: isSelected ? colors.oliveDark : colors.textMid,
+                          textAlign: "right",
+                          transition: "all 0.15s",
+                        }}
+                      >
+                        {book.title}
+                        {book.children.length > 0 && (
+                          <span
+                            style={{
+                              fontSize: "0.65rem",
+                              color: colors.textSubtle,
+                              background: colors.parchmentDeep,
+                              padding: "0.1rem 0.4rem",
+                              borderRadius: radii.pill,
+                              flexShrink: 0,
+                            }}
+                          >
+                            {book.children.length}
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </nav>
+
+      {/* ── Right panel: series grid/list ── */}
+      <div>
+        {!selectedNodeId ? (
+          // Prompt state
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4rem 2rem",
+              background: "white",
+              borderRadius: radii.xl,
+              border: "1px dashed rgba(139,111,71,0.2)",
+              gap: "1rem",
+            }}
+          >
+            <BookOpen
+              style={{ width: 40, height: 40, color: colors.oliveDark, opacity: 0.5 }}
+            />
+            <div
+              style={{
+                fontFamily: fonts.display,
+                fontSize: "1.1rem",
+                fontWeight: 700,
+                color: colors.textMuted,
+              }}
+            >
+              בחר ספר מהתפריט כדי לראות את הסדרות
+            </div>
+          </div>
+        ) : seriesQuery.isLoading ? (
+          <div
+            style={{ display: "flex", justifyContent: "center", padding: "3rem" }}
+          >
+            <Loader2
+              style={{
+                width: 28,
+                height: 28,
+                color: colors.goldDark,
+                animation: "spin 1s linear infinite",
+              }}
+            />
+          </div>
+        ) : (
+          <>
+            {/* Header + toggle */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "1rem",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: fonts.display,
+                    fontWeight: 800,
+                    fontSize: "1.15rem",
+                    color: colors.textDark,
+                  }}
+                >
+                  {selectedNodeTitle}
+                </div>
+                <div
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.75rem",
+                    color: colors.textSubtle,
+                  }}
+                >
+                  {seriesQuery.data?.length ?? 0} סדרות
+                </div>
+              </div>
+              <ViewToggle viewMode={viewMode} onViewChange={handleViewChange} />
+            </div>
+
+            {/* Series grid or list */}
+            {(seriesQuery.data?.length ?? 0) === 0 ? (
+              <div
+                style={{
+                  padding: "2.5rem",
+                  background: "white",
+                  borderRadius: radii.xl,
+                  border: "1px solid rgba(139,111,71,0.08)",
+                  fontFamily: fonts.body,
+                  color: colors.textMuted,
+                  textAlign: "center",
+                }}
+              >
+                אין סדרות זמינות עדיין לספר זה
+              </div>
+            ) : viewMode === "grid" ? (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
+                  gap: "1rem",
+                }}
+              >
+                {(seriesQuery.data ?? []).map((s) => (
+                  <SeriesCard key={s.id} series={s} />
+                ))}
+              </div>
+            ) : (
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                {(seriesQuery.data ?? []).map((s) => (
+                  <SeriesRow_ key={s.id} series={s} />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── Tools tab ─────────────────────────────────────────────────────────────
+/**
+ * Shows the extra sections: howToStudy, generalTopics, moadim, haftarot, tools, livuyTatim.
+ * User clicks a section → series for that node load below.
+ */
+function ToolsTab() {
+  const { extraSections, useSeriesForNode, isLoading } = useTeachersWing();
+  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
+  const [selectedNodeTitle, setSelectedNodeTitle] = useState<string>("");
+
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    try {
+      return (localStorage.getItem(VIEW_PREF_KEY) as ViewMode) || "grid";
+    } catch {
+      return "grid";
+    }
+  });
+
+  const handleViewChange = (v: ViewMode) => {
+    setViewMode(v);
+    try {
+      localStorage.setItem(VIEW_PREF_KEY, v);
+    } catch {
+      /* localStorage may be blocked */
+    }
+  };
+
+  const seriesQuery = useSeriesForNode(selectedNodeId);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", padding: "3rem" }}
+      >
+        <Loader2
+          style={{
+            width: 28,
+            height: 28,
+            color: colors.goldDark,
+            animation: "spin 1s linear infinite",
+          }}
+        />
+      </div>
+    );
+  }
+
+  const sections = extraSections.filter((s) => s.children.length > 0);
+
+  return (
+    <div dir="rtl">
+      {/* Section pills */}
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.65rem",
+          marginBottom: "2rem",
+        }}
+      >
+        {sections.map((sec) => {
+          const isActive = selectedNodeId === sec.id;
+          return (
+            <button
+              key={sec.id}
+              onClick={() => {
+                setSelectedNodeId(sec.id);
+                setSelectedNodeTitle(
+                  TOOL_SECTION_LABELS[sec.title] ?? sec.title
+                );
+              }}
+              style={{
+                padding: "0.45rem 1.1rem",
+                borderRadius: radii.pill,
+                border: `1.5px solid ${isActive ? colors.oliveDark : "rgba(74,90,46,0.2)"}`,
+                background: isActive ? gradients.oliveButton : "transparent",
+                color: isActive ? "white" : colors.oliveDark,
+                fontFamily: fonts.body,
+                fontSize: "0.8rem",
+                fontWeight: isActive ? 700 : 500,
+                cursor: "pointer",
+                transition: "all 0.15s",
+              }}
+            >
+              {TOOL_SECTION_LABELS[sec.title] ?? sec.title}
+              <span
+                style={{
+                  marginRight: "0.4rem",
+                  fontSize: "0.7rem",
+                  opacity: 0.7,
+                }}
+              >
+                ({sec.children.length})
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Results */}
+      {!selectedNodeId ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "4rem 2rem",
+            background: "white",
+            borderRadius: radii.xl,
+            border: "1px dashed rgba(139,111,71,0.2)",
+            gap: "1rem",
+          }}
+        >
+          <Wrench
+            style={{ width: 40, height: 40, color: colors.oliveDark, opacity: 0.5 }}
+          />
+          <div
+            style={{
+              fontFamily: fonts.display,
+              fontSize: "1.1rem",
+              fontWeight: 700,
+              color: colors.textMuted,
+            }}
+          >
+            בחר נושא כלי הוראה מלמעלה
+          </div>
+        </div>
+      ) : seriesQuery.isLoading ? (
+        <div
+          style={{ display: "flex", justifyContent: "center", padding: "3rem" }}
+        >
+          <Loader2
+            style={{
+              width: 28,
+              height: 28,
+              color: colors.goldDark,
+              animation: "spin 1s linear infinite",
+            }}
+          />
+        </div>
+      ) : (
+        <>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "1rem",
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontFamily: fonts.display,
+                  fontWeight: 800,
+                  fontSize: "1.15rem",
+                  color: colors.textDark,
+                }}
+              >
+                {selectedNodeTitle}
+              </div>
+              <div
+                style={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.75rem",
+                  color: colors.textSubtle,
+                }}
+              >
+                {seriesQuery.data?.length ?? 0} סדרות
+              </div>
+            </div>
+            <ViewToggle viewMode={viewMode} onViewChange={handleViewChange} />
+          </div>
+
+          {(seriesQuery.data?.length ?? 0) === 0 ? (
+            <div
+              style={{
+                padding: "2.5rem",
+                background: "white",
+                borderRadius: radii.xl,
+                border: "1px solid rgba(139,111,71,0.08)",
+                fontFamily: fonts.body,
+                color: colors.textMuted,
+                textAlign: "center",
+              }}
+            >
+              אין סדרות זמינות עדיין
+            </div>
+          ) : viewMode === "grid" ? (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+                gap: "1rem",
+              }}
+            >
+              {(seriesQuery.data ?? []).map((s) => (
+                <SeriesCard key={s.id} series={s} />
+              ))}
+            </div>
+          ) : (
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}
+            >
+              {(seriesQuery.data ?? []).map((s) => (
+                <SeriesRow_ key={s.id} series={s} />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+// ─── Creators tab ───────────────────────────────────────────────────────────
+/**
+ * Shows the top 50 rabbis from the hook and their series when clicked.
+ */
+function CreatorsTab() {
+  const { rabbis, useSeriesForRabbi, isLoading } = useTeachersWing();
+  const [selectedRabbiId, setSelectedRabbiId] = useState<string | null>(null);
+  const [selectedRabbiName, setSelectedRabbiName] = useState<string>("");
+
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    try {
+      return (localStorage.getItem(VIEW_PREF_KEY) as ViewMode) || "grid";
+    } catch {
+      return "grid";
+    }
+  });
+
+  const handleViewChange = (v: ViewMode) => {
+    setViewMode(v);
+    try {
+      localStorage.setItem(VIEW_PREF_KEY, v);
+    } catch {
+      /* localStorage may be blocked */
+    }
+  };
+
+  const seriesQuery = useSeriesForRabbi(selectedRabbiId);
+
+  if (isLoading) {
+    return (
+      <div
+        style={{ display: "flex", justifyContent: "center", padding: "3rem" }}
+      >
+        <Loader2
+          style={{
+            width: 28,
+            height: 28,
+            color: colors.goldDark,
+            animation: "spin 1s linear infinite",
+          }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      dir="rtl"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "260px 1fr",
+        gap: "2rem",
+        alignItems: "start",
+      }}
+    >
+      {/* Rabbi list panel */}
+      <nav
+        style={{
+          background: "white",
+          borderRadius: radii.xl,
+          border: "1px solid rgba(139,111,71,0.1)",
+          boxShadow: shadows.cardSoft,
+          overflow: "hidden",
+          maxHeight: "70vh",
+          overflowY: "auto",
+          position: "sticky",
+          top: "6rem",
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            padding: "0.85rem 1rem",
+            background: colors.parchmentDark,
+            borderBottom: "1px solid rgba(139,111,71,0.1)",
+            fontFamily: fonts.display,
+            fontWeight: 800,
+            fontSize: "0.85rem",
+            color: colors.oliveDark,
+          }}
+        >
+          יוצרי תוכן ({rabbis.length})
+        </div>
+
+        {rabbis.map((rabbi) => {
+          const isSelected = selectedRabbiId === rabbi.id;
+          return (
+            <button
+              key={rabbi.id}
+              onClick={() => {
+                setSelectedRabbiId(rabbi.id);
+                setSelectedRabbiName(rabbi.name);
+              }}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0.6rem 1rem",
+                background: isSelected ? "rgba(74,90,46,0.08)" : "transparent",
+                border: "none",
+                borderBottom: "1px solid rgba(139,111,71,0.06)",
+                borderRight: isSelected
+                  ? `3px solid ${colors.oliveDark}`
+                  : "3px solid transparent",
+                cursor: "pointer",
+                fontFamily: fonts.body,
+                fontWeight: isSelected ? 700 : 500,
+                fontSize: "0.82rem",
+                color: isSelected ? colors.oliveDark : colors.textMid,
+                textAlign: "right",
+                transition: "all 0.15s",
+              }}
+            >
+              {rabbi.name}
+              <span
+                style={{
+                  fontSize: "0.65rem",
+                  color: colors.textSubtle,
+                  background: colors.parchmentDeep,
+                  padding: "0.1rem 0.4rem",
+                  borderRadius: radii.pill,
+                  flexShrink: 0,
+                }}
+              >
+                {rabbi.lessonCount}
+              </span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* Series panel */}
+      <div>
+        {!selectedRabbiId ? (
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "4rem 2rem",
+              background: "white",
+              borderRadius: radii.xl,
+              border: "1px dashed rgba(139,111,71,0.2)",
+              gap: "1rem",
+            }}
+          >
+            <Users
+              style={{ width: 40, height: 40, color: colors.oliveDark, opacity: 0.5 }}
+            />
+            <div
+              style={{
+                fontFamily: fonts.display,
+                fontSize: "1.1rem",
+                fontWeight: 700,
+                color: colors.textMuted,
+              }}
+            >
+              בחר יוצר מהרשימה לצד כדי לראות את סדרותיו
+            </div>
+          </div>
+        ) : seriesQuery.isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "3rem",
+            }}
+          >
+            <Loader2
+              style={{
+                width: 28,
+                height: 28,
+                color: colors.goldDark,
+                animation: "spin 1s linear infinite",
+              }}
+            />
+          </div>
+        ) : (
+          <>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: "1rem",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: fonts.display,
+                    fontWeight: 800,
+                    fontSize: "1.15rem",
+                    color: colors.textDark,
+                  }}
+                >
+                  {selectedRabbiName}
+                </div>
+                <div
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.75rem",
+                    color: colors.textSubtle,
+                  }}
+                >
+                  {seriesQuery.data?.length ?? 0} סדרות
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                <Link
+                  to={`/rabbis/${selectedRabbiId}`}
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.75rem",
+                    color: colors.goldDark,
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  פרופיל מלא ←
+                </Link>
+                <ViewToggle viewMode={viewMode} onViewChange={handleViewChange} />
+              </div>
+            </div>
+
+            {(seriesQuery.data?.length ?? 0) === 0 ? (
+              <div
+                style={{
+                  padding: "2.5rem",
+                  background: "white",
+                  borderRadius: radii.xl,
+                  border: "1px solid rgba(139,111,71,0.08)",
+                  fontFamily: fonts.body,
+                  color: colors.textMuted,
+                  textAlign: "center",
+                }}
+              >
+                אין סדרות זמינות לרב זה
+              </div>
+            ) : viewMode === "grid" ? (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
+                  gap: "1rem",
+                }}
+              >
+                {(seriesQuery.data ?? []).map((s) => (
+                  <SeriesCard key={s.id} series={s} />
+                ))}
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                }}
+              >
+                {(seriesQuery.data ?? []).map((s) => (
+                  <SeriesRow_ key={s.id} series={s} />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ─── In-page tab navigation ────────────────────────────────────────────────
+function InPageNav({
+  activeTab,
+  onTabChange,
+}: {
+  activeTab: TabId;
+  onTabChange: (t: TabId) => void;
+}) {
+  return (
+    <div
+      dir="rtl"
+      style={{
+        display: "flex",
+        gap: 0,
+        background: "white",
+        borderRadius: radii.xl,
+        border: "1px solid rgba(139,111,71,0.12)",
+        boxShadow: shadows.cardSoft,
+        padding: "0.3rem",
+        marginBottom: "2.5rem",
+        width: "fit-content",
+      }}
+    >
+      {TABS.map(({ id, label, icon: Icon }) => {
+        const isActive = activeTab === id;
+        return (
+          <button
+            key={id}
+            onClick={() => onTabChange(id)}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.65rem 1.5rem",
+              borderRadius: radii.lg,
+              border: "none",
+              background: isActive ? gradients.oliveButton : "transparent",
+              color: isActive ? "white" : colors.textMuted,
+              fontFamily: fonts.body,
+              fontSize: "0.9rem",
+              fontWeight: isActive ? 700 : 500,
+              cursor: "pointer",
+              transition: "all 0.2s ease",
+            }}
+          >
+            <Icon style={{ width: 16, height: 16 }} />
+            {label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── Page root ─────────────────────────────────────────────────────────────
+export default function DesignPreviewTeachersWingV2() {
+  const [activeTab, setActiveTab] = useState<TabId>("books");
+
+  return (
+    <DesignLayout>
+      {/* Hero — olive variant as per design token spec */}
+      <DesignPageHero
+        variant="olive"
+        eyebrow="אגף המורים"
+        title='כלים ותכנים למחנכי תנ"ך'
+        subtitle='כל הכלים שמחנך תנ"ך צריך — תכנים לפי ספר וחלק, כלי הוראה, ומבחר יוצרים מובילים. מוכן לשיעור, לחוג, ולשיחה משפחתית.'
+      />
+
+      {/* Main content area */}
+      <div
+        style={{
+          background: colors.parchment,
+          minHeight: "60vh",
+          padding: "3rem 1.5rem 5rem",
+        }}
+      >
+        <div
+          style={{ maxWidth: 1280, margin: "0 auto" }}
+          dir="rtl"
+        >
+          {/* In-page tab navigation */}
+          <InPageNav activeTab={activeTab} onTabChange={setActiveTab} />
+
+          {/* Tab panels */}
+          {activeTab === "books" && <BooksTab />}
+          {activeTab === "tools" && <ToolsTab />}
+          {activeTab === "creators" && <CreatorsTab />}
+        </div>
+      </div>
+    </DesignLayout>
+  );
+}
