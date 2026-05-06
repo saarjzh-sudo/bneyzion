@@ -1188,6 +1188,46 @@ the full picture of what changed without reading 40+ individual entries.
 6. **`/portal-old` cleanup** — delete after 30-day stability window (deadline: 2026-05-30).
 7. **Sandbox cleanup** — `/design-series-page-v2/*` routes can be removed from App.tsx after 30-day production stability window.
 
+### 2026-05-06 — Grow audit parity check vs Aboulafia (NetSpark MITM fix + E2E protocol)
+
+**Context:** Cross-check of all 7 Grow audit chapters between abulafia-institute and bneyzion.
+Chapters 1-2 (multi-page Vite + Terms.tsx) were already confirmed done. Chapters 3-7 verified now.
+
+**Chapter 3 — PRODUCTS map:**
+- Aboulafia: `FALLBACK_RULES` in `create-payment.ts` (2 products: zugiyut, ritalin) + `payment_products` DB table
+- bneyzion: `FALLBACK_PRODUCTS` in `create-payment.ts` (2 products: weekly-chapter-subscription, book-megilat-esther) + `store:<slug>` path for products table
+- **Status: IDENTICAL PATTERN — no gap.**
+
+**Chapter 4 — Smoove course-access list lookup:**
+- Aboulafia: `FALLBACK_WIRING` in `webhook.ts` with `smoove_list_id` per product; `subscribeToSmoove()` on every successful payment; 409-handling with GET+PUT fallback
+- bneyzion: `FALLBACK_PRODUCTS` in `webhook.ts` (list 1045078 for weekly-chapter, list 1131982 for megilat-esther); identical `subscribeToSmoove()` function with 409 GET+PUT fallback; donations use `SMOOVE_DEFAULT_LIST_ID=1118798`
+- **Status: IDENTICAL PATTERN — no gap. Smoove env var `SMOOVE_API_KEY` must be set in Vercel prod (Saar action).**
+
+**Chapter 5+6 — NetSpark MITM / Hardcoded Supabase URL:**
+- Aboulafia: `client.ts` hardcoded `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` as string constants — after 4-May-2026 outage where `import.meta.env.VITE_SUPABASE_URL` was stripped from JS bundles by NetSpark TLS proxy even though env var was correctly set in Vercel dashboard.
+- bneyzion: was still using `import.meta.env.VITE_SUPABASE_URL` — **FIXED THIS SESSION** (2026-05-06).
+- `src/integrations/supabase/client.ts` updated: hardcoded URL=`pzvmwfexeiruelwiujxn.supabase.co` + anon key. Comment explains the rationale.
+- **These are PUBLIC values (already shipped to browser in any build) — hardcoding is safe and removes an entire class of silent outages.**
+
+**Chapter 7 — E2E verification protocol:**
+- After every significant Grow/deployment change, verify with `--noproxy '*'` (bypass NetSpark):
+  ```bash
+  # Verify checkout page loads (public static HTML)
+  curl --noproxy '*' -s -o /dev/null -w "%{http_code}" https://bneyzion.vercel.app/checkout.html
+  # Verify terms page loads
+  curl --noproxy '*' -s -o /dev/null -w "%{http_code}" https://bneyzion.vercel.app/terms.html
+  # Verify create-payment API responds (POST)
+  curl --noproxy '*' -s -X POST https://bneyzion.vercel.app/api/grow/create-payment \
+    -H "Content-Type: application/json" \
+    -d '{"sum":1,"description":"test","fullName":"Test","phone":"050","type":"product","successUrl":"https://x.com","cancelUrl":"https://x.com"}' \
+    | jq .
+  # Verify webhook endpoint responds (POST with no body → should return processed:false)
+  curl --noproxy '*' -s -X POST https://bneyzion.vercel.app/api/grow/webhook | jq .
+  ```
+- **Always use `--noproxy '*'` on Saar's machine — NetSpark intercepts and blocks/modifies responses from Supabase, Smoove, and API endpoints.**
+
+**Iron rule added:** Any Vite+React site that uses Supabase on a network with TLS-inspecting proxy (NetSpark) MUST hardcode SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY as string constants in `client.ts`. The env var approach silently breaks without error messages visible to end users.
+
 ### 2026-05-03 — Store checkout migrated from WooCommerce redirect to internal Grow flow (commit 3382aa7)
 
 **Decision:** Option A — `products` table queried dynamically on `create-payment.ts` server. No data duplication into `payment_products`. New `store:<slug>` prefix on `meta.product` routes the request to the products table. Products table `source_url` column kept in DB (for reference), no longer used in UI.
