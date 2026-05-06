@@ -409,6 +409,18 @@ public/
 - `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
 - This file (`KNOWLEDGE.md`) created — full site knowledge
 
+### 2026-05-06 — Grow audit phase 2: extend static HTML coverage to ALL payment-adjacent pages
+- Problem: Grow bot visits `/`, `/donate`, `/megilat-esther`, `/store/:slug` — all SPA shells, no footer visible to bot
+- Fix: `index.html` gets `<noscript>` block with full footer (address, phone, /terms link) — humans never see it, bots do
+- New static pages: `donate.html`, `megilat-esther.html`, `store-product.html`
+  - Each has: form/content + checkbox with /terms link + 18+ declaration + footer with מכלל יופי + הרקפת 5
+  - Each ends with `<script type="module" src="/src/main.tsx">` so React SPA replaces for real users
+- `vite.config.ts`: added 3 new rollup entries (donate, megilat-esther, store-product)
+- `vercel.json`: added 3 rewrites BEFORE SPA catch-all: `/donate`, `/megilat-esther`, `/store/:slug`
+- curl audit result: ALL 7 URLs (`/`, `/terms`, `/checkout`, `/donate`, `/megilat-esther`, `/store`, `/store/wc-3635`) return מכלל יופי + הרקפת + /terms in raw HTML
+- Commit: `155f645`
+- Pattern: `/store/:slug` rewrite points to single `store-product.html` — React reads the actual slug and renders the right product for humans
+
 ### 2026-05-05 — Grow payment audit fix: multi-page HTML for /checkout and /terms
 - Grow auditor at grow.business/Site_check fails SPA sites: bot can't read /checkout or /terms
 - Fix: create `checkout.html` + `terms.html` as static bot-readable HTML files at repo root
