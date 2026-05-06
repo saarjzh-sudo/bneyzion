@@ -97,6 +97,7 @@ const DesignPreviewSeriesPageV2 = lazy(() => import("./pages/DesignPreviewSeries
 const DesignPreviewCourseDetail = lazy(() => import("./pages/DesignPreviewCourseDetail"));
 const DesignPreviewCoursesCatalog = lazy(() => import("./pages/DesignPreviewCoursesCatalog"));
 const DesignPreviewParasha = lazy(() => import("./pages/DesignPreviewParasha"));
+const DesignPreviewTeachersWingV2 = lazy(() => import("./pages/DesignPreviewTeachersWingV2"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -228,6 +229,7 @@ const App = () => (
             <Route path="/design-course" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
             <Route path="/design-course/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
             <Route path="/design-parasha" element={<Suspense fallback={<LazyFallback />}><DesignPreviewParasha /></Suspense>} />
+            <Route path="/design-teachers-wing-v2" element={<Suspense fallback={<LazyFallback />}><DesignPreviewTeachersWingV2 /></Suspense>} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
