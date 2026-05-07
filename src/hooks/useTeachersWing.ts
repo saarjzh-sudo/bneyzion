@@ -51,6 +51,7 @@ export interface RabbiInfo {
 
 // Root category IDs
 const ROOT_IDS = {
+  // Main site content roots
   torah: "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b",
   neviim: "a0472c9f-8212-44ff-8937-ace5fea4b4dc",
   ketuvim: "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
@@ -61,6 +62,13 @@ const ROOT_IDS = {
   riddles: "c852edd8-d959-4c8d-bf7e-17b5881275fa",
   tools: "27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7",
   livuyTatim: "7cbd261e-03b0-43da-a708-e8ae4402105f",
+  // Teacher aids root (מאגר-עזרי-הלמידה — migrated 2026-05-07)
+  maagarEzrei: "6bfb7aaa-cd9e-4562-b087-a37fcc24d295",
+  // Sub-roots under מאגר עזרי הלמידה
+  maagarTorah: "2e248097-b954-4c28-91dc-b84a19f9fabc",
+  maagarNeviim: "42ac131e-631d-4518-8896-86cd1c49c07a",
+  maagarKetuvim: "cb088913-d868-4203-965a-117e5569e170",
+  maagarHowToTeach: "26a5e728-38ef-47e9-8889-29809caf202b",
 };
 
 const TORAH_BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"];
@@ -368,9 +376,71 @@ export function useTeachersWing() {
     rabbis: rabbisQuery.data || [],
     riddlesSeriesId: ROOT_IDS.riddles,
     generalTopicsId: ROOT_IDS.generalTopics,
+    maagarEzreiId: ROOT_IDS.maagarEzrei,
+    maagarRootIds: {
+      torah: ROOT_IDS.maagarTorah,
+      neviim: ROOT_IDS.maagarNeviim,
+      ketuvim: ROOT_IDS.maagarKetuvim,
+      howToTeach: ROOT_IDS.maagarHowToTeach,
+    },
     isLoading: sidebarQuery.isLoading,
     useSeriesForNode,
     useLessonsForNode,
     useSeriesForRabbi,
   };
+}
+
+/**
+ * useMaagarEzreiTree — fetches the full teacher aids tree from מאגר-עזרי-הלמידה.
+ * Returns books and their sub-series for the "עזרי הוראה" tab.
+ * Migrated 2026-05-07 from Umbraco מאגר-עזרי-הלמידה.
+ */
+export interface MaagarBook {
+  id: string;
+  title: string;
+  subSeries: { id: string; title: string; lessonCount: number }[];
+}
+
+export function useMaagarEzreiTree(sectionId: string | null) {
+  return useQuery({
+    queryKey: ["maagar-ezrei-tree", sectionId],
+    queryFn: async () => {
+      if (!sectionId) return [];
+
+      // Get direct book children of this section
+      const { data: books } = await supabase
+        .from("series")
+        .select("id, title, lesson_count")
+        .eq("parent_id", sectionId)
+        .contains("audience_tags", ["teachers"])
+        .order("title");
+
+      if (!books || books.length === 0) return [];
+
+      const bookIds = books.map((b) => b.id);
+
+      // Get sub-series for each book
+      const { data: subSeries } = await supabase
+        .from("series")
+        .select("id, title, lesson_count, parent_id")
+        .in("parent_id", bookIds)
+        .contains("audience_tags", ["teachers"])
+        .order("title");
+
+      const subByBook = new Map<string, { id: string; title: string; lessonCount: number }[]>();
+      for (const s of subSeries || []) {
+        const arr = subByBook.get(s.parent_id!) || [];
+        arr.push({ id: s.id, title: s.title, lessonCount: s.lesson_count });
+        subByBook.set(s.parent_id!, arr);
+      }
+
+      return books.map((b) => ({
+        id: b.id,
+        title: b.title,
+        subSeries: subByBook.get(b.id) || [],
+      })) as MaagarBook[];
+    },
+    enabled: !!sectionId,
+    staleTime: 1000 * 60 * 10,
+  });
 }
