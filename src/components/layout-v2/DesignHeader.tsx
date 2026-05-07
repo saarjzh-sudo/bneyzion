@@ -16,7 +16,7 @@
  */
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, Flame } from "lucide-react";
+import { Menu, X, Search, Flame, GraduationCap } from "lucide-react";
 
 import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
@@ -41,6 +41,14 @@ const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "אודותינו", href: "/about" },
 ];
 
+// Teacher-context nav: fewer items + back-link to main site
+const TEACHER_NAV_ITEMS: { label: string; href: string }[] = [
+  { label: "ראשי", href: "/" },
+  { label: "חנות", href: "/store" },
+  { label: "תרומות", href: "/donate" },
+  { label: "פרשת השבוע", href: "/parasha" },
+];
+
 interface DesignHeaderProps {
   /** When true, header is transparent before scroll (use on pages with a dark hero). */
   transparentOnTop?: boolean;
@@ -59,6 +67,10 @@ export default function DesignHeader({
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Teacher-context mode: activate on /design-teachers-* routes
+  const isTeacherContext = location.pathname.startsWith("/design-teachers-");
+  const activeNavItems = isTeacherContext ? TEACHER_NAV_ITEMS : NAV_ITEMS;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -134,7 +146,37 @@ export default function DesignHeader({
             flexWrap: "wrap",
           }}
         >
-          {NAV_ITEMS.map(({ label, href }) => {
+          {/* Teacher context chip — shown instead of the 4 hidden items */}
+          {isTeacherContext && (
+            <Link
+              to="/design-teachers-wing-v2"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.35rem 0.9rem",
+                borderRadius: "999px",
+                background: location.pathname === "/design-teachers-wing-v2"
+                  ? "#4A5A2E"
+                  : "rgba(74,90,46,0.12)",
+                color: location.pathname === "/design-teachers-wing-v2"
+                  ? "#fff"
+                  : "#4A5A2E",
+                fontFamily: fonts.body,
+                fontSize: "0.82rem",
+                fontWeight: 700,
+                textDecoration: "none",
+                border: "1.5px solid rgba(74,90,46,0.35)",
+                transition: "all 0.2s",
+                whiteSpace: "nowrap",
+              }}
+            >
+              <GraduationCap style={{ width: 14, height: 14 }} />
+              אגף המורים
+            </Link>
+          )}
+
+          {activeNavItems.map(({ label, href }) => {
             const isActive =
               href === "/"
                 ? location.pathname === "/"
