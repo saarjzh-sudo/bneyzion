@@ -1238,6 +1238,101 @@ Chapters 1-2 (multi-page Vite + Terms.tsx) were already confirmed done. Chapters
 
 **Iron rule added:** Any Vite+React site that uses Supabase on a network with TLS-inspecting proxy (NetSpark) MUST hardcode SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY as string constants in `client.ts`. The env var approach silently breaks without error messages visible to end users.
 
+### 2026-05-07 — Teachers Wing archaeology: old site content mapping + audience_tags status
+
+**Trigger:** Saar reported that `/design-teachers-wing-v2` is missing teacher-specific content and that
+regular content was bleeding into the teachers area (mixing audiences).
+
+**Old site archaeology (bneyzion.co.il — public pages, no login needed):**
+
+The old Umbraco site has TWO separate content areas:
+1. `מאגר-השיעורים-והמאמרים` — the main lessons/articles repo (9,566 items indexed)
+2. `מאגר-עזרי-הלמידה` — a SEPARATE teacher aids page NOT in the Umbraco index
+
+The `מאגר-עזרי-הלמידה` page had 69 unique series/collections of teacher materials,
+organized by Bible book. The main categories of teacher content (from HTML scrape):
+
+**Category types found on old site teacher page:**
+| Category | Example | Supabase match |
+|----------|---------|----------------|
+| חוברת עבודה לתלמיד (workbooks) | חוברת עבודה - בראשית | 1 series found |
+| חידות על פי א״ב (riddles ABC) | חידות על פי א״ב - שמות | 5 series found |
+| חידות על פירוש רש״י (riddles Rashi) | חידות רש״י - בראשית | 5 series found |
+| ביאור הפסוקים (commentary) | ביאור הפסוקים - חומש בראשית | 0 series found |
+| שאלות מקיפות למורה ולתלמיד | שאלות מקיפות - שמות | 0 series found |
+| דגשים לפרשות | דגשים לפרשות - בראשית | 0 series found |
+| דגשים למלמדים | דגשים למלמדים - בראשית | 0 series found |
+| ביאורי מילים ושאלות חזרה | ביאורי מילים - שמות | few lessons, no series |
+| שאלות חזרה | שאלות חזרה - ויגש | few lessons only |
+| חידות לילדים (kids riddles) | חידות לילדים - פרשת השבוע | 1 series (32 lessons) |
+| מדריך להוראת ספר X | מדריך להוראת יהושע | 0 series in Supabase |
+| מדריכים למורה | מדריכים - שופטים, שמואל | 0 series found |
+| סיכומים על ספר X | סיכומים על שמואל ב | 1 series found |
+| מפות (maps) | מפות על ספר יהושע | found in כלי עזר |
+| דפי עבודה (worksheets) | דפי עבודה - בראשית | 10 series found |
+| לב הפרק (ת״תים) | לב הפרק - שופטים | 6 series found |
+
+**Also on Teachers Wing home page (אגף המורים):**
+- Featured series: חידות על פי א״ב כל התורה, גדולת אבות האומה, פשט ומדרש בהוראת התנ"ך,
+  ביאור הפסוקים - חומש בראשית, שאלות מקיפות - חומש שמות, חוברת סיכום ויקרא,
+  שאלות ותשובות - חומש במדבר, ספר דברים עם ביאור "ושננתם", דגשים+שאלות על יהושע,
+  שיעורים קצרים - הרב חנניה מלכה, חוברות מורשה, ערכים ומידות - שמואל א,
+  מלכים א ביאור "ושננתם", סיכומים שמואל ב, דפי עבודה מלכים ב, מכלל יופי (3 מגילות).
+
+**Umbraco content tree findings (כ-109 פריטים ב-איך-לומדים-תנך):**
+- הגישה הראויה ללימוד תנ״ך (52 lessons under it)
+- דרכי הפרשנות והמדרש בתנ״ך (34 lessons)
+- היחס הראוי לאבות ולחטאיהם (16 lessons)
+- ליווי ת״תים: רק 5 פריטים — שופטים בלבד (ספר אחד, לא הושלם)
+
+**audience_tags status in Supabase (CRITICAL FINDING):**
+- Migration `20260430_audience_tags.sql` was applied (confirmed 30.4.2026)
+- Column added: `series.audience_tags TEXT[] DEFAULT ARRAY['general']`
+- Keyword backfill tagged 1 series automatically
+- THEN Saar manually ran `UPDATE series SET audience_tags = ARRAY['general','teachers']`
+  and `UPDATE lessons SET audience_tags = ARRAY['general','teachers']`
+- **Result: ALL 1,374 series and 11,818 lessons are tagged ['general','teachers']**
+- The filter `audience_tags @> ARRAY['teachers']` returns 100% of content — useless as a discriminator
+- Zero series have `['general']` only. Zero series have `['teachers']` only.
+- The `TeacherContentBadge` appears on EVERY lesson/series in the site currently
+
+**Root problem confirmed:**
+`/design-teachers-wing-v2` currently shows the same content as the main site because
+`useTeachersWing` fetches ALL series (regardless of `audience_tags`) and filters by
+BIBLICAL BOOK parent_id only. The teachers-specific categories from the old site
+(workbooks, riddles, teacher guides, maps, summaries) are either:
+(a) Absent from Supabase entirely (content gap — never migrated from מאגר-עזרי-הלמידה)
+(b) Present in Supabase but as individual lessons scattered across books, not as tagged series
+(c) Present as series but buried in the general catalog with no teachers filter
+
+**Lesson-level teacher content (what IS in Supabase):**
+- 1,180 lessons with attachment_url (PDFs) — these often ARE teacher aids
+- 1,077 lessons of source_type='article' — often text-based teacher materials
+- "ביאורי מילים" lessons: ~5 found (per-parasha vocabulary sheets)
+- "שאלות חזרה" lessons: ~5 found
+- "שאלות ותשובות" lessons: ~3 found (some with PDFs)
+- These are NOT grouped into teacher-specific series — they're scattered
+
+**What's in the Supabase series tree specifically for teachers:**
+- `איך מלמדים תנ״ך` (ROOT_IDS.howToStudy): exists, 14 lessons directly, 0 children in new site
+- `ליווי ת״תים` (ROOT_IDS.livuyTatim): exists, 0 lessons, 1 child "שופטים" → "לב הפרק שופטים"
+- `כלי עזר` (ROOT_IDS.tools): 15 lessons — maps, timelines
+- `חידות` series (5 per-book, 10 series total): EXIST and are proper teacher content
+- `דפי עבודה` per-book (10 series): EXIST
+- `לב הפרק` (6 series): EXIST under ליווי ת״תים
+
+**What's MISSING from Supabase (content gap):**
+Most of the 69 series from מאגר-עזרי-הלמידה were NOT migrated:
+- שאלות מקיפות למורה ולתלמיד (per-book, Torah + Neviim)
+- דגשים לפרשות (per-parasha highlights)
+- דגשים למלמדים (teacher-specific highlights)
+- ביאורי מילים ושאלות חזרה as SERIES (have individual lessons but no series container)
+- מדריך להוראת ספר X (teaching guides per book)
+- מדריכים למורה (teacher guides per book — Yehoshua, Shoftim, etc.)
+- ביאור הפסוקים as standalone series (exists as lessons under book series)
+- חוברת סיכום per book as series
+- מפות per book as series (have 4 map lessons in כלי עזר but not per-book)
+
 ### 2026-05-03 — Store checkout migrated from WooCommerce redirect to internal Grow flow (commit 3382aa7)
 
 **Decision:** Option A — `products` table queried dynamically on `create-payment.ts` server. No data duplication into `payment_products`. New `store:<slug>` prefix on `meta.product` routes the request to the products table. Products table `source_url` column kept in DB (for reference), no longer used in UI.
@@ -2075,6 +2170,12 @@ This rule is also documented in the system memory at `feedback_netspark_level2_s
   - `vercel.json`: added rewrite `/privacy-policy` → `/terms.html` (so URL resolves to same content)
 - **Post-deploy curl proof:** all 10/10 `/checkout` audit keywords confirmed; 19/19 `/terms` phrases present; `/` address block present; `/privacy-policy` returns HTTP 200
 - **New constraint:** Grow audit checks `/checkout` with specific Hebrew keywords including `אימייל` (not only `דוא"ל`) and requires a separate `href="/privacy-policy"` adjacent to the TOS checkbox. Static HTML must satisfy both.
+
+### 2026-05-07 — Footer: promote terms link visibility to match Aboulafia (commit 9ba466a)
+
+- `Footer.tsx`: added "תקנון האתר" + "מדיניות פרטיות" as `text-sm` links in the copyright bar — same pattern as `abulafia-institute/src/components/Footer.tsx` lines 97-108
+- `Terms.tsx §9`: added `id="privacy"` anchor so `/terms#privacy` deep-links correctly
+- Previous link (text-xs in address bar) still present as secondary touch-point
 
 ---
 
