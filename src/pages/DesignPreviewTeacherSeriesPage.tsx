@@ -23,7 +23,6 @@ import {
   FileText,
   Wrench,
   GraduationCap,
-  Layers,
   ChevronDown,
   ChevronUp,
   ChevronRight,
@@ -52,7 +51,7 @@ import { useTeachersWing, type SeriesRow } from "@/hooks/useTeachersWing";
 import { formatDuration } from "@/lib/designTokens";
 
 // ─── Tab types (mirrors V2) ────────────────────────────────────────────────
-type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto" | "ezrei";
+type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto";
 
 const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
   { id: "books",      label: "ספרים",         icon: BookOpen },
@@ -60,7 +59,6 @@ const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
   { id: "worksheets", label: "דפי עבודה",      icon: FileText },
   { id: "tools",      label: "כלים ומדריכים", icon: Wrench },
   { id: "howto",      label: "איך מלמדים",    icon: GraduationCap },
-  { id: "ezrei",      label: "עזרי הוראה",     icon: Layers },
 ];
 
 // Teacher series IDs (same as V2)
@@ -111,7 +109,6 @@ function useSeriesLessons(seriesId: string) {
         .select("id, title, description, duration, source_type, audio_url, video_url, attachment_url, rabbi_id, series_id")
         .eq("series_id", seriesId)
         .eq("status", "published")
-        .order("sort_order", { ascending: true })
         .order("title")
         .limit(300);
       if (!data || data.length === 0) return [];
@@ -175,17 +172,6 @@ function useTabSeries(tab: TabId) {
           .select("id, title, lesson_count")
           .in("id", [TEACHER_SERIES_IDS.tools, TEACHER_SERIES_IDS.livuyTatim, TEACHER_SERIES_IDS.maps])
           .order("title");
-        return (data || []).map(s => ({ id: s.id, title: s.title, lessonCount: s.lesson_count }));
-      }
-      if (tab === "ezrei") {
-        // Return all teacher-tagged series not matching the other tabs
-        const { data } = await supabase
-          .from("series")
-          .select("id, title, lesson_count")
-          .contains("audience_tags", ["teachers"])
-          .not("title", "ilike", "%דפי עבודה%")
-          .order("lesson_count", { ascending: false })
-          .limit(40);
         return (data || []).map(s => ({ id: s.id, title: s.title, lessonCount: s.lesson_count }));
       }
       // books — return teacher-tagged series
@@ -867,14 +853,16 @@ export default function DesignPreviewTeacherSeriesPage() {
       document.head.appendChild(descEl);
     }
     descEl.setAttribute("content", metaDesc);
-    // canonical
-    let canonEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    if (!canonEl) {
-      canonEl = document.createElement("link");
-      canonEl.setAttribute("rel", "canonical");
-      document.head.appendChild(canonEl);
+    // canonical — only set when we have a real ID to avoid whitespace-only href
+    if (seriesId) {
+      let canonEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      if (!canonEl) {
+        canonEl = document.createElement("link");
+        canonEl.setAttribute("rel", "canonical");
+        document.head.appendChild(canonEl);
+      }
+      canonEl.setAttribute("href", `https://bneyzion.vercel.app/design-teachers-series/${seriesId}`);
     }
-    canonEl.setAttribute("href", `https://bneyzion.vercel.app/design-teachers-series/${seriesId}`);
     return () => {
       document.title = "בני ציון — לימוד תנ\"ך";
     };
