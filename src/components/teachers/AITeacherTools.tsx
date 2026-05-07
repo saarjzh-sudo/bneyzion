@@ -4,8 +4,12 @@ import { BookOpen, FileQuestion, Puzzle, Sparkles, Loader2, Copy, Check, Downloa
 import { useAuth } from "@/contexts/AuthContext";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
 import ReactMarkdown from "react-markdown";
+import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
 
-const TOOLS_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ai-teacher-tools`;
+// NetSpark gotcha: never embed `import.meta.env.VITE_SUPABASE_URL` inline —
+// Vite inlines it at build time as a literal "*.supabase.co" string, which
+// NetSpark then strips in transit. Always derive from the runtime constant.
+const TOOLS_URL = `${SUPABASE_URL_RUNTIME}/functions/v1/ai-teacher-tools`;
 
 type Tool = "lesson-plan" | "quiz" | "word-search";
 
