@@ -412,6 +412,13 @@ public/
 - `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
 - This file (`KNOWLEDGE.md`) created — full site knowledge
 
+### 2026-05-07 — Grow audit full 12-item curl-grep sweep
+- All 12 Grow audit items verified against live deploy https://bneyzion.vercel.app/
+- Only failure found: terms.html section 7 used "נזק ישיר ו/או עקיף" — Grow bot regex needs "נזק עקיף" as standalone substring (words must be adjacent). Fixed by adding "לרבות נזק עקיף, נזק תוצאתי" to the same sentence.
+- Commit: `a6f6ed4`
+- Iron rule learned: when Grow audit says phrase X must appear, the exact substring must appear with the words adjacent — "נזק ישיר ו/או עקיף" does NOT satisfy a search for "נזק עקיף" because grep treats the slash/letters in between as non-matching.
+- All 12 items confirmed passing on live deploy post-push.
+
 ### 2026-05-06 — Grow audit phase 2: extend static HTML coverage to ALL payment-adjacent pages
 - Problem: Grow bot visits `/`, `/donate`, `/megilat-esther`, `/store/:slug` — all SPA shells, no footer visible to bot
 - Fix: `index.html` gets `<noscript>` block with full footer (address, phone, /terms link) — humans never see it, bots do
