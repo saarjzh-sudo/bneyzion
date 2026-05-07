@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-07
+**Last updated:** 2026-05-08
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -2243,6 +2243,15 @@ This rule is also documented in the system memory at `feedback_netspark_level2_s
   - `/מאגר-עזרי-הלמידה/*` redirects → `/design-teachers-wing-v2` (6 entries, non-permanent 307)
 - **Old site findings:** `bneyzion.co.il/מאגר-עזרי-הלמידה/` sidebar has 3 tabs (ראשי/סוג תוכן/יוצרים). ראשי tree: פרשת השבוע / איך מלמדים תנ"ך / תורה / נביאים / כתובים. **There is NO category called "עזרי הוראה"** — the name refers to the whole section (מאגר עזרי הלמידה = teaching aids repository). "סוג תוכן" tab has 22 content-type filters (סיכום פרקים, הכוונה למורה, דפי עבודה, מפות, etc.). The 6th tab in V2 ("עזרי הוראה") is NOT from the old site — it's a new concept.
 - **react-helmet-async:** NOT installed. SEO in sandbox uses `useEffect` instead.
+
+### 2026-05-08 — 4 bug fixes on /design-teachers-series/:id (commits 84c52ff, 4628b33)
+
+- **Bug 1 (400 error / no lessons):** `useSeriesLessons` ordered by `sort_order` — column absent in `lessons` table → PostgREST 400. Fixed: removed `sort_order` order clause, ordered by `title` only. Series page now shows all 50 lessons. File: `src/pages/DesignPreviewTeacherSeriesPage.tsx`.
+- **Bug 2 (canonical whitespace):** `<link rel="canonical">` contained whitespace+UUID without the `https://...` prefix. Root cause: the template literal `\`https://bneyzion.vercel.app/design-teachers-series/${seriesId}\`` had the domain portion stripped. This was **NetSpark level-2 string rewriting** — same class as the supabase.co stripping (see §7 2026-05-07 entry). Fix: use `window.location.origin` at runtime instead of hardcoded domain. Also switched to always `querySelectorAll + remove` before appending canonical to avoid stale tag from prior page navigation. New iron rule added below.
+- **Bug 3 (footer context leak):** `DesignFooter` showed `/rabbis`, `/series`, `/bible/*`, `/community` links even in teacher wing context. Fixed: added `useLocation()` + `isTeacherContext = pathname.startsWith("/design-teachers-")`. Links filtered via `TEACHER_HIDDEN_HREFS` Set in the render. File: `src/components/layout-v2/DesignFooter.tsx`.
+- **Bug 4 (phantom tab):** "עזרי הוראה" tab never existed in original site (`bneyzion.co.il/מאגר-עזרי-הלמידה/`). Removed from `TABS` array in both `DesignPreviewTeachersWingV2.tsx` and `DesignPreviewTeacherSeriesPage.tsx`. `EzreiTab` function renamed `_EzreiTab_REMOVED` (kept as dead code). `Layers` import removed from TeacherSeriesPage.
+- **New iron rule:** Any hardcoded domain string (`bneyzion.vercel.app`, `bneyzion.co.il`) inside a JS template literal WILL be stripped by NetSpark from the bundle body. Use `window.location.origin` (computed at runtime) instead. Applies to canonical URLs, og:url, share links, etc.
+- **Playwright validation:** All 5 checks passed — 50 lessons displayed, canonical correct, footer clean, 5 tabs, 0 console errors.
 
 ---
 
