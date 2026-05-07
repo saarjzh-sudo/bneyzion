@@ -853,15 +853,14 @@ export default function DesignPreviewTeacherSeriesPage() {
       document.head.appendChild(descEl);
     }
     descEl.setAttribute("content", metaDesc);
-    // canonical — only set when we have a real ID to avoid whitespace-only href
+    // canonical — always replace to avoid stale/whitespace href from prior page
     if (seriesId) {
-      let canonEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-      if (!canonEl) {
-        canonEl = document.createElement("link");
-        canonEl.setAttribute("rel", "canonical");
-        document.head.appendChild(canonEl);
-      }
+      // Remove any existing canonical (may have stale value from another page)
+      document.querySelectorAll('link[rel="canonical"]').forEach(el => el.remove());
+      const canonEl = document.createElement("link");
+      canonEl.setAttribute("rel", "canonical");
       canonEl.setAttribute("href", `https://bneyzion.vercel.app/design-teachers-series/${seriesId}`);
+      document.head.appendChild(canonEl);
     }
     return () => {
       document.title = "בני ציון — לימוד תנ\"ך";
