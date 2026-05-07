@@ -203,7 +203,7 @@ const Terms = () => {
         </section>
 
         {/* Section 9 — Privacy */}
-        <section className="space-y-3">
+        <section id="privacy" className="space-y-3">
           <h2 className="text-2xl font-bold">9. מדיניות פרטיות</h2>
           <p className="text-muted-foreground leading-relaxed">
             החנות נוקטת באמצעי זהירות מקובלים על מנת לשמור, ככל האפשר, על סודיות המידע.

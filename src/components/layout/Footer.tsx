@@ -159,7 +159,15 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} בני ציון – כל הזכויות שמורות</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} בני ציון – כל הזכויות שמורות</p>
+            <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              תקנון האתר
+            </Link>
+            <Link to="/terms#privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+              מדיניות פרטיות
+            </Link>
+          </div>
           <p className="text-xs text-muted-foreground">
             נבנה ב<span className="text-accent mx-0.5">♥</span> ע״י{" "}
             <a href="https://wa.me/972526018772" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors underline underline-offset-2">סער חלק</a>
