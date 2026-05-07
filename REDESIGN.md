@@ -173,7 +173,7 @@ See **§ 8. Open work** for the full plan.
 | `/design-rabbi` | Single rabbi profile (defaults to top) | yes | done |
 | `/design-rabbi/:id` | Specific rabbi | yes | done |
 | `/design-teachers-wing` | אגף המורים: 6 categories, benefits, recommended series | yes (recommended) | **hidden 30.4.2026** — route active, 0 nav links. pending deletion decision |
-| `/design-teachers-wing-v2` | אגף המורים v2: in-page tabs (ספרים/כלי הוראה/יוצרים), list/cards toggle | yes (useTeachersWing) | **new 7.5.2026** — pending Saar review |
+| `/design-teachers-wing-v2` | אגף המורים v2: 5 tabs (ספרים/חידות/דפי עבודה/כלים/איך מלמדים), audience_tags filtered | yes (useTeachersWing + direct queries) | **updated 7.5.2026** — 31 series / 139 lessons tagged, pending Saar review |
 | `/design-community` | Community + 3 membership tiers + active courses | yes | done |
 | `/design-bible-book/:book` | Browse a Bible book — chapters with lesson counts | yes | done |
 | `/design-donate` | Donation flow with presets, recurring, dedication | n/a (form only) | done |
@@ -233,18 +233,23 @@ Saar must paste `supabase/migrations/20260430_weekly_program_foundation.sql` in 
 After that: `env -u HTTPS_PROXY -u HTTP_PROXY node scripts/import-weekly-chapter-subscribers.mjs --dry-run` → confirm → run live.
 Only then `useUserAccess` and the gating in `/design-megilat-esther` and `/design-portal-subscriber` will work with real data.
 
-### Priority 1: Teachers Wing v2 — pending Saar review
+### Priority 1: Teachers Wing v2 — updated 7.5.2026 (wave 2)
 
-**7.5.2026 — Built and deployed:**
-- `/design-teachers-wing-v2` — olive hero, in-page tabs (ספרים / כלי הוראה / יוצרים)
-- Real data from `useTeachersWing`, list/cards toggle (same pattern as SeriesPageV2)
-- No AITeacherTools (excluded — Saar unfamiliar with it, pending decision)
-- Old `/design-teachers-wing` still hidden (route active, 0 nav links)
+**7.5.2026 wave 2 — 5-tab rewrite deployed (commit 5f20eba):**
+- audience_tags reset: 1,374 → 31 series correctly tagged teachers
+- `/design-teachers-wing-v2` now has 5 tabs:
+  - **ספרים** — Torah/Nevi'im/Ketuvim tree (existing BooksTab)
+  - **חידות** — "חידות לילדים - פרשת השבוע" 32 lessons (RiddlesTab)
+  - **דפי עבודה** — 26 series across all books (WorksheetsTab)
+  - **כלים ומדריכים** — כלי עזר + מפות + ליווי ת"תים (ToolsTab new)
+  - **איך מלמדים** — "איך מלמדים תנ"ך" 14 lessons (HowToTab)
+- Teacher content: 31 series / 139 lessons properly isolated
 
 **Next decisions needed from Saar:**
-- (a) Is v2 the approved direction? If yes → can delete old v1 page
-- (b) Should AITeacherTools be included? (see KNOWLEDGE.md §7 2026-05-07 for what it was)
+- (a) Is the 5-tab structure approved? If yes → can promote to production teachers page
+- (b) Should the "ספרים" tab filter by audience_tags too, or stay as-is (hierarchical)?
 - (c) Should this link from the main sidebar or nav?
+- (d) Possible addition: "יוצרים" tab showing only rabbis with teacher content
 
 ### Priority 2: Visual examples in `/design-research`
 Saar's feedback: each of the 32 pattern boxes only has text, no actual
