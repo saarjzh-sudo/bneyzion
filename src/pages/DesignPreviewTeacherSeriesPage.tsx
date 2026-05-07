@@ -859,7 +859,8 @@ export default function DesignPreviewTeacherSeriesPage() {
       document.querySelectorAll('link[rel="canonical"]').forEach(el => el.remove());
       const canonEl = document.createElement("link");
       canonEl.setAttribute("rel", "canonical");
-      canonEl.setAttribute("href", `https://bneyzion.vercel.app/design-teachers-series/${seriesId}`);
+      // Use window.location.origin to avoid NetSpark stripping the literal domain from the bundle
+      canonEl.setAttribute("href", `${window.location.origin}/design-teachers-series/${seriesId}`);
       document.head.appendChild(canonEl);
     }
     return () => {
