@@ -412,6 +412,31 @@ public/
 - `~/.claude/agents/bneyzion-designer.md` created (auto-loads context)
 - This file (`KNOWLEDGE.md`) created — full site knowledge
 
+### 2026-05-07 — Teachers Wing v2: audience_tags reset + 5-tab page
+
+**audience_tags reset (Supabase REST API — no PAT needed):**
+- Before: ALL 1,374 series tagged `['general', 'teachers']` (prior bulk tag was over-inclusive)
+- Reset: PATCH all series/lessons to `['general']` via service_role REST API
+- Re-tag: identified 31 teacher-specific series + 139 lessons by ID:
+  - `איך מלמדים תנ"ך` (14 lessons) — teaching methodology
+  - `חידות לילדים - פרשת השבוע` (32 lessons) — riddles for kids
+  - `כלי עזר - טבלאות זמני המאורעות ומפות` + `מפות עזר לתנ"ך` + `ליווי ת"תים` (17 lessons)
+  - 26× `דפי עבודה - <ספר>` series (76 lessons total)
+- After: 31 series + 139 lessons tagged `['teachers', 'general']`
+- Method used: `PATCH /rest/v1/series?id=eq.{sid}` with service_role key
+- Script: `/tmp/tag_teachers_v2.py` (ad-hoc, not committed)
+
+**DesignPreviewTeachersWingV2.tsx rewritten (commit 5f20eba):**
+- 5 in-page tabs: ספרים | חידות | דפי עבודה | כלים ומדריכים | איך מלמדים
+- 3 new inline hooks: `useLessonsInSeries()`, `useTeacherSeriesByKeyword()`, `useToolsSeries()`
+- CreatorsTab removed (replaced by content-specific tabs)
+- All queries use audience_tags filtering OR stable series IDs
+
+**Iron rule learned:**
+- Never do a bulk "tag everything" UPDATE on audience_tags without verifying keyword matches first.
+  The prior migration tagged all 1,374 series because `.or()` with multiple `ilike` conditions
+  matched far more than expected. Always preview counts before committing bulk tags.
+
 ### 2026-05-07 — Grow audit full 12-item curl-grep sweep
 - All 12 Grow audit items verified against live deploy https://bneyzion.vercel.app/
 - Only failure found: terms.html section 7 used "נזק ישיר ו/או עקיף" — Grow bot regex needs "נזק עקיף" as standalone substring (words must be adjacent). Fixed by adding "לרבות נזק עקיף, נזק תוצאתי" to the same sentence.
