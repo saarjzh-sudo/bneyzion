@@ -6,7 +6,7 @@
  * icons, stats bar, install-prompt button) but in the new dark gradient style.
  */
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Flame, Mail, Smartphone, Heart } from "lucide-react";
 
 import logoBright from "@/assets/logo-horizontal-bright.png";
@@ -84,7 +84,12 @@ const STATS = [
   { value: "24/7", label: "גישה חופשית" },
 ];
 
+// Links hidden in the teachers-wing context (not relevant to educators flow)
+const TEACHER_HIDDEN_HREFS = new Set(["/series", "/rabbis", "/bible/בראשית", "/community"]);
+
 export default function DesignFooter() {
+  const location = useLocation();
+  const isTeacherContext = location.pathname.startsWith("/design-teachers-");
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
@@ -240,7 +245,9 @@ export default function DesignFooter() {
                   gap: "0.55rem",
                 }}
               >
-                {col.links.map((link) => (
+                {col.links
+                  .filter((link) => !(isTeacherContext && TEACHER_HIDDEN_HREFS.has(link.href)))
+                  .map((link) => (
                   <li key={link.href}>
                     <Link
                       to={link.href}

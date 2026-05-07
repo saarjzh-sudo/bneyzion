@@ -51,7 +51,7 @@ import { useTeachersWing, useMaagarEzreiTree, type SeriesRow } from "@/hooks/use
 const VIEW_PREF_KEY = "bnz.teachers.view";
 
 // ─── Tab definition ────────────────────────────────────────────────────────
-type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto" | "ezrei";
+type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto";
 
 const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
   { id: "books",      label: "ספרים",          icon: BookOpen },
@@ -59,7 +59,6 @@ const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
   { id: "worksheets", label: "דפי עבודה",       icon: FileText },
   { id: "tools",      label: "כלים ומדריכים",  icon: Wrench },
   { id: "howto",      label: "איך מלמדים",     icon: GraduationCap },
-  { id: "ezrei",      label: "עזרי הוראה",      icon: GraduationCap },
 ];
 
 // ─── Known teacher series IDs (stable — confirmed 2026-05-07) ─────────────
@@ -1091,13 +1090,10 @@ function HowToTab() {
    If a "creators" tab is needed in future, it can be a filtered view of rabbis
    whose series have audience_tags @> ['teachers']. */
 
-// ─── EzreiTab — "עזרי הוראה" from מאגר-עזרי-הלמידה (migrated 2026-05-07) ──
-/**
- * Displays the teacher aids tree: Torah / Nevi'im / Ketuvim / איך מלמדים
- * Each section shows its books; each book expands to show sub-series.
- * Data comes from Supabase series with audience_tags = ['teachers'] only.
- */
-function EzreiTab() {
+// ─── EzreiTab removed 2026-05-07 — tab did not exist in original site ───────
+// Kept as dead code block for reference; component not rendered.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function _EzreiTab_REMOVED() {
   const { maagarRootIds } = useTeachersWing();
   const [activeSection, setActiveSection] = useState<string>(maagarRootIds.torah);
   const [expandedBooks, setExpandedBooks] = useState<Set<string>>(new Set());
@@ -1380,7 +1376,6 @@ export default function DesignPreviewTeachersWingV2() {
           {activeTab === "worksheets" && <WorksheetsTab />}
           {activeTab === "tools"      && <ToolsTab />}
           {activeTab === "howto"      && <HowToTab />}
-          {activeTab === "ezrei"      && <EzreiTab />}
         </div>
       </div>
     </DesignLayout>
