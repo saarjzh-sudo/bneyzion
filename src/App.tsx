@@ -109,51 +109,57 @@ const LazyFallback = () => (
 );
 
 /**
- * ChunkErrorBoundary — catches dynamic-import (lazy chunk) failures.
+ * ChunkErrorBoundary — catches dynamic-import (lazy chunk) failures caused by
+ * PWA Service Worker cache staleness.
  *
- * Cause: PWA Service Worker serves a cached old index.html that references
- * chunk hashes from a previous Vite build. When the page lazy-imports a
- * component whose hash changed in the new build, the old hash no longer
- * exists on the server → ChunkLoadError → blank page inside <Suspense>.
+ * Root cause: the SW precaches index.html from build N. After build N+1 is
+ * deployed, chunk hashes change. If the SW still serves index.html from build N,
+ * lazy import() calls request chunks with OLD hashes → 404 → ChunkLoadError.
  *
- * Fix: on ChunkLoadError perform ONE automatic hard-reload (bypasses SW
- * cache via `location.reload(true)` or the sessionStorage guard).  If the
- * reload still fails, show a visible "refresh" prompt so the user is never
- * left staring at a blank page.
+ * Fix: detect the ChunkLoadError pattern and trigger ONE hard reload (bypasses
+ * SW cache). A sessionStorage flag prevents an infinite reload loop if the
+ * reload itself doesn't fix things.
+ *
+ * React 18 note: getDerivedStateFromError() is called in the render phase and
+ * MUST be pure (no side effects). We store a flag in state and do the reload
+ * in componentDidUpdate (commit phase), which is safe for side effects.
  */
 class ChunkErrorBoundary extends Component<
   { children: ReactNode },
-  { hasError: boolean }
+  { hasError: boolean; isChunkError: boolean }
 > {
-  state = { hasError: false };
+  state = { hasError: false, isChunkError: false };
 
   static getDerivedStateFromError(err: Error) {
-    // ChunkLoadError from Vite / webpack share these markers
     const isChunkError =
       err.name === "ChunkLoadError" ||
       /loading chunk/i.test(err.message) ||
       /failed to fetch dynamically imported module/i.test(err.message) ||
       /Importing a module script failed/i.test(err.message);
 
-    if (isChunkError) {
-      const RELOAD_KEY = "bnz.chunk-reload";
-      const already = sessionStorage.getItem(RELOAD_KEY);
-      if (!already) {
-        sessionStorage.setItem(RELOAD_KEY, "1");
-        // Hard reload — bypasses SW cached responses
-        window.location.reload();
-        return { hasError: false }; // component stays mounted while reload happens
-      }
-    }
-    return { hasError: true };
+    return { hasError: true, isChunkError };
   }
 
   componentDidCatch(err: Error, info: { componentStack: string }) {
     console.error("[ChunkErrorBoundary]", err, info.componentStack);
   }
 
+  componentDidUpdate() {
+    const { hasError, isChunkError } = this.state;
+    if (hasError && isChunkError) {
+      const RELOAD_KEY = "bnz.chunk-reload";
+      const already = sessionStorage.getItem(RELOAD_KEY);
+      if (!already) {
+        sessionStorage.setItem(RELOAD_KEY, "1");
+        // Hard reload — bypasses SW cached responses for assets
+        window.location.reload();
+      }
+    }
+  }
+
   render() {
-    if (!this.state.hasError) return this.props.children;
+    const { hasError, isChunkError } = this.state;
+    if (!hasError) return this.props.children;
     return (
       <div
         style={{
@@ -168,7 +174,9 @@ class ChunkErrorBoundary extends Component<
         }}
       >
         <p style={{ color: "#555", fontSize: "1rem" }}>
-          גרסה חדשה של האתר זמינה — יש לרענן את הדף.
+          {isChunkError
+            ? "גרסה חדשה של האתר זמינה — יש לרענן את הדף."
+            : "אירעה שגיאה בטעינת הדף — נסו לרענן."}
         </p>
         <button
           onClick={() => {
