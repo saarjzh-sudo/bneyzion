@@ -1979,6 +1979,23 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
   sandbox page — only in `TeachersWing.tsx` (production). Excluded from v2 sandbox pending Saar's
   decision on whether to include AI features in the teacher hub.
 
+### 2026-05-07 — ChunkErrorBoundary: fix blank page caused by PWA Service Worker cache staleness (commit 2816b73)
+
+- **Symptom:** `/design-teachers-wing-v2` showed a completely blank white page on Saar's device after the 7.5.2026 deployment. TypeScript compiled clean, Vercel build succeeded, deployment status was Ready. No console errors visible from outside.
+- **Root cause:** The PWA Service Worker (workbox `generateSW` + `registerType: autoUpdate`) precaches all JS chunk URLs. When a new deployment changes chunk hashes (Vite content-hash filenames), the **old SW** is still active on the user's browser. The old SW:
+  1. Serves the cached old `index.html` (NavigationRoute)
+  2. Old `index.html` loads old `main-*.js`
+  3. Old `main-*.js` attempts `import("./DesignPreviewTeachersWingV2-OldHash.js")`
+  4. That URL no longer exists on the server (new hash deployed)
+  5. `ChunkLoadError` thrown — React `<Suspense>` catches it silently
+  6. `LazyFallback` spinner renders, but the CSS chunk may also have changed → spinner invisible → blank white page
+- **Fix:** Added `ChunkErrorBoundary` class component in `src/App.tsx` (wraps `<ErrorBoundary>` + `<Routes>`):
+  - Detects `ChunkLoadError` / "failed to fetch dynamically imported module" / "loading chunk" errors
+  - Performs ONE automatic `window.location.reload()` with sessionStorage guard (`bnz.chunk-reload`) to prevent infinite reload loop
+  - If reload still fails (edge case), shows Hebrew "רענן" button prompt — users never left with blank page
+- **Iron rule learned:** When PWA `autoUpdate` is configured, users may hold a stale SW for minutes/hours after a deploy. Lazy-loaded chunks that changed hash will 404 on the old SW. Always wrap `<Routes>` with a `ChunkErrorBoundary` that auto-reloads.
+- **Files changed:** `src/App.tsx` — added `Component, ReactNode` to React import, added `ChunkErrorBoundary` class, wrapped `<ChunkErrorBoundary>` around `<ErrorBoundary><Routes>`.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every

@@ -329,6 +329,10 @@ When Saar approves the sandbox for production:
 - ❌ Don't add `display: X ? "none" : undefined` inline styles on elements that
   already have Tailwind responsive display classes (`hidden md:flex` etc.) — inline
   styles always win over class-based styles and break the responsive breakpoints.
+- ❌ Never add a new lazy-loaded route without confirming `ChunkErrorBoundary` wraps
+  `<Routes>` in `App.tsx`. When PWA autoUpdate is active, old Service Workers can
+  serve stale chunk hashes → ChunkLoadError → blank page. The boundary auto-reloads
+  once to get the new SW. (Root cause of /design-teachers-wing-v2 blank page 7.5.2026.)
 
 ---
 
