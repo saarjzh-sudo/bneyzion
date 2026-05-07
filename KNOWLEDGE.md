@@ -2011,6 +2011,19 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
   2. ALWAYS run `npm run build && npm run preview` locally before pushing ANY change to `src/App.tsx` to main.
   3. Rollback pattern for Vercel: `vercel alias https://bneyzion-[deployment-id]-... bneyzion.vercel.app` — instant, no redeploy needed. Target the last known-good deployment URL.
 
+### 2026-05-07 — Roll-forward after rollback overshot (deployment bneyzion-8dep99tz8)
+
+- **Incident context:** The rollback from the ChunkErrorBoundary React 18 incident (`bneyzion-irb3ocgut`) restored a deployment that Saar diagnosed via Playwright as still throwing `Error: supabaseUrl is required` in the console. The concern was that the rollback overshot to a deployment *before* commit `5cfbd43` (the hardcoded supabase URL fix).
+- **Diagnosis:** Confirmed via `curl` that production bundle `main-DC-jgqAK.js` already contained `"https://pzvmwfexeiruelwiujxn.supabase.co"` hardcoded — the URL was present, no `VITE_SUPABASE_URL` env var reference. The `supabaseUrl is required` string exists in the bundle only as *library error text inside supabase-js*, not as a thrown error. So the reported error may have been a stale DevTools artifact or SW cache from before the hardcode fix.
+- **Action (roll-forward):** Ran `vercel --prod` from local main (commit `969ccd5`) to deploy a clean fresh build. New deployment: `bneyzion-8dep99tz8`. Auto-aliased to `bneyzion.vercel.app` by Vercel CLI. Bundle hash stayed `main-DC-jgqAK.js` (Vite content hash = unchanged when code is identical — expected).
+- **Verification:**
+  - Production bundle contains `"https://pzvmwfexeiruelwiujxn.supabase.co"` — confirmed via `curl` grep
+  - Production bundle contains NO `VITE_SUPABASE_URL` reference — confirmed
+  - `/` returns HTTP 200
+  - `/design-teachers-wing-v2` returns HTTP 200
+  - `DesignPreviewTeachersWingV2-ddCnnul4.js` chunk returns HTTP 200
+- **New iron rule:** When rolling back via `vercel alias`, always verify the target deployment's bundle contains all critical hardcodes (supabase URL, keys). Roll-forward is safer than roll-backward when recent commits contain security/connectivity fixes: `vercel --prod` builds fresh from current HEAD. A rollback to `deployment-X` silently discards any commits merged after `deployment-X` was built — including hardcodes.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
