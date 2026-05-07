@@ -45,13 +45,13 @@ import {
   radii,
   shadows,
 } from "@/lib/designTokens";
-import { useTeachersWing, type SeriesRow } from "@/hooks/useTeachersWing";
+import { useTeachersWing, useMaagarEzreiTree, type SeriesRow } from "@/hooks/useTeachersWing";
 
 // ─── localStorage key ──────────────────────────────────────────────────────
 const VIEW_PREF_KEY = "bnz.teachers.view";
 
 // ─── Tab definition ────────────────────────────────────────────────────────
-type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto";
+type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto" | "ezrei";
 
 const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
   { id: "books",      label: "ספרים",          icon: BookOpen },
@@ -59,6 +59,7 @@ const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
   { id: "worksheets", label: "דפי עבודה",       icon: FileText },
   { id: "tools",      label: "כלים ומדריכים",  icon: Wrench },
   { id: "howto",      label: "איך מלמדים",     icon: GraduationCap },
+  { id: "ezrei",      label: "עזרי הוראה",      icon: GraduationCap },
 ];
 
 // ─── Known teacher series IDs (stable — confirmed 2026-05-07) ─────────────
@@ -1072,6 +1073,209 @@ function HowToTab() {
    If a "creators" tab is needed in future, it can be a filtered view of rabbis
    whose series have audience_tags @> ['teachers']. */
 
+// ─── EzreiTab — "עזרי הוראה" from מאגר-עזרי-הלמידה (migrated 2026-05-07) ──
+/**
+ * Displays the teacher aids tree: Torah / Nevi'im / Ketuvim / איך מלמדים
+ * Each section shows its books; each book expands to show sub-series.
+ * Data comes from Supabase series with audience_tags = ['teachers'] only.
+ */
+function EzreiTab() {
+  const { maagarRootIds } = useTeachersWing();
+  const [activeSection, setActiveSection] = useState<string>(maagarRootIds.torah);
+  const [expandedBooks, setExpandedBooks] = useState<Set<string>>(new Set());
+
+  const SECTIONS = [
+    { id: maagarRootIds.torah,       label: "תורה" },
+    { id: maagarRootIds.neviim,      label: "נביאים" },
+    { id: maagarRootIds.ketuvim,     label: "כתובים" },
+    { id: maagarRootIds.howToTeach,  label: 'איך מלמדים תנ"ך' },
+  ];
+
+  const { data: books, isLoading } = useMaagarEzreiTree(activeSection);
+
+  const toggleBook = (bookId: string) => {
+    setExpandedBooks((prev) => {
+      const next = new Set(prev);
+      if (next.has(bookId)) next.delete(bookId);
+      else next.add(bookId);
+      return next;
+    });
+  };
+
+  return (
+    <div dir="rtl">
+      {/* Section switcher pills */}
+      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "2rem", flexWrap: "wrap" }}>
+        {SECTIONS.map((s) => {
+          const isActive = activeSection === s.id;
+          return (
+            <button
+              key={s.id}
+              onClick={() => { setActiveSection(s.id); setExpandedBooks(new Set()); }}
+              style={{
+                padding: "0.5rem 1.25rem",
+                borderRadius: radii.pill,
+                border: `1.5px solid ${isActive ? colors.oliveDark : "rgba(139,111,71,0.2)"}`,
+                background: isActive ? colors.oliveDark : "white",
+                color: isActive ? "white" : colors.textMid,
+                fontFamily: fonts.body,
+                fontWeight: isActive ? 700 : 500,
+                fontSize: "0.85rem",
+                cursor: "pointer",
+                transition: "all 0.18s",
+              }}
+            >
+              {s.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Content */}
+      {isLoading ? (
+        <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+          <Loader2 style={{ width: 28, height: 28, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+        </div>
+      ) : !books || books.length === 0 ? (
+        <div style={{ padding: "3rem", textAlign: "center", fontFamily: fonts.body, color: colors.textMuted }}>
+          אין תכנים בקטגוריה זו
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          {books.map((book) => {
+            const isExpanded = expandedBooks.has(book.id);
+            const subCount = book.subSeries.length;
+            return (
+              <div
+                key={book.id}
+                style={{
+                  background: "white",
+                  borderRadius: radii.xl,
+                  border: "1px solid rgba(139,111,71,0.1)",
+                  boxShadow: shadows.cardSoft,
+                  overflow: "hidden",
+                }}
+              >
+                {/* Book header */}
+                <button
+                  onClick={() => toggleBook(book.id)}
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "1rem 1.25rem",
+                    background: isExpanded ? colors.parchmentDark : "white",
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: fonts.display,
+                    fontWeight: 800,
+                    fontSize: "1rem",
+                    color: colors.oliveDark,
+                    textAlign: "right",
+                    transition: "background 0.15s",
+                  }}
+                >
+                  <span>{book.title}</span>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    {subCount > 0 && (
+                      <span style={{
+                        fontFamily: fonts.body,
+                        fontSize: "0.7rem",
+                        color: colors.textSubtle,
+                        background: colors.parchmentDeep,
+                        padding: "0.2rem 0.6rem",
+                        borderRadius: radii.pill,
+                      }}>
+                        {subCount} סדרות
+                      </span>
+                    )}
+                    {isExpanded
+                      ? <ChevronUp style={{ width: 16, height: 16 }} />
+                      : <ChevronDown style={{ width: 16, height: 16 }} />
+                    }
+                  </div>
+                </button>
+
+                {/* Sub-series list */}
+                {isExpanded && subCount > 0 && (
+                  <div style={{ borderTop: "1px solid rgba(139,111,71,0.08)" }}>
+                    {book.subSeries.map((sub, i) => (
+                      <Link
+                        key={sub.id}
+                        to={`/series/${sub.id}`}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            padding: "0.75rem 1.5rem",
+                            borderBottom: i < subCount - 1 ? "1px solid rgba(139,111,71,0.06)" : "none",
+                            background: "white",
+                            cursor: "pointer",
+                            transition: "background 0.15s",
+                          }}
+                          onMouseEnter={(e) => { e.currentTarget.style.background = colors.parchment; }}
+                          onMouseLeave={(e) => { e.currentTarget.style.background = "white"; }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                            <div style={{
+                              width: 6,
+                              height: 6,
+                              borderRadius: "50%",
+                              background: colors.goldDark,
+                              flexShrink: 0,
+                            }} />
+                            <span style={{
+                              fontFamily: fonts.body,
+                              fontWeight: 600,
+                              fontSize: "0.88rem",
+                              color: colors.textDark,
+                            }}>
+                              {sub.title}
+                            </span>
+                          </div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                            <span style={{
+                              fontFamily: fonts.body,
+                              fontSize: "0.7rem",
+                              color: colors.textSubtle,
+                              background: colors.parchmentDeep,
+                              padding: "0.15rem 0.5rem",
+                              borderRadius: radii.pill,
+                            }}>
+                              {sub.lessonCount} שיעורים
+                            </span>
+                            <ExternalLink style={{ width: 12, height: 12, color: colors.textSubtle }} />
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+
+                {isExpanded && subCount === 0 && (
+                  <div style={{
+                    padding: "1rem 1.5rem",
+                    fontFamily: fonts.body,
+                    fontSize: "0.82rem",
+                    color: colors.textMuted,
+                    borderTop: "1px solid rgba(139,111,71,0.08)",
+                  }}>
+                    לחץ לצפייה בתוכן הישיר
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── In-page tab navigation ────────────────────────────────────────────────
 function InPageNav({
   activeTab,
@@ -1158,6 +1362,7 @@ export default function DesignPreviewTeachersWingV2() {
           {activeTab === "worksheets" && <WorksheetsTab />}
           {activeTab === "tools"      && <ToolsTab />}
           {activeTab === "howto"      && <HowToTab />}
+          {activeTab === "ezrei"      && <EzreiTab />}
         </div>
       </div>
     </DesignLayout>

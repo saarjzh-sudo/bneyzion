@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-05-07T19:48:55.639Z",
+  "dryRun": false,
+  "before": {
+    "series": 1374,
+    "lessons": 11836
+  },
+  "after": {
+    "series": 1495,
+    "lessons": 12722
+  },
+  "newSeries": 121,
+  "newLessons": 886,
+  "skipped": 178
+}
