@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-05
+**Last updated:** 2026-05-07
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -330,6 +330,9 @@ public/
 16. **Route-swap is the safest rollout strategy.** Change the route binding in `App.tsx` only. No file copies, no renames. Instant rollback via `git checkout <backup-tag>`.
 17. **Before any production rollout: `git tag -a backup-pre-X-YYYY-MM-DD -m "..."`.** Current tags: `backup-pre-redesign-rollout-2026-04-30`, `backup-pre-sidebar-rollout-2026-04-30`, `pre-swap-portal-2026-04-30T1652`, `backup-pre-parasha-rollout-2026-04-30`.
 18. **Payment flows are guest-friendly.** No `!user` guard on any checkout/donate flow. `user_id` stored as `user?.id || null` — optional, populated only when logged in. Never add auth requirement for purchasing or donating.
+19. **`getDerivedStateFromError()` must be pure — no side effects.** React 18 Concurrent Mode calls this in the render phase. `window.location.reload()`, `sessionStorage.setItem()`, timers, etc. are all forbidden here. Move ALL side effects to `componentDidUpdate()`. Violating this caused the 2026-05-07 production blank page incident.
+20. **Always run `npm run build && npm run preview` locally before pushing any `src/App.tsx` change to `main`.** This is non-negotiable. The 2026-05-07 incident broke production because this step was skipped.
+21. **Vercel rollback pattern: `vercel alias https://bneyzion-[deployment-id]-saars-projects-4508d6bb.vercel.app bneyzion.vercel.app`** — instant restore, no redeploy needed. Target the last known-good deployment URL from `vercel ls --prod`. Then promote the fixed deployment once it builds.
 
 ---
 
@@ -1995,6 +1998,18 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
   - If reload still fails (edge case), shows Hebrew "רענן" button prompt — users never left with blank page
 - **Iron rule learned:** When PWA `autoUpdate` is configured, users may hold a stale SW for minutes/hours after a deploy. Lazy-loaded chunks that changed hash will 404 on the old SW. Always wrap `<Routes>` with a `ChunkErrorBoundary` that auto-reloads.
 - **Files changed:** `src/App.tsx` — added `Component, ReactNode` to React import, added `ChunkErrorBoundary` class, wrapped `<ChunkErrorBoundary>` around `<ErrorBoundary><Routes>`.
+
+### 2026-05-07 — Production incident post-mortem: ChunkErrorBoundary React 18 side-effect bug + rollback (commit 1a8d006)
+
+- **Incident:** After deploying commit 2816b73 (ChunkErrorBoundary), Saar saw blank/black page on `https://bneyzion.vercel.app` in incognito (no SW cache, no extensions). The original ChunkErrorBoundary had a React 18 Concurrent Mode violation.
+- **Root bug in 2816b73:** `getDerivedStateFromError()` called `window.location.reload()` directly. This is a **side effect during the render phase**, which React 18 Concurrent Mode forbids. `getDerivedStateFromError` must be a **pure function** — only return new state, no side effects.
+- **Rollback:** Used `vercel alias` to point `bneyzion.vercel.app` to the last known-good deployment (`bneyzion-8eq46ojsm`, from commit 5cfbd43 at 15:38 the previous day). Command: `vercel alias https://bneyzion-8eq46ojsm-... bneyzion.vercel.app`. Site was restored in under 2 minutes.
+- **Fix (commit 1a8d006):** Moved `window.location.reload()` from `getDerivedStateFromError()` to `componentDidUpdate()` (commit phase — safe for side effects). `getDerivedStateFromError` now only returns `{ hasError: true, isChunkError }` — pure, no side effects. Also split state to include `isChunkError` flag for better error messages.
+- **Verification:** Local `npm run build` (4.26s clean) + `npm run preview` confirmed. Production bundle confirmed to contain `componentDidUpdate` (5 occurrences). Deployed as `bneyzion-irb3ocgut` and promoted to production via `vercel alias`.
+- **New iron rules:**
+  1. `getDerivedStateFromError()` MUST be pure. No `window.*`, no `sessionStorage.*`, no timers. Move side effects to `componentDidUpdate()`.
+  2. ALWAYS run `npm run build && npm run preview` locally before pushing ANY change to `src/App.tsx` to main.
+  3. Rollback pattern for Vercel: `vercel alias https://bneyzion-[deployment-id]-... bneyzion.vercel.app` — instant, no redeploy needed. Target the last known-good deployment URL.
 
 ---
 
