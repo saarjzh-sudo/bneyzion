@@ -86,19 +86,25 @@ const Terms = () => {
           </p>
           <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
             <li>
-              ניתן לבטל עסקה תוך <strong>14 יום</strong> מיום הרכישה ולקבל החזר מלא, ובלבד
-              שלא נעשה שימוש בתכנים המנויים.
+              <strong>תכנים דיגיטליים ומנויים:</strong> ניתן לבטל את רכישת המוצר בתוך 14 יום מרגע רכישת המוצר.
+              הביטול יעשה אך ורק בהודעה בכתב לכתובת{" "}
+              <a href="mailto:office@bneyzion.co.il" className="underline text-primary hover:opacity-80">
+                office@bneyzion.co.il
+              </a>
+              , ובלבד שלא נעשה שימוש בתכנים.
+            </li>
+            <li>
+              <strong>מוצרים פיזיים:</strong> ניתן לבטל את רכישת המוצר בתוך 14 יום מרגע רכישת המוצר.
+              הביטול יעשה אך ורק בהודעה בכתב לכתובת{" "}
+              <a href="mailto:office@bneyzion.co.il" className="underline text-primary hover:opacity-80">
+                office@bneyzion.co.il
+              </a>
+              . יש להחזיר את המוצר באריזתו המקורית, שלם וללא פגיעה ו/או נזק ו/או פגם מכל מין וסוג שהוא.
+              דמי המשלוח בגין ההחזרה יחולו על הרוכש.
             </li>
             <li>
               ביטול לאחר 14 יום — לא יינתן החזר על תקופה שחלפה; המנוי יופסק עם תום
               התקופה ששולמה.
-            </li>
-            <li>
-              לביטול יש לפנות אלינו בכתב דרך{" "}
-              <Link to="/contact" className="underline text-primary hover:opacity-80">
-                דף יצירת קשר
-              </Link>{" "}
-              או בדוא"ל.
             </li>
             <li>ההחזר יבוצע לאמצעי התשלום המקורי תוך 14 ימי עסקים.</li>
           </ul>
@@ -108,10 +114,10 @@ const Terms = () => {
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">5. הגבלת גיל וכשירות לרכישה</h2>
           <p className="text-muted-foreground leading-relaxed">
-            השירותים באתר מיועדים לבני <strong>18 ומעלה</strong>. ביצוע רכישה או הרשמה לאתר
-            מהווה הצהרה של המשתמש כי הוא מלאו לו 18 שנה וכי הוא כשיר משפטית לכרות חוזה
-            מחייב. קטין המבצע רכישה ללא אישור הורה או אפוטרופוס אחראי — הרכישה עלולה
-            להתבטל ולהיות מוחזרת.
+            <strong>תנאי לרכישה באתר כי הרוכש הינו בן 18 שנים ומעלה.</strong>{" "}
+            ביצוע רכישה או הרשמה לאתר מהווה הצהרת המשתמש כי מלאו לו 18 שנים ומעלה וכי
+            הוא כשיר משפטית לכרות חוזה מחייב. קטין המבצע רכישה ללא אישור הורה או אפוטרופוס
+            אחראי — הרכישה עלולה להתבטל ולהיות מוחזרת.
           </p>
         </section>
 
@@ -129,30 +135,38 @@ const Terms = () => {
             </li>
           </ul>
           <p className="text-muted-foreground leading-relaxed font-semibold mt-4">מוצרים פיזיים (ספרים וחוברות):</p>
+          <p className="text-muted-foreground leading-relaxed">
+            אספקת המוצר בימי עסקים וכרוכה בתשלום דמי משלוח בהתאם לאזור וסוג המשלוח. להלן אפשרויות משלוח:
+          </p>
           <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
             <li>
-              <strong>דואר רשום:</strong> המשלוח יצא תוך 3 ימי עסקים מאישור ההזמנה; זמן מסירה עד
-              <strong> 14 ימי עסקים</strong> מיום המשלוח. דמי משלוח כמפורט בשלב הסיום של ההזמנה.
+              <strong>דואר רשום:</strong> המשלוח יצא תוך 3 ימי עסקים מאישור ההזמנה; זמן מסירה
+              <strong> דואר רשום תוך 14 ימי עסקים</strong> מיום המשלוח.
+              דמי משלוח כמפורט בשלב הסיום של ההזמנה.
             </li>
             <li>
-              <strong>שליח עד הבית:</strong> זמן מסירה <strong>עד 7 ימי עסקים</strong> מאישור ההזמנה (בתשלום נפרד).
+              <strong>דואר שליחים:</strong> <strong>דואר שליחים תוך 7 ימי עסקים</strong> מאישור ההזמנה (בתשלום נפרד).
             </li>
             <li>
               <strong>איסוף עצמי:</strong> ניתן לתיאום מראש עם הצוות דרך דף יצירת קשר.
             </li>
             <li>
-              עמותת מכלל יופי (ע"ר) אינה אחראית לעיכובים הנובעים מכוח עליון, שביתות בדואר, או
-              נסיבות שמחוץ לשליטתנו. במקרה כזה ייצור הצוות קשר עם הרוכש.
+              האתר לא יישא באחריות לעיכוב ו/או איחור בשילוח שמבוצע ע"י צד ג' אשר מושפע
+              מכוח עליון ו/או שביתות ו/או השבתות ו/או אי-מענה מצד הלקוח לתיאום המשלוח.
             </li>
           </ul>
         </section>
 
-        {/* Section 7 — Product warranty */}
+        {/* Section 7 — Liability + Product warranty */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">7. אחריות על מוצרים פיזיים</h2>
+          <h2 className="text-2xl font-bold">7. הגבלת אחריות</h2>
           <p className="text-muted-foreground leading-relaxed">
-            לכל מוצר פיזי (ספר, חוברת) הנרכש דרך האתר:
+            החברה ו/או מי מטעמה לא יהיו אחראים לנזק ישיר ו/או עקיף שיגרם כתוצאה משימוש
+            בשירות ו/או שימוש במוצר שנרכש באתר. התוכן באתר אינו מהווה חוות דעת מקצועית.
+            כל תוכן או מידע שיימסר באתר אינו מהווה ייעוץ מקצועי, המלצה או חוות דעת.
+            האחריות על השימוש במידע היא על המשתמש בלבד.
           </p>
+          <p className="text-muted-foreground leading-relaxed font-semibold mt-3">מוצרים פיזיים (ספרים וחוברות):</p>
           <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
             <li>
               <strong>מוצר פגום / שגוי:</strong> ניתן להחזיר תוך <strong>14 ימי עסקים</strong> מיום קבלת המשלוח
@@ -161,9 +175,6 @@ const Terms = () => {
             <li>
               <strong>החלפה בשל שינוי דעה:</strong> ניתן להחזיר מוצר שלם ולא-פגום תוך 14 יום מקבלתו;
               דמי המשלוח בגין ההחזרה יחולו על הרוכש.
-            </li>
-            <li>
-              אחריות אינה חלה על נזק שנגרם בשל שימוש לקוי, רטיבות, או גורמים שמחוץ לשליטתנו.
             </li>
             <li>
               לפניות בנושא אחריות:{" "}
@@ -193,7 +204,12 @@ const Terms = () => {
         {/* Section 9 — Privacy */}
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">9. מדיניות פרטיות</h2>
-          <p className="text-muted-foreground leading-relaxed font-semibold">
+          <p className="text-muted-foreground leading-relaxed">
+            החנות נוקטת באמצעי זהירות מקובלים על מנת לשמור, ככל האפשר, על סודיות המידע.
+            החנות מתחייבת לא לעשות שימוש בפרטי הלקוחות הרשומים באתר אלא לצרכי תפעול האתר בלבד,
+            ועל מנת לאפשר את ביצוע הרכישה.
+          </p>
+          <p className="text-muted-foreground leading-relaxed font-semibold mt-4">
             מידע שאנו אוספים:
           </p>
           <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">

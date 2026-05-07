@@ -148,6 +148,16 @@ const Footer = () => {
           ))}
         </div>
 
+        {/* Legal address — required for Grow (Meshulam) audit: כתובת בית עסק גלויה */}
+        <div className="border-t border-border pt-3 pb-2 text-center text-xs text-muted-foreground">
+          <span>מכלל יופי (ע"ר) | הרקפת 5, ירושלים | טלפון: </span>
+          <a href="tel:+972534706610" className="hover:text-primary transition-colors">053-470-6610</a>
+          <span> | </span>
+          <a href="mailto:office@bneyzion.co.il" className="hover:text-primary transition-colors">office@bneyzion.co.il</a>
+          <span> | </span>
+          <Link to="/terms" className="hover:text-primary transition-colors underline underline-offset-2">תקנון האתר</Link>
+        </div>
+
         <div className="border-t border-border pt-4 flex flex-col md:flex-row justify-between items-center gap-2">
           <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} בני ציון – כל הזכויות שמורות</p>
           <p className="text-xs text-muted-foreground">
