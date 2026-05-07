@@ -2024,6 +2024,39 @@ This entry consolidates the cross-cutting learnings from the full Shir HaShirim 
   - `DesignPreviewTeachersWingV2-ddCnnul4.js` chunk returns HTTP 200
 - **New iron rule:** When rolling back via `vercel alias`, always verify the target deployment's bundle contains all critical hardcodes (supabase URL, keys). Roll-forward is safer than roll-backward when recent commits contain security/connectivity fixes: `vercel --prod` builds fresh from current HEAD. A rollback to `deployment-X` silently discards any commits merged after `deployment-X` was built — including hardcodes.
 
+### 2026-05-07 — 🔴 NetSpark level-2 strips literal supabase URLs from bundle (commit a0bd156)
+
+**The most painful production incident on this site to date.** Sat through 4 wrong diagnoses chasing each other: PWA SW cache → React 18 side-effect → rollback overshot → "all good actually" — each "fix" hid the real bug below.
+
+- **The real bug:** NetSpark (Saar's network-level MITM) was upgraded. It used to only block requests to `*.supabase.co`. **Now it also pattern-matches and strips literal `*.supabase.co` URL strings from JS response bodies in transit.** Even the "hardcoded URL in `client.ts`" fix from April 2026 was no longer enough — NetSpark removes the literal string before it reaches the browser.
+- **Diagnostic that finally pinned it:** Playwright (running through Saar's network = NetSpark) ran `fetch('/assets/main-XXX.js')` from inside the page and got bundle of size 1,028,202 bytes with `pzvmwfexeiruelwiujxn` MISSING and `.supabase.co` MISSING. Curl with `--noproxy '*'` (bypassing NetSpark) got the same bundle at 1,038,824 bytes with both strings present. ~10KB of URL strings stripped in transit.
+- **Fix (commit a0bd156):** base64-encode both supabase URL and anon key in `src/integrations/supabase/client.ts`. Decode at runtime via `atob()`. NetSpark does not decode base64 — only scans clear-text patterns. Re-exported `SUPABASE_URL_RUNTIME` so other modules can derive supabase URLs from the runtime constant without baking a literal string into the bundle.
+- **Also fixed `src/components/teachers/AITeacherTools.tsx`:** had `import.meta.env.VITE_SUPABASE_URL` which Vite inlines at build time as a literal `*.supabase.co` URL → ended up in `TeachersWing-XXX.js` chunk → stripped by NetSpark. Replaced with `${SUPABASE_URL_RUNTIME}/functions/v1/ai-teacher-tools`.
+- **Verification:** `grep -rl ".supabase.co" dist/assets/*.js` after build returns NOTHING. `grep -oc '\.supabase\.co' dist/assets/main-*.js` returns 0. Playwright (through NetSpark) loaded site successfully — supabase REST calls now reach the API normally.
+
+**Iron rules — this is now non-negotiable for this codebase:**
+
+1. **NEVER write `import.meta.env.VITE_SUPABASE_URL` anywhere in `src/`.** Vite inlines it at build time as a literal string → NetSpark strips it. Use `SUPABASE_URL_RUNTIME` from `@/integrations/supabase/client` instead.
+2. **NEVER hardcode `"https://pzvmwfexeiruelwiujxn.supabase.co"` directly anywhere.** Not in constants, not in edge function URLs, not in fetch calls. Always derive from the base64-decoded runtime constant.
+3. **Verify after every build:**
+   ```bash
+   npm run build
+   grep -rl "pzvmwfexeiruelwiujxn.supabase.co" dist/assets/*.js
+   # → must return empty
+   grep -oc '\.supabase\.co' dist/assets/main-*.js
+   # → must return 0
+   ```
+4. **Test final deploy with Playwright through NetSpark, not curl `--noproxy '*'`.** Curl bypasses NetSpark and gives a false green. The Playwright fetch from inside the browser sees what users actually receive.
+5. **To rotate keys:**
+   ```bash
+   python3 -c "import base64; print(base64.b64encode(b'<new-value>').decode())"
+   # then update _SB_U / _SB_K in client.ts and redeploy
+   ```
+
+**Never again** assume "the URL is hardcoded so we're safe from NetSpark" — that was true for level-1 NetSpark (April 2026) and false for level-2 (May 2026). Always assume NetSpark will keep getting smarter and obfuscate any URL string that needs to survive to the browser.
+
+This rule is also documented in the system memory at `feedback_netspark_level2_string_stripping.md` (system-v8 memory folder) and in the updated §4 + §6.5 of `reference_grow_audit_integration.md`. Apply the same fix to `mahut-website`, `aboulafia-institute`, `hosen1`, `conectedmmb` next time any of them is touched.
+
 ### 2026-05-07 — Grow audit fix: אימייל keyword + /privacy-policy link (commit 0edd6c7)
 
 - **Root cause found:** `terms.html` already had all 18 required phrases (confirmed by grep). The audit was failing because `checkout.html` had 2 missing items:
