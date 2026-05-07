@@ -173,7 +173,8 @@ See **§ 8. Open work** for the full plan.
 | `/design-rabbi` | Single rabbi profile (defaults to top) | yes | done |
 | `/design-rabbi/:id` | Specific rabbi | yes | done |
 | `/design-teachers-wing` | אגף המורים: 6 categories, benefits, recommended series | yes (recommended) | **hidden 30.4.2026** — route active, 0 nav links. pending deletion decision |
-| `/design-teachers-wing-v2` | אגף המורים v2: 5 tabs (ספרים/חידות/דפי עבודה/כלים/איך מלמדים), audience_tags filtered | yes (useTeachersWing + direct queries) | **updated 7.5.2026** — 31 series / 139 lessons tagged, pending Saar review |
+| `/design-teachers-wing-v2` | אגף המורים v2: 6 tabs (ספרים/חידות/דפי עבודה/כלים/איך מלמדים/עזרי הוראה), audience_tags filtered | yes (useTeachersWing + direct queries) | **updated 7.5.2026** — cards now link to `/design-teachers-series/:id` |
+| `/design-teachers-series/:id` | דף סדרה בתוך אגף המורים: olive hero, breadcrumb, 6 tabs, teacher sidebar, filter panel, lesson cards with badge | yes | **new 7.5.2026** |
 | `/design-community` | Community + 3 membership tiers + active courses | yes | done |
 | `/design-bible-book/:book` | Browse a Bible book — chapters with lesson counts | yes | done |
 | `/design-donate` | Donation flow with presets, recurring, dedication | n/a (form only) | done |
