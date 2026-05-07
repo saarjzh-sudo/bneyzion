@@ -237,7 +237,7 @@ function ViewToggle({
 function SeriesCard({ series }: { series: SeriesRow }) {
   return (
     <Link
-      to={`/series/${series.id}`}
+      to={`/design-teachers-series/${series.id}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <div
@@ -278,6 +278,24 @@ function SeriesCard({ series }: { series: SeriesRow }) {
             background: gradients.oliveButton,
           }}
         />
+
+        {/* Teacher badge */}
+        <div style={{ marginBottom: "0.25rem" }}>
+          <span
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.6rem",
+              color: colors.oliveDark,
+              background: "rgba(74,90,46,0.1)",
+              padding: "0.1rem 0.5rem",
+              borderRadius: radii.pill,
+              fontWeight: 700,
+              letterSpacing: "0.03em",
+            }}
+          >
+            אגף המורים
+          </span>
+        </div>
 
         {/* Title */}
         <h3
@@ -368,7 +386,7 @@ function SeriesCard({ series }: { series: SeriesRow }) {
 function SeriesRow_({ series }: { series: SeriesRow }) {
   return (
     <Link
-      to={`/series/${series.id}`}
+      to={`/design-teachers-series/${series.id}`}
       style={{ textDecoration: "none", color: "inherit" }}
     >
       <div
@@ -1203,7 +1221,7 @@ function EzreiTab() {
                     {book.subSeries.map((sub, i) => (
                       <Link
                         key={sub.id}
-                        to={`/series/${sub.id}`}
+                        to={`/design-teachers-series/${sub.id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <div
