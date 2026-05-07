@@ -333,6 +333,10 @@ When Saar approves the sandbox for production:
   `<Routes>` in `App.tsx`. When PWA autoUpdate is active, old Service Workers can
   serve stale chunk hashes → ChunkLoadError → blank page. The boundary auto-reloads
   once to get the new SW. (Root cause of /design-teachers-wing-v2 blank page 7.5.2026.)
+- ❌ When rolling back via `vercel alias`, always verify the target deployment's bundle
+  contains critical hardcodes (supabase URL, keys). A rollback silently discards commits
+  merged after the target deployment was built. Prefer **roll-forward** (`vercel --prod`
+  from current HEAD) over roll-backward when recent commits contain connectivity fixes.
 
 ---
 
