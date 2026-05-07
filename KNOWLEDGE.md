@@ -2223,6 +2223,27 @@ This rule is also documented in the system memory at `feedback_netspark_level2_s
   - The old `audience_tags` pollution (UPDATE SET audience_tags=['general','teachers'] on ALL series) means `.contains(['teachers'])` returns old content too. New content uses `['teachers']` ONLY to create a clean discriminator. Use `parent_id`-scoped queries for the teacher aids subtree.
   - XSRF-TOKEN extraction from Umbraco login: must parse the non-httponly `XSRF-TOKEN` from `Set-Cookie` response headers. Send as `X-XSRF-TOKEN` header on all subsequent requests.
 
+### 2026-05-07 — /design-teachers-series/:id — teacher series detail page + wing navigation (commit e27c58e)
+
+- **New page:** `src/pages/DesignPreviewTeacherSeriesPage.tsx` — full teacher series detail.
+  - `sidebar={false}` (immersive), olive hero, breadcrumb, 6-tab MiniTabBar
+  - Two-column layout: right=TeachersSidebarPanel (sticky, lists series for active tab, clicking switches to that series), left=FilterPanel + lessons list
+  - FilterPanel: search / media type / sort / PDF-only toggle. All filters applied client-side via `useMemo`.
+  - Teacher lesson cards: olive `inset-inline-end` stripe, "אגף המורים" badge, media badges (audio/video/PDF), duration
+  - SEO: `useEffect` updates `document.title` + `<meta name="description">` + `<link rel="canonical">` on mount
+  - Cards link to `/design-lesson-page/:id` (not production `/lessons/:id`)
+- **Route:** `/design-teachers-series/:id` added to `App.tsx` (lazy)
+- **DesignHeader:** added `isTeacherContext` mode (activates on `/design-teachers-*`).
+  - Shows olive "אגף המורים" chip (pill with GraduationCap icon) next to nav
+  - Switches NAV_ITEMS → TEACHER_NAV_ITEMS (4 items: ראשי/חנות/תרומות/פרשת השבוע)
+  - Avoids inline `display:none` on nav items (would break Tailwind `hidden md:flex` — iron rule)
+- **DesignPreviewTeachersWingV2:** SeriesCard + SeriesRow_ + EzreiTab sub-series all now link to `/design-teachers-series/:id` (was `/series/:id`). Added "אגף המורים" badge chip to grid cards.
+- **vercel.json:**
+  - `/אגף-המורים/*` redirects → `/design-teachers-wing-v2` (was `/teachers`, non-permanent 307)
+  - `/מאגר-עזרי-הלמידה/*` redirects → `/design-teachers-wing-v2` (6 entries, non-permanent 307)
+- **Old site findings:** `bneyzion.co.il/מאגר-עזרי-הלמידה/` sidebar has 3 tabs (ראשי/סוג תוכן/יוצרים). ראשי tree: פרשת השבוע / איך מלמדים תנ"ך / תורה / נביאים / כתובים. **There is NO category called "עזרי הוראה"** — the name refers to the whole section (מאגר עזרי הלמידה = teaching aids repository). "סוג תוכן" tab has 22 content-type filters (סיכום פרקים, הכוונה למורה, דפי עבודה, מפות, etc.). The 6th tab in V2 ("עזרי הוראה") is NOT from the old site — it's a new concept.
+- **react-helmet-async:** NOT installed. SEO in sandbox uses `useEffect` instead.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
