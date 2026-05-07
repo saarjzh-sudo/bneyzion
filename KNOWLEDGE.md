@@ -1435,8 +1435,8 @@ doesn't need to remind.
 See `REDESIGN.md` §8 for redesign-specific open work. Site-wide opens:
 
 ### Pending
-- **Umbraco admin access** — waiting on Avihay (TWB)
-- **461 empty draft lessons** — unlock when admin access granted
+- **Umbraco admin access** — ~~waiting on Avihay (TWB)~~ RESOLVED 2026-05-07: yoav IS admin (`userType: "admin"`). No action needed.
+- **461 empty draft lessons** — ~~unlock when admin access granted~~ RESOLVED 2026-05-07: these were navigation pages (חיפוש, יוצרים, נושאים etc.), not real content. Actual content scraped and inserted as 886 lessons via `scripts/insert-teachers-content.mjs`.
 - **OAuth production verification** — when custom domain `bneyzion.co.il`
   is live
 - **Custom domain DNS cutover** — `bneyzion.vercel.app` → `bneyzion.co.il`
@@ -2201,6 +2201,27 @@ This rule is also documented in the system memory at `feedback_netspark_level2_s
 - `Footer.tsx`: added "תקנון האתר" + "מדיניות פרטיות" as `text-sm` links in the copyright bar — same pattern as `abulafia-institute/src/components/Footer.tsx` lines 97-108
 - `Terms.tsx §9`: added `id="privacy"` anchor so `/terms#privacy` deep-links correctly
 - Previous link (text-xs in address bar) still present as secondary touch-point
+
+### 2026-05-07 — Teacher aids migration: מאגר-עזרי-הלמידה Umbraco → Supabase (commit ff91177)
+
+- **Scraping:** Built `scripts/umbraco-teachers-scraper.mjs` — authenticates to Umbraco admin API (yoav / 5W;3N)g8Iq), walks `מאגר-עזרי-הלמידה` tree (root ID 2294) recursively via `GetNodes` + `GetById` + `Media/GetById`. Output: `scripts/teachers-scrape-result.json` (1,175 nodes, 121 series, 1,054 lesson nodes).
+- **Insertion:** Built `scripts/insert-teachers-content.mjs` — reads scrape JSON, creates root series `מאגר עזרי הלמידה`, recursively inserts series + lessons, all tagged `audience_tags=['teachers']` (not 'general'). Supports `--dry-run`. Report saved to `scripts/teachers-insert-report.json`.
+- **BEFORE:** 1,374 series / 11,836 lessons. **AFTER:** 1,495 series / 12,722 lessons. **NET:** +121 series, +886 lessons.
+- **New root IDs (Supabase):**
+  - מאגר עזרי הלמידה: `6bfb7aaa-cd9e-4562-b087-a37fcc24d295`
+  - תורה: `2e248097-b954-4c28-91dc-b84a19f9fabc`
+  - נביאים: `42ac131e-631d-4518-8896-86cd1c49c07a`
+  - כתובים: `cb088913-d868-4203-965a-117e5569e170`
+  - איך מלמדים תנ"ך: `26a5e728-38ef-47e9-8889-29809caf202b`
+- **Hook:** `src/hooks/useTeachersWing.ts` — added ROOT_IDs map, `useMaagarEzreiTree(sectionId)` hook (queries books then sub-series under a section, returns `MaagarBook[]`).
+- **UI:** `src/pages/DesignPreviewTeachersWingV2.tsx` — added "עזרי הוראה" tab (6th tab, EzreiTab component) with Torah/Nevi'im/Ketuvim/Teaching section pills and expandable book accordion.
+- **Backup tag:** `backup-pre-teachers-insert-2026-05-07` (created before live INSERT).
+- **Lessons learned:**
+  - `yoav` is Umbraco **admin** (not just editor as previously believed). Confirmed via `userType: "admin"` in login response. Admin access unlocks `GetById` API.
+  - The 461 "empty draft lessons" noted in §9 were navigation pages (חיפוש, יוצרים, נושאים), NOT real content. No unlock needed.
+  - Supabase `series` table has NO `source_type` column. Only `lessons` has it.
+  - The old `audience_tags` pollution (UPDATE SET audience_tags=['general','teachers'] on ALL series) means `.contains(['teachers'])` returns old content too. New content uses `['teachers']` ONLY to create a clean discriminator. Use `parent_id`-scoped queries for the teacher aids subtree.
+  - XSRF-TOKEN extraction from Umbraco login: must parse the non-httponly `XSRF-TOKEN` from `Set-Cookie` response headers. Send as `X-XSRF-TOKEN` header on all subsequent requests.
 
 ---
 
