@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, Component, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -108,6 +108,90 @@ const LazyFallback = () => (
   </div>
 );
 
+/**
+ * ChunkErrorBoundary — catches dynamic-import (lazy chunk) failures.
+ *
+ * Cause: PWA Service Worker serves a cached old index.html that references
+ * chunk hashes from a previous Vite build. When the page lazy-imports a
+ * component whose hash changed in the new build, the old hash no longer
+ * exists on the server → ChunkLoadError → blank page inside <Suspense>.
+ *
+ * Fix: on ChunkLoadError perform ONE automatic hard-reload (bypasses SW
+ * cache via `location.reload(true)` or the sessionStorage guard).  If the
+ * reload still fails, show a visible "refresh" prompt so the user is never
+ * left staring at a blank page.
+ */
+class ChunkErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError(err: Error) {
+    // ChunkLoadError from Vite / webpack share these markers
+    const isChunkError =
+      err.name === "ChunkLoadError" ||
+      /loading chunk/i.test(err.message) ||
+      /failed to fetch dynamically imported module/i.test(err.message) ||
+      /Importing a module script failed/i.test(err.message);
+
+    if (isChunkError) {
+      const RELOAD_KEY = "bnz.chunk-reload";
+      const already = sessionStorage.getItem(RELOAD_KEY);
+      if (!already) {
+        sessionStorage.setItem(RELOAD_KEY, "1");
+        // Hard reload — bypasses SW cached responses
+        window.location.reload();
+        return { hasError: false }; // component stays mounted while reload happens
+      }
+    }
+    return { hasError: true };
+  }
+
+  componentDidCatch(err: Error, info: { componentStack: string }) {
+    console.error("[ChunkErrorBoundary]", err, info.componentStack);
+  }
+
+  render() {
+    if (!this.state.hasError) return this.props.children;
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          gap: "1rem",
+          fontFamily: "sans-serif",
+          direction: "rtl",
+        }}
+      >
+        <p style={{ color: "#555", fontSize: "1rem" }}>
+          גרסה חדשה של האתר זמינה — יש לרענן את הדף.
+        </p>
+        <button
+          onClick={() => {
+            sessionStorage.removeItem("bnz.chunk-reload");
+            window.location.reload();
+          }}
+          style={{
+            padding: "0.6rem 1.5rem",
+            borderRadius: 8,
+            background: "#8B6F47",
+            color: "white",
+            border: "none",
+            cursor: "pointer",
+            fontSize: "0.95rem",
+          }}
+        >
+          רענן
+        </button>
+      </div>
+    );
+  }
+}
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -132,6 +216,7 @@ const App = () => (
           <ScrollToTop />
           <InstallPrompt />
           {/* <GlobalAIChat /> */}
+          <ChunkErrorBoundary>
           <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Index />} />
@@ -234,6 +319,7 @@ const App = () => (
             <Route path="*" element={<NotFound />} />
           </Routes>
           </ErrorBoundary>
+          </ChunkErrorBoundary>
         </PlayerProvider>
         </CartProvider>
         </AuthProvider>
