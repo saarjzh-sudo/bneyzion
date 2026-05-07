@@ -465,6 +465,10 @@
       "destination": "/terms.html"
     },
     {
+      "source": "/privacy-policy",
+      "destination": "/terms.html"
+    },
+    {
       "source": "/donate",
       "destination": "/donate.html"
     },
