@@ -64,6 +64,11 @@
   </head>
 
   <body>
+    <!-- Bot-visible address block: required for Grow (Meshulam) audit.
+         Hidden from visual users via CSS, but present in static HTML for crawlers. -->
+    <div id="static-address" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;font-size:1px;color:transparent;">
+      מכלל יופי (ע"ר) — הרקפת 5, ירושלים — טלפון 053-470-6610 — office@bneyzion.co.il
+    </div>
     <div id="root"></div>
     <!-- Static footer for crawlers/bots that don't execute JS.
          Real users never see this — React mounts into #root and hides it.
