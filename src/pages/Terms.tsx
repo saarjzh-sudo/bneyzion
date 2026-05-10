@@ -82,6 +82,9 @@ const Terms = () => {
         {/* Section 4 — Cancellation */}
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">4. מדיניות ביטולים והחזרים</h2>
+          <p className="text-muted-foreground leading-relaxed font-semibold">
+            ביטול עסקה — תנאים ונוהל:
+          </p>
           <p className="text-muted-foreground leading-relaxed">
             בהתאם לחוק הגנת הצרכן, התשמ"א-1981 ותקנותיו:
           </p>
