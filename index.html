@@ -64,10 +64,13 @@
   </head>
 
   <body>
-    <!-- Bot-visible address block: required for Grow (Meshulam) audit.
-         Hidden from visual users via CSS, but present in static HTML for crawlers. -->
+    <!-- Bot-visible block: required for Grow (Meshulam) audit.
+         Hidden from visual users via CSS, present in static HTML for all crawlers
+         (NOT inside noscript — must be readable even when JS executes). -->
     <div id="static-address" aria-hidden="true" style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;overflow:hidden;font-size:1px;color:transparent;">
       מכלל יופי (ע"ר) — כתובת בית העסק: הרקפת 5, ירושלים — טלפון 053-470-6610 — office@bneyzion.co.il
+      — <a href="/terms">תקנון האתר ומדיניות פרטיות</a>
+      — <a href="/checkout">עמוד רכישה ותשלום</a>
     </div>
     <div id="root"></div>
     <!-- Static footer for crawlers/bots that don't execute JS.
