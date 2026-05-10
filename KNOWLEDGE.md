@@ -437,6 +437,38 @@ public/
   The prior migration tagged all 1,374 series because `.or()` with multiple `ilike` conditions
   matched far more than expected. Always preview counts before committing bulk tags.
 
+### 2026-05-10 — Grow audit 4th pass: exact phrase matching finally resolved
+
+**Root cause identified:** The Grow auditor searches for exact Hebrew substrings. Previous sessions
+added phrases to terms.html but used slightly different wording than what the auditor regex expects.
+The 7 failing checks mapped to these missing exact strings:
+
+| Audit check | Was in terms.html | Required exact string |
+|-------------|-------------------|-----------------------|
+| כתובת בית עסק | הרקפת 5 (no label) | `כתובת בית העסק:` before the address |
+| קיים תקנון באתר | page exists | confirmed present — was passing wrong |
+| הגבלת גיל בתקנון | "18 שנים ומעלה" | `אנו דורשים שהרוכש יהיה בן 18 ומעלה` |
+| מדיניות אספקת מוצרים | "מדיניות אספקת שירותים" | `מדיניות אספקת מוצרים` in heading |
+| אחריות המוצר | "הגבלת אחריות" | `אחריות המוצר` in heading |
+| פרטיות | present | `href="/privacy-policy"` link in section |
+| ביטול עסקה | present | was present, confirmed working |
+
+**Fixes (commit 4ae767a):**
+- `terms.html` §1: added `כתובת בית העסק:` label before address
+- `terms.html` §5: added `אנו דורשים שהרוכש יהיה בן 18 ומעלה` as first sentence
+- `terms.html` §6: heading changed from "אספקת שירותים" → "אספקת מוצרים ושירותים"
+- `terms.html` §7: heading changed from "הגבלת אחריות" → "אחריות המוצר והגבלת אחריות"
+- `terms.html` §9: added `<a href="/privacy-policy">` link at top of privacy section
+- Same changes synced to `Terms.tsx` and `index.html` static blocks
+- All 7 verified in `dist/terms.html` pre-push, then on live URL post-deploy
+
+**Iron rule learned:**
+- Grow auditor greps for exact strings. When it says "אחריות המוצר" — the heading must contain
+  those exact words, not synonyms. Always test with `grep -c "exact phrase" dist/terms.html`
+  before declaring a pass. Don't rely on "semantically equivalent" phrasing.
+- The audit was failing DESPITE content being correct because the exact trigger phrases
+  were slightly off. Same failure pattern possible on future clients.
+
 ### 2026-05-07 — Grow audit full 12-item curl-grep sweep
 - All 12 Grow audit items verified against live deploy https://bneyzion.vercel.app/
 - Only failure found: terms.html section 7 used "נזק ישיר ו/או עקיף" — Grow bot regex needs "נזק עקיף" as standalone substring (words must be adjacent). Fixed by adding "לרבות נזק עקיף, נזק תוצאתי" to the same sentence.
