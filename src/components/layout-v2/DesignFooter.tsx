@@ -364,6 +364,42 @@ export default function DesignFooter() {
           ))}
         </div>
 
+        {/* Legal address + links — required for Grow/Meshulam audit: visible in rendered DOM */}
+        <div
+          style={{
+            borderTop: "1px solid rgba(232,213,160,0.06)",
+            paddingTop: "0.9rem",
+            paddingBottom: "0.75rem",
+            textAlign: "center",
+            fontFamily: fonts.body,
+            fontSize: "0.72rem",
+            color: "rgba(255,255,255,0.38)",
+            direction: "rtl",
+          }}
+        >
+          <span>מכלל יופי (ע"ר) · הרקפת 5, ירושלים · </span>
+          <a
+            href="tel:+972534706610"
+            style={{ color: "rgba(232,213,160,0.55)", textDecoration: "none" }}
+          >
+            053-470-6610
+          </a>
+          <span> · </span>
+          <Link
+            to="/terms"
+            style={{ color: "rgba(232,213,160,0.55)", textDecoration: "underline", textUnderlineOffset: 2 }}
+          >
+            תקנון האתר
+          </Link>
+          <span> · </span>
+          <Link
+            to="/privacy-policy"
+            style={{ color: "rgba(232,213,160,0.55)", textDecoration: "underline", textUnderlineOffset: 2 }}
+          >
+            מדיניות פרטיות
+          </Link>
+        </div>
+
         {/* Bottom bar */}
         <div
           style={{
