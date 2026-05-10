@@ -164,7 +164,7 @@ const Footer = () => {
             <Link to="/terms" className="text-sm text-muted-foreground hover:text-primary transition-colors">
               תקנון האתר
             </Link>
-            <Link to="/terms#privacy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
+            <Link to="/privacy-policy" className="text-sm text-muted-foreground hover:text-primary transition-colors">
               מדיניות פרטיות
             </Link>
           </div>

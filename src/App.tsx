@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { PlayerProvider } from "@/contexts/PlayerContext";
@@ -270,6 +270,7 @@ const App = () => (
             <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />
             <Route path="/terms" element={<Suspense fallback={<LazyFallback />}><Terms /></Suspense>} />
+            <Route path="/privacy-policy" element={<Navigate to="/terms#privacy" replace />} />
             <Route path="/admin" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
             <Route path="/admin/lessons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Lessons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/rabbis" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Rabbis /></Suspense></ProtectedRoute>} />
