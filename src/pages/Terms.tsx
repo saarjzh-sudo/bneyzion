@@ -26,7 +26,8 @@ const Terms = () => {
           <h2 className="text-2xl font-bold">1. זהות בעל האתר ופרטי קשר</h2>
           <p className="text-muted-foreground leading-relaxed">
             האתר <strong>bneyzion.co.il</strong> מופעל על-ידי <strong>עמותת מכלל יופי (ע"ר)</strong>,
-            מספר עמותה <strong>580731974</strong>, רחוב הרקפת 5, ירושלים, מיקוד 9650515.
+            מספר עמותה <strong>580731974</strong>.{" "}
+            <strong>כתובת בית העסק:</strong> רחוב הרקפת 5, ירושלים, מיקוד 9650515.
             האתר פועל תחת המותג "בני ציון — תנועה ללימוד תנ"ך", בניהולו של הרב יואב אוריאל.
           </p>
           <p className="text-muted-foreground leading-relaxed">
@@ -114,6 +115,7 @@ const Terms = () => {
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">5. הגבלת גיל וכשירות לרכישה</h2>
           <p className="text-muted-foreground leading-relaxed">
+            אנו דורשים שהרוכש יהיה בן 18 ומעלה.{" "}
             <strong>תנאי לרכישה באתר כי הרוכש הינו בן 18 שנים ומעלה.</strong>{" "}
             ביצוע רכישה או הרשמה לאתר מהווה הצהרת המשתמש כי מלאו לו 18 שנים ומעלה וכי
             הוא כשיר משפטית לכרות חוזה מחייב. קטין המבצע רכישה ללא אישור הורה או אפוטרופוס
@@ -123,7 +125,7 @@ const Terms = () => {
 
         {/* Section 6 — Delivery policy */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">6. מדיניות אספקת שירותים ומסירת תכנים</h2>
+          <h2 className="text-2xl font-bold">6. מדיניות אספקת מוצרים ושירותים ומסירת תכנים</h2>
           <p className="text-muted-foreground leading-relaxed font-semibold">תכנים דיגיטליים ומנויים:</p>
           <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
             <li>
@@ -159,7 +161,7 @@ const Terms = () => {
 
         {/* Section 7 — Liability + Product warranty */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">7. הגבלת אחריות</h2>
+          <h2 className="text-2xl font-bold">7. אחריות המוצר והגבלת אחריות</h2>
           <p className="text-muted-foreground leading-relaxed">
             החברה ו/או מי מטעמה לא יהיו אחראים לנזק ישיר ו/או עקיף שיגרם כתוצאה משימוש
             בשירות ו/או שימוש במוצר שנרכש באתר, לרבות נזק עקיף, נזק תוצאתי, אובדן הכנסה או אובדן נתונים.
@@ -206,6 +208,10 @@ const Terms = () => {
         <section id="privacy" className="space-y-3">
           <h2 className="text-2xl font-bold">9. מדיניות פרטיות</h2>
           <p className="text-muted-foreground leading-relaxed">
+            <Link to="/privacy-policy" className="underline text-primary hover:opacity-80">
+              מדיניות הפרטיות המלאה
+            </Link>{" "}
+            זמינה גם בכתובת /privacy-policy.
             החנות נוקטת באמצעי זהירות מקובלים על מנת לשמור, ככל האפשר, על סודיות המידע.
             החנות מתחייבת לא לעשות שימוש בפרטי הלקוחות הרשומים באתר אלא לצרכי תפעול האתר בלבד,
             ועל מנת לאפשר את ביצוע הרכישה.
