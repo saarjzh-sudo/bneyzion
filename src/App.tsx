@@ -27,8 +27,6 @@ import NotFound from "./pages/NotFound";
 const TeachersWingPage    = lazy(() => import("./pages/teachers/TeachersWingPage"));
 const TeachersSeriesPage  = lazy(() => import("./pages/teachers/TeachersSeriesPage"));
 const TeachersLessonPage  = lazy(() => import("./pages/teachers/TeachersLessonPage"));
-// Legacy TeachersWing kept for reference — will be deleted after Saar approves new pages
-const TeachersWing = lazy(() => import("./pages/TeachersWing"));
 const ChapterWeekly = lazy(() => import("./pages/ChapterWeekly"));
 const MegilatEsther = lazy(() => import("./pages/MegilatEsther"));
 const Proposal = lazy(() => import("./pages/Proposal"));
