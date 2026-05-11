@@ -4,6 +4,11 @@ import { createClient } from "@supabase/supabase-js";
 // .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
 // which silently breaks downstream string routing/comparisons.
 const GROW_API_URL = (process.env.GROW_API_URL || "").trim();
+// GROW_USER_ID is the legacy single-merchant fallback. Live cutover (May 2026)
+// introduced two separate Grow merchant accounts — one for store/subscription
+// ("עם קבלה") and one for donations ("קבלת תרומה") — each with its own userId
+// and pageCode. Read per-flow via GROW_USER_ID_{PAGE_CODE_ENV} (e.g.
+// GROW_USER_ID_PRODUCTS, _SUBSCRIPTION, _DONATIONS) and fall back to this.
 const GROW_USER_ID = (process.env.GROW_USER_ID || "").trim();
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim();
 const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
@@ -221,17 +226,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // ───── Decide flow type + pageCode ─────
+    // ───── Decide flow type + pageCode + userId ─────
     // Modern (product-driven): productCfg.type → page_code_env → env var
     // Legacy: type='product' → PRODUCTS, type='donation' → DONATIONS
+    // Each flow resolves BOTH pageCode AND userId from the same suffix so that
+    // donations route to the "קבלת תרומה" merchant and store/subscription
+    // route to the "עם קבלה" merchant (two separate Grow accounts).
     let flowType: "wallet" | "directDebit";
     let pageCode: string;
+    let userId: string;
     let cField2Value: string;
 
     if (productCfg) {
       flowType = productCfg.type;
       const envKey = `GROW_PAGECODE_${productCfg.page_code_env}`;
+      const userEnvKey = `GROW_USER_ID_${productCfg.page_code_env}`;
       pageCode = (process.env[envKey] || "").trim();
+      userId = (process.env[userEnvKey] || GROW_USER_ID).trim();
       cField2Value = flowType;
       if (!pageCode) {
         console.error(`Missing env ${envKey} for product ${productCfg.id}`);
@@ -244,10 +255,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (type === "donation" || type === "directDebit") {
         flowType = "directDebit";
         pageCode = (process.env.GROW_PAGECODE_DONATIONS || "").trim();
+        userId = (process.env.GROW_USER_ID_DONATIONS || GROW_USER_ID).trim();
         cField2Value = "donation";
       } else {
         flowType = "wallet";
         pageCode = (process.env.GROW_PAGECODE_PRODUCTS || "").trim();
+        userId = (process.env.GROW_USER_ID_PRODUCTS || GROW_USER_ID).trim();
         cField2Value = "product";
       }
       if (!pageCode) {
@@ -255,6 +268,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           .status(500)
           .json({ error: "Payment page not configured (legacy)" });
       }
+    }
+    if (!userId) {
+      console.error("create-payment: no userId resolved (live env not set?)");
+      return res
+        .status(500)
+        .json({ error: "Payment merchant not configured" });
     }
 
     // ───── Installments cap ─────
@@ -358,7 +377,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // ───── Build Grow createPaymentProcess payload ─────
     const formData = new FormData();
     formData.append("pageCode", pageCode);
-    formData.append("userId", GROW_USER_ID);
+    formData.append("userId", userId);
     formData.append("sum", String(sum));
     formData.append("description", description);
     formData.append("successUrl", successUrl);
