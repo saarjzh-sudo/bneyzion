@@ -226,10 +226,19 @@ Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
   4. Update `vercel.json` if any domain-absolute URLs present
   5. Submit OAuth consent screen for production verification
 
-### Grow (Meshulam) payment
+### Grow (Meshulam) payment — LIVE since 2026-05-11
 - SDK code at `api/grow/` + `src/hooks/useGrowPayment.ts`
 - DB-driven via `payment_products` table + hardcoded FALLBACK constants
-- See `MEMORY.md` "Grow lessons" entry for 10 known gotchas
+- **Two separate merchant accounts** (Grow sends 2 sets of credentials):
+  - "עם קבלה" (store + subscription) — `userId b9a035312abd46d9` / `pageCode efbda303565a`
+  - "קבלת תרומה" (donations) — `userId 3dd391811941cb35` / `pageCode b1dc5e695089`
+- **Code resolves userId per flow** via `GROW_USER_ID_{PAGE_CODE_ENV}` env vars
+  (PRODUCTS / SUBSCRIPTION / DONATIONS), with `GROW_USER_ID` as legacy fallback
+- API URL: `https://secure.meshulam.co.il/api/light/server/1.0` (was sandbox)
+- SDK environment: `PRODUCTION` (was DEV) — set via `VITE_GROW_ENVIRONMENT`
+- **Webhook URL** for Grow's server-side notifications panel: `https://bneyzion.vercel.app/api/grow/webhook`
+- ⚠️ **Open risk:** `GROW_PAGECODE_SUBSCRIPTION` shares the same value as PRODUCTS. Grow pageCodes are usually flow-specific (wallet vs directDebit). If weekly-chapter subscription fails in live, ask Grow for a dedicated directDebit pageCode.
+- See `MEMORY.md` "Grow lessons" entry for 12 known gotchas (now 12 incl. live cutover lessons)
 
 ### Other integrations (live)
 | Service | Purpose | Pointer |
@@ -2353,6 +2362,28 @@ This rule is also documented in the system memory at `feedback_netspark_level2_s
 - **Bug 4 (phantom tab):** "עזרי הוראה" tab never existed in original site (`bneyzion.co.il/מאגר-עזרי-הלמידה/`). Removed from `TABS` array in both `DesignPreviewTeachersWingV2.tsx` and `DesignPreviewTeacherSeriesPage.tsx`. `EzreiTab` function renamed `_EzreiTab_REMOVED` (kept as dead code). `Layers` import removed from TeacherSeriesPage.
 - **New iron rule:** Any hardcoded domain string (`bneyzion.vercel.app`, `bneyzion.co.il`) inside a JS template literal WILL be stripped by NetSpark from the bundle body. Use `window.location.origin` (computed at runtime) instead. Applies to canonical URLs, og:url, share links, etc.
 - **Playwright validation:** All 5 checks passed — 50 lessons displayed, canonical correct, footer clean, 5 tabs, 0 console errors.
+
+### 2026-05-11 — Grow LIVE cutover (commit 20cee68)
+
+Grow approved bneyzion for live clearance. Completed cutover same day:
+
+- **2 separate Grow merchant accounts** were provisioned:
+  - "עם קבלה" (store + subscription): `userId b9a035312abd46d9` / `pageCode efbda303565a`
+  - "קבלת תרומה" (donations): `userId 3dd391811941cb35` / `pageCode b1dc5e695089`
+- **Code refactor:** `api/grow/create-payment.ts` — `userId` is now resolved per-flow (`GROW_USER_ID_{PAGE_CODE_ENV}`), mirroring the existing pageCode-per-flow pattern. `GROW_USER_ID` remains as legacy fallback.
+- **Vercel env vars flipped** (9 vars):
+  - `GROW_API_URL` → `https://secure.meshulam.co.il/api/light/server/1.0` (was sandbox)
+  - `GROW_USER_ID` → live store userId (fallback)
+  - `GROW_USER_ID_PRODUCTS`, `GROW_USER_ID_SUBSCRIPTION` → `b9a035312abd46d9` (NEW)
+  - `GROW_USER_ID_DONATIONS` → `3dd391811941cb35` (NEW)
+  - `GROW_PAGECODE_PRODUCTS`, `GROW_PAGECODE_SUBSCRIPTION` → `efbda303565a`
+  - `GROW_PAGECODE_DONATIONS` → `b1dc5e695089`
+  - `VITE_GROW_ENVIRONMENT` → `PRODUCTION` (was empty → defaulted to DEV)
+- **Smoke test passed:** POST `/api/grow/create-payment` with `type: "donation"` returned real `authCode` + `processId 29212494` from `secure.meshulam.co.il`. Leaves one pending donation row in Supabase (orderId `fb5828d9-04a2-48a6-8e49-442fda186422`) — can be deleted manually.
+- **⚠️ Open risk:** Saar confirmed `GROW_PAGECODE_SUBSCRIPTION` should equal `GROW_PAGECODE_PRODUCTS` ("רגיל"). But Grow pageCodes are typically flow-specific (wallet vs directDebit). If weekly-chapter monthly billing fails in live, ask Grow for a dedicated directDebit pageCode for subscriptions.
+- **New iron rules (added to MEMORY):**
+  1. **Vercel CLI v52 `vercel env add`** requires `--value "..." -y` flags. Stdin (`printf|`, `echo|`) silently saves empty values. See `feedback_vercel_cli_env_add_v52.md`.
+  2. **Don't trust `vercel env pull` as verification** — production vars added via CLI v52 are sensitive-by-default → shown as `""` in pull even when correctly saved. Verify by smoke-testing the deployed endpoint.
 
 ---
 
