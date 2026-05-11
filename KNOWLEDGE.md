@@ -1468,6 +1468,40 @@ Most of the 69 series from מאגר-עזרי-הלמידה were NOT migrated:
 - חוברת סיכום per book as series
 - מפות per book as series (have 4 map lessons in כלי עזר but not per-book)
 
+### 2026-05-11 — Teachers Wing production rollout (Steps 0-12 complete)
+
+**Trigger:** Saar authorized full production rollout of Teachers Wing in one session.
+152 series were already tagged `audience_tags @> ['teachers']` — exceeding the 70-series target,
+so Step 1 (DB tag script approval) was bypassed.
+
+**New files created:**
+- `src/hooks/useTeacherSidebar.ts` — data hook for TeacherSidebar: Torah/Nevi'im/Ketuvim book trees with teacher-tagged children, tools sections, rabbis with teacher content
+- `src/components/teachers/TeacherSidebar.tsx` — production sidebar (3 tabs: ספרים / כלים / יוצרים), olive gradient banner, localStorage collapse key `bnz.teacher-sidebar.collapsed`, mobile off-canvas drawer, `activeSeriesId` prop for highlighting
+- `src/components/teachers/TeachersLayout.tsx` — layout wrapper: DesignHeader + TeacherSidebar + main + DesignFooter + DesignMobileBottomNav. `transparentOnTop={false}` (sidebar pages use solid header)
+- `src/pages/teachers/TeachersWingPage.tsx` — route `/teachers`, 5-tab page (ספרים/חידות/חומרי לימוד/כלים ומדריכים/איך מלמדים), olive hero, ViewToggle (grid/list) persisted to `localStorage['bnz.teachers.view']`
+- `src/pages/teachers/TeachersSeriesPage.tsx` — route `/teachers/series/:id`, lesson cards + TeacherLessonModal popup, FilterPanel (search + media + sort), olive hero with breadcrumb
+- `src/pages/teachers/TeacherLessonModal.tsx` — popup quick-view, closes on ESC/X/backdrop, lesson trio image chain, video/audio player, CTA "לדף המלא ←" → `/teachers/lesson/:id`, mobile full-screen bottom sheet via CSS
+- `src/pages/teachers/TeachersLessonPage.tsx` — route `/teachers/lesson/:id`, full lesson detail (third surface in lesson trio), 320px cinematic olive hero, video/audio/PDF/HTML content
+
+**Modified files:**
+- `src/lib/designTokens.ts` — added `shadows.card` + `shadows.modal`
+- `src/App.tsx` — 3 new production routes (`/teachers/series/:id`, `/teachers/lesson/:id`, `/teachers` → TeachersWingPage), `SandboxSeriesRedirect` component, sandbox redirects updated
+- `vercel.json` — `/אגף-המורים/*` + `/מאגר-עזרי-הלמידה/*` → permanent 301 to `/teachers`; `/design-teachers-wing-v2` + `/design-teachers-series/:id` → permanent 301
+
+**Backup tag created:** `backup-pre-teachers-rollout-2026-05-11`
+
+**TypeScript:** 0 errors. Build: clean. NetSpark Tier 3 audit: 0 files with literal `.supabase.co` in dist/assets/*.js.
+
+**New iron rule:** `react-helmet` is NOT installed in this project. Always use `useSEO` hook (`src/hooks/useSEO.ts`) for SEO meta in production pages. Never import `react-helmet`.
+
+**Bugs encountered and fixed:**
+- JSX Hebrew text with embedded `"` quotes broke parser → fix: wrap content in `{'...'}` single-quoted JS string
+- `useSEO` must be called before any conditional `return` (hooks rules). Used `// eslint-disable-next-line react-hooks/rules-of-hooks` comment when unavoidable.
+- `useNavigate` imported but not used after refactor → removed from import
+
+**Step 11 still pending:** Before deleting `src/pages/TeachersWing.tsx` (old production file),
+Saar must review deployed pages and give explicit approval. Legacy lazy import in `App.tsx` kept until then.
+
 ### 2026-05-03 — Store checkout migrated from WooCommerce redirect to internal Grow flow (commit 3382aa7)
 
 **Decision:** Option A — `products` table queried dynamically on `create-payment.ts` server. No data duplication into `payment_products`. New `store:<slug>` prefix on `meta.product` routes the request to the products table. Products table `source_url` column kept in DB (for reference), no longer used in UI.
