@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import { PlayerProvider } from "@/contexts/PlayerContext";
@@ -23,6 +23,11 @@ import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
 // Lazy-loaded: less frequently visited pages
+// Teachers Wing v2 — production pages (rollout 2026-05-11)
+const TeachersWingPage    = lazy(() => import("./pages/teachers/TeachersWingPage"));
+const TeachersSeriesPage  = lazy(() => import("./pages/teachers/TeachersSeriesPage"));
+const TeachersLessonPage  = lazy(() => import("./pages/teachers/TeachersLessonPage"));
+// Legacy TeachersWing kept for reference — will be deleted after Saar approves new pages
 const TeachersWing = lazy(() => import("./pages/TeachersWing"));
 const ChapterWeekly = lazy(() => import("./pages/ChapterWeekly"));
 const MegilatEsther = lazy(() => import("./pages/MegilatEsther"));
@@ -102,6 +107,12 @@ const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewT
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const Terms = lazy(() => import("./pages/Terms"));
+
+/** Redirect /design-teachers-series/:id → /teachers/series/:id (client-side fallback) */
+function SandboxSeriesRedirect() {
+  const { id } = useParams<{ id: string }>();
+  return <Navigate to={`/teachers/series/${id}`} replace />;
+}
 
 const LazyFallback = () => (
   <div className="flex items-center justify-center min-h-screen">
@@ -229,7 +240,10 @@ const App = () => (
           <ErrorBoundary>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWing /></Suspense>} />
+            {/* ── Teachers Wing v2 — production routes (rollout 2026-05-11) ── */}
+            <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWingPage /></Suspense>} />
+            <Route path="/teachers/series/:id" element={<Suspense fallback={<LazyFallback />}><TeachersSeriesPage /></Suspense>} />
+            <Route path="/teachers/lesson/:id" element={<Suspense fallback={<LazyFallback />}><TeachersLessonPage /></Suspense>} />
             <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
@@ -324,8 +338,9 @@ const App = () => (
             <Route path="/design-course" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
             <Route path="/design-course/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
             <Route path="/design-parasha" element={<Suspense fallback={<LazyFallback />}><DesignPreviewParasha /></Suspense>} />
-            <Route path="/design-teachers-wing-v2" element={<Suspense fallback={<LazyFallback />}><DesignPreviewTeachersWingV2 /></Suspense>} />
-            <Route path="/design-teachers-series/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewTeacherSeriesPage /></Suspense>} />
+            {/* Sandbox redirects → production (301 in vercel.json, Navigate here as fallback for client-side) */}
+            <Route path="/design-teachers-wing-v2" element={<Navigate to="/teachers" replace />} />
+            <Route path="/design-teachers-series/:id" element={<SandboxSeriesRedirect />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -85,6 +85,8 @@ export const shadows = {
   navScroll: "0 2px 24px rgba(45,31,14,0.07)",
 
   insetHighlight: "inset 0 1px 0 rgba(255,255,255,0.08)",
+  card: "0 4px 16px rgba(45,31,14,0.08)",
+  modal: "0 24px 80px rgba(45,31,14,0.25), 0 8px 24px rgba(45,31,14,0.12)",
 } as const;
 
 // ── Radii ──────────────────────────────────────────────────────────────────
