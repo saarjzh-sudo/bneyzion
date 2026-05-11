@@ -2419,6 +2419,15 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   1. **Vercel CLI v52 `vercel env add`** requires `--value "..." -y` flags. Stdin (`printf|`, `echo|`) silently saves empty values. See `feedback_vercel_cli_env_add_v52.md`.
   2. **Don't trust `vercel env pull` as verification** — production vars added via CLI v52 are sensitive-by-default → shown as `""` in pull even when correctly saved. Verify by smoke-testing the deployed endpoint.
 
+### 2026-05-11 — מחיקת TeachersWing.tsx (Step 11 של Teachers Wing rollout)
+- **Commit hash:** `eafe1c0` (push `5b36fec..eafe1c0 main -> main`)
+- **מצב קודם:** `src/pages/TeachersWing.tsx` היה ה-production component של `/teachers` (764 שורות, single-tab legacy)
+- **מצב חדש:** `/teachers` משתמש ב-`src/pages/teachers/TeachersWingPage.tsx` (5 טאבים, olive hero, TeacherSidebar) מאז rollout commit `5b36fec`
+- **גם הוסר:** ה-lazy-import declaration בשורה 31 של `src/App.tsx` (`const TeachersWing = lazy(...)`) שנשאר כ"legacy reference" אחרי ה-rollout — הוסר בצמוד למחיקה
+- **TypeScript:** 0 errors לאחר המחיקה
+- **לשחזור חירום:** `git show eafe1c0~1:src/pages/TeachersWing.tsx > src/pages/TeachersWing.tsx`
+- **Rollback מלא של ה-rollout:** `git checkout backup-pre-teachers-rollout-2026-05-11`
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
