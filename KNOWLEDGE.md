@@ -2550,5 +2550,27 @@ Full grep across `src/` for each pattern. Results below.
 
 ---
 
+### 2026-05-12 — Yehoshua Campaign v2 — full Headstart rebuild (commit e1c443b)
+
+- **File:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
+- **Route:** `/design-yehoshua-campaign`
+- 11 structural changes applied per Saar's brief:
+  1. Signup form (name/email/phone) removed completely — not appropriate on a live-campaign page
+  2. Large Progress Bar added between Hero and Tiers (₪7K/₪80K, 23 donors, days remaining, animated CSS width)
+  3. Grow payment modal integrated on every tier CTA — uses `useGrowPayment` hook, `type: "product"` → routes to "עם קבלה" merchant
+  4. "חזרה לאתר" button removed from nav
+  5. Toast notifications: 10 rotating donor messages, CSS-only `toastIn` animation, every 8s, auto-dismiss after 4s
+  6. Paamon font kept and cleaned up — all weights (400/700/900) from bneyzion.vercel.app/fonts/
+  7. Hebrew dates corrected: launch כ"ח סיון תשפ"ו (2026-06-24), end כ"ד תמוז תשפ"ו (2026-07-29)
+  8. Stretch Goals section removed
+  9. Testimonials section removed (contained invented names — not acceptable)
+  10. New 7-tier structure: ₪90 (EB)/₪120/₪220/₪400(popular)/₪800/₪1200/₪2000 each with `limit` + `claimed` counter
+  11. Page order changed: Hero → Progress Bar → Tiers → Story → About → Timeline → FAQ
+- **Constraint learned:** "הסט המלא של בני ציון" is not yet defined precisely — used placeholder description; real product list should be confirmed with Yoav before launch
+- **Constraint confirmed:** Toast notifications must use CSS-only animation (no framer-motion per iron rule)
+- **Constraint confirmed:** Grow type `"product"` correctly routes to "עם קבלה" merchant (not donations)
+
+---
+
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
