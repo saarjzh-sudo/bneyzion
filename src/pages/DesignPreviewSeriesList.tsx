@@ -248,7 +248,8 @@ export default function DesignPreviewSeriesList() {
               }}
             >
               {top5.map((s, i) => {
-                const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
+                const seriesFamily = getSeriesFamily(s.title, s.description);
+                const fam = seriesFamilies[seriesFamily];
                 const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
                 const isFirst = i === 0;
                 return (
@@ -365,22 +366,24 @@ export default function DesignPreviewSeriesList() {
                       >
                         <div>
                           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.65rem", flexWrap: "wrap" }}>
-                            <span
-                              style={{
-                                display: "inline-block",
-                                padding: "0.22rem 0.6rem",
-                                borderRadius: radii.sm,
-                                background: fam.badgeBg,
-                                color: fam.badgeFg,
-                                fontFamily: fonts.body,
-                                fontSize: "0.65rem",
-                                letterSpacing: "0.1em",
-                                fontWeight: 700,
-                                textTransform: "uppercase",
-                              }}
-                            >
-                              {fam.label}
-                            </span>
+                            {seriesFamily !== "sacredCanon" && (
+                              <span
+                                style={{
+                                  display: "inline-block",
+                                  padding: "0.22rem 0.6rem",
+                                  borderRadius: radii.sm,
+                                  background: fam.badgeBg,
+                                  color: fam.badgeFg,
+                                  fontFamily: fonts.body,
+                                  fontSize: "0.65rem",
+                                  letterSpacing: "0.1em",
+                                  fontWeight: 700,
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                {fam.label}
+                              </span>
+                            )}
                             <TeacherContentBadge tags={s.audience_tags} />
                           </div>
                           <div
@@ -496,7 +499,8 @@ export default function DesignPreviewSeriesList() {
             }}
           >
             {filteredAll.slice(0, 24).map((s) => {
-              const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
+              const seriesFamily = getSeriesFamily(s.title, s.description);
+              const fam = seriesFamilies[seriesFamily];
               return (
                 <Link
                   key={s.id}
@@ -523,22 +527,24 @@ export default function DesignPreviewSeriesList() {
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "0.15rem 0.5rem",
-                          borderRadius: radii.sm,
-                          background: fam.badgeBg,
-                          color: fam.badgeFg,
-                          fontFamily: fonts.body,
-                          fontSize: "0.6rem",
-                          letterSpacing: "0.08em",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        {fam.label}
-                      </span>
+                      {seriesFamily !== "sacredCanon" && (
+                        <span
+                          style={{
+                            display: "inline-block",
+                            padding: "0.15rem 0.5rem",
+                            borderRadius: radii.sm,
+                            background: fam.badgeBg,
+                            color: fam.badgeFg,
+                            fontFamily: fonts.body,
+                            fontSize: "0.6rem",
+                            letterSpacing: "0.08em",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          {fam.label}
+                        </span>
+                      )}
                       <TeacherContentBadge tags={s.audience_tags} variant="small" />
                     </div>
                     <div

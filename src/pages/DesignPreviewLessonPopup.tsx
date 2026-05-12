@@ -70,7 +70,8 @@ export default function DesignPreviewLessonPopup() {
     );
   }
 
-  const fam = seriesFamilies[getSeriesFamily(topSeries.title, topSeries.description)];
+  const seriesFamily = getSeriesFamily(topSeries.title, topSeries.description);
+  const fam = seriesFamilies[seriesFamily];
   const rabbiName = topSeries.rabbis?.name || "";
   const rabbiInitial = rabbiName ? (rabbiName.replace(/^הרב /, "")[0] || "ר") : "ר";
   const lessonType: "video" | "audio" = lesson.source_type === "audio" ? "audio" : "video";
@@ -293,21 +294,23 @@ export default function DesignPreviewLessonPopup() {
                   flexWrap: "wrap",
                 }}
               >
-                <span
-                  style={{
-                    padding: "0.25rem 0.65rem",
-                    borderRadius: radii.sm,
-                    background: fam.badgeBg,
-                    color: fam.badgeFg,
-                    fontFamily: fonts.body,
-                    fontSize: "0.66rem",
-                    letterSpacing: "0.12em",
-                    fontWeight: 700,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {fam.label}
-                </span>
+                {seriesFamily !== "sacredCanon" && (
+                  <span
+                    style={{
+                      padding: "0.25rem 0.65rem",
+                      borderRadius: radii.sm,
+                      background: fam.badgeBg,
+                      color: fam.badgeFg,
+                      fontFamily: fonts.body,
+                      fontSize: "0.66rem",
+                      letterSpacing: "0.12em",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {fam.label}
+                  </span>
+                )}
                 <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textSubtle }}>
                   סדרה: <span style={{ color: colors.goldDark, fontWeight: 600 }}>{topSeries.title}</span>
                 </span>

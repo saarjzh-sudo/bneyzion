@@ -43,7 +43,8 @@ function SeriesHero({
   totalDuration: string;
   imageUrl: string;
 }) {
-  const fam = seriesFamilies[getSeriesFamily(series.title, series.description)];
+  const seriesFamily = getSeriesFamily(series.title, series.description);
+  const fam = seriesFamilies[seriesFamily];
   const rabbiName = series.rabbis?.name || "";
 
   return (
@@ -90,26 +91,28 @@ function SeriesHero({
           margin: "0 auto",
         }}
       >
-        <div
-          style={{
-            display: "inline-block",
-            padding: "0.4rem 1rem",
-            borderRadius: radii.pill,
-            background: "rgba(232,213,160,0.15)",
-            border: `1px solid rgba(232,213,160,0.3)`,
-            color: colors.goldShimmer,
-            fontFamily: fonts.body,
-            fontSize: "0.72rem",
-            fontWeight: 700,
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            marginBottom: "1.25rem",
-            backdropFilter: "blur(8px)",
-            WebkitBackdropFilter: "blur(8px)",
-          }}
-        >
-          {fam.label}
-        </div>
+        {seriesFamily !== "sacredCanon" && (
+          <div
+            style={{
+              display: "inline-block",
+              padding: "0.4rem 1rem",
+              borderRadius: radii.pill,
+              background: "rgba(232,213,160,0.15)",
+              border: `1px solid rgba(232,213,160,0.3)`,
+              color: colors.goldShimmer,
+              fontFamily: fonts.body,
+              fontSize: "0.72rem",
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              marginBottom: "1.25rem",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+            }}
+          >
+            {fam.label}
+          </div>
+        )}
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "1rem" }}>
           <div style={{ width: 50, height: 1, background: "rgba(232,213,160,0.45)" }} />
@@ -570,7 +573,8 @@ function RelatedSeries({ allSeries, currentSeries }: { allSeries: any[]; current
           }}
         >
           {related.map((s) => {
-            const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
+            const relatedFamily = getSeriesFamily(s.title, s.description);
+            const fam = seriesFamilies[relatedFamily];
             const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
             return (
               <div
@@ -619,23 +623,25 @@ function RelatedSeries({ allSeries, currentSeries }: { allSeries: any[]; current
                   }}
                 >
                   <div>
-                    <span
-                      style={{
-                        display: "inline-block",
-                        padding: "0.22rem 0.6rem",
-                        borderRadius: radii.sm,
-                        background: fam.badgeBg,
-                        color: fam.badgeFg,
-                        fontFamily: fonts.body,
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.1em",
-                        fontWeight: 700,
-                        textTransform: "uppercase",
-                        marginBottom: "0.5rem",
-                      }}
-                    >
-                      {fam.label}
-                    </span>
+                    {relatedFamily !== "sacredCanon" && (
+                      <span
+                        style={{
+                          display: "inline-block",
+                          padding: "0.22rem 0.6rem",
+                          borderRadius: radii.sm,
+                          background: fam.badgeBg,
+                          color: fam.badgeFg,
+                          fontFamily: fonts.body,
+                          fontSize: "0.65rem",
+                          letterSpacing: "0.1em",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        {fam.label}
+                      </span>
+                    )}
                     <div
                       style={{
                         fontFamily: fonts.display,
