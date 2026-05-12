@@ -76,7 +76,8 @@ export default function DesignPreviewLessonPage() {
     );
   }
 
-  const fam = seriesFamilies[getSeriesFamily(series.title, series.description)];
+  const seriesFamily = getSeriesFamily(series.title, series.description);
+  const fam = seriesFamilies[seriesFamily];
   const heroImage = lesson.thumbnail_url || series.image_url || getSeriesCoverImage(series.title) || "/images/series-default.png";
   const isAudio = lesson.source_type === "audio";
   const rabbiName = (lesson.rabbis?.name || series.rabbis?.name || "").trim();
@@ -164,23 +165,25 @@ export default function DesignPreviewLessonPage() {
 
           {/* Family + lesson number */}
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-            <span
-              style={{
-                padding: "0.3rem 0.75rem",
-                borderRadius: radii.pill,
-                background: "rgba(232,213,160,0.15)",
-                border: "1px solid rgba(232,213,160,0.3)",
-                color: colors.goldShimmer,
-                fontFamily: fonts.body,
-                fontSize: "0.7rem",
-                fontWeight: 700,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                backdropFilter: "blur(8px)",
-              }}
-            >
-              {fam.label}
-            </span>
+            {seriesFamily !== "sacredCanon" && (
+              <span
+                style={{
+                  padding: "0.3rem 0.75rem",
+                  borderRadius: radii.pill,
+                  background: "rgba(232,213,160,0.15)",
+                  border: "1px solid rgba(232,213,160,0.3)",
+                  color: colors.goldShimmer,
+                  fontFamily: fonts.body,
+                  fontSize: "0.7rem",
+                  fontWeight: 700,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                {fam.label}
+              </span>
+            )}
             <span
               style={{
                 padding: "0.3rem 0.75rem",
