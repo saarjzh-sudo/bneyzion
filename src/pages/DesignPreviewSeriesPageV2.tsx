@@ -1896,8 +1896,8 @@ function LessonModal({
             </p>
           )}
 
-          {/* ── "פתח בעמוד מלא" link ── */}
-          <div style={{ marginBottom: "1.25rem" }}>
+          {/* ── "פתח בעמוד מלא" link — shown only for non-text lessons (audio/video/pdf need separate page; text is fully shown inline) ── */}
+          {mediaType !== "text" && <div style={{ marginBottom: "1.25rem" }}>
             <Link
               to={`/lessons/${lesson.id}`}
               style={{
@@ -1928,7 +1928,7 @@ function LessonModal({
               <ExternalLink style={{ width: 13, height: 13 }} />
               פתח בעמוד מלא
             </Link>
-          </div>
+          </div>}
 
           {/* ── שיעורים נוספים מהסדרה ── */}
           {moreLessons.length > 0 && (
