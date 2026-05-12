@@ -2428,6 +2428,23 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - **לשחזור חירום:** `git show eafe1c0~1:src/pages/TeachersWing.tsx > src/pages/TeachersWing.tsx`
 - **Rollback מלא של ה-rollout:** `git checkout backup-pre-teachers-rollout-2026-05-11`
 
+### 2026-05-12 — Headstart pre-launch sandbox page: /design-yehoshua-campaign (commit 5f26d9b)
+
+- **New file:** `src/pages/DesignPreviewYehoshuaCampaign.tsx` (1889 lines)
+- **Route registered:** `/design-yehoshua-campaign` in `src/App.tsx`
+- **Context:** Standalone sandbox page for the ספר יהושע Headstart crowdfunding campaign by Rabbi Yoav Uriel. Strategy and content from `O-output/bnei-zion-headstart-yehoshua/STRATEGY.md` + `landing-page-prelaunch-v2.html` (both built in a prior session on 2.5.2026).
+- **Design layer added** over existing HTML:
+  1. Sticky top bar (shows on scroll — campaign meta + CTA)
+  2. 8-tier card grid with per-tier CTA, early-bird badge, "most popular" badge, limit counter, sold-out state support
+  3. Sticky mobile bottom CTA bar (fixed bottom, progress pill + pledge button)
+  4. Campaign timeline strip (6 phases, current phase highlighted)
+  5. Animated recent-backers scroll strip (simulated, loops)
+  6. Stretch goals section (3 goals from STRATEGY.md §4.4)
+- **Content:** 100% from existing STRATEGY.md/HTML — no new copy invented. Tiers, prices, names, stretch goals all from §4.1 and §4.4 of STRATEGY.md.
+- **No production files touched.** Sandbox-only.
+- **TS check:** 0 errors.
+- **Pending:** form endpoint (Smoove / Supabase) — placeholder only, same as v2 HTML. Awaiting Yoav approval before publishing.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
