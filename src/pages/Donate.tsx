@@ -350,7 +350,7 @@ const Donate = () => {
                 <ShieldCheck className="h-3 w-3" />
                 סליקה מאובטחת באמצעות Grow — אשראי, ביט, Apple Pay, Google Pay
                 <br />
-                תרומות מעל ₪100 מזכות באישור לפי סעיף 46
+                תרומות מזכות בקבלה לצורך ניכוי מס לפי סעיף 46
               </p>
             </motion.div>
 

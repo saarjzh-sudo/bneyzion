@@ -135,7 +135,7 @@ const RabbiPage = () => {
           {/* Recent Lessons */}
           {lessons && lessons.length > 0 && (
             <section>
-              <h2 className="text-xl font-heading text-foreground mb-6">שיעורים אחרונים</h2>
+              <h2 className="text-xl font-heading text-foreground mb-6">שיעורים ({lessons.length})</h2>
               <div className="space-y-2">
                 {lessons.map((l, i) => {
                   const lSeries = l.series as { id: string; title: string } | null;
