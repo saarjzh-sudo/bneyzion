@@ -2492,6 +2492,62 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   No code change needed. Rav Yoav may have seen an older version.
 - **TS check:** 0 errors.
 
+### 2026-05-12 — Systemic scan of all 7 Rav Yoav bugs across the full codebase (commit 3243c28)
+
+#### Scan methodology
+Full grep across `src/` for each pattern. Results below.
+
+#### #4 — `status` filter across all hooks/components
+- **series.status** values: `'active'` | `'draft'` (from admin UI `admin/Series.tsx`)
+- **lessons.status** values: `'published'` | `'draft'`
+- **rabbis.status** values: `'active'` | `'inactive'`
+- **products.status** values: `'active'` | `'draft'` | `'archived'`
+- **Verdict:** All hooks use the correct status values. The bug was isolated to `useRabbi.ts`
+  (`useRabbiSeries` queried `series` with only `'active'` — now fixed in bdc37c6 to use `.in(["active","published"])`).
+  No other hooks mix statuses incorrectly.
+- **Iron rule confirmed:** For `series`, use `.eq("status", "active")` only. For `lessons`, use `.eq("status", "published")`.
+  For `rabbis`, use `.eq("status", "active")`. `useRabbi.ts` gets `.in(["active","published"])` because it fetches
+  series *for a rabbi page* which may include older series with legacy `'published'` status.
+
+#### #5 — Fullscreen button
+- Fixed in bdc37c6 for `DesignPreviewSeriesPageV2.tsx` — `{mediaType !== "text" && ...}` guard.
+- Scanned entire codebase: `allowFullScreen` attribute on iframes (LessonPage, LessonDialog, KnesPage, CommunityDetailPage, CommunityCoursePage) is an HTML attribute, not a "button". No other "פתח בעמוד מלא" text buttons exist.
+- `LessonPage.tsx:299` "פתח בחלון חדש" is for PDF attachment viewer only — correct behavior.
+
+#### #6 — `sacredCanon` as default family badge — SYSTEMIC FIX (commit 3243c28)
+- **Root pattern:** every `{fam.label}` rendered without `getSeriesFamily(...) !== "sacredCanon"` guard shows
+  the fallback label "קאנון מקודש" on all unclassified series — misleading.
+- **Files fixed** (5 files, 7 badge spots total):
+  - `DesignPreviewSeriesList.tsx` — top5 cards + catalog grid
+  - `DesignPreviewSeriesPage.tsx` — hero label + related-series cards
+  - `DesignPreviewLessonPage.tsx` — hero family badge
+  - `DesignPreviewLessonPopup.tsx` — modal badge row
+  - `DesignPreviewPortal.tsx` — enrolled-series cards
+- **Already correct:** `DesignPreviewRabbi.tsx` (fixed bdc37c6), filter-row chips in SeriesList (intentionally show all families).
+- **Pattern for future:** always `const seriesFamily = getSeriesFamily(...)` + `{seriesFamily !== "sacredCanon" && <span>{fam.label}</span>}`
+
+#### #7 — Hardcoded amounts
+- `Donate.tsx` ₪100 minimum qualifier removed in bdc37c6.
+- All other amounts in `Donate.tsx` are preset values (₪36/72/180/520/1800) — correct, not bugs.
+- `DesignPreviewDonate.tsx` "Impact" amounts (₪50/180/360/1000) are examples of what donations fund — not minimums.
+- No erroneous amounts found elsewhere (About.tsx, Footer, Terms, FAQ).
+
+#### #1 — Biblical order
+- `sortByBiblicalOrder` from `src/lib/biblicalOrder.ts` is used in: `useContentSidebar`, `useTeachersWing`, `useTeacherSidebar`.
+- `DesignPreviewChapterWeekly.tsx` has local `BIBLE_ORDER` array (independent, correct).
+- No other pages display Tanakh book lists unsorted.
+
+#### #3 — LessonComments
+- `LessonPage.tsx`: import + section removed in commit 314525e.
+- `LessonComments.tsx` component remains as dead code (no imports anywhere). Safe to delete later if Saar confirms.
+- `DesignPreviewLessonPage.tsx:489`: has `{/* Comments placeholder */}` comment only — no actual import or render.
+- `roadmapData.ts:346`: historical reference in roadmap data — no action needed.
+
+#### #2 — Imagen prompts
+- `scripts/generate_shir_hashirim_images.py`: STYLE constant includes "No text or letters. No human figures." — correct.
+- `scripts/generate_image.py`: STYLE_CONSTANTS includes "No text or letters." — correct.
+- Both scripts use the style as a prefix to all prompts via `build_full_prompt()`.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
