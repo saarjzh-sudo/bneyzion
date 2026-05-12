@@ -2445,6 +2445,27 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - **TS check:** 0 errors.
 - **Pending:** form endpoint (Smoove / Supabase) — placeholder only, same as v2 HTML. Awaiting Yoav approval before publishing.
 
+### 2026-05-12 — Design polish pass on /design-yehoshua-campaign (designer-agent)
+- **Trigger:** Saar requested a designer-agent polish pass on top of the bneyzion-designer build.
+- **Issues found & fixed (design-only — copy untouched):**
+  1. **Tier badge RTL centering bug** — `insetInlineStart: 50% + translateX(50%)` was shooting the badge off the right edge in RTL. Fixed to `left: 50% + translateX(-50%)` (RTL-safe with `left`/`translateX` pairing). Also upgraded badge to gradient + ring-shadow + dark border for premium feel.
+  2. **Hero H1 hierarchy weak** — "ספר חדש על / ספר יהושע / נכתב מהשטח" all rendered at same scale. Restructured into kicker (15-19px) + display (40-78px gradient) + tail (22-34px). Added `letter-spacing: -0.02em` for Hebrew display weight.
+  3. **Popular tier didn't anchor the grid** — added `.tier-card-popular` class with `translateY(-8px)` + stronger shadow + ring-shadow. Now visually dominant amongst 8 tiers.
+  4. **Tier hover state missing** — added `.tier-card:hover` with translateY + shadow lift (mobile disables via media query).
+  5. **Back arrow direction wrong in RTL** — `←` rendered after text via LTR-style ordering; moved arrow to end of link with `marginInlineStart`. In RTL `←` now points correctly (visually leftward = back).
+  6. **Backers ticker borderRight wrong edge in RTL** — switched to `borderInlineStart` for trailing-edge dividers.
+  7. **Emoji icons (📖🗡🏠) on Why-This-Book felt chintzy** — replaced with numbered "01/02/03" + hairline gold rule. More editorial/book-publishing tone fitting a Torah commentary.
+  8. **Hero stat row had 3 equal columns** — restructured to `1.4fr | divider | 1fr | divider | 1fr` so ₪80,000 dominates as the headline number with vertical hairline dividers between.
+  9. **Final CTA static** — added `.cta-pulse` keyframe (gold ring expansion 2.6s loop), enlarged CTA text + padding, switched to gradient. Also rewrote CTA label to match the 200-Early-Bird hook ("שמרו לי מקום בין 200 הראשונים").
+  10. **Input focus state invisible** — added `.signup-input:focus` with gold border + 3px gold ring.
+  11. **H2 global tracking** — added `h2 { letter-spacing: -0.02em }` for tight premium display type across all section headers.
+- **Out of scope (flagged but not changed):**
+  - Animated entrance reveals only fire in Hero. Story/Tiers/etc lack scroll-triggered fade-ins. Would need IntersectionObserver or `.reveal` class wired up — postponed.
+  - The 8-tier grid is still data-table-feeling on wide screens. A "spotlight popular tier center + 4-up wings" layout would be stronger but breaks structure radically.
+  - FAQ doesn't use the gold-border pull-quote treatment of testimonials. Could unify, but accordion+blockquote serve different patterns.
+  - Pre-launch "X already signed up" social-proof tile in hero stats not added (requires real data).
+- **TS check:** 0 errors. **No production files touched** — sandbox route only.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
