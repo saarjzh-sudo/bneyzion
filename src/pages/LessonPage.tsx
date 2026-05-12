@@ -16,7 +16,6 @@ import { Separator } from "@/components/ui/separator";
 import { useSEO } from "@/hooks/useSEO";
 import { formatRabbiName } from "@/lib/rabbi-name";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
-import LessonComments from "@/components/lesson/LessonComments";
 import AIChatWidget from "@/components/ai/AIChatWidget";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
@@ -356,13 +355,6 @@ const LessonPage = () => {
               </Button>
             </div>
           ) : null}
-
-          {/* Comments */}
-          {lesson && (
-            <section className="mt-12">
-              <LessonComments lessonId={lesson.id} />
-            </section>
-          )}
 
           {/* AI Chat Widget */}
           {/* <AIChatWidget context={`שיעור: ${lesson?.title}${rabbi ? ` מאת ${rabbiName}` : ""}`} /> */}
