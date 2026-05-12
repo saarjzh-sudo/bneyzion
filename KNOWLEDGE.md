@@ -2480,6 +2480,18 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   - Pre-launch "X already signed up" social-proof tile in hero stats not added (requires real data).
 - **TS check:** 0 errors. **No production files touched** — sandbox route only.
 
+### 2026-05-12 — Remove LessonComments from LessonPage (Rav Yoav request #3) (commit 314525e)
+- **Request:** Rav Yoav asked to remove the comments section completely from lesson pages.
+- **File changed:** `src/pages/LessonPage.tsx`
+  - Removed import: `import LessonComments from "@/components/lesson/LessonComments"`
+  - Removed the `{/* Comments */}` section block (6 lines) from the JSX
+  - The `LessonComments` component file itself (`src/components/lesson/LessonComments.tsx`)
+    is NOT deleted — left intact in case it's needed elsewhere or reactivated later.
+- **Request #8 (Donate.tsx — bank transfer removal):** Investigated — the current `Donate.tsx`
+  does NOT contain any bank transfer section. The Grow-only payment flow was already in place.
+  No code change needed. Rav Yoav may have seen an older version.
+- **TS check:** 0 errors.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
