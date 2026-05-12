@@ -2445,6 +2445,20 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - **TS check:** 0 errors.
 - **Pending:** form endpoint (Smoove / Supabase) — placeholder only, same as v2 HTML. Awaiting Yoav approval before publishing.
 
+### 2026-05-12 — Bug fixes from Rav Yoav's QA review (commit bdc37c6)
+- **Trigger:** Rav Yoav sent 7 bug reports (text + screenshots) via WhatsApp personal chat today.
+- **Bugs found and fixed:**
+  1. **useRabbi.ts — `useRabbiSeries` returned 0 series for most rabbis.** Root cause: (a) hook filtered `.eq("status","active")` but most series have `status="published"`. (b) Hook only looked at `series.rabbi_id` — didn't find series where rabbi contributed as guest (e.g. נתן מארגל in פרשת השבוע multi-rabbi series). Fix: added union query — owned series with status IN ('active','published') PLUS series that have at least 1 published lesson from this rabbi via `lessons.rabbi_id`.
+  2. **RabbiPage.tsx — "שיעורים אחרונים" section title confusing + 20-lesson cap.** Renamed to "שיעורים (N)" with dynamic count. Raised limit to 50.
+  3. **DesignPreviewRabbi.tsx [sandbox] — "קאנון מקודש" badge on every series card.** `getSeriesFamily()` returns `sacredCanon` as a fallback for any series not matching a specific keyword pattern — so all Tanakh book-series (דניאל, ישעיהו etc.) got this badge. Fix: wrapped badge in `{getSeriesFamily() !== "sacredCanon" && ...}` — only non-default families show a badge.
+  4. **DesignPreviewSeriesPageV2.tsx [sandbox] — "פתח בעמוד מלא" shown for text lessons.** For text-type lessons the popup already shows the full content inline; the extra link is a confusing dead-end. Fix: hide the link when `mediaType === "text"`.
+  5. **Donate.tsx — "תרומות מעל ₪100 מזכות באישור לפי סעיף 46"** was misleading (the threshold is actually 180₪ by law). Rephrased to "תרומות מזכות בקבלה לצורך ניכוי מס לפי סעיף 46" without a monetary qualifier.
+- **Not fixed (requires Saar decision):**
+  - Bug 1 (00:36): Sorting series on rabbi page by biblical order — needs biblicalOrder library integration; out of scope for hotfix.
+  - Bug 2 (09:27): AI image generation produces Hebrew text artifacts — this is a Gemini Imagen prompt engineering issue, not a code bug. Document the prompt fix separately.
+  - Bug 7 (10:24): Bank transfer donation option unclear — Saar to decide if to hide it.
+- **Constraint learned:** `series.status` in DB uses 4 values: 'active', 'published', 'category', 'draft'. Only 'active' and 'published' are user-facing. Old hooks that filter only 'active' silently miss half the series.
+
 ### 2026-05-12 — Design polish pass on /design-yehoshua-campaign (designer-agent)
 - **Trigger:** Saar requested a designer-agent polish pass on top of the bneyzion-designer build.
 - **Issues found & fixed (design-only — copy untouched):**
