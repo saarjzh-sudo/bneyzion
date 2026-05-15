@@ -1159,12 +1159,11 @@ export default function DesignPreviewYehoshuaCampaign() {
                   boxShadow: "0 4px 16px hsl(38 75% 50% / 0.35)",
                 }}
               >
-                <p style={{ fontSize: 10, fontWeight: 700, margin: 0 }}>סבב מילואים</p>
-                <p style={{ fontSize: 24, fontWeight: 900, lineHeight: 1, margin: 0 }}>6</p>
+                <p style={{ fontSize: 10, fontWeight: 700, margin: 0 }}>מילואים</p>
+                <p style={{ fontSize: 18, fontWeight: 900, lineHeight: 1, margin: 0 }}>סוריה</p>
               </div>
 
               {/* Image frame */}
-              {/* TODO(yoav): replace with new IDF photo — pending from Yoav 13.5.2026 */}
               <div
                 style={{
                   borderRadius: 18,
@@ -1174,46 +1173,10 @@ export default function DesignPreviewYehoshuaCampaign() {
                   position: "relative",
                 }}
               >
-                {/* Placeholder */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    background: "hsl(215 40% 20% / 0.85)",
-                    zIndex: 3,
-                    flexDirection: "column",
-                    gap: 8,
-                    pointerEvents: "none",
-                  }}
-                >
-                  <span style={{ fontSize: 26 }}>📷</span>
-                  <span
-                    style={{
-                      color: "hsl(38 85% 70%)",
-                      fontWeight: 700,
-                      fontSize: 13,
-                      textAlign: "center",
-                      padding: "0 12px",
-                    }}
-                  >
-                    תמונה מהצבא — ממתין מיואב
-                  </span>
-                </div>
                 <img
-                  src="https://club.bneyzion.co.il/wp-content/uploads/2026/04/rav-yoav.jpg"
-                  alt="הרב יואב אוריאל"
-                  style={{ width: "100%", display: "block", opacity: 0.35 }}
-                  onError={(e) => {
-                    const el = e.target as HTMLImageElement;
-                    el.style.minHeight = "360px";
-                    el.style.background = "hsl(215 55% 18%)";
-                  }}
+                  src="/images/yoav-campaign/yoav-with-shoftim-book.jpg"
+                  alt="הרב יואב אוריאל אוחז בספר שופטים, מהמילואים בגבול סוריה"
+                  style={{ width: "100%", display: "block" }}
                 />
                 <div
                   style={{
@@ -1605,16 +1568,10 @@ export default function DesignPreviewYehoshuaCampaign() {
                   boxShadow: "0 8px 32px hsl(38 50% 55% / 0.1)",
                 }}
               >
-                {/* TODO(yoav): replace with approved photo — pending */}
                 <img
-                  src="https://club.bneyzion.co.il/wp-content/uploads/2026/04/rav-yoav.jpg"
-                  alt="הרב יואב אוריאל"
+                  src="/images/yoav-campaign/yoav-writing-on-tank.jpg"
+                  alt="הרב יואב אוריאל כותב על הטנק, מהמילואים בגבול סוריה"
                   style={{ width: "100%", display: "block" }}
-                  onError={(e) => {
-                    const el = e.target as HTMLImageElement;
-                    el.style.minHeight = "340px";
-                    el.style.background = "hsl(215 40% 20%)";
-                  }}
                 />
               </div>
             </div>
