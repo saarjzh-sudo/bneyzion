@@ -3,37 +3,52 @@
  * Route: /design-yehoshua-campaign
  *
  * Campaign page for "ספר יהושע" by Rabbi Yoav Uriel.
- * Updated 2026-05-14 per Yoav's feedback (round 1): copy rewrites, tier restructure,
- * biography corrections, timeline conversion to Hebrew months, hero image placeholder.
  *
- * Page structure:
- * 1. Sticky top bar
- * 2. Hero split: copy right + image left (RTL)
- * 3. Recent supporters scroll strip
- * 4. The Story section
- * 5. Why this book — 3 cards
- * 6. About Yoav
- * 7. Tiers (מסלולות תמיכה)
- * 8. Stretch goals (יעדי המשך)
- * 9. Campaign timeline
- * 10. Testimonials
- * 11. FAQ
- * 12. Final CTA
+ * Rebuild 2026-05-15 — Saar's full structural vision applied:
+ * - Headstart framing (not "מימון המונים")
+ * - Progress bar under hero: ₪7K / ₪80K + supporter count
+ * - Tiers MOVED UP (right after hero/progress)
+ * - Saar's 7-tier ladder (₪90 EarlyBird → ₪2000 studio lesson)
+ * - No pre-launch name/email/WA form anywhere
+ * - Stretch Goals removed entirely
+ * - Fake testimonials (קול הקהילה) removed — section removed
+ * - CTA links to /donate with amount param (Grow קבלת-תרומה merchant)
+ * - Bell-icon donation success toast (visual mock)
+ * - Hebrew months only in timeline
+ * - Consistent typography on all section headlines (single sans style)
+ *
+ * Yoav's factual fixes preserved:
+ * - 480 עמודים
+ * - "הספר יצא לאור"
+ * - "בגבול סוריה" (not "בעומק")
+ * - "הרב יואב" everywhere
+ * - "300 לומדים"
+ * - No "בוגר מרכז הרב"
+ * - No "כל הלפטופ שלי, אני בסוריה"
+ * - "מלמד תנ"ך 15 שנה"
+ * - Hero image placeholder (TODO: pending from Yoav)
  */
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
+
+/* ─── Campaign constants (easy to update) ────────────────── */
+const GOAL = 80000;
+const RAISED = 7000;
+const SUPPORTER_COUNT = 47;
+const PROGRESS_PCT = Math.min(100, Math.round((RAISED / GOAL) * 100));
 
 /* ─── Types ─────────────────────────────────────────────── */
 interface Tier {
   id: string;
   price: number;
   name: string;
-  tagline: string;
-  includes: string[];
-  badge?: string; // "הכי פופולרי" | "early-bird" | "מוגבל ל-200"
-  limit?: number;
+  headline: string;
+  badge?: string;
+  limit: number;
+  remaining: number; // mock — hardcoded
   highlight?: boolean;
-  soldOut?: boolean;
+  perks: string[];
+  note?: string;
 }
 
 interface FaqItem {
@@ -41,135 +56,98 @@ interface FaqItem {
   a: string;
 }
 
-/* ─── Data (from STRATEGY.md §4) ────────────────────────── */
+/* ─── Tier data (Saar's exact structure) ─────────────────── */
 const TIERS: Tier[] = [
   {
-    id: "tier-50",
-    price: 50,
-    name: "המעודד",
-    tagline: "מצטרפים לרצון",
-    includes: [
-      "תודה אישית מהרב יואב",
-      "שמך בעמוד «תורמי הספר» באתר",
-    ],
+    id: "tier-90",
+    price: 90,
+    name: "מחיר מיוחד — 200 ראשונים",
+    headline: "ספר יהושע פיזי עד הבית",
+    badge: "Early Bird",
+    limit: 200,
+    remaining: 153,
+    highlight: true,
+    perks: ["ספר יהושע פיזי", "משלוח עד הבית"],
   },
   {
     id: "tier-120",
     price: 120,
-    name: "הקורא",
-    tagline: "ספר יהושע אצלי בבית",
-    includes: [
-      "1 ספר פיזי + משלוח",
-      "הספר יגיע עד החגים",
-    ],
-    badge: "הכי פופולרי",
-    highlight: true,
+    name: "ספר + הקדשה",
+    headline: "ספר פיזי עד הבית עם הקדשה אישית",
+    limit: 300,
+    remaining: 287,
+    perks: ["ספר יהושע פיזי", "הקדשה אישית מהרב יואב", "משלוח"],
   },
   {
-    id: "tier-200",
-    price: 200,
-    name: "סט יהושע + שופטים",
-    tagline: "שני ספרים — סיפור אחד",
-    includes: [
-      "ספר יהושע + ספר שופטים פיזיים + משלוח",
-      "פירוש על חמש מגילות + יהושע שופטים",
-    ],
+    id: "tier-220",
+    price: 220,
+    name: "הזוג",
+    headline: "שני ספרים פיזיים עד הבית",
+    limit: 150,
+    remaining: 143,
+    perks: ["2 ספרי יהושע", "משלוח"],
   },
   {
-    id: "tier-360",
-    price: 360,
-    name: "המקדיש",
-    tagline: "להנצחה / לסבא / לרב",
-    includes: [
-      "2 ספרים פיזיים + משלוח",
-      "הקדשה אישית בכתב יד של הרב יואב",
-    ],
-  },
-  {
-    id: "tier-600",
-    price: 600,
-    name: "המשפחה",
-    tagline: "מתנה לקהילה",
-    includes: [
-      "5 ספרים פיזיים + משלוח",
-      "הקדשה אישית",
-      "שיעור זום פרטי 30 דקות עם הרב יואב",
+    id: "tier-400",
+    price: 400,
+    name: "הסט המלא",
+    headline: "סט מלא — חמש מגילות + יהושע + שופטים",
+    limit: 100,
+    remaining: 97,
+    perks: [
+      "סט מלא של בני ציון",
+      "כולל הספר החדש: יהושע",
+      "כולל פירוש על שופטים",
+      "משלוח",
     ],
   },
   {
     id: "tier-800",
     price: 800,
-    name: "השותף הקטן",
-    tagline: "סטים מלאים לקהילה",
-    includes: [
-      "סטים מלאים, כולל הספר החדש: חמש מגילות + יהושע שופטים",
-      "הקדשה אישית",
-    ],
+    name: "השותף",
+    headline: "שני סטים מלאים",
+    limit: 50,
+    remaining: 48,
+    perks: ["2× סטים מלאים", "הקדשה אישית", "משלוח"],
   },
   {
     id: "tier-1200",
     price: 1200,
-    name: "השותף",
-    tagline: "שותפי דרך",
-    includes: [
-      "סטים מלאים, כולל הספר החדש: חמש מגילות + יהושע שופטים",
-      "הקדשה אישית",
-      "שיעור פרטי שעה עם הרב יואב",
-      "שמך בעמוד «השותפים שלנו»",
-    ],
+    name: "השותף הבכיר",
+    headline: "שלושה סטים מלאים",
+    limit: 30,
+    remaining: 29,
+    perks: ["3× סטים מלאים", "הקדשה אישית", "משלוח"],
   },
   {
     id: "tier-2000",
     price: 2000,
-    name: "שיעור בקהילה שלכם",
-    tagline: "הרב יואב מגיע אליכם",
-    includes: [
-      "שיעור פיזי של הרב יואב בקהילה / בית הכנסת שלכם",
-      "הקדשה אישית בספר",
-    ],
-  },
-  {
-    id: "tier-3600",
-    price: 3600,
-    name: "הפטרון",
-    tagline: "תומכי כתר",
-    includes: [
-      "25 ספרים + הקדשה",
-      "מפגש פיזי 1:1 עם הרב יואב",
-      "שמך בהקדשת הספר הרשמית",
-    ],
+    name: "שיעור של הרב יואב",
+    headline: "שיעור פיזי של הרב יואב בקהילה שלכם",
+    note: "שיעור בלבד — בלי ספר",
+    limit: 10,
+    remaining: 9,
+    perks: ["שיעור פיזי בקהילה / בית כנסת"],
   },
 ];
 
-const STRETCH_GOALS = [
-  { amount: 120000, title: "3 קליפי «מאחורי הקלעים» מהכתיבה", icon: "▶" },
-  { amount: 150000, title: "אודיובוק — הרב יואב קורא את הספר", icon: "🎧" },
-  { amount: 200000, title: "12 שיעורי וידאו על הספר (חינם לתומכים)", icon: "📚" },
-];
-
-const TESTIMONIALS = [
-  {
-    text: "מביא מבט חדש לכל התנ״ך שלא מצאתי בשום מקום אחר.",
-    name: "משתתפת בלחיות תנ״ך",
-  },
-  {
-    text: "השיעור מרתק, מעמיק, ומחבר את אירועי התנ״ך לאירועים הגדולים שאנחנו חווים בדור שלנו. זה לא רק שיעור תנ״ך — אלא ממש שיעור באמונה.",
-    name: "חנה יצחקי",
-  },
-  {
-    text: "השיעורים של הרב יואב מאירים כל פרק באור מיוחד — גם פרקים שנראים כרשימות טכניות מקבלים חיים.",
-    name: "בני מרואני",
-  },
+const CAMPAIGN_PHASES = [
+  { label: "בניית הקמפיין", sub: "אייר תשפ\"ו", done: true },
+  { label: "השקה", sub: "סיון תשפ\"ו", done: false, current: true },
+  { label: "יעד ראשון — ₪40K", sub: "תמוז תשפ\"ו", done: false },
+  { label: "יעד מלא — ₪80K", sub: "אב תשפ\"ו", done: false },
+  { label: "הדפסה ומשלוח", sub: "אלול תשפ\"ו", done: false },
+  { label: "הספר אצלכם", sub: "עד החגים — תשרי תשפ\"ז", done: false },
 ];
 
 const FAQ_ITEMS: FaqItem[] = [
   {
     q: "מתי הספר יגיע?",
-    a: "הספר צפוי להגיע עד החגים — סוף השנה העברית תשפ\"ו.",
+    a: "הספר צפוי להגיע עד החגים — תשרי תשפ\"ז.",
   },
   {
-    q: "מה זה מימון המונים?",
-    a: "קמפיין תמיכה ציבורי — בוחרים חבילה, משלמים בכרטיס אשראי, ומקבלים את הספר.",
+    q: "מה כולל הסט המלא?",
+    a: "הסט המלא כולל פירוש על חמש מגילות ועל יהושע ושופטים — ספרים שהרב יואב כתב לאורך השנים.",
   },
   {
     q: "מה אם אני לא יכול לתמוך עכשיו?",
@@ -177,38 +155,26 @@ const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: "האם יש אפשרות להקדיש את הספר לאדם אהוב?",
-    a: "כן. במסלול «המקדיש» (₪360) ומעלה הרב יואב כותב הקדשה אישית בכתב ידו — להנצחה, לסבא, לרב, לחייל. ציינו את שם הנמען ברשומת התמיכה.",
+    a: "כן. במסלול «ספר + הקדשה» (₪120) ומעלה הרב יואב כותב הקדשה אישית — להנצחה, לסבא, לרב, לחייל. ציינו את שם הנמען בהערת ההזמנה.",
   },
   {
-    q: "מה כולל הסט המלא?",
-    a: "הסט המלא כולל פירוש על חמש מגילות ועל יהושע שופטים — ספרים שהרב יואב כתב לאורך השנים.",
+    q: "מה זה Headstart?",
+    a: "Headstart היא פלטפורמת מימון ציבורי ישראלית. בוחרים חבילה, משלמים בכרטיס אשראי, ומקבלים את הספר. הפרויקט יתפרסם שם רשמית — הדף הזה הוא טרום-השקה.",
   },
 ];
 
-const CAMPAIGN_PHASES = [
-  { label: "בניית הקמפיין", sub: "אייר תשפ\"ו", done: true },
-  { label: "השקה", sub: "סיון תשפ\"ו", done: false, current: true },
-  { label: "35 ימי גיוס", sub: "סיון–תמוז תשפ\"ו", done: false },
-  { label: "יציאה לדפוס", sub: "אב תשפ\"ו", done: false },
-  { label: "ספר בידיכם", sub: "עד החגים — תשרי תשפ\"ז", done: false },
-];
-
-// Simulated recent backers (in a live Headstart page these are real)
+// Simulated recent backers
 const RECENT_BACKERS = [
-  { name: "א.ל.", tier: "הקורא", time: "לפני 2 ד'" },
-  { name: "מ.כ.", tier: "המקדיש", time: "לפני 5 ד'" },
+  { name: "א.ל.", tier: "מחיר מיוחד — 200 ראשונים", time: "לפני 2 ד'" },
+  { name: "מ.כ.", tier: "ספר + הקדשה", time: "לפני 5 ד'" },
   { name: "ר.ש.", tier: "הזוג", time: "לפני 11 ד'" },
-  { name: "ד.א.", tier: "המעודד", time: "לפני 18 ד'" },
-  { name: "נ.ה.", tier: "המשפחה", time: "לפני 23 ד'" },
+  { name: "ד.א.", tier: "מחיר מיוחד — 200 ראשונים", time: "לפני 18 ד'" },
+  { name: "נ.ה.", tier: "הסט המלא", time: "לפני 23 ד'" },
 ];
 
 /* ─── Sub-components ─────────────────────────────────────── */
 
 function StickyBar({ scrolled }: { scrolled: boolean }) {
-  const GOAL = 80000;
-  const RAISED = 0; // pre-launch
-  const pct = Math.round((RAISED / GOAL) * 100);
-
   return (
     <div
       style={{
@@ -250,16 +216,36 @@ function StickyBar({ scrolled }: { scrolled: boolean }) {
                 fontWeight: 700,
               }}
             >
-              קמפיין פעיל
+              Headstart
             </span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ fontSize: 13, color: "white" }}>
-              <span style={{ fontWeight: 700 }}>יעד:</span>{" "}
-              <span style={{ color: "hsl(38 85% 70%)" }}>₪80,000</span>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            {/* Mini progress */}
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div
+                style={{
+                  width: 80,
+                  height: 4,
+                  background: "hsl(215 20% 35%)",
+                  borderRadius: 4,
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    width: `${PROGRESS_PCT}%`,
+                    background: "hsl(38 75% 55%)",
+                    borderRadius: 4,
+                  }}
+                />
+              </div>
+              <span style={{ fontSize: 12, color: "hsl(38 85% 70%)", fontWeight: 700 }}>
+                {PROGRESS_PCT}%
+              </span>
             </div>
             <a
-              href="#signup"
+              href="#tiers"
               style={{
                 background: "hsl(38 75% 55%)",
                 color: "hsl(215 55% 15%)",
@@ -280,40 +266,138 @@ function StickyBar({ scrolled }: { scrolled: boolean }) {
   );
 }
 
-function TierCard({ tier }: { tier: Tier }) {
-  const isEarlyBird = tier.badge === "early-bird";
-  const isPopular = tier.badge === "הכי פופולרי";
+function ProgressBlock() {
+  return (
+    <div
+      style={{
+        background: "hsl(215 55% 13%)",
+        borderTop: "1px solid hsl(38 75% 55% / 0.2)",
+        padding: "28px 24px",
+      }}
+    >
+      <div style={{ maxWidth: 680, margin: "0 auto" }}>
+        {/* Numbers row */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "baseline",
+            justifyContent: "space-between",
+            marginBottom: 10,
+            flexWrap: "wrap",
+            gap: 8,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+            <span
+              style={{
+                fontSize: 28,
+                fontWeight: 900,
+                color: "hsl(38 85% 68%)",
+                lineHeight: 1,
+              }}
+            >
+              ₪{RAISED.toLocaleString()}
+            </span>
+            <span style={{ fontSize: 14, color: "hsl(215 10% 55%)", fontWeight: 500 }}>
+              מתוך ₪{GOAL.toLocaleString()}
+            </span>
+          </div>
+          <div
+            style={{
+              fontSize: 13,
+              color: "hsl(215 10% 60%)",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            <span style={{ color: "hsl(38 85% 68%)", fontWeight: 700 }}>{SUPPORTER_COUNT}</span>
+            {" תומכים"}
+          </div>
+        </div>
+
+        {/* Bar */}
+        <div
+          style={{
+            height: 10,
+            background: "hsl(215 20% 28%)",
+            borderRadius: 10,
+            overflow: "hidden",
+            marginBottom: 12,
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              width: `${PROGRESS_PCT}%`,
+              background: "linear-gradient(90deg, hsl(43 85% 58%), hsl(38 75% 50%))",
+              borderRadius: 10,
+              transition: "width 1.2s ease-out",
+            }}
+          />
+        </div>
+
+        {/* Labels */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            fontSize: 12,
+            color: "hsl(215 10% 48%)",
+          }}
+        >
+          <span style={{ color: "hsl(38 75% 55%)", fontWeight: 700 }}>
+            {PROGRESS_PCT}% מהיעד
+          </span>
+          <span>
+            <a href="#tiers" style={{ color: "hsl(38 75% 55%)", textDecoration: "none", fontWeight: 600 }}>
+              הצטרפו לקמפיין ↓
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TierCard({
+  tier,
+  onSupport,
+}: {
+  tier: Tier;
+  onSupport: (tier: Tier) => void;
+}) {
+  const isEarlyBird = tier.badge === "Early Bird";
+  const isSoldOut = tier.remaining === 0;
+  const remainingPct = Math.round((tier.remaining / tier.limit) * 100);
+  const almostGone = remainingPct <= 25 && !isSoldOut;
 
   return (
     <div
-      className={`tier-card ${tier.highlight ? "tier-card-popular" : ""}`}
       style={{
         position: "relative",
         background: tier.highlight
           ? "linear-gradient(160deg, hsl(215 55% 18%) 0%, hsl(215 50% 24%) 100%)"
-          : isEarlyBird
-          ? "linear-gradient(160deg, hsl(38 60% 14%) 0%, hsl(215 50% 18%) 100%)"
           : "white",
         border: tier.highlight
           ? "2px solid hsl(38 75% 55%)"
-          : isEarlyBird
-          ? "2px solid hsl(38 75% 55% / 0.6)"
           : "1.5px solid hsl(215 15% 88%)",
         borderRadius: 18,
-        padding: tier.highlight ? "30px 22px 22px" : "26px 20px 20px",
-        color: tier.highlight || isEarlyBird ? "white" : "hsl(215 40% 12%)",
+        padding: tier.highlight ? "32px 22px 22px" : "26px 20px 20px",
+        color: tier.highlight ? "white" : "hsl(215 40% 12%)",
         boxShadow: tier.highlight
           ? "0 16px 44px -8px hsl(38 75% 50% / 0.35), 0 0 0 1px hsl(38 75% 55% / 0.4)"
-          : isEarlyBird
-          ? "0 8px 24px -6px hsl(38 75% 50% / 0.18)"
           : "0 2px 10px hsl(215 15% 60% / 0.08)",
         display: "flex",
         flexDirection: "column",
-        gap: 12,
+        gap: 14,
+        opacity: isSoldOut ? 0.6 : 1,
+        transition: "transform 0.25s ease, box-shadow 0.25s ease",
       }}
+      className={tier.highlight ? "tier-card tier-card-popular" : "tier-card"}
     >
-      {/* Badge — centered on top edge (works in RTL via inset+transform combo) */}
-      {tier.badge && (
+      {/* Badge */}
+      {tier.badge && !isSoldOut && (
         <div
           style={{
             position: "absolute",
@@ -327,109 +411,203 @@ function TierCard({ tier }: { tier: Tier }) {
             padding: "4px 14px",
             borderRadius: 99,
             whiteSpace: "nowrap",
-            letterSpacing: "0.03em",
+            letterSpacing: "0.04em",
             boxShadow: "0 4px 12px hsl(38 75% 50% / 0.3)",
             border: "1.5px solid hsl(215 55% 16%)",
           }}
         >
-          {"★ הכי פופולרי"}
+          ★ {tier.badge}
         </div>
       )}
 
-      {/* Price */}
-      <div>
-        <span
-          style={{
-            fontSize: 36,
-            fontWeight: 900,
-            lineHeight: 1,
-            color: tier.highlight || isEarlyBird ? "hsl(38 85% 70%)" : "hsl(215 55% 25%)",
-          }}
-        >
-          ₪{tier.price.toLocaleString()}
-        </span>
-      </div>
-
-      {/* Name + tagline */}
-      <div>
+      {isSoldOut && (
         <div
           style={{
-            fontSize: 17,
+            position: "absolute",
+            top: -13,
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "hsl(215 15% 55%)",
+            color: "white",
+            fontSize: 11,
             fontWeight: 800,
-            marginBottom: 2,
-            color: tier.highlight || isEarlyBird ? "white" : "hsl(215 55% 20%)",
+            padding: "4px 14px",
+            borderRadius: 99,
+            whiteSpace: "nowrap",
           }}
         >
-          {tier.name}
+          אזל
         </div>
-        <div
-          style={{
-            fontSize: 13,
-            color: tier.highlight || isEarlyBird ? "hsl(38 85% 75%)" : "hsl(215 30% 45%)",
-            fontStyle: "italic",
-          }}
-        >
-          {tier.tagline}
+      )}
+
+      {/* Price + name — equal visual weight */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
+          gap: 8,
+        }}
+      >
+        <div>
+          <div
+            style={{
+              fontSize: 32,
+              fontWeight: 900,
+              lineHeight: 1,
+              color: tier.highlight ? "hsl(38 85% 70%)" : "hsl(215 55% 25%)",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            ₪{tier.price.toLocaleString()}
+          </div>
+          {tier.note && (
+            <div
+              style={{
+                fontSize: 11,
+                color: tier.highlight ? "hsl(215 10% 65%)" : "hsl(215 20% 52%)",
+                marginTop: 3,
+              }}
+            >
+              {tier.note}
+            </div>
+          )}
+        </div>
+        <div style={{ textAlign: "start", flex: 1 }}>
+          <div
+            style={{
+              fontSize: 15,
+              fontWeight: 800,
+              color: tier.highlight ? "white" : "hsl(215 55% 20%)",
+              lineHeight: 1.25,
+            }}
+          >
+            {tier.name}
+          </div>
         </div>
       </div>
 
-      {/* Includes */}
-      <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 6 }}>
-        {tier.includes.map((item, i) => (
+      {/* Headline */}
+      <div
+        style={{
+          fontSize: 14,
+          fontWeight: 600,
+          color: tier.highlight ? "hsl(38 85% 78%)" : "hsl(215 40% 30%)",
+          lineHeight: 1.4,
+          paddingBottom: 10,
+          borderBottom: `1px solid ${tier.highlight ? "hsl(215 20% 32%)" : "hsl(215 15% 90%)"}`,
+        }}
+      >
+        {tier.headline}
+      </div>
+
+      {/* Perks */}
+      <ul
+        style={{
+          margin: 0,
+          padding: 0,
+          listStyle: "none",
+          display: "flex",
+          flexDirection: "column",
+          gap: 7,
+          flex: 1,
+        }}
+      >
+        {tier.perks.map((item, i) => (
           <li
             key={i}
             style={{
-              fontSize: 13,
+              fontSize: 14,
               display: "flex",
               alignItems: "flex-start",
-              gap: 6,
-              color: tier.highlight || isEarlyBird ? "hsl(215 10% 88%)" : "hsl(215 30% 30%)",
+              gap: 7,
+              color: tier.highlight ? "hsl(215 10% 88%)" : "hsl(215 30% 30%)",
             }}
           >
-            <span style={{ color: "hsl(38 75% 55%)", fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
+            <span
+              style={{
+                color: "hsl(38 75% 55%)",
+                fontWeight: 700,
+                flexShrink: 0,
+                marginTop: 1,
+              }}
+            >
+              ✓
+            </span>
             {item}
           </li>
         ))}
       </ul>
 
-      {/* Limit badge */}
-      {tier.limit && !tier.soldOut && (
-        <div
-          style={{
-            fontSize: 12,
-            fontWeight: 700,
-            color: "hsl(38 85% 60%)",
-            background: "hsl(38 75% 55% / 0.12)",
-            borderRadius: 8,
-            padding: "4px 10px",
-            textAlign: "center",
-          }}
-        >
-          מוגבל ל-{tier.limit} תומכים
-        </div>
-      )}
+      {/* Remaining count */}
+      <div
+        style={{
+          fontSize: 12,
+          fontWeight: 700,
+          color: almostGone
+            ? "hsl(20 85% 55%)"
+            : tier.highlight
+            ? "hsl(38 85% 68%)"
+            : "hsl(38 65% 45%)",
+          background: almostGone
+            ? "hsl(20 85% 55% / 0.1)"
+            : "hsl(38 75% 55% / 0.1)",
+          borderRadius: 8,
+          padding: "5px 10px",
+          textAlign: "center",
+        }}
+      >
+        {isSoldOut
+          ? "אזל — אין יותר מקומות"
+          : almostGone
+          ? `⚡ נשארו רק ${tier.remaining} מתוך ${tier.limit}`
+          : `נשארו ${tier.remaining} מתוך ${tier.limit}`}
+      </div>
 
       {/* CTA */}
-      <a
-        href="#signup"
-        style={{
-          marginTop: "auto",
-          display: "block",
-          textAlign: "center",
-          padding: "10px 0",
-          borderRadius: 10,
-          fontWeight: 700,
-          fontSize: 14,
-          textDecoration: "none",
-          background: tier.highlight || isEarlyBird ? "hsl(38 75% 55%)" : "hsl(215 55% 25%)",
-          color: tier.highlight || isEarlyBird ? "hsl(215 55% 15%)" : "white",
-          transition: "opacity 0.15s",
-        }}
-        onMouseOver={(e) => ((e.target as HTMLElement).style.opacity = "0.88")}
-        onMouseOut={(e) => ((e.target as HTMLElement).style.opacity = "1")}
-      >
-        {"בחרו מסלול זה"}
-      </a>
+      {isSoldOut ? (
+        <div
+          style={{
+            display: "block",
+            textAlign: "center",
+            padding: "10px 0",
+            borderRadius: 10,
+            fontWeight: 700,
+            fontSize: 14,
+            background: "hsl(215 15% 80%)",
+            color: "hsl(215 20% 45%)",
+            cursor: "not-allowed",
+          }}
+        >
+          אזל
+        </div>
+      ) : (
+        <button
+          onClick={() => onSupport(tier)}
+          style={{
+            display: "block",
+            width: "100%",
+            textAlign: "center",
+            padding: "11px 0",
+            borderRadius: 10,
+            fontWeight: 700,
+            fontSize: 14,
+            border: "none",
+            cursor: "pointer",
+            background: tier.highlight
+              ? "hsl(38 75% 55%)"
+              : "hsl(215 55% 25%)",
+            color: tier.highlight ? "hsl(215 55% 15%)" : "white",
+            transition: "opacity 0.15s",
+          }}
+          onMouseOver={(e) =>
+            ((e.target as HTMLElement).style.opacity = "0.88")
+          }
+          onMouseOut={(e) => ((e.target as HTMLElement).style.opacity = "1")}
+        >
+          אני תומך
+        </button>
+      )}
     </div>
   );
 }
@@ -533,7 +711,7 @@ function StickyMobileBar() {
             marginBottom: 3,
           }}
         >
-          קמפיין תמיכה · יוני 2026
+          קמפיין Headstart · ספר יהושע
         </div>
         <div
           style={{
@@ -546,7 +724,7 @@ function StickyMobileBar() {
           <div
             style={{
               height: "100%",
-              width: "0%",
+              width: `${PROGRESS_PCT}%`,
               background: "hsl(38 75% 55%)",
               borderRadius: 4,
             }}
@@ -554,7 +732,7 @@ function StickyMobileBar() {
         </div>
       </div>
       <a
-        href="#signup"
+        href="#tiers"
         style={{
           background: "hsl(38 75% 55%)",
           color: "hsl(215 55% 15%)",
@@ -573,11 +751,89 @@ function StickyMobileBar() {
   );
 }
 
+/* Bell toast — visual mock of post-donation confirmation */
+function DonationToast({
+  tier,
+  onClose,
+}: {
+  tier: Tier;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const t = setTimeout(onClose, 5000);
+    return () => clearTimeout(t);
+  }, [onClose]);
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        bottom: 80,
+        insetInlineEnd: 20,
+        zIndex: 100,
+        background: "hsl(215 55% 18%)",
+        border: "1.5px solid hsl(38 75% 55% / 0.5)",
+        borderRadius: 16,
+        padding: "16px 18px",
+        maxWidth: 300,
+        boxShadow: "0 12px 36px hsl(215 55% 10% / 0.45)",
+        display: "flex",
+        alignItems: "flex-start",
+        gap: 12,
+        animation: "slideInToast 0.35s ease-out both",
+      }}
+    >
+      {/* Bell icon */}
+      <div
+        style={{
+          width: 36,
+          height: 36,
+          background: "hsl(38 75% 55% / 0.15)",
+          border: "1px solid hsl(38 75% 55% / 0.35)",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+          fontSize: 18,
+        }}
+      >
+        🔔
+      </div>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontSize: 14, fontWeight: 800, color: "white", marginBottom: 4 }}>
+          תודה על התמיכה!
+        </div>
+        <div style={{ fontSize: 13, color: "hsl(38 85% 72%)", fontWeight: 600, marginBottom: 2 }}>
+          {tier.name} — ₪{tier.price.toLocaleString()}
+        </div>
+        <div style={{ fontSize: 12, color: "hsl(215 10% 55%)" }}>
+          הספר יגיע אליכם עד החגים.
+        </div>
+      </div>
+      <button
+        onClick={onClose}
+        style={{
+          background: "none",
+          border: "none",
+          color: "hsl(215 10% 50%)",
+          cursor: "pointer",
+          fontSize: 16,
+          padding: 0,
+          lineHeight: 1,
+          flexShrink: 0,
+        }}
+      >
+        ×
+      </button>
+    </div>
+  );
+}
+
 /* ─── Main Page ──────────────────────────────────────────── */
 export default function DesignPreviewYehoshuaCampaign() {
   const [scrolled, setScrolled] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const signupRef = useRef<HTMLElement | null>(null);
+  const [toastTier, setToastTier] = useState<Tier | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80);
@@ -585,9 +841,12 @@ export default function DesignPreviewYehoshuaCampaign() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    setFormSubmitted(true);
+  function handleSupport(tier: Tier) {
+    // In production: navigate to /donate?amount=PRICE&source=yehoshua-campaign&tier=TIER_ID
+    // For sandbox: show the toast mock
+    setToastTier(tier);
+    // Uncomment when Grow integration is wired:
+    // window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}`;
   }
 
   return (
@@ -600,7 +859,6 @@ export default function DesignPreviewYehoshuaCampaign() {
         minHeight: "100vh",
       }}
     >
-      {/* Google Font fallback */}
       <style>{`
         @font-face { font-family: 'Paamon'; src: url('https://bneyzion.vercel.app/fonts/paamon-bold-aaa.otf') format('opentype'); font-weight: 700; font-display: swap; }
         @font-face { font-family: 'Paamon'; src: url('https://bneyzion.vercel.app/fonts/paamon-regular-aaa.otf') format('opentype'); font-weight: 400; font-display: swap; }
@@ -610,24 +868,21 @@ export default function DesignPreviewYehoshuaCampaign() {
         a { color: inherit; }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scrollX { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes slideInToast { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-up { animation: fadeUp 0.65s ease-out both; }
         .fade-up-1 { animation-delay: 0.1s; }
         .fade-up-2 { animation-delay: 0.2s; }
         .fade-up-3 { animation-delay: 0.3s; }
         .fade-up-4 { animation-delay: 0.45s; }
-        .fade-up-5 { animation-delay: 0.6s; }
-        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
-        .reveal.in { opacity: 1; transform: translateY(0); }
         .tier-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 18px; align-items: stretch; }
         .tier-card-popular { transform: translateY(-8px); }
         .tier-card-popular:hover { transform: translateY(-12px); }
         .tier-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
         .tier-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px hsl(215 40% 20% / 0.18); }
-        .signup-input:focus { border-color: hsl(38 75% 55%) !important; box-shadow: 0 0 0 3px hsl(38 75% 55% / 0.18); }
-        h2 { letter-spacing: -0.02em; }
+        h2 { letter-spacing: -0.02em; margin: 0; }
+        h3 { letter-spacing: -0.01em; margin: 0; }
         .cta-pulse { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 0 hsl(38 75% 55% / 0.5); animation: ctaPulse 2.6s ease-out infinite; }
         @keyframes ctaPulse { 0% { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 0 hsl(38 75% 55% / 0.5); } 70% { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 14px hsl(38 75% 55% / 0); } 100% { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 0 hsl(38 75% 55% / 0); } }
-        .gold-rule { display: inline-block; width: 48px; height: 3px; background: hsl(38 75% 55%); border-radius: 2px; margin-bottom: 14px; }
         @media (max-width: 640px) {
           .tier-grid { grid-template-columns: 1fr; }
           .tier-card-popular { transform: none; }
@@ -650,6 +905,11 @@ export default function DesignPreviewYehoshuaCampaign() {
 
       {/* Sticky mobile bottom bar */}
       <StickyMobileBar />
+
+      {/* Donation toast */}
+      {toastTier && (
+        <DonationToast tier={toastTier} onClose={() => setToastTier(null)} />
+      )}
 
       {/* ── TOP NAV ── */}
       <nav
@@ -685,53 +945,49 @@ export default function DesignPreviewYehoshuaCampaign() {
               (e.target as HTMLImageElement).style.display = "none";
             }}
           />
+          <span style={{ color: "white", fontSize: 13, fontWeight: 700 }}>
+            תנועת בני ציון
+          </span>
           <span
             style={{
-              color: "white",
-              fontSize: 13,
+              background: "hsl(38 75% 55% / 0.15)",
+              border: "1px solid hsl(38 75% 55% / 0.4)",
+              color: "hsl(38 85% 72%)",
+              borderRadius: 99,
+              padding: "3px 10px",
+              fontSize: 11,
               fontWeight: 700,
+              letterSpacing: "0.04em",
             }}
           >
-            תנועת בני ציון
+            Headstart
           </span>
         </div>
       </nav>
 
       {/* ─────────────────────────────────────────
-          HERO
+          HERO (reduced size per Saar)
       ───────────────────────────────────────── */}
       <section
         style={{
-          background: "linear-gradient(160deg, hsl(215 55% 16%) 0%, hsl(215 50% 26%) 55%, hsl(215 40% 30%) 100%)",
-          padding: "60px 24px 72px",
+          background:
+            "linear-gradient(160deg, hsl(215 55% 16%) 0%, hsl(215 50% 26%) 55%, hsl(215 40% 30%) 100%)",
+          padding: "44px 24px 48px",
           position: "relative",
           overflow: "hidden",
         }}
       >
-        {/* background glow blobs */}
+        {/* background glow */}
         <div
           style={{
             position: "absolute",
             top: 0,
             right: "10%",
-            width: 380,
-            height: 380,
+            width: 320,
+            height: 320,
             background: "hsl(38 75% 55% / 0.07)",
             borderRadius: "50%",
-            filter: "blur(100px)",
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: "5%",
-            width: 280,
-            height: 280,
-            background: "hsl(215 60% 50% / 0.1)",
-            borderRadius: "50%",
-            filter: "blur(80px)",
+            filter: "blur(90px)",
             pointerEvents: "none",
           }}
         />
@@ -743,7 +999,7 @@ export default function DesignPreviewYehoshuaCampaign() {
             margin: "0 auto",
             display: "grid",
             gridTemplateColumns: "1fr 1fr",
-            gap: 48,
+            gap: 40,
             alignItems: "center",
             position: "relative",
             zIndex: 1,
@@ -758,17 +1014,17 @@ export default function DesignPreviewYehoshuaCampaign() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 8,
-                padding: "6px 14px",
+                padding: "5px 12px",
                 borderRadius: 99,
                 background: "hsl(38 75% 55% / 0.12)",
                 border: "1px solid hsl(38 75% 55% / 0.28)",
-                marginBottom: 20,
+                marginBottom: 16,
               }}
             >
               <span
                 style={{
-                  width: 8,
-                  height: 8,
+                  width: 7,
+                  height: 7,
                   background: "hsl(38 75% 55%)",
                   borderRadius: "50%",
                 }}
@@ -776,35 +1032,35 @@ export default function DesignPreviewYehoshuaCampaign() {
               <span
                 style={{
                   color: "hsl(38 85% 72%)",
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: 600,
                   letterSpacing: "0.04em",
                 }}
               >
-                קמפיין תמיכה · השקה יוני 2026
+                קמפיין תמיכה · Headstart · השקה סיון תשפ"ו
               </span>
             </div>
 
-            {/* H1 — kicker + display + tail for hierarchy */}
+            {/* H1 */}
             <h1
               className="fade-up fade-up-2"
               style={{
                 fontWeight: 900,
                 lineHeight: 1.05,
                 color: "white",
-                marginBottom: 22,
+                marginBottom: 18,
                 letterSpacing: "-0.02em",
+                margin: "0 0 18px",
               }}
             >
               <span
                 style={{
                   display: "block",
-                  fontSize: "clamp(15px, 1.6vw, 19px)",
+                  fontSize: "clamp(13px, 1.4vw, 17px)",
                   fontWeight: 600,
                   letterSpacing: "0.06em",
                   color: "hsl(215 15% 78%)",
-                  marginBottom: 8,
-                  textTransform: "none",
+                  marginBottom: 6,
                 }}
               >
                 ספר חדש של הרב יואב אוריאל
@@ -812,8 +1068,9 @@ export default function DesignPreviewYehoshuaCampaign() {
               <span
                 style={{
                   display: "block",
-                  fontSize: "clamp(40px, 6.5vw, 78px)",
-                  background: "linear-gradient(135deg, hsl(43 90% 70%), hsl(38 75% 50%))",
+                  fontSize: "clamp(36px, 5.5vw, 66px)",
+                  background:
+                    "linear-gradient(135deg, hsl(43 90% 70%), hsl(38 75% 50%))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -826,10 +1083,10 @@ export default function DesignPreviewYehoshuaCampaign() {
               <span
                 style={{
                   display: "block",
-                  fontSize: "clamp(22px, 3vw, 34px)",
+                  fontSize: "clamp(18px, 2.5vw, 28px)",
                   fontWeight: 700,
                   color: "white",
-                  marginTop: 6,
+                  marginTop: 5,
                   letterSpacing: "-0.015em",
                 }}
               >
@@ -841,10 +1098,10 @@ export default function DesignPreviewYehoshuaCampaign() {
             <p
               className="fade-up fade-up-3"
               style={{
-                fontSize: 17,
+                fontSize: 16,
                 color: "hsl(215 15% 88%)",
                 lineHeight: 1.7,
-                marginBottom: 12,
+                marginBottom: 10,
               }}
             >
               480 עמודים על סיפור כיבוש הארץ — נכתבו פרק אחר פרק{" "}
@@ -853,178 +1110,78 @@ export default function DesignPreviewYehoshuaCampaign() {
               </strong>
             </p>
             <p
-              className="fade-up fade-up-3"
               style={{
-                fontSize: 15,
+                fontSize: 14,
                 color: "hsl(215 10% 72%)",
                 lineHeight: 1.65,
-                marginBottom: 28,
+                margin: "0 0 20px",
               }}
             >
               הספר יצא לאור. הצטרפו לקמפיין ותמכו בהוצאתו לציבור — וקבלו
               את הספר ישירות לבית.
             </p>
 
-            {/* ── SIGNUP FORM ── */}
-            <div
-              id="signup"
-              ref={(el) => {
-                signupRef.current = el as HTMLElement | null;
+            <a
+              href="#tiers"
+              className="fade-up fade-up-4 cta-pulse"
+              style={{
+                display: "inline-block",
+                padding: "13px 30px",
+                background:
+                  "linear-gradient(135deg, hsl(43 85% 60%), hsl(38 75% 50%))",
+                color: "hsl(215 55% 12%)",
+                fontWeight: 800,
+                fontSize: 16,
+                borderRadius: 99,
+                textDecoration: "none",
+                letterSpacing: "0.01em",
               }}
-              className="fade-up fade-up-4"
             >
-              {!formSubmitted ? (
-                <form
-                  onSubmit={handleSubmit}
-                  style={{
-                    background: "hsl(215 30% 12% / 0.7)",
-                    backdropFilter: "blur(16px)",
-                    borderRadius: 16,
-                    padding: "20px",
-                    border: "1px solid hsl(215 20% 30%)",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 10,
-                  }}
-                >
-                  <input
-                    type="text"
-                    placeholder="שם מלא"
-                    required
-                    className="signup-input"
-                    style={{
-                      padding: "12px 14px",
-                      borderRadius: 10,
-                      border: "1px solid hsl(215 15% 30%)",
-                      background: "hsl(215 30% 16%)",
-                      color: "white",
-                      fontSize: 15,
-                      textAlign: "right",
-                      outline: "none",
-                      transition: "border-color 0.15s, box-shadow 0.15s",
-                    }}
-                  />
-                  <input
-                    type="email"
-                    placeholder="כתובת אימייל"
-                    required
-                    className="signup-input"
-                    style={{
-                      padding: "12px 14px",
-                      borderRadius: 10,
-                      border: "1px solid hsl(215 15% 30%)",
-                      background: "hsl(215 30% 16%)",
-                      color: "white",
-                      fontSize: 15,
-                      textAlign: "right",
-                      outline: "none",
-                      transition: "border-color 0.15s, box-shadow 0.15s",
-                    }}
-                  />
-                  <input
-                    type="tel"
-                    placeholder="טלפון (לא חובה — לעדכון WhatsApp)"
-                    className="signup-input"
-                    style={{
-                      padding: "12px 14px",
-                      borderRadius: 10,
-                      border: "1px solid hsl(215 15% 30%)",
-                      background: "hsl(215 30% 16%)",
-                      color: "white",
-                      fontSize: 15,
-                      textAlign: "right",
-                      outline: "none",
-                      transition: "border-color 0.15s, box-shadow 0.15s",
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    style={{
-                      padding: "13px",
-                      borderRadius: 10,
-                      background: "hsl(38 75% 55%)",
-                      color: "hsl(215 55% 15%)",
-                      fontWeight: 800,
-                      fontSize: 15,
-                      border: "none",
-                      cursor: "pointer",
-                      letterSpacing: "0.01em",
-                    }}
-                  >
-                    תמכו בהוצאת הספר לאור
-                  </button>
-                  <p
-                    style={{
-                      fontSize: 12,
-                      color: "hsl(215 10% 55%)",
-                      textAlign: "center",
-                      marginTop: 2,
-                    }}
-                  >
-                    תמיכה בקמפיין · הספר יגיע עד החגים
-                  </p>
-                </form>
-              ) : (
-                <div
-                  style={{
-                    background: "hsl(215 30% 12% / 0.7)",
-                    backdropFilter: "blur(16px)",
-                    borderRadius: 16,
-                    padding: "24px 20px",
-                    border: "1.5px solid hsl(38 75% 55%)",
-                    textAlign: "center",
-                  }}
-                >
-                  <div style={{ fontSize: 32, marginBottom: 8 }}>✓</div>
-                  <p style={{ color: "white", fontWeight: 700, fontSize: 16, marginBottom: 4 }}>
-                    תודה. שמרנו את מקומכם.
-                  </p>
-                  <p style={{ color: "hsl(215 10% 65%)", fontSize: 14 }}>
-                    תקבלו הודעה ראשונים כשהקמפיין נפתח.
-                  </p>
-                </div>
-              )}
-            </div>
+              לתמיכה בספר ↓
+            </a>
           </div>
 
           {/* VISUAL */}
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <div style={{ position: "relative", maxWidth: 400, width: "100%" }}>
+            <div style={{ position: "relative", maxWidth: 360, width: "100%" }}>
               {/* Floating milui badge */}
               <div
                 style={{
                   position: "absolute",
-                  top: -16,
-                  left: -16,
+                  top: -14,
+                  left: -14,
                   background: "hsl(38 75% 55%)",
                   color: "hsl(215 55% 15%)",
-                  borderRadius: 14,
-                  padding: "8px 14px",
+                  borderRadius: 12,
+                  padding: "7px 12px",
                   transform: "rotate(-4deg)",
                   zIndex: 2,
                   boxShadow: "0 4px 16px hsl(38 75% 50% / 0.35)",
                 }}
               >
-                <p style={{ fontSize: 11, fontWeight: 700, margin: 0 }}>סבב מילואים</p>
-                <p style={{ fontSize: 28, fontWeight: 900, lineHeight: 1, margin: 0 }}>6</p>
+                <p style={{ fontSize: 10, fontWeight: 700, margin: 0 }}>סבב מילואים</p>
+                <p style={{ fontSize: 24, fontWeight: 900, lineHeight: 1, margin: 0 }}>6</p>
               </div>
 
               {/* Image frame */}
               {/* TODO(yoav): replace with new IDF photo — pending from Yoav 13.5.2026 */}
               <div
                 style={{
-                  borderRadius: 20,
+                  borderRadius: 18,
                   overflow: "hidden",
                   border: "2px solid hsl(38 75% 55% / 0.35)",
                   boxShadow: "0 16px 48px hsl(38 75% 50% / 0.15)",
                   position: "relative",
                 }}
               >
-                {/* Visible placeholder label so Yoav sees the slot clearly */}
+                {/* Placeholder */}
                 <div
                   style={{
                     position: "absolute",
-                    top: 0, left: 0, right: 0, bottom: 0,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1035,8 +1192,16 @@ export default function DesignPreviewYehoshuaCampaign() {
                     pointerEvents: "none",
                   }}
                 >
-                  <span style={{ fontSize: 28 }}>📷</span>
-                  <span style={{ color: "hsl(38 85% 70%)", fontWeight: 700, fontSize: 13, textAlign: "center", padding: "0 12px" }}>
+                  <span style={{ fontSize: 26 }}>📷</span>
+                  <span
+                    style={{
+                      color: "hsl(38 85% 70%)",
+                      fontWeight: 700,
+                      fontSize: 13,
+                      textAlign: "center",
+                      padding: "0 12px",
+                    }}
+                  >
                     תמונה מהצבא — ממתין מיואב
                   </span>
                 </div>
@@ -1046,7 +1211,7 @@ export default function DesignPreviewYehoshuaCampaign() {
                   style={{ width: "100%", display: "block", opacity: 0.35 }}
                   onError={(e) => {
                     const el = e.target as HTMLImageElement;
-                    el.style.minHeight = "400px";
+                    el.style.minHeight = "360px";
                     el.style.background = "hsl(215 55% 18%)";
                   }}
                 />
@@ -1058,7 +1223,7 @@ export default function DesignPreviewYehoshuaCampaign() {
                     left: 0,
                     background:
                       "linear-gradient(to top, hsl(215 55% 15% / 0.88) 0%, transparent 100%)",
-                    padding: "20px 16px 16px",
+                    padding: "18px 16px 14px",
                   }}
                 >
                   <p
@@ -1072,64 +1237,12 @@ export default function DesignPreviewYehoshuaCampaign() {
                   >
                     המחבר
                   </p>
-                  <p style={{ color: "white", fontWeight: 800, fontSize: 20 }}>
+                  <p style={{ color: "white", fontWeight: 800, fontSize: 18, margin: 0 }}>
                     הרב יואב אוריאל
                   </p>
                   <p style={{ color: "hsl(215 10% 70%)", fontSize: 12, marginTop: 2 }}>
                     תנועת בני ציון · לחיות תנ״ך
                   </p>
-                </div>
-              </div>
-
-              {/* Campaign goal badge — ₪80K dominant, others smaller */}
-              <div
-                style={{
-                  marginTop: 16,
-                  background: "hsl(215 30% 14% / 0.85)",
-                  backdropFilter: "blur(12px)",
-                  borderRadius: 14,
-                  padding: "16px 18px",
-                  border: "1px solid hsl(215 20% 28%)",
-                  display: "grid",
-                  gridTemplateColumns: "1.4fr 1px 1fr 1px 1fr",
-                  gap: 12,
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <div>
-                  <div
-                    style={{
-                      fontSize: 26,
-                      fontWeight: 900,
-                      color: "hsl(38 90% 68%)",
-                      lineHeight: 1,
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    ₪80,000
-                  </div>
-                  <div style={{ fontSize: 11, color: "hsl(215 10% 60%)", marginTop: 4, fontWeight: 600 }}>
-                    יעד הקמפיין
-                  </div>
-                </div>
-                <div style={{ height: 32, background: "hsl(215 20% 30%)" }} />
-                <div>
-                  <div style={{ fontSize: 17, fontWeight: 800, color: "white", lineHeight: 1 }}>
-                    35 יום
-                  </div>
-                  <div style={{ fontSize: 11, color: "hsl(215 10% 55%)", marginTop: 4 }}>
-                    משך הקמפיין
-                  </div>
-                </div>
-                <div style={{ height: 32, background: "hsl(215 20% 30%)" }} />
-                <div>
-                  <div style={{ fontSize: 17, fontWeight: 800, color: "white", lineHeight: 1 }}>
-                    480
-                  </div>
-                  <div style={{ fontSize: 11, color: "hsl(215 10% 55%)", marginTop: 4 }}>
-                    עמודים
-                  </div>
                 </div>
               </div>
             </div>
@@ -1138,7 +1251,12 @@ export default function DesignPreviewYehoshuaCampaign() {
       </section>
 
       {/* ─────────────────────────────────────────
-          RECENT BACKERS SCROLL (pre-launch simulation)
+          PROGRESS BAR (Headstart style)
+      ───────────────────────────────────────── */}
+      <ProgressBlock />
+
+      {/* ─────────────────────────────────────────
+          RECENT BACKERS SCROLL
       ───────────────────────────────────────── */}
       <div
         style={{
@@ -1165,14 +1283,14 @@ export default function DesignPreviewYehoshuaCampaign() {
               >
                 <div
                   style={{
-                    width: 28,
-                    height: 28,
+                    width: 26,
+                    height: 26,
                     background: "hsl(38 75% 55% / 0.15)",
                     borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: 700,
                     color: "hsl(38 85% 70%)",
                     flexShrink: 0,
@@ -1185,11 +1303,16 @@ export default function DesignPreviewYehoshuaCampaign() {
                     {b.name}
                   </span>
                   <span style={{ color: "hsl(215 10% 55%)", fontSize: 12 }}>
-                    {" "}
-                    בחר/ה «{b.tier}»
+                    {" "}בחר/ה «{b.tier}»
                   </span>
-                  <span style={{ color: "hsl(215 10% 45%)", fontSize: 11, marginRight: 6 }}>
-                    {b.time}
+                  <span
+                    style={{
+                      color: "hsl(215 10% 45%)",
+                      fontSize: 11,
+                      marginInlineEnd: 6,
+                    }}
+                  >
+                    {" "}{b.time}
                   </span>
                 </div>
               </div>
@@ -1197,6 +1320,60 @@ export default function DesignPreviewYehoshuaCampaign() {
           </div>
         </div>
       </div>
+
+      {/* ─────────────────────────────────────────
+          TIERS — moved up, right after hero+progress
+      ───────────────────────────────────────── */}
+      <section
+        style={{
+          background: "hsl(215 15% 96%)",
+          padding: "64px 24px 80px",
+        }}
+        id="tiers"
+      >
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 40 }}>
+            <p
+              style={{
+                color: "hsl(38 75% 42%)",
+                fontWeight: 700,
+                fontSize: 12,
+                letterSpacing: "0.1em",
+                marginBottom: 8,
+              }}
+            >
+              חבילות תמיכה
+            </p>
+            <h2
+              style={{
+                fontSize: "clamp(24px, 3.5vw, 38px)",
+                fontWeight: 900,
+                color: "hsl(215 55% 22%)",
+                lineHeight: 1.2,
+                marginBottom: 8,
+              }}
+            >
+              בחרו את רמת התמיכה שלכם
+            </h2>
+            <p
+              style={{
+                color: "hsl(215 25% 42%)",
+                fontSize: 15,
+                maxWidth: 520,
+                margin: "0 auto",
+              }}
+            >
+              מחיר מיוחד ל-200 הראשונים. לאחר מכן המחיר יעלה.
+            </p>
+          </div>
+
+          <div className="tier-grid">
+            {TIERS.map((tier) => (
+              <TierCard key={tier.id} tier={tier} onSupport={handleSupport} />
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ─────────────────────────────────────────
           THE STORY
@@ -1230,7 +1407,9 @@ export default function DesignPreviewYehoshuaCampaign() {
             }}
           >
             ספר על כיבוש הארץ —{" "}
-            <span style={{ color: "hsl(38 75% 42%)" }}>נכתב תוך כדי כיבוש הארץ.</span>
+            <span style={{ color: "hsl(38 75% 42%)" }}>
+              נכתב תוך כדי כיבוש הארץ.
+            </span>
           </h2>
 
           <div
@@ -1243,23 +1422,22 @@ export default function DesignPreviewYehoshuaCampaign() {
               gap: 18,
             }}
           >
-            <p>
-              הרב יואב מלמד תנ״ך כבר 15 שנה. בשנתיים האחרונות — תוך כדי המילואים ובין הסבבים —
-              ישב וכתב ספר על יהושע. פירוש שמסתכל על ספר יהושע מהמקום שהרב יואב נמצא בו.
+            <p style={{ margin: 0 }}>
+              הרב יואב מלמד תנ״ך כבר 15 שנה. בשנתיים האחרונות — תוך כדי
+              המילואים ובין הסבבים — ישב וכתב ספר על יהושע. פירוש שמסתכל
+              על ספר יהושע מהמקום שהרב יואב נמצא בו.
             </p>
-            <p>
+            <p style={{ margin: 0 }}>
               לא פירוש אקדמי. לא ספר היסטוריה.{" "}
               <strong>
-                פירוש שמסתכל על ספר יהושע מהמקום שהרב יואב נמצא בו — לוחם שמכיר את
-                האדמה, את הגבול, את האחריות.
+                פירוש שמסתכל על ספר יהושע מהמקום שהרב יואב נמצא בו — לוחם
+                שמכיר את האדמה, את הגבול, את האחריות.
               </strong>
             </p>
-            <p>
-              הספר הזה מדבר להרבה אנשים — לא דווקא תלמידים — ועוזר להבין את הגודל של
-              הרגע שאנחנו חיים בו, כשהמלחמה הזאת היא חלק מהסיפור.
-            </p>
-            <p>
-              בלי עזרת הציבור הספר לא יצא לאור.
+            <p style={{ margin: 0 }}>
+              הספר הזה מדבר להרבה אנשים — לא דווקא תלמידים — ועוזר להבין
+              את הגודל של הרגע שאנחנו חיים בו, כשהמלחמה הזאת היא חלק
+              מהסיפור.
             </p>
 
             {/* Pull quote */}
@@ -1320,7 +1498,9 @@ export default function DesignPreviewYehoshuaCampaign() {
               }}
             >
               לא עוד ספר על יהושע.{" "}
-              <span style={{ color: "hsl(38 75% 42%)" }}>הספר שצריך עכשיו.</span>
+              <span style={{ color: "hsl(38 75% 42%)" }}>
+                הספר שצריך עכשיו.
+              </span>
             </h2>
           </div>
 
@@ -1340,7 +1520,7 @@ export default function DesignPreviewYehoshuaCampaign() {
               {
                 num: "02",
                 title: "רגע ההיסטוריה שלנו",
-                body: "כיבוש הארץ, אחריות עם, גבול. שאלות שיהושע הפעיל לפני 3,300 שנה — ושאנחנו מפעילים שוב היום. הספר עוזר להבין את הגודל של הרגע שאנחנו חיים בו, כשהמלחמה הזאת היא חלק מהסיפור.",
+                body: "כיבוש הארץ, אחריות עם, גבול. שאלות שיהושע הפעיל לפני 3,300 שנה — ושאנחנו מפעילים שוב היום. הספר עוזר להבין את הגודל של הרגע שאנחנו חיים בו.",
               },
               {
                 num: "03",
@@ -1351,7 +1531,8 @@ export default function DesignPreviewYehoshuaCampaign() {
               <div
                 key={card.title}
                 style={{
-                  background: "linear-gradient(180deg, hsl(38 40% 97%) 0%, hsl(38 35% 95%) 100%)",
+                  background:
+                    "linear-gradient(180deg, hsl(38 40% 97%) 0%, hsl(38 35% 95%) 100%)",
                   border: "1px solid hsl(38 50% 86%)",
                   borderRadius: 18,
                   padding: "28px 22px",
@@ -1371,7 +1552,9 @@ export default function DesignPreviewYehoshuaCampaign() {
                   }}
                 >
                   <span>{card.num}</span>
-                  <span style={{ flex: 1, height: 1, background: "hsl(38 50% 78%)" }} />
+                  <span
+                    style={{ flex: 1, height: 1, background: "hsl(38 50% 78%)" }}
+                  />
                 </div>
                 <h3
                   style={{
@@ -1383,7 +1566,14 @@ export default function DesignPreviewYehoshuaCampaign() {
                 >
                   {card.title}
                 </h3>
-                <p style={{ fontSize: 14, color: "hsl(215 30% 32%)", lineHeight: 1.65 }}>
+                <p
+                  style={{
+                    fontSize: 14,
+                    color: "hsl(215 30% 32%)",
+                    lineHeight: 1.65,
+                    margin: 0,
+                  }}
+                >
                   {card.body}
                 </p>
               </div>
@@ -1415,14 +1605,15 @@ export default function DesignPreviewYehoshuaCampaign() {
                   boxShadow: "0 8px 32px hsl(38 50% 55% / 0.1)",
                 }}
               >
-                {/* TODO(yoav): replace with new IDF photo — pending from Yoav 13.5.2026 */}
+                {/* TODO(yoav): replace with approved photo — pending */}
                 <img
                   src="https://club.bneyzion.co.il/wp-content/uploads/2026/04/rav-yoav.jpg"
                   alt="הרב יואב אוריאל"
                   style={{ width: "100%", display: "block" }}
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      "https://via.placeholder.com/380x480/1A2744/C8A45A?text=%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91";
+                    const el = e.target as HTMLImageElement;
+                    el.style.minHeight = "340px";
+                    el.style.background = "hsl(215 40% 20%)";
                   }}
                 />
               </div>
@@ -1461,14 +1652,16 @@ export default function DesignPreviewYehoshuaCampaign() {
                   gap: 12,
                 }}
               >
-                <p>
+                <p style={{ margin: 0 }}>
                   ראש תנועת בני ציון ללימוד תנ״ך. מלמד תנ״ך כבר{" "}
-                  <strong>15 שנה</strong>. בתכנית <strong>«לחיות תנ״ך»</strong> לומדים איתו יחד
-                  300+ אנשים — סטודנטים, אברכים, רופאים, מורים, מהנדסי הייטק. גברים ונשים, מכל
-                  גווני הקשת.
+                  <strong>15 שנה</strong>. בתכנית{" "}
+                  <strong>«לחיות תנ״ך»</strong> לומדים איתו יחד 300+ אנשים
+                  — סטודנטים, אברכים, רופאים, מורים, מהנדסי הייטק. גברים
+                  ונשים, מכל גווני הקשת.
                 </p>
-                <p>
-                  ערך וכתב את הספר במהלך המילואים — פרק אחר פרק, בין סבב לסבב. הספר יצא לאור.
+                <p style={{ margin: 0 }}>
+                  ערך וכתב את הספר במהלך המילואים — פרק אחר פרק, בין סבב
+                  לסבב. הספר יצא לאור.
                 </p>
               </div>
 
@@ -1487,7 +1680,7 @@ export default function DesignPreviewYehoshuaCampaign() {
                 {[
                   { val: "15+", label: "שנות הוראה" },
                   { val: "300+", label: "לומדים פעילים" },
-                  { val: "300+", label: "שיעורים בארכיון" },
+                  { val: "480", label: "עמודים בספר" },
                 ].map((s) => (
                   <div key={s.label} style={{ textAlign: "center" }}>
                     <div
@@ -1500,158 +1693,15 @@ export default function DesignPreviewYehoshuaCampaign() {
                     >
                       {s.val}
                     </div>
-                    <div style={{ fontSize: 12, color: "hsl(215 25% 42%)", marginTop: 4 }}>
+                    <div
+                      style={{ fontSize: 12, color: "hsl(215 25% 42%)", marginTop: 4 }}
+                    >
                       {s.label}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────
-          TIERS
-      ───────────────────────────────────────── */}
-      <section
-        style={{
-          background: "hsl(215 15% 96%)",
-          padding: "64px 24px 80px",
-        }}
-        id="tiers"
-      >
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 40 }}>
-            <p
-              style={{
-                color: "hsl(38 75% 42%)",
-                fontWeight: 700,
-                fontSize: 12,
-                letterSpacing: "0.1em",
-                marginBottom: 8,
-              }}
-            >
-              תמיכה
-            </p>
-            <h2
-              style={{
-                fontSize: "clamp(24px, 3.5vw, 38px)",
-                fontWeight: 900,
-                color: "hsl(215 55% 22%)",
-                lineHeight: 1.2,
-                marginBottom: 8,
-              }}
-            >
-              בחרו את רמת התמיכה שלכם
-            </h2>
-            <p style={{ color: "hsl(215 25% 42%)", fontSize: 15, maxWidth: 520, margin: "0 auto" }}>
-              בחרו את המסלול שמתאים לכם — מתמיכה סמלית ועד שיתוף פעולה מלא.
-            </p>
-          </div>
-
-          <div className="tier-grid">
-            {TIERS.map((tier) => (
-              <TierCard key={tier.id} tier={tier} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────
-          STRETCH GOALS
-      ───────────────────────────────────────── */}
-      <section
-        style={{
-          background: "hsl(215 55% 16%)",
-          padding: "56px 24px",
-        }}
-      >
-        <div style={{ maxWidth: 900, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 36 }}>
-            <p
-              style={{
-                color: "hsl(38 85% 70%)",
-                fontWeight: 700,
-                fontSize: 12,
-                letterSpacing: "0.1em",
-                marginBottom: 8,
-              }}
-            >
-              יעדי המשך
-            </p>
-            <h2
-              style={{
-                fontSize: "clamp(22px, 3vw, 34px)",
-                fontWeight: 900,
-                color: "white",
-                marginBottom: 8,
-              }}
-            >
-              ככל שמגייסים יותר — כולם מרוויחים
-            </h2>
-            <p style={{ color: "hsl(215 10% 60%)", fontSize: 14 }}>
-              יעדי ההמשך ישוחררו בפומבי אחרי הגעה ל-100% מהיעד
-            </p>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-            {STRETCH_GOALS.map((goal, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "hsl(215 40% 22% / 0.6)",
-                  border: "1px solid hsl(215 20% 32%)",
-                  borderRadius: 14,
-                  padding: "16px 20px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 16,
-                }}
-              >
-                <div
-                  style={{
-                    width: 44,
-                    height: 44,
-                    background: "hsl(38 75% 55% / 0.15)",
-                    border: "1px solid hsl(38 75% 55% / 0.3)",
-                    borderRadius: "50%",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 18,
-                    flexShrink: 0,
-                  }}
-                >
-                  {goal.icon}
-                </div>
-                <div style={{ flex: 1 }}>
-                  <div
-                    style={{
-                      color: "hsl(38 85% 68%)",
-                      fontWeight: 800,
-                      fontSize: 14,
-                      marginBottom: 2,
-                    }}
-                  >
-                    ₪{goal.amount.toLocaleString()}
-                  </div>
-                  <div style={{ color: "hsl(215 10% 75%)", fontSize: 14 }}>{goal.title}</div>
-                </div>
-                <div
-                  style={{
-                    width: 80,
-                    height: 6,
-                    background: "hsl(215 20% 35%)",
-                    borderRadius: 6,
-                    overflow: "hidden",
-                    flexShrink: 0,
-                  }}
-                >
-                  <div style={{ height: "100%", width: "0%", background: "hsl(38 75% 55%)", borderRadius: 6 }} />
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -1688,7 +1738,7 @@ export default function DesignPreviewYehoshuaCampaign() {
             className="phases-grid"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
+              gridTemplateColumns: `repeat(${CAMPAIGN_PHASES.length}, 1fr)`,
               gap: 4,
               position: "relative",
             }}
@@ -1709,29 +1759,39 @@ export default function DesignPreviewYehoshuaCampaign() {
             {CAMPAIGN_PHASES.map((phase, i) => (
               <div
                 key={i}
-                style={{ textAlign: "center", position: "relative", zIndex: 1, padding: "0 4px" }}
+                style={{
+                  textAlign: "center",
+                  position: "relative",
+                  zIndex: 1,
+                  padding: "0 4px",
+                }}
               >
                 <div
                   style={{
                     width: 40,
                     height: 40,
                     borderRadius: "50%",
-                    background: phase.done
-                      ? "hsl(38 75% 55%)"
-                      : phase.current
+                    background: phase.done || phase.current
                       ? "hsl(38 75% 55%)"
                       : "white",
                     border: `2px solid ${
-                      phase.done || phase.current ? "hsl(38 75% 55%)" : "hsl(215 15% 80%)"
+                      phase.done || phase.current
+                        ? "hsl(38 75% 55%)"
+                        : "hsl(215 15% 80%)"
                     }`,
                     margin: "0 auto 10px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 14,
-                    color: phase.done || phase.current ? "hsl(215 55% 15%)" : "hsl(215 15% 65%)",
+                    color:
+                      phase.done || phase.current
+                        ? "hsl(215 55% 15%)"
+                        : "hsl(215 15% 65%)",
                     fontWeight: 700,
-                    boxShadow: phase.current ? "0 0 0 4px hsl(38 75% 55% / 0.2)" : "none",
+                    boxShadow: phase.current
+                      ? "0 0 0 4px hsl(38 75% 55% / 0.2)"
+                      : "none",
                   }}
                 >
                   {phase.done ? "✓" : i + 1}
@@ -1740,14 +1800,18 @@ export default function DesignPreviewYehoshuaCampaign() {
                   style={{
                     fontSize: 12,
                     fontWeight: phase.current ? 700 : 600,
-                    color: phase.current ? "hsl(215 55% 22%)" : "hsl(215 30% 35%)",
+                    color: phase.current
+                      ? "hsl(215 55% 22%)"
+                      : "hsl(215 30% 35%)",
                     marginBottom: 3,
                     lineHeight: 1.3,
                   }}
                 >
                   {phase.label}
                 </div>
-                <div style={{ fontSize: 11, color: "hsl(215 20% 52%)" }}>{phase.sub}</div>
+                <div style={{ fontSize: 11, color: "hsl(215 20% 52%)" }}>
+                  {phase.sub}
+                </div>
                 {phase.current && (
                   <div
                     style={{
@@ -1764,66 +1828,6 @@ export default function DesignPreviewYehoshuaCampaign() {
                     אנחנו כאן
                   </div>
                 )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─────────────────────────────────────────
-          TESTIMONIALS
-      ───────────────────────────────────────── */}
-      <section style={{ background: "hsl(38 35% 96%)", padding: "64px 24px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 36 }}>
-            <p
-              style={{
-                color: "hsl(38 75% 42%)",
-                fontWeight: 700,
-                fontSize: 12,
-                letterSpacing: "0.1em",
-                marginBottom: 8,
-              }}
-            >
-              מה אומרים על השיעורים של הרב יואב
-            </p>
-            <h2
-              style={{
-                fontSize: "clamp(22px, 3vw, 34px)",
-                fontWeight: 900,
-                color: "hsl(215 55% 22%)",
-              }}
-            >
-              הקול של הקהילה.
-            </h2>
-          </div>
-
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-            {TESTIMONIALS.map((t, i) => (
-              <div
-                key={i}
-                style={{
-                  background: "white",
-                  borderInlineEnd: "5px solid hsl(38 75% 55%)",
-                  borderRadius: "0 12px 12px 0",
-                  padding: "18px 20px 18px 16px",
-                  boxShadow: "0 2px 8px hsl(215 15% 60% / 0.08)",
-                }}
-              >
-                <p
-                  style={{
-                    fontSize: 16,
-                    color: "hsl(215 45% 22%)",
-                    lineHeight: 1.65,
-                    marginBottom: 8,
-                    fontStyle: "italic",
-                  }}
-                >
-                  «{t.text}»
-                </p>
-                <p style={{ fontSize: 13, color: "hsl(215 25% 48%)", fontWeight: 600 }}>
-                  — {t.name}
-                </p>
               </div>
             ))}
           </div>
@@ -1887,7 +1891,14 @@ export default function DesignPreviewYehoshuaCampaign() {
           }}
         />
 
-        <div style={{ maxWidth: 620, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <div
+          style={{
+            maxWidth: 620,
+            margin: "0 auto",
+            position: "relative",
+            zIndex: 1,
+          }}
+        >
           <h2
             style={{
               fontSize: "clamp(28px, 4.5vw, 48px)",
@@ -1907,15 +1918,17 @@ export default function DesignPreviewYehoshuaCampaign() {
               marginBottom: 32,
             }}
           >
-            כל תמיכה עוזרת להוציא את הספר לציבור. הספר יגיע אליכם עד החגים.
+            כל תמיכה עוזרת להוציא את הספר לציבור. הספר יגיע אליכם עד
+            החגים — תשרי תשפ"ז.
           </p>
           <a
-            href="#signup"
+            href="#tiers"
             className="cta-pulse"
             style={{
               display: "inline-block",
               padding: "18px 40px",
-              background: "linear-gradient(135deg, hsl(43 85% 60%), hsl(38 75% 50%))",
+              background:
+                "linear-gradient(135deg, hsl(43 85% 60%), hsl(38 75% 50%))",
               color: "hsl(215 55% 12%)",
               fontWeight: 800,
               fontSize: 18,
@@ -1924,7 +1937,7 @@ export default function DesignPreviewYehoshuaCampaign() {
               letterSpacing: "0.01em",
             }}
           >
-            תמכו בהוצאת הספר לאור
+            לבחירת חבילת תמיכה ↑
           </a>
           <p
             style={{
@@ -1953,7 +1966,7 @@ export default function DesignPreviewYehoshuaCampaign() {
         <p style={{ color: "white", fontWeight: 700, marginBottom: 8 }}>
           תנועת בני ציון ללימוד תנ״ך
         </p>
-        <p style={{ fontSize: 13, color: "hsl(215 10% 50%)" }}>
+        <p style={{ fontSize: 13, color: "hsl(215 10% 50%)", margin: "0 0 16px" }}>
           <a
             href="mailto:office@bneyzion.co.il"
             style={{ color: "hsl(38 75% 60%)", textDecoration: "none" }}
@@ -1968,8 +1981,9 @@ export default function DesignPreviewYehoshuaCampaign() {
             bneyzion.co.il
           </a>
         </p>
-        <p style={{ fontSize: 11, color: "hsl(215 10% 35%)", marginTop: 16 }}>
-          בני ציון · לחיות תנ״ך · 2026 · דף זה הוא sandbox בלבד — לאישור יואב לפני פרסום
+        <p style={{ fontSize: 11, color: "hsl(215 10% 35%)", margin: 0 }}>
+          בני ציון · לחיות תנ״ך · 2026 · דף זה הוא sandbox בלבד — לאישור
+          יואב לפני פרסום
         </p>
       </footer>
 
