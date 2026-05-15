@@ -156,7 +156,7 @@ const CAMPAIGN_PHASES = [
   { label: "השקה", sub: "סיון תשפ\"ו", done: false, current: true },
   { label: "יעד ראשון — ₪40K", sub: "תמוז תשפ\"ו", done: false },
   { label: "יעד מלא — ₪80K", sub: "אב תשפ\"ו", done: false },
-  { label: "הדפסה ומשלוח", sub: "אלול תשפ\"ו", done: false },
+  { label: "הוצאה לאור ומשלוח", sub: "אלול תשפ\"ו", done: false },
   { label: "הספר אצלכם", sub: "עד החגים — תשרי תשפ\"ז", done: false },
 ];
 
@@ -177,19 +177,15 @@ const FAQ_ITEMS: FaqItem[] = [
     q: "האם יש אפשרות להקדיש את הספר לאדם אהוב?",
     a: "כן. במסלול «ספר + הקדשה» (₪120) ומעלה הרב יואב כותב הקדשה אישית — להנצחה, לסבא, לרב, לחייל. ציינו את שם הנמען בהערת ההזמנה.",
   },
-  {
-    q: "איך הקמפיין עובד?",
-    a: "בוחרים חבילה, משלמים בכרטיס אשראי, ומקבלים את הספר עד הבית. הקמפיין יתפרסם רשמית בפלטפורמת מימון ציבורי — הדף הזה הוא טרום-השקה.",
-  },
 ];
 
 // Simulated recent backers
 const RECENT_BACKERS = [
-  { name: "א.ל.", tier: "מחיר מיוחד — 200 ראשונים", time: "לפני 2 ד'" },
-  { name: "מ.כ.", tier: "ספר + הקדשה", time: "לפני 5 ד'" },
-  { name: "ר.ש.", tier: "הזוג", time: "לפני 11 ד'" },
-  { name: "ד.א.", tier: "מחיר מיוחד — 200 ראשונים", time: "לפני 18 ד'" },
-  { name: "נ.ה.", tier: "הסט המלא", time: "לפני 23 ד'" },
+  { name: "א.ל.", tier: "מחיר מיוחד — 200 ראשונים", amount: 90, time: "לפני 2 דקות" },
+  { name: "מ.כ.", tier: "ספר + הקדשה", amount: 120, time: "לפני 5 דקות" },
+  { name: "ר.ש.", tier: "הזוג", amount: 220, time: "לפני 11 דקות" },
+  { name: "ד.א.", tier: "מחיר מיוחד — 200 ראשונים", amount: 90, time: "לפני 18 דקות" },
+  { name: "נ.ה.", tier: "הסט המלא", amount: 400, time: "לפני 23 דקות" },
 ];
 
 /* ─── Sub-components ─────────────────────────────────────── */
@@ -674,6 +670,163 @@ function TierCard({
           אני תומך
         </button>
       )}
+    </div>
+  );
+}
+
+function CustomAmountCard({
+  onSupport,
+}: {
+  onSupport: (tier: Tier) => void;
+}) {
+  const [amount, setAmount] = useState<string>("");
+
+  function submit() {
+    const num = parseInt(amount, 10);
+    if (!num || num < 18) return;
+    onSupport({
+      id: "tier-custom",
+      price: num,
+      name: "סכום חופשי",
+      headline: `תרומה של ₪${num.toLocaleString()}`,
+      limit: 9999,
+      remaining: 9999,
+      perks: ["תמיכה בהוצאת הספר לאור"],
+      image: "/images/yoav-campaign/book-mockup-tank.jpg",
+      imageAlt: "תרומה בסכום חופשי",
+    });
+  }
+
+  return (
+    <div
+      style={{
+        marginTop: 28,
+        background: "linear-gradient(135deg, hsl(38 50% 96%) 0%, hsl(38 60% 92%) 100%)",
+        border: "2px dashed hsl(38 75% 55%)",
+        borderRadius: 18,
+        padding: "26px 24px",
+        display: "flex",
+        flexDirection: "column",
+        gap: 14,
+        alignItems: "center",
+        textAlign: "center",
+      }}
+    >
+      <div>
+        <h3
+          style={{
+            margin: 0,
+            color: "hsl(215 55% 22%)",
+            fontSize: "clamp(20px, 2.4vw, 26px)",
+            fontWeight: 900,
+          }}
+        >
+          רוצים לתמוך בסכום אחר?
+        </h3>
+        <p
+          style={{
+            margin: "6px 0 0",
+            color: "hsl(215 30% 38%)",
+            fontSize: 14,
+            fontWeight: 500,
+          }}
+        >
+          כל תרומה — גדולה או קטנה — עוזרת להוציא את הספר לאור.
+        </p>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "stretch",
+          gap: 10,
+          width: "100%",
+          maxWidth: 460,
+          flexWrap: "wrap",
+        }}
+      >
+        <div
+          style={{
+            flex: "1 1 220px",
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            background: "white",
+            border: "1.5px solid hsl(38 50% 80%)",
+            borderRadius: 12,
+            padding: "0 14px",
+            minWidth: 0,
+          }}
+        >
+          <span
+            style={{
+              fontSize: 22,
+              fontWeight: 800,
+              color: "hsl(38 75% 45%)",
+              marginInlineEnd: 6,
+            }}
+          >
+            ₪
+          </span>
+          <input
+            type="number"
+            inputMode="numeric"
+            min={18}
+            step={1}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="הקלידו סכום"
+            style={{
+              flex: 1,
+              border: "none",
+              outline: "none",
+              fontSize: 18,
+              fontWeight: 700,
+              color: "hsl(215 55% 22%)",
+              background: "transparent",
+              padding: "14px 0",
+              textAlign: "start",
+              fontFamily: "inherit",
+              width: "100%",
+              minWidth: 0,
+            }}
+          />
+        </div>
+        <button
+          onClick={submit}
+          disabled={!parseInt(amount, 10) || parseInt(amount, 10) < 18}
+          style={{
+            flex: "1 1 180px",
+            padding: "0 22px",
+            borderRadius: 12,
+            border: "none",
+            background:
+              parseInt(amount, 10) >= 18
+                ? "linear-gradient(135deg, hsl(38 75% 55%), hsl(38 75% 45%))"
+                : "hsl(215 15% 75%)",
+            color: "white",
+            fontSize: 15,
+            fontWeight: 800,
+            cursor: parseInt(amount, 10) >= 18 ? "pointer" : "not-allowed",
+            transition: "transform 0.2s ease",
+            minHeight: 50,
+            boxShadow:
+              parseInt(amount, 10) >= 18
+                ? "0 6px 18px hsl(38 75% 50% / 0.35)"
+                : "none",
+          }}
+        >
+          תמכו בסכום שלכם ←
+        </button>
+      </div>
+      <p
+        style={{
+          margin: 0,
+          color: "hsl(215 20% 50%)",
+          fontSize: 12,
+        }}
+      >
+        סכום מינימלי ₪18
+      </p>
     </div>
   );
 }
@@ -1285,70 +1438,135 @@ export default function DesignPreviewYehoshuaCampaign() {
       <ProgressBlock />
 
       {/* ─────────────────────────────────────────
-          RECENT BACKERS SCROLL
+          RECENT BACKERS — CARD GRID
       ───────────────────────────────────────── */}
-      <div
+      <section
         style={{
-          background: "hsl(215 55% 14%)",
-          borderTop: "1px solid hsl(38 75% 55% / 0.15)",
-          padding: "12px 0",
-          overflow: "hidden",
+          maxWidth: 1100,
+          margin: "0 auto",
+          padding: "44px 20px 20px",
         }}
       >
-        <div style={{ overflow: "hidden" }}>
-          <div className="backer-scroll">
-            {[...RECENT_BACKERS, ...RECENT_BACKERS].map((b, i) => (
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <p
+            style={{
+              color: "hsl(38 75% 42%)",
+              fontWeight: 700,
+              fontSize: 12,
+              letterSpacing: "0.14em",
+              marginBottom: 6,
+            }}
+          >
+            הצטרפו לתומכים
+          </p>
+          <h2
+            style={{
+              fontSize: "clamp(24px, 3vw, 34px)",
+              fontWeight: 900,
+              color: "hsl(215 55% 22%)",
+              margin: 0,
+            }}
+          >
+            תומכים שהצטרפו לאחרונה
+          </h2>
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: 14,
+          }}
+        >
+          {RECENT_BACKERS.map((b, i) => (
+            <div
+              key={i}
+              style={{
+                background: "white",
+                border: "1.5px solid hsl(38 50% 88%)",
+                borderRadius: 14,
+                padding: "16px 14px",
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                boxShadow: "0 4px 16px hsl(215 20% 30% / 0.05)",
+                position: "relative",
+              }}
+            >
               <div
-                key={i}
                 style={{
+                  width: 44,
+                  height: 44,
+                  background:
+                    "linear-gradient(135deg, hsl(38 75% 60%), hsl(38 75% 45%))",
+                  color: "white",
+                  borderRadius: "50%",
                   display: "flex",
                   alignItems: "center",
-                  gap: 8,
-                  padding: "4px 18px",
-                  borderInlineStart: "1px solid hsl(215 20% 28%)",
-                  whiteSpace: "nowrap",
+                  justifyContent: "center",
+                  fontWeight: 800,
+                  fontSize: 16,
                   flexShrink: 0,
+                  boxShadow: "0 4px 12px hsl(38 75% 50% / 0.3)",
                 }}
               >
+                {b.name[0]}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div
                   style={{
-                    width: 26,
-                    height: 26,
-                    background: "hsl(38 75% 55% / 0.15)",
-                    borderRadius: "50%",
                     display: "flex",
                     alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    color: "hsl(38 85% 70%)",
-                    flexShrink: 0,
+                    justifyContent: "space-between",
+                    gap: 6,
+                    marginBottom: 2,
                   }}
                 >
-                  {b.name[0]}
-                </div>
-                <div>
-                  <span style={{ color: "white", fontSize: 12, fontWeight: 600 }}>
+                  <span
+                    style={{
+                      color: "hsl(215 55% 20%)",
+                      fontSize: 14,
+                      fontWeight: 800,
+                    }}
+                  >
                     {b.name}
-                  </span>
-                  <span style={{ color: "hsl(215 10% 55%)", fontSize: 12 }}>
-                    {" "}בחר/ה «{b.tier}»
                   </span>
                   <span
                     style={{
-                      color: "hsl(215 10% 45%)",
-                      fontSize: 11,
-                      marginInlineEnd: 6,
+                      color: "hsl(38 75% 45%)",
+                      fontSize: 14,
+                      fontWeight: 900,
+                      letterSpacing: "-0.02em",
                     }}
                   >
-                    {" "}{b.time}
+                    ₪{b.amount}
                   </span>
                 </div>
+                <div
+                  style={{
+                    color: "hsl(215 30% 45%)",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {b.tier}
+                </div>
+                <div
+                  style={{
+                    color: "hsl(215 15% 55%)",
+                    fontSize: 10.5,
+                    marginTop: 2,
+                  }}
+                >
+                  {b.time}
+                </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
 
       {/* ─────────────────────────────────────────
           TIERS — moved up, right after hero+progress
@@ -1401,6 +1619,9 @@ export default function DesignPreviewYehoshuaCampaign() {
               <TierCard key={tier.id} tier={tier} onSupport={handleSupport} />
             ))}
           </div>
+
+          {/* Free amount support */}
+          <CustomAmountCard onSupport={handleSupport} />
         </div>
       </section>
 
@@ -1459,12 +1680,12 @@ export default function DesignPreviewYehoshuaCampaign() {
             <p style={{ margin: 0 }}>
               לא פירוש אקדמי. לא ספר היסטוריה.{" "}
               <strong>
-                פירוש שמסתכל על ספר יהושע מהמקום שהרב יואב נמצא בו — לוחם
-                שמכיר את האדמה, את הגבול, את האחריות.
+                פירוש על ספר יהושע במבט גאולי, כלל תנ״כי. מבט שמחבר את
+                המבט הגדול של הנבואה למלחמה של ימינו.
               </strong>
             </p>
             <p style={{ margin: 0 }}>
-              הספר הזה מדבר להרבה אנשים — לא דווקא תלמידים — ועוזר להבין
+              הספר נוגע לכל אחד ואחת, גם בלי רקע רחב בתנ״ך — ועוזר להבין
               את הגודל של הרגע שאנחנו חיים בו, כשהמלחמה הזאת היא חלק
               מהסיפור.
             </p>
@@ -1544,7 +1765,7 @@ export default function DesignPreviewYehoshuaCampaign() {
               {
                 num: "01",
                 title: "פירוש שלם של 24 פרקים",
-                body: "480 עמודים — כל פרק נפתח לעומק. לא הערות, לא קיצורים. ספר שפותח חלון חדש ללמוד תנ״ך, פרק אחר פרק, כמו שהרב יואב מלמד בהרצאות ובשיעורי «לחיות תנ״ך».",
+                body: "480 עמודים — כל פרק נפתח לעומק. לא הערות, לא קיצורים. ספר שפותח חלון חדש ללמוד תנ״ך, פרק אחר פרק, כמו שהרב יואב מדבר בשיעורי «לחיות תנ״ך».",
               },
               {
                 num: "02",
@@ -1553,8 +1774,8 @@ export default function DesignPreviewYehoshuaCampaign() {
               },
               {
                 num: "03",
-                title: "לא רק לתלמידים — לכולם",
-                body: "ספר שאפשר לקרוא בסלון עם הילדים, ולהביא לשיעור בכיתה. לא רק לתלמידי חכמים — לכל מי שרוצה להבין מה קורה פה ולמה ספר יהושע הוא הסיפור שלנו.",
+                title: "לא רק לבני ישיבות — לכולם",
+                body: "ספר שאפשר לקרוא בסלון עם הילדים, ולהביא לשיעור בכיתה. לא רק לבני ישיבות — לכל מי שרוצה להבין מה קורה פה ולמה ספר יהושע הוא הסיפור שלנו.",
               },
             ].map((card) => (
               <div
@@ -1881,7 +2102,7 @@ export default function DesignPreviewYehoshuaCampaign() {
                 color: "hsl(215 55% 22%)",
               }}
             >
-              הכל מה שצריך לדעת
+              כל מה שצריך לדעת
             </h2>
           </div>
           <FaqAccordion items={FAQ_ITEMS} />
