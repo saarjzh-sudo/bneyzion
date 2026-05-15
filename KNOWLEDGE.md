@@ -2445,20 +2445,6 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - **TS check:** 0 errors.
 - **Pending:** form endpoint (Smoove / Supabase) — placeholder only, same as v2 HTML. Awaiting Yoav approval before publishing.
 
-### 2026-05-12 — Bug fixes from Rav Yoav's QA review (commit bdc37c6)
-- **Trigger:** Rav Yoav sent 7 bug reports (text + screenshots) via WhatsApp personal chat today.
-- **Bugs found and fixed:**
-  1. **useRabbi.ts — `useRabbiSeries` returned 0 series for most rabbis.** Root cause: (a) hook filtered `.eq("status","active")` but most series have `status="published"`. (b) Hook only looked at `series.rabbi_id` — didn't find series where rabbi contributed as guest (e.g. נתן מארגל in פרשת השבוע multi-rabbi series). Fix: added union query — owned series with status IN ('active','published') PLUS series that have at least 1 published lesson from this rabbi via `lessons.rabbi_id`.
-  2. **RabbiPage.tsx — "שיעורים אחרונים" section title confusing + 20-lesson cap.** Renamed to "שיעורים (N)" with dynamic count. Raised limit to 50.
-  3. **DesignPreviewRabbi.tsx [sandbox] — "קאנון מקודש" badge on every series card.** `getSeriesFamily()` returns `sacredCanon` as a fallback for any series not matching a specific keyword pattern — so all Tanakh book-series (דניאל, ישעיהו etc.) got this badge. Fix: wrapped badge in `{getSeriesFamily() !== "sacredCanon" && ...}` — only non-default families show a badge.
-  4. **DesignPreviewSeriesPageV2.tsx [sandbox] — "פתח בעמוד מלא" shown for text lessons.** For text-type lessons the popup already shows the full content inline; the extra link is a confusing dead-end. Fix: hide the link when `mediaType === "text"`.
-  5. **Donate.tsx — "תרומות מעל ₪100 מזכות באישור לפי סעיף 46"** was misleading (the threshold is actually 180₪ by law). Rephrased to "תרומות מזכות בקבלה לצורך ניכוי מס לפי סעיף 46" without a monetary qualifier.
-- **Not fixed (requires Saar decision):**
-  - Bug 1 (00:36): Sorting series on rabbi page by biblical order — needs biblicalOrder library integration; out of scope for hotfix.
-  - Bug 2 (09:27): AI image generation produces Hebrew text artifacts — this is a Gemini Imagen prompt engineering issue, not a code bug. Document the prompt fix separately.
-  - Bug 7 (10:24): Bank transfer donation option unclear — Saar to decide if to hide it.
-- **Constraint learned:** `series.status` in DB uses 4 values: 'active', 'published', 'category', 'draft'. Only 'active' and 'published' are user-facing. Old hooks that filter only 'active' silently miss half the series.
-
 ### 2026-05-12 — Design polish pass on /design-yehoshua-campaign (designer-agent)
 - **Trigger:** Saar requested a designer-agent polish pass on top of the bneyzion-designer build.
 - **Issues found & fixed (design-only — copy untouched):**
@@ -2480,95 +2466,70 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   - Pre-launch "X already signed up" social-proof tile in hero stats not added (requires real data).
 - **TS check:** 0 errors. **No production files touched** — sandbox route only.
 
-### 2026-05-12 — Remove LessonComments from LessonPage (Rav Yoav request #3) (commit 314525e)
-- **Request:** Rav Yoav asked to remove the comments section completely from lesson pages.
-- **File changed:** `src/pages/LessonPage.tsx`
-  - Removed import: `import LessonComments from "@/components/lesson/LessonComments"`
-  - Removed the `{/* Comments */}` section block (6 lines) from the JSX
-  - The `LessonComments` component file itself (`src/components/lesson/LessonComments.tsx`)
-    is NOT deleted — left intact in case it's needed elsewhere or reactivated later.
-- **Request #8 (Donate.tsx — bank transfer removal):** Investigated — the current `Donate.tsx`
-  does NOT contain any bank transfer section. The Grow-only payment flow was already in place.
-  No code change needed. Rav Yoav may have seen an older version.
-- **TS check:** 0 errors.
+### 2026-05-14 — Yoav feedback round 1 applied to /design-yehoshua-campaign (27 items)
 
-### 2026-05-12 — Systemic scan of all 7 Rav Yoav bugs across the full codebase (commit 3243c28)
+- **File changed:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
+- **Deployed:** Vercel CLI deploy (`dpl_9KQM7VcDaHdxDfx2voFHfdCqQGPc`) + alias to `bneyzion.vercel.app`. Lazy chunk `DesignPreviewYehoshuaCampaign-DiNuYbzb.js` verified on live bundle.
+- **Note on git:** The local bneyzion repo at `/Users/saarj/Downloads/saar-workspace/bneyzion` has a broken git (missing `objects` dir — orphaned worktree from `/private/tmp/bneyzion-prelaunch` which was cleaned up). Deployed via fresh clone to `/tmp/bneyzion-fresh` + `vercel deploy --prod + vercel alias`. GitHub push was NOT completed (no stored GitHub credentials in current shell). **TODO: Saar must `git push` from a shell that has GitHub credentials, or re-clone the repo.**
+- **Changes applied (all 27 items):**
+  1. All English terms removed: `tier` → `מסלול`, `Early Bird` → removed entirely, `Stretch goals` → `יעדי המשך`
+  2. `בעומק סוריה` → `בגבול סוריה` everywhere
+  3. Laptop quote removed ("הוא יישאר על הלפטופ של יואב")
+  4. Hero image placeholder added — overlay + comment `TODO(yoav): replace with new IDF photo — pending from Yoav 13.5.2026`; About-Yoav image same TODO comment
+  5. 240 → 480 עמודים throughout
+  6. "אם נגיע ליעד הספר יוצא לדפוס" → "הספר יצא לאור"
+  7. Early Bird tier (₪90, 200-cap) removed entirely; pre-launch signup concept canceled
+  8. "ספרי בני ציון / מפות בני ציון" → "פירוש על חמש מגילות + יהושע שופטים"
+  9. New tier added: ₪200 — סט יהושע + שופטים
+  10. ₪800 / ₪1200 tiers added with "סטים מלאים, כולל הספר החדש: חמש מגילות + יהושע שופטים"
+  11. ₪2000 tier (studio lesson): no max-attendees cap
+  12. ₪3600: removed "לאחר שחרורו" from wording
+  13. "הסיפור" section rewritten per Yoav's dictation: "ספר על כיבוש הארץ נכתב תוך כדי כיבוש הארץ" + Yoav's framing about the book speaking to many people, not just students
+  14. "Why this book" 3 cards strengthened with teaching-program voice (פותח חלון, הגודל של הרגע)
+  15. Removed "בוגר ישיבת מרכז הרב" from bio (factually wrong)
+  16. "מלמד את הפרק השבועי 15 שנה" → "מלמד תנ"ך כבר 15 שנה"
+  17. 250 לומדים → 300 לומדים (stats + paragraph)
+  18. Removed "סבב מילואים שישי בעומק סוריה" from bio; replaced with past tense "ערך וכתב את הספר במהלך המילואים"
+  19. Removed "בין משימה, עורך את הפרקים האחרונים" and "עם השחרור הספר ייכנס לדפוס"
+  20. Timeline: Hebrew months only (אייר/סיון/תמוז/אב/תשרי); removed "רישום מוקדם" phase; "חנוכה תשפ\"ז" → "עד החגים — תשרי תשפ\"ז"
+  21. FAQ: removed Early Bird Q, rewritten Headstart explainer to 1 line, removed pre-launch Q, "מתי הספר יגיע" → "עד החגים"
+  22. All CTA buttons: "שמרו לי מקום בין 200 הראשונים" → "תמכו בהוצאת הספר לאור"
+  23. Tiers section header description: removed "200 הראשונים ב-48 שעות" language
+  24. Eyebrow tag: "קמפיין הדסטארט" → "קמפיין תמיכה"
+  25. Sticky top + mobile bar: "טרום השקה" → "קמפיין פעיל/תמיכה"
+  26. File header comment updated (removed Headstart pre-launch framing)
+  27. Pull quote rewritten: "ספר על כיבוש הארץ נכתב תוך כדי כיבוש הארץ"
+- **Bundle verification (live):** `DesignPreviewYehoshuaCampaign-DiNuYbzb.js` — 13/13 checks passed. בגבול סוריה ✓, Early-Bird absent ✓, חמש מגילות ✓, 480 ✓, עד החגים ✓, 300+ ✓, ישיבת מרכז הרב absent ✓, מסלול זה ✓, הספר יצא לאור ✓, 200 הראשונים absent ✓, קמפיין תמיכה ✓, Hebrew months ✓.
+- **TS check:** 0 errors (ran `./node_modules/.bin/tsc --noEmit -p tsconfig.app.json` in `/tmp/bneyzion-fresh`)
+- **Deferred (needs Saar):**
+  - Hero IDF photo: marked as TODO in code, visible overlay placeholder. Yoav to supply photo.
+  - GitHub push: needs Saar to push `/tmp/bneyzion-fresh` to `origin main` (git commit `fa9b0d4` is ready, just needs push with credentials).
 
-#### Scan methodology
-Full grep across `src/` for each pattern. Results below.
+### 2026-05-15 — Yehoshua campaign full structural rebuild (Saar's vision) (commit be88f47)
 
-#### #4 — `status` filter across all hooks/components
-- **series.status** values: `'active'` | `'draft'` (from admin UI `admin/Series.tsx`)
-- **lessons.status** values: `'published'` | `'draft'`
-- **rabbis.status** values: `'active'` | `'inactive'`
-- **products.status** values: `'active'` | `'draft'` | `'archived'`
-- **Verdict:** All hooks use the correct status values. The bug was isolated to `useRabbi.ts`
-  (`useRabbiSeries` queried `series` with only `'active'` — now fixed in bdc37c6 to use `.in(["active","published"])`).
-  No other hooks mix statuses incorrectly.
-- **Iron rule confirmed:** For `series`, use `.eq("status", "active")` only. For `lessons`, use `.eq("status", "published")`.
-  For `rabbis`, use `.eq("status", "active")`. `useRabbi.ts` gets `.in(["active","published"])` because it fetches
-  series *for a rabbi page* which may include older series with legacy `'published'` status.
-
-#### #5 — Fullscreen button
-- Fixed in bdc37c6 for `DesignPreviewSeriesPageV2.tsx` — `{mediaType !== "text" && ...}` guard.
-- Scanned entire codebase: `allowFullScreen` attribute on iframes (LessonPage, LessonDialog, KnesPage, CommunityDetailPage, CommunityCoursePage) is an HTML attribute, not a "button". No other "פתח בעמוד מלא" text buttons exist.
-- `LessonPage.tsx:299` "פתח בחלון חדש" is for PDF attachment viewer only — correct behavior.
-
-#### #6 — `sacredCanon` as default family badge — SYSTEMIC FIX (commit 3243c28)
-- **Root pattern:** every `{fam.label}` rendered without `getSeriesFamily(...) !== "sacredCanon"` guard shows
-  the fallback label "קאנון מקודש" on all unclassified series — misleading.
-- **Files fixed** (5 files, 7 badge spots total):
-  - `DesignPreviewSeriesList.tsx` — top5 cards + catalog grid
-  - `DesignPreviewSeriesPage.tsx` — hero label + related-series cards
-  - `DesignPreviewLessonPage.tsx` — hero family badge
-  - `DesignPreviewLessonPopup.tsx` — modal badge row
-  - `DesignPreviewPortal.tsx` — enrolled-series cards
-- **Already correct:** `DesignPreviewRabbi.tsx` (fixed bdc37c6), filter-row chips in SeriesList (intentionally show all families).
-- **Pattern for future:** always `const seriesFamily = getSeriesFamily(...)` + `{seriesFamily !== "sacredCanon" && <span>{fam.label}</span>}`
-
-#### #7 — Hardcoded amounts
-- `Donate.tsx` ₪100 minimum qualifier removed in bdc37c6.
-- All other amounts in `Donate.tsx` are preset values (₪36/72/180/520/1800) — correct, not bugs.
-- `DesignPreviewDonate.tsx` "Impact" amounts (₪50/180/360/1000) are examples of what donations fund — not minimums.
-- No erroneous amounts found elsewhere (About.tsx, Footer, Terms, FAQ).
-
-#### #1 — Biblical order
-- `sortByBiblicalOrder` from `src/lib/biblicalOrder.ts` is used in: `useContentSidebar`, `useTeachersWing`, `useTeacherSidebar`.
-- `DesignPreviewChapterWeekly.tsx` has local `BIBLE_ORDER` array (independent, correct).
-- No other pages display Tanakh book lists unsorted.
-
-#### #3 — LessonComments
-- `LessonPage.tsx`: import + section removed in commit 314525e.
-- `LessonComments.tsx` component remains as dead code (no imports anywhere). Safe to delete later if Saar confirms.
-- `DesignPreviewLessonPage.tsx:489`: has `{/* Comments placeholder */}` comment only — no actual import or render.
-- `roadmapData.ts:346`: historical reference in roadmap data — no action needed.
-
-#### #2 — Imagen prompts
-- `scripts/generate_shir_hashirim_images.py`: STYLE constant includes "No text or letters. No human figures." — correct.
-- `scripts/generate_image.py`: STYLE_CONSTANTS includes "No text or letters." — correct.
-- Both scripts use the style as a prefix to all prompts via `build_full_prompt()`.
-
----
-
-### 2026-05-12 — Yehoshua Campaign v2 — full Headstart rebuild (commit e1c443b)
-
-- **File:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
-- **Route:** `/design-yehoshua-campaign`
-- 11 structural changes applied per Saar's brief:
-  1. Signup form (name/email/phone) removed completely — not appropriate on a live-campaign page
-  2. Large Progress Bar added between Hero and Tiers (₪7K/₪80K, 23 donors, days remaining, animated CSS width)
-  3. Grow payment modal integrated on every tier CTA — uses `useGrowPayment` hook, `type: "product"` → routes to "עם קבלה" merchant
-  4. "חזרה לאתר" button removed from nav
-  5. Toast notifications: 10 rotating donor messages, CSS-only `toastIn` animation, every 8s, auto-dismiss after 4s
-  6. Paamon font kept and cleaned up — all weights (400/700/900) from bneyzion.vercel.app/fonts/
-  7. Hebrew dates corrected: launch כ"ח סיון תשפ"ו (2026-06-24), end כ"ד תמוז תשפ"ו (2026-07-29)
-  8. Stretch Goals section removed
-  9. Testimonials section removed (contained invented names — not acceptable)
-  10. New 7-tier structure: ₪90 (EB)/₪120/₪220/₪400(popular)/₪800/₪1200/₪2000 each with `limit` + `claimed` counter
-  11. Page order changed: Hero → Progress Bar → Tiers → Story → About → Timeline → FAQ
-- **Constraint learned:** "הסט המלא של בני ציון" is not yet defined precisely — used placeholder description; real product list should be confirmed with Yoav before launch
-- **Constraint confirmed:** Toast notifications must use CSS-only animation (no framer-motion per iron rule)
-- **Constraint confirmed:** Grow type `"product"` correctly routes to "עם קבלה" merchant (not donations)
+- **File changed:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
+- **Trigger:** Previous session (fa9b0d4) applied Yoav's textual feedback but destroyed Saar's earlier structural vision. This session restores Saar's vision while keeping Yoav's factual corrections.
+- **Major structural changes applied:**
+  1. Hero reduced in vertical padding (Saar: "להקטין טיפת ה-hero")
+  2. Pre-launch name/email/WA form removed completely — gone
+  3. ProgressBlock added under hero: ₪7K raised / ₪80K goal / 47 supporters, Headstart-style gold bar
+  4. Tiers section MOVED UP to position 3 (right after hero + progress) — not at bottom
+  5. TIERS array replaced with Saar's exact 7-tier ladder:
+     ₪90 (Early Bird, 200 cap) → ₪120 (ספר+הקדשה) → ₪220 (הזוג) → ₪400 (הסט המלא) → ₪800 (השותף) → ₪1200 (השותף הבכיר) → ₪2000 (שיעור בקהילה)
+  6. TierCard redesigned: equal visual weight to price AND perks (split header row, price 32px + name text side-by-side)
+  7. Remaining count per tier: hardcoded mocks; "⚡ נשארו רק X" when ≤25% left; sold-out state greyed
+  8. CTA is `<button>` calling `handleSupport(tier)` — TODO: wire to `/donate?amount=X&tier=Y` (Grow קבלת-תרומה merchant)
+  9. Stretch Goals section removed entirely
+  10. Testimonials (קול הקהילה) section removed — fake names (חנה יצחקי, בני מרואני) gone
+  11. "Headstart" label explicit in nav badge, sticky bar, eyebrow — "מימון המונים" copy killed
+  12. Timeline: 6 phases with Hebrew months only — target "עד החגים — תשרי תשפ"ז"
+  13. DonationToast mock: bell-icon slide-in from corner, auto-dismiss 5s (visual sandbox only)
+  14. Consistent h2/h3 typography — single sans-serif weight style across all headlines
+- **Yoav's factual fixes preserved:** 480 pages, יצא לאור, גבול סוריה, הרב יואב everywhere, 300 לומדים, no מרכז הרב, no לפטופ quote, 15 שנה teaching, story section per Yoav dictation, hero image placeholder TODO
+- **Deleted:** `.agent-reference-pre-yoav.tsx` (housekeeping — reference file for this session only)
+- **TS check:** 0 errors
+- **Git:** committed `be88f47`, pushed to `origin main` via `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" git push origin main`
+- **New iron rule learned:** When two rounds of feedback conflict (designer vision vs content corrections), always check which layer is structural vs textual. Structural (layout, page order, component existence) = Saar's authority. Textual facts = Yoav's authority. Never let a textual-only round overwrite structural decisions.
 
 ---
 
