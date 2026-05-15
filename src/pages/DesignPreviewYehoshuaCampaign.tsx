@@ -66,7 +66,7 @@ const TIERS: Tier[] = [
     price: 90,
     name: "מחיר מיוחד — 200 ראשונים",
     headline: "ספר יהושע פיזי עד הבית",
-    badge: "Early Bird",
+    badge: "200 הראשונים",
     limit: 200,
     remaining: 153,
     highlight: true,
@@ -178,8 +178,8 @@ const FAQ_ITEMS: FaqItem[] = [
     a: "כן. במסלול «ספר + הקדשה» (₪120) ומעלה הרב יואב כותב הקדשה אישית — להנצחה, לסבא, לרב, לחייל. ציינו את שם הנמען בהערת ההזמנה.",
   },
   {
-    q: "מה זה Headstart?",
-    a: "Headstart היא פלטפורמת מימון ציבורי ישראלית. בוחרים חבילה, משלמים בכרטיס אשראי, ומקבלים את הספר. הפרויקט יתפרסם שם רשמית — הדף הזה הוא טרום-השקה.",
+    q: "איך הקמפיין עובד?",
+    a: "בוחרים חבילה, משלמים בכרטיס אשראי, ומקבלים את הספר עד הבית. הקמפיין יתפרסם רשמית בפלטפורמת מימון ציבורי — הדף הזה הוא טרום-השקה.",
   },
 ];
 
@@ -236,7 +236,7 @@ function StickyBar({ scrolled }: { scrolled: boolean }) {
                 fontWeight: 700,
               }}
             >
-              Headstart
+              קמפיין תמיכה
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -387,7 +387,7 @@ function TierCard({
   tier: Tier;
   onSupport: (tier: Tier) => void;
 }) {
-  const isEarlyBird = tier.badge === "Early Bird";
+  const isEarlyBird = tier.badge === "200 הראשונים";
   const isSoldOut = tier.remaining === 0;
   const remainingPct = Math.round((tier.remaining / tier.limit) * 100);
   const almostGone = remainingPct <= 25 && !isSoldOut;
@@ -777,7 +777,7 @@ function StickyMobileBar() {
             marginBottom: 3,
           }}
         >
-          קמפיין Headstart · ספר יהושע
+          קמפיין תמיכה · ספר יהושע
         </div>
         <div
           style={{
@@ -1026,7 +1026,7 @@ export default function DesignPreviewYehoshuaCampaign() {
               letterSpacing: "0.04em",
             }}
           >
-            Headstart
+            קמפיין תמיכה
           </span>
         </div>
       </nav>
@@ -1103,7 +1103,7 @@ export default function DesignPreviewYehoshuaCampaign() {
                   letterSpacing: "0.04em",
                 }}
               >
-                קמפיין תמיכה · Headstart · השקה סיון תשפ"ו
+                קמפיין תמיכה · השקה סיון תשפ"ו
               </span>
             </div>
 
