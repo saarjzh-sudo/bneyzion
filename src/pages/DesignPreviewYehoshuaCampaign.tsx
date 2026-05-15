@@ -49,6 +49,9 @@ interface Tier {
   highlight?: boolean;
   perks: string[];
   note?: string;
+  image: string;
+  imageAlt: string;
+  imageBadge?: string; // optional "×2" / "×3" multiplier overlay
 }
 
 interface FaqItem {
@@ -68,6 +71,8 @@ const TIERS: Tier[] = [
     remaining: 153,
     highlight: true,
     perks: ["ספר יהושע פיזי", "משלוח עד הבית"],
+    image: "/images/yoav-campaign/book-mockup-tank.jpg",
+    imageAlt: "ספר יהושע — הדמיית הספר על רקע טנק ודגל ישראל",
   },
   {
     id: "tier-120",
@@ -77,6 +82,8 @@ const TIERS: Tier[] = [
     limit: 300,
     remaining: 287,
     perks: ["ספר יהושע פיזי", "הקדשה אישית מהרב יואב", "משלוח"],
+    image: "/images/yoav-campaign/book-mockup-dirt.jpg",
+    imageAlt: "ספר יהושע מונח על האדמה במילואים",
   },
   {
     id: "tier-220",
@@ -86,6 +93,9 @@ const TIERS: Tier[] = [
     limit: 150,
     remaining: 143,
     perks: ["2 ספרי יהושע", "משלוח"],
+    image: "/images/yoav-campaign/book-mockup-tank.jpg",
+    imageAlt: "שני ספרי יהושע",
+    imageBadge: "×2",
   },
   {
     id: "tier-400",
@@ -100,6 +110,8 @@ const TIERS: Tier[] = [
       "כולל פירוש על שופטים",
       "משלוח",
     ],
+    image: "/images/yoav-campaign/set-five-megillot.png",
+    imageAlt: "סט חמש מגילות של בני ציון",
   },
   {
     id: "tier-800",
@@ -109,6 +121,9 @@ const TIERS: Tier[] = [
     limit: 50,
     remaining: 48,
     perks: ["2× סטים מלאים", "הקדשה אישית", "משלוח"],
+    image: "/images/yoav-campaign/set-five-megillot.png",
+    imageAlt: "2× סט חמש מגילות",
+    imageBadge: "×2",
   },
   {
     id: "tier-1200",
@@ -118,6 +133,9 @@ const TIERS: Tier[] = [
     limit: 30,
     remaining: 29,
     perks: ["3× סטים מלאים", "הקדשה אישית", "משלוח"],
+    image: "/images/yoav-campaign/set-five-megillot.png",
+    imageAlt: "3× סט חמש מגילות",
+    imageBadge: "×3",
   },
   {
     id: "tier-2000",
@@ -128,6 +146,8 @@ const TIERS: Tier[] = [
     limit: 10,
     remaining: 9,
     perks: ["שיעור פיזי בקהילה / בית כנסת"],
+    image: "/images/yoav-campaign/yoav-writing-on-tank.jpg",
+    imageAlt: "הרב יואב במילואים — שיעור מהשטח",
   },
 ];
 
@@ -396,6 +416,52 @@ function TierCard({
       }}
       className={tier.highlight ? "tier-card tier-card-popular" : "tier-card"}
     >
+      {/* Product image */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "16 / 10",
+          borderRadius: 12,
+          overflow: "hidden",
+          background: tier.highlight
+            ? "hsl(215 30% 22%)"
+            : "hsl(180 25% 96%)",
+          marginBottom: 4,
+        }}
+      >
+        <img
+          src={tier.image}
+          alt={tier.imageAlt}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        />
+        {tier.imageBadge && (
+          <div
+            style={{
+              position: "absolute",
+              top: 10,
+              insetInlineEnd: 10,
+              background: "linear-gradient(135deg, hsl(43 85% 60%), hsl(38 75% 50%))",
+              color: "hsl(215 55% 12%)",
+              fontSize: 18,
+              fontWeight: 900,
+              padding: "4px 12px",
+              borderRadius: 99,
+              boxShadow: "0 4px 12px hsl(38 75% 50% / 0.4)",
+              border: "2px solid white",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {tier.imageBadge}
+          </div>
+        )}
+      </div>
+
       {/* Badge */}
       {tier.badge && !isSoldOut && (
         <div
