@@ -241,15 +241,15 @@ export default function DesignPreviewSeriesList() {
           ) : (
             <div
               dir="rtl"
+              className="series-top5-grid"
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(420px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fill, minmax(min(420px, 100%), 1fr))",
                 gap: "1.5rem",
               }}
             >
               {top5.map((s, i) => {
-                const seriesFamily = getSeriesFamily(s.title, s.description);
-                const fam = seriesFamilies[seriesFamily];
+                const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
                 const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
                 const isFirst = i === 0;
                 return (
@@ -366,24 +366,22 @@ export default function DesignPreviewSeriesList() {
                       >
                         <div>
                           <div style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginBottom: "0.65rem", flexWrap: "wrap" }}>
-                            {seriesFamily !== "sacredCanon" && (
-                              <span
-                                style={{
-                                  display: "inline-block",
-                                  padding: "0.22rem 0.6rem",
-                                  borderRadius: radii.sm,
-                                  background: fam.badgeBg,
-                                  color: fam.badgeFg,
-                                  fontFamily: fonts.body,
-                                  fontSize: "0.65rem",
-                                  letterSpacing: "0.1em",
-                                  fontWeight: 700,
-                                  textTransform: "uppercase",
-                                }}
-                              >
-                                {fam.label}
-                              </span>
-                            )}
+                            <span
+                              style={{
+                                display: "inline-block",
+                                padding: "0.22rem 0.6rem",
+                                borderRadius: radii.sm,
+                                background: fam.badgeBg,
+                                color: fam.badgeFg,
+                                fontFamily: fonts.body,
+                                fontSize: "0.65rem",
+                                letterSpacing: "0.1em",
+                                fontWeight: 700,
+                                textTransform: "uppercase",
+                              }}
+                            >
+                              {fam.label}
+                            </span>
                             <TeacherContentBadge tags={s.audience_tags} />
                           </div>
                           <div
@@ -494,13 +492,12 @@ export default function DesignPreviewSeriesList() {
             dir="rtl"
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(320px, 100%), 1fr))",
               gap: "1rem",
             }}
           >
             {filteredAll.slice(0, 24).map((s) => {
-              const seriesFamily = getSeriesFamily(s.title, s.description);
-              const fam = seriesFamilies[seriesFamily];
+              const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
               return (
                 <Link
                   key={s.id}
@@ -527,24 +524,22 @@ export default function DesignPreviewSeriesList() {
                     }}
                   >
                     <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.4rem", flexWrap: "wrap" }}>
-                      {seriesFamily !== "sacredCanon" && (
-                        <span
-                          style={{
-                            display: "inline-block",
-                            padding: "0.15rem 0.5rem",
-                            borderRadius: radii.sm,
-                            background: fam.badgeBg,
-                            color: fam.badgeFg,
-                            fontFamily: fonts.body,
-                            fontSize: "0.6rem",
-                            letterSpacing: "0.08em",
-                            fontWeight: 700,
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          {fam.label}
-                        </span>
-                      )}
+                      <span
+                        style={{
+                          display: "inline-block",
+                          padding: "0.15rem 0.5rem",
+                          borderRadius: radii.sm,
+                          background: fam.badgeBg,
+                          color: fam.badgeFg,
+                          fontFamily: fonts.body,
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.08em",
+                          fontWeight: 700,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        {fam.label}
+                      </span>
                       <TeacherContentBadge tags={s.audience_tags} variant="small" />
                     </div>
                     <div
@@ -589,6 +584,17 @@ export default function DesignPreviewSeriesList() {
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 767px) {
+          /* Top 5 series cards — switch from row to column on mobile */
+          .series-top5-grid > a > div {
+            flex-direction: column !important;
+            min-height: unset !important;
+          }
+          .series-top5-grid > a > div > div:first-child {
+            width: 100% !important;
+            height: 160px !important;
+          }
+        }
       `}</style>
     </DesignLayout>
   );

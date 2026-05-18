@@ -466,6 +466,23 @@ export default function DesignPreviewMegillatEsther() {
             .megillat-hero-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
             .megillat-price-card { display: none; }
           }
+          @media (max-width: 767px) {
+            .megillat-hero-grid {
+              padding: 100px 1rem 3rem !important;
+              min-height: unset !important;
+            }
+            .megillat-hero-grid h1 {
+              font-size: clamp(1.8rem, 7vw, 2.8rem) !important;
+            }
+            .megillat-hero-grid > div:first-child > p {
+              font-size: 0.95rem !important;
+            }
+            .megillat-hero-grid > div:first-child > div:last-child a,
+            .megillat-hero-grid > div:first-child > div:last-child a + a {
+              padding: 0.75rem 1.2rem !important;
+              font-size: 0.85rem !important;
+            }
+          }
         `}</style>
       </div>
 
