@@ -175,15 +175,15 @@ const Donate = () => {
 
       {/* Main donation form */}
       <section className="py-16 section-gradient-warm">
-        <div className="container max-w-5xl">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        <div className="container max-w-6xl">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-            {/* Left: Form */}
+            {/* Left: Form — takes 2/3 on desktop */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.3 }}
-              className="lg:col-span-3 space-y-6"
+              className="lg:col-span-2 space-y-6"
             >
               {/* Monthly toggle */}
               <div className="glass-card-light rounded-2xl p-6">
@@ -214,7 +214,7 @@ const Donate = () => {
                   <Gift className="h-5 w-5 text-primary" />
                   <h2 className="text-lg font-display text-foreground">בחרו סכום</h2>
                 </div>
-                <div className="grid grid-cols-3 md:grid-cols-5 gap-3 mb-4">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-4">
                   {presetAmounts.map((preset) => (
                     <motion.button
                       key={preset.value}
@@ -354,12 +354,12 @@ const Donate = () => {
               </p>
             </motion.div>
 
-            {/* Right: Info sidebar */}
+            {/* Right: Info sidebar — takes 1/3 on desktop */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
-              className="lg:col-span-2 space-y-6"
+              className="lg:col-span-1 space-y-6"
             >
               {/* Why donate */}
               <div className="glass-card-gold rounded-2xl p-6">
