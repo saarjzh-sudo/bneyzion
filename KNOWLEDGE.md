@@ -373,6 +373,32 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-18 — Yoav feedback: Word doc viewer + attachment download buttons (commit 5ed6edd)
+
+**Context:** Yoav (editor) filed 3 feedback items at 13:19–15:14:
+1. Lesson `935882a2` (חוברת עבודה - ספר דניאל | פרקים א-ו) — no download button, `attachment_url` is `.docx`
+2. Lesson `d5e4973f` (ספר דניאל עם תרגום וביאור 'ושננתם') — shows as "empty" — confirmed: only 300-char content string, no media
+3. Series `21619bb5` (דניאל) — only 2 lessons — confirmed: exactly 2 in Umbraco, not a migration gap
+
+**Root cause of item 1:** `LessonPage.tsx` had a viewer block gated on `.pdf` only — 425 teacher lessons with `.doc`/`.docx` attachment had no download button at all.
+
+**Fixes applied (all in commit `5ed6edd`):**
+- `src/pages/LessonPage.tsx`: replaced single PDF-only viewer block with a 3-branch IIFE:
+  - `.pdf` → Google Docs gview iframe + download button
+  - `.doc`/`.docx` → Office Online embed iframe + download button (always visible, prominent gold)
+  - fallback → download button only
+- `src/pages/teachers/TeachersLessonPage.tsx`: same 3-branch pattern, replaces old plain "הורד חומר עזר PDF" link
+- `src/pages/teachers/TeacherLessonModal.tsx`: download button now `background: goldDark` (filled, not outline); label dynamically "הורד PDF" / "הורד Word" / "הורד קובץ"; badge in lesson metadata also updates dynamically
+
+**Data findings:**
+- 425 lessons in teachers scrape have `.doc` attachments — all now properly displayed
+- 178 "skipped" lessons in insert-teachers-content.mjs are genuinely empty: no attachment, no audio/video, content < 50 chars — re-scraping will not recover them
+- Daniel series (21619bb5): exactly 2 nodes in `teachers-scrape-result.json`, matches Supabase — no gap
+- Lesson d5e4973f: content="כל ספר דניאל על הסדר עם ביאור פשוט..." (~50 chars), no attachment/media — it IS the series description, not a real lesson
+
+**Iron rule learned:**
+- `getSourceType()` in `insert-teachers-content.mjs` returns `"pdf"` for all attachment types — but `.doc`/`.docx` are NOT PDFs. Future scrape updates should normalize `source_type` to `"word"` for Word files.
+
 ### 2026-05-18 — Mobile responsiveness pass on all sandbox pages
 
 - **10 fixes across 9 files** (commit `6427d80` on branch `fix/donate-checkbox-layout`)
