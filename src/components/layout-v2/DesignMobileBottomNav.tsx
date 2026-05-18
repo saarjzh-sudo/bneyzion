@@ -140,7 +140,9 @@ export default function DesignMobileBottomNav() {
           backdropFilter: "blur(20px) saturate(180%)",
           WebkitBackdropFilter: "blur(20px) saturate(180%)",
           borderTop: `1px solid rgba(139,111,71,0.15)`,
+          display: "flex",
           alignItems: "center",
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
         }}
       >
         <Link
