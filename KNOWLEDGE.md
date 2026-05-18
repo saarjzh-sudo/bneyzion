@@ -2531,6 +2531,34 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - **Git:** committed `be88f47`, pushed to `origin main` via `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" git push origin main`
 - **New iron rule learned:** When two rounds of feedback conflict (designer vision vs content corrections), always check which layer is structural vs textual. Structural (layout, page order, component existence) = Saar's authority. Textual facts = Yoav's authority. Never let a textual-only round overwrite structural decisions.
 
+### 2026-05-18 — Bug fixes on production /donate page (commit 51a11cb, branch fix/donate-checkbox-layout)
+
+**Bug 1 — tosAccepted stale closure in useCallback:**
+- `handleDonate` was memoized with `useCallback` but `tosAccepted` was missing from the dependency array.
+- Result: the callback captured `tosAccepted = false` at component mount; even after the user ticked the
+  checkbox (React state updated to `true`), the old closure always evaluated `!tosAccepted === true` and
+  showed "יש לאשר את התקנון" toast.
+- Fix: added `tosAccepted` to the deps array in `src/pages/Donate.tsx` line 126.
+
+**Bug 2 — DesignSidebar appearing on /donate layout:**
+- `<Layout>` defaults to `sidebar={true}`, which mounts `DesignSidebar` (the Torah-series nav sidebar).
+- `/donate` called `<Layout>` without any prop, so the sidebar appeared — crushing the form into a narrow
+  column and leaving massive whitespace. On mobile it overflowed.
+- Fix: changed `<Layout>` to `<Layout sidebar={false}>` in `src/pages/Donate.tsx`.
+
+**Files changed:** `src/pages/Donate.tsx` (2 lines)
+**Branch:** `fix/donate-checkbox-layout` (not merged to main yet — Saar reviewing preview)
+**Preview URL:** `https://bneyzion-kwmb8x8zb-saars-projects-4508d6bb.vercel.app`
+**TS check:** 0 errors
+
+**Iron rules learned:**
+- Any page that should be "full-width / no sidebar" MUST explicitly pass `sidebar={false}` to `<Layout>`.
+  The default `sidebar={true}` is correct for content pages; checkout-like pages (donate, checkout, auth)
+  must opt out.
+- When using `useCallback` with validation logic, EVERY state value that the validation reads must appear
+  in the dependency array. Missing any one causes stale-closure bugs that are hard to reproduce in devtools
+  (the state shows correct in React DevTools, but the callback reads the old value).
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
