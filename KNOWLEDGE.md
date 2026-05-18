@@ -2650,6 +2650,29 @@ and took full-page localhost screenshots at 1440px and 375px to understand the a
   Reading JSX alone is insufficient — the interaction between `DesignLayout`, `DesignSidebar`, and
   the page's own grid is not obvious from code.
 
+### 2026-05-18 — Promote /donate v3 to production (commit 5ed6edd)
+
+- **What:** Saar approved the `/design-donate` v3 sandbox. Promoted to `/donate` production.
+- **Files:** `src/pages/Donate.tsx` fully rewritten (916 insertions, 335 deletions).
+- **Branch:** `fix/donate-checkbox-layout` → merged to `main` → pushed → Vercel deploy confirmed (HTTP 200, age: 0).
+- **Layout applied from sandbox:**
+  - `<Layout sidebar={false}>` — no sidebar, full canvas destination page
+  - Hero: navy→mahogany gradient, "תורמים מאמינים" badge, H1, subtitle
+  - Stats bar: 11,800+ lessons / 200+ rabbis / שנות הקלטה
+  - Desktop: `maxWidth: 1100, grid: "1fr minmax(360px, 420px)"` — story left, sticky form right
+  - Mobile: `order: -1` on form column (form first), position: static
+- **Grow integration kept from original production:**
+  - `useGrowPayment` hook — type="donation" (one-time) / type="directDebit" (recurring)
+  - Routes to `GROW_PAGECODE_DONATIONS` + `GROW_USER_ID_DONATIONS` (already in Vercel env)
+  - `useRecentDonations` — real DB data from Supabase
+  - Full validation: שם מלא (includes space), טלפון (regex), tosAccepted
+- **Bugs fixed and confirmed carried forward:**
+  1. `useCallback` deps array includes `tosAccepted` — checkbox state bug resolved
+  2. Layout: sidebar removed, wide container, sticky form at `top: 5.5rem`
+- **Grow env vars confirmed in Vercel:** `GROW_PAGECODE_DONATIONS`, `GROW_USER_ID_DONATIONS` (both Encrypted, Production, 7d ago)
+- **Production URL:** `https://bneyzion.vercel.app/donate`
+- **TS check:** 0 errors
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
