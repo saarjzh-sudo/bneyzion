@@ -106,15 +106,16 @@ export default function DesignHeader({
       }}
     >
       <div
+        className="design-header-inner"
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "0 1.5rem",
+          padding: "0 1rem",
           height: 96,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          gap: "1rem",
+          gap: "0.5rem",
         }}
       >
         {/* Logo — RIGHT in RTL */}
@@ -238,9 +239,10 @@ export default function DesignHeader({
 
         {/* Actions — LEFT in RTL */}
         <div
+          className="design-header-actions"
           style={{
             display: "flex",
-            gap: "0.4rem",
+            gap: "0.25rem",
             alignItems: "center",
             flexShrink: 0,
           }}
@@ -357,6 +359,18 @@ export default function DesignHeader({
         .design-header-burger { display: inline-flex; }
         @media (min-width: 768px) {
           .design-header-burger { display: none !important; }
+        }
+        /* Mobile: shrink header height from 96px to 64px */
+        @media (max-width: 767px) {
+          .design-header-inner {
+            height: 64px !important;
+            padding: 0 0.85rem !important;
+          }
+          /* Hide notification bell and dark mode toggle on mobile to reduce clutter */
+          .design-header-actions > *:nth-child(2),
+          .design-header-actions > *:nth-child(3) {
+            display: none !important;
+          }
         }
       `}</style>
     </header>

@@ -33,6 +33,19 @@ interface DesignPageHeroProps {
   compact?: boolean;
 }
 
+// Inject mobile styles once globally via a shared style tag
+// (React will deduplicate this since it's the same string)
+const MOBILE_STYLE = `
+  @media (max-width: 767px) {
+    .design-page-hero {
+      padding: 3rem 1rem 2.5rem !important;
+    }
+    .design-page-hero--compact {
+      padding: 2rem 1rem 1.75rem !important;
+    }
+  }
+`;
+
 export default function DesignPageHero({
   variant = "parchment",
   eyebrow,
@@ -47,8 +60,11 @@ export default function DesignPageHero({
   const isDark = variant !== "parchment";
 
   return (
+    <>
+    <style>{MOBILE_STYLE}</style>
     <section
       dir="rtl"
+      className={compact ? "design-page-hero design-page-hero--compact" : "design-page-hero"}
       style={{
         position: "relative",
         overflow: "hidden",
@@ -238,5 +254,6 @@ export default function DesignPageHero({
         />
       )}
     </section>
+    </>
   );
 }
