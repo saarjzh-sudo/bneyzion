@@ -209,8 +209,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // For LEGACY callers (existing Checkout.tsx, Donate.tsx) we still accept
     // `type` directly without a product. Quick-buy callers MUST pass a product.
+    // Legacy callers (Donate.tsx, Checkout.tsx) pass `type` directly without a
+    // meta.product. Donate.tsx sends type="donation" (one-time) OR
+    // type="directDebit" (הוראת קבע / recurring). Both are legitimate legacy
+    // paths to the DONATIONS merchant — include directDebit here so it doesn't
+    // fall through to the "Missing or unknown product" guard.
     const isLegacyCart =
-      !productSlug && (type === "product" || type === "donation");
+      !productSlug &&
+      (type === "product" || type === "donation" || type === "directDebit");
 
     if (!isLegacyCart) {
       if (!productCfg) {
