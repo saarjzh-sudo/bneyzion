@@ -123,10 +123,10 @@ const Donate = () => {
     } catch (err: any) {
       toast({ title: "שגיאה", description: err.message, variant: "destructive" });
     }
-  }, [finalAmount, isMonthly, donationType, dedicationName, donorName, donorPhone, donorEmail, user]);
+  }, [finalAmount, isMonthly, donationType, dedicationName, donorName, donorPhone, donorEmail, tosAccepted, user]);
 
   return (
-    <Layout>
+    <Layout sidebar={false}>
       {/* Hero - Memorial theme for Saadia z"l */}
       <section className="relative py-24 md:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/15 via-primary/5 to-background" />
@@ -350,7 +350,7 @@ const Donate = () => {
                 <ShieldCheck className="h-3 w-3" />
                 סליקה מאובטחת באמצעות Grow — אשראי, ביט, Apple Pay, Google Pay
                 <br />
-                תרומות מזכות בקבלה לצורך ניכוי מס לפי סעיף 46
+                תרומות מעל ₪100 מזכות באישור לפי סעיף 46
               </p>
             </motion.div>
 
