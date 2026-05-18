@@ -43,8 +43,7 @@ function SeriesHero({
   totalDuration: string;
   imageUrl: string;
 }) {
-  const seriesFamily = getSeriesFamily(series.title, series.description);
-  const fam = seriesFamilies[seriesFamily];
+  const fam = seriesFamilies[getSeriesFamily(series.title, series.description)];
   const rabbiName = series.rabbis?.name || "";
 
   return (
@@ -78,6 +77,7 @@ function SeriesHero({
 
       <div
         dir="rtl"
+        className="series-hero-content"
         style={{
           position: "relative",
           minHeight: 480,
@@ -91,28 +91,26 @@ function SeriesHero({
           margin: "0 auto",
         }}
       >
-        {seriesFamily !== "sacredCanon" && (
-          <div
-            style={{
-              display: "inline-block",
-              padding: "0.4rem 1rem",
-              borderRadius: radii.pill,
-              background: "rgba(232,213,160,0.15)",
-              border: `1px solid rgba(232,213,160,0.3)`,
-              color: colors.goldShimmer,
-              fontFamily: fonts.body,
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              marginBottom: "1.25rem",
-              backdropFilter: "blur(8px)",
-              WebkitBackdropFilter: "blur(8px)",
-            }}
-          >
-            {fam.label}
-          </div>
-        )}
+        <div
+          style={{
+            display: "inline-block",
+            padding: "0.4rem 1rem",
+            borderRadius: radii.pill,
+            background: "rgba(232,213,160,0.15)",
+            border: `1px solid rgba(232,213,160,0.3)`,
+            color: colors.goldShimmer,
+            fontFamily: fonts.body,
+            fontSize: "0.72rem",
+            fontWeight: 700,
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+            marginBottom: "1.25rem",
+            backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
+          }}
+        >
+          {fam.label}
+        </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", marginBottom: "1rem" }}>
           <div style={{ width: 50, height: 1, background: "rgba(232,213,160,0.45)" }} />
@@ -566,15 +564,15 @@ function RelatedSeries({ allSeries, currentSeries }: { allSeries: any[]; current
 
         <div
           dir="rtl"
+          className="related-series-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(420px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(420px, 100%), 1fr))",
             gap: "1.25rem",
           }}
         >
           {related.map((s) => {
-            const relatedFamily = getSeriesFamily(s.title, s.description);
-            const fam = seriesFamilies[relatedFamily];
+            const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
             const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
             return (
               <div
@@ -623,25 +621,23 @@ function RelatedSeries({ allSeries, currentSeries }: { allSeries: any[]; current
                   }}
                 >
                   <div>
-                    {relatedFamily !== "sacredCanon" && (
-                      <span
-                        style={{
-                          display: "inline-block",
-                          padding: "0.22rem 0.6rem",
-                          borderRadius: radii.sm,
-                          background: fam.badgeBg,
-                          color: fam.badgeFg,
-                          fontFamily: fonts.body,
-                          fontSize: "0.65rem",
-                          letterSpacing: "0.1em",
-                          fontWeight: 700,
-                          textTransform: "uppercase",
-                          marginBottom: "0.5rem",
-                        }}
-                      >
-                        {fam.label}
-                      </span>
-                    )}
+                    <span
+                      style={{
+                        display: "inline-block",
+                        padding: "0.22rem 0.6rem",
+                        borderRadius: radii.sm,
+                        background: fam.badgeBg,
+                        color: fam.badgeFg,
+                        fontFamily: fonts.body,
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.1em",
+                        fontWeight: 700,
+                        textTransform: "uppercase",
+                        marginBottom: "0.5rem",
+                      }}
+                    >
+                      {fam.label}
+                    </span>
                     <div
                       style={{
                         fontFamily: fonts.display,
@@ -839,6 +835,20 @@ export default function DesignPreviewSeriesPage() {
 
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 767px) {
+          .series-hero-content {
+            padding: 96px 1rem 3rem !important;
+            min-height: unset !important;
+          }
+          .related-series-grid > div {
+            flex-direction: column !important;
+            min-height: unset !important;
+          }
+          .related-series-grid > div > div:first-child {
+            width: 100% !important;
+            height: 160px !important;
+          }
+        }
       `}</style>
     </DesignLayout>
   );

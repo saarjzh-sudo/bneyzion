@@ -227,20 +227,57 @@ export default function TeachersLessonPage() {
             </div>
           )}
 
-          {/* PDF attachment */}
-          {lesson.attachment_url && (
-            <a
-              href={lesson.attachment_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.65rem 1.25rem", borderRadius: radii.lg, border: `1.5px solid ${colors.goldDark}`, color: colors.goldDark, fontFamily: fonts.body, fontSize: "0.85rem", fontWeight: 700, textDecoration: "none", marginBottom: "1.5rem", transition: "all 0.15s" }}
-              onMouseEnter={(e) => { e.currentTarget.style.background = colors.goldDark; e.currentTarget.style.color = "white"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = colors.goldDark; }}
-            >
-              <FileDown size={15} />
-              הורד חומר עזר PDF
-            </a>
-          )}
+          {/* Attachment — PDF / Word / other */}
+          {lesson.attachment_url && (() => {
+            const url: string = String(lesson.attachment_url);
+            const lower = url.toLowerCase();
+            const isPdf = lower.includes('.pdf');
+            const isWord = lower.includes('.doc') || lower.includes('.docx');
+            const encoded = encodeURIComponent(url);
+            const label = isPdf ? 'הורד קובץ PDF' : isWord ? 'הורד קובץ Word' : 'הורד קובץ מצורף';
+
+            return (
+              <div style={{ marginBottom: "1.5rem" }}>
+                {/* Download button — always visible */}
+                <a
+                  href={url}
+                  download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.65rem 1.25rem", borderRadius: radii.lg, background: colors.goldDark, color: "white", fontFamily: fonts.body, fontSize: "0.85rem", fontWeight: 700, textDecoration: "none", marginBottom: "1rem", transition: "opacity 0.15s" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.88"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
+                >
+                  <FileDown size={15} />
+                  {label}
+                </a>
+
+                {/* Inline viewer for Word files */}
+                {isWord && (
+                  <div style={{ borderRadius: radii.xl, overflow: "hidden", border: "1px solid rgba(139,111,71,0.15)" }}>
+                    <iframe
+                      src={`https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`}
+                      style={{ width: "100%", border: "none", height: "75vh", minHeight: "500px", display: "block" }}
+                      loading="lazy"
+                      title="Word Viewer"
+                    />
+                  </div>
+                )}
+
+                {/* Inline viewer for PDF files */}
+                {isPdf && (
+                  <div style={{ borderRadius: radii.xl, overflow: "hidden", border: "1px solid rgba(139,111,71,0.15)" }}>
+                    <iframe
+                      src={`https://docs.google.com/gview?url=${encoded}&embedded=true`}
+                      style={{ width: "100%", border: "none", height: "75vh", minHeight: "500px", display: "block" }}
+                      loading="lazy"
+                      title="PDF Viewer"
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })()}
 
           {/* Description */}
           {lesson.description && (

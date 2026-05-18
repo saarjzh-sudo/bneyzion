@@ -373,6 +373,24 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-18 — Mobile responsiveness pass on all sandbox pages
+
+- **10 fixes across 9 files** (commit `6427d80` on branch `fix/donate-checkbox-layout`)
+- `DesignHeader.tsx`: header shrinks from 96px to 64px on mobile (`@media max-width:767px`); DarkModeToggle + NotificationBell hidden on mobile to reduce header clutter; actions gap reduced
+- `DesignMobileBottomNav.tsx`: added `display:flex` directly on `<nav>` element (was relying only on CSS class — tabs weren't flexing correctly); added `paddingBottom: env(safe-area-inset-bottom)` for notch devices
+- `DesignLayout.tsx`: padding-bottom corrected from 64px to 72px to match bottom-nav height
+- `DesignFooter.tsx`: added `.footer-stats` class with gap reduction on mobile; footer-grid already had breakpoints but stats bar had `gap:3rem` causing overflow at 375px
+- `DesignPageHero.tsx`: added `MOBILE_STYLE` constant + `<style>` tag injection; `.design-page-hero` reduces padding to `3rem 1rem 2.5rem` on mobile (was `5rem 1.5rem 4rem`)
+- `DesignPreviewHome.tsx`: `KenesBanner` now column on mobile (`.kenes-banner-inner`, `.kenes-banner-poster`); `DesignParashaHolidaySection` 2-col grid → 1-col via `.parasha-holiday-grid`; `TopSeriesSection` minWidth `420px` → `min(420px, 100%)` + `.top-series-grid` class
+- `DesignPreviewSeriesList.tsx`: top-5 grid and full-list grid both use `minmax(min(420px,100%), 1fr)`; mobile CSS via `.series-top5-grid` switches series cards to column layout with 160px image height
+- `DesignPreviewMegillatEsther.tsx`: hero padding `160px 1.5rem 5rem` → `100px 1rem 3rem` on mobile; h1 font-size capped for mobile; breakpoint improved from 900px to also cover 767px
+- `DesignPreviewSeriesPage.tsx`: hero content padding `150px 1.5rem 4rem` → `96px 1rem 3rem` on mobile via `.series-hero-content`; `related-series-grid` fixed to `minmax(min(420px,100%),1fr)` + column layout for related cards on mobile
+
+**Root causes identified (to avoid in future sessions):**
+1. `minmax(420px, 1fr)` in CSS Grid causes horizontal overflow when viewport < 420px. Always use `minmax(min(420px, 100%), 1fr)`.
+2. Inline `padding: "150px ..."` on hero content divs doesn't respond to viewport — always add a CSS class + `@media` rule.
+3. `display: "flex"` on a nav element must be set explicitly in the style object, not only as a CSS class — React SSR-safety and specificity.
+
 ### 2026-04-14 — Migration completion + Google OAuth
 - 312 URLs corrected via `fix-misattributions.mjs`
 - 60/73 missing drafts recovered via vp4.me 4-strategy scraper
@@ -2558,6 +2576,79 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - When using `useCallback` with validation logic, EVERY state value that the validation reads must appear
   in the dependency array. Missing any one causes stale-closure bugs that are hard to reproduce in devtools
   (the state shows correct in React DevTools, but the callback reads the old value).
+
+### 2026-05-18 — Donate page layout fix round 2 (commit 256633d, branch fix/donate-checkbox-layout)
+
+**Root cause of remaining layout breakage (after sidebar was already removed):**
+
+The `sidebar={false}` fix (commit 51a11cb) correctly removed the DesignSidebar — but the
+internal grid layout of Donate.tsx itself was still broken. Specifically:
+
+1. `container max-w-5xl` = 1024px container. With tailwind container padding of 2rem (32px) each side,
+   the net content width is ~960px.
+2. Grid was `lg:grid-cols-5` with form=`col-span-3` (576px) and info=`col-span-2` (384px).
+   At 1024px viewport these columns were extremely narrow — form had ~576px, causing amount buttons
+   to overlap, and the "why donate" text to wrap word-by-word.
+3. Amount buttons inside `col-span-3` (~576px) used `md:grid-cols-5` breakpoint (768px threshold).
+   Since 576px < 768px, `md` never fired — buttons stayed in `grid-cols-3` causing 5 items into 3 cols
+   = rows of 3+2, with the last row having a gap. Combined with the narrow column, items overlapped.
+
+**Fixes applied (`src/pages/Donate.tsx`):**
+- Container: `max-w-5xl` → `max-w-6xl` (1152px — gives grid real breathing room)
+- Grid: `lg:grid-cols-5` (col-span-3 + col-span-2) → `lg:grid-cols-3` (col-span-2 + col-span-1)
+  - Form: 2/3 of 1152px = ~768px — enough for a comfortable form layout
+  - Info sidebar: 1/3 = ~384px — correct for the "why donate" + quote panel
+- Amount buttons: `grid-cols-3 md:grid-cols-5` → `grid-cols-2 sm:grid-cols-3 md:grid-cols-5`
+  - Inside `col-span-2` (~768px), `sm` (640px) fires ✓ and `md` (768px) also fires ✓
+  - On mobile (single col, full width) starts at `grid-cols-2`, then 3, then 5 — always readable
+
+**Iron rule learned:**
+- When placing a responsive grid INSIDE a fractional grid column, always verify that the inner
+  grid's breakpoints (sm/md/lg) are reachable given the outer column's actual pixel width.
+  A `md:grid-cols-5` inside a `col-span-3` of a `max-w-5xl` container never reaches md.
+  Always calculate: outer_container_width * (col_span / total_cols) > breakpoint_threshold.
+
+**Preview URL (round 2):** `https://bneyzion-lmsob9e91-saars-projects-4508d6bb.vercel.app`
+**TS check:** 0 errors
+
+### 2026-05-18 — Donate sandbox page v3: full refactor to 2-column layout (commit 856562e)
+
+**Context:** Saar reviewed the round-2 preview and said "עדיין נראה ממש דחוס וגרוע".
+This time before touching code: loaded `DesignSidebar` width (290px), read `DesignLayout`,
+and took full-page localhost screenshots at 1440px and 375px to understand the actual rendered state.
+
+**Root cause of "cramped" feeling:**
+- `DesignPreviewDonate` had `DesignLayout` with default `sidebar={true}` — but even after switching
+  to `sidebar={false}`, the form section was a single-column layout with `maxWidth: 720` card
+  centered in a `parchment` background — looked like a narrow isolated card floating in void.
+- Impact grid was 4 equal cards (`auto-fit minmax(220px)`) stacked below the form — no visual
+  hierarchy between "give" action and "why give" story.
+
+**Refactor applied (`src/pages/DesignPreviewDonate.tsx`):**
+- Explicitly `sidebar={false}` — full canvas without nav column
+- New hero: navy→mahogany gradient, strong H1, subtitle max-w-560
+- Stats bar (white strip): 11,800+ lessons / 200+ rabbis / שנות הקלטה
+- Main section: `display:grid gridTemplateColumns:"1fr minmax(340px,400px)"` — story column + sticky form card
+- Story column: "למה כדאי לתמוך?" + ImpactRow list (horizontal rows) + memorial dark card + TrustCard grid
+- Form card: `position:sticky top:5.5rem` — stays visible as user scrolls story column
+- Mobile (`@media max-width:768px`): single column, form gets `order:-1` (appears first)
+- Extracted `<DonateForm>`, `<Stat>`, `<ImpactRow>`, `<TrustCard>` as isolated sub-components
+
+**Screenshot confirmed:** 2-column layout renders correctly at 1440px desktop and 375px mobile.
+
+**Files changed:** `src/pages/DesignPreviewDonate.tsx` (589 insertions, 206 deletions)
+**Branch:** `fix/donate-checkbox-layout` (commit 856562e)
+**New preview URL:** `https://bneyzion-md3jfk60l-saars-projects-4508d6bb.vercel.app/design-donate`
+**TS check:** 0 errors
+
+**Iron rule learned:**
+- Destination pages (donate, checkout, auth) need `sidebar={false}` AND a purpose-built 2-column layout.
+  A single centered card (`max-w-720`) floating in parchment background always looks cramped — even with
+  sidebar removed — because there is no visual counterweight. The fix is 2-column: story fills the left
+  width, form card anchors the right. The "air" comes from contrast between columns, not from padding.
+- Before making layout changes: always screenshot the actual rendered page (localhost or Vercel).
+  Reading JSX alone is insufficient — the interaction between `DesignLayout`, `DesignSidebar`, and
+  the page's own grid is not obvious from code.
 
 ---
 

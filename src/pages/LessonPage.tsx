@@ -16,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { useSEO } from "@/hooks/useSEO";
 import { formatRabbiName } from "@/lib/rabbi-name";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
+import LessonComments from "@/components/lesson/LessonComments";
 import AIChatWidget from "@/components/ai/AIChatWidget";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
@@ -282,32 +283,107 @@ const LessonPage = () => {
               </div>
             ) : null}
 
-            {/* PDF Viewer for attachment_url */}
-            {(lesson as any).attachment_url && String((lesson as any).attachment_url).toLowerCase().includes('.pdf') && (
-              <div className="rounded-lg overflow-hidden border border-border bg-foreground/5">
-                <div className="flex items-center justify-between bg-secondary/40 px-4 py-2 border-b border-border">
+            {/* Attachment viewer — PDF / Word / other */}
+            {(lesson as any).attachment_url && (() => {
+              const url: string = String((lesson as any).attachment_url);
+              const lower = url.toLowerCase();
+              const isPdf = lower.includes('.pdf');
+              const isWord = lower.includes('.doc') || lower.includes('.docx');
+              const encoded = encodeURIComponent(url);
+
+              if (isPdf) {
+                return (
+                  <div className="rounded-lg overflow-hidden border border-border bg-foreground/5">
+                    <div className="flex items-center justify-between bg-secondary/40 px-4 py-2 border-b border-border">
+                      <span className="text-sm font-semibold text-foreground flex items-center gap-2">
+                        <BookOpen className="h-4 w-4 text-primary" />
+                        צפייה במסמך
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <a
+                          href={url}
+                          download
+                          className="text-xs bg-primary text-primary-foreground px-3 py-1 rounded-md font-semibold hover:opacity-90 transition-opacity flex items-center gap-1"
+                        >
+                          ↓ הורד PDF
+                        </a>
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-primary hover:underline"
+                        >
+                          פתח בחלון חדש ↗
+                        </a>
+                      </div>
+                    </div>
+                    <iframe
+                      src={`https://docs.google.com/gview?url=${encoded}&embedded=true`}
+                      className="w-full border-0"
+                      style={{ height: "75vh", minHeight: "500px" }}
+                      loading="lazy"
+                      title="PDF Viewer"
+                    />
+                  </div>
+                );
+              }
+
+              if (isWord) {
+                return (
+                  <div className="rounded-lg overflow-hidden border border-border bg-foreground/5">
+                    <div className="flex items-center justify-between bg-secondary/40 px-4 py-2 border-b border-border">
+                      <span className="text-sm font-semibold text-foreground flex items-center gap-2">
+                        <BookOpen className="h-4 w-4 text-primary" />
+                        קובץ Word מצורף
+                      </span>
+                      <div className="flex items-center gap-3">
+                        <a
+                          href={url}
+                          download
+                          className="text-xs bg-primary text-primary-foreground px-3 py-1 rounded-md font-semibold hover:opacity-90 transition-opacity flex items-center gap-1"
+                        >
+                          ↓ הורד קובץ
+                        </a>
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-primary hover:underline"
+                        >
+                          פתח בחלון חדש ↗
+                        </a>
+                      </div>
+                    </div>
+                    <iframe
+                      src={`https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`}
+                      className="w-full border-0"
+                      style={{ height: "75vh", minHeight: "500px" }}
+                      loading="lazy"
+                      title="Word Viewer"
+                    />
+                  </div>
+                );
+              }
+
+              // Fallback — unknown attachment type: show prominent download button only
+              return (
+                <div className="rounded-lg border border-border bg-secondary/20 px-5 py-4 flex items-center justify-between gap-4">
                   <span className="text-sm font-semibold text-foreground flex items-center gap-2">
                     <BookOpen className="h-4 w-4 text-primary" />
-                    צפייה במסמך
+                    קובץ מצורף
                   </span>
                   <a
-                    href={(lesson as any).attachment_url}
+                    href={url}
+                    download
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-primary hover:underline"
+                    className="text-xs bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold hover:opacity-90 transition-opacity flex items-center gap-1"
                   >
-                    פתח בחלון חדש ↗
+                    ↓ הורד קובץ
                   </a>
                 </div>
-                <iframe
-                  src={`https://docs.google.com/gview?url=${encodeURIComponent((lesson as any).attachment_url)}&embedded=true`}
-                  className="w-full border-0"
-                  style={{ height: "75vh", minHeight: "500px" }}
-                  loading="lazy"
-                  title="PDF Viewer"
-                />
-              </div>
-            )}
+              );
+            })()}
 
             {/* Content - full HTML or plain description */}
             {(lesson as any).content ? (
@@ -355,6 +431,13 @@ const LessonPage = () => {
               </Button>
             </div>
           ) : null}
+
+          {/* Comments */}
+          {lesson && (
+            <section className="mt-12">
+              <LessonComments lessonId={lesson.id} />
+            </section>
+          )}
 
           {/* AI Chat Widget */}
           {/* <AIChatWidget context={`שיעור: ${lesson?.title}${rabbi ? ` מאת ${rabbiName}` : ""}`} /> */}

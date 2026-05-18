@@ -164,7 +164,7 @@ export default function TeacherLessonModal({
             )}
             {lesson.attachmentUrl && (
               <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textMuted }}>
-                <FileDown size={12} /> PDF
+                <FileDown size={12} /> {String(lesson.attachmentUrl).toLowerCase().includes('.pdf') ? 'PDF' : String(lesson.attachmentUrl).toLowerCase().includes('.doc') ? 'Word' : 'קובץ'}
               </span>
             )}
           </div>
@@ -229,31 +229,36 @@ export default function TeacherLessonModal({
             לדף המלא ←
           </Link>
 
-          {/* Secondary CTA — PDF attachment */}
-          {lesson.attachmentUrl && (
-            <a
-              href={lesson.attachmentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                padding: "0.7rem 1rem",
-                background: "transparent",
-                color: colors.goldDark,
-                border: `1.5px solid ${colors.goldDark}`,
-                borderRadius: radii.lg,
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "0.85rem",
-                textDecoration: "none",
-              }}
-            >
-              <FileDown size={14} />
-              הורד PDF
-            </a>
-          )}
+          {/* Secondary CTA — attachment download */}
+          {lesson.attachmentUrl && (() => {
+            const lower = String(lesson.attachmentUrl).toLowerCase();
+            const label = lower.includes('.pdf') ? 'הורד PDF' : lower.includes('.doc') ? 'הורד Word' : 'הורד קובץ';
+            return (
+              <a
+                href={lesson.attachmentUrl}
+                download
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.7rem 1rem",
+                  background: colors.goldDark,
+                  color: "white",
+                  border: `1.5px solid ${colors.goldDark}`,
+                  borderRadius: radii.lg,
+                  fontFamily: fonts.body,
+                  fontWeight: 700,
+                  fontSize: "0.85rem",
+                  textDecoration: "none",
+                }}
+              >
+                <FileDown size={14} />
+                {label}
+              </a>
+            );
+          })()}
         </div>
       </div>
 

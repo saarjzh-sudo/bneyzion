@@ -324,12 +324,13 @@ export default function DesignFooter() {
 
         {/* Stats bar */}
         <div
+          className="footer-stats"
           style={{
             borderTop: "1px solid rgba(232,213,160,0.08)",
             padding: "1.5rem 0",
             display: "flex",
             justifyContent: "center",
-            gap: "3rem",
+            gap: "2rem",
             flexWrap: "wrap",
           }}
         >
@@ -437,10 +438,17 @@ export default function DesignFooter() {
             grid-template-columns: 1fr 1fr !important;
             gap: 1.5rem !important;
           }
+          .footer-stats {
+            gap: 1.25rem !important;
+          }
         }
         @media (max-width: 480px) {
           .footer-grid {
             grid-template-columns: 1fr !important;
+          }
+          .footer-stats {
+            gap: 1rem !important;
+            justify-content: space-around !important;
           }
         }
       `}</style>

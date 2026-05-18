@@ -8,10 +8,22 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
+// Routes where the PWA install prompt should NOT appear
+// (e.g. campaign / fundraising pages where it's off-topic and distracting)
+const SUPPRESSED_PATHS = [
+  "/design-yehoshua-campaign",
+  "/yehoshua-campaign", // future production route
+];
+
 const InstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showBanner, setShowBanner] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
+
+  // Suppress on campaign pages
+  if (typeof window !== "undefined" && SUPPRESSED_PATHS.some((p) => window.location.pathname.startsWith(p))) {
+    return null;
+  }
 
   useEffect(() => {
     const handler = (e: Event) => {
