@@ -2611,6 +2611,45 @@ internal grid layout of Donate.tsx itself was still broken. Specifically:
 **Preview URL (round 2):** `https://bneyzion-lmsob9e91-saars-projects-4508d6bb.vercel.app`
 **TS check:** 0 errors
 
+### 2026-05-18 — Donate sandbox page v3: full refactor to 2-column layout (commit 856562e)
+
+**Context:** Saar reviewed the round-2 preview and said "עדיין נראה ממש דחוס וגרוע".
+This time before touching code: loaded `DesignSidebar` width (290px), read `DesignLayout`,
+and took full-page localhost screenshots at 1440px and 375px to understand the actual rendered state.
+
+**Root cause of "cramped" feeling:**
+- `DesignPreviewDonate` had `DesignLayout` with default `sidebar={true}` — but even after switching
+  to `sidebar={false}`, the form section was a single-column layout with `maxWidth: 720` card
+  centered in a `parchment` background — looked like a narrow isolated card floating in void.
+- Impact grid was 4 equal cards (`auto-fit minmax(220px)`) stacked below the form — no visual
+  hierarchy between "give" action and "why give" story.
+
+**Refactor applied (`src/pages/DesignPreviewDonate.tsx`):**
+- Explicitly `sidebar={false}` — full canvas without nav column
+- New hero: navy→mahogany gradient, strong H1, subtitle max-w-560
+- Stats bar (white strip): 11,800+ lessons / 200+ rabbis / שנות הקלטה
+- Main section: `display:grid gridTemplateColumns:"1fr minmax(340px,400px)"` — story column + sticky form card
+- Story column: "למה כדאי לתמוך?" + ImpactRow list (horizontal rows) + memorial dark card + TrustCard grid
+- Form card: `position:sticky top:5.5rem` — stays visible as user scrolls story column
+- Mobile (`@media max-width:768px`): single column, form gets `order:-1` (appears first)
+- Extracted `<DonateForm>`, `<Stat>`, `<ImpactRow>`, `<TrustCard>` as isolated sub-components
+
+**Screenshot confirmed:** 2-column layout renders correctly at 1440px desktop and 375px mobile.
+
+**Files changed:** `src/pages/DesignPreviewDonate.tsx` (589 insertions, 206 deletions)
+**Branch:** `fix/donate-checkbox-layout` (commit 856562e)
+**New preview URL:** `https://bneyzion-md3jfk60l-saars-projects-4508d6bb.vercel.app/design-donate`
+**TS check:** 0 errors
+
+**Iron rule learned:**
+- Destination pages (donate, checkout, auth) need `sidebar={false}` AND a purpose-built 2-column layout.
+  A single centered card (`max-w-720`) floating in parchment background always looks cramped — even with
+  sidebar removed — because there is no visual counterweight. The fix is 2-column: story fills the left
+  width, form card anchors the right. The "air" comes from contrast between columns, not from padding.
+- Before making layout changes: always screenshot the actual rendered page (localhost or Vercel).
+  Reading JSX alone is insufficient — the interaction between `DesignLayout`, `DesignSidebar`, and
+  the page's own grid is not obvious from code.
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
