@@ -2559,6 +2559,40 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   in the dependency array. Missing any one causes stale-closure bugs that are hard to reproduce in devtools
   (the state shows correct in React DevTools, but the callback reads the old value).
 
+### 2026-05-18 — Donate page layout fix round 2 (commit 256633d, branch fix/donate-checkbox-layout)
+
+**Root cause of remaining layout breakage (after sidebar was already removed):**
+
+The `sidebar={false}` fix (commit 51a11cb) correctly removed the DesignSidebar — but the
+internal grid layout of Donate.tsx itself was still broken. Specifically:
+
+1. `container max-w-5xl` = 1024px container. With tailwind container padding of 2rem (32px) each side,
+   the net content width is ~960px.
+2. Grid was `lg:grid-cols-5` with form=`col-span-3` (576px) and info=`col-span-2` (384px).
+   At 1024px viewport these columns were extremely narrow — form had ~576px, causing amount buttons
+   to overlap, and the "why donate" text to wrap word-by-word.
+3. Amount buttons inside `col-span-3` (~576px) used `md:grid-cols-5` breakpoint (768px threshold).
+   Since 576px < 768px, `md` never fired — buttons stayed in `grid-cols-3` causing 5 items into 3 cols
+   = rows of 3+2, with the last row having a gap. Combined with the narrow column, items overlapped.
+
+**Fixes applied (`src/pages/Donate.tsx`):**
+- Container: `max-w-5xl` → `max-w-6xl` (1152px — gives grid real breathing room)
+- Grid: `lg:grid-cols-5` (col-span-3 + col-span-2) → `lg:grid-cols-3` (col-span-2 + col-span-1)
+  - Form: 2/3 of 1152px = ~768px — enough for a comfortable form layout
+  - Info sidebar: 1/3 = ~384px — correct for the "why donate" + quote panel
+- Amount buttons: `grid-cols-3 md:grid-cols-5` → `grid-cols-2 sm:grid-cols-3 md:grid-cols-5`
+  - Inside `col-span-2` (~768px), `sm` (640px) fires ✓ and `md` (768px) also fires ✓
+  - On mobile (single col, full width) starts at `grid-cols-2`, then 3, then 5 — always readable
+
+**Iron rule learned:**
+- When placing a responsive grid INSIDE a fractional grid column, always verify that the inner
+  grid's breakpoints (sm/md/lg) are reachable given the outer column's actual pixel width.
+  A `md:grid-cols-5` inside a `col-span-3` of a `max-w-5xl` container never reaches md.
+  Always calculate: outer_container_width * (col_span / total_cols) > breakpoint_threshold.
+
+**Preview URL (round 2):** `https://bneyzion-lmsob9e91-saars-projects-4508d6bb.vercel.app`
+**TS check:** 0 errors
+
 ---
 
 *This is the long-memory file. Every session must read it. Every
