@@ -22,7 +22,7 @@ export function useRabbiSeries(rabbiId: string | undefined) {
     queryKey: ["rabbi-series", rabbiId],
     enabled: !!rabbiId,
     queryFn: async () => {
-      // First: series directly owned by this rabbi (any status that shows content)
+      // First: series directly owned by this rabbi
       const { data: owned, error: ownedErr } = await supabase
         .from("series")
         .select("id, title, description, image_url, lesson_count, status, sort_order")
@@ -31,7 +31,7 @@ export function useRabbiSeries(rabbiId: string | undefined) {
         .order("sort_order", { ascending: true });
       if (ownedErr) throw ownedErr;
 
-      // Second: series where this rabbi has published lessons, but series.rabbi_id ≠ this rabbi
+      // Second: series where this rabbi has published lessons but series.rabbi_id ≠ this rabbi
       // (handles guest-lecturer and multi-rabbi series like פרשת השבוע)
       const { data: lessons, error: lessonsErr } = await supabase
         .from("lessons")
@@ -56,12 +56,11 @@ export function useRabbiSeries(rabbiId: string | undefined) {
         extra = extraData ?? [];
       }
 
-      // Merge: owned first, then extra (sorted by lesson_count desc)
-      const combined = [
+      // Merge: owned first, then extra sorted by lesson_count desc
+      return [
         ...(owned ?? []),
         ...extra.sort((a, b) => (b.lesson_count ?? 0) - (a.lesson_count ?? 0)),
       ];
-      return combined;
     },
   });
 }
@@ -77,7 +76,7 @@ export function useRabbiLessons(rabbiId: string | undefined) {
         .eq("rabbi_id", rabbiId!)
         .eq("status", "published")
         .order("published_at", { ascending: false })
-        .limit(50);
+        .limit(20);
       if (error) throw error;
       return data;
     },
