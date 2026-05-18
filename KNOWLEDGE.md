@@ -373,6 +373,24 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-18 — Mobile responsiveness pass on all sandbox pages
+
+- **10 fixes across 9 files** (commit `6427d80` on branch `fix/donate-checkbox-layout`)
+- `DesignHeader.tsx`: header shrinks from 96px to 64px on mobile (`@media max-width:767px`); DarkModeToggle + NotificationBell hidden on mobile to reduce header clutter; actions gap reduced
+- `DesignMobileBottomNav.tsx`: added `display:flex` directly on `<nav>` element (was relying only on CSS class — tabs weren't flexing correctly); added `paddingBottom: env(safe-area-inset-bottom)` for notch devices
+- `DesignLayout.tsx`: padding-bottom corrected from 64px to 72px to match bottom-nav height
+- `DesignFooter.tsx`: added `.footer-stats` class with gap reduction on mobile; footer-grid already had breakpoints but stats bar had `gap:3rem` causing overflow at 375px
+- `DesignPageHero.tsx`: added `MOBILE_STYLE` constant + `<style>` tag injection; `.design-page-hero` reduces padding to `3rem 1rem 2.5rem` on mobile (was `5rem 1.5rem 4rem`)
+- `DesignPreviewHome.tsx`: `KenesBanner` now column on mobile (`.kenes-banner-inner`, `.kenes-banner-poster`); `DesignParashaHolidaySection` 2-col grid → 1-col via `.parasha-holiday-grid`; `TopSeriesSection` minWidth `420px` → `min(420px, 100%)` + `.top-series-grid` class
+- `DesignPreviewSeriesList.tsx`: top-5 grid and full-list grid both use `minmax(min(420px,100%), 1fr)`; mobile CSS via `.series-top5-grid` switches series cards to column layout with 160px image height
+- `DesignPreviewMegillatEsther.tsx`: hero padding `160px 1.5rem 5rem` → `100px 1rem 3rem` on mobile; h1 font-size capped for mobile; breakpoint improved from 900px to also cover 767px
+- `DesignPreviewSeriesPage.tsx`: hero content padding `150px 1.5rem 4rem` → `96px 1rem 3rem` on mobile via `.series-hero-content`; `related-series-grid` fixed to `minmax(min(420px,100%),1fr)` + column layout for related cards on mobile
+
+**Root causes identified (to avoid in future sessions):**
+1. `minmax(420px, 1fr)` in CSS Grid causes horizontal overflow when viewport < 420px. Always use `minmax(min(420px, 100%), 1fr)`.
+2. Inline `padding: "150px ..."` on hero content divs doesn't respond to viewport — always add a CSS class + `@media` rule.
+3. `display: "flex"` on a nav element must be set explicitly in the style object, not only as a CSS class — React SSR-safety and specificity.
+
 ### 2026-04-14 — Migration completion + Google OAuth
 - 312 URLs corrected via `fix-misattributions.mjs`
 - 60/73 missing drafts recovered via vp4.me 4-strategy scraper
