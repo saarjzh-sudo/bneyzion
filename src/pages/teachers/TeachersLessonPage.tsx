@@ -46,7 +46,7 @@ function useLessonFull(id: string) {
     queryFn: async () => {
       const { data: lesson } = await supabase
         .from("lessons")
-        .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, thumbnail_url, rabbi_id, series_id, bible_book, bible_chapter")
+        .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, additional_attachments, thumbnail_url, rabbi_id, series_id, bible_book, bible_chapter")
         .eq("id", id)
         .single();
       if (!lesson) return null;
@@ -278,6 +278,30 @@ export default function TeachersLessonPage() {
               </div>
             );
           })()}
+
+          {/* Additional attachments */}
+          {((lesson as any).additional_attachments || []).length > 0 && (
+            <div style={{ marginBottom: "1rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+              {((lesson as any).additional_attachments as string[]).map((url: string, i: number) => {
+                const lower = url.toLowerCase();
+                const isPdf = lower.includes('.pdf');
+                const isWord = lower.includes('.doc') || lower.includes('.docx');
+                const label = isPdf ? `קובץ PDF נוסף ${i + 1}` : isWord ? `קובץ Word נוסף ${i + 1}` : `קובץ מצורף נוסף ${i + 1}`;
+                return (
+                  <a
+                    key={url}
+                    href={url}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", padding: "0.5rem 1rem", borderRadius: radii.lg, background: "rgba(139,111,71,0.08)", color: colors.goldDark, fontFamily: fonts.body, fontSize: "0.8rem", fontWeight: 700, textDecoration: "none", border: "1px solid rgba(139,111,71,0.2)" }}
+                  >
+                    ↓ {label}
+                  </a>
+                );
+              })}
+            </div>
+          )}
 
           {/* Description */}
           {lesson.description && (

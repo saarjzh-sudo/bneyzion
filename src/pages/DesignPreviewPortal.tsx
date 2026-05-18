@@ -363,8 +363,7 @@ export default function DesignPreviewPortal() {
               }}
             >
               {enrolledSeries.map((s, i) => {
-                const enrolledFamily = getSeriesFamily(s.title, s.description);
-                const fam = seriesFamilies[enrolledFamily];
+                const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
                 const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
                 const progress = [62, 45, 18][i] || 30;
                 return (
@@ -396,25 +395,23 @@ export default function DesignPreviewPortal() {
                         <img src={cover} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </div>
                       <div style={{ padding: "1rem 1.1rem 1.1rem" }}>
-                        {enrolledFamily !== "sacredCanon" && (
-                          <span
-                            style={{
-                              display: "inline-block",
-                              padding: "0.18rem 0.5rem",
-                              borderRadius: radii.sm,
-                              background: fam.badgeBg,
-                              color: fam.badgeFg,
-                              fontFamily: fonts.body,
-                              fontSize: "0.62rem",
-                              letterSpacing: "0.1em",
-                              fontWeight: 700,
-                              textTransform: "uppercase",
-                              marginBottom: "0.45rem",
-                            }}
-                          >
-                            {fam.label}
-                          </span>
-                        )}
+                        <span
+                          style={{
+                            display: "inline-block",
+                            padding: "0.18rem 0.5rem",
+                            borderRadius: radii.sm,
+                            background: fam.badgeBg,
+                            color: fam.badgeFg,
+                            fontFamily: fonts.body,
+                            fontSize: "0.62rem",
+                            letterSpacing: "0.1em",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            marginBottom: "0.45rem",
+                          }}
+                        >
+                          {fam.label}
+                        </span>
                         <div
                           style={{
                             fontFamily: fonts.display,

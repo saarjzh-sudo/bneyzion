@@ -385,6 +385,34 @@ const LessonPage = () => {
               );
             })()}
 
+            {/* Additional attachments — extra files beyond the primary attachment_url */}
+            {(() => {
+              const extras: string[] = (lesson as any).additional_attachments || [];
+              if (extras.length === 0) return null;
+              return (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {extras.map((url: string, i: number) => {
+                    const lower = url.toLowerCase();
+                    const isPdf = lower.includes('.pdf');
+                    const isWord = lower.includes('.doc') || lower.includes('.docx');
+                    const label = isPdf ? `קובץ PDF נוסף ${i + 1}` : isWord ? `קובץ Word נוסף ${i + 1}` : `קובץ מצורף נוסף ${i + 1}`;
+                    return (
+                      <a
+                        key={url}
+                        href={url}
+                        download
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs bg-secondary text-foreground px-3 py-2 rounded-md font-semibold hover:opacity-80 transition-opacity flex items-center gap-1 border border-border"
+                      >
+                        ↓ {label}
+                      </a>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+
             {/* Content - full HTML or plain description */}
             {(lesson as any).content ? (
               <div
