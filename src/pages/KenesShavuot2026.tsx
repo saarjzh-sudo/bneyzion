@@ -15,10 +15,9 @@
  */
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
-import { Play, MessageCircle, BookOpen, ChevronDown, ChevronUp, Heart, Archive } from "lucide-react";
+import { Play, MessageCircle, BookOpen, ChevronDown, ChevronUp, Heart } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useSEO } from "@/hooks/useSEO";
-import { Link } from "react-router-dom";
 import kenesHeroBg from "@/assets/hero-bg-bney-zion.jpg";
 
 const KENES_TITLE = "הכנת הלב למתן תורה";
@@ -163,7 +162,7 @@ function getEmbedUrl(url: string): string | null {
 
 function RecordingCard({ recording, index }: { recording: Recording; index: number }) {
   const [videoOpen, setVideoOpen] = useState(false);
-  const [summaryOpen, setSummaryOpen] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(index === 0);
   const embedUrl = getEmbedUrl(recording.videoUrl);
   const hasVideo = !!embedUrl;
 
@@ -172,7 +171,7 @@ function RecordingCard({ recording, index }: { recording: Recording; index: numb
       <div className="group rounded-2xl border border-[hsl(38_50%_82%)] bg-[hsl(38_50%_95%)] p-4 md:p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div className="flex items-start gap-3">
-            <span className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base md:text-lg shrink-0 mt-1">
+            <span className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base md:text-lg shrink-0 mt-1 ring-2 ring-[hsl(43_70%_47%/0.25)] ring-offset-2 ring-offset-[hsl(38_50%_95%)]">
               {index + 1}
             </span>
             <div className="flex flex-col">
@@ -256,49 +255,39 @@ export default function KenesShavuot2026() {
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.25)] via-[hsl(38_60%_90%/0.40)] to-[hsl(38_60%_88%/0.60)]" />
-        <div className="relative z-10 text-center px-4 py-20 max-w-3xl mx-auto">
-          <p
-            className="font-kedem font-black text-black text-lg md:text-xl mb-3 tracking-wide md:mt-16"
-            style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
-          >
-            תנועת בני ציון ללימוד תנ״ך
-          </p>
-          <h1
-            className="font-kedem font-black text-5xl sm:text-6xl md:text-8xl mb-4 leading-[1.05] text-black tracking-tight"
-            style={{ textShadow: '0 2px 8px rgba(255,255,255,0.5), 0 1px 0 rgba(0,0,0,0.1)' }}
-          >
-            {KENES_TITLE}
-          </h1>
-          <p
-            className="font-kedem font-bold text-black text-lg md:text-2xl mb-2"
-            style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
-          >
-            {KENES_SUBTITLE}
-          </p>
-          <p
-            className="font-ploni font-bold text-black text-sm md:text-base mb-8"
-            style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
-          >
-            {KENES_DATE}
-          </p>
-          <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-4">
-            <a
-              href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(85_35%_35%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(85_35%_28%)] hover:shadow-xl hover:scale-105"
-            >
-              <MessageCircle className="w-5 h-5" />
-              קהילת הווצאפ
-            </a>
-            <a
-              href="#recordings"
-              className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
-            >
-              <Play className="w-5 h-5" fill="currentColor" />
-              הקלטות הכנס
-            </a>
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.15)] via-[hsl(38_60%_90%/0.25)] to-[hsl(38_60%_88%/0.40)]" />
+        <div className="relative z-10 px-4 py-20 max-w-3xl mx-auto md:mt-12">
+          <div className="bg-[hsl(38_50%_94%/0.88)] backdrop-blur-sm rounded-3xl p-8 md:p-12 text-center shadow-xl border border-[hsl(38_40%_80%/0.5)]">
+            <p className="font-kedem font-bold text-[hsl(30_40%_25%)] text-base md:text-lg mb-3 tracking-wide">
+              תנועת בני ציון ללימוד תנ״ך
+            </p>
+            <h1 className="font-kedem font-black text-5xl sm:text-6xl md:text-7xl mb-4 leading-[1.05] text-black tracking-tight">
+              {KENES_TITLE}
+            </h1>
+            <p className="font-kedem font-bold text-[hsl(30_40%_20%)] text-lg md:text-xl mb-2">
+              {KENES_SUBTITLE}
+            </p>
+            <p className="font-ploni text-[hsl(30_35%_35%)] text-sm md:text-base mb-8">
+              {KENES_DATE}
+            </p>
+            <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-4">
+              <a
+                href="#recordings"
+                className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+              >
+                <Play className="w-5 h-5" fill="currentColor" />
+                הקלטות הכנס
+              </a>
+              <a
+                href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-row-reverse items-center gap-2 px-6 py-3 rounded-xl bg-transparent border-2 border-[hsl(30_40%_25%)] text-[hsl(30_40%_25%)] font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(30_40%_25%/0.08)]"
+              >
+                <MessageCircle className="w-5 h-5" />
+                קהילת הווצאפ
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -330,7 +319,7 @@ export default function KenesShavuot2026() {
       </section>
 
       {/* ===== RECORDINGS ===== */}
-      <section id="recordings" className="py-12 md:py-16 px-4 bg-[hsl(38_40%_90%)]">
+      <section id="recordings" className="py-12 md:py-16 px-4 bg-[hsl(38_30%_85%)]">
         <div className="max-w-3xl mx-auto">
           <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(30_40%_20%)] text-center mb-2">
             הקלטות הכנס
@@ -347,9 +336,10 @@ export default function KenesShavuot2026() {
       </section>
 
       {/* ===== DONATION VIDEO SECTION ===== */}
-      <section className="py-12 md:py-20 px-4 bg-[hsl(30_40%_15%)]">
+      <div className="h-8 bg-gradient-to-b from-[hsl(38_40%_88%)] to-[hsl(30_45%_28%)]" />
+      <section className="py-12 md:py-20 px-4 bg-[hsl(30_45%_28%)]">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="font-kedem font-bold text-3xl md:text-4xl text-white mb-4">
+          <h2 className="font-kedem font-bold text-3xl md:text-4xl text-[hsl(43_70%_88%)] mb-4">
             אתר התנ"ך החדש — לזכר סעדיה ז"ל
           </h2>
           <p className="font-ploni text-[hsl(38_50%_82%)] mb-8 text-lg">
@@ -367,46 +357,11 @@ export default function KenesShavuot2026() {
             href="https://givechak.co.il/Saadia?ref=r3"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex flex-row-reverse items-center gap-2 px-8 py-4 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base md:text-lg shadow-lg transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+            className="inline-flex flex-row-reverse items-center gap-2 px-8 py-4 rounded-xl bg-[hsl(43_75%_55%)] text-[hsl(30_50%_15%)] font-kedem font-bold text-base md:text-lg shadow-lg transition-all duration-300 hover:bg-[hsl(43_75%_48%)] hover:shadow-xl hover:scale-105"
           >
             <Heart className="w-5 h-5" fill="currentColor" />
             אני רוצה להיות שותף
           </a>
-        </div>
-      </section>
-
-      {/* ===== DONATE BOTTOM ===== */}
-      <section className="py-12 md:py-16 px-4 bg-gradient-to-b from-[hsl(38_40%_88%)] to-[hsl(38_30%_84%)]">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(30_40%_20%)] mb-3">
-            שותפות בפרויקט התנ״ך
-          </h2>
-          <p className="font-ploni text-[hsl(30_30%_40%)] text-base leading-relaxed mb-6">
-            האתר נבנה לזכרו של סעדיה יעקב דרעי הי״ד.
-            כל תרומה מוסיפה שיעור, מאיר קטע תנ"ך, ומנציחה את דמותו.
-          </p>
-          <a
-            href="https://givechak.co.il/Saadia?ref=r3"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex flex-row-reverse items-center gap-2 px-8 py-3.5 rounded-xl bg-[hsl(30_60%_30%)] text-[hsl(43_80%_85%)] font-kedem font-bold text-base md:text-lg shadow-lg transition-all duration-300 hover:bg-[hsl(30_60%_25%)] hover:shadow-xl hover:scale-105"
-          >
-            <Heart className="w-5 h-5" fill="currentColor" />
-            לתרומה — givechak.co.il/Saadia
-          </a>
-        </div>
-      </section>
-
-      {/* ===== ARCHIVE LINK ===== */}
-      <section className="py-8 px-4 bg-[hsl(38_30%_84%)] border-t border-[hsl(38_40%_78%)]">
-        <div className="max-w-xl mx-auto text-center">
-          <Link
-            to="/kenes-archive"
-            className="inline-flex flex-row-reverse items-center gap-2 font-ploni text-[hsl(30_35%_40%)] text-sm hover:text-[hsl(30_40%_25%)] transition-colors"
-          >
-            <Archive className="w-4 h-4" />
-            כל כנסי בני ציון — ארכיון
-          </Link>
         </div>
       </section>
 
