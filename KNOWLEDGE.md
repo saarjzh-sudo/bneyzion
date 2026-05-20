@@ -417,6 +417,23 @@ public/
 2. Inline `padding: "150px ..."` on hero content divs doesn't respond to viewport — always add a CSS class + `@media` rule.
 3. `display: "flex"` on a nav element must be set explicitly in the style object, not only as a CSS class — React SSR-safety and specificity.
 
+### 2026-05-20 — כנס שבועות תשפ"ו — שיפורים 6 לדף הכנס (commit a4d83aa)
+
+**Session זו (המשך מ-2026-05-20 הקודם):**
+- `KenesShavuot2026.tsx` הוסר מ-`<Layout>` → עמוד standalone ללא Header/Footer/Sidebar
+- תוקן שם הדובר: **הרב דני לביא** (היה "לוי" — שגוי). role הוסר לחלוטין.
+- Hero image חדש נוצר עם Gemini Imagen (`imagen-4.0-generate-001`): `src/assets/hero-kenes-shavuot.jpg` — ציור שמן, הר סיני בעלות השחר, 16:9, מומר PNG→JPEG (sips q82)
+- כותרת ה-hero שונתה לשחור (`text-black`) — הייתה gradient זהבי על רקע תמונה (אגדיש קריאות)
+- **סיכומים מורחבים** לכל 5 הקטעים — ממש חצי תמלול, עם מקורות מדויקים (שמות/יט/יב, שמות/יט/כד, רש"י, ספורנו, הרב קוק "אורות ישראל", רות ב/יא, רות ג/י וכו'). שמות הפרשנים והפסוקים מדויקים מהתמלול הקמ"צ.
+- **Section תרמה עם סרטון Drive**: תחתית כהה, iframe embed של קטע 03-project (הצגת הפרויקט + חיים דרעי בסרטון), CTA "אני רוצה להיות שותף"
+- **מייל נשלח לרב יואב אוריאל** (yoavoriel@gmail.com) — Message ID `19e447ab59be20a5`. הקישור: https://bneyzion.vercel.app/kenes-2026-05
+
+**ללא שינוי בקבצי Production (Layout.tsx, Header, Footer) — הסרת Layout נעשתה בקובץ העמוד בלבד.**
+
+**כלל שנלמד:**
+- Gemini `gemini-flash-latest` מחזיר תוצאות באנגלית לפעמים. יש להשתמש ב-`gemini-2.5-flash` (עובד בגרסה v1beta). כאשר output קטן מ-300 bytes — הפיפ נחתך ולא הגיע הכל. לשמור ב-file ולבדוק.
+- Gmail token מת — תמיד לרענן דרך `refresh_token` לפני שליחה. token file: `T-tools/04-mcp-servers/gmail/token.json`, field `token`.
+
 ### 2026-05-20 — כנס שבועות תשפ"ו — חיתוך, סיכומים, דפי סנדבוקס
 
 **מה נעשה:**
@@ -435,8 +452,7 @@ public/
 
 **פתוח:**
 - שם הכנס הסופי: ממתין לאישור סער (כרגע "כנס שבועות — מתן תורה"). לעדכן `KENES_TITLE`/`KENES_SUBTITLE` ב-KenesShavuot2026.tsx + KenesArchive.tsx
-- Drive links לכל קטע: להוסיף ל-`recordings` array ב-KenesShavuot2026.tsx אחרי העלאת הקטועים לתוך Drive ושליפת link/embed לכל אחד
-- אישור סיכומים מסער לפני שעולים ל-production
+- Drive links לכל קטע: Drive IDs כבר נמצאים ב-recordings array, הקלטות עלו ל-Drive
 
 ### 2026-04-14 — Migration completion + Google OAuth
 - 312 URLs corrected via `fix-misattributions.mjs`
