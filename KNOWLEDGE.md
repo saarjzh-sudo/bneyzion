@@ -417,6 +417,27 @@ public/
 2. Inline `padding: "150px ..."` on hero content divs doesn't respond to viewport — always add a CSS class + `@media` rule.
 3. `display: "flex"` on a nav element must be set explicitly in the style object, not only as a CSS class — React SSR-safety and specificity.
 
+### 2026-05-20 — כנס שבועות תשפ"ו — חיתוך, סיכומים, דפי סנדבוקס
+
+**מה נעשה:**
+- חיתוך 5 קטועי mp4 + m4a מתוך `GMT20260519-165200_Recording_2560x1440.mp4` (stream-copy, ffmpeg 8.1.1)
+  - `01-rimon.mp4` (11:11) — הרב רימון, מעמד הר סיני
+  - `02-yoav.mp4` (25:35) — הרב יואב אוריאל, עין טובה + ספירת העומר + סעדיה ז"ל
+  - `03-project.mp4` (5:55) — הצגת פרויקט + תרמה
+  - `04-draii.mp4` (16:24) — חיים דרעי, עדות על סעדיה
+  - `05-dani-levi.mp4` (15:46) — הרב דני לוי, מוסר ולאומיות
+- 5 קבצי סיכום MD ב-`B-brain/05-clients/bnei-zion/kenes-2026-05/segments/`
+- העלאה ל-Drive: `Bnei Zion/Conferences/2026-05-19 - כנס שבועות תשפ"ו/`
+  - Drive folder: https://drive.google.com/open?id=1s5OMF0xhIlBP4mPQi43Hp1iiAeQ_3sEP
+- `src/pages/KenesShavuot2026.tsx` — route `/kenes-2026-05`
+- `src/pages/KenesArchive.tsx` — route `/kenes-archive`
+- commit `aaa8394` on main
+
+**פתוח:**
+- שם הכנס הסופי: ממתין לאישור סער (כרגע "כנס שבועות — מתן תורה"). לעדכן `KENES_TITLE`/`KENES_SUBTITLE` ב-KenesShavuot2026.tsx + KenesArchive.tsx
+- Drive links לכל קטע: להוסיף ל-`recordings` array ב-KenesShavuot2026.tsx אחרי העלאת הקטועים לתוך Drive ושליפת link/embed לכל אחד
+- אישור סיכומים מסער לפני שעולים ל-production
+
 ### 2026-04-14 — Migration completion + Google OAuth
 - 312 URLs corrected via `fix-misattributions.mjs`
 - 60/73 missing drafts recovered via vp4.me 4-strategy scraper
