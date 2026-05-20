@@ -19,7 +19,7 @@ import { Play, MessageCircle, BookOpen, ChevronDown, ChevronUp, Heart, Archive }
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
-import kenesHeroBg from "@/assets/hero-kenes-shavuot.jpg";
+import kenesHeroBg from "@/assets/hero-bg-bney-zion.jpg";
 
 const KENES_TITLE = "הכנת הלב למתן תורה";
 const KENES_SUBTITLE = "מתוך הפסוקים — ערב לימוד לקראת חג השבועות תשפ״ו";
@@ -256,16 +256,32 @@ export default function KenesShavuot2026() {
           alt=""
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.45)] to-[hsl(38_60%_88%/0.70)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.25)] via-[hsl(38_60%_90%/0.40)] to-[hsl(38_60%_88%/0.60)]" />
         <div className="relative z-10 text-center px-4 py-20 max-w-3xl mx-auto">
-          <p className="font-kedem font-light text-black text-lg md:text-xl mb-3 tracking-wide md:mt-16">
-            תנועת בני ציון ללימוד תנ״ך:
+          <p
+            className="font-kedem font-black text-black text-lg md:text-xl mb-3 tracking-wide md:mt-16"
+            style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
+          >
+            תנועת בני ציון ללימוד תנ״ך
           </p>
-          <h1 className="font-kedem-hollow text-4xl sm:text-5xl md:text-7xl mb-3 leading-tight text-black">
+          <h1
+            className="font-kedem font-black text-5xl sm:text-6xl md:text-8xl mb-4 leading-[1.05] text-black tracking-tight"
+            style={{ textShadow: '0 2px 8px rgba(255,255,255,0.5), 0 1px 0 rgba(0,0,0,0.1)' }}
+          >
             {KENES_TITLE}
           </h1>
-          <p className="font-kedem text-[hsl(30_35%_15%)] text-base md:text-lg mb-2">{KENES_SUBTITLE}</p>
-          <p className="font-ploni text-[hsl(30_30%_20%)] text-sm mb-8">{KENES_DATE}</p>
+          <p
+            className="font-kedem font-bold text-black text-lg md:text-2xl mb-2"
+            style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
+          >
+            {KENES_SUBTITLE}
+          </p>
+          <p
+            className="font-ploni font-bold text-black text-sm md:text-base mb-8"
+            style={{ textShadow: '0 1px 2px rgba(255,255,255,0.6)' }}
+          >
+            {KENES_DATE}
+          </p>
           <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-4">
             <a
               href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
