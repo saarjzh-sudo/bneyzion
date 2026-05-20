@@ -3,21 +3,30 @@
  *
  * Route: /kenes-2026-05
  *
- * מבוסס על KnesPage.tsx (כנס פורים תשפ"ו).
- * כל שינוי עיצובי מהותי — sandbox בלבד עד אישור rollout.
+ * עמוד standalone (ללא Layout wrapper) — landing page לכנס בלבד.
+ * ללא Header / Footer / Sidebar / MobileBottomNav.
+ *
+ * שיפורים 2026-05-20:
+ * 1. הסרת Layout — עמוד standalone
+ * 2. הרב דני לביא (תוקן מ"לוי"), role הוסר
+ * 3. Hero image חדש מ-Imagen (hero-kenes-shavuot.jpg), כותרת שחורה
+ * 4. סיכומים מורחבים עם מקורות מדויקים
+ * 5. סרטון תרמה לפרויקט התנ"ך
  */
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { Play, MessageCircle, BookOpen, ChevronDown, ChevronUp, Heart, Archive } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import Layout from "@/components/layout/Layout";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
-import kenesHeroBg from "@/assets/hero-bg-bney-zion.jpg";
+import kenesHeroBg from "@/assets/hero-kenes-shavuot.jpg";
 
 const KENES_TITLE = "הכנת הלב למתן תורה";
 const KENES_SUBTITLE = "מתוך הפסוקים — ערב לימוד לקראת חג השבועות תשפ״ו";
 const KENES_DATE = "י׳ סיון תשפ״ו | 19 במאי 2026";
+
+// Drive file ID for the donation video (from the recording of segment 03-project)
+const DONATION_VIDEO_DRIVE_ID = "1u4hRMr9oHE4-81QRSJUM1QS37ifc9VTJ";
 
 interface Recording {
   slug: string;
@@ -38,30 +47,40 @@ const recordings: Recording[] = [
     duration: "11:11",
     videoUrl: "https://drive.google.com/file/d/1HlsW1ySXcHAMkoojDQ54H7z96XIQQzTi/view",
     summaryHtml: `
-      <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">מדוע הציווי על מעמד הר סיני חוזר שלוש פעמים?</h3>
-      <p style="margin-bottom:10px;">לא "כפל לשון" סתמי — כל חזרה מוסיפה שכבה. הראשונה: הכנה חיצונית (טהרה, גבולות). השנייה: הכנה פנימית (אמונה וציפייה). השלישית: ההתגלות עצמה.</p>
-      <h4 style="font-weight:bold;margin:12px 0 6px;">מתן תורה כבריאה חדשה</h4>
-      <p style="margin-bottom:10px;">ה׳ לא הכריז מראש בדיוק מה עומד לקרות — כי כל הסבר מוקדם היה נכנס לתוך המסגרת הישנה של "תורת האבות". מתן תורה היה בריאה חדשה שאי אפשר היה להכין לה.</p>
-      <h4 style="font-weight:bold;margin:12px 0 6px;">ממלכת כהנים וגוי קדוש</h4>
-      <p style="margin-bottom:10px;">לא עוד עם שה׳ מנחה אותו מהצד — אלא עם שהתורה היא המעטפת שבתוכה הוא חי. כמו כהן שכל יומו בנוי סביב רצון ה׳, כך כל יהודי אמור לחיות.</p>
-      <p style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;">״נעשה ונשמע״ — קודם חווים את החיים בתוך התורה, ואחר כך מבינים אותם. הפוך מכל דרך לימוד אנושית.</p>
+      <h4 style="font-weight:bold;margin:12px 0 6px;">שאלת ריבוי הציוויים — פרדוקס שהטריד את הגאון שנים</h4>
+      <p style="margin-bottom:10px;">הרב רימון פותח בשאלה שמי שקורא את פרשת יתרו בעיון מיד תוקפת אותו: מדוע הקב"ה מצווה על הגבלת ההר שלוש פעמים? בפסוק יב: <strong>"והגבלתה את העם סביב לאמר"</strong> (שמות יט, יב). אחר כך בפסוק כא: <strong>"רד העד בעם"</strong> (שמות יט, כא). ואחרי שמשה עצמו שואל בתמיהה "לא יוכל העם לעלות — כי אתה עדתנו לאמר הגבל את ההר" — הקב"ה חוזר פעם שלישית: <strong>"לך רד ועלית אתה ואהרן עמך"</strong> (שמות יט, כד). האבן עזרא מביא ש"הגאון" חשב שנים בפסוק הזה ולא ידע את טעמו.</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">שלושה פרשנים, שלושה כיוונים</h4>
+      <p style="margin-bottom:10px;">רש"י מסביר: <strong>"מזרזין את האדם קודם מעשה וחוזרין מזרזין אותו בשעת מעשה"</strong> — הציווי הראשון הכין, הציווי השני בא ברגע שזה קורה בפועל. הרשב"ם דוחה זאת ומחפש הסבר עמוק יותר. הספורנו מחדש: ישראל קיבל ציווי לא לעלות — אבל ברגע שאדם ירגיש התעלות רוחנית ונבואה, הוא עלול לחשוב שמותר לו לפרוץ את הגבולות. ולכן הציוויים החוזרים באים להבהיר: גם הדרגה הרוחנית הכי גבוהה לא מבטלת את ההלכה. שאיפה לדביקות עלולה לשכח את הגבולות.</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">"ממלכת כהנים וגוי קדוש" — מה זה אומר לחיות ככה</h4>
+      <p style="margin-bottom:10px;">הרב רימון מגיע לאמירה המרכזית: <strong>"ואתם תהיו לי ממלכת כהנים וגוי קדוש"</strong> (שמות יט, ו) — לא עוד עם שה' מנחה אותו מהצד בנקודות ספציפיות, אלא עם שהתורה היא המעטפת שבתוכה הוא חי. כהן לא שואל "מה רצון ה' בנקודה הזאת" — כל יומו בנוי מראש סביב עבודת ה'. זה המהלך החדש שמתן תורה יצר. "נעשה ונשמע" — קודם כל חווים את החיים מתוך התורה, ואחר כך מבינים אותם. הפוך מכל הגיון אנושי, ומסביר למה לא היה אפשר "להכין" לזה מראש.</p>
+
+      <blockquote style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;margin:12px 0;">
+        "נעשה ונשמע — קודם חווים את החיים בתוך התורה, ואחר כך מבינים אותם. הפוך מכל דרך לימוד אנושית."
+      </blockquote>
     `,
   },
   {
     slug: "02-yoav",
     name: "הרב יואב אוריאל",
     role: "ראש תנועת בני ציון",
-    topic: "עין טובה מביאה מלכות — מנאומי ובועז עד סעדיה ז״ל",
+    topic: "מה ידע ישראל לפני מתן תורה — ומה לא ידע",
     duration: "25:35",
     videoUrl: "https://drive.google.com/file/d/1DanUi5caNMAdebNkiaT-9vcrBQsG02fc/view",
     summaryHtml: `
-      <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">מגילת רות, פרשת יתרו, וסעדיה ז״ל — אותה אמת</h3>
-      <p style="margin-bottom:10px;">יתרו שמע על הניסים — אבל רק יתרו הגיע. הוא ראה בעין טובה את מה שה׳ עושה ופעל. נאומי ובועז — שתי עיניים טובות שביחד הביאו מלכות לעולם.</p>
-      <h4 style="font-weight:bold;margin:12px 0 6px;">עין בתוך שני השמות</h4>
-      <p style="margin-bottom:10px;">הרב יואב עוצר ומציין: האותיות ע-י-ן מצויות בשמות <strong>סעדיה</strong> ו<strong>יעקב</strong> אביו. העיניים הטובות של סעדיה הן אלו שהביאו אותו לאן שהגיע.</p>
-      <h4 style="font-weight:bold;margin:12px 0 6px;">סעדיה בעזה עם גמרה</h4>
-      <p style="margin-bottom:10px;">חיוך מלא אורה, ווסט ציוד — ולומד גמרה. לא <em>למרות</em> הלחימה אלא <em>מכוחה</em>. "הוא אמר: רגע מפקד, אני מתדלק. חוזר ללחימה."</p>
-      <p style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;">חיים שמשתלבים לתוך התורה — לא "תוסף דתיות על חיים", אלא חיים שנבנים מתוך תורה מהבסיס.</p>
+      <h4 style="font-weight:bold;margin:12px 0 6px;">מה ידע עם ישראל לקראת מתן תורה?</h4>
+      <p style="margin-bottom:10px;">הרב אוריאל פותח בשאלה שנראית פשוטה אבל עמוקה: כשעם ישראל יצא ממצרים, מה הוא ידע שמחכה לו? ידע שיהיה <strong>"לגוי גדול ועצום"</strong> — כפי שנאמר לאברהם אבינו. ידע שינחל ארץ ישראל. ידע שיעבוד את האלוקים. אבל דבר אחד לא ידע — שיהיה מעמד הר סיני במובן שאנחנו מכירים: עולם שלם של תרי"ג מצוות, הלכות, לימוד תורה, גמרא, משנה. הקב"ה במכוון לא הודיע. "כי ידעתיו למען אשר יצווה את בניו ואת ביתו אחריו ושמרו דרך השם לעשות צדקה ומשפט" (בראשית יח, יט) — אבל מה זו "דרך השם"? אין תשובה מוגדרת.</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">תורת האבות — "החיים קודמים לתורה"</h4>
+      <p style="margin-bottom:10px;">הרב מגדיר: מה שהיה עד מתן תורה — "תורת האבות" — פועל כך: אתה חי, מגיע לצומת, ושם ה' אומר לך ימינה או שמאלה. "כל אשר תאמר אליך שרה שמע בקולה" — ה' הדריך את האבות צעד אחר צעד. <strong>"עקב אשר שמע אברהם בקולי וישמור משמרתי מצוותיי חוקותיי ותורותיי"</strong> (בראשית כו, ה) — אך המצוות הן הוראות שעה. לפעמים יוצרות מצוות לדורות (ברית מילה, גיד הנשה, "החודש הזה לכם"), אבל הבסיס הוא: ה' יגיד לנו מה לעשות. הבעיה התגלתה בפרשת יתרו: "כי יבוא אליי העם לדרוש אלוקים" (שמות יח, טו) — 60 ריבוא לא יכולים לתפקד כשכולם שואלים את מנהיגם בכל שאלה.</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">המהפכה של מתן תורה — "התורה קודמת לחיים"</h4>
+      <p style="margin-bottom:10px;">מה שהתחדש בסיני: התורה קודמת לחיים. עם ישראל מקבל תרי"ג מצוות — כולל חוקים על ארץ ישראל, לפני שנכנס לשם. לומד הלכות שבת 40 שנה במדבר. ובשעה שנכנס לארץ — החיים נכנסים לתוך מארג המצוות שכבר קיים. <strong>"ואתם תהיו לי ממלכת כהנים וגוי קדוש"</strong> (שמות יט, ו) — כמו כהן שקם בבוקר, לפני שמתחיל לחיות, כבר מריץ בראש עולם שלם של הלכות, מצוות, מסורות. ולתוך זה החיים משתלבים. "נעשה ונשמע" — קודם חווים, אחר כך מבינים. לא יכולנו להבין את זה לפני שזה קרה.</p>
+
+      <blockquote style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;margin:12px 0;">
+        "בתורת האבות — החיים קודמים לתורה. במתן תורה — התורה קודמת לחיים. זה השינוי שלא ידענו שהוא עומד לקרות."
+      </blockquote>
     `,
   },
   {
@@ -72,40 +91,60 @@ const recordings: Recording[] = [
     duration: "5:55",
     videoUrl: "https://drive.google.com/file/d/1u4hRMr9oHE4-81QRSJUM1QS37ifc9VTJ/view",
     summaryHtml: `
-      <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">אתר תנ״ך חדשני — לזכר גיבור ישראל</h3>
-      <p style="margin-bottom:10px;">הפרויקט כבר בנוי: אלפי שיעורים, מאות רבנים, וכלים ללימוד תנ"ך. הכנס הוא ההצגה הראשונה לציבור.</p>
-      <p style="margin-bottom:10px;">כפי שסעדיה חי תורה ולחימה ביחד — כך האתר מחבר לימוד תנ"ך אמיתי עם העוצמה שאנחנו חיים בה. הפרויקט נעשה לשמו ולדמותו.</p>
-      <p style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;">הקהל מוזמן לתרום ולהיות שותפים בהנצחה החיה הזאת — לא רק כסף, אלא כחלק מהמהלך של לימוד התנ"ך בדור הגאולה.</p>
+      <h4 style="font-weight:bold;margin:12px 0 6px;">אתר תנ"ך חדשני — לזכר גיבור ישראל</h4>
+      <p style="margin-bottom:10px;">הסרטון מציג את פרויקט בני ציון — אתר התנ"ך החדש שנבנה לזכרו של סעדיה יעקב דרעי הי"ד, גיבור ישראל שנפל בעזה. הרב יואב אוריאל מסביר: האתר הישן קיים שמונה שנים, ועשרות אלפי אנשים נכנסים אליו בכל חודש. אבל הגיע הזמן לשדרג — להביא את לימוד התנ"ך לרמה שתמשוך מאות אלפי אנשים.</p>
+      <p style="margin-bottom:10px;">חיים דרעי, אביו של סעדיה, מספר בסרטון: "כשפנו אלינו מבני ציון עם היוזמה הזאת — חיכינו שנה וחצי, לא עשינו הנצחה, לא מצאנו את הדבר המדויק. ואז זה הגיע. ואמרנו: כן, זה זה. זה בול." <br/>
+      "בשבילי התנ"ך הוא מפעל חיים. ועכשיו זה ההזדמנות להפוך את זה לאתר מקצועי, גדול, רחב."</p>
+      <blockquote style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;margin:12px 0;">
+        "אנחנו מאמינים ומקווים שסעדיה ילווה אותנו מן השמיים — וישלח לנו את השיעת הנשמה, את האור בעיניים שצריך לפרויקט כזה גדול."
+      </blockquote>
     `,
   },
   {
     slug: "04-draii",
     name: "חיים דרעי",
     role: "אביו של סעדיה יעקב דרעי הי״ד",
-    topic: "עדות — מי היה סעדיה",
+    topic: "עין טובה מביאה מלכות — ממגילת רות עד סעדיה",
     duration: "16:24",
     videoUrl: "https://drive.google.com/file/d/19W0Ntau6Q07dHgWM6UM0F1k6Bzf6xzTU/view",
     summaryHtml: `
-      <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">״הוא קם בבוקר וישר הלך ללמוד״</h3>
-      <p style="margin-bottom:10px;">לא נאום, לא הספד — עדות חיה של אב על בן שכולו תורה ועוצמה. חיים מתאר ילד שמאז ילדות אהב ללמוד לא כי הכריחו אותו, אלא כי זו הייתה נשמתו.</p>
-      <h4 style="font-weight:bold;margin:12px 0 6px;">החיוך שלא עזב</h4>
-      <p style="margin-bottom:10px;">גם בעזה, גם בקרב — התמונות של סעדיה הן של אדם שחיוכו מלא אור. לא הצגה. זה מי שהיה. תורה ולחימה — לא שני דברים נפרדים.</p>
-      <p style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;font-weight:bold;">״שנלך בדרכיהם — במותם ציוו לנו חיים.״</p>
+      <h4 style="font-weight:bold;margin:12px 0 6px;">מסע אישי — ספר איוב שהרים אב שכול</h4>
+      <p style="margin-bottom:10px;">חיים דרעי מספר שאחרי נפילת סעדיה, לא מצא כוח לפתוח ספרים בדרך הרגילה. "מצאתי פודקאסט, ואיכשהו הלימוד הזה ברשת הרים אותי." מתוך כך חזר ללימוד התנ"ך — וגילה שם את סעדיה. "פתאום אמרתי: רגע — הבן שלי הוא דמות תנ"כית. הוא אחד ממלאכי חזקיה, של יואש, של דמות מלך."</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">העין הטובה במגילת רות — נאומי ובועז</h4>
+      <p style="margin-bottom:10px;">חיים מדגיש את עקרון "העין הטובה" שחוזר לאורך כל מגילת רות. אלימלך — על פי רש"י לרות א, א: "צרת עין בעיני הבאים לדוחקו." לעומתו, נאומי — "אישה גדולה שמסתכלת עליהן בטוב", ולכן הכלות "לא מוכנות לעזוב אותה." בועז — כשהקוצרים מספרים לו על רות המואביה, הוא לא שומע אישה זרה — הוא מסתכל עליה בעין טובה לגמרי: <strong>"ויגד ויגד לו כל אשר עשתה אחרי מות אישה"</strong> (רות ב, יא). ואחר כך: <strong>"חסדך האחרון גדול מחסדך הראשון"</strong> (רות ג, י). שניהם — נאומי ובועז — הביאו את המלכות של דוד מלך ישראל בזכות עינם הטובה.</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">"ע-י-ן" בשמות סעדיה ויעקב — עין שהביאה אותו לאן שהביאה</h4>
+      <p style="margin-bottom:10px;">חיים מציין תצפית מרגשת: "ושם ללב שגם לסעדיה וגם ליעקב — אביו — יש 'עין' בתוך השמות. שתי העיניים הטובות של סעדיה הן אלו שהביאו אותו לאן שהביאו." מספר: ביפו, סעדיה ישב בבית המדרש, שמע תאונת אופנוע — רץ לעזור. מסתבר שאותו אדם שנפל זרק אבן לעבר הישיבה. סעדיה לא ידע. "ראה אדם נפגע — רץ לעזור. זה העין הטובה שלו. הוא לא שפט אנשים." היה "שילוב בין תלמיד ישיבה לאדם שיכול להרגיש בנוח עם כל רבדי עם ישראל."</p>
+
+      <blockquote style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;margin:12px 0;">
+        "שנלך בדרכיהם — במותם ציוו לנו חיים."
+      </blockquote>
     `,
   },
   {
-    slug: "05-dani-levi",
-    name: "הרב דני לוי",
-    role: "ראש ישיבת אורות שאול",
+    slug: "05-dani-lavi",
+    name: "הרב דני לביא",
+    role: "",
     topic: "מוסר ולאומיות בעשרת הדיברות",
     duration: "15:46",
     videoUrl: "https://drive.google.com/file/d/1Et5O3f0CL1sOZpiwy75rCw54BGJ5nRAA/view",
     summaryHtml: `
-      <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">בלי יסוד רוחני — גם הלאומיות מתפוררת</h3>
-      <p style="margin-bottom:10px;">מה הקשר בין עשרת הדיברות לבין הלאומיות הישראלית? "בלי היסוד הרוחני אלוקי בעם ישראל — גם המישור המוסרי הכי בסיסי, כולל הלאומיות עצמה, מתפוררים לטווח הרחוק."</p>
-      <h4 style="font-weight:bold;margin:12px 0 6px;">סעדיה מייצג דור חדש</h4>
-      <p style="margin-bottom:10px;">לא ״למרות התורה — לוחם.״ ״מכוח התורה — לוחם ומאיר.״ החיבור הזה הוא בדיוק מה שהפרויקט של בני ציון מנסה לחזק בכל לומד.</p>
-      <p style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;font-weight:bold;">״שנלך בדרכיהם — במותם ציוו לנו חיים.״<br/>אמן ואמן.</p>
+      <h4 style="font-weight:bold;margin:12px 0 6px;">שאלת פתיחה: מדוע עשרת הדיברות מלמדים מוסר "ברור מאליו"?</h4>
+      <p style="margin-bottom:10px;">הרב לביא פותח בסוגיה אקטואלית — חייל שנענש על פאץ' "משיח" — ומשתמש בה כפתח לשאלה עמוקה: מה הקשר בין קבלת תורה ללאומיות הישראלית? ומדוע עשרת הדיברות כוללות "לא תרצח, לא תגנוב, לא תנאף" — מצוות שנראות טבעיות לכל בן אנוש? "כמעט חבל לבזבז חלק כזה מהבשורה של היהדות על מצוות כל כך מוסריות."</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">שלוש תשובות — מהפרטים ועד יסוד המוסר</h4>
+      <p style="margin-bottom:10px;"><strong>א. על הפרטים — לתורה יש הרבה לחדש.</strong> "לא תרצח" — כולם מסכימים. אבל מה לגבי הפלות? מה לגבי המתת חסד? הרב מביא דוגמה מצמררת: פרנסיס קריק, מגלה מבנה ה-DNA וזוכה פרס נובל, כתב ב-Nature שתינוק יחשב חי "רק 48 שעות לאחר לידה" ובני אדם מעל 80 יחשבו "מתים." הצעתו: "להפסיק את לימוד המוסר הדתי לילדים ולהחליפו בהשקפת הביולוגיה המודרנית."</p>
+      <p style="margin-bottom:10px;"><strong>ב. המוסר האנושי תנודתי.</strong> שבת — פילוסוף רומי סנקה כתב: "היהודים מבזבזים כמעט שביעית מחייהם בבטלנות." עבדות — "הייתה נחשבת מוסכמה בסיסית", ובגלל השפעת היהדות הפכה לטאבו — ועכשיו שוב חוזרת בתרבות המערבית כ"מצוין ולכתחילה."</p>
+      <p style="margin-bottom:10px;"><strong>ג. "ישר-אל" — בלי האל, גם הישרות מתמוטטת.</strong> הרב קוק ב"אורות ישראל" נגד הרב מרדכי אליאשברג: לא ניתן לבנות על "דרך ארץ שקדמה לתורה" — "כי המין האנושי כל כך התקלקל שכבר אי אפשר לבנות על האנושיות הזאת את קומת התורה." המשך חוכמה: חידוש התורה יורד עד להדרכות מעשיות. בן גוריון אמר שהחזון המשיחי של נביאי ישראל הוא שיצר את המדינה. הרצל בסיום "אלטנוילנד" — "הרב שמואל הזקן קם ואמר: האלוקים."</p>
+
+      <h4 style="font-weight:bold;margin:12px 0 6px;">סעדיה — דמות המופת של הדור החדש</h4>
+      <p style="margin-bottom:10px;">הרב לביא מסיים בדמותו של סעדיה: לא "למרות שלומד תורה — לוחם", אלא "בזכות שמחובר לתורה — מאיר את העולם וגם לוחם." "הוא אמר: רגע מפקד, אני מתדלק, כבר חוזר ללחימה" — ולמד גמרה עם הווסט וכל הציוד בעזה.</p>
+
+      <blockquote style="padding:10px;background:hsl(38 40% 90%);border-radius:8px;font-style:italic;margin:12px 0;">
+        "בלי היסוד הרוחני האלוקי בעם ישראל — גם המישור המוסרי הכי בסיסי, כולל הלאומיות עצמה, מתפוררים לטווח הרחוק.<br/>
+        שנלך בדרכיהם — במותם ציוו לנו את החיים."
+      </blockquote>
     `,
   },
 ];
@@ -140,7 +179,9 @@ function RecordingCard({ recording, index }: { recording: Recording; index: numb
               <h3 className="font-kedem font-bold text-base md:text-xl text-[hsl(30_40%_25%)]">
                 {recording.name}
               </h3>
-              <p className="font-ploni text-xs text-[hsl(30_30%_50%)] mb-0.5">{recording.role}</p>
+              {recording.role && (
+                <p className="font-ploni text-xs text-[hsl(30_30%_50%)] mb-0.5">{recording.role}</p>
+              )}
               <p className="font-ploni text-sm text-[hsl(30_35%_40%)]">{recording.topic}</p>
               <span className="font-ploni text-xs text-[hsl(30_30%_55%)] mt-0.5">
                 {recording.duration} דק׳
@@ -206,126 +247,153 @@ export default function KenesShavuot2026() {
   });
 
   return (
-    <Layout>
-      <div dir="rtl" className="bg-[hsl(38_50%_93%)]">
+    <div dir="rtl" className="min-h-screen bg-[hsl(38_50%_93%)]">
 
-        {/* ===== HERO ===== */}
-        <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
-          <img
-            src={kenesHeroBg}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.55)] to-[hsl(38_60%_88%/0.75)]" />
-          <div className="relative z-10 text-center px-4 py-20 max-w-3xl mx-auto">
-            <p className="font-kedem font-light text-[hsl(30_40%_20%)] text-lg md:text-xl mb-3 tracking-wide md:mt-16">
-              תנועת בני ציון ללימוד תנ״ך:
-            </p>
-            <h1 className="font-kedem-hollow text-4xl sm:text-5xl md:text-7xl mb-3 leading-tight bg-gradient-to-l from-[hsl(25_50%_25%)] to-[hsl(30_40%_18%)] bg-clip-text text-transparent">
-              {KENES_TITLE}
-            </h1>
-            <p className="font-kedem text-[hsl(30_35%_35%)] text-base md:text-lg mb-2">{KENES_SUBTITLE}</p>
-            <p className="font-ploni text-[hsl(30_30%_50%)] text-sm mb-8">{KENES_DATE}</p>
-            <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-4">
-              <a
-                href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(85_35%_35%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(85_35%_28%)] hover:shadow-xl hover:scale-105"
-              >
-                <MessageCircle className="w-5 h-5" />
-                קהילת הווצאפ
-              </a>
-              <a
-                href="#recordings"
-                className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
-              >
-                <Play className="w-5 h-5" fill="currentColor" />
-                הקלטות הכנס
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== INTRO / MEMORIAL NOTE ===== */}
-        <section className="py-10 md:py-14 px-4 bg-gradient-to-b from-[hsl(38_50%_93%)] to-[hsl(38_40%_88%)]">
-          <div className="max-w-2xl mx-auto text-center">
-            <p className="font-kedem text-[hsl(30_40%_25%)] text-lg md:text-xl leading-relaxed mb-2">
-              תודה <strong>לכל המשתתפים</strong> בכנס!
-            </p>
-            <p className="font-ploni text-[hsl(30_30%_40%)] text-base leading-relaxed mb-4">
-              כנס שבועות תשפ״ו נערך לזכרו של{" "}
-              <strong className="text-[hsl(30_40%_25%)]">סעדיה יעקב דרעי הי״ד</strong>,
-              גיבור ישראל שנפל בעזה — שחייו היו דוגמה חיה לחיבור בין תורה ולחימה.
-            </p>
-            <p className="font-ploni text-[hsl(30_30%_45%)] text-sm mb-5">
-              לתמיכה בפרויקט אתר התנ"ך לזכרו:
-            </p>
+      {/* ===== HERO ===== */}
+      <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+        <img
+          src={kenesHeroBg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.45)] to-[hsl(38_60%_88%/0.70)]" />
+        <div className="relative z-10 text-center px-4 py-20 max-w-3xl mx-auto">
+          <p className="font-kedem font-light text-black text-lg md:text-xl mb-3 tracking-wide md:mt-16">
+            תנועת בני ציון ללימוד תנ״ך:
+          </p>
+          <h1 className="font-kedem-hollow text-4xl sm:text-5xl md:text-7xl mb-3 leading-tight text-black">
+            {KENES_TITLE}
+          </h1>
+          <p className="font-kedem text-[hsl(30_35%_15%)] text-base md:text-lg mb-2">{KENES_SUBTITLE}</p>
+          <p className="font-ploni text-[hsl(30_30%_20%)] text-sm mb-8">{KENES_DATE}</p>
+          <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-4">
             <a
-              href="https://givechak.co.il/Saadia?ref=r3"
+              href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex flex-row-reverse items-center gap-2 px-8 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base md:text-lg shadow-md transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+              className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(85_35%_35%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(85_35%_28%)] hover:shadow-xl hover:scale-105"
             >
-              <Heart className="w-5 h-5" fill="currentColor" />
-              תרמו לזכרו
+              <MessageCircle className="w-5 h-5" />
+              קהילת הווצאפ
             </a>
-          </div>
-        </section>
-
-        {/* ===== RECORDINGS ===== */}
-        <section id="recordings" className="py-12 md:py-16 px-4 bg-[hsl(38_40%_90%)]">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(30_40%_20%)] text-center mb-2">
+            <a
+              href="#recordings"
+              className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+            >
+              <Play className="w-5 h-5" fill="currentColor" />
               הקלטות הכנס
-            </h2>
-            <p className="font-ploni text-[hsl(30_30%_45%)] text-center text-sm mb-8">
-              5 קטעים | סה"כ ~75 דקות תורה
-            </p>
-            <div className="flex flex-col gap-4">
-              {recordings.map((rec, i) => (
-                <RecordingCard key={rec.slug} recording={rec} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ===== DONATE BOTTOM ===== */}
-        <section className="py-12 md:py-16 px-4 bg-gradient-to-b from-[hsl(38_40%_88%)] to-[hsl(38_30%_84%)]">
-          <div className="max-w-xl mx-auto text-center">
-            <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(30_40%_20%)] mb-3">
-              שותפות בפרויקט התנ״ך
-            </h2>
-            <p className="font-ploni text-[hsl(30_30%_40%)] text-base leading-relaxed mb-6">
-              האתר נבנה לזכרו של סעדיה יעקב דרעי הי״ד.
-              כל תרומה מוסיפה שיעור, מאיר קטע תנ"ך, ומנציחה את דמותו.
-            </p>
-            <a
-              href="https://givechak.co.il/Saadia?ref=r3"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex flex-row-reverse items-center gap-2 px-8 py-3.5 rounded-xl bg-[hsl(30_60%_30%)] text-[hsl(43_80%_85%)] font-kedem font-bold text-base md:text-lg shadow-lg transition-all duration-300 hover:bg-[hsl(30_60%_25%)] hover:shadow-xl hover:scale-105"
-            >
-              <Heart className="w-5 h-5" fill="currentColor" />
-              לתרומה — givechak.co.il/Saadia
             </a>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* ===== ARCHIVE LINK ===== */}
-        <section className="py-8 px-4 bg-[hsl(38_30%_84%)] border-t border-[hsl(38_40%_78%)]">
-          <div className="max-w-xl mx-auto text-center">
-            <Link
-              to="/kenes-archive"
-              className="inline-flex flex-row-reverse items-center gap-2 font-ploni text-[hsl(30_35%_40%)] text-sm hover:text-[hsl(30_40%_25%)] transition-colors"
-            >
-              <Archive className="w-4 h-4" />
-              כל כנסי בני ציון — ארכיון
-            </Link>
+      {/* ===== INTRO / MEMORIAL NOTE ===== */}
+      <section className="py-10 md:py-14 px-4 bg-gradient-to-b from-[hsl(38_50%_93%)] to-[hsl(38_40%_88%)]">
+        <div className="max-w-2xl mx-auto text-center">
+          <p className="font-kedem text-[hsl(30_40%_25%)] text-lg md:text-xl leading-relaxed mb-2">
+            תודה <strong>לכל המשתתפים</strong> בכנס!
+          </p>
+          <p className="font-ploni text-[hsl(30_30%_40%)] text-base leading-relaxed mb-4">
+            כנס שבועות תשפ״ו נערך לזכרו של{" "}
+            <strong className="text-[hsl(30_40%_25%)]">סעדיה יעקב דרעי הי״ד</strong>,
+            גיבור ישראל שנפל בעזה — שחייו היו דוגמה חיה לחיבור בין תורה ולחימה.
+          </p>
+          <p className="font-ploni text-[hsl(30_30%_45%)] text-sm mb-5">
+            לתמיכה בפרויקט אתר התנ"ך לזכרו:
+          </p>
+          <a
+            href="https://givechak.co.il/Saadia?ref=r3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-row-reverse items-center gap-2 px-8 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base md:text-lg shadow-md transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+          >
+            <Heart className="w-5 h-5" fill="currentColor" />
+            תרמו לזכרו
+          </a>
+        </div>
+      </section>
+
+      {/* ===== RECORDINGS ===== */}
+      <section id="recordings" className="py-12 md:py-16 px-4 bg-[hsl(38_40%_90%)]">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(30_40%_20%)] text-center mb-2">
+            הקלטות הכנס
+          </h2>
+          <p className="font-ploni text-[hsl(30_30%_45%)] text-center text-sm mb-8">
+            5 קטעים | סה"כ ~75 דקות תורה
+          </p>
+          <div className="flex flex-col gap-4">
+            {recordings.map((rec, i) => (
+              <RecordingCard key={rec.slug} recording={rec} index={i} />
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-      </div>
-    </Layout>
+      {/* ===== DONATION VIDEO SECTION ===== */}
+      <section className="py-12 md:py-20 px-4 bg-[hsl(30_40%_15%)]">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-kedem font-bold text-3xl md:text-4xl text-white mb-4">
+            אתר התנ"ך החדש — לזכר סעדיה ז"ל
+          </h2>
+          <p className="font-ploni text-[hsl(38_50%_82%)] mb-8 text-lg">
+            צפו בסרטון ההצגה והשתתפו בהקמת אתר התנ"ך הגדול בעם ישראל
+          </p>
+          <div className="aspect-video rounded-2xl overflow-hidden shadow-2xl mb-8">
+            <iframe
+              src={`https://drive.google.com/file/d/${DONATION_VIDEO_DRIVE_ID}/preview`}
+              className="w-full h-full"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </div>
+          <a
+            href="https://givechak.co.il/Saadia?ref=r3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-row-reverse items-center gap-2 px-8 py-4 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base md:text-lg shadow-lg transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+          >
+            <Heart className="w-5 h-5" fill="currentColor" />
+            אני רוצה להיות שותף
+          </a>
+        </div>
+      </section>
+
+      {/* ===== DONATE BOTTOM ===== */}
+      <section className="py-12 md:py-16 px-4 bg-gradient-to-b from-[hsl(38_40%_88%)] to-[hsl(38_30%_84%)]">
+        <div className="max-w-xl mx-auto text-center">
+          <h2 className="font-kedem font-bold text-2xl md:text-3xl text-[hsl(30_40%_20%)] mb-3">
+            שותפות בפרויקט התנ״ך
+          </h2>
+          <p className="font-ploni text-[hsl(30_30%_40%)] text-base leading-relaxed mb-6">
+            האתר נבנה לזכרו של סעדיה יעקב דרעי הי״ד.
+            כל תרומה מוסיפה שיעור, מאיר קטע תנ"ך, ומנציחה את דמותו.
+          </p>
+          <a
+            href="https://givechak.co.il/Saadia?ref=r3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex flex-row-reverse items-center gap-2 px-8 py-3.5 rounded-xl bg-[hsl(30_60%_30%)] text-[hsl(43_80%_85%)] font-kedem font-bold text-base md:text-lg shadow-lg transition-all duration-300 hover:bg-[hsl(30_60%_25%)] hover:shadow-xl hover:scale-105"
+          >
+            <Heart className="w-5 h-5" fill="currentColor" />
+            לתרומה — givechak.co.il/Saadia
+          </a>
+        </div>
+      </section>
+
+      {/* ===== ARCHIVE LINK ===== */}
+      <section className="py-8 px-4 bg-[hsl(38_30%_84%)] border-t border-[hsl(38_40%_78%)]">
+        <div className="max-w-xl mx-auto text-center">
+          <Link
+            to="/kenes-archive"
+            className="inline-flex flex-row-reverse items-center gap-2 font-ploni text-[hsl(30_35%_40%)] text-sm hover:text-[hsl(30_40%_25%)] transition-colors"
+          >
+            <Archive className="w-4 h-4" />
+            כל כנסי בני ציון — ארכיון
+          </Link>
+        </div>
+      </section>
+
+    </div>
   );
 }
