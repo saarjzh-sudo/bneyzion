@@ -24,8 +24,8 @@ const KENES_TITLE = "הכנת הלב למתן תורה";
 const KENES_SUBTITLE = "מתוך הפסוקים — ערב לימוד לקראת חג השבועות תשפ״ו";
 const KENES_DATE = "י׳ סיון תשפ״ו | 19 במאי 2026";
 
-// Drive file ID for the donation video (from the recording of segment 03-project)
-const DONATION_VIDEO_DRIVE_ID = "1u4hRMr9oHE4-81QRSJUM1QS37ifc9VTJ";
+// Drive file ID — קמפיין התנ"ך סעדיה (הסרטון הייעודי של הקמפיין, לא קטע מהכנס)
+const DONATION_VIDEO_DRIVE_ID = "1pCC1S2h6qkM_5_Ol4QKLtPqioCdFkgJZ";
 
 interface Recording {
   slug: string;
