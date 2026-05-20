@@ -1,7 +1,6 @@
 /**
  * KenesShavuot2026 — כנס שבועות תשפ"ו (19.5.2026)
  *
- * שם הכנס הסופי: ממתין לאישור סער (TODO: החלף KENES_TITLE ו-KENES_SUBTITLE)
  * Route: /kenes-2026-05
  *
  * מבוסס על KnesPage.tsx (כנס פורים תשפ"ו).
@@ -16,9 +15,8 @@ import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import kenesHeroBg from "@/assets/hero-bg-bney-zion.jpg";
 
-// TODO: קבל שם רשמי מסער ועדכן כאן
-const KENES_TITLE = "כנס שבועות — מתן תורה";
-const KENES_SUBTITLE = "ערב לימוד ותורה לקראת חג השבועות תשפ״ו";
+const KENES_TITLE = "הכנת הלב למתן תורה";
+const KENES_SUBTITLE = "מתוך הפסוקים — ערב לימוד לקראת חג השבועות תשפ״ו";
 const KENES_DATE = "י׳ סיון תשפ״ו | 19 במאי 2026";
 
 interface Recording {
@@ -38,7 +36,7 @@ const recordings: Recording[] = [
     role: "ראש ישיבת ההסדר גוש עציון",
     topic: "מעמד הר סיני — שלוש חזרות הציווי",
     duration: "11:11",
-    videoUrl: "",
+    videoUrl: "https://drive.google.com/file/d/1HlsW1ySXcHAMkoojDQ54H7z96XIQQzTi/view",
     summaryHtml: `
       <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">מדוע הציווי על מעמד הר סיני חוזר שלוש פעמים?</h3>
       <p style="margin-bottom:10px;">לא "כפל לשון" סתמי — כל חזרה מוסיפה שכבה. הראשונה: הכנה חיצונית (טהרה, גבולות). השנייה: הכנה פנימית (אמונה וציפייה). השלישית: ההתגלות עצמה.</p>
@@ -55,7 +53,7 @@ const recordings: Recording[] = [
     role: "ראש תנועת בני ציון",
     topic: "עין טובה מביאה מלכות — מנאומי ובועז עד סעדיה ז״ל",
     duration: "25:35",
-    videoUrl: "",
+    videoUrl: "https://drive.google.com/file/d/1DanUi5caNMAdebNkiaT-9vcrBQsG02fc/view",
     summaryHtml: `
       <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">מגילת רות, פרשת יתרו, וסעדיה ז״ל — אותה אמת</h3>
       <p style="margin-bottom:10px;">יתרו שמע על הניסים — אבל רק יתרו הגיע. הוא ראה בעין טובה את מה שה׳ עושה ופעל. נאומי ובועז — שתי עיניים טובות שביחד הביאו מלכות לעולם.</p>
@@ -72,7 +70,7 @@ const recordings: Recording[] = [
     role: "תנועת בני ציון",
     topic: "אתר התנ״ך החדש — לזכר סעדיה יעקב דרעי הי״ד",
     duration: "5:55",
-    videoUrl: "",
+    videoUrl: "https://drive.google.com/file/d/1u4hRMr9oHE4-81QRSJUM1QS37ifc9VTJ/view",
     summaryHtml: `
       <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">אתר תנ״ך חדשני — לזכר גיבור ישראל</h3>
       <p style="margin-bottom:10px;">הפרויקט כבר בנוי: אלפי שיעורים, מאות רבנים, וכלים ללימוד תנ"ך. הכנס הוא ההצגה הראשונה לציבור.</p>
@@ -86,7 +84,7 @@ const recordings: Recording[] = [
     role: "אביו של סעדיה יעקב דרעי הי״ד",
     topic: "עדות — מי היה סעדיה",
     duration: "16:24",
-    videoUrl: "",
+    videoUrl: "https://drive.google.com/file/d/19W0Ntau6Q07dHgWM6UM0F1k6Bzf6xzTU/view",
     summaryHtml: `
       <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">״הוא קם בבוקר וישר הלך ללמוד״</h3>
       <p style="margin-bottom:10px;">לא נאום, לא הספד — עדות חיה של אב על בן שכולו תורה ועוצמה. חיים מתאר ילד שמאז ילדות אהב ללמוד לא כי הכריחו אותו, אלא כי זו הייתה נשמתו.</p>
@@ -101,7 +99,7 @@ const recordings: Recording[] = [
     role: "ראש ישיבת אורות שאול",
     topic: "מוסר ולאומיות בעשרת הדיברות",
     duration: "15:46",
-    videoUrl: "",
+    videoUrl: "https://drive.google.com/file/d/1Et5O3f0CL1sOZpiwy75rCw54BGJ5nRAA/view",
     summaryHtml: `
       <h3 style="font-size:1.05em;font-weight:bold;margin-bottom:8px;">בלי יסוד רוחני — גם הלאומיות מתפוררת</h3>
       <p style="margin-bottom:10px;">מה הקשר בין עשרת הדיברות לבין הלאומיות הישראלית? "בלי היסוד הרוחני אלוקי בעם ישראל — גם המישור המוסרי הכי בסיסי, כולל הלאומיות עצמה, מתפוררים לטווח הרחוק."</p>
