@@ -454,6 +454,18 @@ public/
 - שם הכנס הסופי: ממתין לאישור סער (כרגע "כנס שבועות — מתן תורה"). לעדכן `KENES_TITLE`/`KENES_SUBTITLE` ב-KenesShavuot2026.tsx + KenesArchive.tsx
 - Drive links לכל קטע: Drive IDs כבר נמצאים ב-recordings array, הקלטות עלו ל-Drive
 
+### 2026-05-21 — Grow directDebit: הוספת 4 שדות חובה לתשלום חוזר (commit 9f0daf2)
+
+- **קובץ:** `api/grow/create-payment.ts` — בלוק FormData
+- **בעיה:** תשלומי directDebit (מנוי הפרק השבועי + תרומה חודשית) נרשמו ב-Grow כחד-פעמיים ולא הופיעו כמנויים חוזרים בדשבורד Grow.
+- **תיקון:** הוספת 4 שדות בתוך `if (flowType === "directDebit")`:
+  - `chargeIdentifier` = orderId (UUID ייחודי per transaction — Grow דורש מזהה)
+  - `planName` = `productCfg?.display_name || description` (שם התוכנית הגלוי בדשבורד)
+  - `period` = `"MONTHLY"` (מחזוריות חיוב)
+  - `sumInstallments` = `"0"` (0 = ללא הגבלת מועד — עד ביטול)
+- **היקף:** תיקון אחד מכסה גם `weekly-chapter-subscription` (QuickBuyDialog) וגם `Donate.tsx` directDebit — שניהם עוברים אותו `flowType === "directDebit"` branch.
+- **Iron rule נלמד:** Grow directDebit דורש chargeIdentifier + planName + period + sumInstallments — ללא הם, Grow רושם charge חד-פעמי בלי קשר לסוג הדף.
+
 ### 2026-04-14 — Migration completion + Google OAuth
 - 312 URLs corrected via `fix-misattributions.mjs`
 - 60/73 missing drafts recovered via vp4.me 4-strategy scraper
