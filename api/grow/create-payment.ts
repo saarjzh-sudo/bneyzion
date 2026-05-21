@@ -404,6 +404,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       formData.append("cField3", productSlug); // → product wiring lookup
     }
 
+    // DirectDebit (הוראת קבע) — required fields for recurring to appear in Grow dashboard.
+    // Without these, Grow registers a one-time charge even though the page is a directDebit page.
+    // Applies to: weekly-chapter-subscription (QuickBuyDialog) AND donation directDebit (Donate.tsx).
+    if (flowType === "directDebit") {
+      // chargeIdentifier — unique key per customer+product combo. orderId is already a UUID
+      // created above and is unique per transaction, which is what Grow expects here.
+      formData.append("chargeIdentifier", orderId!);
+      // planName — human-readable label visible in Grow dashboard for the recurring plan.
+      // productCfg?.display_name is set for both the FALLBACK and DB paths; description is
+      // the caller-supplied fallback (e.g. "תרומה חודשית").
+      formData.append("planName", productCfg?.display_name || description);
+      // period — billing cadence. All current directDebit products are monthly.
+      formData.append("period", "MONTHLY");
+      // sumInstallments — 0 = recurring with no end date (until customer cancels).
+      formData.append("sumInstallments", "0");
+    }
+
     // Build notifyUrl from request headers — works automatically on custom domains
     const webhookUrl = `${
       req.headers["x-forwarded-proto"] || "https"
