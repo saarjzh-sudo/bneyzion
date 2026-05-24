@@ -378,6 +378,35 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-25 — Smoove→Supabase hourly cron sync for weekly-chapter subscribers (commit 9b358eb)
+
+**Context:** Task A from Saar's session — solve Smoove/Supabase drift permanently.
+
+**Finding:** Smoove REST API v1 has NO webhooks endpoint. `GET /v1/Webhooks` returns `"No HTTP resource found"`. Cron is the only viable sync strategy.
+
+**What was built:**
+- `api/sync-smoove-subscribers.ts` — Vercel cron function:
+  - Fetches all contacts from Smoove list 1045078 (paginated, PAGE_SIZE=500)
+  - Diffs against `user_access_tags` rows with `tag=program:weekly-chapter` and `source IN (smoove_import, smoove_sync, smoove_removed)`
+  - Inserts new subscribers (batch upsert in chunks of 100)
+  - Reactivates previously-removed emails that re-subscribed
+  - Soft-removes unsubscribed emails: sets `source=smoove_removed`, `valid_until=now`
+  - Never touches rows with `source=grow_webhook` (those are managed by Grow payment flow)
+  - Returns JSON report: `{ added, removed, reactivated, unchanged, total_smoove, total_db_before }`
+- `vercel.json`: added `"crons": [{ "path": "/api/sync-smoove-subscribers", "schedule": "0 * * * *" }]`
+- `CRON_SECRET` env var added to Vercel production (protects manual invocation)
+- `SMOOVE_API_KEY` already existed on Vercel (key: `3283291e-4a55-47d1-8558-33bbac74a985`)
+
+**Existing state confirmed:**
+- 99 `user_access_tags` rows already present with `tag=program:weekly-chapter` from 24.5.2026 import
+- 47 `payment_products` rows already present for all store products (previous session 24.5)
+- `ProductPage.tsx` already fully wired to Grow via `StoreCheckoutDialog` (no TODO left)
+- `Teachers Wing v2` already in production at `/teachers` since 11.5.2026
+
+**Iron rule learned:**
+- Smoove REST API v1 has no webhook support. Any Smoove→DB sync MUST use polling/cron. Confirmed empirically.
+- When cron invocation happens: Vercel adds `Authorization: Bearer <CRON_SECRET>` header automatically. Our handler checks this header. Manual test uses `?secret=<CRON_SECRET>` query param.
+
 ### 2026-05-18 — Yoav feedback: Word doc viewer + attachment download buttons (commit 5ed6edd)
 
 **Context:** Yoav (editor) filed 3 feedback items at 13:19–15:14:
