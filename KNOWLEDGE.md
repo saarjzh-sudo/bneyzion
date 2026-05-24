@@ -237,7 +237,12 @@ Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
 - API URL: `https://secure.meshulam.co.il/api/light/server/1.0` (was sandbox)
 - SDK environment: `PRODUCTION` (was DEV) — set via `VITE_GROW_ENVIRONMENT`
 - **Webhook URL** for Grow's server-side notifications panel: `https://bneyzion.vercel.app/api/grow/webhook`
-- ⚠️ **Open risk:** `GROW_PAGECODE_SUBSCRIPTION` shares the same value as PRODUCTS. Grow pageCodes are usually flow-specific (wallet vs directDebit). If weekly-chapter subscription fails in live, ask Grow for a dedicated directDebit pageCode.
+- **Iron rule (2026-05-24):** Grow bnei-zion יש רק 2 pageCodes:
+  - `efbda303565a` = **wallet** (one-time payments: store products)
+  - `b1dc5e695089` = **directDebit** (recurring/donations: subscriptions + donations)
+  - `GROW_PAGECODE_SUBSCRIPTION` חייב = `b1dc5e695089` (directDebit), **לא** = `efbda303565a` (wallet).
+    wallet pageCode לא יוצר recurring plan — Grow מאשרת charge ראשון אבל לא בונה מנוי חוזר.
+  - **תוקן 2026-05-24:** `GROW_PAGECODE_SUBSCRIPTION` שונה מ-`efbda303565a` ל-`b1dc5e695089`.
 - See `MEMORY.md` "Grow lessons" entry for 12 known gotchas (now 12 incl. live cutover lessons)
 
 ### Other integrations (live)
@@ -2507,7 +2512,7 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   - `GROW_PAGECODE_DONATIONS` → `b1dc5e695089`
   - `VITE_GROW_ENVIRONMENT` → `PRODUCTION` (was empty → defaulted to DEV)
 - **Smoke test passed:** POST `/api/grow/create-payment` with `type: "donation"` returned real `authCode` + `processId 29212494` from `secure.meshulam.co.il`. Leaves one pending donation row in Supabase (orderId `fb5828d9-04a2-48a6-8e49-442fda186422`) — can be deleted manually.
-- **⚠️ Open risk:** Saar confirmed `GROW_PAGECODE_SUBSCRIPTION` should equal `GROW_PAGECODE_PRODUCTS` ("רגיל"). But Grow pageCodes are typically flow-specific (wallet vs directDebit). If weekly-chapter monthly billing fails in live, ask Grow for a dedicated directDebit pageCode for subscriptions.
+- **⚠️ Open risk (נסגר 2026-05-24):** Saar confirmed `GROW_PAGECODE_SUBSCRIPTION` should equal `GROW_PAGECODE_PRODUCTS` ("רגיל"). But Grow pageCodes are typically flow-specific (wallet vs directDebit). **הסתבר שזאת בדיוק הבעיה** — wallet pageCode לא יוצר recurring plan, ולכן מנוי לא עבד. תוקן: `GROW_PAGECODE_SUBSCRIPTION` שונה מ-`efbda303565a` (wallet) ל-`b1dc5e695089` (directDebit = אותו כמו DONATIONS). Deploy: `dpl_3iSdwDtbciPBV7MxzwPE7GRiuJgU`.
 - **New iron rules (added to MEMORY):**
   1. **Vercel CLI v52 `vercel env add`** requires `--value "..." -y` flags. Stdin (`printf|`, `echo|`) silently saves empty values. See `feedback_vercel_cli_env_add_v52.md`.
   2. **Don't trust `vercel env pull` as verification** — production vars added via CLI v52 are sensitive-by-default → shown as `""` in pull even when correctly saved. Verify by smoke-testing the deployed endpoint.
@@ -2747,6 +2752,13 @@ and took full-page localhost screenshots at 1440px and 375px to understand the a
 - **Grow env vars confirmed in Vercel:** `GROW_PAGECODE_DONATIONS`, `GROW_USER_ID_DONATIONS` (both Encrypted, Production, 7d ago)
 - **Production URL:** `https://bneyzion.vercel.app/donate`
 - **TS check:** 0 errors
+
+### 2026-05-24 — תיקון GROW_PAGECODE_SUBSCRIPTION (wallet→directDebit)
+
+- **ממצא:** `GROW_PAGECODE_SUBSCRIPTION` היה מוגדר ל-`efbda303565a` (wallet pageCode, = PRODUCTS). אבל Grow יש רק 2 pageCodes — wallet עבור one-time payments, directDebit עבור recurring. wallet לא יוצר recurring plan → מנוי שבועי לא עבד (Grow מאשרת charge ראשון בלבד).
+- **תיקון:** `vercel env rm GROW_PAGECODE_SUBSCRIPTION production` + `vercel env add --value "b1dc5e695089"` (directDebit pageCode = אותו כמו DONATIONS).
+- **Deploy:** `dpl_3iSdwDtbciPBV7MxzwPE7GRiuJgU` — `https://bneyzion.vercel.app`
+- **חוק ברזל:** bneyzion יש רק 2 Grow pageCodes. SUBSCRIPTION+DONATIONS = directDebit (`b1dc5e695089`). PRODUCTS = wallet (`efbda303565a`). אסור לערבב.
 
 ---
 
