@@ -378,6 +378,13 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-25 — /design-research: 32 pattern micro-demos + Umbraco chase draft + memorial WA draft (commit 36decd0)
+
+- `src/pages/DesignPreviewResearch.tsx` — rewritten PatternCard: each of the 32 cards now has a unique `PatternDemo` component at the top that demonstrates the pattern in practice (not just text). Demos include: live font pairing, animated editorial numbers, drop cap, RTL pull-quote with CSS animation, variable-weight scale, asymmetric hero mini, bento grid with animation, sticky TOC with active state, container query comparison, gematria URL comparison, connections panel with pasuk highlight, logical CSS mapping, nikud comparison, dual-pane source+translation, topic graph with hub+satellites, daily learning strip, Cmd+K palette UI, faceted search chips, recently-viewed strip, ViewTransitions click-to-toggle, scroll-driven reveal bars, magnetic button with cursor-follow gradient, FLIP filter demo, live theme switcher (light/dark/sepia), progress bar animation, for-you rail, optimistic UI bookmark toggle, floating player with float CSS animation, synced transcript word highlight, AI summary card, 66ch comfort column, estimated time badges.
+- `drafts/umbraco-chase-avihay.md` — Umbraco admin access chase email to Avihay@TWB, pending Saar approval.
+- `drafts/memorial-drai-request.md` — WhatsApp message to Drei family requesting 4 photos + names + dates, pending Saar approval.
+- Memorial note: `DesignPreviewMemorialSaadia.tsx` already uses 6 real photos from `src/assets/` (saadia-soldier, saadia-tefillin, saadia-young-books, saadia-suit, saadia-rally, saadia-combat). The "4 empty slots" from the original brief are already filled. The pending task is only to send the WA to ask for additional family-approved photos.
+
 ### 2026-05-25 — Smoove→Supabase hourly cron sync for weekly-chapter subscribers (commit 9b358eb)
 
 **Context:** Task A from Saar's session — solve Smoove/Supabase drift permanently.
