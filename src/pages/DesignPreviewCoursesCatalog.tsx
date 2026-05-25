@@ -74,7 +74,7 @@ const MY_COURSES: CourseCard[] = [
     completedChapters: 18,
     status: "active",
     ctaLabel: "המשך",
-    ctaTo: "/design-course/weekly-chapter",
+    ctaTo: "/course/weekly-chapter",
     tag: "מנוי פעיל",
     isMain: true,
   },
@@ -88,7 +88,7 @@ const MY_COURSES: CourseCard[] = [
     completedChapters: 8,
     status: "completed",
     ctaLabel: "צפה שוב",
-    ctaTo: "/design-series-list",
+    ctaTo: "/series",
     tag: "הושלם",
   },
 ];
@@ -105,7 +105,7 @@ const MORE_COURSES: CourseCard[] = [
     completedChapters: 0,
     status: "available",
     ctaLabel: "גלה עוד",
-    ctaTo: "/design-series-list",
+    ctaTo: "/series",
   },
   {
     slug: "avot",
@@ -117,7 +117,7 @@ const MORE_COURSES: CourseCard[] = [
     completedChapters: 0,
     status: "available",
     ctaLabel: "גלה עוד",
-    ctaTo: "/design-series-list",
+    ctaTo: "/series",
   },
   {
     slug: "tehilim",
@@ -129,7 +129,7 @@ const MORE_COURSES: CourseCard[] = [
     completedChapters: 0,
     status: "available",
     ctaLabel: "גלה עוד",
-    ctaTo: "/design-series-list",
+    ctaTo: "/series",
   },
 ];
 
@@ -212,7 +212,7 @@ export default function DesignPreviewCoursesCatalog() {
             {/* Breadcrumb */}
             <nav style={{ marginBottom: "1.25rem" }}>
               <Link
-                to="/design-portal-subscriber"
+                to="/portal"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -513,7 +513,7 @@ function MainCourseCard({ course, isSubscriber }: { course: CourseCard; isSubscr
           <div style={{ textAlign: "center" }}>
             <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: "white", marginBottom: "0.25rem" }}>תכנית המנויים</div>
             <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: "rgba(255,255,255,0.6)", marginBottom: "1rem" }}>₪5 לחודש ראשון · ₪110/חודש לאחר מכן</div>
-            <Link to="/design-megilat-esther" style={{
+            <Link to="/megilat-esther" style={{
               display: "inline-flex", alignItems: "center", gap: "0.5rem",
               padding: "0.75rem 1.75rem", borderRadius: radii.lg,
               background: gradients.goldButton, color: "white",
@@ -962,7 +962,7 @@ function CourseTile({ course, isSubscriber }: { course: CourseCard; isSubscriber
               </span>
             </div>
             <Link
-              to="/design-store"
+              to="/store"
               style={{
                 display: "inline-flex", alignItems: "center", justifyContent: "center",
                 gap: "0.45rem", padding: "0.78rem 1.25rem", borderRadius: radii.lg,
