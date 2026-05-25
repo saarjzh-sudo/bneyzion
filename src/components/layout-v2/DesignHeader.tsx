@@ -38,6 +38,7 @@ const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "חנות", href: "/store" },
   { label: "תרומות", href: "/donate" },
   { label: "פרשת השבוע", href: "/parasha" },
+  { label: "מחירים", href: "/pricing" },
   { label: "אודותינו", href: "/about" },
 ];
 

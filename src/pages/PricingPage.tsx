@@ -1,11 +1,11 @@
 import Layout from "@/components/layout/Layout";
 import PageHero from "@/components/layout/PageHero";
-import { motion } from "framer-motion";
-import { Check, Star, Crown, Zap, BookOpen, Users, Headphones, Shield } from "lucide-react";
+import { Check, Star, Crown, BookOpen, Users, Headphones, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useSEO } from "@/hooks/useSEO";
 
 interface PlanFeature {
   text: string;
@@ -49,33 +49,33 @@ const tiers: PricingTier[] = [
   },
   {
     id: "basic",
-    name: "בסיסי",
+    name: "הפרק השבועי",
     icon: <Star className="w-7 h-7" />,
-    monthlyPrice: 49,
-    yearlyPrice: 39,
-    description: "כל השיעורים וההקלטות — למי שרוצה ללמוד ברצינות",
+    monthlyPrice: 110,
+    yearlyPrice: 110,
+    description: "תכנית לימוד שבועית — פרקי תנ״ך עם הרב יואב אוריאל",
     badge: "פופולרי",
     highlighted: true,
     features: [
-      { text: "כל השיעורים ללא הגבלה", included: true },
+      { text: "שיעור זום שבועי חי", included: true },
       { text: "גישה לפרשת השבוע", included: true },
-      { text: "חיפוש בספרייה", included: true },
-      { text: "שמירת מועדפים ללא הגבלה", included: true },
-      { text: "שיעורים מוקלטים ללא הגבלה", included: true },
+      { text: "תכני בסיס + העמקה", included: true },
+      { text: "הקלטות שיעורים", included: true },
+      { text: "פורטל לומדים אישי", included: true },
       { text: "קבוצת וואטסאפ", included: true },
-      { text: "הורדת שיעורים", included: false },
-      { text: "תוכן בלעדי", included: false },
+      { text: "ביטול בכל עת", included: true },
+      { text: "כל ספרי נביאים וכתובים", included: true },
     ],
-    ctaText: "הצטרפו עכשיו",
-    ctaLink: "/auth",
+    ctaText: "הצטרפו לתכנית",
+    ctaLink: "/chapter-weekly",
   },
   {
     id: "premium",
-    name: "פרימיום",
+    name: "מגילת אסתר",
     icon: <Crown className="w-7 h-7" />,
     monthlyPrice: 110,
-    yearlyPrice: 89,
-    description: "חוויית הלימוד המלאה — כולל תוכן בלעדי וקהילה",
+    yearlyPrice: 110,
+    description: "תכנית המנויים — לחיות תנ״ך עם הרב יואב אוריאל",
     features: [
       { text: "כל השיעורים ללא הגבלה", included: true },
       { text: "גישה לפרשת השבוע", included: true },
@@ -83,25 +83,24 @@ const tiers: PricingTier[] = [
       { text: "שמירת מועדפים ללא הגבלה", included: true },
       { text: "שיעורים מוקלטים ללא הגבלה", included: true },
       { text: "קבוצת וואטסאפ VIP", included: true },
-      { text: "הורדת שיעורים", included: true },
-      { text: "תוכן בלעדי ומפגשים חיים", included: true },
+      { text: "תכנים בלעדיים", included: true },
+      { text: "מפגשים חיים", included: true },
     ],
-    ctaText: "הצטרפו לפרימיום",
-    ctaLink: "/auth",
+    ctaText: "להצטרפות",
+    ctaLink: "/megilat-esther",
   },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" as const },
-  }),
-};
+// CSS-only fade-in via Tailwind animate-in (no framer-motion dependency)
 
 export default function PricingPage() {
   const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
+
+  useSEO({
+    title: "מסלולים ומחירים — בני ציון",
+    description: "הצטרפו לתכנית הפרק השבועי של הרב יואב אוריאל — לימוד תנ״ך שבועי בזום, תכני העמקה ופורטל אישי. החל מ-₪110/חודש.",
+    url: "https://bneyzion.co.il/pricing",
+  });
 
   return (
     <Layout>
@@ -143,14 +142,9 @@ export default function PricingPage() {
 
           {/* Pricing cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
-            {tiers.map((tier, i) => (
-              <motion.div
+            {tiers.map((tier) => (
+              <div
                 key={tier.id}
-                custom={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                variants={cardVariants}
                 className={cn(
                   "relative rounded-2xl border p-8 flex flex-col transition-all duration-300",
                   tier.highlighted
@@ -243,7 +237,7 @@ export default function PricingPage() {
                 >
                   <a href={tier.ctaLink}>{tier.ctaText}</a>
                 </Button>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -258,19 +252,13 @@ export default function PricingPage() {
               { icon: <Headphones className="w-8 h-8" />, title: "תמיכה מלאה", desc: "צוות התמיכה שלנו זמין עבורכם" },
               { icon: <Users className="w-8 h-8" />, title: "קהילת לומדים", desc: "הצטרפו לאלפי לומדים ברחבי העולם" },
             ].map((item) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="flex flex-col items-center gap-3"
-              >
+              <div key={item.title} className="flex flex-col items-center gap-3">
                 <div className="w-14 h-14 rounded-2xl bg-primary/10 text-primary flex items-center justify-center">
                   {item.icon}
                 </div>
                 <h4 className="font-bold text-foreground">{item.title}</h4>
                 <p className="text-sm text-muted-foreground">{item.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -280,7 +268,7 @@ export default function PricingPage() {
       <section className="py-12 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-muted-foreground text-sm leading-relaxed">
-            כל המסלולים כוללים גישה מלאה לאפליקציה • ניתן לשדרג או לבטל בכל רגע
+            כל המסלולים כוללים גישה מלאה לאפליקציה • אפשר לשדרג או לבטל בכל רגע
             <br />
             לשאלות נוספות{" "}
             <a href="/contact" className="text-primary underline hover:no-underline">
