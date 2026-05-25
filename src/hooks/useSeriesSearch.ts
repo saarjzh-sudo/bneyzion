@@ -35,12 +35,14 @@ function useSeriesSearchQuery(query: string) {
           .from("series")
           .select("id, title, description, image_url, lesson_count, status, rabbis(name), parent:series!series_parent_id_fkey(title)")
           .ilike("title", pattern)
+          .not("audience_tags", "cs", '{"teachers"}')
           .limit(12),
         supabase
           .from("lessons")
           .select("id, title, duration, video_url, audio_url, series:series!lessons_series_id_fkey(id, title), rabbis(name)")
           .eq("status", "published")
           .ilike("title", pattern)
+          .not("audience_tags", "cs", '{"teachers"}')
           .limit(12),
       ]);
 

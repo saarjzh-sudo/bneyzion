@@ -118,6 +118,7 @@ export function useGlobalSearch(query: string) {
           .select("id, title, lesson_count, rabbis(name)")
           .or(patterns.map(p => `title.ilike.${p}`).join(","))
           .eq("status", "active")
+          .not("audience_tags", "cs", '{"teachers"}')
           .order("lesson_count", { ascending: false })
           .limit(8),
         supabase
@@ -125,6 +126,7 @@ export function useGlobalSearch(query: string) {
           .select("id, title, rabbis(name), series(title)")
           .or(patterns.map(p => `title.ilike.${p}`).join(","))
           .eq("status", "published")
+          .not("audience_tags", "cs", '{"teachers"}')
           .limit(8),
         supabase
           .from("topics")
