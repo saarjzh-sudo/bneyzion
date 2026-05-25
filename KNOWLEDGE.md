@@ -345,29 +345,36 @@ public/
 
 ---
 
-## 6. Content state (as of 2026-04-30)
+## 6. Content state (as of 2026-05-25)
 
 | Metric | Value |
 |--------|-------|
-| Total lessons | 11,818 |
-| Published | 11,357 (96%) |
-| With audio | 6,432 |
-| With video | 820 |
-| With PDF | 963 |
-| With media (any) | 6,941 |
-| Drafts | 461 (truly empty, awaiting Umbraco admin access) |
-| Active rabbis | 179 (with `lesson_count > 0`) |
-| Active series | 745 (with at least one published lesson) |
-| Total series | 1,374 |
+| Total lessons | 13,172 (was 11,818 in Apr 2026) |
+| Published | 12,718 (97%) |
+| With bible_book tagged | 1,147 (9%) — critical gap |
+| With bible_chapter tagged | 181 (1.4%) — critical gap |
+| With audio | ~6,432 (not re-counted after teacher aids insert) |
+| With video | ~820+ |
+| With PDF | ~963+ |
+| Drafts remaining | ~461 (navigation pages + truly empty) |
+| Total series | 1,526 (was 1,374 — grew after teacher aids insert) |
+| Series with lessons | 921 |
+| Total rabbis | 203 |
 | Topics | 741 |
 | Products (active) | 47 |
 | Product categories | 10 |
 | Auth users | 2 |
 | Admin users | 1 (`saar.j.z.h@gmail.com`) |
 
+### Critical data gaps (priority order)
+1. **bible_book coverage: 9%** — Torah books have ZERO tags. Only some Neviim+Ketuvim tagged.
+2. **bible_chapter coverage: 1.4%** — almost entirely untagged.
+3. **~820 lessons missing video** — vp4.me iframe detection issue in scraper.
+4. **461 draft lessons** — scraper couldn't match by title (normalize mismatch).
+
 ### Health score (last QA run)
-- **87%** — most gaps are missing media URLs that need row-level scraping
-  or Umbraco admin access to GetById API
+- **87%** (April 2026) — most gaps are now bible_book/chapter tagging (9% coverage)
+  and missing media URLs (video especially)
 
 ---
 
@@ -2569,6 +2576,71 @@ Full grep across `src/` for each pattern. Results below.
 - **Constraint learned:** "הסט המלא של בני ציון" is not yet defined precisely — used placeholder description; real product list should be confirmed with Yoav before launch
 - **Constraint confirmed:** Toast notifications must use CSS-only animation (no framer-motion per iron rule)
 - **Constraint confirmed:** Grow type `"product"` correctly routes to "עם קבלה" merchant (not donations)
+
+### 2026-05-25 — Browser scan findings + content/tagging/teachers architecture plan
+
+#### ממצאים קריטיים מסריקת Browser (Chrome MCP + SSH session)
+
+**א. שני אתרים חיים במקביל:**
+- `bneyzion.co.il` = Umbraco ישן, מלא תוכן, URLs בעברית
+- `bneyzion.vercel.app` = React חדש, DB מאוכלס אבל תצוגה שבורה ב-/series ו-/rabbis/:id
+
+**ב. נתוני DB מעודכנים (מ-14.5.2026 לפי סריקה ישירה):**
+| Metric | ערך |
+|--------|-----|
+| Total lessons | 13,172 |
+| Published | 12,718 |
+| Total series | 1,526 |
+| Series with lessons | 921 |
+| Total rabbis | 203 |
+
+הגידול מ-11,818 ל-13,172 שיעורים = +1,354 שיעורים מאז הסקרייפ הראשון (כולל teacher aids).
+
+**ג. בעיית תיוג תנ"ך קריטית:**
+| שדה | כמות ממולאת | אחוז |
+|-----|------------|------|
+| series_id | 11,514 | 90% |
+| rabbi_id | 11,870 | 93% |
+| bible_book | 1,147 | 9% |
+| bible_chapter | 181 | 1.4% |
+
+תורה לחלוטין לא מתויגת: 0 שיעורים ב-בראשית/שמות/ויקרא/במדבר/דברים.
+רק נביאים+כתובים מכוסים חלקית: ירמיהו 296, ישעיהו 294, יחזקאל 273.
+
+**ד. באגים שנמצאו בסריקה:**
+1. `/pricing` — כפתור "פרימיום ₪110/חודש" שולח ל-`/megilat-esther` (דף ספרים פיזיים, לא מנוי)
+2. Vercel edge cache מחזיק גרסאות ישנות — `?nocache=1` עוקף זמנית
+3. `/chapter-weekly` + `/megilat-esther` — אין global nav (לא משתמשים ב-Layout)
+4. `/megilat-esther` — accessibility tree ריק מ-buttons/links
+5. תוכן מיושן: שני הדפים landing על פורים שעבר (היום שבועות)
+6. `/pricing` — ₪49 ו-₪110 כמעט זהים, אין visual differentiation
+7. `/rabbis/:id` — משתמש ב-UUIDs ב-URL במקום slugs
+
+**ה. row-level-scrape.mjs — סטטוס ריצות:**
+- 10 workers רצו (w0-w9). `row-scrape-log-w*.json` = 87 רשומות סה"כ, כולן `action: null`
+- המשמעות: הסקריפט מצא blocks, אבל ה-log מכיל רק enriched items שעברו update (וה-87 הם ה-87 שהתעדכנו)
+- בעיה מתועדת: הסקריפט מוצא lessonBlocks, ממפה לפי כותרת, אבל match rate נמוך מאוד
+  - Root cause חשוד: normalize() משתמש ב-`.toLowerCase()` — עברית אינה case-sensitive, אבל ביטויים מיוחדים (‏, ‎,  ) עלולים לייצר mismatch
+  - נשארו 461 drafts ו-820 וידאו חסרים (מ-KNOWLEDGE §9)
+  - upsert ל-Supabase קורה רק כשיש `Object.keys(updates).length > 0` — כשאין מה לעדכן, הרשומה לא נכתבת ל-log
+
+**ו. DB schema — teachers/visibility — מה קיים:**
+| שאלה | תשובה |
+|-------|--------|
+| `audience_tags` על series/lessons | קיים (TEXT[], migration 20260430_audience_tags.sql אופשר) |
+| ערכים בשימוש | `['general']`, `['general','teachers']`, `['teachers']` (מאגר עזרי הלמידה) |
+| RLS על lessons | קיים — public read, user own-row, admin-only על migration tables |
+| teachers table נפרד | אינו קיים |
+| visibility flag על lessons | אינו קיים (רק `status` — published/draft) |
+| auth gate על `/teachers` | קיים ב-TeachersLayout.tsx אבל רק עבור TeacherLessonModal, לא הדף כולו |
+| RLS שחוסם teacher-only content מהציבור | אינו קיים — כל תוכן עם `audience_tags @> ['teachers']` גלוי לכולם |
+
+**כלל ברזל שנלמד:** DB schema הנוכחי אינו תומך בהפרדה אמיתית של תוכן מורים — רק בתיוג. להפרדה מלאה (תוכן מורים לא מופיע בציבור) צריך: (1) flag visibility על lessons, (2) RLS policy שחוסמת anon+user מ-rows עם visibility='teachers_only', (3) כל public query מסנן החוצה.
+
+**ז. מה פתוח לאחר הסריקה (לא בוצע עדיין — ממתין לאישור סאר):**
+1. תיקון תוכן: השלמת row-level-scrape (match rate + upsert fix)
+2. תיוג תנ"ך: סקריפט אוטומטי bible_book/bible_chapter מ-URL + כותרת
+3. אזור מורים מבודד: visibility flag + RLS + frontend filtering
 
 ---
 
