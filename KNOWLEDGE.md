@@ -2953,3 +2953,22 @@ significant change must update it. The agent enforces this.*
 - Yoav's WhatsApp chat ID: 972527203221@c.us (confirmed personal chat, not group)
 - The "פרויקט יהושע" does NOT have a dedicated campaign/landing page on bneyzion.co.il — the purchase pages are on club.bneyzion.co.il
 - No "תרומת ספר יהושע לחיילים" product exists (only שופטים has that variant)
+
+---
+
+### 2026-05-25 — audience_tags filtering: scope decision + 4-hook implementation
+
+**Decision (Saar, explicit):**
+- `useRabbiSeries` and `useRabbiLessons` — **not filtered**. On a rabbi's page, the user expects to see ALL content by that rabbi, including teacher-audience series. The rabbi page is intentional context.
+- Filtering applies only to **4 public/global hooks** (5 query lines total):
+
+| Hook | File | Line | What was added |
+|------|------|------|----------------|
+| `useGlobalSearch` | `src/hooks/useGlobalSearch.ts` | 120 (series) | `.not("audience_tags", "cs", '{"teachers"}')` |
+| `useGlobalSearch` | `src/hooks/useGlobalSearch.ts` | 127 (lessons) | `.not("audience_tags", "cs", '{"teachers"}')` |
+| `useTopSeries` | `src/hooks/useTopSeries.ts` | 22 | `.not("audience_tags", "cs", '{"teachers"}')` |
+| `useSeriesSearch` | `src/hooks/useSeriesSearch.ts` | 37 (series) | `.not("audience_tags", "cs", '{"teachers"}')` |
+| `useSeriesSearch` | `src/hooks/useSeriesSearch.ts` | 43 (lessons) | `.not("audience_tags", "cs", '{"teachers"}')` |
+
+**Build:** `npx tsc --noEmit` — clean (0 errors).
+**Iron rule learned:** Filter teachers content from GLOBAL search/browse hooks. Do NOT filter from rabbi-specific hooks — rabbi pages show the rabbi's full portfolio.
