@@ -100,7 +100,6 @@ const DesignPreviewSeriesPageV2 = lazy(() => import("./pages/DesignPreviewSeries
 const DesignPreviewCourseDetail = lazy(() => import("./pages/DesignPreviewCourseDetail"));
 const DesignPreviewCoursesCatalog = lazy(() => import("./pages/DesignPreviewCoursesCatalog"));
 const DesignPreviewParasha = lazy(() => import("./pages/DesignPreviewParasha"));
-const DesignPreviewTeachersWingV2 = lazy(() => import("./pages/DesignPreviewTeachersWingV2"));
 const DesignPreviewYehoshuaCampaign = lazy(() => import("./pages/DesignPreviewYehoshuaCampaign"));
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
