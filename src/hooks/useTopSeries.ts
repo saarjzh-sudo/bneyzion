@@ -19,6 +19,7 @@ export function useTopSeries(limit = 50) {
         .select("*, rabbis(name)")
         .eq("status", "active")
         .gt("lesson_count", 0)
+        .not("audience_tags", "cs", '{"teachers"}')
         .order("lesson_count", { ascending: false })
         .limit(limit);
       if (error) throw error;
