@@ -233,7 +233,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             >
               {[
                 { to: "/", label: "ראשי", icon: Home },
-                { to: "/design-chapter-weekly", label: "תכנית הפרק השבועי", icon: CalendarDays },
+                { to: "/chapter-weekly", label: "תכנית הפרק השבועי", icon: CalendarDays },
               ].map(({ to, label, icon: Icon }) => (
                 <Link
                   key={to}
@@ -479,7 +479,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 .map((r) => (
                   <Link
                     key={r.id}
-                    to={`/design-rabbi/${r.id}`}
+                    to={`/rabbis/${r.id}`}
                     onClick={onDrawerClose}
                     style={{
                       display: "flex",
@@ -548,7 +548,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
         >
           {/* תרומות */}
           <Link
-            to="/design-donate"
+            to="/donate"
             onClick={onDrawerClose}
             style={{
               display: "flex",
