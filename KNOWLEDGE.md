@@ -347,6 +347,8 @@ public/
 19. **`getDerivedStateFromError()` must be pure — no side effects.** React 18 Concurrent Mode calls this in the render phase. `window.location.reload()`, `sessionStorage.setItem()`, timers, etc. are all forbidden here. Move ALL side effects to `componentDidUpdate()`. Violating this caused the 2026-05-07 production blank page incident.
 20. **Always run `npm run build && npm run preview` locally before pushing any `src/App.tsx` change to `main`.** This is non-negotiable. The 2026-05-07 incident broke production because this step was skipped.
 21. **Vercel rollback pattern: `vercel alias https://bneyzion-[deployment-id]-saars-projects-4508d6bb.vercel.app bneyzion.vercel.app`** — instant restore, no redeploy needed. Target the last known-good deployment URL from `vercel ls --prod`. Then promote the fixed deployment once it builds.
+22. **`DesignSidebar` is production. Never add `/design-*` links to it.** `Layout.tsx` imports `DesignSidebar` directly (since sidebar rollout). Any link inside it — even in the "ראשי" section or "רבנים" tab — reaches real users. All links must point to production routes (`/chapter-weekly`, `/rabbis/:id`, `/donate`), never to sandbox (`/design-*`). Found and fixed 2026-05-25.
+23. **Three nav arrays must stay in sync:** `FULL_NAV_LINKS` in `DesignPreviewHome.tsx`, `NAV_ITEMS` in `DesignHeader.tsx`, `NAV_ITEMS` in `DesignMobileBottomNav.tsx`. Iron rule 15 says "two navbars" but the mobile bottom nav is a third. Always update all 3.
 
 ---
 
@@ -377,6 +379,25 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-25 — Full code fix pass + UI/UX audit (commits 1934054, 680aa17, 2f49d27)
+
+**Code fixes:**
+- `src/App.tsx`: removed dead lazy import of `DesignPreviewTeachersWingV2` (route already redirects to `/teachers`, import was dead weight)
+- `src/pages/Terms.tsx`: replaced 2× "על מנת" with "כדי" (hebrew-writing-skill compliance)
+- `src/components/layout/Footer.tsx`, `src/components/chapter-weekly/sections/FinalCTA.tsx`, `src/pages/MegilatEsther.tsx`: replaced public "סאר חלק" attribution with "צוות בני ציון" — prevents external exposure of Saar's personal brand in client-facing footers
+- `src/pages/CommunityPage.tsx`: course card image alt="" → `alt={e.community_courses?.title}` (meaningful alt on content image)
+- `src/pages/PricingPage.tsx`: added `useSEO` (missing on critical conversion page)
+- `src/pages/DesignPreviewHome.tsx`: "לתכנית הפרק השבועי" CTA navigated to `/design-chapter-weekly` (sandbox) — fixed to `/chapter-weekly` (production)
+- `src/pages/DesignPreviewHome.tsx` + `src/components/layout-v2/DesignHeader.tsx` + `src/components/layout-v2/DesignMobileBottomNav.tsx`: added "מחירים → /pricing" to all 3 nav sources (iron rule 15)
+- `src/components/layout-v2/DesignSidebar.tsx`: **critical** — 3 sandbox `/design-*` links in production sidebar fixed: `/design-chapter-weekly` → `/chapter-weekly`, `/design-rabbi/:id` → `/rabbis/:id`, `/design-donate` → `/donate`
+
+**Vercel env vars:** all GROW_* and SMOOVE_API_KEY already present in Production. `GROW_PAGECODE_SUBSCRIPTION` updated to `b1dc5e695089` (directDebit) 23h prior.
+
+**OAuth pending_user_link:** already implemented in `AuthContext.tsx` from previous session.
+
+**Iron rule learned:**
+- `DesignSidebar` is imported by production `Layout.tsx`. Any `/design-*` links inside DesignSidebar will be live in production. Before adding any link to DesignSidebar, verify it points to a production route, not a sandbox route.
 
 ### 2026-05-25 — /design-research: 32 pattern micro-demos + Umbraco chase draft + memorial WA draft (commit 36decd0)
 
