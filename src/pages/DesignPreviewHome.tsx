@@ -38,6 +38,7 @@ const FULL_NAV_LINKS: { label: string; path: string; external?: boolean }[] = [
   { label: "פרשת השבוע",     path: "/parasha"          },
   { label: "חנות",           path: "/store"            },
   { label: "תרומות",         path: "/donate"           },
+  { label: "מחירים",         path: "/pricing"          },
   { label: "אודותינו",       path: "/about"            },
   { label: "לזכר סעדיה הי״ד", path: "/memorial/saadia" },
 ];
@@ -258,7 +259,7 @@ function DesignHero() {
                      boxShadow: "0 4px 24px rgba(139,111,71,0.4)" }}>
             התחילו ללמוד
           </button>
-          <button onClick={() => navigate("/design-chapter-weekly")}
+          <button onClick={() => navigate("/chapter-weekly")}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem",
                      border: "1.5px solid rgba(255,255,255,0.35)",
                      background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
