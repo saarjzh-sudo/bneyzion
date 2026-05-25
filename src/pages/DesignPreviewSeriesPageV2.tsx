@@ -45,6 +45,7 @@
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useSearchParams, Link } from "react-router-dom";
+import { useSEO } from "@/hooks/useSEO";
 import {
   Share2,
   Bookmark,
@@ -2075,6 +2076,14 @@ export default function DesignPreviewSeriesPageV2() {
 
   const { data: series, isLoading: seriesLoading } = useSeriesDetail(targetId);
   const { data: lessons = [], isLoading: lessonsLoading } = useLessonsBySeries(series?.id);
+
+  useSEO({
+    title: series?.title ? `${series.title} — בני ציון` : "סדרת לימוד — בני ציון",
+    description: series?.title
+      ? `שיעורים בסדרת "${series.title}" — ${lessons.length} שיעורים מאת ${series.rabbi_id ? "רב" : "רבנים"} מובילים. לימוד תנ״ך מעמיק ב-bneyzion.co.il`
+      : "לימוד תנ״ך מעמיק — אלפי שיעורים מסדרות נושאיות של רבנים מובילים.",
+    url: `https://bneyzion.co.il/series/${targetId}`,
+  });
   const { data: childSeries = [] } = useSeriesChildren(series?.id);
 
   // Open/close lesson modal, sync URL
