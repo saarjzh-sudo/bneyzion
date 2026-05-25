@@ -396,8 +396,16 @@ public/
 
 **OAuth pending_user_link:** already implemented in `AuthContext.tsx` from previous session.
 
+**Additional production pages fixed in same session (commits ddb0270–b2f0d62):**
+- `DesignPreviewPortalSubscriber.tsx` (/portal): 10 sandbox links → production
+- `DesignPreviewCoursesCatalog.tsx` (/courses): 8 sandbox links → production
+- `DesignPreviewCourseDetail.tsx` (/course/:slug): 4 sandbox links → production
+- `DesignPreviewSeriesPageV2.tsx` (/series/:id): added useSEO (dynamic title/desc per series)
+- `ChapterWeekly.tsx` + `MegilatEsther.tsx`: added useSEO (landing pages had no title/desc)
+
 **Iron rule learned:**
 - `DesignSidebar` is imported by production `Layout.tsx`. Any `/design-*` links inside DesignSidebar will be live in production. Before adding any link to DesignSidebar, verify it points to a production route, not a sandbox route.
+- Any `DesignPreview*.tsx` file that is used as a production route in `App.tsx` (without `/design-` prefix) must be treated as a production file. Run `grep -n '"/design-' <file>` on every such file before shipping.
 
 ### 2026-05-25 — /design-research: 32 pattern micro-demos + Umbraco chase draft + memorial WA draft (commit 36decd0)
 
