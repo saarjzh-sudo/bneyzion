@@ -443,7 +443,7 @@ export default function DesignPreviewPortalSubscriber() {
                 {hasSubscription ? (
                   /* Subscriber: enter weekly lesson */
                   <Link
-                    to="/design-course/weekly-chapter#chapter-zechariah-7"
+                    to="/course/weekly-chapter#chapter-zechariah-7"
                     style={{ textDecoration: "none" }}
                   >
                     <div
@@ -498,7 +498,7 @@ export default function DesignPreviewPortalSubscriber() {
                 ) : (
                   /* Member (not subscriber): "המשך מאיפה שהפסקת" */
                   <Link
-                    to="/design-series-list"
+                    to="/series"
                     style={{ textDecoration: "none" }}
                   >
                     <div
@@ -557,7 +557,7 @@ export default function DesignPreviewPortalSubscriber() {
                   icon={<Bookmark size={20} />}
                   label="שיעורים שמורים"
                   sub="3 שמורים"
-                  to="/design-series-list"
+                  to="/series"
                   color={colors.tealMain}
                   bg="rgba(45,125,125,0.08)"
                 />
@@ -565,7 +565,7 @@ export default function DesignPreviewPortalSubscriber() {
                   icon={<BookOpen size={20} />}
                   label="הקורסים שלי"
                   sub="1 פעיל"
-                  to="/design-courses"
+                  to="/courses"
                   color={colors.oliveMain}
                   bg="rgba(91,110,58,0.08)"
                 />
@@ -733,7 +733,7 @@ export default function DesignPreviewPortalSubscriber() {
                     </div>
                     {/* CTA button */}
                     <Link
-                      to="/design-megilat-esther"
+                      to="/megilat-esther"
                       style={{
                         display: "inline-flex", alignItems: "center", gap: "0.55rem",
                         padding: "1rem 2.25rem", borderRadius: radii.lg,
@@ -840,7 +840,7 @@ export default function DesignPreviewPortalSubscriber() {
                       מהדורות קודמות
                     </button>
                     <Link
-                      to="/design-course/weekly-chapter#chapter-zechariah-7"
+                      to="/course/weekly-chapter#chapter-zechariah-7"
                       style={{
                         padding: "0.65rem 1.4rem",
                         borderRadius: radii.md,
@@ -1001,7 +1001,7 @@ export default function DesignPreviewPortalSubscriber() {
                     {SUBSCRIBER_STATS.chaptersCompleted} פרקים הושלמו מתוך 64
                   </div>
                   <Link
-                    to="/design-course/weekly-chapter"
+                    to="/course/weekly-chapter"
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
@@ -1330,7 +1330,7 @@ export default function DesignPreviewPortalSubscriber() {
                     return (
                       <Link
                         key={s.id}
-                        to={`/design-series-page/${s.id}`}
+                        to={`/series/${s.id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <div
@@ -1429,7 +1429,7 @@ export default function DesignPreviewPortalSubscriber() {
                   </p>
                   <div style={{ display: "flex", justifyContent: "center", gap: "0.85rem", flexWrap: "wrap" }}>
                     <Link
-                      to="/design-donate"
+                      to="/donate"
                       style={{
                         padding: "0.7rem 1.25rem",
                         borderRadius: radii.md,
@@ -1492,7 +1492,7 @@ export default function DesignPreviewPortalSubscriber() {
                     גישה מלאה להרחבה, מצגות, מאמרים והקלטות שבועיות — ₪5 לחודש הראשון.
                   </p>
                   <Link
-                    to="/design-megilat-esther"
+                    to="/megilat-esther"
                     style={{
                       display: "inline-flex",
                       alignItems: "center",

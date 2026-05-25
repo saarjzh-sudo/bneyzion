@@ -172,12 +172,9 @@ export default function DesignPreviewRabbi() {
                         <img src={cover} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       </div>
                       <div style={{ padding: "1rem 1.1rem 1.15rem" }}>
-                        {/* Only show family badge for non-default families — sacredCanon is the fallback and showing it on every series looks wrong */}
-                        {getSeriesFamily(s.title, s.description) !== "sacredCanon" && (
-                          <span style={{ display: "inline-block", padding: "0.15rem 0.45rem", borderRadius: radii.sm, background: fam.badgeBg, color: fam.badgeFg, fontFamily: fonts.body, fontSize: "0.6rem", letterSpacing: "0.1em", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.45rem" }}>
-                            {fam.label}
-                          </span>
-                        )}
+                        <span style={{ display: "inline-block", padding: "0.15rem 0.45rem", borderRadius: radii.sm, background: fam.badgeBg, color: fam.badgeFg, fontFamily: fonts.body, fontSize: "0.6rem", letterSpacing: "0.1em", fontWeight: 700, textTransform: "uppercase", marginBottom: "0.45rem" }}>
+                          {fam.label}
+                        </span>
                         <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.95rem", color: colors.textDark, lineHeight: 1.35, marginBottom: "0.4rem", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", minHeight: "2.5em" }}>
                           {s.title}
                         </div>

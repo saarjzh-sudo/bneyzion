@@ -237,7 +237,12 @@ Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
 - API URL: `https://secure.meshulam.co.il/api/light/server/1.0` (was sandbox)
 - SDK environment: `PRODUCTION` (was DEV) — set via `VITE_GROW_ENVIRONMENT`
 - **Webhook URL** for Grow's server-side notifications panel: `https://bneyzion.vercel.app/api/grow/webhook`
-- ⚠️ **Open risk:** `GROW_PAGECODE_SUBSCRIPTION` shares the same value as PRODUCTS. Grow pageCodes are usually flow-specific (wallet vs directDebit). If weekly-chapter subscription fails in live, ask Grow for a dedicated directDebit pageCode.
+- **Iron rule (2026-05-24):** Grow bnei-zion יש רק 2 pageCodes:
+  - `efbda303565a` = **wallet** (one-time payments: store products)
+  - `b1dc5e695089` = **directDebit** (recurring/donations: subscriptions + donations)
+  - `GROW_PAGECODE_SUBSCRIPTION` חייב = `b1dc5e695089` (directDebit), **לא** = `efbda303565a` (wallet).
+    wallet pageCode לא יוצר recurring plan — Grow מאשרת charge ראשון אבל לא בונה מנוי חוזר.
+  - **תוקן 2026-05-24:** `GROW_PAGECODE_SUBSCRIPTION` שונה מ-`efbda303565a` ל-`b1dc5e695089`.
 - See `MEMORY.md` "Grow lessons" entry for 12 known gotchas (now 12 incl. live cutover lessons)
 
 ### Other integrations (live)
@@ -342,6 +347,8 @@ public/
 19. **`getDerivedStateFromError()` must be pure — no side effects.** React 18 Concurrent Mode calls this in the render phase. `window.location.reload()`, `sessionStorage.setItem()`, timers, etc. are all forbidden here. Move ALL side effects to `componentDidUpdate()`. Violating this caused the 2026-05-07 production blank page incident.
 20. **Always run `npm run build && npm run preview` locally before pushing any `src/App.tsx` change to `main`.** This is non-negotiable. The 2026-05-07 incident broke production because this step was skipped.
 21. **Vercel rollback pattern: `vercel alias https://bneyzion-[deployment-id]-saars-projects-4508d6bb.vercel.app bneyzion.vercel.app`** — instant restore, no redeploy needed. Target the last known-good deployment URL from `vercel ls --prod`. Then promote the fixed deployment once it builds.
+22. **`DesignSidebar` is production. Never add `/design-*` links to it.** `Layout.tsx` imports `DesignSidebar` directly (since sidebar rollout). Any link inside it — even in the "ראשי" section or "רבנים" tab — reaches real users. All links must point to production routes (`/chapter-weekly`, `/rabbis/:id`, `/donate`), never to sandbox (`/design-*`). Found and fixed 2026-05-25.
+23. **Three nav arrays must stay in sync:** `FULL_NAV_LINKS` in `DesignPreviewHome.tsx`, `NAV_ITEMS` in `DesignHeader.tsx`, `NAV_ITEMS` in `DesignMobileBottomNav.tsx`. Iron rule 15 says "two navbars" but the mobile bottom nav is a third. Always update all 3.
 
 ---
 
@@ -379,6 +386,162 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-25 — Full code fix pass + UI/UX audit (commits 1934054, 680aa17, 2f49d27)
+
+**Code fixes:**
+- `src/App.tsx`: removed dead lazy import of `DesignPreviewTeachersWingV2` (route already redirects to `/teachers`, import was dead weight)
+- `src/pages/Terms.tsx`: replaced 2× "על מנת" with "כדי" (hebrew-writing-skill compliance)
+- `src/components/layout/Footer.tsx`, `src/components/chapter-weekly/sections/FinalCTA.tsx`, `src/pages/MegilatEsther.tsx`: replaced public "סאר חלק" attribution with "צוות בני ציון" — prevents external exposure of Saar's personal brand in client-facing footers
+- `src/pages/CommunityPage.tsx`: course card image alt="" → `alt={e.community_courses?.title}` (meaningful alt on content image)
+- `src/pages/PricingPage.tsx`: added `useSEO` (missing on critical conversion page)
+- `src/pages/DesignPreviewHome.tsx`: "לתכנית הפרק השבועי" CTA navigated to `/design-chapter-weekly` (sandbox) — fixed to `/chapter-weekly` (production)
+- `src/pages/DesignPreviewHome.tsx` + `src/components/layout-v2/DesignHeader.tsx` + `src/components/layout-v2/DesignMobileBottomNav.tsx`: added "מחירים → /pricing" to all 3 nav sources (iron rule 15)
+- `src/components/layout-v2/DesignSidebar.tsx`: **critical** — 3 sandbox `/design-*` links in production sidebar fixed: `/design-chapter-weekly` → `/chapter-weekly`, `/design-rabbi/:id` → `/rabbis/:id`, `/design-donate` → `/donate`
+
+**Vercel env vars:** all GROW_* and SMOOVE_API_KEY already present in Production. `GROW_PAGECODE_SUBSCRIPTION` updated to `b1dc5e695089` (directDebit) 23h prior.
+
+**OAuth pending_user_link:** already implemented in `AuthContext.tsx` from previous session.
+
+**Additional production pages fixed in same session (commits ddb0270–b2f0d62):**
+- `DesignPreviewPortalSubscriber.tsx` (/portal): 10 sandbox links → production
+- `DesignPreviewCoursesCatalog.tsx` (/courses): 8 sandbox links → production
+- `DesignPreviewCourseDetail.tsx` (/course/:slug): 4 sandbox links → production
+- `DesignPreviewSeriesPageV2.tsx` (/series/:id): added useSEO (dynamic title/desc per series)
+- `ChapterWeekly.tsx` + `MegilatEsther.tsx`: added useSEO (landing pages had no title/desc)
+
+**Iron rule learned:**
+- `DesignSidebar` is imported by production `Layout.tsx`. Any `/design-*` links inside DesignSidebar will be live in production. Before adding any link to DesignSidebar, verify it points to a production route, not a sandbox route.
+- Any `DesignPreview*.tsx` file that is used as a production route in `App.tsx` (without `/design-` prefix) must be treated as a production file. Run `grep -n '"/design-' <file>` on every such file before shipping.
+
+### 2026-05-25 — /design-research: 32 pattern micro-demos + Umbraco chase draft + memorial WA draft (commit 36decd0)
+
+- `src/pages/DesignPreviewResearch.tsx` — rewritten PatternCard: each of the 32 cards now has a unique `PatternDemo` component at the top that demonstrates the pattern in practice (not just text). Demos include: live font pairing, animated editorial numbers, drop cap, RTL pull-quote with CSS animation, variable-weight scale, asymmetric hero mini, bento grid with animation, sticky TOC with active state, container query comparison, gematria URL comparison, connections panel with pasuk highlight, logical CSS mapping, nikud comparison, dual-pane source+translation, topic graph with hub+satellites, daily learning strip, Cmd+K palette UI, faceted search chips, recently-viewed strip, ViewTransitions click-to-toggle, scroll-driven reveal bars, magnetic button with cursor-follow gradient, FLIP filter demo, live theme switcher (light/dark/sepia), progress bar animation, for-you rail, optimistic UI bookmark toggle, floating player with float CSS animation, synced transcript word highlight, AI summary card, 66ch comfort column, estimated time badges.
+- `drafts/umbraco-chase-avihay.md` — Umbraco admin access chase email to Avihay@TWB, pending Saar approval.
+- `drafts/memorial-drai-request.md` — WhatsApp message to Drei family requesting 4 photos + names + dates, pending Saar approval.
+- Memorial note: `DesignPreviewMemorialSaadia.tsx` already uses 6 real photos from `src/assets/` (saadia-soldier, saadia-tefillin, saadia-young-books, saadia-suit, saadia-rally, saadia-combat). The "4 empty slots" from the original brief are already filled. The pending task is only to send the WA to ask for additional family-approved photos.
+
+### 2026-05-25 — Smoove→Supabase hourly cron sync for weekly-chapter subscribers (commit 9b358eb)
+
+**Context:** Task A from Saar's session — solve Smoove/Supabase drift permanently.
+
+**Finding:** Smoove REST API v1 has NO webhooks endpoint. `GET /v1/Webhooks` returns `"No HTTP resource found"`. Cron is the only viable sync strategy.
+
+**What was built:**
+- `api/sync-smoove-subscribers.ts` — Vercel cron function:
+  - Fetches all contacts from Smoove list 1045078 (paginated, PAGE_SIZE=500)
+  - Diffs against `user_access_tags` rows with `tag=program:weekly-chapter` and `source IN (smoove_import, smoove_sync, smoove_removed)`
+  - Inserts new subscribers (batch upsert in chunks of 100)
+  - Reactivates previously-removed emails that re-subscribed
+  - Soft-removes unsubscribed emails: sets `source=smoove_removed`, `valid_until=now`
+  - Never touches rows with `source=grow_webhook` (those are managed by Grow payment flow)
+  - Returns JSON report: `{ added, removed, reactivated, unchanged, total_smoove, total_db_before }`
+- `vercel.json`: added `"crons": [{ "path": "/api/sync-smoove-subscribers", "schedule": "0 * * * *" }]`
+- `CRON_SECRET` env var added to Vercel production (protects manual invocation)
+- `SMOOVE_API_KEY` already existed on Vercel (key: `3283291e-4a55-47d1-8558-33bbac74a985`)
+
+**Existing state confirmed:**
+- 99 `user_access_tags` rows already present with `tag=program:weekly-chapter` from 24.5.2026 import
+- 47 `payment_products` rows already present for all store products (previous session 24.5)
+- `ProductPage.tsx` already fully wired to Grow via `StoreCheckoutDialog` (no TODO left)
+- `Teachers Wing v2` already in production at `/teachers` since 11.5.2026
+
+**Iron rule learned:**
+- Smoove REST API v1 has no webhook support. Any Smoove→DB sync MUST use polling/cron. Confirmed empirically.
+- When cron invocation happens: Vercel adds `Authorization: Bearer <CRON_SECRET>` header automatically. Our handler checks this header. Manual test uses `?secret=<CRON_SECRET>` query param.
+
+### 2026-05-18 — Yoav feedback: Word doc viewer + attachment download buttons (commit 5ed6edd)
+
+**Context:** Yoav (editor) filed 3 feedback items at 13:19–15:14:
+1. Lesson `935882a2` (חוברת עבודה - ספר דניאל | פרקים א-ו) — no download button, `attachment_url` is `.docx`
+2. Lesson `d5e4973f` (ספר דניאל עם תרגום וביאור 'ושננתם') — shows as "empty" — confirmed: only 300-char content string, no media
+3. Series `21619bb5` (דניאל) — only 2 lessons — confirmed: exactly 2 in Umbraco, not a migration gap
+
+**Root cause of item 1:** `LessonPage.tsx` had a viewer block gated on `.pdf` only — 425 teacher lessons with `.doc`/`.docx` attachment had no download button at all.
+
+**Fixes applied (all in commit `5ed6edd`):**
+- `src/pages/LessonPage.tsx`: replaced single PDF-only viewer block with a 3-branch IIFE:
+  - `.pdf` → Google Docs gview iframe + download button
+  - `.doc`/`.docx` → Office Online embed iframe + download button (always visible, prominent gold)
+  - fallback → download button only
+- `src/pages/teachers/TeachersLessonPage.tsx`: same 3-branch pattern, replaces old plain "הורד חומר עזר PDF" link
+- `src/pages/teachers/TeacherLessonModal.tsx`: download button now `background: goldDark` (filled, not outline); label dynamically "הורד PDF" / "הורד Word" / "הורד קובץ"; badge in lesson metadata also updates dynamically
+
+**Data findings:**
+- 425 lessons in teachers scrape have `.doc` attachments — all now properly displayed
+- 178 "skipped" lessons in insert-teachers-content.mjs are genuinely empty: no attachment, no audio/video, content < 50 chars — re-scraping will not recover them
+- Daniel series (21619bb5): exactly 2 nodes in `teachers-scrape-result.json`, matches Supabase — no gap
+- Lesson d5e4973f: content="כל ספר דניאל על הסדר עם ביאור פשוט..." (~50 chars), no attachment/media — it IS the series description, not a real lesson
+
+**Iron rule learned:**
+- `getSourceType()` in `insert-teachers-content.mjs` returns `"pdf"` for all attachment types — but `.doc`/`.docx` are NOT PDFs. Future scrape updates should normalize `source_type` to `"word"` for Word files.
+
+### 2026-05-18 — Mobile responsiveness pass on all sandbox pages
+
+- **10 fixes across 9 files** (commit `6427d80` on branch `fix/donate-checkbox-layout`)
+- `DesignHeader.tsx`: header shrinks from 96px to 64px on mobile (`@media max-width:767px`); DarkModeToggle + NotificationBell hidden on mobile to reduce header clutter; actions gap reduced
+- `DesignMobileBottomNav.tsx`: added `display:flex` directly on `<nav>` element (was relying only on CSS class — tabs weren't flexing correctly); added `paddingBottom: env(safe-area-inset-bottom)` for notch devices
+- `DesignLayout.tsx`: padding-bottom corrected from 64px to 72px to match bottom-nav height
+- `DesignFooter.tsx`: added `.footer-stats` class with gap reduction on mobile; footer-grid already had breakpoints but stats bar had `gap:3rem` causing overflow at 375px
+- `DesignPageHero.tsx`: added `MOBILE_STYLE` constant + `<style>` tag injection; `.design-page-hero` reduces padding to `3rem 1rem 2.5rem` on mobile (was `5rem 1.5rem 4rem`)
+- `DesignPreviewHome.tsx`: `KenesBanner` now column on mobile (`.kenes-banner-inner`, `.kenes-banner-poster`); `DesignParashaHolidaySection` 2-col grid → 1-col via `.parasha-holiday-grid`; `TopSeriesSection` minWidth `420px` → `min(420px, 100%)` + `.top-series-grid` class
+- `DesignPreviewSeriesList.tsx`: top-5 grid and full-list grid both use `minmax(min(420px,100%), 1fr)`; mobile CSS via `.series-top5-grid` switches series cards to column layout with 160px image height
+- `DesignPreviewMegillatEsther.tsx`: hero padding `160px 1.5rem 5rem` → `100px 1rem 3rem` on mobile; h1 font-size capped for mobile; breakpoint improved from 900px to also cover 767px
+- `DesignPreviewSeriesPage.tsx`: hero content padding `150px 1.5rem 4rem` → `96px 1rem 3rem` on mobile via `.series-hero-content`; `related-series-grid` fixed to `minmax(min(420px,100%),1fr)` + column layout for related cards on mobile
+
+**Root causes identified (to avoid in future sessions):**
+1. `minmax(420px, 1fr)` in CSS Grid causes horizontal overflow when viewport < 420px. Always use `minmax(min(420px, 100%), 1fr)`.
+2. Inline `padding: "150px ..."` on hero content divs doesn't respond to viewport — always add a CSS class + `@media` rule.
+3. `display: "flex"` on a nav element must be set explicitly in the style object, not only as a CSS class — React SSR-safety and specificity.
+
+### 2026-05-20 — כנס שבועות תשפ"ו — שיפורים 6 לדף הכנס (commit a4d83aa)
+
+**Session זו (המשך מ-2026-05-20 הקודם):**
+- `KenesShavuot2026.tsx` הוסר מ-`<Layout>` → עמוד standalone ללא Header/Footer/Sidebar
+- תוקן שם הדובר: **הרב דני לביא** (היה "לוי" — שגוי). role הוסר לחלוטין.
+- Hero image חדש נוצר עם Gemini Imagen (`imagen-4.0-generate-001`): `src/assets/hero-kenes-shavuot.jpg` — ציור שמן, הר סיני בעלות השחר, 16:9, מומר PNG→JPEG (sips q82)
+- כותרת ה-hero שונתה לשחור (`text-black`) — הייתה gradient זהבי על רקע תמונה (אגדיש קריאות)
+- **סיכומים מורחבים** לכל 5 הקטעים — ממש חצי תמלול, עם מקורות מדויקים (שמות/יט/יב, שמות/יט/כד, רש"י, ספורנו, הרב קוק "אורות ישראל", רות ב/יא, רות ג/י וכו'). שמות הפרשנים והפסוקים מדויקים מהתמלול הקמ"צ.
+- **Section תרמה עם סרטון Drive**: תחתית כהה, iframe embed של קטע 03-project (הצגת הפרויקט + חיים דרעי בסרטון), CTA "אני רוצה להיות שותף"
+- **מייל נשלח לרב יואב אוריאל** (yoavoriel@gmail.com) — Message ID `19e447ab59be20a5`. הקישור: https://bneyzion.vercel.app/kenes-2026-05
+
+**ללא שינוי בקבצי Production (Layout.tsx, Header, Footer) — הסרת Layout נעשתה בקובץ העמוד בלבד.**
+
+**כלל שנלמד:**
+- Gemini `gemini-flash-latest` מחזיר תוצאות באנגלית לפעמים. יש להשתמש ב-`gemini-2.5-flash` (עובד בגרסה v1beta). כאשר output קטן מ-300 bytes — הפיפ נחתך ולא הגיע הכל. לשמור ב-file ולבדוק.
+- Gmail token מת — תמיד לרענן דרך `refresh_token` לפני שליחה. token file: `T-tools/04-mcp-servers/gmail/token.json`, field `token`.
+
+### 2026-05-20 — כנס שבועות תשפ"ו — חיתוך, סיכומים, דפי סנדבוקס
+
+**מה נעשה:**
+- חיתוך 5 קטועי mp4 + m4a מתוך `GMT20260519-165200_Recording_2560x1440.mp4` (stream-copy, ffmpeg 8.1.1)
+  - `01-rimon.mp4` (11:11) — הרב רימון, מעמד הר סיני
+  - `02-yoav.mp4` (25:35) — הרב יואב אוריאל, עין טובה + ספירת העומר + סעדיה ז"ל
+  - `03-project.mp4` (5:55) — הצגת פרויקט + תרמה
+  - `04-draii.mp4` (16:24) — חיים דרעי, עדות על סעדיה
+  - `05-dani-levi.mp4` (15:46) — הרב דני לוי, מוסר ולאומיות
+- 5 קבצי סיכום MD ב-`B-brain/05-clients/bnei-zion/kenes-2026-05/segments/`
+- העלאה ל-Drive: `Bnei Zion/Conferences/2026-05-19 - כנס שבועות תשפ"ו/`
+  - Drive folder: https://drive.google.com/open?id=1s5OMF0xhIlBP4mPQi43Hp1iiAeQ_3sEP
+- `src/pages/KenesShavuot2026.tsx` — route `/kenes-2026-05`
+- `src/pages/KenesArchive.tsx` — route `/kenes-archive`
+- commit `aaa8394` on main
+
+**פתוח:**
+- שם הכנס הסופי: ממתין לאישור סער (כרגע "כנס שבועות — מתן תורה"). לעדכן `KENES_TITLE`/`KENES_SUBTITLE` ב-KenesShavuot2026.tsx + KenesArchive.tsx
+- Drive links לכל קטע: Drive IDs כבר נמצאים ב-recordings array, הקלטות עלו ל-Drive
+
+### 2026-05-21 — Grow directDebit: הוספת 4 שדות חובה לתשלום חוזר (commit 9f0daf2)
+
+- **קובץ:** `api/grow/create-payment.ts` — בלוק FormData
+- **בעיה:** תשלומי directDebit (מנוי הפרק השבועי + תרומה חודשית) נרשמו ב-Grow כחד-פעמיים ולא הופיעו כמנויים חוזרים בדשבורד Grow.
+- **תיקון:** הוספת 4 שדות בתוך `if (flowType === "directDebit")`:
+  - `chargeIdentifier` = orderId (UUID ייחודי per transaction — Grow דורש מזהה)
+  - `planName` = `productCfg?.display_name || description` (שם התוכנית הגלוי בדשבורד)
+  - `period` = `"MONTHLY"` (מחזוריות חיוב)
+  - `sumInstallments` = `"0"` (0 = ללא הגבלת מועד — עד ביטול)
+- **היקף:** תיקון אחד מכסה גם `weekly-chapter-subscription` (QuickBuyDialog) וגם `Donate.tsx` directDebit — שניהם עוברים אותו `flowType === "directDebit"` branch.
+- **Iron rule נלמד:** Grow directDebit דורש chargeIdentifier + planName + period + sumInstallments — ללא הם, Grow רושם charge חד-פעמי בלי קשר לסוג הדף.
 
 ### 2026-04-14 — Migration completion + Google OAuth
 - 312 URLs corrected via `fix-misattributions.mjs`
@@ -2421,7 +2584,7 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   - `GROW_PAGECODE_DONATIONS` → `b1dc5e695089`
   - `VITE_GROW_ENVIRONMENT` → `PRODUCTION` (was empty → defaulted to DEV)
 - **Smoke test passed:** POST `/api/grow/create-payment` with `type: "donation"` returned real `authCode` + `processId 29212494` from `secure.meshulam.co.il`. Leaves one pending donation row in Supabase (orderId `fb5828d9-04a2-48a6-8e49-442fda186422`) — can be deleted manually.
-- **⚠️ Open risk:** Saar confirmed `GROW_PAGECODE_SUBSCRIPTION` should equal `GROW_PAGECODE_PRODUCTS` ("רגיל"). But Grow pageCodes are typically flow-specific (wallet vs directDebit). If weekly-chapter monthly billing fails in live, ask Grow for a dedicated directDebit pageCode for subscriptions.
+- **⚠️ Open risk (נסגר 2026-05-24):** Saar confirmed `GROW_PAGECODE_SUBSCRIPTION` should equal `GROW_PAGECODE_PRODUCTS` ("רגיל"). But Grow pageCodes are typically flow-specific (wallet vs directDebit). **הסתבר שזאת בדיוק הבעיה** — wallet pageCode לא יוצר recurring plan, ולכן מנוי לא עבד. תוקן: `GROW_PAGECODE_SUBSCRIPTION` שונה מ-`efbda303565a` (wallet) ל-`b1dc5e695089` (directDebit = אותו כמו DONATIONS). Deploy: `dpl_3iSdwDtbciPBV7MxzwPE7GRiuJgU`.
 - **New iron rules (added to MEMORY):**
   1. **Vercel CLI v52 `vercel env add`** requires `--value "..." -y` flags. Stdin (`printf|`, `echo|`) silently saves empty values. See `feedback_vercel_cli_env_add_v52.md`.
   2. **Don't trust `vercel env pull` as verification** — production vars added via CLI v52 are sensitive-by-default → shown as `""` in pull even when correctly saved. Verify by smoke-testing the deployed endpoint.
@@ -2452,20 +2615,6 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
 - **TS check:** 0 errors.
 - **Pending:** form endpoint (Smoove / Supabase) — placeholder only, same as v2 HTML. Awaiting Yoav approval before publishing.
 
-### 2026-05-12 — Bug fixes from Rav Yoav's QA review (commit bdc37c6)
-- **Trigger:** Rav Yoav sent 7 bug reports (text + screenshots) via WhatsApp personal chat today.
-- **Bugs found and fixed:**
-  1. **useRabbi.ts — `useRabbiSeries` returned 0 series for most rabbis.** Root cause: (a) hook filtered `.eq("status","active")` but most series have `status="published"`. (b) Hook only looked at `series.rabbi_id` — didn't find series where rabbi contributed as guest (e.g. נתן מארגל in פרשת השבוע multi-rabbi series). Fix: added union query — owned series with status IN ('active','published') PLUS series that have at least 1 published lesson from this rabbi via `lessons.rabbi_id`.
-  2. **RabbiPage.tsx — "שיעורים אחרונים" section title confusing + 20-lesson cap.** Renamed to "שיעורים (N)" with dynamic count. Raised limit to 50.
-  3. **DesignPreviewRabbi.tsx [sandbox] — "קאנון מקודש" badge on every series card.** `getSeriesFamily()` returns `sacredCanon` as a fallback for any series not matching a specific keyword pattern — so all Tanakh book-series (דניאל, ישעיהו etc.) got this badge. Fix: wrapped badge in `{getSeriesFamily() !== "sacredCanon" && ...}` — only non-default families show a badge.
-  4. **DesignPreviewSeriesPageV2.tsx [sandbox] — "פתח בעמוד מלא" shown for text lessons.** For text-type lessons the popup already shows the full content inline; the extra link is a confusing dead-end. Fix: hide the link when `mediaType === "text"`.
-  5. **Donate.tsx — "תרומות מעל ₪100 מזכות באישור לפי סעיף 46"** was misleading (the threshold is actually 180₪ by law). Rephrased to "תרומות מזכות בקבלה לצורך ניכוי מס לפי סעיף 46" without a monetary qualifier.
-- **Not fixed (requires Saar decision):**
-  - Bug 1 (00:36): Sorting series on rabbi page by biblical order — needs biblicalOrder library integration; out of scope for hotfix.
-  - Bug 2 (09:27): AI image generation produces Hebrew text artifacts — this is a Gemini Imagen prompt engineering issue, not a code bug. Document the prompt fix separately.
-  - Bug 7 (10:24): Bank transfer donation option unclear — Saar to decide if to hide it.
-- **Constraint learned:** `series.status` in DB uses 4 values: 'active', 'published', 'category', 'draft'. Only 'active' and 'published' are user-facing. Old hooks that filter only 'active' silently miss half the series.
-
 ### 2026-05-12 — Design polish pass on /design-yehoshua-campaign (designer-agent)
 - **Trigger:** Saar requested a designer-agent polish pass on top of the bneyzion-designer build.
 - **Issues found & fixed (design-only — copy untouched):**
@@ -2487,95 +2636,201 @@ Grow approved bneyzion for live clearance. Completed cutover same day:
   - Pre-launch "X already signed up" social-proof tile in hero stats not added (requires real data).
 - **TS check:** 0 errors. **No production files touched** — sandbox route only.
 
-### 2026-05-12 — Remove LessonComments from LessonPage (Rav Yoav request #3) (commit 314525e)
-- **Request:** Rav Yoav asked to remove the comments section completely from lesson pages.
-- **File changed:** `src/pages/LessonPage.tsx`
-  - Removed import: `import LessonComments from "@/components/lesson/LessonComments"`
-  - Removed the `{/* Comments */}` section block (6 lines) from the JSX
-  - The `LessonComments` component file itself (`src/components/lesson/LessonComments.tsx`)
-    is NOT deleted — left intact in case it's needed elsewhere or reactivated later.
-- **Request #8 (Donate.tsx — bank transfer removal):** Investigated — the current `Donate.tsx`
-  does NOT contain any bank transfer section. The Grow-only payment flow was already in place.
-  No code change needed. Rav Yoav may have seen an older version.
-- **TS check:** 0 errors.
+### 2026-05-14 — Yoav feedback round 1 applied to /design-yehoshua-campaign (27 items)
 
-### 2026-05-12 — Systemic scan of all 7 Rav Yoav bugs across the full codebase (commit 3243c28)
+- **File changed:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
+- **Deployed:** Vercel CLI deploy (`dpl_9KQM7VcDaHdxDfx2voFHfdCqQGPc`) + alias to `bneyzion.vercel.app`. Lazy chunk `DesignPreviewYehoshuaCampaign-DiNuYbzb.js` verified on live bundle.
+- **Note on git:** The local bneyzion repo at `/Users/saarj/Downloads/saar-workspace/bneyzion` has a broken git (missing `objects` dir — orphaned worktree from `/private/tmp/bneyzion-prelaunch` which was cleaned up). Deployed via fresh clone to `/tmp/bneyzion-fresh` + `vercel deploy --prod + vercel alias`. GitHub push was NOT completed (no stored GitHub credentials in current shell). **TODO: Saar must `git push` from a shell that has GitHub credentials, or re-clone the repo.**
+- **Changes applied (all 27 items):**
+  1. All English terms removed: `tier` → `מסלול`, `Early Bird` → removed entirely, `Stretch goals` → `יעדי המשך`
+  2. `בעומק סוריה` → `בגבול סוריה` everywhere
+  3. Laptop quote removed ("הוא יישאר על הלפטופ של יואב")
+  4. Hero image placeholder added — overlay + comment `TODO(yoav): replace with new IDF photo — pending from Yoav 13.5.2026`; About-Yoav image same TODO comment
+  5. 240 → 480 עמודים throughout
+  6. "אם נגיע ליעד הספר יוצא לדפוס" → "הספר יצא לאור"
+  7. Early Bird tier (₪90, 200-cap) removed entirely; pre-launch signup concept canceled
+  8. "ספרי בני ציון / מפות בני ציון" → "פירוש על חמש מגילות + יהושע שופטים"
+  9. New tier added: ₪200 — סט יהושע + שופטים
+  10. ₪800 / ₪1200 tiers added with "סטים מלאים, כולל הספר החדש: חמש מגילות + יהושע שופטים"
+  11. ₪2000 tier (studio lesson): no max-attendees cap
+  12. ₪3600: removed "לאחר שחרורו" from wording
+  13. "הסיפור" section rewritten per Yoav's dictation: "ספר על כיבוש הארץ נכתב תוך כדי כיבוש הארץ" + Yoav's framing about the book speaking to many people, not just students
+  14. "Why this book" 3 cards strengthened with teaching-program voice (פותח חלון, הגודל של הרגע)
+  15. Removed "בוגר ישיבת מרכז הרב" from bio (factually wrong)
+  16. "מלמד את הפרק השבועי 15 שנה" → "מלמד תנ"ך כבר 15 שנה"
+  17. 250 לומדים → 300 לומדים (stats + paragraph)
+  18. Removed "סבב מילואים שישי בעומק סוריה" from bio; replaced with past tense "ערך וכתב את הספר במהלך המילואים"
+  19. Removed "בין משימה, עורך את הפרקים האחרונים" and "עם השחרור הספר ייכנס לדפוס"
+  20. Timeline: Hebrew months only (אייר/סיון/תמוז/אב/תשרי); removed "רישום מוקדם" phase; "חנוכה תשפ\"ז" → "עד החגים — תשרי תשפ\"ז"
+  21. FAQ: removed Early Bird Q, rewritten Headstart explainer to 1 line, removed pre-launch Q, "מתי הספר יגיע" → "עד החגים"
+  22. All CTA buttons: "שמרו לי מקום בין 200 הראשונים" → "תמכו בהוצאת הספר לאור"
+  23. Tiers section header description: removed "200 הראשונים ב-48 שעות" language
+  24. Eyebrow tag: "קמפיין הדסטארט" → "קמפיין תמיכה"
+  25. Sticky top + mobile bar: "טרום השקה" → "קמפיין פעיל/תמיכה"
+  26. File header comment updated (removed Headstart pre-launch framing)
+  27. Pull quote rewritten: "ספר על כיבוש הארץ נכתב תוך כדי כיבוש הארץ"
+- **Bundle verification (live):** `DesignPreviewYehoshuaCampaign-DiNuYbzb.js` — 13/13 checks passed. בגבול סוריה ✓, Early-Bird absent ✓, חמש מגילות ✓, 480 ✓, עד החגים ✓, 300+ ✓, ישיבת מרכז הרב absent ✓, מסלול זה ✓, הספר יצא לאור ✓, 200 הראשונים absent ✓, קמפיין תמיכה ✓, Hebrew months ✓.
+- **TS check:** 0 errors (ran `./node_modules/.bin/tsc --noEmit -p tsconfig.app.json` in `/tmp/bneyzion-fresh`)
+- **Deferred (needs Saar):**
+  - Hero IDF photo: marked as TODO in code, visible overlay placeholder. Yoav to supply photo.
+  - GitHub push: needs Saar to push `/tmp/bneyzion-fresh` to `origin main` (git commit `fa9b0d4` is ready, just needs push with credentials).
 
-#### Scan methodology
-Full grep across `src/` for each pattern. Results below.
+### 2026-05-15 — Yehoshua campaign full structural rebuild (Saar's vision) (commit be88f47)
 
-#### #4 — `status` filter across all hooks/components
-- **series.status** values: `'active'` | `'draft'` (from admin UI `admin/Series.tsx`)
-- **lessons.status** values: `'published'` | `'draft'`
-- **rabbis.status** values: `'active'` | `'inactive'`
-- **products.status** values: `'active'` | `'draft'` | `'archived'`
-- **Verdict:** All hooks use the correct status values. The bug was isolated to `useRabbi.ts`
-  (`useRabbiSeries` queried `series` with only `'active'` — now fixed in bdc37c6 to use `.in(["active","published"])`).
-  No other hooks mix statuses incorrectly.
-- **Iron rule confirmed:** For `series`, use `.eq("status", "active")` only. For `lessons`, use `.eq("status", "published")`.
-  For `rabbis`, use `.eq("status", "active")`. `useRabbi.ts` gets `.in(["active","published"])` because it fetches
-  series *for a rabbi page* which may include older series with legacy `'published'` status.
+- **File changed:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
+- **Trigger:** Previous session (fa9b0d4) applied Yoav's textual feedback but destroyed Saar's earlier structural vision. This session restores Saar's vision while keeping Yoav's factual corrections.
+- **Major structural changes applied:**
+  1. Hero reduced in vertical padding (Saar: "להקטין טיפת ה-hero")
+  2. Pre-launch name/email/WA form removed completely — gone
+  3. ProgressBlock added under hero: ₪7K raised / ₪80K goal / 47 supporters, Headstart-style gold bar
+  4. Tiers section MOVED UP to position 3 (right after hero + progress) — not at bottom
+  5. TIERS array replaced with Saar's exact 7-tier ladder:
+     ₪90 (Early Bird, 200 cap) → ₪120 (ספר+הקדשה) → ₪220 (הזוג) → ₪400 (הסט המלא) → ₪800 (השותף) → ₪1200 (השותף הבכיר) → ₪2000 (שיעור בקהילה)
+  6. TierCard redesigned: equal visual weight to price AND perks (split header row, price 32px + name text side-by-side)
+  7. Remaining count per tier: hardcoded mocks; "⚡ נשארו רק X" when ≤25% left; sold-out state greyed
+  8. CTA is `<button>` calling `handleSupport(tier)` — TODO: wire to `/donate?amount=X&tier=Y` (Grow קבלת-תרומה merchant)
+  9. Stretch Goals section removed entirely
+  10. Testimonials (קול הקהילה) section removed — fake names (חנה יצחקי, בני מרואני) gone
+  11. "Headstart" label explicit in nav badge, sticky bar, eyebrow — "מימון המונים" copy killed
+  12. Timeline: 6 phases with Hebrew months only — target "עד החגים — תשרי תשפ"ז"
+  13. DonationToast mock: bell-icon slide-in from corner, auto-dismiss 5s (visual sandbox only)
+  14. Consistent h2/h3 typography — single sans-serif weight style across all headlines
+- **Yoav's factual fixes preserved:** 480 pages, יצא לאור, גבול סוריה, הרב יואב everywhere, 300 לומדים, no מרכז הרב, no לפטופ quote, 15 שנה teaching, story section per Yoav dictation, hero image placeholder TODO
+- **Deleted:** `.agent-reference-pre-yoav.tsx` (housekeeping — reference file for this session only)
+- **TS check:** 0 errors
+- **Git:** committed `be88f47`, pushed to `origin main` via `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" git push origin main`
+- **New iron rule learned:** When two rounds of feedback conflict (designer vision vs content corrections), always check which layer is structural vs textual. Structural (layout, page order, component existence) = Saar's authority. Textual facts = Yoav's authority. Never let a textual-only round overwrite structural decisions.
 
-#### #5 — Fullscreen button
-- Fixed in bdc37c6 for `DesignPreviewSeriesPageV2.tsx` — `{mediaType !== "text" && ...}` guard.
-- Scanned entire codebase: `allowFullScreen` attribute on iframes (LessonPage, LessonDialog, KnesPage, CommunityDetailPage, CommunityCoursePage) is an HTML attribute, not a "button". No other "פתח בעמוד מלא" text buttons exist.
-- `LessonPage.tsx:299` "פתח בחלון חדש" is for PDF attachment viewer only — correct behavior.
+### 2026-05-18 — Bug fixes on production /donate page (commit 51a11cb, branch fix/donate-checkbox-layout)
 
-#### #6 — `sacredCanon` as default family badge — SYSTEMIC FIX (commit 3243c28)
-- **Root pattern:** every `{fam.label}` rendered without `getSeriesFamily(...) !== "sacredCanon"` guard shows
-  the fallback label "קאנון מקודש" on all unclassified series — misleading.
-- **Files fixed** (5 files, 7 badge spots total):
-  - `DesignPreviewSeriesList.tsx` — top5 cards + catalog grid
-  - `DesignPreviewSeriesPage.tsx` — hero label + related-series cards
-  - `DesignPreviewLessonPage.tsx` — hero family badge
-  - `DesignPreviewLessonPopup.tsx` — modal badge row
-  - `DesignPreviewPortal.tsx` — enrolled-series cards
-- **Already correct:** `DesignPreviewRabbi.tsx` (fixed bdc37c6), filter-row chips in SeriesList (intentionally show all families).
-- **Pattern for future:** always `const seriesFamily = getSeriesFamily(...)` + `{seriesFamily !== "sacredCanon" && <span>{fam.label}</span>}`
+**Bug 1 — tosAccepted stale closure in useCallback:**
+- `handleDonate` was memoized with `useCallback` but `tosAccepted` was missing from the dependency array.
+- Result: the callback captured `tosAccepted = false` at component mount; even after the user ticked the
+  checkbox (React state updated to `true`), the old closure always evaluated `!tosAccepted === true` and
+  showed "יש לאשר את התקנון" toast.
+- Fix: added `tosAccepted` to the deps array in `src/pages/Donate.tsx` line 126.
 
-#### #7 — Hardcoded amounts
-- `Donate.tsx` ₪100 minimum qualifier removed in bdc37c6.
-- All other amounts in `Donate.tsx` are preset values (₪36/72/180/520/1800) — correct, not bugs.
-- `DesignPreviewDonate.tsx` "Impact" amounts (₪50/180/360/1000) are examples of what donations fund — not minimums.
-- No erroneous amounts found elsewhere (About.tsx, Footer, Terms, FAQ).
+**Bug 2 — DesignSidebar appearing on /donate layout:**
+- `<Layout>` defaults to `sidebar={true}`, which mounts `DesignSidebar` (the Torah-series nav sidebar).
+- `/donate` called `<Layout>` without any prop, so the sidebar appeared — crushing the form into a narrow
+  column and leaving massive whitespace. On mobile it overflowed.
+- Fix: changed `<Layout>` to `<Layout sidebar={false}>` in `src/pages/Donate.tsx`.
 
-#### #1 — Biblical order
-- `sortByBiblicalOrder` from `src/lib/biblicalOrder.ts` is used in: `useContentSidebar`, `useTeachersWing`, `useTeacherSidebar`.
-- `DesignPreviewChapterWeekly.tsx` has local `BIBLE_ORDER` array (independent, correct).
-- No other pages display Tanakh book lists unsorted.
+**Files changed:** `src/pages/Donate.tsx` (2 lines)
+**Branch:** `fix/donate-checkbox-layout` (not merged to main yet — Saar reviewing preview)
+**Preview URL:** `https://bneyzion-kwmb8x8zb-saars-projects-4508d6bb.vercel.app`
+**TS check:** 0 errors
 
-#### #3 — LessonComments
-- `LessonPage.tsx`: import + section removed in commit 314525e.
-- `LessonComments.tsx` component remains as dead code (no imports anywhere). Safe to delete later if Saar confirms.
-- `DesignPreviewLessonPage.tsx:489`: has `{/* Comments placeholder */}` comment only — no actual import or render.
-- `roadmapData.ts:346`: historical reference in roadmap data — no action needed.
+**Iron rules learned:**
+- Any page that should be "full-width / no sidebar" MUST explicitly pass `sidebar={false}` to `<Layout>`.
+  The default `sidebar={true}` is correct for content pages; checkout-like pages (donate, checkout, auth)
+  must opt out.
+- When using `useCallback` with validation logic, EVERY state value that the validation reads must appear
+  in the dependency array. Missing any one causes stale-closure bugs that are hard to reproduce in devtools
+  (the state shows correct in React DevTools, but the callback reads the old value).
 
-#### #2 — Imagen prompts
-- `scripts/generate_shir_hashirim_images.py`: STYLE constant includes "No text or letters. No human figures." — correct.
-- `scripts/generate_image.py`: STYLE_CONSTANTS includes "No text or letters." — correct.
-- Both scripts use the style as a prefix to all prompts via `build_full_prompt()`.
+### 2026-05-18 — Donate page layout fix round 2 (commit 256633d, branch fix/donate-checkbox-layout)
 
----
+**Root cause of remaining layout breakage (after sidebar was already removed):**
 
-### 2026-05-12 — Yehoshua Campaign v2 — full Headstart rebuild (commit e1c443b)
+The `sidebar={false}` fix (commit 51a11cb) correctly removed the DesignSidebar — but the
+internal grid layout of Donate.tsx itself was still broken. Specifically:
 
-- **File:** `src/pages/DesignPreviewYehoshuaCampaign.tsx`
-- **Route:** `/design-yehoshua-campaign`
-- 11 structural changes applied per Saar's brief:
-  1. Signup form (name/email/phone) removed completely — not appropriate on a live-campaign page
-  2. Large Progress Bar added between Hero and Tiers (₪7K/₪80K, 23 donors, days remaining, animated CSS width)
-  3. Grow payment modal integrated on every tier CTA — uses `useGrowPayment` hook, `type: "product"` → routes to "עם קבלה" merchant
-  4. "חזרה לאתר" button removed from nav
-  5. Toast notifications: 10 rotating donor messages, CSS-only `toastIn` animation, every 8s, auto-dismiss after 4s
-  6. Paamon font kept and cleaned up — all weights (400/700/900) from bneyzion.vercel.app/fonts/
-  7. Hebrew dates corrected: launch כ"ח סיון תשפ"ו (2026-06-24), end כ"ד תמוז תשפ"ו (2026-07-29)
-  8. Stretch Goals section removed
-  9. Testimonials section removed (contained invented names — not acceptable)
-  10. New 7-tier structure: ₪90 (EB)/₪120/₪220/₪400(popular)/₪800/₪1200/₪2000 each with `limit` + `claimed` counter
-  11. Page order changed: Hero → Progress Bar → Tiers → Story → About → Timeline → FAQ
-- **Constraint learned:** "הסט המלא של בני ציון" is not yet defined precisely — used placeholder description; real product list should be confirmed with Yoav before launch
-- **Constraint confirmed:** Toast notifications must use CSS-only animation (no framer-motion per iron rule)
-- **Constraint confirmed:** Grow type `"product"` correctly routes to "עם קבלה" merchant (not donations)
+1. `container max-w-5xl` = 1024px container. With tailwind container padding of 2rem (32px) each side,
+   the net content width is ~960px.
+2. Grid was `lg:grid-cols-5` with form=`col-span-3` (576px) and info=`col-span-2` (384px).
+   At 1024px viewport these columns were extremely narrow — form had ~576px, causing amount buttons
+   to overlap, and the "why donate" text to wrap word-by-word.
+3. Amount buttons inside `col-span-3` (~576px) used `md:grid-cols-5` breakpoint (768px threshold).
+   Since 576px < 768px, `md` never fired — buttons stayed in `grid-cols-3` causing 5 items into 3 cols
+   = rows of 3+2, with the last row having a gap. Combined with the narrow column, items overlapped.
+
+**Fixes applied (`src/pages/Donate.tsx`):**
+- Container: `max-w-5xl` → `max-w-6xl` (1152px — gives grid real breathing room)
+- Grid: `lg:grid-cols-5` (col-span-3 + col-span-2) → `lg:grid-cols-3` (col-span-2 + col-span-1)
+  - Form: 2/3 of 1152px = ~768px — enough for a comfortable form layout
+  - Info sidebar: 1/3 = ~384px — correct for the "why donate" + quote panel
+- Amount buttons: `grid-cols-3 md:grid-cols-5` → `grid-cols-2 sm:grid-cols-3 md:grid-cols-5`
+  - Inside `col-span-2` (~768px), `sm` (640px) fires ✓ and `md` (768px) also fires ✓
+  - On mobile (single col, full width) starts at `grid-cols-2`, then 3, then 5 — always readable
+
+**Iron rule learned:**
+- When placing a responsive grid INSIDE a fractional grid column, always verify that the inner
+  grid's breakpoints (sm/md/lg) are reachable given the outer column's actual pixel width.
+  A `md:grid-cols-5` inside a `col-span-3` of a `max-w-5xl` container never reaches md.
+  Always calculate: outer_container_width * (col_span / total_cols) > breakpoint_threshold.
+
+**Preview URL (round 2):** `https://bneyzion-lmsob9e91-saars-projects-4508d6bb.vercel.app`
+**TS check:** 0 errors
+
+### 2026-05-18 — Donate sandbox page v3: full refactor to 2-column layout (commit 856562e)
+
+**Context:** Saar reviewed the round-2 preview and said "עדיין נראה ממש דחוס וגרוע".
+This time before touching code: loaded `DesignSidebar` width (290px), read `DesignLayout`,
+and took full-page localhost screenshots at 1440px and 375px to understand the actual rendered state.
+
+**Root cause of "cramped" feeling:**
+- `DesignPreviewDonate` had `DesignLayout` with default `sidebar={true}` — but even after switching
+  to `sidebar={false}`, the form section was a single-column layout with `maxWidth: 720` card
+  centered in a `parchment` background — looked like a narrow isolated card floating in void.
+- Impact grid was 4 equal cards (`auto-fit minmax(220px)`) stacked below the form — no visual
+  hierarchy between "give" action and "why give" story.
+
+**Refactor applied (`src/pages/DesignPreviewDonate.tsx`):**
+- Explicitly `sidebar={false}` — full canvas without nav column
+- New hero: navy→mahogany gradient, strong H1, subtitle max-w-560
+- Stats bar (white strip): 11,800+ lessons / 200+ rabbis / שנות הקלטה
+- Main section: `display:grid gridTemplateColumns:"1fr minmax(340px,400px)"` — story column + sticky form card
+- Story column: "למה כדאי לתמוך?" + ImpactRow list (horizontal rows) + memorial dark card + TrustCard grid
+- Form card: `position:sticky top:5.5rem` — stays visible as user scrolls story column
+- Mobile (`@media max-width:768px`): single column, form gets `order:-1` (appears first)
+- Extracted `<DonateForm>`, `<Stat>`, `<ImpactRow>`, `<TrustCard>` as isolated sub-components
+
+**Screenshot confirmed:** 2-column layout renders correctly at 1440px desktop and 375px mobile.
+
+**Files changed:** `src/pages/DesignPreviewDonate.tsx` (589 insertions, 206 deletions)
+**Branch:** `fix/donate-checkbox-layout` (commit 856562e)
+**New preview URL:** `https://bneyzion-md3jfk60l-saars-projects-4508d6bb.vercel.app/design-donate`
+**TS check:** 0 errors
+
+**Iron rule learned:**
+- Destination pages (donate, checkout, auth) need `sidebar={false}` AND a purpose-built 2-column layout.
+  A single centered card (`max-w-720`) floating in parchment background always looks cramped — even with
+  sidebar removed — because there is no visual counterweight. The fix is 2-column: story fills the left
+  width, form card anchors the right. The "air" comes from contrast between columns, not from padding.
+- Before making layout changes: always screenshot the actual rendered page (localhost or Vercel).
+  Reading JSX alone is insufficient — the interaction between `DesignLayout`, `DesignSidebar`, and
+  the page's own grid is not obvious from code.
+
+### 2026-05-18 — Promote /donate v3 to production (commit 5ed6edd)
+
+- **What:** Saar approved the `/design-donate` v3 sandbox. Promoted to `/donate` production.
+- **Files:** `src/pages/Donate.tsx` fully rewritten (916 insertions, 335 deletions).
+- **Branch:** `fix/donate-checkbox-layout` → merged to `main` → pushed → Vercel deploy confirmed (HTTP 200, age: 0).
+- **Layout applied from sandbox:**
+  - `<Layout sidebar={false}>` — no sidebar, full canvas destination page
+  - Hero: navy→mahogany gradient, "תורמים מאמינים" badge, H1, subtitle
+  - Stats bar: 11,800+ lessons / 200+ rabbis / שנות הקלטה
+  - Desktop: `maxWidth: 1100, grid: "1fr minmax(360px, 420px)"` — story left, sticky form right
+  - Mobile: `order: -1` on form column (form first), position: static
+- **Grow integration kept from original production:**
+  - `useGrowPayment` hook — type="donation" (one-time) / type="directDebit" (recurring)
+  - Routes to `GROW_PAGECODE_DONATIONS` + `GROW_USER_ID_DONATIONS` (already in Vercel env)
+  - `useRecentDonations` — real DB data from Supabase
+  - Full validation: שם מלא (includes space), טלפון (regex), tosAccepted
+- **Bugs fixed and confirmed carried forward:**
+  1. `useCallback` deps array includes `tosAccepted` — checkbox state bug resolved
+  2. Layout: sidebar removed, wide container, sticky form at `top: 5.5rem`
+- **Grow env vars confirmed in Vercel:** `GROW_PAGECODE_DONATIONS`, `GROW_USER_ID_DONATIONS` (both Encrypted, Production, 7d ago)
+- **Production URL:** `https://bneyzion.vercel.app/donate`
+- **TS check:** 0 errors
+
+### 2026-05-24 — תיקון GROW_PAGECODE_SUBSCRIPTION (wallet→directDebit)
+
+- **ממצא:** `GROW_PAGECODE_SUBSCRIPTION` היה מוגדר ל-`efbda303565a` (wallet pageCode, = PRODUCTS). אבל Grow יש רק 2 pageCodes — wallet עבור one-time payments, directDebit עבור recurring. wallet לא יוצר recurring plan → מנוי שבועי לא עבד (Grow מאשרת charge ראשון בלבד).
+- **תיקון:** `vercel env rm GROW_PAGECODE_SUBSCRIPTION production` + `vercel env add --value "b1dc5e695089"` (directDebit pageCode = אותו כמו DONATIONS).
+- **Deploy:** `dpl_3iSdwDtbciPBV7MxzwPE7GRiuJgU` — `https://bneyzion.vercel.app`
+- **חוק ברזל:** bneyzion יש רק 2 Grow pageCodes. SUBSCRIPTION+DONATIONS = directDebit (`b1dc5e695089`). PRODUCTS = wallet (`efbda303565a`). אסור לערבב.
 
 ### 2026-05-25 — Browser scan findings + content/tagging/teachers architecture plan
 

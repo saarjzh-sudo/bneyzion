@@ -1,5 +1,6 @@
 import "@/styles/chapter-weekly.css";
 
+import { useSEO } from "@/hooks/useSEO";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
 import heroDesktop from "@/assets/esther-hero-desktop.png";
@@ -64,6 +65,12 @@ const SampleButton = ({ light = false, className = "" }: { light?: boolean; clas
 );
 
 const MegilatEsther = () => {
+  useSEO({
+    title: "מגילת אסתר — מכלל יופי | בני ציון",
+    description: "מגילת אסתר עם פירוש מרתק מאת הרב יואב אוריאל — חוברת לימוד מהודרת. הזמינו עוד היום.",
+    url: "https://bneyzion.co.il/megilat-esther",
+  });
+
   return (
     <div className="chapter-weekly-theme min-h-screen bg-background text-foreground" dir="rtl">
       <header className="py-3 px-4 bg-cream-warm border-b border-border/30">
@@ -303,9 +310,7 @@ const MegilatEsther = () => {
       <footer className="py-6 bg-navy-deep text-center">
         <p className="text-cream/50 text-sm">
           נבנה ב♥ ע״י{" "}
-          <a href="https://wa.me/972527203221" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold transition-colors">
-            סער חלק
-          </a>
+          <span>צוות בני ציון</span>
         </p>
         <p className="text-cream/30 text-xs mt-2">© {new Date().getFullYear()} בני ציון</p>
       </footer>
