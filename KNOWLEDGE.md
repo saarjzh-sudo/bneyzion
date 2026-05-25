@@ -387,6 +387,30 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-25 — Teachers Wing access model: החלטה סופית — רמה 1 (פתוח לכולם)
+
+**ההחלטה:** סאר חזר בו מרמה 3 (auth + JWT claims + RLS). אגף המורים יהיה פתוח כמו כל האתר — ללא auth, ללא gating.
+
+**מה זה אומר למעשה:**
+- `/teachers`, `/teachers/series/:id`, `/teachers/lesson/:id` — נגיש לכולם, ללא login.
+- תוכן מורים (series/lessons עם `audience_tags @> ['teachers']`) **מוסתר מהחיפוש הציבורי, מדפי הסדרות הרגילים, מחיפוש גלובלי** — כדי שלא יבלבל קהל כללי.
+- **לא נדרש migration, לא נדרש auth, לא נדרש RLS שינוי.**
+
+**הצעד היחיד הנדרש (שלב 3):** להוסיף `.not("audience_tags", "cs", '{"teachers"}')` לכל queries ציבוריים שמציגים series/lessons לקהל הכללי.
+
+**Hooks שצריך לסנן (ממצאי שלב 1 — ראה דוח):**
+- `useGlobalSearch` — גם series גם lessons query — חסר סינון
+- `useTopSeries` — חסר סינון
+- `useSeriesSearch` — series query — חסר סינון
+- `useLessons` (admin hook, לא דחוף)
+- `useRabbiSeries` / `useRabbiLessons` — יש לבדוק אם רצוי לסנן גם ברב-page
+- `useContentSidebar` — queries של series/books — כנראה OK (מבוסס root IDs ספציפיים, לא audience_tags)
+
+**Hooks שמציגים teachers בכוונה — לא לגעת:**
+- `useTeachersWing` — כל הקוד שלו בנוי לאגף המורים
+- `useMaagarEzreiTree` — already filters `contains("audience_tags", ["teachers"])`
+- `TeachersWingPage.tsx` inline hooks — already filter audience_tags
+
 ### 2026-05-25 — Full code fix pass + UI/UX audit (commits 1934054, 680aa17, 2f49d27)
 
 **Code fixes:**
@@ -2901,3 +2925,31 @@ and took full-page localhost screenshots at 1440px and 375px to understand the a
 
 *This is the long-memory file. Every session must read it. Every
 significant change must update it. The agent enforces this.*
+
+---
+
+### 2026-05-25 — Yehoshua Project Recruitment Video
+
+**What was done:**
+- Downloaded 3 video clips from Yoav Oriel's private WhatsApp chat (972527203221@c.us) via Green API getChatHistory
+  - clip1: 57s, clip2: 27.5s, clip3: 75s — all 478x850 vertical H264
+  - Message IDs: AC86A3F8..., ACE588F0..., AC0B548C...
+- Found "ספר יהושע | 360 עמודים" product + "קורס מקוון יהושע" at club.bneyzion.co.il
+  - Book image: /wp-content/uploads/2023/08/1.jpg
+  - Course/rabbi image: /wp-content/uploads/2023/07/WhatsApp-Image-2023-08-20-at-14.48.01.jpeg
+  - Product URLs:
+    - https://club.bneyzion.co.il/product/ספר-יהושע-360-עמודים/
+    - https://club.bneyzion.co.il/product/קורס-מקוון-יהושע/
+- Built recruitment video with ffmpeg:
+  - Structure: title_card(5s) → clip1(30s) → book_broll(3s) → clip2(26s) → rabbi_broll(3s) → clip3(20s) → end_card(5s)
+  - Background atmospheric music (sine tone drone) mixed at 8% volume
+  - Output: `/Users/saarj/saar-workspace/bneyzion/output/yehoshua_recruitment_v1.mp4`
+  - Final: 94.7s, 8.2MB, 478x850 H264
+- Sent video + copy to Saar (972526018772@c.us) via Green API sendFileByUpload
+
+**Constraints discovered:**
+- ffmpeg 8.1 on this Mac does NOT include libfreetype → `drawtext` filter unavailable. Use PIL for text cards instead.
+- `aevalsrc` filter in ffmpeg 8.1 doesn't accept `r=44100` option — use `anullsrc=channel_layout=stereo:sample_rate=44100` for silent audio.
+- Yoav's WhatsApp chat ID: 972527203221@c.us (confirmed personal chat, not group)
+- The "פרויקט יהושע" does NOT have a dedicated campaign/landing page on bneyzion.co.il — the purchase pages are on club.bneyzion.co.il
+- No "תרומת ספר יהושע לחיילים" product exists (only שופטים has that variant)
