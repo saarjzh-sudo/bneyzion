@@ -387,6 +387,39 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-25 — פרויקט יהושע — סרטון גיוס V2 (Headstart campaign)
+
+**הקשר:** סאר ביקש לשפר סרטון גיוס V1 שנבנה עם PIL (כרטיסי טקסט גנריים). V2 נבנה מהיסוד עם הברנדינג של הקמפיין.
+
+**מה נעשה:**
+- שליפת היסטוריית WhatsApp עם הרב יואב (972527203221@c.us) — אפריל-מאי 2026
+- אתר הקמפיין: LP HTML מקומי (`O-output/bnei-zion-headstart-yehoshua/landing-page-prelaunch-v2.html`) — טרם עלה לאוויר ב-Vercel
+- תמלול 3 קליפים עם Whisper medium (Hebrew): `yoav_clip1.txt`, `yoav_clip2.txt`, `yoav_clip3.txt` — ב-`output/transcripts/`
+- כרטיסי HTML+Playwright (לא PIL): `title_card.html`, `end_card.html`, `lower_third.html` — ב-`output/cards/`
+- פלטת ברנדינג: navy `hsl(215,55%,12%)` + gold `hsl(38,75%,55%)`, פונט Paamon, לוגו "תנועת בני ציון"
+- build script: `output/build_v2.sh` — 7 שלבים ffmpeg
+- **פלט:** `output/yehoshua_recruitment_v2.mp4` — 1080×1920, 102.7s, 58MB
+
+**מבנה הסרטון:**
+- `[0:00-0:03]` כרטיס פתיחה HTML — "פרויקט יהושע · הרב יואב אוריאל"
+- `[0:03-0:35]` clip1 (0-32s) — יואב מגבול סוריה, מספר על הספר שכתב + lower-third 4s ראשונים
+- `[0:35-1:02]` clip2 (27s מלא) — כוח ספר יהושע, הקשר למלחמה
+- `[1:02-1:34]` clip3 (0-32s) — קריאה לפעולה, לרכוש ולהיות שותפים
+- `[1:34-1:42]` כרטיס סיום HTML — headstart.co.il/yehoshua-uriel, מחיר 90/120 ₪
+
+**ברנדינג קמפיין יהושע (לשימוש עתידי):**
+- Primary navy: `hsl(215, 55%, 12%)` / `hsl(215, 50%, 20%)`
+- Gold: `hsl(38, 75%, 55%)` / `hsl(43, 85%, 70%)`
+- Font: Paamon (נטען מ-`bneyzion.vercel.app/fonts/`)
+- Hero gradient: `linear-gradient(160deg, hsl(215,55%,12%), hsl(215,50%,20%), hsl(215,45%,16%))`
+- Meta Pixel: `885385145465904`
+- Headstart URL: `headstart.co.il/yehoshua-uriel` (טרם נפתח — placeholder)
+
+**Iron rules שנלמדו:**
+- לא להשתמש ב-PIL לכרטיסי טקסט. תמיד HTML+Playwright→PNG — מייצר פלטה אמיתית, פונטים נכונים, לוגו.
+- Whisper על CPU לוקח ~2-3 דקות לדקת וידאו. לא להריץ במקביל — GPU contention.
+- 3 קליפי המקור הם portrait 478×850 — scale ישיר ל-1080×1920 ללא crop.
+
 ### 2026-05-25 — Teachers Wing access model: החלטה סופית — רמה 1 (פתוח לכולם)
 
 **ההחלטה:** סאר חזר בו מרמה 3 (auth + JWT claims + RLS). אגף המורים יהיה פתוח כמו כל האתר — ללא auth, ללא gating.
