@@ -303,9 +303,7 @@ const MegilatEsther = () => {
       <footer className="py-6 bg-navy-deep text-center">
         <p className="text-cream/50 text-sm">
           נבנה ב♥ ע״י{" "}
-          <a href="https://wa.me/972527203221" target="_blank" rel="noopener noreferrer" className="underline hover:text-gold transition-colors">
-            סער חלק
-          </a>
+          <span>צוות בני ציון</span>
         </p>
         <p className="text-cream/30 text-xs mt-2">© {new Date().getFullYear()} בני ציון</p>
       </footer>

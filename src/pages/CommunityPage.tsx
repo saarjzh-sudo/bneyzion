@@ -129,7 +129,7 @@ const CommunityPage = () => {
                     <Card className="hover:shadow-lg hover:border-primary/30 transition-all group overflow-hidden">
                       {e.community_courses?.image_url && (
                         <div className="h-32 overflow-hidden">
-                          <img src={e.community_courses.image_url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                          <img src={e.community_courses.image_url} alt={e.community_courses?.title || "תמונת קורס"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                         </div>
                       )}
                       <CardContent className="p-4">
