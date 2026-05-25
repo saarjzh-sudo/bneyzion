@@ -1330,7 +1330,7 @@ export default function DesignPreviewPortalSubscriber() {
                     return (
                       <Link
                         key={s.id}
-                        to={`/design-series-page/${s.id}`}
+                        to={`/series/${s.id}`}
                         style={{ textDecoration: "none", color: "inherit" }}
                       >
                         <div
