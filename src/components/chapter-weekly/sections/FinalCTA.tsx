@@ -33,14 +33,7 @@ const FinalCTA = () => (
       <p className="text-xs text-muted-foreground mb-2">התכנית לעילוי נשמת מעין פלסר ז״ל • © 2025 בני ציון</p>
       <p className="text-xs text-muted-foreground">
         נבנה ב<span className="text-muted-foreground">♥</span> ע״י{" "}
-        <a
-          href="https://wa.me/972527203221"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-primary transition-colors underline"
-        >
-          סער חלק
-        </a>
+        <span>צוות בני ציון</span>
       </p>
     </div>
   </section>

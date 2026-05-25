@@ -209,8 +209,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // For LEGACY callers (existing Checkout.tsx, Donate.tsx) we still accept
     // `type` directly without a product. Quick-buy callers MUST pass a product.
+    // Legacy callers (Donate.tsx, Checkout.tsx) pass `type` directly without a
+    // meta.product. Donate.tsx sends type="donation" (one-time) OR
+    // type="directDebit" (הוראת קבע / recurring). Both are legitimate legacy
+    // paths to the DONATIONS merchant — include directDebit here so it doesn't
+    // fall through to the "Missing or unknown product" guard.
     const isLegacyCart =
-      !productSlug && (type === "product" || type === "donation");
+      !productSlug &&
+      (type === "product" || type === "donation" || type === "directDebit");
 
     if (!isLegacyCart) {
       if (!productCfg) {
@@ -396,6 +402,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     formData.append("cField2", cField2Value); // → 'product' | 'donation' | 'wallet' | 'directDebit'
     if (productSlug) {
       formData.append("cField3", productSlug); // → product wiring lookup
+    }
+
+    // DirectDebit (הוראת קבע) — required fields for recurring to appear in Grow dashboard.
+    // Without these, Grow registers a one-time charge even though the page is a directDebit page.
+    // Applies to: weekly-chapter-subscription (QuickBuyDialog) AND donation directDebit (Donate.tsx).
+    if (flowType === "directDebit") {
+      // chargeIdentifier — unique key per customer+product combo. orderId is already a UUID
+      // created above and is unique per transaction, which is what Grow expects here.
+      formData.append("chargeIdentifier", orderId!);
+      // planName — human-readable label visible in Grow dashboard for the recurring plan.
+      // productCfg?.display_name is set for both the FALLBACK and DB paths; description is
+      // the caller-supplied fallback (e.g. "תרומה חודשית").
+      formData.append("planName", productCfg?.display_name || description);
+      // period — billing cadence. All current directDebit products are monthly.
+      formData.append("period", "MONTHLY");
+      // sumInstallments — 0 = recurring with no end date (until customer cancels).
+      formData.append("sumInstallments", "0");
     }
 
     // Build notifyUrl from request headers — works automatically on custom domains

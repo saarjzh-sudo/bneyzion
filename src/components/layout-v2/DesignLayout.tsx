@@ -81,9 +81,9 @@ export default function DesignLayout({
       <DesignMobileBottomNav />
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 767px) {
           .design-layout-main {
-            padding-bottom: 64px !important;
+            padding-bottom: 72px !important;
           }
         }
       `}</style>

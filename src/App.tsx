@@ -100,12 +100,13 @@ const DesignPreviewSeriesPageV2 = lazy(() => import("./pages/DesignPreviewSeries
 const DesignPreviewCourseDetail = lazy(() => import("./pages/DesignPreviewCourseDetail"));
 const DesignPreviewCoursesCatalog = lazy(() => import("./pages/DesignPreviewCoursesCatalog"));
 const DesignPreviewParasha = lazy(() => import("./pages/DesignPreviewParasha"));
-const DesignPreviewTeachersWingV2 = lazy(() => import("./pages/DesignPreviewTeachersWingV2"));
 const DesignPreviewYehoshuaCampaign = lazy(() => import("./pages/DesignPreviewYehoshuaCampaign"));
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const Terms = lazy(() => import("./pages/Terms"));
+const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
+const KenesArchive = lazy(() => import("./pages/KenesArchive"));
 
 /** Redirect /design-teachers-series/:id → /teachers/series/:id (client-side fallback) */
 function SandboxSeriesRedirect() {
@@ -269,6 +270,8 @@ const App = () => (
             <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><Donate /></Suspense>} />
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
+            <Route path="/kenes-2026-05" element={<Suspense fallback={<LazyFallback />}><KenesShavuot2026 /></Suspense>} />
+            <Route path="/kenes-archive" element={<Suspense fallback={<LazyFallback />}><KenesArchive /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
             {import.meta.env.DEV && (
               <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />

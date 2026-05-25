@@ -630,6 +630,7 @@ export type Database = {
       }
       lessons: {
         Row: {
+          additional_attachments: string[] | null
           attachment_url: string | null
           audience_tags: string[]
           audio_url: string | null
@@ -653,6 +654,7 @@ export type Database = {
           views_count: number
         }
         Insert: {
+          additional_attachments?: string[] | null
           attachment_url?: string | null
           audience_tags?: string[]
           audio_url?: string | null
@@ -676,6 +678,7 @@ export type Database = {
           views_count?: number
         }
         Update: {
+          additional_attachments?: string[] | null
           attachment_url?: string | null
           audience_tags?: string[]
           audio_url?: string | null

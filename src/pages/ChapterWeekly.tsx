@@ -1,5 +1,6 @@
 import "@/styles/chapter-weekly.css";
 
+import { useSEO } from "@/hooks/useSEO";
 import Header from "@/components/chapter-weekly/sections/Header";
 import Hero from "@/components/chapter-weekly/sections/Hero";
 import ProgramIntro from "@/components/chapter-weekly/sections/ProgramIntro";
@@ -17,6 +18,12 @@ import FinalCTA from "@/components/chapter-weekly/sections/FinalCTA";
 import { AnimatedSection } from "@/components/ui/animated-section";
 
 const ChapterWeekly = () => {
+  useSEO({
+    title: "תכנית הפרק השבועי — לחיות תנ״ך עם הרב יואב אוריאל",
+    description: "הצטרפו לתכנית לימוד תנ״ך שבועית — פרק בשבוע עם שיעור זום חי, תכני העמקה ופורטל אישי. החל מ-₪5 לחודש הראשון.",
+    url: "https://bneyzion.co.il/chapter-weekly",
+  });
+
   return (
     <div className="chapter-weekly-theme min-h-screen bg-background text-foreground" dir="rtl">
       <Header />

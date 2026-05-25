@@ -246,7 +246,7 @@ export default function DesignPreviewCourseDetail() {
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
           {/* Breadcrumb */}
           <Link
-            to="/design-courses"
+            to="/courses"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -331,7 +331,7 @@ export default function DesignPreviewCourseDetail() {
           </div>
 
           <Link
-            to="/design-portal-subscriber"
+            to="/portal"
             style={{
               padding: "0.5rem 1rem",
               borderRadius: radii.md,
@@ -1124,7 +1124,7 @@ function LockedTabPanel({ tab }: { tab: string }) {
         שיעורי ההרחבה, המצגות, המאמרים וההקלטות השבועיות פתוחים למנויי הפרק השבועי בלבד.
       </p>
       <Link
-        to="/design-megilat-esther"
+        to="/megilat-esther"
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -1145,7 +1145,7 @@ function LockedTabPanel({ tab }: { tab: string }) {
       </Link>
       <div style={{ marginTop: "0.85rem" }}>
         <Link
-          to="/design-portal-subscriber"
+          to="/portal"
           style={{
             fontFamily: fonts.body,
             fontSize: "0.78rem",

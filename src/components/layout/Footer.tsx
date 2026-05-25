@@ -170,7 +170,7 @@ const Footer = () => {
           </div>
           <p className="text-xs text-muted-foreground">
             נבנה ב<span className="text-accent mx-0.5">♥</span> ע״י{" "}
-            <a href="https://wa.me/972526018772" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors underline underline-offset-2">סער חלק</a>
+            <span>צוות בני ציון</span>
           </p>
         </div>
       </div>

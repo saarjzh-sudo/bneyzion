@@ -38,6 +38,7 @@ const FULL_NAV_LINKS: { label: string; path: string; external?: boolean }[] = [
   { label: "פרשת השבוע",     path: "/parasha"          },
   { label: "חנות",           path: "/store"            },
   { label: "תרומות",         path: "/donate"           },
+  { label: "מחירים",         path: "/pricing"          },
   { label: "אודותינו",       path: "/about"            },
   { label: "לזכר סעדיה הי״ד", path: "/memorial/saadia" },
 ];
@@ -258,7 +259,7 @@ function DesignHero() {
                      boxShadow: "0 4px 24px rgba(139,111,71,0.4)" }}>
             התחילו ללמוד
           </button>
-          <button onClick={() => navigate("/design-chapter-weekly")}
+          <button onClick={() => navigate("/chapter-weekly")}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem",
                      border: "1.5px solid rgba(255,255,255,0.35)",
                      background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
@@ -317,6 +318,7 @@ function KenesBanner() {
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
         <div dir="rtl"
           onClick={() => navigate("/kenes")}
+          className="kenes-banner-inner"
           style={{
             borderRadius: "1.75rem", overflow: "hidden", position: "relative",
             display: "flex", alignItems: "center", gap: "2.5rem",
@@ -334,7 +336,7 @@ function KenesBanner() {
             backgroundSize: "24px 24px", pointerEvents: "none" }} />
 
           {/* Poster image */}
-          <div style={{ width: 200, flexShrink: 0, borderRadius: "1rem", overflow: "hidden",
+          <div className="kenes-banner-poster" style={{ width: 200, flexShrink: 0, borderRadius: "1rem", overflow: "hidden",
                         boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
                         border: "2px solid rgba(196,162,101,0.25)", position: "relative", zIndex: 1 }}>
             <img src="/images/kenes-yom-haatzmaut.png" alt="כנס מעצמה תנ״כית"
@@ -496,7 +498,7 @@ function DesignParashaHolidaySection() {
         backgroundSize: "30px 30px" }} />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative" }}>
-        <div style={{ display: "grid", gridTemplateColumns: holiday && holidaySeries.length > 0 ? "1fr 1fr" : "1fr",
+        <div className="parasha-holiday-grid" style={{ display: "grid", gridTemplateColumns: holiday && holidaySeries.length > 0 ? "1fr 1fr" : "1fr",
                       gap: "4rem", alignItems: "start" }}>
 
           {/* ── RIGHT (first in RTL): Holiday ── */}
@@ -1037,8 +1039,8 @@ function TopSeriesSection() {
           </span>
         </div>
 
-        <div dir="rtl" style={{ display: "grid",
-                                  gridTemplateColumns: "repeat(auto-fill, minmax(420px, 1fr))", gap: "1.25rem" }}>
+        <div dir="rtl" className="top-series-grid" style={{ display: "grid",
+                                  gridTemplateColumns: "repeat(auto-fill, minmax(min(420px, 100%), 1fr))", gap: "1.25rem" }}>
           {(series.length === 0 ? Array.from({ length: 4 }) : series).map((s: any, i: number) => (
             <div key={s?.id ?? i}
               onClick={() => s?.id && navigate(`/series/${s.id}`)}
@@ -1378,6 +1380,29 @@ export default function DesignPreviewHome() {
 
       <DesignFooter />
       <DesignMobileBottomNav />
+
+      {/* Mobile responsive fixes for Home page sections */}
+      <style>{`
+        @media (max-width: 767px) {
+          .kenes-banner-inner {
+            flex-direction: column !important;
+            gap: 1.5rem !important;
+            padding: 1.5rem !important;
+          }
+          .kenes-banner-poster {
+            width: 100% !important;
+            max-width: 280px !important;
+            margin: 0 auto !important;
+          }
+          .parasha-holiday-grid {
+            grid-template-columns: 1fr !important;
+            gap: 2.5rem !important;
+          }
+          .top-series-grid {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }
