@@ -1012,6 +1012,74 @@ No human figures, no faces, no letters, no text.
 - Whisper על CPU לוקח ~2-3 דקות לדקת וידאו. לא להריץ במקביל — GPU contention.
 - 3 קליפי המקור הם portrait 478×850 — scale ישיר ל-1080×1920 ללא crop.
 
+### 2026-05-26 — Image safety emergency: shir-hashirim thumbnail takedown + full audit
+
+**אירוע:** תמונה watercolor של אישה בגינה נגלתה ב-lesson "שיר השירים פרק א" (הרב יונדב זר) ב-LIVE site. הפרת חוק ברזל: אסור visuals של נשים בלקוחות הרב יואב אוריאל.
+
+**Emergency takedown (שלב 1) — בוצע:**
+- `UPDATE lessons SET thumbnail_url = NULL WHERE thumbnail_url LIKE '%shir-hashirim%'` → 37 lessons
+- `UPDATE series SET image_url = NULL WHERE image_url LIKE '%shir-hashirim%'` → 4 series
+- `UPDATE lessons SET thumbnail_url = NULL WHERE thumbnail_url LIKE '%1776235%'` → 3 lessons נוספים (UUIDs מ-shir-hashirim שלא היו בpath)
+- **סה"כ:** 40 lessons + 4 series nullified
+
+**Full audit (שלב 2) — ידני ב-Claude Vision:**
+- 56 unique thumbnail URLs בדוקות
+- 15 תמונות ספרים (bucket: `bnei-zion-thumbnails/books/`) — **כולן נקיות.** אין דמות אדם, אין פנים, אין סילואטים. רק watercolor אבסטרקטי (עננים, גלים, עצים, נרות, מנורה, בניינים).
+- 3 תמונות timestamp-named (`1776235036-*`, etc.) — **נקיות.** פרחים/נוף/ים.
+
+**Blocker לשלבים 3-5:** Gemini API key (`AIzaSyDSFo7xhRUELzqw8ra8z1fIWvS-FqqbLV8`) **נחסם על ידי Google (403: "key was reported as leaked")**. הKey הופיע ב-MEMORY.md ב-open sessions. הפקת key חדש נדרשת לפני Vision gate אוטומטי.
+
+**Iron rules שנלמדו:**
+- **Imagen + שיר השירים = fail.** גם "no human figures" ב-STYLE לא מספיק לthemes רומנטיים/אגפיים. Imagen ייצר אישה בכרם גם כשהprompt לא ביקש זאת.
+- **חובה negative prompt field נפרד** (לא רק בתוך הprompt) + Vision verification gate לפני write לDB.
+- **Gemini key ב-MEMORY.md = גלוי לכל session** — אסור keys רגישים ב-MEMORY. KEY_ROTATED כי דלף.
+- כל image שנוצר לshir-hashirim מחוק מה-DB — יש לצור מחדש לאחר הקמת Vision gate.
+
+**סטטוס:**
+- שלב 1 (takedown) — **DONE**
+- שלב 2 (audit 56 תמונות קיימות) — **DONE** (15 books OK, shir-hashirim נמחקו מDB)
+- שלבים 3-5 (scripts fix + vision gate + regen) — **ממתינים ל-Gemini key חדש**
+- שלב 6 (memory update) — **DONE (הרשומה הנוכחית)**
+
+### 2026-05-26 — Image safety: §9 — Image safety gate v2
+
+ראה §9 למטה.
+
+---
+
+## 9. Image safety — verification gate v2 (2026-05-26)
+
+**אירוע:** lesson "שיר השירים פרק א" הציג תמונת אישה watercolor ב-LIVE. חוק ברזל הופר.
+
+**כלל חדש לכל יצירת תמונה בbneyzion:**
+
+### Negative prompt — mandatory field
+```python
+NEGATIVE = "absolutely no people, no humans, no figures, no human silhouettes, no faces, no body parts, no hair, no clothing, no dresses, no gowns, no robes, no hands, no feet, no arms, no legs, no children, no men, no women, no portraits, no anthropomorphic shapes, no text, no letters, no typography"
+```
+**Imagen 4 API:** להעביר כ-`negativePrompt` field נפרד ב-payload (לא רק ב-prompt text).
+
+### Vision gate — בדיקה אחרי כל תמונה
+```
+Does this image contain any human figure, face, body part, silhouette, or implied person? Answer yes or no, then explain.
+```
+- YES → reject, retry עם prompt חזק יותר (max 3 retries)
+- 3 fails → skip + log ב-`rejected-images.json`
+
+### Content descriptions — ספרים בסיכון גבוה
+| ספר | סיכון | הנחיה |
+|-----|-------|--------|
+| שיר השירים | גבוה מאוד | רק נוף/צמחים/צבעים. אסור "garden", "beloved", "woman", "bride" |
+| רות | גבוה | רק שדות חיטה, ענני ערב. אסור "woman in field" |
+| אסתר | גבוה | רק ארמון/כוכבים/גלים סגולים. אסור "queen", "royal figure" |
+| שמואל ב | בינוני | רק כינור/הרים. אסור "king", "harp player" |
+| שיר השירים פרקים — כלל | **NULL ב-DB** | לא לcreate עד שVision gate פעיל |
+
+### Blocker נוכחי
+Gemini key נחסם (דלף ב-MEMORY.md). לפני שlabels 3-5 מתבצעים — צריך key חדש ב-Google Cloud Console.
+
+---
+
 ### 2026-05-25 — Teachers Wing access model: החלטה סופית — רמה 1 (פתוח לכולם)
 
 **ההחלטה:** סאר חזר בו מרמה 3 (auth + JWT claims + RLS). אגף המורים יהיה פתוח כמו כל האתר — ללא auth, ללא gating.
@@ -3722,3 +3790,34 @@ significant change must update it. The agent enforces this.*
 - `scripts/image-batch-phase2.py`: sleep changed to 90s (from 7s), backoff changed to 120x (from 60x)
 - `scripts/image-batch-phase3.py`: sleep changed to 90s (from 7s), backoff changed to 120x (from 60x)
 - NOTE: image-batch-phase1.py still has 7s sleep — if re-running Phase 1 with new key and it hits 429 again, consider changing to 90s
+
+### 2026-05-26 — Vision gate + negative prompt hardening (sequel-6)
+
+**שינויי scripts (commit `7c76e9c`):**
+- `scripts/lib/vision_gate.py` — Vision gate library חדשה:
+  - Model: `gemini-2.5-flash` (נבחר אחרי שגילינו ש-`gemini-2.0-flash` לא זמין עם key החדש)
+  - Function: `verify_no_humans(image_path, api_key) → (bool, reason)`
+  - Fail-open: כישלון API מאפשר העלאה (לא מעצור את ה-batch בשל quota Vision)
+  - Rejection log: `scripts/rejected-images.json` (appended)
+  - `verify_with_retry(...)` — כניסה לregenerating על rejection
+- Phase 1/2/3 עודכנו:
+  - NEGATIVE prompt חזק נוסף ל-STYLE (רשימת 15 פריטי גוף/לבוש/דמות)
+  - Vision gate בתוך try block — עד 3 ניסיונות per image; skip אחרי 3 כישלונות
+  - Cost tracking תוקן (ב-vision loop, לא אחרי upload)
+- 7 descriptions בעיתיות תוקנו ב-phase1 BOOK_DESC:
+  - שיר השירים: הוסרו "garden gateway" + "beloved" — הוחלפו ב-pure abstract color washes
+  - רות: הוסרו "wheat stalk standing" — color field של harvest light בלבד
+  - שמואל ב: הוסרו "golden string vibrating" — pure abstract ochre/rose washes
+  - שופטים: הוסרו "arc of light" — pure abstract indigo/gold color fields
+  - מלכים: הוסרו "flame flickering" — pure abstract gold/indigo washes, no throne/crown
+  - אסתר: הוסרו "doorway" — layered purple/gold washes, no arch or crown
+
+**State (נוכחי):**
+- Phase 1: 17/43 completed | 0 failed | $1.08
+- Phase 1 retry (26 books) running ב-background עם key `AIzaSyB-tuEo...`
+- Phase 2 + 3: לא התחילו (ממתין ל-Phase 1 לסיים)
+
+**Iron rule learned:**
+- `gemini-2.0-flash` ב-v1beta API אינו זמין ל-new users. תמיד לבדוק models list לפני שמגדירים VISION_MODEL. `gemini-2.5-flash` הוא הפשרה הנכונה (מהיר + זמין).
+- Vision gate API calls: ~$0.001 per call, fail-open כדי שלא לעצור batch ב-quota exhaustion.
+- אחרי vision rejection rate >10% → STOP, נקה descriptions, תחזור לBOOK_DESC audit.
