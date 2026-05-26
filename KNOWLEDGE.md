@@ -404,19 +404,20 @@ public/
 
 ---
 
-## 6. Content state (as of 2026-05-25)
+## 6. Content state (as of 2026-05-26 — post bible_book backfill)
 
 | Metric | Value |
 |--------|-------|
 | Total lessons | 13,172 (was 11,818 in Apr 2026) |
 | Published | 12,718 (97%) |
-| With bible_book tagged | 1,147 (9%) — critical gap |
-| With bible_chapter tagged | 181 (1.4%) — critical gap |
+| With bible_book tagged | **9,542 (72.4%)** — post backfill (was 9% on 25.5) |
+| With bible_chapter tagged | **3,366 (25.6%)** — post tag-bible-chapter.mjs (was 1.4% on 25.5) |
 | With audio | ~6,432 (not re-counted after teacher aids insert) |
 | With video | ~820+ |
 | With PDF | ~963+ |
 | Drafts remaining | ~461 (navigation pages + truly empty) |
 | Total series | 1,526 (was 1,374 — grew after teacher aids insert) |
+| Series with bible_book | **1,104 (72.3%)** — post backfill-series-bible-book.mjs |
 | Series with lessons | 921 |
 | Total rabbis | 203 |
 | Topics | 741 |
@@ -425,14 +426,21 @@ public/
 | Auth users | 2 |
 | Admin users | 1 (`saar.j.z.h@gmail.com`) |
 
-### Critical data gaps (priority order)
-1. **bible_book coverage: 9%** — Torah books have ZERO tags. Only some Neviim+Ketuvim tagged.
-2. **bible_chapter coverage: 1.4%** — almost entirely untagged.
+### Data coverage by book (series, top 10)
+תהלים 157 · ישעיהו 81 · ירמיהו 69 · יחזקאל 62 · בראשית 58 · שמות 57 · במדבר 46 · דברים 45 · ויקרא 43 · שופטים 30
+
+### Pages now functional after backfill
+- `/bible-book/:book` — now works for all 24 books with meaningful content (was ~0% before)
+- `/rabbis/:id` TOC — series grouped by book, sorted biblically (pending PR #6 merge)
+
+### Remaining data gaps (priority order)
+1. **bible_book: 27.7% untagged series** — 422 series with no recognizable book name in title (general topics). Needs manual tagging or Yoav's categorization decision.
+2. **bible_chapter: 74.4% untagged** — needs deeper pattern coverage or Yoav to add chapter numbers to more lesson titles.
 3. **~820 lessons missing video** — vp4.me iframe detection issue in scraper.
 4. **461 draft lessons** — scraper couldn't match by title (normalize mismatch).
 
 ### Health score (last QA run)
-- **87%** (April 2026) — most gaps are now bible_book/chapter tagging (9% coverage)
+- **87%** (April 2026) — bible_book/chapter gaps now mostly resolved (72%+ coverage)
   and missing media URLs (video especially)
 
 ---
@@ -499,6 +507,25 @@ public/
 - **לא** merge ישיר ל-main — PR בלבד (שינוי production)
 
 **Iron rule שנלמד:** סקריפטי `scripts/*.mjs` שמשתמשים ב-Management API ב-fetch חייבים tokens דרך env vars בלבד. GitHub push protection חוסם commits עם `sbp_*` hardcoded — גם ב-string constants. תמיד `SUPABASE_MGMT_TOKEN=process.env.SUPABASE_MGMT_TOKEN`.
+
+### 2026-05-26 — אמות bible_book + PR #6 לdF הרב (session 4)
+
+**אמות DB (live numbers מ-Management API, session 4):**
+- `series`: 1,104 / 1,526 עם bible_book — **72.3%** (dry-run הצפה 72.9% — close enough)
+- `lessons`: 9,542 / 13,172 עם bible_book — **72.4%**
+- `lessons`: 3,366 / 13,172 עם bible_chapter — **25.6%**
+- הכתיבה לDB בוצעה בסשן 3 (commit `312a63a`) — לא בסשן 4
+
+**PR #6 פתוח:**
+- Branch: `feature/rabbi-page-toc-sort` → `main`
+- URL: `https://github.com/saarjzh-sudo/bneyzion/pull/6`
+- `npx tsc --noEmit -p tsconfig.app.json` — 0 שגיאות לפני הפתיחה
+- הכיל קובץ `scripts/backfill-series-bible-book.mjs` — הסקריפט שכתב את ה-bible_book לseries
+- לא merged — ממתין לסאר
+
+**אנומליות שנבדקו:**
+- ספרים עם 1 סדרה: דברי הימים א, דברי הימים ב — אמיתי, לא באג
+- Top books: תהלים 157, ישעיהו 81, ירמיהו 69 — הגיוני
 
 ### 2026-05-26 — תיקון 3 רגרסיות: About לינק, Donate campaign handler, Footer memorial
 
