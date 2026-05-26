@@ -450,6 +450,22 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — Orphan lesson rehoming: 649 lessons moved from 4 dump series to 36 specific series
+
+**DB operation (live UPDATE via Management API):**
+- 4 "Plan G" dump series: `cab4229a` (שיעורים כלליים), `63aac39b` (יחזקאל מוקלט), `76c7c4b9` (ספר ירמיהו), `cfb7da1a` (ישעיהו מוקלט)
+- Total lessons in dump before: 1,592. After: 943 remaining (649 moved).
+- Algorithm: for each lesson in dump with rabbi_id + bible_book, find the unique matching series (same rabbi, same bible_book, not draft, not in dump). Only unambiguous (match_count=1) moved.
+- 649 rows updated with `SET series_id=<target>, updated_at=NOW()`
+- TRIGGER `set_updated_at_lessons` confirmed firing — all 649 rows got `updated_at = 2026-05-26 12:28:53.794869+00`
+- Conservation check: total lesson count across all 39 tracked series unchanged (2,582 before = 2,582 after, delta = 0)
+- 75 ambiguous lessons (match_count>1) remain in dump — need manual triage
+- 439 unmappable (rabbi_id IS NULL OR bible_book IS NULL) remain in dump — cannot auto-route
+- 36 target series gained lessons (top: קריאה וביאור בקצרה של ספר ישעיהו +65, מאמרים קצרים-ספר ירמיהו +56)
+- Snapshot: `/tmp/orphans-616-recovery-20260526-152821.json` (649 rows: id, old_series_id, new_series_id, rabbi_id, bible_book)
+- Note: session briefed "616 orphans" but actual unambiguous count at execution was 649 (DB state changed between planning and execution — more lessons became mappable)
+- commit: `fix(db): rehome 649 orphan lessons from dump series to specific rabbi+book series`
+
 ### 2026-05-26 — Image batch Phase 0: bucket + scripts + 3-book pilot (sequel-3 image batch)
 
 **Infrastructure:**
