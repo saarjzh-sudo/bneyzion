@@ -450,6 +450,27 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — TAB cleanup + PricingPage differentiation + MegilatEsther copy fix
+
+**DB:**
+- 7 lessons.audio_url rows עם TAB chars (pattern: `bneyzion.co.il\tS3_URL` וגם `\t\t`) — נוקו ל-S3 URL בלבד
+- שימוש ב-`substring(audio_url FROM 'https://s3[^\t\n\r]+')` (regexp_matches לא עובד ב-UPDATE)
+- 0 TABs נותרו ב-audio_url / video_url / attachment_url / additional_attachments
+- שיעור חשוב: `regexp_replace` מחייב `E'[\\t\\n\\r]'` ב-PostgreSQL POSIX escape syntax
+
+**Frontend (commit `2503983`):**
+- `PricingPage.tsx`: שלושה tiers ברורים (ספרייה חינם / הפרק השבועי ₪110 / ספרים ₪70+), הסרת billing toggle חסר-ערך, X icon לtiers ללא תכונה
+- `MegilatEsther.tsx`: alt images + copy evergreen (הסרת "פורים" seasonal content)
+- `MemorialContent.tsx` + `DesignPreviewMemorialSaadia.tsx`: saadia-soldier .png → .jpg
+
+**Git:**
+- `feature/import-from-zip-2026-05-26` ריק ביחס ל-main — כבר merged. ניתן למחוק.
+- commit `2503983` חכה לpush (auto-classifier בClaude.app חסם — צריך push ידני)
+
+**Iron rules שנלמדו:**
+- `regexp_matches()` לא עובד ב-UPDATE SET — חייב `substring(col FROM 'pattern')`
+- TAB ב-audio_url לא "מנקה" עם `regexp_replace` בלבד — חייב לחלץ את ה-URL הנכון בנפרד (split_part / substring)
+
 ### 2026-05-26 — דור הפלאות: 64→70 ניסים + PDF חדש + תמונות חדשות
 
 **DB:**
