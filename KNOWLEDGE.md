@@ -57,8 +57,8 @@ adds to (not overwrites) institutional memory.
 - **יחסי אמון עמוקים:** "אנחנו צוות טוב ביחד" (2026-03-01). לא client-vendor רגיל.
 
 ### שאלות פתוחות שיואב חייב להחליט (blocker list)
-1. שם סופי לעמוד תכנית המנויים (`/megilat-esther` → ?)
-2. מסלול אחרי תשלום מנוי חדש — לאן מנתבים?
+1. ~~שם סופי לעמוד תכנית המנויים~~ — **הובהר 26.5.2026 (תיקון תפיסתי):** `/megilat-esther` = דף מוצר (ספר/חוברת), **לא** דף מנויים. `/chapter-weekly` = **דף המנויים האמיתי** — דף המכירה להצטרפות לתכנית הפרק השבועי. אין לבלבל בין השניים.
+2. מסלול אחרי תשלום מנוי חדש — לאן מנתבים? (כרגע → `/thank-you?type=subscription` → "כניסה לפורטל הלומדים" → `/portal`)
 3. רשימת "סוגי תוכן" באגף המורים (5-7 קטגוריות)
 4. ארכיון הפסוק היומי — חלק מהאתר או לא?
 5. קמפיין יהושע — URL סופי (headstart / bneyzion עצמו / שניהם)?
@@ -446,6 +446,25 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — ייבוא מזיפ: dor-haplaot hero image + booklet popup + OS Antidot TR fonts
+
+- **מקור:** `/Users/srhlq/Desktop/bney-zion-project-full.zip` (114MB, פרויקט Lovable נפרד)
+- **DorHaplaot.tsx** עודכן: hero עכשיו משתמש ב-`dor-haplaot-hero.jpg` אמיתי (במקום `/images/war-miracles-bg.jpg` שלא היה קיים). נוסף `PrintableBookletPopup` (3-שלבים: view→donate→download) + booklet CTA card בגריד הניסים.
+- **PrintableBookletPopup.tsx** נוסף: `src/components/dor-haplaot/PrintableBookletPopup.tsx`
+- **Assets חדשים:** `src/assets/dor-haplaot-hero.jpg`, `src/assets/dor-haplaot-booklet-cover.png`, `public/dor-haplaot-booklet.pdf`
+- **OS Antidot TR fonts** הועתקו ל-`public/fonts/` (6 variants: extralight/light/regular/semibold/bold, woff2+woff) — כבר מוגדרים ב-`chapter-weekly.css`
+- **lovable-uploads:** 4 תמונות נוספו (GUIDs + לוגואים)
+- **מה לא שונה:** ChapterWeekly (הפרודקשן מתקדם יותר מהזיפ), ThankYou (כנ"ל)
+- **Commit:** `423c63e` · Branch: `feature/import-from-zip-2026-05-26`
+- **Iron rule:** זיפ מ-Lovable = snapshot ישן. תמיד להשוות גרסאות לפני override — הפרודקשן לא תמיד ישן יותר.
+
+### 2026-05-26 — תיקון תפיסתי: /chapter-weekly vs /megilat-esther + Green API outgoing file limitation
+
+- **תיקון תפיסתי קריטי:** `/megilat-esther` = דף מוצר (ספר חוברת). `/chapter-weekly` = דף המנויים האמיתי — דף המכירה לתכנית הפרק השבועי. הוגדר ע"י סאר 26.5.2026.
+- **Iron rule שנלמד:** Green API getChatHistory מחזיר `{{SWE002}}` (placeholder) כ-downloadUrl עבור הודעות `outgoing` (שנשלחו מהמכשיר הפיזי, לא דרך API). אי אפשר להוריד קבצים outgoing דרך Green API בשום שיטה (downloadFile, getMessage — אותו תוצאה). רק קבצים incoming (שהתקבלו) עובדים.
+- **הכלה:** כשסאר שולח זיפ לעצמו דרך WhatsApp (לא ה-API) — יש לבקש ממנו לשתף קישור ישיר (Drive/Dropbox/temp.sh) או לשלוח שוב דרך API (sendFileByUpload).
+- KNOWLEDGE.md §0 עודכן: תיקון blocker list #1.
 
 ### 2026-05-26 — Yehoshua campaign page rebuild + V4 video (session 4)
 
