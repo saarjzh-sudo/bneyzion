@@ -3842,3 +3842,9 @@ significant change must update it. The agent enforces this.*
 - `gemini-2.0-flash` ב-v1beta API אינו זמין ל-new users. תמיד לבדוק models list לפני שמגדירים VISION_MODEL. `gemini-2.5-flash` הוא הפשרה הנכונה (מהיר + זמין).
 - Vision gate API calls: ~$0.001 per call, fail-open כדי שלא לעצור batch ב-quota exhaustion.
 - אחרי vision rejection rate >10% → STOP, נקה descriptions, תחזור לBOOK_DESC audit.
+
+### 2026-05-27 — DesignHeader nav cleanup + categories centering fix (commit 24fc4a5)
+- `src/components/layout-v2/DesignHeader.tsx` — הוסר "תנ"ך" מ-NAV_ITEMS ומ-TEACHER_NAV_ITEMS. ניווט סופי: חנות | פרשת השבוע | אגף המורים | אודותינו.
+- `src/pages/DesignPreviewHome.tsx` — FULL_NAV_LINKS מסונכרן לאותם 4 פריטים (הוסרו ראשי, תרומות, מחירים, לזכר).
+- `src/pages/DesignPreviewSeriesList.tsx` — chips container: הוסר `overflowX: auto`, נוסף `width: "100%"` — אוכף מרכוז מלא.
+- לוגו: הלוגיקה הקיימת (`isTransparent ? logoBright : logoColor`) נכונה — בדפים פנימיים `transparentOnTop` מוגדר `false` ברירת מחדל → תמיד מוצג `logoColor`. אין צורך בשינוי.
