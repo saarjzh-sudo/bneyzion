@@ -294,20 +294,67 @@ const MemorialContent = () => (
         ))}
       </motion.div>
 
-      {/* ── CTA ── */}
+      {/* ── Donation CTA ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="rounded-2xl p-8 md:p-10 text-center"
+        style={{
+          background: "linear-gradient(145deg, #1D2E27 0%, #384F47 100%)",
+          border: "1px solid rgba(201,164,84,0.2)",
+          boxShadow: "0 8px 40px rgba(29,46,39,0.3)",
+        }}
+      >
+        <p
+          className="text-sm font-display uppercase tracking-widest mb-3"
+          style={{ color: "#C9A454", letterSpacing: "0.14em" }}
+        >
+          הנצח את שמו
+        </p>
+        <h3
+          className="text-xl md:text-2xl font-heading mb-4"
+          style={{ color: "#F0EBE3" }}
+        >
+          תרום לבניית ספריית בני ציון
+          <br />
+          לעילוי נשמת סעדיה יעקב דרעי הי״ד
+        </h3>
+        <p
+          className="text-sm leading-relaxed mb-6 max-w-md mx-auto"
+          style={{ color: "rgba(240,235,227,0.65)" }}
+        >
+          כל תרומה מאפשרת לנו להוסיף שיעורים, להנגיש תוכן ולהמשיך את מורשתו.
+          שמו ייזכר בכל שיעור שנלמד.
+        </p>
+        <Link
+          to="/donate?campaign=saadia"
+          className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-display text-sm transition-all hover:scale-[1.03] active:scale-[0.98]"
+          style={{
+            background: "linear-gradient(135deg, #C9A454, #B8885F)",
+            color: "#1D2E27",
+            boxShadow: "0 4px 20px rgba(201,164,84,0.35)",
+            fontWeight: 700,
+          }}
+        >
+          לתרומה לעילוי נשמתו
+        </Link>
+      </motion.div>
+
+      {/* ── Secondary CTA — learn ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center pt-4"
+        className="text-center pt-2"
       >
         <Link
           to="/"
           className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl font-display text-sm transition-all hover:scale-[1.03] active:scale-[0.98]"
           style={{
-            background: "linear-gradient(135deg, #C9A454, #B8885F)",
-            color: "#1D2E27",
-            boxShadow: "0 4px 20px rgba(201,164,84,0.3)",
+            background: "transparent",
+            color: "#384F47",
+            border: "1.5px solid rgba(56,79,71,0.3)",
             fontWeight: 600,
           }}
         >

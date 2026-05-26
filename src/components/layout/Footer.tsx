@@ -51,15 +51,27 @@ const Footer = () => {
             <div className="mb-3">
               <img src={logoHorizontal} alt="בני ציון" width={200} height={64} className="h-16" />
             </div>
-            <div className="space-y-1">
+            <div className="space-y-2">
               <div className="flex items-center gap-1.5">
                 <Flame className="h-3.5 w-3.5 text-accent" />
                 <span className="text-xs font-display text-accent">לעילוי נשמת</span>
                 <Flame className="h-3.5 w-3.5 text-accent" />
               </div>
-              <Link to="/memorial" className="text-xs font-serif text-foreground/80 hover:text-primary transition-colors block">בן ציון חיים הנמן הי״ד</Link>
-              <Link to="/memorial/saadia" className="text-xs font-serif text-foreground/80 hover:text-primary transition-colors block">סעדיה יעקב בן חיים הי״ד</Link>
-              <p className="text-xs font-serif text-foreground/80">מעין פלסר ז״ל</p>
+              <Link
+                to="/memorial/saadia"
+                className="text-xs font-serif text-foreground/80 hover:text-primary transition-colors block leading-relaxed"
+              >
+                אתר התנ״ך של ישראל — לעילוי נשמת{" "}
+                <span className="font-bold">סעדיה דרעי הי״ד</span>
+              </Link>
+              <Link
+                to="/memorial"
+                className="text-xs font-serif text-foreground/80 hover:text-primary transition-colors block leading-relaxed"
+              >
+                האתר נבנה בידי ארגון בני ציון — לעילוי נשמת{" "}
+                <span className="font-bold">בן ציון הנמן הי״ד</span>
+              </Link>
+              <p className="text-xs font-serif text-foreground/70">מעין פלסר ז״ל</p>
             </div>
 
             {/* Install button - only when available */}

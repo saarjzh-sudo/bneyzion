@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-08
+**Last updated:** 2026-05-26 (session 2)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -10,6 +10,58 @@ adds to (not overwrites) institutional memory.
 > 📘 **Companion doc:** `REDESIGN.md` (this repo) covers the v2 sandbox
 > redesign work specifically. This file (`KNOWLEDGE.md`) covers
 > *everything else* — site history, content, data, integrations.
+
+---
+
+## 0. פרופיל הרב יואב אוריאל — הלקוח
+
+> פרק זה מבוסס על קריאת 1,575 הודעות WhatsApp (22.2.2026–25.5.2026) + ניתוח הדיון האסטרטגי שנעשה לפני כתיבת תכנית fluffy-forging-garden.md.
+
+### מי הוא
+- **מחבר ספרים:** "מכלל יופי" — פרויקט דגל, פרשנות על כל התנ"ך. ספר יהושע (360 עמ') — נמכר ב-club.bneyzion.co.il.
+- **מרצה ויוצר תוכן יומי:** שולח פסוק יומי לעשרות קבוצות WhatsApp. הפודקאסט ("תנ"ך בגובה העיניים") — 5+ עונות.
+- **בעלים של אגף "תנ"ך למשפחה":** תכנים לילדים, חידות, דפי עבודה — 425+ קובצי docx.
+- **מפקד תכנית הפרק השבועי:** 280+ מנויים (₪110/חודש). ספרים שהושלמו: אסתר → חגי/זכריה/מלאכי → קהלת (אלול).
+
+### איך הוא חושב
+- **קטגוריות ברורות:** שיעור / ספר / רעיון. רוצה שהאתר יהיה "מכלל יופי דיגיטלי" — לא ארכיון מת.
+- **מאוזן בין נדיבות לפרנסה:** שאל שוב ושוב "תוכן בתשלום כן או לא?" (2026-02-26, 2026-03-12). הגיע להחלטה: קצת פתוח, קצת בתשלום.
+- **חושב בלוחות שנה:** כל פעולה צמודה למועד — סיוון (קמפיין יהושע), אלול (קהלת), תשרי (תכנית חדשה).
+- **מבט אסטרטגי ארוך:** אמר ב-2026-02-26 "עוד לא בשפיץ של הקצה של ההתחלה" — מפנה לעשר שנים קדימה.
+- **מאמין בסאר:** "סומך עלייך לתעדף". לא מנהל ב-micro.
+
+### מה הוא רוצה מהאתר
+- **לא ארכיון — מסע לומד.** "מכלל יופי דיגיטלי" = כניסה שיודעת מי אתה, מה למדת, לאן הלאה.
+- **ניווט אינטואיטיבי לפי ספר תנ"ך** — ביקש TOC בדף הרב ב-12.5.2026.
+- **הפרדה בין קהלים:** מורים (אגף נפרד), מנויים (פורטל), ציבור כללי.
+- **אין צ'אט AI שמחליף ניווט** (הסתייג ב-12.3.2026).
+
+### פידבק חוזר (ציר הזמן)
+| תאריך | בקשה / פידבק |
+|--------|--------------|
+| 12.3.2026 | הסתייג מצ'אט AI כניווט ראשי |
+| 24.3.2026 | ביקש סינון לפי "סוג תוכן" באגף מורים (מבחנים / דפי עבודה / מפות / ביאורי מילים) |
+| 12.5.2026 | ביקש TOC לפי סדר התנ"ך בדף הרב |
+| 25.5.2026 | אישר לצלם סרטון גיוס לקמפיין יהושע (90 שניות) |
+
+### לוח שיווקי קבוע
+- **סיוון (יוני):** קמפיין ספר יהושע — pre-sale, headstart.co.il (בדיון), `/design-yehoshua-campaign`.
+- **אלול (ספטמבר):** מעבר תכנית הפרק השבועי לקהלת.
+- **תשרי (אוקטובר, כ"ו):** תכנית חדשה — עוד לא הוגדרה.
+- **שבועיים לפני כל מועד:** בנר sticky + CTA באתר.
+
+### סגנון תקשורת
+- **ארוך ומפורט:** הודעות voice של 2-5 דקות. מציף הרבה צרכים ורעיונות בפעם אחת.
+- **סומך על סאר לתעדף:** "תאמר לי אם זה בזבוז זמן" — לא נוקב עדיפויות בעצמו.
+- **תגובה מהירה לתוצאות:** כשרואה תוצר — מגיב מיידית. "מדהים", "וואו", "גאון".
+- **יחסי אמון עמוקים:** "אנחנו צוות טוב ביחד" (2026-03-01). לא client-vendor רגיל.
+
+### שאלות פתוחות שיואב חייב להחליט (blocker list)
+1. שם סופי לעמוד תכנית המנויים (`/megilat-esther` → ?)
+2. מסלול אחרי תשלום מנוי חדש — לאן מנתבים?
+3. רשימת "סוגי תוכן" באגף המורים (5-7 קטגוריות)
+4. ארכיון הפסוק היומי — חלק מהאתר או לא?
+5. קמפיין יהושע — URL סופי (headstart / bneyzion עצמו / שניהם)?
 
 ---
 
@@ -386,6 +438,71 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — תיקון 3 רגרסיות: About לינק, Donate campaign handler, Footer memorial
+
+- **About.tsx** — החזרה של `<Link to="/memorial">` סביב "בן ציון חיים הנמן הי״ד". הסשן הקודם הסיר את הלינק והשאיר `<strong>` בלבד — זו רגרסיה לפי הנחיית יואב המפורשת.
+- **Donate.tsx** — הוספת `useSearchParams` handler ל-`?campaign=saadia`: prefill אוטומטי של שדה ההקדשה ("סעדיה יעקב דרעי הי״ד") + type="iluy_neshama" + באנר עליון "תרומה זו מוקדשת לעילוי נשמת סעדיה הי״ד". לא שובר flows קיימים.
+- **Footer.tsx** — עדכון שתי שורות ה-memorial לפורמט שיואב הגדיר: "אתר התנ״ך של ישראל — לעילוי נשמת סעדיה דרעי הי״ד" + "האתר נבנה בידי ארגון בני ציון — לעילוי נשמת בן ציון הנמן הי״ד".
+- Build נקי (TS + Vite). commit: `fix: restore /memorial link in About + campaign=saadia handler + footer memorial format`
+
+### 2026-05-26 — פרויקט יהושע — סרטון גיוס V3 (design-yehoshua-campaign branding)
+
+**הקשר:** סאר תיקן — הקמפיין לא ב-headstart.co.il אלא בסנדבוקס V2 של בני ציון עצמו: `bneyzion.vercel.app/design-yehoshua-campaign`. V3 מבוסס קריאה מעמיקה של הקוד המקור (`DesignPreviewYehoshuaCampaign.tsx`) ולא של Headstart.
+
+**מה נבדק ונלמד מהדף:**
+- הדף קיים ב-`/Users/saarj/Downloads/saar-workspace/bneyzion/src/pages/DesignPreviewYehoshuaCampaign.tsx` (2,239 שורות)
+- ה-CTA האמיתי: `handleSupport(tier)` → בסנדבוקס = toast. בפרודקשן = `/donate?amount=PRICE&source=yehoshua-campaign&tier=TIER_ID`. אין Headstart URL חיצוני (עדיין placeholder).
+- הדף מסומן: "sandbox בלבד — לאישור יואב לפני פרסום"
+- 7 tiers: ₪90 (EarlyBird/200 first), ₪120 (הקדשה), ₪220 (זוג), ₪400 (סט מלא), ₪800 (שותף), ₪1200 (שותף בכיר), ₪2000 (שיעור)
+- Progress: ₪7,000 / ₪80,000, 47 תומכים (9%)
+
+**פלטת צבעים מדויקת מהקוד:**
+- Navy hero: `hsl(215 55% 16%)` / gradient: `linear-gradient(160deg, hsl(215 55% 16%), hsl(215 50% 26%), hsl(215 40% 30%))`
+- Navy dark (nav/footer): `hsl(215 55% 12%)`
+- Gold primary: `hsl(38 75% 55%)` / Gold light: `hsl(43 85% 60%)` / Gold text: `hsl(38 85% 72%)`
+- Background parchment: `hsl(38 35% 96%)` (sections הסיפור + story)
+- Background card-light: `hsl(215 15% 97%)` (sections FAQ + About)
+- Tiers section bg: `hsl(215 15% 96%)`
+- Gold bar (top/bottom): `linear-gradient(90deg, hsl(38 75% 55%), hsl(43 85% 70%), hsl(38 75% 45%))`
+
+**מבנה הדף (sections בסדר):**
+1. Nav — navy `hsl(215 55% 16%)`, לוגו SVG בני ציון, badge "קמפיין תמיכה"
+2. Hero — 2-col grid, copy + image frame + floating "מילואים/סוריה" badge
+3. ProgressBlock — ₪7K/₪80K + 47 תומכים + progress bar
+4. Recent Backers — 5 avatar cards scrolling
+5. Tiers — `id="tiers"`, 7 tier cards + CustomAmountCard (min ₪18)
+6. The Story — pull-quote blockquote + RTL border-inline-end gold
+7. Why This Book — 3 cards numbered 01/02/03
+8. About Yoav — 2-col: photo + stats (15+y, 300+, 480 עמ)
+9. Timeline — 6 phases, Hebrew months
+10. FAQ — accordion
+11. Final CTA — navy hero gradient + "רוצים להיות חלק מזה?" + same CTA button
+12. Footer — `hsl(215 55% 12%)` dark
+
+**מה נבנה:**
+- 4 כרטיסי HTML V3 ב-`output/cards/`: `v3_title_card.html`, `v3_story_card.html`, `v3_why_card.html`, `v3_end_card.html`
+- רונדור ל-PNG עם Playwright: `render_cards_v3.mjs`
+- Build script: `output/build_v3.sh`
+- פלט: `output/yehoshua_recruitment_v3.mp4` — 1:53, 81MB
+
+**מבנה V3:**
+- `[0:00-0:03]` כרטיס פתיחה — navy hero gradient, progress bar, eyebrow badge
+- `[0:03-0:33]` clip1 (30s) — יואב בגבול סוריה + lower-third
+- `[0:33-0:37]` כרטיס הסיפור — parchment bg, pull-quote, 3 stats
+- `[0:37-1:04]` clip2 (27s) — כוח התנ"ך, ספר יהושע
+- `[1:04-1:08]` כרטיס למה — white bg, 3 why-cards (01/02/03)
+- `[1:08-1:43]` clip3 (35s) — קריאה לפעולה
+- `[1:43-1:49]` כרטיס סיום — navy gradient, tier hints, URL, "בכוח התנ"ך ננצח"
+
+**החלטות פתוחות:**
+- URL סופי לקמפיין (כרגע `bneyzion.vercel.app/yehoshua` — redirect placeholder)
+- תמונת hero של יואב בדף (`/images/yoav-campaign/yoav-with-shoftim-book.jpg`) — האם לשלב בסרטון?
+- מוזיקה — bg_music.mp3 + high-pass EQ + 18% vol. סאר עדיין לא אישר.
+
+**Iron rules שנלמדו:**
+- לפני בניית סרטון גיוס — חייב לקרוא את קוד הדף המקומי, לא להסתמך על KNOWLEDGE.md בלבד. ה-CTA, הצבעים, הסלוגנים — הכל בקוד.
+- ה-CTA של `design-yehoshua-campaign` הוא `/donate?amount=...` (Grow) — לא Headstart. Headstart הוא אפשרות עתידית, לא הנוכחית.
 
 ### 2026-05-25 — פרויקט יהושע — סרטון גיוס V2 (Headstart campaign)
 
@@ -3005,3 +3122,26 @@ significant change must update it. The agent enforces this.*
 
 **Build:** `npx tsc --noEmit` — clean (0 errors).
 **Iron rule learned:** Filter teachers content from GLOBAL search/browse hooks. Do NOT filter from rabbi-specific hooks — rabbi pages show the rabbi's full portfolio.
+
+### 2026-05-26 — תכנית אסטרטגית + הקמת בסיס ידע מורחב
+
+**מה נעשה:**
+- נקרא 1,575 הודעות WhatsApp עם הרב יואב (22.2.2026–25.5.2026) — ניתוח מעמיק.
+- נכתבה תכנית fluffy-forging-garden.md (5 שלבים, עם blockers מוגדרים).
+- נוסף §0 "פרופיל הרב יואב אוריאל — הלקוח" ל-KNOWLEDGE.md — פרופיל לקוח מלא.
+- נוצר `/Users/saarj/Downloads/saar-workspace/bneyzion/AUDIENCES.md` — 5 קהלים + מסעות.
+- תוקן `Donate.tsx` (שלב 1.4): הפרדת הנצחת בן ציון הנמן מ-`/donate` + עודכן `About.tsx`.
+- נוסף CTA תרומה ל-`MemorialSaadia.tsx` (שלב 1.5).
+- bible_book coverage ב-series: **גילוי חשוב** — טבלת `series` בסכמה הנוכחית אין לה עמודת `bible_book` בכלל (רק ב-`lessons`). מיון לפי סדר תנ"כי בדף הרב מבוצע דרך `sortByBiblicalOrder(series.title)` (biblicalOrder.ts) — ניתן לבצע ב-100% מהסדרות שיש להן כותרת תנ"כית מוכרת.
+- שלב 1.2 ו-1.3 בוצעו ב-`DesignPreviewRabbi.tsx` (sandbox `/design-rabbi/:id`).
+
+**Files changed:**
+- `KNOWLEDGE.md` — פרק §0 חדש + עדכון §7
+- `AUDIENCES.md` — קובץ חדש
+- `src/pages/Donate.tsx` — הסרת אזכור בן ציון, נשאר רק סעדיה
+- `src/pages/About.tsx` — הוספת פיסקה על בן ציון הנמן
+- `src/pages/MemorialSaadia.tsx` — CTA תרומה בתחתית
+
+**Iron rule learned:**
+- DB queries (Supabase Management API) דורשות אישור מפורש מסאר ב-auto mode — auto classifier חוסם. תמיד לדווח לסאר ולחכות לאישור לפני שאילתות data-check על production.
+- לפני תיקוני donate/memorial — לבדוק האם `Donate.tsx` הוא הקובץ הפעיל (vs `DesignPreviewDonate.tsx`). ב-App.tsx: route `/donate` מפנה ל-`Donate` (production), לא ל-sandbox.
