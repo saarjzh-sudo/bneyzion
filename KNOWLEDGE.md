@@ -450,6 +450,46 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — Image batch Phase 0: bucket + scripts + 3-book pilot (sequel-3 image batch)
+
+**Infrastructure:**
+- Supabase Storage bucket `bnei-zion-thumbnails` created (public, PNG/JPEG/WebP)
+- 3 scripts built with resume/checkpoint via `scripts/image-batch-state.json`:
+  - `scripts/image-batch-phase1.py` — 43 bible_book images → `lessons.thumbnail_url`
+  - `scripts/image-batch-phase2.py` — 949 (book,chapter) images → `lessons.thumbnail_url`
+  - `scripts/image-batch-phase3.py` — 403 series images → `series.image_url`
+- Actual counts (lower than plan): 43 + 949 + 403 = 1,395 images, ~$84 not $155
+- Style prompt locked from pilot 26.5.2026 — NO LETTERS enforced in every prompt
+
+**Pilot (3 books generated + uploaded + DB updated):**
+- בראשית → `books/bereshit.png` — 797 lessons updated
+- תהילים → `books/tehilim.png` — 10 lessons updated
+- שיר השירים → `books/shir-hashirim.png` — 21 lessons updated
+- All verified: HTTP 200, PNG magic bytes, correct thumbnail_url in DB
+
+**Key lesson learned:**
+- Supabase Storage rejects Hebrew characters in storage paths (`InvalidKey` 400)
+- Solution: BOOK_SLUG dict mapping Hebrew → ASCII slugs (bereshit, shemot, etc.)
+- Series images use UUID as storage_path (already ASCII)
+
+**STOP — awaiting Saar handshake to run Phase 1 full batch (40 remaining books)**
+
+### 2026-05-26 — YouTube double-URL fix + CREATE TRIGGER updated_at (session sequel-3)
+
+**DB:**
+- תיקון 2 lessons עם double YouTube prefix:
+  - `3ebc9478` (video_url: כפל `watch?v=watch?v=`) → `https://www.youtube.com/watch?v=YUETnU8L94s`
+  - `f76a15c0` (video_url: כפל + `&t=26s` נשמר) → `https://www.youtube.com/watch?v=uTU8Pbwrmi4&t=26s`
+  - snapshot: `scripts/youtube-double-url-snapshot-20260526.json`
+  - regexp_replace עובד על UUID — אישור של pattern `\.youtube\.com/watch\?v=\.youtube\.com/watch\?v=`
+- CREATE EXTENSION moddatetime (v1.0) — לא היתה קיימת
+- CREATE TRIGGER set_updated_at_lessons BEFORE UPDATE ON lessons EXECUTE FUNCTION moddatetime(updated_at)
+  - ✅ smoke test: `title = title` touch → updated_at זז אוטומטית
+- commit: `04554d4` (ממתין לpush ידני — `HTTP_PROXY="" HTTPS_PROXY="" git push origin main`)
+
+**מה שנשאר פתוח בסשן זה:**
+- שאלה לסאר: מה בדיוק "616 orphans"? (series_id IS NULL = 0 כרגע. אפשרות: lessons ב-4 dump series של Plan G עם rabbi+book match לסדרה ייעודית)
+
 ### 2026-05-26 — TAB cleanup + PricingPage differentiation + MegilatEsther copy fix
 
 **DB:**

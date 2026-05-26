@@ -1,0 +1,19 @@
+{
+  "phase1": {
+    "completed": [
+      "בראשית",
+      "תהילים",
+      "שיר השירים"
+    ],
+    "failed": []
+  },
+  "phase2": {
+    "completed": [],
+    "failed": []
+  },
+  "phase3": {
+    "completed": [],
+    "failed": []
+  },
+  "total_cost": 0.18
+}
