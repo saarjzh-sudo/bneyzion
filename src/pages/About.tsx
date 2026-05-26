@@ -76,10 +76,11 @@ const About = () => {
                   </p>
                   <p>
                     'בני ציון' הוקמה להנצחת זכרו של{" "}
-                    <Link to="/memorial" className="text-primary font-bold hover:underline">
+                    <Link to="/memorial" className="text-foreground font-bold hover:text-primary transition-colors underline underline-offset-2 decoration-primary/40">
                       בן ציון חיים הנמן הי"ד
                     </Link>
-                    , אשר מסר נפשו בקרב עם מחבלים בשכם.
+                    {" "}— בחור ישיבה מלא חיים, אוהב תנ"ך, אשר מסר נפשו בקרב עם מחבלים בשכם.
+                    שמו הטהור נושא את שם התנועה עד היום.
                   </p>
                   <p>
                     בראש התכנית עומד <strong className="text-foreground">הרב יואב אוריאל</strong>.

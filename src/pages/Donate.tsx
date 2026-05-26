@@ -13,13 +13,13 @@
  *   1. checkbox tosAccepted dep array — useCallback includes tosAccepted ✓
  *   2. layout — sidebar={false}, wide container, sticky form ✓
  */
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import {
   Heart, Flame, Shield, Award, CheckCircle2,
   Users, BookOpen, Mic, Loader2, ShieldCheck,
   Star, Sparkles,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
@@ -57,6 +57,8 @@ function timeAgo(dateStr: string) {
 // Main component
 // ─────────────────────────────────────────────
 
+const SAADIA_DEDICATION = "סעדיה יעקב דרעי הי״ד";
+
 const Donate = () => {
   useSEO({
     title: "תרומות — בני ציון",
@@ -65,11 +67,17 @@ const Donate = () => {
     url: "https://bneyzion.co.il/donate",
   });
 
+  const [searchParams] = useSearchParams();
+  const campaign = searchParams.get("campaign");
+  const isSaadiaCampaign = campaign === "saadia";
+
   // ── Form state ────────────────────────────────
   const [amount, setAmount] = useState<number>(180);
   const [recurring, setRecurring] = useState(false);
-  const [dedication, setDedication] = useState("");
-  const [donationType, setDonationType] = useState<"regular" | "iluy_neshama" | "refua">("regular");
+  const [dedication, setDedication] = useState(isSaadiaCampaign ? SAADIA_DEDICATION : "");
+  const [donationType, setDonationType] = useState<"regular" | "iluy_neshama" | "refua">(
+    isSaadiaCampaign ? "iluy_neshama" : "regular"
+  );
   const [donorName, setDonorName] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
@@ -150,6 +158,39 @@ const Donate = () => {
 
   return (
     <Layout sidebar={false}>
+      {/* ── Saadia campaign banner ───────────────── */}
+      {isSaadiaCampaign && (
+        <div
+          style={{
+            background: `linear-gradient(90deg, ${colors.navyDeep}, #1a2744)`,
+            borderBottom: `2px solid ${colors.goldShimmer}`,
+            padding: "0.75rem 2rem",
+            textAlign: "center",
+            color: "white",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.65rem",
+          }}
+          dir="rtl"
+        >
+          <Flame size={16} style={{ color: colors.goldShimmer, flexShrink: 0 }} />
+          <span
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.9rem",
+              lineHeight: 1.5,
+              color: "rgba(255,255,255,0.9)",
+            }}
+          >
+            תרומה זו מוקדשת{" "}
+            <strong style={{ color: colors.goldShimmer }}>לעילוי נשמת סעדיה יעקב דרעי הי״ד</strong>
+            {" "}— תהא נשמתו צרורה בצרור החיים
+          </span>
+          <Flame size={16} style={{ color: colors.goldShimmer, flexShrink: 0 }} />
+        </div>
+      )}
+
       {/* ── Hero ──────────────────────────────────── */}
       <section
         style={{
@@ -312,9 +353,7 @@ const Donate = () => {
                   margin: "0 0 0.75rem",
                 }}
               >
-                לעילוי נשמת בן ציון חיים הנמן הי״ד
-                <br />
-                וסעדיה יעקב בן חיים הי״ד
+                לעילוי נשמת סעדיה יעקב בן חיים דרעי הי״ד
               </h3>
               <p
                 style={{
@@ -325,8 +364,8 @@ const Donate = () => {
                   margin: 0,
                 }}
               >
-                האתר מוקדש לזכרם של חיילי בני ציון שנפלו על קידוש השם.
-                כל שיעור שתורמים נצרב כשעת לימוד לעילוי נשמתם.
+                כל תרומה לאתר נצרבת כשעת לימוד לעילוי נשמתו.
+                שיעורי בני ציון ממשיכים את דרכו.
               </p>
             </div>
 
