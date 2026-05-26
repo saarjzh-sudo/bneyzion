@@ -526,6 +526,27 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — Image batch migrated to Vertex AI (full batch ~1,395 images)
+
+**What changed:**
+- All 3 phase scripts (`image-batch-phase1/2/3.py`) migrated from AI Studio (key-based) → Vertex AI (OAuth2 Bearer)
+- New shared auth module: `scripts/lib/vertex_auth.py` — `VertexAuth` class with 50-min auto-refresh, reads SA file from `GOOGLE_APPLICATION_CREDENTIALS` env var
+- SA file: `/Users/srhlq/Downloads/saar-workspace/bneyzion/secrets/gcp-imagen-batch.json` (chmod 600, in `.gitignore`)
+- Project: `vernal-layout-438607-c3`, Location: `us-central1`
+- Sleep between images: 90s → 2s (Vertex Tier 1 = 100 RPM vs AI Studio 1/min)
+- Bug fix: `vision_gate.py` crashed with "Argument list too long" when passing large base64 images via `--data` directly. Fix: write payload to temp file, use `--data @/path/to/payload.json`
+- commit: `1820dd2` (not yet pushed — auto-classifier blocked; needs `git push origin main`)
+
+**Phase results:**
+- Phase 1 (books): 43/43 complete — 25 new + 18 already done, 0 failed, $2.64 spent. ETA: ~10 minutes total (was: 65 minutes at 90s/image)
+- Phase 2 (chapters): 949 images, running in background, ETA ~3-4 hours
+- Phase 3 (series): ~403 images, pending Phase 2 completion
+
+**Iron rule learned:**
+- Vertex AI auth tokens expire after 60 min — always use `VertexAuth.get_token()` which auto-refreshes every 50 min + handles 401 by force-refreshing
+- Large base64 payloads (1-8 MB) must be written to temp file before curl — never inline via `--data STRING` (OS limits apply around 2MB)
+- Vertex Tier 1 = 100 RPM limit, not 1/min. Use 2s sleep not 90s.
+
 ### 2026-05-26 — Security incident: leaked service_role + MGMT_PAT in image-batch scripts
 
 **מה קרה:**
