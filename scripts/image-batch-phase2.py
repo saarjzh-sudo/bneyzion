@@ -145,7 +145,7 @@ def generate_image(content: str, outfile: Path) -> bool:
             print(f"  [IMG OK] {size_kb}KB")
             return True
         elif http_code == "429":
-            wait = 60 * (attempt + 1)
+            wait = 120 * (attempt + 1)  # 120s / 240s / 360s — Imagen Ultra quota is strict
             print(f"  [RATE LIMIT] 429 — waiting {wait}s")
             os.unlink(tmp_path)
             time.sleep(wait)
@@ -302,7 +302,7 @@ def main():
             print(f"\n--- CHECKPOINT: {count} done, ${state['total_cost']:.2f} spent ---\n")
 
         if i < len(tuples):
-            time.sleep(7)
+            time.sleep(90)  # 90s between images — Imagen Ultra quota ~1/min observed
 
     print("\n" + "=" * 60)
     print(f"Phase 2: {count} generated | {skipped} skipped | {failed} failed")
