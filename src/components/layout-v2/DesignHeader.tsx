@@ -28,26 +28,23 @@ import DarkModeToggle from "@/components/ui/dark-mode-toggle";
 
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
-// Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers" }
+// Nav items — updated 2026-05-26 per Saar:
+// Removed: ראשי (logo links home), רבנים, סדרות, קהילה, תרומות, מחירים
+// Added: אגף המורים (links to /teachers — production route)
 const NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "ראשי", href: "/" },
-  { label: "רבנים", href: "/rabbis" },
-  { label: "סדרות", href: "/series" },
   { label: "תנ״ך", href: "/bible/בראשית" },
-  { label: "קהילה", href: "/community" },
   { label: "חנות", href: "/store" },
-  { label: "תרומות", href: "/donate" },
   { label: "פרשת השבוע", href: "/parasha" },
-  { label: "מחירים", href: "/pricing" },
+  { label: "אגף המורים", href: "/teachers" },
   { label: "אודותינו", href: "/about" },
 ];
 
-// Teacher-context nav: fewer items + back-link to main site
+// Teacher-context nav: fewer items when in /teachers/* context
 const TEACHER_NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "ראשי", href: "/" },
+  { label: "תנ״ך", href: "/bible/בראשית" },
   { label: "חנות", href: "/store" },
-  { label: "תרומות", href: "/donate" },
   { label: "פרשת השבוע", href: "/parasha" },
+  { label: "אודותינו", href: "/about" },
 ];
 
 interface DesignHeaderProps {

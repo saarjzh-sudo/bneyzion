@@ -155,6 +155,8 @@ export default function DesignPreviewSeriesList() {
             overflowX: "auto",
             padding: "0.5rem 0 1.25rem",
             scrollbarWidth: "thin",
+            justifyContent: "center",
+            flexWrap: "wrap",
           }}
         >
           <button
