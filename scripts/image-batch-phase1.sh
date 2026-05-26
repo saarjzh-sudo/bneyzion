@@ -7,10 +7,11 @@
 # ============================================================
 set -euo pipefail
 
-GEMINI_KEY="AIzaSyDSFo7xhRUELzqw8ra8z1fIWvS-FqqbLV8"
-SUPABASE_URL="https://pzvmwfexeiruelwiujxn.supabase.co"
-SERVICE_KEY="SUPABASE_SERVICE_ROLE_REDACTED"
-MGMT_PAT="SUPABASE_MGMT_PAT_REDACTED"
+# Load from environment — never hardcode secrets
+GEMINI_KEY="${GEMINI_API_KEY:?GEMINI_API_KEY not set}"
+SUPABASE_URL="${SUPABASE_URL:-https://pzvmwfexeiruelwiujxn.supabase.co}"
+SERVICE_KEY="${SUPABASE_SERVICE_ROLE_KEY:?SUPABASE_SERVICE_ROLE_KEY not set}"
+MGMT_PAT="${SUPABASE_ACCESS_TOKEN:?SUPABASE_ACCESS_TOKEN not set}"
 PROJECT_REF="pzvmwfexeiruelwiujxn"
 BUCKET="bnei-zion-thumbnails"
 STATE_FILE="$(dirname "$0")/image-batch-state.json"

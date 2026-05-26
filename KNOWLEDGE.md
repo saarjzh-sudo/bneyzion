@@ -401,6 +401,7 @@ public/
 21. **Vercel rollback pattern: `vercel alias https://bneyzion-[deployment-id]-saars-projects-4508d6bb.vercel.app bneyzion.vercel.app`** — instant restore, no redeploy needed. Target the last known-good deployment URL from `vercel ls --prod`. Then promote the fixed deployment once it builds.
 22. **`DesignSidebar` is production. Never add `/design-*` links to it.** `Layout.tsx` imports `DesignSidebar` directly (since sidebar rollout). Any link inside it — even in the "ראשי" section or "רבנים" tab — reaches real users. All links must point to production routes (`/chapter-weekly`, `/rabbis/:id`, `/donate`), never to sandbox (`/design-*`). Found and fixed 2026-05-25.
 23. **Three nav arrays must stay in sync:** `FULL_NAV_LINKS` in `DesignPreviewHome.tsx`, `NAV_ITEMS` in `DesignHeader.tsx`, `NAV_ITEMS` in `DesignMobileBottomNav.tsx`. Iron rule 15 says "two navbars" but the mobile bottom nav is a third. Always update all 3.
+24. **NEVER hardcode secrets in scripts — always `os.environ.get()`/`${ENV_VAR}`.** Commit `6b57c96` (pre-cleanup SHA `743070b`) leaked both `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ACCESS_TOKEN` (Management PAT) in 4 script files (image-batch-phase1/2/3.py + phase1.sh). Discovered 2026-05-26. Fix: git-filter-repo rewrote all history; both tokens replaced with `SUPABASE_SERVICE_ROLE_REDACTED`/`SUPABASE_MGMT_PAT_REDACTED`. Scripts updated to env-var pattern. Iron rule: any script that calls Supabase must read credentials from `os.environ.get("SUPABASE_SERVICE_ROLE_KEY")` — if the env var is empty the script should fail loud (`KeyError`/`${VAR:?not set}`), never fall back to a hardcoded string.
 
 ---
 
@@ -448,7 +449,108 @@ public/
 
 ---
 
+## 6b. Image generation — locked v3 formula (approved 26.5.2026)
+
+> סאר אישר את v3 כסגנון סופי לכל תמונות האתר (ספרים, פרקים, סדרות).
+> **אסור לשנות את ה-STYLE string ללא אישור מפורש.** זהו הנוסחה הקנונית.
+
+### STYLE (fixed — do not edit)
+
+```
+Minimalist watercolor painting on white textured paper. Ultra-clean, gentle, soft,
+ethereal, atmospheric, meditative, spiritually evocative. Loose watercolor washes,
+muted pastel tones — sage green, dusty teal, soft blue-gray, warm sand, wheat,
+pale gold, quiet lavender, blush rose. Visible paper grain, gentle gradients,
+completely soft edges. No harsh lines. No dark outlines. No explicit human figures.
+ABSOLUTELY NO TEXT, NO LETTERS, NO HEBREW CHARACTERS, NO ENGLISH CHARACTERS,
+NO TYPOGRAPHY, NO CALLIGRAPHY anywhere in the image. Generous white space — leave
+the center open and luminous. Abstract representation, impressionistic style,
+spiritual ambiance.
+```
+
+### Content formula (v3) — 6 rules
+
+1. פתח ב-`Abstract spiritual representation of [theme]`
+2. הכנס **אלמנט עדין אחד** — orb / gateway / arch / petals / ripples / single flame / horizon / drop / leaves / single string of light / doorway / wisp / shadow of a mountain / single olive branch
+3. סביב האלמנט: atmospheric washes / mist / light
+4. הוסף adjective רגשי: *Delicate / subtle / intimate / quiet / tender*
+5. שלילה מפורשת: `No human figures, no faces, no letters, no text`
+6. **אסור object גרפי-מדי** (כינור שלם, חרב, כתר, סולם). אם אובייקט — *רמז* לאובייקט בלבד (מיתר זהוב יחיד, לא כינור שלם; קשת אחת, לא קרן).
+
+### דוגמאות מאושרות (canonical)
+
+**בראשית (Genesis):**
+```
+Abstract spiritual representation of creation — the first light separating from
+darkness. A single soft orb of warm gold light emerging from swirling mist, gentle
+washes of sage green and warm sand spreading outward. Delicate atmospheric layers,
+completely soft edges. No human figures, no faces, no letters, no text.
+```
+
+**תהילים (Psalms) — v3.1 תוקן 26.5.2026 (מיתר יחיד, לא כינור שלם):**
+```
+Abstract spiritual representation of prayer, praise, and the full emotional range
+of the human heart reaching toward the divine. A single golden string of light
+vibrating gently in the center, surrounded by soft watercolor washes of warm gold,
+quiet lavender, and pale rose. Tender, intimate atmosphere, generous white space.
+No human figures, no faces, no letters, no text.
+```
+
+**שיר השירים (Song of Songs):**
+```
+Abstract spiritual representation of sacred love and longing — the beloved's garden
+in bloom. Soft rose and warm gold washes with delicate petal shapes dissolving into
+mist. A single blooming arch suggested by gentle color, intimate and tender atmosphere.
+No human figures, no faces, no letters, no text.
+```
+
+### Cost reference
+- Phase 1 (43 books): ~$2.58 (43 × $0.06)
+- Phase 2 (949 chapters): ~$56.94
+- Phase 3 (403 series): ~$24.18
+- **Total estimate: ~$83.70**
+
+### Storage paths
+- Books: `bnei-zion-thumbnails/books/{slug}.png` (ASCII slug — see BOOK_SLUG dict)
+- Chapters: `bnei-zion-thumbnails/chapters/{slug}-ch{chapter}.png`
+- Series: `bnei-zion-thumbnails/series/{uuid}.png`
+
+### Iron rules for image generation (cross-session)
+- `--noproxy '*'` on all curl calls (NetSpark)
+- Resume via `scripts/image-batch-state.json` (never restart from scratch)
+- `updated_at = NOW()` on every DB UPDATE (trigger fires automatically after moddatetime extension installed 26.5.2026)
+- NO letters in generated images — always include `ABSOLUTELY NO TEXT, NO LETTERS, NO HEBREW CHARACTERS, NO ENGLISH CHARACTERS, NO TYPOGRAPHY, NO CALLIGRAPHY` in every prompt
+- Visual verifier (Chrome MCP screenshot) required after each phase completes
+
+---
+
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — Security incident: leaked service_role + MGMT_PAT in image-batch scripts
+
+**מה קרה:**
+- commit `6b57c96` (image batch infrastructure) כלל 4 scripts עם tokens hardcoded:
+  - `SUPABASE_SERVICE_ROLE_KEY` ← service_role JWT של project `pzvmwfexeiruelwiujxn`
+  - `SUPABASE_ACCESS_TOKEN` ← Supabase Management PAT (`sbp_539f...`)
+- ה-push נחסם ע"י GitHub (secret scanning) — לכן ה-tokens לא היו חשופים ב-remote
+- אך הם חיו ב-local git history
+
+**פעולות שננקטו:**
+1. גיבוי: branch `backup/pre-token-cleanup-20260526` + tag `backup-pre-token-cleanup-20260526`
+2. `git-filter-repo --replace-text` — 2 ריצות, כל history נוקה:
+   - service_role JWT → `SUPABASE_SERVICE_ROLE_REDACTED`
+   - Management PAT → `SUPABASE_MGMT_PAT_REDACTED`
+3. ה-4 scripts עודכנו ל-`os.environ.get()` / `${ENV_VAR:?}` pattern
+4. iron rule 24 נוסף ל-§5
+
+**מה עדיין פתוח:**
+- **Rotate service_role key** — חייב דרך dashboard (אין Management API endpoint לlegacy key):
+  `https://supabase.com/dashboard/project/pzvmwfexeiruelwiujxn/settings/api` → Reset
+- **`git push origin main --force`** — הcode נקי ב-local, remote עדיין עם history ישן (token חסום מ-push). צריך force push לאחר rotate.
+- **Vercel env** — אחרי rotate: עדכן `SUPABASE_SERVICE_ROLE_KEY` ב-Vercel production
+- **`api-keys.md`** — המפתח החדש ישמר שם (לא בgit)
+
+**New SHA (post-cleanup):** ה-5 commits הנראים גבוה (כולל `b7971e0`) = השניים שהיו + ה-rewrite
 
 ### 2026-05-26 — Rabbi slug URLs: /rabbis/:slug replaces UUID
 

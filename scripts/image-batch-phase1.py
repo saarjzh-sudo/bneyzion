@@ -21,11 +21,11 @@ import base64
 import tempfile
 from pathlib import Path
 
-# ── Config ────────────────────────────────────────────────────
-GEMINI_KEY = "AIzaSyDSFo7xhRUELzqw8ra8z1fIWvS-FqqbLV8"
-SUPABASE_URL = "https://pzvmwfexeiruelwiujxn.supabase.co"
-SERVICE_KEY = "SUPABASE_SERVICE_ROLE_REDACTED"
-MGMT_PAT = "SUPABASE_MGMT_PAT_REDACTED"
+# ── Config — load from environment (never hardcode secrets) ───
+GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pzvmwfexeiruelwiujxn.supabase.co")
+SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+MGMT_PAT = os.environ.get("SUPABASE_ACCESS_TOKEN", "")
 PROJECT_REF = "pzvmwfexeiruelwiujxn"
 BUCKET = "bnei-zion-thumbnails"
 COST_PER_IMAGE = 0.06
@@ -50,49 +50,50 @@ STYLE = (
 
 # ── Book descriptions (English, for Imagen) ──────────────────
 BOOK_DESC = {
-    "בראשית": "Genesis — the book of creation, the founding narratives of humanity and the patriarchs. Swirling cosmic light separating from darkness, the first dawn, gentle forms of earth and water taking shape.",
-    "שמות": "Exodus — liberation from Egypt, the journey through the desert, and the revelation at Sinai. Parting waters, desert sands, luminous cloud and fire pillars, the awe of divine encounter.",
-    "ויקרא": "Leviticus — the sacred order of priestly service, holiness, and moral law. Soft altar flames, incense wisps rising, the radiance of sanctity and purity.",
-    "במדבר": "Numbers — forty years of wandering in the wilderness, tribal community, and faith tested. Vast desert landscapes, the wandering cloud, encampments of tents under an infinite sky.",
-    "דברים": "Deuteronomy — Moses' final teachings and the covenant renewed before entering the land. A solitary figure on a mountain peak, the promised land shimmering in the distance.",
-    "יהושע": "Joshua — the crossing of the Jordan and the conquest of the land of Israel. Flowing river waters, the walls of a city dissolving into light, dawn breaking over a promised land.",
-    "שופטים": "Judges — the cycles of faith, failure, and redemption in the early settlement period. Alternating light and shadow, turbulent yet ultimately hopeful atmosphere.",
-    "שמואל": "Samuel — the rise of prophecy, the first kings, and the establishment of the monarchy in Israel. Royal purple and gold, a young prophet listening in the night, an anointing with oil.",
-    "שמואל א": "First Samuel — Eli and Samuel, the ark of the covenant, and the transition to kingship. Lamp light in the Tabernacle, the ark carried in reverence, the anointing of a shepherd king.",
-    "שמואל ב": "Second Samuel — King David's reign, his psalms, triumphs, and failures. A harp silhouetted against a golden sky, the City of David on a hill, complex human emotion in warm tones.",
-    "מלכים": "Kings — the divided monarchy, prophets like Elijah, the Temple and its destruction. The Temple's golden glory fading into twilight, a prophet's cloak blowing in the wind.",
-    "מלכים א": "First Kings — Solomon's wisdom and the Temple's construction, then the kingdom's division. The Temple's radiant glory at its peak, architectural grandeur in warm gold and cedar.",
-    "מלכים ב": "Second Kings — the fall of the northern and southern kingdoms, exile to Babylon. A city dissolving into mist, exiles journeying under a weeping sky, hope still glowing on the horizon.",
-    "ישעיהו": "Isaiah — majestic prophetic visions of justice, redemption, and the messianic era. Soaring heavenly light breaking through storm clouds, a luminous vision of peace and universal hope.",
-    "ירמיהו": "Jeremiah — the prophet of anguish witnessing Jerusalem's destruction and calling for return. Tears and grief dissolving into hope, dark storm lifting, green shoots emerging from ruins.",
-    "יחזקאל": "Ezekiel — visionary prophecy, the divine chariot, the valley of dry bones restored. Radiant cosmic wheels, a valley of bones rising with new life, ethereal divine presence.",
-    "הושע": "Hosea — the metaphor of faithful love, Israel's straying and the call to return. A tender reunion suggested in soft light, longing and forgiveness woven in warm rose and gold.",
-    "יואל": "Joel — the locust plague, repentance, and the outpouring of divine spirit. Agricultural abundance followed by desolation then restoration, the spirit poured like rain.",
-    "עמוס": "Amos — the prophet of justice, speaking for the poor against social injustice. Bold scales of justice, market scenes in muted tones, a prophetic voice cutting through complacency.",
-    "עובדיה": "Obadiah — the shortest prophetic book, addressing Edom's fall and Zion's future. A mountain landscape, an eagle descending, ultimately the victory of justice.",
-    "יונה": "Jonah — the reluctant prophet, the great fish, and divine compassion for all peoples. Deep ocean blues and greens, a small figure inside a luminous belly, dawn breaking after darkness.",
-    "מיכה": "Micah — justice, mercy, and walking humbly — the essence of moral living. Humble village life, scales of justice, the promise of an era of peace.",
-    "נחום": "Nahum — the downfall of Nineveh and divine justice against cruelty. A great city dissolving in turbulent water and wind, justice arriving like a storm.",
-    "חבקוק": "Habakkuk — the prophet who dares to question God and receives a vision of patient faith. A lone watcher on a tower, cosmic tension resolving into luminous trust.",
-    "צפניה": "Zephaniah — the day of judgment and the promise of joyful restoration. Dark clouds giving way to golden light, a remnant of quiet faithful souls.",
-    "חגי": "Haggai — the call to rebuild the Temple after the return from exile. Foundations being laid, hands working together, the renewed Temple rising in soft light.",
-    "זכריה": "Zechariah — visions of restoration, the messianic era, and Jerusalem's renewal. Luminous apocalyptic imagery softened into watercolor dreamscapes, candelabras and olive trees.",
-    "מלאכי": "Malachi — the last prophet, calling for covenant renewal before the great day. A closing chapter, the setting sun of prophecy, a small flame kept burning.",
-    "תהילים": "Psalms — the universal language of the human heart in prayer, praise, and lament. Musical waves of light, hands raised in prayer, the full emotional spectrum of human-divine relationship.",
-    "תהלים": "Psalms (alternate transliteration) — songs of praise, lament, and trust across all human experiences. Lyrical waves of soft color, an open heart reaching upward in quiet devotion.",
-    "משלי": "Proverbs — wisdom personified, practical moral teaching for everyday life. A wise elder and youth in conversation, the Tree of Life suggested in branching golden forms.",
-    "איוב": "Job — the great trial of faith, suffering, and divine encounter beyond human comprehension. Storm clouds and whirlwind giving way to awe, a figure small before cosmic vastness.",
-    "שיר השירים": "Song of Songs — the poetry of love, longing, and the sacred relationship between Israel and the divine. Blooming flowers, soft rose and gold light, the beauty of spring in the beloved's garden.",
-    "רות": "Ruth — loyalty, kindness, and the beauty of choosing belonging. Golden fields of grain at harvest time, two women walking together, warmth of Bethlehem at dusk.",
-    "קהלת": "Ecclesiastes — the search for meaning, the cycles of time, and wisdom beyond vanity. Sun rising and setting, rivers flowing to the sea, the quiet wisdom of accepting life's rhythms.",
-    "איכה": "Lamentations — mourning Jerusalem's destruction, tears, and the beginning of hope. Tears falling on ancient stones, a city in ruins softened into watercolor, a single candle still burning.",
-    "אסתר": "Esther — the hidden miracle, courage, and the reversal of decree. Royal court in soft purple and gold, a young woman standing with quiet courage, the hidden hand of providence.",
-    "דניאל": "Daniel — faith in exile, prophetic visions, and divine protection. Lions' den lit by divine light, cosmic visions, gold and blue celestial imagery.",
-    "עזרא": "Ezra — the return from exile and the restoration of Torah study. Scrolls unrolling, returnees streaming toward a rebuilt Jerusalem, the joy of homecoming.",
-    "נחמיה": "Nehemiah — rebuilding Jerusalem's walls, communal renewal, and dedicated leadership. Walls rising stone by stone, a community working together, ancient gates renewed.",
-    "דברי הימים": "Chronicles — the grand sweep of history retold with a focus on Temple worship and the covenant. Many generations, the Temple as the golden center of all history.",
-    "דברי הימים א": "First Chronicles — genealogies leading to David, the preparation for the Temple. Ancient family trees becoming living light, the arc of history bending toward the sacred.",
-    "דברי הימים ב": "Second Chronicles — Solomon's Temple and the kings of Judah through the exile. The Temple in its full glory, the long history of faithfulness, ending with hope of return.",
+    # v3-compliant descriptions — approved formula: abstract opening + single delicate element + emotional adjective + negation
+    "בראשית": "Abstract spiritual representation of creation and the first dawn. A single soft orb of warm gold light emerging from swirling mist, gentle washes of sage green and warm sand spreading outward. Delicate atmospheric layers, completely soft edges. No human figures, no faces, no letters, no text.",
+    "שמות": "Abstract spiritual representation of liberation and divine encounter in the desert. A single luminous pillar of soft light rising from warm desert washes, pale gold and dusty teal mist surrounding it. Quiet, awe-filled atmosphere. No human figures, no faces, no letters, no text.",
+    "ויקרא": "Abstract spiritual representation of holiness and priestly sanctity. A single wisp of incense smoke rising through warm gold and pale white washes, soft and ethereal. Intimate, sacred atmosphere. No human figures, no faces, no letters, no text.",
+    "במדבר": "Abstract spiritual representation of desert wandering and divine guidance. A single wandering cloud suggested in soft dusty blue-gray washes over warm sand and infinite sky. Vast, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "דברים": "Abstract spiritual representation of covenant and the promised land on the horizon. A single distant horizon glowing with warm gold light through soft mountain mist, quiet and contemplative. Subtle, meditative atmosphere. No human figures, no faces, no letters, no text.",
+    "יהושע": "Abstract spiritual representation of crossing and homecoming. A single flowing river of soft blue-green dissolving into light, walls of mist parting on either side. Hopeful, luminous atmosphere. No human figures, no faces, no letters, no text.",
+    "שופטים": "Abstract spiritual representation of cycles of light and shadow, faith and redemption. A single arc of light breaking through turbulent washes of dark indigo and warm gold, resolved into stillness. Quiet, hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "שמואל": "Abstract spiritual representation of prophecy and sacred calling in the night. A single lamp of warm amber light glowing softly in darkness, surrounded by royal purple and gold washes. Intimate, reverent atmosphere. No human figures, no faces, no letters, no text.",
+    "שמואל א": "Abstract spiritual representation of covenant, the ark, and divine presence. A single radiant doorway of soft golden light in the Tabernacle, delicate warm washes surrounding it. Tender, reverent atmosphere. No human figures, no faces, no letters, no text.",
+    "שמואל ב": "Abstract spiritual representation of David's reign and the emotional depth of kingship. A single golden string of light vibrating over a hillside of warm ochre and dusky rose. Complex, intimate atmosphere, full of feeling. No human figures, no faces, no letters, no text.",
+    "מלכים": "Abstract spiritual representation of royal glory and prophetic fire. A single flame of deep gold flickering at the edge of twilight washes, the Temple's light fading into soft indigo. Meditative, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "מלכים א": "Abstract spiritual representation of Solomon's wisdom and the Temple's radiant glory. A single arch of warm cedar and gold light, architectural grandeur dissolved into soft watercolor. Luminous, intimate atmosphere. No human figures, no faces, no letters, no text.",
+    "מלכים ב": "Abstract spiritual representation of exile and lingering hope. A single glowing ember of light on the far horizon, a city dissolving into soft mist and indigo washes. Quiet, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "ישעיהו": "Abstract spiritual representation of prophetic vision and messianic light. A single shaft of heavenly light breaking through storm-cloud washes, pure and luminous. Majestic, ethereal atmosphere. No human figures, no faces, no letters, no text.",
+    "ירמיהו": "Abstract spiritual representation of grief and the green shoots of hope after destruction. A single green tendril emerging from dark storm washes, delicate and alive. Tender, sorrowful-yet-hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "יחזקאל": "Abstract spiritual representation of divine vision and cosmic renewal. A single radiant wheel of soft light, ethereal and otherworldly, surrounded by gold and celestial blue washes. Awe-filled, meditative atmosphere. No human figures, no faces, no letters, no text.",
+    "הושע": "Abstract spiritual representation of faithful love and the call to return. A single soft rose-gold glow suggested in mist, longing and forgiveness woven in warm rose and quiet gold washes. Tender, intimate atmosphere. No human figures, no faces, no letters, no text.",
+    "יואל": "Abstract spiritual representation of repentance and the spirit poured like rain. A single drop of light falling into still water, ripples spreading outward in soft blue and green washes. Quiet, restorative atmosphere. No human figures, no faces, no letters, no text.",
+    "עמוס": "Abstract spiritual representation of justice and the call to moral living. A single shaft of clear light cutting through heavy washes of dusty earth tones, resolving into stillness. Subtle, serious atmosphere. No human figures, no faces, no letters, no text.",
+    "עובדיה": "Abstract spiritual representation of divine justice and Zion's future. A single mountain peak bathed in soft gold light above turbulent indigo washes, victorious and quiet. Delicate, hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "יונה": "Abstract spiritual representation of deep ocean, darkness, and divine compassion. A single luminous orb glowing deep beneath soft ocean-blue washes, then a dawn breaking above. Quiet, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "מיכה": "Abstract spiritual representation of justice, mercy, and humble living. A single gentle pathway of warm light through muted earth tones, soft and unhurried. Intimate, quiet atmosphere. No human figures, no faces, no letters, no text.",
+    "נחום": "Abstract spiritual representation of divine justice arriving like a storm. A single wave of turbulent water dissolving into mist and clearing light, power becoming stillness. Subtle, serious atmosphere. No human figures, no faces, no letters, no text.",
+    "חבקוק": "Abstract spiritual representation of patient faith and luminous trust. A single watchtower silhouette suggested in misty washes, cosmic tension resolving into soft gold light. Quiet, contemplative atmosphere. No human figures, no faces, no letters, no text.",
+    "צפניה": "Abstract spiritual representation of judgment giving way to joyful restoration. A single break of golden light piercing dark cloud washes, remnant warmth glowing softly. Delicate, hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "חגי": "Abstract spiritual representation of rebuilding and renewed dedication. A single foundation stone of warm sandstone suggested in soft light, the Temple rising in misty gold above it. Quiet, hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "זכריה": "Abstract spiritual representation of messianic visions and Jerusalem's renewal. A single candelabra of soft gold light dissolved into watercolor dreamscapes, olive branches as delicate washes. Luminous, ethereal atmosphere. No human figures, no faces, no letters, no text.",
+    "מלאכי": "Abstract spiritual representation of the final prophet and covenant renewal. A single small flame kept burning at the edge of a setting sun, warm gold dissolving into soft indigo. Tender, contemplative atmosphere. No human figures, no faces, no letters, no text.",
+    "תהילים": "Abstract spiritual representation of prayer, praise, and the full emotional range of the human heart reaching toward the divine. A single golden string of light vibrating gently in the center, surrounded by soft watercolor washes of warm gold, quiet lavender, and pale rose. Tender, intimate atmosphere, generous white space. No human figures, no faces, no letters, no text.",
+    "תהלים": "Abstract spiritual representation of song, lament, and devotion — the psalms as living prayer. A single lyrical arc of soft warm light rising through pale lavender and rose washes. Quiet, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "משלי": "Abstract spiritual representation of wisdom and the Tree of Life. A single branching form of golden light, delicate and luminous, suggested in warm gold washes against soft white space. Intimate, gentle atmosphere. No human figures, no faces, no letters, no text.",
+    "איוב": "Abstract spiritual representation of divine encounter through suffering and awe. A single figure-less whirlwind of soft indigo and silver light, immense yet somehow tender. Awe-filled, humble atmosphere. No human figures, no faces, no letters, no text.",
+    "שיר השירים": "Abstract spiritual representation of sacred love and the beloved's garden in bloom. A single blooming arch of soft rose and warm gold petals dissolving into mist, spring light all around. Intimate, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "רות": "Abstract spiritual representation of loyalty, kindness, and harvest belonging. A single golden wheat stalk standing in warm harvest light, dusty teal and golden washes. Warm, quiet atmosphere. No human figures, no faces, no letters, no text.",
+    "קהלת": "Abstract spiritual representation of time's cycles and the search for meaning. A single sun arc traced in warm ochre and gold, rivers of soft blue flowing beneath. Contemplative, wise atmosphere. No human figures, no faces, no letters, no text.",
+    "איכה": "Abstract spiritual representation of mourning and the first ember of hope. A single candle flame in soft warm gold, ancient stone washes in muted grey and rose around it. Sorrowful, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "אסתר": "Abstract spiritual representation of hidden providence and quiet courage. A single doorway of soft purple and gold light, the hidden hand of providence suggested in gentle washes. Intimate, mysterious atmosphere. No human figures, no faces, no letters, no text.",
+    "דניאל": "Abstract spiritual representation of faith in exile and celestial vision. A single orb of divine light illuminating deep gold and celestial blue washes, radiant and protected. Awe-filled, ethereal atmosphere. No human figures, no faces, no letters, no text.",
+    "עזרא": "Abstract spiritual representation of return from exile and Torah restored. A single scroll-curve of soft warm light unfurling through Jerusalem-gold and sage green washes. Joyful, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "נחמיה": "Abstract spiritual representation of rebuilding and communal renewal. A single ancient gate suggested in warm sandstone washes, walls rising in soft light around it. Quiet, hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "דברי הימים": "Abstract spiritual representation of history's arc bending toward the sacred. A single luminous Temple at the center of layered gold and earth-tone washes, generations of light converging. Meditative, grand atmosphere. No human figures, no faces, no letters, no text.",
+    "דברי הימים א": "Abstract spiritual representation of sacred lineage and preparation for the Temple. A single arc of living light tracing a family tree, ancient gold and warm sand washes. Delicate, reverent atmosphere. No human figures, no faces, no letters, no text.",
+    "דברי הימים ב": "Abstract spiritual representation of the Temple in its full glory and the long arc of faithfulness. A single radiant Temple silhouette suggested in warm gold light, ending with a horizon of hope. Luminous, tender atmosphere. No human figures, no faces, no letters, no text.",
 }
 
 # ── State management ──────────────────────────────────────────

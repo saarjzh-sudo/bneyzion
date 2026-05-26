@@ -24,11 +24,11 @@ import tempfile
 import urllib.parse
 from pathlib import Path
 
-# ── Config ────────────────────────────────────────────────────
-GEMINI_KEY = "AIzaSyDSFo7xhRUELzqw8ra8z1fIWvS-FqqbLV8"
-SUPABASE_URL = "https://pzvmwfexeiruelwiujxn.supabase.co"
-SERVICE_KEY = "SUPABASE_SERVICE_ROLE_REDACTED"
-MGMT_PAT = "SUPABASE_MGMT_PAT_REDACTED"
+# ── Config — load from environment (never hardcode secrets) ───
+GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pzvmwfexeiruelwiujxn.supabase.co")
+SERVICE_KEY = os.environ.get("SUPABASE_SERVICE_ROLE_KEY", "")
+MGMT_PAT = os.environ.get("SUPABASE_ACCESS_TOKEN", "")
 PROJECT_REF = "pzvmwfexeiruelwiujxn"
 BUCKET = "bnei-zion-thumbnails"
 COST_PER_IMAGE = 0.06
