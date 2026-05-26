@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-26 (session 2)
+**Last updated:** 2026-05-26 (session 3)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -438,6 +438,36 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — Bible tagging: series.bible_book + lessons.bible_book + lessons.bible_chapter (session 3)
+
+**סטטוס scraper (live run PID 16513 מ-25.5.2026):**
+- ה-live run לא כתב שום דבר ל-DB. updated_at האחרון = 18.5.2026.
+- ה-scraper רץ על האייר בלי `--noproxy '*'` → NetSpark חסם את הכתיבה ל-Supabase.
+- 815 שיעורים מועמדים לעדכון — נשארים פתוחים לסשן עתידי כשיש SSH לאייר.
+
+**תיקון TAB ב-audio_url:**
+- 2 שיעורים עם TAB character בתחילת audio_url תוקנו ב-regexp_replace.
+- `trim()` ב-PostgreSQL לא מסיר TAB — חייבים `regexp_replace(url, E'^[\\t\\n\\r\\s]+', '')`.
+
+**שלב 4 — bible_book backfill:**
+- `ALTER TABLE series ADD COLUMN bible_book text` — בוצע דרך Management API.
+- `scripts/backfill-series-bible-book.mjs --write` הריץ: 1,104/1,113 סדרות עודכנו (9 נכשלו בגלל schema cache lag של supabase-js — ניתן לטפל בהרצה חוזרת).
+- UPDATE lessons מ-series: `UPDATE lessons SET bible_book = s.bible_book FROM series WHERE l.series_id = s.id AND l.bible_book IS NULL AND s.bible_book IS NOT NULL` → 8,298 שיעורים עודכנו.
+- **תוצאה: 9,283/12,718 שיעורים published עם bible_book — 73.0% (מ-9% לפני).**
+- **תורה מיוצגת כעת:** בראשית 828, שמות 755, במדבר 720, ויקרא 409, דברים 390.
+
+**שלב bible_chapter:**
+- סקריפט חדש: `scripts/tag-bible-chapter.mjs`
+- Extracts chapter from lesson.title: "פרק X" (עברית/ערבי), range "פרקים א-ב" → ראשון, "מזמור X" (תהלים).
+- GEMATRIA table מלא עד 150.
+- write: 3,159 שיעורים עודכנו עם bible_chapter.
+- **תוצאה: 3,299/12,718 שיעורים published עם bible_chapter — 25.9% (מ-1.4% לפני).**
+
+**Iron rules שנלמדו:**
+- `trim()` ב-PostgreSQL לא מסיר TAB — חובה `regexp_replace` עם `E'^[\\t...]+' '`.
+- supabase-js schema cache לא מתעדכן מיד אחרי `ALTER TABLE` — אם יש FAILs על "column not found", להמתין/להריץ שוב דרך Management API ישירות.
+- ה-service_role key נמצא ב-`.env` בשם `SUPABASE_SERVICE_ROLE_KEY` (לא `SUPABASE_SERVICE_KEY`). הסקריפט `backfill-series-bible-book.mjs` מצפה ל-`SUPABASE_SERVICE_KEY` — לשים לב.
 
 ### 2026-05-26 — Migration check, bible_book backfill script, RabbiPage TOC+sort
 
