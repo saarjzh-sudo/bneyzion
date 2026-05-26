@@ -3374,3 +3374,50 @@ significant change must update it. The agent enforces this.*
 **Iron rule learned:**
 - DB queries (Supabase Management API) דורשות אישור מפורש מסאר ב-auto mode — auto classifier חוסם. תמיד לדווח לסאר ולחכות לאישור לפני שאילתות data-check על production.
 - לפני תיקוני donate/memorial — לבדוק האם `Donate.tsx` הוא הקובץ הפעיל (vs `DesignPreviewDonate.tsx`). ב-App.tsx: route `/donate` מפנה ל-`Donate` (production), לא ל-sandbox.
+
+---
+
+### 2026-05-26 — Plan B+A: שיוך 1,400 יתומים + Teachers Audit
+
+**מה נעשה:**
+
+**Plan B — 918 lessons ל-3 ספרים גדולים:**
+- ירמיהו (308 lessons) → series `76c7c4b9` "ספר ירמיהו" (59 lessons לפני, 367 אחרי)
+- ישעיהו (333 lessons) → series `cfb7da1a` "ישעיהו - מוקלט | ללא טעמים" (65 לפני, 398 אחרי)
+- יחזקאל (277 lessons) → series `63aac39b` "יחזקאל - מוקלט | אשכנזי" (68 לפני, 345 אחרי)
+- כל שלוש target series: status=active, audience_tags=['general'] — לא teachers
+
+**Plan A — 482 lessons שאר:**
+- נוצרה series חדשה `cab4229a-50d5-495e-9b68-b1967355fc6c` "שיעורים כלליים"
+  - audience_tags: ['general'], status: active
+  - 439 ללא bible_book, 21 יהושע, 17 שמות, 5 שופטים
+- כל 482 שויכו לסדרה חדשה זו
+
+**אימות:** `SELECT COUNT(*) FROM lessons WHERE series_id IS NULL` = **0**
+
+**הערה על counts:** הסשן הקודם דיווח 863+316=1,179. בפועל: 918+482=1,400. הפרש של ~196 — כנראה rescrape PID 2281 הוסיף lessons בינתיים.
+
+**Teachers Audit — ממצאים:**
+
+1. **שמות חשודים:** אין — 0 series general עם שמות "מורים/חינוך/פדגוגיה" וכד'.
+
+2. **Lesson↔series mismatch:**
+   - 0 lessons עם teachers tag בתוך series general בלבד (נקי)
+   - **34 lessons general בתוך series teachers-only** — 18 series מעורבות:
+     שמואל א (5), יהושע (4), איוב (4), דגשים לפרשות חומש במדבר (2), שופטים (2), דברים (2), בראשית (2), שמות (2), מאגר עזרי הלמידה (2), ועוד 9 series עם 1 כל אחת.
+   - **הסיבה הסבירה:** lessons אלה מיובאים מ-Umbraco ללא audience_tag, קיבלו ברירת מחדל 'general'. Series שלהם teachers. זה mismatch תיוג, לא בעיית תוכן.
+
+3. **Rabbi-as-proxy:** הרב ניסים כהן — 2 series teachers+general ("דפי עבודה - ויקרא/שמות") — תקין, כי הן באמת teachers+general.
+   - ושננתם + הרב בן ארצי: מעורב teachers + general — מתאים.
+   - אין רב שכל content שלו teachers ועדיין series general לא מסומנות.
+
+4. **Status anomaly:** 10 series עם audience_tags@>'{teachers}' ו-status=active (במקום published):
+   - כולן "דפי עבודה" (הושע, יונה, יחזקאל, ירמיהו, ישעיהו, מלכים א+ב, עובדיה) + "חידות לילדים - פרשת השבוע" + "מפות עזר לתנ"ך"
+   - כולן teachers+general — לא בעיה כרגע, hooks מסננות לפי audience_tag לא status
+
+**המלצה לסאר:**
+- **34 lessons general בתוך teachers series** — לתקן לפני image gen. פתרון: `UPDATE lessons SET audience_tags = ARRAY['teachers','general'] WHERE series_id IN (18 series IDs) AND audience_tags = ARRAY['general']`. מחכה לאישור.
+- שאר: נקי לפני image gen.
+
+**Files created:**
+- KNOWLEDGE.md (עדכון זה)
