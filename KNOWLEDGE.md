@@ -404,21 +404,24 @@ public/
 
 ---
 
-## 6. Content state (as of 2026-05-26 — post bible_book backfill)
+## 6. Content state (as of 2026-05-26 — session 5)
 
 | Metric | Value |
 |--------|-------|
 | Total lessons | 13,172 (was 11,818 in Apr 2026) |
 | Published | 12,718 (97%) |
 | With bible_book tagged | **9,542 (72.4%)** — post backfill (was 9% on 25.5) |
-| With bible_chapter tagged | **3,366 (25.6%)** — post tag-bible-chapter.mjs (was 1.4% on 25.5) |
+| With bible_chapter tagged | **4,126 (31.3%)** — post tag-bible-chapter-from-series.mjs (was 25.6% → session 5) |
 | With audio | ~6,432 (not re-counted after teacher aids insert) |
 | With video | ~820+ |
 | With PDF | ~963+ |
+| With thumbnail_url | 41 (0.3%) — almost all fall to placeholder |
 | Drafts remaining | ~461 (navigation pages + truly empty) |
 | Total series | 1,526 (was 1,374 — grew after teacher aids insert) |
-| Series with bible_book | **1,104 (72.3%)** — post backfill-series-bible-book.mjs |
+| Series with bible_book | **1,113 (72.9%)** — re-ran backfill session 5 (was 1,104 — 9 fixed) |
 | Series with lessons | 921 |
+| Empty series total | 605 (of which: 51 container-categories-by-design, 554 truly empty) |
+| Empty series — active | 7 (suspicious: "פרשת שבוע בראשית" etc — no rabbi, lesson_count=0) |
 | Total rabbis | 203 |
 | Topics | 741 |
 | Products (active) | 47 |
@@ -446,6 +449,40 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — Session 5: bible tagging cleanup + audit D/E (session 5)
+
+**A — תיקון 9 series שנכשלו ב-schema cache:**
+- `scripts/backfill-series-bible-book.mjs` שולף מ-branch `feature/rabbi-page-toc-sort` (לא היה ב-main)
+- הרצת `--write` מחדש — 1,113/1,526 series עם bible_book (72.9%), עלייה מ-1,104
+- commit: `301b06a`
+
+**B — TAB cleanup בעמודות URL:**
+- **נדחה** — rescrape-lesson-media.mjs רץ על המיני (PID 2281) וכותב לאותן עמודות. יבוצע רק אחרי סיום ה-rescrape.
+
+**C — bible_chapter from series.title:**
+- סקריפט חדש: `scripts/tag-bible-chapter-from-series.mjs`
+- 667 series עם chapter ניתן לחילוץ. 760 lessons עודכנו.
+- bible_chapter coverage: **25.6% → 31.3%** (4,126/13,172 lessons)
+- patterns: "פרק N" (arabic/hebrew/range/gershayim), "מזמור X"
+- commit: `301b06a`
+
+**D — audit thumbnail_url (SELECT בלבד):**
+- **41** lessons עם thumbnail_url (0.3% בלבד!)
+- **0** lessons שנופלים ל-series.image_url fallback — כי series.image_url גם כן NULL לכולם
+- **12,677** published lessons נופלים לפלייסהולדר
+- Top series עם הכי הרבה placeholder: "מידות בפרשה" (268), "לשון הקודש בפרשה" (268), "עולמות חדשים בפרשה" (163)
+- **ממצא קריטי:** 1,204 שיעורים published בלי series_id כלל — כולם placeholder
+
+**E — audit 605 series ללא lessons (SELECT בלבד):**
+- **51** מתוך 605 = container categories by design (יש להם child series, לא אמורים לקבל שיעורים ישירים)
+  - דוגמאות: "כל השיעורים בספר יהושע" (17 child), "כל השיעורים בספר שמואל ב'" (29 child)
+- **554** truly empty (לא child, לא lessons):
+  - 194 draft → נורמלי
+  - 189 published → **בעייתי** — published series ריקות נראות רע ב-UI
+  - 164 category → בינוני (containers ללא תוכן)
+  - 7 active → **הכי דחוף** — "פרשת שבוע בראשית/במדבר/דברים", "שיעורים חומש בראשית/שמות", "שיעורים יהושע", "שיעורים על התנך ירמיהו" — אין rabbi, lesson_count=0
+- **המלצה לסאר:** 7 active empty → לסמן archived. 189 published → לבחור: archive או להזין תוכן.
 
 ### 2026-05-26 — ייבוא מזיפ: dor-haplaot hero image + booklet popup + OS Antidot TR fonts
 
