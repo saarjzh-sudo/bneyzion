@@ -151,7 +151,7 @@ The `env -u HTTPS_PROXY -u HTTP_PROXY` strips NetSpark proxy.
 |-------|------|---------|
 | `lessons` | 11,818 | title, content (HTML), audio_url, video_url, attachment_url, source_type, rabbi_id, series_id, status, bible_book, bible_chapter, duration, thumbnail_url, **audience_tags TEXT[]** |
 | `series` | 1,374 | hierarchical (parent_id), lesson_count, rabbi_id, status, image_url, **audience_tags TEXT[]** |
-| `rabbis` | 203 | name, title, bio, image_url, lesson_count |
+| `rabbis` | 203 | name, **slug** (unique, NOT NULL — added 26.5.2026), title, bio, image_url, lesson_count |
 | `topics` | 741 | slug-based navigation categories |
 | `lesson_topics` | 12,907 | many-to-many lessons↔topics |
 
@@ -449,6 +449,32 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — Rabbi slug URLs: /rabbis/:slug replaces UUID
+
+**DB:**
+- `ALTER TABLE rabbis ADD COLUMN slug TEXT NOT NULL`
+- 203 unique slugs populated: manual for Tier 1+2 + ~30 prominent (e.g. `reuven-sasson`, `eliezer-kashtiel`, `shmuel-eliyahu`, `yoav-uriel`, `yondav-zer`); auto-transliteration for rest
+- `CREATE UNIQUE INDEX rabbis_slug_unique ON rabbis(slug)`
+- snapshot: `scripts/rabbi-slugs-snapshot-20260526.json` + `/tmp/rabbi-slugs-20260526.json`
+- script: `/tmp/build-rabbi-slugs.py`
+
+**Frontend (commit `363adfd`):**
+- `src/hooks/useRabbi.ts` — `useRabbiBySlug(slug)` + `useRabbi(uuid)` + `isUUID()` helper
+- `src/pages/RabbiPage.tsx` — UUID param → fetch by id → `navigate(slug, replace: true)`; slug param → `useRabbiBySlug`
+- `src/components/cards/RabbiCard.tsx` — accepts `slug?` prop, links to `slug ?? id`
+- `src/pages/RabbisList.tsx` — passes `slug` to `RabbiCard`
+- `src/components/layout-v2/DesignSidebar.tsx` — links to `slug ?? id`
+- `src/components/search/GlobalSearch.tsx` + `src/hooks/useGlobalSearch.ts` — fetches+uses `slug`
+- `src/components/about/AboutRabbisSection.tsx` — links to `slug ?? id`
+- `src/integrations/supabase/types.ts` — `slug: string` added to rabbis Row/Insert/Update
+- `api/sitemap.js` — uses `r.slug ?? r.id` for rabbi URLs
+
+**Iron rule learned:**
+- After `ALTER TABLE` on Supabase, always update `src/integrations/supabase/types.ts` manually (or regenerate). The auto-generated types stay stale until regenerated — causes TS errors on `.eq("slug", ...)` calls.
+- Supabase Management API returns `[]` for DDL success (not `[{result}]`) — that's correct, not an error.
+
+**Commit `363adfd` — not yet pushed (waiting for Saar approval).**
 
 ### 2026-05-26 — Orphan lesson rehoming: 649 lessons moved from 4 dump series to 36 specific series
 
