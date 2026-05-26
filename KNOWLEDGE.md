@@ -552,6 +552,17 @@ No human figures, no faces, no letters, no text.
 
 **New SHA (post-cleanup):** ה-5 commits הנראים גבוה (כולל `b7971e0`) = השניים שהיו + ה-rewrite
 
+### 2026-05-26 — Image batch v3 style lock + תהילים v3.1 regen
+
+- KNOWLEDGE.md §6b added: locked v3 formula (STYLE + 6 content rules + 3 canonical examples)
+- All 43 BOOK_DESC entries audited and rewritten to v3 spec (abstract opening + single element + emotional adjective + negation of figures/text)
+- 18 problematic entries fixed: explicit figures (דברים, שמואל, יונה, חבקוק, צפניה, אסתר, רות), graphic objects (שמואל ב full harp→single string, יחזקאל bones→wheel, עמוס scales→shaft of light), body parts (חגי hands→foundation stone, נחמיה community→gate), multi-person (משלי two figures→branching light)
+- תהילים v3.1: "single golden string of light" replaces original "Musical waves of light, hands raised" — per Saar feedback (no full harp, no hands raised)
+- `scripts/regen-tehilim-only.py` created for single-book regen with Desktop save + Storage upload + DB update
+- tehilim-v3.1.png saved to `Desktop/bnei-zion-test-3-books/tehilim-v3.1.png` for Saar review
+- State: Phase 1 completed = [בראשית, שיר השירים, תהילים] | total_cost = $0.24
+- **STOP — awaiting Saar approval of tehilim-v3.1.png before Phase 1 full batch (40 remaining books)**
+
 ### 2026-05-26 — Rabbi slug URLs: /rabbis/:slug replaces UUID
 
 **DB:**
