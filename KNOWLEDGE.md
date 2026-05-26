@@ -439,6 +439,37 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — Migration check, bible_book backfill script, RabbiPage TOC+sort
+
+**Migration `20260430_weekly_program_foundation.sql` — סטטוס: כבר הורץ.**
+בדיקה מול DB אישרה שכל הרכיבים קיימים:
+- `user_access_tags` — קיים (99 שורות עם tag=program:weekly-chapter מ-24.5.2026)
+- `weekly_program_progress` — קיים
+- `community_courses.program_slug / access_type / access_tag` — קיימים
+- `community_course_lessons.layer_type / week_number / bible_book / ...` — קיימים
+- `has_access_tag()` function — קיימת
+- `community_course_lessons` ריקה (0 שורות) — תוכן עדיין לא הוזן, זה תקין
+- **Iron rule:** לפני הרצת migration — תמיד לבדוק קודם ב-`information_schema.columns` ב-Management API.
+
+**`series.bible_book` — אין עמודה.**
+טבלת `series` לא כוללת עמודת `bible_book`. ה-`sortByBiblicalOrder()` עובד על title ישיר — זה מספיק לדף הרב. backfill נדרש רק לפונקציות `/bible-book/:book` ולquery מבוסס ספר.
+
+**Script חדש: `scripts/backfill-series-bible-book.mjs`**
+- Dry-run: 72.9% כיסוי (1113/1526 series)
+- Patterns: ספר X, חומש X, X בבקיאות, X פרק Y, מזמור X (→תהלים), פרשת X (→ספר תורה), מענה X (→איוב), דפי עבודה-X, חמאה ודבש-X, הפטרות X, על פרשיות X, מגילת X
+- 413 unmatched — נושאיים כלליים ללא שם ספר בכותרת
+- **הפעלה:** `SUPABASE_SERVICE_KEY=... SUPABASE_MGMT_TOKEN=... node scripts/backfill-series-bible-book.mjs` (dry-run)
+- **לכתיבה:** הוסף `--write`. לשלב lessons: `--write --lessons`
+- **חסום על אישור סאר** לפני --write
+
+**RabbiPage.tsx — TOC + מיון תנ"כי בפרודקשן**
+- `src/pages/RabbiPage.tsx` עודכן: series ממוינות לפי `sortByBiblicalOrder()`, TOC sticky מופיע כשיש >2 ספרים, series מוצגות מקובצות לפי ספר
+- שמר: Layout, useSEO, formatRabbiName, כל ה-routes הקיימים
+- Branch: `feature/rabbi-page-toc-sort` (commit `aa53f3e`) — ממתין ל-merge מסאר
+- **לא** merge ישיר ל-main — PR בלבד (שינוי production)
+
+**Iron rule שנלמד:** סקריפטי `scripts/*.mjs` שמשתמשים ב-Management API ב-fetch חייבים tokens דרך env vars בלבד. GitHub push protection חוסם commits עם `sbp_*` hardcoded — גם ב-string constants. תמיד `SUPABASE_MGMT_TOKEN=process.env.SUPABASE_MGMT_TOKEN`.
+
 ### 2026-05-26 — תיקון 3 רגרסיות: About לינק, Donate campaign handler, Footer memorial
 
 - **About.tsx** — החזרה של `<Link to="/memorial">` סביב "בן ציון חיים הנמן הי״ד". הסשן הקודם הסיר את הלינק והשאיר `<strong>` בלבד — זו רגרסיה לפי הנחיית יואב המפורשת.
