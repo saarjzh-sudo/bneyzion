@@ -45,6 +45,7 @@ function withCacheBustedImage(url?: string | null, updatedAt?: string, width = 6
 
 function getChapterForMiracle(miracleNumber: number, chapters: Chapter[]): Chapter | undefined {
   return chapters.find(ch => {
+    if (!ch.miracle_range) return false;
     const [start, end] = ch.miracle_range.split("-").map(Number);
     return miracleNumber >= start && miracleNumber <= end;
   });
@@ -53,7 +54,7 @@ function getChapterForMiracle(miracleNumber: number, chapters: Chapter[]): Chapt
 function ShareButtons({ miracle }: { miracle: Miracle }) {
   const [copied, setCopied] = useState(false);
   const url = `${window.location.origin}/dor-haplaot?nes=${miracle.number}`;
-  const text = `🇮🇱 נס מספר ${miracle.number}: ${miracle.title}\n${miracle.body_intro.slice(0, 100)}...\nקראו את הטור המלא:\n${url}`;
+  const text = `🇮🇱 נס מספר ${miracle.number}: ${miracle.title}\n${(miracle.body_intro ?? "").slice(0, 100)}...\nקראו את הטור המלא:\n${url}`;
 
   const shareWhatsApp = () => window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
   const shareFacebook = () => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
@@ -109,7 +110,7 @@ function MiracleCard({ miracle, onClick, chapters }: { miracle: Miracle; onClick
               </p>
             )}
             <p className="font-ploni font-bold text-sm text-[hsl(30_25%_30%)] leading-relaxed line-clamp-2">
-              {miracle.body_intro.slice(0, 120)}...
+              {(miracle.body_intro ?? "").slice(0, 120)}...
             </p>
           </div>
         </div>
