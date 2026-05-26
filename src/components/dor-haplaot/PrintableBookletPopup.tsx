@@ -62,7 +62,7 @@ export default function PrintableBookletPopup({ open, onClose }: { open: boolean
                 <img src={bookletCover} alt="חוברת דור הפלאות" className="w-56 h-auto rounded-lg shadow-md" />
               </div>
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px] text-center">
-                מוזמנים לקבל את <strong className="text-[hsl(0_60%_25%)]">כל 64 הניסים בחוברת מעוצבת להדפסה</strong> — עם חיבור תנ״כי מרומם לכל נס!
+                מוזמנים לקבל את <strong className="text-[hsl(0_60%_25%)]">כל 70 הניסים בחוברת מעוצבת להדפסה</strong> — עם חיבור תנ״כי מרומם לכל נס!
               </p>
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px] text-center">
                 תרמו ל<strong className="text-[hsl(0_60%_25%)]">בניית אתר התנ״ך השלם לזכר סעדיה דרעי הי״ד</strong>{" "}
@@ -120,7 +120,7 @@ export default function PrintableBookletPopup({ open, onClose }: { open: boolean
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px] text-center">
                 <strong className="text-[hsl(142_50%_25%)]">תודה ענקית!</strong>
                 <br />
-                הנה החוברת המלאה להדפסה — 64 ניסים עם חיבור תנ״כי.
+                הנה החוברת המלאה להדפסה — 70 ניסים עם חיבור תנ״כי.
                 <br />
                 שתפו עם חברים ומשפחה! 🇮🇱
               </p>
