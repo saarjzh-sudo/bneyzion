@@ -450,6 +450,36 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — דור הפלאות: 64→70 ניסים + PDF חדש + תמונות חדשות
+
+**DB:**
+- 6 ניסים חדשים נוספו (65-70) + כל 64 הקיימים עודכנו (image_url + title corrections)
+- Chapter 8 miracle_range עודכן: `54-64` → `54-70`
+- עמודות DB בשימוש: `number, title, body_miracle, image_url, chapter_number, status, updated_at`
+- 9 כותרות תוקנו (דוגמאות: "האירני" ← "האירני", "חימושית" ← "חימושית")
+
+**Storage:**
+- bucket חדש `miracle-images` נוצר על `pzvmwfexeiruelwiujxn` (הפרויקט הראשי)
+- 71 תמונות PNG (109MB) → JPEG 1200px q85 (16MB) → uploaded לבאקט החדש
+- תמונות PDF בנויות ב-600px q72 (3MB) — גרסה קטנה רק ל-PDF
+- image_url עם format: `https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/miracle-images/miracle-XX.jpg`
+- הבאקט הישן `eqqrafxdtxpypxdmyyix/miracle-images` = don't touch (פרויקט נפרד, אין גישה)
+
+**PDF:**
+- ישן: `dor-haplaot-booklet.pdf` 6.9MB (64 ניסים, פונטים שגויים)
+- חדש: 3.9MB, 81 עמודים (כריכה + הקדמה + 8 חלקי פרק + 70 ניסים + אחרית דבר)
+- פונטים: Kedem Serif (כותרות) + Ploni (גוף) — מהפולדר `public/fonts/`
+- בנוי ב-playwright-core + Chrome headless (`/Applications/Google Chrome.app/...`)
+- URLs ו-WA links נוקו מהטקסט לפני הדפסה
+- commit: `e492eee`
+
+**Popup:**
+- `PrintableBookletPopup.tsx` עודכן: "64 ניסים" → "70 ניסים" בשלבים 1 ו-3
+
+**Iron rule:**
+- `eqqrafxdtxpypxdmyyix` = פרויקט conference ישן. ה-mgmt token שלנו לא מכסה אותו. לעולם לא לנסות Upload לשם.
+- עיבוד PDF: תמיד בנה גרסת תמונות נפרדת (קטנה) ל-PDF vs. עמוד אתר (גדולה). embed base64 HTML ← 600px/72q. storage upload ← 1200px/85q.
+
 ### 2026-05-26 — Session 6: 7 empty-active series archived + 1,204 orphan lessons discovery
 
 **משימה 1 — archive 7 series ריקות (active + 0 lessons + 0 rabbi):**
