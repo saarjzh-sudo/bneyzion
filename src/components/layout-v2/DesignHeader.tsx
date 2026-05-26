@@ -28,20 +28,18 @@ import DarkModeToggle from "@/components/ui/dark-mode-toggle";
 
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
-// Nav items — updated 2026-05-26 per Saar:
-// Removed: ראשי (logo links home), רבנים, סדרות, קהילה, תרומות, מחירים
-// Added: אגף המורים (links to /teachers — production route)
+// Nav items — updated 2026-05-27 per Saar:
+// Removed: תנ"ך (from both main and teacher-context nav)
+// Final nav: חנות | פרשת השבוע | אגף המורים | אודותינו
 const NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "תנ״ך", href: "/bible/בראשית" },
   { label: "חנות", href: "/store" },
   { label: "פרשת השבוע", href: "/parasha" },
   { label: "אגף המורים", href: "/teachers" },
   { label: "אודותינו", href: "/about" },
 ];
 
-// Teacher-context nav: fewer items when in /teachers/* context
+// Teacher-context nav: same items minus "אגף המורים" (replaced by the context chip)
 const TEACHER_NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "תנ״ך", href: "/bible/בראשית" },
   { label: "חנות", href: "/store" },
   { label: "פרשת השבוע", href: "/parasha" },
   { label: "אודותינו", href: "/about" },

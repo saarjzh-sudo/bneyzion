@@ -33,14 +33,12 @@ const NAVY_DEEP    = "#1A2744";
 const TEAL_MAIN    = "#2D7D7D";
 
 // ── DesignNavBar ───────────────────────────────────────────────────────────
+// Nav updated 2026-05-27 per Saar: חנות | פרשת השבוע | אגף המורים | אודותינו
 const FULL_NAV_LINKS: { label: string; path: string; external?: boolean }[] = [
-  { label: "ראשי",           path: "/"                 },
-  { label: "פרשת השבוע",     path: "/parasha"          },
   { label: "חנות",           path: "/store"            },
-  { label: "תרומות",         path: "/donate"           },
-  { label: "מחירים",         path: "/pricing"          },
+  { label: "פרשת השבוע",     path: "/parasha"          },
+  { label: "אגף המורים",     path: "/teachers"         },
   { label: "אודותינו",       path: "/about"            },
-  { label: "לזכר סעדיה הי״ד", path: "/memorial/saadia" },
 ];
 
 function DesignNavBar() {

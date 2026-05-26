@@ -150,11 +150,10 @@ export default function DesignPreviewSeriesList() {
           style={{
             maxWidth: 1280,
             margin: "0 auto",
+            width: "100%",
             display: "flex",
             gap: "0.5rem",
-            overflowX: "auto",
             padding: "0.5rem 0 1.25rem",
-            scrollbarWidth: "thin",
             justifyContent: "center",
             flexWrap: "wrap",
           }}
