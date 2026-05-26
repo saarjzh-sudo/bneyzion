@@ -18,7 +18,7 @@ import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 
-import saadiaPortrait from "@/assets/saadia-soldier.png";
+import saadiaPortrait from "@/assets/saadia-soldier.jpg";
 import saadiaTefillin from "@/assets/saadia-tefillin.png";
 import saadiaYoungBooks from "@/assets/saadia-young-books.jpg";
 import saadiaSuit from "@/assets/saadia-suit.jpg";

@@ -1,9 +1,9 @@
 import Layout from "@/components/layout/Layout";
 import PageHero from "@/components/layout/PageHero";
-import { Check, Star, Crown, BookOpen, Users, Headphones, Shield } from "lucide-react";
+import { Check, X, Star, Crown, BookOpen, Users, Headphones, Shield, BookMarked } from "lucide-react";
+// Note: BookMarked is used for the books tier icon
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -16,86 +16,83 @@ interface PricingTier {
   id: string;
   name: string;
   icon: React.ReactNode;
-  monthlyPrice: number;
-  yearlyPrice: number;
+  price: number | null;
+  priceSuffix?: string;
   description: string;
   badge?: string;
   highlighted?: boolean;
   features: PlanFeature[];
   ctaText: string;
   ctaLink: string;
+  accentClass?: string;
 }
 
 const tiers: PricingTier[] = [
   {
     id: "free",
-    name: "חינם",
+    name: "ספרייה פתוחה",
     icon: <BookOpen className="w-7 h-7" />,
-    monthlyPrice: 0,
-    yearlyPrice: 0,
-    description: "גישה בסיסית לתוכן נבחר — התחילו ללמוד עוד היום",
+    price: 0,
+    description: "אלפי שיעורים ב-24 ספרי תנ״ך — פתוחים לכולם, ללא הרשמה",
     features: [
-      { text: "10 שיעורים נבחרים בחודש", included: true },
-      { text: "גישה לפרשת השבוע", included: true },
-      { text: "חיפוש בספרייה", included: true },
-      { text: "שמירת מועדפים (עד 5)", included: true },
-      { text: "שיעורים מוקלטים ללא הגבלה", included: false },
+      { text: "11,000+ שיעורים ב-24 ספרי תנ״ך", included: true },
+      { text: "200+ רבנים ומרצים", included: true },
+      { text: "חיפוש לפי ספר, פרק, רב", included: true },
+      { text: "הורדת שיעורי שמע (MP3)", included: true },
+      { text: "שיעור זום שבועי חי", included: false },
+      { text: "פורטל לומדים אישי", included: false },
       { text: "קבוצת וואטסאפ", included: false },
-      { text: "הורדת שיעורים", included: false },
-      { text: "תוכן בלעדי", included: false },
+      { text: "תכני העמקה ותרגול", included: false },
     ],
-    ctaText: "התחילו בחינם",
-    ctaLink: "/auth",
+    ctaText: "לספרייה",
+    ctaLink: "/series",
   },
   {
-    id: "basic",
-    name: "הפרק השבועי",
+    id: "weekly",
+    name: "תכנית הפרק השבועי",
     icon: <Star className="w-7 h-7" />,
-    monthlyPrice: 110,
-    yearlyPrice: 110,
-    description: "תכנית לימוד שבועית — פרקי תנ״ך עם הרב יואב אוריאל",
-    badge: "פופולרי",
+    price: 110,
+    priceSuffix: "לחודש",
+    description: "פרק בשבוע עם הרב יואב אוריאל — שיעור זום חי, תכני העמקה ופורטל אישי",
+    badge: "המסלול הפופולרי",
     highlighted: true,
     features: [
-      { text: "שיעור זום שבועי חי", included: true },
-      { text: "גישה לפרשת השבוע", included: true },
-      { text: "תכני בסיס + העמקה", included: true },
-      { text: "הקלטות שיעורים", included: true },
-      { text: "פורטל לומדים אישי", included: true },
+      { text: "כל תוכן הספרייה הפתוחה", included: true },
+      { text: "שיעור זום שבועי חי (רביעי 21:00)", included: true },
+      { text: "תכני בסיס + שכבת העמקה", included: true },
+      { text: "הקלטות השיעורים הקודמים", included: true },
+      { text: "פורטל לומדים אישי + מעקב התקדמות", included: true },
       { text: "קבוצת וואטסאפ", included: true },
-      { text: "ביטול בכל עת", included: true },
-      { text: "כל ספרי נביאים וכתובים", included: true },
+      { text: "ביטול בכל עת — ללא קנס", included: true },
+      { text: "כיסוי: נביאים, כתובים, חגי/זכריה/מלאכי", included: true },
     ],
     ctaText: "הצטרפו לתכנית",
     ctaLink: "/chapter-weekly",
+    accentClass: "bg-accent/20 text-accent-foreground",
   },
   {
-    id: "premium",
-    name: "מגילת אסתר",
-    icon: <Crown className="w-7 h-7" />,
-    monthlyPrice: 110,
-    yearlyPrice: 110,
-    description: "תכנית המנויים — לחיות תנ״ך עם הרב יואב אוריאל",
+    id: "books",
+    name: "ספרי מכלל יופי",
+    icon: <BookMarked className="w-7 h-7" />,
+    price: 70,
+    priceSuffix: "לספר",
+    description: "פרשנות מרתקת של הרב יואב אוריאל — סדרת ספרי תנ״ך מהודרים לקנייה חד-פעמית",
     features: [
-      { text: "כל השיעורים ללא הגבלה", included: true },
-      { text: "גישה לפרשת השבוע", included: true },
-      { text: "חיפוש בספרייה", included: true },
-      { text: "שמירת מועדפים ללא הגבלה", included: true },
-      { text: "שיעורים מוקלטים ללא הגבלה", included: true },
-      { text: "קבוצת וואטסאפ VIP", included: true },
-      { text: "תכנים בלעדיים", included: true },
-      { text: "מפגשים חיים", included: true },
+      { text: "מגילת אסתר — ₪70 (עותק אחד)", included: true },
+      { text: "זוג מגילות — ₪120", included: true },
+      { text: "סדרת מכלל יופי (5 ספרים+שופטים) — ₪350", included: true },
+      { text: "ביאור מלא לכל פסוק", included: true },
+      { text: "משלוח עד הבית", included: true },
+      { text: "שיעור זום שבועי חי", included: false },
+      { text: "פורטל לומדים אישי", included: false },
+      { text: "קבוצת וואטסאפ", included: false },
     ],
-    ctaText: "להצטרפות",
+    ctaText: "לרכישת הספרים",
     ctaLink: "/megilat-esther",
   },
 ];
 
-// CSS-only fade-in via Tailwind animate-in (no framer-motion dependency)
-
 export default function PricingPage() {
-  const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
-
   useSEO({
     title: "מסלולים ומחירים — בני ציון",
     description: "הצטרפו לתכנית הפרק השבועי של הרב יואב אוריאל — לימוד תנ״ך שבועי בזום, תכני העמקה ופורטל אישי. החל מ-₪110/חודש.",
@@ -106,40 +103,11 @@ export default function PricingPage() {
     <Layout>
       <PageHero
         title="בחרו את המסלול שלכם"
-        subtitle="למדו תנ״ך בקצב שלכם — בכל מקום, בכל זמן"
+        subtitle="11,000+ שיעורים פתוחים לכולם — ותכנית לימוד שבועית למי שרוצה יותר"
       />
 
-      {/* Billing toggle */}
       <section className="py-10 md:py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="flex items-center justify-center gap-4 mb-12">
-            <button
-              onClick={() => setBilling("monthly")}
-              className={cn(
-                "px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300",
-                billing === "monthly"
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              )}
-            >
-              חודשי
-            </button>
-            <button
-              onClick={() => setBilling("yearly")}
-              className={cn(
-                "px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 relative",
-                billing === "yearly"
-                  ? "bg-primary text-primary-foreground shadow-lg"
-                  : "bg-muted text-muted-foreground hover:bg-muted/80"
-              )}
-            >
-              שנתי
-              <span className="absolute -top-3 -left-2 bg-accent text-accent-foreground text-[10px] font-bold px-2 py-0.5 rounded-full">
-                חיסכון 20%
-              </span>
-            </button>
-          </div>
-
           {/* Pricing cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-stretch">
             {tiers.map((tier) => (
@@ -177,23 +145,19 @@ export default function PricingPage() {
 
                 {/* Price */}
                 <div className="text-center mb-8">
-                  <div className="flex items-baseline justify-center gap-1">
-                    <span className="text-5xl font-bold text-foreground">
-                      {billing === "monthly" ? tier.monthlyPrice : tier.yearlyPrice}
-                    </span>
-                    <span className="text-lg text-muted-foreground font-medium">
-                      {tier.monthlyPrice === 0 ? "" : "₪"}
-                    </span>
-                  </div>
-                  {tier.monthlyPrice > 0 && (
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {billing === "monthly" ? "לחודש" : "לחודש (חיוב שנתי)"}
-                    </p>
-                  )}
-                  {billing === "yearly" && tier.yearlyPrice > 0 && (
-                    <p className="text-xs text-accent font-semibold mt-1">
-                      חיסכון של {(tier.monthlyPrice - tier.yearlyPrice) * 12}₪ בשנה
-                    </p>
+                  {tier.price === null || tier.price === 0 ? (
+                    <div className="flex items-baseline justify-center gap-1">
+                      <span className="text-4xl font-bold text-foreground">חינם</span>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-baseline justify-center gap-1">
+                        <span className="text-5xl font-bold text-foreground">{tier.price}₪</span>
+                      </div>
+                      {tier.priceSuffix && (
+                        <p className="text-sm text-muted-foreground mt-1">{tier.priceSuffix}</p>
+                      )}
+                    </>
                   )}
                 </div>
 
@@ -209,12 +173,15 @@ export default function PricingPage() {
                             : "bg-muted text-muted-foreground/40"
                         )}
                       >
-                        <Check className="w-3.5 h-3.5" />
+                        {feature.included
+                          ? <Check className="w-3.5 h-3.5" />
+                          : <X className="w-3 h-3" />
+                        }
                       </div>
                       <span
                         className={cn(
                           "text-sm",
-                          feature.included ? "text-foreground" : "text-muted-foreground/50 line-through"
+                          feature.included ? "text-foreground" : "text-muted-foreground/50"
                         )}
                       >
                         {feature.text}

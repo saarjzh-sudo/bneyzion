@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import saadiaTefillin from "@/assets/saadia-tefillin.png";
-import saadiaSoldier from "@/assets/saadia-soldier.png";
+import saadiaSoldier from "@/assets/saadia-soldier.jpg";
 import landscapeSunrise from "@/assets/memorial-landscape-sunrise.jpg";
 import landscapePath from "@/assets/memorial-landscape-path.jpg";
 import torahScroll from "@/assets/memorial-torah-scroll.jpg";

@@ -85,8 +85,8 @@ const MegilatEsther = () => {
 
       <section className="relative min-h-[90vh] md:min-h-screen flex flex-col overflow-hidden">
         <div className="relative w-full flex-1">
-          <img src={heroDesktop} alt="מגילת אסתר – מכלל יופי על שולחן פורים" className="hidden md:block w-full h-full object-cover" />
-          <img src={heroMobile} alt="מגילת אסתר – מכלל יופי על שולחן פורים" className="block md:hidden w-full h-full object-cover" />
+          <img src={heroDesktop} alt="מגילת אסתר – מכלל יופי, ביאור הרב יואב אוריאל" className="hidden md:block w-full h-full object-cover" />
+          <img src={heroMobile} alt="מגילת אסתר – מכלל יופי, ביאור הרב יואב אוריאל" className="block md:hidden w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-navy-deep via-navy-deep/60 to-transparent" />
         </div>
 
@@ -286,7 +286,7 @@ const MegilatEsther = () => {
           <div className="absolute bottom-10 right-20 w-60 h-60 bg-crimson/10 rounded-full blur-[80px]" />
 
           <div className="relative z-10 max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl md:text-4xl font-bold text-cream mb-4">בפורים הזה – תקרא את המגילה אחרת</h2>
+            <h2 className="text-2xl md:text-4xl font-bold text-cream mb-4">הגיע הזמן לקרוא את המגילה אחרת</h2>
             <p className="text-cream/70 text-lg mb-10">הצטרפו למאות לומדים שכבר גילו את העומק שמאחורי הסיפור.</p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -303,8 +303,8 @@ const MegilatEsther = () => {
         </section>
       </AnimatedSection>
 
-      <section className="py-12 bg-gradient-to-l from-gold via-crimson to-gold text-center">
-        <h2 className="text-3xl md:text-5xl font-bold text-cream drop-shadow-lg">🎭 פורים שמח! 🎭</h2>
+      <section className="py-12 bg-gradient-to-l from-gold via-gold-light to-gold text-center">
+        <p className="text-xl md:text-2xl font-bold text-navy-deep drop-shadow">סדרת מכלל יופי — פרשנות חדשה לכל ספרי התנ״ך</p>
       </section>
 
       <footer className="py-6 bg-navy-deep text-center">
