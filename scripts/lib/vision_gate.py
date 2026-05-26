@@ -114,15 +114,22 @@ def verify_no_humans(image_path: str, api_key: str) -> tuple[bool, str]:
         f"{VISION_MODEL}:generateContent?key={api_key}"
     )
 
+    # Write response output to a temp file
     with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as tmp:
         tmp_path = tmp.name
+
+    # Write the payload to a temp file to avoid "Argument list too long"
+    # (base64-encoded images can be 4–8 MB as inline --data strings)
+    with tempfile.NamedTemporaryFile(suffix=".payload.json", delete=False, mode="w", encoding="utf-8") as payload_tmp:
+        payload_tmp.write(payload)
+        payload_tmp_path = payload_tmp.name
 
     try:
         result = _run_curl([
             "-s", "-o", tmp_path, "-w", "%{http_code}",
             "-X", "POST", url,
             "-H", "Content-Type: application/json",
-            "--data", payload
+            "--data", f"@{payload_tmp_path}"
         ])
 
         http_code = result.stdout.decode().strip() if result.stdout else "000"
@@ -160,6 +167,10 @@ def verify_no_humans(image_path: str, api_key: str) -> tuple[bool, str]:
     finally:
         try:
             os.unlink(tmp_path)
+        except Exception:
+            pass
+        try:
+            os.unlink(payload_tmp_path)
         except Exception:
             pass
 

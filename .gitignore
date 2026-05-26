@@ -39,3 +39,4 @@ scripts/row-scrape-log-w*.json
 scripts/media-map-w*.json
 __pycache__/
 *.pyc
+secrets/

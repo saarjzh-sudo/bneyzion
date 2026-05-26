@@ -29,10 +29,12 @@ from pathlib import Path
 # Vision gate import
 try:
     from lib.vision_gate import verify_no_humans
+    from lib.vertex_auth import VertexAuth
 except ImportError:
     import sys as _sys
     _sys.path.insert(0, str(Path(__file__).parent))
     from lib.vision_gate import verify_no_humans
+    from lib.vertex_auth import VertexAuth
 
 # ── Config — load from environment (never hardcode secrets) ───
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -47,6 +49,15 @@ CHECKPOINT_EVERY = 200
 SCRIPT_DIR = Path(__file__).parent
 STATE_FILE = SCRIPT_DIR / "image-batch-state.json"
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
+
+# ── Vertex AI auth (initialized once, auto-refreshes every 50 min) ──
+_vertex_auth: VertexAuth | None = None
+
+def get_vertex_auth() -> VertexAuth:
+    global _vertex_auth
+    if _vertex_auth is None:
+        _vertex_auth = VertexAuth()
+    return _vertex_auth
 
 # ── Style (locked — pilot approved 26.5.2026 · NEGATIVE added 26.5.2026) ─────
 STYLE = (
@@ -131,7 +142,7 @@ def series_prompt(title: str, bible_book: str | None) -> str:
         f"Meditative, luminous, spiritually uplifting."
     )
 
-# ── Generate image ────────────────────────────────────────────
+# ── Generate image via Vertex AI ──────────────────────────────
 def generate_image(content: str, outfile: Path) -> bool:
     prompt = f"{STYLE}\n\nContent to visualize: {content}"
     payload = json.dumps({
@@ -143,13 +154,19 @@ def generate_image(content: str, outfile: Path) -> bool:
             "safetySetting": "block_low_and_above"
         }
     })
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-ultra-generate-001:predict?key={GEMINI_KEY}"
+
+    auth = get_vertex_auth()
 
     for attempt in range(3):
+        token = auth.get_token()
+        url = auth.endpoint
+
         with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as tmp:
             tmp_path = tmp.name
         result = run_curl(["-s", "-o", tmp_path, "-w", "%{http_code}",
-                           "-X", "POST", url, "-H", "Content-Type: application/json",
+                           "-X", "POST", url,
+                           "-H", "Content-Type: application/json",
+                           "-H", f"Authorization: Bearer {token}",
                            "--data", payload])
         http_code = result.stdout.decode().strip()
         if http_code == "200":
@@ -160,8 +177,13 @@ def generate_image(content: str, outfile: Path) -> bool:
             size_kb = outfile.stat().st_size // 1024
             print(f"  [IMG OK] {size_kb}KB")
             return True
+        elif http_code == "401":
+            print(f"  [AUTH] 401 — force-refreshing token (attempt {attempt+1}/3)")
+            os.unlink(tmp_path)
+            auth._refresh()
+            time.sleep(2)
         elif http_code == "429":
-            wait = 120 * (attempt + 1)  # 120s / 240s / 360s — Imagen Ultra quota is strict
+            wait = 10 * (attempt + 1)  # Vertex Tier 1 = 100 RPM
             print(f"  [RATE LIMIT] waiting {wait}s")
             os.unlink(tmp_path)
             time.sleep(wait)
@@ -304,7 +326,7 @@ def main():
             print(f"\n--- CHECKPOINT: {count} done, ${state['total_cost']:.2f} total ---\n")
 
         if i < len(series_list):
-            time.sleep(90)  # 90s between images — Imagen Ultra quota ~1/min observed
+            time.sleep(2)  # Vertex Tier 1 — 100 RPM, no need for long sleep
 
     print("\n" + "=" * 60)
     print(f"Phase 3: {count} generated | {skipped} skipped | {failed} failed")

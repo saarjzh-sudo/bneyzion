@@ -29,10 +29,12 @@ from pathlib import Path
 # Vision gate import — works when run from repo root or scripts/ dir
 try:
     from lib.vision_gate import verify_no_humans
+    from lib.vertex_auth import VertexAuth
 except ImportError:
     import sys as _sys
     _sys.path.insert(0, str(Path(__file__).parent))
     from lib.vision_gate import verify_no_humans
+    from lib.vertex_auth import VertexAuth
 
 # ── Config — load from environment (never hardcode secrets) ───
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
@@ -46,6 +48,15 @@ COST_PER_IMAGE = 0.06
 SCRIPT_DIR = Path(__file__).parent
 STATE_FILE = SCRIPT_DIR / "image-batch-state.json"
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
+
+# ── Vertex AI auth (initialized once, auto-refreshes every 50 min) ──
+_vertex_auth: VertexAuth | None = None
+
+def get_vertex_auth() -> VertexAuth:
+    global _vertex_auth
+    if _vertex_auth is None:
+        _vertex_auth = VertexAuth()
+    return _vertex_auth
 
 # ── Style (locked — pilot approved 26.5.2026 · Vision gate added 26.5.2026) ───
 STYLE = (
@@ -136,7 +147,7 @@ def run_curl(args, capture_output=True):
     result = subprocess.run(cmd, capture_output=capture_output, text=False)
     return result
 
-# ── Imagen generation ─────────────────────────────────────────
+# ── Imagen generation via Vertex AI ──────────────────────────
 def generate_image(content: str, outfile: Path) -> bool:
     prompt = f"{STYLE}\n\nContent to visualize: {content}"
     payload = json.dumps({
@@ -149,9 +160,12 @@ def generate_image(content: str, outfile: Path) -> bool:
         }
     })
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-ultra-generate-001:predict?key={GEMINI_KEY}"
+    auth = get_vertex_auth()
 
     for attempt in range(3):
+        token = auth.get_token()
+        url = auth.endpoint
+
         with tempfile.NamedTemporaryFile(suffix=".json", delete=False) as tmp:
             tmp_path = tmp.name
 
@@ -159,6 +173,7 @@ def generate_image(content: str, outfile: Path) -> bool:
             "-s", "-o", tmp_path, "-w", "%{http_code}",
             "-X", "POST", url,
             "-H", "Content-Type: application/json",
+            "-H", f"Authorization: Bearer {token}",
             "--data", payload
         ])
         http_code = result.stdout.decode().strip() if result.stdout else "000"
@@ -171,8 +186,14 @@ def generate_image(content: str, outfile: Path) -> bool:
             size_kb = outfile.stat().st_size // 1024
             print(f"  [OK] Generated {outfile.name} ({size_kb}KB)")
             return True
+        elif http_code == "401":
+            # Token expired mid-batch — force refresh and retry
+            print(f"  [AUTH] 401 Unauthorized — force-refreshing token (attempt {attempt+1}/3)")
+            os.unlink(tmp_path)
+            auth._refresh()
+            time.sleep(2)
         elif http_code == "429":
-            wait = 120 * (attempt + 1)  # 120s / 240s / 360s — Imagen Ultra quota is strict
+            wait = 10 * (attempt + 1)  # 10s / 20s / 30s — Vertex Tier 1 has 100 RPM, not 1/min
             print(f"  [RATE LIMIT] HTTP 429 — waiting {wait}s (attempt {attempt+1}/3)")
             os.unlink(tmp_path)
             time.sleep(wait)
@@ -391,9 +412,9 @@ def main():
         finally:
             tmp_path.unlink(missing_ok=True)
 
-        # Rate limit: 90s between requests (Imagen Ultra quota ~1/min observed)
+        # Vertex Tier 1 — 100 RPM, no need for long sleep
         if i < len(books):
-            time.sleep(90)
+            time.sleep(2)
 
     print("\n" + "=" * 60)
     print(f"Phase 1 complete: {count} generated | {skipped} skipped | {failed} failed")
