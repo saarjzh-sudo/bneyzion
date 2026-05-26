@@ -28,8 +28,8 @@ const HowItWorks = () => (
           <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
             <Target className="w-6 h-6 text-primary" />
           </div>
-          <h4 className="text-xl font-bold text-foreground mb-3">שני פרקים בשבוע</h4>
-          <p className="text-brown-light leading-relaxed">במגילת אסתר לומדים שני פרקים בשבוע – קצב מהיר שמאפשר להקיף את כל המגילה תוך 5 שבועות בלבד.</p>
+          <h4 className="text-xl font-bold text-foreground mb-3">פרק בשבוע</h4>
+          <p className="text-brown-light leading-relaxed">כל שבוע לומדים פרק אחד לעומק – קצב נוח שמאפשר הבנה אמיתית ולא רק קריאה שטחית.</p>
         </div>
 
         <div className="premium-card group">

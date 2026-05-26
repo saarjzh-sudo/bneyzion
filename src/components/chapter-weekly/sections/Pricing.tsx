@@ -8,23 +8,22 @@ const Pricing = () => (
       <p className="text-lg text-brown-light mb-12">התכנית ללא שום התחייבות – ניתן להצטרף אפילו לחודש אחד</p>
 
       <div className="premium-card max-w-xl mx-auto mb-12 relative overflow-hidden">
-        <div className="absolute top-0 left-0 bg-accent text-accent-foreground px-4 py-2 text-sm font-bold rounded-br-xl">מבצע לכבוד מגילת אסתר!</div>
-
+        {/* Sale badge */}
+        <div className="absolute top-4 left-4 bg-gradient-to-l from-crimson to-crimson-dark text-white px-4 py-1.5 rounded-full text-sm font-bold animate-pulse">
+          🔥 מבצע הצטרפות!
+        </div>
         <div className="pt-8">
-          <p className="text-primary font-semibold mb-4">לכבוד תחילת לימוד מגילת אסתר</p>
+          <p className="text-primary font-semibold mb-4">מנוי חודשי – כולל הכל</p>
           <div className="mb-8">
-            <p className="text-foreground line-through text-lg mb-2">במקום 110 ש"ח לחודש</p>
+            <div className="flex items-baseline justify-center gap-2 mb-1">
+              <span className="text-2xl text-muted-foreground line-through">110 ש"ח</span>
+            </div>
             <div className="flex items-baseline justify-center gap-2">
               <span className="text-6xl md:text-7xl font-bold text-primary">5</span>
               <span className="text-2xl text-foreground font-semibold">ש"ח</span>
             </div>
-            <p className="text-xl text-accent font-bold mt-2">לחודש הראשון בלבד!</p>
-          </div>
-
-          <div className="border-t border-border pt-6 mb-8">
-            <p className="text-foreground mb-4">לאחר מכן:</p>
-            <p className="text-2xl font-bold text-foreground">110 ש"ח לחודש</p>
-            <p className="text-sm text-foreground mt-1">פחות מ-4 ש"ח ליום • כולל הכל</p>
+            <p className="text-lg text-foreground mt-2">לחודש הראשון בלבד</p>
+            <p className="text-sm text-primary font-semibold mt-1">ואח"כ 110 ש"ח לחודש • ביטול בכל עת</p>
           </div>
 
           <ul className="space-y-3 text-right mb-8">
@@ -44,9 +43,9 @@ const Pricing = () => (
           <SubscribeButton>
             <button
               type="button"
-              className="w-full inline-flex items-center justify-center gap-2 md:gap-3 bg-accent text-accent-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 hover:shadow-gold hover:scale-105"
+              className="w-full inline-flex items-center justify-center gap-2 md:gap-3 bg-primary text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all duration-300 hover:shadow-premium-lg hover:scale-105"
             >
-              אני רוצה להצטרף במחיר מבצע!
+              אני רוצה להצטרף!
               <ArrowLeft className="w-5 h-5" />
             </button>
           </SubscribeButton>
