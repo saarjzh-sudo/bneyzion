@@ -421,7 +421,7 @@ public/
 | Series with bible_book | **1,113 (72.9%)** — re-ran backfill session 5 (was 1,104 — 9 fixed) |
 | Series with lessons | 921 |
 | Empty series total | 605 (of which: 51 container-categories-by-design, 554 truly empty) |
-| Empty series — active | 7 (suspicious: "פרשת שבוע בראשית" etc — no rabbi, lesson_count=0) |
+| Empty series — active | 0 (7 archived to draft — 2026-05-26 session 6) |
 | Total rabbis | 203 |
 | Topics | 741 |
 | Products (active) | 47 |
@@ -449,6 +449,37 @@ public/
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-26 — Session 6: 7 empty-active series archived + 1,204 orphan lessons discovery
+
+**משימה 1 — archive 7 series ריקות (active + 0 lessons + 0 rabbi):**
+- Snapshot נלקח לפני UPDATE (כל 7 נוצרו ב-2026-05-18 יחד — containers שנוצרו בטעות)
+- IDs שעודכנו מ-`active` ל-`draft`:
+  - `1dda2814` פרשת שבוע בראשית
+  - `b2c946a4` פרשת שבוע במדבר
+  - `2ee49d73` פרשת שבוע דברים
+  - `eaa38cba` שיעורים חומש בראשית
+  - `f7e9ea01` שיעורים חומש שמות
+  - `d5ef79b3` שיעורים יהושע
+  - `aeea0713` שיעורים על התנך ירמיהו
+- אחרי UPDATE: active=553, draft=213 (עלייה של 7 מ-206)
+- **הערה:** status values קיימות: `active / published / category / draft`. אין `archived` — השתמשנו ב-`draft` כסימון בטוח.
+- commit: ראה session log
+
+**משימה 2 — discovery 1,204 שיעורים יתומים (series_id IS NULL + published):**
+
+ממצאים:
+- **1,400** סך הכל ללא series_id: 1,204 published + 196 draft
+- **1,203/1,204** עם rabbi_id (99.9%)
+- **53** רבנים ייחודיים בקרב היתומים
+- **888/1,204** עם bible_book (73.8%)
+- **source_type:** audio 820 (68%), text 204 (17%), article 122 (10%), video 43, pdf 13, qa 2
+- **bible_book TOP 3:** ירמיהו 296, ישעיהו 294, יחזקאל 273 (882 מתוך 1,204 = 73% מהיתומים עם bible_book = נביאים גדולים בלבד!)
+- **TOP 5 רבנים:** הרב יונדב זר 210 · הרב יואב אוריאל 121 · הרב דן בארי 94 · הרב אחיקם גץ 86 · הרב יצחק בן שחר 75
+- **אין** original_series_name / source_url — אי אפשר fuzzy match על שדות מקור
+- **יש** series קיימות לנביאים הגדולים: "שיעורים על התנ"ך - ירמיהו" (18 lessons), "שיעורים על ספר ישעיהו" (52), "שיעורים על התנ"ך - יחזקאל" (39)
+
+**3 הצעות לסאר — ראה פלט הסשן למלצת.**
 
 ### 2026-05-26 — Session 5: bible tagging cleanup + audit D/E (session 5)
 
