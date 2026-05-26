@@ -1,9 +1,12 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { MessageCircle, Share2, ChevronDown, ArrowRight, ArrowLeft, Search, X, Copy, Check, BookOpen } from "lucide-react";
+import { MessageCircle, Share2, ChevronDown, ArrowRight, ArrowLeft, Search, X, Copy, Check, BookOpen, Download } from "lucide-react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import MemorialFooter from "@/components/dor-haplaot/MemorialFooter";
 import DonationPopup from "@/components/dor-haplaot/DonationPopup";
+import PrintableBookletPopup from "@/components/dor-haplaot/PrintableBookletPopup";
+import heroBg from "@/assets/dor-haplaot-hero.jpg";
+import bookletCover from "@/assets/dor-haplaot-booklet-cover.png";
 import Layout from "@/components/layout/Layout";
 
 interface Chapter {
@@ -276,6 +279,7 @@ export default function DorHaplaot() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMiracle, setSelectedMiracle] = useState<Miracle | null>(null);
   const [sortAsc, setSortAsc] = useState(true);
+  const [bookletPopupOpen, setBookletPopupOpen] = useState(false);
 
   const filteredMiracles = useMemo(() => {
     const now = new Date();
@@ -307,7 +311,7 @@ export default function DorHaplaot() {
 
         {/* ===== HERO ===== */}
         <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden -mt-24">
-          <img src="/images/war-miracles-bg.jpg" alt="" className="absolute inset-0 w-full h-full object-cover object-[30%_center] md:object-center" />
+          <img src={heroBg} alt="" className="absolute inset-0 w-full h-full object-cover object-[30%_center] md:object-center" width={1920} height={1080} />
           <div className="absolute inset-0 bg-gradient-to-b from-[#1A2744]/90 via-[#1A2744]/70 to-[#FAF6F0]" />
           <div className="relative z-10 text-center px-4 py-20 md:py-24 max-w-3xl mx-auto">
             <img
@@ -481,6 +485,32 @@ export default function DorHaplaot() {
                 onClick={() => setSelectedMiracle(miracle)}
               />
             ))}
+
+            {/* Printable Booklet CTA Card */}
+            {!searchQuery.trim() && selectedChapter === null && (
+              <button
+                onClick={() => setBookletPopupOpen(true)}
+                className="group text-right rounded-2xl border border-[hsl(30_30%_82%)] bg-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#C4A265]/50 w-full"
+              >
+                <img
+                  src={bookletCover}
+                  alt="חוברת דור הפלאות להדפסה"
+                  className="w-full h-40 object-cover"
+                />
+                <div className="p-5 md:p-6 flex flex-col items-center gap-3">
+                  <h3 className="font-kedem font-bold text-base md:text-lg text-[#1A2744] text-center leading-tight">
+                    קבלו את כל 64 הניסים בחוברת מעוצבת להדפסה!
+                  </h3>
+                  <p className="font-ploni font-bold text-sm text-[hsl(30_25%_30%)] leading-relaxed text-center">
+                    תרמו לבניית אתר התנ״ך לזכר סעדיה הי״ד וקבלו את החוברת המלאה
+                  </p>
+                  <span className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#1A2744] text-white font-kedem font-bold text-sm transition-all group-hover:bg-[#0A1224] group-hover:shadow-lg">
+                    <Download className="w-4 h-4" />
+                    לחוברת המלאה
+                  </span>
+                </div>
+              </button>
+            )}
           </div>
 
           {filteredMiracles.length === 0 && miracles.length > 0 && (
@@ -527,6 +557,7 @@ export default function DorHaplaot() {
         </footer>
 
         <DonationPopup />
+        <PrintableBookletPopup open={bookletPopupOpen} onClose={() => setBookletPopupOpen(false)} />
 
         {/* Miracle Detail Dialog */}
         <Dialog open={!!selectedMiracle} onOpenChange={open => !open && setSelectedMiracle(null)}>
