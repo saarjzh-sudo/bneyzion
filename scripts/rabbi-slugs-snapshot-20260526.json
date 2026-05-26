@@ -1,0 +1,1017 @@
+[
+  {
+    "id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+    "name": "הרב יונדב זר",
+    "slug": "yondav-zer"
+  },
+  {
+    "id": "acd34d0f-1288-47b8-9e8e-38e69599c294",
+    "name": "הרב יואב אוריאל",
+    "slug": "yoav-uriel"
+  },
+  {
+    "id": "8a709507-b4ac-4d45-9051-9e4e6bdeb856",
+    "name": "הרב דן בארי",
+    "slug": "dan-bari"
+  },
+  {
+    "id": "be153d0e-b68e-4704-a108-56f5af7d0ca9",
+    "name": "הרב איתן שנדורפי",
+    "slug": "etan-shandorfi"
+  },
+  {
+    "id": "33865aa7-c9a6-4166-ae07-47466ec92e9f",
+    "name": "הרב אליעזר קשתיאל",
+    "slug": "eliezer-kashtiel"
+  },
+  {
+    "id": "744da303-22be-4062-a822-4ba8e8f1b02d",
+    "name": "הרב עמנואל בן ארצי",
+    "slug": "emanueal-ben-artzi"
+  },
+  {
+    "id": "e6e04daf-0aa6-4a07-911e-2a7cacd9b5fe",
+    "name": "הרב אחיקם גץ",
+    "slug": "achikam-gatz"
+  },
+  {
+    "id": "3a3eac56-4546-4803-9d38-1fceb0c1452d",
+    "name": "הרב יהונתן מיכאלי",
+    "slug": "yehonatan-michaeli"
+  },
+  {
+    "id": "afb0d3c5-4447-40c5-ac3e-2fc41716360c",
+    "name": "הרב יצחק בן שחר",
+    "slug": "yitzhak-ben-shachar"
+  },
+  {
+    "id": "b28770d5-1504-46ad-8613-3c3ca37a641c",
+    "name": "הרב חגי ולוסקי",
+    "slug": "chagai-velosski"
+  },
+  {
+    "id": "7658e8ac-a4c5-4c1d-80dd-3f8070f2a742",
+    "name": "הרב דרור טוויל",
+    "slug": "dror-tvil"
+  },
+  {
+    "id": "06cafb42-023b-4491-926e-74ae5dee8b88",
+    "name": "הרב חנניה מלכה",
+    "slug": "chanania-malka"
+  },
+  {
+    "id": "04b3f54f-a91a-4054-a8b0-887f8faaec07",
+    "name": "הרב טוביה לפשיץ",
+    "slug": "tovia-lapshitz"
+  },
+  {
+    "id": "4822f2bb-9d1c-4adc-9554-d2a2db7bdbc8",
+    "name": "הרב מנחם שחור",
+    "slug": "menachem-shachor"
+  },
+  {
+    "id": "274f4480-cc34-4331-842e-138c2e1f6175",
+    "name": "מערכת בני ציון",
+    "slug": "maarechet-bnei-zion"
+  },
+  {
+    "id": "a2059c69-f0e1-442d-a38c-8ec5d4b91ee0",
+    "name": "הרב אוהד תירוש",
+    "slug": "ohad-tirosh"
+  },
+  {
+    "id": "1b8d2627-f1ce-49a0-bdca-bef3cc0f13b8",
+    "name": "הרב יוסף הורוביץ",
+    "slug": "yosef-horovitz"
+  },
+  {
+    "id": "2754844c-8149-4c50-922a-331664b4124e",
+    "name": "הרב יוסף שילר",
+    "slug": "yosef-shiler"
+  },
+  {
+    "id": "0aa03897-79ce-4016-aaf8-72c090b0ea60",
+    "name": "הרב יהושע שפירא",
+    "slug": "yehoshua-shapira"
+  },
+  {
+    "id": "277e3084-aaff-44e6-a83a-5facf893607e",
+    "name": "הרב שלמה אבינר",
+    "slug": "shlomo-aviner"
+  },
+  {
+    "id": "9bb528c0-94c9-4f6c-aa59-4990af66cb4e",
+    "name": "הרב לוי סודרי",
+    "slug": "levi-sudri"
+  },
+  {
+    "id": "dd10db16-faaf-457a-82cb-49590864e29a",
+    "name": "הרב יעקב ידיד",
+    "slug": "yaakov-yadid"
+  },
+  {
+    "id": "34ef8dae-5352-4dfe-9887-ab7c3b8bcdd8",
+    "name": "הרב אריק אוריאל",
+    "slug": "arik-uriel"
+  },
+  {
+    "id": "02dfa84d-1a8f-4454-8ef7-c82a7a6defd5",
+    "name": "הרב גי'אמי",
+    "slug": "jiami"
+  },
+  {
+    "id": "9135d874-b42b-4952-b7c6-97f0fb7fbfe6",
+    "name": "הרב יהודה קופרמן זצ\"ל",
+    "slug": "yehuda-kuperman"
+  },
+  {
+    "id": "776ac9f7-577c-489a-8522-3a41d3c94e04",
+    "name": "הרב חננאל אתרוג",
+    "slug": "chananel-etrog"
+  },
+  {
+    "id": "e5d69c5f-1c5c-4401-83c6-f95809952696",
+    "name": "הרב דני סטיסקין",
+    "slug": "danny-stiskin"
+  },
+  {
+    "id": "71aa933c-5548-4ea7-8be0-dfb659202660",
+    "name": "הרב מאיר הילביץ'",
+    "slug": "meir-hilvitz"
+  },
+  {
+    "id": "678c4f71-1e70-4444-9046-3b79182294e2",
+    "name": "הרב צבי שוויגר",
+    "slug": "zvi-shvaiger"
+  },
+  {
+    "id": "6f4b2572-b019-4832-9547-de7e8bc6d909",
+    "name": "ושננתם - אוצר התורה",
+    "slug": "veshinantam-otzar-hatorah"
+  },
+  {
+    "id": "ff233638-a99c-4049-9613-41d44a12f90a",
+    "name": "הרב נועם וידר",
+    "slug": "noam-vider"
+  },
+  {
+    "id": "205bdd49-2c88-4fbb-8df0-bd961861e298",
+    "name": "הרב ברוך סליי",
+    "slug": "baruch-seley"
+  },
+  {
+    "id": "ed629999-adaf-48f9-af75-60a516596021",
+    "name": "הרב ערן טמיר",
+    "slug": "eran-tamir"
+  },
+  {
+    "id": "3da1df9d-4ed5-48ba-9ffa-e3c5271d40e1",
+    "name": "הרב עמירם אלבה",
+    "slug": "amiram-alva"
+  },
+  {
+    "id": "4dc6c4a3-ebe3-43e5-b8d7-6d565be405eb",
+    "name": "הרב נתן רוטמן",
+    "slug": "natan-rotman"
+  },
+  {
+    "id": "103442a2-5724-44cf-94f3-9ba75a342aec",
+    "name": "הרב שמעון כהן",
+    "slug": "shimon-cohen"
+  },
+  {
+    "id": "b5555555-5555-5555-5555-555555555555",
+    "name": "תלמוד תורה מורשה",
+    "slug": "talmud-torah-morasha"
+  },
+  {
+    "id": "e6c81665-5737-4c82-b96e-7527cc0e6ee6",
+    "name": "ושננתם",
+    "slug": "veshinantam"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111103",
+    "name": "נתן מארגל",
+    "slug": "natan-margel"
+  },
+  {
+    "id": "62db3ad6-731b-4463-85d3-eb2424cbde57",
+    "name": "הרב אלי אדלר",
+    "slug": "eli-adler"
+  },
+  {
+    "id": "b545bcbd-97a8-482e-a69f-6b7e1ed3c939",
+    "name": "הרב יהונתן עידן",
+    "slug": "yehonatan-idan"
+  },
+  {
+    "id": "3b77b33d-65e4-43a1-92bd-534f45ff9392",
+    "name": "הרב צבי הירש קלישר זצ\"ל",
+    "slug": "tzby-hyrsh-klyshr"
+  },
+  {
+    "id": "98af6a27-12db-4e4a-867e-c03e92e8445c",
+    "name": "הרב דוד ג'יאמי",
+    "slug": "david-jiami"
+  },
+  {
+    "id": "9fb9a5b1-8318-4a18-af93-268c4fa3698c",
+    "name": "הרב עדיאל לוי",
+    "slug": "adiel-levi"
+  },
+  {
+    "id": "fbf45d02-d83a-4d47-a48a-f7035fb15b0c",
+    "name": "הרב איתן קופמן",
+    "slug": "etan-kopman"
+  },
+  {
+    "id": "d149c8bb-2c74-42ca-b28d-a6aeba4e41bf",
+    "name": "הרב יואל מנוביץ'",
+    "slug": "yoel-manowitz"
+  },
+  {
+    "id": "52b071b1-8ab5-4ca3-a8ce-900eceec590c",
+    "name": "הרב אלעזר נאה",
+    "slug": "elazar-nae"
+  },
+  {
+    "id": "e3ae8794-b48d-4a7f-9634-c814e4fc52d3",
+    "name": "הרב חיים שפירא",
+    "slug": "chaim-shapira"
+  },
+  {
+    "id": "06a6954f-b65b-4fa4-ae1d-5ea643faff10",
+    "name": "הרב אלחנן בן נון",
+    "slug": "elchanan-ben-nun"
+  },
+  {
+    "id": "d81a67ab-3da1-478d-8fff-8a7c190ac0d1",
+    "name": "הרב יעקב אריאל",
+    "slug": "yaakov-ariel"
+  },
+  {
+    "id": "4a12bee1-429c-4db5-a0d8-1c933eb96696",
+    "name": "הרב יחזקאל קופלד",
+    "slug": "ychzkal-kvpld"
+  },
+  {
+    "id": "e13dda79-e8b5-4c69-8c36-86507f3beac3",
+    "name": "הרב נועם ונגרובר",
+    "slug": "nvm-vngrvbr"
+  },
+  {
+    "id": "7fcd7014-5eef-4e9b-b792-e6460d75e720",
+    "name": "ישקו העדרים",
+    "slug": "yishko-hadarim"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111101",
+    "name": "הרב דביר אפלבוים",
+    "slug": "dbyr-aplbvym"
+  },
+  {
+    "id": "44dcb2cc-b408-457f-92e6-08f6340e33ad",
+    "name": "הרב יוסף קלנר",
+    "slug": "yvsp-klnr"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111121",
+    "name": "הרב בניה כהן",
+    "slug": "bnyh-khn"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111102",
+    "name": "הרב עדי איצקוביץ'",
+    "slug": "dy-aytzkvbytz"
+  },
+  {
+    "id": "1acd517c-1e18-4bdc-a18e-0ecf5924e50f",
+    "name": "הרב אברהם וסרמן",
+    "slug": "abrhm-vsrmn"
+  },
+  {
+    "id": "d4e5f6a7-4444-4444-dddd-444444444444",
+    "name": "הרב שלמה כץ",
+    "slug": "shlmh-ktz"
+  },
+  {
+    "id": "7a9524c6-fa70-42af-8e15-d39750fd34d6",
+    "name": "הרב יאיר הס",
+    "slug": "yayr-hs"
+  },
+  {
+    "id": "ad1e342e-30a8-43b7-9c91-e5660402e3a5",
+    "name": "הרב מישאל רובין",
+    "slug": "myshal-rvbyn"
+  },
+  {
+    "id": "a1a6925b-64c4-4cfe-a6a7-9daaddbfe7d8",
+    "name": "הרב שלמה מונדשיין",
+    "slug": "shlmh-mvndshyyn"
+  },
+  {
+    "id": "a2bbca4b-30ba-4362-995c-50d727589545",
+    "name": "הרב רמי גליקשטיין",
+    "slug": "rmy-glykshtyyn"
+  },
+  {
+    "id": "6948b005-8390-45f0-b14b-7ede0f05c671",
+    "name": "הרב לייב מינצברג",
+    "slug": "lyyb-myntzbrg"
+  },
+  {
+    "id": "53089efa-5913-40ed-a530-f6e47a5c10c2",
+    "name": "הרבנית נורית גאל דור (לנשים)",
+    "slug": "nvryt-gal-dvr"
+  },
+  {
+    "id": "8c386317-623c-46fa-a28b-f436c6ab2c71",
+    "name": "הרב חגי לונדין",
+    "slug": "chgy-lvndyn"
+  },
+  {
+    "id": "21815917-0c20-4ad2-b6ab-3943956c9a55",
+    "name": "הרב מנחם אליהו",
+    "slug": "mnchm-alyhv"
+  },
+  {
+    "id": "86dd0d3d-1c51-4728-8c86-3ca5461553db",
+    "name": "הרב שמואל אליהו",
+    "slug": "shmuel-eliyahu"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111105",
+    "name": "הרב אורי שטמלר",
+    "slug": "avry-shtmlr"
+  },
+  {
+    "id": "11087a99-ce82-4297-ac6e-881a700b00e9",
+    "name": "הרב יצחק בן ישראל",
+    "slug": "ytzchk-bn-yshral"
+  },
+  {
+    "id": "6e709b09-2a24-445d-94ad-6aa7f593b6df",
+    "name": "הרב חיים דרוקמן",
+    "slug": "chyym-drvkmn"
+  },
+  {
+    "id": "ac592618-3115-4d39-be84-f68edb4a5e8e",
+    "name": "הרב אשר חלפון",
+    "slug": "ashr-chlpvn"
+  },
+  {
+    "id": "52c215fe-b60e-42b6-a5ce-feb1703f65cd",
+    "name": "הרב יוסף מילר",
+    "slug": "yvsp-mylr"
+  },
+  {
+    "id": "bf5948a7-d84a-4dff-b488-2646b378d4f3",
+    "name": "הרב יהושע ון-דייק",
+    "slug": "yhvsh-vn-dyyk"
+  },
+  {
+    "id": "c0da1cd2-63ea-4c4b-ae14-004168209bbb",
+    "name": "הרב אריה אוריאל",
+    "slug": "aryh-avryal"
+  },
+  {
+    "id": "27e770f5-cf5f-4dd5-8a72-a59d45c546c6",
+    "name": "הרב מיכאל טוביאנו",
+    "slug": "mykal-tvbyanv"
+  },
+  {
+    "id": "92f3c15f-750a-438c-9413-7edeb50e754b",
+    "name": "הרב קובי דביר",
+    "slug": "kvby-dbyr"
+  },
+  {
+    "id": "9244511d-a2b2-4d0c-a097-b52595990c69",
+    "name": "הרב יוסף אטון",
+    "slug": "yvsp-atvn"
+  },
+  {
+    "id": "f8bf13ea-efd1-4a1f-b4c0-ba85244e1735",
+    "name": "הרב אלי קוהנוב",
+    "slug": "aly-kvhnvb"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111104",
+    "name": "הרב עמוס נתנאל",
+    "slug": "mvs-ntnal"
+  },
+  {
+    "id": "a004d473-6b88-4237-b66c-fb2146bcbfdd",
+    "name": "הרב אהרן בן גרשון",
+    "slug": "ahrn-bn-grshvn"
+  },
+  {
+    "id": "d34528da-ee89-433e-a059-874a653fea78",
+    "name": "הרב אלישב אביחיל",
+    "slug": "alyshb-abychyl"
+  },
+  {
+    "id": "d6666666-6666-6666-6666-666666666666",
+    "name": "הרב ניסים כהן",
+    "slug": "nysym-khn"
+  },
+  {
+    "id": "8269f8b6-08ca-4510-840b-f3689216c257",
+    "name": "הרב יחזקאל כהן",
+    "slug": "ychzkal-khn"
+  },
+  {
+    "id": "1e46fe39-8488-4c69-a7de-63e8cd295729",
+    "name": "הרב שמואל ישמח",
+    "slug": "shmval-yshmch"
+  },
+  {
+    "id": "5f7c6551-76fc-410f-b838-7c0d57ce7972",
+    "name": "הרב אלישע וישליצקי",
+    "slug": "alysh-vyshlytzky"
+  },
+  {
+    "id": "5af49987-719c-4c36-a4fb-e88dcde11161",
+    "name": "הרב יהושע צוקרמן",
+    "slug": "yhvsh-tzvkrmn"
+  },
+  {
+    "id": "d68b38ad-fd70-47d3-b667-20f68af6d8c4",
+    "name": "הרב יוסי ברינר",
+    "slug": "yvsy-brynr"
+  },
+  {
+    "id": "f3cb36a5-ce6f-453d-939b-37a987b2fd9d",
+    "name": "הרב אריה אברמסון",
+    "slug": "aryh-abrmsvn"
+  },
+  {
+    "id": "cc169a16-6fac-4da9-915c-b484c7b24b11",
+    "name": "הרב דוד חי הכהן",
+    "slug": "dvd-chy-hkhn"
+  },
+  {
+    "id": "3ca3c8b7-c061-4997-82dc-50f81e738e2a",
+    "name": "הרב צבי קוסטינר",
+    "slug": "tzby-kvstynr"
+  },
+  {
+    "id": "bf93edb7-8845-4a95-b13c-d2bc237ddb8a",
+    "name": "הרב יעקב אפשטיין",
+    "slug": "ykb-apshtyyn"
+  },
+  {
+    "id": "2ca95063-4e0b-4756-a8e1-1a83fb0118e9",
+    "name": "הרב ארי לנדא",
+    "slug": "ary-lnda"
+  },
+  {
+    "id": "8301fc29-5cb9-4476-93ab-af9fa8aea58c",
+    "name": "הרב מנחם בורשטין",
+    "slug": "mnchm-bvrshtyn"
+  },
+  {
+    "id": "75614e8d-32d5-43c8-bbe5-444702e961df",
+    "name": "הרב גדי שלוין",
+    "slug": "gdy-shlvyn"
+  },
+  {
+    "id": "e1111111-1111-1111-1111-111111111120",
+    "name": "הרב נחום אריאל",
+    "slug": "nchvm-aryal"
+  },
+  {
+    "id": "12bf37dd-1e71-43bf-a369-14ac93384bfa",
+    "name": "הרב אופיר כהן",
+    "slug": "avpyr-khn"
+  },
+  {
+    "id": "330639b2-b447-41d8-a3e5-e9f14d677a38",
+    "name": "הרב דוד טורנר",
+    "slug": "dvd-tvrnr"
+  },
+  {
+    "id": "d4e5f6a7-6666-6666-ffff-666666666666",
+    "name": "הרב שמעון שוהם",
+    "slug": "shmvn-shvhm"
+  },
+  {
+    "id": "fcf12848-4f60-438b-85e7-19d6ad728663",
+    "name": "הרבנית ורדית אביחי (לנשים)",
+    "slug": "vrdyt-abychy"
+  },
+  {
+    "id": "0104ccd7-2814-47fc-a397-682b2254ba7d",
+    "name": "הרב צפניה דרורי",
+    "slug": "tzpnyh-drvry"
+  },
+  {
+    "id": "58096c73-c03b-4bc9-91e1-11259bfe7792",
+    "name": "הרב דוד אמיתי",
+    "slug": "dvd-amyty"
+  },
+  {
+    "id": "fa715fa1-23fb-4977-b761-6df1dcfdd798",
+    "name": "הרב אליהו ידיד",
+    "slug": "alyhv-ydyd"
+  },
+  {
+    "id": "75254424-9675-47ec-a934-ff086c6f7f47",
+    "name": "הרב חן חלמיש",
+    "slug": "chn-chlmysh"
+  },
+  {
+    "id": "f8cd6298-a593-4b80-9fa6-6d7cd43203fe",
+    "name": "הרב יואב אוריאל והרב עמנואל בן ארצי",
+    "slug": "yoav-uriel-veemanueal-ben-artzi"
+  },
+  {
+    "id": "dcb63ace-ad6a-494f-ba95-365d680cb22b",
+    "name": "הרבנית דנה סליי (לנשים)",
+    "slug": "dnh-slyy"
+  },
+  {
+    "id": "a90410a1-89e7-4e0e-b93d-0e132768bbbf",
+    "name": "הרב קלמן בר",
+    "slug": "klmn-br"
+  },
+  {
+    "id": "954bb8a5-4536-4468-8481-9197b434417c",
+    "name": "הרבנית עידית איצקוביץ' (לנשים)",
+    "slug": "ydyt-aytzkvbytz"
+  },
+  {
+    "id": "648b46f4-8578-46bb-a601-c551c718dc3e",
+    "name": "הרב דודי מתוקי",
+    "slug": "dvdy-mtvky"
+  },
+  {
+    "id": "723c69b7-a119-42f5-9684-c4a05388475a",
+    "name": "הרב אס\"ף בנדל",
+    "slug": "asp-bndl"
+  },
+  {
+    "id": "44abc5d4-1cac-4c62-8259-c5e719b83abc",
+    "name": "הרב דוד הוברפלד",
+    "slug": "dvd-hvbrpld"
+  },
+  {
+    "id": "e772bb3b-34cb-4616-9dcd-b8ca92e006a0",
+    "name": "הרב מיכה הלוי",
+    "slug": "mykh-hlvy"
+  },
+  {
+    "id": "a43e5133-5987-4065-86f2-cf22ff4c6f90",
+    "name": "הרבנית גילה שרים (לנשים)",
+    "slug": "gylh-shrym"
+  },
+  {
+    "id": "38d9893b-6250-40fa-9d97-8066391f0ca6",
+    "name": "הרב מתניה ידיד",
+    "slug": "mtnyh-ydyd"
+  },
+  {
+    "id": "1f51f188-3d0b-45b4-9c93-55d32e67ca3e",
+    "name": "הרב מאיר נאמן",
+    "slug": "mayr-namn"
+  },
+  {
+    "id": "4d3e31bc-420c-4d24-8a20-bbc181e55a9c",
+    "name": "הרב ברק עוקבי",
+    "slug": "brk-vkby"
+  },
+  {
+    "id": "52a4aa8b-fff0-421b-85c1-70e03d6e8993",
+    "name": "הרב מנחם בורשטיין",
+    "slug": "mnchm-bvrshtyyn"
+  },
+  {
+    "id": "1f1815e8-c20c-4b49-997f-f62927ae7a07",
+    "name": "הרב מנחם מן",
+    "slug": "mnchm-mn"
+  },
+  {
+    "id": "6bcd10bd-b127-4ff0-8f2c-b2f2b98efbea",
+    "name": "הרב אילן אלפונטה",
+    "slug": "ayln-alpvnth"
+  },
+  {
+    "id": "6e2327b3-735a-45d6-abec-b1c4f1ec3209",
+    "name": "הרב דרור אריה",
+    "slug": "drvr-aryh"
+  },
+  {
+    "id": "f437e7a9-2cf0-43df-a20b-4dcb34851212",
+    "name": "הרבנית דינה ראפ (לנשים)",
+    "slug": "dynh-rap"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000001",
+    "name": "הרבנית ורדית אביחי",
+    "slug": "vrdyt-abychy-2"
+  },
+  {
+    "id": "e8d6a202-0e6a-45ae-82ca-49e638b2f57e",
+    "name": "הרבנית תהילה הרץ (לנשים)",
+    "slug": "thylh-hrtz"
+  },
+  {
+    "id": "cdb6545e-ce50-4e10-a544-2fa57d57ddff",
+    "name": "הרב שלמה יוסף ויצן",
+    "slug": "shlmh-yvsp-vytzn"
+  },
+  {
+    "id": "f6d239d6-6c9d-4a65-8167-b2b3ab01de51",
+    "name": "הרב נחום נריה",
+    "slug": "nchvm-nryh"
+  },
+  {
+    "id": "d80ccef5-c33b-4bd0-8367-0c3ebbb123a7",
+    "name": "הרבנית דנה סליי",
+    "slug": "dnh-slyy-2"
+  },
+  {
+    "id": "48460b4e-a597-43ad-b8fb-fce8bcd7e858",
+    "name": "הרב רפאל למפרט",
+    "slug": "rpal-lmprt"
+  },
+  {
+    "id": "7a570390-7995-4bac-98a6-15efa87f9c7a",
+    "name": "הרב חיים סבתו",
+    "slug": "chyym-sbtv"
+  },
+  {
+    "id": "97d20921-c6b2-47f4-96a7-97e6dcaddfbf",
+    "name": "הרב עקיבא קשתיאל",
+    "slug": "kyba-kshtyal"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000003",
+    "name": "הרבנית תהילה הרץ",
+    "slug": "thylh-hrtz-2"
+  },
+  {
+    "id": "e9af5074-fc56-44f8-91d7-2fc934887852",
+    "name": "הרבנית ברוריה בן שחר (לנשים)",
+    "slug": "brvryh-bn-shchr"
+  },
+  {
+    "id": "38f96d08-5a07-4669-96fe-d806627cc1bd",
+    "name": "הרב משה הגר",
+    "slug": "mshh-hgr"
+  },
+  {
+    "id": "905cca79-9bcf-42ba-829a-ec3b9e907167",
+    "name": "הרב ראובן ששון",
+    "slug": "reuven-sasson"
+  },
+  {
+    "id": "efcae8b9-5fa5-4b74-933e-8e681653dfdb",
+    "name": "הרב בנימין סופר",
+    "slug": "bnymyn-svpr"
+  },
+  {
+    "id": "da074c0f-eda5-42f5-85b0-4202a5a8449b",
+    "name": "הרב אריאל בראלי",
+    "slug": "aryal-braly"
+  },
+  {
+    "id": "e19e7faf-ddab-4dff-9b1d-e249e05c8b84",
+    "name": "הרב אוהד קרקובר",
+    "slug": "avhd-krkvbr"
+  },
+  {
+    "id": "177c7a79-ece0-467f-9360-103b25ece1f2",
+    "name": "הרב אורן טרבלסי",
+    "slug": "avrn-trblsy"
+  },
+  {
+    "id": "f6ce1953-241f-42b7-964f-fa103c6e1958",
+    "name": "ולו",
+    "slug": "velo"
+  },
+  {
+    "id": "13905f4d-590d-4ca8-bb48-372ac15186e9",
+    "name": "הרב גדי הרלינג",
+    "slug": "gdy-hrlyng"
+  },
+  {
+    "id": "acede66e-8b83-4abd-b737-ac9c79e1b119",
+    "name": "הרב מרדכי קופרמן",
+    "slug": "mrdky-kvprmn"
+  },
+  {
+    "id": "feff2daf-983f-4c9d-b66a-1dc2c7cfc2e2",
+    "name": "הרבנית נעמה בן פנחס (לנשים)",
+    "slug": "nmh-bn-pnchs"
+  },
+  {
+    "id": "1f347997-d999-4250-987e-a7ae619b15a2",
+    "name": "הרבנית חגית אלרן (לנשים)",
+    "slug": "chgyt-alrn"
+  },
+  {
+    "id": "6806733c-9606-466e-b48e-68946fdaa671",
+    "name": "הרב דוב ביגון",
+    "slug": "dvb-bygvn"
+  },
+  {
+    "id": "6001d928-dc8c-4e0f-bc24-0f05fcc6203a",
+    "name": "הרב איתיאל אמיתי",
+    "slug": "aytyal-amyty"
+  },
+  {
+    "id": "c1f5a0d9-6727-48a3-9ab7-86cc493ffdb9",
+    "name": "הרב צבי לבנברג",
+    "slug": "tzby-lbnbrg"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000008",
+    "name": "הרבנית נעמי שפירא",
+    "slug": "nmy-shpyra"
+  },
+  {
+    "id": "8923c7a2-b4d4-4a3f-a38b-534e1bb26606",
+    "name": "הרב מנחם לוי",
+    "slug": "mnchm-lvy"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000011",
+    "name": "הרבנית דינה ראף",
+    "slug": "dynh-rap-2"
+  },
+  {
+    "id": "99f94412-7f26-4699-af2f-eb97f75b2105",
+    "name": "הרב עידו רוזנטל",
+    "slug": "ydv-rvzntl"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000010",
+    "name": "הרבנית גילה שרים",
+    "slug": "gylh-shrym-2"
+  },
+  {
+    "id": "f16ac6fa-ba12-4792-815e-2457548df247",
+    "name": "הרב רוני אגלטל",
+    "slug": "rvny-agltl"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000006",
+    "name": "הרבנית דניאלה ון-דייק",
+    "slug": "dnyalh-vn-dyyk"
+  },
+  {
+    "id": "c25c124d-752a-42f7-ba5f-39fc391f2e44",
+    "name": "הרבנית שיפי גולדשטיין (לנשים)",
+    "slug": "shypy-gvldshtyyn"
+  },
+  {
+    "id": "a5480276-3dcc-4423-84f7-4ef305c63d15",
+    "name": "הרבנית עידית שילה (לנשים)",
+    "slug": "ydyt-shylh"
+  },
+  {
+    "id": "9f93561f-45d9-4055-96de-5bba915ea1b4",
+    "name": "הרבנית בת שבע אליהו (לנשים)",
+    "slug": "bt-shb-alyhv"
+  },
+  {
+    "id": "b5f822f8-22e3-49fb-bad9-b262bab3bd75",
+    "name": "הרב עמוס קליגר",
+    "slug": "mvs-klygr"
+  },
+  {
+    "id": "6c7db943-6918-4761-9097-1b2e48000a10",
+    "name": "הרבנית נעמי שפירא (לנשים)",
+    "slug": "nmy-shpyra-2"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000009",
+    "name": "הרבנית ברוריה בן שחר",
+    "slug": "brvryh-bn-shchr-2"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000005",
+    "name": "הרבנית רחלי מונדשטיין",
+    "slug": "rchly-mvndshtyyn"
+  },
+  {
+    "id": "cc5b9459-774b-4a10-b65b-4d8f6d9d49c9",
+    "name": "הרב דוד לאו",
+    "slug": "dvd-lav"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000013",
+    "name": "הרבנית בת שבע יוסיפון",
+    "slug": "bt-shb-yvsypvn"
+  },
+  {
+    "id": "c0999db2-4cb5-4ebf-bbca-b75427839a5f",
+    "name": "הרב משה שטרנברג",
+    "slug": "mshh-shtrnbrg"
+  },
+  {
+    "id": "be9d2c21-7e47-4dcb-9c1d-daf85877d63f",
+    "name": "הרבנית דניאלה ון-דייק (לנשים)",
+    "slug": "dnyalh-vn-dyyk-2"
+  },
+  {
+    "id": "ef010001-0001-4000-8000-000000000001",
+    "name": "הרב צבי ענבל",
+    "slug": "tzby-nbl"
+  },
+  {
+    "id": "fec85b7a-af58-4008-a867-733472a0c7aa",
+    "name": "רותי שפירא - ד\"ר (לנשים)",
+    "slug": "ruti-shapira-lanashim"
+  },
+  {
+    "id": "d67b0194-efcd-45a1-a04b-3cf1b8ceb9bc",
+    "name": "הרב אסף שטראוס",
+    "slug": "asp-shtravs"
+  },
+  {
+    "id": "3a54e4e3-4b11-4cb8-bda5-21902ea81b40",
+    "name": "הרב אביעד תפוחי",
+    "slug": "abyd-tpvchy"
+  },
+  {
+    "id": "c3d4e5f6-3333-4444-cccc-333333333333",
+    "name": "הרב ידידיה שילה",
+    "slug": "ydydyh-shylh"
+  },
+  {
+    "id": "8866dfed-392d-4912-bcda-a8d6754c6887",
+    "name": "הרב אריה מרזר",
+    "slug": "aryh-mrzr"
+  },
+  {
+    "id": "200cc932-cb41-4be8-bf7a-d7f0ed96ede6",
+    "name": "הרב יהודה סדן",
+    "slug": "yhvdh-sdn"
+  },
+  {
+    "id": "e1f5b75e-3080-4e7d-a316-9484757adb49",
+    "name": "הרב יגאל שפרן",
+    "slug": "ygal-shprn"
+  },
+  {
+    "id": "99ed0fc4-7174-42ce-8411-58e861149f44",
+    "name": "הרב יהונתן פוזן",
+    "slug": "yhvntn-pvzn"
+  },
+  {
+    "id": "b2c3d4e5-2222-4444-bbbb-222222222222",
+    "name": "סידור שים שלום",
+    "slug": "sidur-sim-shalom"
+  },
+  {
+    "id": "c61c9582-5f5f-4b63-ac8d-8bb18aafb9c5",
+    "name": "הרב אריאל כהן",
+    "slug": "aryal-khn"
+  },
+  {
+    "id": "13a134db-1268-45b3-9870-1fd79a2ba490",
+    "name": "הרב טוביה אריאל",
+    "slug": "tvbyh-aryal"
+  },
+  {
+    "id": "a1b2c3d4-1111-4444-aaaa-111111111111",
+    "name": "אוריה כראדי",
+    "slug": "oria-keradi"
+  },
+  {
+    "id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+    "name": "הרב שמעון לוי",
+    "slug": "shmvn-lvy"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000002",
+    "name": "הרבנית חגית אלון",
+    "slug": "chgyt-alvn"
+  },
+  {
+    "id": "46366d84-b0c2-4917-8362-d3acf1d30b76",
+    "name": "הרב נועם אליצור",
+    "slug": "nvm-alytzvr"
+  },
+  {
+    "id": "a24c2f68-2381-4965-a03c-5958ffc163ca",
+    "name": "כל הרבנים",
+    "slug": "kol-harabanim"
+  },
+  {
+    "id": "a1a4fa3e-b4e4-4774-aa55-0f248e627d5b",
+    "name": "הרבנית נעמה אתרוג (לנשים)",
+    "slug": "nmh-atrvg"
+  },
+  {
+    "id": "80cca8ce-f10c-4ee0-a2b0-63d49c1ed57c",
+    "name": "סיוון רהב-מאיר (לנשים בלבד)",
+    "slug": "sivan-rahav-meir"
+  },
+  {
+    "id": "8fba6175-4dd7-4be4-9446-c7f375728949",
+    "name": "הרב אהרון קוטלר זצ\"ל",
+    "slug": "ahrvn-kvtlr"
+  },
+  {
+    "id": "a5c3d9ec-a8fb-49e4-bc54-f266156ec6f4",
+    "name": "הרב אבי סמוטריץ'",
+    "slug": "aby-smvtrytz"
+  },
+  {
+    "id": "d4e5f6a7-5555-5555-eeee-555555555555",
+    "name": "מחבר לא ידוע",
+    "slug": "mechaber-lo-yadua"
+  },
+  {
+    "id": "886d3045-8262-4e47-ba07-9d3f4d25893b",
+    "name": "הרב אלי פרידמן",
+    "slug": "aly-prydmn"
+  },
+  {
+    "id": "90ec036a-c87b-4cbe-9fbf-9df0d2aded6c",
+    "name": "הרבנית אחינועם ברקו (לנשים)",
+    "slug": "achynvm-brkv"
+  },
+  {
+    "id": "81e9d9d2-7e99-4b4c-aab0-e4300f3d4fde",
+    "name": "הרב יהושע מגנס",
+    "slug": "yhvsh-mgns"
+  },
+  {
+    "id": "bc6e5c0b-2465-4ed1-9de6-1fc28250c387",
+    "name": "הרבנית בת שבע יוסיפון (לנשים)",
+    "slug": "bt-shb-yvsypvn-2"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000007",
+    "name": "רותי שפירא - ד\"ר",
+    "slug": "ruti-shapira"
+  },
+  {
+    "id": "6b6e048d-cee2-4214-af04-f50528658fd1",
+    "name": "פרופ' דבורה רוזנווסר (לנשים)",
+    "slug": "prof-dvora-rozenwaser"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000004",
+    "name": "הרבנית יפה מגנס",
+    "slug": "yph-mgns"
+  },
+  {
+    "id": "87411a99-c469-4300-8e2d-74e81a8aaadb",
+    "name": "הרב מנחם אהור",
+    "slug": "mnchm-ahvr"
+  },
+  {
+    "id": "e3c3449c-1e81-41f7-b416-87c2b4abb568",
+    "name": "הרב בנימין רוזנצוויג",
+    "slug": "bnymyn-rvzntzvvyg"
+  },
+  {
+    "id": "03dea711-7cb7-4720-be1e-042d83577bee",
+    "name": "הרבנית רחלי מונדשיין (לנשים)",
+    "slug": "rchly-mvndshyyn"
+  },
+  {
+    "id": "ef010001-0001-4000-8000-000000000002",
+    "name": "הרב ישי פלס",
+    "slug": "yshy-pls"
+  },
+  {
+    "id": "d5e60001-0001-4000-8000-000000000001",
+    "name": "הרב איתן טוקר",
+    "slug": "aytn-tvkr"
+  },
+  {
+    "id": "c77f633b-162e-4128-b7a6-d1fdf30d4748",
+    "name": "הרה\"ג הרב דוד לאו",
+    "slug": "dvd-lav-2"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000014",
+    "name": "הרב נחום נריה",
+    "slug": "nchvm-nryh-2"
+  },
+  {
+    "id": "73fd07b7-4fbe-49b7-87b1-0da37ae5dfee",
+    "name": "הרב אליהו דסלר זצ\"ל",
+    "slug": "alyhv-dslr"
+  },
+  {
+    "id": "479caee9-502f-4e5a-a2c9-08364968aab9",
+    "name": "הרב יעקב יצחק הלוי רודרמן זצ\"ל",
+    "slug": "ykb-ytzchk-hlvy-rvdrmn"
+  },
+  {
+    "id": "b1010001-0001-4000-8000-000000000012",
+    "name": "הרבנית נורית גאל דור",
+    "slug": "nvryt-gal-dvr-2"
+  },
+  {
+    "id": "9985d06a-0dd2-4314-85f2-6610993ceb32",
+    "name": "הרבנית יפה מגנס (לנשים)",
+    "slug": "yph-mgns-2"
+  }
+]

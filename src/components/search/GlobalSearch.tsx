@@ -137,7 +137,7 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
               <CommandItem
                 key={rabbi.id}
                 value={rabbi.name}
-                onSelect={() => go(`/rabbis/${rabbi.id}`)}
+                onSelect={() => go(`/rabbis/${rabbi.slug ?? rabbi.id}`)}
                 className="flex items-center gap-3 cursor-pointer"
               >
                 <Avatar className="h-8 w-8">

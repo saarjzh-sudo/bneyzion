@@ -8,6 +8,7 @@ const fadeUp = {
 
 interface Rabbi {
   id: string;
+  slug?: string | null;
   name: string;
   title: string | null;
   image_url: string | null;
@@ -33,7 +34,7 @@ const AboutRabbisSection = ({ topRabbis }: Props) => {
             {topRabbis.map((rabbi, i) => (
               <motion.div key={rabbi.id} variants={fadeUp} custom={i + 1}>
                 <Link
-                  to={`/rabbis/${rabbi.id}`}
+                  to={`/rabbis/${rabbi.slug ?? rabbi.id}`}
                   className="glass-card-light rounded-2xl p-5 text-center block hover:shadow-lg hover:border-primary/20 transition-all group"
                 >
                   <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">

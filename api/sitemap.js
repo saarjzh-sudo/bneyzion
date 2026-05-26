@@ -82,7 +82,7 @@ export default async function handler(req, res) {
     // (`useRabbis` hook just selects * with no filter).
     supabase
       .from('rabbis')
-      .select('id, created_at')
+      .select('id, slug, created_at')
       .limit(500),
   ]);
 
@@ -115,7 +115,7 @@ export default async function handler(req, res) {
 
   for (const r of rabbisRes.data ?? []) {
     entries.push(urlEntry({
-      loc: `/rabbis/${r.id}`,
+      loc: `/rabbis/${r.slug ?? r.id}`,
       lastmod: r.created_at ? new Date(r.created_at).toISOString() : undefined,
       changefreq: 'weekly',
       priority: '0.6',

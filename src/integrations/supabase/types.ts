@@ -1422,6 +1422,7 @@ export type Database = {
           image_url: string | null
           lesson_count: number
           name: string
+          slug: string
           specialty: string | null
           status: string
           title: string | null
@@ -1433,6 +1434,7 @@ export type Database = {
           image_url?: string | null
           lesson_count?: number
           name: string
+          slug: string
           specialty?: string | null
           status?: string
           title?: string | null
@@ -1444,6 +1446,7 @@ export type Database = {
           image_url?: string | null
           lesson_count?: number
           name?: string
+          slug?: string
           specialty?: string | null
           status?: string
           title?: string | null

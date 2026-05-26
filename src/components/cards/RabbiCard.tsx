@@ -6,6 +6,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface RabbiCardProps {
   id: string;
+  slug?: string | null;
   name: string;
   title?: string | null;
   specialty?: string | null;
@@ -30,9 +31,9 @@ function getGradient(name: string) {
   return avatarGradients[Math.abs(hash) % avatarGradients.length];
 }
 
-const RabbiCard = memo(function RabbiCard({ id, name, title, specialty, imageUrl, lessonCount }: RabbiCardProps) {
+const RabbiCard = memo(function RabbiCard({ id, slug, name, title, specialty, imageUrl, lessonCount }: RabbiCardProps) {
   return (
-    <Link to={`/rabbis/${id}`}>
+    <Link to={`/rabbis/${slug ?? id}`}>
       <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 h-full group text-center border-border">
         <CardContent className="p-6 flex flex-col items-center">
           {imageUrl ? (

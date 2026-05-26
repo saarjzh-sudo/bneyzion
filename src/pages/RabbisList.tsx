@@ -33,6 +33,7 @@ const RabbisList = () => {
                 <RabbiCard
                   key={rabbi.id}
                   id={rabbi.id}
+                  slug={rabbi.slug}
                   name={rabbi.name}
                   title={rabbi.title}
                   specialty={rabbi.specialty}

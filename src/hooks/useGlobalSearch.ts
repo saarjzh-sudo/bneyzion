@@ -41,6 +41,7 @@ function buildPatterns(query: string): string[] {
 
 interface RabbiResult {
   id: string;
+  slug: string;
   name: string;
   title: string | null;
   image_url: string | null;
@@ -108,7 +109,7 @@ export function useGlobalSearch(query: string) {
       const [rabbisRes, seriesRes, lessonsRes, topicsRes] = await Promise.all([
         supabase
           .from("rabbis")
-          .select("id, name, title, image_url, lesson_count")
+          .select("id, slug, name, title, image_url, lesson_count")
           .or(rabbiOrClauses)
           .eq("status", "active")
           .order("lesson_count", { ascending: false })

@@ -1,8 +1,9 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Clock } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-import { useRabbi, useRabbiSeries, useRabbiLessons } from "@/hooks/useRabbi";
+import { useRabbi, useRabbiBySlug, useRabbiSeries, useRabbiLessons, isUUID } from "@/hooks/useRabbi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
@@ -10,7 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { useSEO } from "@/hooks/useSEO";
 import { formatRabbiName } from "@/lib/rabbi-name";
-import { useMemo } from "react";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -18,10 +18,31 @@ function formatDuration(seconds: number | null) {
 }
 
 const RabbiPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const { data: rabbi, isLoading } = useRabbi(id);
-  const { data: seriesList } = useRabbiSeries(id);
-  const { data: lessons } = useRabbiLessons(id);
+  const { id: param } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const uuidMode = isUUID(param);
+
+  // UUID path: fetch by id to get the slug, then redirect
+  const { data: rabbiByUUID, isLoading: uuidLoading } = useRabbi(uuidMode ? param : undefined);
+
+  // Slug path: normal fetch
+  const { data: rabbiBySlug, isLoading: slugLoading } = useRabbiBySlug(!uuidMode ? param : undefined);
+
+  // After UUID fetch resolves, redirect to slug URL (301-like client redirect)
+  useEffect(() => {
+    if (uuidMode && rabbiByUUID?.slug) {
+      navigate(`/rabbis/${rabbiByUUID.slug}`, { replace: true });
+    }
+  }, [uuidMode, rabbiByUUID, navigate]);
+
+  const rabbi = uuidMode ? undefined : rabbiBySlug;
+  const isLoading = uuidMode ? uuidLoading : slugLoading;
+
+  // Derived rabbi id (needed for series/lessons hooks which still use id internally)
+  const rabbiId = rabbi?.id;
+
+  const { data: seriesList } = useRabbiSeries(rabbiId);
+  const { data: lessons } = useRabbiLessons(rabbiId);
 
   const displayName = useMemo(() => formatRabbiName(rabbi), [rabbi]);
 
@@ -42,7 +63,8 @@ const RabbiPage = () => {
     jsonLd,
   });
 
-  if (isLoading) {
+  // Show spinner while UUID-mode redirect is in flight
+  if (uuidMode || isLoading) {
     return (
       <Layout>
         <div className="container py-12 space-y-6">

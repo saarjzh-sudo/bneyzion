@@ -122,7 +122,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const { data: rabbisRaw = [] } = usePublicRabbis();
 
   const topRabbis = useMemo(() => {
-    const list = (rabbisRaw as { id: string; name?: string; lesson_count?: number }[])
+    const list = (rabbisRaw as { id: string; slug?: string; name?: string; lesson_count?: number }[])
       .filter((r) => r.name)
       .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
     return list.slice(0, 30);
@@ -479,7 +479,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 .map((r) => (
                   <Link
                     key={r.id}
-                    to={`/rabbis/${r.id}`}
+                    to={`/rabbis/${r.slug ?? r.id}`}
                     onClick={onDrawerClose}
                     style={{
                       display: "flex",

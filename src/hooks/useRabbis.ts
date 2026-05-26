@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 export interface Rabbi {
   id: string;
   name: string;
+  slug: string;
   title: string | null;
   bio: string | null;
   image_url: string | null;

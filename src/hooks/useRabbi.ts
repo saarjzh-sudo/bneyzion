@@ -1,10 +1,42 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** Returns true if the string looks like a UUID (legacy URL) */
+export function isUUID(s: string | undefined): boolean {
+  return !!s && UUID_RE.test(s);
+}
+
+/**
+ * Fetch a rabbi by slug (primary path).
+ * Used by RabbiPage when the URL param is a slug.
+ */
+export function useRabbiBySlug(slug: string | undefined) {
+  return useQuery({
+    queryKey: ["rabbi-slug", slug],
+    enabled: !!slug && !isUUID(slug),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("rabbis")
+        .select("*")
+        .eq("slug", slug!)
+        .single();
+      if (error) throw error;
+      return data;
+    },
+  });
+}
+
+/**
+ * Fetch a rabbi by UUID (legacy path — used for redirects).
+ * RabbiPage calls this when the URL param looks like a UUID,
+ * reads the slug, and then does a client-side navigate.
+ */
 export function useRabbi(id: string | undefined) {
   return useQuery({
     queryKey: ["rabbi", id],
-    enabled: !!id,
+    enabled: !!id && isUUID(id),
     queryFn: async () => {
       const { data, error } = await supabase
         .from("rabbis")
