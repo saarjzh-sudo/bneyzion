@@ -1,5 +1,5 @@
 import { Heart } from "lucide-react";
-import saadiaImg from "@/assets/saadia-soldier.png";
+import saadiaImg from "@/assets/saadia-soldier.jpg";
 
 const DONATION_URL = "https://givechak.co.il/Saadia?ref=r3";
 

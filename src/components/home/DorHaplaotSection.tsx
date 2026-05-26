@@ -11,10 +11,13 @@ interface Miracle {
   updated_at?: string;
 }
 
-function withCacheBustedImage(url?: string | null, updatedAt?: string) {
+function withCacheBustedImage(url?: string | null, updatedAt?: string, width = 600, quality = 70) {
   if (!url) return "";
-  const separator = url.includes("?") ? "&" : "?";
-  return updatedAt ? `${url}${separator}v=${encodeURIComponent(updatedAt)}` : url;
+  const transformed = url.replace("/storage/v1/object/public/", "/storage/v1/render/image/public/");
+  const sep = transformed.includes("?") ? "&" : "?";
+  const params = `width=${width}&quality=${quality}`;
+  const versioned = updatedAt ? `&v=${encodeURIComponent(updatedAt)}` : "";
+  return `${transformed}${sep}${params}${versioned}`;
 }
 
 const DorHaplaotSection = () => {

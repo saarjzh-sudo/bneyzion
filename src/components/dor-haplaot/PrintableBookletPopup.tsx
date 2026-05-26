@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { X, Heart, CheckCircle, Download } from "lucide-react";
-import bookletCover from "@/assets/dor-haplaot-booklet-cover.png";
+import bookletCover from "@/assets/dor-haplaot-booklet-cover.jpg";
 
 const DONATION_URL = "https://givechak.co.il/Saadia?ref=r3";
 const BOOKLET_URL = "/dor-haplaot-booklet.pdf";
