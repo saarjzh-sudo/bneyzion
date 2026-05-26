@@ -515,6 +515,32 @@ public/
   - 7 active → **הכי דחוף** — "פרשת שבוע בראשית/במדבר/דברים", "שיעורים חומש בראשית/שמות", "שיעורים יהושע", "שיעורים על התנך ירמיהו" — אין rabbi, lesson_count=0
 - **המלצה לסאר:** 7 active empty → לסמן archived. 189 published → לבחור: archive או להזין תוכן.
 
+### 2026-05-26 — ייבוא מלא של chapter-weekly sections מזיפ Lovable
+
+**Branch:** `feature/import-from-zip-2026-05-26` · **Commit:** `fe2242c`
+
+**13 סקשנים שעודכנו (9 שונו, 4 נשמרו כנוכחי):**
+- `FAQ.tsx` — ספר (אסתר→חגי/זכריה/מלאכי), יום (שני→רביעי)
+- `FinalCTA.tsx` — headline "הנבואה חוזרת אליך" + price display
+- `FutureProgram.tsx` — "אחרי אסתר" → "אחרי חגי/ז/מ → יהושע" + 3 ספרים
+- `Hero.tsx` — H1 קיץ תשפ"ו, תוכן חגי/זכריה/מלאכי, badge זהב
+- `HowItWorks.tsx` — "שני פרקים/שבוע אסתר" → "פרק בשבוע"
+- `PracticalDetails.tsx` — יום שני 21:00 → יום רביעי 21:00
+- `Pricing.tsx` — badge crimson "מבצע הצטרפות" + layout חדש
+- `Testimonials.tsx` — הורחב מ-8 ל-16 עדויות (featured: נתנאל/חנה/ישורון)
+- `WhySecondTemple.tsx` — שכתוב מלא: 9 key topics grid + showAll toggle + sunrise bg
+
+**סקשן חדש:**
+- `WhyEichah.tsx` — נוצר מהזיפ (74 שורות). לא ב-ChapterWeekly.tsx כי לא היה ב-Index.tsx. ממתין להחלטת יואב לגבי מיקום.
+
+**נשמרו ללא שינוי (תוכן זהה לזיפ):**
+- `Header.tsx`, `ProgramIntro.tsx`, `PainAndDream.tsx`, `HowItWorksInPractice.tsx`, `MeetRabbi.tsx`
+
+**Iron rules מהסשן:**
+- `SubscribeButton` = payment modal (QuickBuyDialog) — אסור להחליף ב-`<a href="pay.grow.link/...">` מהזיפ. הזיפ של Lovable לא יכול לדעת על ה-webhook המקומי.
+- `ThankYou.tsx` בפרודקשן כולל 4 variants (subscription/store/donation/cart) — הרבה יותר מתקדם מהזיפ. לא לדרוס.
+- Build: ✓ 257 modules, 0 TS errors, `✓ built in 3.54s`
+
 ### 2026-05-26 — ייבוא מזיפ: dor-haplaot hero image + booklet popup + OS Antidot TR fonts
 
 - **מקור:** `/Users/srhlq/Desktop/bney-zion-project-full.zip` (114MB, פרויקט Lovable נפרד)
