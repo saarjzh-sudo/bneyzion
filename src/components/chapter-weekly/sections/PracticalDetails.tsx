@@ -12,7 +12,7 @@ const PracticalDetails = () => (
           <p>15 דקות הכנה</p>
         </div>
         <div>
-          <p className="text-accent font-bold mb-1">יום שני 21:00</p>
+          <p className="text-accent font-bold mb-1">יום רביעי 21:00</p>
           <p>זום עם הרב יואב</p>
         </div>
         <div>
