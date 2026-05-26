@@ -7,6 +7,11 @@ Uploads to Supabase Storage bnei-zion-thumbnails/books/
 Updates lessons.thumbnail_url for matching rows.
 Supports resume via scripts/image-batch-state.json.
 
+Vision gate (added 26.5.2026): every generated image is verified by Gemini
+Vision (gemini-2.0-flash) for absence of human figures. Up to 3 retries per
+book; after 3 failures the book is logged to scripts/rejected-images.json
+and skipped (not written to DB).
+
 Usage:
   python3 scripts/image-batch-phase1.py           # live run
   DRY_RUN=1 python3 scripts/image-batch-phase1.py # dry run (no API calls)
@@ -21,6 +26,14 @@ import base64
 import tempfile
 from pathlib import Path
 
+# Vision gate import — works when run from repo root or scripts/ dir
+try:
+    from lib.vision_gate import verify_no_humans
+except ImportError:
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).parent))
+    from lib.vision_gate import verify_no_humans
+
 # ── Config — load from environment (never hardcode secrets) ───
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pzvmwfexeiruelwiujxn.supabase.co")
@@ -34,19 +47,26 @@ SCRIPT_DIR = Path(__file__).parent
 STATE_FILE = SCRIPT_DIR / "image-batch-state.json"
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
-# ── Style (locked — pilot approved 26.5.2026) ─────────────────
+# ── Style (locked — pilot approved 26.5.2026 · Vision gate added 26.5.2026) ───
 STYLE = (
     "Minimalist watercolor painting on white textured paper. "
     "Ultra-clean, gentle, soft, ethereal, atmospheric, meditative, spiritually evocative. "
     "Loose watercolor washes, muted pastel tones — sage green, dusty teal, soft blue-gray, "
     "warm sand, wheat, pale gold, quiet lavender, blush rose. "
     "Visible paper grain, gentle gradients, completely soft edges. "
-    "No harsh lines. No dark outlines. No explicit human figures. "
+    "No harsh lines. No dark outlines. "
     "ABSOLUTELY NO TEXT, NO LETTERS, NO HEBREW CHARACTERS, NO ENGLISH CHARACTERS, "
     "NO TYPOGRAPHY, NO CALLIGRAPHY anywhere in the image. "
     "Generous white space — leave the center open and luminous. "
-    "Abstract representation, impressionistic style, spiritual ambiance."
+    "Abstract representation, impressionistic style, spiritual ambiance. "
+    "NEGATIVE: absolutely no people, no humans, no figures, no human silhouettes, "
+    "no faces, no body parts, no hair, no clothing, no dresses, no gowns, no robes, "
+    "no hands, no feet, no arms, no legs, no children, no men, no women, "
+    "no portraits, no anthropomorphic shapes, no characters, no persons whatsoever."
 )
+
+# Vision gate retry limit
+VISION_MAX_RETRIES = 3
 
 # ── Book descriptions (English, for Imagen) ──────────────────
 BOOK_DESC = {
@@ -57,11 +77,11 @@ BOOK_DESC = {
     "במדבר": "Abstract spiritual representation of desert wandering and divine guidance. A single wandering cloud suggested in soft dusty blue-gray washes over warm sand and infinite sky. Vast, tender atmosphere. No human figures, no faces, no letters, no text.",
     "דברים": "Abstract spiritual representation of covenant and the promised land on the horizon. A single distant horizon glowing with warm gold light through soft mountain mist, quiet and contemplative. Subtle, meditative atmosphere. No human figures, no faces, no letters, no text.",
     "יהושע": "Abstract spiritual representation of crossing and homecoming. A single flowing river of soft blue-green dissolving into light, walls of mist parting on either side. Hopeful, luminous atmosphere. No human figures, no faces, no letters, no text.",
-    "שופטים": "Abstract spiritual representation of cycles of light and shadow, faith and redemption. A single arc of light breaking through turbulent washes of dark indigo and warm gold, resolved into stillness. Quiet, hopeful atmosphere. No human figures, no faces, no letters, no text.",
+    "שופטים": "Abstract spiritual representation of cycles of light and shadow, faith and redemption. Turbulent washes of dark indigo and warm gold, dissolving into soft stillness and quiet light — no arc, no torch, no figure of any kind. Pure abstract color fields. Quiet, hopeful atmosphere. No human figures, no faces, no letters, no text.",
     "שמואל": "Abstract spiritual representation of prophecy and sacred calling in the night. A single lamp of warm amber light glowing softly in darkness, surrounded by royal purple and gold washes. Intimate, reverent atmosphere. No human figures, no faces, no letters, no text.",
     "שמואל א": "Abstract spiritual representation of covenant, the ark, and divine presence. A single radiant doorway of soft golden light in the Tabernacle, delicate warm washes surrounding it. Tender, reverent atmosphere. No human figures, no faces, no letters, no text.",
-    "שמואל ב": "Abstract spiritual representation of David's reign and the emotional depth of kingship. A single golden string of light vibrating over a hillside of warm ochre and dusky rose. Complex, intimate atmosphere, full of feeling. No human figures, no faces, no letters, no text.",
-    "מלכים": "Abstract spiritual representation of royal glory and prophetic fire. A single flame of deep gold flickering at the edge of twilight washes, the Temple's light fading into soft indigo. Meditative, tender atmosphere. No human figures, no faces, no letters, no text.",
+    "שמואל ב": "Abstract spiritual representation of the emotional depth of a kingdom in its fullness and grief. Warm ochre and dusky rose washes bleeding into pale gold, layers of soft color suggesting depth and feeling. Pure abstract color field — no instruments, no strings, no figures. Complex, intimate atmosphere. No human figures, no faces, no letters, no text.",
+    "מלכים": "Abstract spiritual representation of prophetic fire and the fading of ancient light. Deep gold and twilight-indigo washes layered over each other, a glow at the horizon dissolving into soft mist. Pure abstract color fields — no throne, no crown, no flame shape, no figures. Meditative, tender atmosphere. No human figures, no faces, no letters, no text.",
     "מלכים א": "Abstract spiritual representation of Solomon's wisdom and the Temple's radiant glory. A single arch of warm cedar and gold light, architectural grandeur dissolved into soft watercolor. Luminous, intimate atmosphere. No human figures, no faces, no letters, no text.",
     "מלכים ב": "Abstract spiritual representation of exile and lingering hope. A single glowing ember of light on the far horizon, a city dissolving into soft mist and indigo washes. Quiet, tender atmosphere. No human figures, no faces, no letters, no text.",
     "ישעיהו": "Abstract spiritual representation of prophetic vision and messianic light. A single shaft of heavenly light breaking through storm-cloud washes, pure and luminous. Majestic, ethereal atmosphere. No human figures, no faces, no letters, no text.",
@@ -83,11 +103,11 @@ BOOK_DESC = {
     "תהלים": "Abstract spiritual representation of song, lament, and devotion — the psalms as living prayer. A single lyrical arc of soft warm light rising through pale lavender and rose washes. Quiet, tender atmosphere. No human figures, no faces, no letters, no text.",
     "משלי": "Abstract spiritual representation of wisdom and the Tree of Life. A single branching form of golden light, delicate and luminous, suggested in warm gold washes against soft white space. Intimate, gentle atmosphere. No human figures, no faces, no letters, no text.",
     "איוב": "Abstract spiritual representation of divine encounter through suffering and awe. A single figure-less whirlwind of soft indigo and silver light, immense yet somehow tender. Awe-filled, humble atmosphere. No human figures, no faces, no letters, no text.",
-    "שיר השירים": "Abstract spiritual representation of sacred love and the beloved's garden in bloom. A single blooming arch of soft rose and warm gold petals dissolving into mist, spring light all around. Intimate, tender atmosphere. No human figures, no faces, no letters, no text.",
-    "רות": "Abstract spiritual representation of loyalty, kindness, and harvest belonging. A single golden wheat stalk standing in warm harvest light, dusty teal and golden washes. Warm, quiet atmosphere. No human figures, no faces, no letters, no text.",
+    "שיר השירים": "Abstract spiritual representation of sacred love and the season of blooming. Soft watercolor washes of warm rose, blush pink, and pale gold bleeding into cream-textured paper. Misty atmosphere, abstract organic shapes of foliage and petals in the distance — no human forms, no garden gateway, no figures. Tender and quiet. No human figures, no faces, no letters, no text.",
+    "רות": "Abstract spiritual representation of loyalty, kindness, and harvest belonging. Wide warm washes of golden harvest light over flat earth tones — dusty amber, golden wheat-color, soft ochre — suggesting an open field at dusk. Pure abstract color field, no stalks as shapes, no figures, no silhouettes. Warm, quiet atmosphere. No human figures, no faces, no letters, no text.",
     "קהלת": "Abstract spiritual representation of time's cycles and the search for meaning. A single sun arc traced in warm ochre and gold, rivers of soft blue flowing beneath. Contemplative, wise atmosphere. No human figures, no faces, no letters, no text.",
     "איכה": "Abstract spiritual representation of mourning and the first ember of hope. A single candle flame in soft warm gold, ancient stone washes in muted grey and rose around it. Sorrowful, tender atmosphere. No human figures, no faces, no letters, no text.",
-    "אסתר": "Abstract spiritual representation of hidden providence and quiet courage. A single doorway of soft purple and gold light, the hidden hand of providence suggested in gentle washes. Intimate, mysterious atmosphere. No human figures, no faces, no letters, no text.",
+    "אסתר": "Abstract spiritual representation of hidden providence and quiet courage. Layered washes of soft purple, midnight blue, and warm gold — depth and mystery without any figure, arch, crown, or throne. Pure abstract color field, luminous center, gentle and mysterious. No human figures, no faces, no letters, no text.",
     "דניאל": "Abstract spiritual representation of faith in exile and celestial vision. A single orb of divine light illuminating deep gold and celestial blue washes, radiant and protected. Awe-filled, ethereal atmosphere. No human figures, no faces, no letters, no text.",
     "עזרא": "Abstract spiritual representation of return from exile and Torah restored. A single scroll-curve of soft warm light unfurling through Jerusalem-gold and sage green washes. Joyful, tender atmosphere. No human figures, no faces, no letters, no text.",
     "נחמיה": "Abstract spiritual representation of rebuilding and communal renewal. A single ancient gate suggested in warm sandstone washes, walls rising in soft light around it. Quiet, hopeful atmosphere. No human figures, no faces, no letters, no text.",
@@ -324,8 +344,32 @@ def main():
             tmp_path = Path(tmp.name)
 
         try:
-            if not generate_image(desc, tmp_path):
-                state["phase1"]["failed"].append(book)
+            # ── Generate + Vision gate (up to VISION_MAX_RETRIES) ───
+            vision_passed = False
+            for vision_attempt in range(1, VISION_MAX_RETRIES + 1):
+                if not generate_image(desc, tmp_path):
+                    print(f"  [FAIL] Image generation failed (attempt {vision_attempt}/{VISION_MAX_RETRIES})")
+                    if vision_attempt < VISION_MAX_RETRIES:
+                        time.sleep(15)
+                    continue
+
+                state["total_cost"] = round(state["total_cost"] + COST_PER_IMAGE, 4)
+
+                passed, reason = verify_no_humans(str(tmp_path), GEMINI_KEY)
+                if passed:
+                    print(f"  [VISION OK] {reason[:80]}")
+                    vision_passed = True
+                    break
+                else:
+                    print(f"  [VISION FAIL {vision_attempt}/{VISION_MAX_RETRIES}] {reason[:120]}")
+                    if vision_attempt < VISION_MAX_RETRIES:
+                        print(f"  [VISION RETRY] Re-generating...")
+                        time.sleep(30)
+
+            if not vision_passed:
+                print(f"  [SKIP] {book} — all {VISION_MAX_RETRIES} vision attempts failed. Logged to rejected-images.json")
+                if book not in state["phase1"]["failed"]:
+                    state["phase1"]["failed"].append(book)
                 save_state(state)
                 failed += 1
                 tmp_path.unlink(missing_ok=True)
@@ -341,7 +385,6 @@ def main():
 
             update_lessons_thumbnail(book, public_url)
             state["phase1"]["completed"].append(book)
-            state["total_cost"] = round(state["total_cost"] + COST_PER_IMAGE, 4)
             save_state(state)
             count += 1
 

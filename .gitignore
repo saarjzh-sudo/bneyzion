@@ -37,3 +37,5 @@ scripts/scrape-output-w*.log
 scripts/scrape-log-w*.json
 scripts/row-scrape-log-w*.json
 scripts/media-map-w*.json
+__pycache__/
+*.pyc

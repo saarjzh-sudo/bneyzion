@@ -7,6 +7,9 @@ Uploads to Supabase Storage bnei-zion-thumbnails/series/
 Updates series.image_url for matching rows.
 Supports resume via scripts/image-batch-state.json.
 
+Vision gate (added 26.5.2026): every generated image verified by Gemini Vision
+for absence of human figures. Up to 3 retries; failures logged and skipped.
+
 REQUIRES: Phase 2 completed and approved by Saar.
 
 Usage:
@@ -23,6 +26,14 @@ import tempfile
 import urllib.parse
 from pathlib import Path
 
+# Vision gate import
+try:
+    from lib.vision_gate import verify_no_humans
+except ImportError:
+    import sys as _sys
+    _sys.path.insert(0, str(Path(__file__).parent))
+    from lib.vision_gate import verify_no_humans
+
 # ── Config — load from environment (never hardcode secrets) ───
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY", "")
 SUPABASE_URL = os.environ.get("SUPABASE_URL", "https://pzvmwfexeiruelwiujxn.supabase.co")
@@ -37,19 +48,26 @@ SCRIPT_DIR = Path(__file__).parent
 STATE_FILE = SCRIPT_DIR / "image-batch-state.json"
 DRY_RUN = os.environ.get("DRY_RUN", "0") == "1"
 
-# ── Style (locked — pilot approved 26.5.2026) ─────────────────
+# ── Style (locked — pilot approved 26.5.2026 · NEGATIVE added 26.5.2026) ─────
 STYLE = (
     "Minimalist watercolor painting on white textured paper. "
     "Ultra-clean, gentle, soft, ethereal, atmospheric, meditative, spiritually evocative. "
     "Loose watercolor washes, muted pastel tones — sage green, dusty teal, soft blue-gray, "
     "warm sand, wheat, pale gold, quiet lavender, blush rose. "
     "Visible paper grain, gentle gradients, completely soft edges. "
-    "No harsh lines. No dark outlines. No explicit human figures. "
+    "No harsh lines. No dark outlines. "
     "ABSOLUTELY NO TEXT, NO LETTERS, NO HEBREW CHARACTERS, NO ENGLISH CHARACTERS, "
     "NO TYPOGRAPHY, NO CALLIGRAPHY anywhere in the image. "
     "Generous white space — leave the center open and luminous. "
-    "Abstract representation, impressionistic style, spiritual ambiance."
+    "Abstract representation, impressionistic style, spiritual ambiance. "
+    "NEGATIVE: absolutely no people, no humans, no figures, no human silhouettes, "
+    "no faces, no body parts, no hair, no clothing, no dresses, no gowns, no robes, "
+    "no hands, no feet, no arms, no legs, no children, no men, no women, "
+    "no portraits, no anthropomorphic shapes, no characters, no persons whatsoever."
 )
+
+# Vision gate retry limit
+VISION_MAX_RETRIES = 3
 
 def run_curl(args):
     cmd = ["curl", "--noproxy", "*"] + args
@@ -236,8 +254,32 @@ def main():
             tmp_path = Path(tmp.name)
 
         try:
-            if not generate_image(series_prompt(title, bible_book), tmp_path):
-                state["phase3"]["failed"].append(key)
+            # ── Generate + Vision gate (up to VISION_MAX_RETRIES) ───
+            vision_passed = False
+            prompt_str = series_prompt(title, bible_book)
+            for vision_attempt in range(1, VISION_MAX_RETRIES + 1):
+                if not generate_image(prompt_str, tmp_path):
+                    print(f"  [FAIL] Generation failed (attempt {vision_attempt}/{VISION_MAX_RETRIES})")
+                    if vision_attempt < VISION_MAX_RETRIES:
+                        time.sleep(15)
+                    continue
+
+                state["total_cost"] = round(state["total_cost"] + COST_PER_IMAGE, 4)
+
+                passed, reason = verify_no_humans(str(tmp_path), GEMINI_KEY)
+                if passed:
+                    print(f"  [VISION OK] {reason[:80]}")
+                    vision_passed = True
+                    break
+                else:
+                    print(f"  [VISION FAIL {vision_attempt}/{VISION_MAX_RETRIES}] {reason[:120]}")
+                    if vision_attempt < VISION_MAX_RETRIES:
+                        time.sleep(30)
+
+            if not vision_passed:
+                print(f"  [SKIP] {series_id} ({title[:40]}) — all vision attempts failed")
+                if key not in state["phase3"]["failed"]:
+                    state["phase3"]["failed"].append(key)
                 save_state(state)
                 failed += 1
                 continue
@@ -251,7 +293,7 @@ def main():
 
             update_series_image(series_id, public_url)
             state["phase3"]["completed"].append(key)
-            state["total_cost"] = round(state["total_cost"] + COST_PER_IMAGE, 4)
+            # Note: total_cost already incremented inside vision gate loop
             save_state(state)
             count += 1
 
