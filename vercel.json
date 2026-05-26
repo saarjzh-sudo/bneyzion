@@ -7,6 +7,1021 @@
   ],
   "redirects": [
     {
+      "source": "/rabbis/1acd517c-1e18-4bdc-a18e-0ecf5924e50f",
+      "destination": "/rabbis/abrhm-vsrmn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a5c3d9ec-a8fb-49e4-bc54-f266156ec6f4",
+      "destination": "/rabbis/aby-smvtrytz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/3a54e4e3-4b11-4cb8-bda5-21902ea81b40",
+      "destination": "/rabbis/abyd-tpvchy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e6e04daf-0aa6-4a07-911e-2a7cacd9b5fe",
+      "destination": "/rabbis/achikam-gatz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/90ec036a-c87b-4cbe-9fbf-9df0d2aded6c",
+      "destination": "/rabbis/achynvm-brkv",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9fb9a5b1-8318-4a18-af93-268c4fa3698c",
+      "destination": "/rabbis/adiel-levi",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a004d473-6b88-4237-b66c-fb2146bcbfdd",
+      "destination": "/rabbis/ahrn-bn-grshvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8fba6175-4dd7-4be4-9446-c7f375728949",
+      "destination": "/rabbis/ahrvn-kvtlr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f8bf13ea-efd1-4a1f-b4c0-ba85244e1735",
+      "destination": "/rabbis/aly-kvhnvb",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/886d3045-8262-4e47-ba07-9d3f4d25893b",
+      "destination": "/rabbis/aly-prydmn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/73fd07b7-4fbe-49b7-87b1-0da37ae5dfee",
+      "destination": "/rabbis/alyhv-dslr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/fa715fa1-23fb-4977-b761-6df1dcfdd798",
+      "destination": "/rabbis/alyhv-ydyd",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/5f7c6551-76fc-410f-b838-7c0d57ce7972",
+      "destination": "/rabbis/alysh-vyshlytzky",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d34528da-ee89-433e-a059-874a653fea78",
+      "destination": "/rabbis/alyshb-abychyl",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/3da1df9d-4ed5-48ba-9ffa-e3c5271d40e1",
+      "destination": "/rabbis/amiram-alva",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/34ef8dae-5352-4dfe-9887-ab7c3b8bcdd8",
+      "destination": "/rabbis/arik-uriel",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/2ca95063-4e0b-4756-a8e1-1a83fb0118e9",
+      "destination": "/rabbis/ary-lnda",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/da074c0f-eda5-42f5-85b0-4202a5a8449b",
+      "destination": "/rabbis/aryal-braly",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c61c9582-5f5f-4b63-ac8d-8bb18aafb9c5",
+      "destination": "/rabbis/aryal-khn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f3cb36a5-ce6f-453d-939b-37a987b2fd9d",
+      "destination": "/rabbis/aryh-abrmsvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c0da1cd2-63ea-4c4b-ae14-004168209bbb",
+      "destination": "/rabbis/aryh-avryal",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8866dfed-392d-4912-bcda-a8d6754c6887",
+      "destination": "/rabbis/aryh-mrzr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/ac592618-3115-4d39-be84-f68edb4a5e8e",
+      "destination": "/rabbis/ashr-chlpvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/723c69b7-a119-42f5-9684-c4a05388475a",
+      "destination": "/rabbis/asp-bndl",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d67b0194-efcd-45a1-a04b-3cf1b8ceb9bc",
+      "destination": "/rabbis/asp-shtravs",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e19e7faf-ddab-4dff-9b1d-e249e05c8b84",
+      "destination": "/rabbis/avhd-krkvbr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/12bf37dd-1e71-43bf-a369-14ac93384bfa",
+      "destination": "/rabbis/avpyr-khn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/177c7a79-ece0-467f-9360-103b25ece1f2",
+      "destination": "/rabbis/avrn-trblsy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111105",
+      "destination": "/rabbis/avry-shtmlr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6bcd10bd-b127-4ff0-8f2c-b2f2b98efbea",
+      "destination": "/rabbis/ayln-alpvnth",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d5e60001-0001-4000-8000-000000000001",
+      "destination": "/rabbis/aytn-tvkr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6001d928-dc8c-4e0f-bc24-0f05fcc6203a",
+      "destination": "/rabbis/aytyal-amyty",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/205bdd49-2c88-4fbb-8df0-bd961861e298",
+      "destination": "/rabbis/baruch-seley",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111121",
+      "destination": "/rabbis/bnyh-khn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e3c3449c-1e81-41f7-b416-87c2b4abb568",
+      "destination": "/rabbis/bnymyn-rvzntzvvyg",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/efcae8b9-5fa5-4b74-933e-8e681653dfdb",
+      "destination": "/rabbis/bnymyn-svpr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/4d3e31bc-420c-4d24-8a20-bbc181e55a9c",
+      "destination": "/rabbis/brk-vkby",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e9af5074-fc56-44f8-91d7-2fc934887852",
+      "destination": "/rabbis/brvryh-bn-shchr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000009",
+      "destination": "/rabbis/brvryh-bn-shchr-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9f93561f-45d9-4055-96de-5bba915ea1b4",
+      "destination": "/rabbis/bt-shb-alyhv",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000013",
+      "destination": "/rabbis/bt-shb-yvsypvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/bc6e5c0b-2465-4ed1-9de6-1fc28250c387",
+      "destination": "/rabbis/bt-shb-yvsypvn-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b28770d5-1504-46ad-8613-3c3ca37a641c",
+      "destination": "/rabbis/chagai-velosski",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e3ae8794-b48d-4a7f-9634-c814e4fc52d3",
+      "destination": "/rabbis/chaim-shapira",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/776ac9f7-577c-489a-8522-3a41d3c94e04",
+      "destination": "/rabbis/chananel-etrog",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/06cafb42-023b-4491-926e-74ae5dee8b88",
+      "destination": "/rabbis/chanania-malka",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8c386317-623c-46fa-a28b-f436c6ab2c71",
+      "destination": "/rabbis/chgy-lvndyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/1f347997-d999-4250-987e-a7ae619b15a2",
+      "destination": "/rabbis/chgyt-alrn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000002",
+      "destination": "/rabbis/chgyt-alvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/75254424-9675-47ec-a934-ff086c6f7f47",
+      "destination": "/rabbis/chn-chlmysh",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6e709b09-2a24-445d-94ad-6aa7f593b6df",
+      "destination": "/rabbis/chyym-drvkmn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/7a570390-7995-4bac-98a6-15efa87f9c7a",
+      "destination": "/rabbis/chyym-sbtv",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8a709507-b4ac-4d45-9051-9e4e6bdeb856",
+      "destination": "/rabbis/dan-bari",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e5d69c5f-1c5c-4401-83c6-f95809952696",
+      "destination": "/rabbis/danny-stiskin",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/98af6a27-12db-4e4a-867e-c03e92e8445c",
+      "destination": "/rabbis/david-jiami",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111101",
+      "destination": "/rabbis/dbyr-aplbvym",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/dcb63ace-ad6a-494f-ba95-365d680cb22b",
+      "destination": "/rabbis/dnh-slyy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d80ccef5-c33b-4bd0-8367-0c3ebbb123a7",
+      "destination": "/rabbis/dnh-slyy-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000006",
+      "destination": "/rabbis/dnyalh-vn-dyyk",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/be9d2c21-7e47-4dcb-9c1d-daf85877d63f",
+      "destination": "/rabbis/dnyalh-vn-dyyk-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/7658e8ac-a4c5-4c1d-80dd-3f8070f2a742",
+      "destination": "/rabbis/dror-tvil",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6e2327b3-735a-45d6-abec-b1c4f1ec3209",
+      "destination": "/rabbis/drvr-aryh",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6806733c-9606-466e-b48e-68946fdaa671",
+      "destination": "/rabbis/dvb-bygvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/58096c73-c03b-4bc9-91e1-11259bfe7792",
+      "destination": "/rabbis/dvd-amyty",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/cc169a16-6fac-4da9-915c-b484c7b24b11",
+      "destination": "/rabbis/dvd-chy-hkhn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/44abc5d4-1cac-4c62-8259-c5e719b83abc",
+      "destination": "/rabbis/dvd-hvbrpld",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/cc5b9459-774b-4a10-b65b-4d8f6d9d49c9",
+      "destination": "/rabbis/dvd-lav",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c77f633b-162e-4128-b7a6-d1fdf30d4748",
+      "destination": "/rabbis/dvd-lav-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/330639b2-b447-41d8-a3e5-e9f14d677a38",
+      "destination": "/rabbis/dvd-tvrnr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/648b46f4-8578-46bb-a601-c551c718dc3e",
+      "destination": "/rabbis/dvdy-mtvky",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111102",
+      "destination": "/rabbis/dy-aytzkvbytz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f437e7a9-2cf0-43df-a20b-4dcb34851212",
+      "destination": "/rabbis/dynh-rap",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000011",
+      "destination": "/rabbis/dynh-rap-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/52b071b1-8ab5-4ca3-a8ce-900eceec590c",
+      "destination": "/rabbis/elazar-nae",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/06a6954f-b65b-4fa4-ae1d-5ea643faff10",
+      "destination": "/rabbis/elchanan-ben-nun",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/62db3ad6-731b-4463-85d3-eb2424cbde57",
+      "destination": "/rabbis/eli-adler",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/33865aa7-c9a6-4166-ae07-47466ec92e9f",
+      "destination": "/rabbis/eliezer-kashtiel",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/744da303-22be-4062-a822-4ba8e8f1b02d",
+      "destination": "/rabbis/emanueal-ben-artzi",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/ed629999-adaf-48f9-af75-60a516596021",
+      "destination": "/rabbis/eran-tamir",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/fbf45d02-d83a-4d47-a48a-f7035fb15b0c",
+      "destination": "/rabbis/etan-kopman",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/be153d0e-b68e-4704-a108-56f5af7d0ca9",
+      "destination": "/rabbis/etan-shandorfi",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/13905f4d-590d-4ca8-bb48-372ac15186e9",
+      "destination": "/rabbis/gdy-hrlyng",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/75614e8d-32d5-43c8-bbe5-444702e961df",
+      "destination": "/rabbis/gdy-shlvyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a43e5133-5987-4065-86f2-cf22ff4c6f90",
+      "destination": "/rabbis/gylh-shrym",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000010",
+      "destination": "/rabbis/gylh-shrym-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/02dfa84d-1a8f-4454-8ef7-c82a7a6defd5",
+      "destination": "/rabbis/jiami",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a90410a1-89e7-4e0e-b93d-0e132768bbbf",
+      "destination": "/rabbis/klmn-br",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a24c2f68-2381-4965-a03c-5958ffc163ca",
+      "destination": "/rabbis/kol-harabanim",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/92f3c15f-750a-438c-9413-7edeb50e754b",
+      "destination": "/rabbis/kvby-dbyr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/97d20921-c6b2-47f4-96a7-97e6dcaddfbf",
+      "destination": "/rabbis/kyba-kshtyal",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9bb528c0-94c9-4f6c-aa59-4990af66cb4e",
+      "destination": "/rabbis/levi-sudri",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6948b005-8390-45f0-b14b-7ede0f05c671",
+      "destination": "/rabbis/lyyb-myntzbrg",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/274f4480-cc34-4331-842e-138c2e1f6175",
+      "destination": "/rabbis/maarechet-bnei-zion",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/1f51f188-3d0b-45b4-9c93-55d32e67ca3e",
+      "destination": "/rabbis/mayr-namn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d4e5f6a7-5555-5555-eeee-555555555555",
+      "destination": "/rabbis/mechaber-lo-yadua",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/71aa933c-5548-4ea7-8be0-dfb659202660",
+      "destination": "/rabbis/meir-hilvitz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/4822f2bb-9d1c-4adc-9554-d2a2db7bdbc8",
+      "destination": "/rabbis/menachem-shachor",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/87411a99-c469-4300-8e2d-74e81a8aaadb",
+      "destination": "/rabbis/mnchm-ahvr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/21815917-0c20-4ad2-b6ab-3943956c9a55",
+      "destination": "/rabbis/mnchm-alyhv",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8301fc29-5cb9-4476-93ab-af9fa8aea58c",
+      "destination": "/rabbis/mnchm-bvrshtyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/52a4aa8b-fff0-421b-85c1-70e03d6e8993",
+      "destination": "/rabbis/mnchm-bvrshtyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8923c7a2-b4d4-4a3f-a38b-534e1bb26606",
+      "destination": "/rabbis/mnchm-lvy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/1f1815e8-c20c-4b49-997f-f62927ae7a07",
+      "destination": "/rabbis/mnchm-mn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/acede66e-8b83-4abd-b737-ac9c79e1b119",
+      "destination": "/rabbis/mrdky-kvprmn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/38f96d08-5a07-4669-96fe-d806627cc1bd",
+      "destination": "/rabbis/mshh-hgr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c0999db2-4cb5-4ebf-bbca-b75427839a5f",
+      "destination": "/rabbis/mshh-shtrnbrg",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/38d9893b-6250-40fa-9d97-8066391f0ca6",
+      "destination": "/rabbis/mtnyh-ydyd",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b5f822f8-22e3-49fb-bad9-b262bab3bd75",
+      "destination": "/rabbis/mvs-klygr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111104",
+      "destination": "/rabbis/mvs-ntnal",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/27e770f5-cf5f-4dd5-8a72-a59d45c546c6",
+      "destination": "/rabbis/mykal-tvbyanv",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e772bb3b-34cb-4616-9dcd-b8ca92e006a0",
+      "destination": "/rabbis/mykh-hlvy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/ad1e342e-30a8-43b7-9c91-e5660402e3a5",
+      "destination": "/rabbis/myshal-rvbyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111103",
+      "destination": "/rabbis/natan-margel",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/4dc6c4a3-ebe3-43e5-b8d7-6d565be405eb",
+      "destination": "/rabbis/natan-rotman",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1111111-1111-1111-1111-111111111120",
+      "destination": "/rabbis/nchvm-aryal",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f6d239d6-6c9d-4a65-8167-b2b3ab01de51",
+      "destination": "/rabbis/nchvm-nryh",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000014",
+      "destination": "/rabbis/nchvm-nryh-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a1a4fa3e-b4e4-4774-aa55-0f248e627d5b",
+      "destination": "/rabbis/nmh-atrvg",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/feff2daf-983f-4c9d-b66a-1dc2c7cfc2e2",
+      "destination": "/rabbis/nmh-bn-pnchs",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000008",
+      "destination": "/rabbis/nmy-shpyra",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6c7db943-6918-4761-9097-1b2e48000a10",
+      "destination": "/rabbis/nmy-shpyra-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/ff233638-a99c-4049-9613-41d44a12f90a",
+      "destination": "/rabbis/noam-vider",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/46366d84-b0c2-4917-8362-d3acf1d30b76",
+      "destination": "/rabbis/nvm-alytzvr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e13dda79-e8b5-4c69-8c36-86507f3beac3",
+      "destination": "/rabbis/nvm-vngrvbr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/53089efa-5913-40ed-a530-f6e47a5c10c2",
+      "destination": "/rabbis/nvryt-gal-dvr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000012",
+      "destination": "/rabbis/nvryt-gal-dvr-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d6666666-6666-6666-6666-666666666666",
+      "destination": "/rabbis/nysym-khn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a2059c69-f0e1-442d-a38c-8ec5d4b91ee0",
+      "destination": "/rabbis/ohad-tirosh",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a1b2c3d4-1111-4444-aaaa-111111111111",
+      "destination": "/rabbis/oria-keradi",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6b6e048d-cee2-4214-af04-f50528658fd1",
+      "destination": "/rabbis/prof-dvora-rozenwaser",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000005",
+      "destination": "/rabbis/rchly-mvndshtyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/03dea711-7cb7-4720-be1e-042d83577bee",
+      "destination": "/rabbis/rchly-mvndshyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/905cca79-9bcf-42ba-829a-ec3b9e907167",
+      "destination": "/rabbis/reuven-sasson",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a2bbca4b-30ba-4362-995c-50d727589545",
+      "destination": "/rabbis/rmy-glykshtyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/48460b4e-a597-43ad-b8fb-fce8bcd7e858",
+      "destination": "/rabbis/rpal-lmprt",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000007",
+      "destination": "/rabbis/ruti-shapira",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/fec85b7a-af58-4008-a867-733472a0c7aa",
+      "destination": "/rabbis/ruti-shapira-lanashim",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f16ac6fa-ba12-4792-815e-2457548df247",
+      "destination": "/rabbis/rvny-agltl",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/103442a2-5724-44cf-94f3-9ba75a342aec",
+      "destination": "/rabbis/shimon-cohen",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d4e5f6a7-4444-4444-dddd-444444444444",
+      "destination": "/rabbis/shlmh-ktz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a1a6925b-64c4-4cfe-a6a7-9daaddbfe7d8",
+      "destination": "/rabbis/shlmh-mvndshyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/cdb6545e-ce50-4e10-a544-2fa57d57ddff",
+      "destination": "/rabbis/shlmh-yvsp-vytzn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/277e3084-aaff-44e6-a83a-5facf893607e",
+      "destination": "/rabbis/shlomo-aviner",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/86dd0d3d-1c51-4728-8c86-3ca5461553db",
+      "destination": "/rabbis/shmuel-eliyahu",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/1e46fe39-8488-4c69-a7de-63e8cd295729",
+      "destination": "/rabbis/shmval-yshmch",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9f9362d5-5de7-42d8-8e7f-cac609e23216",
+      "destination": "/rabbis/shmvn-lvy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d4e5f6a7-6666-6666-ffff-666666666666",
+      "destination": "/rabbis/shmvn-shvhm",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c25c124d-752a-42f7-ba5f-39fc391f2e44",
+      "destination": "/rabbis/shypy-gvldshtyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b2c3d4e5-2222-4444-bbbb-222222222222",
+      "destination": "/rabbis/sidur-sim-shalom",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/80cca8ce-f10c-4ee0-a2b0-63d49c1ed57c",
+      "destination": "/rabbis/sivan-rahav-meir",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b5555555-5555-5555-5555-555555555555",
+      "destination": "/rabbis/talmud-torah-morasha",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e8d6a202-0e6a-45ae-82ca-49e638b2f57e",
+      "destination": "/rabbis/thylh-hrtz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000003",
+      "destination": "/rabbis/thylh-hrtz-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/04b3f54f-a91a-4054-a8b0-887f8faaec07",
+      "destination": "/rabbis/tovia-lapshitz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/13a134db-1268-45b3-9870-1fd79a2ba490",
+      "destination": "/rabbis/tvbyh-aryal",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/3b77b33d-65e4-43a1-92bd-534f45ff9392",
+      "destination": "/rabbis/tzby-hyrsh-klyshr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/3ca3c8b7-c061-4997-82dc-50f81e738e2a",
+      "destination": "/rabbis/tzby-kvstynr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c1f5a0d9-6727-48a3-9ab7-86cc493ffdb9",
+      "destination": "/rabbis/tzby-lbnbrg",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/ef010001-0001-4000-8000-000000000001",
+      "destination": "/rabbis/tzby-nbl",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/0104ccd7-2814-47fc-a397-682b2254ba7d",
+      "destination": "/rabbis/tzpnyh-drvry",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f6ce1953-241f-42b7-964f-fa103c6e1958",
+      "destination": "/rabbis/velo",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e6c81665-5737-4c82-b96e-7527cc0e6ee6",
+      "destination": "/rabbis/veshinantam",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/6f4b2572-b019-4832-9547-de7e8bc6d909",
+      "destination": "/rabbis/veshinantam-otzar-hatorah",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/fcf12848-4f60-438b-85e7-19d6ad728663",
+      "destination": "/rabbis/vrdyt-abychy",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000001",
+      "destination": "/rabbis/vrdyt-abychy-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d81a67ab-3da1-478d-8fff-8a7c190ac0d1",
+      "destination": "/rabbis/yaakov-ariel",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/dd10db16-faaf-457a-82cb-49590864e29a",
+      "destination": "/rabbis/yaakov-yadid",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/7a9524c6-fa70-42af-8e15-d39750fd34d6",
+      "destination": "/rabbis/yayr-hs",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/8269f8b6-08ca-4510-840b-f3689216c257",
+      "destination": "/rabbis/ychzkal-khn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/4a12bee1-429c-4db5-a0d8-1c933eb96696",
+      "destination": "/rabbis/ychzkal-kvpld",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/99f94412-7f26-4699-af2f-eb97f75b2105",
+      "destination": "/rabbis/ydv-rvzntl",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/c3d4e5f6-3333-4444-cccc-333333333333",
+      "destination": "/rabbis/ydydyh-shylh",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/954bb8a5-4536-4468-8481-9197b434417c",
+      "destination": "/rabbis/ydyt-aytzkvbytz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/a5480276-3dcc-4423-84f7-4ef305c63d15",
+      "destination": "/rabbis/ydyt-shylh",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b545bcbd-97a8-482e-a69f-6b7e1ed3c939",
+      "destination": "/rabbis/yehonatan-idan",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/3a3eac56-4546-4803-9d38-1fceb0c1452d",
+      "destination": "/rabbis/yehonatan-michaeli",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/0aa03897-79ce-4016-aaf8-72c090b0ea60",
+      "destination": "/rabbis/yehoshua-shapira",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9135d874-b42b-4952-b7c6-97f0fb7fbfe6",
+      "destination": "/rabbis/yehuda-kuperman",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/e1f5b75e-3080-4e7d-a316-9484757adb49",
+      "destination": "/rabbis/ygal-shprn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/200cc932-cb41-4be8-bf7a-d7f0ed96ede6",
+      "destination": "/rabbis/yhvdh-sdn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/99ed0fc4-7174-42ce-8411-58e861149f44",
+      "destination": "/rabbis/yhvntn-pvzn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/81e9d9d2-7e99-4b4c-aab0-e4300f3d4fde",
+      "destination": "/rabbis/yhvsh-mgns",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/5af49987-719c-4c36-a4fb-e88dcde11161",
+      "destination": "/rabbis/yhvsh-tzvkrmn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/bf5948a7-d84a-4dff-b488-2646b378d4f3",
+      "destination": "/rabbis/yhvsh-vn-dyyk",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/7fcd7014-5eef-4e9b-b792-e6460d75e720",
+      "destination": "/rabbis/yishko-hadarim",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/afb0d3c5-4447-40c5-ac3e-2fc41716360c",
+      "destination": "/rabbis/yitzhak-ben-shachar",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/bf93edb7-8845-4a95-b13c-d2bc237ddb8a",
+      "destination": "/rabbis/ykb-apshtyyn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/479caee9-502f-4e5a-a2c9-08364968aab9",
+      "destination": "/rabbis/ykb-ytzchk-hlvy-rvdrmn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/acd34d0f-1288-47b8-9e8e-38e69599c294",
+      "destination": "/rabbis/yoav-uriel",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/f8cd6298-a593-4b80-9fa6-6d7cd43203fe",
+      "destination": "/rabbis/yoav-uriel-veemanueal-ben-artzi",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d149c8bb-2c74-42ca-b28d-a6aeba4e41bf",
+      "destination": "/rabbis/yoel-manowitz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d79a4a34-9086-46cb-95b5-d7863179bc0e",
+      "destination": "/rabbis/yondav-zer",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/1b8d2627-f1ce-49a0-bdca-bef3cc0f13b8",
+      "destination": "/rabbis/yosef-horovitz",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/2754844c-8149-4c50-922a-331664b4124e",
+      "destination": "/rabbis/yosef-shiler",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/b1010001-0001-4000-8000-000000000004",
+      "destination": "/rabbis/yph-mgns",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9985d06a-0dd2-4314-85f2-6610993ceb32",
+      "destination": "/rabbis/yph-mgns-2",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/ef010001-0001-4000-8000-000000000002",
+      "destination": "/rabbis/yshy-pls",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/11087a99-ce82-4297-ac6e-881a700b00e9",
+      "destination": "/rabbis/ytzchk-bn-yshral",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/9244511d-a2b2-4d0c-a097-b52595990c69",
+      "destination": "/rabbis/yvsp-atvn",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/44dcb2cc-b408-457f-92e6-08f6340e33ad",
+      "destination": "/rabbis/yvsp-klnr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/52c215fe-b60e-42b6-a5ce-feb1703f65cd",
+      "destination": "/rabbis/yvsp-mylr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/d68b38ad-fd70-47d3-b667-20f68af6d8c4",
+      "destination": "/rabbis/yvsy-brynr",
+      "permanent": true
+    },
+    {
+      "source": "/rabbis/678c4f71-1e70-4444-9046-3b79182294e2",
+      "destination": "/rabbis/zvi-shvaiger",
+      "permanent": true
+    },
+    {
       "source": "/%D7%90%D7%95%D7%93%D7%95%D7%AA%D7%99%D7%A0%D7%95",
       "destination": "/about",
       "permanent": true
