@@ -447,6 +447,34 @@ public/
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-26 — Yehoshua campaign page rebuild + V4 video (session 4)
+
+**דף `/design-yehoshua-campaign`:**
+- שיפוץ מאפס של `src/pages/DesignPreviewYehoshuaCampaign.tsx` (1,777 שורות → 1,290 נקיות)
+- IA חדשה: Hero cinematic → ProofStrip → Tiers → Story → Why → Author → Timeline → FAQ → FinalCTA
+- Hero: full-bleed image + overlay + progress BAR בתוך ה-hero (לא בנפרד)
+- IntersectionObserver entrance animations, CSS-only (אין framer-motion)
+- הסרת fake backers section (הורסת אמינות)
+- RTL logical CSS properties בכל הקוד החדש
+- TS check עבר נקי לפני commit
+- commit: `1b5ac5e` · push: ✓
+
+**וידאו V4:**
+- הורדת 3 קליפים מ-Green API getChatHistory (chat יואב: `972527203221@c.us`)
+- Whisper medium-q8_0 (785MB) — תמלול עברית מדויק, 21 sub events
+- חיתוך: clip1→47s, clip2→26s, clip3→41s (חיתוך "שטויות" בסוף)
+- כרטיסי HTML→PNG דרך Chrome headless (לא PIL, לא Playwright — playwright אין browsers)
+- ASS subtitles: Ploni ML v2 AAA, 62pt, stroke 5px, MarginL/R=40, Encoding=177
+- מוזיקה: Kevin MacLeod "Drums of the Deep" (174s, 13% volume, loop)
+- פלט: `/Users/srhlq/Downloads/saar-workspace/bneyzion/output/yehoshua_recruitment_v4.mp4` (16MB, 2:08)
+- נשלח לסאר: idMessage `3EB044D29F596CB67A8D87`
+
+**לקחים טכניים:**
+- `npx playwright screenshot` דורש `npx playwright install chromium` — ב-NetSpark לא יורד → השתמש ב-Chrome headless ישירות: `"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --screenshot=...`
+- whisper-cli לא תומך ב-quantized models (Q5_0, Q5_1, Q8) שהורדו מ-HuggingFace כברירת מחדל. צריך fp16 מלא (~1.5GB) או להתשמש ב-`ggml-medium-q8_0.bin` שגדול יותר (785MB) ועובד.
+- whisper-cli tiny (הכלול בחבילת homebrew) מחזיר SRT ריק על עברית — רק medium+ עובד לעברית.
+- `ffmpeg --output-format` לא קיים ב-whisper-cli — תחביר נכון: `-osrt -of output_path`
+
 ### 2026-05-26 — Bible tagging: series.bible_book + lessons.bible_book + lessons.bible_chapter (session 3)
 
 **סטטוס scraper (live run PID 16513 מ-25.5.2026):**
