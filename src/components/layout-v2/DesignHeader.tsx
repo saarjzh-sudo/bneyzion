@@ -243,8 +243,8 @@ export default function DesignHeader({
             onClick={() => setSearchOpen(true)}
             aria-label="חיפוש"
             style={{
-              width: 40,
-              height: 40,
+              width: 44,  /* P3: 40→44px — meets 44×44px touch target minimum */
+              height: 44,
               borderRadius: 12,
               border: "none",
               background: "transparent",

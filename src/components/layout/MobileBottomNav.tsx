@@ -74,7 +74,7 @@ const MobileBottomNav = () => {
             }`}
           >
             <Home className="h-5 w-5" />
-            <span className="text-[10px] font-medium">ראשי</span>
+            <span className="text-xs font-medium">ראשי</span>
           </Link>
 
           {/* Search */}
@@ -83,7 +83,7 @@ const MobileBottomNav = () => {
             className="flex flex-col items-center justify-center gap-0.5 flex-1 h-full transition-colors text-muted-foreground"
           >
             <Search className="h-5 w-5" />
-            <span className="text-[10px] font-medium">חיפוש</span>
+            <span className="text-xs font-medium">חיפוש</span>
           </button>
 
           {/* Favorites */}
@@ -96,7 +96,7 @@ const MobileBottomNav = () => {
             }`}
           >
             <Heart className="h-5 w-5" />
-            <span className="text-[10px] font-medium">מועדפים</span>
+            <span className="text-xs font-medium">מועדפים</span>
           </Link>
 
           {/* Menu */}
@@ -111,7 +111,7 @@ const MobileBottomNav = () => {
             ) : (
               <Menu className="h-5 w-5" />
             )}
-            <span className="text-[10px] font-medium">תפריט</span>
+            <span className="text-xs font-medium">תפריט</span>
           </button>
         </div>
       </nav>

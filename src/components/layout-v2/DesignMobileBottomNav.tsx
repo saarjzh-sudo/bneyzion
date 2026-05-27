@@ -43,7 +43,7 @@ export default function DesignMobileBottomNav() {
     justifyContent: "center",
     gap: 2,
     fontFamily: fonts.body,
-    fontSize: 10,
+    fontSize: 12, /* P3 fix: was 10px → 12px WCAG minimum touch label */
     fontWeight: 500,
     color: colors.textSubtle,
     textDecoration: "none",
