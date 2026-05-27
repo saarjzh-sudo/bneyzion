@@ -275,13 +275,12 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               borderBottom: `1px solid rgba(139,111,71,0.08)`,
             }}
           >
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 2 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 2 }}>
               {(
                 [
                   { key: "main" as Tab, label: "ראשי", icon: Library },
                   { key: "topics" as Tab, label: "נושאים", icon: Filter },
                   { key: "rabbis" as Tab, label: "רבנים", icon: Users },
-                  { key: "teachers" as Tab, label: "מורים", icon: GraduationCap },
                 ] as const
               ).map((t) => {
                 const Icon = t.icon;
@@ -312,42 +311,6 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                   </button>
                 );
               })}
-            </div>
-          </div>
-        )}
-
-        {/* Search */}
-        {(!collapsed || isDrawer) && (
-          <div style={{ padding: "0.5rem 0.85rem" }}>
-            <div style={{ position: "relative" }}>
-              <Search
-                style={{
-                  position: "absolute",
-                  insetInlineEnd: 10,
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  width: 13,
-                  height: 13,
-                  color: colors.textSubtle,
-                }}
-              />
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="חיפוש..."
-                style={{
-                  width: "100%",
-                  padding: "0.45rem 1.85rem 0.45rem 0.65rem",
-                  fontFamily: fonts.body,
-                  fontSize: "0.78rem",
-                  borderRadius: radii.sm,
-                  border: `1px solid rgba(139,111,71,0.15)`,
-                  background: "rgba(245,240,232,0.5)",
-                  color: colors.textDark,
-                  outline: "none",
-                  direction: "rtl",
-                }}
-              />
             </div>
           </div>
         )}

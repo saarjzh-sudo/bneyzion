@@ -303,7 +303,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "דור הפלאות",
     desc: "70 ניסי המלחמה",
     href: "/dor-haplaot",
-    image: "/family-bible/hero-miracles.png",
+    image: "/family-bible/abstract-miracles.png",
     disabled: false,
   },
   {
@@ -311,7 +311,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "תנ\"ך לחיים",
     desc: "פסוק אחד ביום",
     href: "/daily-verse",
-    image: "/family-bible/hero-verse.png",
+    image: "/family-bible/abstract-verse.png",
     disabled: false,
   },
   {
@@ -319,7 +319,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "קריאת כיוון",
     desc: "המצפן היומי שלך בתנ\"ך",
     href: "/daily-video",
-    image: "/family-bible/hero-compass.png",
+    image: "/family-bible/abstract-compass.png",
     disabled: false,
   },
   {
@@ -327,7 +327,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "סיפורי התנ\"ך לילדים",
     desc: "פודקאסט מבית בני ציון · בקרוב!",
     href: "#",
-    image: "/family-bible/hero-podcast.png",
+    image: "/family-bible/abstract-podcast.png",
     disabled: true,
   },
 ];
