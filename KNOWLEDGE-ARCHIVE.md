@@ -526,6 +526,26 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-27 — Lesson attachments migration to Supabase Storage (PostgREST)
+
+**What changed:**
+- Created `scripts/migrate_lesson_attachments.py` — full migration script (PostgREST PATCH, 10 workers, resume support)
+- Ran `repair_db_update_failures.py` to fix 991 db_update_failed entries from previous session (Management API throttle)
+- Bucket `lesson-attachments` updated: file_size_limit 5MB→50MB, added mime types (ppt/xls/zip/octet-stream/audio/video/image)
+- Final result: **4,709 lessons migrated** to Supabase Storage, 4,709 legacy_attachment_url set for rollback
+- Remaining 3 bneyzion.co.il/media/ URLs: source 404 — never existed on Umbraco (marked `source_404_not_found`)
+- Remaining 1,055 bneyzion.co.il HTML page URLs: these are Umbraco nav page links stored as attachment_url — not downloadable files (marked `skipped_html_page`)
+- db_failures = 0
+
+**Key constraints discovered:**
+- Supabase Storage bucket had `allowed_mime_types` restriction — `application/octet-stream` not allowed until updated
+- `curl_download` needs `-L --globoff` for Hebrew filenames + redirect following
+- 60s timeout needed for large Umbraco files (30s was too short)
+- Umbraco often stores HTML page URLs as `attachment_url` — these have no file extension and must be skipped
+- PostgREST PATCH endpoint: `https://pzvmwfexeiruelwiujxn.supabase.co/rest/v1/lessons?id=eq.{id}` returns 204 on success
+
+**Iron rule added:** Never assume Supabase Storage allows all mime types — check bucket config first with `GET /storage/v1/bucket/{name}`. Bucket `lesson-attachments` only allowed pdf+doc+docx initially.
+
 ### 2026-05-26 — Image batch migrated to Vertex AI (full batch ~1,395 images)
 
 **What changed:**
