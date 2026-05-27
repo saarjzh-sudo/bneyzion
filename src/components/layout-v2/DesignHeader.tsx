@@ -223,6 +223,8 @@ export default function DesignHeader({
               color: isTransparent ? "rgba(232,213,160,0.95)" : colors.goldDark,
               textDecoration: "none",
               whiteSpace: "nowrap",
+              paddingBottom: 2,
+              borderBottom: "1.5px solid transparent",
             }}
           >
             לזכר סעדיה הי״ד
