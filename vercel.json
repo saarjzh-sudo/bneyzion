@@ -1157,11 +1157,6 @@
       "permanent": true
     },
     {
-      "source": "/design-teachers-wing-v2",
-      "destination": "/teachers",
-      "permanent": true
-    },
-    {
       "source": "/design-teachers-series/:id",
       "destination": "/teachers/series/:id",
       "permanent": true
