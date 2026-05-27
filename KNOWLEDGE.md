@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-27 (session — Teachers Wing parity)
+**Last updated:** 2026-05-27 (session — TeachersWingV2 3-tab rebuild)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -3998,3 +3998,40 @@ vercel deploy --prebuilt --yes
 **Iron rule חדש:** כשsandbox commits נמצאים על feature branch (לא main) — deploy חייב להיות מ-`bneyzion-work` project (worktree), לא מ-`bneyzion` project. שני הprojects קיימים ב-Vercel:
 - `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x) = production site, מחובר ל-`main` ב-GitHub
 - `bneyzion-work` (prj_ctSOckC9whh7OVP15LeXUSzC5P8N) = worktree previews, deploy ידני
+
+### 2026-05-27 — TeachersWingV2: 3-tab rebuild (ראשי / סוג תוכן / יוצרים)
+
+**Mission:** /design-teachers-wing-v2 הציג גרסה ישנה (4 טאבים: ראשי/נושאים/רבנים/מורים). הוגדרה רגרסיה. בוצע debug מלא + rebuild.
+
+**Root cause of regression:**
+- `main` branch contains only scripts/docs (NO React source). Vercel configured `productionBranch: main` → deployed nothing useful.
+- All React work lives on `sandbox-test`. Latest sandbox-test was `f2c1df2` (PR #7 merged to sandbox-test, NOT main).
+- The deployed site was running commit `f029b02` (sandbox-test) — a 5-tab version (ספרים/חידות/דפי עבודה/כלים/איך מלמדים).
+- commit `c0d4846` referenced in task briefing does NOT EXIST in this repo. The "Phase 4" work was never committed.
+
+**What was built (commit 9fdcbf1 on sandbox-test):**
+- File: `src/pages/DesignPreviewTeachersWingV2.tsx`
+- **3-tab structure** matching `bneyzion.co.il/מאגר-עזרי-הלמידה/`:
+  - Tab 1 "ראשי": existing BooksTab (Torah/Nevi'im/Ketuvim tree) — unchanged
+  - Tab 2 "סוג תוכן": 25 content types with lesson counts. Click → expand lesson list.
+    - Hook: `useContentTypeCounts()` — raw PostgREST fetch (content_type not in generated types)
+  - Tab 3 "יוצרים": split into רבנים (entity_type=rabbi) / יוצרי תוכן (entity_type=content_creator)
+    - Hook: `useCreatorsByType()` — typed lesson query + raw fetch for entity_type
+    - Count badge per creator. Click → expand lesson list with content_type tag + file indicator.
+- Tab counts in parentheses on "סוג תוכן" (count=25) and "יוצרים" (count=N creators)
+
+**DB confirmed (via Supabase API):**
+- `content_type` column exists on `lessons` table (text) — NOT in generated types
+- `entity_type` column exists on `rabbis` table (text) — NOT in generated types
+- Values: ~25 content_type values, entity_type = 'rabbi' | 'content_creator'
+
+**Workaround for missing columns in generated types:**
+- Used raw PostgREST fetch via `SUPABASE_URL_RUNTIME` + anon key (re-decoded in helper `getSupabaseAnonKey()`)
+- Pattern: `fetch(url, { headers: { apikey, Authorization } })` with typed interface cast on response
+- This avoids TypeScript errors while keeping real Supabase data
+
+**Deploy:** `dpl_5RsN9Kcj9fusX4hJwAtkm56zdtvL` → `bneyzion.vercel.app` aliased. HTTP 200 confirmed.
+
+**Iron rules learned:**
+- When Supabase generated types are out of sync with DB columns, use raw PostgREST fetch via SUPABASE_URL_RUNTIME + anon key. Never use `as any` casts on supabase.from().select() — the error message leaks into JSX and is hard to debug. Raw fetch is cleaner.
+- PR #7 was merged to `sandbox-test` (not main). Vercel's `productionBranch` is `main`. The 2 branches are COMPLETELY SEPARATE codebases — sandbox-test has React, main has only scripts. Deploy is via `vercel --prod` CLI (not GitHub auto-deploy).
