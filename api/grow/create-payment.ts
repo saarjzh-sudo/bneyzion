@@ -421,10 +421,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       formData.append("sumInstallments", "0");
     }
 
-    // Build notifyUrl from request headers — works automatically on custom domains
+    // Build notifyUrl from request headers — works automatically on custom domains.
+    // For protected previews (Vercel SSO), append the WEBHOOK_PROTECTION_BYPASS query
+    // param so Grow's server-to-server callback can pass through deployment protection.
+    // The env var is set only on preview/sandbox; production has no SSO on its custom domain.
+    const webhookBypass = (process.env.WEBHOOK_PROTECTION_BYPASS || "").trim();
+    const bypassQuery = webhookBypass
+      ? `?x-vercel-protection-bypass=${webhookBypass}&x-vercel-set-bypass-cookie=samesitenone`
+      : "";
     const webhookUrl = `${
       req.headers["x-forwarded-proto"] || "https"
-    }://${req.headers.host}/api/grow/webhook`;
+    }://${req.headers.host}/api/grow/webhook${bypassQuery}`;
     formData.append("notifyUrl", webhookUrl);
 
     const response = await fetch(`${GROW_API_URL}/createPaymentProcess`, {
