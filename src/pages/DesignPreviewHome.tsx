@@ -76,20 +76,21 @@ function DesignNavBar() {
 
   return (
     <nav dir="rtl" style={{ position: "sticky", top: 0, zIndex: 50, transition: "all 0.3s ease", ...navBg }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", height: 96,
+      <div style={{ maxWidth: 1280, margin: "0 auto", paddingInlineStart: "1.5rem",
+                    paddingInlineEnd: 0, height: 96,
                     display: "flex", alignItems: "center", justifyContent: "space-between",
                     gap: "1rem" }}>
         {/* Logo — RIGHT side (start in RTL) */}
         <div onClick={() => navigate("/")} style={{ cursor: "pointer", flexShrink: 0 }}>
           <img
-            src={scrolled ? logoColor : logoBright}
+            src={logoColor}
             alt="בני ציון"
             style={{ height: 64, width: "auto", objectFit: "contain" }}
           />
         </div>
 
-        {/* Nav links — flex-centered between logo and actions */}
-        <div className="hidden md:flex" style={{ flex: 1, justifyContent: "center",
+        {/* Nav links — packed toward left (flex-end = left in RTL layout) */}
+        <div className="hidden md:flex" style={{ flex: 1, justifyContent: "flex-end",
                     gap: "1.75rem", alignItems: "center", flexWrap: "wrap" }}>
           {FULL_NAV_LINKS.map(({ label, path }) => (
             <span key={label} onClick={() => navigate(path)}
@@ -302,82 +303,182 @@ function StatsBar() {
   );
 }
 
-// ── KenesBanner ────────────────────────────────────────────────────────────
-function KenesBanner() {
+// ── TanachLemishpachaSection ───────────────────────────────────────────────
+// Four flagship projects under the "תנ"ך למשפחה" brand by הרב יואב אוריאל
+const TANACH_MISHPACHA_PROJECTS = [
+  {
+    id: "family-riddles",
+    title: "חידות לילדים",
+    subtitle: "פרשת השבוע",
+    desc: "חידות מהנות ומאתגרות על פרשת השבוע — לשולחן שבת משפחתי",
+    seriesId: "c852edd8-d959-4c8d-bf7e-17b5881275fa",
+    color: TEAL_MAIN,
+    icon: "✦",
+    bgGradient: `linear-gradient(135deg, #1d5c5c, #2D7D7D)`,
+  },
+  {
+    id: "family-parasha",
+    title: "דבר תורה לשולחן שבת",
+    subtitle: "שמות",
+    desc: "מאמרים קצרים ומרתקים לכל בני הבית — מדי שבת",
+    seriesId: "dbcae806-435d-4aa1-a227-0c1acb14a914",
+    color: OLIVE_MAIN,
+    icon: "✦",
+    bgGradient: `linear-gradient(135deg, ${OLIVE_DARK}, ${OLIVE_MAIN})`,
+  },
+  {
+    id: "family-broad",
+    title: "הפרשה במבט רחב",
+    subtitle: "לימוד שבועי",
+    desc: "הרב יואב אוריאל — מבט אחר על פרשת השבוע לכל המשפחה",
+    seriesId: "a1111111-1111-1111-1111-111111111111",
+    color: GOLD_DARK,
+    icon: "✦",
+    bgGradient: `linear-gradient(135deg, #5a3f20, ${GOLD_DARK})`,
+  },
+  {
+    id: "family-maklal",
+    title: "מכלל יופי — ספרים",
+    subtitle: "פרשנות תנ״כית",
+    desc: "סדרת ספרים ושיעורים מפורטים לכל ספרי התנ\"ך — הרב יואב אוריאל",
+    seriesId: "b6eac28f-ee7f-4e3b-8b56-3946a00a979a",
+    color: NAVY_DEEP,
+    icon: "✦",
+    bgGradient: `linear-gradient(135deg, #1a2744, #2d3d5c)`,
+  },
+];
+
+function TanachLemishpachaSection() {
   const navigate = useNavigate();
 
-  const speakers = [
-    "הרב חגי לונדין", "הרב חנאל אתרוג", "הרב יהושע שפירא",
-    "הרב דני לביא", "הרב יואב אוריאל", "הרב אליעזר קשתיאל", "הרב שמואל אליהו",
-  ];
+  // Fetch series images for each project
+  const { data: projectImages } = useQuery({
+    queryKey: ["tanach-mishpacha-images"],
+    staleTime: 1000 * 60 * 60,
+    queryFn: async () => {
+      const ids = TANACH_MISHPACHA_PROJECTS.map(p => p.seriesId);
+      const { data } = await supabase
+        .from("series")
+        .select("id, image_url, lesson_count")
+        .in("id", ids);
+      const map: Record<string, { image_url: string | null; lesson_count: number }> = {};
+      for (const row of data ?? []) {
+        map[row.id] = { image_url: row.image_url, lesson_count: row.lesson_count };
+      }
+      return map;
+    },
+  });
 
   return (
-    <section style={{ background: PARCHMENT, padding: "3rem 1.5rem" }}>
+    <section dir="rtl" style={{ background: PARCHMENT, padding: "5rem 1.5rem" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        <div dir="rtl"
-          onClick={() => navigate("/kenes")}
-          className="kenes-banner-inner"
-          style={{
-            borderRadius: "1.75rem", overflow: "hidden", position: "relative",
-            display: "flex", alignItems: "center", gap: "2.5rem",
-            padding: "2.5rem", cursor: "pointer",
-            background: "linear-gradient(135deg, #1a2744 0%, #2d3d5c 100%)",
-            boxShadow: "0 8px 48px rgba(26,39,68,0.25)",
-            transition: "transform 0.3s ease",
-          }}
-          onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.005)")}
-          onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
-        >
-          {/* Background texture */}
-          <div style={{ position: "absolute", inset: 0,
-            backgroundImage: "radial-gradient(circle, rgba(196,162,101,0.05) 1px, transparent 1px)",
-            backgroundSize: "24px 24px", pointerEvents: "none" }} />
-
-          {/* Poster image */}
-          <div className="kenes-banner-poster" style={{ width: 200, flexShrink: 0, borderRadius: "1rem", overflow: "hidden",
-                        boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
-                        border: "2px solid rgba(196,162,101,0.25)", position: "relative", zIndex: 1 }}>
-            <img src="/images/kenes-yom-haatzmaut.png" alt="כנס מעצמה תנ״כית"
-              style={{ width: "100%", height: "auto", display: "block" }} />
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "flex-end",
+                      justifyContent: "space-between", marginBottom: "2.75rem",
+                      flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700,
+                          color: TEAL_MAIN, letterSpacing: "0.15em", textTransform: "uppercase",
+                          marginBottom: "0.3rem" }}>
+              הרב יואב אוריאל
+            </div>
+            {/* Logo text — "תנ"ך למשפחה" as display title */}
+            <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                          fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", color: TEXT_DARK,
+                          margin: "0 0 0.4rem", lineHeight: 1.15 }}>
+              תנ״ך למשפחה
+            </h2>
+            <p style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.88rem", color: TEXT_MUTED,
+                        margin: 0, maxWidth: 400 }}>
+              חידות, מאמרים, שיעורים — לכל בני הבית ביחד
+            </p>
           </div>
+          <span
+            onClick={() => navigate("/design-series-page/" + TANACH_MISHPACHA_PROJECTS[3].seriesId)}
+            style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.88rem", color: TEAL_MAIN,
+                     cursor: "pointer", borderBottom: `1px solid ${TEAL_MAIN}`,
+                     paddingBottom: "1px", whiteSpace: "nowrap" }}>
+            לכל התכנים ←
+          </span>
+        </div>
 
-          {/* Content */}
-          <div style={{ flex: 1, position: "relative", zIndex: 1 }}>
-            {/* Date badge */}
-            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem",
-                          padding: "0.25rem 0.85rem", borderRadius: "2rem",
-                          background: "rgba(196,162,101,0.15)", border: `1px solid rgba(196,162,101,0.35)`,
-                          marginBottom: "1rem" }}>
-              <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
-                             fontWeight: 700, color: GOLD_LIGHT, letterSpacing: "0.06em" }}>
-                יום ראשון 19.4 • ב׳ אייר תשפ״ו • 20:00 • ללא עלות
-              </span>
-            </div>
-
-            <h3 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                          fontSize: "clamp(1.4rem, 2.5vw, 2rem)", color: "white",
-                          margin: "0 0 0.3rem", lineHeight: 1.2 }}>
-              מעצמה תנ״כית
-            </h3>
-            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.9rem",
-                          color: "rgba(255,255,255,0.6)", marginBottom: "1.25rem" }}>
-              כנס העצמאות והגאולה של בני ציון
-            </div>
-
-            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
-                          color: "rgba(255,255,255,0.42)", lineHeight: 1.9, marginBottom: "1.5rem" }}>
-              {speakers.join(" • ")}
-            </div>
-
-            <button
-              style={{ padding: "0.75rem 2rem", borderRadius: "0.9rem", border: "none",
-                       background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
-                       color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
-                       fontSize: "0.95rem", cursor: "pointer",
-                       boxShadow: "0 4px 20px rgba(139,111,71,0.4)" }}>
-              לפרטים והרשמה ←
-            </button>
-          </div>
+        {/* Projects grid */}
+        <div style={{ display: "grid",
+                      gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+                      gap: "1.25rem" }}>
+          {TANACH_MISHPACHA_PROJECTS.map((project) => {
+            const meta = projectImages?.[project.seriesId];
+            const hasImage = !!meta?.image_url;
+            return (
+              <div
+                key={project.id}
+                onClick={() => navigate(`/design-series-page/${project.seriesId}`)}
+                style={{ borderRadius: "1.5rem", overflow: "hidden", cursor: "pointer",
+                         background: "white", border: "1px solid rgba(139,111,71,0.1)",
+                         boxShadow: "0 2px 16px rgba(45,31,14,0.06)",
+                         transition: "all 0.28s ease" }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-5px)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 16px 48px rgba(45,31,14,0.14)";
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 16px rgba(45,31,14,0.06)";
+                }}
+              >
+                {/* Image / color header */}
+                <div style={{ height: 160, position: "relative", overflow: "hidden",
+                              background: project.bgGradient }}>
+                  {hasImage ? (
+                    <img src={meta.image_url!} alt={project.title}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                  ) : (
+                    <div style={{ position: "absolute", inset: 0,
+                                  display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                                      fontSize: "4rem", opacity: 0.18, color: "white" }}>
+                        {project.icon}
+                      </span>
+                    </div>
+                  )}
+                  <div style={{ position: "absolute", inset: 0,
+                                background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)" }} />
+                  <div style={{ position: "absolute", top: 12, right: 12,
+                                padding: "0.15rem 0.65rem", borderRadius: "1rem",
+                                background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)",
+                                fontFamily: "Ploni, sans-serif", fontSize: "0.68rem",
+                                fontWeight: 700, color: "rgba(255,255,255,0.9)" }}>
+                    {project.subtitle}
+                  </div>
+                </div>
+                {/* Body */}
+                <div style={{ padding: "1.1rem 1.25rem 1.4rem" }}>
+                  <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                                fontSize: "1rem", color: TEXT_DARK, marginBottom: "0.3rem",
+                                lineHeight: 1.3 }}>
+                    {project.title}
+                  </div>
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem",
+                                color: TEXT_MUTED, lineHeight: 1.6, marginBottom: "0.75rem" }}>
+                    {project.desc}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center",
+                                justifyContent: "space-between" }}>
+                    {meta?.lesson_count != null && (
+                      <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
+                                     color: TEXT_SUBTLE }}>
+                        {meta.lesson_count} שיעורים
+                      </span>
+                    )}
+                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
+                                   color: project.color, fontWeight: 600 }}>
+                      לתוכן ←
+                    </span>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -385,18 +486,22 @@ function KenesBanner() {
 }
 
 // ── DesignParashaHolidaySection ────────────────────────────────────────────
+// seriesId = ID of the matching series in Supabase (for navigation)
+// imageUrl = optional cover image (used if present)
 const HOLIDAYS_5786 = [
-  { name: "פורים",         hebrewDate: "י״ד אדר",  date: new Date(2026, 2, 3),  terms: ["פורים","אסתר"] },
-  { name: "פסח",           hebrewDate: "ט״ו ניסן", date: new Date(2026, 3, 2),  terms: ["פסח","הגדה"] },
-  { name: "יום העצמאות",   hebrewDate: "ה׳ אייר",  date: new Date(2026, 3, 22), terms: ["יום העצמאות","עצמאות"] },
-  { name: "ל״ג בעומר",     hebrewDate: "י״ח אייר", date: new Date(2026, 4, 5),  terms: ["ל\"ג בעומר"] },
-  { name: "יום ירושלים",   hebrewDate: "כ״ח אייר", date: new Date(2026, 4, 15), terms: ["יום ירושלים","ירושלים","בית המקדש"] },
-  { name: "שבועות",        hebrewDate: "ו׳ סיוון", date: new Date(2026, 4, 22), terms: ["שבועות","רות"] },
-  { name: "תשעה באב",      hebrewDate: "ט׳ באב",   date: new Date(2026, 6, 23), terms: ["תשעה באב","איכה"] },
-  { name: "ראש השנה",      hebrewDate: "א׳ תשרי",  date: new Date(2026, 8, 12), terms: ["ראש השנה"] },
-  { name: "יום כיפור",     hebrewDate: "י׳ תשרי",  date: new Date(2026, 8, 21), terms: ["יום כיפור","כיפור"] },
-  { name: "סוכות",         hebrewDate: "ט״ו תשרי", date: new Date(2026, 8, 26), terms: ["סוכות"] },
-  { name: "חנוכה",         hebrewDate: "כ״ה כסלו", date: new Date(2026, 11, 5), terms: ["חנוכה"] },
+  { name: "פורים",          hebrewDate: "י״ד אדר",   date: new Date(2026, 2, 3),   terms: ["פורים","אסתר"],     seriesId: null, imageUrl: null },
+  { name: "פסח",            hebrewDate: "ט״ו ניסן",  date: new Date(2026, 3, 2),   terms: ["פסח","הגדה"],       seriesId: null, imageUrl: null },
+  { name: "יום העצמאות",    hebrewDate: "ה׳ אייר",   date: new Date(2026, 3, 22),  terms: ["יום העצמאות","עצמאות"], seriesId: null, imageUrl: null },
+  { name: "ל״ג בעומר",      hebrewDate: "י״ח אייר",  date: new Date(2026, 4, 5),   terms: ["ל\"ג בעומר"],       seriesId: null, imageUrl: null },
+  { name: "יום ירושלים",    hebrewDate: "כ״ח אייר",  date: new Date(2026, 4, 15),  terms: ["יום ירושלים","ירושלים","בית המקדש"], seriesId: null, imageUrl: null },
+  { name: "שבועות",         hebrewDate: "ו׳ סיוון",  date: new Date(2026, 4, 22),  terms: ["שבועות","רות"],     seriesId: null, imageUrl: null },
+  // י"ז בתמוז — מועד שלושת השבועות (נמצא ב-DB כסדרה "שלושת השבועות")
+  { name: "י״ז בתמוז",      hebrewDate: "י״ז תמוז",  date: new Date(2026, 6, 13),  terms: ["שלושת השבועות","תמוז","בין המצרים"], seriesId: "e36ea5d6-38f8-49ca-874e-ff3324bb3795", imageUrl: null },
+  { name: "תשעה באב",       hebrewDate: "ט׳ באב",    date: new Date(2026, 6, 23),  terms: ["תשעה באב","איכה"],  seriesId: null, imageUrl: null },
+  { name: "ראש השנה",       hebrewDate: "א׳ תשרי",   date: new Date(2026, 8, 12),  terms: ["ראש השנה"],         seriesId: null, imageUrl: null },
+  { name: "יום כיפור",      hebrewDate: "י׳ תשרי",   date: new Date(2026, 8, 21),  terms: ["יום כיפור","כיפור"], seriesId: null, imageUrl: null },
+  { name: "סוכות",          hebrewDate: "ט״ו תשרי",  date: new Date(2026, 8, 26),  terms: ["סוכות"],            seriesId: null, imageUrl: null },
+  { name: "חנוכה",          hebrewDate: "כ״ה כסלו",  date: new Date(2026, 11, 5),  terms: ["חנוכה"],            seriesId: null, imageUrl: null },
 ];
 
 const YOMHAATZMAOUT = "יום העצמאות";
@@ -409,7 +514,7 @@ function DesignParashaHolidaySection() {
 
   const holiday = useMemo(() => {
     const now = new Date();
-    const cutoff = new Date(now.getTime() + 45 * 864e5);
+    const cutoff = new Date(now.getTime() + 60 * 864e5); // 60 days window
     return HOLIDAYS_5786.find(h => h.date >= now && h.date <= cutoff) ?? null;
   }, []);
 
@@ -502,8 +607,8 @@ function DesignParashaHolidaySection() {
           {/* ── RIGHT (first in RTL): Holiday ── */}
           {holiday && holidaySeries.length > 0 && (
             <div>
-              {/* Flag image header for Yom Haatzmaout */}
-              {isYomHaatzmaout && (
+              {/* Image header — Yom Haatzmaout flag or holiday cover */}
+              {isYomHaatzmaout ? (
                 <div style={{ marginBottom: "1.5rem", borderRadius: "1rem", overflow: "hidden",
                   border: "2px solid rgba(0,63,138,0.3)", position: "relative", height: 140 }}>
                   <img src="/images/yom-haatzmaut-hero.png"
@@ -511,6 +616,32 @@ function DesignParashaHolidaySection() {
                     style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   <div style={{ position: "absolute", inset: 0,
                     background: "linear-gradient(to top, rgba(13,31,61,0.6) 0%, transparent 50%)" }} />
+                </div>
+              ) : holiday.imageUrl ? (
+                <div style={{ marginBottom: "1.5rem", borderRadius: "1rem", overflow: "hidden",
+                  border: "2px solid rgba(196,162,101,0.2)", position: "relative", height: 140 }}>
+                  <img src={holiday.imageUrl}
+                    alt={holiday.name}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  <div style={{ position: "absolute", inset: 0,
+                    background: "linear-gradient(to top, rgba(44,58,30,0.65) 0%, transparent 55%)" }} />
+                </div>
+              ) : (
+                /* Decorative placeholder for holidays without a custom image */
+                <div style={{ marginBottom: "1.5rem", borderRadius: "1rem",
+                  border: "1px solid rgba(196,162,101,0.2)", position: "relative", height: 100,
+                  background: "rgba(255,255,255,0.04)",
+                  display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                      fontSize: "1.8rem", color: "rgba(196,162,101,0.35)", lineHeight: 1 }}>
+                      {holiday.hebrewDate}
+                    </div>
+                    <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
+                      color: "rgba(255,255,255,0.2)", marginTop: "0.35rem" }}>
+                      {holiday.name}
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -588,8 +719,12 @@ function DesignParashaHolidaySection() {
                 </div>
               )}
 
-              {/* Single CTA — all holiday lessons */}
-              <button onClick={() => navigate("/series")}
+              {/* Single CTA — holiday series (NEW route) or series list */}
+              <button onClick={() =>
+                holiday.seriesId
+                  ? navigate(`/design-series-page/${holiday.seriesId}`)
+                  : navigate("/design-series-list")
+              }
                 style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem",
                   border: "none",
                   background: isYomHaatzmaout
@@ -621,6 +756,42 @@ function DesignParashaHolidaySection() {
                 <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
                   color: "rgba(255,255,255,0.45)" }}>חומש {chumash}</div>
               )}
+            </div>
+
+            {/* Parasha visual card — book illustration placeholder */}
+            <div style={{ marginBottom: "1.75rem", borderRadius: "1rem", overflow: "hidden",
+              border: "1px solid rgba(196,162,101,0.2)", position: "relative", height: 110,
+              background: `linear-gradient(135deg, rgba(139,111,71,0.18), rgba(196,162,101,0.08))` }}>
+              {/* Parasha cover from series if available */}
+              {firstArticle?.seriesId && (
+                <div style={{ position: "absolute", inset: 0,
+                  backgroundImage: `url(/images/series-tanach-victory.png)`,
+                  backgroundSize: "cover", backgroundPosition: "center",
+                  opacity: 0.25 }} />
+              )}
+              <div style={{ position: "absolute", inset: 0,
+                background: "linear-gradient(135deg, rgba(44,58,30,0.8), rgba(58,77,40,0.6))" }} />
+              <div style={{ position: "relative", padding: "1rem 1.25rem", height: "100%",
+                display: "flex", alignItems: "center", gap: "1rem" }}>
+                {/* Hebrew scroll icon */}
+                <div style={{ width: 52, height: 52, borderRadius: "50%", flexShrink: 0,
+                  background: "rgba(196,162,101,0.15)", border: "1px solid rgba(196,162,101,0.3)",
+                  display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif",
+                    fontSize: "1.5rem", opacity: 0.7, color: GOLD_LIGHT }}>ס</span>
+                </div>
+                <div>
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.68rem",
+                    fontWeight: 700, color: GOLD_LIGHT, letterSpacing: "0.12em",
+                    textTransform: "uppercase", marginBottom: "0.2rem" }}>
+                    {chumash || "תורה"}
+                  </div>
+                  <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                    fontSize: "1.25rem", color: "white", lineHeight: 1.15 }}>
+                    פרשת {parasha || "..."}
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Verse blockquote */}
@@ -692,7 +863,7 @@ function DesignParashaHolidaySection() {
                 לדף פרשת השבוע ←
               </button>
               {firstArticle?.seriesId && (
-                <button onClick={() => navigate(`/series/${firstArticle.seriesId}`)}
+                <button onClick={() => navigate(`/design-series-page/${firstArticle.seriesId}`)}
                   style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem",
                     border: `1.5px solid ${GOLD_LIGHT}`, background: "transparent",
                     color: GOLD_LIGHT, fontFamily: "Paamon, serif", fontWeight: 700,
@@ -1185,6 +1356,231 @@ function RabbisSection() {
   );
 }
 
+// ── NewsletterSection ──────────────────────────────────────────────────────
+// 27.5.2026 — "עדכונים מעולם התנ"ך של בני ציון" — Smoove signup with double opt-in
+// Microcopy: warm, biblical, eye-level Saar voice. NOT corporate.
+function NewsletterSection() {
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errMsg, setErrMsg] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim() || !email.includes("@")) {
+      setErrMsg("רגע, צריך כתובת מייל אמיתית");
+      return;
+    }
+    setStatus("submitting");
+    setErrMsg("");
+    try {
+      // Insert to newsletter_subscribers table. RLS-allowed for anonymous.
+      // Saar exports to Smoove from this table via cron.
+      const { error } = await supabase
+        .from("newsletter_subscribers" as any)
+        .insert({
+          email: email.trim().toLowerCase(),
+          first_name: firstName.trim() || null,
+          consent_at: new Date().toISOString(),
+          source: "homepage",
+        });
+      if (error && !error.message.toLowerCase().includes("duplicate")) throw error;
+      setStatus("success");
+    } catch (err: any) {
+      setStatus("error");
+      setErrMsg(err.message || "משהו השתבש. נסה שוב בעוד רגע.");
+    }
+  }
+
+  return (
+    <section
+      dir="rtl"
+      style={{
+        background: `linear-gradient(135deg, ${PARCHMENT} 0%, ${PARCHMENT_DARK} 100%)`,
+        padding: "5rem 1.5rem",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Decorative background dots */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `radial-gradient(circle, ${GOLD_LIGHT}22 1px, transparent 1px)`,
+          backgroundSize: "32px 32px",
+          opacity: 0.4,
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", zIndex: 1, textAlign: "center" }}>
+        {/* Eyebrow */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            padding: "0.3rem 0.9rem",
+            borderRadius: "2rem",
+            background: `${GOLD_DARK}15`,
+            border: `1px solid ${GOLD_DARK}35`,
+            marginBottom: "1.25rem",
+          }}
+        >
+          <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700, color: GOLD_DARK, letterSpacing: "0.05em" }}>
+            עדכונים מעולם התנ״ך
+          </span>
+        </div>
+
+        {/* H2 */}
+        <h2
+          style={{
+            fontFamily: "Kedem, Frank Ruhl Libre, serif",
+            fontWeight: 900,
+            fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+            color: TEXT_DARK,
+            margin: "0 0 0.75rem",
+            lineHeight: 1.2,
+          }}
+        >
+          רוצה <span style={{ background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>פסוק אחד טוב</span> בשבוע?
+        </h2>
+
+        {/* Subtitle */}
+        <p
+          style={{
+            fontFamily: "Ploni, sans-serif",
+            fontSize: "1.05rem",
+            color: `${TEXT_DARK}cc`,
+            lineHeight: 1.65,
+            maxWidth: 540,
+            margin: "0 auto 2rem",
+          }}
+        >
+          חידושי תורה מהפרשה, נסים מהשטח וסיפורים מבני ציון.<br />
+          מייל אחד בשבוע. בלי ספאם, בלי שטויות — רק מה ששווה לקרוא.
+        </p>
+
+        {status === "success" ? (
+          <div
+            style={{
+              padding: "1.5rem 1.25rem",
+              background: "white",
+              borderRadius: "1rem",
+              border: `2px solid ${GOLD_LIGHT}`,
+              boxShadow: "0 4px 24px rgba(196,162,101,0.18)",
+            }}
+          >
+            <div style={{ fontFamily: "Kedem, serif", fontSize: "1.35rem", fontWeight: 800, color: GOLD_DARK, marginBottom: "0.4rem" }}>
+              נרשמת. ברוך תהיה! ✡
+            </div>
+            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.95rem", color: `${TEXT_DARK}aa`, lineHeight: 1.5 }}>
+              שלחנו לך מייל אישור — רק תאשר ונתחיל לדבר אחת לשבוע.
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 480, margin: "0 auto" }}>
+            <input
+              type="text"
+              placeholder="שם פרטי (לא חובה)"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "0.95rem 1.1rem",
+                borderRadius: "0.85rem",
+                border: `1.5px solid ${GOLD_DARK}33`,
+                background: "white",
+                fontFamily: "Ploni, sans-serif",
+                fontSize: "1rem",
+                color: TEXT_DARK,
+                outline: "none",
+                transition: "border-color 0.2s",
+                textAlign: "right",
+                boxSizing: "border-box",
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
+              onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
+            />
+            <input
+              type="email"
+              placeholder="כתובת המייל שלך"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={{
+                width: "100%",
+                padding: "0.95rem 1.1rem",
+                borderRadius: "0.85rem",
+                border: `1.5px solid ${GOLD_DARK}33`,
+                background: "white",
+                fontFamily: "Ploni, sans-serif",
+                fontSize: "1rem",
+                color: TEXT_DARK,
+                outline: "none",
+                transition: "border-color 0.2s",
+                textAlign: "right",
+                boxSizing: "border-box",
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
+              onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
+            />
+            {errMsg && (
+              <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: "#a52727", textAlign: "right" }}>
+                {errMsg}
+              </div>
+            )}
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              style={{
+                padding: "1rem 1.5rem",
+                borderRadius: "0.85rem",
+                border: "none",
+                background: status === "submitting" ? `${GOLD_DARK}88` : `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
+                color: "white",
+                fontFamily: "Paamon, serif",
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                cursor: status === "submitting" ? "wait" : "pointer",
+                boxShadow: "0 6px 24px rgba(139,111,71,0.35)",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                if (status !== "submitting") {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 8px 32px rgba(139,111,71,0.45)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 6px 24px rgba(139,111,71,0.35)";
+              }}
+            >
+              {status === "submitting" ? "רגע אחד..." : "אני רוצה לקבל"}
+            </button>
+            {/* Consent microcopy — required for Israeli newsletter law */}
+            <div
+              style={{
+                fontFamily: "Ploni, sans-serif",
+                fontSize: "0.78rem",
+                color: `${TEXT_DARK}88`,
+                lineHeight: 1.5,
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              בלחיצה אני מאשר לקבל עדכונים שיווקיים מבני ציון. אפשר לבטל בכל מייל.
+            </div>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+}
+
 // ── WhatsAppCTASection ─────────────────────────────────────────────────────
 function WhatsAppCTASection() {
   return (
@@ -1366,13 +1762,13 @@ export default function DesignPreviewHome() {
 
         {/* Main content area */}
         <main style={{ flex: 1, minWidth: 0 }}>
-          <KenesBanner />
+          {/* 27.5.2026 — KenesBanner removed (outdated 19.4 event) */}
+          <TanachLemishpachaSection />
           <DesignParashaHolidaySection />
-          <PopularLessonsSection />
+          {/* 27.5.2026 — PopularLessonsSection removed per Saar (homepage cleanup) */}
           <WarMiraclesSection />
-          <TopSeriesSection />
-          <RabbisSection />
-          <WhatsAppCTASection />
+          {/* 27.5.2026 — TopSeriesSection, RabbisSection, WhatsAppCTASection removed per Saar */}
+          <NewsletterSection />
         </main>
       </div>
 
@@ -1382,16 +1778,6 @@ export default function DesignPreviewHome() {
       {/* Mobile responsive fixes for Home page sections */}
       <style>{`
         @media (max-width: 767px) {
-          .kenes-banner-inner {
-            flex-direction: column !important;
-            gap: 1.5rem !important;
-            padding: 1.5rem !important;
-          }
-          .kenes-banner-poster {
-            width: 100% !important;
-            max-width: 280px !important;
-            margin: 0 auto !important;
-          }
           .parasha-holiday-grid {
             grid-template-columns: 1fr !important;
             gap: 2.5rem !important;

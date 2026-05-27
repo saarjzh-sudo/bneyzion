@@ -48,8 +48,8 @@ const HeroSection = () => {
             <span className="gradient-gold-smooth" style={{ WebkitTextFillColor: 'transparent' }}>של ישראל</span>
           </motion.h1>
 
-          {/* CTA - opens dialog */}
-          <Link to="/series">
+          {/* CTA - opens dialog. 27.5.2026 — /series→/lessons since /series was removed. */}
+          <Link to="/lessons">
             <motion.span
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}

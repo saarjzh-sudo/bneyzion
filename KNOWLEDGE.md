@@ -878,6 +878,37 @@ No human figures, no faces, no letters, no text.
 - whisper-cli tiny (הכלול בחבילת homebrew) מחזיר SRT ריק על עברית — רק medium+ עובד לעברית.
 - `ffmpeg --output-format` לא קיים ב-whisper-cli — תחביר נכון: `-osrt -of output_path`
 
+### 2026-05-27 — Home page fixes: כנס removed, תנ"ך למשפחה section, י"ז בתמוז nav fix
+
+**Branch:** `sandbox-header-fixes-27may` · **Commit:** `455c373`
+
+**מה השתנה:**
+1. **הסרת `KenesBanner`** — הכנס הסתיים, ה-section נמחק לגמרי מ-DesignPreviewHome.tsx
+2. **`TanachLemishpachaSection` חדש** — 4 פרויקטים תחת מותג "תנ"ך למשפחה" של הרב יואב אוריאל:
+   - חידות לילדים (seriesId: `c852edd8`) — 50 שיעורים
+   - דבר תורה לשולחן שבת — שמות (seriesId: `dbcae806`)
+   - הפרשה במבט רחב (seriesId: `a1111111`)
+   - בכח התנ"ך ננצח / מכלל יופי (seriesId: `b6eac28f`) — 154 שיעורים
+   - כרטיסים עם רקע צבעוני (teal/olive/gold/navy) + תמונות מ-DB ב-`series.image_url`
+3. **י"ז בתמוז הוסף ל-HOLIDAYS_5786** עם `seriesId: "e36ea5d6"` ("שלושת השבועות" — ב-DB)
+4. **navigation תוקן** — CTAs ב-DesignParashaHolidaySection מנווטים כעת ל-`/design-series-page/:id` (לא ל-`/series` הישן)
+5. **Parasha visual card** — נוסף כרטיס ויזואלי לפרשה (scroll icon + שם פרשה + חומש) מעל ה-verse
+6. **Holiday placeholder card** — למועדים בלי תמונה: כרטיס placeholder עם שם בעברי
+
+**DB discoveries:**
+- "תנ"ך למשפחה" לא קיים כ-series/category DB — זה brand name של הרב יואב אוריאל
+- seriesId של "שלושת השבועות": `e36ea5d6-38f8-49ca-874e-ff3324bb3795`
+- לוגו "תנ"ך למשפחה" לא קיים עדיין כ-asset ב-src/assets/ — יוסף בעתיד
+- חידות לילדים: `c852edd8` (50 שיעורים), שיעורי הרב יואב (154+ שיעורים, seriesId `b6eac28f`)
+
+**navigation issue root cause:**
+- `/series/${id}` → `DesignPreviewSeriesPageV2` (כבר מוגדר ב-App.tsx שורה 284) — נכון
+- הבעיה הייתה ב-CTA buttons שהלכו ל-`/series` (רשימה ישנה) לא לסדרה ספציפית
+- תוקן: CTA ל-`/design-series-page/${seriesId}` כשיש seriesId, אחרת ל-`/design-series-list`
+
+**Iron rule:**
+- `HOLIDAYS_5786` צריך לכלול גם מועדים בתאריך עתידי ב-60+ ימים (לא 45) כדי ש"י"ז בתמוז" יופיע ביוני.
+
 ### 2026-05-26 — Bible tagging: series.bible_book + lessons.bible_book + lessons.bible_chapter (session 3)
 
 **סטטוס scraper (live run PID 16513 מ-25.5.2026):**
@@ -3938,3 +3969,32 @@ python3 scripts/migrate_lesson_attachments.py  # no --limit
 - `src/pages/DesignPreviewHome.tsx` — FULL_NAV_LINKS מסונכרן לאותם 4 פריטים (הוסרו ראשי, תרומות, מחירים, לזכר).
 - `src/pages/DesignPreviewSeriesList.tsx` — chips container: הוסר `overflowX: auto`, נוסף `width: "100%"` — אוכף מרכוז מלא.
 - לוגו: הלוגיקה הקיימת (`isTransparent ? logoBright : logoColor`) נכונה — בדפים פנימיים `transparentOnTop` מוגדר `false` ברירת מחדל → תמיד מוצג `logoColor`. אין צורך בשינוי.
+
+### 2026-05-27 — DesignHeader: שינוי סדר ניווט + הסרת אייקון להבה (second pass)
+- `src/components/layout-v2/DesignHeader.tsx` — סדר NAV_ITEMS שונה לפי בקשת סער:
+  - לפני: `חנות | פרשת השבוע | אגף המורים | אודותינו`
+  - אחרי: `אגף המורים | פרשת השבוע | חנות | אודותינו` (RTL: ראשון ב-array = הכי קרוב ללוגו בימין)
+- TEACHER_NAV_ITEMS עודכן בהתאם (הוסר "אגף המורים" מהרשימה, נשארו 3 פריטים).
+- `<Flame>` icon הוסר לחלוטין מה-header — desktop nav + mobile panel. "לזכר סעדיה הי"ד" כעת טקסט בלבד ללא אייקון.
+- import של `Flame` מ-lucide-react הוסר.
+
+### 2026-05-27 — Deploy regression diagnosis + clean rebuild (sequel session)
+**הממצא:** deploy `bneyzion-jqu6gzuws` שסאר ראה הציג תיקונים חסרים (כנס מעצמה עדיין, סדר nav ישן). **סיבה:** כל התיקונים (commits `91e8004`, `455c373`, `4b2efcc`, `de334b8`) נמצאים על branch `sandbox-header-fixes-27may` — לא על `main`. Vercel חיבר את ה-URL הקודם ל-`bneyzion` project (הprod project) שדיפלה מ-`main` — branch שלא כלל את הtיקונים.
+
+**הפתרון:** build נקי + deploy מ-worktree `/private/tmp/bneyzion-work/` (project `bneyzion-work`):
+```
+rm -rf dist .vercel
+npm run build
+vercel build --yes
+vercel deploy --prebuilt --yes
+```
+**URL חדש:** `https://bneyzion-work-fezhcuy3b-saars-projects-4508d6bb.vercel.app`
+
+**אימות bundle:**
+- `כנס מעצמה תנ"כית` — NOT FOUND בכל bundle (נמחק נכון)
+- `אגף המורים → פרשת השבוע → חנות` — ORDER CORRECT ב-main bundle
+- `Flame` ב-DesignHeader.tsx — import הוסר (נמצא רק בקומפוננטים ישנים: LearningDashboard, Footer, Header production)
+
+**Iron rule חדש:** כשsandbox commits נמצאים על feature branch (לא main) — deploy חייב להיות מ-`bneyzion-work` project (worktree), לא מ-`bneyzion` project. שני הprojects קיימים ב-Vercel:
+- `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x) = production site, מחובר ל-`main` ב-GitHub
+- `bneyzion-work` (prj_ctSOckC9whh7OVP15LeXUSzC5P8N) = worktree previews, deploy ידני

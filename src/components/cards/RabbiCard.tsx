@@ -31,6 +31,12 @@ function getGradient(name: string) {
   return avatarGradients[Math.abs(hash) % avatarGradients.length];
 }
 
+// 27.5.2026 — skip "הרב " prefix so each rabbi gets a distinct initial (not all "ה")
+function getRabbiInitial(name: string): string {
+  const cleanName = name.replace(/^הרב\s+/, "").trim();
+  return cleanName.charAt(0) || name.charAt(0);
+}
+
 const RabbiCard = memo(function RabbiCard({ id, slug, name, title, specialty, imageUrl, lessonCount }: RabbiCardProps) {
   return (
     <Link to={`/rabbis/${slug ?? id}`}>
@@ -40,13 +46,13 @@ const RabbiCard = memo(function RabbiCard({ id, slug, name, title, specialty, im
             <Avatar className="h-20 w-20 mb-4 border-2 border-primary/10">
               <AvatarImage src={imageUrl} alt={name} />
               <AvatarFallback className="text-xl font-heading bg-primary/10 text-primary">
-                {name.charAt(0)}
+                {getRabbiInitial(name)}
               </AvatarFallback>
             </Avatar>
           ) : (
             <div className={`h-20 w-20 mb-4 rounded-full bg-gradient-to-br ${getGradient(name)} flex items-center justify-center border-2 border-white/20 shadow-inner`}>
               <span className="text-2xl font-heading text-white/90 drop-shadow-sm">
-                {name.charAt(0)}
+                {getRabbiInitial(name)}
               </span>
             </div>
           )}

@@ -270,9 +270,10 @@ const Donate = () => {
             flexWrap: "wrap" as const,
           }}
         >
-          <StatChip icon={<BookOpen size={18} />} value="11,800+" label="שיעורים באתר" />
-          <StatChip icon={<Users size={18} />} value="200+" label="רבנים ומרצים" />
-          <StatChip icon={<Mic size={18} />} value="שנות" label="הקלטה ועריכה" />
+          {/* 27.5.2026 — מיושר עם Homepage StatsBar */}
+          <StatChip icon={<BookOpen size={18} />} value="+11,000" label="שיעורים ומאמרים" />
+          <StatChip icon={<Users size={18} />} value="+200" label="רבנים ומרצים" />
+          <StatChip icon={<Mic size={18} />} value="+1,300" label="סדרות לימוד" />
         </div>
       </div>
 

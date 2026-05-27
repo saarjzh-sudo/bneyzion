@@ -15,11 +15,11 @@ import { colors, fonts } from "@/lib/designTokens";
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "ראשי", href: "/" },
   { label: "רבנים", href: "/rabbis" },
-  { label: "סדרות", href: "/series" },
+  // 27.5.2026 — /series removed
   { label: "תנ״ך", href: "/bible/בראשית" },
   { label: "קהילה", href: "/community" },
   { label: "חנות", href: "/store" },
-  { label: "מחירים", href: "/pricing" },
+  // 27.5.2026 — /pricing removed
   { label: "פרשת השבוע", href: "/parasha" },
   { label: "אודותינו", href: "/about" },
 ];

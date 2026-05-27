@@ -4,7 +4,8 @@ import { Play, MessageCircle, ExternalLink, BookOpen, ChevronDown, ChevronUp, He
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Layout from "@/components/layout/Layout";
 import { useSEO } from "@/hooks/useSEO";
-import kenesHeroBg from "@/assets/hero-bg-bney-zion.jpg";
+// 27.5.2026 — hero-bg-bney-zion.jpg showed European/Scottish mountains. Replaced with Israeli Jerusalem walls.
+import kenesHeroBg from "@/assets/jerusalem-walls.jpg";
 import watercolorBook from "@/assets/watercolor-book.png";
 import kriatKivunBanner from "@/assets/kriat-kivun-banner.png";
 

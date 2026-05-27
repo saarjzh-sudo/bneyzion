@@ -3,8 +3,10 @@ import "@/styles/chapter-weekly.css";
 import { useSEO } from "@/hooks/useSEO";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
-import heroDesktop from "@/assets/esther-hero-desktop.png";
-import heroMobile from "@/assets/esther-hero-mobile.png";
+// 27.5.2026 — esther-hero-desktop/mobile.png were broken 1245-byte stubs.
+// Replaced with esther-sunrise.jpg (Jerusalem skyline + golden sunrise).
+import heroDesktop from "@/assets/esther-sunrise.jpg";
+import heroMobile from "@/assets/esther-sunrise.jpg";
 import estherBook from "@/assets/esther-book.png";
 import bookSet from "@/assets/book-set.png";
 import { Crown, ScrollText, Eye, Sparkles, Shield, Users, Star, ChevronLeft, Gift, Library, Download, BookOpen, Target } from "lucide-react";
