@@ -19,7 +19,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search, Flame, GraduationCap } from "lucide-react";
 
 import logoColor from "@/assets/logo-horizontal-color.png";
-import logoBright from "@/assets/logo-horizontal-bright.png";
 import GlobalSearch from "@/components/search/GlobalSearch";
 import UserMenu from "@/components/layout/UserMenu";
 import CartButton from "@/components/cart/CartButton";
@@ -106,7 +105,10 @@ export default function DesignHeader({
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "0 1rem",
+          // padding-right: 0 aligns the logo flush with the sidebar's right edge.
+          // padding-left: 1rem gives breathing room on the actions (left) side.
+          paddingInlineStart: "1rem",
+          paddingInlineEnd: 0,
           height: 96,
           display: "flex",
           alignItems: "center",
@@ -114,10 +116,10 @@ export default function DesignHeader({
           gap: "0.5rem",
         }}
       >
-        {/* Logo — RIGHT in RTL */}
+        {/* Logo — RIGHT in RTL — always logoColor (same asset on home + inner pages) */}
         <Link to="/" style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
           <img
-            src={isTransparent ? logoBright : logoColor}
+            src={logoColor}
             alt="בני ציון"
             className="h-16 md:h-20"
             style={{
@@ -128,18 +130,16 @@ export default function DesignHeader({
           />
         </Link>
 
-        {/* Nav — CENTER (hidden on mobile; always visible on desktop even when sidebar is active).
-             Previously `display: onSidebarToggle ? "none" : undefined` would hide the entire
-             nav whenever a sidebar was present — that hid the logo/nav on desktop too.
-             Fix: never hide on desktop; the sidebar is a separate panel that doesn't
-             conflict with the header nav. */}
+        {/* Nav — packed toward LEFT (flex-end in LTR = visual left in RTL direction).
+             flex:1 + justifyContent:"flex-end" pushes nav items toward the left side,
+             leaving empty space between the logo (right) and the nav cluster. */}
         <nav
           className="hidden md:flex"
           style={{
             gap: "1.25rem",
             alignItems: "center",
             flex: 1,
-            justifyContent: "center",
+            justifyContent: "flex-end",
             flexWrap: "wrap",
           }}
         >

@@ -76,20 +76,21 @@ function DesignNavBar() {
 
   return (
     <nav dir="rtl" style={{ position: "sticky", top: 0, zIndex: 50, transition: "all 0.3s ease", ...navBg }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 1.5rem", height: 96,
+      <div style={{ maxWidth: 1280, margin: "0 auto", paddingInlineStart: "1.5rem",
+                    paddingInlineEnd: 0, height: 96,
                     display: "flex", alignItems: "center", justifyContent: "space-between",
                     gap: "1rem" }}>
         {/* Logo — RIGHT side (start in RTL) */}
         <div onClick={() => navigate("/")} style={{ cursor: "pointer", flexShrink: 0 }}>
           <img
-            src={scrolled ? logoColor : logoBright}
+            src={logoColor}
             alt="בני ציון"
             style={{ height: 64, width: "auto", objectFit: "contain" }}
           />
         </div>
 
-        {/* Nav links — flex-centered between logo and actions */}
-        <div className="hidden md:flex" style={{ flex: 1, justifyContent: "center",
+        {/* Nav links — packed toward left (flex-end = left in RTL layout) */}
+        <div className="hidden md:flex" style={{ flex: 1, justifyContent: "flex-end",
                     gap: "1.75rem", alignItems: "center", flexWrap: "wrap" }}>
           {FULL_NAV_LINKS.map(({ label, path }) => (
             <span key={label} onClick={() => navigate(path)}
