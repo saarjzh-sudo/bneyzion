@@ -105,18 +105,8 @@ function DesignNavBar() {
           ))}
         </div>
 
-        {/* Buttons + search — LEFT side (end in RTL) */}
+        {/* Buttons — LEFT side (end in RTL) */}
         <div style={{ display: "flex", gap: "0.65rem", alignItems: "center", flexShrink: 0 }}>
-          {/* Search icon */}
-          <div style={{ width: 36, height: 36, borderRadius: "50%", display: "flex",
-                        alignItems: "center", justifyContent: "center", cursor: "pointer",
-                        color: scrolled ? TEXT_MUTED : "rgba(255,255,255,0.75)" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </div>
-
           {!user ? (
             <button onClick={handleSignIn} disabled={signingIn || authLoading}
               style={{ padding: "0.4rem 1rem", border: `1.5px solid ${scrolled ? GOLD_DARK : "rgba(255,255,255,0.5)"}`,
@@ -303,182 +293,205 @@ function StatsBar() {
   );
 }
 
-// ── TanachLemishpachaSection ───────────────────────────────────────────────
-// Four flagship projects under the "תנ"ך למשפחה" brand by הרב יואב אוריאל
-const TANACH_MISHPACHA_PROJECTS = [
+// ── FamilyBibleSection — chapel-arch design ───────────────────────────────
+// Replaces TanachLemishpachaSection (2026-05-27)
+// 4 portrait cards with top-arch border-radius, gold ribbon connector, cream+gold only
+
+const FAMILY_BIBLE_CARDS = [
   {
-    id: "family-riddles",
-    title: "חידות לילדים",
-    subtitle: "פרשת השבוע",
-    desc: "חידות מהנות ומאתגרות על פרשת השבוע — לשולחן שבת משפחתי",
-    seriesId: "c852edd8-d959-4c8d-bf7e-17b5881275fa",
-    color: TEAL_MAIN,
-    icon: "✦",
-    bgGradient: `linear-gradient(135deg, #1d5c5c, #2D7D7D)`,
+    id: "dor-haplaot",
+    title: "נס מדור הפלאות",
+    desc: "ניסים גלויים מהמלחמה — מה שקרה עם עינינו",
+    href: "/dor-haplaot",
+    image: "/family-bible/hero-miracles.png",
+    disabled: false,
   },
   {
-    id: "family-parasha",
-    title: "דבר תורה לשולחן שבת",
-    subtitle: "שמות",
-    desc: "מאמרים קצרים ומרתקים לכל בני הבית — מדי שבת",
-    seriesId: "dbcae806-435d-4aa1-a227-0c1acb14a914",
-    color: OLIVE_MAIN,
-    icon: "✦",
-    bgGradient: `linear-gradient(135deg, ${OLIVE_DARK}, ${OLIVE_MAIN})`,
+    id: "daily-verse",
+    title: "פסוק יומי",
+    desc: "פסוק אחד לכל יום — מאת הרב יואב אוריאל",
+    href: "/daily-verse",
+    image: "/family-bible/hero-verse.png",
+    disabled: false,
   },
   {
-    id: "family-broad",
-    title: "הפרשה במבט רחב",
-    subtitle: "לימוד שבועי",
-    desc: "הרב יואב אוריאל — מבט אחר על פרשת השבוע לכל המשפחה",
-    seriesId: "a1111111-1111-1111-1111-111111111111",
-    color: GOLD_DARK,
-    icon: "✦",
-    bgGradient: `linear-gradient(135deg, #5a3f20, ${GOLD_DARK})`,
+    id: "daily-video",
+    title: "קריאת כיוון",
+    desc: "המצפן היומי שלך בתנ\"ך · 5 דקות תנ\"ך ביום",
+    href: "/daily-video",
+    image: "/family-bible/hero-compass.png",
+    disabled: false,
   },
   {
-    id: "family-maklal",
-    title: "מכלל יופי — ספרים",
-    subtitle: "פרשנות תנ״כית",
-    desc: "סדרת ספרים ושיעורים מפורטים לכל ספרי התנ\"ך — הרב יואב אוריאל",
-    seriesId: "b6eac28f-ee7f-4e3b-8b56-3946a00a979a",
-    color: NAVY_DEEP,
-    icon: "✦",
-    bgGradient: `linear-gradient(135deg, #1a2744, #2d3d5c)`,
+    id: "kids-podcast",
+    title: "סיפורי התנ\"ך לילדים",
+    desc: "פודקאסט · בקרוב",
+    href: "#",
+    image: "/family-bible/hero-podcast.png",
+    disabled: true,
   },
 ];
 
-function TanachLemishpachaSection() {
+function FamilyBibleSection() {
   const navigate = useNavigate();
 
-  // Fetch series images for each project
-  const { data: projectImages } = useQuery({
-    queryKey: ["tanach-mishpacha-images"],
-    staleTime: 1000 * 60 * 60,
-    queryFn: async () => {
-      const ids = TANACH_MISHPACHA_PROJECTS.map(p => p.seriesId);
-      const { data } = await supabase
-        .from("series")
-        .select("id, image_url, lesson_count")
-        .in("id", ids);
-      const map: Record<string, { image_url: string | null; lesson_count: number }> = {};
-      for (const row of data ?? []) {
-        map[row.id] = { image_url: row.image_url, lesson_count: row.lesson_count };
-      }
-      return map;
-    },
-  });
-
   return (
-    <section dir="rtl" style={{ background: PARCHMENT, padding: "5rem 1.5rem" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-        {/* Header */}
-        <div style={{ display: "flex", alignItems: "flex-end",
-                      justifyContent: "space-between", marginBottom: "2.75rem",
-                      flexWrap: "wrap", gap: "1rem" }}>
-          <div>
-            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700,
-                          color: TEAL_MAIN, letterSpacing: "0.15em", textTransform: "uppercase",
-                          marginBottom: "0.3rem" }}>
-              הרב יואב אוריאל
-            </div>
-            {/* Logo text — "תנ"ך למשפחה" as display title */}
-            <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                          fontSize: "clamp(1.6rem, 3.5vw, 2.4rem)", color: TEXT_DARK,
-                          margin: "0 0 0.4rem", lineHeight: 1.15 }}>
+    <section dir="rtl" style={{ background: PARCHMENT, padding: "5.5rem 1.5rem", position: "relative", overflow: "hidden" }}>
+
+      {/* SVG filigree decorations */}
+      <svg aria-hidden style={{ position: "absolute", top: 24, insetInlineStart: "50%", transform: "translateX(-50%)", pointerEvents: "none", opacity: 0.15 }} width="600" height="28" viewBox="0 0 600 28">
+        <line x1="0" y1="14" x2="220" y2="14" stroke="#C4A265" strokeWidth="1" />
+        <circle cx="240" cy="14" r="3" fill="none" stroke="#C4A265" strokeWidth="1" />
+        <circle cx="300" cy="14" r="5" fill="none" stroke="#C4A265" strokeWidth="1.2" />
+        <circle cx="360" cy="14" r="3" fill="none" stroke="#C4A265" strokeWidth="1" />
+        <line x1="380" y1="14" x2="600" y2="14" stroke="#C4A265" strokeWidth="1" />
+      </svg>
+
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+
+        {/* Section header — "תנ"ך למשפחה" gold shimmer logo */}
+        <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+          {/* Dividers + title row */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", marginBottom: "0.5rem" }}>
+            <div style={{ flex: 1, maxWidth: 140, height: 1, background: `linear-gradient(to left, ${GOLD_LIGHT}, transparent)` }} />
+            <h2
+              style={{
+                fontFamily: "Kedem, Frank Ruhl Libre, serif",
+                fontWeight: 900,
+                fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
+                margin: 0,
+                lineHeight: 1.1,
+                background: "linear-gradient(135deg, #C4A265 0%, #E8D89A 50%, #C4A265 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                letterSpacing: "0.02em",
+              }}
+            >
               תנ״ך למשפחה
             </h2>
-            <p style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.88rem", color: TEXT_MUTED,
-                        margin: 0, maxWidth: 400 }}>
-              חידות, מאמרים, שיעורים — לכל בני הבית ביחד
-            </p>
+            <div style={{ flex: 1, maxWidth: 140, height: 1, background: `linear-gradient(to right, ${GOLD_LIGHT}, transparent)` }} />
           </div>
-          <span
-            onClick={() => navigate("/design-series-page/" + TANACH_MISHPACHA_PROJECTS[3].seriesId)}
-            style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.88rem", color: TEAL_MAIN,
-                     cursor: "pointer", borderBottom: `1px solid ${TEAL_MAIN}`,
-                     paddingBottom: "1px", whiteSpace: "nowrap" }}>
-            לכל התכנים ←
-          </span>
+          <p style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.9rem", color: TEXT_MUTED, margin: 0 }}>
+            הלימוד היומי
+          </p>
         </div>
 
-        {/* Projects grid */}
-        <div style={{ display: "grid",
-                      gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-                      gap: "1.25rem" }}>
-          {TANACH_MISHPACHA_PROJECTS.map((project) => {
-            const meta = projectImages?.[project.seriesId];
-            const hasImage = !!meta?.image_url;
-            return (
-              <div
-                key={project.id}
-                onClick={() => navigate(`/design-series-page/${project.seriesId}`)}
-                style={{ borderRadius: "1.5rem", overflow: "hidden", cursor: "pointer",
-                         background: "white", border: "1px solid rgba(139,111,71,0.1)",
-                         boxShadow: "0 2px 16px rgba(45,31,14,0.06)",
-                         transition: "all 0.28s ease" }}
-                onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(-5px)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 16px 48px rgba(45,31,14,0.14)";
+        {/* Chapel-arch cards grid */}
+        <style>{`
+          .family-bible-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+          @media (max-width: 900px) { .family-bible-grid { grid-template-columns: repeat(2, 1fr); } }
+          @media (max-width: 480px) { .family-bible-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; } }
+        `}</style>
+
+        <div className="family-bible-grid" style={{ position: "relative" }}>
+
+          {/* Gold ribbon flow — absolute SVG connector between cards */}
+          <svg
+            aria-hidden
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 0 }}
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <linearGradient id="ribbon-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#C4A265" stopOpacity="0" />
+                <stop offset="30%" stopColor="#E8D5A0" stopOpacity="0.35" />
+                <stop offset="70%" stopColor="#E8D5A0" stopOpacity="0.35" />
+                <stop offset="100%" stopColor="#C4A265" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <rect x="0" y="35%" width="100%" height="4" rx="2" fill="url(#ribbon-grad)" />
+          </svg>
+
+          {FAMILY_BIBLE_CARDS.map((card) => (
+            <div
+              key={card.id}
+              onClick={() => !card.disabled && navigate(card.href)}
+              style={{
+                position: "relative",
+                zIndex: 1,
+                cursor: card.disabled ? "default" : "pointer",
+                opacity: card.disabled ? 0.5 : 1,
+                transition: "transform 0.28s ease, box-shadow 0.28s ease",
+                borderRadius: "8px 8px 50% 50% / 8px 8px 30% 30%",
+                overflow: "hidden",
+                border: `1px solid rgba(201,169,97,0.3)`,
+                background: "white",
+                boxShadow: "0 4px 20px rgba(45,31,14,0.07)",
+                aspectRatio: "3 / 4",
+              }}
+              onMouseEnter={e => {
+                if (!card.disabled) {
+                  (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
+                  (e.currentTarget as HTMLElement).style.boxShadow = "0 20px 56px rgba(45,31,14,0.14)";
+                }
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(45,31,14,0.07)";
+              }}
+            >
+              {/* Image fills entire card — portrait */}
+              <img
+                src={card.image}
+                alt={card.title}
+                loading="lazy"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  display: "block",
                 }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 16px rgba(45,31,14,0.06)";
-                }}
-              >
-                {/* Image / color header */}
-                <div style={{ height: 160, position: "relative", overflow: "hidden",
-                              background: project.bgGradient }}>
-                  {hasImage ? (
-                    <img src={meta.image_url!} alt={project.title}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
-                  ) : (
-                    <div style={{ position: "absolute", inset: 0,
-                                  display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                                      fontSize: "4rem", opacity: 0.18, color: "white" }}>
-                        {project.icon}
-                      </span>
-                    </div>
-                  )}
-                  <div style={{ position: "absolute", inset: 0,
-                                background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)" }} />
-                  <div style={{ position: "absolute", top: 12, right: 12,
-                                padding: "0.15rem 0.65rem", borderRadius: "1rem",
-                                background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)",
-                                fontFamily: "Ploni, sans-serif", fontSize: "0.68rem",
-                                fontWeight: 700, color: "rgba(255,255,255,0.9)" }}>
-                    {project.subtitle}
-                  </div>
+              />
+
+              {/* Gold gradient overlay from bottom */}
+              <div style={{
+                position: "absolute",
+                inset: 0,
+                background: "linear-gradient(to top, rgba(45,31,14,0.82) 0%, rgba(45,31,14,0.3) 50%, transparent 75%)",
+              }} />
+
+              {/* Text content — bottom */}
+              <div style={{
+                position: "absolute",
+                bottom: 0,
+                insetInlineStart: 0,
+                insetInlineEnd: 0,
+                padding: "1.1rem 1rem 1.25rem",
+              }}>
+                <div style={{
+                  fontFamily: "Kedem, Frank Ruhl Libre, serif",
+                  fontWeight: 900,
+                  fontSize: "clamp(0.88rem, 2vw, 1.05rem)",
+                  color: "white",
+                  marginBottom: "0.25rem",
+                  lineHeight: 1.25,
+                }}>
+                  {card.title}
                 </div>
-                {/* Body */}
-                <div style={{ padding: "1.1rem 1.25rem 1.4rem" }}>
-                  <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                                fontSize: "1rem", color: TEXT_DARK, marginBottom: "0.3rem",
-                                lineHeight: 1.3 }}>
-                    {project.title}
-                  </div>
-                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem",
-                                color: TEXT_MUTED, lineHeight: 1.6, marginBottom: "0.75rem" }}>
-                    {project.desc}
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center",
-                                justifyContent: "space-between" }}>
-                    {meta?.lesson_count != null && (
-                      <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
-                                     color: TEXT_SUBTLE }}>
-                        {meta.lesson_count} שיעורים
-                      </span>
-                    )}
-                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
-                                   color: project.color, fontWeight: 600 }}>
-                      לתוכן ←
-                    </span>
-                  </div>
+                <div style={{
+                  fontFamily: "Ploni, sans-serif",
+                  fontSize: "0.75rem",
+                  color: "rgba(255,255,255,0.72)",
+                  lineHeight: 1.55,
+                }}>
+                  {card.desc}
                 </div>
+                {!card.disabled && (
+                  <div style={{
+                    fontFamily: "Ploni, sans-serif",
+                    fontSize: "0.72rem",
+                    color: GOLD_SHIMMER,
+                    fontWeight: 600,
+                    marginTop: "0.5rem",
+                  }}>
+                    להמשך ←
+                  </div>
+                )}
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -500,7 +513,10 @@ const HOLIDAYS_5786 = [
   { name: "יום ירושלים",    hebrewDate: "כ״ח אייר",  date: new Date(2026, 4, 15),  terms: ["יום ירושלים","ירושלים","בית המקדש"], seriesId: null, imageUrl: null },
   { name: "שבועות",         hebrewDate: "ו׳ סיוון",  date: new Date(2026, 4, 22),  terms: ["שבועות","רות"],     seriesId: null, imageUrl: null },
   // י"ז בתמוז — מועד שלושת השבועות (נמצא ב-DB כסדרה "שלושת השבועות")
-  { name: "י״ז בתמוז",      hebrewDate: "י״ז תמוז",  date: new Date(2026, 6, 13),  terms: ["שלושת השבועות","תמוז","בין המצרים"], seriesId: "e36ea5d6-38f8-49ca-874e-ff3324bb3795", imageUrl: null },
+  { name: "י״ז בתמוז",      hebrewDate: "י״ז תמוז",  date: new Date(2026, 6, 13),  terms: ["שלושת השבועות","תמוז","בין המצרים"], seriesId: "e36ea5d6-38f8-49ca-874e-ff3324bb3795", imageUrl: null,
+    quote: "ואם נחרבנו ונחרב העולם עמנו על ידי שנאת חינם, נשוב להיבנות והעולם עמנו יבנה על ידי אהבת חינם",
+    quoteAttribution: "הרב קוק זצ\"ל",
+  },
   { name: "תשעה באב",       hebrewDate: "ט׳ באב",    date: new Date(2026, 6, 23),  terms: ["תשעה באב","איכה"],  seriesId: null, imageUrl: null },
   { name: "ראש השנה",       hebrewDate: "א׳ תשרי",   date: new Date(2026, 8, 12),  terms: ["ראש השנה"],         seriesId: null, imageUrl: null },
   { name: "יום כיפור",      hebrewDate: "י׳ תשרי",   date: new Date(2026, 8, 21),  terms: ["יום כיפור","כיפור"], seriesId: null, imageUrl: null },
@@ -1409,25 +1425,29 @@ function RabbisSection() {
 }
 
 // ── NewsletterSection ──────────────────────────────────────────────────────
-// 27.5.2026 — "עדכונים מעולם התנ"ך של בני ציון" — Smoove signup with double opt-in
-// Microcopy: warm, biblical, eye-level Saar voice. NOT corporate.
+// redesign 2026-05-27: side-by-side inputs + checkbox consent + new copy
 function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errMsg, setErrMsg] = useState("");
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!email.trim() || !email.includes("@")) {
+    if (!email.trim() || !emailRegex.test(email.trim())) {
       setErrMsg("רגע, צריך כתובת מייל אמיתית");
+      return;
+    }
+    if (!agreed) {
+      setErrMsg("יש לאשר את תנאי השימוש לפני הצטרפות");
       return;
     }
     setStatus("submitting");
     setErrMsg("");
     try {
-      // Insert to newsletter_subscribers table. RLS-allowed for anonymous.
-      // Saar exports to Smoove from this table via cron.
       const { error } = await supabase
         .from("newsletter_subscribers" as any)
         .insert({
@@ -1435,6 +1455,7 @@ function NewsletterSection() {
           first_name: firstName.trim() || null,
           consent_at: new Date().toISOString(),
           source: "homepage",
+          agreed_to_terms: true,
         });
       if (error && !error.message.toLowerCase().includes("duplicate")) throw error;
       setStatus("success");
@@ -1454,7 +1475,7 @@ function NewsletterSection() {
         overflow: "hidden",
       }}
     >
-      {/* Decorative background dots */}
+      {/* Decorative dots */}
       <div
         aria-hidden
         style={{
@@ -1466,6 +1487,12 @@ function NewsletterSection() {
           pointerEvents: "none",
         }}
       />
+
+      <style>{`
+        @media (max-width: 600px) {
+          .newsletter-inputs-row { flex-direction: column !important; }
+        }
+      `}</style>
 
       <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", zIndex: 1, textAlign: "center" }}>
         {/* Eyebrow */}
@@ -1482,7 +1509,7 @@ function NewsletterSection() {
           }}
         >
           <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700, color: GOLD_DARK, letterSpacing: "0.05em" }}>
-            עדכונים מעולם התנ״ך
+            ספר הספרים
           </span>
         </div>
 
@@ -1497,7 +1524,7 @@ function NewsletterSection() {
             lineHeight: 1.2,
           }}
         >
-          רוצה <span style={{ background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>פסוק אחד טוב</span> בשבוע?
+          רוצים <span style={{ background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>מסרים מרוממים</span> מספר הספרים?
         </h2>
 
         {/* Subtitle */}
@@ -1511,8 +1538,7 @@ function NewsletterSection() {
             margin: "0 auto 2rem",
           }}
         >
-          חידושי תורה מהפרשה, נסים מהשטח וסיפורים מבני ציון.<br />
-          מייל אחד בשבוע. בלי ספאם, בלי שטויות — רק מה ששווה לקרוא.
+          הצטרפו לתפוצה — מנת תנ"ך שבועית, ישר למייל.
         </p>
 
         {status === "success" ? (
@@ -1526,64 +1552,110 @@ function NewsletterSection() {
             }}
           >
             <div style={{ fontFamily: "Kedem, serif", fontSize: "1.35rem", fontWeight: 800, color: GOLD_DARK, marginBottom: "0.4rem" }}>
-              נרשמת. ברוך תהיה! ✡
+              נרשמת. ברוך תהיה!
             </div>
             <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.95rem", color: `${TEXT_DARK}aa`, lineHeight: 1.5 }}>
               שלחנו לך מייל אישור — רק תאשר ונתחיל לדבר אחת לשבוע.
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 480, margin: "0 auto" }}>
-            <input
-              type="text"
-              placeholder="שם פרטי (לא חובה)"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 520, margin: "0 auto" }}>
+            {/* Side-by-side inputs row */}
+            <div
+              className="newsletter-inputs-row"
               style={{
-                width: "100%",
-                padding: "0.95rem 1.1rem",
-                borderRadius: "0.85rem",
-                border: `1.5px solid ${GOLD_DARK}33`,
-                background: "white",
-                fontFamily: "Ploni, sans-serif",
-                fontSize: "1rem",
-                color: TEXT_DARK,
-                outline: "none",
-                transition: "border-color 0.2s",
-                textAlign: "right",
-                boxSizing: "border-box",
+                display: "flex",
+                flexDirection: "row",
+                gap: "1rem",
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
-              onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
-            />
-            <input
-              type="email"
-              placeholder="כתובת המייל שלך"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+            >
+              <input
+                type="text"
+                placeholder="שם פרטי (לא חובה)"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                style={{
+                  flex: 1,
+                  padding: "0.95rem 1.1rem",
+                  borderRadius: "0.85rem",
+                  border: `1.5px solid ${GOLD_DARK}33`,
+                  background: "white",
+                  fontFamily: "Ploni, sans-serif",
+                  fontSize: "1rem",
+                  color: TEXT_DARK,
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  textAlign: "right",
+                  boxSizing: "border-box",
+                  minWidth: 0,
+                }}
+                onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
+                onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
+              />
+              <input
+                type="email"
+                placeholder="כתובת המייל שלך"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                style={{
+                  flex: 1,
+                  padding: "0.95rem 1.1rem",
+                  borderRadius: "0.85rem",
+                  border: `1.5px solid ${GOLD_DARK}33`,
+                  background: "white",
+                  fontFamily: "Ploni, sans-serif",
+                  fontSize: "1rem",
+                  color: TEXT_DARK,
+                  outline: "none",
+                  transition: "border-color 0.2s",
+                  textAlign: "right",
+                  boxSizing: "border-box",
+                  minWidth: 0,
+                }}
+                onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
+                onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
+              />
+            </div>
+
+            {/* Terms checkbox */}
+            <label
               style={{
-                width: "100%",
-                padding: "0.95rem 1.1rem",
-                borderRadius: "0.85rem",
-                border: `1.5px solid ${GOLD_DARK}33`,
-                background: "white",
-                fontFamily: "Ploni, sans-serif",
-                fontSize: "1rem",
-                color: TEXT_DARK,
-                outline: "none",
-                transition: "border-color 0.2s",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "0.6rem",
+                cursor: "pointer",
                 textAlign: "right",
-                boxSizing: "border-box",
               }}
-              onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
-              onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
-            />
+            >
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={(e) => setAgreed(e.target.checked)}
+                style={{
+                  marginTop: "0.15rem",
+                  width: 18,
+                  height: 18,
+                  accentColor: GOLD_DARK,
+                  flexShrink: 0,
+                  cursor: "pointer",
+                }}
+              />
+              <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem", color: TEXT_MUTED, lineHeight: 1.55 }}>
+                קראתי ואני מסכים ל
+                <a href="/terms" target="_blank" rel="noopener noreferrer"
+                  style={{ color: GOLD_DARK, textDecoration: "underline", textUnderlineOffset: "2px" }}>
+                  תנאי השימוש
+                </a>
+              </span>
+            </label>
+
             {errMsg && (
               <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: "#a52727", textAlign: "right" }}>
                 {errMsg}
               </div>
             )}
+
             <button
               type="submit"
               disabled={status === "submitting"}
@@ -1611,20 +1683,20 @@ function NewsletterSection() {
                 e.currentTarget.style.boxShadow = "0 6px 24px rgba(139,111,71,0.35)";
               }}
             >
-              {status === "submitting" ? "רגע אחד..." : "אני רוצה לקבל"}
+              {status === "submitting" ? "רגע אחד..." : "הצטרף"}
             </button>
-            {/* Consent microcopy — required for Israeli newsletter law */}
+
             <div
               style={{
                 fontFamily: "Ploni, sans-serif",
                 fontSize: "0.78rem",
                 color: `${TEXT_DARK}88`,
                 lineHeight: 1.5,
-                marginTop: "0.5rem",
+                marginTop: "0.25rem",
                 textAlign: "center",
               }}
             >
-              בלחיצה אני מאשר לקבל עדכונים שיווקיים מבני ציון. אפשר לבטל בכל מייל.
+              אפשר לבטל מנוי בכל מייל.
             </div>
           </form>
         )}
@@ -1815,7 +1887,7 @@ export default function DesignPreviewHome() {
         {/* Main content area */}
         <main style={{ flex: 1, minWidth: 0 }}>
           {/* 27.5.2026 — KenesBanner removed (outdated 19.4 event) */}
-          <TanachLemishpachaSection />
+          <FamilyBibleSection />
           <DesignParashaHolidaySection />
           {/* 27.5.2026 — PopularLessonsSection removed per Saar (homepage cleanup) */}
           <WarMiraclesSection />

@@ -16,10 +16,9 @@
  */
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, GraduationCap } from "lucide-react";
+import { Menu, X, GraduationCap } from "lucide-react";
 
 import logoColor from "@/assets/logo-horizontal-color.png";
-import GlobalSearch from "@/components/search/GlobalSearch";
 import UserMenu from "@/components/layout/UserMenu";
 import CartButton from "@/components/cart/CartButton";
 import NotificationBell from "@/components/layout/NotificationBell";
@@ -60,7 +59,6 @@ export default function DesignHeader({
 }: DesignHeaderProps) {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Teacher-context mode: activate on /design-teachers-* routes
@@ -223,6 +221,8 @@ export default function DesignHeader({
               color: isTransparent ? "rgba(232,213,160,0.95)" : colors.goldDark,
               textDecoration: "none",
               whiteSpace: "nowrap",
+              paddingBottom: 2,
+              borderBottom: "1.5px solid transparent",
             }}
           >
             לזכר סעדיה הי״ד
@@ -239,33 +239,6 @@ export default function DesignHeader({
             flexShrink: 0,
           }}
         >
-          <button
-            onClick={() => setSearchOpen(true)}
-            aria-label="חיפוש"
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 12,
-              border: "none",
-              background: "transparent",
-              color: isTransparent ? "rgba(255,255,255,0.85)" : colors.textMuted,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "all 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = isTransparent
-                ? "rgba(255,255,255,0.12)"
-                : "rgba(139,111,71,0.08)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-            }}
-          >
-            <Search style={{ width: 18, height: 18 }} />
-          </button>
           <DarkModeToggle isTransparent={isTransparent} />
           <NotificationBell isTransparent={isTransparent} />
           <CartButton isTransparent={isTransparent} />
@@ -341,8 +314,6 @@ export default function DesignHeader({
           </Link>
         </nav>
       )}
-
-      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
 
       <style>{`
         .design-header-burger { display: inline-flex; }

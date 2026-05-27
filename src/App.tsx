@@ -50,6 +50,8 @@ const Portal = lazy(() => import("./pages/Portal"));
 const Checkout = lazy(() => import("./pages/Checkout"));
 const KnesPage = lazy(() => import("./pages/KnesPage"));
 const DorHaplaot = lazy(() => import("./pages/DorHaplaot"));
+const DailyVersePage = lazy(() => import("./pages/DailyVersePage"));
+const DailyVideoPage = lazy(() => import("./pages/DailyVideoPage"));
 const DevPages = lazy(() => import("./pages/DevPages"));
 const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
 // 27.5.2026 — /pricing removed per Saar
@@ -275,6 +277,8 @@ const App = () => (
             <Route path="/kenes-2026-05" element={<Suspense fallback={<LazyFallback />}><KenesShavuot2026 /></Suspense>} />
             <Route path="/kenes-archive" element={<Suspense fallback={<LazyFallback />}><KenesArchive /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
+            <Route path="/daily-verse" element={<Suspense fallback={<LazyFallback />}><DailyVersePage /></Suspense>} />
+            <Route path="/daily-video" element={<Suspense fallback={<LazyFallback />}><DailyVideoPage /></Suspense>} />
             {import.meta.env.DEV && (
               <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
             )}
