@@ -3,20 +3,19 @@
  *
  * Design decisions:
  * - Hero: olive variant, eyebrow "אגף המורים", title "כלים ותכנים למחנכי תנ״ך"
- * - Navigation: in-page tabs (ספרים / חידות / דפי עבודה / כלים ומדריכים / איך מלמדים)
+ * - Navigation: 3 in-page tabs mirroring bneyzion.co.il/מאגר-עזרי-הלמידה/:
+ *     ראשי    → Torah/Nevi'im/Ketuvim tree (same as old site sidebar "ראשי" tab)
+ *     סוג תוכן → 22+ content-type filters with lesson counts (old site "סוג תוכן" tab)
+ *     יוצרים  → split: רבנים (entity_type=rabbi) / יוצרי תוכן (entity_type=content_creator)
  * - Data: real data from useTeachersWing hook + direct Supabase queries per tab
- * - List/Cards toggle: same pattern as DesignPreviewSeriesPageV2 (bnz.teachers.view)
  * - audience_tags filtering: only series/lessons tagged ["teachers"] appear
- * - No AITeacherTools component (Saar not familiar with it — excluded pending decision)
- * - No role gating in sandbox
+ * - Counts in parentheses on each content type and creator
  * - Sandbox-only — does NOT touch production TeachersWing.tsx
  *
- * Tab map (2026-05-07):
- *   books    → Torah/Nevi'im/Ketuvim tree (filtered: teacher-tagged series only)
- *   riddles  → "חידות לילדים - פרשת השבוע" series (ID: c852edd8-...)
- *   worksheets → "דפי עבודה - *" series (audience_tags @> ['teachers'])
- *   tools    → "כלי עזר", "מפות עזר", "ליווי ת"תים" (audience_tags @> ['teachers'])
- *   howto    → "איך מלמדים תנ"ך" (ID: 26e30725-...)
+ * Tab map (2026-05-27 rebuild — 3-tab structure matching old site):
+ *   rashim      → ראשי: Torah/Nevi'im/Ketuvim book tree
+ *   sogTochn    → סוג תוכן: content-type filters (22 types) with lesson counts
+ *   yotzrim     → יוצרים: split rabbis / content_creators with lesson counts
  */
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -32,6 +31,8 @@ import {
   ChevronUp,
   Loader2,
   ExternalLink,
+  Tag,
+  Users,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -46,19 +47,18 @@ import {
   shadows,
 } from "@/lib/designTokens";
 import { useTeachersWing, useMaagarEzreiTree, type SeriesRow } from "@/hooks/useTeachersWing";
+import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
 
 // ─── localStorage key ──────────────────────────────────────────────────────
 const VIEW_PREF_KEY = "bnz.teachers.view";
 
-// ─── Tab definition ────────────────────────────────────────────────────────
-type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto";
+// ─── Tab definition — 3 tabs matching old site bneyzion.co.il/מאגר-עזרי-הלמידה/ ──
+type TabId = "rashim" | "sogTochn" | "yotzrim";
 
 const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
-  { id: "books",      label: "ספרים",          icon: BookOpen },
-  { id: "riddles",    label: "חידות",           icon: HelpCircle },
-  { id: "worksheets", label: "דפי עבודה",       icon: FileText },
-  { id: "tools",      label: "כלים ומדריכים",  icon: Wrench },
-  { id: "howto",      label: "איך מלמדים",     icon: GraduationCap },
+  { id: "rashim",   label: "ראשי",      icon: BookOpen },
+  { id: "sogTochn", label: "סוג תוכן",  icon: Tag },
+  { id: "yotzrim",  label: "יוצרים",    icon: Users },
 ];
 
 // ─── Known teacher series IDs (stable — confirmed 2026-05-07) ─────────────
@@ -177,6 +177,102 @@ function useToolsSeries() {
         description: s.description,
         sourceType: null,
       })) as SeriesRow[];
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ─── Hook: content_type counts for teacher lessons ─────────────────────────
+interface ContentTypeCount {
+  content_type: string;
+  cnt: number;
+}
+
+// Helper to get anon key from supabase client (already decoded at runtime)
+function getSupabaseAnonKey(): string {
+  // The client is created with the anon key — we access it via the internal headers
+  // Safer: just re-decode here since it's a public key
+  return atob("ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA4bw==");
+}
+
+function useContentTypeCounts() {
+  return useQuery<ContentTypeCount[]>({
+    queryKey: ["tw-content-type-counts"],
+    queryFn: async () => {
+      // content_type exists in DB but not in Supabase generated types
+      // Using direct PostgREST fetch to bypass TS type constraints
+      const anonKey = getSupabaseAnonKey();
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=content_type&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=not.is.null&limit=20000`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      if (!resp.ok) return [];
+      const rows: Array<{ content_type: string }> = await resp.json();
+      const map = new Map<string, number>();
+      for (const row of rows) {
+        if (row.content_type) {
+          map.set(row.content_type, (map.get(row.content_type) || 0) + 1);
+        }
+      }
+      return Array.from(map.entries())
+        .map(([content_type, cnt]) => ({ content_type, cnt }))
+        .sort((a, b) => b.cnt - a.cnt);
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ─── Hook: creators (rabbis + content_creators) with lesson counts ──────────
+interface CreatorEntry {
+  id: string;
+  name: string;
+  entity_type: "rabbi" | "content_creator";
+  cnt: number;
+}
+
+function useCreatorsByType() {
+  return useQuery<CreatorEntry[]>({
+    queryKey: ["tw-creators-by-type"],
+    queryFn: async () => {
+      // Step 1: get rabbi_id counts from teacher lessons (typed — rabbi_id exists in types)
+      const { data: lessonRabbis } = await supabase
+        .from("lessons")
+        .select("rabbi_id")
+        .contains("audience_tags", ["teachers"])
+        .eq("status", "published")
+        .not("rabbi_id", "is", null)
+        .limit(20000);
+
+      if (!lessonRabbis || lessonRabbis.length === 0) return [];
+
+      const rabbiIdCount = new Map<string, number>();
+      for (const row of lessonRabbis) {
+        if (row.rabbi_id) {
+          rabbiIdCount.set(row.rabbi_id, (rabbiIdCount.get(row.rabbi_id) || 0) + 1);
+        }
+      }
+
+      // Step 2: get rabbis info with entity_type via raw fetch (entity_type not in generated types)
+      const anonKey = getSupabaseAnonKey();
+      const rabbiIds = Array.from(rabbiIdCount.keys());
+      // PostgREST IN filter: id=in.(id1,id2,...)
+      const inList = rabbiIds.map(id => `"${id}"`).join(",");
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/rabbis?select=id,name,entity_type&id=in.(${rabbiIds.join(",")})&limit=200`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      void inList;
+      if (!resp.ok) return [];
+      const rabbisInfo: Array<{ id: string; name: string; entity_type: string | null }> = await resp.json();
+
+      return rabbisInfo
+        .map(r => ({
+          id: r.id,
+          name: r.name,
+          entity_type: (r.entity_type === "content_creator" ? "content_creator" : "rabbi") as "rabbi" | "content_creator",
+          cnt: rabbiIdCount.get(r.id) || 0,
+        }))
+        .sort((a, b) => b.cnt - a.cnt);
     },
     staleTime: 1000 * 60 * 10,
   });
@@ -1290,13 +1386,512 @@ function _EzreiTab_REMOVED() {
   );
 }
 
+// ─── ContentType tab ────────────────────────────────────────────────────────
+/**
+ * "סוג תוכן" — 22+ content types with lesson counts.
+ * Clicking a content type shows lessons of that type (future: filter to series).
+ */
+function ContentTypeTab() {
+  const countsQuery = useContentTypeCounts();
+  const [activeType, setActiveType] = useState<string | null>(null);
+  const [lessonsForType, setLessonsForType] = useState<{id:string;title:string;attachment_url:string|null}[]>([]);
+  const [loadingLessons, setLoadingLessons] = useState(false);
+
+  const handleTypeClick = async (type: string) => {
+    if (activeType === type) {
+      setActiveType(null);
+      setLessonsForType([]);
+      return;
+    }
+    setActiveType(type);
+    setLoadingLessons(true);
+    // content_type not in generated types — use raw PostgREST fetch
+    const anonKey = getSupabaseAnonKey();
+    const encodedType = encodeURIComponent(type);
+    const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,attachment_url&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=eq.${encodedType}&order=title.asc&limit=50`;
+    try {
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      const rows: Array<{ id: string; title: string; attachment_url: string | null }> = resp.ok ? await resp.json() : [];
+      setLessonsForType(rows);
+    } catch {
+      setLessonsForType([]);
+    }
+    setLoadingLessons(false);
+  };
+
+  if (countsQuery.isLoading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+        <Loader2 style={{ width: 28, height: 28, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+      </div>
+    );
+  }
+
+  const types = countsQuery.data ?? [];
+  const total = types.reduce((s, t) => s + t.cnt, 0);
+
+  return (
+    <div dir="rtl">
+      {/* Header */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.3rem", color: colors.textDark, margin: 0 }}>
+          סוג תוכן
+        </h2>
+        <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle, margin: "0.3rem 0 0" }}>
+          {types.length} סוגי תוכן · {total.toLocaleString()} שיעורים בסך הכל
+        </p>
+      </div>
+
+      {/* Content type grid */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+        gap: "0.75rem",
+        marginBottom: activeType ? "2rem" : 0,
+      }}>
+        {types.map(({ content_type, cnt }) => {
+          const isActive = activeType === content_type;
+          return (
+            <button
+              key={content_type}
+              onClick={() => handleTypeClick(content_type)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0.9rem 1.2rem",
+                background: isActive ? colors.oliveDark : "white",
+                borderRadius: radii.xl,
+                border: `1.5px solid ${isActive ? colors.oliveDark : "rgba(139,111,71,0.12)"}`,
+                boxShadow: isActive ? shadows.cardHover : shadows.cardSoft,
+                cursor: "pointer",
+                transition: "all 0.18s ease",
+                textAlign: "right",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.borderColor = colors.goldDark;
+                  e.currentTarget.style.background = colors.parchmentDark;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.borderColor = "rgba(139,111,71,0.12)";
+                  e.currentTarget.style.background = "white";
+                }
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                <FileText style={{
+                  width: 16, height: 16,
+                  color: isActive ? "rgba(255,255,255,0.8)" : colors.oliveDark,
+                  flexShrink: 0,
+                }} />
+                <span style={{
+                  fontFamily: fonts.body,
+                  fontWeight: 700,
+                  fontSize: "0.87rem",
+                  color: isActive ? "white" : colors.textDark,
+                }}>
+                  {content_type}
+                </span>
+              </div>
+              <span style={{
+                fontFamily: fonts.body,
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                color: isActive ? "rgba(255,255,255,0.85)" : colors.textSubtle,
+                background: isActive ? "rgba(255,255,255,0.15)" : colors.parchmentDeep,
+                padding: "0.15rem 0.55rem",
+                borderRadius: radii.pill,
+                flexShrink: 0,
+              }}>
+                {cnt.toLocaleString()}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Expanded lessons list for selected type */}
+      {activeType && (
+        <div style={{
+          background: "white",
+          borderRadius: radii.xl,
+          border: "1px solid rgba(139,111,71,0.12)",
+          boxShadow: shadows.cardSoft,
+          overflow: "hidden",
+        }}>
+          {/* Panel header */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "1rem 1.5rem",
+            background: colors.parchmentDark,
+            borderBottom: "1px solid rgba(139,111,71,0.1)",
+          }}>
+            <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.oliveDark }}>
+              {activeType}
+            </div>
+            <button
+              onClick={() => { setActiveType(null); setLessonsForType([]); }}
+              style={{ border: "none", background: "none", cursor: "pointer", color: colors.textSubtle, fontSize: "1.2rem", lineHeight: 1 }}
+              aria-label="סגור"
+            >
+              ✕
+            </button>
+          </div>
+
+          {loadingLessons ? (
+            <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+              <Loader2 style={{ width: 24, height: 24, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            </div>
+          ) : lessonsForType.length === 0 ? (
+            <div style={{ padding: "2rem", textAlign: "center", fontFamily: fonts.body, color: colors.textMuted, fontSize: "0.85rem" }}>
+              אין שיעורים זמינים בסוג תוכן זה
+            </div>
+          ) : (
+            <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+              {lessonsForType.map((lesson, i) => (
+                <Link
+                  key={lesson.id}
+                  to={`/lessons/${lesson.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.75rem 1.5rem",
+                    borderBottom: i < lessonsForType.length - 1 ? "1px solid rgba(139,111,71,0.06)" : "none",
+                    cursor: "pointer",
+                    transition: "background 0.15s",
+                  }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = colors.parchment; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "white"; }}
+                  >
+                    <span style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textDark, fontWeight: 500, flex: 1, paddingInlineEnd: "1rem" }}>
+                      {lesson.title}
+                    </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+                      {lesson.attachment_url && (
+                        <span style={{ fontFamily: fonts.body, fontSize: "0.65rem", color: colors.goldDark, background: "rgba(139,111,71,0.08)", padding: "0.1rem 0.4rem", borderRadius: radii.pill }}>
+                          קובץ
+                        </span>
+                      )}
+                      <ExternalLink style={{ width: 12, height: 12, color: colors.textSubtle }} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+              {lessonsForType.length === 50 && (
+                <div style={{ padding: "0.75rem 1.5rem", fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted, textAlign: "center" }}>
+                  מוצגים 50 ראשונים בלבד
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ─── Creators tab ────────────────────────────────────────────────────────────
+/**
+ * "יוצרים" — split: רבנים (entity_type=rabbi) / יוצרי תוכן (entity_type=content_creator)
+ * Each entry shows lesson count in parentheses. Clicking opens a lesson list.
+ */
+function CreatorsTab() {
+  const creatorsQuery = useCreatorsByType();
+  const [activeCreatorId, setActiveCreatorId] = useState<string | null>(null);
+  const [activeCreatorName, setActiveCreatorName] = useState<string>("");
+  const [lessonsForCreator, setLessonsForCreator] = useState<{id:string;title:string;content_type:string|null;attachment_url:string|null}[]>([]);
+  const [loadingLessons, setLoadingLessons] = useState(false);
+
+  const handleCreatorClick = async (creatorId: string, name: string) => {
+    if (activeCreatorId === creatorId) {
+      setActiveCreatorId(null);
+      setLessonsForCreator([]);
+      return;
+    }
+    setActiveCreatorId(creatorId);
+    setActiveCreatorName(name);
+    setLoadingLessons(true);
+    // content_type not in generated types — use raw PostgREST fetch
+    const anonKey = getSupabaseAnonKey();
+    const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,content_type,attachment_url&audience_tags=cs.%7Bteachers%7D&status=eq.published&rabbi_id=eq.${creatorId}&order=title.asc&limit=50`;
+    try {
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      const rows: Array<{ id: string; title: string; content_type: string | null; attachment_url: string | null }> = resp.ok ? await resp.json() : [];
+      setLessonsForCreator(rows);
+    } catch {
+      setLessonsForCreator([]);
+    }
+    setLoadingLessons(false);
+  };
+
+  if (creatorsQuery.isLoading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+        <Loader2 style={{ width: 28, height: 28, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+      </div>
+    );
+  }
+
+  const all = creatorsQuery.data ?? [];
+  const rabbis = all.filter(c => c.entity_type === "rabbi");
+  const contentCreators = all.filter(c => c.entity_type === "content_creator");
+
+  return (
+    <div dir="rtl">
+      {/* Header */}
+      <div style={{ marginBottom: "1.5rem" }}>
+        <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.3rem", color: colors.textDark, margin: 0 }}>
+          יוצרים
+        </h2>
+        <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle, margin: "0.3rem 0 0" }}>
+          {rabbis.length} רבנים · {contentCreators.length} יוצרי תוכן
+        </p>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem", alignItems: "start" }}>
+        {/* Column 1: Rabbis */}
+        <div>
+          {/* Section header */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.6rem",
+            marginBottom: "1rem",
+            paddingBottom: "0.6rem",
+            borderBottom: `2px solid ${colors.goldDark}`,
+          }}>
+            <GraduationCap style={{ width: 18, height: 18, color: colors.goldDark }} />
+            <span style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.textDark }}>
+              רבנים
+            </span>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginInlineStart: "auto" }}>
+              ({rabbis.length})
+            </span>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            {rabbis.map((rabbi) => {
+              const isActive = activeCreatorId === rabbi.id;
+              return (
+                <button
+                  key={rabbi.id}
+                  onClick={() => handleCreatorClick(rabbi.id, rabbi.name)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.7rem 1rem",
+                    background: isActive ? colors.goldDark : "white",
+                    borderRadius: radii.lg,
+                    border: `1px solid ${isActive ? colors.goldDark : "rgba(139,111,71,0.1)"}`,
+                    boxShadow: isActive ? shadows.cardHover : "none",
+                    cursor: "pointer",
+                    transition: "all 0.15s",
+                    textAlign: "right",
+                    width: "100%",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) { e.currentTarget.style.borderColor = colors.goldDark; e.currentTarget.style.background = colors.parchmentDark; }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) { e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)"; e.currentTarget.style.background = "white"; }
+                  }}
+                >
+                  <span style={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "0.85rem", color: isActive ? "white" : colors.textDark }}>
+                    {rabbi.name}
+                  </span>
+                  <span style={{
+                    fontFamily: fonts.body, fontSize: "0.7rem", fontWeight: 700,
+                    color: isActive ? "rgba(255,255,255,0.8)" : colors.textSubtle,
+                    background: isActive ? "rgba(255,255,255,0.15)" : colors.parchmentDeep,
+                    padding: "0.1rem 0.45rem", borderRadius: radii.pill,
+                  }}>
+                    {rabbi.cnt}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Column 2: Content Creators */}
+        <div>
+          {/* Section header */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.6rem",
+            marginBottom: "1rem",
+            paddingBottom: "0.6rem",
+            borderBottom: `2px solid ${colors.oliveDark}`,
+          }}>
+            <FileText style={{ width: 18, height: 18, color: colors.oliveDark }} />
+            <span style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.textDark }}>
+              יוצרי תוכן
+            </span>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginInlineStart: "auto" }}>
+              ({contentCreators.length})
+            </span>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+            {contentCreators.map((creator) => {
+              const isActive = activeCreatorId === creator.id;
+              return (
+                <button
+                  key={creator.id}
+                  onClick={() => handleCreatorClick(creator.id, creator.name)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.7rem 1rem",
+                    background: isActive ? colors.oliveDark : "white",
+                    borderRadius: radii.lg,
+                    border: `1px solid ${isActive ? colors.oliveDark : "rgba(139,111,71,0.1)"}`,
+                    boxShadow: isActive ? shadows.cardHover : "none",
+                    cursor: "pointer",
+                    transition: "all 0.15s",
+                    textAlign: "right",
+                    width: "100%",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) { e.currentTarget.style.borderColor = colors.oliveDark; e.currentTarget.style.background = colors.parchmentDark; }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) { e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)"; e.currentTarget.style.background = "white"; }
+                  }}
+                >
+                  <span style={{ fontFamily: fonts.body, fontWeight: 700, fontSize: "0.85rem", color: isActive ? "white" : colors.textDark }}>
+                    {creator.name}
+                  </span>
+                  <span style={{
+                    fontFamily: fonts.body, fontSize: "0.7rem", fontWeight: 700,
+                    color: isActive ? "rgba(255,255,255,0.8)" : colors.textSubtle,
+                    background: isActive ? "rgba(255,255,255,0.15)" : colors.parchmentDeep,
+                    padding: "0.1rem 0.45rem", borderRadius: radii.pill,
+                  }}>
+                    {creator.cnt}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Expanded lessons list for selected creator */}
+      {activeCreatorId && (
+        <div style={{
+          marginTop: "2rem",
+          background: "white",
+          borderRadius: radii.xl,
+          border: "1px solid rgba(139,111,71,0.12)",
+          boxShadow: shadows.cardSoft,
+          overflow: "hidden",
+        }}>
+          {/* Panel header */}
+          <div style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "1rem 1.5rem",
+            background: colors.parchmentDark,
+            borderBottom: "1px solid rgba(139,111,71,0.1)",
+          }}>
+            <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.oliveDark }}>
+              {activeCreatorName}
+            </div>
+            <button
+              onClick={() => { setActiveCreatorId(null); setLessonsForCreator([]); }}
+              style={{ border: "none", background: "none", cursor: "pointer", color: colors.textSubtle, fontSize: "1.2rem", lineHeight: 1 }}
+              aria-label="סגור"
+            >
+              ✕
+            </button>
+          </div>
+
+          {loadingLessons ? (
+            <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+              <Loader2 style={{ width: 24, height: 24, color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            </div>
+          ) : lessonsForCreator.length === 0 ? (
+            <div style={{ padding: "2rem", textAlign: "center", fontFamily: fonts.body, color: colors.textMuted, fontSize: "0.85rem" }}>
+              אין שיעורים זמינים ליוצר זה
+            </div>
+          ) : (
+            <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+              {lessonsForCreator.map((lesson, i) => (
+                <Link
+                  key={lesson.id}
+                  to={`/lessons/${lesson.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <div style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.75rem 1.5rem",
+                    borderBottom: i < lessonsForCreator.length - 1 ? "1px solid rgba(139,111,71,0.06)" : "none",
+                    cursor: "pointer",
+                    transition: "background 0.15s",
+                  }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = colors.parchment; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "white"; }}
+                  >
+                    <span style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textDark, fontWeight: 500, flex: 1, paddingInlineEnd: "1rem" }}>
+                      {lesson.title}
+                    </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexShrink: 0 }}>
+                      {lesson.content_type && (
+                        <span style={{ fontFamily: fonts.body, fontSize: "0.65rem", color: colors.oliveDark, background: "rgba(74,90,46,0.08)", padding: "0.1rem 0.45rem", borderRadius: radii.pill, whiteSpace: "nowrap" }}>
+                          {lesson.content_type}
+                        </span>
+                      )}
+                      {lesson.attachment_url && (
+                        <span style={{ fontFamily: fonts.body, fontSize: "0.65rem", color: colors.goldDark, background: "rgba(139,111,71,0.08)", padding: "0.1rem 0.4rem", borderRadius: radii.pill }}>
+                          קובץ
+                        </span>
+                      )}
+                      <ExternalLink style={{ width: 12, height: 12, color: colors.textSubtle }} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+              {lessonsForCreator.length === 50 && (
+                <div style={{ padding: "0.75rem 1.5rem", fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted, textAlign: "center" }}>
+                  מוצגים 50 ראשונים בלבד
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ─── In-page tab navigation ────────────────────────────────────────────────
 function InPageNav({
   activeTab,
   onTabChange,
+  tabCounts,
 }: {
   activeTab: TabId;
   onTabChange: (t: TabId) => void;
+  tabCounts: Partial<Record<TabId, number>>;
 }) {
   return (
     <div
@@ -1315,6 +1910,7 @@ function InPageNav({
     >
       {TABS.map(({ id, label, icon: Icon }) => {
         const isActive = activeTab === id;
+        const count = tabCounts[id];
         return (
           <button
             key={id}
@@ -1337,6 +1933,19 @@ function InPageNav({
           >
             <Icon style={{ width: 16, height: 16 }} />
             {label}
+            {count !== undefined && (
+              <span style={{
+                fontFamily: fonts.body,
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                color: isActive ? "rgba(255,255,255,0.75)" : colors.textSubtle,
+                background: isActive ? "rgba(255,255,255,0.2)" : colors.parchmentDeep,
+                padding: "0.1rem 0.4rem",
+                borderRadius: radii.pill,
+              }}>
+                {count}
+              </span>
+            )}
           </button>
         );
       })}
@@ -1346,7 +1955,16 @@ function InPageNav({
 
 // ─── Page root ─────────────────────────────────────────────────────────────
 export default function DesignPreviewTeachersWingV2() {
-  const [activeTab, setActiveTab] = useState<TabId>("books");
+  const [activeTab, setActiveTab] = useState<TabId>("rashim");
+
+  // Pre-fetch counts for tab badges
+  const contentTypeCountsQ = useContentTypeCounts();
+  const creatorsQ = useCreatorsByType();
+
+  const tabCounts: Partial<Record<TabId, number>> = {
+    sogTochn: contentTypeCountsQ.data?.length,
+    yotzrim: creatorsQ.data?.length,
+  };
 
   return (
     <DesignLayout>
@@ -1355,7 +1973,7 @@ export default function DesignPreviewTeachersWingV2() {
         variant="olive"
         eyebrow="אגף המורים"
         title='כלים ותכנים למחנכי תנ"ך'
-        subtitle='כל הכלים שמחנך תנ"ך צריך — ספרים לפי חלק, חידות לשיעור, דפי עבודה, כלי עזר, ופדגוגיה מעשית. תוכן teacher-only — מסונן ומוכן.'
+        subtitle='כל הכלים שמחנך תנ"ך צריך — עץ הספרים, סינון לפי סוג תוכן, ורשימת יוצרים. מבנה זהה לאתר המקורי.'
       />
 
       {/* Main content area */}
@@ -1367,15 +1985,13 @@ export default function DesignPreviewTeachersWingV2() {
         }}
       >
         <div style={{ maxWidth: 1280, margin: "0 auto" }} dir="rtl">
-          {/* In-page tab navigation */}
-          <InPageNav activeTab={activeTab} onTabChange={setActiveTab} />
+          {/* In-page tab navigation — 3 tabs matching old site */}
+          <InPageNav activeTab={activeTab} onTabChange={setActiveTab} tabCounts={tabCounts} />
 
           {/* Tab panels */}
-          {activeTab === "books"      && <BooksTab />}
-          {activeTab === "riddles"    && <RiddlesTab />}
-          {activeTab === "worksheets" && <WorksheetsTab />}
-          {activeTab === "tools"      && <ToolsTab />}
-          {activeTab === "howto"      && <HowToTab />}
+          {activeTab === "rashim"   && <BooksTab />}
+          {activeTab === "sogTochn" && <ContentTypeTab />}
+          {activeTab === "yotzrim"  && <CreatorsTab />}
         </div>
       </div>
     </DesignLayout>
