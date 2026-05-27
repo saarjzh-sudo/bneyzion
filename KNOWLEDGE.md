@@ -526,6 +526,29 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-27 — Teachers Wing cleanup (parity) + lesson modal UI fix + migration-verifier skill
+
+**What changed:**
+- **DB Cleanup (audience_tags):**
+  - Backup: `lessons_pre_cleanup_v3_2026_05_27` (22,940 rows) created in Supabase before any writes
+  - Removed 'teachers' tag from 835 lessons whose series were tagged only ['general'] (wrong-series lessons)
+  - Deleted 3,028 completely empty placeholder records (content=NULL + attachment_url=NULL + audio_url=NULL + video_url=NULL) — scraping artifacts with no real content
+  - Result: 11,773 → 7,910 teacher-tagged lessons
+  - Backup table: `lessons_pre_cleanup_v3_2026_05_27` (22,940 rows) — rollback: `UPDATE lessons l SET audience_tags = b.audience_tags FROM lessons_pre_cleanup_v3_2026_05_27 b WHERE l.id = b.id`
+- **Key insight (gotcha):** The target numbers from old site UI (475, 426, 358…) are SERIES/ITEMS counts in the filter checkbox UI, NOT individual lesson counts. Each "series" item may contain 5–50+ individual lessons. Total old-site filter = ~2,745 series; total DB lessons = 7,910 individual lessons. This is correct — no mismatch.
+- **UI fix (commit d0865a5, branch sandbox-test):** `src/pages/DesignPreviewTeacherSeriesPage.tsx`
+  - `TeacherLessonCard` changed from `<Link to="/design-lesson-page/:id">` to `<div role="button" onClick={onClick}>` — prevents navigation out of Teachers Wing
+  - Added `selectedLesson` state + `TeacherLessonModal` render — lesson click now opens popup inside Teachers Wing
+  - Added `thumbnail_url` to `useSeriesLessons` select + `thumbnailUrl` mapping in return
+- **New skill created:** `/Users/saarj/Downloads/saar-workspace/bneyzion/.claude/skills/bnei-zion-migration-verifier/SKILL.md`
+  - 12 iron rules, 10-step workflow, gotchas table, SQL snippets, connection details
+
+**New constraints learned:**
+- `array_remove` ONLY for audience_tags changes — never `SET audience_tags = '{}'` or full overwrite
+- Filter UI counts on bneyzion.co.il = series-level counts, not lesson counts — 475 items ≠ 475 lessons
+- Empty records (content=NULL + all media=NULL + all attachments=NULL) = safe to DELETE; they are scraping artifacts
+- `curl --noproxy '*'` for ALL Supabase Management API calls — NetSpark breaks urllib
+
 ### 2026-05-26 — Image batch migrated to Vertex AI (full batch ~1,395 images)
 
 **What changed:**
