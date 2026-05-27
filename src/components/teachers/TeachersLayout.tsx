@@ -58,6 +58,7 @@ export default function TeachersLayout({ children, activeSeriesId, onSidebarSele
           flex: 1,
           minHeight: 0,
           alignItems: "stretch",
+          overflowX: "clip", /* P2: clip collapsed sidebar from spilling outside viewport on mobile */
         }}
       >
         <TeacherSidebar

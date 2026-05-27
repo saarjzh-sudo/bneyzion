@@ -45,6 +45,7 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
           flex: 1,
           minHeight: 0,
           alignItems: "stretch",
+          overflowX: "clip", /* P2 mobile fix: clip DesignSidebar from spilling outside viewport */
         }}
       >
         {sidebar && (
