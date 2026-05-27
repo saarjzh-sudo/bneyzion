@@ -488,6 +488,10 @@ function TanachLemishpachaSection() {
 // ── DesignParashaHolidaySection ────────────────────────────────────────────
 // seriesId = ID of the matching series in Supabase (for navigation)
 // imageUrl = optional cover image (used if present)
+//
+// Image placeholders — replace with real assets from flyer-creator agent:
+const PARASHA_PLACEHOLDER_IMG = "/family-bible/hero-verse.png";
+const MOED_PLACEHOLDER_IMG    = "/family-bible/hero-miracles.png";
 const HOLIDAYS_5786 = [
   { name: "פורים",          hebrewDate: "י״ד אדר",   date: new Date(2026, 2, 3),   terms: ["פורים","אסתר"],     seriesId: null, imageUrl: null },
   { name: "פסח",            hebrewDate: "ט״ו ניסן",  date: new Date(2026, 3, 2),   terms: ["פסח","הגדה"],       seriesId: null, imageUrl: null },
@@ -574,12 +578,18 @@ function DesignParashaHolidaySection() {
     },
   });
 
+  // Parchment section — light background (Yom Haatzmaout stays navy)
+  const sectionBg = isYomHaatzmaout
+    ? `linear-gradient(160deg, #0d1f3d 0%, #142d5c 45%, #0d1f3d 100%)`
+    : PARCHMENT_DARK;
+  const onDark = isYomHaatzmaout;
+
   return (
     <section dir="rtl" style={{
-      background: isYomHaatzmaout
-        ? `linear-gradient(160deg, #0d1f3d 0%, #142d5c 45%, #0d1f3d 100%)`
-        : `linear-gradient(160deg, #2C3A1E 0%, #3A4D28 45%, #2C3A1E 100%)`,
-      padding: "5.5rem 1.5rem", position: "relative", overflow: "hidden",
+      background: sectionBg,
+      padding: "5rem 1.5rem", position: "relative", overflow: "hidden",
+      borderTop: onDark ? "none" : `1px solid rgba(139,111,71,0.1)`,
+      borderBottom: onDark ? "none" : `1px solid rgba(139,111,71,0.1)`,
     }}>
       {/* Israeli flag top band for Yom Haatzmaout */}
       {isYomHaatzmaout && (
@@ -590,294 +600,336 @@ function DesignParashaHolidaySection() {
         </div>
       )}
 
-      {/* Grain texture */}
-      <svg style={{ position: "absolute", inset: 0, opacity: 0.04, pointerEvents: "none" }} width="100%" height="100%">
-        <filter id="g3"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" /><feColorMatrix type="saturate" values="0" /></filter>
-        <rect width="100%" height="100%" filter="url(#g3)" />
-      </svg>
-      {/* Subtle dot pattern */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none",
-        backgroundImage: "radial-gradient(circle, rgba(232,213,160,0.07) 1px, transparent 1px)",
-        backgroundSize: "30px 30px" }} />
-
       <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative" }}>
+        {/* Section header — mirrors TanachLemishpacha header pattern */}
+        <div style={{ display: "flex", alignItems: "flex-end",
+          justifyContent: "space-between", marginBottom: "2.5rem",
+          flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700,
+              color: onDark ? GOLD_LIGHT : GOLD_DARK, letterSpacing: "0.15em",
+              textTransform: "uppercase", marginBottom: "0.3rem" }}>
+              בני ציון · תנ״ך
+            </div>
+            <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+              fontSize: "clamp(1.5rem, 3vw, 2.2rem)",
+              color: onDark ? "white" : TEXT_DARK,
+              margin: "0 0 0.3rem", lineHeight: 1.15 }}>
+              פרשת השבוע ומועדים
+            </h2>
+            <p style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem",
+              color: onDark ? "rgba(255,255,255,0.55)" : TEXT_MUTED,
+              margin: 0 }}>
+              שיעורים, מאמרים ותכנים לשולחן שבת ולחגי ישראל
+            </p>
+          </div>
+        </div>
+
         <div className="parasha-holiday-grid" style={{ display: "grid", gridTemplateColumns: holiday && holidaySeries.length > 0 ? "1fr 1fr" : "1fr",
-                      gap: "4rem", alignItems: "start" }}>
+                      gap: "2rem", alignItems: "start" }}>
 
           {/* ── RIGHT (first in RTL): Holiday ── */}
           {holiday && holidaySeries.length > 0 && (
-            <div>
-              {/* Image header — Yom Haatzmaout flag or holiday cover */}
-              {isYomHaatzmaout ? (
-                <div style={{ marginBottom: "1.5rem", borderRadius: "1rem", overflow: "hidden",
-                  border: "2px solid rgba(0,63,138,0.3)", position: "relative", height: 140 }}>
+            <div style={{ borderRadius: "1.5rem", overflow: "hidden",
+              background: onDark ? "transparent" : "white",
+              border: onDark ? "none" : "1px solid rgba(139,111,71,0.1)",
+              boxShadow: onDark ? "none" : "0 2px 16px rgba(45,31,14,0.06)" }}>
+
+              {/* Image header — 160px tall, same as TanachLemishpacha cards */}
+              <div style={{ height: 160, position: "relative", overflow: "hidden",
+                background: isYomHaatzmaout
+                  ? `linear-gradient(135deg, #0d1f3d, #1a3566)`
+                  : `linear-gradient(135deg, ${GOLD_DARK}, #a07840)` }}>
+                {isYomHaatzmaout ? (
                   <img src="/images/yom-haatzmaut-hero.png"
                     alt="יום העצמאות"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  <div style={{ position: "absolute", inset: 0,
-                    background: "linear-gradient(to top, rgba(13,31,61,0.6) 0%, transparent 50%)" }} />
-                </div>
-              ) : holiday.imageUrl ? (
-                <div style={{ marginBottom: "1.5rem", borderRadius: "1rem", overflow: "hidden",
-                  border: "2px solid rgba(196,162,101,0.2)", position: "relative", height: 140 }}>
-                  <img src={holiday.imageUrl}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                ) : (holiday.imageUrl || MOED_PLACEHOLDER_IMG) ? (
+                  <img src={holiday.imageUrl || MOED_PLACEHOLDER_IMG}
                     alt={holiday.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                  <div style={{ position: "absolute", inset: 0,
-                    background: "linear-gradient(to top, rgba(44,58,30,0.65) 0%, transparent 55%)" }} />
-                </div>
-              ) : (
-                /* Decorative placeholder for holidays without a custom image */
-                <div style={{ marginBottom: "1.5rem", borderRadius: "1rem",
-                  border: "1px solid rgba(196,162,101,0.2)", position: "relative", height: 100,
-                  background: "rgba(255,255,255,0.04)",
-                  display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <div style={{ textAlign: "center" }}>
-                    <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                      fontSize: "1.8rem", color: "rgba(196,162,101,0.35)", lineHeight: 1 }}>
-                      {holiday.hebrewDate}
-                    </div>
-                    <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
-                      color: "rgba(255,255,255,0.2)", marginTop: "0.35rem" }}>
-                      {holiday.name}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Header */}
-              <div style={{ marginBottom: "2rem" }}>
-                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem", fontWeight: 700,
-                  letterSpacing: "0.2em", color: holidayAccentLight,
-                  textTransform: "uppercase", marginBottom: "0.5rem" }}>
-                  החג הקרוב
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", flexWrap: "wrap" }}>
-                  <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                    fontSize: "clamp(1.6rem, 3vw, 2.2rem)", color: "white", margin: 0,
-                    lineHeight: 1.15 }}>
-                    {isYomHaatzmaout ? "🇮🇱 " : ""}{holiday.name}
-                  </h2>
-                  <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                    padding: "0.2rem 0.65rem", borderRadius: "2rem",
-                    background: isYomHaatzmaout ? "rgba(0,63,138,0.25)" : "rgba(196,162,101,0.15)",
-                    border: `1px solid ${isYomHaatzmaout ? "rgba(0,63,138,0.6)" : "rgba(196,162,101,0.4)"}` }}>
-                    <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e",
-                      boxShadow: "0 0 6px #22c55e" }} />
-                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.7rem",
-                      fontWeight: 700, color: holidayAccentLight }}>
-                      עוד {daysUntil} ימים
-                    </span>
-                  </div>
-                </div>
-                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
-                  color: "rgba(255,255,255,0.45)", marginTop: "0.25rem" }}>
-                  {holiday.hebrewDate} • שיעורים והכנה לחג
+                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                ) : null}
+                <div style={{ position: "absolute", inset: 0,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)" }} />
+                {/* Badge top-right */}
+                <div style={{ position: "absolute", top: 12, right: 12,
+                  padding: "0.15rem 0.65rem", borderRadius: "1rem",
+                  background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)",
+                  fontFamily: "Ploni, sans-serif", fontSize: "0.68rem",
+                  fontWeight: 700, color: "rgba(255,255,255,0.9)" }}>
+                  {holiday.hebrewDate}
                 </div>
               </div>
 
-              {/* Holiday lesson preview */}
-              {holidayLessonPreview && (
-                <div
-                  onClick={() => navigate(`/lessons/${holidayLessonPreview.id}`)}
-                  style={{ background: "rgba(255,255,255,0.06)", borderRadius: "1.1rem",
-                    border: `1px solid ${isYomHaatzmaout ? "rgba(0,63,138,0.2)" : "rgba(232,213,160,0.12)"}`,
-                    padding: "1.25rem 1.5rem", marginBottom: "1.75rem", cursor: "pointer",
-                    transition: "all 0.2s" }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.1)";
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
-                  }}
-                >
-                  <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
-                    fontSize: "0.95rem", color: isYomHaatzmaout ? "#6ba3e8" : GOLD_SHIMMER,
-                    marginBottom: "0.4rem" }}>
-                    {holidayLessonPreview.title}
+              {/* Body */}
+              <div style={{ padding: "1.25rem 1.4rem 1.5rem" }}>
+                {/* Header */}
+                <div style={{ marginBottom: "1rem" }}>
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", fontWeight: 700,
+                    letterSpacing: "0.18em",
+                    color: onDark ? holidayAccentLight : GOLD_DARK,
+                    textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                    החג הקרוב
                   </div>
-                  {(holidayLessonPreview.rabbis as any)?.name && (
-                    <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
-                      color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>
-                      מאת {(holidayLessonPreview.rabbis as any).name}
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+                    <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                      fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                      color: onDark ? "white" : TEXT_DARK,
+                      margin: 0, lineHeight: 1.15 }}>
+                      {isYomHaatzmaout ? "🇮🇱 " : ""}{holiday.name}
+                    </h2>
+                    {/* "עוד X ימים" pill — gold dot, not green */}
+                    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                      padding: "0.2rem 0.65rem", borderRadius: "2rem",
+                      background: isYomHaatzmaout ? "rgba(0,63,138,0.12)" : "rgba(139,111,71,0.1)",
+                      border: `1px solid ${isYomHaatzmaout ? "rgba(0,63,138,0.35)" : "rgba(139,111,71,0.25)"}` }}>
+                      <div style={{ width: 6, height: 6, borderRadius: "50%",
+                        background: isYomHaatzmaout ? "#6ba3e8" : GOLD_LIGHT,
+                        boxShadow: isYomHaatzmaout ? "0 0 5px rgba(107,163,232,0.6)" : `0 0 5px rgba(196,162,101,0.5)` }} />
+                      <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.7rem",
+                        fontWeight: 700,
+                        color: onDark ? holidayAccentLight : GOLD_DARK }}>
+                        עוד {daysUntil} ימים
+                      </span>
                     </div>
-                  )}
-                  <div
-                    className="line-clamp-3"
-                    style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem",
-                      color: "rgba(255,255,255,0.65)", lineHeight: 1.7,
-                      display: "-webkit-box", WebkitLineClamp: 3,
-                      WebkitBoxOrient: "vertical", overflow: "hidden" }}
-                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(
-                      holidayLessonPreview.content?.replace(/<[^>]+>/g, " ").slice(0, 200) ?? ""
-                    ) }}
-                  />
-                  <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
-                    color: holidayAccentLight, fontWeight: 600, marginTop: "0.5rem", display: "inline-block" }}>
-                    לשיעור המלא ←
-                  </span>
+                  </div>
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem",
+                    color: onDark ? "rgba(255,255,255,0.5)" : TEXT_MUTED,
+                    marginTop: "0.2rem" }}>
+                    {holiday.hebrewDate} • שיעורים והכנה לחג
+                  </div>
                 </div>
-              )}
 
-              {/* Single CTA — holiday series (NEW route) or series list */}
-              <button onClick={() =>
-                holiday.seriesId
-                  ? navigate(`/design-series-page/${holiday.seriesId}`)
-                  : navigate("/design-series-list")
-              }
-                style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem",
-                  border: "none",
-                  background: isYomHaatzmaout
-                    ? `linear-gradient(135deg, ${ISRAEL_BLUE}, #1a5fb4)`
-                    : `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
-                  color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
-                  fontSize: "0.95rem", cursor: "pointer",
-                  boxShadow: isYomHaatzmaout ? "0 4px 20px rgba(0,63,138,0.35)" : "0 4px 20px rgba(139,111,71,0.35)" }}>
-                כל שיעורי {holiday.name} ←
-              </button>
+                {/* Holiday lesson preview — parchment card on light, glass on dark */}
+                {holidayLessonPreview && (
+                  <div
+                    onClick={() => navigate(`/lessons/${holidayLessonPreview.id}`)}
+                    style={{
+                      background: onDark ? "rgba(255,255,255,0.06)" : PARCHMENT,
+                      borderRadius: "0.9rem",
+                      border: onDark
+                        ? `1px solid ${isYomHaatzmaout ? "rgba(0,63,138,0.2)" : "rgba(232,213,160,0.12)"}`
+                        : "1px solid rgba(139,111,71,0.12)",
+                      padding: "1rem 1.1rem", marginBottom: "1.25rem", cursor: "pointer",
+                      transition: "all 0.22s" }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.background = onDark
+                        ? "rgba(255,255,255,0.1)" : "#F0EAE0";
+                      (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.background = onDark
+                        ? "rgba(255,255,255,0.06)" : PARCHMENT;
+                      (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
+                    }}
+                  >
+                    <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
+                      fontSize: "0.92rem",
+                      color: onDark ? (isYomHaatzmaout ? "#6ba3e8" : GOLD_SHIMMER) : TEXT_DARK,
+                      marginBottom: "0.3rem" }}>
+                      {holidayLessonPreview.title}
+                    </div>
+                    {(holidayLessonPreview.rabbis as any)?.name && (
+                      <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
+                        color: onDark ? "rgba(255,255,255,0.5)" : TEXT_SUBTLE,
+                        marginBottom: "0.4rem" }}>
+                        מאת {(holidayLessonPreview.rabbis as any).name}
+                      </div>
+                    )}
+                    <div
+                      className="line-clamp-3"
+                      style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
+                        color: onDark ? "rgba(255,255,255,0.65)" : TEXT_MUTED,
+                        lineHeight: 1.65,
+                        display: "-webkit-box", WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                      dangerouslySetInnerHTML={{ __html: sanitizeHtml(
+                        holidayLessonPreview.content?.replace(/<[^>]+>/g, " ").slice(0, 200) ?? ""
+                      ) }}
+                    />
+                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
+                      color: onDark ? holidayAccentLight : GOLD_DARK,
+                      fontWeight: 600, marginTop: "0.45rem", display: "inline-block" }}>
+                      לשיעור המלא ←
+                    </span>
+                  </div>
+                )}
+
+                {/* CTA */}
+                <button onClick={() =>
+                  holiday.seriesId
+                    ? navigate(`/design-series-page/${holiday.seriesId}`)
+                    : navigate("/design-series-list")
+                }
+                  style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem",
+                    border: "none",
+                    background: isYomHaatzmaout
+                      ? `linear-gradient(135deg, ${ISRAEL_BLUE}, #1a5fb4)`
+                      : `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
+                    color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
+                    fontSize: "0.92rem", cursor: "pointer",
+                    boxShadow: isYomHaatzmaout ? "0 4px 16px rgba(0,63,138,0.3)" : "0 4px 16px rgba(139,111,71,0.3)" }}>
+                  כל שיעורי {holiday.name} ←
+                </button>
+              </div>
             </div>
           )}
 
           {/* ── LEFT (second in RTL): Parasha ── */}
-          <div>
-            {/* Header */}
-            <div style={{ marginBottom: "2rem" }}>
-              <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem", fontWeight: 700,
-                letterSpacing: "0.2em", color: GOLD_LIGHT, textTransform: "uppercase",
-                marginBottom: "0.5rem" }}>
-                הדף לשולחן שבת
-              </div>
-              <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                fontSize: "clamp(1.6rem, 3vw, 2.2rem)", color: "white", margin: "0 0 0.25rem",
-                lineHeight: 1.15 }}>
-                פרשת {parasha || "..."}
-              </h2>
-              {chumash && (
-                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
-                  color: "rgba(255,255,255,0.45)" }}>חומש {chumash}</div>
-              )}
-            </div>
+          <div style={{ borderRadius: "1.5rem", overflow: "hidden",
+            background: onDark ? "transparent" : "white",
+            border: onDark ? "none" : "1px solid rgba(139,111,71,0.1)",
+            boxShadow: onDark ? "none" : "0 2px 16px rgba(45,31,14,0.06)" }}>
 
-            {/* Parasha visual card — book illustration placeholder */}
-            <div style={{ marginBottom: "1.75rem", borderRadius: "1rem", overflow: "hidden",
-              border: "1px solid rgba(196,162,101,0.2)", position: "relative", height: 110,
-              background: `linear-gradient(135deg, rgba(139,111,71,0.18), rgba(196,162,101,0.08))` }}>
-              {/* Parasha cover from series if available */}
-              {firstArticle?.seriesId && (
-                <div style={{ position: "absolute", inset: 0,
-                  backgroundImage: `url(/images/series-tanach-victory.png)`,
-                  backgroundSize: "cover", backgroundPosition: "center",
-                  opacity: 0.25 }} />
+            {/* Parasha visual header — 160px, gold gradient with placeholder image */}
+            <div style={{ height: 160, position: "relative", overflow: "hidden",
+              background: `linear-gradient(135deg, #5a3f20, ${GOLD_DARK})` }}>
+              {PARASHA_PLACEHOLDER_IMG && (
+                <img src={PARASHA_PLACEHOLDER_IMG}
+                  alt={`פרשת ${parasha}`}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
               )}
               <div style={{ position: "absolute", inset: 0,
-                background: "linear-gradient(135deg, rgba(44,58,30,0.8), rgba(58,77,40,0.6))" }} />
-              <div style={{ position: "relative", padding: "1rem 1.25rem", height: "100%",
-                display: "flex", alignItems: "center", gap: "1rem" }}>
-                {/* Hebrew scroll icon */}
-                <div style={{ width: 52, height: 52, borderRadius: "50%", flexShrink: 0,
-                  background: "rgba(196,162,101,0.15)", border: "1px solid rgba(196,162,101,0.3)",
-                  display: "flex", alignItems: "center", justifyContent: "center" }}>
-                  <span style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif",
-                    fontSize: "1.5rem", opacity: 0.7, color: GOLD_LIGHT }}>ס</span>
-                </div>
-                <div>
-                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.68rem",
-                    fontWeight: 700, color: GOLD_LIGHT, letterSpacing: "0.12em",
-                    textTransform: "uppercase", marginBottom: "0.2rem" }}>
-                    {chumash || "תורה"}
-                  </div>
-                  <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
-                    fontSize: "1.25rem", color: "white", lineHeight: 1.15 }}>
-                    פרשת {parasha || "..."}
-                  </div>
-                </div>
+                background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)" }} />
+              {/* Badge */}
+              <div style={{ position: "absolute", top: 12, right: 12,
+                padding: "0.15rem 0.65rem", borderRadius: "1rem",
+                background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)",
+                fontFamily: "Ploni, sans-serif", fontSize: "0.68rem",
+                fontWeight: 700, color: "rgba(255,255,255,0.9)" }}>
+                {chumash || "תורה"}
               </div>
             </div>
 
-            {/* Verse blockquote */}
-            {verse && (
-              <div style={{ borderRight: `3px solid ${GOLD_LIGHT}`, paddingRight: "1.25rem",
-                marginBottom: "1.75rem" }}>
-                <blockquote style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 400,
-                  fontSize: "1.05rem", fontStyle: "italic", color: "rgba(255,255,255,0.85)",
-                  margin: 0, lineHeight: 1.7 }}>
-                  ״{verse.text}״
-                </blockquote>
-                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
-                  color: "rgba(255,255,255,0.35)", marginTop: "0.4rem" }}>
-                  [{verse.reference}]
+            {/* Body */}
+            <div style={{ padding: "1.25rem 1.4rem 1.5rem" }}>
+              {/* Header */}
+              <div style={{ marginBottom: "1rem" }}>
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", fontWeight: 700,
+                  letterSpacing: "0.18em",
+                  color: onDark ? GOLD_LIGHT : GOLD_DARK,
+                  textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                  הדף לשולחן שבת
                 </div>
-              </div>
-            )}
-
-            {/* Article preview */}
-            {firstArticle && (
-              <div
-                onClick={() => firstArticle.lessonId && navigate(`/lessons/${firstArticle.lessonId}`)}
-                style={{ background: "rgba(255,255,255,0.06)", borderRadius: "1.1rem",
-                  border: "1px solid rgba(232,213,160,0.12)", padding: "1.25rem 1.5rem",
-                  marginBottom: "1.75rem", cursor: firstArticle.lessonId ? "pointer" : "default",
-                  transition: "all 0.2s" }}
-                onMouseEnter={e => {
-                  if (firstArticle.lessonId) (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.1)";
-                }}
-                onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)";
-                }}
-              >
-                <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
-                  fontSize: "0.95rem", color: GOLD_SHIMMER, marginBottom: "0.4rem" }}>
-                  {firstArticle.title}
-                </div>
-                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
-                  color: "rgba(255,255,255,0.5)", marginBottom: "0.5rem" }}>
-                  מאת {firstArticle.rabbi}
-                </div>
-                <div
-                  className="line-clamp-3"
-                  style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem",
-                    color: "rgba(255,255,255,0.65)", lineHeight: 1.7,
-                    display: "-webkit-box", WebkitLineClamp: 3,
-                    WebkitBoxOrient: "vertical", overflow: "hidden" }}
-                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(
-                    firstArticle.lessonContent?.replace(/<[^>]+>/g, " ").slice(0, 200) ?? ""
-                  ) }}
-                />
-                {firstArticle.lessonId && (
-                  <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
-                    color: GOLD_LIGHT, fontWeight: 600, marginTop: "0.5rem", display: "inline-block" }}>
-                    לשיעור המלא ←
-                  </span>
+                <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+                  fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                  color: onDark ? "white" : TEXT_DARK,
+                  margin: "0 0 0.2rem", lineHeight: 1.15 }}>
+                  פרשת {parasha || "..."}
+                </h2>
+                {chumash && (
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem",
+                    color: onDark ? "rgba(255,255,255,0.5)" : TEXT_MUTED }}>
+                    חומש {chumash}
+                  </div>
                 )}
               </div>
-            )}
 
-            {/* Dual CTAs */}
-            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-              <button onClick={() => navigate("/parasha")}
-                style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem", border: "none",
-                  background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
-                  color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
-                  fontSize: "0.95rem", cursor: "pointer",
-                  boxShadow: "0 4px 20px rgba(139,111,71,0.35)" }}>
-                לדף פרשת השבוע ←
-              </button>
-              {firstArticle?.seriesId && (
-                <button onClick={() => navigate(`/design-series-page/${firstArticle.seriesId}`)}
-                  style={{ padding: "0.8rem 2rem", borderRadius: "0.9rem",
-                    border: `1.5px solid ${GOLD_LIGHT}`, background: "transparent",
-                    color: GOLD_LIGHT, fontFamily: "Paamon, serif", fontWeight: 700,
-                    fontSize: "0.95rem", cursor: "pointer", transition: "all 0.2s" }}
+              {/* Verse blockquote */}
+              {verse && (
+                <div style={{ borderInlineEnd: `3px solid ${GOLD_LIGHT}`, paddingInlineEnd: "1.1rem",
+                  marginBottom: "1.25rem" }}>
+                  <blockquote style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 400,
+                    fontSize: "1rem", fontStyle: "italic",
+                    color: onDark ? "rgba(255,255,255,0.85)" : TEXT_DARK,
+                    margin: 0, lineHeight: 1.7 }}>
+                    ״{verse.text}״
+                  </blockquote>
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.7rem",
+                    color: onDark ? "rgba(255,255,255,0.35)" : TEXT_SUBTLE,
+                    marginTop: "0.35rem" }}>
+                    [{verse.reference}]
+                  </div>
+                </div>
+              )}
+
+              {/* Article preview — parchment card on light, glass on dark */}
+              {firstArticle && (
+                <div
+                  onClick={() => firstArticle.lessonId && navigate(`/lessons/${firstArticle.lessonId}`)}
+                  style={{
+                    background: onDark ? "rgba(255,255,255,0.06)" : PARCHMENT,
+                    borderRadius: "0.9rem",
+                    border: onDark ? "1px solid rgba(232,213,160,0.12)" : "1px solid rgba(139,111,71,0.12)",
+                    padding: "1rem 1.1rem",
+                    marginBottom: "1.25rem",
+                    cursor: firstArticle.lessonId ? "pointer" : "default",
+                    transition: "all 0.22s" }}
                   onMouseEnter={e => {
-                    (e.currentTarget as HTMLElement).style.background = "rgba(196,162,101,0.1)";
+                    if (firstArticle.lessonId) {
+                      (e.currentTarget as HTMLElement).style.background = onDark
+                        ? "rgba(255,255,255,0.1)" : "#F0EAE0";
+                      (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)";
+                    }
                   }}
                   onMouseLeave={e => {
-                    (e.currentTarget as HTMLElement).style.background = "transparent";
+                    (e.currentTarget as HTMLElement).style.background = onDark
+                      ? "rgba(255,255,255,0.06)" : PARCHMENT;
+                    (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
                   }}
                 >
-                  לסדרה ←
-                </button>
+                  <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
+                    fontSize: "0.92rem",
+                    color: onDark ? GOLD_SHIMMER : TEXT_DARK,
+                    marginBottom: "0.3rem" }}>
+                    {firstArticle.title}
+                  </div>
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem",
+                    color: onDark ? "rgba(255,255,255,0.5)" : TEXT_SUBTLE,
+                    marginBottom: "0.4rem" }}>
+                    מאת {firstArticle.rabbi}
+                  </div>
+                  <div
+                    className="line-clamp-3"
+                    style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.82rem",
+                      color: onDark ? "rgba(255,255,255,0.65)" : TEXT_MUTED,
+                      lineHeight: 1.65,
+                      display: "-webkit-box", WebkitLineClamp: 3,
+                      WebkitBoxOrient: "vertical", overflow: "hidden" }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeHtml(
+                      firstArticle.lessonContent?.replace(/<[^>]+>/g, " ").slice(0, 200) ?? ""
+                    ) }}
+                  />
+                  {firstArticle.lessonId && (
+                    <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
+                      color: onDark ? GOLD_LIGHT : GOLD_DARK,
+                      fontWeight: 600, marginTop: "0.45rem", display: "inline-block" }}>
+                      לשיעור המלא ←
+                    </span>
+                  )}
+                </div>
               )}
+
+              {/* Dual CTAs */}
+              <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap" }}>
+                <button onClick={() => navigate("/parasha")}
+                  style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem", border: "none",
+                    background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
+                    color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
+                    fontSize: "0.92rem", cursor: "pointer",
+                    boxShadow: "0 4px 16px rgba(139,111,71,0.3)" }}>
+                  לדף פרשת השבוע ←
+                </button>
+                {firstArticle?.seriesId && (
+                  <button onClick={() => navigate(`/design-series-page/${firstArticle.seriesId}`)}
+                    style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem",
+                      border: `1.5px solid ${onDark ? GOLD_LIGHT : GOLD_DARK}`,
+                      background: "transparent",
+                      color: onDark ? GOLD_LIGHT : GOLD_DARK,
+                      fontFamily: "Paamon, serif", fontWeight: 700,
+                      fontSize: "0.92rem", cursor: "pointer", transition: "all 0.2s" }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.background = onDark
+                        ? "rgba(196,162,101,0.1)" : "rgba(139,111,71,0.08)";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                    }}
+                  >
+                    לסדרה ←
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
