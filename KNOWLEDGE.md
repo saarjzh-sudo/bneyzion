@@ -3873,6 +3873,43 @@ Scraped files saved to: `/Users/srhlq/Downloads/saar-workspace/bneyzion/migratio
 - Sidebar badge counts on old site (e.g., "מכון דעת סופרים (333)") = items with that content attribution. Our bulk insert may exceed this count because we scraped all sub-pages including items appearing across multiple pages. Excess is acceptable per mandate.
 - Content type reclassification by title patterns is the right approach for items inserted with generic types.
 
+### 2026-05-27 — PDF modal fallback + Supabase Storage migration Phase A+B (sandbox-test)
+
+**משימה 1 — modal PDF fallback (commit f49cf58, already on origin/sandbox-test):**
+- `src/pages/DesignPreviewSeriesPageV2.tsx` — הוסף `useLesson(id)` fallback
+- כשה-`?lesson=ID` שייך ל-child series (לא ל-lessons array הנוכחי), `openLessonFromList` = null
+- `needsFallback` = true → `useLesson(openLessonId)` נורה → modal נפתח עם lesson מה-DB
+- deployment: `bneyzion-5pn4dars9-saars-projects-4508d6bb.vercel.app` (sandbox-test, commit f49cf58, READY)
+
+**משימה 2 — Supabase Storage migration script (commit eb26fc0):**
+- Bucket נוצר: `lesson-attachments` (public, 5MB limit, PDF/DOC/DOCX)
+- עמודה חדשה ב-`lessons`: `legacy_attachment_url TEXT` (rollback insurance)
+- Script: `scripts/migrate_lesson_attachments.py`
+- Phase B dry-run על 10 lessons: **9 הצליחו, 1 skipped (page URL לא קובץ)**
+
+**בעיות שנפתרו:**
+1. relative URLs (`/media/...`) → prefix `https://www.bneyzion.co.il`
+2. Hebrew chars בURL → `urllib.parse.quote(path, safe='/%')` לפני download
+3. Supabase Storage דוחה non-ASCII keys — פתרון: `hashlib.sha1(basename)[:10]` + ext (`he-XXXXXX.pdf`)
+4. Page URLs (ללא extension .pdf/.doc/.docx) → skip עם reason `not_a_file_url`
+5. Secrets → `os.environ.get()`, אסור hardcode
+
+**מצב DB אחרי dry-run:**
+- 11 lessons migrated → `attachment_url` = Supabase Storage URL, `legacy_attachment_url` = legacy URL
+- 8,796 lessons remaining (total with attachment_url = 8,807)
+
+**לריצת Phase C (full run ~1hr):**
+```bash
+export SUPABASE_SERVICE_ROLE="eyJ..."  # from .env
+export SUPABASE_MANAGEMENT_TOKEN="sbp_..."  # from api-keys.md
+python3 scripts/migrate_lesson_attachments.py  # no --limit
+```
+
+**Iron rules learned:**
+- Supabase Storage API path must be ASCII-only. Hebrew path → transliterate to hash. This is documented in §7 image-batch session too (line ~647) but easily missed for new script types.
+- Bucket creation endpoint: `POST https://{PROJECT}.supabase.co/storage/v1/bucket` (service_role auth), NOT `POST api.supabase.com/v1/projects/{ref}/storage/buckets`
+- Public Supabase Storage has `access-control-allow-origin: *` (no X-Frame-Options) → Google Docs Viewer works
+
 ### 2026-05-27 — DesignHeader nav cleanup + categories centering fix (commit 24fc4a5)
 - `src/components/layout-v2/DesignHeader.tsx` — הוסר "תנ"ך" מ-NAV_ITEMS ומ-TEACHER_NAV_ITEMS. ניווט סופי: חנות | פרשת השבוע | אגף המורים | אודותינו.
 - `src/pages/DesignPreviewHome.tsx` — FULL_NAV_LINKS מסונכרן לאותם 4 פריטים (הוסרו ראשי, תרומות, מחירים, לזכר).
