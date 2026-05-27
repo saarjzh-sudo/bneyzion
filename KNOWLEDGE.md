@@ -3887,3 +3887,24 @@ significant change must update it. The agent enforces this.*
 - TEACHER_NAV_ITEMS עודכן בהתאם (הוסר "אגף המורים" מהרשימה, נשארו 3 פריטים).
 - `<Flame>` icon הוסר לחלוטין מה-header — desktop nav + mobile panel. "לזכר סעדיה הי"ד" כעת טקסט בלבד ללא אייקון.
 - import של `Flame` מ-lucide-react הוסר.
+
+### 2026-05-27 — Deploy regression diagnosis + clean rebuild (sequel session)
+**הממצא:** deploy `bneyzion-jqu6gzuws` שסאר ראה הציג תיקונים חסרים (כנס מעצמה עדיין, סדר nav ישן). **סיבה:** כל התיקונים (commits `91e8004`, `455c373`, `4b2efcc`, `de334b8`) נמצאים על branch `sandbox-header-fixes-27may` — לא על `main`. Vercel חיבר את ה-URL הקודם ל-`bneyzion` project (הprod project) שדיפלה מ-`main` — branch שלא כלל את הtיקונים.
+
+**הפתרון:** build נקי + deploy מ-worktree `/private/tmp/bneyzion-work/` (project `bneyzion-work`):
+```
+rm -rf dist .vercel
+npm run build
+vercel build --yes
+vercel deploy --prebuilt --yes
+```
+**URL חדש:** `https://bneyzion-work-fezhcuy3b-saars-projects-4508d6bb.vercel.app`
+
+**אימות bundle:**
+- `כנס מעצמה תנ"כית` — NOT FOUND בכל bundle (נמחק נכון)
+- `אגף המורים → פרשת השבוע → חנות` — ORDER CORRECT ב-main bundle
+- `Flame` ב-DesignHeader.tsx — import הוסר (נמצא רק בקומפוננטים ישנים: LearningDashboard, Footer, Header production)
+
+**Iron rule חדש:** כשsandbox commits נמצאים על feature branch (לא main) — deploy חייב להיות מ-`bneyzion-work` project (worktree), לא מ-`bneyzion` project. שני הprojects קיימים ב-Vercel:
+- `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x) = production site, מחובר ל-`main` ב-GitHub
+- `bneyzion-work` (prj_ctSOckC9whh7OVP15LeXUSzC5P8N) = worktree previews, deploy ידני
