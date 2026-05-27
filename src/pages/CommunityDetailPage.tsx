@@ -196,11 +196,45 @@ const CommunityDetailPage = () => {
                 {selectedLesson.description && !selectedLesson.content_html && (
                   <p className="text-muted-foreground">{selectedLesson.description}</p>
                 )}
-                {selectedLesson.attachment_url && (
-                  <a href={selectedLesson.attachment_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline text-sm">
-                    <FileText className="h-4 w-4" /> הורד חומרי לימוד
-                  </a>
-                )}
+                {selectedLesson.attachment_url && (() => {
+                  const url: string = String(selectedLesson.attachment_url);
+                  const lower = url.toLowerCase();
+                  const isPdf = lower.includes('.pdf');
+                  const isWord = lower.includes('.doc') || lower.includes('.docx');
+                  const encoded = encodeURIComponent(url);
+                  return (
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <span className="inline-flex items-center gap-2 text-sm font-semibold text-foreground">
+                          <FileText className="h-4 w-4 text-primary" />
+                          {isPdf ? 'PDF מצורף' : isWord ? 'Word מצורף' : 'קובץ מצורף'}
+                        </span>
+                        <div className="flex gap-2">
+                          <a href={url} download className="text-xs px-3 py-1.5 bg-primary text-primary-foreground rounded-md font-semibold hover:opacity-90 transition-opacity">
+                            ↓ הורד
+                          </a>
+                          <a href={url} target="_blank" rel="noopener noreferrer" className="text-xs px-3 py-1.5 border border-primary text-primary rounded-md font-semibold hover:opacity-80 transition-opacity">
+                            פתח בלשונית ↗
+                          </a>
+                        </div>
+                      </div>
+                      {(isPdf || isWord) && (
+                        <div className="rounded-lg overflow-hidden border border-border">
+                          <iframe
+                            src={isPdf
+                              ? `https://docs.google.com/gview?url=${encoded}&embedded=true`
+                              : `https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`
+                            }
+                            className="w-full border-0"
+                            style={{ height: "60vh", minHeight: "400px" }}
+                            loading="lazy"
+                            title={isPdf ? 'PDF Viewer' : 'Word Viewer'}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             </>
           )}

@@ -1854,32 +1854,60 @@ function LessonModal({
             </div>
           ) : null}
 
-          {/* ── PDF attachment ── */}
-          {lesson.attachment_url && (
-            <div style={{ marginBottom: "1.25rem" }}>
-              <a
-                href={lesson.attachment_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.55rem 1.25rem",
-                  borderRadius: radii.md,
-                  background: gradients.goldButton,
-                  color: "white",
-                  fontFamily: fonts.body,
-                  fontSize: "0.82rem",
-                  fontWeight: 700,
-                  textDecoration: "none",
-                }}
-              >
-                <FileText style={{ width: 15, height: 15 }} />
-                פתח PDF
-              </a>
-            </div>
-          )}
+          {/* ── PDF / Word attachment — inline viewer ── */}
+          {lesson.attachment_url && (() => {
+            const url: string = String(lesson.attachment_url);
+            const lower = url.toLowerCase();
+            const isPdf = lower.includes('.pdf');
+            const isWord = lower.includes('.doc') || lower.includes('.docx');
+            const encoded = encodeURIComponent(url);
+            const downloadLabel = isPdf ? 'הורד PDF' : isWord ? 'הורד Word' : 'הורד קובץ';
+            const viewerLabel = isPdf ? 'PDF' : isWord ? 'Word' : 'קובץ מצורף';
+
+            return (
+              <div style={{ marginBottom: "1.5rem" }}>
+                {/* Header row: label + download button */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.75rem", flexWrap: "wrap", gap: "0.5rem" }}>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.82rem", fontWeight: 700, color: colors.textMid, display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <FileText style={{ width: 15, height: 15 }} />
+                    {viewerLabel} מצורף
+                  </span>
+                  <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                    <a
+                      href={url}
+                      download
+                      style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", padding: "0.4rem 1rem", borderRadius: radii.md, background: gradients.goldButton, color: "white", fontFamily: fonts.body, fontSize: "0.78rem", fontWeight: 700, textDecoration: "none" }}
+                    >
+                      ↓ {downloadLabel}
+                    </a>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", padding: "0.4rem 0.85rem", borderRadius: radii.md, border: `1px solid ${colors.goldDark}`, color: colors.goldDark, fontFamily: fonts.body, fontSize: "0.78rem", fontWeight: 600, textDecoration: "none", background: "transparent" }}
+                    >
+                      פתח בלשונית ↗
+                    </a>
+                  </div>
+                </div>
+
+                {/* Inline viewer */}
+                {(isPdf || isWord) && (
+                  <div style={{ borderRadius: radii.xl, overflow: "hidden", border: "1px solid rgba(139,111,71,0.15)" }}>
+                    <iframe
+                      src={isPdf
+                        ? `https://docs.google.com/gview?url=${encoded}&embedded=true`
+                        : `https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`
+                      }
+                      style={{ width: "100%", border: "none", height: "70vh", minHeight: "480px", display: "block" }}
+                      loading="lazy"
+                      title={viewerLabel}
+                    />
+                  </div>
+                )}
+              </div>
+            );
+          })()}
 
           {/* ── Description ── */}
           {lesson.description && (
