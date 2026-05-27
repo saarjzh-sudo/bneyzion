@@ -105,18 +105,8 @@ function DesignNavBar() {
           ))}
         </div>
 
-        {/* Buttons + search — LEFT side (end in RTL) */}
+        {/* Buttons — LEFT side (end in RTL) */}
         <div style={{ display: "flex", gap: "0.65rem", alignItems: "center", flexShrink: 0 }}>
-          {/* Search icon */}
-          <div style={{ width: 36, height: 36, borderRadius: "50%", display: "flex",
-                        alignItems: "center", justifyContent: "center", cursor: "pointer",
-                        color: scrolled ? TEXT_MUTED : "rgba(255,255,255,0.75)" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </div>
-
           {!user ? (
             <button onClick={handleSignIn} disabled={signingIn || authLoading}
               style={{ padding: "0.4rem 1rem", border: `1.5px solid ${scrolled ? GOLD_DARK : "rgba(255,255,255,0.5)"}`,
@@ -313,7 +303,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "נס מדור הפלאות",
     desc: "ניסים גלויים מהמלחמה — מה שקרה עם עינינו",
     href: "/dor-haplaot",
-    image: "/images/war-miracles-bg.jpg",
+    image: "/family-bible/hero-miracles.png",
     disabled: false,
   },
   {
@@ -321,7 +311,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "פסוק יומי",
     desc: "פסוק אחד לכל יום — מאת הרב יואב אוריאל",
     href: "/daily-verse",
-    image: "/images/series-tanach-victory.png",
+    image: "/family-bible/hero-verse.png",
     disabled: false,
   },
   {
@@ -329,7 +319,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "קריאת כיוון",
     desc: "המצפן היומי שלך בתנ\"ך · 5 דקות תנ\"ך ביום",
     href: "/daily-video",
-    image: "/images/series-middot.png",
+    image: "/family-bible/hero-compass.png",
     disabled: false,
   },
   {
@@ -337,7 +327,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "סיפורי התנ\"ך לילדים",
     desc: "פודקאסט · בקרוב",
     href: "#",
-    image: "/images/lesson-audio.png",
+    image: "/family-bible/hero-podcast.png",
     disabled: true,
   },
 ];
