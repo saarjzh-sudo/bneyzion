@@ -80,6 +80,7 @@ import {
 } from "@/lib/designTokens";
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
+import { useLesson } from "@/hooks/useLesson";
 import { useSeriesChildren, useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
@@ -2136,11 +2137,16 @@ export default function DesignPreviewSeriesPageV2() {
     });
   }, [setSearchParams]);
 
-  // Resolve open lesson object
-  const openLesson = useMemo(
-    () => (openLessonId ? (lessons as any[]).find((l) => l.id === openLessonId) : null),
+  // Resolve open lesson object — first try inline lessons array (fast, no extra query),
+  // then fall back to direct DB fetch via useLesson (handles cross-series ?lesson= deep-links
+  // where the lesson belongs to a child series not loaded in this series's lessons array).
+  const openLessonFromList = useMemo(
+    () => (openLessonId ? (lessons as any[]).find((l) => l.id === openLessonId) ?? null : null),
     [openLessonId, lessons]
   );
+  const needsFallback = !!openLessonId && !openLessonFromList && !lessonsLoading;
+  const { data: openLessonFallback } = useLesson(needsFallback ? openLessonId ?? undefined : undefined);
+  const openLesson = openLessonFromList ?? openLessonFallback ?? null;
 
   // Loading state
   if (seriesLoading) {
