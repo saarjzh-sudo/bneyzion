@@ -233,7 +233,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             >
               {[
                 { to: "/", label: "ראשי", icon: Home },
-                { to: "/chapter-weekly", label: "תכנית הפרק השבועי", icon: CalendarDays },
+                { to: "/parasha", label: "פרשת השבוע", icon: BookOpen },
+                { to: "/how-to-learn-tanach", label: "איך לומדים תנ״ך", icon: Sparkles },
               ].map(({ to, label, icon: Icon }) => (
                 <Link
                   key={to}
@@ -509,6 +510,31 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             gap: "0.3rem",
           }}
         >
+          {/* תכנית הפרק השבועי */}
+          <Link
+            to="/chapter-weekly"
+            onClick={onDrawerClose}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.55rem",
+              padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
+              borderRadius: radii.md,
+              fontFamily: fonts.body,
+              fontSize: "0.8rem",
+              color: colors.textMid,
+              fontWeight: 600,
+              textDecoration: "none",
+              justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
+              transition: "background 0.15s",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(139,111,71,0.08)")}
+            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
+          >
+            <CalendarDays size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+            {(!collapsed || isDrawer) && <span>תכנית הפרק השבועי</span>}
+          </Link>
+
           {/* תרומות */}
           <Link
             to="/donate"
