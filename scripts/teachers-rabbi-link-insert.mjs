@@ -13,7 +13,7 @@ import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { randomUUID } from 'crypto';
 
-const SUPABASE_TOKEN = 'SUPABASE_TOKEN_REMOVED';
+const SUPABASE_TOKEN = process.env.SUPABASE_ACCESS_TOKEN || '';
 const SUPABASE_REF = 'pzvmwfexeiruelwiujxn';
 const MAAGAR_ROOT_ID = '6bfb7aaa-cd9e-4562-b087-a37fcc24d295'; // מאגר עזרי הלמידה
 

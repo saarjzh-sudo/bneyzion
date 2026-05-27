@@ -10,7 +10,7 @@ Run: env -u HTTPS_PROXY -u HTTP_PROXY python3 scripts/full-teachers-scrape-2026-
 import json, time, subprocess, sys, os, re
 from urllib.parse import unquote, urlencode, quote
 
-FIRECRAWL_KEY = "fc-85c9d5413dbd41e692e68832e804f31d"
+FIRECRAWL_KEY = os.environ.get("FIRECRAWL_API_KEY", "")
 OLD_SITE = "https://www.bneyzion.co.il"
 OUTPUT_PATH = "migrations/umbraco_full_scrape_2026_05_27.json"
 
