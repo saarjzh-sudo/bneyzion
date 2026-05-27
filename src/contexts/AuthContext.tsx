@@ -61,6 +61,17 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           if (_event === "SIGNED_IN" && session.user.email) {
             setTimeout(() => linkPendingAccessTags(session.user.id, session.user.email!), 0);
           }
+          // Portal-next redirect: כש-PortalLogin שומר next ב-sessionStorage
+          if (_event === "SIGNED_IN") {
+            const portalNext = sessionStorage.getItem("bnz.portal-next");
+            if (portalNext) {
+              sessionStorage.removeItem("bnz.portal-next");
+              // defer קצת כדי ש-session state יתעדכן לפני navigation
+              setTimeout(() => {
+                window.location.href = portalNext;
+              }, 100);
+            }
+          }
         } else {
           setIsAdmin(false);
         }

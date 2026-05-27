@@ -103,6 +103,8 @@ const DesignPreviewCoursesCatalog = lazy(() => import("./pages/DesignPreviewCour
 const DesignPreviewParasha = lazy(() => import("./pages/DesignPreviewParasha"));
 const DesignPreviewYehoshuaCampaign = lazy(() => import("./pages/DesignPreviewYehoshuaCampaign"));
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
+const DesignPreviewMyCourses = lazy(() => import("./pages/DesignPreviewMyCourses"));
+const PortalLogin = lazy(() => import("./pages/PortalLogin"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const Terms = lazy(() => import("./pages/Terms"));
@@ -261,6 +263,8 @@ const App = () => (
             {/* 2026-05-27 — דף התקדמות לפגישות (לא מקושר מהניווט) */}
             <Route path="/2026" element={<Suspense fallback={<LazyFallback />}><Progress2026 /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
+            {/* דף כניסה ידידותי לפורטל (לא "דשבורד ניהול") */}
+            <Route path="/portal-login" element={<Suspense fallback={<LazyFallback />}><PortalLogin /></Suspense>} />
             <Route path="/lessons/:id" element={<LessonPage />} />
             <Route path="/rabbis" element={<RabbisList />} />
             <Route path="/rabbis/:id" element={<RabbiPage />} />
@@ -342,6 +346,8 @@ const App = () => (
             <Route path="/design-courses" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCoursesCatalog /></Suspense>} />
             <Route path="/design-course" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
             <Route path="/design-course/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
+            {/* הקורסים שלי — sandbox + production-ready */}
+            <Route path="/design-my-courses" element={<Suspense fallback={<LazyFallback />}><DesignPreviewMyCourses /></Suspense>} />
             <Route path="/design-parasha" element={<Suspense fallback={<LazyFallback />}><DesignPreviewParasha /></Suspense>} />
             {/* Sandbox redirects → production (301 in vercel.json, Navigate here as fallback for client-side) */}
             <Route path="/design-yehoshua-campaign" element={<Suspense fallback={<LazyFallback />}><DesignPreviewYehoshuaCampaign /></Suspense>} />
