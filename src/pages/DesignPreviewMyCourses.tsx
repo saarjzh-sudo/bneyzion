@@ -77,7 +77,7 @@ function LockOverlay({ ctaLabel, ctaTo }: { ctaLabel: string; ctaTo: string }) {
           display: "flex",
           alignItems: "center",
           gap: 6,
-          boxShadow: shadows.md,
+          boxShadow: shadows.cardSoft,
         }}
       >
         <ShoppingBag size={16} />
@@ -111,16 +111,16 @@ function CourseCard({ course }: { course: CourseCardData }) {
         position: "relative",
         borderRadius: radii.xl,
         overflow: "hidden",
-        boxShadow: shadows.lg,
+        boxShadow: shadows.card,
         transition: "transform 0.2s, box-shadow 0.2s",
       }}
       onMouseEnter={(e) => {
         (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.xl;
+        (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.cardHover;
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.lg;
+        (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.card;
       }}
     >
       {/* Gradient cover */}
