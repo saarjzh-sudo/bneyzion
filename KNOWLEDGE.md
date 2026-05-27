@@ -3908,3 +3908,13 @@ vercel deploy --prebuilt --yes
 **Iron rule חדש:** כשsandbox commits נמצאים על feature branch (לא main) — deploy חייב להיות מ-`bneyzion-work` project (worktree), לא מ-`bneyzion` project. שני הprojects קיימים ב-Vercel:
 - `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x) = production site, מחובר ל-`main` ב-GitHub
 - `bneyzion-work` (prj_ctSOckC9whh7OVP15LeXUSzC5P8N) = worktree previews, deploy ידני
+
+### 2026-05-27 — Teachers Wing sidebar redesign + production rollout (commit 6092b33)
+- **בעיה שסאר דיווח:** הסיידבר הראשי של האתר הופיע ב-/teachers (DesignPreviewTeachersWingV2 השתמש ב-DesignLayout); 3 tabs היו במרכז ולא בצד.
+- **תיקון:**
+  1. `TeacherSidebar.tsx` — שינוי 3 tabs מ-`ספרים/כלים/יוצרים` ל-`ראשי/סוג תוכן/יוצרים`. Tab ראשי = עץ ספרים תנ"ך; סוג תוכן = counts מה-DB; יוצרים = פיצול רבנים/יוצרי תוכן עם ספירות. נוסף `onSelect` callback ו-`selection` prop.
+  2. `TeachersLayout.tsx` — מוסיף `onSidebarSelect` + `sidebarSelection` props ומעביר אותם ל-TeacherSidebar.
+  3. `TeachersWingPage.tsx` — הוסר tab nav horizontal. content area reactive לבחירה בסיידבר (book→series grid; content_type→lessons; creator→lessons). לחיצה על שיעור → popup modal עם ESC close. "לדף המלא" → /teachers/lesson/:id.
+  4. `DesignPreviewTeachersWingV2.tsx` — הפחתה ל-alias של TeachersWingPage (sandbox = production). הוסר DesignLayout.
+- **deploy:** production rollout ב-`bneyzion.vercel.app` (deploy ידני מ-worktree, `vercel deploy --prebuilt --prod`). Deploy URL: `bneyzion-1yu8bho8g-saars-projects-4508d6bb.vercel.app`.
+- **backup branch:** `backup/teachers-pre-v2-replace-2026-05-27` (נמצא ב-GitHub).
