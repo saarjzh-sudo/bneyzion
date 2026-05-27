@@ -426,8 +426,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // param so Grow's server-to-server callback can pass through deployment protection.
     // The env var is set only on preview/sandbox; production has no SSO on its custom domain.
     const webhookBypass = (process.env.WEBHOOK_PROTECTION_BYPASS || "").trim();
+    // NOTE: do NOT include `x-vercel-set-bypass-cookie` — that triggers a 307
+    // redirect that server-to-server callers (like Grow) cannot follow. Plain
+    // bypass query alone returns 200 directly.
     const bypassQuery = webhookBypass
-      ? `?x-vercel-protection-bypass=${webhookBypass}&x-vercel-set-bypass-cookie=samesitenone`
+      ? `?x-vercel-protection-bypass=${webhookBypass}`
       : "";
     const webhookUrl = `${
       req.headers["x-forwarded-proto"] || "https"
