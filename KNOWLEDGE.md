@@ -855,6 +855,37 @@ No human figures, no faces, no letters, no text.
 - whisper-cli tiny (הכלול בחבילת homebrew) מחזיר SRT ריק על עברית — רק medium+ עובד לעברית.
 - `ffmpeg --output-format` לא קיים ב-whisper-cli — תחביר נכון: `-osrt -of output_path`
 
+### 2026-05-27 — Home page fixes: כנס removed, תנ"ך למשפחה section, י"ז בתמוז nav fix
+
+**Branch:** `sandbox-header-fixes-27may` · **Commit:** `455c373`
+
+**מה השתנה:**
+1. **הסרת `KenesBanner`** — הכנס הסתיים, ה-section נמחק לגמרי מ-DesignPreviewHome.tsx
+2. **`TanachLemishpachaSection` חדש** — 4 פרויקטים תחת מותג "תנ"ך למשפחה" של הרב יואב אוריאל:
+   - חידות לילדים (seriesId: `c852edd8`) — 50 שיעורים
+   - דבר תורה לשולחן שבת — שמות (seriesId: `dbcae806`)
+   - הפרשה במבט רחב (seriesId: `a1111111`)
+   - בכח התנ"ך ננצח / מכלל יופי (seriesId: `b6eac28f`) — 154 שיעורים
+   - כרטיסים עם רקע צבעוני (teal/olive/gold/navy) + תמונות מ-DB ב-`series.image_url`
+3. **י"ז בתמוז הוסף ל-HOLIDAYS_5786** עם `seriesId: "e36ea5d6"` ("שלושת השבועות" — ב-DB)
+4. **navigation תוקן** — CTAs ב-DesignParashaHolidaySection מנווטים כעת ל-`/design-series-page/:id` (לא ל-`/series` הישן)
+5. **Parasha visual card** — נוסף כרטיס ויזואלי לפרשה (scroll icon + שם פרשה + חומש) מעל ה-verse
+6. **Holiday placeholder card** — למועדים בלי תמונה: כרטיס placeholder עם שם בעברי
+
+**DB discoveries:**
+- "תנ"ך למשפחה" לא קיים כ-series/category DB — זה brand name של הרב יואב אוריאל
+- seriesId של "שלושת השבועות": `e36ea5d6-38f8-49ca-874e-ff3324bb3795`
+- לוגו "תנ"ך למשפחה" לא קיים עדיין כ-asset ב-src/assets/ — יוסף בעתיד
+- חידות לילדים: `c852edd8` (50 שיעורים), שיעורי הרב יואב (154+ שיעורים, seriesId `b6eac28f`)
+
+**navigation issue root cause:**
+- `/series/${id}` → `DesignPreviewSeriesPageV2` (כבר מוגדר ב-App.tsx שורה 284) — נכון
+- הבעיה הייתה ב-CTA buttons שהלכו ל-`/series` (רשימה ישנה) לא לסדרה ספציפית
+- תוקן: CTA ל-`/design-series-page/${seriesId}` כשיש seriesId, אחרת ל-`/design-series-list`
+
+**Iron rule:**
+- `HOLIDAYS_5786` צריך לכלול גם מועדים בתאריך עתידי ב-60+ ימים (לא 45) כדי ש"י"ז בתמוז" יופיע ביוני.
+
 ### 2026-05-26 — Bible tagging: series.bible_book + lessons.bible_book + lessons.bible_chapter (session 3)
 
 **סטטוס scraper (live run PID 16513 מ-25.5.2026):**
