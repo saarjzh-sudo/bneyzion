@@ -4035,3 +4035,36 @@ vercel deploy --prebuilt --yes
 **Iron rules learned:**
 - When Supabase generated types are out of sync with DB columns, use raw PostgREST fetch via SUPABASE_URL_RUNTIME + anon key. Never use `as any` casts on supabase.from().select() — the error message leaks into JSX and is hard to debug. Raw fetch is cleaner.
 - PR #7 was merged to `sandbox-test` (not main). Vercel's `productionBranch` is `main`. The 2 branches are COMPLETELY SEPARATE codebases — sandbox-test has React, main has only scripts. Deploy is via `vercel --prod` CLI (not GitHub auto-deploy).
+
+### 2026-05-27 — ParashaHolidaySection: הסרת ירוק olive + unify עם TanachLemishpacha style
+
+**Branch:** `fix/parasha-holiday-green-removal` (from `sandbox-test`)
+**Commit:** `a47b20e`
+**Preview deploy:** `bneyzion-gomslq94e-saars-projects-4508d6bb.vercel.app` (401 auth = Vercel preview protection — normal. View via Inspector URL.)
+
+**מה השתנה:**
+- `background`: `linear-gradient(160deg, #2C3A1E, #3A4D28)` olive dark → `PARCHMENT_DARK` (`#F5F0E8`)
+- dot "עוד X ימים": `#22c55e` neon-green + boxShadow green → `GOLD_LIGHT` (`#C4A265`) + gold glow
+- שני ה-columns עטופים ב-card לבן (borderRadius 1.5rem, gold border 0.1 opacity, shadow 0 2px 16px) — DNA של TanachLemishpacha
+- image headers: 160px tall (matching family cards) + gradient overlay to top + badge chip
+- Grain SVG + dot-pattern הוסרו (designed for dark, invisible/noise on parchment)
+- section header חדש מעל ה-grid: "פרשת השבוע ומועדים" — mirrors TanachLemishpacha header
+- כל `color: white` → TEXT_DARK; כל `rgba(255,255,255,0.45)` → TEXT_MUTED / TEXT_SUBTLE
+- preview cards (article + holiday lesson): glass → PARCHMENT inner + hover translateY(-2px)
+- Yom Haatzmaout: navy dark mode שמור, כל שינויים בהירים מדולגים דרך `onDark` flag
+- RTL: `borderInlineEnd` / `paddingInlineEnd` — לא פיזיים left/right
+
+**Image placeholders (top of section):**
+```ts
+const PARASHA_PLACEHOLDER_IMG = "/family-bible/hero-verse.png";
+const MOED_PLACEHOLDER_IMG    = "/family-bible/hero-miracles.png";
+```
+flyer-creator agent יחזיר `parasha-shavua.png` + `moed-17-tammuz.png` — לשנות רק את שני הקונסטנטים האלו.
+
+**Token sources used:**
+- `PARCHMENT_DARK` = `#F5F0E8` (local const)
+- `GOLD_LIGHT` = `#C4A265` (local const)
+- `GOLD_DARK` = `#8B6F47` (local const)
+- `TEXT_DARK` = `#2D1F0E`, `TEXT_MUTED` = `#6B5C4A`, `TEXT_SUBTLE` = `#A69882`
+
+**PR:** https://github.com/saarjzh-sudo/bneyzion/compare/sandbox-test...fix/parasha-holiday-green-removal
