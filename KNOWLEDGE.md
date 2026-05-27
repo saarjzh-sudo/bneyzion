@@ -3879,3 +3879,11 @@ significant change must update it. The agent enforces this.*
 - `src/pages/DesignPreviewHome.tsx` — FULL_NAV_LINKS מסונכרן לאותם 4 פריטים (הוסרו ראשי, תרומות, מחירים, לזכר).
 - `src/pages/DesignPreviewSeriesList.tsx` — chips container: הוסר `overflowX: auto`, נוסף `width: "100%"` — אוכף מרכוז מלא.
 - לוגו: הלוגיקה הקיימת (`isTransparent ? logoBright : logoColor`) נכונה — בדפים פנימיים `transparentOnTop` מוגדר `false` ברירת מחדל → תמיד מוצג `logoColor`. אין צורך בשינוי.
+
+### 2026-05-27 — DesignHeader: שינוי סדר ניווט + הסרת אייקון להבה (second pass)
+- `src/components/layout-v2/DesignHeader.tsx` — סדר NAV_ITEMS שונה לפי בקשת סער:
+  - לפני: `חנות | פרשת השבוע | אגף המורים | אודותינו`
+  - אחרי: `אגף המורים | פרשת השבוע | חנות | אודותינו` (RTL: ראשון ב-array = הכי קרוב ללוגו בימין)
+- TEACHER_NAV_ITEMS עודכן בהתאם (הוסר "אגף המורים" מהרשימה, נשארו 3 פריטים).
+- `<Flame>` icon הוסר לחלוטין מה-header — desktop nav + mobile panel. "לזכר סעדיה הי"ד" כעת טקסט בלבד ללא אייקון.
+- import של `Flame` מ-lucide-react הוסר.

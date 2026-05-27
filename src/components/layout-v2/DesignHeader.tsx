@@ -16,7 +16,7 @@
  */
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search, Flame, GraduationCap } from "lucide-react";
+import { Menu, X, Search, GraduationCap } from "lucide-react";
 
 import logoColor from "@/assets/logo-horizontal-color.png";
 import GlobalSearch from "@/components/search/GlobalSearch";
@@ -27,20 +27,20 @@ import DarkModeToggle from "@/components/ui/dark-mode-toggle";
 
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
-// Nav items — updated 2026-05-27 per Saar:
-// Removed: תנ"ך (from both main and teacher-context nav)
-// Final nav: חנות | פרשת השבוע | אגף המורים | אודותינו
+// Nav items — updated 2026-05-27 per Saar (second pass):
+// Order (RTL: first item = rightmost, closest to logo):
+// אגף המורים | פרשת השבוע | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
 const NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "חנות", href: "/store" },
-  { label: "פרשת השבוע", href: "/parasha" },
   { label: "אגף המורים", href: "/teachers" },
+  { label: "פרשת השבוע", href: "/parasha" },
+  { label: "חנות", href: "/store" },
   { label: "אודותינו", href: "/about" },
 ];
 
 // Teacher-context nav: same items minus "אגף המורים" (replaced by the context chip)
 const TEACHER_NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "חנות", href: "/store" },
   { label: "פרשת השבוע", href: "/parasha" },
+  { label: "חנות", href: "/store" },
   { label: "אודותינו", href: "/about" },
 ];
 
@@ -214,7 +214,7 @@ export default function DesignHeader({
               </Link>
             );
           })}
-          {/* Memorial flame link — preserved from production header */}
+          {/* Memorial link — text only, no icon (per Saar 2026-05-27) */}
           <Link
             to="/memorial/saadia"
             style={{
@@ -222,13 +222,9 @@ export default function DesignHeader({
               fontSize: "0.85rem",
               color: isTransparent ? "rgba(232,213,160,0.95)" : colors.goldDark,
               textDecoration: "none",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.4rem",
               whiteSpace: "nowrap",
             }}
           >
-            <Flame style={{ width: 14, height: 14 }} />
             לזכר סעדיה הי״ד
           </Link>
         </nav>
@@ -332,9 +328,7 @@ export default function DesignHeader({
             to="/memorial/saadia"
             onClick={() => setMobileOpen(false)}
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
+              display: "block",
               fontFamily: fonts.body,
               fontSize: "0.95rem",
               color: colors.goldDark,
@@ -343,7 +337,6 @@ export default function DesignHeader({
               textDecoration: "none",
             }}
           >
-            <Flame style={{ width: 16, height: 16 }} />
             לזכר סעדיה הי״ד
           </Link>
         </nav>
