@@ -40,6 +40,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import DesignPageHero from "@/components/layout-v2/DesignPageHero";
+import TeacherLessonModal from "@/pages/teachers/TeacherLessonModal";
 import {
   colors,
   fonts,
@@ -106,7 +107,7 @@ function useSeriesLessons(seriesId: string) {
     queryFn: async () => {
       const { data } = await supabase
         .from("lessons")
-        .select("id, title, description, duration, source_type, audio_url, video_url, attachment_url, rabbi_id, series_id")
+        .select("id, title, description, duration, source_type, audio_url, video_url, attachment_url, thumbnail_url, rabbi_id, series_id")
         .eq("series_id", seriesId)
         .eq("status", "published")
         .order("title")
@@ -127,6 +128,7 @@ function useSeriesLessons(seriesId: string) {
         audioUrl: l.audio_url,
         videoUrl: l.video_url,
         attachmentUrl: l.attachment_url,
+        thumbnailUrl: l.thumbnail_url,
         rabbiName: l.rabbi_id ? rabbiMap.get(l.rabbi_id) || null : null,
       }));
     },
@@ -617,9 +619,10 @@ function FilterPanel({
 }
 
 // ─── Lesson Card (teacher-styled) ────────────────────────────────────────────
-function TeacherLessonCard({ lesson, index }: {
+function TeacherLessonCard({ lesson, index, onClick }: {
   lesson: ReturnType<typeof useSeriesLessons>["data"] extends (infer T)[] | undefined ? T : never;
   index: number;
+  onClick: () => void;
 }) {
   if (!lesson) return null;
   const hasAudio = !!lesson.audioUrl;
@@ -627,33 +630,36 @@ function TeacherLessonCard({ lesson, index }: {
   const hasPdf   = !!lesson.attachmentUrl;
 
   return (
-    <Link to={`/design-lesson-page/${lesson.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-      <div
-        style={{
-          background: "white",
-          borderRadius: radii.xl,
-          border: "1px solid rgba(74,90,46,0.1)",
-          boxShadow: shadows.cardSoft,
-          padding: "1rem 1.1rem 0.9rem",
-          cursor: "pointer",
-          transition: "all 0.2s ease",
-          position: "relative",
-          overflow: "hidden",
-          display: "flex",
-          gap: "0.9rem",
-          alignItems: "flex-start",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = colors.oliveDark;
-          e.currentTarget.style.boxShadow = shadows.cardHover;
-          e.currentTarget.style.background = "rgba(74,90,46,0.02)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = "rgba(74,90,46,0.1)";
-          e.currentTarget.style.boxShadow = shadows.cardSoft;
-          e.currentTarget.style.background = "white";
-        }}
-      >
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={onClick}
+      onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onClick(); }}
+      style={{
+        background: "white",
+        borderRadius: radii.xl,
+        border: "1px solid rgba(74,90,46,0.1)",
+        boxShadow: shadows.cardSoft,
+        padding: "1rem 1.1rem 0.9rem",
+        cursor: "pointer",
+        transition: "all 0.2s ease",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        gap: "0.9rem",
+        alignItems: "flex-start",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.borderColor = colors.oliveDark;
+        e.currentTarget.style.boxShadow = shadows.cardHover;
+        e.currentTarget.style.background = "rgba(74,90,46,0.02)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.borderColor = "rgba(74,90,46,0.1)";
+        e.currentTarget.style.boxShadow = shadows.cardSoft;
+        e.currentTarget.style.background = "white";
+      }}
+    >
         {/* Olive left stripe (RTL end = right in Hebrew) */}
         <div
           style={{
@@ -774,10 +780,12 @@ function TeacherLessonCard({ lesson, index }: {
         </div>
 
         <ChevronRight style={{ width: 14, height: 14, color: colors.textSubtle, flexShrink: 0, marginTop: "0.35rem", transform: "scaleX(-1)" }} />
-      </div>
-    </Link>
+    </div>
   );
 }
+
+// ─── Lesson type for modal ──────────────────────────────────────────────────
+type LessonItem = NonNullable<ReturnType<typeof useSeriesLessons>["data"]>[number];
 
 // ─── Page root ─────────────────────────────────────────────────────────────
 export default function DesignPreviewTeacherSeriesPage() {
@@ -791,6 +799,9 @@ export default function DesignPreviewTeacherSeriesPage() {
     sort: "default",
     pdfOnly: false,
   });
+
+  // Modal state — selected lesson opens TeacherLessonModal (stays in teacher context)
+  const [selectedLesson, setSelectedLesson] = useState<LessonItem | null>(null);
 
   const metaQuery = useSeriesMeta(seriesId);
   const lessonsQuery = useSeriesLessons(seriesId);
@@ -1005,7 +1016,12 @@ export default function DesignPreviewTeacherSeriesPage() {
               ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem" }}>
                   {filteredLessons.map((lesson, index) => (
-                    <TeacherLessonCard key={lesson.id} lesson={lesson} index={index} />
+                    <TeacherLessonCard
+                      key={lesson.id}
+                      lesson={lesson}
+                      index={index}
+                      onClick={() => setSelectedLesson(lesson)}
+                    />
                   ))}
                 </div>
               )}
@@ -1013,6 +1029,17 @@ export default function DesignPreviewTeacherSeriesPage() {
           </div>
         </div>
       </div>
+
+      {/* TeacherLessonModal — opens instead of navigating away */}
+      {selectedLesson && (
+        <TeacherLessonModal
+          lesson={selectedLesson}
+          seriesId={seriesId}
+          seriesImageUrl={series?.image_url ?? null}
+          seriesTitle={series?.title ?? ""}
+          onClose={() => setSelectedLesson(null)}
+        />
+      )}
     </DesignLayout>
   );
 }
