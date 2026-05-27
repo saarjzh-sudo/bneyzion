@@ -107,6 +107,7 @@ const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
+const Progress2026 = lazy(() => import("./pages/Progress2026"));
 
 /** Redirect /design-teachers-series/:id → /teachers/series/:id (client-side fallback) */
 function SandboxSeriesRedirect() {
@@ -256,6 +257,8 @@ const App = () => (
             <Route path="/portal-old" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />
             <Route path="/portal/course/:id" element={<RequireAuth><Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<Suspense fallback={<LazyFallback />}><Roadmap /></Suspense>} />
+            {/* 2026-05-27 — דף התקדמות לפגישות (לא מקושר מהניווט) */}
+            <Route path="/2026" element={<Suspense fallback={<LazyFallback />}><Progress2026 /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/lessons/:id" element={<LessonPage />} />
             <Route path="/rabbis" element={<RabbisList />} />
