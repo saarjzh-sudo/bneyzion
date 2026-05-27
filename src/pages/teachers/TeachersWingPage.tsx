@@ -2,186 +2,192 @@
  * TeachersWingPage — /teachers
  *
  * Production Teachers Wing main page.
- * 5 tabs approved by Saar (2026-05-11):
- *   ספרים       — Torah / Nevi'im / Ketuvim tree (series filtered by audience_tags)
- *   חידות        — "חידות לילדים - פרשת השבוע" series
- *   חומרי לימוד  — דפי עבודה + סיכומים + חוברות + ביאורי מילים + פשט + ביאור
- *   כלים ומדריכים — כלי עזר + מפות + מדריכים + ליווי ת"תים + שאלות
- *   איך מלמדים  — "איך מלמדים תנ"ך" + דגשים לפרשות
  *
  * Layout: TeachersLayout (DesignHeader + TeacherSidebar + DesignFooter)
- * Hero: olive variant (hardcoded per iron rule)
- * All series links → /teachers/series/:id (not /design-teachers-series/:id)
+ * Sidebar: 3 tabs — ראשי / סוג תוכן / יוצרים (per Saar feedback 2026-05-27)
+ *
+ * Content area responds to sidebar selection:
+ *   book selected       → series grid for that book/section
+ *   content_type        → lesson list for that content type
+ *   creator             → lesson list for that creator
+ *   nothing selected    → welcome state
+ *
+ * Lesson click → popup modal (stays in Teachers Wing context)
+ * "לדף המלא" → /teachers/lesson/:id (URL-shareable)
+ *
+ * Hero: slim banner at top, olive variant, "אגף המורים"
  */
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen,
-  HelpCircle,
-  FileText,
-  Wrench,
+  ExternalLink,
   GraduationCap,
+  Loader2,
+  X,
+  FileText,
+  Tag,
+  Users,
   LayoutGrid,
   List,
-  ChevronDown,
-  ChevronLeft,
-  Loader2,
-  ExternalLink,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSEO } from "@/hooks/useSEO";
 
 import TeachersLayout from "@/components/teachers/TeachersLayout";
-import DesignPageHero from "@/components/layout-v2/DesignPageHero";
+import { type TeacherSidebarSelection } from "@/components/teachers/TeacherSidebar";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useTeachersWing, type SeriesRow } from "@/hooks/useTeachersWing";
+import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
 
-// ─── Types / constants ────────────────────────────────────────────────────────
-type TabId = "books" | "riddles" | "worksheets" | "tools" | "howto";
+// ─── Types ─────────────────────────────────────────────────────────────────
 type ViewMode = "grid" | "list";
-
 const VIEW_KEY = "bnz.teachers.view";
 
-const TABS: { id: TabId; label: string; icon: typeof BookOpen }[] = [
-  { id: "books",      label: "ספרים",           icon: BookOpen },
-  { id: "riddles",    label: "חידות",            icon: HelpCircle },
-  { id: "worksheets", label: "חומרי לימוד",     icon: FileText },
-  { id: "tools",      label: "כלים ומדריכים",   icon: Wrench },
-  { id: "howto",      label: "איך מלמדים",      icon: GraduationCap },
-];
+// ─── Helper: anon key ───────────────────────────────────────────────────────
+function getAnonKey(): string {
+  return atob("ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA0bw==");
+}
 
-// Stable series IDs
-const IDS = {
-  riddles:    "c852edd8-d959-4c8d-bf7e-17b5881275fa",
-  howToStudy: "26e30725-d5d0-4d88-8f73-f7a279801241",
-  tools:      "27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7",
-  livuyTatim: "7cbd261e-03b0-43da-a708-e8ae4402105f",
-  maps:       "4d78557b-da8b-4b1f-8d8e-09d74ff3070a",
-};
+// ─── Hook: series for a selected node ────────────────────────────────────────
+function useSeriesForBook(bookId: string | null) {
+  const { useSeriesForNode } = useTeachersWing();
+  return useSeriesForNode(bookId);
+}
 
-// ─── Shared data fetchers ─────────────────────────────────────────────────────
+// ─── Hook: lessons for a content_type ────────────────────────────────────────
+interface LessonBrief {
+  id: string;
+  title: string;
+  content_type: string | null;
+  attachment_url: string | null;
+  audio_url: string | null;
+  video_url: string | null;
+  duration: number | null;
+  rabbi_name: string | null;
+}
 
-function useLessonsInSeries(seriesId: string) {
-  return useQuery({
-    queryKey: ["tw-prod-lessons", seriesId],
+function useLessonsForContentType(contentType: string | null) {
+  return useQuery<LessonBrief[]>({
+    queryKey: ["tw-lessons-by-ctype", contentType],
+    enabled: !!contentType,
     queryFn: async () => {
-      const { data } = await supabase
-        .from("lessons")
-        .select("id, title, description, duration, audio_url, video_url, attachment_url, rabbi_id")
-        .eq("series_id", seriesId)
-        .eq("status", "published")
-        .order("title")
-        .limit(200);
-      if (!data || data.length === 0) return [];
-      const rabbiIds = [...new Set(data.filter((l) => l.rabbi_id).map((l) => l.rabbi_id!))];
+      if (!contentType) return [];
+      const anonKey = getAnonKey();
+      const encodedType = encodeURIComponent(contentType);
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,content_type,attachment_url,audio_url,video_url,duration,rabbi_id&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=eq.${encodedType}&order=title.asc&limit=100`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      if (!resp.ok) return [];
+      const rows: Array<{
+        id: string; title: string; content_type: string | null;
+        attachment_url: string | null; audio_url: string | null;
+        video_url: string | null; duration: number | null; rabbi_id: string | null;
+      }> = await resp.json();
+      const rabbiIds = [...new Set(rows.filter(r => r.rabbi_id).map(r => r.rabbi_id!))];
       let rabbiMap = new Map<string, string>();
       if (rabbiIds.length > 0) {
-        const { data: rabbis } = await supabase
-          .from("rabbis")
-          .select("id, name")
-          .in("id", rabbiIds);
-        rabbiMap = new Map((rabbis || []).map((r) => [r.id, r.name]));
+        const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
+        rabbiMap = new Map((rabbis || []).map(r => [r.id, r.name]));
       }
-      return data.map((l) => ({
-        id:          l.id,
-        title:       l.title,
-        description: l.description,
-        duration:    l.duration,
-        audioUrl:    l.audio_url,
-        videoUrl:    l.video_url,
-        attachmentUrl: l.attachment_url,
-        rabbiName:   l.rabbi_id ? rabbiMap.get(l.rabbi_id) || null : null,
+      return rows.map(r => ({
+        id: r.id,
+        title: r.title,
+        content_type: r.content_type,
+        attachment_url: r.attachment_url,
+        audio_url: r.audio_url,
+        video_url: r.video_url,
+        duration: r.duration,
+        rabbi_name: r.rabbi_id ? rabbiMap.get(r.rabbi_id) || null : null,
       }));
     },
     staleTime: 1000 * 60 * 10,
   });
 }
 
-function useTeacherSeriesByKeyword(keyword: string) {
-  return useQuery({
-    queryKey: ["tw-prod-kw", keyword],
+// ─── Hook: lessons for a creator ─────────────────────────────────────────────
+function useLessonsForCreator(creatorId: string | null) {
+  return useQuery<LessonBrief[]>({
+    queryKey: ["tw-lessons-by-creator", creatorId],
+    enabled: !!creatorId,
     queryFn: async () => {
+      if (!creatorId) return [];
+      const anonKey = getAnonKey();
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,content_type,attachment_url,audio_url,video_url,duration,rabbi_id&audience_tags=cs.%7Bteachers%7D&status=eq.published&rabbi_id=eq.${creatorId}&order=title.asc&limit=100`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      if (!resp.ok) return [];
+      const rows: Array<{
+        id: string; title: string; content_type: string | null;
+        attachment_url: string | null; audio_url: string | null;
+        video_url: string | null; duration: number | null; rabbi_id: string | null;
+      }> = await resp.json();
+      return rows.map(r => ({
+        id: r.id,
+        title: r.title,
+        content_type: r.content_type,
+        attachment_url: r.attachment_url,
+        audio_url: r.audio_url,
+        video_url: r.video_url,
+        duration: r.duration,
+        rabbi_name: null,
+      }));
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ─── Hook: lesson detail (for popup) ─────────────────────────────────────────
+interface LessonDetail {
+  id: string;
+  title: string;
+  description: string | null;
+  duration: number | null;
+  audio_url: string | null;
+  video_url: string | null;
+  attachment_url: string | null;
+  rabbi_name: string | null;
+}
+
+function useLessonDetail(lessonId: string | null) {
+  return useQuery<LessonDetail | null>({
+    queryKey: ["tw-lesson-detail", lessonId],
+    enabled: !!lessonId,
+    queryFn: async () => {
+      if (!lessonId) return null;
       const { data } = await supabase
-        .from("series")
-        .select("id, title, lesson_count, rabbi_id, description")
-        .contains("audience_tags", ["teachers"])
-        .ilike("title", `%${keyword}%`)
-        .order("title")
-        .limit(100);
-      if (!data || data.length === 0) return [];
-      const rabbiIds = [...new Set(data.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
-      let rabbiMap = new Map<string, string>();
-      if (rabbiIds.length > 0) {
-        const { data: rabbis } = await supabase
-          .from("rabbis")
-          .select("id, name")
-          .in("id", rabbiIds);
-        rabbiMap = new Map((rabbis || []).map((r) => [r.id, r.name]));
+        .from("lessons")
+        .select("id, title, description, duration, audio_url, video_url, attachment_url, rabbi_id")
+        .eq("id", lessonId)
+        .single();
+      if (!data) return null;
+      let rabbiName: string | null = null;
+      if (data.rabbi_id) {
+        const { data: rabbi } = await supabase.from("rabbis").select("name").eq("id", data.rabbi_id).single();
+        rabbiName = rabbi?.name || null;
       }
-      return data.map((s) => ({
-        id:          s.id,
-        title:       s.title,
-        lessonCount: s.lesson_count,
-        rabbiName:   s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
-        description: s.description,
-        sourceType:  null,
-      })) as SeriesRow[];
+      return {
+        id: data.id,
+        title: data.title,
+        description: data.description,
+        duration: data.duration,
+        audio_url: data.audio_url,
+        video_url: data.video_url,
+        attachment_url: data.attachment_url,
+        rabbi_name: rabbiName,
+      };
     },
     staleTime: 1000 * 60 * 10,
   });
 }
 
-function useToolsSeries() {
-  return useQuery({
-    queryKey: ["tw-prod-tools"],
-    queryFn: async () => {
-      const toolIds = [IDS.tools, IDS.livuyTatim, IDS.maps];
-      const { data: roots } = await supabase
-        .from("series")
-        .select("id, title, lesson_count, description, rabbi_id")
-        .in("id", toolIds);
-      const { data: children } = await supabase
-        .from("series")
-        .select("id, title, lesson_count, description, rabbi_id")
-        .in("parent_id", toolIds)
-        .contains("audience_tags", ["teachers"])
-        .order("title")
-        .limit(100);
-      const all = [...(roots || []), ...(children || [])];
-      const rabbiIds = [...new Set(all.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
-      let rabbiMap = new Map<string, string>();
-      if (rabbiIds.length > 0) {
-        const { data: rabbis } = await supabase
-          .from("rabbis")
-          .select("id, name")
-          .in("id", rabbiIds);
-        rabbiMap = new Map((rabbis || []).map((r) => [r.id, r.name]));
-      }
-      return all.map((s) => ({
-        id:          s.id,
-        title:       s.title,
-        lessonCount: s.lesson_count,
-        rabbiName:   s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
-        description: s.description,
-        sourceType:  null,
-      })) as SeriesRow[];
-    },
-    staleTime: 1000 * 60 * 10,
-  });
-}
-
-// ─── ViewToggle ───────────────────────────────────────────────────────────────
+// ─── ViewToggle ──────────────────────────────────────────────────────────────
 function ViewToggle({ viewMode, onChange }: { viewMode: ViewMode; onChange: (v: ViewMode) => void }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        border: `1.5px solid rgba(139,111,71,0.2)`,
-        borderRadius: radii.md,
-        overflow: "hidden",
-      }}
-    >
+    <div style={{ display: "flex", border: `1.5px solid rgba(139,111,71,0.2)`, borderRadius: radii.md, overflow: "hidden" }}>
       {(["grid", "list"] as ViewMode[]).map((v) => {
         const active = viewMode === v;
         return (
@@ -190,15 +196,10 @@ function ViewToggle({ viewMode, onChange }: { viewMode: ViewMode; onChange: (v: 
             onClick={() => onChange(v)}
             title={v === "grid" ? "תצוגת כרטיסים" : "תצוגת רשימה"}
             style={{
-              width: 36,
-              height: 32,
-              border: "none",
+              width: 36, height: 32, border: "none",
               background: active ? colors.goldDark : "transparent",
               color: active ? "white" : colors.textMuted,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center",
             }}
           >
             {v === "grid" ? <LayoutGrid size={15} /> : <List size={15} />}
@@ -215,19 +216,10 @@ function SeriesCard({ series }: { series: SeriesRow }) {
     <Link to={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
       <div
         style={{
-          background: "white",
-          borderRadius: radii.xl,
-          border: "1px solid rgba(139,111,71,0.1)",
-          boxShadow: shadows.cardSoft,
-          padding: "1.25rem 1.25rem 1rem",
-          cursor: "pointer",
-          transition: "all 0.22s ease",
-          position: "relative",
-          overflow: "hidden",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
+          background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.1)",
+          boxShadow: shadows.cardSoft, padding: "1.25rem 1.25rem 1rem", cursor: "pointer",
+          transition: "all 0.22s ease", position: "relative", overflow: "hidden",
+          height: "100%", display: "flex", flexDirection: "column", gap: "0.5rem",
         }}
         onMouseEnter={(e) => {
           e.currentTarget.style.transform = "translateY(-3px)";
@@ -240,34 +232,23 @@ function SeriesCard({ series }: { series: SeriesRow }) {
           e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
         }}
       >
-        {/* Olive accent stripe (RTL = right) */}
         <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 4, background: gradients.oliveButton }} />
-
-        {/* Badge */}
         <span style={{ fontFamily: fonts.body, fontSize: "0.6rem", color: colors.oliveDark, background: "rgba(74,90,46,0.1)", padding: "0.1rem 0.5rem", borderRadius: radii.pill, fontWeight: 700, alignSelf: "flex-start" }}>
           אגף המורים
         </span>
-
-        {/* Title */}
         <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "0.95rem", color: colors.textDark, margin: 0, lineHeight: 1.4, paddingInlineEnd: "0.5rem" }}>
           {series.title}
         </h3>
-
-        {/* Rabbi */}
         {series.rabbiName && (
           <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.goldDark, fontWeight: 700 }}>
             {series.rabbiName}
           </div>
         )}
-
-        {/* Description */}
         {series.description && (
           <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted, margin: 0, lineHeight: 1.55, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", flex: 1 }}>
             {series.description}
           </p>
         )}
-
-        {/* Footer */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "0.65rem", borderTop: "1px solid rgba(139,111,71,0.08)", marginTop: "auto" }}>
           <span style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: colors.textSubtle }}>{series.lessonCount} שיעורים</span>
           <span style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: colors.oliveMain, fontWeight: 600 }}>לסדרה ←</span>
@@ -277,7 +258,7 @@ function SeriesCard({ series }: { series: SeriesRow }) {
   );
 }
 
-// ─── SeriesListRow ─────────────────────────────────────────────────────────────
+// ─── SeriesListRow ────────────────────────────────────────────────────────────
 function SeriesListRow({ series }: { series: SeriesRow }) {
   return (
     <Link to={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
@@ -300,201 +281,292 @@ function SeriesListRow({ series }: { series: SeriesRow }) {
   );
 }
 
-// ─── LessonRow (for riddles / howto tabs) ─────────────────────────────────────
-function LessonItemRow({ lesson }: { lesson: { id: string; title: string; duration: number | null; audioUrl: string | null; videoUrl: string | null; rabbiName: string | null } }) {
+// ─── LessonRow ────────────────────────────────────────────────────────────────
+function LessonRow({ lesson, onOpen }: { lesson: LessonBrief; onOpen: (id: string) => void }) {
   return (
-    <Link to={`/teachers/lesson/${lesson.id}`} style={{ textDecoration: "none", color: "inherit" }}>
-      <div
-        style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.7rem 1rem", borderRadius: radii.md, background: "white", border: "1px solid rgba(139,111,71,0.07)", cursor: "pointer", transition: "all 0.15s" }}
-        onMouseEnter={(e) => { e.currentTarget.style.borderColor = colors.oliveMain; e.currentTarget.style.background = colors.parchmentDark; }}
-        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(139,111,71,0.07)"; e.currentTarget.style.background = "white"; }}
-      >
-        {/* Media type dot */}
-        <div style={{ width: 6, height: 6, borderRadius: "50%", background: lesson.videoUrl ? colors.oliveMain : lesson.audioUrl ? colors.goldDark : colors.textSubtle, flexShrink: 0 }} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textDark, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{lesson.title}</div>
-          {lesson.rabbiName && <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.goldDark }}>{lesson.rabbiName}</div>}
-        </div>
-        {lesson.duration && (
-          <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, flexShrink: 0 }}>
-            {Math.round(lesson.duration / 60)}′
-          </span>
-        )}
-        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600, flexShrink: 0 }}>פרטים ←</span>
+    <div
+      onClick={() => onOpen(lesson.id)}
+      style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.75rem 1rem", borderRadius: radii.lg, background: "white", border: "1px solid rgba(139,111,71,0.07)", cursor: "pointer", transition: "all 0.15s" }}
+      onMouseEnter={(e) => { e.currentTarget.style.borderColor = colors.oliveMain; e.currentTarget.style.background = colors.parchmentDark; }}
+      onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(139,111,71,0.07)"; e.currentTarget.style.background = "white"; }}
+    >
+      <div style={{ width: 6, height: 6, borderRadius: "50%", background: lesson.video_url ? colors.oliveMain : lesson.audio_url ? colors.goldDark : colors.textSubtle, flexShrink: 0 }} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textDark, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{lesson.title}</div>
+        {lesson.content_type && <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveDark, marginTop: "0.1rem" }}>{lesson.content_type}</div>}
       </div>
-    </Link>
-  );
-}
-
-// ─── SeriesGrid helper ────────────────────────────────────────────────────────
-function SeriesGrid({ series, viewMode }: { series: SeriesRow[]; viewMode: ViewMode }) {
-  if (series.length === 0) {
-    return <div style={{ color: colors.textSubtle, fontFamily: fonts.body, fontSize: "0.85rem", padding: "2rem 0", textAlign: "center" }}>לא נמצאו סדרות</div>;
-  }
-  if (viewMode === "grid") {
-    return (
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "1.25rem" }}>
-        {series.map((s) => <SeriesCard key={s.id} series={s} />)}
-      </div>
-    );
-  }
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-      {series.map((s) => <SeriesListRow key={s.id} series={s} />)}
+      {lesson.duration && (
+        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, flexShrink: 0 }}>
+          {Math.round(lesson.duration / 60)}′
+        </span>
+      )}
+      {lesson.attachment_url && (
+        <span style={{ fontFamily: fonts.body, fontSize: "0.65rem", color: colors.goldDark, background: "rgba(139,111,71,0.08)", padding: "0.1rem 0.4rem", borderRadius: radii.pill, flexShrink: 0 }}>
+          קובץ
+        </span>
+      )}
+      <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600, flexShrink: 0 }}>פרטים ←</span>
     </div>
   );
 }
 
-// ─── BooksTab ─────────────────────────────────────────────────────────────────
-function BooksTab({ viewMode, onViewChange }: { viewMode: ViewMode; onViewChange: (v: ViewMode) => void }) {
-  const { categories, useSeriesForNode, isLoading } = useTeachersWing();
-  const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
-  const [selectedTitle, setSelectedTitle] = useState("");
-  const [expanded, setExpanded] = useState<Set<string>>(new Set(["torah"]));
+// ─── LessonPopup ──────────────────────────────────────────────────────────────
+function LessonPopup({ lessonId, onClose }: { lessonId: string; onClose: () => void }) {
+  const { data: lesson, isLoading } = useLessonDetail(lessonId);
 
-  const seriesQ = useSeriesForNode(selectedNodeId);
-  const toggle = (id: string) => setExpanded((prev) => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
-
-  if (isLoading) return <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}><Loader2 size={28} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} /></div>;
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
 
   return (
-    <div dir="rtl" style={{ display: "grid", gridTemplateColumns: "260px 1fr", gap: "2rem", alignItems: "start" }}>
-      {/* Book tree */}
-      <nav style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.1)", boxShadow: shadows.cardSoft, overflow: "hidden", position: "sticky", top: "6rem" }}>
-        {categories.map((cat) => {
-          const open = expanded.has(cat.id);
-          return (
-            <div key={cat.id}>
-              <button onClick={() => toggle(cat.id)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.85rem 1rem", background: colors.parchmentDark, border: "none", borderBottom: "1px solid rgba(139,111,71,0.1)", cursor: "pointer", fontFamily: fonts.display, fontWeight: 800, fontSize: "0.9rem", color: colors.oliveDark, textAlign: "right" }}>
-                {cat.title}
-                {open ? <ChevronDown size={14} /> : <ChevronLeft size={14} />}
-              </button>
-              {open && (
-                <div>
-                  {cat.books.map((book) => {
-                    const isSelected = selectedNodeId === book.id;
-                    return (
-                      <div key={book.id}>
-                        <button
-                          onClick={() => { setSelectedNodeId(book.id); setSelectedTitle(book.title); }}
-                          style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.65rem 1.2rem", background: isSelected ? "rgba(139,111,71,0.08)" : "transparent", border: "none", borderBottom: "1px solid rgba(139,111,71,0.06)", cursor: "pointer", fontFamily: fonts.body, fontSize: "0.82rem", color: isSelected ? colors.oliveDark : colors.textMid, textAlign: "right", borderInlineStart: isSelected ? `3px solid ${colors.goldDark}` : "3px solid transparent" }}
-                        >
-                          {book.title}
-                        </button>
-                        {book.children.length > 0 && isSelected &&
-                          book.children.map((child) => (
-                            <button key={child.id} onClick={() => { setSelectedNodeId(child.id); setSelectedTitle(child.title); }} style={{ width: "100%", display: "flex", padding: "0.5rem 1.5rem", background: selectedNodeId === child.id ? "rgba(139,111,71,0.12)" : "transparent", border: "none", cursor: "pointer", fontFamily: fonts.body, fontSize: "0.76rem", color: selectedNodeId === child.id ? colors.oliveDark : colors.textMuted, textAlign: "right" }}>
-                              {child.title}
-                            </button>
-                          ))}
-                      </div>
-                    );
-                  })}
+    <>
+      <div
+        onClick={onClose}
+        style={{
+          position: "fixed", inset: 0,
+          background: "rgba(45,31,14,0.6)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+          zIndex: 80,
+        }}
+      />
+      <div
+        dir="rtl"
+        style={{
+          position: "fixed",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "min(640px, 92vw)",
+          maxHeight: "85vh",
+          overflowY: "auto",
+          background: colors.parchment,
+          borderRadius: radii.xl,
+          boxShadow: shadows.card,
+          zIndex: 90,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <div style={{
+          background: `linear-gradient(135deg, ${colors.oliveDark}, ${colors.oliveMain})`,
+          padding: "1.25rem 1.5rem",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          borderRadius: `${radii.xl} ${radii.xl} 0 0`,
+          flexShrink: 0,
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+            <GraduationCap size={18} style={{ color: "#E8D5A0" }} />
+            <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.85rem", color: "#E8D5A0" }}>
+              אגף המורים
+            </span>
+          </div>
+          <button
+            onClick={onClose}
+            style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(232,213,160,0.8)", padding: "0.25rem", lineHeight: 0 }}
+            aria-label="סגור"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        <div style={{ padding: "1.5rem", flex: 1 }}>
+          {isLoading ? (
+            <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}>
+              <Loader2 size={28} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            </div>
+          ) : !lesson ? (
+            <div style={{ fontFamily: fonts.body, color: colors.textMuted, textAlign: "center", padding: "2rem" }}>
+              לא נמצא שיעור
+            </div>
+          ) : (
+            <>
+              <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.3rem", color: colors.textDark, margin: "0 0 0.5rem" }}>
+                {lesson.title}
+              </h2>
+              {lesson.rabbi_name && (
+                <div style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.goldDark, fontWeight: 700, marginBottom: "1rem" }}>
+                  {lesson.rabbi_name}
                 </div>
               )}
-            </div>
-          );
-        })}
-      </nav>
+              {lesson.description && (
+                <p style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMid, lineHeight: 1.65, marginBottom: "1.25rem" }}>
+                  {lesson.description}
+                </p>
+              )}
+              {lesson.audio_url && (
+                <div style={{ marginBottom: "1rem" }}>
+                  <audio controls src={lesson.audio_url} style={{ width: "100%", borderRadius: radii.md }} />
+                </div>
+              )}
+              {lesson.attachment_url && (
+                <a
+                  href={lesson.attachment_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.6rem 1.2rem", background: colors.goldDark, color: "white", borderRadius: radii.lg, fontFamily: fonts.body, fontWeight: 700, fontSize: "0.85rem", textDecoration: "none", marginBottom: "1rem" }}
+                >
+                  <FileText size={15} />
+                  הורד קובץ
+                </a>
+              )}
+              {lesson.duration && (
+                <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textSubtle, marginBottom: "1rem" }}>
+                  משך: {Math.round(lesson.duration / 60)} דקות
+                </div>
+              )}
+              <div style={{ borderTop: `1px solid rgba(139,111,71,0.12)`, paddingTop: "1rem", display: "flex", justifyContent: "flex-end" }}>
+                <Link
+                  to={`/teachers/lesson/${lesson.id}`}
+                  onClick={onClose}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: fonts.body, fontSize: "0.82rem", color: colors.oliveDark, fontWeight: 700, textDecoration: "none" }}
+                >
+                  <ExternalLink size={14} />
+                  לדף המלא
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
 
-      {/* Series panel */}
-      <div>
-        {!selectedNodeId ? (
-          <div style={{ textAlign: "center", padding: "4rem 2rem", color: colors.textSubtle, fontFamily: fonts.body }}>
-            <BookOpen size={48} style={{ color: colors.goldDark, marginBottom: "1rem", opacity: 0.5 }} />
-            <p>בחר ספר מהתפריט כדי לראות את הסדרות</p>
+// ─── Content area components ──────────────────────────────────────────────────
+
+function BookContentArea({ bookId, bookTitle }: { bookId: string; bookTitle: string }) {
+  const { data: series, isLoading } = useSeriesForBook(bookId);
+  const [viewMode, setViewMode] = useState<ViewMode>(() => {
+    try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "grid"; } catch { return "grid"; }
+  });
+  const handleViewChange = (v: ViewMode) => {
+    setViewMode(v);
+    try { localStorage.setItem(VIEW_KEY, v); } catch { /* blocked */ }
+  };
+  if (isLoading) return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+      <Loader2 size={28} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+    </div>
+  );
+  const items = series || [];
+  return (
+    <div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
+        <div>
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.oliveDark, margin: 0 }}>{bookTitle}</h2>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginTop: "0.2rem" }}>{items.length} סדרות</div>
+        </div>
+        <ViewToggle viewMode={viewMode} onChange={handleViewChange} />
+      </div>
+      {items.length === 0 ? (
+        <div style={{ padding: "2.5rem", background: "white", borderRadius: radii.xl, border: "1px dashed rgba(139,111,71,0.2)", fontFamily: fonts.body, color: colors.textMuted, textAlign: "center" }}>
+          אין סדרות זמינות לספר זה
+        </div>
+      ) : viewMode === "grid" ? (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: "1.25rem" }}>
+          {items.map((s) => <SeriesCard key={s.id} series={s} />)}
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {items.map((s) => <SeriesListRow key={s.id} series={s} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ContentTypeArea({ contentType, onLessonOpen }: { contentType: string; onLessonOpen: (id: string) => void }) {
+  const { data: lessons, isLoading } = useLessonsForContentType(contentType);
+  if (isLoading) return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+      <Loader2 size={28} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+    </div>
+  );
+  const items = lessons || [];
+  return (
+    <div>
+      <div style={{ marginBottom: "1.25rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Tag size={18} style={{ color: colors.oliveDark }} />
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: 0 }}>{contentType}</h2>
+        </div>
+        <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginTop: "0.25rem" }}>{items.length} שיעורים{items.length === 100 ? "+" : ""}</div>
+      </div>
+      {items.length === 0 ? (
+        <div style={{ padding: "2.5rem", background: "white", borderRadius: radii.xl, border: "1px dashed rgba(139,111,71,0.2)", fontFamily: fonts.body, color: colors.textMuted, textAlign: "center" }}>
+          אין שיעורים בסוג תוכן זה
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+          {items.map((l) => <LessonRow key={l.id} lesson={l} onOpen={onLessonOpen} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CreatorArea({ creatorId, creatorName, onLessonOpen }: { creatorId: string; creatorName: string; onLessonOpen: (id: string) => void }) {
+  const { data: lessons, isLoading } = useLessonsForCreator(creatorId);
+  if (isLoading) return (
+    <div style={{ display: "flex", justifyContent: "center", padding: "3rem" }}>
+      <Loader2 size={28} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+    </div>
+  );
+  const items = lessons || [];
+  return (
+    <div>
+      <div style={{ marginBottom: "1.25rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <Users size={18} style={{ color: colors.goldDark }} />
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: 0 }}>{creatorName}</h2>
+        </div>
+        <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginTop: "0.25rem" }}>{items.length} שיעורים{items.length === 100 ? "+" : ""}</div>
+      </div>
+      {items.length === 0 ? (
+        <div style={{ padding: "2.5rem", background: "white", borderRadius: radii.xl, border: "1px dashed rgba(139,111,71,0.2)", fontFamily: fonts.body, color: colors.textMuted, textAlign: "center" }}>
+          אין שיעורים ליוצר זה
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+          {items.map((l) => <LessonRow key={l.id} lesson={l} onOpen={onLessonOpen} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function WelcomeState() {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "5rem 2rem", background: "white", borderRadius: radii.xl, border: "1px dashed rgba(74,90,46,0.2)", gap: "1rem", textAlign: "center" }}>
+      <div style={{ width: 72, height: 72, borderRadius: "50%", background: `linear-gradient(135deg, ${colors.oliveDark}, ${colors.oliveMain})`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: shadows.cardSoft }}>
+        <GraduationCap size={32} style={{ color: "#E8D5A0" }} />
+      </div>
+      <div style={{ fontFamily: fonts.display, fontSize: "1.2rem", fontWeight: 800, color: colors.textDark }}>
+        ברוך הבא לאגף המורים
+      </div>
+      <div style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMuted, maxWidth: 380, lineHeight: 1.7 }}>
+        בחר ספר מהתפריט לפי עץ התנ"ך, סנן לפי סוג תוכן, או עיין לפי יוצר
+      </div>
+      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center", marginTop: "0.5rem" }}>
+        {[
+          { icon: <BookOpen size={14} />, label: "ראשי — עץ הספרים" },
+          { icon: <Tag size={14} />,      label: "סוג תוכן — לפי קטגוריה" },
+          { icon: <Users size={14} />,    label: "יוצרים — לפי מחבר" },
+        ].map(({ icon, label }) => (
+          <div key={label} style={{ display: "flex", alignItems: "center", gap: "0.4rem", padding: "0.4rem 0.9rem", background: colors.parchmentDark, borderRadius: radii.pill, fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}>
+            <span style={{ color: colors.oliveDark }}>{icon}</span>
+            {label}
           </div>
-        ) : (
-          <>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
-              <h2 style={{ fontFamily: fonts.display, fontSize: "1.15rem", color: colors.oliveDark, margin: 0 }}>{selectedTitle}</h2>
-              <ViewToggle viewMode={viewMode} onChange={onViewChange} />
-            </div>
-            {seriesQ.isLoading ? (
-              <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}><Loader2 size={24} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} /></div>
-            ) : (
-              <SeriesGrid series={seriesQ.data || []} viewMode={viewMode} />
-            )}
-          </>
-        )}
+        ))}
       </div>
     </div>
   );
 }
 
-// ─── RiddlesTab ───────────────────────────────────────────────────────────────
-function RiddlesTab() {
-  const q = useLessonsInSeries(IDS.riddles);
-  if (q.isLoading) return <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}><Loader2 size={24} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} /></div>;
-  return (
-    <div>
-      <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, marginBottom: "1.25rem" }}>
-        חידות לילדים לפרשת השבוע — {q.data?.length || 0} שיעורים
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        {(q.data || []).map((l) => <LessonItemRow key={l.id} lesson={l} />)}
-      </div>
-    </div>
-  );
-}
-
-// ─── WorksheetsTab ───────────────────────────────────────────────────────────
-function WorksheetsTab({ viewMode, onViewChange }: { viewMode: ViewMode; onViewChange: (v: ViewMode) => void }) {
-  const keywords = ["דף עבודה", "סיכום", "חוברת", "ביאורי מילים", "פשט", "ביאור"];
-  const queries = keywords.map((kw) => useTeacherSeriesByKeyword(kw));
-  const isLoading = queries.some((q) => q.isLoading);
-
-  const combined = Object.values(
-    queries.reduce((acc, q) => {
-      for (const s of q.data || []) { acc[s.id] = s; }
-      return acc;
-    }, {} as Record<string, SeriesRow>)
-  ).sort((a, b) => b.lessonCount - a.lessonCount);
-
-  if (isLoading) return <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}><Loader2 size={24} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} /></div>;
-  return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
-        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: 0 }}>{combined.length} סדרות — דפי עבודה, סיכומים, חוברות, ביאורי מילים ועוד</p>
-        <ViewToggle viewMode={viewMode} onChange={onViewChange} />
-      </div>
-      <SeriesGrid series={combined} viewMode={viewMode} />
-    </div>
-  );
-}
-
-// ─── ToolsTab ─────────────────────────────────────────────────────────────────
-function ToolsTab({ viewMode, onViewChange }: { viewMode: ViewMode; onViewChange: (v: ViewMode) => void }) {
-  const q = useToolsSeries();
-  if (q.isLoading) return <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}><Loader2 size={24} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} /></div>;
-  return (
-    <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem" }}>
-        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: 0 }}>כלי עזר, מפות, מדריכים, ליווי ת"תים ועוד — {q.data?.length || 0} סדרות</p>
-        <ViewToggle viewMode={viewMode} onChange={onViewChange} />
-      </div>
-      <SeriesGrid series={q.data || []} viewMode={viewMode} />
-    </div>
-  );
-}
-
-// ─── HowToTab ────────────────────────────────────────────────────────────────
-function HowToTab() {
-  const q = useLessonsInSeries(IDS.howToStudy);
-  if (q.isLoading) return <div style={{ display: "flex", justifyContent: "center", padding: "2rem" }}><Loader2 size={24} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} /></div>;
-  return (
-    <div>
-      <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, marginBottom: "1.25rem" }}>
-        {q.data?.length || 0} שיעורים על מתודולוגיה של הוראת תנ"ך
-      </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        {(q.data || []).map((l) => <LessonItemRow key={l.id} lesson={l} />)}
-      </div>
-    </div>
-  );
-}
-
-// ─── Main page ────────────────────────────────────────────────────────────────
+// ─── Main page ─────────────────────────────────────────────────────────────────
 export default function TeachersWingPage() {
   useSEO({
     title: 'אגף המורים — כלים ותכנים למחנכי תנ"ך',
@@ -502,105 +574,80 @@ export default function TeachersWingPage() {
     url: "https://bneyzion.co.il/teachers",
   });
 
-  const [activeTab, setActiveTab] = useState<TabId>("books");
-  const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "grid"; }
-    catch { return "grid"; }
-  });
+  const [selection, setSelection] = useState<TeacherSidebarSelection | null>(null);
+  const [openLessonId, setOpenLessonId] = useState<string | null>(null);
 
-  const handleViewChange = useCallback((v: ViewMode) => {
-    setViewMode(v);
-    try { localStorage.setItem(VIEW_KEY, v); } catch { /* blocked */ }
+  const handleSidebarSelect = useCallback((sel: TeacherSidebarSelection) => {
+    setSelection(sel);
+    setOpenLessonId(null);
   }, []);
 
-  const renderTab = () => {
-    switch (activeTab) {
-      case "books":      return <BooksTab viewMode={viewMode} onViewChange={handleViewChange} />;
-      case "riddles":    return <RiddlesTab />;
-      case "worksheets": return <WorksheetsTab viewMode={viewMode} onViewChange={handleViewChange} />;
-      case "tools":      return <ToolsTab viewMode={viewMode} onViewChange={handleViewChange} />;
-      case "howto":      return <HowToTab />;
-    }
+  const handleLessonOpen  = useCallback((id: string) => setOpenLessonId(id), []);
+  const handleLessonClose = useCallback(() => setOpenLessonId(null), []);
+
+  const renderContent = () => {
+    if (!selection)                      return <WelcomeState />;
+    if (selection.type === "book")       return <BookContentArea bookId={selection.id} bookTitle={selection.label} />;
+    if (selection.type === "content_type") return <ContentTypeArea contentType={selection.id} onLessonOpen={handleLessonOpen} />;
+    if (selection.type === "creator")    return <CreatorArea creatorId={selection.id} creatorName={selection.label} onLessonOpen={handleLessonOpen} />;
+    return <WelcomeState />;
   };
 
   return (
-    <TeachersLayout>
-        {/* Hero */}
-        <DesignPageHero
-          variant="olive"
-          eyebrow="אגף המורים"
-          title='כלים ותכנים למחנכי תנ"ך'
-          subtitle='מאגר תכנים מקצועי למורים: דפי עבודה, חידות, כלי עזר, מדריכים והוראות לכיתות א׳–י״ב'
-          icon={<GraduationCap size={28} style={{ color: "#E8D5A0" }} />}
-        />
-
-        {/* Tab navigation */}
-        <div
-          dir="rtl"
-          style={{
-            background: "white",
-            borderBottom: `1px solid rgba(139,111,71,0.12)`,
-            position: "sticky",
-            top: 96,
-            zIndex: 20,
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1100,
-              margin: "0 auto",
-              padding: "0 1.5rem",
-              display: "flex",
-              gap: "0.25rem",
-              overflowX: "auto",
-            }}
-          >
-            {TABS.map(({ id, label, icon: Icon }) => {
-              const active = activeTab === id;
-              return (
-                <button
-                  key={id}
-                  onClick={() => setActiveTab(id)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.4rem",
-                    padding: "0.9rem 1.1rem",
-                    background: "none",
-                    border: "none",
-                    borderBottom: active ? `2.5px solid ${colors.oliveDark}` : "2.5px solid transparent",
-                    cursor: "pointer",
-                    fontFamily: fonts.body,
-                    fontSize: "0.85rem",
-                    fontWeight: active ? 700 : 400,
-                    color: active ? colors.oliveDark : colors.textMuted,
-                    whiteSpace: "nowrap",
-                    transition: "all 0.15s",
-                  }}
-                >
-                  <Icon size={15} />
-                  {label}
-                </button>
-              );
-            })}
+    <TeachersLayout
+      onSidebarSelect={handleSidebarSelect}
+      sidebarSelection={selection}
+    >
+      {/* Slim hero — olive, identifies Teachers Wing, ≤30vh */}
+      <div
+        dir="rtl"
+        style={{
+          background: `linear-gradient(135deg, ${colors.oliveDark} 0%, ${colors.oliveMain} 60%, rgba(91,110,58,0.85) 100%)`,
+          padding: "1.5rem 2rem",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")", opacity: 0.4, pointerEvents: "none" as const }} />
+        <div style={{ position: "relative", maxWidth: 900, margin: "0 auto" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(232,213,160,0.15)", border: "1.5px solid rgba(232,213,160,0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <GraduationCap size={18} style={{ color: "#E8D5A0" }} />
+            </div>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: "rgba(232,213,160,0.8)", letterSpacing: "0.08em" }}>
+              אגף המורים
+            </span>
           </div>
+          <h1 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.2rem, 2.5vw, 1.6rem)", color: "#FAF6F0", margin: "0 0 0.35rem", lineHeight: 1.25 }}>
+            כלים ותכנים למחנכי תנ"ך
+          </h1>
+          <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: "rgba(250,246,240,0.75)", margin: 0, lineHeight: 1.5 }}>
+            בחר מהתפריט לפי עץ הספרים, סוג תוכן, או יוצר
+          </p>
         </div>
+      </div>
 
-        {/* Tab content */}
-        <div
-          dir="rtl"
-          style={{
-            maxWidth: 1100,
-            margin: "0 auto",
-            padding: "2rem 1.5rem 3rem",
-          }}
-        >
-          {renderTab()}
-        </div>
+      {/* Content area */}
+      <div
+        dir="rtl"
+        style={{
+          padding: "2rem 1.5rem 4rem",
+          maxWidth: 900,
+          margin: "0 auto",
+          width: "100%",
+        }}
+      >
+        {renderContent()}
+      </div>
 
-        <style>{`
-          @keyframes spin { to { transform: rotate(360deg); } }
-        `}</style>
-      </TeachersLayout>
+      {/* Lesson popup */}
+      {openLessonId && (
+        <LessonPopup lessonId={openLessonId} onClose={handleLessonClose} />
+      )}
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+      `}</style>
+    </TeachersLayout>
   );
 }

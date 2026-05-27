@@ -20,16 +20,20 @@ import { useState, type ReactNode } from "react";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
-import TeacherSidebar from "./TeacherSidebar";
+import TeacherSidebar, { type TeacherSidebarSelection } from "./TeacherSidebar";
 import { colors } from "@/lib/designTokens";
 
 interface TeachersLayoutProps {
   children: ReactNode;
   /** Active series ID — passed through to TeacherSidebar for highlighting */
   activeSeriesId?: string;
+  /** Called when user selects a book/content-type/creator from sidebar */
+  onSidebarSelect?: (sel: TeacherSidebarSelection) => void;
+  /** Currently selected sidebar item — for highlighting */
+  sidebarSelection?: TeacherSidebarSelection | null;
 }
 
-export default function TeachersLayout({ children, activeSeriesId }: TeachersLayoutProps) {
+export default function TeachersLayout({ children, activeSeriesId, onSidebarSelect, sidebarSelection }: TeachersLayoutProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -60,6 +64,8 @@ export default function TeachersLayout({ children, activeSeriesId }: TeachersLay
           drawerOpen={drawerOpen}
           onDrawerClose={() => setDrawerOpen(false)}
           activeSeriesId={activeSeriesId}
+          onSelect={onSidebarSelect}
+          selection={sidebarSelection}
         />
 
         <main

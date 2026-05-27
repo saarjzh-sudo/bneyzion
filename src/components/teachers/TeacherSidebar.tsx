@@ -1,41 +1,134 @@
 /**
  * TeacherSidebar — sidebar for the Teachers Wing production pages.
  *
- * Structure mirrors DesignSidebar (3-tab + gold banner pattern)
- * but is scoped to teacher content only.
- *
- * Tabs:
- *   ספרים   — Torah / Nevi'im / Ketuvim accordion tree
- *   כלים    — tools sections (כלי עזר / מפות / ליווי ת"תים / איך מלמדים / חידות)
- *   יוצרים  — rabbis with teacher-tagged content
+ * 3 tabs matching old site bneyzion.co.il/מאגר-עזרי-הלמידה/:
+ *   ראשי      — Torah / Nevi'im / Ketuvim accordion tree
+ *   סוג תוכן  — content type filters with lesson counts
+ *   יוצרים    — split: רבנים / יוצרי תוכן with lesson counts
  *
  * Iron rules:
- *  - RTL logical CSS only (padding-inline-*, border-inline-*, inset-inline-*)
- *  - Gold primary banner required
- *  - Mobile: off-canvas drawer (RTL slide from right)
+ *  - RTL logical CSS only
+ *  - Gold/olive primary banner
+ *  - Mobile: off-canvas drawer from right
  *  - localStorage key: bnz.teacher-sidebar.collapsed
+ *
+ * Selection callbacks:
+ *  - onBookSelect(seriesId, title) — navigates to /teachers/series/:id
+ *  - onContentTypeSelect(type)     — drives content area in TeachersWingPage
+ *  - onCreatorSelect(creatorId, name) — drives content area in TeachersWingPage
  */
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BookOpen,
-  Wrench,
+  Tag,
   Users,
   ChevronDown,
   ChevronLeft,
   Search,
   X,
   GraduationCap,
+  FileText,
+  Loader2,
 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { colors, fonts, radii, shadows } from "@/lib/designTokens";
 import { useTeacherSidebar } from "@/hooks/useTeacherSidebar";
+import { supabase } from "@/integrations/supabase/client";
+import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 const STORAGE_KEY   = "bnz.teacher-sidebar.collapsed";
-const SIDEBAR_W_EXP = 280;
+const SIDEBAR_W_EXP = 300;
 const SIDEBAR_W_COL = 64;
 
-type Tab = "books" | "tools" | "yotzrim";
+type Tab = "rashim" | "sogTochn" | "yotzrim";
+
+// ─── Content type counts hook ────────────────────────────────────────────────
+interface ContentTypeCount {
+  content_type: string;
+  cnt: number;
+}
+
+function getAnonKey(): string {
+  return atob("ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA4bw==");
+}
+
+function useContentTypeCounts() {
+  return useQuery<ContentTypeCount[]>({
+    queryKey: ["tw-sidebar-content-type-counts"],
+    queryFn: async () => {
+      const anonKey = getAnonKey();
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=content_type&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=not.is.null&limit=20000`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      if (!resp.ok) return [];
+      const rows: Array<{ content_type: string }> = await resp.json();
+      const map = new Map<string, number>();
+      for (const row of rows) {
+        if (row.content_type) {
+          map.set(row.content_type, (map.get(row.content_type) || 0) + 1);
+        }
+      }
+      return Array.from(map.entries())
+        .map(([content_type, cnt]) => ({ content_type, cnt }))
+        .sort((a, b) => b.cnt - a.cnt);
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ─── Creators hook ────────────────────────────────────────────────────────────
+interface CreatorEntry {
+  id: string;
+  name: string;
+  entity_type: "rabbi" | "content_creator";
+  cnt: number;
+}
+
+function useCreatorsByType() {
+  return useQuery<CreatorEntry[]>({
+    queryKey: ["tw-sidebar-creators-by-type"],
+    queryFn: async () => {
+      const { data: lessonRabbis } = await supabase
+        .from("lessons")
+        .select("rabbi_id")
+        .contains("audience_tags", ["teachers"])
+        .eq("status", "published")
+        .not("rabbi_id", "is", null)
+        .limit(20000);
+
+      if (!lessonRabbis || lessonRabbis.length === 0) return [];
+
+      const rabbiIdCount = new Map<string, number>();
+      for (const row of lessonRabbis) {
+        if (row.rabbi_id) {
+          rabbiIdCount.set(row.rabbi_id, (rabbiIdCount.get(row.rabbi_id) || 0) + 1);
+        }
+      }
+
+      const anonKey = getAnonKey();
+      const rabbiIds = Array.from(rabbiIdCount.keys());
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/rabbis?select=id,name,entity_type&id=in.(${rabbiIds.join(",")})&limit=200`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      if (!resp.ok) return [];
+      const rabbisInfo: Array<{ id: string; name: string; entity_type: string | null }> = await resp.json();
+
+      return rabbisInfo
+        .map(r => ({
+          id: r.id,
+          name: r.name,
+          entity_type: (r.entity_type === "content_creator" ? "content_creator" : "rabbi") as "rabbi" | "content_creator",
+          cnt: rabbiIdCount.get(r.id) || 0,
+        }))
+        .sort((a, b) => b.cnt - a.cnt);
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
 
 // ─── useMobileViewport ───────────────────────────────────────────────────────
 function useMobileViewport(): boolean {
@@ -51,13 +144,21 @@ function useMobileViewport(): boolean {
 }
 
 // ─── Props ───────────────────────────────────────────────────────────────────
+export interface TeacherSidebarSelection {
+  type: "book" | "content_type" | "creator";
+  id: string;
+  label: string;
+}
+
 interface TeacherSidebarProps {
   drawerOpen?: boolean;
   onDrawerClose?: () => void;
   /** Active series ID for highlighting */
   activeSeriesId?: string;
-  /** Active lesson ID for highlighting */
-  activeLessonId?: string;
+  /** Called when user selects a book/content-type/creator — drives content area */
+  onSelect?: (sel: TeacherSidebarSelection) => void;
+  /** Currently selected item (for highlighting) */
+  selection?: TeacherSidebarSelection | null;
 }
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -65,23 +166,25 @@ export default function TeacherSidebar({
   drawerOpen,
   onDrawerClose,
   activeSeriesId,
+  onSelect,
+  selection,
 }: TeacherSidebarProps) {
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem(STORAGE_KEY) === "1";
   });
-  const [activeTab, setActiveTab] = useState<Tab>("books");
+  const [activeTab, setActiveTab] = useState<Tab>("rashim");
   const [search, setSearch] = useState("");
   const [expandedBooks, setExpandedBooks] = useState<Set<string>>(new Set(["torah"]));
-  const [expandedTools, setExpandedTools] = useState<Set<string>>(new Set());
 
   const isMobile   = useMobileViewport();
   const isDrawer   = isMobile;
   const drawerVis  = isDrawer && !!drawerOpen;
   const navigate   = useNavigate();
 
-  const { torahBooks, neviimBooks, ketuvimBooks, toolsSections, yotzrimRabbis, isLoading } =
-    useTeacherSidebar();
+  const { torahBooks, neviimBooks, ketuvimBooks, isLoading } = useTeacherSidebar();
+  const contentTypeQ = useContentTypeCounts();
+  const creatorsQ    = useCreatorsByType();
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -104,20 +207,31 @@ export default function TeacherSidebar({
     });
   };
 
-  const handleSeriesClick = useCallback(
-    (seriesId: string) => {
-      onDrawerClose?.();
-      navigate(`/teachers/series/${seriesId}`);
+  const handleBookSelect = useCallback(
+    (seriesId: string, title: string) => {
+      if (onSelect) {
+        onSelect({ type: "book", id: seriesId, label: title });
+      } else {
+        // Default: navigate directly (series pages, lesson pages)
+        onDrawerClose?.();
+        navigate(`/teachers/series/${seriesId}`);
+      }
     },
-    [navigate, onDrawerClose],
+    [onSelect, onDrawerClose, navigate],
   );
 
-  const handleRabbiClick = useCallback(
-    (rabbiId: string) => {
-      onDrawerClose?.();
-      navigate(`/rabbis/${rabbiId}`);
+  const handleContentTypeSelect = useCallback(
+    (type: string) => {
+      onSelect?.({ type: "content_type", id: type, label: type });
     },
-    [navigate, onDrawerClose],
+    [onSelect],
+  );
+
+  const handleCreatorSelect = useCallback(
+    (creatorId: string, name: string) => {
+      onSelect?.({ type: "creator", id: creatorId, label: name });
+    },
+    [onSelect],
   );
 
   const sidebarW = isDrawer
@@ -143,7 +257,7 @@ export default function TeacherSidebar({
     textAlign: "right" as const,
   });
 
-  // ─── Render books accordion (shared between torah/neviim/ketuvim) ──────────
+  // ─── Render books accordion ───────────────────────────────────────────────
   const renderBookGroup = (
     label: string,
     groupKey: string,
@@ -155,7 +269,6 @@ export default function TeacherSidebar({
 
     return (
       <div key={groupKey}>
-        {/* Group header */}
         <button
           onClick={() => toggleExpand(setExpandedBooks, groupKey)}
           style={{
@@ -187,6 +300,8 @@ export default function TeacherSidebar({
               const bookKey = `${groupKey}::${book.id}`;
               const isBookOpen = expandedBooks.has(bookKey);
               const hasChildren = book.children.length > 0;
+              const isActive = selection?.type === "book" && selection.id === book.id
+                || activeSeriesId === book.id;
 
               return (
                 <div key={book.id}>
@@ -195,11 +310,11 @@ export default function TeacherSidebar({
                       if (hasChildren) {
                         toggleExpand(setExpandedBooks, bookKey);
                       } else {
-                        handleSeriesClick(book.id);
+                        handleBookSelect(book.id, book.title);
                       }
                     }}
                     style={{
-                      ...itemStyle(activeSeriesId === book.id),
+                      ...itemStyle(isActive),
                       width: "100%",
                       border: "none",
                       justifyContent: "space-between",
@@ -221,9 +336,12 @@ export default function TeacherSidebar({
                         .map((child) => (
                           <button
                             key={child.id}
-                            onClick={() => handleSeriesClick(child.id)}
+                            onClick={() => handleBookSelect(child.id, child.title)}
                             style={{
-                              ...itemStyle(activeSeriesId === child.id),
+                              ...itemStyle(
+                                (selection?.type === "book" && selection.id === child.id)
+                                || activeSeriesId === child.id
+                              ),
                               width: "100%",
                               border: "none",
                               fontSize: "0.78rem",
@@ -245,21 +363,20 @@ export default function TeacherSidebar({
 
   // ─── Tab content ────────────────────────────────────────────────────────────
   const renderTabContent = () => {
-    if (isLoading) {
-      return (
-        <div style={{ padding: "1.5rem", textAlign: "center", color: colors.textSubtle, fontSize: "0.8rem" }}>
-          טוען...
-        </div>
-      );
-    }
-
     switch (activeTab) {
-      case "books":
+      case "rashim":
+        if (isLoading) {
+          return (
+            <div style={{ padding: "1.5rem", display: "flex", justifyContent: "center" }}>
+              <Loader2 size={20} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            </div>
+          );
+        }
         return (
           <div>
-            {renderBookGroup("תורה", "torah", torahBooks)}
-            {renderBookGroup("נביאים", "neviim", neviimBooks)}
-            {renderBookGroup("כתובים", "ketuvim", ketuvimBooks)}
+            {renderBookGroup("תורה",    "torah",   torahBooks)}
+            {renderBookGroup("נביאים",  "neviim",  neviimBooks)}
+            {renderBookGroup("כתובים",  "ketuvim", ketuvimBooks)}
             {torahBooks.length === 0 && neviimBooks.length === 0 && ketuvimBooks.length === 0 && (
               <div style={{ padding: "1rem 0.75rem", color: colors.textSubtle, fontSize: "0.8rem" }}>
                 לא נמצאו ספרים
@@ -268,104 +385,186 @@ export default function TeacherSidebar({
           </div>
         );
 
-      case "tools":
+      case "sogTochn":
+        if (contentTypeQ.isLoading) {
+          return (
+            <div style={{ padding: "1.5rem", display: "flex", justifyContent: "center" }}>
+              <Loader2 size={20} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            </div>
+          );
+        }
         return (
           <div>
-            {toolsSections.map((section) => {
-              const isSectionOpen = expandedTools.has(section.id);
-              const visibleChildren = section.children.filter((c) => matchSearch(c.title));
-              if (!matchSearch(section.title) && visibleChildren.length === 0) return null;
-
-              return (
-                <div key={section.id}>
+            {(contentTypeQ.data || [])
+              .filter((ct) => matchSearch(ct.content_type))
+              .map(({ content_type, cnt }) => {
+                const isActive = selection?.type === "content_type" && selection.id === content_type;
+                return (
                   <button
-                    onClick={() => {
-                      if (section.children.length > 0) {
-                        toggleExpand(setExpandedTools, section.id);
-                      } else {
-                        handleSeriesClick(section.id);
-                      }
-                    }}
+                    key={content_type}
+                    onClick={() => handleContentTypeSelect(content_type)}
                     style={{
                       display: "flex",
-                      width: "100%",
                       alignItems: "center",
                       justifyContent: "space-between",
-                      padding: "0.5rem 0.75rem",
-                      background: "transparent",
+                      width: "100%",
+                      padding: "0.45rem 0.75rem",
+                      background: isActive ? "rgba(74,90,46,0.12)" : "transparent",
                       border: "none",
+                      borderInlineStart: isActive ? `3px solid ${colors.oliveDark}` : "3px solid transparent",
+                      borderBottom: `1px solid rgba(139,111,71,0.06)`,
                       cursor: "pointer",
-                      color: colors.textDark,
                       fontFamily: fonts.body,
-                      fontSize: "0.83rem",
-                      fontWeight: 600,
-                      borderBottom: `1px solid rgba(139,111,71,0.08)`,
+                      fontSize: "0.8rem",
+                      color: isActive ? colors.oliveDark : colors.textMid,
+                      fontWeight: isActive ? 700 : 500,
+                      textAlign: "right",
+                      transition: "all 0.15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) e.currentTarget.style.background = "rgba(139,111,71,0.05)";
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) e.currentTarget.style.background = "transparent";
                     }}
                   >
-                    <span>{section.title}</span>
-                    {section.children.length > 0 &&
-                      (isSectionOpen ? (
-                        <ChevronDown size={13} style={{ color: colors.goldDark }} />
-                      ) : (
-                        <ChevronLeft size={13} style={{ color: colors.textSubtle }} />
-                      ))}
+                    <span>{content_type}</span>
+                    <span style={{
+                      fontFamily: fonts.body,
+                      fontSize: "0.68rem",
+                      color: isActive ? colors.oliveDark : colors.textSubtle,
+                      background: isActive ? "rgba(74,90,46,0.1)" : colors.parchmentDeep,
+                      padding: "0.1rem 0.45rem",
+                      borderRadius: radii.pill,
+                      flexShrink: 0,
+                    }}>
+                      {cnt.toLocaleString()}
+                    </span>
                   </button>
-
-                  {isSectionOpen && section.children.length > 0 && (
-                    <div style={{ paddingInlineStart: "0.75rem", paddingBottom: "0.25rem" }}>
-                      {visibleChildren.map((child) => (
-                        <button
-                          key={child.id}
-                          onClick={() => handleSeriesClick(child.id)}
-                          style={{
-                            ...itemStyle(activeSeriesId === child.id),
-                            width: "100%",
-                            border: "none",
-                          }}
-                        >
-                          {child.title}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+                );
+              })}
+            {contentTypeQ.data?.length === 0 && (
+              <div style={{ padding: "1rem 0.75rem", color: colors.textSubtle, fontSize: "0.8rem" }}>
+                לא נמצאו סוגי תוכן
+              </div>
+            )}
           </div>
         );
 
-      case "yotzrim":
-        return (
-          <div style={{ padding: "0.25rem 0" }}>
-            {yotzrimRabbis
-              .filter((r) => matchSearch(r.name))
-              .map((rabbi) => (
+      case "yotzrim": {
+        if (creatorsQ.isLoading) {
+          return (
+            <div style={{ padding: "1.5rem", display: "flex", justifyContent: "center" }}>
+              <Loader2 size={20} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            </div>
+          );
+        }
+        const all = creatorsQ.data || [];
+        const rabbis = all.filter(c => c.entity_type === "rabbi");
+        const contentCreators = all.filter(c => c.entity_type === "content_creator");
+
+        const renderCreatorList = (list: CreatorEntry[], accentColor: string) =>
+          list
+            .filter((c) => matchSearch(c.name))
+            .map((creator) => {
+              const isActive = selection?.type === "creator" && selection.id === creator.id;
+              return (
                 <button
-                  key={rabbi.id}
-                  onClick={() => handleRabbiClick(rabbi.id)}
+                  key={creator.id}
+                  onClick={() => handleCreatorSelect(creator.id, creator.name)}
                   style={{
                     display: "flex",
-                    width: "100%",
                     alignItems: "center",
                     justifyContent: "space-between",
+                    width: "100%",
                     padding: "0.42rem 0.75rem",
-                    background: "transparent",
+                    background: isActive ? "rgba(139,111,71,0.08)" : "transparent",
                     border: "none",
+                    borderInlineStart: isActive ? `3px solid ${accentColor}` : "3px solid transparent",
                     cursor: "pointer",
-                    color: colors.textMid,
-                    fontSize: "0.82rem",
                     fontFamily: fonts.body,
-                    borderBottom: `1px solid rgba(139,111,71,0.06)`,
+                    fontSize: "0.8rem",
+                    color: isActive ? accentColor : colors.textMid,
+                    fontWeight: isActive ? 700 : 500,
+                    textAlign: "right",
+                    transition: "all 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) e.currentTarget.style.background = "rgba(139,111,71,0.05)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) e.currentTarget.style.background = "transparent";
                   }}
                 >
-                  <span>{rabbi.name}</span>
-                  <span style={{ fontSize: "0.72rem", color: colors.textSubtle }}>
-                    {rabbi.lessonCount}
+                  <span>{creator.name}</span>
+                  <span style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.68rem",
+                    color: colors.textSubtle,
+                    flexShrink: 0,
+                  }}>
+                    {creator.cnt}
                   </span>
                 </button>
-              ))}
+              );
+            });
+
+        return (
+          <div>
+            {/* Rabbis section */}
+            {rabbis.length > 0 && (
+              <div>
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.6rem 0.75rem 0.4rem",
+                  borderBottom: `1px solid rgba(139,111,71,0.15)`,
+                  marginBottom: "0.2rem",
+                }}>
+                  <GraduationCap size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                  <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.8rem", color: colors.textDark }}>
+                    רבנים
+                  </span>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, marginInlineStart: "auto" }}>
+                    ({rabbis.length})
+                  </span>
+                </div>
+                {renderCreatorList(rabbis, colors.goldDark)}
+              </div>
+            )}
+
+            {/* Content creators section */}
+            {contentCreators.length > 0 && (
+              <div style={{ marginTop: "0.75rem" }}>
+                <div style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.6rem 0.75rem 0.4rem",
+                  borderBottom: `1px solid rgba(139,111,71,0.15)`,
+                  marginBottom: "0.2rem",
+                }}>
+                  <FileText size={13} style={{ color: colors.oliveDark, flexShrink: 0 }} />
+                  <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.8rem", color: colors.textDark }}>
+                    יוצרי תוכן
+                  </span>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, marginInlineStart: "auto" }}>
+                    ({contentCreators.length})
+                  </span>
+                </div>
+                {renderCreatorList(contentCreators, colors.oliveDark)}
+              </div>
+            )}
+
+            {all.length === 0 && (
+              <div style={{ padding: "1rem 0.75rem", color: colors.textSubtle, fontSize: "0.8rem" }}>
+                לא נמצאו יוצרים
+              </div>
+            )}
           </div>
         );
+      }
     }
   };
 
@@ -406,9 +605,9 @@ export default function TeacherSidebar({
           <GraduationCap size={22} />
         </button>
         {[
-          { tab: "books" as Tab,    icon: <BookOpen size={18} />,   title: "ספרים" },
-          { tab: "tools" as Tab,    icon: <Wrench size={18} />,     title: "כלים" },
-          { tab: "yotzrim" as Tab,  icon: <Users size={18} />,      title: "יוצרים" },
+          { tab: "rashim" as Tab,   icon: <BookOpen size={18} />,  title: "ראשי" },
+          { tab: "sogTochn" as Tab, icon: <Tag size={18} />,       title: "סוג תוכן" },
+          { tab: "yotzrim" as Tab,  icon: <Users size={18} />,     title: "יוצרים" },
         ].map(({ tab, icon, title }) => (
           <button
             key={tab}
@@ -486,7 +685,7 @@ export default function TeacherSidebar({
           </div>
         )}
 
-        {/* Gold banner */}
+        {/* Olive/green banner — Teachers Wing identity */}
         <div
           style={{
             background: `linear-gradient(135deg, ${colors.oliveDark}, ${colors.oliveMain})`,
@@ -510,7 +709,7 @@ export default function TeacherSidebar({
                   lineHeight: 1.3,
                 }}
               >
-                ניווט באגף המורים לפי ספר
+                אגף המורים
               </span>
             </div>
           )}
@@ -539,7 +738,7 @@ export default function TeacherSidebar({
           )}
         </div>
 
-        {/* Tabs */}
+        {/* 3 Tabs: ראשי / סוג תוכן / יוצרים */}
         <div
           style={{
             display: "flex",
@@ -548,9 +747,9 @@ export default function TeacherSidebar({
           }}
         >
           {[
-            { tab: "books" as Tab,   label: "ספרים",  icon: <BookOpen size={14} /> },
-            { tab: "tools" as Tab,   label: "כלים",   icon: <Wrench size={14} /> },
-            { tab: "yotzrim" as Tab, label: "יוצרים", icon: <Users size={14} /> },
+            { tab: "rashim" as Tab,   label: "ראשי",      icon: <BookOpen size={13} /> },
+            { tab: "sogTochn" as Tab, label: "סוג תוכן",  icon: <Tag size={13} /> },
+            { tab: "yotzrim" as Tab,  label: "יוצרים",    icon: <Users size={13} /> },
           ].map(({ tab, label, icon }) => (
             <button
               key={tab}
@@ -569,7 +768,7 @@ export default function TeacherSidebar({
                   : "2px solid transparent",
                 cursor: "pointer",
                 color: activeTab === tab ? colors.goldDark : colors.textSubtle,
-                fontSize: "0.72rem",
+                fontSize: "0.68rem",
                 fontFamily: fonts.body,
                 transition: "color 0.15s, border-color 0.15s",
               }}
@@ -626,6 +825,10 @@ export default function TeacherSidebar({
           {renderTabContent()}
         </div>
       </aside>
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+      `}</style>
     </>
   );
 }
