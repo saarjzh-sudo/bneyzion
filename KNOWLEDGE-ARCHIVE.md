@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-26 (session 3)
+**Last updated:** 2026-05-27 (washnantam lessons session)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -3870,3 +3870,34 @@ significant change must update it. The agent enforces this.*
 - `src/pages/DesignPreviewHome.tsx` — FULL_NAV_LINKS מסונכרן לאותם 4 פריטים (הוסרו ראשי, תרומות, מחירים, לזכר).
 - `src/pages/DesignPreviewSeriesList.tsx` — chips container: הוסר `overflowX: auto`, נוסף `width: "100%"` — אוכף מרכוז מלא.
 - לוגו: הלוגיקה הקיימת (`isTransparent ? logoBright : logoColor`) נכונה — בדפים פנימיים `transparentOnTop` מוגדר `false` ברירת מחדל → תמיד מוצג `logoColor`. אין צורך בשינוי.
+
+### 2026-05-27 — ושננתם אוצר התורה: 47 series + 1,004 lessons inserted
+
+**What changed:**
+- Created `migrations/firecrawl_deep_scrape_2026_05_27/` with raw scraped pages from old site teachers wing
+- Scraped 43 ושננתם series pages using Firecrawl v2 API
+- Raw pages saved to `raw_pages/` (53 files, hash-named)
+- ושננתם rabbi_id: `6f4b2572-b019-4832-9547-de7e8bc6d909`
+- Inserted 40 new series (2 were pre-existing: יהושע + רות)
+- Inserted 906 lessons (28 skipped — already existed in pre-existing series)
+- Total ושננתם: 47 series, 1,004 lessons
+- All tagged `audience_tags = ['teachers', 'general']`, `source_type = 'text'`
+- Fixed 3 ציר זמן placeholder titles: שיעור 1/2/3 → actual lesson names with PDF level descriptors
+- Data files: `washnantam_full.json` (43 series + 931 lessons), `washnantam_rows.json`, `washnantam_lesson_insert_results.json`
+- Scripts: `scripts/insert_washnantam_lessons.py` (new)
+
+**Remaining placeholders (59 lessons across 7 series — NOT fixable by static scrape):**
+- יהודה וישראל - אז והיום: 23 lessons
+- הרב עדי איצקוביץ': 12 lessons
+- 'דניאל הרב מאיר הילביץ: 10 lessons
+- תלמוד תורה מורשה: 9 lessons
+- הרב עמנואל בן ארצי: 2 lessons
+- מבנה ירושלים: 2 lessons
+- לב הפרק - ישעיהו: 1 lesson
+These are from `/מאגר-השיעורים-והמאמרים/` SPA with JS routing — Firecrawl gets empty content on query-param URLs.
+
+**Iron rules learned:**
+- PostgreSQL double-quote vs single-quote: `json.dumps(s)` produces `"Hebrew"` which Postgres reads as a column identifier. Always use `"'" + s.replace("'", "''") + "'"` for SQL string literals.
+- `lessons` table has NO `sort_order` or `source_url` columns. Use `attachment_url` to store old-site URLs. Columns: title, series_id, rabbi_id, attachment_url, status, source_type, audience_tags.
+- Firecrawl can NOT scrape `/מאגר-השיעורים-והמאמרים/?rav=X` or any `?` query-param URL on the old Umbraco SPA. These return empty or 404. Only static `/path/to/page/` URLs work.
+- Teachers wing stats post-session: 2,973 total lessons with `audience_tags @> ['teachers']`, 14,140 total lessons in DB.
