@@ -426,7 +426,8 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
             <nav aria-label="breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">
               <Link to="/" className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>ראשי</Link>
               <ChevronLeft className="h-3 w-3" />
-              <Link to="/series" className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>מאגר השיעורים</Link>
+              {/* 27.5.2026 — /series removed. Link to homepage parsha section. */}
+              <Link to="/parasha" className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>פרשת השבוע</Link>
               {breadcrumb && breadcrumb.length > 0 && breadcrumb.map((ancestor) => (
                 <span key={ancestor.id} className="flex items-center gap-1.5">
                   <ChevronLeft className="h-3 w-3" />

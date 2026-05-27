@@ -7,7 +7,7 @@ const navItems = [
   { label: "ראשי", href: "/" },
   { label: "אגף המורים", href: "/teachers" },
   { label: "רבנים", href: "/rabbis" },
-  { label: "סדרות", href: "/series" },
+  // 27.5.2026 — /series removed
   { label: "תנ״ך", href: "/bible/בראשית" },
   { label: "קהילה", href: "/community" },
   { label: "חנות", href: "/store" },

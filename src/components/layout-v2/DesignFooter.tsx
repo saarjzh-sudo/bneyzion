@@ -49,7 +49,7 @@ const COLUMNS: { title: string; links: { label: string; href: string; flame?: bo
   {
     title: "התנ״ך",
     links: [
-      { label: "סדרות", href: "/series" },
+      // 27.5.2026 — /series removed
       { label: "רבנים", href: "/rabbis" },
       { label: "פרשת השבוע", href: "/parasha" },
       { label: "ספרי התנ״ך", href: "/bible/בראשית" },
@@ -64,7 +64,7 @@ const COLUMNS: { title: string; links: { label: string; href: string; flame?: bo
       // Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers" }
       { label: "כנס ההודאה", href: "/kenes" },
       { label: "דור הפלאות", href: "/dor-haplaot" },
-      { label: "מסלולים ומחירים", href: "/pricing" },
+      // 27.5.2026 — /pricing removed
     ],
   },
   {

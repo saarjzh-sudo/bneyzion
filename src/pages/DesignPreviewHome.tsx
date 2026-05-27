@@ -1185,6 +1185,231 @@ function RabbisSection() {
   );
 }
 
+// ── NewsletterSection ──────────────────────────────────────────────────────
+// 27.5.2026 — "עדכונים מעולם התנ"ך של בני ציון" — Smoove signup with double opt-in
+// Microcopy: warm, biblical, eye-level Saar voice. NOT corporate.
+function NewsletterSection() {
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errMsg, setErrMsg] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email.trim() || !email.includes("@")) {
+      setErrMsg("רגע, צריך כתובת מייל אמיתית");
+      return;
+    }
+    setStatus("submitting");
+    setErrMsg("");
+    try {
+      // Insert to newsletter_subscribers table. RLS-allowed for anonymous.
+      // Saar exports to Smoove from this table via cron.
+      const { error } = await supabase
+        .from("newsletter_subscribers" as any)
+        .insert({
+          email: email.trim().toLowerCase(),
+          first_name: firstName.trim() || null,
+          consent_at: new Date().toISOString(),
+          source: "homepage",
+        });
+      if (error && !error.message.toLowerCase().includes("duplicate")) throw error;
+      setStatus("success");
+    } catch (err: any) {
+      setStatus("error");
+      setErrMsg(err.message || "משהו השתבש. נסה שוב בעוד רגע.");
+    }
+  }
+
+  return (
+    <section
+      dir="rtl"
+      style={{
+        background: `linear-gradient(135deg, ${PARCHMENT} 0%, ${PARCHMENT_DARK} 100%)`,
+        padding: "5rem 1.5rem",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Decorative background dots */}
+      <div
+        aria-hidden
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage: `radial-gradient(circle, ${GOLD_LIGHT}22 1px, transparent 1px)`,
+          backgroundSize: "32px 32px",
+          opacity: 0.4,
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", zIndex: 1, textAlign: "center" }}>
+        {/* Eyebrow */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.4rem",
+            padding: "0.3rem 0.9rem",
+            borderRadius: "2rem",
+            background: `${GOLD_DARK}15`,
+            border: `1px solid ${GOLD_DARK}35`,
+            marginBottom: "1.25rem",
+          }}
+        >
+          <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700, color: GOLD_DARK, letterSpacing: "0.05em" }}>
+            עדכונים מעולם התנ״ך
+          </span>
+        </div>
+
+        {/* H2 */}
+        <h2
+          style={{
+            fontFamily: "Kedem, Frank Ruhl Libre, serif",
+            fontWeight: 900,
+            fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+            color: TEXT_DARK,
+            margin: "0 0 0.75rem",
+            lineHeight: 1.2,
+          }}
+        >
+          רוצה <span style={{ background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>פסוק אחד טוב</span> בשבוע?
+        </h2>
+
+        {/* Subtitle */}
+        <p
+          style={{
+            fontFamily: "Ploni, sans-serif",
+            fontSize: "1.05rem",
+            color: `${TEXT_DARK}cc`,
+            lineHeight: 1.65,
+            maxWidth: 540,
+            margin: "0 auto 2rem",
+          }}
+        >
+          חידושי תורה מהפרשה, נסים מהשטח וסיפורים מבני ציון.<br />
+          מייל אחד בשבוע. בלי ספאם, בלי שטויות — רק מה ששווה לקרוא.
+        </p>
+
+        {status === "success" ? (
+          <div
+            style={{
+              padding: "1.5rem 1.25rem",
+              background: "white",
+              borderRadius: "1rem",
+              border: `2px solid ${GOLD_LIGHT}`,
+              boxShadow: "0 4px 24px rgba(196,162,101,0.18)",
+            }}
+          >
+            <div style={{ fontFamily: "Kedem, serif", fontSize: "1.35rem", fontWeight: 800, color: GOLD_DARK, marginBottom: "0.4rem" }}>
+              נרשמת. ברוך תהיה! ✡
+            </div>
+            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.95rem", color: `${TEXT_DARK}aa`, lineHeight: 1.5 }}>
+              שלחנו לך מייל אישור — רק תאשר ונתחיל לדבר אחת לשבוע.
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "0.75rem", maxWidth: 480, margin: "0 auto" }}>
+            <input
+              type="text"
+              placeholder="שם פרטי (לא חובה)"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              style={{
+                width: "100%",
+                padding: "0.95rem 1.1rem",
+                borderRadius: "0.85rem",
+                border: `1.5px solid ${GOLD_DARK}33`,
+                background: "white",
+                fontFamily: "Ploni, sans-serif",
+                fontSize: "1rem",
+                color: TEXT_DARK,
+                outline: "none",
+                transition: "border-color 0.2s",
+                textAlign: "right",
+                boxSizing: "border-box",
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
+              onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
+            />
+            <input
+              type="email"
+              placeholder="כתובת המייל שלך"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              style={{
+                width: "100%",
+                padding: "0.95rem 1.1rem",
+                borderRadius: "0.85rem",
+                border: `1.5px solid ${GOLD_DARK}33`,
+                background: "white",
+                fontFamily: "Ploni, sans-serif",
+                fontSize: "1rem",
+                color: TEXT_DARK,
+                outline: "none",
+                transition: "border-color 0.2s",
+                textAlign: "right",
+                boxSizing: "border-box",
+              }}
+              onFocus={(e) => (e.currentTarget.style.borderColor = GOLD_DARK)}
+              onBlur={(e) => (e.currentTarget.style.borderColor = `${GOLD_DARK}33`)}
+            />
+            {errMsg && (
+              <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: "#a52727", textAlign: "right" }}>
+                {errMsg}
+              </div>
+            )}
+            <button
+              type="submit"
+              disabled={status === "submitting"}
+              style={{
+                padding: "1rem 1.5rem",
+                borderRadius: "0.85rem",
+                border: "none",
+                background: status === "submitting" ? `${GOLD_DARK}88` : `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
+                color: "white",
+                fontFamily: "Paamon, serif",
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                cursor: status === "submitting" ? "wait" : "pointer",
+                boxShadow: "0 6px 24px rgba(139,111,71,0.35)",
+                transition: "transform 0.2s, box-shadow 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                if (status !== "submitting") {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 8px 32px rgba(139,111,71,0.45)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 6px 24px rgba(139,111,71,0.35)";
+              }}
+            >
+              {status === "submitting" ? "רגע אחד..." : "אני רוצה לקבל"}
+            </button>
+            {/* Consent microcopy — required for Israeli newsletter law */}
+            <div
+              style={{
+                fontFamily: "Ploni, sans-serif",
+                fontSize: "0.78rem",
+                color: `${TEXT_DARK}88`,
+                lineHeight: 1.5,
+                marginTop: "0.5rem",
+                textAlign: "center",
+              }}
+            >
+              בלחיצה אני מאשר לקבל עדכונים שיווקיים מבני ציון. אפשר לבטל בכל מייל.
+            </div>
+          </form>
+        )}
+      </div>
+    </section>
+  );
+}
+
 // ── WhatsAppCTASection ─────────────────────────────────────────────────────
 function WhatsAppCTASection() {
   return (
@@ -1366,13 +1591,12 @@ export default function DesignPreviewHome() {
 
         {/* Main content area */}
         <main style={{ flex: 1, minWidth: 0 }}>
-          <KenesBanner />
+          {/* 27.5.2026 — KenesBanner removed (outdated 19.4 event) */}
           <DesignParashaHolidaySection />
-          <PopularLessonsSection />
+          {/* 27.5.2026 — PopularLessonsSection removed per Saar (homepage cleanup) */}
           <WarMiraclesSection />
-          <TopSeriesSection />
-          <RabbisSection />
-          <WhatsAppCTASection />
+          {/* 27.5.2026 — TopSeriesSection, RabbisSection, WhatsAppCTASection removed per Saar */}
+          <NewsletterSection />
         </main>
       </div>
 

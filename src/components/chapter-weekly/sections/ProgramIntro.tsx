@@ -10,18 +10,7 @@ const ProgramIntro = () => (
     <div className="max-w-4xl mx-auto text-center relative z-10">
       <p className="text-lg md:text-xl text-primary-foreground/80 font-medium mb-6">תנועת בני ציון גאה להציג</p>
 
-      <div className="max-w-2xl mx-auto mb-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-accent/30">
-        <div className="aspect-video">
-          <iframe
-            src="https://drive.google.com/file/d/1ZGxVeFaCkw7oLm__2ugXLDMhGgQQCE2e/preview"
-            width="100%"
-            height="100%"
-            allow="autoplay"
-            className="w-full h-full"
-            title="המלצות על התכנית"
-          />
-        </div>
-      </div>
+      {/* 27.5.2026 — Drive video iframe (1ZGxVeFaCkw7oLm__2ugXLDMhGgQQCE2e) returns 403. Hidden until Drive sharing is set to "Anyone with the link → Viewer". */}
 
       <div className="relative inline-block mb-8">
         <div className="absolute inset-0 bg-white/40 blur-2xl rounded-full scale-110" />

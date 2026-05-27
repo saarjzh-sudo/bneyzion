@@ -8,7 +8,7 @@ const PAGES = [
   { path: "/parasha", label: "פרשת השבוע", category: "ציבורי" },
   { path: "/rabbis", label: "כל הרבנים", category: "ציבורי" },
   { path: "/rabbis/hagay-vlossky", label: "עמוד רב (דוגמה)", category: "ציבורי" },
-  { path: "/series", label: "כל הסדרות", category: "ציבורי" },
+  // 27.5.2026 — /series removed
   { path: "/series/1", label: "סדרה בודדת (דוגמה)", category: "ציבורי" },
   { path: "/lessons/1", label: "שיעור בודד (דוגמה)", category: "ציבורי" },
   { path: "/bible/bereshit", label: "תנ\"ך — בראשית", category: "ציבורי" },
@@ -16,7 +16,7 @@ const PAGES = [
   { path: "/store", label: "חנות", category: "ציבורי" },
   { path: "/about", label: "אודותינו", category: "ציבורי" },
   { path: "/contact", label: "צור קשר", category: "ציבורי" },
-  { path: "/pricing", label: "מחירים", category: "ציבורי" },
+  // 27.5.2026 — /pricing removed
   // ---- ניסי המלחמה ----
   { path: "/dor-haplaot", label: "דור הפלאות — ניסי המלחמה", category: "ניסי המלחמה" },
   // ---- משתמש ----

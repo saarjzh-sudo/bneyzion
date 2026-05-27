@@ -92,7 +92,7 @@ const Footer = () => {
               התנ״ך
             </h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link to="/series" className="hover:text-primary transition-colors">סדרות</Link></li>
+              {/* 27.5.2026 — /series removed */}
               <li><Link to="/rabbis" className="hover:text-primary transition-colors">רבנים</Link></li>
               <li><Link to="/parasha" className="hover:text-primary transition-colors">פרשת השבוע</Link></li>
               <li><Link to="/bible/bereshit" className="hover:text-primary transition-colors">ספרי התנ״ך</Link></li>
@@ -110,7 +110,7 @@ const Footer = () => {
               <li><Link to="/community" className="hover:text-primary transition-colors flex items-center gap-1"><Crown className="h-3 w-3" />קהילת לומדים</Link></li>
               <li><Link to="/teachers" className="hover:text-primary transition-colors">אגף המורים</Link></li>
               <li><Link to="/kenes" className="hover:text-primary transition-colors">כנס ההודאה</Link></li>
-              <li><Link to="/pricing" className="hover:text-primary transition-colors">מסלולים ומחירים</Link></li>
+              {/* 27.5.2026 — /pricing removed */}
               <li><Link to="/memorial/saadia" className="hover:text-primary transition-colors flex items-center gap-1"><Heart className="h-3 w-3" />לזכר סעדיה הי״ד</Link></li>
             </ul>
           </div>

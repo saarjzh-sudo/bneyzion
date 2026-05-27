@@ -17,7 +17,8 @@ import { PageSkeleton } from "@/components/ui/page-skeleton";
 import Index from "./pages/DesignPreviewHome";
 import LessonPage from "./pages/LessonPage";
 import RabbiPage from "./pages/RabbiPage";
-import SeriesList from "./pages/SeriesList";
+// 27.5.2026 — SeriesList route removed per Saar. Import preserved for potential rollback.
+// import SeriesList from "./pages/SeriesList";
 import RabbisList from "./pages/RabbisList";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -51,7 +52,7 @@ const KnesPage = lazy(() => import("./pages/KnesPage"));
 const DorHaplaot = lazy(() => import("./pages/DorHaplaot"));
 const DevPages = lazy(() => import("./pages/DevPages"));
 const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
-const PricingPage = lazy(() => import("./pages/PricingPage"));
+// 27.5.2026 — /pricing removed per Saar
 const CommunityPage = lazy(() => import("./pages/CommunityPage"));
 const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
@@ -276,9 +277,8 @@ const App = () => (
             {import.meta.env.DEV && (
               <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
             )}
-            <Route path="/series" element={<SeriesList />} />
+            {/* 27.5.2026 — /series & /pricing removed per Saar */}
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
-            <Route path="/pricing" element={<Suspense fallback={<LazyFallback />}><PricingPage /></Suspense>} />
             <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
             <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />
             <Route path="/series/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />

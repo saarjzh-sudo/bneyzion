@@ -25,6 +25,17 @@ export function useRabbis() {
   });
 }
 
+// 27.5.2026 — priority tiers per profile.md (bnei-zion). Pinned to top of /rabbis list.
+const RABBI_TIER_1 = ["ראובן ששון", "אליעזר קשתיאל"];
+const RABBI_TIER_2 = ["שמואל אליהו"];
+
+function getRabbiTier(name: string): number {
+  const cleanName = name.replace(/^הרב\s+/, "").trim();
+  if (RABBI_TIER_1.some(t => cleanName.includes(t))) return 1;
+  if (RABBI_TIER_2.some(t => cleanName.includes(t))) return 2;
+  return 99;
+}
+
 export function usePublicRabbis() {
   return useQuery({
     queryKey: ["rabbis-public"],
@@ -36,7 +47,12 @@ export function usePublicRabbis() {
         .gt("lesson_count", 0)
         .order("lesson_count", { ascending: false });
       if (error) throw error;
-      return data as Rabbi[];
+      const sorted = (data as Rabbi[]).slice().sort((a, b) => {
+        const tierDiff = getRabbiTier(a.name) - getRabbiTier(b.name);
+        if (tierDiff !== 0) return tierDiff;
+        return (b.lesson_count ?? 0) - (a.lesson_count ?? 0);
+      });
+      return sorted;
     },
   });
 }
