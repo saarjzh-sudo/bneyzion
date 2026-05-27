@@ -3953,3 +3953,94 @@ other_count:    0 ✅
 
 **Iron rule חדש:**
 - כשיש relative paths שהם duplicates — לעולם לא לעלות מחדש. לחפש match ב-`legacy_attachment_url` קודם (`WHERE done.legacy_attachment_url = bneyzion_base + rel_path`). חסך ~3,024 העלאות מיותרות.
+
+---
+
+### 2026-05-27 — chapel-arch FamilyBibleSection + daily-verse + daily-video + newsletter redesign
+
+**Branch:** `feat/family-bible-chapel-arch` (off `sandbox-test`). **PR:** #9 → sandbox-test.
+**Preview deploy:** `bneyzion-fjvldi6qq-saars-projects-4508d6bb.vercel.app` (SSO protected — Vercel dashboard).
+
+**מה נבנה:**
+- `src/pages/DesignPreviewHome.tsx` — `FamilyBibleSection` (chapel-arch) מחליף `TanachLemishpachaSection`.
+  - 4 כרטיסים portrait עם `border-radius: 8px 8px 50% 50% / 8px 8px 30% 30%`, `aspect-ratio: 3/4`.
+  - gold shimmer "תנ"ך למשפחה" heading + SVG filigree + gold ribbon connector (CSS only, אין framer-motion).
+  - cards: נס מדור הפלאות `/dor-haplaot` + פסוק יומי `/daily-verse` + קריאת כיוון `/daily-video` + סיפורי ילדים (disabled).
+  - 4→2 cols at 900px.
+  - NewsletterSection redesign: side-by-side inputs (flex row, mobile flex column), checkbox תנאי שימוש, new copy "רוצים מסרים מרוממים מספר הספרים?", button "הצטרף".
+  - DesignParashaHolidaySection: י"ז בתמוז quote הרב קוק + onClick → `/series/:id`.
+- `src/pages/DailyVersePage.tsx` — route `/daily-verse`. Hero + grid 17 פסוקים + modal.
+- `src/pages/DailyVideoPage.tsx` — route `/daily-video`. Hero + grid 8 סרטונים + modal/player.
+- `src/components/layout-v2/DesignHeader.tsx` — "לזכר סעדיה הי"ד" קיבל `paddingBottom:2` + `borderBottom`.
+- `src/App.tsx` — routes `/daily-verse` + `/daily-video` נוספו.
+
+**DB migration:**
+- `ALTER TABLE newsletter_subscribers ADD COLUMN IF NOT EXISTS agreed_to_terms BOOLEAN DEFAULT false` — בוצע ב-bnei-zion Supabase.
+
+**Commits:** ab4f3f0, 8f49b1e, 3eef5bf
+
+---
+
+### 2026-05-27 — Saar admin access to all courses (Management API)
+
+**רקע:** סער ביקש גישה אישית לכל הקורסים במייל `saar.j.z.h@gmail.com` כדי לבדוק חוויית משתמש מבפנים (מקדים פיתוח דף "הקורסים שלי" + חוויית קורס בסגנון לוקחים-אחריות + תיקון login redirect אחרי תשלום).
+
+**מצב לפני:**
+- User קיים ב-`auth.users` (uid `17f1690c-0101-4125-a98b-e5cc758fe261`, התחבר לאחרונה 2026-05-27 13:30:20).
+- אין שורת `profiles`.
+- אפס שורות ב-`user_access_tags`, `course_enrollments`, `user_enrollments`, `community_member_courses`.
+
+**גילויים על המודל:**
+- `course_enrollments` + `user_enrollments` + `community_member_courses` — **כולם ריקים בפרוד**. כרגע המודל לא משתמש בהם בפועל; הגישה נשלטת אך ורק ע"י `user_access_tags` + `has_access_tag()` RPC.
+- כל 8 הקורסים ב-`community_courses` הם `access_type='open'` ו-`access_tag=null` — חופשיים לכולם.
+- ה-bundle (`dist/assets/*.js`) מתייחס ל-tag יחיד: `program:weekly-chapter`. אין tags נוספים בקוד.
+- Unique constraint על `user_access_tags`: `ux_email_tag (email, tag)` — לא על user_id+tag.
+
+**מה בוצע (Management API, project `pzvmwfexeiruelwiujxn`):**
+
+```sql
+-- 1) Master subscription tag
+INSERT INTO public.user_access_tags
+  (user_id, email, tag, valid_until, source, notes, pending_user_link)
+VALUES
+  ('17f1690c-0101-4125-a98b-e5cc758fe261',
+   'saar.j.z.h@gmail.com',
+   'program:weekly-chapter',
+   '2099-12-31 23:59:59+00',
+   'manual',
+   'Saar admin access — granted via Management API 2026-05-27',
+   false)
+ON CONFLICT DO NOTHING;
+
+-- 2) Enrollment row per existing course (8 rows)
+INSERT INTO public.course_enrollments (user_id, course_id, status)
+SELECT '17f1690c-0101-4125-a98b-e5cc758fe261', id, 'active'
+FROM public.community_courses
+ON CONFLICT DO NOTHING;
+```
+
+**Verification:**
+- `has_access_tag('17f1690c-...', 'program:weekly-chapter') → true`
+- 8 enrollment rows יושבים: איך לומדים תנ"ך · לחיות תנ"ך - תכנית המנויים · למה (וכמה) ללמוד תנ"ך · מגילת אסתר · ספר דניאל · ספר נחמיה · ספר עזרא · ספר שופטים במבט חדש.
+
+**איטרציות עתידיות (פתוחות):**
+1. ❌ באג: post-payment redirect שולח משתמש ל"מסך התחברות זר" במקום ל-thank-you. ממתין לחקירה — לאתר את הקובץ שמפנה אחרי `grow/create-payment` success.
+2. ❌ דף "הקורסים שלי" + entry ב-header — לא נבנה עדיין.
+3. ❌ חוויית קורס בסגנון `mmb.org.il` (לוקחים-אחריות) ל"לחיות תנ"ך - הפרק השבועי" — לא נבנה.
+4. ❌ החלפת login הזר ב-Google OAuth של האתר הראשי.
+
+**Iron rule שנלמד:** `course_enrollments.user_id` הוא `text` (לא uuid). למרות זאת אנחנו מאחסנים שם את uid המלא של auth.users כ-text — כך עתידי UI יכול לעשות `WHERE user_id=auth.uid()::text`.
+
+---
+
+### 2026-05-27 — דף התקדמות 2026 (route /2026)
+
+- **מטרה:** דף לפגישות — סקירת התקדמות ויזואלית, לא מקושר מהניווט.
+- **קבצים שנוצרו:**
+  - `/tmp/bz-fixes/src/pages/Progress2026.tsx` (ו-cherry-pick ל-`/private/tmp/bneyzion-work/src/pages/`)
+  - `App.tsx` — הוסף route `/2026` (lazy) + import
+- **branch:** `sandbox-header-fixes-27may` (commit `33ceb37`) + `fix/visual-2026-05-27-v2` (commit `e03a76b`)
+- **Deploy:** promoted ל-production, URL: `https://bneyzion.vercel.app/2026`
+- **עיצוב:** cream + navy hero + gold progress bars, RTL, CSS only (ללא framer-motion), sidebar=false
+- **11 סטטוסים:** 6 ✅ הושלמו, 4 🟡 בתהליך, 1 🔵 בבנייה
+- **Admin check:** `saar.j.z.h@gmail.com` — user קיים ב-`auth.users` (uid `17f1690c`) ובעל role `admin` ב-`user_roles`. גישת אדמין מלאה קיימת.
