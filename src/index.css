@@ -250,12 +250,14 @@
 
   html {
     direction: rtl;
+    overflow-x: hidden; /* P2: prevent sidebar-triggered horizontal scroll on all 26 pages */
   }
 
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: 'Ploni', sans-serif;
+    overflow-x: hidden; /* P2: belt-and-suspenders — body also clips horizontal overflow */
   }
 }
 

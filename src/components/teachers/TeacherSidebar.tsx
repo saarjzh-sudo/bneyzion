@@ -431,7 +431,7 @@ export default function TeacherSidebar({
                     <span>{content_type}</span>
                     <span style={{
                       fontFamily: fonts.body,
-                      fontSize: "0.68rem",
+                      fontSize: "0.75rem", /* P3 fix: was 0.68rem → 0.75rem (12px) minimum */
                       color: isActive ? colors.oliveDark : colors.textSubtle,
                       background: isActive ? "rgba(74,90,46,0.1)" : colors.parchmentDeep,
                       padding: "0.1rem 0.45rem",
@@ -499,7 +499,7 @@ export default function TeacherSidebar({
                   <span>{creator.name}</span>
                   <span style={{
                     fontFamily: fonts.body,
-                    fontSize: "0.68rem",
+                    fontSize: "0.75rem", /* P3 fix: was 0.68rem → 0.75rem (12px) minimum */
                     color: colors.textSubtle,
                     flexShrink: 0,
                   }}>
@@ -526,7 +526,7 @@ export default function TeacherSidebar({
                   <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.8rem", color: colors.textDark }}>
                     רבנים
                   </span>
-                  <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, marginInlineStart: "auto" }}>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", /* P3 fix: was 0.68rem → 0.75rem (12px) minimum */ color: colors.textSubtle, marginInlineStart: "auto" }}>
                     ({rabbis.length})
                   </span>
                 </div>
@@ -549,7 +549,7 @@ export default function TeacherSidebar({
                   <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.8rem", color: colors.textDark }}>
                     יוצרי תוכן
                   </span>
-                  <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, marginInlineStart: "auto" }}>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", /* P3 fix: was 0.68rem → 0.75rem (12px) minimum */ color: colors.textSubtle, marginInlineStart: "auto" }}>
                     ({contentCreators.length})
                   </span>
                 </div>
@@ -658,7 +658,9 @@ export default function TeacherSidebar({
           height: isDrawer ? "100vh" : "calc(100vh - 96px)",
           zIndex: isDrawer ? 70 : 30,
           transform: isDrawer && !drawerVis ? "translateX(100%)" : "translateX(0)",
-          transition: "transform 0.28s ease, width 0.22s ease",
+          visibility: isDrawer && !drawerVis ? "hidden" : "visible", /* P2: hide from hit-testing + prevent horizontal scroll trigger */
+          transition: "transform 0.28s ease, width 0.22s ease, visibility 0s linear 0.28s",
+          ...(isDrawer && drawerVis ? { transition: "transform 0.28s ease, width 0.22s ease, visibility 0s" } : {}),
           background: colors.parchment,
           borderInlineStart: `1px solid rgba(139,111,71,0.12)`,
           boxShadow: isDrawer && drawerVis ? shadows.card : "none",
@@ -739,11 +741,16 @@ export default function TeacherSidebar({
         </div>
 
         {/* 3 Tabs: ראשי / סוג תוכן / יוצרים */}
+        {/* P1 fix: overflow-x scroll prevents tabs from overflowing 375px viewport */}
         <div
           style={{
             display: "flex",
             borderBottom: `1px solid rgba(139,111,71,0.15)`,
             flexShrink: 0,
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            WebkitOverflowScrolling: "touch",
+            scrollbarWidth: "none",
           }}
         >
           {[
@@ -755,12 +762,13 @@ export default function TeacherSidebar({
               key={tab}
               onClick={() => setActiveTab(tab)}
               style={{
-                flex: 1,
+                flex: "1 0 auto",    /* P1: flex-shrink:0 prevents squashing below min-content */
+                minWidth: "4.5rem",  /* P1: explicit minimum so each tab stays readable at 375px */
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "0.2rem",
-                padding: "0.6rem 0.25rem 0.5rem",
+                padding: "0.6rem 0.35rem 0.5rem",
                 background: "none",
                 border: "none",
                 borderBottom: activeTab === tab
@@ -768,9 +776,11 @@ export default function TeacherSidebar({
                   : "2px solid transparent",
                 cursor: "pointer",
                 color: activeTab === tab ? colors.goldDark : colors.textSubtle,
-                fontSize: "0.68rem",
+                fontSize: "0.75rem", /* P3 fix: was 0.68rem (10.9px) → 0.75rem (12px) WCAG minimum */
                 fontFamily: fonts.body,
                 transition: "color 0.15s, border-color 0.15s",
+                scrollSnapAlign: "start",
+                whiteSpace: "nowrap",
               }}
             >
               {icon}

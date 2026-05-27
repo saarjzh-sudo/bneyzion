@@ -184,7 +184,9 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           height: isDrawer ? "100vh" : "calc(100vh - 96px)",
           zIndex: isDrawer ? 70 : 30,
           transform: isDrawer && !drawerVisible ? "translateX(100%)" : "translateX(0)",
-          transition: "transform 0.28s ease, width 0.22s ease",
+          visibility: isDrawer && !drawerVisible ? "hidden" : "visible", /* P2: hide from hit-testing + prevent horizontal scroll trigger */
+          transition: "transform 0.28s ease, width 0.22s ease, visibility 0s linear 0.28s",
+          ...(isDrawer && drawerVisible ? { transition: "transform 0.28s ease, width 0.22s ease, visibility 0s" } : {}),
           background: colors.parchment,
           borderInlineStart: `1px solid rgba(139,111,71,0.12)`,
           boxShadow: isDrawer && drawerVisible ? "-8px 0 32px rgba(45,31,14,0.18)" : "none",
@@ -443,7 +445,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                   <div
                     style={{
                       fontFamily: fonts.body,
-                      fontSize: "0.67rem",
+                      fontSize: "0.75rem", /* P3 fix: 0.67→0.75rem */
                       color: colors.textMuted,
                       marginTop: "0.1rem",
                     }}
@@ -509,7 +511,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                     </span>
                     <span
                       style={{
-                        fontSize: "0.65rem",
+                        fontSize: "0.75rem", /* P3 fix: 0.65→0.75rem */
                         color: colors.textSubtle,
                         flexShrink: 0,
                         marginInlineStart: "0.4rem",
@@ -1306,7 +1308,7 @@ function SeriesInlineList({
           {s.lessonCount > 0 && (
             <span
               style={{
-                fontSize: "0.62rem",
+                fontSize: "0.75rem", /* P3 fix: 0.62→0.75rem */
                 color: colors.textSubtle,
                 flexShrink: 0,
                 marginInlineStart: "0.2rem",
