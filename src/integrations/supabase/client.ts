@@ -37,10 +37,16 @@ const _SB_K = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKe
 const SUPABASE_URL = atob(_SB_U);
 const SUPABASE_PUBLISHABLE_KEY = atob(_SB_K);
 
-// Re-export so other modules don't need their own copy of the URL
+// Re-export so other modules don't need their own copy of the URL or anon key.
 // (NetSpark strips literal `*.supabase.co` strings from any bundle in transit —
 // every literal URL elsewhere in the codebase becomes an outage. Import from here.)
 export const SUPABASE_URL_RUNTIME = SUPABASE_URL;
+
+// Re-export the anon (publishable) key for modules that must set apikey headers
+// manually (e.g. direct fetch() calls to Edge Functions).
+// It is safe to expose: this is the browser-public anon key, already present in
+// every build artifact.
+export const SUPABASE_ANON_KEY_RUNTIME = SUPABASE_PUBLISHABLE_KEY;
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";

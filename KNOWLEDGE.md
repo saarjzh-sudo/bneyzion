@@ -526,6 +526,13 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-28 — botApi.ts: fix undefined Supabase URL/key bug in navigator-bot
+- **Branch:** `feat/navigator-bot`, commit `20ee85ec`
+- **Bug:** `botApi.ts` read `supabase.supabaseUrl` / `supabase.supabaseKey` via `@ts-expect-error` internal property hacks. Both properties return `undefined` at runtime (not part of the public `@supabase/supabase-js` API), causing every Gemini call to fail with "נכשל. אפשר לנסות שוב?".
+- **Fix:** Exported `SUPABASE_ANON_KEY_RUNTIME` from `src/integrations/supabase/client.ts` (alongside existing `SUPABASE_URL_RUNTIME`). `botApi.ts` now imports both constants — no internal property access, no `@ts-expect-error`.
+- **Verified:** `GEMINI_API_KEY` confirmed present in Edge Function secrets via Management API.
+- **Iron rule learned:** Never read Supabase client internals (`supabase.supabaseUrl`, `supabase.supabaseKey`) — they are undefined at runtime. Always export from `client.ts` and import from there.
+
 ### 2026-05-27 — Teachers Wing cleanup (parity) + lesson modal UI fix + migration-verifier skill
 
 **What changed:**
