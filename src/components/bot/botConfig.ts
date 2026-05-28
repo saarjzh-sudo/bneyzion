@@ -22,12 +22,13 @@ export const BOT_CONFIG = {
   moedWindowDays: 20,
 
   // Branding
-  botName: "סוכן הניווט",
+  botName: "בנצי",
+  botTagline: "הסוכן המנווט שלך באתר בני ציון",
   botAvatar: "/images/bot-avatar.png", // optional — gold sealing-wax style
 
   // Welcome message (shown above opening buttons)
   welcomeMessage:
-    "ברוך הבא לאתר התנ\"ך של ישראל. מה אתה מחפש? אכוון אותך.",
+    "שלום, אני בנצי. מה אתה מחפש? אכוון אותך.",
 } as const;
 
 // ============================================================

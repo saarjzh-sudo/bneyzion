@@ -1,8 +1,9 @@
 // Top-level bot wrapper — handles open/close + first-visit pop logic
-// Mount once in Layout.tsx (inside <SidebarProvider> or after Footer).
 // Path in repo: src/components/bot/OnboardingBot.tsx
+// Updated 28.5.2026: fixed hooks-order bug + injected Ploni font + brand "בנצי"
 
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { BotButton } from "./BotButton";
 import { BotPanel } from "./BotPanel";
 import { BOT_CONFIG } from "./botConfig";
@@ -14,23 +15,63 @@ interface Props {
   disabledOnRoutes?: string[];
 }
 
+// Ploni font @font-face — injected once on mount (clearest Hebrew font)
+const PLONI_FONT_CSS = `
+@font-face {
+  font-family: "Ploni";
+  src: url("https://fonts.cdnfonts.com/s/22050/ploni-light-aaa.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ploni";
+  src: url("https://fonts.cdnfonts.com/s/22050/ploni-regular-aaa.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ploni";
+  src: url("https://fonts.cdnfonts.com/s/22050/ploni-medium-aaa.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ploni";
+  src: url("https://fonts.cdnfonts.com/s/22050/ploni-bold-aaa.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+`;
+
 export function OnboardingBot({
   currentParasha = null,
   disabledOnRoutes = ["/admin", "/design-"],
 }: Props) {
+  // ── ALL hooks must be called unconditionally (React rules) ────────────
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
 
-  // Route guard
-  if (typeof window !== "undefined") {
-    const pathname = window.location.pathname;
-    if (disabledOnRoutes.some((r) => pathname.startsWith(r))) {
-      return null;
-    }
-  }
+  const isDisabled = disabledOnRoutes.some((r) => location.pathname.startsWith(r));
+
+  // Inject Ploni @font-face once
+  useEffect(() => {
+    const id = "bnezi-ploni-fonts";
+    if (typeof document === "undefined") return;
+    if (document.getElementById(id)) return;
+    const style = document.createElement("style");
+    style.id = id;
+    style.textContent = PLONI_FONT_CSS;
+    document.head.appendChild(style);
+  }, []);
 
   // First-visit auto-pop after 3s
   useEffect(() => {
+    if (isDisabled) return;
     let timer: ReturnType<typeof setTimeout> | null = null;
     try {
       const shown = localStorage.getItem(BOT_CONFIG.storage.firstVisitShown);
@@ -41,7 +82,6 @@ export function OnboardingBot({
           localStorage.setItem(BOT_CONFIG.storage.firstVisitShown, "1");
         }, BOT_CONFIG.firstVisitDelayMs);
       } else {
-        // Returning visitor — show a quiet unread dot once per session
         const dotShown = sessionStorage.getItem("bz_bot_dot_shown");
         if (!dotShown) {
           setHasUnread(true);
@@ -54,7 +94,7 @@ export function OnboardingBot({
     return () => {
       if (timer) clearTimeout(timer);
     };
-  }, []);
+  }, [isDisabled]);
 
   // Close on Esc
   useEffect(() => {
@@ -65,6 +105,13 @@ export function OnboardingBot({
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isOpen]);
+
+  // Auto-close panel when navigating to a disabled route
+  useEffect(() => {
+    if (isDisabled && isOpen) setIsOpen(false);
+  }, [isDisabled, isOpen]);
+
+  if (isDisabled) return null;
 
   const toggleOpen = () => {
     setIsOpen((v) => !v);

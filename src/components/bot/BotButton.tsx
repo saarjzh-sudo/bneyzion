@@ -1,4 +1,4 @@
-// Floating bot button — gold circle, bottom-right (RTL = visual right)
+// Floating bot button — gold circle, bottom-LEFT (per Saar 28.5.2026)
 // Path in repo: src/components/bot/BotButton.tsx
 
 import { MessageCircle, X } from "lucide-react";
@@ -17,8 +17,8 @@ export function BotButton({ isOpen, onClick, hasUnread = false }: Props) {
       onClick={onClick}
       aria-label={isOpen ? "סגור צ׳אט" : "פתח צ׳אט"}
       className={cn(
-        "fixed bottom-6 right-6 z-[100]",
-        "flex h-14 w-14 items-center justify-center rounded-full",
+        "fixed bottom-6 left-6 z-[100]",
+        "flex h-12 w-12 items-center justify-center rounded-full",
         "shadow-lg transition-all duration-200",
         "focus:outline-none focus-visible:ring-4 focus-visible:ring-[#C4A265]/40",
         isOpen
@@ -27,12 +27,12 @@ export function BotButton({ isOpen, onClick, hasUnread = false }: Props) {
       )}
     >
       {isOpen ? (
-        <X className="h-6 w-6" />
+        <X className="h-5 w-5" />
       ) : (
         <>
-          <MessageCircle className="h-6 w-6" />
+          <MessageCircle className="h-5 w-5" />
           {hasUnread && (
-            <span className="absolute top-1 right-1 h-3 w-3 rounded-full bg-red-500 ring-2 ring-[#FAF6F0]" />
+            <span className="absolute top-1 left-1 h-3 w-3 rounded-full bg-red-500 ring-2 ring-[#FAF6F0]" />
           )}
         </>
       )}

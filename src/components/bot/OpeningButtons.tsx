@@ -1,10 +1,13 @@
 // 5 opening buttons shown on first interaction (post-Yoav iron rule)
+// Font: Ploni (per Saar 28.5.2026)
 // Path in repo: src/components/bot/OpeningButtons.tsx
 
 import { useState } from "react";
 import { Book, Search, Compass, GraduationCap, Sparkles } from "lucide-react";
 import type { OpeningButton, BotPersona } from "./types";
 import { OPENING_BUTTONS, BOT_CONFIG } from "./botConfig";
+
+const BOT_FONT = '"Ploni", "Ploni DL 1.1", "Paamon", system-ui, sans-serif';
 
 const ICON_MAP = {
   book: Book,
@@ -23,10 +26,10 @@ export function OpeningButtons({ onSelect }: Props) {
 
   if (followUpFor && followUpFor.followUp) {
     return (
-      <div dir="rtl" className="flex flex-col gap-2">
+      <div dir="rtl" className="flex flex-col gap-1.5" style={{ fontFamily: BOT_FONT }}>
         <p
-          className="text-[15px] text-[#1A2744] mb-1"
-          style={{ fontFamily: "Paamon, system-ui, sans-serif" }}
+          className="text-[13px] text-[#1A2744] mb-0.5"
+          style={{ fontFamily: BOT_FONT }}
         >
           {followUpFor.followUp.question}
         </p>
@@ -38,10 +41,10 @@ export function OpeningButtons({ onSelect }: Props) {
               onSelect(opt.nextPrompt, opt.persona);
               setFollowUpFor(null);
             }}
-            className="flex items-center gap-2 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-3 py-2.5 text-right transition hover:bg-[#C4A265]/15 hover:border-[#C4A265]"
-            style={{ fontFamily: "Paamon, system-ui, sans-serif" }}
+            className="flex items-center gap-2 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-2.5 py-2 text-right transition hover:bg-[#C4A265]/15 hover:border-[#C4A265]"
+            style={{ fontFamily: BOT_FONT }}
           >
-            <span className="flex-1 text-[14px] font-medium text-[#1A2744]">
+            <span className="flex-1 text-[12px] font-medium text-[#1A2744]">
               {opt.label}
             </span>
           </button>
@@ -49,7 +52,8 @@ export function OpeningButtons({ onSelect }: Props) {
         <button
           type="button"
           onClick={() => setFollowUpFor(null)}
-          className="mt-1 text-[12px] text-[#8B6F47] hover:underline self-start"
+          className="mt-0.5 text-[11px] text-[#8B6F47] hover:underline self-start"
+          style={{ fontFamily: BOT_FONT }}
         >
           חזרה לתפריט הראשי
         </button>
@@ -58,10 +62,10 @@ export function OpeningButtons({ onSelect }: Props) {
   }
 
   return (
-    <div dir="rtl" className="flex flex-col gap-2">
+    <div dir="rtl" className="flex flex-col gap-1.5" style={{ fontFamily: BOT_FONT }}>
       <p
-        className="text-[15px] text-[#1A2744] mb-1"
-        style={{ fontFamily: "Paamon, system-ui, sans-serif" }}
+        className="text-[13px] text-[#1A2744] mb-0.5"
+        style={{ fontFamily: BOT_FONT }}
       >
         {BOT_CONFIG.welcomeMessage}
       </p>
@@ -78,11 +82,11 @@ export function OpeningButtons({ onSelect }: Props) {
               }
               if (btn.prompt) onSelect(btn.prompt);
             }}
-            className="flex items-center gap-2 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-3 py-2.5 text-right transition hover:bg-[#C4A265]/15 hover:border-[#C4A265]"
-            style={{ fontFamily: "Paamon, system-ui, sans-serif" }}
+            className="flex items-center gap-2 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-2.5 py-2 text-right transition hover:bg-[#C4A265]/15 hover:border-[#C4A265]"
+            style={{ fontFamily: BOT_FONT }}
           >
-            <Icon className="h-4 w-4 shrink-0 text-[#8B6F47]" />
-            <span className="flex-1 text-[14px] font-medium text-[#1A2744]">
+            <Icon className="h-3.5 w-3.5 shrink-0 text-[#8B6F47]" />
+            <span className="flex-1 text-[12px] font-medium text-[#1A2744]">
               {btn.label}
             </span>
           </button>
