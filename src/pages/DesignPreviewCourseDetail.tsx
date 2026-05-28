@@ -38,6 +38,7 @@ import {
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useUserAccess } from "@/hooks/useUserAccess";
+import { useAuth } from "@/contexts/AuthContext";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 type TabKey = "base" | "enrichment" | "weekly";
@@ -166,10 +167,13 @@ const PROGRAM_BOOKS: BookDef[] = [
 export default function DesignPreviewCourseDetail() {
   const { slug = "zechariah" } = useParams<{ slug: string }>();
   const { hasAccess: realAccess, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
+  const { isAdmin } = useAuth();
 
   // Sandbox preview toggle
   const [previewMode, setPreviewMode] = useState<"subscriber" | "locked">("subscriber");
-  const hasAccess = previewMode === "subscriber" || realAccess;
+  // Real users go through useUserAccess. Admins (Saar) can override via the
+  // preview toggle — useful for testing the locked-state UI without logging out.
+  const hasAccess = isAdmin ? (previewMode === "subscriber" || realAccess) : realAccess;
 
   // Default: open on זכריה פרק ז (book index 5, chapter index 6)
   const defaultBookIdx = Math.max(0, PROGRAM_BOOKS.findIndex((b) => b.slug === slug));
@@ -350,66 +354,72 @@ export default function DesignPreviewCourseDetail() {
         </div>
       </div>
 
-      {/* ─── Sandbox preview toggle ────────────────────────────────────── */}
-      <div
-        dir="rtl"
-        style={{
-          background: "rgba(45,31,14,0.97)",
-          borderBottom: "1px solid rgba(232,213,160,0.15)",
-          padding: "0.5rem 1.5rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.85rem",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.68rem",
-            color: "rgba(232,213,160,0.5)",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-          }}
-        >
-          תצוגה מקדימה
-        </span>
+      {/* ─── Sandbox preview toggle (admin-only) ──────────────────────────
+       * Hidden from regular users. Only admins see this control —
+       * it lets Saar flip between subscriber/locked views without
+       * needing to log out.
+       */}
+      {isAdmin && (
         <div
+          dir="rtl"
           style={{
-            display: "inline-flex",
-            background: "rgba(255,255,255,0.06)",
-            borderRadius: 20,
-            padding: "0.18rem",
-            gap: "0.1rem",
+            background: "rgba(45,31,14,0.97)",
+            borderBottom: "1px solid rgba(232,213,160,0.15)",
+            padding: "0.5rem 1.5rem",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.85rem",
           }}
         >
-          {(
-            [
-              { key: "subscriber" as const, label: "מנוי" },
-              { key: "locked" as const, label: "לא-מנוי" },
-            ]
-          ).map((opt) => (
-            <button
-              key={opt.key}
-              onClick={() => setPreviewMode(opt.key)}
-              style={{
-                padding: "0.28rem 0.8rem",
-                borderRadius: 16,
-                border: "none",
-                cursor: "pointer",
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "0.72rem",
-                background: previewMode === opt.key ? gradients.goldButton : "transparent",
-                color: previewMode === opt.key ? "white" : "rgba(232,213,160,0.5)",
-                transition: "all 0.18s",
-              }}
-            >
-              {opt.label}
-            </button>
-          ))}
+          <span
+            style={{
+              fontFamily: fonts.body,
+              fontSize: "0.68rem",
+              color: "rgba(232,213,160,0.5)",
+              fontWeight: 700,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+            }}
+          >
+            תצוגת אדמין
+          </span>
+          <div
+            style={{
+              display: "inline-flex",
+              background: "rgba(255,255,255,0.06)",
+              borderRadius: 20,
+              padding: "0.18rem",
+              gap: "0.1rem",
+            }}
+          >
+            {(
+              [
+                { key: "subscriber" as const, label: "מנוי" },
+                { key: "locked" as const, label: "לא-מנוי" },
+              ]
+            ).map((opt) => (
+              <button
+                key={opt.key}
+                onClick={() => setPreviewMode(opt.key)}
+                style={{
+                  padding: "0.28rem 0.8rem",
+                  borderRadius: 16,
+                  border: "none",
+                  cursor: "pointer",
+                  fontFamily: fonts.body,
+                  fontWeight: 700,
+                  fontSize: "0.72rem",
+                  background: previewMode === opt.key ? gradients.goldButton : "transparent",
+                  color: previewMode === opt.key ? "white" : "rgba(232,213,160,0.5)",
+                  transition: "all 0.18s",
+                }}
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* ─── Two-column layout ─────────────────────────────────────────── */}
       <div
