@@ -17,6 +17,7 @@ import DesignHeader from "./DesignHeader";
 import DesignFooter from "./DesignFooter";
 import DesignMobileBottomNav from "./DesignMobileBottomNav";
 import DesignSidebar from "./DesignSidebar";
+import { OnboardingBot } from "@/components/bot";
 import { colors } from "@/lib/designTokens";
 
 interface DesignLayoutProps {
@@ -79,6 +80,9 @@ export default function DesignLayout({
 
       <DesignFooter />
       <DesignMobileBottomNav />
+
+      {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin and /design-* routes. */}
+      <OnboardingBot />
 
       <style>{`
         @media (max-width: 767px) {
