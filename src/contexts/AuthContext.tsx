@@ -7,7 +7,13 @@ interface AuthContextType {
   session: Session | null;
   isAdmin: boolean;
   isLoading: boolean;
-  signInWithGoogle: () => Promise<void>;
+  /**
+   * Sign in with Google. Optional `next` param = the path the user should
+   * land on after the OAuth round-trip. We pipe it through `redirectTo` so
+   * Google → Supabase → /portal-login?next=… and PortalLogin's own
+   * "already-logged-in" effect carries the user to `next` automatically.
+   */
+  signInWithGoogle: (next?: string) => Promise<void>;
   signOut: () => Promise<void>;
 }
 
@@ -61,17 +67,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           if (_event === "SIGNED_IN" && session.user.email) {
             setTimeout(() => linkPendingAccessTags(session.user.id, session.user.email!), 0);
           }
-          // Portal-next redirect: כש-PortalLogin שומר next ב-sessionStorage
-          if (_event === "SIGNED_IN") {
-            const portalNext = sessionStorage.getItem("bnz.portal-next");
-            if (portalNext) {
-              sessionStorage.removeItem("bnz.portal-next");
-              // defer קצת כדי ש-session state יתעדכן לפני navigation
-              setTimeout(() => {
-                window.location.href = portalNext;
-              }, 100);
-            }
-          }
+          // NOTE: portal-next redirect logic moved to PortalLogin.tsx.
+          // The next path is now passed via redirectTo URL param, not sessionStorage,
+          // so navigation happens automatically when PortalLogin sees `user && next`.
         } else {
           setIsAdmin(false);
         }
@@ -91,10 +89,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (next?: string) => {
+    // If a `next` path is provided (e.g. user clicked login from /portal or
+    // landed on /portal-login?next=/course/X), we send Google → Supabase →
+    // /portal-login?next=ENCODED, and PortalLogin's "already-logged-in"
+    // effect immediately forwards to `next`. This avoids race conditions
+    // with sessionStorage and survives hard reloads / new tabs.
+    const origin = window.location.origin;
+    const redirectTo = next
+      ? `${origin}/portal-login?next=${encodeURIComponent(next)}`
+      : origin;
+
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: window.location.origin },
+      options: { redirectTo },
     });
     if (error) console.error("Sign-in failed:", error);
     if (data?.url) window.location.href = data.url;

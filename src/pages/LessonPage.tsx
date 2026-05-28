@@ -453,7 +453,7 @@ const LessonPage = () => {
                 <p className="text-sm md:text-base font-display text-foreground">נהנית מהשיעור? תמשיך מאיפה שעצרת</p>
                 <p className="text-xs text-muted-foreground mt-0.5">התחבר ונשמור לך את המקום — בכל מכשיר, בכל זמן</p>
               </div>
-              <Button size="sm" onClick={signInWithGoogle} className="shrink-0 gap-1.5">
+              <Button size="sm" onClick={() => signInWithGoogle()} className="shrink-0 gap-1.5">
                 <LogIn className="h-3.5 w-3.5" />
                 התחברות
               </Button>

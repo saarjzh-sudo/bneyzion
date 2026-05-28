@@ -25,7 +25,7 @@ export default function Auth() {
         </CardHeader>
         <CardContent className="space-y-4">
           <Button
-            onClick={signInWithGoogle}
+            onClick={() => signInWithGoogle()}
             className="w-full h-12 text-base font-display"
             disabled={isLoading}
           >

@@ -21,7 +21,14 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
   const handleSignIn = async () => {
     setSigningIn(true);
     try {
-      await signInWithGoogle();
+      // Carry the user back to the page they clicked login from.
+      // Skip /portal-login itself and /auth to avoid loops.
+      const here = window.location.pathname + window.location.search;
+      const next =
+        here.startsWith("/portal-login") || here.startsWith("/auth") || here === "/"
+          ? undefined
+          : here;
+      await signInWithGoogle(next);
     } finally {
       setSigningIn(false);
     }
