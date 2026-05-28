@@ -526,6 +526,13 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-28 — Navigator bot (בנצי) merged to production
+- **Merged:** `feat/navigator-bot` → `sandbox-test` (no-ff, commit `4a27a44d`)
+- **Production deploy:** `dpl_GoJYKUDmu2GCzRz8ksFNg71e4Yk9` via `vercel --prod` from `/private/tmp/bz-chapel-arch`
+- **Live at:** `https://bneyzion.vercel.app` (and `bneyzion.co.il` → 200 via 301)
+- **What shipped:** `src/components/bot/` (10 files) + `<OnboardingBot />` mount in `App.tsx`. Floating gold button bottom-left, RTL, Gemini 2.5 Flash powered, auto-hides on /admin and /design-*
+- **Vercel note:** pushing to `sandbox-test` triggers Preview only — production requires explicit `vercel --prod` from the worktree at `/private/tmp/bz-chapel-arch`
+
 ### 2026-05-28 — botApi.ts: fix undefined Supabase URL/key bug in navigator-bot
 - **Branch:** `feat/navigator-bot`, commit `20ee85ec`
 - **Bug:** `botApi.ts` read `supabase.supabaseUrl` / `supabase.supabaseKey` via `@ts-expect-error` internal property hacks. Both properties return `undefined` at runtime (not part of the public `@supabase/supabase-js` API), causing every Gemini call to fail with "נכשל. אפשר לנסות שוב?".
