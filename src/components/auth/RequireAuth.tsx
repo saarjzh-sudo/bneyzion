@@ -18,7 +18,13 @@ export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     const next = encodeURIComponent(location.pathname + location.search);
-    return <Navigate to={`/auth?next=${next}`} replace />;
+    // נתיבי פורטל ולומד → PortalLogin (ממשק ידידותי, לא "דשבורד ניהול")
+    const isPortalPath =
+      location.pathname.startsWith("/portal") ||
+      location.pathname.startsWith("/course") ||
+      location.pathname.startsWith("/my-courses");
+    const loginPath = isPortalPath ? "/portal-login" : "/auth";
+    return <Navigate to={`${loginPath}?next=${next}`} replace />;
   }
 
   return <>{children}</>;

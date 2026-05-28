@@ -58,6 +58,8 @@ const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
 // 27.5.2026 — /pricing removed per Saar
 const CommunityPage = lazy(() => import("./pages/CommunityPage"));
 const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
+const PortalLogin = lazy(() => import("./pages/PortalLogin"));
+const DesignPreviewMyCourses = lazy(() => import("./pages/DesignPreviewMyCourses"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
@@ -264,6 +266,8 @@ const App = () => (
             <Route path="/portal/course/:id" element={<RequireAuth><Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense></RequireAuth>} />
             <Route path="/roadmap" element={<Suspense fallback={<LazyFallback />}><Roadmap /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/portal-login" element={<Suspense fallback={<LazyFallback />}><PortalLogin /></Suspense>} />
+            <Route path="/design-my-courses" element={<Suspense fallback={<LazyFallback />}><DesignPreviewMyCourses /></Suspense>} />
             <Route path="/lessons/:id" element={<LessonPage />} />
             <Route path="/rabbis" element={<RabbisList />} />
             <Route path="/rabbis/:id" element={<RabbiPage />} />

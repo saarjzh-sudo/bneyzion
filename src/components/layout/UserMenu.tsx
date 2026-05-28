@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, LogOut, Heart, History, Shield, UserCircle, Upload } from "lucide-react";
+import { User, LogOut, Heart, History, Shield, UserCircle, Upload, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -21,7 +21,14 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
   const handleSignIn = async () => {
     setSigningIn(true);
     try {
-      await signInWithGoogle();
+      // Carry the user back to the page they clicked login from.
+      // Skip /portal-login itself and /auth to avoid loops.
+      const here = window.location.pathname + window.location.search;
+      const next =
+        here.startsWith("/portal-login") || here.startsWith("/auth") || here === "/"
+          ? undefined
+          : here;
+      await signInWithGoogle(next);
     } finally {
       setSigningIn(false);
     }
@@ -91,6 +98,12 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
           <p className="text-sm font-display text-foreground">{displayName}</p>
           <p className="text-xs text-muted-foreground">{user.email}</p>
         </div>
+        <DropdownMenuItem asChild className="cursor-pointer">
+          <Link to="/portal" className="flex items-center gap-2 font-semibold text-primary">
+            <BookOpen className="h-4 w-4" />
+            הקורסים שלי
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
           <Link to="/profile" className="flex items-center gap-2">
             <UserCircle className="h-4 w-4" />

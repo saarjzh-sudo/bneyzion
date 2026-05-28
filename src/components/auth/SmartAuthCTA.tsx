@@ -52,7 +52,7 @@ const SmartAuthCTA = ({ variant = "general", className = "", compact = false }: 
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut" }}
-        onClick={signInWithGoogle}
+        onClick={() => signInWithGoogle()}
         className={`group inline-flex items-center gap-2 px-4 py-2 rounded-xl
           bg-secondary/60 hover:bg-secondary/90
           border border-border/40 hover:border-primary/30
@@ -92,7 +92,7 @@ const SmartAuthCTA = ({ variant = "general", className = "", compact = false }: 
         </div>
 
         <button
-          onClick={signInWithGoogle}
+          onClick={() => signInWithGoogle()}
           className="shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-xl
             bg-primary text-primary-foreground text-sm font-display
             hover:bg-primary/90 transition-all duration-300 hover:shadow-md
