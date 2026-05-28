@@ -4075,3 +4075,99 @@ flyer-creator agent יחזיר `parasha-shavua.png` + `moed-17-tammuz.png` — �
 - `TEXT_DARK` = `#2D1F0E`, `TEXT_MUTED` = `#6B5C4A`, `TEXT_SUBTLE` = `#A69882`
 
 **PR:** https://github.com/saarjzh-sudo/bneyzion/compare/sandbox-test...fix/parasha-holiday-green-removal
+
+---
+
+### 2026-05-28 — Portal login fix + 5 deploy gotchas (the hard lessons)
+
+**Session goal:** fix post-payment redirect bug + restyle PortalLogin + hide admin-only toggle on /course/:slug + add "הקורסים שלי" route.
+
+**Result:** all 4 changes live on production (`bneyzion.vercel.app`), verified via Firecrawl scrape of non-logged-in user view.
+
+**Code work (commit `436561c5` on `feat/navigator-bot`):**
+- `src/contexts/AuthContext.tsx` — `signInWithGoogle(next?: string)` pipes `next` via OAuth `redirectTo` URL (`/portal-login?next=ENCODED`). Removed dead sessionStorage portal-next read.
+- `src/pages/PortalLogin.tsx` — NEW. Route `/portal-login`. Main-site theme (parchment + navy + Ploni + multi-color Google G icon). Not chapter-weekly promo theme.
+- `src/pages/DesignPreviewMyCourses.tsx` — NEW. Route `/design-my-courses`. Pulls from `course_enrollments JOIN community_courses`.
+- `src/components/layout/UserMenu.tsx` — carries `window.location.pathname` as `next` so login from any page returns there.
+- `src/components/auth/RequireAuth.tsx` — routes `/portal*`, `/course*`, `/my-courses` to `/portal-login` (not `/auth` which is admin dashboard).
+- `src/pages/DesignPreviewCourseDetail.tsx` — toggle gated behind `isAdmin`; `hasAccess` formula made secure (non-admins go through `useUserAccess` RPC only).
+- `src/components/auth/SmartAuthCTA.tsx`, `lesson/LessonDialog.tsx`, `pages/Auth.tsx`, `pages/LessonPage.tsx` — wrapped 5 raw `onClick={signInWithGoogle}` sites in arrow fns (event ≠ next).
+- `src/App.tsx` — registered the 2 new routes with lazy imports.
+
+**Two security-adjacent bugs caught:**
+1. The "תצוגה מקדימה: מנוי / לא-מנוי" toggle on `/course/:slug` was visible to all users, and its default `previewMode='subscriber'` silently granted access to the locked tabs (הרחבה / שיעור שבועי) for non-subscribers. Now gated behind `isAdmin` + access formula doesn't honor `previewMode` for non-admins.
+2. `redirectTo: window.location.origin` in `signInWithGoogle` always sent users back to homepage regardless of `next`. The `sessionStorage.bnz.portal-next` shortcut was a race-condition hack that didn't reliably fire. Fix: piped `next` through the OAuth URL itself, so PortalLogin's "already-logged-in" effect picks it up after Google → Supabase round trip.
+
+**The 5 deploy gotchas — now in agent instructions:**
+
+#### 1. `feat/navigator-bot` IS the production branch, not `main`
+
+`main` is an abandoned legacy stub. The V2 redesign branches share no
+common ancestor — `git merge` returns "refusing to merge unrelated histories".
+Vercel's `bneyzion` project deploys `feat/navigator-bot` as production.
+**Any work that needs to live on production must end up on this branch.**
+
+#### 2. `vercel --prod` from a worktree without linking → creates a NEW Vercel project
+
+Running `vercel --prod --yes` from `/private/tmp/bz-fixes` created a project
+called `bz-fixes` (deploying to `bz-fixes.vercel.app`). The real production
+at `bneyzion.vercel.app` was untouched.
+
+```bash
+# Before any vercel --prod from a non-main directory:
+cd /private/tmp/<worktree>
+rm -rf .vercel
+HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel link --yes --project bneyzion
+HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel --prod --yes
+```
+
+#### 3. GitHub auto-deploy supersedes manual `vercel --prod`
+
+In this session I did `vercel --prod` from `fix/visual-2026-05-27-v2`. Five
+minutes later an auto-deploy from a push to `feat/navigator-bot` overrode
+production. Saar saw the OLD code with no fix applied.
+
+**Order of ops:** port work to the production branch FIRST, push there, then
+optionally `vercel --prod` as belt-and-suspenders.
+
+#### 4. Bring work between branches via file checkout, not cherry-pick
+
+Cherry-pick between V2 branches fails with `AA` (both-added) conflicts when
+the same file was added independently on both branches. The clean approach:
+
+```bash
+git checkout origin/feat/navigator-bot -B prod-with-my-changes
+for f in src/contexts/AuthContext.tsx src/pages/PortalLogin.tsx ...; do
+  git checkout fix/visual-2026-05-27-v2 -- "$f"
+done
+git commit -m "feat(X): bring work from other branch"
+git push origin prod-with-my-changes:feat/navigator-bot
+```
+
+#### 5. "Is it deployed?" verification needs deep bundle inspection
+
+A `200 OK` doesn't prove your code is live — CDN/cache + lazy-loaded chunks
+hide stale code. Two reliable verifications:
+
+```bash
+# A. Bundle sniffing
+curl -s --noproxy '*' "https://bneyzion.vercel.app/<route>" -o /tmp/page.html
+grep -oE 'assets/main-[A-Za-z0-9_-]+\.js' /tmp/page.html
+curl -s --noproxy '*' "https://bneyzion.vercel.app/assets/main-XXX.js" -o /tmp/main.js
+grep -oE '"assets/<Component>-[A-Za-z0-9_-]+\.js"' /tmp/main.js
+curl -s --noproxy '*' "https://bneyzion.vercel.app/assets/<chunk>" | grep -oE "<unique_string_from_your_change>"
+
+# B. Firecrawl (SPA-aware)
+HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" firecrawl scrape "<url>" \
+  --only-main-content --wait-for 5000 -o /tmp/page.md
+```
+
+**Bonus:** `www.bneyzion.co.il` is NOT pointing to V2 yet. Still on legacy
+WordPress/Umbraco via Cloudflare. Test V2 work at `bneyzion.vercel.app`.
+The custom-domain cutover requires: Cloudflare DNS change + Supabase Site
+URL update + Grow `notifyUrl` update.
+
+**Authorization receipts:** Saar's exact word `"מעולה פרוס אחי"` was the
+green light for the manual `vercel --prod` after the classifier blocked
+the first attempt. Quote his words verbatim in commit messages so the
+audit trail shows explicit authorization.
