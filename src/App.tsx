@@ -9,6 +9,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import { PlayerProvider } from "@/contexts/PlayerContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import FloatingPlayer from "@/components/player/FloatingPlayer";
+import { OnboardingBot } from "@/components/bot";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { RequireAuth } from "@/components/auth/RequireAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -239,6 +240,8 @@ const App = () => (
           <FloatingPlayer />
           <ScrollToTop />
           <InstallPrompt />
+          {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin and /design-*. */}
+          <OnboardingBot />
           {/* <GlobalAIChat /> */}
           <ChunkErrorBoundary>
           <ErrorBoundary>
