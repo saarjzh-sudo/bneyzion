@@ -1,7 +1,7 @@
 // Fetch wrapper for the Bnei Zion navigator bot edge function
 // Path in repo: src/components/bot/botApi.ts
 
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_URL_RUNTIME, SUPABASE_ANON_KEY_RUNTIME } from "@/integrations/supabase/client";
 import type { BotMessage, BotResponse, BotPersona } from "./types";
 import { BOT_CONFIG } from "./botConfig";
 
@@ -24,17 +24,15 @@ export async function sendBotMessage(opts: SendOptions): Promise<BotResponse> {
     currentParasha = null,
   } = opts;
 
-  // Get the runtime-resolved Supabase URL (NetSpark-safe — see client.ts)
-  // @ts-expect-error — internal property, but stable
-  const supabaseUrl = supabase.supabaseUrl as string;
-  // @ts-expect-error — same as above
-  const supabaseAnonKey = supabase.supabaseKey as string;
+  // SUPABASE_URL_RUNTIME and SUPABASE_ANON_KEY_RUNTIME come from client.ts.
+  // They are base64-decoded at module load time — NetSpark-safe, no internal
+  // property hacks, no @ts-expect-error needed.
+  const endpoint = `${SUPABASE_URL_RUNTIME}${BOT_CONFIG.edgeFunctionPath}`;
+  const supabaseAnonKey = SUPABASE_ANON_KEY_RUNTIME;
 
   // Pull the auth session if user is logged in (for user_id binding)
   const { data: { session: authSession } } = await supabase.auth.getSession();
   const userId = authSession?.user?.id ?? null;
-
-  const endpoint = `${supabaseUrl}${BOT_CONFIG.edgeFunctionPath}`;
 
   const res = await fetch(endpoint, {
     method: "POST",
