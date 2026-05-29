@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-29 (yehoshua campaign DonationModal in-page)
+**Last updated:** 2026-05-29 (yehoshua campaign: wallet fix + stats reset 0/0)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -525,6 +525,39 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-29 — yehoshua-campaign: wallet fix + stats reset to 0/0 (commit a730798)
+
+**Problem:** Previous session (b6591a7/edc042f) changed campaign to directDebit+DONATIONS
+merchant for "קבלת תרומה" receipt. This opens a הוראת קבע (recurring) form — wrong for
+a one-time book campaign. Saar confirmed: he wants standard one-time wallet checkout.
+
+**What changed:**
+- `payment_products` DB: `yehoshua-campaign` SET `type='wallet'`, `page_code_env='PRODUCTS'`
+  (was: `directDebit` / `DONATIONS`)
+- `api/grow/create-payment.ts` FALLBACK_PRODUCTS: `yehoshua-campaign` → `type: "wallet"`,
+  `page_code_env: "PRODUCTS"` (target_table='donations' kept — campaign tracking still works)
+- `src/pages/DesignPreviewYehoshuaCampaign.tsx`:
+  - `RAISED_FALLBACK = 0` (was 7,000)
+  - `SUPPORTERS_FALLBACK = 0` (was 47)
+  - `useCampaignRaised` hook: `setRaised(total)` + `setSupporters(data.length)` always —
+    no fallback to mock values. Pre-launch shows 0/0/0%.
+  - `ProofStrip` now accepts `supporters` prop (live from DB) instead of hardcoded "47".
+
+**pageCode used:** `efbda303565a` (wallet, "עם קבלה", userId `b9a035312abd46d9`) — same as store.
+
+**Grow URL source discovery:** `pay.grow.link/NjM3NDI~dc848853c0c5d3e4bb33f5355689e3c8-MzQ3NzI5Ng`
+decodes to Grow internal IDs 63742 / 3477296. Does NOT expose a 3rd pageCode — these are
+Grow's internal order/payment IDs, not merchant configuration. Only 2 pageCodes exist for
+bneyzion (iron rule from 2026-05-24 confirmed correct).
+
+**Deployed to:** `bneyzion.vercel.app/design-yehoshua-campaign` via:
+  `vercel alias bneyzion-qhqjldtk4-... bneyzion.vercel.app`
+
+**Iron rule added:**
+- Grow `directDebit` pageCode always opens a הוראת קבע UI — even if you omit
+  chargeIdentifier/planName/period. For one-time purchases always use `wallet` pageCode.
+- `pay.grow.link/<base64>~<hash>-<base64>` URLs encode Grow-internal IDs, not pageCode.
 
 ### 2026-05-26 — Image batch migrated to Vertex AI (full batch ~1,395 images)
 
