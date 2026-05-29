@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-27 (washnantam lessons session)
+**Last updated:** 2026-05-29 (yehoshua campaign wire-up)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -3927,3 +3927,21 @@ These are from `/מאגר-השיעורים-והמאמרים/` SPA with JS routin
 - `lessons` table has NO `sort_order` or `source_url` columns. Use `attachment_url` to store old-site URLs. Columns: title, series_id, rabbi_id, attachment_url, status, source_type, audience_tags.
 - Firecrawl can NOT scrape `/מאגר-השיעורים-והמאמרים/?rav=X` or any `?` query-param URL on the old Umbraco SPA. These return empty or 404. Only static `/path/to/page/` URLs work.
 - Teachers wing stats post-session: 2,973 total lessons with `audience_tags @> ['teachers']`, 14,140 total lessons in DB.
+
+### 2026-05-29 — Yehoshua campaign support buttons wired to /donate (commit 794f60e)
+
+**What changed:**
+- `src/pages/DesignPreviewYehoshuaCampaign.tsx` — `handleSupport()` now navigates to `/donate?amount={price}&source=yehoshua-campaign&tier={id}` (was: showing a mock DonationToast with no real action)
+- Removed `DonationToast` component and `toastTier` useState — no longer needed
+- `src/pages/Donate.tsx` — added `?amount=` URL param reading: `const urlAmount = parseInt(searchParams.get("amount") ?? "", 10)` and pre-fills the amount state on load (fallback: ₪180)
+- Branch: `sandbox-test` → pushed to `origin/sandbox-test` → Vercel auto-deploy triggered
+- All 8 support paths covered: 7 TierCard buttons (₪90, ₪180, ₪270, ₪450, ₪720, ₪1200, ₪2000) + CustomAmountCard free-input
+
+**Context:**
+- Saar is about to publish a Reels video that links to `/design-yehoshua-campaign`. People need to actually be able to donate from that page.
+- The `?amount=` param pre-fills the donation form — good UX for the ₪90 EarlyBird tier.
+
+**Iron rules confirmed:**
+- The src code lives only in git objects for the `sandbox-test` branch (and others). `origin/main` has ZERO tsx files — it's scripts+docs only. Vercel deploys from `sandbox-test` branch.
+- To edit production code: `git worktree add /tmp/bneyzion-X origin/X` → edit → commit → push origin/X.
+- Never checkout src/* onto `main` — it doesn't belong there.
