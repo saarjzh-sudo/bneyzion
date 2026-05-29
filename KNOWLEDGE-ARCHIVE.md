@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-29 (yehoshua campaign wire-up)
+**Last updated:** 2026-05-29 (yehoshua campaign DonationModal in-page)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -3927,6 +3927,27 @@ These are from `/מאגר-השיעורים-והמאמרים/` SPA with JS routin
 - `lessons` table has NO `sort_order` or `source_url` columns. Use `attachment_url` to store old-site URLs. Columns: title, series_id, rabbi_id, attachment_url, status, source_type, audience_tags.
 - Firecrawl can NOT scrape `/מאגר-השיעורים-והמאמרים/?rav=X` or any `?` query-param URL on the old Umbraco SPA. These return empty or 404. Only static `/path/to/page/` URLs work.
 - Teachers wing stats post-session: 2,973 total lessons with `audience_tags @> ['teachers']`, 14,140 total lessons in DB.
+
+### 2026-05-29 — DonationModal in-page: campaign no longer redirects to /donate (commit 57c5c1c)
+
+**What changed:**
+- `src/pages/DesignPreviewYehoshuaCampaign.tsx` — replaced `window.location.href → /donate` with in-page `DonationModal` component
+- `DonationModal`: standalone, no shadcn deps. Collects name/phone/email/TOS.
+  - Calls `/api/grow/create-payment` directly with `successUrl = /design-yehoshua-campaign?payment=success`
+  - Wallet flow (authCode): `growPayment.renderPaymentOptions` → `onSuccess` → closes modal + shows banner
+  - Redirect flow (donation url): navigates to Grow, returns to campaign with `?payment=success`
+- `ThankYouBanner`: sticky top banner, shown on return from Grow redirect OR wallet success
+- `useEffect` on mount detects `?payment=success` query param, sets `showThankYou=true`, cleans URL
+- Grow SDK loaded lazily inside `DonationModal` via `useEffect`, compatible with existing `useGrowPayment.ts` (uses `GrowPaymentWindow` type alias to avoid redeclaration conflict)
+- Added `@keyframes modalSlideIn` and `@keyframes spin` to `<style>` block
+- Body scroll locked while modal is open (restored on unmount)
+- Branch: `sandbox-test` commit `57c5c1c`, pushed to `origin/sandbox-test`
+
+**Iron rules confirmed:**
+- The src code lives only in git objects for the `sandbox-test` branch (and others). `origin/main` has ZERO tsx files — it's scripts+docs only. Vercel deploys from `sandbox-test` branch.
+- To edit production code: use the worktree at `/private/tmp/bneyzion-sandbox-test`. Don't edit in `origin/main` worktree (`/Users/saarj/Downloads/saar-workspace/bneyzion/src`) — those changes don't deploy.
+- Always copy edited files to the correct worktree before committing.
+- Grow donation flow is always redirect (not wallet overlay). The `successUrl` in `useGrowPayment.ts` was hardcoded to `/thank-you` — for campaign we pass it directly to `create-payment` API.
 
 ### 2026-05-29 — Yehoshua campaign support buttons wired to /donate (commit 794f60e)
 
