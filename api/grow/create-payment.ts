@@ -71,6 +71,16 @@ const FALLBACK_PRODUCTS: Record<
     target_table: "orders",
     display_name: "מגילת אסתר",
   },
+  // Yehoshua campaign — one-time purchase (wallet pageCode, not directDebit)
+  // Uses PRODUCTS pageCode (efbda303565a) → secure.meshulam.co.il/purchase (not credit-checkout)
+  "yehoshua-campaign": {
+    active: true,
+    type: "wallet",
+    page_code_env: "PRODUCTS",
+    max_installments: 1,
+    target_table: "donations",
+    display_name: "קמפיין ספר יהושע",
+  },
 };
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
