@@ -4069,3 +4069,28 @@ WHERE id='yehoshua-campaign';
 - `cField2Value` for product-driven donations must be `"donation"` (not `flowType`) so webhook routes correctly.
 - Any product with `target_table=donations` + `type=directDebit` is a ONE-TIME donation via the תרומה merchant — do NOT send recurring fields to Grow.
 - To send recurring fields: `isRecurringDirectDebit = flowType === "directDebit" && resolvedTargetTable !== "donations"`.
+
+### 2026-05-29 — 4 visual fixes to /design-yehoshua-campaign
+
+**Fixes applied to `src/pages/DesignPreviewYehoshuaCampaign.tsx` (committed to main 1143be0) and dist patched + deployed to bneyzion-sandbox-test:**
+
+1. **Author image (מי כותב section):** `yoav-with-full-set.jpg` → `yoav-with-shoftim-book.jpg`.
+   Root cause: `yoav-with-full-set.jpg` exists on production (`bneyzion.vercel.app`) but NOT in local dist build, so `bneyzion-sandbox-test` (which serves from dist, not GitHub) showed a broken image placeholder.
+   Fix: replaced with `yoav-with-shoftim-book.jpg` which is confirmed 200 on both environments.
+
+2. **Tier ₪120 dedication copy:** headline `"ספר פיזי + הקדשה אישית מהרב יואב"` → `"ספר פיזי + הקדשה אישית בכתב יד מהרב יואב"`, perk `"הקדשה אישית מהרב יואב"` → `"הקדשה אישית בכתב יד מהרב יואב — בלעדי לטייר זה"`. Clarifies that handwritten dedication is exclusive to this tier.
+
+3. **Tier names:** `"השותף"` → `"שותף"` (₪800), `"השותף הבכיר"` → `"שותף בכיר"` (₪1,200). Article "ה" removed per Saar's request.
+
+4. **Remaining counts reset to full capacity** (0 sold, campaign not yet launched):
+   ₪90→200, ₪120→300, ₪220→150, ₪400→100, ₪800→50, ₪1200→30, ₪2000→10.
+   Stats (47 backers / ₪7,000 / 9%) kept — these are real hardcoded mock values, not DB.
+
+**Deploy notes:**
+- The `bneyzion-sandbox-test` Vercel project is **static deploy only** — no GitHub integration, no vite build. It receives `vercel deploy dist/` from CLI with static vercel.json (rewrites: `*` → `/index.html`).
+- Full bneyzion frontend source is NOT tracked in the sparse GitHub repo (`saarjzh-sudo/bneyzion`). It lives in Vercel's deployment file store. To make code changes: edit `src/pages/DesignPreviewYehoshuaCampaign.tsx` in the Downloads/saar-workspace/bneyzion/ worktree, then patch the dist chunk directly and redeploy dist/.
+- The dist chunk for this page is `dist/assets/DesignPreviewYehoshuaCampaign-DV_QF7Pn.js`.
+- Deploy command: `cd /tmp/static-deploy && npx vercel deploy --prod --yes --scope saars-projects-4508d6bb --name bneyzion-sandbox-test`
+
+**Iron rule learned:**
+- `bneyzion-sandbox-test.vercel.app` is a static deploy (dist/ only). To update a lazy-loaded page chunk: edit the TSX source, then directly patch the minified `.js` chunk in `dist/assets/`, and redeploy the entire `dist/` directory as static files.
