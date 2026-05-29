@@ -117,7 +117,7 @@ const TIERS: Tier[] = [
     headline: "ספר יהושע פיזי עד הבית",
     badge: "200 הראשונים",
     limit: 200,
-    remaining: 153,
+    remaining: 200,
     highlight: true,
     perks: ["ספר יהושע פיזי", "משלוח עד הבית"],
     image: "/images/yoav-campaign/book-mockup-tank.jpg",
@@ -127,10 +127,10 @@ const TIERS: Tier[] = [
     id: "tier-120",
     price: 120,
     name: "ספר + הקדשה",
-    headline: "ספר פיזי + הקדשה אישית מהרב יואב",
+    headline: "ספר פיזי + הקדשה אישית בכתב יד מהרב יואב",
     limit: 300,
-    remaining: 287,
-    perks: ["ספר יהושע פיזי", "הקדשה אישית מהרב יואב", "משלוח"],
+    remaining: 300,
+    perks: ["ספר יהושע פיזי", "הקדשה אישית בכתב יד מהרב יואב — בלעדי לטייר זה", "משלוח"],
     image: "/images/yoav-campaign/book-mockup-dirt.jpg",
     imageAlt: "ספר יהושע על האדמה",
   },
@@ -140,7 +140,7 @@ const TIERS: Tier[] = [
     name: "הזוג",
     headline: "שני ספרים פיזיים עד הבית",
     limit: 150,
-    remaining: 143,
+    remaining: 150,
     perks: ["2 ספרי יהושע", "משלוח"],
     image: "/images/yoav-campaign/book-mockup-tank.jpg",
     imageAlt: "שני ספרי יהושע",
@@ -152,7 +152,7 @@ const TIERS: Tier[] = [
     name: "הסט המלא",
     headline: "חמש מגילות + יהושע + שופטים",
     limit: 100,
-    remaining: 97,
+    remaining: 100,
     perks: ["סט מלא של בני ציון", "ספר יהושע", "פירוש על שופטים", "משלוח"],
     image: "/images/yoav-campaign/set-five-megillot.png",
     imageAlt: "סט חמש מגילות של בני ציון",
@@ -160,11 +160,11 @@ const TIERS: Tier[] = [
   {
     id: "tier-800",
     price: 800,
-    name: "השותף",
+    name: "שותף",
     headline: "שני סטים מלאים",
     limit: 50,
-    remaining: 48,
-    perks: ["2× סטים מלאים", "הקדשה אישית", "משלוח"],
+    remaining: 50,
+    perks: ["2× סטים מלאים", "הקדשה אישית בכתב יד מהרב יואב — בלעדי לטייר זה", "משלוח"],
     image: "/images/yoav-campaign/set-five-megillot.png",
     imageAlt: "2 סטים",
     imageBadge: "×2",
@@ -172,11 +172,11 @@ const TIERS: Tier[] = [
   {
     id: "tier-1200",
     price: 1200,
-    name: "השותף הבכיר",
+    name: "שותף בכיר",
     headline: "שלושה סטים מלאים",
     limit: 30,
-    remaining: 29,
-    perks: ["3× סטים מלאים", "הקדשה אישית", "משלוח"],
+    remaining: 30,
+    perks: ["3× סטים מלאים", "הקדשה אישית בכתב יד מהרב יואב — בלעדי לטייר זה", "משלוח"],
     image: "/images/yoav-campaign/set-five-megillot.png",
     imageAlt: "3 סטים",
     imageBadge: "×3",
@@ -188,7 +188,7 @@ const TIERS: Tier[] = [
     headline: "שיעור פיזי של הרב יואב אצלכם",
     note: "שיעור בלבד — בלי ספר",
     limit: 10,
-    remaining: 9,
+    remaining: 10,
     perks: ["שיעור פיזי בקהילה / בית כנסת"],
     image: "/images/yoav-campaign/yoav-writing-on-tank.jpg",
     imageAlt: "הרב יואב במילואים",
@@ -1286,8 +1286,8 @@ function AuthorSection() {
             }}
           >
             <img
-              src="/images/yoav-campaign/yoav-with-full-set.jpg"
-              alt="הרב יואב אוריאל עם סט הספרים המלא של בני ציון"
+              src="/images/yoav-campaign/yoav-with-shoftim-book.jpg"
+              alt="הרב יואב אוריאל עם ספר שופטים, מהמילואים בגבול סוריה"
               style={{ width: "100%", display: "block" }}
             />
           </div>
