@@ -3949,6 +3949,45 @@ These are from `/מאגר-השיעורים-והמאמרים/` SPA with JS routin
 - Always copy edited files to the correct worktree before committing.
 - Grow donation flow is always redirect (not wallet overlay). The `successUrl` in `useGrowPayment.ts` was hardcoded to `/thank-you` — for campaign we pass it directly to `create-payment` API.
 
+### 2026-05-29 — Yehoshua campaign: full donation tracking + live progress well (commit 4243c2a)
+
+**What changed:**
+
+**DB — migration applied live (Management API):**
+- `migrations/yehoshua-campaign-donations.sql` applied to `pzvmwfexeiruelwiujxn`:
+  - `ALTER TABLE donations ADD COLUMN source text` — campaign identifier (e.g. 'yehoshua-campaign')
+  - `ALTER TABLE donations ADD COLUMN tier_id text` — e.g. 'tier-90', 'tier-400'
+  - `ALTER TABLE donations ADD COLUMN tier_name text` — human-readable tier name at purchase time
+  - `ALTER TABLE donations ADD COLUMN tier_perks jsonb` — JSON array of perks in the tier
+  - `CREATE INDEX donations_source_idx ON donations(source)` — for admin filter
+  - `CREATE INDEX donations_source_status_idx ON donations(source, payment_status)` — for progress sum
+  - `CREATE VIEW v_yehoshua_campaign_report` — admin report view, all columns
+
+**Admin report queries:**
+- Full report: `SELECT * FROM v_yehoshua_campaign_report ORDER BY created_at DESC;`
+- Progress well: `SELECT SUM(amount), COUNT(*) FROM donations WHERE source='yehoshua-campaign' AND payment_status='completed';`
+- View is accessible to service_role users; inherits donations RLS (admin-only)
+
+**`api/grow/create-payment.ts`:**
+- New `campaignMeta?: { source, tier_id, tier_name, tier_perks[] }` field in `CreatePaymentBody`
+- Donations insert now saves all 4 campaign fields to DB
+
+**`src/pages/DesignPreviewYehoshuaCampaign.tsx`:**
+- `useCampaignRaised(refreshKey)` hook added — fetches SUM(amount) WHERE source='yehoshua-campaign' AND payment_status='completed'; falls back to RAISED_FALLBACK=7000 if DB returns 0 or error (handles pre-migration gracefully)
+- `RAISED/SUPPORTER_COUNT/PROGRESS_PCT` static constants replaced with live props from hook
+- `HeroSection`, `StickyNav`, `StickyMobileBar`, `FinalCTA` — all accept `raised/supporters/progressPct` as props
+- `refreshKey` increments on: (a) `handlePaymentSuccess` (wallet flow), (b) `?payment=success` URL param on redirect return — both trigger immediate re-fetch so well moves after donation
+- `DonationModal.handleSubmit` sends `campaignMeta` with source + full tier metadata
+
+**`src/integrations/supabase/types.ts`:**
+- `donations` Row/Insert/Update extended with `source, tier_id, tier_name, tier_perks`
+
+**Branch:** `sandbox-test` commit `4243c2a` pushed to `origin/sandbox-test`
+
+**Iron rules confirmed:**
+- After ALTER TABLE on Supabase, update `src/integrations/supabase/types.ts` manually — types stay stale otherwise. Pattern: add column to Row + Insert + Update sections.
+- `useCampaignRaised` must fallback to RAISED_FALLBACK (not 0) when query returns empty data — otherwise campaign page shows ₪0 before any live donations come in.
+
 ### 2026-05-29 — Yehoshua campaign support buttons wired to /donate (commit 794f60e)
 
 **What changed:**
