@@ -526,6 +526,15 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-29 — Yehoshua wallet fix ported to sandbox-test (commit 43358ac)
+- **Bug:** `165d777` was committed to `pre-launch-fixes` but never reached `sandbox-test` — the branch Vercel deploys to `bneyzion.vercel.app`. Playwright confirmed the old `credit-checkout` URL was still live.
+- **Root cause:** `DonationModal` in `DesignPreviewYehoshuaCampaign.tsx` still sent `type: "donation"` with no `meta.product` → API used legacy `directDebit` path → `secure.meshulam.co.il/credit-checkout` (recurring UI) instead of one-time overlay.
+- **Fix applied (commit 43358ac, branch sandbox-test):**
+  1. `api/grow/create-payment.ts` — added `"yehoshua-campaign"` to `FALLBACK_PRODUCTS` with `type="wallet"`, `page_code_env="PRODUCTS"`, `target_table="donations"`.
+  2. `src/pages/DesignPreviewYehoshuaCampaign.tsx` — `handleSubmit` now sends `type: "product"` + `meta: { product: "yehoshua-campaign", tos_accepted: true, tos_accepted_at }`.
+- **Verified live:** `/api/grow/create-payment` with `type="product"` + `meta.product="yehoshua-campaign"` returns `{ authCode: "...", url: null }`. Old `type="donation"` still returns `credit-checkout` URL (separate flow, unchanged).
+- **Iron rule learned:** When a fix commit lands on a feature branch, ALWAYS check if `sandbox-test` (Vercel deploy branch) also has it. Cherry-pick will conflict if both branches added the same file. Solution: apply the specific hunks manually then commit.
+
 ### 2026-05-28 — Navigator bot (בנצי) merged to production
 - **Merged:** `feat/navigator-bot` → `sandbox-test` (no-ff, commit `4a27a44d`)
 - **Production deploy:** `dpl_GoJYKUDmu2GCzRz8ksFNg71e4Yk9` via `vercel --prod` from `/private/tmp/bz-chapel-arch`
