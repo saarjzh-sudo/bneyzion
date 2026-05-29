@@ -46,6 +46,13 @@ interface CreatePaymentBody {
     donor_email?: string;
     user_id?: string;
   };
+  // Campaign tracking — stored in donations.source / tier_* columns
+  campaignMeta?: {
+    source?: string;        // e.g. 'yehoshua-campaign'
+    tier_id?: string;       // e.g. 'tier-90'
+    tier_name?: string;     // e.g. 'מחיר מיוחד — 200 ראשונים'
+    tier_perks?: string[];  // e.g. ['ספר יהושע פיזי', 'משלוח עד הבית']
+  };
 }
 
 // Conservative fallback if the payment_products row/table isn't there yet.
@@ -99,6 +106,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       cancelUrl,
       meta,
       donationMeta,
+      campaignMeta,
     } = body;
     let { orderId } = body;
 
@@ -309,6 +317,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             dedication_name: donationMeta?.dedication_name || null,
             user_id: donationMeta?.user_id || meta?.user_id || null,
             payment_status: "pending",
+            // Campaign tracking
+            source: campaignMeta?.source || null,
+            tier_id: campaignMeta?.tier_id || null,
+            tier_name: campaignMeta?.tier_name || null,
+            tier_perks: campaignMeta?.tier_perks
+              ? JSON.stringify(campaignMeta.tier_perks)
+              : null,
             raw_payload: { consent: consentAudit },
           })
           .select("id")

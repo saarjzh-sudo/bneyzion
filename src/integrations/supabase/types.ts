@@ -435,6 +435,10 @@ export type Database = {
           raw_payload: Json | null
           smoove_list_id: number | null
           smoove_subscribed: boolean | null
+          source: string | null
+          tier_id: string | null
+          tier_name: string | null
+          tier_perks: Json | null
           transaction_type_id: number | null
           user_id: string | null
         }
@@ -461,6 +465,10 @@ export type Database = {
           raw_payload?: Json | null
           smoove_list_id?: number | null
           smoove_subscribed?: boolean | null
+          source?: string | null
+          tier_id?: string | null
+          tier_name?: string | null
+          tier_perks?: Json | null
           transaction_type_id?: number | null
           user_id?: string | null
         }
@@ -487,6 +495,10 @@ export type Database = {
           raw_payload?: Json | null
           smoove_list_id?: number | null
           smoove_subscribed?: boolean | null
+          source?: string | null
+          tier_id?: string | null
+          tier_name?: string | null
+          tier_perks?: Json | null
           transaction_type_id?: number | null
           user_id?: string | null
         }
