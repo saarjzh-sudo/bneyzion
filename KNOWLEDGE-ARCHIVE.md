@@ -4033,3 +4033,39 @@ User never leaves the campaign page. `credit-checkout` is gone. One-time payment
 - The src code lives only in git objects for the `sandbox-test` branch (and others). `origin/main` has ZERO tsx files — it's scripts+docs only. Vercel deploys from `sandbox-test` branch.
 - To edit production code: `git worktree add /tmp/bneyzion-X origin/X` → edit → commit → push origin/X.
 - Never checkout src/* onto `main` — it doesn't belong there.
+
+### 2026-05-29 — Fix: yehoshua-campaign donations routed to DONATIONS merchant for קבלת תרומה (commits b6591a7, edc042f)
+
+**Problem:** After commit 165d777 (wallet fix), campaign donations used `page_code_env: "PRODUCTS"` (merchant "עם קבלה"). Grow issued a purchase receipt instead of a donation receipt ("קבלת תרומה"). Money appeared under products in Grow admin, not under donations.
+
+**Root cause:** Two Grow merchants on bneyzion:
+- "עם קבלה" (userId `b9a035312abd46d9`, pageCode `efbda303565a` = wallet) — for store+subscription
+- "קבלת תרומה" (userId `3dd391811941cb35`, pageCode `b1dc5e695089` = directDebit) — for donations
+
+Using wallet pageCode = wrong merchant = wrong receipt type.
+
+**Fix (`api/grow/create-payment.ts`):**
+
+1. `FALLBACK_PRODUCTS["yehoshua-campaign"]`: `type: wallet → directDebit`, `page_code_env: PRODUCTS → DONATIONS`
+2. `cField2Value`: when `productCfg.target_table === "donations"`, force `cField2 = "donation"` (not `flowType`). Ensures webhook routes update to `donations` table not `orders`.
+3. `resolvedTargetTable` + `isRecurringDirectDebit`: moved BEFORE the donations row insert. Uses `productCfg.target_table ?? (type === "directDebit" ? "orders" : "donations")`. Recurring fields (chargeIdentifier/planName/period/sumInstallments) sent only when `isRecurringDirectDebit = true`.
+4. `is_monthly` on donation insert: changed from `flowType === "directDebit"` → `isRecurringDirectDebit`. Prevents one-time campaign donations from being flagged as monthly.
+
+**DB update (Management API):**
+```sql
+UPDATE payment_products SET type='directDebit', page_code_env='DONATIONS'
+WHERE id='yehoshua-campaign';
+```
+
+**Verified live:**
+- API returns `url: secure.meshulam.co.il/credit-checkout` (DONATIONS merchant) ✓
+- `donations` row: `source=yehoshua-campaign`, `tier_id=tier-90`, `is_monthly=false` ✓
+- Old test rows (from previous deploys) have `is_monthly=true` — expected, pre-fix
+
+**UX change:** payment is now a redirect (not inline overlay). `DonationModal` already handles both — `if (data.url) window.location.href = data.url`. Returns to `/design-yehoshua-campaign?payment=success`.
+
+**New iron rules:**
+- `resolvedTargetTable` must be computed BEFORE the donations row insert (is_monthly depends on it).
+- `cField2Value` for product-driven donations must be `"donation"` (not `flowType`) so webhook routes correctly.
+- Any product with `target_table=donations` + `type=directDebit` is a ONE-TIME donation via the תרומה merchant — do NOT send recurring fields to Grow.
+- To send recurring fields: `isRecurringDirectDebit = flowType === "directDebit" && resolvedTargetTable !== "donations"`.
