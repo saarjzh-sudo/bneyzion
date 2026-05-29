@@ -3988,6 +3988,34 @@ These are from `/מאגר-השיעורים-והמאמרים/` SPA with JS routin
 - After ALTER TABLE on Supabase, update `src/integrations/supabase/types.ts` manually — types stay stale otherwise. Pattern: add column to Row + Insert + Update sections.
 - `useCampaignRaised` must fallback to RAISED_FALLBACK (not 0) when query returns empty data — otherwise campaign page shows ₪0 before any live donations come in.
 
+### 2026-05-29 — Fix: yehoshua campaign payment flow — wallet not directDebit (commit 165d777)
+
+**Bug diagnosed:** DonationModal was sending `type: "donation"` without `meta.product` → API used
+legacy directDebit path → `GROW_PAGECODE_DONATIONS` (b1dc5e695089) → Meshulam returned
+`url: secure.meshulam.co.il/credit-checkout` → looked like subscription/recurring page.
+
+**Root cause:** `credit-checkout` is the directDebit Meshulam UI. Even though it would have been
+a one-time charge (no `chargeIdentifier+planName+period+sumInstallments` sent), the UI says "תשלום חודשי".
+
+**Fix:**
+- `api/grow/create-payment.ts` (pre-launch-fixes branch) — added `"yehoshua-campaign"` to FALLBACK_PRODUCTS:
+  `type: "wallet"`, `page_code_env: "PRODUCTS"`, `target_table: "donations"`, `max_installments: 1`
+- `src/pages/DesignPreviewYehoshuaCampaign.tsx` — `DonationModal.handleSubmit` now sends:
+  - `type: "product"` (not `"donation"`)
+  - `meta.product: "yehoshua-campaign"`
+  - `meta.tos_accepted: true` + `meta.tos_accepted_at`
+  - SDK `environment: "PRODUCTION"` (was `"DEV"`)
+- `payment_products` DB row inserted via Management API: id=yehoshua-campaign, type=wallet,
+  page_code_env=PRODUCTS, target_table=donations
+
+**Result:** API now returns `authCode` (not `url`) → Grow SDK overlay opens ON the campaign page.
+User never leaves the campaign page. `credit-checkout` is gone. One-time payment confirmed.
+
+**Iron rules learned:**
+- Grow bneyzion has exactly 2 pageCodes: wallet (efbda303565a) = one-time `/purchase`, directDebit (b1dc5e695089) = recurring+donations `/credit-checkout`. For campaign donations use PRODUCTS (wallet) not DONATIONS (directDebit) — otherwise UI shows subscription language.
+- Legacy `type: "donation"` always routes to directDebit. New callers MUST use `type: "product"` + `meta.product` to get correct routing.
+- `wallet` pageCode returns `authCode` (SDK overlay). `directDebit` pageCode returns `url` (redirect). The presence/absence of `authCode` in API response is the deterministic signal.
+
 ### 2026-05-29 — Yehoshua campaign support buttons wired to /donate (commit 794f60e)
 
 **What changed:**
