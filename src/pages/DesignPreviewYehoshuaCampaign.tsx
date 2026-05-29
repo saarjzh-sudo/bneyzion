@@ -16,9 +16,15 @@
  * - No fake backers section
  * - Cinematic entrance animations (CSS-only, no framer-motion)
  * - RTL logical CSS properties throughout
+ *
+ * V3 (2026-05-29):
+ * - Support buttons open DonationModal in-page — no redirect to /donate
+ * - Grow payment runs inside modal; on redirect flow successUrl points back
+ *   to /design-yehoshua-campaign?payment=success
+ * - Thank-you state displayed as sticky banner inside the campaign page
  */
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 /* ─── Campaign constants ────────────────────────────────── */
 const GOAL = 80_000;
@@ -1583,12 +1589,578 @@ function StickyMobileBar({ onSupportClick }: { onSupportClick: () => void }) {
   );
 }
 
+/* ─── Donation Modal ────────────────────────────────────── */
+
+interface DonationModalProps {
+  tier: Tier | null;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+const SDK_URL = "https://cdn.meshulam.co.il/sdk/gs.min.js";
+
+// Extend the existing Window.growPayment declaration only if not already declared
+// (useGrowPayment.ts also declares it — we stay compatible by using the same shape)
+type GrowPaymentWindow = Window & {
+  growPayment?: {
+    init: (config: any) => void;
+    renderPaymentOptions: (authCode: string) => void;
+  };
+};
+
+function DonationModal({ tier, onClose, onSuccess }: DonationModalProps) {
+  const [amount, setAmount] = useState(tier?.price ?? 90);
+  const [donorName, setDonorName] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [tosAccepted, setTosAccepted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sdkReady, setSdkReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const resolveRef = useRef<((v: any) => void) | null>(null);
+  const rejectRef = useRef<((e: any) => void) | null>(null);
+
+  // Sync amount when tier changes
+  useEffect(() => {
+    if (tier) setAmount(tier.price);
+  }, [tier]);
+
+  // Prevent body scroll while modal open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  // Load and init Grow SDK
+  useEffect(() => {
+    function doInit() {
+      if (!(window as GrowPaymentWindow).growPayment) return;
+      (window as GrowPaymentWindow).growPayment.init({
+        environment: "DEV",
+        version: 1,
+        events: {
+          onSuccess: (response: any) => {
+            setIsLoading(false);
+            resolveRef.current?.(response);
+            resolveRef.current = null;
+            rejectRef.current = null;
+          },
+          onFailure: (response: any) => {
+            setIsLoading(false);
+            const msg = response?.message || "התשלום נכשל";
+            setError(msg);
+            rejectRef.current?.(new Error(msg));
+            resolveRef.current = null;
+            rejectRef.current = null;
+          },
+          onError: (response: any) => {
+            setIsLoading(false);
+            const msg = response?.message || "שגיאה בתשלום";
+            setError(msg);
+            rejectRef.current?.(new Error(msg));
+            resolveRef.current = null;
+            rejectRef.current = null;
+          },
+          onTimeout: () => {
+            setIsLoading(false);
+            setError("פג הזמן לתשלום — נסו שנית");
+            rejectRef.current?.(new Error("timeout"));
+            resolveRef.current = null;
+            rejectRef.current = null;
+          },
+          onWalletChange: (state: "open" | "close") => {
+            if (state === "close") setIsLoading(false);
+          },
+          onPaymentCancel: () => { setIsLoading(false); },
+        },
+      });
+      setSdkReady(true);
+    }
+
+    if ((window as GrowPaymentWindow).growPayment) { doInit(); return; }
+
+    const existing = document.querySelector(`script[src="${SDK_URL}"]`);
+    if (existing) {
+      existing.addEventListener("load", doInit);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = SDK_URL;
+    script.async = true;
+    script.onload = doInit;
+    script.onerror = () => setError("לא ניתן לטעון מערכת תשלום — נסו לרענן");
+    document.head.appendChild(script);
+  }, []);
+
+  const handleSubmit = useCallback(async () => {
+    setError(null);
+
+    if (!amount || amount < 1) { setError("נא לבחור סכום"); return; }
+    if (!donorName || !donorName.trim().includes(" ")) {
+      setError("נא להזין שם מלא (שם פרטי ומשפחה)"); return;
+    }
+    if (!donorPhone || !/^05\d{8}$/.test(donorPhone.replace(/[-\s]/g, ""))) {
+      setError("נא להזין מספר טלפון תקין (05XXXXXXXX)"); return;
+    }
+    if (!tosAccepted) { setError("יש לאשר את התקנון לפני המשך"); return; }
+
+    setIsLoading(true);
+    try {
+      const res = await fetch("/api/grow/create-payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          sum: amount,
+          description: `תמיכה בספר יהושע — ${tier?.name ?? "תרומה חופשית"}`,
+          fullName: donorName,
+          phone: donorPhone,
+          email: donorEmail,
+          type: "donation",
+          thankYouType: "donation",
+          // successUrl returns user back to this campaign page with flag
+          successUrl: `${window.location.origin}/design-yehoshua-campaign?payment=success`,
+          cancelUrl: window.location.href,
+          donationMeta: { donor_email: donorEmail || undefined },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok || (!data.authCode && !data.url)) {
+        throw new Error(data.error || "שגיאה בפתיחת התשלום");
+      }
+
+      // Wallet / overlay flow (if authCode returned)
+      if (data.authCode && (window as GrowPaymentWindow).growPayment) {
+        const result = await new Promise<any>((resolve, reject) => {
+          resolveRef.current = resolve;
+          rejectRef.current = reject;
+          (window as GrowPaymentWindow).growPayment!.renderPaymentOptions(data.authCode);
+        });
+        setIsLoading(false);
+        onSuccess();
+        console.log("Grow payment success:", result);
+        return;
+      }
+
+      // Redirect flow — navigate to Grow payment page
+      // successUrl is /design-yehoshua-campaign?payment=success
+      if (data.url) {
+        window.location.href = data.url;
+        return;
+      }
+
+      throw new Error("לא התקבל קישור תשלום");
+    } catch (err: any) {
+      setIsLoading(false);
+      setError(err.message);
+    }
+  }, [amount, donorName, donorPhone, donorEmail, tosAccepted, tier, onSuccess]);
+
+  // Close on backdrop click
+  function handleBackdropClick(e: { target: EventTarget | null; currentTarget: EventTarget | null }) {
+    if (e.target === e.currentTarget) onClose();
+  }
+
+  if (!tier) return null;
+
+  const btnDisabled = isLoading || !tosAccepted || !donorName || !donorPhone;
+
+  return (
+    <div
+      onClick={handleBackdropClick}
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 200,
+        background: "hsl(215 55% 8% / 0.72)",
+        backdropFilter: "blur(6px)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+        overflowY: "auto",
+      }}
+      dir="rtl"
+    >
+      <div
+        style={{
+          background: "white",
+          borderRadius: 24,
+          padding: "32px 28px 28px",
+          width: "100%",
+          maxWidth: 480,
+          position: "relative",
+          boxShadow: "0 32px 80px hsl(215 55% 8% / 0.45)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 20,
+          animation: "modalSlideIn 0.28s cubic-bezier(0.34,1.56,0.64,1) both",
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          aria-label="סגור"
+          style={{
+            position: "absolute",
+            top: 16,
+            insetInlineStart: 16,
+            width: 34,
+            height: 34,
+            borderRadius: "50%",
+            border: "1.5px solid hsl(215 15% 88%)",
+            background: "hsl(215 10% 97%)",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 18,
+            color: "hsl(215 30% 40%)",
+            lineHeight: 1,
+          }}
+        >
+          ×
+        </button>
+
+        {/* Header */}
+        <div style={{ textAlign: "center", paddingBlockStart: 4 }}>
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "4px 14px",
+              borderRadius: 99,
+              background: "hsl(38 75% 55% / 0.1)",
+              border: "1px solid hsl(38 75% 55% / 0.25)",
+              marginBlockEnd: 12,
+            }}
+          >
+            <span style={{ color: "hsl(38 75% 42%)", fontSize: 12, fontWeight: 700, letterSpacing: "0.04em" }}>
+              תמיכה בספר יהושע
+            </span>
+          </div>
+          <h2 style={{ fontSize: 22, fontWeight: 900, color: "hsl(215 55% 18%)", margin: "0 0 4px", letterSpacing: "-0.02em" }}>
+            {tier.headline}
+          </h2>
+          <p style={{ fontSize: 13, color: "hsl(215 20% 48%)", margin: 0 }}>
+            {tier.name}
+          </p>
+        </div>
+
+        {/* Amount display */}
+        <div
+          style={{
+            background: "linear-gradient(135deg, hsl(215 55% 16%) 0%, hsl(215 48% 22%) 100%)",
+            borderRadius: 16,
+            padding: "18px 20px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 12,
+          }}
+        >
+          <div>
+            <div style={{ fontSize: 11, color: "hsl(38 85% 66%)", fontWeight: 700, letterSpacing: "0.08em", marginBlockEnd: 4 }}>
+              סכום התמיכה
+            </div>
+            <div style={{ fontSize: 36, fontWeight: 900, color: "hsl(38 85% 70%)", lineHeight: 1, letterSpacing: "-0.02em" }}>
+              ₪{amount.toLocaleString()}
+            </div>
+          </div>
+          <div style={{ textAlign: "start" }}>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 5 }}>
+              {tier.perks.map((p, i) => (
+                <li key={i} style={{ fontSize: 13, color: "hsl(215 10% 80%)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ color: "hsl(38 75% 55%)", fontWeight: 700 }}>✓</span> {p}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Form */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {/* Name */}
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 30% 36%)", display: "block", marginBlockEnd: 5 }}>
+              שם מלא *
+            </label>
+            <input
+              type="text"
+              value={donorName}
+              onChange={(e) => setDonorName(e.target.value)}
+              placeholder="שם פרטי ומשפחה..."
+              dir="rtl"
+              style={inputStyle}
+            />
+          </div>
+
+          {/* Phone + Email */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            <div>
+              <label style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 30% 36%)", display: "block", marginBlockEnd: 5 }}>
+                טלפון *
+              </label>
+              <input
+                type="tel"
+                value={donorPhone}
+                onChange={(e) => setDonorPhone(e.target.value)}
+                placeholder="05XXXXXXXX"
+                dir="ltr"
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 30% 36%)", display: "block", marginBlockEnd: 5 }}>
+                אימייל
+              </label>
+              <input
+                type="email"
+                value={donorEmail}
+                onChange={(e) => setDonorEmail(e.target.value)}
+                placeholder="email@..."
+                dir="ltr"
+                style={inputStyle}
+              />
+            </div>
+          </div>
+
+          {/* TOS */}
+          <label
+            style={{
+              display: "flex",
+              alignItems: "flex-start",
+              gap: 10,
+              cursor: "pointer",
+              fontSize: 13,
+              color: "hsl(215 25% 40%)",
+              lineHeight: 1.55,
+            }}
+          >
+            <div
+              onClick={() => setTosAccepted(!tosAccepted)}
+              style={{
+                width: 18,
+                height: 18,
+                borderRadius: 5,
+                border: tosAccepted ? "2px solid hsl(38 75% 45%)" : "2px solid hsl(215 15% 75%)",
+                background: tosAccepted ? "hsl(38 75% 55%)" : "white",
+                flexShrink: 0,
+                marginBlockStart: 1,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.15s",
+                cursor: "pointer",
+              }}
+            >
+              {tosAccepted && (
+                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                  <path d="M1 4l3 3 5-6" stroke="hsl(215 55% 12%)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+            </div>
+            <span>
+              אני מאשר/ת את{" "}
+              <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: "hsl(38 75% 40%)", textDecoration: "underline" }}>
+                תקנון האתר
+              </a>
+              {" "}ומדיניות הפרטיות, ואני מעל גיל 18.
+            </span>
+          </label>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div
+            style={{
+              padding: "10px 14px",
+              borderRadius: 10,
+              background: "hsl(0 80% 96%)",
+              border: "1px solid hsl(0 75% 85%)",
+              fontSize: 13,
+              color: "hsl(0 65% 40%)",
+              textAlign: "center",
+            }}
+          >
+            {error}
+          </div>
+        )}
+
+        {/* Submit */}
+        <button
+          onClick={handleSubmit}
+          disabled={btnDisabled}
+          style={{
+            width: "100%",
+            padding: "14px 0",
+            borderRadius: 14,
+            border: "none",
+            background: btnDisabled
+              ? "hsl(215 15% 82%)"
+              : "linear-gradient(135deg, hsl(43 85% 62%), hsl(38 75% 48%))",
+            color: btnDisabled ? "hsl(215 15% 58%)" : "hsl(215 55% 12%)",
+            fontWeight: 900,
+            fontSize: 17,
+            cursor: btnDisabled ? "not-allowed" : "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            transition: "opacity 0.15s",
+          }}
+          onMouseOver={(e) => { if (!btnDisabled) (e.currentTarget as HTMLElement).style.opacity = "0.9"; }}
+          onMouseOut={(e) => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+        >
+          {isLoading ? (
+            <>
+              <span
+                style={{
+                  width: 18,
+                  height: 18,
+                  border: "2.5px solid hsl(215 55% 30% / 0.4)",
+                  borderTopColor: "hsl(215 55% 20%)",
+                  borderRadius: "50%",
+                  animation: "spin 0.7s linear infinite",
+                  flexShrink: 0,
+                }}
+              />
+              מעבד תשלום...
+            </>
+          ) : !sdkReady ? (
+            "טוען מערכת תשלום..."
+          ) : (
+            <>לתשלום ₪{amount.toLocaleString()} →</>
+          )}
+        </button>
+
+        {/* Security note */}
+        <p style={{ textAlign: "center", fontSize: 11, color: "hsl(215 15% 58%)", margin: 0, display: "flex", alignItems: "center", justifyContent: "center", gap: 5 }}>
+          <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
+            <path d="M6 1L1 3.5V7c0 3 2.2 5.5 5 6 2.8-.5 5-3 5-6V3.5L6 1z" fill="hsl(38 75% 55%)" />
+          </svg>
+          סליקה מאובטחת · Grow · אשראי, ביט, Apple Pay, Google Pay
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const inputStyle: { [key: string]: string | number } = {
+  width: "100%",
+  padding: "10px 14px",
+  borderRadius: 10,
+  border: "1.5px solid hsl(215 15% 85%)",
+  background: "hsl(215 10% 98%)",
+  fontSize: 14,
+  color: "hsl(215 55% 16%)",
+  outline: "none",
+  fontFamily: "inherit",
+  boxSizing: "border-box",
+  transition: "border-color 0.15s",
+};
+
+/* ─── Thank-You Banner ──────────────────────────────────── */
+function ThankYouBanner({ onDismiss }: { onDismiss: () => void }) {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        insetBlockStart: 0,
+        insetInlineStart: 0,
+        insetInlineEnd: 0,
+        zIndex: 150,
+        background: "linear-gradient(90deg, hsl(215 55% 16%), hsl(215 48% 22%))",
+        borderBlockEnd: "2px solid hsl(38 75% 55%)",
+        padding: "14px 20px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: 12,
+        animation: "fadeUp 0.5s ease-out both",
+      }}
+      dir="rtl"
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: "50%",
+            background: "hsl(38 75% 55%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+          }}
+        >
+          <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+            <path d="M1.5 7l5 5 10-10" stroke="hsl(215 55% 12%)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <div>
+          <div style={{ color: "white", fontWeight: 800, fontSize: 16, lineHeight: 1.2 }}>
+            תודה על תמיכתכם! הספר יגיע אליכם עד החגים.
+          </div>
+          <div style={{ color: "hsl(38 85% 68%)", fontSize: 13, marginBlockStart: 2 }}>
+            קבלה תישלח למייל שסיפקתם. ברוכים הבאים לשותפים של הספר.
+          </div>
+        </div>
+      </div>
+      <button
+        onClick={onDismiss}
+        style={{
+          background: "none",
+          border: "1.5px solid hsl(215 20% 35%)",
+          borderRadius: 8,
+          color: "hsl(215 10% 68%)",
+          padding: "5px 12px",
+          fontSize: 12,
+          fontWeight: 700,
+          cursor: "pointer",
+          flexShrink: 0,
+        }}
+      >
+        סגור
+      </button>
+    </div>
+  );
+}
+
 /* ─── Main Page ─────────────────────────────────────────── */
 export default function DesignPreviewYehoshuaCampaign() {
   const scrollY = useScrollY();
   const scrolled = scrollY > 80;
+
+  // Modal state
+  const [modalTier, setModalTier] = useState<Tier | null>(null);
+  // Thank-you state — set when returning from Grow redirect with ?payment=success
+  const [showThankYou, setShowThankYou] = useState(false);
+
+  // Detect return from Grow redirect
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("payment") === "success") {
+      setShowThankYou(true);
+      // Clean URL without reload
+      const clean = window.location.pathname;
+      window.history.replaceState({}, "", clean);
+    }
+  }, []);
+
   function handleSupport(tier: Tier) {
-    window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}`;
+    setModalTier(tier);
+  }
+
+  function handleModalClose() {
+    setModalTier(null);
+  }
+
+  function handlePaymentSuccess() {
+    setModalTier(null);
+    setShowThankYou(true);
   }
 
   function scrollToTiers() {
@@ -1623,6 +2195,8 @@ export default function DesignPreviewYehoshuaCampaign() {
         @keyframes bounce-down { 0%, 100% { transform: translateX(50%) translateY(0); } 50% { transform: translateX(50%) translateY(6px); } }
         @keyframes scroll-dot { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
         @keyframes ctaGlow { 0% { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 0 hsl(38 75% 55% / 0.45); } 70% { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 16px hsl(38 75% 55% / 0); } 100% { box-shadow: 0 8px 24px hsl(38 75% 50% / 0.35), 0 0 0 0 hsl(38 75% 55% / 0); } }
+        @keyframes modalSlideIn { from { opacity: 0; transform: scale(0.93) translateY(12px); } to { opacity: 1; transform: none; } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .hero-fade-1 { animation: fadeUp 0.7s ease-out 0.15s both; }
         .hero-fade-2 { animation: fadeUp 0.7s ease-out 0.28s both; }
@@ -1646,6 +2220,18 @@ export default function DesignPreviewYehoshuaCampaign() {
           .mobile-bar { display: none !important; }
         }
       `}</style>
+
+      {/* Thank-you banner — shown after Grow redirect returns */}
+      {showThankYou && <ThankYouBanner onDismiss={() => setShowThankYou(false)} />}
+
+      {/* Donation modal */}
+      {modalTier && (
+        <DonationModal
+          tier={modalTier}
+          onClose={handleModalClose}
+          onSuccess={handlePaymentSuccess}
+        />
+      )}
 
       {/* Sticky nav */}
       <StickyNav scrolled={scrolled} onSupportClick={scrollToTiers} />
