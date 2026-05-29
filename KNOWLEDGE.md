@@ -4091,3 +4091,33 @@ flyer-creator agent יחזיר `parasha-shavua.png` + `moed-17-tammuz.png` — �
 - `TEXT_DARK` = `#2D1F0E`, `TEXT_MUTED` = `#6B5C4A`, `TEXT_SUBTLE` = `#A69882`
 
 **PR:** https://github.com/saarjzh-sudo/bneyzion/compare/sandbox-test...fix/parasha-holiday-green-removal
+
+### 2026-05-29 — bneyzion.vercel.app deploy gap diagnosis + fix
+
+**Root cause:**
+`bneyzion.vercel.app` = Vercel project `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x), linked to GitHub repo `saarjzh-sudo/bneyzion` branch `main`. BUT branch `main` contains ONLY docs/scripts/src snippets — no `package.json`. Every auto-triggered GitHub→Vercel build fails with `vite: command not found` (exit 127). The last successful production build (`bneyzion-n21u50mbg`) was a manual `vercel deploy --prebuilt` from 16:20. All subsequent git pushes to `main` after 16:20 (commits 1143be0, b4af074, 88cbb11) triggered failing builds — so production stayed stale.
+
+Simultaneously, `sandbox-test` branch (the REAL full codebase with `package.json`) received commits `a730798` (stats reset + wallet fix) but NOT `1143be0` (tier names + counters), because 1143be0 was committed to `main` after the branches diverged.
+
+**Fix applied:**
+1. Cherry-picked `1143be0` into `sandbox-test` (worktree at `/private/tmp/bneyzion-sandbox-test`) → commit `d4e3943`
+2. Ran `vercel pull --yes --environment production` to set target=production
+3. Built: `vercel build --yes --target production` → `.vercel/output`
+4. Deployed: `vercel deploy --prebuilt --prod` → `bneyzion-b9wlf8nkg` → aliased to `bneyzion.vercel.app`
+5. Pushed `d4e3943` to `origin/sandbox-test`
+
+**Verification:**
+- JS bundle `DesignPreviewYehoshuaCampaign-DvhpULXe.js` on bneyzion.vercel.app contains:
+  - `remaining:200,300,150,100,50,30,10` (all limits, not pre-sold values)
+  - `"שותף"` / `"שותף בכיר"` (not "השותף")
+  - `"בלעדי"` (3 occurrences — exclusive dedication copy)
+- `/api/grow/create-payment` with `meta.product=yehoshua-campaign` returns `{"authCode":"...","url":null,...}` — wallet, not directDebit URL
+- `RAISED_FALLBACK=0`, `SUPPORTERS_FALLBACK=0` in source
+
+**Iron rule learned (§ deploy arch):**
+Branch `main` in `saarjzh-sudo/bneyzion` is a SPARSE worktree — no `package.json`. NEVER push full-app code to `main`. The full codebase lives on `sandbox-test`. Deploy path is ALWAYS: build locally from `sandbox-test` worktree → `vercel build --target production` → `vercel deploy --prebuilt --prod`.
+
+**Worktree locations:**
+- `sandbox-test` full app: `/private/tmp/bneyzion-sandbox-test/`
+- `main` sparse: `/Users/saarj/Downloads/saar-workspace/bneyzion/`
+- `.vercel/project.json` in both points to `prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x` (bneyzion)
