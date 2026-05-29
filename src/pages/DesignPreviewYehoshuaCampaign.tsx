@@ -1776,8 +1776,12 @@ function DonationModal({ tier, onClose, onSuccess }: DonationModalProps) {
           fullName: donorName,
           phone: donorPhone,
           email: donorEmail,
-          type: "donation",
-          thankYouType: "donation",
+          type: "product",
+          meta: {
+            product: "yehoshua-campaign",
+            tos_accepted: true,
+            tos_accepted_at: new Date().toISOString(),
+          },
           // successUrl returns user back to this campaign page with flag
           successUrl: `${window.location.origin}/design-yehoshua-campaign?payment=success`,
           cancelUrl: window.location.href,
