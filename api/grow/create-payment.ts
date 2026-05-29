@@ -85,16 +85,15 @@ const FALLBACK_PRODUCTS: Record<
     target_table: "orders",
     display_name: "מגילת אסתר",
   },
-  // Yehoshua campaign — one-time DONATION via the "קבלת תרומה" Grow merchant.
-  // Uses DONATIONS pageCode (b1dc5e695089) + GROW_USER_ID_DONATIONS so Grow
-  // categorises it as a tzedaka donation and emails a tax-deductible receipt.
-  // directDebit pageCode returns a `url` (redirect) not `authCode` (overlay) —
-  // but we deliberately do NOT send chargeIdentifier/planName/period/sumInstallments
-  // so Grow registers a ONE-TIME charge, not a recurring plan.
+  // Yehoshua campaign — one-time payment via the wallet (PRODUCTS) Grow merchant.
+  // Uses wallet pageCode (efbda303565a) + GROW_USER_ID_PRODUCTS so Grow opens
+  // the standard credit-card overlay (not a הוראת קבע / recurring plan page).
+  // target_table="donations" keeps campaign tracking in the donations table for
+  // admin reporting (same as before), but the checkout UX is standard one-time.
   "yehoshua-campaign": {
     active: true,
-    type: "directDebit",
-    page_code_env: "DONATIONS",
+    type: "wallet",
+    page_code_env: "PRODUCTS",
     max_installments: 1,
     target_table: "donations",
     display_name: "קמפיין ספר יהושע",

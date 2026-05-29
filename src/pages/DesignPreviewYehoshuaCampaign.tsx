@@ -29,10 +29,11 @@ import { supabase } from "@/integrations/supabase/client";
 
 /* ─── Campaign constants ────────────────────────────────── */
 const GOAL = 80_000;
-// Initial/fallback values shown before live data loads from Supabase.
-// Once useCampaignRaised resolves, these are replaced with real sums.
-const RAISED_FALLBACK = 7_000;
-const SUPPORTERS_FALLBACK = 47;
+// Fallback values shown while live data loads from Supabase.
+// 0/0 = correct pre-launch state. Once useCampaignRaised resolves with
+// completed donations, the real sums replace these.
+const RAISED_FALLBACK = 0;
+const SUPPORTERS_FALLBACK = 0;
 
 /* ─── Live campaign totals hook ─────────────────────────── */
 interface CampaignTotals {
@@ -72,10 +73,11 @@ function useCampaignRaised(
 
         if (data && data.length >= 0) {
           const total = data.reduce((sum, row) => sum + (Number(row.amount) || 0), 0);
-          // Show live data if we have any; otherwise keep fallback so the
-          // page doesn't show ₪0 before the campaign starts.
-          setRaised(total > 0 ? total : RAISED_FALLBACK);
-          setSupporters(data.length > 0 ? data.length : SUPPORTERS_FALLBACK);
+          // Always show real DB totals (including 0/0 before campaign starts).
+          // RAISED_FALLBACK / SUPPORTERS_FALLBACK are only the initial useState
+          // values shown for the ~150ms before the first fetch resolves.
+          setRaised(total);
+          setSupporters(data.length);
         }
       } catch (e) {
         console.warn("useCampaignRaised: exception", e);
@@ -655,7 +657,7 @@ function HeroSection({ onSupportClick, raised, supporters, progressPct }: { onSu
   );
 }
 
-function ProofStrip() {
+function ProofStrip({ supporters }: { supporters: number }) {
   const { ref, visible } = useInView();
   return (
     <div
@@ -679,7 +681,7 @@ function ProofStrip() {
           { val: "15+", label: "שנות הוראת תנ\"ך", icon: "📖" },
           { val: "300+", label: "לומדים פעילים", icon: "👥" },
           { val: "480", label: "עמודים בספר", icon: "📝" },
-          { val: "47", label: "תומכים כבר הצטרפו", icon: "🙌" },
+          { val: String(supporters), label: "תומכים כבר הצטרפו", icon: "🙌" },
         ].map((s, i) => (
           <div
             key={s.label}
@@ -2323,7 +2325,7 @@ export default function DesignPreviewYehoshuaCampaign() {
       <HeroSection onSupportClick={scrollToTiers} raised={raised} supporters={supporters} progressPct={progressPct} />
 
       {/* ── 2. PROOF STRIP ── */}
-      <ProofStrip />
+      <ProofStrip supporters={supporters} />
 
       {/* ── 3. TIERS (early — Headstart convention) ── */}
       <TiersSection onSupport={handleSupport} />
