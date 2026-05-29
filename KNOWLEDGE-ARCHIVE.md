@@ -3687,6 +3687,32 @@ significant change must update it. The agent enforces this.*
 **Build:** `npx tsc --noEmit` — clean (0 errors).
 **Iron rule learned:** Filter teachers content from GLOBAL search/browse hooks. Do NOT filter from rabbi-specific hooks — rabbi pages show the rabbi's full portfolio.
 
+### 2026-05-29 — תיקון SCHEDULE_5786: פרשת השבוע הוצגה שגויה (בהר במקום בהעלותך)
+
+**הבעיה:**
+- האתר הציג "בהר" בתאריך 29.5.2026, בעוד פרשת השבוע האמיתית בישראל היא "בהעלותך".
+- הסיבה: `SCHEDULE_5786` ב-`src/lib/parashaCalendar.ts` היה שגוי מאמצע מרץ 2026 ואילך. כל הפרשות נדחו ב-3-4 שבועות.
+
+**שגיאות שהיו בלוח (לפני תיקון):**
+- `[2, 21, "פקודי"]` → היה צריך להיות ויקרא (Mar 21)
+- `[2, 28, "ויקרא"]` → היה צריך להיות צו (Mar 28)
+- `[3, 18, "שמיני"]` → היה צריך להיות שמיני ב-Apr 11
+- `[4, 23, "אמור"]` → היה צריך להיות אמור ב-May 2
+- `[4, 30, "בהר"]` → היה צריך להיות **בהעלותך ב-May 30**
+- ועוד 15+ שגיאות בהמשך
+
+**מה תוקן:**
+- `src/lib/parashaCalendar.ts` — `SCHEDULE_5786` נבנה מחדש לפי hebcal.com עם `i=on` (מצב ישראל).
+- כל הפרשות מ-Mar 14 2026 ואילך תוקנו.
+- הערות הוספו בקוד לסימון איחוד פרשות ישראל (double parshiot).
+
+**Iron rule:**
+- `SCHEDULE_5786` (ו-5785) הוא lookup hardcoded ולא API חי. **כל שנה** יש לעדכן את הלוח ידנית לפי hebcal.com/shabbat עם `i=on` (ישראל). אחרת הפרשות יסטו שוב.
+- בישראל, פרשות מסוימות מחוברות (תזריע-מצורע, אחרי מות-קדושים, בהר-בחוקותי, מטות-מסעי, נצבים-וילך) — הלוח צריך לשקף זאת.
+
+**Files changed:**
+- `src/lib/parashaCalendar.ts` — תיקון SCHEDULE_5786 (שורות 172-225)
+
 ### 2026-05-26 — תכנית אסטרטגית + הקמת בסיס ידע מורחב
 
 **מה נעשה:**
