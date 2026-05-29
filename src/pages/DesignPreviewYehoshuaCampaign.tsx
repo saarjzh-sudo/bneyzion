@@ -1536,44 +1536,6 @@ function FinalCTA({ onSupportClick }: { onSupportClick: () => void }) {
   );
 }
 
-function DonationToast({ tier, onClose }: { tier: Tier; onClose: () => void }) {
-  useEffect(() => {
-    const t = setTimeout(onClose, 5000);
-    return () => clearTimeout(t);
-  }, [onClose]);
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        insetBlockEnd: 88,
-        insetInlineEnd: 20,
-        zIndex: 100,
-        background: "hsl(215 55% 17%)",
-        border: "1.5px solid hsl(38 75% 55% / 0.45)",
-        borderRadius: 16,
-        padding: "16px 18px",
-        maxWidth: 300,
-        boxShadow: "0 12px 40px hsl(215 55% 10% / 0.5)",
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 12,
-        animation: "slideInToast 0.35s ease-out both",
-      }}
-    >
-      <div style={{ width: 36, height: 36, background: "hsl(38 75% 55% / 0.15)", border: "1px solid hsl(38 75% 55% / 0.3)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, fontSize: 17 }}>
-        ✓
-      </div>
-      <div style={{ flex: 1 }}>
-        <div style={{ fontSize: 14, fontWeight: 800, color: "white", marginBlockEnd: 3 }}>תודה על התמיכה!</div>
-        <div style={{ fontSize: 13, color: "hsl(38 85% 70%)", fontWeight: 600, marginBlockEnd: 2 }}>{tier.name} — ₪{tier.price.toLocaleString()}</div>
-        <div style={{ fontSize: 12, color: "hsl(215 10% 52%)" }}>הספר יגיע אליכם עד החגים.</div>
-      </div>
-      <button onClick={onClose} style={{ background: "none", border: "none", color: "hsl(215 10% 48%)", cursor: "pointer", fontSize: 16, padding: 0, lineHeight: 1, flexShrink: 0 }}>×</button>
-    </div>
-  );
-}
-
 function StickyMobileBar({ onSupportClick }: { onSupportClick: () => void }) {
   return (
     <div
@@ -1625,11 +1587,8 @@ function StickyMobileBar({ onSupportClick }: { onSupportClick: () => void }) {
 export default function DesignPreviewYehoshuaCampaign() {
   const scrollY = useScrollY();
   const scrolled = scrollY > 80;
-  const [toastTier, setToastTier] = useState<Tier | null>(null);
-
   function handleSupport(tier: Tier) {
-    setToastTier(tier);
-    // Production: window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}`;
+    window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}`;
   }
 
   function scrollToTiers() {
@@ -1693,9 +1652,6 @@ export default function DesignPreviewYehoshuaCampaign() {
 
       {/* Mobile bottom bar */}
       <StickyMobileBar onSupportClick={scrollToTiers} />
-
-      {/* Toast */}
-      {toastTier && <DonationToast tier={toastTier} onClose={() => setToastTier(null)} />}
 
       {/* ── 1. HERO ── */}
       <HeroSection onSupportClick={scrollToTiers} />

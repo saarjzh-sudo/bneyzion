@@ -72,7 +72,8 @@ const Donate = () => {
   const isSaadiaCampaign = campaign === "saadia";
 
   // ── Form state ────────────────────────────────
-  const [amount, setAmount] = useState<number>(180);
+  const urlAmount = parseInt(searchParams.get("amount") ?? "", 10);
+  const [amount, setAmount] = useState<number>(Number.isFinite(urlAmount) && urlAmount > 0 ? urlAmount : 180);
   const [recurring, setRecurring] = useState(false);
   const [dedication, setDedication] = useState(isSaadiaCampaign ? SAADIA_DEDICATION : "");
   const [donationType, setDonationType] = useState<"regular" | "iluy_neshama" | "refua">(
