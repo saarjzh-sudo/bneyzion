@@ -85,12 +85,16 @@ const FALLBACK_PRODUCTS: Record<
     target_table: "orders",
     display_name: "מגילת אסתר",
   },
-  // Yehoshua campaign — one-time purchase (wallet pageCode, not directDebit)
-  // Uses PRODUCTS pageCode (efbda303565a) → secure.meshulam.co.il/purchase (not credit-checkout)
+  // Yehoshua campaign — one-time DONATION via the "קבלת תרומה" Grow merchant.
+  // Uses DONATIONS pageCode (b1dc5e695089) + GROW_USER_ID_DONATIONS so Grow
+  // categorises it as a tzedaka donation and emails a tax-deductible receipt.
+  // directDebit pageCode returns a `url` (redirect) not `authCode` (overlay) —
+  // but we deliberately do NOT send chargeIdentifier/planName/period/sumInstallments
+  // so Grow registers a ONE-TIME charge, not a recurring plan.
   "yehoshua-campaign": {
     active: true,
-    type: "wallet",
-    page_code_env: "PRODUCTS",
+    type: "directDebit",
+    page_code_env: "DONATIONS",
     max_installments: 1,
     target_table: "donations",
     display_name: "קמפיין ספר יהושע",
@@ -267,7 +271,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const userEnvKey = `GROW_USER_ID_${productCfg.page_code_env}`;
       pageCode = (process.env[envKey] || "").trim();
       userId = (process.env[userEnvKey] || GROW_USER_ID).trim();
-      cField2Value = flowType;
+      // When target_table is "donations", cField2 must be "donation" so that
+      // the webhook routes the row update to the donations table, not orders.
+      // For all other product types, cField2 reflects the flow type.
+      cField2Value = productCfg.target_table === "donations" ? "donation" : flowType;
       if (!pageCode) {
         console.error(`Missing env ${envKey} for product ${productCfg.id}`);
         return res
@@ -429,10 +436,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       formData.append("cField3", productSlug); // → product wiring lookup
     }
 
-    // DirectDebit (הוראת קבע) — required fields for recurring to appear in Grow dashboard.
-    // Without these, Grow registers a one-time charge even though the page is a directDebit page.
-    // Applies to: weekly-chapter-subscription (QuickBuyDialog) AND donation directDebit (Donate.tsx).
-    if (flowType === "directDebit") {
+    // DirectDebit recurring fields — send ONLY for genuine subscriptions.
+    //
+    // The DONATIONS merchant (pageCode b1dc5e695089) is also used for one-time
+    // campaign donations (yehoshua-campaign) because it routes to the
+    // "קבלת תרומה" Grow merchant so donors receive a tax-deductible receipt.
+    // Sending chargeIdentifier/planName/period/sumInstallments on a donation
+    // would create an unwanted recurring plan.
+    //
+    // Logic:
+    //  ✓ weekly-chapter-subscription → product, target_table=orders → IS recurring
+    //  ✓ Donate.tsx recurring=true → type="directDebit", no productCfg → IS recurring
+    //  ✗ yehoshua-campaign → product, target_table=donations → NOT recurring
+    //  ✗ Donate.tsx recurring=false → type="donation" → flowType="directDebit" but NOT recurring
+    //
+    // Infer whether this is a subscription or a one-time charge:
+    const resolvedTargetTable: string =
+      productCfg?.target_table ??
+      (type === "directDebit" ? "orders" : "donations");
+    const isRecurringDirectDebit =
+      flowType === "directDebit" && resolvedTargetTable !== "donations";
+
+    if (isRecurringDirectDebit) {
       // chargeIdentifier — unique key per customer+product combo. orderId is already a UUID
       // created above and is unique per transaction, which is what Grow expects here.
       formData.append("chargeIdentifier", orderId!);
