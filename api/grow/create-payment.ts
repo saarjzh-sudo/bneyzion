@@ -313,6 +313,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const maxInstallments = productCfg?.max_installments || 1;
     const safeInstallments = Math.min(requestedInstallments, maxInstallments);
 
+    // ───── Recurring vs one-time detection (used both in row insert + formData) ─────
+    // Defined here (before row creation) so is_monthly can be set correctly.
+    const resolvedTargetTable: string =
+      productCfg?.target_table ??
+      (type === "directDebit" ? "orders" : "donations");
+    const isRecurringDirectDebit =
+      flowType === "directDebit" && resolvedTargetTable !== "donations";
+
     // ───── Create the order/donation row if not provided ─────
     if (!orderId) {
       // Donation flow (legacy or product-as-donation)
@@ -329,7 +337,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             phone,
             description,
             product: productSlug || null,
-            is_monthly: donationMeta?.is_monthly || flowType === "directDebit",
+            // is_monthly: true only for genuine recurring donations (הוראת קבע).
+            // Product-driven donations (target_table=donations) are always one-time
+            // even though they may use the directDebit Grow merchant/pageCode to
+            // obtain a "קבלת תרומה" receipt. Use resolvedTargetTable (computed above)
+            // to distinguish subscription-recurring from one-time-donation-via-donations-merchant.
+            is_monthly: donationMeta?.is_monthly || isRecurringDirectDebit,
             dedication_type: donationMeta?.dedication_type || "regular",
             dedication_name: donationMeta?.dedication_name || null,
             user_id: donationMeta?.user_id || meta?.user_id || null,
@@ -437,26 +450,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // DirectDebit recurring fields — send ONLY for genuine subscriptions.
-    //
-    // The DONATIONS merchant (pageCode b1dc5e695089) is also used for one-time
-    // campaign donations (yehoshua-campaign) because it routes to the
-    // "קבלת תרומה" Grow merchant so donors receive a tax-deductible receipt.
-    // Sending chargeIdentifier/planName/period/sumInstallments on a donation
-    // would create an unwanted recurring plan.
-    //
-    // Logic:
-    //  ✓ weekly-chapter-subscription → product, target_table=orders → IS recurring
-    //  ✓ Donate.tsx recurring=true → type="directDebit", no productCfg → IS recurring
-    //  ✗ yehoshua-campaign → product, target_table=donations → NOT recurring
-    //  ✗ Donate.tsx recurring=false → type="donation" → flowType="directDebit" but NOT recurring
-    //
-    // Infer whether this is a subscription or a one-time charge:
-    const resolvedTargetTable: string =
-      productCfg?.target_table ??
-      (type === "directDebit" ? "orders" : "donations");
-    const isRecurringDirectDebit =
-      flowType === "directDebit" && resolvedTargetTable !== "donations";
-
+    // See isRecurringDirectDebit defined above (before row creation).
     if (isRecurringDirectDebit) {
       // chargeIdentifier — unique key per customer+product combo. orderId is already a UUID
       // created above and is unique per transaction, which is what Grow expects here.
