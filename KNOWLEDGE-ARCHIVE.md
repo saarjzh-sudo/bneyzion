@@ -289,12 +289,21 @@ Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
 - API URL: `https://secure.meshulam.co.il/api/light/server/1.0` (was sandbox)
 - SDK environment: `PRODUCTION` (was DEV) — set via `VITE_GROW_ENVIRONMENT`
 - **Webhook URL** for Grow's server-side notifications panel: `https://bneyzion.vercel.app/api/grow/webhook`
-- **Iron rule (2026-05-24):** Grow bnei-zion יש רק 2 pageCodes:
-  - `efbda303565a` = **wallet** (one-time payments: store products)
-  - `b1dc5e695089` = **directDebit** (recurring/donations: subscriptions + donations)
-  - `GROW_PAGECODE_SUBSCRIPTION` חייב = `b1dc5e695089` (directDebit), **לא** = `efbda303565a` (wallet).
-    wallet pageCode לא יוצר recurring plan — Grow מאשרת charge ראשון אבל לא בונה מנוי חוזר.
-  - **תוקן 2026-05-24:** `GROW_PAGECODE_SUBSCRIPTION` שונה מ-`efbda303565a` ל-`b1dc5e695089`.
+- **Iron rule (תוקן 2026-05-30 — ראה §7 entry):** Grow bnei-zion יש 4 pageCodes (2 merchants × 2 סוגים):
+  - **merchant "עם קבלה" (`userId b9a035312abd46d9`):**
+    - `efbda303565a` = **wallet** (one-time: חנות + קמפיין יהושע)
+    - `7ed4033c7379` = **directDebit** (הוראת קבע: מנוי פרק שבועי)
+  - **merchant "קבלת תרומה" (`userId 3dd391811941cb35`):**
+    - `b1dc5e695089` = **wallet** (one-time donation with קבלת תרומה receipt) ← **לא** directDebit!
+    - `473cc5cb92c4` = **directDebit** (הוראת קבע של תרומה חוזרת)
+  - **CRITICAL:** `b1dc5e695089` הוא **wallet חד-פעמי** של merchant "קבלת תרומה", **לא directDebit**.
+    הטעות ההיסטורית: ב-2026-05-24 סיווגנו `b1dc5e695089` כ-directDebit — שגוי.
+    Grow מגדיר wallet/directDebit לפי סוג ה-pageCode, לא לפי merchant. כל merchant יכול להיות wallet או directDebit.
+  - `GROW_PAGECODE_SUBSCRIPTION` חייב = `7ed4033c7379` (directDebit של "עם קבלה").
+  - `GROW_PAGECODE_DONATIONS` = `b1dc5e695089` (wallet של "קבלת תרומה") — לתרומות חד-פעמיות עם קבלת תרומה.
+  - `yehoshua-campaign`: type=wallet, page_code_env=PRODUCTS (efbda303565a) — checkout רגיל, לא הוראת קבע.
+  - **כלל ברזל:** directDebit pageCode **תמיד** פותח הוראת קבע UI, אפילו בלי chargeIdentifier/planName.
+    לרכישה חד-פעמית — תמיד wallet pageCode, ללא יוצא מן הכלל.
 - See `MEMORY.md` "Grow lessons" entry for 12 known gotchas (now 12 incl. live cutover lessons)
 
 ### Other integrations (live)
@@ -525,6 +534,35 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-30 — pageCode iron rule correction: b1dc5e695089 is wallet not directDebit
+
+**המיפוי הנכון המאושר על ידי סאר (30.5.2026):**
+
+| merchant | pageCode | type | env var |
+|---------|---------|------|---------|
+| "עם קבלה" `b9a035312abd46d9` | `efbda303565a` | wallet | GROW_PAGECODE_PRODUCTS |
+| "עם קבלה" `b9a035312abd46d9` | `7ed4033c7379` | directDebit | GROW_PAGECODE_SUBSCRIPTION |
+| "קבלת תרומה" `3dd391811941cb35` | `b1dc5e695089` | **wallet** | GROW_PAGECODE_DONATIONS |
+| "קבלת תרומה" `3dd391811941cb35` | `473cc5cb92c4` | directDebit | (לא בשימוש) |
+
+**מה היה הבאג ההיסטורי:**
+- session 2026-05-24: סיווגנו `b1dc5e695089` כ-directDebit (שגוי)
+- commit `b6591a7` (2026-05-29): שינה `yehoshua-campaign` ל-`type='directDebit', page_code_env='DONATIONS'`
+- תוצאה: לחיצה על "אני תומך" פתחה דף הוראת קבע (recurring plan), לא checkout רגיל
+- הסיבה: Grow pageCode `b1dc5e695089` הוא wallet (one-time), לא directDebit
+- כל directDebit pageCode פותח UI הוראת קבע, גם בלי chargeIdentifier/planName/period
+
+**מה תוקן ב-a730798 (29.5.2026):**
+- `payment_products` DB: `yehoshua-campaign` SET type='wallet', page_code_env='PRODUCTS'
+- `api/grow/create-payment.ts` FALLBACK_PRODUCTS: `yehoshua-campaign` type='wallet', page_code_env='PRODUCTS'
+- Supabase donations row עם tier_id/tier_perks/source נוצר נכון
+- API returns `authCode` (wallet overlay) לא `url` (directDebit redirect)
+
+**אימות (30.5.2026):**
+- `curl POST /api/grow/create-payment {product: "yehoshua-campaign", sum:90}` → returns `{authCode: "...", url: null}`
+- Supabase donations row: source=yehoshua-campaign, tier_id=tier-90, tier_perks=[...], is_monthly=false
+- ה-iron rule הקודם ב-§4 תוקן
 
 ### 2026-05-29 — yehoshua-campaign: wallet fix + stats reset to 0/0 (commit a730798)
 
