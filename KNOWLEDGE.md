@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-27 (session — TeachersWingV2 3-tab rebuild)
+**Last updated:** 2026-05-31 (DonationModal DEV→PRODUCTION fix)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -401,7 +401,9 @@ public/
 21. **Vercel rollback pattern: `vercel alias https://bneyzion-[deployment-id]-saars-projects-4508d6bb.vercel.app bneyzion.vercel.app`** — instant restore, no redeploy needed. Target the last known-good deployment URL from `vercel ls --prod`. Then promote the fixed deployment once it builds.
 22. **`DesignSidebar` is production. Never add `/design-*` links to it.** `Layout.tsx` imports `DesignSidebar` directly (since sidebar rollout). Any link inside it — even in the "ראשי" section or "רבנים" tab — reaches real users. All links must point to production routes (`/chapter-weekly`, `/rabbis/:id`, `/donate`), never to sandbox (`/design-*`). Found and fixed 2026-05-25.
 23. **Three nav arrays must stay in sync:** `FULL_NAV_LINKS` in `DesignPreviewHome.tsx`, `NAV_ITEMS` in `DesignHeader.tsx`, `NAV_ITEMS` in `DesignMobileBottomNav.tsx`. Iron rule 15 says "two navbars" but the mobile bottom nav is a third. Always update all 3.
-24. **NEVER hardcode secrets in scripts — always `os.environ.get()`/`${ENV_VAR}`.** Commit `6b57c96` (pre-cleanup SHA `743070b`) leaked both `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ACCESS_TOKEN` (Management PAT) in 4 script files (image-batch-phase1/2/3.py + phase1.sh). Discovered 2026-05-26. Fix: git-filter-repo rewrote all history; both tokens replaced with `SUPABASE_SERVICE_ROLE_REDACTED`/`SUPABASE_MGMT_PAT_REDACTED`. Scripts updated to env-var pattern. Iron rule: any script that calls Supabase must read credentials from `os.environ.get("SUPABASE_SERVICE_ROLE_KEY")` — if the env var is empty the script should fail loud (`KeyError`/`${VAR:?not set}`), never fall back to a hardcoded string.
+24. **NEVER hardcode secrets in scripts — always `os.environ.get()`/`${ENV_VAR}`.**
+25. **NEVER hardcode `environment: "DEV"` or `"PRODUCTION"` in any `growPayment.init()` call.** Always read `import.meta.env.VITE_GROW_ENVIRONMENT`. For production-facing pages (campaigns, checkout), default to `"PRODUCTION"` when the env var is absent. `DonationModal` in `DesignPreviewYehoshuaCampaign.tsx` was the first offender (2026-05-31). The pattern: `const growEnv = (import.meta.env.VITE_GROW_ENVIRONMENT || "PRODUCTION") as "PRODUCTION" | "DEV"`. Note: `useGrowPayment.ts` defaults `"DEV"` as a safety net for sandbox development — but inline `growPayment.init()` calls in campaign pages must default `"PRODUCTION"` since they are always live.
+ Commit `6b57c96` (pre-cleanup SHA `743070b`) leaked both `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ACCESS_TOKEN` (Management PAT) in 4 script files (image-batch-phase1/2/3.py + phase1.sh). Discovered 2026-05-26. Fix: git-filter-repo rewrote all history; both tokens replaced with `SUPABASE_SERVICE_ROLE_REDACTED`/`SUPABASE_MGMT_PAT_REDACTED`. Scripts updated to env-var pattern. Iron rule: any script that calls Supabase must read credentials from `os.environ.get("SUPABASE_SERVICE_ROLE_KEY")` — if the env var is empty the script should fail loud (`KeyError`/`${VAR:?not set}`), never fall back to a hardcoded string.
 
 ---
 
@@ -525,6 +527,21 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-05-31 — DonationModal SDK environment hardcoded DEV→PRODUCTION fix (commits f45a7e7, 2bf08bc, prod dpl_DRizXtADKR23FW1HNZiKiWPnFrV9)
+- **Bug:** `DonationModal` in `DesignPreviewYehoshuaCampaign.tsx` (line 1701) hardcoded `environment: "DEV"` in `growPayment.init()`. This routed SDK requests to `dev.meshulam.co.il` (and loaded SDK from `cdn.meshulam.co.il/sdk/dev/...`) which rejects the production pageCode `b1dc5e695089` → error "הלינק שנשלח אינו תקין".
+- **Root cause (deeper):** The `useGrowPayment.ts` hook reads `VITE_GROW_ENVIRONMENT` env var and defaults to `"DEV"`. `DonationModal` had its own inline `growPayment.init()` call with `"DEV"` hardcoded — it never read the env var.
+- **What was correct already:** `useGrowPayment.ts` bundle showed `"PRODUCTION"` (env var worked for the hook). API `create-payment.ts` used `GROW_API_URL=secure.meshulam.co.il` (production env). Only the `DonationModal` inline call was wrong.
+- **Fix (commit f45a7e7, file `src/pages/DesignPreviewYehoshuaCampaign.tsx`):** Replaced `environment: "DEV"` with:
+  ```typescript
+  const growEnv = (import.meta.env.VITE_GROW_ENVIRONMENT || "PRODUCTION") as "PRODUCTION" | "DEV";
+  (window as GrowPaymentWindow).growPayment.init({ environment: growEnv, ... });
+  ```
+  Default is now `"PRODUCTION"` (reversed from `useGrowPayment.ts` which defaults `"DEV"`). This is correct because the campaign page is always production-facing.
+- **Additional fix:** `VITE_GROW_ENVIRONMENT` Vercel env var for `Preview (sandbox-test)` was updated from `DEV` → `PRODUCTION` so the preview build also bakes in `"PRODUCTION"`.
+- **Deploy note:** `vercel --prod` from `/private/tmp/bneyzion-sandbox-test` creates production-target deployment (uses production env vars including `GROW_API_URL=secure.meshulam.co.il`). Push to `sandbox-test` branch creates preview only (sandbox env vars).
+- **Verification:** `DesignPreviewYehoshuaCampaign-BsSGz1YK.js` bundle contains `environment:"PRODUCTION"`. API call returns `authCode` (not sandbox `url`). No "הלינק אינו תקין" error.
+- **Iron rule added:** NEVER hardcode `environment: "DEV"` or `"PRODUCTION"` in any `growPayment.init()` call. Always read from `import.meta.env.VITE_GROW_ENVIRONMENT`. Default to `"PRODUCTION"` in production-facing pages. The `DonationModal` in campaign pages is production-facing — not a sandbox test page.
 
 ### 2026-05-29 — Yehoshua wallet fix ported to sandbox-test (commit 43358ac)
 - **Bug:** `165d777` was committed to `pre-launch-fixes` but never reached `sandbox-test` — the branch Vercel deploys to `bneyzion.vercel.app`. Playwright confirmed the old `credit-checkout` URL was still live.
