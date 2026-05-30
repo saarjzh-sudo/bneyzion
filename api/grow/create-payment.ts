@@ -85,15 +85,18 @@ const FALLBACK_PRODUCTS: Record<
     target_table: "orders",
     display_name: "מגילת אסתר",
   },
-  // Yehoshua campaign — one-time payment via the wallet (PRODUCTS) Grow merchant.
-  // Uses wallet pageCode (efbda303565a) + GROW_USER_ID_PRODUCTS so Grow opens
-  // the standard credit-card overlay (not a הוראת קבע / recurring plan page).
-  // target_table="donations" keeps campaign tracking in the donations table for
-  // admin reporting (same as before), but the checkout UX is standard one-time.
+  // Yehoshua campaign — one-time payment using the DONATIONS merchant ("קבלת תרומה").
+  // Uses wallet pageCode (b1dc5e695089) + GROW_USER_ID_DONATIONS (3dd391811941cb35)
+  // so Grow issues a "קבלת תרומה" receipt (tax-deductible donation document), not
+  // a regular store invoice ("חשבונית").
+  // type="wallet" keeps the standard credit-card overlay (not a הוראת קבע / recurring
+  // plan page). b1dc5e695089 is the DONATIONS merchant's wallet pageCode — one-time,
+  // confirmed 2026-05-30.
+  // target_table="donations" keeps campaign tracking in the donations table.
   "yehoshua-campaign": {
     active: true,
     type: "wallet",
-    page_code_env: "PRODUCTS",
+    page_code_env: "DONATIONS",
     max_installments: 1,
     target_table: "donations",
     display_name: "קמפיין ספר יהושע",
