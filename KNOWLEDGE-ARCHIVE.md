@@ -301,9 +301,13 @@ Video iframe: https://embed.vp4.me/LandingPage,<guid>,<id>.aspx (vp4.me service)
     Grow מגדיר wallet/directDebit לפי סוג ה-pageCode, לא לפי merchant. כל merchant יכול להיות wallet או directDebit.
   - `GROW_PAGECODE_SUBSCRIPTION` חייב = `7ed4033c7379` (directDebit של "עם קבלה").
   - `GROW_PAGECODE_DONATIONS` = `b1dc5e695089` (wallet של "קבלת תרומה") — לתרומות חד-פעמיות עם קבלת תרומה.
-  - `yehoshua-campaign`: type=wallet, page_code_env=PRODUCTS (efbda303565a) — checkout רגיל, לא הוראת קבע.
+  - `yehoshua-campaign`: type=wallet, page_code_env=**DONATIONS** (b1dc5e695089) — checkout חד-פעמי עם קבלת תרומה.
+    **תוקן 31.5.2026:** היה PRODUCTS בטעות → שונה ל-DONATIONS (merchant "קבלת תרומה").
   - **כלל ברזל:** directDebit pageCode **תמיד** פותח הוראת קבע UI, אפילו בלי chargeIdentifier/planName.
     לרכישה חד-פעמית — תמיד wallet pageCode, ללא יוצא מן הכלל.
+  - **CRITICAL env var:** `GROW_PAGECODE_DONATIONS` ב-Vercel חייב להיות `b1dc5e695089` (wallet).
+    `473cc5cb92c4` = directDebit של "קבלת תרומה" — אסור להכניס ב-`GROW_PAGECODE_DONATIONS`.
+    אימות: API צריך להחזיר `authCode` (לא `url`) ל-yehoshua-campaign.
 - See `MEMORY.md` "Grow lessons" entry for 12 known gotchas (now 12 incl. live cutover lessons)
 
 ### Other integrations (live)
@@ -563,6 +567,33 @@ No human figures, no faces, no letters, no text.
 - `curl POST /api/grow/create-payment {product: "yehoshua-campaign", sum:90}` → returns `{authCode: "...", url: null}`
 - Supabase donations row: source=yehoshua-campaign, tier_id=tier-90, tier_perks=[...], is_monthly=false
 - ה-iron rule הקודם ב-§4 תוקן
+
+### 2026-05-31 — yehoshua-campaign: DONATIONS merchant fix (commits 2ea8f42..7079d75)
+
+**הבעיה שזוהתה:**
+- commit a730798 (29.5) תיקן את ה-directDebit→wallet, אבל השאיר `page_code_env='PRODUCTS'`
+- המשמעות: חיוב מ-merchant "עם קבלה" (userId b9a035312abd46d9) → מוציא **חשבונית**, לא **קבלת תרומה**
+- סאר זיהה ודיווח: "תרומות לקמפיין יהושע יקבלו חשבונית במקום קבלת תרומה"
+
+**שני הbugים שתוקנו:**
+1. `page_code_env` ב-DB + FALLBACK: `'PRODUCTS'` → `'DONATIONS'` (merchant נכון)
+2. `GROW_PAGECODE_DONATIONS` ב-Vercel env: `473cc5cb92c4` (directDebit של "קבלת תרומה") → `b1dc5e695089` (wallet של "קבלת תרומה")
+
+**מה תוקן:**
+- Supabase `payment_products WHERE id='yehoshua-campaign'`: SET `page_code_env='DONATIONS'`
+- `api/grow/create-payment.ts` FALLBACK_PRODUCTS: `page_code_env: 'PRODUCTS'` → `'DONATIONS'`
+- Vercel production env: `GROW_PAGECODE_DONATIONS` שונה מ-`473cc5cb92c4` ל-`b1dc5e695089`
+
+**אימות (31.5.2026):**
+- Audit log שנוסף זמנית ואושר: `pageCode=***5089 userId=***cb35 flowType=wallet`
+- = `b1dc5e695089` (wallet "קבלת תרומה") + `3dd391811941cb35` (merchant "קבלת תרומה") ✓
+- API מחזיר `{authCode: "...", url: null}` — wallet SDK overlay, לא directDebit redirect ✓
+- audit log הוסר בcommit 7079d75
+
+**Iron rule חדש (הוסף ל-§4 של KNOWLEDGE-ARCHIVE):**
+- `GROW_PAGECODE_DONATIONS` ב-Vercel **חייב להיות** `b1dc5e695089` (wallet, "קבלת תרומה")
+- `473cc5cb92c4` הוא ה-directDebit של "קבלת תרומה" — לא בשימוש עכשיו (תרומה חוזרת עתידית)
+- אסור לשנות `GROW_PAGECODE_DONATIONS` ל-`473cc5cb92c4` — יפתח הוראת קבע
 
 ### 2026-05-29 — yehoshua-campaign: wallet fix + stats reset to 0/0 (commit a730798)
 
