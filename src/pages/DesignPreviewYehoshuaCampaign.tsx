@@ -1697,8 +1697,13 @@ function DonationModal({ tier, onClose, onSuccess }: DonationModalProps) {
   useEffect(() => {
     function doInit() {
       if (!(window as GrowPaymentWindow).growPayment) return;
+      // Read environment from Vite env var — defaults to "PRODUCTION" so the
+      // production pageCode (b1dc5e695089) is accepted by secure.meshulam.co.il.
+      // Never hardcode "DEV" here; that routes to dev.meshulam.co.il which rejects
+      // production pageCodes with "הלינק שנשלח אינו תקין".
+      const growEnv = (import.meta.env.VITE_GROW_ENVIRONMENT || "PRODUCTION") as "PRODUCTION" | "DEV";
       (window as GrowPaymentWindow).growPayment.init({
-        environment: "DEV",
+        environment: growEnv,
         version: 1,
         events: {
           onSuccess: (response: any) => {
