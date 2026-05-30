@@ -277,6 +277,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // the webhook routes the row update to the donations table, not orders.
       // For all other product types, cField2 reflects the flow type.
       cField2Value = productCfg.target_table === "donations" ? "donation" : flowType;
+      // AUDIT LOG: log last 4 chars of pageCode + userId to verify merchant routing
+      // without exposing full credentials. Remove after merchant routing is confirmed.
+      console.log(`create-payment merchant-audit: product=${productCfg.id} env=${productCfg.page_code_env} pageCode=***${pageCode.slice(-4)} userId=***${userId.slice(-4)} flowType=${flowType}`);
       if (!pageCode) {
         console.error(`Missing env ${envKey} for product ${productCfg.id}`);
         return res
