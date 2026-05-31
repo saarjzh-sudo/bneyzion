@@ -108,6 +108,7 @@ const DesignPreviewCourseDetail = lazy(() => import("./pages/DesignPreviewCourse
 const DesignPreviewCoursesCatalog = lazy(() => import("./pages/DesignPreviewCoursesCatalog"));
 const DesignPreviewParasha = lazy(() => import("./pages/DesignPreviewParasha"));
 const DesignPreviewYehoshuaCampaign = lazy(() => import("./pages/DesignPreviewYehoshuaCampaign"));
+const DesignPreviewYehoshuaAdmin = lazy(() => import("./pages/DesignPreviewYehoshuaAdmin"));
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
@@ -354,6 +355,7 @@ const App = () => (
             <Route path="/design-parasha" element={<Suspense fallback={<LazyFallback />}><DesignPreviewParasha /></Suspense>} />
             {/* Sandbox redirects → production (301 in vercel.json, Navigate here as fallback for client-side) */}
             <Route path="/design-yehoshua-campaign" element={<Suspense fallback={<LazyFallback />}><DesignPreviewYehoshuaCampaign /></Suspense>} />
+            <Route path="/design-yehoshua-admin" element={<Suspense fallback={<LazyFallback />}><DesignPreviewYehoshuaAdmin /></Suspense>} />
             <Route path="/design-teachers-wing-v2" element={<Suspense fallback={<LazyFallback />}><DesignPreviewTeachersWingV2 /></Suspense>} />
             <Route path="/design-teachers-series/:id" element={<SandboxSeriesRedirect />} />
 

@@ -19,12 +19,57 @@
  */
 
 import { useState, useEffect, useRef } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 /* ─── Campaign constants ────────────────────────────────── */
 const GOAL = 80_000;
-const RAISED = 7_000;
-const SUPPORTER_COUNT = 47;
-const PROGRESS_PCT = Math.min(100, Math.round((RAISED / GOAL) * 100));
+
+/* ─── Realtime donations hook ───────────────────────────── */
+function useCampaignStats() {
+  const [raised, setRaised] = useState<number>(0);
+  const [supporters, setSupporters] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchStats() {
+    const { data, error } = await supabase
+      .from("donations")
+      .select("amount")
+      .eq("product", "yehoshua-campaign")
+      .eq("payment_status", "completed");
+    if (!error && data) {
+      setRaised(data.reduce((sum, row) => sum + (row.amount || 0), 0));
+      setSupporters(data.length);
+    }
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchStats();
+
+    // Realtime subscription — fires whenever a row in donations changes
+    const channel = supabase
+      .channel("yehoshua-campaign-stats")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "donations",
+          filter: "product=eq.yehoshua-campaign",
+        },
+        () => {
+          fetchStats();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
+  return { raised, supporters, loading };
+}
 
 /* ─── Tier definition ───────────────────────────────────── */
 interface Tier {
@@ -186,7 +231,9 @@ function useInView(threshold = 0.15) {
 
 /* ─── Sub-components ────────────────────────────────────── */
 
-function StickyNav({ scrolled, onSupportClick }: { scrolled: boolean; onSupportClick: () => void }) {
+interface StatsProps { raised: number; supporters: number; progressPct: number; }
+
+function StickyNav({ scrolled, onSupportClick, progressPct }: { scrolled: boolean; onSupportClick: () => void; progressPct: number }) {
   return (
     <div
       style={{
@@ -249,14 +296,14 @@ function StickyNav({ scrolled, onSupportClick }: { scrolled: boolean; onSupportC
               <div
                 style={{
                   height: "100%",
-                  width: `${PROGRESS_PCT}%`,
+                  width: `${progressPct}%`,
                   background: "linear-gradient(90deg, hsl(43 85% 62%), hsl(38 75% 48%))",
                   borderRadius: 4,
                 }}
               />
             </div>
             <span style={{ fontSize: 12, color: "hsl(38 85% 68%)", fontWeight: 700 }}>
-              {PROGRESS_PCT}%
+              {progressPct}%
             </span>
           </div>
         )}
@@ -286,7 +333,7 @@ function StickyNav({ scrolled, onSupportClick }: { scrolled: boolean; onSupportC
   );
 }
 
-function HeroSection({ onSupportClick }: { onSupportClick: () => void }) {
+function HeroSection({ onSupportClick, raised, supporters, progressPct }: { onSupportClick: () => void } & StatsProps) {
   return (
     <section
       style={{
@@ -500,13 +547,13 @@ function HeroSection({ onSupportClick }: { onSupportClick: () => void }) {
               }}
             >
               <span style={{ color: "hsl(38 85% 70%)", fontWeight: 900, fontSize: 22 }}>
-                ₪{RAISED.toLocaleString()}
+                ₪{raised.toLocaleString()}
               </span>
               <span style={{ color: "hsl(215 10% 48%)", fontSize: 13 }}>
                 מתוך ₪{GOAL.toLocaleString()}
               </span>
               <span style={{ color: "hsl(38 85% 68%)", fontWeight: 700, fontSize: 13 }}>
-                {SUPPORTER_COUNT} תומכים
+                {supporters} תומכים
               </span>
             </div>
             <div
@@ -520,7 +567,7 @@ function HeroSection({ onSupportClick }: { onSupportClick: () => void }) {
               <div
                 style={{
                   height: "100%",
-                  width: `${PROGRESS_PCT}%`,
+                  width: `${progressPct}%`,
                   background: "linear-gradient(90deg, hsl(43 85% 62%), hsl(38 75% 48%))",
                   borderRadius: 6,
                   transition: "width 1.4s ease-out",
@@ -528,7 +575,7 @@ function HeroSection({ onSupportClick }: { onSupportClick: () => void }) {
               />
             </div>
             <div style={{ fontSize: 11, color: "hsl(215 10% 40%)", marginBlockStart: 4 }}>
-              {PROGRESS_PCT}% מהיעד · הקמפיין בעיצומו
+              {progressPct}% מהיעד · הקמפיין בעיצומו
             </div>
           </div>
 
@@ -589,7 +636,7 @@ function HeroSection({ onSupportClick }: { onSupportClick: () => void }) {
   );
 }
 
-function ProofStrip() {
+function ProofStrip({ supporters }: { supporters: number }) {
   const { ref, visible } = useInView();
   return (
     <div
@@ -613,7 +660,7 @@ function ProofStrip() {
           { val: "15+", label: "שנות הוראת תנ\"ך", icon: "📖" },
           { val: "300+", label: "לומדים פעילים", icon: "👥" },
           { val: "480", label: "עמודים בספר", icon: "📝" },
-          { val: "47", label: "תומכים כבר הצטרפו", icon: "🙌" },
+          { val: String(supporters), label: "תומכים כבר הצטרפו", icon: "🙌" },
         ].map((s, i) => (
           <div
             key={s.label}
@@ -1431,7 +1478,7 @@ function FaqSection() {
   );
 }
 
-function FinalCTA({ onSupportClick }: { onSupportClick: () => void }) {
+function FinalCTA({ onSupportClick, supporters, progressPct }: { onSupportClick: () => void; supporters: number; progressPct: number }) {
   const { ref, visible } = useInView(0.2);
   return (
     <section
@@ -1525,10 +1572,10 @@ function FinalCTA({ onSupportClick }: { onSupportClick: () => void }) {
 
         <div style={{ marginBlockStart: 20, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           <div style={{ width: 90, height: 3, background: "hsl(215 20% 28%)", borderRadius: 3, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: `${PROGRESS_PCT}%`, background: "hsl(38 75% 55%)", borderRadius: 3 }} />
+            <div style={{ height: "100%", width: `${progressPct}%`, background: "hsl(38 75% 55%)", borderRadius: 3 }} />
           </div>
           <span style={{ fontSize: 13, color: "hsl(38 85% 64%)", fontWeight: 700 }}>
-            {SUPPORTER_COUNT} תומכים · {PROGRESS_PCT}% מהיעד
+            {supporters} תומכים · {progressPct}% מהיעד
           </span>
         </div>
       </div>
@@ -1574,7 +1621,7 @@ function DonationToast({ tier, onClose }: { tier: Tier; onClose: () => void }) {
   );
 }
 
-function StickyMobileBar({ onSupportClick }: { onSupportClick: () => void }) {
+function StickyMobileBar({ onSupportClick, progressPct }: { onSupportClick: () => void; progressPct: number }) {
   return (
     <div
       className="mobile-bar"
@@ -1598,7 +1645,7 @@ function StickyMobileBar({ onSupportClick }: { onSupportClick: () => void }) {
           קמפיין תמיכה · ספר יהושע
         </div>
         <div style={{ height: 4, background: "hsl(215 20% 30%)", borderRadius: 4, overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${PROGRESS_PCT}%`, background: "hsl(38 75% 55%)", borderRadius: 4 }} />
+          <div style={{ height: "100%", width: `${progressPct}%`, background: "hsl(38 75% 55%)", borderRadius: 4 }} />
         </div>
       </div>
       <button
@@ -1626,10 +1673,11 @@ export default function DesignPreviewYehoshuaCampaign() {
   const scrollY = useScrollY();
   const scrolled = scrollY > 80;
   const [toastTier, setToastTier] = useState<Tier | null>(null);
+  const { raised, supporters } = useCampaignStats();
+  const progressPct = Math.min(100, Math.round((raised / GOAL) * 100));
 
   function handleSupport(tier: Tier) {
-    setToastTier(tier);
-    // Production: window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}`;
+    window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}&type=donation`;
   }
 
   function scrollToTiers() {
@@ -1689,19 +1737,19 @@ export default function DesignPreviewYehoshuaCampaign() {
       `}</style>
 
       {/* Sticky nav */}
-      <StickyNav scrolled={scrolled} onSupportClick={scrollToTiers} />
+      <StickyNav scrolled={scrolled} onSupportClick={scrollToTiers} progressPct={progressPct} />
 
       {/* Mobile bottom bar */}
-      <StickyMobileBar onSupportClick={scrollToTiers} />
+      <StickyMobileBar onSupportClick={scrollToTiers} progressPct={progressPct} />
 
       {/* Toast */}
       {toastTier && <DonationToast tier={toastTier} onClose={() => setToastTier(null)} />}
 
       {/* ── 1. HERO ── */}
-      <HeroSection onSupportClick={scrollToTiers} />
+      <HeroSection onSupportClick={scrollToTiers} raised={raised} supporters={supporters} progressPct={progressPct} />
 
       {/* ── 2. PROOF STRIP ── */}
-      <ProofStrip />
+      <ProofStrip supporters={supporters} />
 
       {/* ── 3. TIERS (early — Headstart convention) ── */}
       <TiersSection onSupport={handleSupport} />
@@ -1722,7 +1770,7 @@ export default function DesignPreviewYehoshuaCampaign() {
       <FaqSection />
 
       {/* ── 9. FINAL CTA ── */}
-      <FinalCTA onSupportClick={scrollToTiers} />
+      <FinalCTA onSupportClick={scrollToTiers} supporters={supporters} progressPct={progressPct} />
 
       {/* ── FOOTER ── */}
       <footer style={{ background: "hsl(215 55% 11%)", padding: "32px 24px", textAlign: "center" }}>
