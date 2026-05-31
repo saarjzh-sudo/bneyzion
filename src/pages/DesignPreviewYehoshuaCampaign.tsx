@@ -2312,24 +2312,57 @@ export default function DesignPreviewYehoshuaCampaign() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // ── Trigger renderPaymentOptions after modal is gone ────────────────────
-  // We use a one-frame delay (requestAnimationFrame) to ensure the DonationModal
-  // has fully unmounted from the DOM (and its stacking context is destroyed)
-  // before the SDK injects #Gr0W8-wallet-root. Without this delay, the wallet
-  // DOM could be injected while React is still in the middle of the unmount.
+  // ── Trigger renderPaymentOptions + fix wallet positioning ───────────────
+  // The Grow SDK injects #Gr0W8-wallet-root into document.body at an arbitrary
+  // position (e.g. position:relative; top:5763px) which puts it miles below the
+  // viewport. We install a MutationObserver BEFORE calling renderPaymentOptions
+  // so we can override the positioning the instant the element appears in the DOM.
   useEffect(() => {
     if (!walletAuthCode) return;
+
+    // MutationObserver: watches document.body for the SDK-injected wallet root.
+    // As soon as it appears, force position:fixed so it sits at the viewport center.
+    const observer = new MutationObserver(() => {
+      const walletRoot = document.getElementById("Gr0W8-wallet-root");
+      if (!walletRoot) return;
+
+      // Stop observing immediately — we only need to patch it once.
+      observer.disconnect();
+
+      // Force the wallet into the viewport regardless of where the SDK placed it.
+      walletRoot.style.setProperty("position", "fixed", "important");
+      walletRoot.style.setProperty("inset", "0", "important");
+      walletRoot.style.setProperty("top", "0", "important");
+      walletRoot.style.setProperty("left", "0", "important");
+      walletRoot.style.setProperty("right", "0", "important");
+      walletRoot.style.setProperty("bottom", "0", "important");
+      walletRoot.style.setProperty("z-index", "9999", "important");
+      walletRoot.style.setProperty("width", "100vw", "important");
+      walletRoot.style.setProperty("height", "100vh", "important");
+      walletRoot.style.setProperty("overflow", "hidden", "important");
+
+      console.log("[Grow] wallet root patched to position:fixed — should be visible in viewport");
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // One-frame delay ensures DonationModal has fully unmounted before SDK fires.
     const raf = requestAnimationFrame(() => {
       const gw = (window as GrowPaymentWindow).growPayment;
       if (!gw || typeof gw.renderPaymentOptions !== "function") {
         console.error("[Grow] renderPaymentOptions not available — SDK not loaded?");
+        observer.disconnect();
         setWalletAuthCode(null);
         return;
       }
       console.log("[Grow] calling renderPaymentOptions with authCode", walletAuthCode.slice(-8));
       gw.renderPaymentOptions(walletAuthCode);
     });
-    return () => cancelAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      observer.disconnect();
+    };
   }, [walletAuthCode]);
 
   // Detect return from Grow redirect
@@ -2423,6 +2456,20 @@ export default function DesignPreviewYehoshuaCampaign() {
         .cta-glow:hover { animation: none; opacity: 0.9; }
 
         h2, h3 { letter-spacing: -0.02em; margin: 0; }
+
+        /* Force Grow wallet into viewport regardless of SDK positioning */
+        #Gr0W8-wallet-root {
+          position: fixed !important;
+          inset: 0 !important;
+          top: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 0 !important;
+          z-index: 9999 !important;
+          width: 100vw !important;
+          height: 100vh !important;
+          overflow: hidden !important;
+        }
 
         /* Responsive */
         @media (max-width: 700px) {
