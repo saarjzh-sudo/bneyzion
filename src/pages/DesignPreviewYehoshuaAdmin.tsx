@@ -12,72 +12,24 @@
  * - CSV export of filtered completed records
  */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 const GOAL = 80_000;
 const PRODUCT = "yehoshua-campaign";
 
-interface DonationRow {
-  id: string;
-  created_at: string;
-  donor_name: string | null;
-  amount: number;
-  description: string | null;
-  asmachta: string | null;
-  payment_id: string | null;
-  payment_status: string;
+// NOTE (sandbox): Admin shows aggregates only — same view as public campaign page.
+// Donor name / asmachta / payment_id columns require authenticated admin access
+// which will be wired in production. Showing donor PII to anon is intentionally
+// blocked via RLS on the donations table.
+interface CampaignStatsRow {
+  supporters: number;
+  raised: number;
 }
 
 /* ─── Helpers ───────────────────────────────────────────── */
-function fmtDate(iso: string) {
-  const d = new Date(iso);
-  return d.toLocaleDateString("he-IL", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-}
-
 function fmtILS(n: number) {
   return "₪" + n.toLocaleString("he-IL");
-}
-
-function statusColor(s: string): string {
-  if (s === "completed") return "hsl(142 55% 42%)";
-  if (s === "pending") return "hsl(38 80% 48%)";
-  if (s === "failed") return "hsl(0 65% 50%)";
-  return "hsl(215 20% 50%)";
-}
-
-function statusLabel(s: string): string {
-  if (s === "completed") return "הושלם";
-  if (s === "pending") return "ממתין";
-  if (s === "failed") return "נכשל";
-  return s;
-}
-
-function exportCSV(rows: DonationRow[]) {
-  const headers = ["תאריך", "שם", "סכום", "Tier", "אסמכתא", "Payment ID", "סטטוס"];
-  const lines = rows.map((r) => [
-    fmtDate(r.created_at),
-    r.donor_name ?? "",
-    r.amount,
-    r.description ?? "",
-    r.asmachta ?? "",
-    r.payment_id ?? "",
-    r.payment_status,
-  ].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(","));
-  const csv = "﻿" + [headers.join(","), ...lines].join("\r\n");
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `yehoshua-campaign-${new Date().toISOString().slice(0, 10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
 }
 
 /* ─── KPI Card ───────────────────────────────────────────── */
@@ -133,79 +85,48 @@ function KpiCard({
 }
 
 /* ─── Main ───────────────────────────────────────────────── */
+// SANDBOX NOTE: This admin shows aggregate KPIs only (from yehoshua_campaign_stats view).
+// Donor detail rows (name, asmachta, payment_id) require authenticated admin access — NOT
+// available to anon. Will be wired in production via Supabase auth + admin role check.
+// Until then: no PII is exposed — safer than showing an empty table that implies "no donors".
 export default function DesignPreviewYehoshuaAdmin() {
-  const [rows, setRows] = useState<DonationRow[]>([]);
+  const [stats, setStats] = useState<CampaignStatsRow>({ supporters: 0, raised: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Filters
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [statusFilter, setStatusFilter] = useState<"all" | "completed" | "pending">("all");
-
-  // Fetch all campaign donations (no server-side filter — simple enough for sandbox)
   useEffect(() => {
-    async function fetchAll() {
+    async function fetchStats() {
       setLoading(true);
       const { data, error: err } = await supabase
-        .from("donations")
-        .select(
-          "id, created_at, donor_name, amount, description, asmachta, payment_id, payment_status"
-        )
-        .eq("product", PRODUCT)
-        .order("created_at", { ascending: false });
+        .from("yehoshua_campaign_stats")
+        .select("*")
+        .single();
       if (err) {
         setError(err.message);
-      } else {
-        setRows((data || []) as DonationRow[]);
+      } else if (data) {
+        setStats({ supporters: Number(data.supporters) || 0, raised: Number(data.raised) || 0 });
       }
       setLoading(false);
     }
-    fetchAll();
+    fetchStats();
 
-    // Realtime: refresh when a row changes
+    // Realtime on donations table — refetch the view on any change
     const channel = supabase
       .channel("yehoshua-admin-feed")
       .on(
         "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "donations",
-          filter: `product=eq.${PRODUCT}`,
-        },
-        () => fetchAll()
+        { event: "*", schema: "public", table: "donations", filter: `product=eq.${PRODUCT}` },
+        () => fetchStats()
       )
       .subscribe();
 
-    return () => {
-      supabase.removeChannel(channel);
-    };
+    return () => { supabase.removeChannel(channel); };
   }, []);
 
-  // Client-side filtering
-  const filtered = useMemo(() => {
-    return rows.filter((r) => {
-      if (statusFilter !== "all" && r.payment_status !== statusFilter) return false;
-      if (dateFrom) {
-        const from = new Date(dateFrom);
-        if (new Date(r.created_at) < from) return false;
-      }
-      if (dateTo) {
-        const to = new Date(dateTo);
-        to.setHours(23, 59, 59, 999);
-        if (new Date(r.created_at) > to) return false;
-      }
-      return true;
-    });
-  }, [rows, statusFilter, dateFrom, dateTo]);
-
-  // KPI values — always based on ALL completed (not filtered)
-  const completed = rows.filter((r) => r.payment_status === "completed");
-  const totalRaised = completed.reduce((s, r) => s + r.amount, 0);
-  const donorCount = completed.length;
-  const avg = donorCount > 0 ? Math.round(totalRaised / donorCount) : 0;
+  const totalRaised = stats.raised;
+  const donorCount = stats.supporters;
   const remaining = Math.max(0, GOAL - totalRaised);
+  const progressPct = Math.min(100, Math.round((totalRaised / GOAL) * 100));
 
   return (
     <div
@@ -217,13 +138,7 @@ export default function DesignPreviewYehoshuaAdmin() {
         color: "hsl(215 40% 12%)",
       }}
     >
-      <style>{`
-        * { box-sizing: border-box; }
-        input, select { font-family: inherit; }
-        table { border-collapse: collapse; width: 100%; }
-        th { text-align: right; }
-        tr:hover td { background: hsl(38 40% 96%); }
-      `}</style>
+      <style>{`* { box-sizing: border-box; } input, select { font-family: inherit; }`}</style>
 
       {/* ── Header bar ── */}
       <div
@@ -239,42 +154,28 @@ export default function DesignPreviewYehoshuaAdmin() {
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <a
             href="/design-yehoshua-campaign"
-            style={{
-              color: "hsl(38 85% 68%)",
-              textDecoration: "none",
-              fontSize: 13,
-              fontWeight: 600,
-            }}
+            style={{ color: "hsl(38 85% 68%)", textDecoration: "none", fontSize: 13, fontWeight: 600 }}
           >
             ← קמפיין יהושע
           </a>
           <span style={{ color: "hsl(215 20% 35%)" }}>|</span>
-          <h1
-            style={{
-              color: "white",
-              fontWeight: 900,
-              fontSize: 18,
-              margin: 0,
-              letterSpacing: "-0.01em",
-            }}
-          >
+          <h1 style={{ color: "white", fontWeight: 900, fontSize: 18, margin: 0, letterSpacing: "-0.01em" }}>
             ניהול תרומות — ספר יהושע
           </h1>
         </div>
-        <div
-          style={{
-            fontSize: 11,
-            color: "hsl(215 10% 50%)",
-            background: "hsl(215 40% 10%)",
-            padding: "3px 10px",
-            borderRadius: 99,
-          }}
-        >
+        <div style={{ fontSize: 11, color: "hsl(215 10% 50%)", background: "hsl(215 40% 10%)", padding: "3px 10px", borderRadius: 99 }}>
           sandbox only — אין auth
         </div>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "32px 24px" }}>
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "32px 24px" }}>
+
+        {loading && (
+          <div style={{ textAlign: "center", color: "hsl(215 20% 55%)", padding: "32px", fontSize: 14 }}>טוען...</div>
+        )}
+        {error && (
+          <div style={{ textAlign: "center", color: "hsl(0 65% 50%)", padding: "16px", fontSize: 13 }}>שגיאה: {error}</div>
+        )}
 
         {/* ── KPI Cards ── */}
         <div
@@ -298,14 +199,9 @@ export default function DesignPreviewYehoshuaAdmin() {
             accent="hsl(215 55% 30%)"
           />
           <KpiCard
-            label="תרומה ממוצעת"
-            value={avg ? fmtILS(avg) : "—"}
-            accent="hsl(215 45% 35%)"
-          />
-          <KpiCard
             label="נשאר ליעד"
             value={fmtILS(remaining)}
-            sub={`${Math.min(100, Math.round((totalRaised / GOAL) * 100))}% הושג`}
+            sub={`${progressPct}% הושג`}
             accent={remaining === 0 ? "hsl(142 55% 42%)" : "hsl(0 55% 45%)"}
           />
         </div>
@@ -320,34 +216,15 @@ export default function DesignPreviewYehoshuaAdmin() {
             marginBlockEnd: 28,
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBlockEnd: 10,
-              fontSize: 13,
-              fontWeight: 600,
-              color: "hsl(215 30% 35%)",
-            }}
-          >
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBlockEnd: 10, fontSize: 13, fontWeight: 600, color: "hsl(215 30% 35%)" }}>
             <span>התקדמות לעבר היעד</span>
-            <span style={{ color: "hsl(38 75% 40%)", fontWeight: 800 }}>
-              {Math.min(100, Math.round((totalRaised / GOAL) * 100))}%
-            </span>
+            <span style={{ color: "hsl(38 75% 40%)", fontWeight: 800 }}>{progressPct}%</span>
           </div>
-          <div
-            style={{
-              height: 10,
-              background: "hsl(215 15% 88%)",
-              borderRadius: 10,
-              overflow: "hidden",
-            }}
-          >
+          <div style={{ height: 10, background: "hsl(215 15% 88%)", borderRadius: 10, overflow: "hidden" }}>
             <div
               style={{
                 height: "100%",
-                width: `${Math.min(100, Math.round((totalRaised / GOAL) * 100))}%`,
+                width: `${progressPct}%`,
                 background: "linear-gradient(90deg, hsl(43 85% 62%), hsl(38 75% 48%))",
                 borderRadius: 10,
                 transition: "width 0.8s ease-out",
@@ -356,341 +233,29 @@ export default function DesignPreviewYehoshuaAdmin() {
           </div>
         </div>
 
-        {/* ── Filters row ── */}
+        {/* ── Sandbox notice ── */}
         <div
           style={{
-            background: "white",
-            border: "1.5px solid hsl(215 15% 88%)",
+            background: "hsl(215 40% 14%)",
+            border: "1.5px solid hsl(215 30% 28%)",
             borderRadius: 14,
-            padding: "16px 20px",
+            padding: "20px 24px",
             marginBlockEnd: 20,
-            display: "flex",
-            alignItems: "center",
-            gap: 16,
-            flexWrap: "wrap",
           }}
         >
-          <span
-            style={{
-              fontSize: 13,
-              fontWeight: 700,
-              color: "hsl(215 30% 35%)",
-              flexShrink: 0,
-            }}
-          >
-            סינון:
-          </span>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <label style={{ fontSize: 12, color: "hsl(215 20% 50%)" }}>מתאריך</label>
-            <input
-              type="date"
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-              style={{
-                border: "1.5px solid hsl(215 15% 82%)",
-                borderRadius: 8,
-                padding: "6px 10px",
-                fontSize: 13,
-                color: "hsl(215 40% 20%)",
-                outline: "none",
-              }}
-            />
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <label style={{ fontSize: 12, color: "hsl(215 20% 50%)" }}>עד תאריך</label>
-            <input
-              type="date"
-              value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
-              style={{
-                border: "1.5px solid hsl(215 15% 82%)",
-                borderRadius: 8,
-                padding: "6px 10px",
-                fontSize: 13,
-                color: "hsl(215 40% 20%)",
-                outline: "none",
-              }}
-            />
-          </div>
-
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <label style={{ fontSize: 12, color: "hsl(215 20% 50%)" }}>סטטוס</label>
-            <select
-              value={statusFilter}
-              onChange={(e) =>
-                setStatusFilter(e.target.value as "all" | "completed" | "pending")
-              }
-              style={{
-                border: "1.5px solid hsl(215 15% 82%)",
-                borderRadius: 8,
-                padding: "6px 10px",
-                fontSize: 13,
-                color: "hsl(215 40% 20%)",
-                outline: "none",
-              }}
-            >
-              <option value="all">הכל</option>
-              <option value="completed">הושלם</option>
-              <option value="pending">ממתין</option>
-            </select>
-          </div>
-
-          {(dateFrom || dateTo || statusFilter !== "all") && (
-            <button
-              onClick={() => {
-                setDateFrom("");
-                setDateTo("");
-                setStatusFilter("all");
-              }}
-              style={{
-                background: "none",
-                border: "1.5px solid hsl(215 20% 75%)",
-                borderRadius: 8,
-                padding: "5px 12px",
-                fontSize: 12,
-                color: "hsl(215 30% 42%)",
-                cursor: "pointer",
-              }}
-            >
-              נקה סינון
-            </button>
-          )}
-
-          <div style={{ flex: 1 }} />
-
-          <button
-            onClick={() =>
-              exportCSV(filtered.filter((r) => r.payment_status === "completed"))
-            }
-            disabled={filtered.filter((r) => r.payment_status === "completed").length === 0}
-            style={{
-              background: filtered.filter((r) => r.payment_status === "completed").length > 0
-                ? "linear-gradient(135deg, hsl(43 85% 62%), hsl(38 75% 48%))"
-                : "hsl(215 15% 78%)",
-              color: filtered.filter((r) => r.payment_status === "completed").length > 0
-                ? "hsl(215 55% 12%)"
-                : "hsl(215 20% 55%)",
-              border: "none",
-              borderRadius: 10,
-              padding: "8px 18px",
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: filtered.filter((r) => r.payment_status === "completed").length > 0
-                ? "pointer"
-                : "not-allowed",
-              flexShrink: 0,
-            }}
-          >
-            ייצוא CSV ({filtered.filter((r) => r.payment_status === "completed").length})
-          </button>
-        </div>
-
-        {/* ── Table ── */}
-        <div
-          style={{
-            background: "white",
-            border: "1.5px solid hsl(215 15% 88%)",
-            borderRadius: 14,
-            overflow: "hidden",
-          }}
-        >
-          {/* Table header */}
-          <div
-            style={{
-              padding: "14px 20px",
-              borderBlockEnd: "1.5px solid hsl(215 15% 90%)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: 13, fontWeight: 700, color: "hsl(215 35% 22%)" }}>
-              רשומות ({filtered.length})
-            </span>
-            {loading && (
-              <span style={{ fontSize: 12, color: "hsl(215 20% 55%)" }}>טוען...</span>
-            )}
-            {error && (
-              <span style={{ fontSize: 12, color: "hsl(0 65% 50%)" }}>שגיאה: {error}</span>
-            )}
-          </div>
-
-          {filtered.length === 0 && !loading ? (
-            <div
-              style={{
-                padding: "48px 24px",
-                textAlign: "center",
-                color: "hsl(215 20% 55%)",
-                fontSize: 14,
-              }}
-            >
-              אין רשומות לתצוגה
-            </div>
-          ) : (
-            <div style={{ overflowX: "auto" }}>
-              <table>
-                <thead>
-                  <tr
-                    style={{
-                      background: "hsl(215 15% 97%)",
-                      borderBlockEnd: "1.5px solid hsl(215 15% 90%)",
-                    }}
-                  >
-                    {[
-                      "תאריך",
-                      "שם",
-                      "סכום",
-                      "Tier",
-                      "אסמכתא",
-                      "Payment ID",
-                      "סטטוס",
-                    ].map((h) => (
-                      <th
-                        key={h}
-                        style={{
-                          padding: "10px 16px",
-                          fontSize: 12,
-                          fontWeight: 700,
-                          color: "hsl(215 25% 40%)",
-                          letterSpacing: "0.03em",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {h}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((r) => (
-                    <tr
-                      key={r.id}
-                      style={{
-                        borderBlockEnd: "1px solid hsl(215 15% 93%)",
-                      }}
-                    >
-                      <td
-                        style={{
-                          padding: "11px 16px",
-                          fontSize: 13,
-                          color: "hsl(215 30% 30%)",
-                          whiteSpace: "nowrap",
-                          direction: "ltr",
-                          textAlign: "left",
-                        }}
-                      >
-                        {fmtDate(r.created_at)}
-                      </td>
-                      <td
-                        style={{
-                          padding: "11px 16px",
-                          fontSize: 13,
-                          fontWeight: 600,
-                          color: "hsl(215 40% 18%)",
-                        }}
-                      >
-                        {r.donor_name ?? "—"}
-                      </td>
-                      <td
-                        style={{
-                          padding: "11px 16px",
-                          fontSize: 13,
-                          fontWeight: 700,
-                          color: "hsl(38 75% 38%)",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {fmtILS(r.amount)}
-                      </td>
-                      <td
-                        style={{
-                          padding: "11px 16px",
-                          fontSize: 12,
-                          color: "hsl(215 25% 42%)",
-                          maxWidth: 160,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                        title={r.description ?? ""}
-                      >
-                        {r.description ?? "—"}
-                      </td>
-                      <td
-                        style={{
-                          padding: "11px 16px",
-                          fontSize: 12,
-                          color: "hsl(215 25% 42%)",
-                          fontFamily: "monospace",
-                          direction: "ltr",
-                          textAlign: "left",
-                        }}
-                      >
-                        {r.asmachta ?? "—"}
-                      </td>
-                      <td
-                        style={{
-                          padding: "11px 16px",
-                          fontSize: 11,
-                          color: "hsl(215 25% 50%)",
-                          fontFamily: "monospace",
-                          direction: "ltr",
-                          textAlign: "left",
-                          maxWidth: 130,
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                        }}
-                        title={r.payment_id ?? ""}
-                      >
-                        {r.payment_id ?? "—"}
-                      </td>
-                      <td style={{ padding: "11px 16px", whiteSpace: "nowrap" }}>
-                        <span
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 5,
-                            fontSize: 12,
-                            fontWeight: 700,
-                            color: statusColor(r.payment_status),
-                            background: `${statusColor(r.payment_status)}18`,
-                            padding: "3px 10px",
-                            borderRadius: 99,
-                          }}
-                        >
-                          <span
-                            style={{
-                              width: 6,
-                              height: 6,
-                              background: statusColor(r.payment_status),
-                              borderRadius: "50%",
-                              flexShrink: 0,
-                            }}
-                          />
-                          {statusLabel(r.payment_status)}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+          <p style={{ margin: "0 0 8px", fontSize: 13, fontWeight: 800, color: "hsl(38 85% 68%)" }}>
+            פירוט תורמים — ב-production בלבד
+          </p>
+          <p style={{ margin: 0, fontSize: 13, color: "hsl(215 10% 65%)", lineHeight: 1.6 }}>
+            טבלת שמות תורמים, אסמכתאות ומזהי תשלום תוצג לאדמין מחובר בלבד.
+            ב-sandbox הגישה ל-<code style={{ background: "hsl(215 30% 22%)", padding: "1px 6px", borderRadius: 4 }}>donations</code> חסומה ל-anon דרך RLS —
+            כך PII של תורמים לא נחשף.
+          </p>
         </div>
 
         {/* Footer note */}
-        <div
-          style={{
-            marginBlockStart: 16,
-            fontSize: 11,
-            color: "hsl(215 20% 55%)",
-            textAlign: "center",
-          }}
-        >
-          sandbox — ללא אימות · מציג רשומות product = '{PRODUCT}' · מתעדכן realtime
+        <div style={{ marginBlockStart: 16, fontSize: 11, color: "hsl(215 20% 55%)", textAlign: "center" }}>
+          sandbox · נתונים מ-<code>yehoshua_campaign_stats</code> view · מתעדכן realtime
         </div>
       </div>
     </div>

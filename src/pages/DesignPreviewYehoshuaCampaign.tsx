@@ -25,6 +25,10 @@ import { supabase } from "@/integrations/supabase/client";
 const GOAL = 80_000;
 
 /* ─── Realtime donations hook ───────────────────────────── */
+// Reads from the SECURITY DEFINER view yehoshua_campaign_stats.
+// anon gets only aggregates (supporters, raised) — no donor PII.
+// Realtime subscription stays on "donations" table so any new
+// completed payment triggers an immediate refetch of the view.
 function useCampaignStats() {
   const [raised, setRaised] = useState<number>(0);
   const [supporters, setSupporters] = useState<number>(0);
@@ -32,13 +36,12 @@ function useCampaignStats() {
 
   async function fetchStats() {
     const { data, error } = await supabase
-      .from("donations")
-      .select("amount")
-      .eq("product", "yehoshua-campaign")
-      .eq("payment_status", "completed");
+      .from("yehoshua_campaign_stats")
+      .select("*")
+      .single();
     if (!error && data) {
-      setRaised(data.reduce((sum, row) => sum + (row.amount || 0), 0));
-      setSupporters(data.length);
+      setRaised(Number(data.raised) || 0);
+      setSupporters(Number(data.supporters) || 0);
     }
     setLoading(false);
   }
@@ -46,7 +49,8 @@ function useCampaignStats() {
   useEffect(() => {
     fetchStats();
 
-    // Realtime subscription — fires whenever a row in donations changes
+    // Realtime subscription on donations (view doesn't support realtime directly).
+    // Any INSERT/UPDATE/DELETE on donations triggers refetch of the view.
     const channel = supabase
       .channel("yehoshua-campaign-stats")
       .on(
