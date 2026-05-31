@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-31 (session — yehoshua_campaign_stats view + security fix)
+**Last updated:** 2026-06-01 (session — yehoshua-campaign donation routing bug fix + DB backfill)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -525,6 +525,15 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-01 — yehoshua-campaign donation routing bug: product=NULL → view blind
+- **Bug:** `/donate?source=yehoshua-campaign&tier=tier-90` params were silently dropped. `Donate.tsx` only read `?campaign=saadia`, never `?source`/`?tier`. `startPayment()` sent no `meta.product`, so `create-payment.ts` stored `product=NULL`. The `yehoshua_campaign_stats` view filters `WHERE product='yehoshua-campaign'` → 0 results despite real donations landing.
+- **Root cause confirmed via DB query:** 6 donations from the evening (5 completed + 1 pending), all with `product=NULL`, `source=NULL`. View showed 2 supporters/180₪ (only the earlier test donations had correct product).
+- **Fix 1 — Donate.tsx:** reads `searchParams.get('source')`, `searchParams.get('tier')`, `searchParams.get('amount')`. Passes `source` as `meta.product` and appends `source`+`tier_id` inside `donationMeta` when calling `startPayment()`.
+- **Fix 2 — create-payment.ts:** extracts `donationMeta.source` + `donationMeta.tier_id`, stores them as `source` and `tier_id` columns on the `donations` INSERT. `product` column: `productSlug || donationSource || null`.
+- **DB backfill:** 5 completed donations backfilled via direct SQL UPDATE to `product='yehoshua-campaign'`, `source='yehoshua-campaign'`.
+- **Result:** view now shows 7 supporters, 900 ₪. Commit `945d484d`, production deploy `dpl_C1gvdToiujY3borbNY3ctNZt27fL` (`bneyzion.vercel.app`).
+- **Iron rule:** When a page redirects to `/donate?source=X`, Donate.tsx MUST forward `source`/`tier`/`amount` params explicitly — they are not auto-inherited. Any new campaign that routes through `/donate` must verify these params reach the DB.
 
 ### 2026-05-28 — Navigator bot (בנצי) merged to production
 - **Merged:** `feat/navigator-bot` → `sandbox-test` (no-ff, commit `4a27a44d`)
