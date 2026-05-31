@@ -526,6 +526,13 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-05-28 — Navigator bot (בנצי) merged to production
+- **Merged:** `feat/navigator-bot` → `sandbox-test` (no-ff, commit `4a27a44d`)
+- **Production deploy:** `dpl_GoJYKUDmu2GCzRz8ksFNg71e4Yk9` via `vercel --prod` from `/private/tmp/bz-chapel-arch`
+- **Live at:** `https://bneyzion.vercel.app` (and bneyzion.co.il → 200 via 301)
+- **What shipped:** `src/components/bot/` (10 files) + `<OnboardingBot />` mount in `App.tsx`. Floating gold button bottom-left, RTL, Gemini 2.5 Flash powered, auto-hides on /admin and /design-*
+- **Vercel note:** pushing to `sandbox-test` triggers Preview only — production requires explicit `vercel --prod` from the worktree at `/private/tmp/bz-chapel-arch`
+
 ### 2026-05-28 — botApi.ts: fix undefined Supabase URL/key bug in navigator-bot
 - **Branch:** `feat/navigator-bot`, commit `20ee85ec`
 - **Bug:** `botApi.ts` read `supabase.supabaseUrl` / `supabase.supabaseKey` via `@ts-expect-error` internal property hacks. Both properties return `undefined` at runtime (not part of the public `@supabase/supabase-js` API), causing every Gemini call to fail with "נכשל. אפשר לנסות שוב?".
@@ -4171,3 +4178,38 @@ URL update + Grow `notifyUrl` update.
 green light for the manual `vercel --prod` after the classifier blocked
 the first attempt. Quote his words verbatim in commit messages so the
 audit trail shows explicit authorization.
+
+### 2026-05-31 — Yehoshua campaign: realtime donations counter + payment redirect + admin page (commit b5978206)
+
+- **Files changed:**
+  - `src/pages/DesignPreviewYehoshuaCampaign.tsx` — replaced hardcoded RAISED/SUPPORTER_COUNT/PROGRESS_PCT with `useCampaignStats()` hook
+  - `src/pages/DesignPreviewYehoshuaAdmin.tsx` — new file, 370 lines
+  - `src/App.tsx` — lazy import + route `/design-yehoshua-admin`
+
+- **useCampaignStats() hook (inline in campaign page):**
+  - `SELECT amount FROM donations WHERE product='yehoshua-campaign' AND payment_status='completed'`
+  - Supabase realtime `postgres_changes` subscription on `donations` table with `filter: product=eq.yehoshua-campaign`
+  - On any `*` event (INSERT/UPDATE/DELETE) → refetch stats
+  - Returns `{ raised, supporters, loading }`
+  - Cleanup: `supabase.removeChannel(channel)` on unmount (iron rule: always cleanup realtime)
+  - IMPORTANT: channel name must be unique per page if you have multiple subscriptions (`yehoshua-campaign-stats`, `yehoshua-admin-feed`)
+
+- **Payment button flow:**
+  - `handleSupport(tier)` now does `window.location.href = /donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}&type=donation`
+  - The `/donate` page + Grow webhook handles creating the `donations` row with `product='yehoshua-campaign'`
+  - Tier ID (e.g., `tier-90`, `tier-120`) lands in the query param; the webhook should store it in `description` column
+  - No DonationToast shown anymore — user is redirected before toast fires
+
+- **DesignPreviewYehoshuaAdmin features:**
+  - 4 KPI cards computed from ALL completed (ignores active filters for accuracy)
+  - Table columns: date (ltr), name, amount, description (tier), asmachta, payment_id (monospace ltr), status badge
+  - Filters: dateFrom (input type=date), dateTo (input type=date), statusFilter select (all/completed/pending)
+  - Client-side filtering via `useMemo`
+  - CSV export: `exportCSV(filteredCompletedRows)` — BOM prefix (﻿) for Excel Hebrew rendering
+  - Realtime subscription updates the table automatically
+  - No auth gate — sandbox only. Add `useAuth()` + redirect before production rollout
+
+- **Design decisions for future reference:**
+  - Tier IDs are defined in `TIERS` array in DesignPreviewYehoshuaCampaign.tsx — if you change them, update the webhook parsing too
+  - `description` column on `donations` is used as the tier label (set by webhook from the `tier` query param)
+  - Admin page is intentionally standalone (no DesignLayout wrapper) — it's a utility dashboard, not a public page
