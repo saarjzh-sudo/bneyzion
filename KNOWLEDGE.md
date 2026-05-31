@@ -4213,3 +4213,20 @@ audit trail shows explicit authorization.
   - Tier IDs are defined in `TIERS` array in DesignPreviewYehoshuaCampaign.tsx — if you change them, update the webhook parsing too
   - `description` column on `donations` is used as the tier label (set by webhook from the `tier` query param)
   - Admin page is intentionally standalone (no DesignLayout wrapper) — it's a utility dashboard, not a public page
+
+---
+
+### 2026-05-31 — Yehoshua admin live on production (sandbox, no auth)
+
+- **Deploy:** `vercel --prod` from `feat/navigator-bot` branch (commit `d745c6e8`) →
+  Vercel deployment `dpl_7TYDfBcfbrSM4JHV4yBHk1p3WtdX` (alias: `bneyzion.vercel.app`)
+- **Production branch:** `feat/navigator-bot` (NOT `main` — see §7 Deploy gotchas)
+- **Routes live:**
+  - `/design-yehoshua-campaign` — Headstart-style campaign page with realtime counter
+  - `/design-yehoshua-admin` — Admin dashboard: 4 KPI cards, filterable table, CSV export
+- **KPI values shown:** live from Supabase `donations` table where `product='yehoshua-campaign'`
+  and `payment_status='completed'`. Zeros = no completed donations yet in DB (test rows removed).
+- **No auth gate** on admin page — sandbox only. Auth must be added before real rollout.
+- **CDN note (2026-05-31):** After deploy, fra1 (Europe/Israel) edge had 404 on lazy-loaded
+  chunks for ~10+ min due to propagation delay. Pages loaded correctly from US edges (Firecrawl
+  confirmed). This is normal Vercel CDN behavior — resolves on its own.
