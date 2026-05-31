@@ -286,7 +286,7 @@ export default function DesignPreviewYehoshuaAdmin() {
           }}
         >
           <KpiCard
-            label="סה\"כ נגבה"
+            label={'סה"כ נגבה'}
             value={fmtILS(totalRaised)}
             sub={`מתוך ${fmtILS(GOAL)} יעד`}
             accent="hsl(38 75% 40%)"
