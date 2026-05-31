@@ -4248,3 +4248,25 @@ audit trail shows explicit authorization.
 - **Vercel production deploy:** `dpl_AtMBVjMqViGLgDh4mP8tmQukxwdw` → `bneyzion.vercel.app`
 - **Iron rule learned:** Whenever anon needs a COUNT/SUM from a PII table — use a SECURITY DEFINER view. Never expose raw table to anon even if RLS blocks rows. Add view to `types.ts` Views immediately or TS build fails.
 - **Vercel productionBranch is `main` NOT `feat/navigator-bot`:** GitHub auto-deploy from `feat/navigator-bot` creates PREVIEW builds, not production. For production, must run `vercel --prod` with `VERCEL_PROJECT_ID` set.
+
+### 2026-05-31 — Yehoshua admin: Google OAuth auth gate + RLS policy + full donations table + CSV export (commit f833291e)
+
+- **Auth gate added to `/design-yehoshua-admin`:**
+  - Not logged in → `LoginScreen` (Google OAuth via `supabase.auth.signInWithOAuth`, redirectTo=`/design-yehoshua-admin`)
+  - Logged in + email ≠ `saar.j.z.h@gmail.com` → `UnauthorizedScreen` (shows email, signOut button)
+  - Logged in + saar → `AdminView` (full donations table + CSV export + filters)
+  - Allowlist is frontend constant `ADMIN_EMAIL = "saar.j.z.h@gmail.com"` — backend enforced by RLS
+  - Logout button in admin header
+- **RLS policy created on `donations` table:**
+  - `admin_select_donations`: `FOR SELECT TO authenticated USING (auth.email() = 'saar.j.z.h@gmail.com')`
+  - `anon_insert` preserved: Grow webhook still can INSERT without auth
+  - Non-saar authenticated users → RLS returns 0 rows (not an error, just empty)
+- **AdminView fetches:**
+  - KPIs from `yehoshua_campaign_stats` view (fast, no RLS issue)
+  - Full rows from `donations` table (authenticated client, RLS allows saar only)
+  - Realtime subscription on `donations` table
+  - Filters: dateFrom, dateTo, statusFilter
+  - Columns shown: date, donor_name, donor_email, phone, amount, asmachta, payment_id, status
+- **CSV export:** all filtered rows, PII included, UTF-8 BOM for Excel Hebrew
+- **Note on types.ts:** `tier_id` / `tier_name` exist in DB but NOT in `src/integrations/supabase/types.ts` (added to schema after last type sync). Excluded from select/interface to pass TS check. Update types.ts when doing next schema sync.
+- **Deploy:** commit `f833291e` on `feat/navigator-bot` + `vercel --prod` → production chunk `DesignPreviewYehoshuaAdmin-CHWY-_L0.js` verified live with `saar.j.z.h@gmail.com` string in bundle.
