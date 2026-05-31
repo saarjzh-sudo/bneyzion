@@ -4196,3 +4196,40 @@ WHERE id='yehoshua-campaign';
 
 **Iron rule learned:**
 - `bneyzion-sandbox-test.vercel.app` is a static deploy (dist/ only). To update a lazy-loaded page chunk: edit the TSX source, then directly patch the minified `.js` chunk in `dist/assets/`, and redeploy the entire `dist/` directory as static files.
+
+### 2026-05-31 — VITE_GROW_ENVIRONMENT DEV→PRODUCTION fix + wallet UX (commit 7e80f02 + deploy fxgpc21x7)
+
+**Root cause — why `"DEV"` was baked into live bundle:**
+- Vercel Production env var `VITE_GROW_ENVIRONMENT` was set to `DEV` (added 20 days ago, never changed to PRODUCTION).
+- The successful deploy `p65luc7ob` (01:03 31/5) was built with that DEV var → `environment:"DEV"` baked into `DesignPreviewYehoshuaCampaign-DvhpULXe.js`.
+- Result: `growPayment.init({environment:"DEV"})` → SDK called `dev.meshulam.co.il` → PRODUCTION pageCode `b1dc5e695089` not recognized → "הלינק שנשלח אינו תקין".
+
+**Fix applied:**
+1. `vercel env rm VITE_GROW_ENVIRONMENT production` + `vercel env add VITE_GROW_ENVIRONMENT production` = "PRODUCTION".
+2. Built fresh from `/private/tmp/bneyzion-sandbox-test` worktree (full source with vite) with `VITE_GROW_ENVIRONMENT=PRODUCTION` in `.env`.
+3. Deployed `vercel --prod` from sandbox-test worktree → `dpl_2vAmZxfuorUwyLXBcLGq126nnK8E` (READY, 9s).
+4. `vercel alias bneyzion-fxgpc21x7-...vercel.app bneyzion.vercel.app` → live.
+
+**Verification:**
+- `curl bneyzion.vercel.app/assets/DesignPreviewYehoshuaCampaign-BsSGz1YK.js | grep PRODUCTION` → `growPayment.init({environment:"PRODUCTION"` ✓
+- `POST /api/grow/create-payment {sum:90}` → `{"authCode":"c551d60...","processId":29946787}` ✓ (PRODUCTION Grow token)
+- Full page screenshot: hero, tier cards, FAQ all render correctly.
+
+**Wallet UX fix (commit 7e80f02, already in the build):**
+- `DonationModal` now fires `onWalletReady(authCode)` + immediately unmounts (removes stacking context).
+- Parent calls `renderPaymentOptions()` after 1 RAF → wallet renders as true viewport overlay (no top:5763px).
+- `GrowWaitingOverlay` (z-index 50) shows while wallet is open, with ביטול button.
+- Changed spinner text from "מעבד תשלום..." → "שולח פרטים..." (accurate).
+
+**New bundle name:** `DesignPreviewYehoshuaCampaign-BsSGz1YK.js` (48.59 KB, replaces `DvhpULXe.js` 51.98 KB)
+
+**Critical deploy knowledge:**
+- The bneyzion project `prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x` has NO GitHub auto-deploy that works — git pushes to `saarjzh-sudo/bneyzion` (sparse repo) trigger builds that fail with `vite: command not found`.
+- ALWAYS deploy to `bneyzion.vercel.app` using: `cd /private/tmp/bneyzion-sandbox-test && vercel --prod` + `vercel alias`.
+- The worktree at `/private/tmp/bneyzion-sandbox-test` is the **canonical deploy source** for bneyzion.vercel.app.
+- NEVER use `vercel deploy dist/` for bneyzion.vercel.app — it creates static-only deploy without API serverless functions.
+- After build: check `.env` VITE_GROW_ENVIRONMENT = PRODUCTION (not DEV) before deploying production.
+
+**New iron rule:**
+- Production deploys to bneyzion.vercel.app go through `/private/tmp/bneyzion-sandbox-test` worktree with `VITE_GROW_ENVIRONMENT=PRODUCTION` in `.env`, NOT git push to saarjzh-sudo/bneyzion.
+- Rollback pattern: `vercel alias bneyzion-[good-deployment-id]-... bneyzion.vercel.app` (instant, no rebuild).
