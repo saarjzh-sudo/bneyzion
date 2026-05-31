@@ -2077,6 +2077,13 @@ export type Database = {
         }
         Relationships: []
       }
+      yehoshua_campaign_stats: {
+        Row: {
+          raised: number
+          supporters: number
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_series_ancestors: {

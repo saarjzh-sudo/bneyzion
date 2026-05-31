@@ -40,8 +40,9 @@ function useCampaignStats() {
       .select("*")
       .single();
     if (!error && data) {
-      setRaised(Number(data.raised) || 0);
-      setSupporters(Number(data.supporters) || 0);
+      const row = data as { raised: number; supporters: number };
+      setRaised(Number(row.raised) || 0);
+      setSupporters(Number(row.supporters) || 0);
     }
     setLoading(false);
   }

@@ -104,7 +104,8 @@ export default function DesignPreviewYehoshuaAdmin() {
       if (err) {
         setError(err.message);
       } else if (data) {
-        setStats({ supporters: Number(data.supporters) || 0, raised: Number(data.raised) || 0 });
+        const row = data as { raised: number; supporters: number };
+        setStats({ supporters: Number(row.supporters) || 0, raised: Number(row.raised) || 0 });
       }
       setLoading(false);
     }
