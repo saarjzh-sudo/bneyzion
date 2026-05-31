@@ -71,8 +71,15 @@ const Donate = () => {
   const campaign = searchParams.get("campaign");
   const isSaadiaCampaign = campaign === "saadia";
 
+  // Campaign-specific params — forwarded to create-payment so the DB row
+  // gets the right product/source/tier_id for stat views like yehoshua_campaign_stats.
+  // e.g. /donate?source=yehoshua-campaign&tier=tier-90&amount=90&type=donation
+  const sourceParam = searchParams.get("source");  // e.g. "yehoshua-campaign"
+  const tierParam   = searchParams.get("tier");    // e.g. "tier-90"
+  const amountParam = searchParams.get("amount");  // e.g. "90"
+
   // ── Form state ────────────────────────────────
-  const [amount, setAmount] = useState<number>(180);
+  const [amount, setAmount] = useState<number>(amountParam ? Number(amountParam) : 180);
   const [recurring, setRecurring] = useState(false);
   const [dedication, setDedication] = useState(isSaadiaCampaign ? SAADIA_DEDICATION : "");
   const [donationType, setDonationType] = useState<"regular" | "iluy_neshama" | "refua">(
@@ -129,13 +136,19 @@ const Donate = () => {
         email: donorEmail,
         type: recurring ? "directDebit" : "donation",
         thankYouType: "donation",
+        // Pass campaign routing fields so the DB row gets product/source/tier_id
+        // which the yehoshua_campaign_stats view (and admin page) filter on.
+        meta: sourceParam ? { product: sourceParam } : undefined,
         donationMeta: {
           is_monthly: recurring,
           dedication_type: donationType,
           dedication_name: dedication || undefined,
           donor_email: donorEmail || undefined,
           user_id: user?.id,
-        },
+          // Extra fields forwarded to create-payment
+          ...(sourceParam && { source: sourceParam }),
+          ...(tierParam   && { tier_id: tierParam }),
+        } as any,
       });
 
       toast({

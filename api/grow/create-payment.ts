@@ -45,6 +45,9 @@ interface CreatePaymentBody {
     dedication_name?: string;
     donor_email?: string;
     user_id?: string;
+    // Campaign-specific routing (added by Donate.tsx when ?source= param exists)
+    source?: string;   // e.g. "yehoshua-campaign"
+    tier_id?: string;  // e.g. "tier-90"
   };
 }
 
@@ -295,6 +298,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         type === "donation" ||
         productCfg?.target_table === "donations"
       ) {
+        // source / tier_id come from Donate.tsx when a campaign redirect sets
+        // ?source=yehoshua-campaign&tier=tier-90. The product column is set to
+        // meta.product (same value as source) so stat views can filter on it.
+        const donationSource = donationMeta?.source || null;
+        const donationTierId = donationMeta?.tier_id || null;
+
         const { data: donation, error: donationErr } = await supabaseAdmin
           .from("donations")
           .insert({
@@ -303,7 +312,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             donor_email: email || donationMeta?.donor_email || null,
             phone,
             description,
-            product: productSlug || null,
+            product: productSlug || donationSource || null,
+            source: donationSource,
+            tier_id: donationTierId,
             is_monthly: donationMeta?.is_monthly || flowType === "directDebit",
             dedication_type: donationMeta?.dedication_type || "regular",
             dedication_name: donationMeta?.dedication_name || null,
