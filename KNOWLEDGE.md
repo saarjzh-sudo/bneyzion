@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-05-27 (session — TeachersWingV2 3-tab rebuild)
+**Last updated:** 2026-05-31 (session — yehoshua_campaign_stats view + security fix)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -4230,3 +4230,21 @@ audit trail shows explicit authorization.
 - **CDN note (2026-05-31):** After deploy, fra1 (Europe/Israel) edge had 404 on lazy-loaded
   chunks for ~10+ min due to propagation delay. Pages loaded correctly from US edges (Firecrawl
   confirmed). This is normal Vercel CDN behavior — resolves on its own.
+
+### 2026-05-31 — yehoshua_campaign_stats view + PII security fix (commits 68c60242, f44bb7f0)
+
+- **Problem:** `useCampaignStats()` queried `donations` table directly as anon — RLS was
+  returning `[]` (empty rows blocked) so the counter showed 0, but also donor names/amounts
+  could potentially be exposed if RLS were ever misconfigured.
+- **Solution (option ג — SECURITY DEFINER view):**
+  - Created `public.yehoshua_campaign_stats` view: `SELECT COUNT(*)::int AS supporters, COALESCE(SUM(amount),0)::numeric AS raised FROM donations WHERE product='yehoshua-campaign' AND payment_status='completed'`
+  - `GRANT SELECT ON yehoshua_campaign_stats TO anon, authenticated`
+  - Verified via PostgREST as anon: `[{"supporters":2,"raised":180}]`
+  - `donations` table still returns `[]` to anon (RLS blocks) — PII protected
+- **Code changes:**
+  - `useCampaignStats()` in `DesignPreviewYehoshuaCampaign.tsx`: now `.from("yehoshua_campaign_stats").select("*").single()` — realtime subscription stays on `donations` table
+  - `DesignPreviewYehoshuaAdmin.tsx`: replaced full donations fetch with view-only aggregates; donor detail rows deferred to auth implementation; sandbox shows 3 KPI cards + explanatory notice
+  - `src/integrations/supabase/types.ts`: added `yehoshua_campaign_stats` to Views section (Row: `{raised: number, supporters: number}`)
+- **Vercel production deploy:** `dpl_AtMBVjMqViGLgDh4mP8tmQukxwdw` → `bneyzion.vercel.app`
+- **Iron rule learned:** Whenever anon needs a COUNT/SUM from a PII table — use a SECURITY DEFINER view. Never expose raw table to anon even if RLS blocks rows. Add view to `types.ts` Views immediately or TS build fails.
+- **Vercel productionBranch is `main` NOT `feat/navigator-bot`:** GitHub auto-deploy from `feat/navigator-bot` creates PREVIEW builds, not production. For production, must run `vercel --prod` with `VERCEL_PROJECT_ID` set.
