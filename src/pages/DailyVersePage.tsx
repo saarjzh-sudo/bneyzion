@@ -21,6 +21,10 @@ const TEXT_DARK    = "#2D1F0E";
 const TEXT_MUTED   = "#6B5C4A";
 const NAVY_DEEP    = "#1A2744";
 
+// ── Sender / author constants
+const RABBI_NAME   = "הרב יואב אוריאל";
+const RABBI_AVATAR = "/images/yoav-campaign/yoav-with-shoftim-book.jpg";
+
 interface DailyVerse {
   id: string;
   date: string;
@@ -123,10 +127,58 @@ function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void
               {verse.commentary}
             </div>
           )}
+
+          {/* Author row in modal */}
+          <div style={{
+            display: "flex", alignItems: "center", gap: "0.6rem",
+            marginTop: "1.25rem",
+            paddingTop: "1rem",
+            borderTop: `1px solid rgba(139,111,71,0.15)`,
+          }}>
+            <img
+              src={RABBI_AVATAR}
+              alt={RABBI_NAME}
+              style={{
+                width: 36, height: 36, borderRadius: "50%",
+                objectFit: "cover", objectPosition: "top",
+                border: `2px solid rgba(196,162,101,0.4)`,
+                flexShrink: 0,
+              }}
+            />
+            <div>
+              <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem", fontWeight: 700, color: TEXT_DARK }}>
+                {RABBI_NAME}
+              </div>
+              <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: TEXT_MUTED }}>
+                פסוק יומי — בכוח התנ״ך ננצח
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
+}
+
+function formatHebrewMonth(dateStr: string): string {
+  const d = new Date(dateStr + "T00:00:00");
+  return d.toLocaleDateString("he-IL", { month: "long", year: "numeric" });
+}
+
+function groupByMonth(verses: DailyVerse[]): { label: string; verses: DailyVerse[] }[] {
+  const map = new Map<string, DailyVerse[]>();
+  for (const v of verses) {
+    const key = v.date.slice(0, 7); // YYYY-MM
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(v);
+  }
+  // Sort descending (newest month first)
+  return Array.from(map.entries())
+    .sort((a, b) => b[0].localeCompare(a[0]))
+    .map(([key, items]) => ({
+      label: formatHebrewMonth(key + "-01"),
+      verses: items,
+    }));
 }
 
 export default function DailyVersePage() {
@@ -145,6 +197,8 @@ export default function DailyVersePage() {
       return (data ?? []) as unknown as DailyVerse[];
     },
   });
+
+  const grouped = groupByMonth(verses);
 
   return (
     <div style={{ minHeight: "100vh", background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
@@ -225,8 +279,28 @@ export default function DailyVersePage() {
                 .verse-grid { grid-template-columns: 1fr; }
               }
             `}</style>
-            <div className="verse-grid">
-              {verses.map(verse => (
+            {grouped.map(group => (
+              <div key={group.label} style={{ marginBottom: "3rem" }}>
+                {/* Month header */}
+                <div style={{
+                  display: "flex", alignItems: "center", gap: "1rem",
+                  marginBottom: "1.5rem",
+                }}>
+                  <h2 style={{
+                    fontFamily: "Kedem, Frank Ruhl Libre, serif",
+                    fontSize: "1.15rem", fontWeight: 700,
+                    color: NAVY_DEEP, margin: 0, whiteSpace: "nowrap",
+                  }}>
+                    {group.label}
+                  </h2>
+                  <div style={{ flex: 1, height: 1, background: `rgba(139,111,71,0.2)` }} />
+                  <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: TEXT_MUTED, whiteSpace: "nowrap" }}>
+                    {group.verses.length} פסוקים
+                  </span>
+                </div>
+
+                <div className="verse-grid">
+              {group.verses.map(verse => (
                 <div
                   key={verse.id}
                   onClick={() => setSelected(verse)}
@@ -313,10 +387,37 @@ export default function DailyVersePage() {
                         לפירוש המלא ←
                       </div>
                     )}
+
+                    {/* Author row */}
+                    <div style={{
+                      display: "flex", alignItems: "center", gap: "0.5rem",
+                      marginTop: "0.9rem",
+                      paddingTop: "0.75rem",
+                      borderTop: "1px solid rgba(139,111,71,0.1)",
+                    }}>
+                      <img
+                        src={RABBI_AVATAR}
+                        alt={RABBI_NAME}
+                        style={{
+                          width: 28, height: 28, borderRadius: "50%",
+                          objectFit: "cover", objectPosition: "top",
+                          border: `1.5px solid rgba(196,162,101,0.35)`,
+                          flexShrink: 0,
+                        }}
+                      />
+                      <span style={{
+                        fontFamily: "Ploni, sans-serif", fontSize: "0.72rem",
+                        color: TEXT_MUTED, fontWeight: 500,
+                      }}>
+                        {RABBI_NAME}
+                      </span>
+                    </div>
                   </div>
                 </div>
               ))}
+              </div>
             </div>
+          ))}
           </>
         )}
       </section>
