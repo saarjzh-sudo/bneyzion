@@ -555,6 +555,29 @@ No human figures, no faces, no letters, no text.
 - **IRON RULE:** Any bneyzion deploy verification MUST be done in Chrome (Chrome MCP) with SW cleared (`Application → Storage → Clear site data`), never curl. Curl bypasses the SW entirely — if the SW is stale, curl reports 200/correct while every browser user sees the old version.
 - **IRON RULE:** Donation counts and any dynamic Supabase data must NEVER be SW-cached. Use `NetworkOnly` for all `*.supabase.co` requests.
 
+### 2026-06-01 (session 4) — daily-verse: images to Supabase Storage + migration run
+
+**מה נעשה:**
+- הורדו 4 תמונות פסוק יומי מ-DigitalOcean Spaces (Green API cache) לפני שה-cache מתרוקן:
+  - `verse-2026-05-27.jpg` (252K) — ישעיהו מ, ג-ד
+  - `verse-2026-05-29.jpg` (244K) — ישעיהו מא, י
+  - `verse-2026-05-30.png` (1.4M) — ישעיהו מג, ב
+  - `verse-2026-05-31.jpg` (280K) — ישעיהו מט, כה
+- הועלו ל-Supabase Storage bucket `bnei-zion-thumbnails/daily-verses/` (public) דרך REST API
+- עודכן `migrations/daily-verses-wa-2026-06-01.sql` — image_url מ-DigitalOcean → Supabase Storage URLs
+- הורצה ה-migration: `daily_verses` עלתה מ-17 ל-21 שורות (4 פסוקים חדשים מאי 2026)
+- `npm run build` עבר ✓
+- push ל-`feat/daily-verse-data`, deploy ל-`bneyzion-verse.vercel.app`
+- אומת: 4 פסוקים מופיעים בדף + avatar הרב יואב אוריאל + תמונות Supabase נטענות (naturalWidth=1408)
+- Screenshots: `/tmp/verse-screenshots/` (daily-verse-full2.png, modal-avatar-zoom.png, archive-section.png)
+
+**Pattern שנלמד:**
+- Supabase Storage upload: `POST /storage/v1/object/{bucket}/{path}` עם Bearer service_role key + Content-Type
+- Management API מחזיר `[]` (empty array) = הצלחה ל-INSERT SQL — לא שגיאה
+- Green API image downloadURLs חיות בטווח ימים-שבועות — להוריד לאחסון קבוע מוקדם ככל האפשר
+
+**Branch:** `feat/daily-verse-data` — commit `95116e36`
+
 ### 2026-06-01 (session 3) — yehoshua-campaign: inline checkout deployed to production
 - **Issue:** `InlineCheckoutModal` was already committed (`f2e62bcc`, `feat/navigator-bot`) but Vercel had not auto-deployed it to production. Production was still on `bneyzion-ewext35iv` (commit `76bba5e7`, 00:00am) which pre-dated the inline checkout work (08:12am). Push to `feat/navigator-bot` triggered only a Preview deploy, not Production.
 - **Fix:** Ran `vercel --prod --yes` from `/Users/saarj/Downloads/saar-workspace/bneyzion`. New production deploy: `bneyzion-ff0xnzyoo-saars-projects-4508d6bb.vercel.app` → live on `bneyzion.vercel.app`.
