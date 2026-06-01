@@ -21,14 +21,17 @@ export default defineConfig(() => ({
         navigateFallbackDenylist: [/^\/~oauth/],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2,otf}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // skipWaiting + clientsClaim: new SW activates immediately on all tabs
+        // without waiting for user to close tabs. Critical for production deploys.
+        skipWaiting: true,
+        clientsClaim: true,
+        cleanupOutdatedCaches: true,
+        // Supabase requests must NEVER be cached — donation counts and dynamic
+        // data must always reflect live DB state. NetworkOnly = bypass SW entirely.
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/.*\.supabase\.co\/.*/i,
-            handler: "NetworkFirst",
-            options: {
-              cacheName: "supabase-cache",
-              expiration: { maxEntries: 50, maxAgeSeconds: 60 * 5 },
-            },
+            handler: "NetworkOnly",
           },
         ],
       },
