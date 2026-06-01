@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
+**Last updated:** 2026-06-01 (session — daily-verse bug fix: duplicate commentary + 🌿 restore for 2026-05-31)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -525,6 +525,15 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-01 (session 2) — daily-verse bug fix: duplicate commentary + 🌿 restore for 2026-05-31
+- **Bug:** `commentary` for 2026-05-31 contained the 📜 paragraph twice (exact duplicate), and was missing 🌿 completely.
+- **Root cause (parser):** The parser wrote `commentary` by concatenating two sources: (1) the parsed commentary text extracted from the WA caption, and (2) a second copy of the same text extracted from the `raw_caption` body (which includes the 📜 paragraph verbatim as part of the WA message format). Result: same paragraph appears twice. The 🌿 was missing because `raw_caption` was truncated at 800 chars before the 🌿 section.
+- **Fix — DB (live):** `UPDATE daily_verses SET commentary = '<single 📜 + partial 🌿>' WHERE date = '2026-05-31'` via Supabase Management API. Verified: 📜×1, 🌿×1, len=572. All other 20 rows confirmed clean (no duplicates, all have 🌿).
+- **Fix — SQL file:** `migrations/daily-verses-wa-2026-06-01.sql` — commentary value for 2026-05-31 corrected to single paragraph. Commit `21cb7e43`.
+- **🌿 status:** The 🌿 text recovered from `raw_caption` before truncation: "נקודת חיים: במלחמה, מול אויב אכזר, קל להרגיש שהכל על כתפינו ושגודל המשימה מאיים להכריע." The rest of the sentence was beyond the 800-char cut. Green API instance was `notAuthorized` at time of fix — full text unrecoverable without reconnecting the phone. The partial sentence is preserved as-is (authentic text, not invented).
+- **Iron rule — parser:** When extracting `commentary` from WA daily-verse, use ONLY the text AFTER the bible verse citation line and BEFORE 🌿 for the 📜 part — never copy from `raw_caption`. The `raw_caption` contains the WA message header (`*הפסוק היומי*`, citation) + 📜 + 🌿 as one block. Copying that block into commentary = instant duplicate.
+- **Vercel preview:** `https://bneyzion-evmiw1p4o-saars-projects-4508d6bb.vercel.app` (SSO-protected, 401 from curl). Build passes, TS clean.
 
 ### 2026-06-01 — daily-verse: WA scrape + rabbi avatar + monthly archive
 - **Branch:** `feat/daily-verse-data`
