@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
+**Last updated:** 2026-06-01 (session — daily-verse bug fix: duplicate commentary + 🌿 restore for 2026-05-31)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -526,6 +526,24 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-01 (session 2) — daily-verse bug fix: duplicate commentary + 🌿 restore for 2026-05-31
+- **Bug:** `commentary` for 2026-05-31 contained the 📜 paragraph twice (exact duplicate), and was missing 🌿 completely.
+- **Root cause (parser):** The parser wrote `commentary` by concatenating two sources: (1) the parsed commentary text extracted from the WA caption, and (2) a second copy of the same text extracted from the `raw_caption` body (which includes the 📜 paragraph verbatim as part of the WA message format). Result: same paragraph appears twice. The 🌿 was missing because `raw_caption` was truncated at 800 chars before the 🌿 section.
+- **Fix — DB (live):** `UPDATE daily_verses SET commentary = '<single 📜 + partial 🌿>' WHERE date = '2026-05-31'` via Supabase Management API. Verified: 📜×1, 🌿×1, len=572. All other 20 rows confirmed clean (no duplicates, all have 🌿).
+- **Fix — SQL file:** `migrations/daily-verses-wa-2026-06-01.sql` — commentary value for 2026-05-31 corrected to single paragraph. Commit `21cb7e43`.
+- **🌿 status:** The 🌿 text recovered from `raw_caption` before truncation: "נקודת חיים: במלחמה, מול אויב אכזר, קל להרגיש שהכל על כתפינו ושגודל המשימה מאיים להכריע." The rest of the sentence was beyond the 800-char cut. Green API instance was `notAuthorized` at time of fix — full text unrecoverable without reconnecting the phone. The partial sentence is preserved as-is (authentic text, not invented).
+- **Iron rule — parser:** When extracting `commentary` from WA daily-verse, use ONLY the text AFTER the bible verse citation line and BEFORE 🌿 for the 📜 part — never copy from `raw_caption`. The `raw_caption` contains the WA message header (`*הפסוק היומי*`, citation) + 📜 + 🌿 as one block. Copying that block into commentary = instant duplicate.
+- **Vercel preview:** `https://bneyzion-evmiw1p4o-saars-projects-4508d6bb.vercel.app` (SSO-protected, 401 from curl). Build passes, TS clean.
+
+### 2026-06-01 — daily-verse: WA scrape + rabbi avatar + monthly archive
+- **Branch:** `feat/daily-verse-data`
+- **WA scrape:** `getChatHistory({chatId: "120363149928936992@g.us", count: 500})` + group #4 (`120363147523026962@g.us`). Both return 95-96 messages (~2 months back). Pattern `הפסוק היומי` in `caption` (imageMessage) OR `textMessage`. Must check BOTH fields — many daily verses come as imageMessage with caption only, textMessage is empty.
+- **4 new verses to insert:** 2026-05-27 (ישעיהו מ,ג-ד), 2026-05-29 (ישעיהו מא,י), 2026-05-30 (ישעיהו מג,ב), 2026-05-31 (ישעיהו מט,כה). All have `downloadUrl` (DigitalOcean Spaces). Migration at `migrations/daily-verses-wa-2026-06-01.sql` — **PENDING SAAR APPROVAL before running.**
+- **DailyVersePage.tsx changes:** (1) `RABBI_NAME`/`RABBI_AVATAR` constants — avatar uses `/images/yoav-campaign/yoav-with-shoftim-book.jpg`. (2) Author row (avatar 28px circle + name) at bottom of every card + modal footer. (3) `groupByMonth()` helper — grid now split by Hebrew month headers (newest first) with verse count. TS clean, build passes.
+- **Supabase daily_verses schema:** `id(uuid), date(date), verse_text(text NOT NULL), verse_source(text), commentary(text), image_url(text), raw_caption(text), group_id(text), created_at(timestamptz)`. Table already existed — no new migration needed for schema.
+- **Rabbi image in DB:** `rabbis.image_url` is NULL for `id=acd34d0f` (הרב יואב אוריאל). Avatar sourced from `/images/yoav-campaign/yoav-with-shoftim-book.jpg` directly.
+- **Vercel preview URL:** `https://bneyzion-o0mge7jju-saars-projects-4508d6bb.vercel.app/daily-verse` — returns 401 (Vercel SSO protection on preview URLs). Verified via local dist assets: `DailyVersePage-DqgkEZQb.js` contains `yoav-with-shoftim` + `verse-grid`. Build: ✓
+
 ### 2026-06-01 (session 4) — yehoshua: installment choice + shipping + admin + live counters
 - **Part 1 — paymentNum→maxPaymentNum** (`api/grow/create-payment.ts` ~line 407): `paymentNum` forces fixed count → buyer has no choice. `maxPaymentNum` gives buyer a dropdown 1..N. Change: one-word swap. Applies to all callers — `installments` param always means "max allowed", not "fixed count". Tiers ₪90/120/220 pass `safeInstallments=1` so neither field is sent (single payment). Tiers ₪400+ pass up to 5 → dropdown 1–5.
 - **Part 2 — shipping address**: 5 new columns added to `donations` table via Management API: `shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes` (all `text`). `types.ts` updated (also added `source, tier_id, tier_name, tier_perks` that existed in DB but were missing from types). `InlineCheckoutModal` now shows shipping block (street+house required, city required, zip optional, notes textarea optional). Block hidden for `tier-2000` (₪2000 lesson-only tier — no physical delivery). `canSubmit` gate extended. `create-payment.ts` INSERT saves all 5 fields.
@@ -545,6 +563,29 @@ No human figures, no faces, no letters, no text.
 - **Commit:** `1c06c0e5`, branch `feat/navigator-bot` (production)
 - **IRON RULE:** Any bneyzion deploy verification MUST be done in Chrome (Chrome MCP) with SW cleared (`Application → Storage → Clear site data`), never curl. Curl bypasses the SW entirely — if the SW is stale, curl reports 200/correct while every browser user sees the old version.
 - **IRON RULE:** Donation counts and any dynamic Supabase data must NEVER be SW-cached. Use `NetworkOnly` for all `*.supabase.co` requests.
+
+### 2026-06-01 (session 4) — daily-verse: images to Supabase Storage + migration run
+
+**מה נעשה:**
+- הורדו 4 תמונות פסוק יומי מ-DigitalOcean Spaces (Green API cache) לפני שה-cache מתרוקן:
+  - `verse-2026-05-27.jpg` (252K) — ישעיהו מ, ג-ד
+  - `verse-2026-05-29.jpg` (244K) — ישעיהו מא, י
+  - `verse-2026-05-30.png` (1.4M) — ישעיהו מג, ב
+  - `verse-2026-05-31.jpg` (280K) — ישעיהו מט, כה
+- הועלו ל-Supabase Storage bucket `bnei-zion-thumbnails/daily-verses/` (public) דרך REST API
+- עודכן `migrations/daily-verses-wa-2026-06-01.sql` — image_url מ-DigitalOcean → Supabase Storage URLs
+- הורצה ה-migration: `daily_verses` עלתה מ-17 ל-21 שורות (4 פסוקים חדשים מאי 2026)
+- `npm run build` עבר ✓
+- push ל-`feat/daily-verse-data`, deploy ל-`bneyzion-verse.vercel.app`
+- אומת: 4 פסוקים מופיעים בדף + avatar הרב יואב אוריאל + תמונות Supabase נטענות (naturalWidth=1408)
+- Screenshots: `/tmp/verse-screenshots/` (daily-verse-full2.png, modal-avatar-zoom.png, archive-section.png)
+
+**Pattern שנלמד:**
+- Supabase Storage upload: `POST /storage/v1/object/{bucket}/{path}` עם Bearer service_role key + Content-Type
+- Management API מחזיר `[]` (empty array) = הצלחה ל-INSERT SQL — לא שגיאה
+- Green API image downloadURLs חיות בטווח ימים-שבועות — להוריד לאחסון קבוע מוקדם ככל האפשר
+
+**Branch:** `feat/daily-verse-data` — commit `95116e36`
 
 ### 2026-06-01 (session 3) — yehoshua-campaign: inline checkout deployed to production
 - **Issue:** `InlineCheckoutModal` was already committed (`f2e62bcc`, `feat/navigator-bot`) but Vercel had not auto-deployed it to production. Production was still on `bneyzion-ewext35iv` (commit `76bba5e7`, 00:00am) which pre-dated the inline checkout work (08:12am). Push to `feat/navigator-bot` triggered only a Preview deploy, not Production.
