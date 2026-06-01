@@ -4338,3 +4338,14 @@ audit trail shows explicit authorization.
 ### ⚠️ Deploy topology (caused hours of confusion)
 - Vercel project `saars-projects-4508d6bb/bneyzion`. **Pushing to `feat/navigator-bot` builds a PREVIEW only.** The `bneyzion.vercel.app` alias = latest **Production** deployment.
 - **To ship to the live alias you MUST run `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel --prod --yes`** from the repo. A git push alone does NOT update production. (`.vercel/repo.json` present, no `project.json` — CLI resolves project from repo.json.)
+
+---
+
+### 2026-06-01 — DesignHeader: GlobalSearch restored + Dark Mode removed + ספרים added (repo: bneyzion-header, branch fix/header-search-darkmode)
+**Commits:** `2f7e8f50` (header), `7b79dcd2` (books + cleanup). **NOT merged — awaiting Saar's approval.**
+- **Search restored:** `DesignHeader.tsx` (v2, used by `Layout.tsx` → so on production home `/`) had no search after replacing the old `Header.tsx`. Re-wired `GlobalSearch` dialog + a Search trigger button (40×40, cream/transparent-aware) in the actions row; Ctrl/Cmd+K works (listener lives inside GlobalSearch).
+- **Search scope now:** סדרות (series) + שיעורים (lessons) + **ספרים (products/store)** + נושאים (topics) + רבנים (rabbis). Books were the spec's 3rd target but the existing `useGlobalSearch` never queried them — **added** a `products` query (`status='active'`, OR on `title.ilike`, limit 6) → `results.books`, rendered as a "ספרים" group linking `/store/{slug}` (route `App.tsx:299`). Product title field is `title`, slug like `wc-3635`.
+- **Teacher content excluded:** `useGlobalSearch` filters series+lessons with `.not("audience_tags","cs",'{"teachers"}')`. products/rabbis/topics are public directories (no teacher audience), left unfiltered — confirmed with Saar's "לא תוכן מורים" intent.
+- **Dark Mode removed:** deleted the `DarkModeToggle` import+render from DesignHeader. `dark-mode-toggle.tsx` was the *entire* dark-mode mechanism (self-contained, own localStorage `bneyzion_theme` + toggles `<html>.dark`) — no separate context/hook. After removal it had **0 importers repo-wide**, so the file was deleted (`git rm`). Nothing adds the `.dark` class anymore → cream-warm `rgba(250,246,240,0.92)` is permanent; verified no white-on-white.
+- **Verification:** `npm run build` clean (tsc -b + vite + PWA). Verified in a **real headless browser** (not curl — respects the SW lesson above) on local dev (vite dev = no SW): header renders search icon (no dark toggle), modal opens, live results for "תהילים"/"שופטים" group into הצעות/נושאים/סדרות/שיעורים/ספרים. Vercel **preview** (not prod): `https://bneyzion-nv2shsupl-saars-projects-4508d6bb.vercel.app` (SSO-protected; access via `x-vercel-protection-bypass` automation secret).
+- **Untouched** (parallel sessions own them): SeriesList, DesignSidebar, pages/teachers/, migrations, MemorialSaadia, Donate, DorHaplaot, DailyVersePage.
