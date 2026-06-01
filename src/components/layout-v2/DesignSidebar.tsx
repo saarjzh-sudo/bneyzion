@@ -50,10 +50,13 @@ const SIDEBAR_W_COLLAPSED = 68;
 type Tab = "main" | "topics" | "rabbis" | "teachers";
 
 // ────────────────────────────────────────────────────────────────────────
-// Hook: series for a specific node ID (book or child)
+// Hook: series for a specific node ID (book or child) — PUBLIC sidebar only.
+// IRON RULE: teacher-only content (audience_tags @> ['teachers']) is filtered out.
+// The public sidebar must never show teacher content. The Teachers Wing has its
+// own sidebar (TeacherSidebar) that uses useTeacherSidebar() hook instead.
 function useSeriesForNodeLocal(nodeId: string | null) {
   return useQuery({
-    queryKey: ["dsb-series", nodeId],
+    queryKey: ["dsb-series-public", nodeId],
     queryFn: async () => {
       if (!nodeId) return [];
       const { data: descendants } = await supabase.rpc("get_series_descendant_ids", {
@@ -66,15 +69,30 @@ function useSeriesForNodeLocal(nodeId: string | null) {
         .in("id", allIds)
         .gt("lesson_count", 0)
         .order("lesson_count", { ascending: false })
-        .limit(80);
+        .limit(100);
       if (!series || series.length === 0) return [];
-      const rabbiIds = [...new Set(series.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
+
+      // Filter out teacher-only series from the public sidebar.
+      // A series is teacher-only when audience_tags contains 'teachers' AND
+      // nothing else (i.e. the only audience is teachers). If audience_tags
+      // also includes 'public' or is null/empty, the series is visible to all.
+      const publicSeries = series.filter((s) => {
+        const tags = (s.audience_tags as string[] | null) ?? [];
+        if (tags.length === 0) return true; // no tag = public
+        // Only hide if the *only* tag is "teachers" (pure teacher content)
+        const isTeachersOnly = tags.length > 0 && tags.every((t) => t === "teachers");
+        return !isTeachersOnly;
+      });
+
+      if (publicSeries.length === 0) return [];
+
+      const rabbiIds = [...new Set(publicSeries.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
       let rabbiMap = new Map<string, string>();
       if (rabbiIds.length > 0) {
         const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
         rabbiMap = new Map(rabbis?.map((r) => [r.id, r.name]) || []);
       }
-      return series.map((s) => ({
+      return publicSeries.map((s) => ({
         id: s.id,
         title: s.title,
         lessonCount: s.lesson_count ?? 0,
