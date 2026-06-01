@@ -1879,7 +1879,11 @@ function InlineCheckoutModal({
         email: donorEmail,
         type: "donation",
         thankYouType: "donation",
-        meta: { product: "yehoshua-campaign" },
+        meta: {
+          product: "yehoshua-campaign",
+          tos_accepted: true,
+          tos_accepted_at: new Date().toISOString(),
+        },
         donationMeta: {
           is_monthly: false,
           donor_email: donorEmail || undefined,
