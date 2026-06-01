@@ -6,7 +6,8 @@ import type { OpeningButton } from "./types";
 export const BOT_CONFIG = {
   // Supabase Edge Function endpoint
   // Use the runtime-resolved URL from src/integrations/supabase/client.ts
-  edgeFunctionPath: "/functions/v1/navigation-bot",
+  // VITE_BOT_FUNCTION overrides to point to a preview function (e.g. navigation-bot-preview)
+  edgeFunctionPath: `/functions/v1/${import.meta.env.VITE_BOT_FUNCTION ?? "navigation-bot"}`,
 
   // First-visit popup delay (ms)
   firstVisitDelayMs: 3000,
