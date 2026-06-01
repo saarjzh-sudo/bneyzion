@@ -526,6 +526,14 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-01 (session 2) — yehoshua-campaign: inline checkout modal (no redirect)
+- **Decision:** Saar: "שינוי גדול — סליקה inline בלי redirect". 7 completed donations ₪900 but UX caused abandonment (redirect was too slow + disorienting).
+- **Change:** `DesignPreviewYehoshuaCampaign.tsx` — added `InlineCheckoutModal` component (439 lines). `handleSupport(tier)` now sets `checkoutTier` state instead of `window.location.href = /donate?...`.
+- **Architecture:** `useGrowPayment` hook loaded on page mount (not on click) — SDK ready before user clicks. Form: שם מלא + טלפון + אימייל + TOS checkbox. Identical DB params: `meta.product='yehoshua-campaign'`, `donationMeta.tier_id=tier.id`.
+- **Fallback:** if `isReady=false` after 5s → `sdkTimedOut=true` → renders a direct link to `/donate?...` (no silent failure).
+- **Commit:** `f2e62bcc`, branch `feat/navigator-bot` (production).
+- **Iron rule:** Inline checkout = `useGrowPayment` in the calling component. The hook loads the SDK via `useEffect` on mount — critical to mount the component EARLY (not lazily) so SDK is ready. If SDK times out, fallback to redirect URL is mandatory.
+
 ### 2026-06-01 — yehoshua-campaign donation routing bug: product=NULL → view blind
 - **Bug:** `/donate?source=yehoshua-campaign&tier=tier-90` params were silently dropped. `Donate.tsx` only read `?campaign=saadia`, never `?source`/`?tier`. `startPayment()` sent no `meta.product`, so `create-payment.ts` stored `product=NULL`. The `yehoshua_campaign_stats` view filters `WHERE product='yehoshua-campaign'` → 0 results despite real donations landing.
 - **Root cause confirmed via DB query:** 6 donations from the evening (5 completed + 1 pending), all with `product=NULL`, `source=NULL`. View showed 2 supporters/180₪ (only the earlier test donations had correct product).
