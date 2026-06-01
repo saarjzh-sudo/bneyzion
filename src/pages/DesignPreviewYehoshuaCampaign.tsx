@@ -15,7 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
-import { X, Loader2, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard } from "lucide-react";
 
 /* ─── Campaign constants ────────────────────────────────── */
 const GOAL = 80_000;
@@ -174,6 +174,15 @@ const TIERS: Tier[] = [
     imageAlt: "הרב יואב במילואים",
   },
 ];
+
+/**
+ * Max installments the donor may split the payment into, per Saar's spec:
+ *   ₪90 / ₪120 / ₪220 (the book tiers) → single payment only
+ *   ₪400 and up (sets / partnership / lesson) → up to 5 payments
+ * The Grow wallet shows a "מס׳ תשלומים" dropdown capped at this number.
+ * Server (create-payment.ts) still clamps to payment_products.max_installments.
+ */
+const maxInstallmentsFor = (price: number): number => (price <= 220 ? 1 : 5);
 
 const CAMPAIGN_PHASES = [
   { label: "בניית הקמפיין", sub: 'אייר תשפ"ו', done: true },
@@ -1879,6 +1888,8 @@ function InlineCheckoutModal({
         email: donorEmail,
         type: "donation",
         thankYouType: "donation",
+        // ₪90/120/220 → single payment; ₪400+ → up to 5 installments
+        installments: maxInstallmentsFor(tier.price),
         meta: {
           product: "yehoshua-campaign",
           tos_accepted: true,
@@ -2027,6 +2038,27 @@ function InlineCheckoutModal({
               {perk}
             </div>
           ))}
+        </div>
+
+        {/* Installments banner */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            padding: "8px 12px",
+            background: "hsl(38 60% 96%)",
+            borderRadius: 10,
+            fontSize: 12.5,
+            fontWeight: 700,
+            color: "hsl(215 45% 28%)",
+            border: "1px solid hsl(38 50% 86%)",
+          }}
+        >
+          <CreditCard size={14} style={{ color: "hsl(38 75% 45%)", flexShrink: 0 }} />
+          {maxInstallmentsFor(tier.price) > 1
+            ? `ניתן לפצל עד ${maxInstallmentsFor(tier.price)} תשלומים — ללא ריבית`
+            : "תשלום אחד בלבד"}
         </div>
 
         {/* SDK loading indicator or fallback */}
