@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { BookOpen, Users, Library, Loader2, Tag, Search, Sparkles } from "lucide-react";
+import { BookOpen, Users, Library, Loader2, Search, Sparkles } from "lucide-react";
 import {
   CommandDialog,
   CommandInput,
@@ -94,7 +94,7 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
                 <Search className="h-3.5 w-3.5 text-muted-foreground" />
                 <span>{s.text}</span>
                 <Badge variant="outline" className="mr-auto text-[10px] px-1.5 py-0">
-                  {s.type === "rabbi" ? "רב" : s.type === "series" ? "סדרה" : "נושא"}
+                  {s.type === "rabbi" ? "רב" : "סדרה"}
                 </Badge>
               </CommandItem>
             ))}
@@ -102,28 +102,6 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
         )}
 
         {(hasResults && suggestions.length > 0) && <CommandSeparator />}
-
-        {/* Topics */}
-        {results.topics.length > 0 && (
-          <CommandGroup heading={
-            <span className="flex items-center gap-1.5">
-              <Tag className="h-3.5 w-3.5" />
-              נושאים
-            </span>
-          }>
-            {results.topics.map((t) => (
-              <CommandItem
-                key={t.id}
-                value={t.name}
-                onSelect={() => go(`/series?topic=${t.slug}`)}
-                className="flex items-center gap-3 cursor-pointer"
-              >
-                <Tag className="h-4 w-4 text-accent shrink-0" />
-                <span className="font-medium">{t.name}</span>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        )}
 
         {/* Rabbis */}
         {results.rabbis.length > 0 && (

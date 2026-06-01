@@ -62,12 +62,6 @@ interface LessonResult {
   series: { title: string } | null;
 }
 
-interface TopicResult {
-  id: string;
-  name: string;
-  slug: string;
-}
-
 interface BookResult {
   id: string;
   title: string;
@@ -78,17 +72,16 @@ export interface SearchResults {
   rabbis: RabbiResult[];
   series: SeriesResult[];
   lessons: LessonResult[];
-  topics: TopicResult[];
   books: BookResult[];
 }
 
 export interface SearchSuggestion {
   text: string;
-  type: "rabbi" | "series" | "topic";
+  type: "rabbi" | "series";
 }
 
 export function useGlobalSearch(query: string) {
-  const [results, setResults] = useState<SearchResults>({ rabbis: [], series: [], lessons: [], topics: [], books: [] });
+  const [results, setResults] = useState<SearchResults>({ rabbis: [], series: [], lessons: [], books: [] });
   const [isLoading, setIsLoading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -97,7 +90,7 @@ export function useGlobalSearch(query: string) {
 
     const trimmed = query.trim();
     if (!trimmed || trimmed.length < 2) {
-      setResults({ rabbis: [], series: [], lessons: [], topics: [], books: [] });
+      setResults({ rabbis: [], series: [], lessons: [], books: [] });
       setIsLoading(false);
       return;
     }
@@ -106,14 +99,13 @@ export function useGlobalSearch(query: string) {
 
     timerRef.current = setTimeout(async () => {
       const patterns = buildPatterns(trimmed);
-      const mainPattern = patterns[0];
 
       // Build OR filter for rabbis with all patterns
       const rabbiOrClauses = patterns
         .flatMap(p => [`name.ilike.${p}`, `title.ilike.${p}`, `specialty.ilike.${p}`])
         .join(",");
 
-      const [rabbisRes, seriesRes, lessonsRes, topicsRes, booksRes] = await Promise.all([
+      const [rabbisRes, seriesRes, lessonsRes, booksRes] = await Promise.all([
         supabase
           .from("rabbis")
           .select("id, slug, name, title, image_url, lesson_count")
@@ -136,11 +128,6 @@ export function useGlobalSearch(query: string) {
           .eq("status", "published")
           .not("audience_tags", "cs", '{"teachers"}')
           .limit(8),
-        supabase
-          .from("topics")
-          .select("id, name, slug")
-          .ilike("name", mainPattern)
-          .limit(5),
         // ספרים — חנות (products). מאגר ציבורי, ללא audience_tags של מורים.
         supabase
           .from("products")
@@ -154,7 +141,6 @@ export function useGlobalSearch(query: string) {
         rabbis: (rabbisRes.data as RabbiResult[]) || [],
         series: (seriesRes.data as SeriesResult[]) || [],
         lessons: (lessonsRes.data as LessonResult[]) || [],
-        topics: (topicsRes.data as TopicResult[]) || [],
         books: (booksRes.data as BookResult[]) || [],
       });
       setIsLoading(false);
@@ -174,13 +160,10 @@ export function useGlobalSearch(query: string) {
     for (const s of results.series.slice(0, 3)) {
       items.push({ text: s.title, type: "series" });
     }
-    for (const t of results.topics.slice(0, 2)) {
-      items.push({ text: t.name, type: "topic" });
-    }
     return items;
   }, [results]);
 
-  const totalResults = results.rabbis.length + results.series.length + results.lessons.length + results.topics.length + results.books.length;
+  const totalResults = results.rabbis.length + results.series.length + results.lessons.length + results.books.length;
   const hasResults = totalResults > 0;
 
   return { results, isLoading, hasResults, suggestions, totalResults };
