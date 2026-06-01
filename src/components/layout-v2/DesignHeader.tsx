@@ -146,8 +146,8 @@ export default function DesignHeader({
             flex: 1,
             justifyContent: "flex-end",
             flexWrap: "wrap",
-            // נדחף מעט ימינה (לכיוון הלוגו) + מעט למטה לאיזון אסתטי (Saar 2026-06-01)
-            transform: "translate(22px, 6px)",
+            // נדחף מעט ימינה (לכיוון הלוגו) בלבד; ללא הזזה אנכית כדי להישאר מיושר בגובה עם כפתור ההתחברות (Saar 2026-06-01)
+            transform: "translateX(22px)",
           }}
         >
           {/* Teacher context chip — shown instead of the 4 hidden items */}
