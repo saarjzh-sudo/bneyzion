@@ -321,6 +321,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             user_id: donationMeta?.user_id || meta?.user_id || null,
             payment_status: "pending",
             raw_payload: { consent: consentAudit },
+            // Shipping address (populated when the buyer receives a physical product)
+            shipping_street: (donationMeta as any)?.shipping_street || null,
+            shipping_house_number: (donationMeta as any)?.shipping_house_number || null,
+            shipping_city: (donationMeta as any)?.shipping_city || null,
+            shipping_zip: (donationMeta as any)?.shipping_zip || null,
+            shipping_notes: (donationMeta as any)?.shipping_notes || null,
           })
           .select("id")
           .single();
@@ -405,7 +411,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       formData.append("pageField[email]", email);
     }
     if (safeInstallments > 1) {
-      formData.append("paymentNum", String(safeInstallments));
+      // maxPaymentNum lets the customer choose 1–N in Grow's UI.
+      // paymentNum would have forced a fixed count (no choice for the buyer).
+      formData.append("maxPaymentNum", String(safeInstallments));
     }
 
     // Custom fields for webhook routing

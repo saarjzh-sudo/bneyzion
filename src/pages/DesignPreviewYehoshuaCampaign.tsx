@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
+import { useTierCounts } from "@/hooks/useTierCounts";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard } from "lucide-react";
 
 /* ─── Campaign constants ────────────────────────────────── */
@@ -705,9 +706,11 @@ function ProofStrip({ supporters }: { supporters: number }) {
   );
 }
 
-function TierCard({ tier, onSupport }: { tier: Tier; onSupport: (t: Tier) => void }) {
-  const isSoldOut = tier.remaining === 0;
-  const remainingPct = Math.round((tier.remaining / tier.limit) * 100);
+function TierCard({ tier, sold, onSupport }: { tier: Tier; sold: number; onSupport: (t: Tier) => void }) {
+  // remaining is computed from live DB data (sold) — ignores static tier.remaining
+  const remaining = Math.max(0, tier.limit - sold);
+  const isSoldOut = remaining === 0;
+  const remainingPct = Math.round((remaining / tier.limit) * 100);
   const almostGone = remainingPct <= 25 && !isSoldOut;
 
   return (
@@ -891,8 +894,8 @@ function TierCard({ tier, onSupport }: { tier: Tier; onSupport: (t: Tier) => voi
         {isSoldOut
           ? "אזל — אין יותר מקומות"
           : almostGone
-          ? `⚡ נשארו רק ${tier.remaining} מתוך ${tier.limit}`
-          : `נשארו ${tier.remaining} מתוך ${tier.limit}`}
+          ? `⚡ נשארו רק ${remaining} מתוך ${tier.limit}`
+          : `נשארו ${remaining} מתוך ${tier.limit}`}
       </div>
 
       {/* CTA */}
@@ -930,6 +933,7 @@ function TierCard({ tier, onSupport }: { tier: Tier; onSupport: (t: Tier) => voi
 }
 
 function TiersSection({ onSupport }: { onSupport: (t: Tier) => void }) {
+  const tierCounts = useTierCounts(); // live sold counts per tier_id
   const [customAmount, setCustomAmount] = useState("");
 
   function submitCustom() {
@@ -962,7 +966,12 @@ function TiersSection({ onSupport }: { onSupport: (t: Tier) => void }) {
           }}
         >
           {TIERS.map((tier) => (
-            <TierCard key={tier.id} tier={tier} onSupport={onSupport} />
+            <TierCard
+              key={tier.id}
+              tier={tier}
+              sold={tierCounts[tier.id] ?? 0}
+              onSupport={onSupport}
+            />
           ))}
         </div>
 
@@ -1842,6 +1851,14 @@ function InlineCheckoutModal({
   const [donorEmail, setDonorEmail] = useState("");
   const [tosAccepted, setTosAccepted] = useState(false);
 
+  // Shipping address (required for all tiers except tier-2000 = lesson-only)
+  const needsShipping = tier.price !== 2000;
+  const [shippingStreet, setShippingStreet] = useState("");
+  const [shippingHouseNumber, setShippingHouseNumber] = useState("");
+  const [shippingCity, setShippingCity] = useState("");
+  const [shippingZip, setShippingZip] = useState("");
+  const [shippingNotes, setShippingNotes] = useState("");
+
   // SDK timeout fallback: after 5 seconds, if not ready → show fallback button
   const [sdkTimedOut, setSdkTimedOut] = useState(false);
   useEffect(() => {
@@ -1874,6 +1891,10 @@ function InlineCheckoutModal({
       toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
       return;
     }
+    if (needsShipping && (!shippingStreet.trim() || !shippingHouseNumber.trim() || !shippingCity.trim())) {
+      toast({ title: "נא למלא כתובת למשלוח (רחוב, מספר בית, עיר)", variant: "destructive" });
+      return;
+    }
     if (!tosAccepted) {
       toast({ title: "יש לאשר את התקנון לפני המשך לתשלום", variant: "destructive" });
       return;
@@ -1902,6 +1923,11 @@ function InlineCheckoutModal({
           // @ts-expect-error — extra fields forwarded to create-payment
           source: "yehoshua-campaign",
           tier_id: tier.id,
+          shipping_street: needsShipping ? shippingStreet.trim() : undefined,
+          shipping_house_number: needsShipping ? shippingHouseNumber.trim() : undefined,
+          shipping_city: needsShipping ? shippingCity.trim() : undefined,
+          shipping_zip: shippingZip.trim() || undefined,
+          shipping_notes: shippingNotes.trim() || undefined,
         },
       });
 
@@ -1914,7 +1940,8 @@ function InlineCheckoutModal({
   }, [donorName, donorPhone, donorEmail, tosAccepted, tier, user, startPayment, toast, onClose]);
 
   const isProcessing = paymentLoading;
-  const canSubmit = !isProcessing && (paymentReady || sdkTimedOut) && tosAccepted && !!donorName && !!donorPhone;
+  const addressOk = !needsShipping || (!!shippingStreet.trim() && !!shippingHouseNumber.trim() && !!shippingCity.trim());
+  const canSubmit = !isProcessing && (paymentReady || sdkTimedOut) && tosAccepted && !!donorName && !!donorPhone && addressOk;
 
   return (
     <div
@@ -2202,6 +2229,146 @@ function InlineCheckoutModal({
             />
           </div>
         </div>
+
+        {/* Shipping address — shown for all tiers except tier-2000 (lesson only) */}
+        {needsShipping && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 700,
+                color: "hsl(215 30% 42%)",
+                paddingBlockEnd: 4,
+                borderBlockEnd: "1px solid hsl(38 30% 88%)",
+              }}
+            >
+              כתובת למשלוח הספר
+            </div>
+            {/* Street + house number */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 8 }}>
+              <div>
+                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 4 }}>
+                  רחוב *
+                </label>
+                <input
+                  type="text"
+                  value={shippingStreet}
+                  onChange={(e) => setShippingStreet(e.target.value)}
+                  placeholder="שם הרחוב"
+                  dir="rtl"
+                  style={{
+                    width: "100%",
+                    padding: "9px 11px",
+                    borderRadius: 10,
+                    border: "1.5px solid hsl(38 30% 82%)",
+                    fontFamily: "inherit",
+                    fontSize: 14,
+                    color: "hsl(215 40% 14%)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+              <div style={{ width: 72 }}>
+                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 4 }}>
+                  מס׳ *
+                </label>
+                <input
+                  type="text"
+                  value={shippingHouseNumber}
+                  onChange={(e) => setShippingHouseNumber(e.target.value)}
+                  placeholder="12"
+                  dir="ltr"
+                  style={{
+                    width: "100%",
+                    padding: "9px 11px",
+                    borderRadius: 10,
+                    border: "1.5px solid hsl(38 30% 82%)",
+                    fontFamily: "inherit",
+                    fontSize: 14,
+                    color: "hsl(215 40% 14%)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+            </div>
+            {/* City + zip */}
+            <div style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 8 }}>
+              <div>
+                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 4 }}>
+                  עיר *
+                </label>
+                <input
+                  type="text"
+                  value={shippingCity}
+                  onChange={(e) => setShippingCity(e.target.value)}
+                  placeholder="שם היישוב"
+                  dir="rtl"
+                  style={{
+                    width: "100%",
+                    padding: "9px 11px",
+                    borderRadius: 10,
+                    border: "1.5px solid hsl(38 30% 82%)",
+                    fontFamily: "inherit",
+                    fontSize: 14,
+                    color: "hsl(215 40% 14%)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+              <div style={{ width: 96 }}>
+                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 4 }}>
+                  מיקוד
+                </label>
+                <input
+                  type="text"
+                  value={shippingZip}
+                  onChange={(e) => setShippingZip(e.target.value)}
+                  placeholder="7 ספרות"
+                  dir="ltr"
+                  style={{
+                    width: "100%",
+                    padding: "9px 11px",
+                    borderRadius: 10,
+                    border: "1.5px solid hsl(38 30% 82%)",
+                    fontFamily: "inherit",
+                    fontSize: 14,
+                    color: "hsl(215 40% 14%)",
+                    outline: "none",
+                    boxSizing: "border-box",
+                  }}
+                />
+              </div>
+            </div>
+            {/* Notes */}
+            <div>
+              <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 4 }}>
+                הערות משלוח (דירה, קומה, קוד כניסה...)
+              </label>
+              <textarea
+                value={shippingNotes}
+                onChange={(e) => setShippingNotes(e.target.value)}
+                placeholder="לא חובה"
+                dir="rtl"
+                rows={2}
+                style={{
+                  width: "100%",
+                  padding: "9px 11px",
+                  borderRadius: 10,
+                  border: "1.5px solid hsl(38 30% 82%)",
+                  fontFamily: "inherit",
+                  fontSize: 13,
+                  color: "hsl(215 40% 14%)",
+                  outline: "none",
+                  boxSizing: "border-box",
+                  resize: "vertical",
+                }}
+              />
+            </div>
+          </div>
+        )}
 
         {/* TOS */}
         <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>

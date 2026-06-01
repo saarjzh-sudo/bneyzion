@@ -433,8 +433,17 @@ export type Database = {
           phone: string | null
           product: string | null
           raw_payload: Json | null
+          shipping_city: string | null
+          shipping_house_number: string | null
+          shipping_notes: string | null
+          shipping_street: string | null
+          shipping_zip: string | null
           smoove_list_id: number | null
           smoove_subscribed: boolean | null
+          source: string | null
+          tier_id: string | null
+          tier_name: string | null
+          tier_perks: Json | null
           transaction_type_id: number | null
           user_id: string | null
         }
@@ -459,8 +468,17 @@ export type Database = {
           phone?: string | null
           product?: string | null
           raw_payload?: Json | null
+          shipping_city?: string | null
+          shipping_house_number?: string | null
+          shipping_notes?: string | null
+          shipping_street?: string | null
+          shipping_zip?: string | null
           smoove_list_id?: number | null
           smoove_subscribed?: boolean | null
+          source?: string | null
+          tier_id?: string | null
+          tier_name?: string | null
+          tier_perks?: Json | null
           transaction_type_id?: number | null
           user_id?: string | null
         }
@@ -485,8 +503,17 @@ export type Database = {
           phone?: string | null
           product?: string | null
           raw_payload?: Json | null
+          shipping_city?: string | null
+          shipping_house_number?: string | null
+          shipping_notes?: string | null
+          shipping_street?: string | null
+          shipping_zip?: string | null
           smoove_list_id?: number | null
           smoove_subscribed?: boolean | null
+          source?: string | null
+          tier_id?: string | null
+          tier_name?: string | null
+          tier_perks?: Json | null
           transaction_type_id?: number | null
           user_id?: string | null
         }
@@ -2081,6 +2108,13 @@ export type Database = {
         Row: {
           raised: number
           supporters: number
+        }
+        Relationships: []
+      }
+      yehoshua_tier_counts: {
+        Row: {
+          tier_id: string
+          sold: number
         }
         Relationships: []
       }

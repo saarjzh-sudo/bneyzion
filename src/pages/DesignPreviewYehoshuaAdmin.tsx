@@ -28,6 +28,18 @@ interface CampaignStatsRow {
   raised: number;
 }
 
+// Tier-id → human-readable name (mirrors TIERS in campaign page)
+const TIER_NAMES: Record<string, string> = {
+  "tier-90":   "ספר יהושע — 200 ראשונים",
+  "tier-120":  "ספר + הקדשה",
+  "tier-220":  "הזוג",
+  "tier-400":  "הסט המלא",
+  "tier-800":  "השותף",
+  "tier-1200": "השותף הבכיר",
+  "tier-2000": "שיעור בקהילה",
+  "tier-custom": "סכום חופשי",
+};
+
 interface DonationRow {
   id: string;
   created_at: string;
@@ -41,6 +53,13 @@ interface DonationRow {
   product: string | null;
   payment_method: string | null;
   card_suffix: string | null;
+  tier_id: string | null;
+  description: string | null;
+  shipping_street: string | null;
+  shipping_house_number: string | null;
+  shipping_city: string | null;
+  shipping_zip: string | null;
+  shipping_notes: string | null;
 }
 
 /* ─── Helpers ───────────────────────────────────────────────── */
@@ -309,6 +328,12 @@ function exportCSV(rows: DonationRow[]) {
     "אימייל",
     "טלפון",
     "סכום",
+    "מה רכש",
+    "רחוב",
+    "מספר בית",
+    "עיר",
+    "מיקוד",
+    "הערות משלוח",
     "אסמכתא",
     "מזהה תשלום",
     "שיטת תשלום",
@@ -332,6 +357,12 @@ function exportCSV(rows: DonationRow[]) {
         r.donor_email,
         r.phone,
         r.amount,
+        r.tier_id ? (TIER_NAMES[r.tier_id] ?? r.tier_id) : (r.description ?? ""),
+        r.shipping_street,
+        r.shipping_house_number,
+        r.shipping_city,
+        r.shipping_zip,
+        r.shipping_notes,
         r.asmachta,
         r.payment_id,
         r.payment_method,
@@ -387,7 +418,7 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
     let query = supabase
       .from("donations")
       .select(
-        "id, created_at, donor_name, donor_email, phone, amount, asmachta, payment_id, payment_status, product, payment_method, card_suffix"
+        "id, created_at, donor_name, donor_email, phone, amount, asmachta, payment_id, payment_status, product, payment_method, card_suffix, tier_id, description, shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes"
       )
       .eq("product", PRODUCT)
       .order("created_at", { ascending: false });
@@ -669,7 +700,7 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
               width: "100%",
               borderCollapse: "collapse",
               fontSize: 13,
-              minWidth: 900,
+              minWidth: 1300,
             }}
           >
             <thead>
@@ -688,6 +719,10 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
                   "אימייל",
                   "טלפון",
                   "סכום",
+                  "מה רכש",
+                  "כתובת",
+                  "מיקוד",
+                  "הערות",
                   "אסמכתא",
                   "Payment ID",
                   "סטטוס",
@@ -710,7 +745,7 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
               {!loading && donations.length === 0 && (
                 <tr>
                   <td
-                    colSpan={8}
+                    colSpan={12}
                     style={{
                       padding: "40px",
                       textAlign: "center",
@@ -746,6 +781,20 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
                   </td>
                   <td style={{ padding: "10px 14px", fontWeight: 800, color: "hsl(38 75% 38%)" }}>
                     {fmtILS(Number(d.amount))}
+                  </td>
+                  <td style={{ padding: "10px 14px", fontSize: 12, color: "hsl(215 35% 28%)", maxWidth: 160, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {d.tier_id ? (TIER_NAMES[d.tier_id] ?? d.tier_id) : (d.description ?? "—")}
+                  </td>
+                  <td style={{ padding: "10px 14px", fontSize: 12, color: "hsl(215 30% 35%)", whiteSpace: "nowrap" }}>
+                    {d.shipping_street
+                      ? `${d.shipping_street} ${d.shipping_house_number ?? ""}, ${d.shipping_city}`
+                      : <span style={{ color: "hsl(215 15% 65%)" }}>—</span>}
+                  </td>
+                  <td style={{ padding: "10px 14px", fontSize: 12, color: "hsl(215 30% 45%)", direction: "ltr" }}>
+                    {d.shipping_zip ?? "—"}
+                  </td>
+                  <td style={{ padding: "10px 14px", fontSize: 12, color: "hsl(215 30% 45%)", maxWidth: 140, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {d.shipping_notes ?? "—"}
                   </td>
                   <td style={{ padding: "10px 14px", fontFamily: "monospace", fontSize: 11, color: "hsl(215 30% 45%)" }}>
                     {d.asmachta ?? "—"}
