@@ -526,6 +526,13 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-01 (session 3) — yehoshua-campaign: inline checkout deployed to production
+- **Issue:** `InlineCheckoutModal` was already committed (`f2e62bcc`, `feat/navigator-bot`) but Vercel had not auto-deployed it to production. Production was still on `bneyzion-ewext35iv` (commit `76bba5e7`, 00:00am) which pre-dated the inline checkout work (08:12am). Push to `feat/navigator-bot` triggered only a Preview deploy, not Production.
+- **Fix:** Ran `vercel --prod --yes` from `/Users/saarj/Downloads/saar-workspace/bneyzion`. New production deploy: `bneyzion-ff0xnzyoo-saars-projects-4508d6bb.vercel.app` → live on `bneyzion.vercel.app`.
+- **Verified:** No `window.location.href=/donate` in `DesignPreviewYehoshuaCampaign.tsx`. Attribution intact: `meta.product='yehoshua-campaign'`, `donationMeta.source='yehoshua-campaign'`, `donationMeta.tier_id=tier.id` all forwarded to `create-payment.ts` → `donations` table.
+- **Grow inline:** Uses `useGrowPayment` hook which opens SDK wallet overlay (not redirect) for donation flow. Fallback after 5s timeout: link to `/donate?amount=...&source=yehoshua-campaign&tier=...`.
+- **Deploy pattern lesson:** Vercel auto-deploy to production only fires if `productionBranch` in Vercel dashboard matches. When push produces only a Preview deploy, must run `vercel --prod --yes` manually from the repo directory.
+
 ### 2026-06-01 (session 2) — yehoshua-campaign: inline checkout modal (no redirect)
 - **Decision:** Saar: "שינוי גדול — סליקה inline בלי redirect". 7 completed donations ₪900 but UX caused abandonment (redirect was too slow + disorienting).
 - **Change:** `DesignPreviewYehoshuaCampaign.tsx` — added `InlineCheckoutModal` component (439 lines). `handleSupport(tier)` now sets `checkoutTier` state instead of `window.location.href = /donate?...`.
