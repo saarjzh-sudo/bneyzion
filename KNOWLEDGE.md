@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua-campaign donation routing bug fix + DB backfill)
+**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -525,6 +525,14 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-01 (session 4) — yehoshua: installment choice + shipping + admin + live counters
+- **Part 1 — paymentNum→maxPaymentNum** (`api/grow/create-payment.ts` ~line 407): `paymentNum` forces fixed count → buyer has no choice. `maxPaymentNum` gives buyer a dropdown 1..N. Change: one-word swap. Applies to all callers — `installments` param always means "max allowed", not "fixed count". Tiers ₪90/120/220 pass `safeInstallments=1` so neither field is sent (single payment). Tiers ₪400+ pass up to 5 → dropdown 1–5.
+- **Part 2 — shipping address**: 5 new columns added to `donations` table via Management API: `shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes` (all `text`). `types.ts` updated (also added `source, tier_id, tier_name, tier_perks` that existed in DB but were missing from types). `InlineCheckoutModal` now shows shipping block (street+house required, city required, zip optional, notes textarea optional). Block hidden for `tier-2000` (₪2000 lesson-only tier — no physical delivery). `canSubmit` gate extended. `create-payment.ts` INSERT saves all 5 fields.
+- **Part 3 — admin** (`DesignPreviewYehoshuaAdmin.tsx`): `DonationRow` interface + select query: added `tier_id, description, shipping_*`. Added `TIER_NAMES` map (tier-id→Hebrew). Table: 4 new columns ("מה רכש", "כתובת", "מיקוד", "הערות"), minWidth 900→1300. CSV: 6 new columns (what purchased + 5 shipping fields).
+- **Part 4 — live counters**: DB view `yehoshua_tier_counts` created (`SELECT tier_id, COUNT(*) AS sold FROM donations WHERE product='yehoshua-campaign' AND payment_status='completed'`). GRANT SELECT TO anon, authenticated. New hook `src/hooks/useTierCounts.ts` — reads view, realtime sub on donations. `TiersSection` uses hook; `TierCard` receives `sold` prop, computes `remaining = limit - sold` dynamically. Static `tier.remaining` values no longer displayed (they were fake).
+- **Commit:** `37bb4844`, branch `feat/navigator-bot` (production). tsc+vite build clean.
+- **Iron rule:** Grow `paymentNum` forces a fixed count (no buyer choice). `maxPaymentNum` gives buyer a dropdown from 1 to N. When the intent is "up to N payments", always use `maxPaymentNum`.
 
 ### 2026-06-01 — PWA Service Worker fix: NetworkOnly for Supabase + skipWaiting/clientsClaim
 - **ROOT CAUSE of "deploy didn't take / counter stuck" (all evening 2026-06-01):** PWA Service Worker (`sw.js`) was serving stale JS from `workbox-precache` after deploys. Users who had visited before saw the old toast-only button instead of the new inline modal. `supabase-cache` rule with `NetworkFirst + 5min TTL` froze donation counts mid-session (would serve cached Supabase response for up to 5 minutes). `curl` cannot see the SW — all "it's deployed" confirmations via curl were false positives.
