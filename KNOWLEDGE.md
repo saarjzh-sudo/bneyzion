@@ -4306,3 +4306,19 @@ audit trail shows explicit authorization.
 - **CSV export:** all filtered rows, PII included, UTF-8 BOM for Excel Hebrew
 - **Note on types.ts:** `tier_id` / `tier_name` exist in DB but NOT in `src/integrations/supabase/types.ts` (added to schema after last type sync). Excluded from select/interface to pass TS check. Update types.ts when doing next schema sync.
 - **Deploy:** commit `f833291e` on `feat/navigator-bot` + `vercel --prod` → production chunk `DesignPreviewYehoshuaAdmin-CHWY-_L0.js` verified live with `saar.j.z.h@gmail.com` string in bundle.
+
+## Yehoshua donation — TWO bugs fixed 2026-06-01 (real money was at stake)
+
+### Bug A — PWA Service Worker served stale everything (ROOT CAUSE of "deploy didn't take")
+- Site has a Workbox SW (`sw.js`). It had `supabase-cache` (NetworkFirst) freezing donation counts + `workbox-precache` serving old JS (old hardcoded counter + toast-only button that COULDN'T pay).
+- `curl` has NO service worker → agents kept reporting "deployed & verified" all evening while Saar's browser served stale cache. **Every bneyzion deploy verification MUST be in a real browser (Chrome MCP) with SW cleared — never curl.**
+- FIX (`vite.config.ts`): Supabase runtimeCaching `NetworkFirst`→**`NetworkOnly`** (donation/dynamic data must NEVER be SW-cached) + `skipWaiting:true`+`clientsClaim:true`+`cleanupOutdatedCaches:true` so new SW takes over existing clients immediately. Verified: after clear+reload `supabase-cache` is NOT recreated, counter live (₪900/7).
+
+### Bug B — inline checkout omitted `tos_accepted` → server rejected every donation
+- `DesignPreviewYehoshuaCampaign.tsx` handleSubmit sent `meta:{product:'yehoshua-campaign'}` WITHOUT `tos_accepted`. Server `api/grow/create-payment.ts:117` (`if (meta?.product && !meta?.tos_accepted)`) rejected with "יש לאשר את תקנון האתר ומדיניות הפרטיות" EVEN when the TOS box was checked (client guard passed, but the flag was never forwarded).
+- Symptom: inline modal opens fine, but clicking "תמוך" → red error + "שגיאה בפתיחת חלון התשלום", never reaches Grow.
+- FIX: add `tos_accepted:true, tos_accepted_at:new Date().toISOString()` to `meta` — matches QuickBuyDialog/StoreCheckoutDialog/Checkout. Commit `f10b841b`. Verified in browser: clicking "תמוך" now opens the **inline Grow wallet** (bit/אשראי/העברה בנקאית/PayBox) on-page, no redirect, no error.
+
+### ⚠️ Deploy topology (caused hours of confusion)
+- Vercel project `saars-projects-4508d6bb/bneyzion`. **Pushing to `feat/navigator-bot` builds a PREVIEW only.** The `bneyzion.vercel.app` alias = latest **Production** deployment.
+- **To ship to the live alias you MUST run `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel --prod --yes`** from the repo. A git push alone does NOT update production. (`.vercel/repo.json` present, no `project.json` — CLI resolves project from repo.json.)
