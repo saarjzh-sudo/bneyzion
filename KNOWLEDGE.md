@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
+**Last updated:** 2026-06-02 (session — navigation-bot-preview: 14/14 unit tests PASS, Vercel preview deployed, GEMINI_API_KEY blocker documented)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -525,6 +525,36 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-02 — useContentSidebar: ghost series filter — Neviim-specific fix
+
+**Branch:** `fix/series-teachers-data`
+**Repo:** `bneyzion-data` (NOT the main bneyzion repo — different worktree)
+**File:** `src/hooks/useContentSidebar.ts`
+
+**Root cause:** `allBooks` query (line ~40) fetched ALL children of Torah/Neviim/Ketuvim without status filter.
+Previous fix had correctly added `.in("status", ["active","published"])` to 3 child queries (lines 57/70/88) but missed the `allBooks` query itself.
+
+**Data structure learned (critical for future sessions):**
+- Neviim book-level nodes (יהושע, שופטים, ישעיהו, etc.) = status `category`
+- Ketuvim book-level nodes = mix of `category`, `published`, `active` (all legitimate)
+- Torah book-level nodes = mix including `active` sidecar series (but TORAH_BOOK_ORDER filter handles Torah)
+- Ghost series parented directly to Neviim root = `draft` (5 of 6) + 1 `active` ("שיעורים שופטים")
+
+**Fix applied:**
+Split `allBooks` query into two:
+1. `torahKetuvimBooks` — `.in("status", ["active","published","category"])` (Ketuvim has legitimate published/active books)
+2. `neviimBooks` — `.eq("status", "category")` ONLY (Neviim real books are always `category`; any active/draft = ghost)
+
+Also added `.in("status", ["active","published"])` to `useSeriesForNode` and `useSeriesForRabbi` queries.
+
+**Verification:**
+- 6/6 ghost series gone: ישעיהו מוקלט | ללא טעמים, שיעורים יהושע, שיעורים על התנך יחזקאל, שיעורים על התנך ירמיהו, שיעורים קצרים קריאה וביאור ספר מלכים ב, שיעורים שופטים
+- 21/21 real Neviim books present including ישעיהו expanded with real child series
+- Screenshot: `/tmp/bneyzion-screenshots/final-NO-ghosts-confirmed.png`
+- `npm run build` clean
+
+**Iron rule learned:** For Neviim (and likely Torah) `allBooks` — real book nodes are ALWAYS `status='category'`. Any non-category entry parented directly to a root category ID (Torah/Neviim/Ketuvim) is a misplaced series that should be hidden. Use `eq("status","category")` for Neviim specifically.
 
 ### 2026-06-02 — בנצי bot: route whitelist + system prompt audit + fix
 
@@ -4465,3 +4495,30 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - Playwright screenshot at `http://localhost:5173/teachers/lesson/685580cb-f21b-486b-9bee-9b74026bb123` confirmed: hero renders with real title "ביאורי מילים – חומש ויקרא", sidebar tree visible, zero ErrorBoundary.
 
 **Iron rule (new):** In every page component, ALL `use*` hooks MUST appear before the first `if (...) return` statement. When a hook needs lesson data, compute it null-safely with a ternary — never after an early return. The `// eslint-disable` comment is NOT a fix — it only hides the lint warning while the runtime bug remains.
+
+### 2026-06-02 — navigation-bot-preview: deploy + integration tests + Vercel preview link
+
+**Branch:** `fix/benzi-preview-link`
+
+**What happened:**
+- `supabase/functions/navigation-bot-preview/index.ts` — already deployed to Supabase by prior session. Verified live at `https://pzvmwfexeiruelwiujxn.supabase.co/functions/v1/navigation-bot-preview`.
+- **14/14 unit tests PASS** (Node.js port): `validate-routes.node-test.mjs`. Tests cover: isValidRoute static routes, prefix routes, invalid routes, query-string stripping, sanitizeRoute, sanitizeCtas (drop invalid, max 3, non-array), known-bad routes from live audit, known-good routes.
+- **Integration tests (E2E)** — 14 scenarios in `integration-test.sh` — BLOCKED by GEMINI_API_KEY missing from `navigation-bot-preview` function scope. The live `navigation-bot` works fine (project-level secret exists), but `navigation-bot-preview` returns FALLBACK ("משהו השתבש"). Root cause: Supabase secrets are project-level but the preview function appears not to receive the key — possibly a scope/reload issue. **BLOCKER: Saar must verify via Supabase dashboard that `GEMINI_API_KEY` secret is accessible to `navigation-bot-preview`.**
+- `src/components/bot/botConfig.ts` — changed `edgeFunctionPath` to read `VITE_BOT_FUNCTION` env var: `` `/functions/v1/${import.meta.env.VITE_BOT_FUNCTION ?? "navigation-bot"}` ``. Default behavior unchanged.
+- `VITE_BOT_FUNCTION=navigation-bot-preview` added to Vercel project env for `fix/benzi-preview-link` preview branch (verified via Vercel API).
+- Vercel preview deployed: `https://bneyzion-git-fix-benzi-preview-link-saars-projects-4508d6bb.vercel.app` (requires Vercel auth to open — share via Vercel dashboard or disable Deployment Protection for this deploy).
+
+**Key diagnostic finding:**
+- The live `navigation-bot` function works → GEMINI_API_KEY exists project-level in Supabase.
+- `navigation-bot-preview` returns fallback → key not reaching the new function.
+- Supabase CLI `functions logs` subcommand not available in the npx version installed — cannot read server logs directly.
+- Fix: Saar opens Supabase dashboard → Edge Functions → `navigation-bot-preview` → verify `GEMINI_API_KEY` is listed. If not: run `npx supabase secrets set GEMINI_API_KEY=<key> --project-ref pzvmwfexeiruelwiujxn`.
+
+**Pattern learned:** When deploying a NEW Supabase edge function, always verify that project-level secrets are accessible by sending a diagnostic request and checking for the FALLBACK_RESPONSE signature. Don't assume secrets propagate automatically to new functions.
+
+**Files committed on `fix/benzi-preview-link`:**
+- `supabase/functions/navigation-bot-preview/index.ts` (the fixed function)
+- `supabase/functions/navigation-bot-preview/validate-routes.node-test.mjs` (14 unit tests)
+- `supabase/functions/navigation-bot-preview/validate-routes.test.ts` (Deno version)
+- `supabase/functions/navigation-bot-preview/integration-test.sh` (14 E2E scenarios)
+- `src/components/bot/botConfig.ts` (VITE_BOT_FUNCTION override)
