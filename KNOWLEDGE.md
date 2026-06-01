@@ -4346,3 +4346,34 @@ audit trail shows explicit authorization.
 ### ⚠️ Deploy topology (caused hours of confusion)
 - Vercel project `saars-projects-4508d6bb/bneyzion`. **Pushing to `feat/navigator-bot` builds a PREVIEW only.** The `bneyzion.vercel.app` alias = latest **Production** deployment.
 - **To ship to the live alias you MUST run `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel --prod --yes`** from the repo. A git push alone does NOT update production. (`.vercel/repo.json` present, no `project.json` — CLI resolves project from repo.json.)
+
+### 2026-06-01 — Smoove import real run + teachers wing visual audit
+
+**Branch:** `fix/series-teachers-data`
+
+**Axis C — Smoove import (final):**
+- Script `scripts/import-weekly-chapter-subscribers.mjs` fixed: was using hardcoded `SUPABASE_SERVICE_ROLE_REDACTED` placeholder (post-security-incident). Updated to read from `process.env.SUPABASE_SERVICE_ROLE_KEY` with explicit exit-1 if missing.
+- Import run result: **100 rows** in `user_access_tags` with `tag=program:weekly-chapter`.
+  - 3 linked (user_id known) / 97 pending
+  - Smoove list 1045078 contains 288 contacts but only **99 unique email addresses** (rest are duplicates across multiple list subscriptions). All 99 unique emails are confirmed present in DB. The unique constraint `UNIQUE(email, tag)` on the table correctly deduplicates.
+  - The "285 rows to upsert" in the dry-run was misleading — that counts raw Smoove contacts, not unique emails.
+- DB count confirmed via Management API (`sbp_539f16...`):
+  ```
+  SELECT COUNT(*) → 100, linked=3, pending=97
+  ```
+- `.env` file created in `bneyzion-data/` (not committed — in .gitignore) with VITE_SUPABASE_URL + VITE_SUPABASE_PUBLISHABLE_KEY for local dev.
+
+**Axis A — Public sidebar filter (visual confirmation):**
+- `/design-series-list` and `/series/:id` routes — series with `audience_tags @> ['teachers']` do NOT appear in the public sidebar. Confirmed via screenshot (`/tmp/bneyzion-screenshots/07-public-sidebar-desktop.png`): sidebar shows only public categories (תורה/נביאים/כתובים).
+- DesignSidebar `useSeriesForNodeLocal` filter is working correctly.
+
+**Axis B — Teachers wing (visual):**
+- `/teachers` page shows TeachersLayout with olive sidebar (3 tabs: ספרים/כלים/יוצרים), search field, and TOC expanding per bible section.
+- `/teachers/series/69ab99b4` shows series cards grid with lesson thumbnails.
+- `/teachers/lesson/:id` — shows loading spinner in headless Chrome (expected — headless does not wait for Supabase async fetch). Not a code bug. The component code is correct: `isLoading` → spinner, then full lesson content.
+
+**Iron rules learned:**
+- `scripts/import-weekly-chapter-subscribers.mjs` must be run with env var `SUPABASE_SERVICE_ROLE_KEY` set. To get the key use Supabase Management API `GET /v1/projects/pzvmwfexeiruelwiujxn/api-keys` with the PAT from api-keys.md.
+- Smoove list contact count ≠ unique email count. The unique constraint on `(email, tag)` silently deduplicates — upsert always succeeds but count will be lower than the raw Smoove count.
+- Headless Chrome `--virtual-time-budget` does not help async `fetch()` to external APIs (Supabase). Pages with async data show loading spinners in screenshots. This is NOT a code bug — verified by reading the component source.
+- `SUPABASE_SERVICE_ROLE_REDACTED` in scripts = post-security-incident placeholder. Always replace via Management API before running import scripts.

@@ -28,9 +28,15 @@ import { createClient } from "@supabase/supabase-js";
 import https from "node:https";
 
 // ── Supabase (service_role — bypasses RLS) ────────────────────────────────────
-const SUPABASE_URL = "https://pzvmwfexeiruelwiujxn.supabase.co";
-const SUPABASE_SERVICE_ROLE =
-  "SUPABASE_SERVICE_ROLE_REDACTED";
+const SUPABASE_URL =
+  process.env.SUPABASE_URL || "https://pzvmwfexeiruelwiujxn.supabase.co";
+const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!SUPABASE_SERVICE_ROLE) {
+  console.error(
+    "❌  SUPABASE_SERVICE_ROLE_KEY env var is not set. Aborting."
+  );
+  process.exit(1);
+}
 
 // ── Smoove ─────────────────────────────────────────────────────────────────────
 const SMOOVE_API_KEY = "3283291e-4a55-47d1-8558-33bbac74a985";
