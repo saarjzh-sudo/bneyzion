@@ -526,6 +526,18 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-01 — PWA Service Worker fix: NetworkOnly for Supabase + skipWaiting/clientsClaim
+- **ROOT CAUSE of "deploy didn't take / counter stuck" (all evening 2026-06-01):** PWA Service Worker (`sw.js`) was serving stale JS from `workbox-precache` after deploys. Users who had visited before saw the old toast-only button instead of the new inline modal. `supabase-cache` rule with `NetworkFirst + 5min TTL` froze donation counts mid-session (would serve cached Supabase response for up to 5 minutes). `curl` cannot see the SW — all "it's deployed" confirmations via curl were false positives.
+- **Fix in `vite.config.ts`:**
+  - `runtimeCaching` Supabase handler: `NetworkFirst` → `NetworkOnly` (no cache at all — zero TTL)
+  - Removed `cacheName` / `expiration` from Supabase rule (not applicable with `NetworkOnly`)
+  - Added `skipWaiting: true` — new SW version activates immediately without waiting for all tabs to close
+  - Added `clientsClaim: true` — newly activated SW takes control of all open tabs instantly
+  - Added `cleanupOutdatedCaches: true` — stale `workbox-precache-v2-*` caches deleted on SW activate
+- **Commit:** `1c06c0e5`, branch `feat/navigator-bot` (production)
+- **IRON RULE:** Any bneyzion deploy verification MUST be done in Chrome (Chrome MCP) with SW cleared (`Application → Storage → Clear site data`), never curl. Curl bypasses the SW entirely — if the SW is stale, curl reports 200/correct while every browser user sees the old version.
+- **IRON RULE:** Donation counts and any dynamic Supabase data must NEVER be SW-cached. Use `NetworkOnly` for all `*.supabase.co` requests.
+
 ### 2026-06-01 (session 3) — yehoshua-campaign: inline checkout deployed to production
 - **Issue:** `InlineCheckoutModal` was already committed (`f2e62bcc`, `feat/navigator-bot`) but Vercel had not auto-deployed it to production. Production was still on `bneyzion-ewext35iv` (commit `76bba5e7`, 00:00am) which pre-dated the inline checkout work (08:12am). Push to `feat/navigator-bot` triggered only a Preview deploy, not Production.
 - **Fix:** Ran `vercel --prod --yes` from `/Users/saarj/Downloads/saar-workspace/bneyzion`. New production deploy: `bneyzion-ff0xnzyoo-saars-projects-4508d6bb.vercel.app` → live on `bneyzion.vercel.app`.
