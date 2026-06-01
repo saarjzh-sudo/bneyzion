@@ -138,7 +138,12 @@ const Donate = () => {
         thankYouType: "donation",
         // Pass campaign routing fields so the DB row gets product/source/tier_id
         // which the yehoshua_campaign_stats view (and admin page) filter on.
-        meta: sourceParam ? { product: sourceParam } : undefined,
+        meta: {
+          ...(sourceParam && { product: sourceParam }),
+          // User passed the tosAccepted guard above, so consent is genuine.
+          tos_accepted: true,
+          tos_accepted_at: new Date().toISOString(),
+        },
         donationMeta: {
           is_monthly: recurring,
           dedication_type: donationType,

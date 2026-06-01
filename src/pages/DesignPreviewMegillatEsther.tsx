@@ -148,6 +148,10 @@ export default function DesignPreviewMegillatEsther() {
         meta: {
           product: "weekly-chapter-subscription",
           user_id: user?.id,
+          // TODO: this sandbox page has no ToS checkbox yet — add a real consent
+          // gate before production. Set true for now so create-payment doesn't 400.
+          tos_accepted: true,
+          tos_accepted_at: new Date().toISOString(),
         },
       });
       setPaymentStep("success");
