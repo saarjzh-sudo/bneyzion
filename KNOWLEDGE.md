@@ -526,6 +526,15 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-01 — daily-verse: WA scrape + rabbi avatar + monthly archive
+- **Branch:** `feat/daily-verse-data`
+- **WA scrape:** `getChatHistory({chatId: "120363149928936992@g.us", count: 500})` + group #4 (`120363147523026962@g.us`). Both return 95-96 messages (~2 months back). Pattern `הפסוק היומי` in `caption` (imageMessage) OR `textMessage`. Must check BOTH fields — many daily verses come as imageMessage with caption only, textMessage is empty.
+- **4 new verses to insert:** 2026-05-27 (ישעיהו מ,ג-ד), 2026-05-29 (ישעיהו מא,י), 2026-05-30 (ישעיהו מג,ב), 2026-05-31 (ישעיהו מט,כה). All have `downloadUrl` (DigitalOcean Spaces). Migration at `migrations/daily-verses-wa-2026-06-01.sql` — **PENDING SAAR APPROVAL before running.**
+- **DailyVersePage.tsx changes:** (1) `RABBI_NAME`/`RABBI_AVATAR` constants — avatar uses `/images/yoav-campaign/yoav-with-shoftim-book.jpg`. (2) Author row (avatar 28px circle + name) at bottom of every card + modal footer. (3) `groupByMonth()` helper — grid now split by Hebrew month headers (newest first) with verse count. TS clean, build passes.
+- **Supabase daily_verses schema:** `id(uuid), date(date), verse_text(text NOT NULL), verse_source(text), commentary(text), image_url(text), raw_caption(text), group_id(text), created_at(timestamptz)`. Table already existed — no new migration needed for schema.
+- **Rabbi image in DB:** `rabbis.image_url` is NULL for `id=acd34d0f` (הרב יואב אוריאל). Avatar sourced from `/images/yoav-campaign/yoav-with-shoftim-book.jpg` directly.
+- **Vercel preview URL:** `https://bneyzion-o0mge7jju-saars-projects-4508d6bb.vercel.app/daily-verse` — returns 401 (Vercel SSO protection on preview URLs). Verified via local dist assets: `DailyVersePage-DqgkEZQb.js` contains `yoav-with-shoftim` + `verse-grid`. Build: ✓
+
 ### 2026-06-01 (session 4) — yehoshua: installment choice + shipping + admin + live counters
 - **Part 1 — paymentNum→maxPaymentNum** (`api/grow/create-payment.ts` ~line 407): `paymentNum` forces fixed count → buyer has no choice. `maxPaymentNum` gives buyer a dropdown 1..N. Change: one-word swap. Applies to all callers — `installments` param always means "max allowed", not "fixed count". Tiers ₪90/120/220 pass `safeInstallments=1` so neither field is sent (single payment). Tiers ₪400+ pass up to 5 → dropdown 1–5.
 - **Part 2 — shipping address**: 5 new columns added to `donations` table via Management API: `shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes` (all `text`). `types.ts` updated (also added `source, tier_id, tier_name, tier_perks` that existed in DB but were missing from types). `InlineCheckoutModal` now shows shipping block (street+house required, city required, zip optional, notes textarea optional). Block hidden for `tier-2000` (₪2000 lesson-only tier — no physical delivery). `canSubmit` gate extended. `create-payment.ts` INSERT saves all 5 fields.
