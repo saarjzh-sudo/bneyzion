@@ -33,10 +33,11 @@ import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
 // Nav items — updated 2026-05-27 per Saar (second pass):
 // Order (RTL: first item = rightmost, closest to logo):
-// אגף המורים | פרשת השבוע | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
+// אגף המורים | פרשת השבוע | הקורסים שלי | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "אגף המורים", href: "/teachers" },
   { label: "פרשת השבוע", href: "/parasha" },
+  { label: "הקורסים שלי", href: "/design-my-courses" },
   { label: "חנות", href: "/store" },
   { label: "אודותינו", href: "/about" },
 ];
@@ -145,6 +146,8 @@ export default function DesignHeader({
             flex: 1,
             justifyContent: "flex-end",
             flexWrap: "wrap",
+            // נדחף מעט ימינה (לכיוון הלוגו) + מעט למטה לאיזון אסתטי (Saar 2026-06-01)
+            transform: "translate(22px, 6px)",
           }}
         >
           {/* Teacher context chip — shown instead of the 4 hidden items */}
