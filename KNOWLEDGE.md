@@ -4321,6 +4321,12 @@ audit trail shows explicit authorization.
 - **FULL AUDIT of all 7 create-payment callers (commit `62779824`):** `Donate.tsx` (the `/donate` page — this is what 400'd real donors yesterday once a `?source` set the product) and `DesignPreviewMegillatEsther.tsx` ALSO omitted `tos_accepted` → fixed both. The other 4 (QuickBuyDialog, StoreCheckoutDialog, Checkout, Yehoshua) were already correct. Both fixes verified live in-browser (Grow wallet opens, no error). ⚠️ MegillatEsther has NO ToS checkbox — `tos_accepted:true` is hardcoded just to unblock; it needs a real consent gate before going live.
 - **Iron rule:** any new Grow payment entry point that sets `meta.product` MUST collect ToS via a checkbox and forward `tos_accepted:true` + `tos_accepted_at`. Server `create-payment.ts:117` hard-400s otherwise.
 
+### Yehoshua per-tier installments (2026-06-01)
+- Requirement: ₪90/120/220 → single payment; ₪400/800/1200/2000 → up to 5.
+- Client (`DesignPreviewYehoshuaCampaign.tsx`): `maxInstallmentsFor(price) = price<=220 ? 1 : 5`, passed as `installments` to startPayment; inline modal shows a banner ("תשלום אחד בלבד" / "ניתן לפצל עד 5 תשלומים — ללא ריבית").
+- **DB dependency:** server clamps `safeInstallments = min(client_installments, payment_products.max_installments)`. `payment_products.id='yehoshua-campaign'` `max_installments` was **1**, bumped to **5** (DML on bnei-zion). If a future tier needs >5, raise this too. Server only sends Grow `paymentNum` when `safeInstallments>1` (so the wallet "מס׳ תשלומים" dropdown caps there; ≤1 = locked single payment).
+- Verified live in-browser: ₪90 wallet shows "מס׳ תשלומים: 1", ₪400 wallet shows "5". yehoshua-campaign product is `type=wallet`, `target_table=donations` (authCode → inline overlay, not redirect).
+
 ### ⚠️ Deploy topology (caused hours of confusion)
 - Vercel project `saars-projects-4508d6bb/bneyzion`. **Pushing to `feat/navigator-bot` builds a PREVIEW only.** The `bneyzion.vercel.app` alias = latest **Production** deployment.
 - **To ship to the live alias you MUST run `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel --prod --yes`** from the repo. A git push alone does NOT update production. (`.vercel/repo.json` present, no `project.json` — CLI resolves project from repo.json.)
