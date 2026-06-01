@@ -68,11 +68,18 @@ interface TopicResult {
   slug: string;
 }
 
+interface BookResult {
+  id: string;
+  title: string;
+  slug: string;
+}
+
 export interface SearchResults {
   rabbis: RabbiResult[];
   series: SeriesResult[];
   lessons: LessonResult[];
   topics: TopicResult[];
+  books: BookResult[];
 }
 
 export interface SearchSuggestion {
@@ -81,7 +88,7 @@ export interface SearchSuggestion {
 }
 
 export function useGlobalSearch(query: string) {
-  const [results, setResults] = useState<SearchResults>({ rabbis: [], series: [], lessons: [], topics: [] });
+  const [results, setResults] = useState<SearchResults>({ rabbis: [], series: [], lessons: [], topics: [], books: [] });
   const [isLoading, setIsLoading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
 
@@ -90,7 +97,7 @@ export function useGlobalSearch(query: string) {
 
     const trimmed = query.trim();
     if (!trimmed || trimmed.length < 2) {
-      setResults({ rabbis: [], series: [], lessons: [], topics: [] });
+      setResults({ rabbis: [], series: [], lessons: [], topics: [], books: [] });
       setIsLoading(false);
       return;
     }
@@ -106,7 +113,7 @@ export function useGlobalSearch(query: string) {
         .flatMap(p => [`name.ilike.${p}`, `title.ilike.${p}`, `specialty.ilike.${p}`])
         .join(",");
 
-      const [rabbisRes, seriesRes, lessonsRes, topicsRes] = await Promise.all([
+      const [rabbisRes, seriesRes, lessonsRes, topicsRes, booksRes] = await Promise.all([
         supabase
           .from("rabbis")
           .select("id, slug, name, title, image_url, lesson_count")
@@ -134,6 +141,13 @@ export function useGlobalSearch(query: string) {
           .select("id, name, slug")
           .ilike("name", mainPattern)
           .limit(5),
+        // ספרים — חנות (products). מאגר ציבורי, ללא audience_tags של מורים.
+        supabase
+          .from("products")
+          .select("id, title, slug")
+          .or(patterns.map(p => `title.ilike.${p}`).join(","))
+          .eq("status", "active")
+          .limit(6),
       ]);
 
       setResults({
@@ -141,6 +155,7 @@ export function useGlobalSearch(query: string) {
         series: (seriesRes.data as SeriesResult[]) || [],
         lessons: (lessonsRes.data as LessonResult[]) || [],
         topics: (topicsRes.data as TopicResult[]) || [],
+        books: (booksRes.data as BookResult[]) || [],
       });
       setIsLoading(false);
     }, 250);
@@ -165,7 +180,7 @@ export function useGlobalSearch(query: string) {
     return items;
   }, [results]);
 
-  const totalResults = results.rabbis.length + results.series.length + results.lessons.length + results.topics.length;
+  const totalResults = results.rabbis.length + results.series.length + results.lessons.length + results.topics.length + results.books.length;
   const hasResults = totalResults > 0;
 
   return { results, isLoading, hasResults, suggestions, totalResults };

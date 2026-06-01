@@ -54,7 +54,7 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
       <CommandInput
-        placeholder="חיפוש רבנים, סדרות, שיעורים ונושאים..."
+        placeholder="חיפוש סדרות, שיעורים, ספרים..."
         value={query}
         onValueChange={setQuery}
         className="text-right"
@@ -202,6 +202,28 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
                     {[l.rabbis?.name, l.series?.title].filter(Boolean).join(" · ")}
                   </span>
                 </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+
+        {/* Books (store products) */}
+        {results.books.length > 0 && (
+          <CommandGroup heading={
+            <span className="flex items-center gap-1.5">
+              <BookOpen className="h-3.5 w-3.5" />
+              ספרים
+            </span>
+          }>
+            {results.books.map((b) => (
+              <CommandItem
+                key={b.id}
+                value={`book-${b.title}`}
+                onSelect={() => go(`/store/${b.slug}`)}
+                className="flex items-center gap-3 cursor-pointer"
+              >
+                <BookOpen className="h-5 w-5 text-accent shrink-0" />
+                <span className="font-medium flex-1">{b.title}</span>
               </CommandItem>
             ))}
           </CommandGroup>
