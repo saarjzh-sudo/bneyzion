@@ -4408,3 +4408,87 @@ audit trail shows explicit authorization.
 - ⚠️ **bneyzion.co.il / www.bneyzion.co.il is STILL the OLD legacy site** (Cloudflare + vp4.me/jQuery builder, NOT this Vercel app). The new React app's live home = **bneyzion.vercel.app**. The custom-domain DNS cutover to Vercel is a separate future step — NOT done here.
 - My branch `fix/header-search-darkmode` (`1b64459d`) pushed to origin. **`feat/navigator-bot` (shared integration branch) left UNTOUCHED at `182adf6a`** — it's checked out in the `/…/bneyzion` worktree and advancing it is gated behind Saar's merge-approval.
 - 🔴 **MULTI-SESSION DEPLOY CLOBBER RISK:** the prod alias is ONE deployment. Each session worktree is on a divergent branch (header=1b64459d/base 182adf6a · pages=182adf6a · data=20d92e86 · verse=f7769a46). A `vercel --prod` from any one worktree deploys ONLY that branch's code → **overwrites the live site, dropping the other sessions' changes** (git-safe, but gone from live). To ship multiple sessions: integrate all branches into ONE branch first (merge → resolve conflicts → single `vercel --prod`). Do NOT deploy sessions independently expecting them to stack.
+
+### 2026-06-01 — Hollow-font heroes + Saadia/Donate copy precision (branch `fix/page-content-visual`)
+
+**New reusable utility — `.text-outline` (src/index.css):** true outlined/hollow heading
+(transparent fill + `-webkit-text-stroke`). Keeps the element's existing font-family & weight.
+Stroke color via `--outline-color` (default `#FFFFFF`), width via `--outline-width` (default `2px`).
+⚠️ The pre-existing `.font-kedem-hollow` is a MISNOMER — it's just `font-weight:100` (thin Kedem),
+NOT a stroke outline. Don't confuse them. Use `.text-outline` for real hollow.
+
+**Applied `.text-outline` to 5 hero titles** (Saar approved 4 of 5 candidates + DorHaplaot):
+- `DorHaplaot.tsx` h1 "דור הפלאות" — white stroke on navy hero (non-gated, did first).
+- `KenesShavuot2026.tsx` h1 — `--outline-color:#000000` (black, on light cream card). Strongest look.
+- `MegilatEsther.tsx` h1 — only the FIRST line wrapped in a `<span class="text-outline">` with
+  `--outline-color:hsl(var(--cream))`; the 2nd line keeps its gold `bg-clip-text` gradient. (Don't
+  put text-outline on the whole h1 — stroke would bleed onto the gradient line.)
+- `CommunityPage.tsx` h1 — white stroke + added `drop-shadow-md` for legibility on the brown hero.
+- `StorePage.tsx` h1 — `--outline-color:hsl(var(--foreground))` (theme-adaptive dark on cream; subtle).
+- Saar REJECTED Proposal.tsx as a candidate.
+- Theme tokens used as stroke colors auto-adapt to dark mode (cream/foreground are CSS vars).
+
+**Saadia memorial — premise correction:** `MemorialSaadia.tsx` is NOT a "5-line stub" — it's a thin
+wrapper delegating to `MemorialHero` + `MemorialContent`, BOTH already full (mother's quote is in the
+hero; full bio in content). Copy ≈ identical to the `/design-memorial-saadia` sandbox. Sandbox extras
+NOT in prod: family-details card, 6-photo album, live "שיעורים לזכרו". **Saar chose: leave prod as-is.**
+Only 2 refinements kept (made by a prior agent): paragraph split for readability + stats corrected
+2,500+/50+ → 11,000+/200+ (matches the CTA). NOTE: sandbox has a typo "אישתו" → correct is "אשתו"
+(do not propagate if ever porting the family card).
+
+**Donate.tsx copy precision (Saar approved 2 of 4):**
+- `timeAgo()` Hebrew number-agreement bug FIXED: was `לפני 1 שעות`/`לפני 1 ימים`. Now handles
+  שעה/שעתיים/X שעות and יום/יומיים/X ימים. (hebrew-skill mandatory rule — numeral agreement.)
+- Trust card `זיכוי מס 46%` → `זיכוי מס סעיף 46`. The 46% was wrong: §46 of the income-tax ordinance
+  gives a 35% credit to individuals; "46" is the section number, not the rate. Removed the false %.
+- Saar declined: hero "אנחנו לא ארגון ממומן" rewrite (left as-is).
+
+**Preview/screenshot gotcha (cost ~15 min):** the `Claude_Preview` MCP is rooted at the **`bneyzion`
+main checkout**, not `bneyzion-pages`. `preview_start "bneyzion-dev"` launched vite with cwd
+`.../bneyzion` (port 8082) → served OLD code without my edits (fetched `/src/...tsx`, grepped for
+`text-outline`, found none → confirmed wrong checkout). Fix: started a 2nd vite manually in
+`bneyzion-pages` (`npm run dev -- --port 8090 --strictPort`) and navigated the managed browser to
+`localhost:8090`. For clean file screenshots used `playwright-core` (already in deps) driving system
+Chrome (`executablePath`), headless, hiding fixed popups/dialogs before each shot →
+`/tmp/bz-shots/*.png`. There are 5 sibling checkouts: bneyzion (main), -pages, -header, -data, -verse.
+
+**Status:** `npm run build` (`tsc -b && vite build`) passes clean. NOT pushed, NOT merged, NO prod
+deploy — awaiting Saar approval on the screenshots. Files touched: index.css, DorHaplaot.tsx,
+KenesShavuot2026.tsx, MegilatEsther.tsx, CommunityPage.tsx, StorePage.tsx, Donate.tsx,
+MemorialContent.tsx (prior agent). Did NOT touch other sessions' zones (header/data/verse).
+
+#### CORRECTION (same day, after Saar feedback): use the REAL font, not CSS stroke
+- Saar: "התכוונתי ל-kedem-serif-hollow-aaa" — he wanted the actual **hollow display FONT**, not a
+  `-webkit-text-stroke` simulation. The font lives in his library:
+  `~/Desktop/פונטים/aaa-fonts/kedem-serif/kedem-serif-hollow-aaa.otf` (catalogued in
+  `וואן-מן-שואו/ראשי/B-brain/fonts-library.md` — "Kedem Serif — 6 weights includes Hollow variant").
+  It was NOT yet in this project (public/fonts had only ultralight/light/regular/bold/black).
+- Copied → `public/fonts/kedem-serif-hollow-aaa.otf`. Added `@font-face { font-family:'Kedem Hollow' }`
+  in index.css. REMOVED the `.text-outline` class; replaced with `.font-kedem-hollow-aaa
+  { font-family:'Kedem Hollow','Kedem',serif; font-weight:400 }`. The hollow glyphs are open by design
+  — set `color` to fill the strokes (no transparent-fill / stroke trick needed).
+- All 5 heroes now use `.font-kedem-hollow-aaa` with their original colors restored (DorHaplaot=white,
+  Kenes=black, Megilat line1=cream, Community=white, Store=foreground). Verified
+  `document.fonts` → 'Kedem Hollow' loaded:true and computed font-family resolves to it on all 5.
+- LESSON: when Saar says "פונט חלול" he means a real hollow typeface from his AAA library, not a CSS
+  effect. Check `fonts-library.md` + `~/Desktop/פונטים/` FIRST. The existing `.font-kedem-hollow`
+  (weight 100) on KnesPage is the misnomer that misled me originally.
+
+#### Saadia page — removed 3 mislabeled face-photo banners
+- `MemorialContent.tsx` had 3 `<LandscapeBanner>`s with alts "נוף הרי שומרון בזריחה" / "ספר תורה פתוח"
+  / "שביל עתיק בנוף ישראלי" pointing to `memorial-landscape-sunrise.jpg`, `memorial-torah-scroll.jpg`,
+  `memorial-landscape-path.jpg`. All 3 files are **byte-identical** (same md5 fb9eb47…, 41196 bytes)
+  and the image is actually a **face photo of an unrelated young man** — NOT a landscape/scroll. Saar:
+  "תמונת פנים שלו הוא לא קשור, תוריד אותו." Removed all 3 usages + their imports + the now-unused
+  `LandscapeBanner` component. The 2 real Saadia photos (saadia-soldier, saadia-tefillin) stay.
+  Page still flows fine — `space-y-10` + SectionDividers handle the spacing. `hasFace:false` verified.
+- The 3 orphan asset files remain on disk (unused now) — left them; safe to delete later.
+- FOLLOW-UP: Saar then flagged the `saadia-tefillin.png` PhotoBlock too — its image is Saadia in a
+  bombed Gaza building but he's tiny/far + top-cropped → "לא רואים אותו, תוריד". Removed that PhotoBlock
+  + its import. Only Saadia photo left = `saadia-soldier.jpg` (clear portrait, "סעדיה דרעי הי״ד, לוחם
+  בחטיבת אלכסנדרוני"). Lesson: vet that a memorial photo actually SHOWS the person clearly, not just
+  that the filename/caption claims so.
+
+**Review channels (current build):** local prod preview `http://localhost:4173` ·
+Vercel preview `https://bneyzion-l654w8n8x-saars-projects-4508d6bb.vercel.app` (SSO-gated, opens for
+Saar). Linked bneyzion-pages → Vercel project `bneyzion` via `vercel link` (`.vercel` is gitignored).

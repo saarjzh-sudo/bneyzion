@@ -36,6 +36,14 @@
   font-style: normal;
   font-display: swap;
 }
+/* Kedem Serif Hollow — real outlined display face (separate family, not a weight) */
+@font-face {
+  font-family: 'Kedem Hollow';
+  src: url('/fonts/kedem-serif-hollow-aaa.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 /* Ploni Sans */
 @font-face {
@@ -491,6 +499,13 @@
 .font-kedem-hollow {
   font-family: 'Kedem', 'Frank Ruhl Libre', serif;
   font-weight: 100;
+}
+
+/* Kedem Serif Hollow — apply the real outlined display font.
+   The glyphs are open/outlined by design; set `color` to fill the strokes. */
+.font-kedem-hollow-aaa {
+  font-family: 'Kedem Hollow', 'Kedem', 'Frank Ruhl Libre', serif;
+  font-weight: 400;
 }
 
 /* Mudgash - highlighted emphasis paragraphs from Umbraco content */

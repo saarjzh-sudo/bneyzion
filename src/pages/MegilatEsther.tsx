@@ -93,8 +93,8 @@ const MegilatEsther = () => {
         </div>
 
         <div className="absolute bottom-0 inset-x-0 z-10 px-4 pb-10 md:pb-16 text-center">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-cream mb-4 leading-tight drop-shadow-lg">
-            השנה, תקרא את המגילה
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 leading-tight drop-shadow-lg">
+            <span className="font-kedem-hollow-aaa text-cream">השנה, תקרא את המגילה</span>
             <br />
             <span className="bg-gradient-to-l from-gold to-gold-light bg-clip-text text-transparent">כמו שאף פעם לא קראת</span>
           </h1>
