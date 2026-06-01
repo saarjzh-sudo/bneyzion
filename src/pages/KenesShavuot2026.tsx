@@ -261,7 +261,7 @@ export default function KenesShavuot2026() {
             <p className="font-kedem font-bold text-[hsl(30_40%_25%)] text-base md:text-lg mb-3 tracking-wide">
               תנועת בני ציון ללימוד תנ״ך
             </p>
-            <h1 className="font-kedem font-black text-5xl sm:text-6xl md:text-7xl mb-4 leading-[1.05] text-black tracking-tight">
+            <h1 className="font-kedem-hollow-aaa text-5xl sm:text-6xl md:text-7xl mb-4 leading-[1.05] tracking-tight text-black">
               {KENES_TITLE}
             </h1>
             <p className="font-kedem font-bold text-[hsl(30_40%_20%)] text-lg md:text-xl mb-2">

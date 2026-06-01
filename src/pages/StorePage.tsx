@@ -129,7 +129,7 @@ const StorePage = () => {
               <ShoppingBag className="h-4 w-4" />
               החנות של בני ציון
             </div>
-            <h1 className="text-4xl md:text-5xl font-heading text-foreground mb-4">
+            <h1 className="text-4xl md:text-5xl font-kedem-hollow-aaa mb-4 text-foreground">
               ספרי תנ״ך מבית בני ציון
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
