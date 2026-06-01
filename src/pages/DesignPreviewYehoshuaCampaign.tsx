@@ -3,23 +3,19 @@
  * Route: /design-yehoshua-campaign
  *
  * V2 complete rebuild 2026-05-26.
- * Critique of V1: flat IA, split progress bar, weak hero, cold stats,
- * fake backers section destroying trust, weak CTA, no urgency.
- *
- * V2 fixes:
- * - Cinematic hero: full-bleed image + overlay text + progress IN hero
- * - Emotion-first IA: Hook → Proof strip → Tiers (early) → Story → Why → Author → Timeline → FAQ → Final CTA
- * - Pull-quote as hero anchor, not buried mid-page
- * - Stats with emotional labels, not just numbers
- * - Urgency woven throughout (not just tier remaining count)
- * - Typography with clear 4-level hierarchy
- * - No fake backers section
- * - Cinematic entrance animations (CSS-only, no framer-motion)
- * - RTL logical CSS properties throughout
+ * V3 inline checkout 2026-06-01:
+ * - Replaced window.location.href redirect to /donate with InlineCheckoutModal
+ * - Grow SDK loads on page-load (not on click) to eliminate the "טוען..." delay
+ * - Fallback: if SDK not ready after 5s, falls back to /donate redirect
+ * - All DB fields (product, source, tier_id) forwarded identically to Donate.tsx
  */
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useGrowPayment } from "@/hooks/useGrowPayment";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { X, Loader2, ShieldCheck, CheckCircle2 } from "lucide-react";
 
 /* ─── Campaign constants ────────────────────────────────── */
 const GOAL = 80_000;
@@ -1681,8 +1677,12 @@ export default function DesignPreviewYehoshuaCampaign() {
   const { raised, supporters } = useCampaignStats();
   const progressPct = Math.min(100, Math.round((raised / GOAL) * 100));
 
+  // Inline checkout state
+  const [checkoutTier, setCheckoutTier] = useState<Tier | null>(null);
+
   function handleSupport(tier: Tier) {
-    window.location.href = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}&type=donation`;
+    // Open inline checkout modal instead of redirecting to /donate
+    setCheckoutTier(tier);
   }
 
   function scrollToTiers() {
@@ -1750,6 +1750,14 @@ export default function DesignPreviewYehoshuaCampaign() {
       {/* Toast */}
       {toastTier && <DonationToast tier={toastTier} onClose={() => setToastTier(null)} />}
 
+      {/* Inline checkout modal */}
+      {checkoutTier && (
+        <InlineCheckoutModal
+          tier={checkoutTier}
+          onClose={() => setCheckoutTier(null)}
+        />
+      )}
+
       {/* ── 1. HERO ── */}
       <HeroSection onSupportClick={scrollToTiers} raised={raised} supporters={supporters} progressPct={progressPct} />
 
@@ -1798,6 +1806,422 @@ export default function DesignPreviewYehoshuaCampaign() {
 
       {/* Bottom padding for mobile bar */}
       <div className="mobile-bar" style={{ height: 64 }} />
+    </div>
+  );
+}
+
+/* ─── InlineCheckoutModal ───────────────────────────────────────────────────
+ * Grows payment directly in the campaign page — no redirect to /donate.
+ * Mirrors Donate.tsx logic: same useGrowPayment hook, same params to create-payment.
+ * Fallback: if SDK fails to init after 5 s, shows a redirect button to /donate.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+function InlineCheckoutModal({
+  tier,
+  onClose,
+}: {
+  tier: Tier;
+  onClose: () => void;
+}) {
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const { startPayment, isReady: paymentReady, isLoading: paymentLoading, error: paymentError, setError } = useGrowPayment();
+
+  // Form fields
+  const [donorName, setDonorName] = useState("");
+  const [donorPhone, setDonorPhone] = useState("");
+  const [donorEmail, setDonorEmail] = useState("");
+  const [tosAccepted, setTosAccepted] = useState(false);
+
+  // SDK timeout fallback: after 5 seconds, if not ready → show fallback button
+  const [sdkTimedOut, setSdkTimedOut] = useState(false);
+  useEffect(() => {
+    if (paymentReady) return;
+    const timer = setTimeout(() => setSdkTimedOut(true), 5000);
+    return () => clearTimeout(timer);
+  }, [paymentReady]);
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  // Prevent body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  const fallbackUrl = `/donate?amount=${tier.price}&source=yehoshua-campaign&tier=${tier.id}&type=donation`;
+
+  const handleSubmit = useCallback(async () => {
+    if (!donorName || !donorName.trim().includes(" ")) {
+      toast({ title: "נא להזין שם מלא (שם פרטי ומשפחה)", variant: "destructive" });
+      return;
+    }
+    if (!donorPhone || !/^05\d{8}$/.test(donorPhone.replace(/[-\s]/g, ""))) {
+      toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
+      return;
+    }
+    if (!tosAccepted) {
+      toast({ title: "יש לאשר את התקנון לפני המשך לתשלום", variant: "destructive" });
+      return;
+    }
+
+    try {
+      await startPayment({
+        sum: tier.price,
+        description: `${tier.headline} — קמפיין ספר יהושע`,
+        fullName: donorName,
+        phone: donorPhone,
+        email: donorEmail,
+        type: "donation",
+        thankYouType: "donation",
+        meta: { product: "yehoshua-campaign" },
+        donationMeta: {
+          is_monthly: false,
+          donor_email: donorEmail || undefined,
+          user_id: user?.id,
+          // @ts-expect-error — extra fields forwarded to create-payment
+          source: "yehoshua-campaign",
+          tier_id: tier.id,
+        },
+      });
+
+      toast({ title: "חלון תשלום נפתח!", description: "השלימו את התשלום בחלון שנפתח." });
+      onClose();
+    } catch (err: any) {
+      // startPayment already sets error in hook — just show toast
+      toast({ title: "שגיאה בפתיחת חלון התשלום", description: err.message, variant: "destructive" });
+    }
+  }, [donorName, donorPhone, donorEmail, tosAccepted, tier, user, startPayment, toast, onClose]);
+
+  const isProcessing = paymentLoading;
+  const canSubmit = !isProcessing && (paymentReady || sdkTimedOut) && tosAccepted && !!donorName && !!donorPhone;
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 200,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+      }}
+      dir="rtl"
+    >
+      {/* Backdrop */}
+      <div
+        onClick={onClose}
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "hsl(215 55% 8% / 0.75)",
+          backdropFilter: "blur(4px)",
+        }}
+      />
+
+      {/* Modal card */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: 480,
+          background: "white",
+          borderRadius: 20,
+          padding: "28px 24px 24px",
+          boxShadow: "0 32px 80px hsl(215 55% 8% / 0.4)",
+          display: "flex",
+          flexDirection: "column",
+          gap: 18,
+          maxHeight: "90vh",
+          overflowY: "auto",
+        }}
+      >
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          style={{
+            position: "absolute",
+            insetInlineStart: 16,
+            top: 16,
+            background: "hsl(215 10% 94%)",
+            border: "none",
+            borderRadius: 99,
+            width: 30,
+            height: 30,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "hsl(215 30% 35%)",
+          }}
+          aria-label="סגור"
+        >
+          <X size={16} />
+        </button>
+
+        {/* Tier summary */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+            paddingBlockEnd: 16,
+            borderBlockEnd: "1px solid hsl(38 30% 88%)",
+          }}
+        >
+          <img
+            src={tier.image}
+            alt={tier.imageAlt}
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: 10,
+              objectFit: "cover",
+              flexShrink: 0,
+              border: "1.5px solid hsl(38 50% 84%)",
+            }}
+          />
+          <div>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 700,
+                color: "hsl(38 65% 45%)",
+                letterSpacing: "0.1em",
+                marginBlockEnd: 3,
+              }}
+            >
+              {tier.name}
+            </div>
+            <div style={{ fontWeight: 900, fontSize: 17, color: "hsl(215 55% 16%)", lineHeight: 1.25 }}>
+              {tier.headline}
+            </div>
+            <div
+              style={{
+                fontSize: 20,
+                fontWeight: 900,
+                color: "hsl(38 75% 42%)",
+                marginBlockStart: 2,
+              }}
+            >
+              ₪{tier.price.toLocaleString("he-IL")}
+            </div>
+          </div>
+        </div>
+
+        {/* Perks */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {tier.perks.map((perk) => (
+            <div key={perk} style={{ display: "flex", alignItems: "center", gap: 7, fontSize: 13, color: "hsl(215 30% 30%)" }}>
+              <CheckCircle2 size={14} style={{ color: "hsl(38 75% 45%)", flexShrink: 0 }} />
+              {perk}
+            </div>
+          ))}
+        </div>
+
+        {/* SDK loading indicator or fallback */}
+        {!paymentReady && !sdkTimedOut && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              padding: "10px 14px",
+              background: "hsl(38 60% 96%)",
+              borderRadius: 10,
+              fontSize: 13,
+              color: "hsl(215 40% 35%)",
+              border: "1px solid hsl(38 50% 86%)",
+            }}
+          >
+            <Loader2 size={14} className="animate-spin" style={{ color: "hsl(38 65% 48%)", flexShrink: 0 }} />
+            טוען מערכת תשלום מאובטחת...
+          </div>
+        )}
+
+        {sdkTimedOut && !paymentReady && (
+          <div
+            style={{
+              padding: "12px 16px",
+              background: "hsl(38 60% 96%)",
+              borderRadius: 10,
+              fontSize: 13,
+              color: "hsl(215 40% 35%)",
+              border: "1px solid hsl(38 50% 84%)",
+              lineHeight: 1.6,
+            }}
+          >
+            <strong>מערכת התשלום לא נטענה.</strong> ניתן להמשיך לדף התשלום:
+            <a
+              href={fallbackUrl}
+              style={{
+                display: "block",
+                marginBlockStart: 8,
+                padding: "9px 16px",
+                background: "linear-gradient(135deg, hsl(43 85% 58%), hsl(38 75% 45%))",
+                color: "hsl(215 55% 12%)",
+                borderRadius: 99,
+                textAlign: "center",
+                fontWeight: 800,
+                textDecoration: "none",
+                fontSize: 14,
+              }}
+            >
+              המשך לדף תשלום ↗
+            </a>
+          </div>
+        )}
+
+        {/* Error state */}
+        {paymentError && (
+          <div
+            style={{
+              padding: "10px 14px",
+              background: "hsl(0 65% 96%)",
+              border: "1px solid hsl(0 60% 85%)",
+              borderRadius: 10,
+              fontSize: 13,
+              color: "hsl(0 65% 42%)",
+            }}
+          >
+            {paymentError}
+          </div>
+        )}
+
+        {/* Donor name */}
+        <div>
+          <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 5 }}>
+            שם מלא *
+          </label>
+          <input
+            type="text"
+            value={donorName}
+            onChange={(e) => setDonorName(e.target.value)}
+            placeholder="שם פרטי ומשפחה..."
+            dir="rtl"
+            style={{
+              width: "100%",
+              padding: "10px 12px",
+              borderRadius: 10,
+              border: "1.5px solid hsl(38 30% 82%)",
+              fontFamily: "inherit",
+              fontSize: 14,
+              color: "hsl(215 40% 14%)",
+              outline: "none",
+              boxSizing: "border-box",
+            }}
+          />
+        </div>
+
+        {/* Phone + email row */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+          <div>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 5 }}>
+              טלפון *
+            </label>
+            <input
+              type="tel"
+              value={donorPhone}
+              onChange={(e) => setDonorPhone(e.target.value)}
+              placeholder="05XXXXXXXX"
+              dir="ltr"
+              style={{
+                width: "100%",
+                padding: "10px 12px",
+                borderRadius: 10,
+                border: "1.5px solid hsl(38 30% 82%)",
+                fontFamily: "inherit",
+                fontSize: 14,
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+          <div>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", marginBlockEnd: 5 }}>
+              אימייל
+            </label>
+            <input
+              type="email"
+              value={donorEmail}
+              onChange={(e) => setDonorEmail(e.target.value)}
+              placeholder="email@..."
+              dir="ltr"
+              style={{
+                width: "100%",
+                padding: "10px 12px",
+                borderRadius: 10,
+                border: "1.5px solid hsl(38 30% 82%)",
+                fontFamily: "inherit",
+                fontSize: 14,
+                outline: "none",
+                boxSizing: "border-box",
+              }}
+            />
+          </div>
+        </div>
+
+        {/* TOS */}
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
+          <input
+            id="yehoshua-tos"
+            type="checkbox"
+            checked={tosAccepted}
+            onChange={(e) => setTosAccepted(e.target.checked)}
+            style={{ marginBlockStart: 2, accentColor: "hsl(38 75% 45%)", flexShrink: 0 }}
+          />
+          <label htmlFor="yehoshua-tos" style={{ fontSize: 12, color: "hsl(215 20% 48%)", lineHeight: 1.6, cursor: "pointer" }}>
+            אני מאשר/ת את{" "}
+            <a href="/terms" target="_blank" rel="noopener noreferrer" style={{ color: "hsl(38 65% 42%)", textDecoration: "underline" }}>
+              תקנון האתר
+            </a>
+            {" "}ומדיניות הפרטיות, ואני מעל גיל 18.
+          </label>
+        </div>
+
+        {/* CTA button */}
+        <button
+          onClick={sdkTimedOut && !paymentReady ? undefined : handleSubmit}
+          disabled={!canSubmit}
+          style={{
+            width: "100%",
+            padding: "14px",
+            borderRadius: 12,
+            border: "none",
+            background: canSubmit
+              ? "linear-gradient(135deg, hsl(43 85% 58%), hsl(38 75% 45%))"
+              : "hsl(38 30% 78%)",
+            color: canSubmit ? "hsl(215 55% 12%)" : "hsl(215 20% 55%)",
+            fontFamily: "inherit",
+            fontWeight: 900,
+            fontSize: 16,
+            cursor: canSubmit ? "pointer" : "not-allowed",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 8,
+            transition: "all 0.15s",
+          }}
+        >
+          {isProcessing ? (
+            <><Loader2 size={16} className="animate-spin" />מעבד תשלום...</>
+          ) : (
+            <>תמוך ב-₪{tier.price.toLocaleString("he-IL")}</>
+          )}
+        </button>
+
+        {/* Security note */}
+        <p style={{ margin: 0, textAlign: "center", fontSize: 11, color: "hsl(215 20% 52%)", display: "flex", alignItems: "center", justifyContent: "center", gap: 5 }}>
+          <ShieldCheck size={11} />
+          סליקה מאובטחת באמצעות Grow — אשראי, ביט, Apple Pay, Google Pay
+        </p>
+      </div>
     </div>
   );
 }
