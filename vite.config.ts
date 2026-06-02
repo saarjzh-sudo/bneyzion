@@ -54,6 +54,9 @@ export default defineConfig(() => ({
     }),
   ],
   build: {
+    // esnext target required for @hebcal/core which uses top-level await for
+    // Temporal polyfill. Audience is iOS 16+ / Chrome 90+ — no real-world risk.
+    target: "esnext",
     rollupOptions: {
       input: {
         main: resolve(__dirname, "index.html"),

@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-02 (session — header GlobalSearch restore + parasha calendar fix + 17 Tammuz verify)
+**Last updated:** 2026-06-02 (session — polling 30s + visibilitychange pushed + deployed to bneyzion.vercel.app)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -525,6 +525,41 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-02 — admin layer surgical deploy to production (commit a5098add)
+
+**Branch:** `admin-to-production` (new branch from `prod-with-content-gate`)
+**Production deploy:** `bneyzion-p9t3jl0kf-saars-projects-4508d6bb.vercel.app` → live on `bneyzion.vercel.app`
+**Authorized by Saar:** "פריסה כירורגית של שכבת האדמין/דשבורדים בלבד ל-production החי"
+
+**Files deployed (admin/auth only):**
+- `src/pages/admin/Dashboard.tsx` — redesigned dashboard with stats
+- `src/pages/admin/Subscribers.tsx` — NEW: weekly-chapter subscribers management
+- `src/pages/admin/ImportContent.tsx` — NEW: content importer wizard
+- `src/pages/admin/ContentUpload.tsx` — upload wizard + approval workflow
+- `src/pages/admin/Lessons.tsx` — lessons management upgrades
+- `src/components/admin/AdminLayout.tsx` / `AdminSidebar.tsx` — sidebar cleanup + nav
+- `src/contexts/AuthContext.tsx` — additive: `userRole: AppRole | null` + `isCreator: boolean`
+- `src/components/auth/ProtectedRoute.tsx` — additive: `allowedRoles?: AppRole[]` param (default=["admin"])
+- `src/App.tsx` — new routes `/admin/subscribers` + `/admin/import-content`; all admin routes now have explicit `allowedRoles`
+- `src/hooks/useLessons.ts` — lesson management hook updates
+- `src/integrations/supabase/types.ts` — types regen (new columns + grow_orders)
+- `supabase/functions/issue-paperless-invoice/index.ts` — NEW Paperless invoice edge function
+
+**Payments.tsx decision:** admin-overhaul has richer version (1870 lines: grow_orders + edit modal) vs production (1403 lines). Classifier blocked checkout due to instruction ambiguity ("production has richer version"). Saar should confirm: "משוך גם Payments.tsx מ-admin-overhaul" to get the grow_orders UI.
+
+**NOT touched:** BibleChapterReader, useCommunity, CommunityDetailPage, navigation-bot, Payments (see above), Yehoshua, import scripts, Home, Header, Footer.
+
+**Verification:**
+- Build: 0 errors, 0 TypeScript errors
+- `bneyzion.vercel.app/` → 200
+- `bneyzion.vercel.app/admin/payments` → 200
+- `bneyzion.vercel.app/community/35e7d37b-...` → 200
+- `bneyzion.vercel.app/chapter-weekly` → 200
+- Bundle: chunks `Subscribers-CQrxialG.js` + `ImportContent-Ds8_nqeK.js` present in production
+- `BibleChapterReader` + `reading_chapter` preserved in `CommunityDetailPage` chunk
+
+**scripts/import-weekly-chapter-subscribers.mjs:** NOT pulled from admin-overhaul (classifier blocked). Still has old hardcoded SUPABASE_SERVICE_ROLE_REDACTED placeholder. Saar should confirm to pull env-var fix.
 
 ### 2026-06-02 — bneyzion-data branch: round-2 Saar feedback (sidebar/series/teachers/lesson)
 
@@ -4672,43 +4707,208 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 
 **Iron rule (new):** In every page component, ALL `use*` hooks MUST appear before the first `if (...) return` statement. When a hook needs lesson data, compute it null-safely with a ternary — never after an early return. The `// eslint-disable` comment is NOT a fix — it only hides the lint warning while the runtime bug remains.
 
+### 2026-06-02 — ספר עזרא pilot LIVE — content gate on production
+
+**Deploy URL:** `https://bneyzion.vercel.app` (Vercel deployment `dpl_58vCTH9BdEugQycXHm2C7nnVADnX`, READY, target: production)
+**Branch pushed:** `prod-with-content-gate` (commit `9a51791e`) → `feat/navigator-bot` (for GitHub record) + `vercel --prod` from local worktree
+
+**What shipped:**
+- `/community/weekly-chapter` — קורס עזרא עם 32 שיעורים, וידאו Drive inline, קורא פסוקים native (`BibleChapterReader`), audio+video links unified.
+- **Content gate** (`CommunityDetailPage.tsx`): `access_type="requires_tag"` locks the page behind `program:weekly-chapter` tag. Anonymous/non-subscriber sees lock screen (Lock icon + CTA). No lesson URLs leak — `useCourseLessons(w ? id : undefined)` only fires when `courseAccessGranted=true`.
+- **`useUserAccess` hook** (`src/hooks/useUserAccess.ts`): calls `has_access_tag(uuid, tag)` SECURITY DEFINER RPC. Falls back to `false` on any error. Also checks `isHardcodedSubscriber` (saar.j.z.h@gmail.com) for dev access.
+- **264 subscribers** in `user_access_tags` table with tag `program:weekly-chapter` (imported earlier session).
+- **DB migration** `20260602_bible_verses_and_audio_video_linking.sql`: `bible_verses` table (public read RLS), `community_course_lessons.reading_chapter` + `audio_url` columns.
+
+**Verified:**
+- New bundle hash: `assets/main-CtCAHzhD.js` (previous: `main-CT5gZb9o.js`)
+- `requires_tag` string confirmed in `CommunityDetailPage-lJFm_p_v.js` chunk
+- No Drive/media URLs in initial HTML of `/community/weekly-chapter` (SPA, gated)
+- `vercel --prod` output: `Aliased https://bneyzion.vercel.app`
+
+**Known limitation:** `community_course_lessons` table has no RLS — protection is front-end only. A knowledgeable user calling the Supabase REST API directly could read lesson rows (including video_url). Acceptable for MVP; full server-side gate requires either RLS + `has_access_tag` in a policy, or an Edge Function proxy.
+
+**Deploy topology clarification:**
+- Vercel `productionBranch` config = `main` (legacy stub, not used for code)
+- Actual production deploys = manual `vercel --prod` from `prod-with-content-gate` worktree
+- GitHub push to `feat/navigator-bot` creates Preview deploys (not Production)
+- Do NOT rely on push-to-branch auto-deploy for production — always `vercel --prod`
+
 ---
 
-### 2026-06-02 — Header GlobalSearch restore + parasha schedule fix + 17 Tammuz verify
+## Public content structure — data model & placement rules (canonical map)
 
-**Branch:** `restore/header-search-2026-06-02` → pushed to `feat/navigator-bot` + `vercel --prod`
-**Commit:** `7158e395` (restore) + prior `ae2445cc` (yehoshua polling fix)
-**Triggered by:** ה-push ל-`feat/navigator-bot` ב-2.6 14:32 (smoove-portal-import) + admin wave-3 דרסו את הדר שנבנה ב-`integration/live-2026-06-01`.
+> Written 2026-06-02 based on deep investigation of `bneyzion-data` branch `fix/series-teachers-data`.
+> Purpose: every future session must understand this model and NOT reinvent it.
 
-**Root cause of header loss:**
-- `integration/live-2026-06-01` נשלח לפרודקשן ידנית ב-1.6 (vercel --prod) אבל **מעולם לא מוזג** ל-`feat/navigator-bot`.
-- כל push עתידי ל-`feat/navigator-bot` (auto-deploy) דרס את ה-header.
-- **לקח:** כל שינוי שצריך לשרוד בפרודקשן חייב להיות ב-`feat/navigator-bot`, לא רק deploy ידני.
+### 1. The hierarchy model
 
-**Files restored from integration/live-2026-06-01:**
-- `src/components/layout-v2/DesignHeader.tsx` — GlobalSearch, "הקורסים שלי", close-X RTL
-- `src/components/search/GlobalSearch.tsx` + `src/hooks/useGlobalSearch.ts` + `src/components/ui/command.tsx`
-- `src/index.css` — kedem-serif font face + search styles
-- `public/fonts/kedem-serif-hollow-aaa.otf` — self-hosted
-- Page fixes: `CommunityPage`, `DailyVersePage`, `Donate`, `DorHaplaot`, `KenesShavuot2026`, `MegilatEsther`, `StorePage`, `MemorialContent`
+Every row in the `series` table has a `parent_id` and a `status`:
 
-**Parasha calendar fix (root cause analysis):**
-- `src/lib/parashaCalendar.ts` `SCHEDULE_5786` was off by ~1 week from April onward.
-- Error: Shemini marked Apr 18 but actual = Apr 11 (Israel 5786). Spring doublings (תזריע-מצורע, אחרי מות-קדושים, בהר-בחוקותי) listed as separate weeks — wrong.
-- Real 5786 Israel cycle: Shemini Apr 11, תזריע-מצורע Apr 18, אחרי מות-קדושים Apr 25, אמור May 2, בהר-בחוקותי May 9, במדבר May 16, נשא May 23 (Shabbat after Shavuot = May 22 Fri), בהעלותך May 30, **שלח לך Jun 6** (current week of Jun 2), קורח Jun 13, חוקת Jun 20, בלק Jun 27, פנחס Jul 4, מטות-מסעי Jul 11, דברים Jul 18 ... נצבים-וילך Sep 5.
-- Added `PARASHA_TO_SERIES_TITLE` + `PARASHA_TO_CHUMASH` entries for all combined parashiot.
-- **Iron rule:** When editing `SCHEDULE_5786`, verify against real Hebrew calendar (Shavuot anchor = 6 Sivan; count backward from there to set Bamidbar = Shabbat before Shavuot).
+| status      | meaning |
+|-------------|---------|
+| `category`  | Container node — groups books or sub-sections. Never shown as a "series". |
+| `active`    | Live series with content. Shown publicly. |
+| `published` | Equivalent to active for display purposes. |
+| `draft`     | In-progress. Shown publicly ONLY when no active/published twin exists (canonical rule). |
 
-**17 Tammuz / שלושת השבועות:**
-- `DesignPreviewHome.tsx` (= `src/pages/Index.tsx`) already had `seriesId: "e36ea5d6-38f8-49ca-874e-ff3324bb3795"` hardcoded.
-- Verified in DB: series `שלושת השבועות`, `status=active`, `lesson_count=7`. No change needed — already correct.
+The tree is:
+```
+ROOT categories (parent_id = null, status=category)
+  └─ Books / sub-categories (status=category)
+       └─ Series (status=active/published/draft)
+            └─ Lessons (status=published)
+```
 
-**Deploy gotcha (new instance):**
-- `git push origin restore/...:feat/navigator-bot` triggered a **Preview** deploy, not Production.
-- Workaround: `vercel --prod --yes --scope saars-projects-4508d6bb` from repo root.
-- Confirmed live: `cmdk` (search lib) + "הקורסים שלי" + "שלח לך" all in production bundle.
+ROOT category IDs (hardcoded in `useContentSidebar.ts` as `ROOT_IDS`):
+- `torah`          — `bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b`
+- `neviim`         — `a0472c9f-8212-44ff-8937-ace5fea4b4dc`
+- `ketuvim`        — `5cdd770c-9593-4b0d-9f9e-cda50cf5ef41`
+- `howToLearn`     — `62590949-6187-4e17-b84d-65a518467521`
+- `generalTopics`  — `2d6d28c1-3c5c-4d61-9283-410bc56cd351`
+- `moadim`         — `92130154-e96a-4f98-b032-5a20ac385f63`
+- `haftarot`       — `3327c721-7bc9-471c-878f-0b3aef98b090`
+- `tools`          — `27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7`
+- `yemeiIyun`      — `f4040001-0001-4000-8000-000000000000`
+- `livuyTatim`     — `7cbd261e-03b0-43da-a708-e8ae4402105f`
+- `riddles`        — `c852edd8-d959-4c8d-bf7e-17b5881275fa` (special: חידות לילדים, linked under בראשית)
 
-**Firecrawl aמot:**
-- Home page: "פרשת שלח לך" + "חומש במדבר" ← parasha fix live.
-- "י״ז בתמוז עוד 41 ימים" ← holiday section renders correctly.
-- "כל שיעורי י״ז בתמוז ←" ← links to שלושת השבועות series.
+### 2. The draft/active duplicate pattern
+
+The DB has many series that exist in TWO versions: one `draft` (lc=0) and one `active` (lc>0). These are NOT two separate series — the `active` is the real one; the `draft` is a dead placeholder that was never cleaned up.
+
+**Rule: never show both.**
+
+**Canonical dedup rule** (implemented in `useSeriesForNode`, enforced in `CategoryPage.tsx` and `useContentSidebar.ts`):
+
+For each unique `title.trim()` in a descendant set:
+1. If an `active`/`published` copy with `lesson_count > 0` exists → show it. Hide all drafts with the same title.
+2. If ONLY a `draft` copy exists (no active/published twin) → show it anyway (mirrors old site behavior; series exists publicly on old Umbraco even without lessons).
+3. Never show a `category`-status node as a "series" — it's a container.
+
+**Where the duplicates exist (as of 2026-06-02):**
+- "איך לומדים" tree: `הקדמה ללימוד נביאים` (6e95b813 draft + 19c8308f active), `ללמוד וללמד תנ"ך` (1983f663 draft + 4da05535 active), `"כל האומר דוד חטא"` (4c0bac05 draft + bb516929 active)
+- Same drafts are children of sub-categories (8f089f22 = "הגישה הראויה", 224f701b = "היחס הראוי")
+
+### 3. "איך לומדים תנ"ך" — the deep hierarchy problem
+
+This section (`62590949`) is **two levels deep**, unlike "מועדים" which is flat:
+
+```
+62590949 (category) "איך לומדים תנ"ך"
+  ├─ 8f089f22  (category) "הגישה הראויה ללימוד תנ"ך"
+  │     ├─ 096fc3cd  (active, lc=13)  "איך לומדים תנ"ך"
+  │     ├─ 19c8308f  (active, lc=5)   "הקדמה ללימוד נביאים"
+  │     ├─ 4da05535  (active, lc=8)   "ללמוד וללמד תנ"ך"
+  │     ├─ 6e95b813  (draft, lc=0)    [hidden — twin of 19c8308f]
+  │     └─ 1983f663  (draft, lc=0)    [hidden — twin of 4da05535]
+  ├─ 224f701b (category) "היחס הראוי לאבות"
+  │     ├─ bb516929  (active, lc=2)   '"כל האומר דוד חטא"'
+  │     └─ 4c0bac05  (draft, lc=0)    [hidden — twin of bb516929]
+  └─ 2015e21e (category) "דרכי הפרשנות"
+        ├─ 6b62c4a1  (draft, lc=0)   "'הדיבור הישיר' בתורה"   [NO active twin — SHOW]
+        └─ cd359c27  (draft, lc=0)   "לפני ואחרי במשנת הספורנו" [NO active twin — SHOW]
+```
+
+**The bug:** `useSeriesForNode` originally filtered `lesson_count > 0` → showed 4 series (missed the 2 draft-only ones). The canonical rule fixes this to 6 series.
+
+**The sidebar bug:** `useContentSidebar` originally fetched `parent_id in expandableIds` with `status in [active,published]`. Since the direct children of `62590949` are all `status=category`, ZERO series appeared in the sidebar. Fixed by using `get_series_descendant_ids` RPC for howToLearn specifically.
+
+### 4. Flat sections vs deep sections
+
+| Section | Structure | How children are fetched |
+|---------|-----------|--------------------------|
+| מועדים, הפטרות, נושאים כלליים, כלי עזר, ימי עיון, ליווי ת"תים | Flat — direct children are leaf series | `parent_id in [...]` + `status in [active,published]` |
+| איך לומדים תנ"ך | Deep — has sub-category containers before leaf series | RPC `get_series_descendant_ids` + canonical dedup in JS |
+
+### 5. Code locations
+
+| What | File | Notes |
+|------|------|-------|
+| ROOT_IDS constants | `src/hooks/useContentSidebar.ts` | All hardcoded UUIDs |
+| `useSeriesForNode` | `src/hooks/useContentSidebar.ts` | Canonical dedup — fetch all statuses, dedup by title |
+| `useContentSidebar` sidebarQuery | `src/hooks/useContentSidebar.ts` | howToLearnForSection uses RPC+dedup |
+| Category display | `src/pages/CategoryPage.tsx` | SeriesBlock: shows series header + expanded lessons inline with thumbnail |
+| Sidebar tree | `src/components/layout-v2/DesignSidebar.tsx` | ExtraSectionBlock reads `section.children` (which are now canonical) |
+| Breadcrumb | `src/hooks/useSeriesHierarchy.ts` | RPC `get_series_ancestors` |
+| RPC | Supabase `get_series_descendant_ids(root_id UUID)` | Returns `[{series_id, parent_series_id, series_title}]` |
+| RPC | Supabase `get_series_ancestors(series_uuid UUID)` | Returns `[{id, title, depth}]` |
+
+### 6. Teachers Wing vs public content
+
+These are **two separate systems**:
+
+| Aspect | Public | Teachers Wing |
+|--------|--------|---------------|
+| URL pattern | `/category/:id`, `/series/:id` | `/teachers/book/:book`, `/teachers/content-type/:type`, `/teachers/creator/:name` |
+| Navigation basis | `parent_id` tree from ROOT categories | `bible_book` column + `content_type` column + `creator` field |
+| Sidebar | `DesignSidebar.tsx` | `TeacherSidebar.tsx` |
+| Hook | `useContentSidebar` | `useTeachersWing` |
+| Audience filter | Hides `audience_tags = ['teachers']` | Shows only teachers content |
+| Content type | Lessons as "שיעורים" (audio/video/text) | Docs as "דפי עבודה", "מבחנים", "מפות", etc. |
+
+### 7. Lesson image priority chain
+
+Used consistently across `CategoryPage.tsx`, `SeriesBlock`, `LessonRow`:
+```
+lesson.thumbnail_url
+  → series.image_url
+  → getSeriesCoverImage(series.title)  [from designTokens.ts]
+  → "/images/series-default.png"
+```
+
+### 8. Canonical count per ExtraSection (as of 2026-06-02)
+
+| Section | Current (broken) | Canonical (fixed) |
+|---------|-------------------|-------------------|
+| איך לומדים תנ"ך | 4 | 6 |
+| המועדים | 12 (active+lc>0) | 13 (+1 draft-only "לב הפרק - מועדים") |
+| נושאים כלליים | many active | unchanged (already flat+active) |
+| הפטרות | 7 children | unchanged |
+
+### 2026-06-02 — CategoryPage canonical fix + sidebar howToLearn deep fetch
+
+- **Changed:** `useSeriesForNode` in `src/hooks/useContentSidebar.ts` — removed `lesson_count > 0` filter; added canonical dedup by title (active/published preferred over draft).
+- **Changed:** sidebarQuery in same file — split into `flatExpandableIds` (direct-child fetch) + `howToLearnForSection` (RPC-based deep fetch + canonical dedup).
+- **Changed:** `src/pages/CategoryPage.tsx` — `SeriesBlock` component shows series header + expanded inline lessons with thumbnail images. Draft series show "בהכנה" badge. `LessonRow` shows 48×34 thumbnail with media icon overlay.
+- **Constraint learned:** never filter `lesson_count > 0` globally — draft-only series are valid public content when they have no active twin.
+
+### 2026-06-02 — Payments wave-3 + import script merged to production (commit 9478e2f6)
+
+- **Merged:** `src/pages/admin/Payments.tsx` from `admin-overhaul` (1870 lines) into `admin-to-production` branch. Superset of production — zero features removed.
+- **Added to production:** PaymentProductsTab full inline editing — toggle active on/off (live DB write), `EditProductDialog` for display_name/default_amount/max_installments, page_code_env `b1dc5e695089` directDebit guard.
+- **Added to production:** `InvoiceButton` on every orders/donations row — calls `/functions/v1/issue-paperless-invoice` edge function (returns 503 until PAPERLESS_API_KEY configured — safe no-op in production today).
+- **Mutations added:** `useToggleProductActive`, `useUpdatePaymentProduct`, `useIssuePaperlessInvoice`.
+- **Import script:** `scripts/import-weekly-chapter-subscribers.mjs` — already at production version (Members endpoint fix, 2026-06-02). NOT overwritten with older Contacts endpoint from admin-overhaul.
+- **Comparison finding:** `grow_orders` tab was never in Payments.tsx (in any branch). It's a DB table + managed via Subscribers.tsx. The merge prompt's mention of it was inaccurate — no tab to port.
+- **Iron rule confirmed:** when two branches both wrote the same file independently, the branch with the larger line count (admin-overhaul, 1870) was the superset — verified by manual diff before any write.
+- **Deploy:** production commit `9478e2f6` on `admin-to-production`, `bneyzion.vercel.app` verified — Payments chunk `Payments-BASAYFRH.js` confirmed live with `הפק`, toggle, directDebit guard.
+
+### 2026-06-02 — Yehoshua campaign: polling 30s + visibilitychange deployed (commit ae2445c)
+
+- **Commit:** `ae2445c` on `feat/navigator-bot` (worktree `/private/tmp/bz-realtime/bneyzion`).
+- **What shipped:** `useCampaignStats` + `useTierCounts` hooks — `setInterval(fetch, 3e4)` (30s polling) + `document.addEventListener('visibilitychange', ...)` listener. הבר מתעדכן לבד בלי reload עד 30 שניות אחרי תרומה.
+- **Deploy:** push → GitHub auto-deploy יצא כ-preview (productionBranch=main ב-Vercel, לא `feat/navigator-bot`). תוקן עם `vercel link + vercel --prod`. Deployment ID `dpl_9fSENHNrze8svb2A6k3jrc7tPKsT`, aliased ל-`bneyzion.vercel.app`.
+- **אימות:** chunk `DesignPreviewYehoshuaCampaign-DYcJz_8r.js` אומת — `setInterval(i,3e4)` ו-`visibilitychange` קיימים. DB טסט: עדכון pending→completed→pending אומת ספירה 26→27→26.
+- **נשאר פתוח:** realtime WebSocket (ALTER PUBLICATION supabase_realtime ADD TABLE donations) — יעלה תגובה מ-30ש' ל-2-3ש' אבל דורש Supabase PAT חדש מסאר (PAT הקיים לא מורשה ל-replication). + processToken ב-create-payment + webhook 500 — לא דחוף.
+- **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
+
+### 2026-06-02 — ⭐⭐ הדר עם החיפוש נדרס בפרודקשן + תיקון לוח פרשות 5786
+
+**הבעיה שסאר דיווח:** ההדר החדש עם החיפוש הכולל (GlobalSearch) + "הקורסים שלי" נעלם מ-`bneyzion.vercel.app`, למרות תיקון בן 3 סשנים שהועלה. גם פרשת השבוע הציגה פרשה ישנה ("בחוקותי") במקום "שלח לך".
+
+**שורש הדריסה (CRITICAL):**
+- ההדר נבנה ב-1.6 ב-4 commits על `fix/header-search-darkmode` → אוחד ל-`integration/live-2026-06-01` → נשלח לפרודקשן **ידנית** (`vercel --prod`).
+- אבל `integration/live-2026-06-01` **מעולם לא מוזג** ל-branch הפרודקשן. ב-2.6 שלושה push-ים חדשים (`9a51791e` smoove-import, `a5098add` admin, Payments wave-3) deployו פרודקשן מ-branch שלא הכיל את ההדר → **כל deploy חדש מחק את ההדר**.
+- **כלל ברזל:** כל עבודה שצריכה לשרוד בפרודקשן חייבת להיכנס ל-branch שממנו פורסים פרודקשן — **לא** `vercel --prod` ידני מ-branch צדדי שנדרס ב-push הבא. deploy ידני בלי merge = פצצת זמן.
+
+**התיקון (header):**
+- branch `restore/header-search-2026-06-02` מבוסס על tip הפרודקשן, עם checkout קובץ-קובץ מ-`integration/live-2026-06-01`: `DesignHeader.tsx`, `GlobalSearch.tsx`, `useGlobalSearch.ts`, `command.tsx`, `index.css`, `kedem-serif-hollow-aaa.otf` + 8 page fixes. כל עבודת ה-admin של היום נשמרה (rebase על `ae2445cc`). TypeScript נקי.
+
+**התיקון (לוח פרשות) — שורש אמיתי:**
+- `SCHEDULE_5786` ב-`src/lib/parashaCalendar.ts` היה שגוי: שמיני סומן 18 אפריל במקום **11 אפריל (ישראל)** → כל הפרשות הוסטו שבוע אחורה. תוקן מ-11 אפריל ואילך.
+- נוספו entries לפרשות מחוברות (תזריע-מצורע, אחרי מות-קדושים, בהר-בחוקותי, מטות-מסעי, נצבים-וילך) ב-`PARASHA_TO_SERIES_TITLE` + `PARASHA_TO_CHUMASH`.
+- **לקח:** באג בלוח קשיח = תיקון שורש, לא רק הערך הנוכחי. בדוק את כל הטבלה מול לוח ישראל (לא חו"ל — הפרשות מתפצלות אחרי פסח).
+
+**י"ז בתמוז → שלושת השבועות:** לא נדרש תיקון. `DesignPreviewHome.tsx` כבר מצביע ל-`seriesId: e36ea5d6-38f8-49ca-874e-ff3324bb3795` (סדרה פעילה, 7 שיעורים). Firecrawl אישר "כל שיעורי י״ז בתמוז ←" חי.
+
+**אומת בלייב (Firecrawl, לא curl):** "פרשת שלח לך" + "חומש במדבר", "כל שיעורי י״ז בתמוז ←", `cmdk` + "הקורסים שלי" ב-bundle הפרודקשן, admin wave-3 עובד.
