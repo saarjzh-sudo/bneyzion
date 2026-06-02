@@ -526,6 +526,23 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — Ezra Drive import + CourseDetail v4 UI (feat/weekly-chapter-data-driven, commit 7c3a3361)
+
+**Branch:** `feat/weekly-chapter-data-driven`
+**Preview deploy:** `https://bneyzion-ot26gad53-saars-projects-4508d6bb.vercel.app`
+
+**What changed:**
+
+1. `scripts/import-ezra-drive-content.mjs` — NEW import script. Source: `/tmp/ezra-drive-manifest.json`. Deletes existing rows for course_id `35e7d37b-...` then inserts 84 rows (4 intro + 33 base + 25 enrichment + 22 weekly). One row per Drive file (not per layer). media routing: pdf→attachment_url, mp4/mpeg→video_url, mp3→audio_url. All embed via Drive /preview iframe. Canonical titles by role (ROLE_TITLES map). Run: `env -u HTTPS_PROXY -u HTTP_PROXY SUPABASE_SERVICE_ROLE=<key> node scripts/import-ezra-drive-content.mjs`. **DB write PENDING — saar must run with service_role key.**
+
+2. `src/hooks/useCommunity.ts` — added `useCourseDataMulti(courseId)` hook + `CourseDataMulti` / `ChapterLayersMulti` types. Returns `intro: CommunityLesson[]` + `chapters: Map<number, ChapterLayersMulti>` (each with `base[]`, `enrichment[]`, `weekly[]`). Legacy `useChapterLayerMap` kept.
+
+3. `src/pages/DesignPreviewCourseDetail.tsx` — v4 rewrite. Switches to `useCourseDataMulti`. Shows LIST of MediaCards per layer (Drive iframe embed on toggle). Intro section = all intro items before chapter 1. bible_verses / BibleReading REMOVED. Chapter subtitle = topic from manifest. LockedPanel links to /chapter-weekly.
+
+**DB write authorization:** "ייבוא מחדש מ-Google Drive כולל כתיבה ל-DB החי" (Saar message)
+
+**Iron rule:** One community_course_lessons row per Drive file (not per layer). Layer can have multiple rows. Use useCourseDataMulti (not useChapterLayerMap) for multi-file display.
+
 ### 2026-06-02 — admin layer surgical deploy to production (commit a5098add)
 
 **Branch:** `admin-to-production` (new branch from `prod-with-content-gate`)
