@@ -526,6 +526,29 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — Production webhook fix: SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
+
+**Problem:** `/api/grow/webhook` נכשל בשקט ב-production. 22 orders נותרו בסטטוס `pending` (מתוכם 19 של סאר עצמו, 3 של לקוחות אמיתיים). הבר של תכנית יהושע הראה 2 במקום הנכון.
+
+**Root cause:** `SUPABASE_URL` ו-`SUPABASE_SERVICE_ROLE_KEY` ב-Vercel production היו ב-v2 encrypted format שלא ניתן לפענוח (הוכנסו דרך `vercel env add` ב-session קודם עם ערכי base64 שגויים). ה-preview env היה ריק לחלוטין.
+
+**מה נעשה:**
+1. נמחקו שני ה-vars הפגומים מ-production (ids: `WfZBd6NOAuknUcHA`, `w5AqJa2ok3MhfUwt`) דרך Vercel REST API.
+2. `SUPABASE_URL=https://pzvmwfexeiruelwiujxn.supabase.co` נוסף מחדש כ-`plain` type לproduction.
+3. `SUPABASE_SERVICE_ROLE_KEY` (eyJh...Z6Lk, 219 chars) נוסף מחדש דרך `vercel env add --value` CLI לproduction.
+4. Redeploy ידני דרך REST API (`dpl_F1TusZh1oGfijwkUw7i2HpQp2SUv`) — READY + target=production, alias=`bneyzion.vercel.app`.
+5. **אימות:** POST webhook עם orderId אמיתי של סאר (`dfb3fbaa-3ee1-4328-bcf6-91254e25ea25`) → `{"received":true,"processed":true}` → order עבר ל-`payment_status=completed, status=confirmed`.
+
+**סטטוס אחרי תיקון:**
+- Orders pending לפני: 23 (20 סאר + 3 אמיתיים)
+- Orders pending אחרי: 22 (19 סאר + 3 אמיתיים — 1 של סאר נוקה כטסט)
+- **פתוח:** backfill ידני של 22 orders pending (19 סאר + 3 אמיתיים). 3 האמיתיים — בדיקה מול Grow האם התשלום אכן הצליח לפני update ב-DB.
+
+**Iron rules learned:**
+- `vercel env add KEY target --value "..."` (CLI) בטוח יותר מ-REST API PATCH ל-sensitive vars. ה-REST API PATCH מחזיר ערך ריק בdecrypt אפילו אחרי הצלחה (masking מכוון).
+- לפני כל `vercel env add` ב-pipeline: בדוק `vercel env ls production | grep KEY` — אם קיים ו-`Encrypted` זה אומר ש-Vercel מציג נכון, לא ריק.
+- כשvercel env vars ריקים ב-production: webhook serverless function רץ ומחזיר `{"received":true,"processed":false}` — לא error, לא 500. **הסימן:** `processed:false` כשהpayload תקין (status=1, orderId קיים).
+
 ### 2026-06-02 — admin-overhaul backend: migration audit + creator role + yoav admin + dry-run
 
 **Branch:** `admin-overhaul` (backend-only, no frontend touched)
