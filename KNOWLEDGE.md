@@ -529,6 +529,45 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — admin-overhaul cohesion pass: dashboard redesign + visual verification + Vercel preview
+
+**Branch:** `admin-overhaul` — commit `8e4845da`
+
+**1. Dashboard.tsx — שכתוב מלא.**
+- הוסרו tabs מתים: "גיימיפיקציה" (placeholder ריק) + "data-ops" (כפתורים לא מחוברים).
+- Header חדש: "שלום, יואב" + CTA "העלאת תוכן חדש" על רקע navy.
+- 4 KPI cards גדולות ולחיצות (Link עטיפה) → quick links ישירות לכל מסך קריטי:
+  שיעורים פעילים → `/admin/lessons`, ממתינים → `/admin/lessons?tab=pending_review`,
+  מנויים → `/admin/subscribers`, הכנסות → `/admin/payments`.
+- כרטיס "ממתינים" משנה צבע לאמבר אם יש ממתינים > 0.
+- פעולות מהירות: 4 quick-action cards בתחתית.
+- גרף AreaChart (14 ימים) + "רבנים מובילים" נשמרו.
+- design tokens: מירור מלא של Payments.tsx (const C object).
+
+**2. AdminLayout.tsx — שדרוג header.**
+- רקע bg-[#FAF6F0] (parchment) על כל ה-shell — עקבי עם שאר מסכי admin.
+- header bar sticky עם gold gradient accent line בחלק העליון.
+
+**3. auth stub לצילום screenshots.**
+- stub זמני ב-`AuthContext.tsx` (DEV_ADMIN_ACTIVE) + `ProtectedRoute.tsx` (_DEV_PASS).
+- שניהם הוסרו לחלוטין לפני ה-commit — `git diff HEAD -- src/contexts/AuthContext.tsx src/components/auth/ProtectedRoute.tsx` ריק לחלוטין.
+- Iron rule מוכח: **stub בשני מקומות** — AuthContext מייצר user mock, ProtectedRoute חוסם navigate. שניהם נחוצים ביחד.
+
+**4. Screenshots צולמו ואומתו (Python playwright):**
+- `/admin` (dashboard) — RTL תקין, כרטיסים, גרף, no console errors.
+- `/admin/payments` — 3 tabs + drawer (אין נתונים בסביבת dev).
+- `/admin/subscribers` — KPI cards + table.
+- `/admin/upload` — אשף 4 שלבים, step 1 נראה.
+- `/admin/lessons` — tab "ממתין לאישור" active.
+
+**5. Vercel preview:**
+- Push ל-`admin-overhaul` → auto-preview build Ready (58s).
+- URL: `https://bneyzion-6b2i3cbpe-saars-projects-4508d6bb.vercel.app`
+- **לא נמזג ל-main / feat/navigator-bot** — sandbox בלבד עד אישור סער.
+
+**Iron rule נלמד:**
+- `const` ב-module level ב-React רצים **לפני** כל `useState` — stub ב-AuthContext בלבד לא מספיק כי ProtectedRoute קורא לו ומסיק `!user → <Navigate to="/auth">`. חייבים stub גם ב-ProtectedRoute עצמו.
+
 ### 2026-06-02 — admin-overhaul integration audit: migration applied + types regen + creator gap fixed
 
 **Branch:** `admin-overhaul` (sandbox-only, no production touch)
