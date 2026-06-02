@@ -526,6 +526,39 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — Smoove portal import PILOT: ספר עזרא → community_course_lessons (32 rows)
+
+**Branch:** `feat/smoove-portal-import`
+
+**What was done:**
+- Imported 32 lessons from `.smoove-import/ezra.json` into `community_course_lessons` for course_id `35e7d37b-a263-4e85-a8d8-16fdbae312ae` (ספר עזרא, smoove_course_id=14253).
+- Updated `community_courses.total_lessons = 32`.
+- Verified visually via Firecrawl on `https://bneyzion.vercel.app/community/35e7d37b-a263-4e85-a8d8-16fdbae312ae` — all 32 lessons rendered, titles correct.
+
+**Mapping decisions (canonical — repeat for remaining 6 courses):**
+
+| Source field | DB column | Logic |
+|---|---|---|
+| `page.chapter` | `bible_chapter` | Hebrew letter → int (א=1…י=10); NULL for intro/resources |
+| `page.layer` | `layer_type` | base/enrichment/weekly/intro/resources (5 values) |
+| First `type=video` item's `drive_id` | `video_url` | `https://drive.google.com/file/d/{id}/preview` |
+| All items | `content_html` | Full HTML: Sefaria link + Drive iframes (video+pdf alike via /preview) |
+| `chapter_index * 3 + layer_offset` | `lesson_number` | resources=1, intro=2, then ch*3+offset |
+| `weekly` counter | `week_number` | 1-10 (only for layer=weekly) |
+| fixed | `bible_book` | "עזרא" |
+| fixed | `status` | "published" |
+
+**Key insight (MUST carry forward):** All Drive files (video AND pdf) embed identically via `https://drive.google.com/file/d/{drive_id}/preview` in an iframe. `video_url` field gets the first video's embed URL. `content_html` gets ALL items as iframe embeds + Sefaria links.
+
+**Frontend consumption:**
+- `useCourseLessons(courseId)` — SELECT *, eq(status, published), order(lesson_number asc)
+- `CommunityDetailPage.tsx` renders: `video_url` → aspect-video iframe · `content_html` → prose dangerouslySetInnerHTML (sanitized via DOMPurify)
+- `CommunityCoursePage.tsx` (portal) — same fields, same rendering
+
+**Import script:** `/tmp/ezra_import.py` + `/tmp/ezra_lessons_preview.json` (ephemeral — regenerate from ezra.json if needed)
+
+**Remaining courses to import:** 6 (same structure, same script pattern — update COURSE_ID + course-specific bible_book)
+
 ### 2026-06-02 — admin-overhaul backend: migration audit + creator role + yoav admin + dry-run
 
 **Branch:** `admin-overhaul` (backend-only, no frontend touched)
