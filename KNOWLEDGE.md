@@ -4901,3 +4901,17 @@ lesson.thumbnail_url
 - **אימות פרודקשן:** `bneyzion.vercel.app` — כרטיס פרשת השבוע = "פרשת שלח לך, חומש במדבר". כרטיס י"ז בתמוז = "עוד 41 ימים". `/series/e36ea5d6` נטען עם 7 שיעורים.
 - **Iron rule:** NEVER use static schedule table for parasha — use @hebcal/core (il:true). Table breaks every year.
 - **Branch:** pushed `prod-parasha-tammuz-fix` → `feat/navigator-bot` directly.
+
+### 2026-06-02 — Branch regression recovery: unified merge feat/navigator-bot + admin-to-production
+
+- **בעיה:** שני branches של 2.6.2026 התפצלו מ-`9a51791e`. deploy מ-`feat/navigator-bot` (hebcal+header) דרס admin wave-3 + content gate שחיו ב-`admin-to-production`. Payments chunk `Payments-q34Vg-wW.js` = 0 סמני wave-3 בפרודקשן.
+- **פתרון:** merge branch `merge/unified-production` מ-`feat/navigator-bot` + `git merge origin/admin-to-production`. קונפליקט יחיד: `KNOWLEDGE.md` — union של שני הצדדים. כל שאר הקבצים = auto-merge נקי (אין overlap מחוץ ל-KNOWLEDGE.md).
+- **merge commit:** `0a42778a` on `feat/navigator-bot`.
+- **Deploy:** `dpl_8Ya4WDjAj4eJcYLW8Hikk1eM1GWG`, `readyState=READY`, aliased ל-`bneyzion.vercel.app`.
+- **אימות (א):** Firecrawl homepage — "פרשת שלח לך, חומש במדבר" ✓
+- **אימות (ב):** י"ז בתמוז = "עוד 41 ימים" + navigate ל-`/series/e36ea5d6` ✓ (לא sandbox)
+- **אימות (ג):** `cmdk`/`hebcal` ב-main bundle ✓ (GlobalSearch + hebcal dynamic)
+- **אימות (ד):** Payments chunk `Payments-bZxUC4vk.js` — `directDebit` (3x) + `issue-paperless-invoice` + `הפק` ✓ (wave-3)
+- **אימות (ה):** Subscribers chunk — `user_access_tags` (4x) + `weekly-chapter` (2x) ✓ (content gate)
+- **Iron rule — לקח ברזל:** לפני deploy לפרודקשן — לוודא שה-branch הנפרס הוא superset של מה שכבר חי (`git log --oneline origin/prod..other-branch`). deploy "מתקדם" יכול לדרוס feature אחר שחי מ-branch מקביל. אם שני branches התפצלו מאותו base — merge לפני deploy.
+- **Deploy topology reminder:** כל `git push` ל-`feat/navigator-bot` יוצא כ-preview (productionBranch=main ב-Vercel). לפרודקשן תמיד `vercel --prod --yes` עם `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID`.
