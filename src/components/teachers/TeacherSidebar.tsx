@@ -37,33 +37,33 @@ function getAnonKey(): string {
   return atob("ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA4bw==");
 }
 
-// ─── Hook: content_type counts with client-side dedup ───────────────────────
-// ד2: dedup by (title+series_id+content_type), filter series_id=null,
-// to neutralize the ×20 lesson inflation from the 2026-05-27 migration.
+// ─── Hook: content_type counts (real, full count) ────────────────────────────
+// Counts ALL published teacher lessons per content_type. NO dedup, NO series_id
+// filter: per Saar (2026-06-02), teacher content legitimately appears in many
+// places ("מורים בתוך מורים") and null-series items are real content, not junk.
+// PostgREST caps a single response at 1000 rows → must paginate via Range header.
 interface ContentTypeCount { content_type: string; cnt: number; }
 
 function useContentTypeCountsDeduped() {
   return useQuery<ContentTypeCount[]>({
-    queryKey: ["teacher-sidebar-content-type-counts-deduped"],
+    queryKey: ["teacher-sidebar-content-type-counts-v2"],
     queryFn: async () => {
       const anonKey = getAnonKey();
-      // Fetch title+series_id+content_type for dedup; series_id != null filters orphans
-      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=title,series_id,content_type&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=not.is.null&series_id=not.is.null&limit=30000`;
-      const resp = await fetch(url, {
-        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
-      });
-      if (!resp.ok) return [];
-      const rows: Array<{ title: string; series_id: string; content_type: string }> = await resp.json();
-      // Dedup by composite key
-      const seen = new Set<string>();
+      const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}` };
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=content_type&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=not.is.null`;
       const map = new Map<string, number>();
-      for (const row of rows) {
-        const key = `${row.title}|${row.series_id}|${row.content_type}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        map.set(row.content_type, (map.get(row.content_type) || 0) + 1);
+      const PAGE = 1000;
+      for (let start = 0; ; start += PAGE) {
+        const resp = await fetch(base, {
+          headers: { ...headers, Range: `${start}-${start + PAGE - 1}` },
+        });
+        if (!resp.ok) break;
+        const rows: Array<{ content_type: string }> = await resp.json();
+        for (const row of rows) {
+          map.set(row.content_type, (map.get(row.content_type) || 0) + 1);
+        }
+        if (rows.length < PAGE) break; // last page reached
       }
-      // NOTE: counts are approximate until DB cleanup completes (2026-05-27 inflation)
       return Array.from(map.entries())
         .map(([content_type, cnt]) => ({ content_type, cnt }))
         .sort((a, b) => b.cnt - a.cnt);
