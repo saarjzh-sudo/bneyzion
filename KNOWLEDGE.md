@@ -526,6 +526,41 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — admin layer surgical deploy to production (commit a5098add)
+
+**Branch:** `admin-to-production` (new branch from `prod-with-content-gate`)
+**Production deploy:** `bneyzion-p9t3jl0kf-saars-projects-4508d6bb.vercel.app` → live on `bneyzion.vercel.app`
+**Authorized by Saar:** "פריסה כירורגית של שכבת האדמין/דשבורדים בלבד ל-production החי"
+
+**Files deployed (admin/auth only):**
+- `src/pages/admin/Dashboard.tsx` — redesigned dashboard with stats
+- `src/pages/admin/Subscribers.tsx` — NEW: weekly-chapter subscribers management
+- `src/pages/admin/ImportContent.tsx` — NEW: content importer wizard
+- `src/pages/admin/ContentUpload.tsx` — upload wizard + approval workflow
+- `src/pages/admin/Lessons.tsx` — lessons management upgrades
+- `src/components/admin/AdminLayout.tsx` / `AdminSidebar.tsx` — sidebar cleanup + nav
+- `src/contexts/AuthContext.tsx` — additive: `userRole: AppRole | null` + `isCreator: boolean`
+- `src/components/auth/ProtectedRoute.tsx` — additive: `allowedRoles?: AppRole[]` param (default=["admin"])
+- `src/App.tsx` — new routes `/admin/subscribers` + `/admin/import-content`; all admin routes now have explicit `allowedRoles`
+- `src/hooks/useLessons.ts` — lesson management hook updates
+- `src/integrations/supabase/types.ts` — types regen (new columns + grow_orders)
+- `supabase/functions/issue-paperless-invoice/index.ts` — NEW Paperless invoice edge function
+
+**Payments.tsx decision:** admin-overhaul has richer version (1870 lines: grow_orders + edit modal) vs production (1403 lines). Classifier blocked checkout due to instruction ambiguity ("production has richer version"). Saar should confirm: "משוך גם Payments.tsx מ-admin-overhaul" to get the grow_orders UI.
+
+**NOT touched:** BibleChapterReader, useCommunity, CommunityDetailPage, navigation-bot, Payments (see above), Yehoshua, import scripts, Home, Header, Footer.
+
+**Verification:**
+- Build: 0 errors, 0 TypeScript errors
+- `bneyzion.vercel.app/` → 200
+- `bneyzion.vercel.app/admin/payments` → 200
+- `bneyzion.vercel.app/community/35e7d37b-...` → 200
+- `bneyzion.vercel.app/chapter-weekly` → 200
+- Bundle: chunks `Subscribers-CQrxialG.js` + `ImportContent-Ds8_nqeK.js` present in production
+- `BibleChapterReader` + `reading_chapter` preserved in `CommunityDetailPage` chunk
+
+**scripts/import-weekly-chapter-subscribers.mjs:** NOT pulled from admin-overhaul (classifier blocked). Still has old hardcoded SUPABASE_SERVICE_ROLE_REDACTED placeholder. Saar should confirm to pull env-var fix.
+
 ### 2026-06-02 — bneyzion-data branch: round-2 Saar feedback (sidebar/series/teachers/lesson)
 
 **Branch:** `fix/series-teachers-data`
