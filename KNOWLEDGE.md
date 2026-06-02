@@ -4890,4 +4890,134 @@ lesson.thumbnail_url
 - **Deploy:** push → GitHub auto-deploy יצא כ-preview (productionBranch=main ב-Vercel, לא `feat/navigator-bot`). תוקן עם `vercel link + vercel --prod`. Deployment ID `dpl_9fSENHNrze8svb2A6k3jrc7tPKsT`, aliased ל-`bneyzion.vercel.app`.
 - **אימות:** chunk `DesignPreviewYehoshuaCampaign-DYcJz_8r.js` אומת — `setInterval(i,3e4)` ו-`visibilitychange` קיימים. DB טסט: עדכון pending→completed→pending אומת ספירה 26→27→26.
 - **נשאר פתוח:** realtime WebSocket (ALTER PUBLICATION supabase_realtime ADD TABLE donations) — יעלה תגובה מ-30ש' ל-2-3ש' אבל דורש Supabase PAT חדש מסאר (PAT הקיים לא מורשה ל-replication). + processToken ב-create-payment + webhook 500 — לא דחוף.
+
+### 2026-06-02 — Yehoshua campaign donations stuck pending: two-layer bug RESOLVED (commit b5b177c)
+
+**רקע:** דף שותפים יהושע (`/yehoshua` → `DesignPreviewYehoshuaCampaign.tsx`). בר ההתקדמות תקוע על 7 שותפים / ₪900 למרות שסליקות אמיתיות נכנסו.
+
+#### הסימפטום שהסיח דעת
+- לקוח עם מספר בית "200" נתקע בטופס — נראה כמו באג ולידציה. האבחון הראשוני ריצד סביב זה.
+- בפועל: הדף קורא `yehoshua_campaign_stats` חי בכל טעינה (Vite SPA, ללא build-time caching). deploy לא נדרש לתצוגה — הבר קורא DB חי. הסחה.
+
+#### שתי תקלות שכבדו זו על זו
+
+**תקלה 1 — משתני סביבה חסרים בפרודקשן:**
+- `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` הוגדרו רק ב-Vercel **Preview** environment, לא ב-**Production**.
+- `api/grow/webhook.ts` קרא `createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)` — בפרודקשן קיבל `createClient("", "")`.
+- Supabase client עם מחרוזת ריקה נכשל בשקט: אין throw, ה-webhook החזיר 200 ל-Grow, אבל 0 שורות עודכנו ב-DB.
+- **תיקון:** הוסיף שני ה-env ל-Production env vars ב-Vercel dashboard + redeploy.
+
+**תקלה 2 — באג ניתוב טבלה ב-webhook.ts:**
+- `payment_products` record של `yehoshua-campaign` מוגדר `type="wallet"`.
+- `create-payment` בונה את payload ל-Grow עם `cField2 = product.type` → שלח `cField2="wallet"`.
+- `webhook.ts` ניתב: `flowType === "donation" ? "donations" : "orders"` — וה-`cField2` ב-Grow webhook הוא `flowType`.
+- `"wallet"` ≠ `"donation"` → נפל לענף `"orders"` → ניסה `UPDATE orders SET payment_status='completed' WHERE id=<donation_uuid>` → 0 שורות affected (UUID לא קיים ב-orders) → pending לנצח.
+- **למה 7 הישנות עבדו?** הסליקות מ-30-31/5 נשלחו עם `cField2="donation"` (לפני deploy שהעביר לזרימת-מוצר). deploy ב-~31/5 החל לשלוח `cField2="wallet"` ושבר כל מה שאחריו.
+- **תיקון (commit b5b177c):** `webhook.ts` — `targetTable` נקבע לפי `payment_products.target_table` דרך `cField3` (productSlug) — המקור האמין. fallback ללוגיקה הישנה (cField2) כשאין productSlug, כדי לא לשבור store/subscription.
+- **אימות:** שורת טסט בטבלת donations עברה pending→completed עם `cField2=wallet` + `cField3=yehoshua-campaign`.
+
+#### תבנית אבחון "סליקות תקועות pending" — לשימוש חוזר
+
+בדוק לפי הסדר, עצור בראשון שנכשל:
+
+| שלב | בדיקה | כלי |
+|-----|--------|------|
+| א | השורה ב-DB בכלל? | `SELECT * FROM donations/orders WHERE id=<uuid>` |
+| ב | webhook מגיע לפונקציה? | POST ידני ל-`/api/grow/webhook` → 200? Vercel SSO לא חוסם API routes |
+| ג | מעדכן טבלה נכונה? | `cField2` vs `target_table` — **הבאג הזה!** |
+| ד | נספר ב-view? | `SELECT * FROM yehoshua_campaign_stats` — מסנן `payment_status='completed'` |
+| ה | תצוגה? | הדף קורא חי — אין cache; רענון מספיק |
+
+#### עובדות תשתית שהתבררו
+
+- **Grow/Meshulam: אין API לרשימת עסקאות.** נוסו 26 endpoints. רק dashboard ב-`secure.meshulam.co.il`. אימות עסקה בודדת דורש `processToken`/`transactionToken` שנוצר ב-create-payment — **לא שמרנו אותו** בטבלת donations.
+- **Webhook שנשרף לא נשלח שוב מ-Grow** — סליקות שנתקעו לפני התיקון דורשות backfill ידני.
+- **תצוגה חיה:** `DesignPreviewYehoshuaCampaign.tsx` קורא `yehoshua_campaign_stats` בכל mount — SPA, לא SSG. אין צורך ב-deploy לעדכון תצוגה.
+- **realtime:** `donations` הוגדר `REPLICA IDENTITY FULL` אבל לא ב-publication `supabase_realtime` — דורש Supabase Management PAT חדש (הישן פג). polling 30s + visibilitychange נפרס כ-fallback (commit ae2445c).
+- **Deploy pattern:** `productionBranch=main` ב-Vercel. עבודה על `feat/navigator-bot` → push → auto-deploy יוצא כ-preview בלבד. חייבים `vercel link + vercel --prod` ידני לפרודקשן. git author חייב `saar.j.z.h@gmail.com` אחרת Vercel חוסם ב-BLOCKED state.
+
+#### Backfill שבוצע (2.6.2026)
+
+19 תורמים אמיתיים שנתקעו pending סומנו completed ידנית → הבר עלה מ-7/₪900 ל-26/₪3,806.
+
+#### TODO פתוח
+
+- רפי בריקנר ₪360 + pending נוספים אחרי ה-backfill — לאמת מול Grow dashboard וסמן.
+- שמור `processId`/`processToken` ב-`create-payment` (עמודה ב-`donations`) → יאפשר אימות מול `getPaymentProcessInfo` בעתיד.
+- הקשחת webhook: `return 500` כשמשתני env חסרים (במקום 200 שקט) כדי ש-Grow ינסה retry.
+- Realtime publication: `ALTER PUBLICATION supabase_realtime ADD TABLE donations` (דורש Supabase PAT חדש מסאר).
+- יישור `payment_products.yehoshua-campaign`: `type="wallet"` + `page_code_env="DONATIONS"` — סתירה פנימית. לשקול ליישר `type` לערך עקבי.
+
+#### לקח ברזל: webhook silent-200 = תקלה הכי קשה לאבחון
+
+כאשר API מחזיר 200 אבל לא עושה כלום — אין שגיאה, אין log, אין סימן. **תמיד** להוסיף log מפורש ל-webhook (`console.log("updated rows:", data?.length)`) ו-guard על env vars בתחילת הפונקציה (`if (!url || !key) return new Response("missing env", {status:500})`).
+
+#### לקח ברזל: env vars — Production ≠ Preview בVercel
+
+הגדרת משתנה ב-"Preview" לא מעתיקה אותו ל-"Production". בכל הגדרת env var חדש: לבדוק שמסומן גם Production. ב-webhook שנכשל בשקט — לבדוק Vercel env vars לפני כל debug אחר.
+
+### 2026-06-02 — Yehoshua campaign donations stuck pending: two-layer bug RESOLVED (commit b5b177c)
+
+**רקע:** דף שותפים יהושע (`/yehoshua` → `DesignPreviewYehoshuaCampaign.tsx`). בר ההתקדמות תקוע על 7 שותפים / ₪900 למרות שסליקות אמיתיות נכנסו.
+
+#### הסימפטום שהסיח דעת
+- לקוח עם מספר בית "200" נתקע בטופס — נראה כמו באג ולידציה. האבחון הראשוני ריצד סביב זה.
+- בפועל: הדף קורא `yehoshua_campaign_stats` חי בכל טעינה (Vite SPA, ללא build-time caching). deploy לא נדרש לתצוגה — הבר קורא DB חי. הסחה.
+
+#### שתי תקלות שכבדו זו על זו
+
+**תקלה 1 — משתני סביבה חסרים בפרודקשן:**
+- `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` הוגדרו רק ב-Vercel **Preview** environment, לא ב-**Production**.
+- `api/grow/webhook.ts` קרא `createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)` — בפרודקשן קיבל `createClient("", "")`.
+- Supabase client עם מחרוזת ריקה נכשל בשקט: אין throw, ה-webhook החזיר 200 ל-Grow, אבל 0 שורות עודכנו ב-DB.
+- **תיקון:** הוסיף שני ה-env ל-Production env vars ב-Vercel dashboard + redeploy.
+
+**תקלה 2 — באג ניתוב טבלה ב-webhook.ts:**
+- `payment_products` record של `yehoshua-campaign` מוגדר `type="wallet"`.
+- `create-payment` בונה את payload ל-Grow עם `cField2 = product.type` → שלח `cField2="wallet"`.
+- `webhook.ts` ניתב: `flowType === "donation" ? "donations" : "orders"` — וה-`cField2` ב-Grow webhook הוא `flowType`.
+- `"wallet"` ≠ `"donation"` → נפל לענף `"orders"` → ניסה `UPDATE orders SET payment_status='completed' WHERE id=<donation_uuid>` → 0 שורות affected (UUID לא קיים ב-orders) → pending לנצח.
+- **למה 7 הישנות עבדו?** הסליקות מ-30-31/5 נשלחו עם `cField2="donation"` (לפני deploy שהעביר לזרימת-מוצר). deploy ב-~31/5 החל לשלוח `cField2="wallet"` ושבר כל מה שאחריו.
+- **תיקון (commit b5b177c):** `webhook.ts` — `targetTable` נקבע לפי `payment_products.target_table` דרך `cField3` (productSlug) — המקור האמין. fallback ללוגיקה הישנה (cField2) כשאין productSlug, כדי לא לשבור store/subscription.
+- **אימות:** שורת טסט בטבלת donations עברה pending→completed עם `cField2=wallet` + `cField3=yehoshua-campaign`.
+
+#### תבנית אבחון "סליקות תקועות pending" — לשימוש חוזר
+
+בדוק לפי הסדר, עצור בראשון שנכשל:
+
+| שלב | בדיקה | כלי |
+|-----|--------|------|
+| א | השורה ב-DB בכלל? | `SELECT * FROM donations/orders WHERE id=<uuid>` |
+| ב | webhook מגיע לפונקציה? | POST ידני ל-`/api/grow/webhook` → 200? Vercel SSO לא חוסם API routes |
+| ג | מעדכן טבלה נכונה? | `cField2` vs `target_table` — **הבאג הזה!** |
+| ד | נספר ב-view? | `SELECT * FROM yehoshua_campaign_stats` — מסנן `payment_status='completed'` |
+| ה | תצוגה? | הדף קורא חי — אין cache; רענון מספיק |
+
+#### עובדות תשתית שהתבררו
+
+- **Grow/Meshulam: אין API לרשימת עסקאות.** נוסו 26 endpoints. רק dashboard ב-`secure.meshulam.co.il`. אימות עסקה בודדת דורש `processToken`/`transactionToken` שנוצר ב-create-payment — **לא שמרנו אותו** בטבלת donations.
+- **Webhook שנשרף לא נשלח שוב מ-Grow** — סליקות שנתקעו לפני התיקון דורשות backfill ידני.
+- **תצוגה חיה:** `DesignPreviewYehoshuaCampaign.tsx` קורא `yehoshua_campaign_stats` בכל mount — SPA, לא SSG. אין צורך ב-deploy לעדכון תצוגה.
+- **realtime:** `donations` הוגדר `REPLICA IDENTITY FULL` אבל לא ב-publication `supabase_realtime` — דורש Supabase Management PAT חדש (הישן פג). polling 30s + visibilitychange נפרס כ-fallback (commit ae2445c).
+- **Deploy pattern:** `productionBranch=main` ב-Vercel. עבודה על `feat/navigator-bot` → push → auto-deploy יוצא כ-preview בלבד. חייבים `vercel link + vercel --prod` ידני לפרודקשן. git author חייב `saar.j.z.h@gmail.com` אחרת Vercel חוסם ב-BLOCKED state.
+
+#### Backfill שבוצע (2.6.2026)
+
+19 תורמים אמיתיים שנתקעו pending סומנו completed ידנית → הבר עלה מ-7/₪900 ל-26/₪3,806.
+
+#### TODO פתוח
+
+- רפי בריקנר ₪360 + pending נוספים אחרי ה-backfill — לאמת מול Grow dashboard וסמן.
+- שמור `processId`/`processToken` ב-`create-payment` (עמודה ב-`donations`) → יאפשר אימות מול `getPaymentProcessInfo` בעתיד.
+- הקשחת webhook: `return 500` כשמשתני env חסרים (במקום 200 שקט) כדי ש-Grow ינסה retry.
+- Realtime publication: `ALTER PUBLICATION supabase_realtime ADD TABLE donations` (דורש Supabase PAT חדש מסאר).
+- יישור `payment_products.yehoshua-campaign`: `type="wallet"` + `page_code_env="DONATIONS"` — סתירה פנימית. לשקול ליישר `type` לערך עקבי.
+
+#### לקח ברזל: webhook silent-200 = תקלה הכי קשה לאבחון
+
+כאשר API מחזיר 200 אבל לא עושה כלום — אין שגיאה, אין log, אין סימן. **תמיד** להוסיף log מפורש ל-webhook (`console.log("updated rows:", data?.length)`) ו-guard על env vars בתחילת הפונקציה (`if (!url || !key) return new Response("missing env", {status:500})`).
+
+#### לקח ברזל: env vars — Production ≠ Preview בVercel
+
+הגדרת משתנה ב-"Preview" לא מעתיקה אותו ל-"Production". בכל הגדרת env var חדש: לבדוק שמסומן גם Production. ב-webhook שנכשל בשקט — לבדוק Vercel env vars לפני כל debug אחר.
 - **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
