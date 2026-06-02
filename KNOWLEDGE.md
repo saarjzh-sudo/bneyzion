@@ -529,6 +529,26 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — yehoshua-campaign: DB audit + REPLICA IDENTITY FULL (תיקון 2+3)
+
+**DB-only, no frontend changes, no deploy needed.**
+
+**תיקון 2 — audit:**
+- קראנו את `yehoshua_campaign_stats` view: `WHERE product='yehoshua-campaign' AND payment_status='completed'` — **ללא** פילטר על `tier_id IS NOT NULL`.
+- אומת שה-view כבר כולל את 5 ה-completed חסרי tier_id: `supporters=7, raised=₪900`.
+- Breakdown: 2 completed עם tier_id (₪180) + 5 completed ללא tier_id (₪720) = 7 שותפים, ₪900.
+- `yehoshua_tier_counts` (per-tier) — נכון שמסנן `tier_id IS NOT NULL` by-design (אי אפשר לשייך חסרי tier לתיקיה).
+- **מסקנה:** אין צורך לשנות view כלשהו. ה-`useCampaignStats` hook (שמזין את הבר + "מספר השותפים") כבר מחשב נכון. לא שיברנו שום עמודה.
+
+**תיקון 3 — REPLICA IDENTITY FULL:**
+- לפני: `relreplident='d'` (default — רק PK בנוי ב-WAL logs).
+- `ALTER TABLE donations REPLICA IDENTITY FULL;` — הורץ דרך Management API.
+- אחרי: `relreplident='f'` (full — כל עמודה נרשמת ב-WAL). מאפשר את filter `product=eq.yehoshua-campaign` ב-realtime subscription ב-`useTierCounts` + `useCampaignStats`.
+- **ללא deploy frontend** — שינוי DB בלבד.
+
+**מה נשאר פתוח (מסשן קודם):**
+- backfill ידני של 22 orders pending (19 סאר + 3 אמיתיים).
+
 ### 2026-06-02 — admin-overhaul cohesion pass: dashboard redesign + visual verification + Vercel preview
 
 **Branch:** `admin-overhaul` — commit `8e4845da`
@@ -2929,13 +2949,12 @@ Saar must review deployed pages and give explicit approval. Legacy lazy import i
 **Deploy:**
 - Supabase: `navigation-bot-preview` פרוס ל-`pzvmwfexeiruelwiujxn` (אין preview env ב-Supabase — function נפרדת לבדיקה)
 - Supabase CLI shim: `SUPABASE_GO_BINARY=/Users/srhlq/.local/share/supabase/supabase-go` (shim קיים שבור)
-- `navigation-bot` (החי) — לא נגע. פריסה לchי ממתינה לאישור מפורש מסאר.
+- `navigation-bot` (החי) — **✅ נפרס ל-production 2026-06-02 באישור סער.** `navigation-bot` החי כעת זהה פונקציונלית ל-preview (43/43). אומת ישירות מול הפונקציה החיה: 'מחירים' → 'אין דף מחירים כללי' + /store,/chapter-weekly; מגילת אסתר → /megilat-esther; הרב יואב → /rabbis/yoav-uriel. באג /pricing המקורי סגור.
 - Vercel review URL: `https://bneyzion-git-fix-benzi-preview-link-saars-projects-4508d6bb.vercel.app` (env `VITE_BOT_FUNCTION=navigation-bot-preview`, scope=preview/branch; 401-protected — סאר פותח מחובר ל-Vercel)
 - commit: `02d9b0ab` (נחת על branch `admin-overhaul` עקב churn בין sessions מקבילים)
 
-**פתוח — לא לבצע בלי אישור מפורש מסאר:**
-- `supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn` — פריסת הגרסה המתוקנת לחי
-- לאחר פריסה: לאמת 43/43 מול `navigation-bot` (לא רק `navigation-bot-preview`)
+**סטטוס סגור — production אושר 2026-06-02:**
+- `supabase functions deploy navigation-bot` — בוצע ואומת.
 
 **Iron rules חדשות (להוסיף גם ל-§5 ו-REDESIGN.md §10):**
 - כל edge function שמשתמשת ב-Gemini: לוודא שם מודל ללא suffix preview + `maxOutputTokens >= 2048` אם המודל עם חשיבה
