@@ -402,6 +402,9 @@ public/
 22. **`DesignSidebar` is production. Never add `/design-*` links to it.** `Layout.tsx` imports `DesignSidebar` directly (since sidebar rollout). Any link inside it — even in the "ראשי" section or "רבנים" tab — reaches real users. All links must point to production routes (`/chapter-weekly`, `/rabbis/:id`, `/donate`), never to sandbox (`/design-*`). Found and fixed 2026-05-25.
 23. **Three nav arrays must stay in sync:** `FULL_NAV_LINKS` in `DesignPreviewHome.tsx`, `NAV_ITEMS` in `DesignHeader.tsx`, `NAV_ITEMS` in `DesignMobileBottomNav.tsx`. Iron rule 15 says "two navbars" but the mobile bottom nav is a third. Always update all 3.
 24. **NEVER hardcode secrets in scripts — always `os.environ.get()`/`${ENV_VAR}`.** Commit `6b57c96` (pre-cleanup SHA `743070b`) leaked both `SUPABASE_SERVICE_ROLE_KEY` and `SUPABASE_ACCESS_TOKEN` (Management PAT) in 4 script files (image-batch-phase1/2/3.py + phase1.sh). Discovered 2026-05-26. Fix: git-filter-repo rewrote all history; both tokens replaced with `SUPABASE_SERVICE_ROLE_REDACTED`/`SUPABASE_MGMT_PAT_REDACTED`. Scripts updated to env-var pattern. Iron rule: any script that calls Supabase must read credentials from `os.environ.get("SUPABASE_SERVICE_ROLE_KEY")` — if the env var is empty the script should fail loud (`KeyError`/`${VAR:?not set}`), never fall back to a hardcoded string.
+25. **Gemini model names in edge functions: never use preview/dated suffix.** `gemini-2.5-flash-preview-05-20` was pulled from service (404). Use `gemini-2.5-flash` (stable, no suffix). Before debugging "silent fallback" in any Gemini-powered edge function — verify model name first with a direct `curl` to the Gemini API. (Learned 2026-06-02, navigation-bot-preview session.)
+26. **Gemini thinking models need `maxOutputTokens >= 2048`.** `gemini-2.5-flash` burns ~490 tokens on internal "thinking" before generating output. With `maxOutputTokens:512`, complex queries result in `finishReason=MAX_TOKENS` and empty `candidates[0].content` → silent fallback. Set minimum 2048 for any thinking-capable model. (Learned 2026-06-02.)
+27. **LLM bots that return routes MUST have a server-side sanitizer.** A system prompt alone is insufficient — models can ignore it under pressure. The pattern: `isValidRoute(route)` checks against `STATIC_ROUTES` Set + `PREFIX_ROUTES` array; `sanitizeRoute()` falls back to `"/"`; `sanitizeCtas()` drops invalid entries. Without this, бнצי returned invented routes like `/pricing`, `/topics/:slug`, `/how-to-learn-tanach`. (Learned 2026-06-02.)
 
 ---
 
@@ -2717,6 +2720,68 @@ Saar must review deployed pages and give explicit approval. Legacy lazy import i
 - Batch backup BEFORE any DELETE (not per-row, not per-batch) — fetch all rows in batches of 50, write all to JSONL, THEN batch-delete.
 - RECOVER false positive analysis: v2 norm_title matching still has ~89% FP rate due to series-title mismatch (same lesson in different series). The only reliable final filter = direct DB title-only query.
 - Script: `/Users/srhlq/Downloads/saar-workspace/bneyzion-data/scripts/reconcile-mirror.py` (full LIVE implementation + --skip-recover flag + throttle retry + FK cleanup hooks)
+
+### 2026-06-02 — בנצי bot: navigation-bot-preview — תיקון מלא (43/43 PASS, ממתין לאישור production)
+
+**הקשר:** המשך לרשומה 2026-06-02 "בנצי bot: route whitelist + system prompt audit + fix" (commit `7f7876f6`, branch `fix/benzi-valid-links`). הסשן הנוכחי סיים את העבודה ב-branch `fix/benzi-preview-link` ופרס פונקציה נפרדת `navigation-bot-preview` לבדיקה בלי לגעת ב-`navigation-bot` החי.
+
+**5 שורשי הבעיה שטופלו:**
+
+1. **לינקים מומצאים (תוקן ב-whitelist + server-side sanitizer):**
+   - 6 routes שהיו ב-system prompt לא קיימים ב-App.tsx: `/pricing`, `/topics/:slug`, `/bible-book/:book`, `/search`, `/how-to-learn-tanach`, `/study-aids`
+   - whitelist הורחב ל-43 routes אמיתיים מ-App.tsx (static + dynamic prefix patterns)
+   - פונקציות `isValidRoute()` / `sanitizeRoute()` / `sanitizeCtas()` מבטיחות שגם אם המודל ממציא — הפלט נחסם בקוד (not just in prompt)
+
+2. **תוכן שגוי ב-system prompt (תוקן):**
+   - זהות: "תנועת בני ציון לעילוי נשמת..." → "פרויקט לימוד תנ"ך של הרב יואב אוריאל"
+   - מגילת אסתר: `/bible-book/esther` → `/megilat-esther` (ספר) + `/chapter-weekly` (תכנית)
+   - contact queries: "/" → `/contact`
+   - תיאור תכנית הפרק השבועי תוקן להתאמה לדף `/chapter-weekly`
+
+3. **[LESSON ⭐] מודל `gemini-2.5-flash-preview-05-20` הוצא משירות (404 מ-Google):**
+   - כל edge function שמשתמשת בו תיפול ל-fallback שקט — ללא שגיאה גלויה, רק תשובה ריקה
+   - **החלף תמיד ל-`gemini-2.5-flash` (ללא suffix)** — הגרסה היציבה הנוכחית
+   - לפני debug של "fallback בלי שגיאה" — תמיד לוודא את שם המודל ישירות מול Google API
+
+4. **[LESSON ⭐] `gemini-2.5-flash` מבזבז ~490 tokens על "thinking" פנימי:**
+   - עם `maxOutputTokens:512` שאלות קשות נחתכו: `finishReason=MAX_TOKENS`, `candidatesTokenCount=7`, פלט ריק → fallback
+   - **הועלה ל-2048.** כשמודל-חשיבה מחזיר fallback לסירוגין — לבדוק `usageMetadata.thoughtsTokenCount` מול `maxOutputTokens`
+   - כלל: מודל עם חשיבה פנימית (thinking budget) צריך `maxOutputTokens` גבוה מהצפי — minimum 2048 לבנצי
+
+5. **[LESSON] GEMINI_API_KEY ב-Supabase secrets:**
+   - ה-secret `GEMINI_API_KEY` בפרויקט `pzvmwfexeiruelwiujxn` החזיק מפתח ישן
+   - הפונקציה הישנה החיה כנראה מחזיקה מפתח hardcoded — לכן עבדה
+   - עודכן ה-secret למפתח הפעיל (`...FeVl_w`) — נדרש גם לתיקון production העתידי
+   - **לא לסמוך על secret קיים ב-Supabase — תמיד לאמת שהוא תקין לפני deploy**
+
+**מה נבנה (edge function `navigation-bot-preview`):**
+- `supabase/functions/navigation-bot-preview/index.ts` — clone של `navigation-bot` עם כל התיקונים
+- 43 routes ב-whitelist (מ-App.tsx: 34 static + 9 dynamic prefix patterns)
+- `STATIC_ROUTES` Set + `PREFIX_ROUTES` array + `isValidRoute()` + `sanitizeRoute()` + `sanitizeCtas()`
+- system prompt מתוקן: זהות נכונה, routes נכונים, "do not invent" explicit
+- `responseMimeType: "application/json"` + markdown fence stripping לפני `JSON.parse`
+- `console.warn` logging לכל route חסום (observability)
+- model: `gemini-2.5-flash` (לא preview), `maxOutputTokens: 2048`
+
+**אימות:**
+- 14 תרחישי integration, 43 assertions — **43/43 PASS** מול `navigation-bot-preview`
+- כל route בתשובות נמצא ב-whitelist. אפס לינקים מומצאים.
+
+**Deploy:**
+- Supabase: `navigation-bot-preview` פרוס ל-`pzvmwfexeiruelwiujxn` (אין preview env ב-Supabase — function נפרדת לבדיקה)
+- Supabase CLI shim: `SUPABASE_GO_BINARY=/Users/srhlq/.local/share/supabase/supabase-go` (shim קיים שבור)
+- `navigation-bot` (החי) — לא נגע. פריסה לchי ממתינה לאישור מפורש מסאר.
+- Vercel review URL: `https://bneyzion-git-fix-benzi-preview-link-saars-projects-4508d6bb.vercel.app` (env `VITE_BOT_FUNCTION=navigation-bot-preview`, scope=preview/branch; 401-protected — סאר פותח מחובר ל-Vercel)
+- commit: `02d9b0ab` (נחת על branch `admin-overhaul` עקב churn בין sessions מקבילים)
+
+**פתוח — לא לבצע בלי אישור מפורש מסאר:**
+- `supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn` — פריסת הגרסה המתוקנת לחי
+- לאחר פריסה: לאמת 43/43 מול `navigation-bot` (לא רק `navigation-bot-preview`)
+
+**Iron rules חדשות (להוסיף גם ל-§5 ו-REDESIGN.md §10):**
+- כל edge function שמשתמשת ב-Gemini: לוודא שם מודל ללא suffix preview + `maxOutputTokens >= 2048` אם המודל עם חשיבה
+- כל bot שמחזיר routes: חובה server-side `isValidRoute()` + `sanitizeCtas()` — לא לסמוך על prompt בלבד
+- GEMINI_API_KEY ב-Supabase secrets: לאמת תקינות לפני כל deploy של edge function חדשה
 
 ---
 
