@@ -36,6 +36,9 @@ interface TeacherLessonModalProps {
   seriesId: string;
   seriesImageUrl: string | null;
   seriesTitle: string;
+  /** Series author — authoritative for teacher content. Prefer over lesson.rabbiName,
+   *  which the migration sometimes set to the wrong rabbi (e.g. שמואל אליהו on a מנחם אליהו series). */
+  seriesRabbiName?: string | null;
   onClose: () => void;
 }
 
@@ -44,8 +47,10 @@ export default function TeacherLessonModal({
   seriesId,
   seriesImageUrl,
   seriesTitle,
+  seriesRabbiName,
   onClose,
 }: TeacherLessonModalProps) {
+  const displayRabbi = seriesRabbiName || lesson.rabbiName;
   // Lesson trio image chain
   const imgSrc =
     lesson.thumbnailUrl ||
@@ -135,9 +140,9 @@ export default function TeacherLessonModal({
             <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: "white", margin: 0, lineHeight: 1.35 }}>
               {lesson.title}
             </h2>
-            {lesson.rabbiName && (
+            {displayRabbi && (
               <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.goldShimmer, fontWeight: 700, marginTop: "0.2rem" }}>
-                {lesson.rabbiName}
+                {displayRabbi}
               </div>
             )}
           </div>

@@ -345,6 +345,7 @@ export default function TeachersSeriesPage() {
             seriesId={id}
             seriesImageUrl={series?.image_url || null}
             seriesTitle={series?.title || ""}
+            seriesRabbiName={series?.rabbiName || null}
             onClose={() => setModalLessonId(null)}
           />
         )}
