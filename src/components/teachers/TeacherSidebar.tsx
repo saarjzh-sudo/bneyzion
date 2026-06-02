@@ -31,6 +31,7 @@ import {
 import { colors, fonts, radii, shadows, gradients } from "@/lib/designTokens";
 import { useTeacherSidebar } from "@/hooks/useTeacherSidebar";
 import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
+import { PARSHIOT_BY_BOOK } from "@/hooks/useTeacherParashaContent";
 
 // ─── Helper: get anon key (same pattern as DesignPreviewTeachersWingV2) ──────
 function getAnonKey(): string {
@@ -191,9 +192,12 @@ export default function TeacherSidebar({
   });
 
   // ─── Render books accordion (shared between torah/neviim/ketuvim) ──────────
-  // B — when a book is expanded, shows:
-  //   1. "כל התכנים ב<book>" button → /teachers/book/:book
-  //   2. Child series list → /teachers/series/:id
+  // Per Saar: under each book show EXACTLY:
+  //   1. "כל התכנים ב<book>" → /teachers/book/:book
+  //   2. "דפי עבודה - <book>" → /teachers/worksheets/:book
+  //   3. Parshiot (Torah only, derived from PARSHIOT_BY_BOOK) — each → /teachers/parasha/:book/:parasha
+  // NO flat series list in sidebar.
+  // Neviim + Ketuvim: only items 1 + 2 (no parshiot).
   const renderBookGroup = (
     label: string,
     groupKey: string,
@@ -236,10 +240,11 @@ export default function TeacherSidebar({
             {visible.map((book) => {
               const bookKey = `${groupKey}::${book.id}`;
               const isBookOpen = expandedBooks.has(bookKey);
+              const parshiot = PARSHIOT_BY_BOOK[book.title] || [];
 
               return (
                 <div key={book.id}>
-                  {/* Book row — clicking always expands, arrow navigates to book page */}
+                  {/* Book row — clicking expands */}
                   <button
                     onClick={() => toggleExpand(setExpandedBooks, bookKey)}
                     style={{
@@ -259,7 +264,7 @@ export default function TeacherSidebar({
 
                   {isBookOpen && (
                     <div style={{ paddingInlineStart: "0.75rem" }}>
-                      {/* B.1 — "כל התכנים ב<book>" → /teachers/book/:book */}
+                      {/* 1 — "כל התכנים ב<book>" → /teachers/book/:book */}
                       <button
                         onClick={() => {
                           onDrawerClose?.();
@@ -279,35 +284,67 @@ export default function TeacherSidebar({
                           fontSize: "0.77rem",
                           fontFamily: fonts.body,
                           fontWeight: 700,
-                          marginBottom: "0.2rem",
+                          marginBottom: "0.18rem",
                           textAlign: "right" as const,
                         }}
                       >
-                        <span style={{ fontSize: "0.72rem" }}>📚</span>
                         כל התכנים ב{book.title}
                       </button>
 
-                      {/* B.2 — child series list */}
-                      {book.children
-                        .filter((c) => matchSearch(c.title))
-                        .map((child) => (
-                          <button
-                            key={child.id}
-                            onClick={() => handleSeriesClick(child.id)}
-                            style={{
-                              ...itemStyle(activeSeriesId === child.id),
-                              width: "100%",
-                              border: "none",
-                              fontSize: "0.78rem",
-                            }}
-                          >
-                            {child.title}
-                          </button>
-                        ))}
+                      {/* 2 — "דפי עבודה - <book>" → /teachers/worksheets/:book */}
+                      <button
+                        onClick={() => {
+                          onDrawerClose?.();
+                          navigate(`/teachers/worksheets/${encodeURIComponent(book.title)}`);
+                        }}
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          alignItems: "center",
+                          gap: "0.4rem",
+                          padding: "0.35rem 0.6rem",
+                          borderRadius: radii.sm,
+                          background: "transparent",
+                          border: "none",
+                          cursor: "pointer",
+                          color: colors.goldDark,
+                          fontSize: "0.76rem",
+                          fontFamily: fonts.body,
+                          fontWeight: 600,
+                          marginBottom: "0.18rem",
+                          textAlign: "right" as const,
+                        }}
+                        onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.07)"; }}
+                        onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+                      >
+                        דפי עבודה — {book.title}
+                      </button>
 
-                      {book.children.length === 0 && (
-                        <div style={{ padding: "0.3rem 0.6rem", fontFamily: fonts.body, fontSize: "0.73rem", color: colors.textSubtle }}>
-                          אין סדרות
+                      {/* 3 — Parshiot (Torah only) */}
+                      {parshiot.length > 0 && (
+                        <div style={{ paddingInlineStart: "0.25rem", borderInlineStart: `2px solid rgba(139,111,71,0.12)`, marginInlineStart: "0.3rem" }}>
+                          {parshiot
+                            .filter((p) => !search.trim() || `פרשת ${p}`.includes(search.trim()) || p.includes(search.trim()))
+                            .map((parasha) => (
+                              <button
+                                key={parasha}
+                                onClick={() => {
+                                  onDrawerClose?.();
+                                  navigate(`/teachers/parasha/${encodeURIComponent(book.title)}/${encodeURIComponent(parasha)}`);
+                                }}
+                                style={{
+                                  ...itemStyle(false),
+                                  width: "100%",
+                                  border: "none",
+                                  fontSize: "0.75rem",
+                                  paddingInlineStart: "0.5rem",
+                                }}
+                                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.07)"; (e.currentTarget as HTMLButtonElement).style.color = colors.oliveDark; }}
+                                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; (e.currentTarget as HTMLButtonElement).style.color = colors.textMuted; }}
+                              >
+                                פרשת {parasha}
+                              </button>
+                            ))}
                         </div>
                       )}
                     </div>

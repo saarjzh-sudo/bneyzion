@@ -33,6 +33,9 @@ const TeachersLessonPage      = lazy(() => import("./pages/teachers/TeachersLess
 const TeachersBookPage        = lazy(() => import("./pages/teachers/TeachersBookPage"));
 const TeachersContentTypePage = lazy(() => import("./pages/teachers/TeachersContentTypePage"));
 const TeachersCreatorPage     = lazy(() => import("./pages/teachers/TeachersCreatorPage"));
+// Teachers Wing parasha + worksheets pages — 2026-06-02 (F)
+const TeachersParashaPage    = lazy(() => import("./pages/teachers/TeachersParashaPage"));
+const TeachersWorksheetsPage = lazy(() => import("./pages/teachers/TeachersWorksheetsPage"));
 const ChapterWeekly = lazy(() => import("./pages/ChapterWeekly"));
 const MegilatEsther = lazy(() => import("./pages/MegilatEsther"));
 const Proposal = lazy(() => import("./pages/Proposal"));
@@ -263,6 +266,9 @@ const App = () => (
             <Route path="/teachers/book/:book" element={<Suspense fallback={<LazyFallback />}><TeachersBookPage /></Suspense>} />
             <Route path="/teachers/content-type/:type" element={<Suspense fallback={<LazyFallback />}><TeachersContentTypePage /></Suspense>} />
             <Route path="/teachers/creator/:id" element={<Suspense fallback={<LazyFallback />}><TeachersCreatorPage /></Suspense>} />
+            {/* Teachers Wing parasha + worksheets — 2026-06-02 (F) */}
+            <Route path="/teachers/parasha/:book/:parasha" element={<Suspense fallback={<LazyFallback />}><TeachersParashaPage /></Suspense>} />
+            <Route path="/teachers/worksheets/:book" element={<Suspense fallback={<LazyFallback />}><TeachersWorksheetsPage /></Suspense>} />
             <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />

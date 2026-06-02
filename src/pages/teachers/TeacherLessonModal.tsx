@@ -191,6 +191,49 @@ export default function TeacherLessonModal({
               <audio controls src={lesson.audioUrl} style={{ width: "100%" }} />
             </div>
           )}
+
+          {/* PDF / Word inline viewer */}
+          {lesson.attachmentUrl && !lesson.videoUrl && (() => {
+            const url = lesson.attachmentUrl!;
+            const lower = url.toLowerCase();
+            const isPdf  = lower.includes(".pdf");
+            const isDocx = lower.includes(".docx") || lower.includes(".doc");
+
+            if (isPdf) {
+              return (
+                <div style={{ marginBottom: "0.5rem" }}>
+                  <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginBottom: "0.4rem", fontWeight: 600 }}>
+                    תצוגת מסמך:
+                  </div>
+                  <iframe
+                    src={url}
+                    title="PDF viewer"
+                    style={{ width: "100%", height: 320, border: "1px solid rgba(139,111,71,0.15)", borderRadius: radii.lg }}
+                  />
+                </div>
+              );
+            }
+
+            if (isDocx) {
+              const encoded = encodeURIComponent(url);
+              // Office Online viewer (primary), Google Docs viewer (fallback in title attr)
+              const officeUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`;
+              return (
+                <div style={{ marginBottom: "0.5rem" }}>
+                  <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginBottom: "0.4rem", fontWeight: 600 }}>
+                    תצוגת מסמך Word:
+                  </div>
+                  <iframe
+                    src={officeUrl}
+                    title="Word viewer"
+                    style={{ width: "100%", height: 320, border: "1px solid rgba(139,111,71,0.15)", borderRadius: radii.lg }}
+                  />
+                </div>
+              );
+            }
+
+            return null;
+          })()}
         </div>
 
         {/* Footer CTAs */}
