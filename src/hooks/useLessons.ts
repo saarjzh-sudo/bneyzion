@@ -46,6 +46,8 @@ export function useCreateLesson() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (lesson: Partial<Lesson>) => {
+      // Partial<Lesson> doesn't satisfy the required `title` in Supabase Insert type.
+      // The `as any` cast here is intentional — callers must supply a title.
       const { data, error } = await supabase.from("lessons").insert([lesson as any]).select().single();
       if (error) throw error;
       return data;
@@ -58,12 +60,9 @@ export function useUpdateLesson() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...updates }: Partial<Lesson> & { id: string }) => {
-      // Cast to `any` because the generated Supabase types don't yet include
-      // the approval-workflow columns (submitted_by, reviewed_by, etc.).
-      // These columns are added via migration 20260602_content_approval_workflow.sql.
       const { data, error } = await supabase
         .from("lessons")
-        .update({ ...(updates as any), updated_at: new Date().toISOString() })
+        .update({ ...updates, updated_at: new Date().toISOString() })
         .eq("id", id)
         .select()
         .single();

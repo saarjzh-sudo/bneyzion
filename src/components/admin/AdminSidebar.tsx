@@ -2,7 +2,7 @@ import {
   LayoutDashboard, BookOpen, Users2, FolderOpen, Tag, ArrowLeftRight,
   Shield, Home, Settings, ShoppingBag, Mail, GitCompare, GraduationCap,
   BarChart3, Bell, PanelTop, ClipboardList, Ticket, HeartPulse, CreditCard,
-  UserCheck,
+  UserCheck, Upload,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -37,6 +37,7 @@ interface NavItem {
 
 // ─── Content items — admin + creator ───────────────────────────
 const CONTENT_ITEMS: NavItem[] = [
+  { title: "העלאת תוכן",    url: "/admin/upload",            icon: Upload,        roles: ["admin", "creator"] },
   { title: "שיעורים",        url: "/admin/lessons",           icon: BookOpen,      roles: ["admin", "creator"] },
   { title: "רבנים",          url: "/admin/rabbis",            icon: Users2,        roles: ["admin", "creator"] },
   { title: "סדרות",          url: "/admin/series",            icon: FolderOpen,    roles: ["admin", "creator"] },

@@ -49,7 +49,11 @@ export type Database = {
           id: string
           lesson_number: number
           published_at: string | null
+          review_note: string | null
+          reviewed_by: string | null
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
           title: string
           video_url: string | null
         }
@@ -63,7 +67,11 @@ export type Database = {
           id?: string
           lesson_number?: number
           published_at?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title: string
           video_url?: string | null
         }
@@ -77,7 +85,11 @@ export type Database = {
           id?: string
           lesson_number?: number
           published_at?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title?: string
           video_url?: string | null
         }
@@ -671,9 +683,13 @@ export type Database = {
           id: string
           published_at: string | null
           rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
           series_id: string | null
           source_type: string
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string
@@ -695,9 +711,13 @@ export type Database = {
           id?: string
           published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           series_id?: string | null
           source_type?: string
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string
@@ -719,9 +739,13 @@ export type Database = {
           id?: string
           published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           series_id?: string | null
           source_type?: string
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string
@@ -1516,9 +1540,14 @@ export type Database = {
           image_url: string | null
           lesson_count: number
           parent_id: string | null
+          published_at: string | null
           rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
           sort_order: number
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
           title: string
         }
         Insert: {
@@ -1529,9 +1558,14 @@ export type Database = {
           image_url?: string | null
           lesson_count?: number
           parent_id?: string | null
+          published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           sort_order?: number
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title: string
         }
         Update: {
@@ -1542,9 +1576,14 @@ export type Database = {
           image_url?: string | null
           lesson_count?: number
           parent_id?: string | null
+          published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           sort_order?: number
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title?: string
         }
         Relationships: [
