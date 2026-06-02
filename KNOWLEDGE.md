@@ -526,6 +526,48 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — bneyzion-data branch: round-2 Saar feedback (sidebar/series/teachers/lesson)
+
+**Branch:** `fix/series-teachers-data`
+**Commit before this session:** `fc24bd3d` (ניקוי 1,090 + sidebar filter + teachers hooks fix)
+
+#### מצב שהגענו אליו עד כה
+- 1,090 שיעורי זבל נמחקו לאורך מספר סשנים (כולל 436 ב-round 1 של branch זה).
+- `useContentSidebar.ts` מסנן כעת סדרות עם `lesson_count > 0` בלבד.
+- `useTeacherSidebar.ts` ו-`useTeachersWing.ts` מחוברים לדאטה אמיתית עם `audience_tags @> ['teachers']`.
+- `DesignPreviewTeachersWingV2.tsx` (sandbox `/design-teachers-wing-v2`) יש בו hooks נכונים: `useContentTypeCounts` + `useCreatorsByType`.
+- עמוד `/series/:id` מצביע ל-`DesignPreviewSeriesPageV2.tsx`.
+- עמוד `/design-series-list` קיים אך `/series` (ללא :id) הוסר מ-App.tsx ב-27.5.2026.
+
+#### פידבק סאר — round 2 (2026-06-02)
+
+**ציר 1 — סיידבר: כפילות ותנהגות לחיצה על קטגוריה**
+- לחיצה על קטגוריה פותחת SeriesInlineList בסיידבר — אבל סאר רוצה ניווט לדף קטגוריה נפרד.
+- כפתור "כל השיעורים ב-X" צריך רק לנווט לדף קטגוריה — לא לפתוח SeriesInlineList מתחתיו.
+- accordion שכותרתו שם-סדרה ומתחתיו רק אותה סדרה — להעיף (SeriesInlineList עם סדרה אחת = חסר-ערך).
+- כשלוחצים על שם ספר → מתחתיו accordion הילדים בלבד + ניווט לדף קטגוריה.
+
+**ציר 2 — דף סדרה**
+- Hero מציג רב אחד בלבד (series.rabbis?.name). תיקון: אם rabbi_id=NULL → לאסוף רבנים ייחודיים מ-lessons.
+- SubSeriesGroup מציג children עם lesson_count=0. תיקון: להציג רק children שיש להם lesson_count > 0.
+- דף קטגוריה לא קיים כ-route. צריך `/category/:id` שמציג את כל הסדרות + שיעורים לא-בסדרה תחת הקטגוריה.
+
+**ציר 3 — שיעור (popup ודף מלא)**
+- LessonModal: להציג `lesson.content` המלא (עם sanitizeHtml), לא snippet של 320 תווים.
+- LessonPage.tsx (production): אין hero image. relatedLessons מוצגים בלי תמונה. שניהם לתיקון.
+
+**ציר 4 — אגף המורים**
+- FilterPanel ב-TeachersSeriesPage.tsx — להעיף (כפילות עם סיידבר).
+- TeacherSidebar.tsx (production) tabs: "ספרים/כלים/יוצרים" — שגוי. צריך "ראשי/סוג תוכן/יוצרים" (כמו DesignPreviewTeachersWingV2).
+- useContentTypeCounts ב-v2 כן מחובר לדאטה. הבעיה שה-production עדיין משתמש ב-TeacherSidebar הישן.
+- מספרי סוג תוכן מהאתר הישן (כפי שנמדדו 2026-05-27): 475/426/358/354/312/252/213/132/91/36 (ראה פרומפט לפירוט).
+- **כלל ברזל**: הדאטה בעמודת content_type ב-DB כבר מאוכלס מסשן 2026-05-27. אסור להמציא מחדש — לחבר ל-content_type הקיים.
+
+#### הבהרה קריטית — סשן 2026-05-27
+"כבר עשינו סשן ארוך שאיפס את כל אגף המורים קטגוריה-קטגוריה בסיידבר" — content_type values ב-DB כבר מאוכלסים. אסור להמציא mapping חדש. query GROUP BY content_type על lessons עם audience_tags @> ['teachers'] יאמת את המספרים.
+
+---
+
 ### 2026-06-02 — Smoove portal import PILOT: ספר עזרא → community_course_lessons (32 rows)
 
 **Branch:** `feat/smoove-portal-import`
@@ -554,6 +596,62 @@ No human figures, no faces, no letters, no text.
 - `useCourseLessons(courseId)` — SELECT *, eq(status, published), order(lesson_number asc)
 - `CommunityDetailPage.tsx` renders: `video_url` → aspect-video iframe · `content_html` → prose dangerouslySetInnerHTML (sanitized via DOMPurify)
 - `CommunityCoursePage.tsx` (portal) — same fields, same rendering
+
+---
+
+### 2026-06-02 — Smoove pilot: 3 הגדרות סאר — Drive inline + bible_verses native + audio↔video link
+
+**Branch:** `feat/smoove-portal-import`
+
+#### מה נבנה
+
+**החלטה 1: Drive inline (וידאו + PDF)**
+- אין שינוי לוגיקה — Drive `/preview` iframes כבר עובדים.
+- `CommunityDetailPage.tsx` dialog: iframe עם `allow="autoplay"` ו-`allowFullScreen`.
+- PDF מ-Drive: `content_html` מכיל אותו `/preview` — מתנגן inline ב-prose block.
+
+**החלטה 2: bible_verses — קורא native**
+- טבלה חדשה: `public.bible_verses` (book TEXT, chapter INT, verse INT, text_he TEXT, UNIQUE(book,chapter,verse)).
+- אוכלסה חד-פעמית: 280 פסוקים, עזרא פרקים א-י מ-Sefaria API.
+- עמודה חדשה: `community_course_lessons.reading_chapter INT` — מסמן שיש פרק קריאה native.
+- 10 שורות layer=base עודכנו: `reading_chapter = bible_chapter` (פרקים 1-10).
+- hook חדש: `useBibleChapter(book, chapter)` ב-`src/hooks/useCommunity.ts`.
+- component חדש: `src/components/community/BibleChapterReader.tsx` — RTL, ניקוד, מספור עברי, רקע ענבר.
+- `CommunityDetailPage.tsx` dialog: כשיש `reading_chapter` → `<BibleChapterReader book=... chapter=... />`.
+
+**החלטה 3: audio↔video — איחוד על שורה אחת**
+- עמודה קיימת (`audio_url`) על `community_course_lessons` — לא נוספה.
+- 10 שורות layer=base עודכנו: `audio_url` = S3 URL של הרב יונדב זר (מ-`lessons` table).
+- מיפוי: `lessons` table, `rabbit.name ILIKE '%יונדב זר%'`, `title ~ '^עזרא פרק [א-י]$'`, `bible_chapter = N`.
+- דיאלוג: video iframe ראשון → אחריו audio עם label "גרסת אודיו — הרב יונדב זר (ארכיון)".
+
+#### DB state אחרי session זה
+
+| lesson# | layer | ch | reading_ch | audio | video |
+|---|---|---|---|---|---|
+| 3,6,9,12,15,18,21,24,27,30 | base | 1-10 | 1-10 | S3/יונדב זר | Drive/preview |
+| 2 | intro | NULL | NULL | ✗ | ✓ |
+| 5,8,11...32 | weekly | 1-10 | NULL | ✗ | ✓ |
+| 4,7,10...31 | enrichment | 1-10 | NULL | ✗ | ✗ |
+| 1 | resources | NULL | NULL | ✗ | ✗ |
+
+#### bible_verses coverage
+- עזרא: 280 פסוקים (11+70+13+24+17+22+28+36+15+44)
+- שאר הספרים: ריק — לאכלס לפי צורך (script /tmp/populate_bible_verses_curl.py לשימוש חוזר)
+
+#### Frontend files changed
+- `src/hooks/useCommunity.ts` — `useBibleChapter` hook חדש
+- `src/pages/CommunityDetailPage.tsx` — dialog: BibleChapterReader + audio dual-format label
+- `src/components/community/BibleChapterReader.tsx` — component חדש
+
+#### Migration files
+- `supabase/migrations/20260602_bible_verses_and_audio_video_linking.sql`
+
+#### Iron rule חדש (learned this session)
+- **Sefaria type=reading items → reading_chapter column, never a Sefaria link.** ה-URL המקורי `https://www.sefaria.org.il/Ezra.N?lang=he` לא מוטמע באתר — במקומו `reading_chapter=N` + `BibleChapterReader`. כלל זה חל על כל 6 הקורסים הנוספים.
+- **audio_url + video_url על אותה community_course_lessons שורה = dual-format.** לא שתי שורות נפרדות. Frontend מציג שניהם בדיאלוג אחד.
+- **bible_verses.text_he מכיל ניקוד מסורה (מ-Sefaria `he` field).** `text` field = אנגלית. תמיד `he` field.
+
 
 **Import script:** `/tmp/ezra_import.py` + `/tmp/ezra_lessons_preview.json` (ephemeral — regenerate from ezra.json if needed)
 

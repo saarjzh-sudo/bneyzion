@@ -2,10 +2,11 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, Video, Play, Lock, Clock, Users, BookOpen, ArrowRight, CheckCircle2, ChevronLeft, Headphones, FileText } from "lucide-react";
+import { Calendar, Video, Play, Lock, Users, BookOpen, ArrowRight, CheckCircle2, ChevronLeft, Headphones, FileText } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCourseDetail, useCourseSessions, useCourseEnrollment, useEnrollInCourse } from "@/hooks/useCourseEnrollment";
 import { useCourseLessons, useMemberAccess } from "@/hooks/useCommunity";
+import { BibleChapterReader } from "@/components/community/BibleChapterReader";
 import Layout from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -182,14 +183,40 @@ const CommunityDetailPage = () => {
                 <DialogTitle className="text-xl font-heading">{selectedLesson.title}</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
+
+                {/* Decision 1: Drive video — inline iframe (never opens new tab) */}
                 {selectedLesson.video_url && (
                   <div className="aspect-video rounded-xl overflow-hidden bg-black">
-                    <iframe src={selectedLesson.video_url} className="w-full h-full" allowFullScreen />
+                    <iframe
+                      src={selectedLesson.video_url}
+                      className="w-full h-full border-0"
+                      allow="autoplay"
+                      allowFullScreen
+                      title={selectedLesson.title}
+                    />
                   </div>
                 )}
+
+                {/* Decision 3: audio — shown below video when both exist */}
                 {selectedLesson.audio_url && (
-                  <audio controls className="w-full" src={selectedLesson.audio_url} />
+                  <div className="space-y-1">
+                    {selectedLesson.video_url && (
+                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Headphones className="h-3 w-3" /> גרסת אודיו — הרב יונדב זר (ארכיון)
+                      </p>
+                    )}
+                    <audio controls className="w-full" src={selectedLesson.audio_url} />
+                  </div>
                 )}
+
+                {/* Decision 2: native bible chapter reader */}
+                {selectedLesson.reading_chapter && selectedLesson.bible_book && (
+                  <BibleChapterReader
+                    book={selectedLesson.bible_book}
+                    chapter={selectedLesson.reading_chapter}
+                  />
+                )}
+
                 {selectedLesson.content_html && (
                   <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedLesson.content_html ?? "") }} />
                 )}
@@ -341,6 +368,7 @@ const LessonsList = ({ lessons, isEnrolled, isMember, user, onSelect, onEnroll, 
           <div className="flex items-center gap-2 shrink-0">
             {lesson.video_url && <Video className="h-3.5 w-3.5 text-muted-foreground" />}
             {lesson.audio_url && <Headphones className="h-3.5 w-3.5 text-muted-foreground" />}
+            {lesson.reading_chapter && <BookOpen className="h-3.5 w-3.5 text-amber-600" />}
             {lesson.attachment_url && <FileText className="h-3.5 w-3.5 text-muted-foreground" />}
             {!canAccess && <Lock className="h-3.5 w-3.5 text-muted-foreground" />}
             {canAccess && <ChevronLeft className="h-3.5 w-3.5 text-muted-foreground" />}
