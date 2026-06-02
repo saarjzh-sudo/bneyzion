@@ -26,6 +26,24 @@ export interface CommunityLesson {
   reading_chapter: number | null;
 }
 
+// ── Multi-item layer model (new: one row per file) ────────────────────────
+// Each chapter/layer can have multiple lessons (e.g. base has ושננתם + audio + guidance_sheet).
+
+export interface ChapterLayersMulti {
+  chapter: number;
+  topic: string | null;          // description from the first row of this chapter
+  base: CommunityLesson[];
+  enrichment: CommunityLesson[];
+  weekly: CommunityLesson[];
+}
+
+export interface CourseDataMulti {
+  intro: CommunityLesson[];       // intro-layer items (shown before chapter 1)
+  chapters: Map<number, ChapterLayersMulti>;
+  chapterNumbers: number[];
+}
+
+// ── Legacy single-item model (kept for backward compat) ──────────────────
 export interface ChapterLayers {
   chapter: number;
   base: CommunityLesson | null;
@@ -59,7 +77,69 @@ export function useCourseByProgramSlug(programSlug: string | undefined) {
   });
 }
 
-// ── useChapterLayerMap ─────────────────────────────────────────────────────
+// ── useCourseDataMulti — NEW multi-item hook ───────────────────────────────
+// Supports the new model where each layer has multiple items per chapter.
+
+export function useCourseDataMulti(courseId: string | undefined) {
+  return useQuery({
+    queryKey: ["course-data-multi", courseId],
+    enabled: !!courseId,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_course_lessons")
+        .select("*")
+        .eq("course_id", courseId!)
+        .eq("status", "published")
+        .order("bible_chapter", { ascending: true, nullsFirst: true })
+        .order("lesson_number", { ascending: true });
+      if (error) throw error;
+
+      const lessons = (data ?? []) as CommunityLesson[];
+
+      const result: CourseDataMulti = {
+        intro: [],
+        chapters: new Map(),
+        chapterNumbers: [],
+      };
+
+      for (const lesson of lessons) {
+        const lt = lesson.layer_type?.toLowerCase();
+
+        if (lt === "intro") {
+          result.intro.push(lesson);
+          continue;
+        }
+
+        const ch = lesson.bible_chapter;
+        if (!ch) continue;
+
+        if (!result.chapters.has(ch)) {
+          result.chapters.set(ch, {
+            chapter: ch,
+            topic: lesson.description ?? null,
+            base: [],
+            enrichment: [],
+            weekly: [],
+          });
+        }
+        const entry = result.chapters.get(ch)!;
+        // Set topic from first row if not yet set
+        if (!entry.topic && lesson.description) entry.topic = lesson.description;
+
+        if (lt === "base") entry.base.push(lesson);
+        else if (lt === "enrichment") entry.enrichment.push(lesson);
+        else if (lt === "weekly") entry.weekly.push(lesson);
+      }
+
+      result.chapterNumbers = Array.from(result.chapters.keys()).sort((a, b) => a - b);
+
+      return result;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+// ── useChapterLayerMap (legacy — keep for backward compat) ─────────────────
 
 export function useChapterLayerMap(courseId: string | undefined) {
   return useQuery({
