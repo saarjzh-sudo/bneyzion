@@ -28,12 +28,33 @@ import { createClient } from "@supabase/supabase-js";
 import https from "node:https";
 
 // ── Supabase (service_role — bypasses RLS) ────────────────────────────────────
+// SUPABASE_SERVICE_ROLE must be set in environment — never hardcode.
+// Retrieve via: curl -s --noproxy '*' -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN"
+//   https://api.supabase.com/v1/projects/pzvmwfexeiruelwiujxn/api-keys | jq '.[]|select(.name=="service_role").api_key'
+if (!process.env.SUPABASE_SERVICE_ROLE) {
+  console.error(
+    "ERROR: SUPABASE_SERVICE_ROLE environment variable is not set.\n" +
+    "Usage: SUPABASE_SERVICE_ROLE=<key> SMOOVE_API_KEY=<key> node scripts/import-weekly-chapter-subscribers.mjs\n" +
+    "Key: retrieve from Supabase Management API (see api-keys.md)"
+  );
+  process.exit(1);
+}
 const SUPABASE_URL = "https://pzvmwfexeiruelwiujxn.supabase.co";
-const SUPABASE_SERVICE_ROLE =
-  "SUPABASE_SERVICE_ROLE_REDACTED";
+const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
 
 // ── Smoove ─────────────────────────────────────────────────────────────────────
-const SMOOVE_API_KEY = "3283291e-4a55-47d1-8558-33bbac74a985";
+// SMOOVE_API_KEY must be set in environment — never hardcode.
+// Run: env -u HTTPS_PROXY -u HTTP_PROXY SMOOVE_API_KEY=<key> node scripts/import-weekly-chapter-subscribers.mjs
+// Key value: see סקילים/01-skills/shigor-pro/references/clients.md (bnei-zion section)
+if (!process.env.SMOOVE_API_KEY) {
+  console.error(
+    "ERROR: SMOOVE_API_KEY environment variable is not set.\n" +
+    "Usage: SMOOVE_API_KEY=<key> node scripts/import-weekly-chapter-subscribers.mjs [--dry-run]\n" +
+    "Key location: סקילים/01-skills/shigor-pro/references/clients.md"
+  );
+  process.exit(1);
+}
+const SMOOVE_API_KEY = process.env.SMOOVE_API_KEY;
 const SMOOVE_LIST_ID = 1045078; // "הפרק השבועי - תכנית מנויים"
 const SMOOVE_BASE = "https://rest.smoove.io";
 

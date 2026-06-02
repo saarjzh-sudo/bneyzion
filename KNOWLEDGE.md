@@ -427,8 +427,8 @@ public/
 | Topics | 741 |
 | Products (active) | 47 |
 | Product categories | 10 |
-| Auth users | 2 |
-| Admin users | 1 (`saar.j.z.h@gmail.com`) |
+| Auth users | 6 (updated 2026-06-02) |
+| Admin users | 2 (`saar.j.z.h@gmail.com` + `yoavoriel@gmail.com`) |
 
 ### Data coverage by book (series, top 10)
 תהלים 157 · ישעיהו 81 · ירמיהו 69 · יחזקאל 62 · בראשית 58 · שמות 57 · במדבר 46 · דברים 45 · ויקרא 43 · שופטים 30
@@ -525,6 +525,50 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-02 — admin-overhaul backend: migration audit + creator role + yoav admin + dry-run
+
+**Branch:** `admin-overhaul` (backend-only, no frontend touched)
+
+**Migration `20260430_weekly_program_foundation.sql` — status: ALREADY APPLIED**
+- All 5 objects existed before this session (tables, columns, indexes, policies, function).
+- `user_access_tags` — 12 cols, 4 indexes (ux_user_access_tags_user_tag, ux_user_access_tags_email_tag, idx_*_tag, idx_*_user_id), 2 RLS policies.
+- `weekly_program_progress` — 10 cols, 2 RLS policies.
+- `community_courses` — 3 new cols present (program_slug, access_type, access_tag).
+- `community_course_lessons` — 8 new cols present (week_number, bible_book, bible_chapter, layer_type, summary_html, presentation_url, drive_folder_url, thumbnail_url).
+- `has_access_tag(uuid, text)` function — exists with SECURITY DEFINER, GRANT to authenticated.
+- **NOTE:** `grow_orders` table does NOT exist (see §3 note below). The FK `grow_order_id REFERENCES public.grow_orders(id)` in the SQL is silently skipped because `user_access_tags` was created before `grow_orders` existed. Constraint is NOT in the DB.
+
+**`creator` role added to `app_role` enum:**
+- `ALTER TYPE app_role ADD VALUE IF NOT EXISTS 'creator'` executed successfully.
+- Values now: `admin`, `moderator`, `user`, `creator`.
+
+**Yoav Oriel — admin granted:**
+- `yoavoriel@gmail.com` existed in `auth.users` (id `74e60b95-afe3-4939-a481-1ecb150c9bda`, signed in 2026-05-01).
+- `INSERT INTO user_roles (user_id, role) VALUES ('74e60b95...', 'admin') ON CONFLICT DO NOTHING` — succeeded.
+- `user_roles` now has 2 admin rows: saar + yoav.
+- **Note:** `user_roles.user_id` is `text` type (not `uuid`) — JOINs with `auth.users.id` require explicit cast `::text`.
+
+**Scripts — env-var fix in `scripts/import-weekly-chapter-subscribers.mjs`:**
+- `SMOOVE_API_KEY` hardcoded on line 36 → now reads `process.env.SMOOVE_API_KEY`, fails loudly if unset.
+- `SUPABASE_SERVICE_ROLE` hardcoded (was `SUPABASE_SERVICE_ROLE_REDACTED`) → now reads `process.env.SUPABASE_SERVICE_ROLE`, fails loudly if unset.
+- Key documented location: `סקילים/01-skills/shigor-pro/references/clients.md` §בני ציון (line 145).
+
+**Dry-run results — Smoove list 1045078 (הפרק השבועי):**
+- Total contacts: **288**
+- Linked to Supabase user: **6** (pending_user_link=false) — includes yoav himself
+- Pending user registration: **279** (pending_user_link=true)
+- Skipped (no email): **3**
+- Total rows would be upserted: **285**
+- No data written to DB (dry-run only). To run real import: `SUPABASE_SERVICE_ROLE=<key> SMOOVE_API_KEY=<key> node scripts/import-weekly-chapter-subscribers.mjs`
+
+**grow_orders — confirmed absent:**
+- `information_schema.tables` query returned 0 rows for `grow_orders`.
+- No FK constraint exists on `user_access_tags.grow_order_id` (constraint check returned empty).
+- Impact: `grow_order_id` column is nullable with no integrity constraint — safe to leave NULL for all import rows.
+- Recommendation: create `grow_orders` table when Grow webhook integration is built (see §8 open items).
+
+**Auth users count updated:** was 2 (saar only admin), now 6 registered users total, 2 admins (saar + yoav).
 
 ### 2026-06-02 — בנצי bot: route whitelist + system prompt audit + fix
 
