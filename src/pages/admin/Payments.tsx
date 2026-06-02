@@ -11,7 +11,7 @@
  */
 
 import { useState, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   CreditCard,
   ShoppingBag,
@@ -23,8 +23,14 @@ import {
   X,
   Repeat2,
   Package,
+  FileText,
+  Pencil,
+  Check,
+  AlertTriangle,
+  Loader2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { SUPABASE_URL_RUNTIME, SUPABASE_ANON_KEY_RUNTIME } from "@/integrations/supabase/client";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -51,7 +57,16 @@ import {
   SheetTitle,
   SheetClose,
 } from "@/components/ui/sheet";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { Label } from "@/components/ui/label";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /* ─── Color tokens (gold / parchment / navy — mirrors design system) ─── */
 const C = {
@@ -717,6 +732,90 @@ function usePaymentProducts() {
   });
 }
 
+/* ─── Mutation: toggle payment_product.active ────────────────────────── */
+function useToggleProductActive() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, active }: { id: string; active: boolean }) => {
+      const { error } = await supabase
+        .from("payment_products")
+        .update({ active })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-payments-products"] }),
+  });
+}
+
+/* ─── Mutation: update payment_product fields ────────────────────────── */
+function useUpdatePaymentProduct() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id,
+      display_name,
+      default_amount,
+      max_installments,
+    }: {
+      id: string;
+      display_name: string;
+      default_amount: number | null;
+      max_installments: number;
+    }) => {
+      const { error } = await supabase
+        .from("payment_products")
+        .update({ display_name, default_amount, max_installments })
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-payments-products"] }),
+  });
+}
+
+/* ─── Mutation: issue Paperless invoice ──────────────────────────────── */
+function useIssuePaperlessInvoice() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      source_table,
+      record_id,
+    }: {
+      source_table: "orders" | "donations";
+      record_id: string;
+    }) => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) throw new Error("לא מחובר");
+
+      const res = await fetch(
+        `${SUPABASE_URL_RUNTIME}/functions/v1/issue-paperless-invoice`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+            apikey: SUPABASE_ANON_KEY_RUNTIME,
+          },
+          body: JSON.stringify({ source_table, record_id }),
+        }
+      );
+      const json = await res.json();
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error || `HTTP ${res.status}`);
+      }
+      return json as { ok: true; invoice_number: string | null; invoice_url: string };
+    },
+    onSuccess: (_data, { source_table }) => {
+      // Invalidate the relevant query so the table refreshes
+      if (source_table === "orders") {
+        qc.invalidateQueries({ queryKey: ["admin-payments-orders"] });
+      } else {
+        qc.invalidateQueries({ queryKey: ["admin-payments-donations"] });
+      }
+    },
+  });
+}
+
 /* ─── Empty / Loading / Error ────────────────────────────────── */
 function LoadingRows({ cols }: { cols: number }) {
   return (
@@ -750,6 +849,83 @@ function EmptyRow({ cols, msg }: { cols: number; msg?: string }) {
         {msg ?? "אין רשומות"}
       </TableCell>
     </TableRow>
+  );
+}
+
+/* ─── Invoice button ────────────────────────────────────────── */
+function InvoiceButton({
+  sourceTable,
+  recordId,
+  existingUrl,
+}: {
+  sourceTable: "orders" | "donations";
+  recordId: string;
+  existingUrl: string | null;
+}) {
+  const mutation = useIssuePaperlessInvoice();
+  const [done, setDone] = useState(false);
+  const [errMsg, setErrMsg] = useState<string | null>(null);
+
+  if (existingUrl) {
+    return (
+      <a
+        href={existingUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={(e) => e.stopPropagation()}
+        style={{ color: C.gold, fontSize: 12, textDecoration: "underline" }}
+      >
+        פתח
+      </a>
+    );
+  }
+
+  if (done) {
+    return <StatusBadge variant="green">הופקה</StatusBadge>;
+  }
+
+  return (
+    <div onClick={(e) => e.stopPropagation()}>
+      {errMsg && (
+        <div style={{ fontSize: 10, color: C.red, marginBottom: 4, maxWidth: 140, wordBreak: "break-word" }}>
+          {errMsg}
+        </div>
+      )}
+      <button
+        disabled={mutation.isPending}
+        onClick={async (e) => {
+          e.stopPropagation();
+          setErrMsg(null);
+          try {
+            await mutation.mutateAsync({ source_table: sourceTable, record_id: recordId });
+            setDone(true);
+          } catch (err: unknown) {
+            setErrMsg(err instanceof Error ? err.message : "שגיאה");
+          }
+        }}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 4,
+          background: mutation.isPending ? "#f0ece6" : C.parchment,
+          border: `1px solid ${C.border}`,
+          borderRadius: 8,
+          padding: "3px 10px",
+          fontSize: 11,
+          fontWeight: 700,
+          color: C.gold,
+          cursor: mutation.isPending ? "not-allowed" : "pointer",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {mutation.isPending ? (
+          <Loader2 size={10} style={{ animation: "spin 1s linear infinite" }} />
+        ) : (
+          <FileText size={10} />
+        )}
+        הפק
+      </button>
+    </div>
   );
 }
 
@@ -912,19 +1088,11 @@ function OrdersTab({ orders, loading, error }: { orders: Order[]; loading: boole
                       {o.card_suffix ? `····${o.card_suffix}` : "—"}
                     </TableCell>
                     <TableCell>
-                      {o.invoice_url ? (
-                        <a
-                          href={o.invoice_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          style={{ color: C.gold, fontSize: 12, textDecoration: "underline" }}
-                        >
-                          פתח
-                        </a>
-                      ) : (
-                        <span style={{ color: C.textSubtle, fontSize: 12 }}>—</span>
-                      )}
+                      <InvoiceButton
+                        sourceTable="orders"
+                        recordId={o.id}
+                        existingUrl={o.invoice_url}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
@@ -1095,19 +1263,11 @@ function DonationsTab({ donations, loading, error }: { donations: Donation[]; lo
                       {d.card_suffix ? `····${d.card_suffix}` : "—"}
                     </TableCell>
                     <TableCell>
-                      {d.invoice_url ? (
-                        <a
-                          href={d.invoice_url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          style={{ color: C.gold, fontSize: 12, textDecoration: "underline" }}
-                        >
-                          פתח
-                        </a>
-                      ) : (
-                        <span style={{ color: C.textSubtle, fontSize: 12 }}>—</span>
-                      )}
+                      <InvoiceButton
+                        sourceTable="donations"
+                        recordId={d.id}
+                        existingUrl={d.invoice_url}
+                      />
                     </TableCell>
                   </TableRow>
                 ))
@@ -1122,14 +1282,249 @@ function DonationsTab({ donations, loading, error }: { donations: Donation[]; lo
   );
 }
 
+/* ─── Edit product dialog ────────────────────────────────────── */
+interface EditProductState {
+  id: string;
+  display_name: string;
+  default_amount: string;
+  max_installments: string;
+}
+
+function EditProductDialog({
+  product,
+  onClose,
+}: {
+  product: PaymentProduct;
+  onClose: () => void;
+}) {
+  const updateMutation = useUpdatePaymentProduct();
+  const [form, setForm] = useState<EditProductState>({
+    id: product.id,
+    display_name: product.display_name ?? "",
+    default_amount: product.default_amount != null ? String(product.default_amount) : "",
+    max_installments: product.max_installments != null ? String(product.max_installments) : "1",
+  });
+  const [err, setErr] = useState<string | null>(null);
+
+  const isDirectDebit = product.page_code_env?.toLowerCase().includes("subscription") ||
+    product.page_code_env === "b1dc5e695089";
+
+  async function handleSave() {
+    setErr(null);
+    if (!form.display_name.trim()) {
+      setErr("שם תצוגה חובה");
+      return;
+    }
+    const defaultAmount = form.default_amount ? Number(form.default_amount) : null;
+    const maxInstallments = Number(form.max_installments) || 1;
+    if (defaultAmount !== null && isNaN(defaultAmount)) {
+      setErr("סכום ברירת מחדל חייב להיות מספר");
+      return;
+    }
+    if (isNaN(maxInstallments) || maxInstallments < 1 || maxInstallments > 36) {
+      setErr("מקסימום תשלומים: 1–36");
+      return;
+    }
+    try {
+      await updateMutation.mutateAsync({
+        id: form.id,
+        display_name: form.display_name.trim(),
+        default_amount: defaultAmount,
+        max_installments: maxInstallments,
+      });
+      onClose();
+    } catch (e: unknown) {
+      setErr(e instanceof Error ? e.message : "שגיאת שמירה");
+    }
+  }
+
+  return (
+    <Dialog open onOpenChange={(v) => !v && onClose()}>
+      <DialogContent dir="rtl" style={{ maxWidth: 460 }}>
+        <DialogHeader>
+          <DialogTitle style={{ color: C.navy }}>עריכת מוצר תשלום</DialogTitle>
+        </DialogHeader>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {/* ID — read-only */}
+          <div>
+            <Label style={{ fontSize: 12, color: C.textMuted }}>מזהה (לא ניתן לשינוי)</Label>
+            <div
+              style={{
+                fontFamily: "monospace",
+                fontSize: 12,
+                color: C.textSubtle,
+                background: "#f8f8f8",
+                borderRadius: 8,
+                padding: "6px 10px",
+                marginTop: 4,
+              }}
+            >
+              {product.id}
+            </div>
+          </div>
+
+          {/* page_code_env warning for non-tech admins */}
+          <div
+            style={{
+              background: C.amberBg,
+              border: `1px solid ${C.goldShimmer}`,
+              borderRadius: 8,
+              padding: "8px 12px",
+              display: "flex",
+              gap: 8,
+              alignItems: "flex-start",
+            }}
+          >
+            <AlertTriangle size={14} color={C.amber} style={{ marginTop: 2, flexShrink: 0 }} />
+            <div style={{ fontSize: 12, color: C.amber, lineHeight: 1.5 }}>
+              <strong>page_code_env:</strong>{" "}
+              <code style={{ fontFamily: "monospace", background: "#fef3c7", padding: "1px 4px", borderRadius: 4 }}>
+                {product.page_code_env ?? "—"}
+              </code>
+              {" "}— שדה זה קריטי לניתוב בגרו. השינוי נעשה ישירות ב-DB ודורש אישור מהמפתח.
+              {isDirectDebit && (
+                <div style={{ marginTop: 4, fontWeight: 700 }}>
+                  זהו מוצר directDebit (הוראת קבע/מנוי). אל תחליף את page_code_env ל-wallet!
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* display_name */}
+          <div>
+            <Label style={{ fontSize: 12, color: C.text }}>שם תצוגה</Label>
+            <Input
+              value={form.display_name}
+              onChange={(e) => setForm((f) => ({ ...f, display_name: e.target.value }))}
+              style={{ marginTop: 4, direction: "rtl" }}
+              placeholder="שם הפונציה/מוצר"
+            />
+          </div>
+
+          {/* default_amount */}
+          <div>
+            <Label style={{ fontSize: 12, color: C.text }}>סכום ברירת מחדל (₪)</Label>
+            <Input
+              type="number"
+              min={0}
+              value={form.default_amount}
+              onChange={(e) => setForm((f) => ({ ...f, default_amount: e.target.value }))}
+              style={{ marginTop: 4, direction: "ltr" }}
+              placeholder="ריק = ללא ברירת מחדל"
+            />
+          </div>
+
+          {/* max_installments */}
+          <div>
+            <Label style={{ fontSize: 12, color: C.text }}>מקסימום תשלומים</Label>
+            <Input
+              type="number"
+              min={1}
+              max={36}
+              value={form.max_installments}
+              onChange={(e) => setForm((f) => ({ ...f, max_installments: e.target.value }))}
+              style={{ marginTop: 4, direction: "ltr" }}
+            />
+            {isDirectDebit && (
+              <p style={{ fontSize: 11, color: C.textSubtle, marginTop: 4 }}>
+                directDebit — בד"כ 1 (חיוב חוזר ללא סיום)
+              </p>
+            )}
+          </div>
+
+          {err && (
+            <div
+              style={{
+                background: C.redBg,
+                color: C.red,
+                borderRadius: 8,
+                padding: "8px 12px",
+                fontSize: 13,
+              }}
+            >
+              {err}
+            </div>
+          )}
+        </div>
+
+        <DialogFooter style={{ flexDirection: "row", gap: 8, justifyContent: "flex-start" }}>
+          <button
+            onClick={handleSave}
+            disabled={updateMutation.isPending}
+            style={{
+              background: C.gold,
+              color: "white",
+              border: "none",
+              borderRadius: 10,
+              padding: "8px 20px",
+              fontWeight: 700,
+              fontSize: 13,
+              cursor: updateMutation.isPending ? "not-allowed" : "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+            }}
+          >
+            {updateMutation.isPending ? <Loader2 size={13} style={{ animation: "spin 1s linear infinite" }} /> : <Check size={13} />}
+            שמור שינויים
+          </button>
+          <button
+            onClick={onClose}
+            style={{
+              background: "transparent",
+              border: `1.5px solid ${C.border}`,
+              borderRadius: 10,
+              padding: "8px 16px",
+              fontWeight: 600,
+              fontSize: 13,
+              color: C.textMuted,
+              cursor: "pointer",
+            }}
+          >
+            ביטול
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 /* ─── PAYMENT PRODUCTS TAB ───────────────────────────────────── */
 function PaymentProductsTab({ products, loading, error }: { products: PaymentProduct[]; loading: boolean; error: Error | null }) {
+  const toggleMutation = useToggleProductActive();
+  const [editProduct, setEditProduct] = useState<PaymentProduct | null>(null);
+  const [toggleErr, setToggleErr] = useState<Record<string, string>>({});
+
+  async function handleToggle(p: PaymentProduct) {
+    setToggleErr((e) => ({ ...e, [p.id]: "" }));
+    try {
+      await toggleMutation.mutateAsync({ id: p.id, active: !p.active });
+    } catch (err: unknown) {
+      setToggleErr((e) => ({
+        ...e,
+        [p.id]: err instanceof Error ? err.message : "שגיאה",
+      }));
+    }
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: C.amberBg, borderRadius: 10, border: `1px solid ${C.goldShimmer}` }}>
-        <Package size={15} color={C.amber} />
-        <span style={{ fontSize: 13, color: C.amber, fontWeight: 600 }}>
-          תצוגה בלבד — עריכת הגדרות תשלום תבוא בגל הבא
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "10px 14px",
+          background: "#eff6ff",
+          borderRadius: 10,
+          border: "1px solid #bfdbfe",
+        }}
+      >
+        <Package size={15} color={C.blue} />
+        <span style={{ fontSize: 13, color: C.blue, fontWeight: 600 }}>
+          לחץ על שורה לעריכת שם / סכום / תשלומים. Toggle לביטול/הפעלה מיידי.{" "}
+          <strong>page_code_env</strong> — אל תשנה בלי אישור מפתח (ראה הסבר בדיאלוג).
         </span>
       </div>
 
@@ -1144,14 +1539,14 @@ function PaymentProductsTab({ products, loading, error }: { products: PaymentPro
           <Table>
             <TableHeader>
               <TableRow style={{ background: C.parchment }}>
-                <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>מזהה</TableHead>
                 <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>שם תצוגה</TableHead>
                 <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>סוג</TableHead>
                 <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>page_code_env</TableHead>
                 <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>סכום ברירת מחדל</TableHead>
-                <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>מקסימום תשלומים</TableHead>
+                <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>תשלומים</TableHead>
                 <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>טבלת יעד</TableHead>
-                <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>פעיל?</TableHead>
+                <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>פעיל</TableHead>
+                <TableHead className="text-right" style={{ color: C.textMuted, fontWeight: 700, fontSize: 12 }}>עריכה</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -1161,18 +1556,28 @@ function PaymentProductsTab({ products, loading, error }: { products: PaymentPro
                 <EmptyRow cols={8} msg="אין הגדרות תשלום" />
               ) : (
                 products.map((p) => (
-                  <TableRow key={p.id}>
-                    <TableCell style={{ fontFamily: "monospace", fontSize: 11, color: C.textMuted }}>
-                      {p.id}
-                    </TableCell>
+                  <TableRow
+                    key={p.id}
+                    className="hover:bg-amber-50/60"
+                    style={{ cursor: "default" }}
+                  >
                     <TableCell style={{ fontWeight: 600, fontSize: 13, color: C.text }}>
                       {p.display_name || "—"}
                     </TableCell>
                     <TableCell>{productTypeBadge(p.type)}</TableCell>
-                    <TableCell style={{ fontFamily: "monospace", fontSize: 11, color: C.textMuted }}>
-                      {p.page_code_env || "—"}
+                    <TableCell>
+                      <div style={{ fontFamily: "monospace", fontSize: 11, color: C.textMuted }}>
+                        {p.page_code_env || "—"}
+                      </div>
+                      {/* Warn if this is the directDebit page code */}
+                      {p.page_code_env === "b1dc5e695089" && (
+                        <div style={{ fontSize: 10, color: C.amber, marginTop: 2 }}>directDebit ←</div>
+                      )}
+                      {p.page_code_env === "efbda303565a" && (
+                        <div style={{ fontSize: 10, color: C.blue, marginTop: 2 }}>wallet ←</div>
+                      )}
                     </TableCell>
-                    <TableCell style={{ fontWeight: 600, color: C.navy }}>
+                    <TableCell style={{ fontWeight: 600, color: C.navy, whiteSpace: "nowrap" }}>
                       {p.default_amount != null ? fmtILS(p.default_amount) : "—"}
                     </TableCell>
                     <TableCell style={{ fontSize: 13, color: C.textMuted }}>
@@ -1182,11 +1587,62 @@ function PaymentProductsTab({ products, loading, error }: { products: PaymentPro
                       {p.target_table || "—"}
                     </TableCell>
                     <TableCell>
-                      {p.active ? (
-                        <StatusBadge variant="green">פעיל</StatusBadge>
-                      ) : (
-                        <StatusBadge variant="grey">כבוי</StatusBadge>
-                      )}
+                      {/* Toggle switch */}
+                      <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                        <button
+                          onClick={() => handleToggle(p)}
+                          disabled={toggleMutation.isPending}
+                          style={{
+                            width: 44,
+                            height: 22,
+                            borderRadius: 99,
+                            background: p.active ? "#15803d" : "#94a3b8",
+                            border: "none",
+                            cursor: toggleMutation.isPending ? "not-allowed" : "pointer",
+                            position: "relative",
+                            transition: "background 0.2s",
+                          }}
+                          title={p.active ? "לחץ לכיבוי" : "לחץ להפעלה"}
+                        >
+                          <span
+                            style={{
+                              position: "absolute",
+                              top: 3,
+                              right: p.active ? 3 : undefined,
+                              left: p.active ? undefined : 3,
+                              width: 16,
+                              height: 16,
+                              borderRadius: "50%",
+                              background: "white",
+                              transition: "all 0.2s",
+                            }}
+                          />
+                        </button>
+                        {toggleErr[p.id] && (
+                          <div style={{ fontSize: 10, color: C.red }}>{toggleErr[p.id]}</div>
+                        )}
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <button
+                        onClick={() => setEditProduct(p)}
+                        style={{
+                          background: C.parchment,
+                          border: `1px solid ${C.border}`,
+                          borderRadius: 8,
+                          padding: "4px 10px",
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                          fontSize: 12,
+                          fontWeight: 600,
+                          color: C.gold,
+                          cursor: "pointer",
+                        }}
+                      >
+                        <Pencil size={11} />
+                        ערוך
+                      </button>
                     </TableCell>
                   </TableRow>
                 ))
@@ -1195,6 +1651,13 @@ function PaymentProductsTab({ products, loading, error }: { products: PaymentPro
           </Table>
         </CardContent>
       </Card>
+
+      {editProduct && (
+        <EditProductDialog
+          product={editProduct}
+          onClose={() => setEditProduct(null)}
+        />
+      )}
     </div>
   );
 }
@@ -1228,6 +1691,10 @@ export default function Payments() {
         @keyframes shimmer {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
       `}</style>
 
