@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
+**Last updated:** 2026-06-02 (session — ezra pilot LIVE + content gate deployed to production)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -4671,3 +4671,29 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - Playwright screenshot at `http://localhost:5173/teachers/lesson/685580cb-f21b-486b-9bee-9b74026bb123` confirmed: hero renders with real title "ביאורי מילים – חומש ויקרא", sidebar tree visible, zero ErrorBoundary.
 
 **Iron rule (new):** In every page component, ALL `use*` hooks MUST appear before the first `if (...) return` statement. When a hook needs lesson data, compute it null-safely with a ternary — never after an early return. The `// eslint-disable` comment is NOT a fix — it only hides the lint warning while the runtime bug remains.
+
+### 2026-06-02 — ספר עזרא pilot LIVE — content gate on production
+
+**Deploy URL:** `https://bneyzion.vercel.app` (Vercel deployment `dpl_58vCTH9BdEugQycXHm2C7nnVADnX`, READY, target: production)
+**Branch pushed:** `prod-with-content-gate` (commit `9a51791e`) → `feat/navigator-bot` (for GitHub record) + `vercel --prod` from local worktree
+
+**What shipped:**
+- `/community/weekly-chapter` — קורס עזרא עם 32 שיעורים, וידאו Drive inline, קורא פסוקים native (`BibleChapterReader`), audio+video links unified.
+- **Content gate** (`CommunityDetailPage.tsx`): `access_type="requires_tag"` locks the page behind `program:weekly-chapter` tag. Anonymous/non-subscriber sees lock screen (Lock icon + CTA). No lesson URLs leak — `useCourseLessons(w ? id : undefined)` only fires when `courseAccessGranted=true`.
+- **`useUserAccess` hook** (`src/hooks/useUserAccess.ts`): calls `has_access_tag(uuid, tag)` SECURITY DEFINER RPC. Falls back to `false` on any error. Also checks `isHardcodedSubscriber` (saar.j.z.h@gmail.com) for dev access.
+- **264 subscribers** in `user_access_tags` table with tag `program:weekly-chapter` (imported earlier session).
+- **DB migration** `20260602_bible_verses_and_audio_video_linking.sql`: `bible_verses` table (public read RLS), `community_course_lessons.reading_chapter` + `audio_url` columns.
+
+**Verified:**
+- New bundle hash: `assets/main-CtCAHzhD.js` (previous: `main-CT5gZb9o.js`)
+- `requires_tag` string confirmed in `CommunityDetailPage-lJFm_p_v.js` chunk
+- No Drive/media URLs in initial HTML of `/community/weekly-chapter` (SPA, gated)
+- `vercel --prod` output: `Aliased https://bneyzion.vercel.app`
+
+**Known limitation:** `community_course_lessons` table has no RLS — protection is front-end only. A knowledgeable user calling the Supabase REST API directly could read lesson rows (including video_url). Acceptable for MVP; full server-side gate requires either RLS + `has_access_tag` in a policy, or an Edge Function proxy.
+
+**Deploy topology clarification:**
+- Vercel `productionBranch` config = `main` (legacy stub, not used for code)
+- Actual production deploys = manual `vercel --prod` from `prod-with-content-gate` worktree
+- GitHub push to `feat/navigator-bot` creates Preview deploys (not Production)
+- Do NOT rely on push-to-branch auto-deploy for production — always `vercel --prod`
