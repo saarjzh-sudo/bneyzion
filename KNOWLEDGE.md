@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-02 (session — Payments wave-3 + import script merged to production)
+**Last updated:** 2026-06-02 (session — polling 30s + visibilitychange pushed + deployed to bneyzion.vercel.app)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -4882,3 +4882,12 @@ lesson.thumbnail_url
 - **Comparison finding:** `grow_orders` tab was never in Payments.tsx (in any branch). It's a DB table + managed via Subscribers.tsx. The merge prompt's mention of it was inaccurate — no tab to port.
 - **Iron rule confirmed:** when two branches both wrote the same file independently, the branch with the larger line count (admin-overhaul, 1870) was the superset — verified by manual diff before any write.
 - **Deploy:** production commit `9478e2f6` on `admin-to-production`, `bneyzion.vercel.app` verified — Payments chunk `Payments-BASAYFRH.js` confirmed live with `הפק`, toggle, directDebit guard.
+
+### 2026-06-02 — Yehoshua campaign: polling 30s + visibilitychange deployed (commit ae2445c)
+
+- **Commit:** `ae2445c` on `feat/navigator-bot` (worktree `/private/tmp/bz-realtime/bneyzion`).
+- **What shipped:** `useCampaignStats` + `useTierCounts` hooks — `setInterval(fetch, 3e4)` (30s polling) + `document.addEventListener('visibilitychange', ...)` listener. הבר מתעדכן לבד בלי reload עד 30 שניות אחרי תרומה.
+- **Deploy:** push → GitHub auto-deploy יצא כ-preview (productionBranch=main ב-Vercel, לא `feat/navigator-bot`). תוקן עם `vercel link + vercel --prod`. Deployment ID `dpl_9fSENHNrze8svb2A6k3jrc7tPKsT`, aliased ל-`bneyzion.vercel.app`.
+- **אימות:** chunk `DesignPreviewYehoshuaCampaign-DYcJz_8r.js` אומת — `setInterval(i,3e4)` ו-`visibilitychange` קיימים. DB טסט: עדכון pending→completed→pending אומת ספירה 26→27→26.
+- **נשאר פתוח:** realtime WebSocket (ALTER PUBLICATION supabase_realtime ADD TABLE donations) — יעלה תגובה מ-30ש' ל-2-3ש' אבל דורש Supabase PAT חדש מסאר (PAT הקיים לא מורשה ל-replication). + processToken ב-create-payment + webhook 500 — לא דחוף.
+- **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
