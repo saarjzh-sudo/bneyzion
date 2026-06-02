@@ -823,6 +823,50 @@ No human figures, no faces, no letters, no text.
 - **Result:** view now shows 7 supporters, 900 ₪. Commit `945d484d`, production deploy `dpl_C1gvdToiujY3borbNY3ctNZt27fL` (`bneyzion.vercel.app`).
 - **Iron rule:** When a page redirects to `/donate?source=X`, Donate.tsx MUST forward `source`/`tier`/`amount` params explicitly — they are not auto-inherited. Any new campaign that routes through `/donate` must verify these params reach the DB.
 
+### 2026-06-02 — admin-overhaul consolidation wave: grow_orders migration + subscriber import + preview deploy
+
+**Branch:** `admin-overhaul` (sandbox-only, no production touch)
+**Agent:** Single-threaded consolidation pass (serial — no parallel agents)
+
+**1. git state audit:**
+- 383 commits on branch — all clean. Last commit: `d376717f` (payments wave-3 + grow_orders).
+- Only unstaged files: `tsconfig.app.tsbuildinfo` (build artifact), `.vite/`, `supabase/.temp/` — no lost code.
+- `npm run build` → 0 TypeScript errors, 0 vite errors, 4064 modules, build in 3.80s.
+
+**2. grow_orders migration applied to LIVE DB:**
+- File: `supabase/migrations/20260602_grow_orders.sql`
+- Applied via Management API (`POST /v1/projects/pzvmwfexeiruelwiujxn/database/query`).
+- Result: table created, 7 indexes created, RLS enabled (2 policies: admin all + customer read own), FK `user_access_tags.grow_order_id → grow_orders.id` added.
+- Verified: `table_exists=1, fk_exists=1, index_count=7`.
+- Idempotent — `CREATE TABLE IF NOT EXISTS` + DO block for FK.
+
+**3. Smoove list 1045078 subscriber import — partial:**
+- List: "הפרק השבועי - תכנית מנויים", `contactsCount=290` per API metadata.
+- **LIMITATION DISCOVERED:** Smoove API caps Members endpoint at 100 contacts per request and ignores `pageNumber` beyond page 1 (all pages return the same first 100). This is a Smoove account tier limitation.
+- Fetched 99 unique valid emails from the 100 API returns.
+- Cross-checked against DB: all 99 already existed (previous sessions imported them).
+- Ran idempotent UPSERT anyway to refresh `user_id` linkages and `updated_at`.
+- **Final DB state:** `total=101, linked=3 (user_id NOT NULL), pending=98, not_pending=3`
+- The remaining ~189 contacts in Smoove list 1045078 are not retrievable via API (Smoove cap).
+  To import them: use Smoove UI → Export CSV → import via `scripts/import-weekly-chapter-subscribers.mjs` with the CSV file.
+
+**4. grow_orders schema note updated:**
+- Section §3 entry for `grow_orders` updated to remove "NOT yet applied" note.
+- FK on `user_access_tags.grow_order_id` now live.
+
+**5. Vercel preview deploy:**
+- `vercel --yes` from `/Users/saarj/Downloads/saar-workspace/bneyzion` (branch `admin-overhaul`).
+- Deployment ID: `dpl_9dNJnxgXpATbd8nGfdF2SmeKHxh3`
+- **Preview URL:** `https://bneyzion-qh8h76wal-saars-projects-4508d6bb.vercel.app`
+- readyState=READY, build clean.
+- Note: Vercel preview URLs require Vercel login to access (protected by Vercel auth).
+  To share with Saar: use `vercel share` or create an alias, or send to `vercel.com/saars-projects-4508d6bb/bneyzion/9dNJnxgXpATbd8nGfdF2SmeKHxh3`.
+
+**Iron rules learned:**
+- Smoove `GET /Lists/{id}/Members` caps at 100 contacts, ignores pageNumber beyond 1 for this account. To import a full list >100: export CSV from Smoove UI, then use the MJS script.
+- `CREATE TABLE IF NOT EXISTS` + idempotent DO block for FK = safe migration that can be re-run.
+- `vercel --yes` (preview, not `--prod`) from a linked project dir deploys to preview automatically without needing explicit branch push.
+
 ### 2026-05-28 — Navigator bot (בנצי) merged to production
 - **Merged:** `feat/navigator-bot` → `sandbox-test` (no-ff, commit `4a27a44d`)
 - **Production deploy:** `dpl_GoJYKUDmu2GCzRz8ksFNg71e4Yk9` via `vercel --prod` from `/private/tmp/bz-chapel-arch`
@@ -4841,3 +4885,150 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - `SUPABASE_URL_RUNTIME` + `SUPABASE_ANON_KEY_RUNTIME` מ-`client.ts` — השתמש ב-fetch ל-edge functions.
 - כפתור הפקת מסמך רשמי → auth check server-side + guard existingInvoice + 409 אם קיים.
 - Paperless edge function: לא להפיק בטסט. לאמת credentials לפני deploy.
+
+### 2026-06-02 — DB cleanup wave 3: ניקוי 1,090 שיעורי זבל + שחזור + מצב נוכחי מאומת
+
+**Branch:** `fix/series-teachers-data` · **Commit:** `fc24bd3d`
+**ריפו data:** `/Users/srhlq/Downloads/saar-workspace/bneyzion-data`
+
+#### מה בוצע
+
+**ציר ג' — מיגרציית הפרק השבועי (commit 20d92e86):**
+- `user_access_tags` מולא: ~99 emails מ-Smoove list 1045078 + סאר ידנית = סך ~100 שורות.
+- תג: `program:weekly-chapter`, `source=smoove_import`, `pending_user_link=true` לרוב.
+- 6 מנויים מקושרים לחשבון Supabase (`pending_user_link=false`) — כולל יואב.
+
+**בניית AUTHORITATIVE-OLD.json (אינוונטר Umbraco מוסמך):**
+- קובץ: `/tmp/bneyzion-cleanup/AUTHORITATIVE-OLD.json`
+- 7,610 שיעורים published מהאתר הישן.
+- סוננו 618 רפאים (ψευδο-nodes בעץ Umbraco) + 239 duplicates.
+- שמש כבסיס לכל הניקוי.
+
+**מחיקת 1,090 שיעורי זבל (בשני שלבים):**
+
+| שלב | כמות | סוג |
+|-----|------|-----|
+| שלב 1 (קודם לסשן זה) | 654 | EMPTY, PLACEHOLDER, MISATTRIBUTED |
+| שלב 2 (סשן זה) | 436 | EMPTY=425, PLACEHOLDER=7, EXACT_DUP=4 |
+| **סה"כ** | **1,090** | |
+
+- כל הזבל: IDs סינתטיים (`b/c/e/f1010001...`), ריקים, exact-dups, מזמורים שתויקו שגוי תחת איוב/משלי מ-bug recovery קודם.
+- 12 מזמורים הועברו לסדרת תהלים הנכונה.
+- 269 שורות `lesson_topics` (pivot, 0 user-data) נמחקו לפני המחיקה הראשית.
+- 4 סדרות-רפאים ריקות עודכנו ל-`status=draft`.
+- **שמור על 179+ רבנים** — סאר החליט: שיעורי רבנים אחרים שאינם ביואב = לשמור. אסור למחוק שיעור רק כי "לא היה בישן".
+
+**גיבויים מלאים (ב-/tmp/bneyzion-cleanup/backups/):**
+- `FINAL-deleted.jsonl` — 1,090 שורות שנמחקו (654+436).
+- `FINAL-child-rows.jsonl` — 269 שורות FK ילדים (lesson_topics).
+- `FINAL-empty-series.jsonl` — סדרות ריקות שדורגו ל-draft.
+
+**שחזור 1 שיעור אמיתי:**
+- node 12447 — "מדוע התורה שבעל פה לא מובנת מפשיטות מתוך התורה שבכתב?" (הרב יהודה קופרמן זצ"ל).
+- UUID שהוקצה: `9a40257e-8070-4079-9c2b-320c59425f26`.
+- PDF attachment: `/media/143488/מדוע-התורה-שבעל-פה-אינה-כתובה-בפירוש-בתורה-שבכתב.pdf` (200 OK, 4.5MB).
+- שוחזר מ-Umbraco GetById API (yoav credentials).
+
+**10 שיעורים שנראו "חסרים" — כבר קיימים בDB:**
+- "ביאור ושננתם" ב-יהושע (nodes 41423-41432) קיימים תחת סדרה `audience_tags=['general','teachers']`.
+- השאילתה שגילתה אותם כ"חסרים" הייתה מוגבלת לנון-טיצ'ר בלבד — שגיאה. תמיד לבדוק עם `WHERE 1=1`.
+
+**פער שאלות-שמואל א/יהושע — 94% false positive:**
+- מה שנראה כפער ענק = URL encoding + סדרות teacher. רק שיעור 1 היה חסר אמיתי.
+
+**שינויי קוד:**
+- `src/hooks/useContentSidebar.ts` — סינון `status=published` (לא מציג drafts בציבורי).
+- `src/pages/teachers/TeachersLessonPage.tsx` — תיקון `useSEO` rules-of-hooks violation.
+- `src/components/layout-v2/DesignSidebar.tsx` — סינון `audience_tags teacher` מהציבורי.
+
+#### מצב DB מאומת (2026-06-02 אחרי כל הניקוי)
+
+| מדד | ערך |
+|-----|-----|
+| שיעורים ציבוריים (non-teacher) | ~11,062 |
+| שיעורים מורים (teacher) | ~7,905 |
+| אינוונטר ישן מוסמך | 7,610 |
+| רבנים | 179+ |
+
+**Preview URL** (SSO-protected, חשבון סאר):
+`bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
+
+#### 🔴 SECURITY — PAT דלף ב-scripts
+
+`SUPABASE_ACCESS_TOKEN` (sbp_ prefix — Management PAT) ו-`SUPABASE_SERVICE_ROLE_KEY` היו hardcoded ב-4 סקריפטים בריפו `bneyzion-data`. הנקוי בוצע מהדחיפה (לא push ל-remote עם ה-secrets). **חובה rotation:**
+
+1. `SUPABASE_ACCESS_TOKEN` → `https://supabase.com/dashboard/account/tokens` → Revoke + Generate new.
+2. `SUPABASE_SERVICE_ROLE_KEY` → `https://supabase.com/dashboard/project/pzvmwfexeiruelwiujxn/settings/api` → Reset.
+3. עדכן ב-Vercel production env vars.
+4. עדכן ב-`api-keys.md`.
+5. כל סקריפט בריפו `bneyzion-data` — חובה `os.environ.get()` / `${VAR:?not set}` בלבד. **אסור לחלוטין hardcoded strings.** (ראה iron rule 24 ב-§5.)
+
+---
+
+## 🔴 בעיות פתוחות שסאר זיהה בתצוגה (2026-06-02) — לתיקון בסשן הבא
+
+> מקור: פידבק ישיר של סאר על preview `bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
+
+### סיידבר ציבורי + דפי קטגוריה
+
+**דף קטגוריה חסר/שבור:**
+- לחיצה על קטגוריה (דוגמה: "איך לומדים תנ"ך" / "שיר השירים") פותחת רשימת סדרות גולמית — אין דף קטגוריה מעוצב.
+- הצפי: דף עם כותרת הקטגוריה, כל הסדרות שייכות, + שיעורים בודדים שלא בסדרה.
+
+**כפילות מתישה בסיידבר:**
+- "כל השיעורים ב-X" גולל את כל הסדרות מתחתיו (כפילות גלויה לעין).
+- Accordion שכותרתו שם הסדרה, ומתחתיו רק אותה סדרה בלבד (accordion חסר טעם).
+- **הצפי:** לחיצה על שם ספר → נפתחות כל הסדרות מתחת (nested). "כל השיעורים" = לינק לדף קטגוריה בלבד, לא גלילת סדרות.
+
+**דף series לא קיים / שבור:**
+- ניווט מהסיידבר לסדרה לא מגיע לדף עובד. צריך לשחזר ולעצב מחדש.
+
+### דף סדרה
+
+**ייחוס רב שגוי:**
+- מציג "הרב שמואל אליהו" כרב יחיד גם לסדרות עם מלא רבנים + שיעורים ללא ייחוס.
+- "2 חלקי הסדרה" של רב מסוים מופיעים עם 0 שיעורים — לבדוק מול אינוונטר הישן האם זבל.
+
+### תצוגת שיעור
+
+- פופאפ שיעור: צריך להציג טקסט מלא (לא להכריח פתיחת דף מלא).
+- דף שיעור מלא: חסרה תמונה + עיצוב כללי חלש.
+- הפניות לשיעורים נוספים בדף השיעור: מוצגות ללא תמונה.
+
+### אגף המורים (Teachers Wing)
+
+**סלט UI — שני מנגנוני סינון:**
+- קיים FilterPanel בתוך העמוד + סיידבר. להעיף את הFilterPanel מהעמוד (לשמור סיידבר בלבד).
+
+**סיידבר שגוי — tabs:**
+- מציג: ספרים / **כלים** / יוצרים — שגוי.
+- צריך (לפי האתר הישן): ראשי (לפי ספר) / **סוג תוכן** / יוצרים.
+
+**"סוג תוכן" — הרשימה המדויקת מהאתר הישן (מספרים = מספר פריטים בפועל):**
+
+| סוג תוכן | כמות |
+|----------|------|
+| סיכום הפרקים והנושאים בקצרה | 475 |
+| הכוונה והדרכה למורה | 426 |
+| ביאור הפסוקים | 358 |
+| חידות חזרה | 354 |
+| שאלות ותשובות על סדר הפרקים | 312 |
+| דגשים והכוונה על סדר הפרקים | 252 |
+| דפי עבודה | 213 |
+| ביאורי מילים | 132 |
+| שאלות ותשובות | 91 |
+| מפות | 36 |
+
+**הערה חשובה על המספרים:** אלו מספרי **סדרות/פריטים** בממשק הסינון של האתר הישן — לא מספר שיעורים בודדים. כל "פריט" יכול להכיל 5–50+ שיעורים. (ראה session 2026-05-27 לפירוט.)
+
+**"חסרים של כל השיעורים" בסיידבר לא מחובר לדאטה:**
+- "בראשית" מציג רק 2-3 סדרות במקום הכל — לאמת מול אינוונטר הישן ולחבר כהלכה.
+
+**חשוב — audience_tags מותקנים:**
+- בסשן לפני ~שבוע (2026-05-27) נעשה תיוג audience_tags קטגוריה-קטגוריה ל-31 סדרות מורים.
+- לפני כל עבודה על אגף המורים: לקרוא את session 2026-05-27 ב-§7 + לבדוק מה בDB לפני שינוי כלשהו. אסור להמציא מחדש.
+
+### סטטוס preview לצפייה
+
+URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
+(SSO-protected — רק חשבון סאר. לשיתוף עם יואב להשתמש ב-URL ציבורי של `bneyzion.vercel.app`)
