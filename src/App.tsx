@@ -246,8 +246,8 @@ const App = () => (
           <FloatingPlayer />
           <ScrollToTop />
           <InstallPrompt />
-          {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin and /design-*. */}
-          <OnboardingBot />
+          {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, and /course/weekly-chapter (bot covers card buttons there). */}
+          <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/weekly-chapter"]} />
           {/* <GlobalAIChat /> */}
           <ChunkErrorBoundary>
           <ErrorBoundary>
