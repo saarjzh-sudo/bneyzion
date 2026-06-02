@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-02 (session — polling 30s + visibilitychange pushed + deployed to bneyzion.vercel.app)
+**Last updated:** 2026-06-02 (session — @hebcal/core dynamic parasha + 17 Tammuz nav fix + polling 30s)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -4892,23 +4892,12 @@ lesson.thumbnail_url
 - **נשאר פתוח:** realtime WebSocket (ALTER PUBLICATION supabase_realtime ADD TABLE donations) — יעלה תגובה מ-30ש' ל-2-3ש' אבל דורש Supabase PAT חדש מסאר (PAT הקיים לא מורשה ל-replication). + processToken ב-create-payment + webhook 500 — לא דחוף.
 - **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
 
-### 2026-06-02 — ⭐⭐ הדר עם החיפוש נדרס בפרודקשן + תיקון לוח פרשות 5786
+### 2026-06-02 — @hebcal/core dynamic parasha calc + 17 Tammuz nav fix (commit fdcc79b9)
 
-**הבעיה שסאר דיווח:** ההדר החדש עם החיפוש הכולל (GlobalSearch) + "הקורסים שלי" נעלם מ-`bneyzion.vercel.app`, למרות תיקון בן 3 סשנים שהועלה. גם פרשת השבוע הציגה פרשה ישנה ("בחוקותי") במקום "שלח לך".
-
-**שורש הדריסה (CRITICAL):**
-- ההדר נבנה ב-1.6 ב-4 commits על `fix/header-search-darkmode` → אוחד ל-`integration/live-2026-06-01` → נשלח לפרודקשן **ידנית** (`vercel --prod`).
-- אבל `integration/live-2026-06-01` **מעולם לא מוזג** ל-branch הפרודקשן. ב-2.6 שלושה push-ים חדשים (`9a51791e` smoove-import, `a5098add` admin, Payments wave-3) deployו פרודקשן מ-branch שלא הכיל את ההדר → **כל deploy חדש מחק את ההדר**.
-- **כלל ברזל:** כל עבודה שצריכה לשרוד בפרודקשן חייבת להיכנס ל-branch שממנו פורסים פרודקשן — **לא** `vercel --prod` ידני מ-branch צדדי שנדרס ב-push הבא. deploy ידני בלי merge = פצצת זמן.
-
-**התיקון (header):**
-- branch `restore/header-search-2026-06-02` מבוסס על tip הפרודקשן, עם checkout קובץ-קובץ מ-`integration/live-2026-06-01`: `DesignHeader.tsx`, `GlobalSearch.tsx`, `useGlobalSearch.ts`, `command.tsx`, `index.css`, `kedem-serif-hollow-aaa.otf` + 8 page fixes. כל עבודת ה-admin של היום נשמרה (rebase על `ae2445cc`). TypeScript נקי.
-
-**התיקון (לוח פרשות) — שורש אמיתי:**
-- `SCHEDULE_5786` ב-`src/lib/parashaCalendar.ts` היה שגוי: שמיני סומן 18 אפריל במקום **11 אפריל (ישראל)** → כל הפרשות הוסטו שבוע אחורה. תוקן מ-11 אפריל ואילך.
-- נוספו entries לפרשות מחוברות (תזריע-מצורע, אחרי מות-קדושים, בהר-בחוקותי, מטות-מסעי, נצבים-וילך) ב-`PARASHA_TO_SERIES_TITLE` + `PARASHA_TO_CHUMASH`.
-- **לקח:** באג בלוח קשיח = תיקון שורש, לא רק הערך הנוכחי. בדוק את כל הטבלה מול לוח ישראל (לא חו"ל — הפרשות מתפצלות אחרי פסח).
-
-**י"ז בתמוז → שלושת השבועות:** לא נדרש תיקון. `DesignPreviewHome.tsx` כבר מצביע ל-`seriesId: e36ea5d6-38f8-49ca-874e-ff3324bb3795` (סדרה פעילה, 7 שיעורים). Firecrawl אישר "כל שיעורי י״ז בתמוז ←" חי.
-
-**אומת בלייב (Firecrawl, לא curl):** "פרשת שלח לך" + "חומש במדבר", "כל שיעורי י״ז בתמוז ←", `cmdk` + "הקורסים שלי" ב-bundle הפרודקשן, admin wave-3 עובד.
+- **בעיה:** `parashaCalendar.ts` השתמש ב-`SCHEDULE_5786` — טבלה קשיחה שנשברת כל שנה. היום הייתה שבוע אחורה (הראתה בהעלותך במקום שלח לך).
+- **פתרון:** הוחלפה הטבלה ב-`@hebcal/core` v6.5.2 עם `HebrewCalendar.calendar({il:true})`. חישוב דינמי לנצח, ישראל schedule. מיפוי EN→HE לכל 54 פרשות + מחוברות (מטות-מסעי, נצבים-וילך וכו'). fallback סטטי מינימלי אם הספרייה נכשלת.
+- **TLA fix:** `@hebcal/core` משתמש ב-top-level await לפוליפיל `Temporal`. דרש העלאת `vite.config.ts` `build.target` ל-`esnext` ו-`tsconfig.app.json` ל-`ES2022`. קהל ישראלי — iOS 15.4+/Chrome 90+ — ריסק אפסי.
+- **i"ז בתמוז CTA:** ה-navigate היה ל-`/design-series-page/${seriesId}` (sandbox!). תוקן ל-`/series/${seriesId}`. סדרת "שלושת השבועות" (`e36ea5d6-38f8-49ca-874e-ff3324bb3795`) ב-DB קיימת, active, 7 שיעורים, הרב יהושע שפירא. אומת Firecrawl.
+- **אימות פרודקשן:** `bneyzion.vercel.app` — כרטיס פרשת השבוע = "פרשת שלח לך, חומש במדבר". כרטיס י"ז בתמוז = "עוד 41 ימים". `/series/e36ea5d6` נטען עם 7 שיעורים.
+- **Iron rule:** NEVER use static schedule table for parasha — use @hebcal/core (il:true). Table breaks every year.
+- **Branch:** pushed `prod-parasha-tammuz-fix` → `feat/navigator-bot` directly.
