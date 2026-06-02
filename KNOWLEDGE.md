@@ -526,6 +526,11 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 🔑 Credentials (2026-06-02) — location only, values are gitignored
+- **`secrets/credentials.env`** (gitignored, chmod 600) holds Saar's `GITHUB_TOKEN` (classic `ghp_`, user `saarjzh-sudo`) for `git push` / `gh` to the bneyzion repo. Source it: `set -a; . secrets/credentials.env; set +a`.
+- ⚠️ **The GitHub token CANNOT write to Supabase.** Data-fix work (INSERT/UPDATE on lessons/series) still needs `SUPABASE_SERVICE_ROLE_KEY` (a JWT `eyJ...` from Supabase → Settings → API → service_role) — NOT yet provided. anon key (`.env`) is read-only.
+
+
 ### 2026-06-02 (round-4) — Teachers Wing rebuilt to mirror the OLD site (Saar reference screenshot)
 
 **Branch:** `fix/series-teachers-data` · Frontend only. Saar showed the live old-site teacher wing (`bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית`) as the exact reference.
