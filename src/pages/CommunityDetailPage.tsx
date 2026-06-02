@@ -2,10 +2,12 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, Video, Play, Lock, Clock, Users, BookOpen, ArrowRight, CheckCircle2, ChevronLeft, Headphones, FileText } from "lucide-react";
+import { Calendar, Video, Play, Lock, Users, BookOpen, ArrowRight, CheckCircle2, ChevronLeft, Headphones, FileText, ShieldAlert } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCourseDetail, useCourseSessions, useCourseEnrollment, useEnrollInCourse } from "@/hooks/useCourseEnrollment";
 import { useCourseLessons, useMemberAccess } from "@/hooks/useCommunity";
+import { useUserAccess } from "@/hooks/useUserAccess";
+import { BibleChapterReader } from "@/components/community/BibleChapterReader";
 import Layout from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,17 +21,42 @@ import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
 
 const CommunityDetailPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { user } = useAuth();
+  const { user, isLoading: authLoading } = useAuth();
   const { data: course, isLoading: courseLoading } = useCourseDetail(id);
   const { data: sessions = [] } = useCourseSessions(id);
-  const { data: lessons = [] } = useCourseLessons(id);
   const { data: enrollment } = useCourseEnrollment(id);
   const { data: member } = useMemberAccess(user?.email ?? undefined);
   const enrollMutation = useEnrollInCourse();
   const [selectedLesson, setSelectedLesson] = useState<any | null>(null);
 
+  // Access-tag check — required for access_type="requires_tag" courses
+  // The tag is read from the course record after it loads (may be null for open courses)
+  const accessTag = (course as any)?.access_tag ?? "";
+  const {
+    hasAccess: hasTagAccess,
+    isLoading: tagAccessLoading,
+  } = useUserAccess(accessTag || "program:__none__");
+
   const isMember = !!member && member.status === "active";
   const isEnrolled = !!enrollment;
+
+  // ── Access resolution ──
+  // open:            always accessible
+  // subscribers_only: accessible to community members only
+  // requires_tag:    accessible ONLY to users with the matching tag in user_access_tags
+  //                  (Grow webhook grants this on successful recurring payment)
+  const accessType: string = (course as any)?.access_type ?? "open";
+  const courseAccessGranted =
+    accessType === "open"
+      ? true
+      : accessType === "subscribers_only"
+      ? isMember
+      : accessType === "requires_tag"
+      ? (!!accessTag && hasTagAccess)
+      : false;
+
+  // Lessons only fetched when the user actually has access (prevents data leak)
+  const { data: lessons = [] } = useCourseLessons(courseAccessGranted ? id : undefined);
 
   useSEO({
     title: course?.title,
@@ -49,7 +76,7 @@ const CommunityDetailPage = () => {
     });
   };
 
-  if (courseLoading) {
+  if (courseLoading || authLoading || tagAccessLoading) {
     return (
       <Layout>
         <div className="container py-16 space-y-6">
@@ -62,6 +89,53 @@ const CommunityDetailPage = () => {
   }
 
   if (!course) return <Navigate to="/community" replace />;
+
+  // ── Premium Content Gate ──
+  // When a course requires a subscription tag and the user lacks it,
+  // show a full-page locked state — no content leaks at all.
+  if (!courseAccessGranted) {
+    const isTagRequired = accessType === "requires_tag";
+    return (
+      <Layout>
+        <div className="min-h-[70vh] flex items-center justify-center px-4" dir="rtl">
+          <Card className="w-full max-w-md border-2 border-primary/20 shadow-lg">
+            <CardContent className="p-8 text-center space-y-5">
+              <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
+                <Lock className="h-8 w-8 text-primary" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-2xl font-heading text-foreground">{course.title}</h2>
+                <p className="text-muted-foreground">
+                  {isTagRequired
+                    ? "תוכן זה זמין למנויי תכנית הפרק השבועי בלבד"
+                    : "תוכן זה זמין לחברי הקהילה בלבד"}
+                </p>
+              </div>
+              {!user ? (
+                <div className="space-y-3">
+                  <p className="text-sm text-muted-foreground">כניסה לאזור האישי לצפייה בתכנים</p>
+                  <SmartAuthCTA variant="enroll" />
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 justify-center text-sm text-amber-600 bg-amber-50 rounded-lg p-3">
+                    <ShieldAlert className="h-4 w-4 shrink-0" />
+                    <span>חשבונך אינו כולל גישה לתכנית הפרק השבועי</span>
+                  </div>
+                  <Button asChild size="lg" className="w-full">
+                    <Link to="/chapter-weekly">הצטרפו לתכנית הפרק השבועי</Link>
+                  </Button>
+                  <Button asChild variant="outline" size="sm" className="w-full">
+                    <Link to="/community">חזרה לקורסים פתוחים</Link>
+                  </Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </Layout>
+    );
+  }
 
   return (
     <Layout>
@@ -151,16 +225,13 @@ const CommunityDetailPage = () => {
             ))}
           </TabsContent>
 
-          {/* Lessons */}
+          {/* Lessons — only rendered when courseAccessGranted (already blocked above, defensive belt) */}
           <TabsContent value="lessons" className="space-y-2">
             <LessonsList
               lessons={lessons}
-              isEnrolled={isEnrolled}
-              isMember={isMember}
+              canAccess={courseAccessGranted}
               user={user}
               onSelect={setSelectedLesson}
-              onEnroll={handleEnroll}
-              enrollPending={enrollMutation.isPending}
             />
           </TabsContent>
 
@@ -182,14 +253,40 @@ const CommunityDetailPage = () => {
                 <DialogTitle className="text-xl font-heading">{selectedLesson.title}</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
+
+                {/* Decision 1: Drive video — inline iframe (never opens new tab) */}
                 {selectedLesson.video_url && (
                   <div className="aspect-video rounded-xl overflow-hidden bg-black">
-                    <iframe src={selectedLesson.video_url} className="w-full h-full" allowFullScreen />
+                    <iframe
+                      src={selectedLesson.video_url}
+                      className="w-full h-full border-0"
+                      allow="autoplay"
+                      allowFullScreen
+                      title={selectedLesson.title}
+                    />
                   </div>
                 )}
+
+                {/* Decision 3: audio — shown below video when both exist */}
                 {selectedLesson.audio_url && (
-                  <audio controls className="w-full" src={selectedLesson.audio_url} />
+                  <div className="space-y-1">
+                    {selectedLesson.video_url && (
+                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Headphones className="h-3 w-3" /> גרסת אודיו — הרב יונדב זר (ארכיון)
+                      </p>
+                    )}
+                    <audio controls className="w-full" src={selectedLesson.audio_url} />
+                  </div>
                 )}
+
+                {/* Decision 2: native bible chapter reader */}
+                {selectedLesson.reading_chapter && selectedLesson.bible_book && (
+                  <BibleChapterReader
+                    book={selectedLesson.bible_book}
+                    chapter={selectedLesson.reading_chapter}
+                  />
+                )}
+
                 {selectedLesson.content_html && (
                   <div className="prose prose-sm max-w-none" dangerouslySetInnerHTML={{ __html: sanitizeHtml(selectedLesson.content_html ?? "") }} />
                 )}
@@ -305,9 +402,9 @@ const RecordingCard = ({ session: s, index: i, isEnrolled }: { session: any; ind
   </motion.div>
 );
 
-const LessonsList = ({ lessons, isEnrolled, isMember, user, onSelect, onEnroll, enrollPending }: any) => {
-  const canAccess = isEnrolled || isMember;
-
+// LessonsList — only rendered after courseAccessGranted is confirmed at the page level.
+// canAccess is always true here, but kept as a prop for defensive clarity.
+const LessonsList = ({ lessons, canAccess, user: _user, onSelect }: any) => {
   if (lessons.length === 0) {
     return (
       <div className="text-center py-12 text-muted-foreground">
@@ -341,23 +438,18 @@ const LessonsList = ({ lessons, isEnrolled, isMember, user, onSelect, onEnroll, 
           <div className="flex items-center gap-2 shrink-0">
             {lesson.video_url && <Video className="h-3.5 w-3.5 text-muted-foreground" />}
             {lesson.audio_url && <Headphones className="h-3.5 w-3.5 text-muted-foreground" />}
+            {lesson.reading_chapter && <BookOpen className="h-3.5 w-3.5 text-amber-600" />}
             {lesson.attachment_url && <FileText className="h-3.5 w-3.5 text-muted-foreground" />}
-            {!canAccess && <Lock className="h-3.5 w-3.5 text-muted-foreground" />}
             {canAccess && <ChevronLeft className="h-3.5 w-3.5 text-muted-foreground" />}
           </div>
         </motion.button>
       ))}
 
+      {/* This block should never render (courseAccessGranted gate above), kept for safety */}
       {!canAccess && (
         <div className="mt-6 text-center p-6 bg-muted/30 rounded-2xl border border-border">
           <Lock className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
           <p className="text-foreground font-heading mb-1">תוכן זה זמין לחברי קהילה בלבד</p>
-          <p className="text-sm text-muted-foreground mb-4">הירשם לקורס או הצטרף לקהילה לגישה מלאה</p>
-          {user ? (
-            <Button onClick={onEnroll} disabled={enrollPending}>הירשם לקורס</Button>
-          ) : (
-            <SmartAuthCTA variant="enroll" />
-          )}
         </div>
       )}
     </>

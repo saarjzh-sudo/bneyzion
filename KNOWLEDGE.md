@@ -427,8 +427,8 @@ public/
 | Topics | 741 |
 | Products (active) | 47 |
 | Product categories | 10 |
-| Auth users | 2 |
-| Admin users | 1 (`saar.j.z.h@gmail.com`) |
+| Auth users | 6 (updated 2026-06-02) |
+| Admin users | 2 (`saar.j.z.h@gmail.com` + `yoavoriel@gmail.com`) |
 
 ### Data coverage by book (series, top 10)
 תהלים 157 · ישעיהו 81 · ירמיהו 69 · יחזקאל 62 · בראשית 58 · שמות 57 · במדבר 46 · דברים 45 · ויקרא 43 · שופטים 30
@@ -526,6 +526,249 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — bneyzion-data branch: round-2 Saar feedback (sidebar/series/teachers/lesson)
+
+**Branch:** `fix/series-teachers-data`
+**Commit before this session:** `fc24bd3d` (ניקוי 1,090 + sidebar filter + teachers hooks fix)
+
+#### מצב שהגענו אליו עד כה
+- 1,090 שיעורי זבל נמחקו לאורך מספר סשנים (כולל 436 ב-round 1 של branch זה).
+- `useContentSidebar.ts` מסנן כעת סדרות עם `lesson_count > 0` בלבד.
+- `useTeacherSidebar.ts` ו-`useTeachersWing.ts` מחוברים לדאטה אמיתית עם `audience_tags @> ['teachers']`.
+- `DesignPreviewTeachersWingV2.tsx` (sandbox `/design-teachers-wing-v2`) יש בו hooks נכונים: `useContentTypeCounts` + `useCreatorsByType`.
+- עמוד `/series/:id` מצביע ל-`DesignPreviewSeriesPageV2.tsx`.
+- עמוד `/design-series-list` קיים אך `/series` (ללא :id) הוסר מ-App.tsx ב-27.5.2026.
+
+#### פידבק סאר — round 2 (2026-06-02)
+
+**ציר 1 — סיידבר: כפילות ותנהגות לחיצה על קטגוריה**
+- לחיצה על קטגוריה פותחת SeriesInlineList בסיידבר — אבל סאר רוצה ניווט לדף קטגוריה נפרד.
+- כפתור "כל השיעורים ב-X" צריך רק לנווט לדף קטגוריה — לא לפתוח SeriesInlineList מתחתיו.
+- accordion שכותרתו שם-סדרה ומתחתיו רק אותה סדרה — להעיף (SeriesInlineList עם סדרה אחת = חסר-ערך).
+- כשלוחצים על שם ספר → מתחתיו accordion הילדים בלבד + ניווט לדף קטגוריה.
+
+**ציר 2 — דף סדרה**
+- Hero מציג רב אחד בלבד (series.rabbis?.name). תיקון: אם rabbi_id=NULL → לאסוף רבנים ייחודיים מ-lessons.
+- SubSeriesGroup מציג children עם lesson_count=0. תיקון: להציג רק children שיש להם lesson_count > 0.
+- דף קטגוריה לא קיים כ-route. צריך `/category/:id` שמציג את כל הסדרות + שיעורים לא-בסדרה תחת הקטגוריה.
+
+**ציר 3 — שיעור (popup ודף מלא)**
+- LessonModal: להציג `lesson.content` המלא (עם sanitizeHtml), לא snippet של 320 תווים.
+- LessonPage.tsx (production): אין hero image. relatedLessons מוצגים בלי תמונה. שניהם לתיקון.
+
+**ציר 4 — אגף המורים**
+- FilterPanel ב-TeachersSeriesPage.tsx — להעיף (כפילות עם סיידבר).
+- TeacherSidebar.tsx (production) tabs: "ספרים/כלים/יוצרים" — שגוי. צריך "ראשי/סוג תוכן/יוצרים" (כמו DesignPreviewTeachersWingV2).
+- useContentTypeCounts ב-v2 כן מחובר לדאטה. הבעיה שה-production עדיין משתמש ב-TeacherSidebar הישן.
+- מספרי סוג תוכן מהאתר הישן (כפי שנמדדו 2026-05-27): 475/426/358/354/312/252/213/132/91/36 (ראה פרומפט לפירוט).
+- **כלל ברזל**: הדאטה בעמודת content_type ב-DB כבר מאוכלס מסשן 2026-05-27. אסור להמציא מחדש — לחבר ל-content_type הקיים.
+
+#### הבהרה קריטית — סשן 2026-05-27
+"כבר עשינו סשן ארוך שאיפס את כל אגף המורים קטגוריה-קטגוריה בסיידבר" — content_type values ב-DB כבר מאוכלסים. אסור להמציא mapping חדש. query GROUP BY content_type על lessons עם audience_tags @> ['teachers'] יאמת את המספרים.
+
+---
+
+### 2026-06-02 — Smoove portal import PILOT: ספר עזרא → community_course_lessons (32 rows)
+
+**Branch:** `feat/smoove-portal-import`
+
+**What was done:**
+- Imported 32 lessons from `.smoove-import/ezra.json` into `community_course_lessons` for course_id `35e7d37b-a263-4e85-a8d8-16fdbae312ae` (ספר עזרא, smoove_course_id=14253).
+- Updated `community_courses.total_lessons = 32`.
+- Verified visually via Firecrawl on `https://bneyzion.vercel.app/community/35e7d37b-a263-4e85-a8d8-16fdbae312ae` — all 32 lessons rendered, titles correct.
+
+**Mapping decisions (canonical — repeat for remaining 6 courses):**
+
+| Source field | DB column | Logic |
+|---|---|---|
+| `page.chapter` | `bible_chapter` | Hebrew letter → int (א=1…י=10); NULL for intro/resources |
+| `page.layer` | `layer_type` | base/enrichment/weekly/intro/resources (5 values) |
+| First `type=video` item's `drive_id` | `video_url` | `https://drive.google.com/file/d/{id}/preview` |
+| All items | `content_html` | Full HTML: Sefaria link + Drive iframes (video+pdf alike via /preview) |
+| `chapter_index * 3 + layer_offset` | `lesson_number` | resources=1, intro=2, then ch*3+offset |
+| `weekly` counter | `week_number` | 1-10 (only for layer=weekly) |
+| fixed | `bible_book` | "עזרא" |
+| fixed | `status` | "published" |
+
+**Key insight (MUST carry forward):** All Drive files (video AND pdf) embed identically via `https://drive.google.com/file/d/{drive_id}/preview` in an iframe. `video_url` field gets the first video's embed URL. `content_html` gets ALL items as iframe embeds + Sefaria links.
+
+**Frontend consumption:**
+- `useCourseLessons(courseId)` — SELECT *, eq(status, published), order(lesson_number asc)
+- `CommunityDetailPage.tsx` renders: `video_url` → aspect-video iframe · `content_html` → prose dangerouslySetInnerHTML (sanitized via DOMPurify)
+- `CommunityCoursePage.tsx` (portal) — same fields, same rendering
+
+---
+
+### 2026-06-02 — Smoove pilot: 3 הגדרות סאר — Drive inline + bible_verses native + audio↔video link
+
+**Branch:** `feat/smoove-portal-import`
+
+#### מה נבנה
+
+**החלטה 1: Drive inline (וידאו + PDF)**
+- אין שינוי לוגיקה — Drive `/preview` iframes כבר עובדים.
+- `CommunityDetailPage.tsx` dialog: iframe עם `allow="autoplay"` ו-`allowFullScreen`.
+- PDF מ-Drive: `content_html` מכיל אותו `/preview` — מתנגן inline ב-prose block.
+
+**החלטה 2: bible_verses — קורא native**
+- טבלה חדשה: `public.bible_verses` (book TEXT, chapter INT, verse INT, text_he TEXT, UNIQUE(book,chapter,verse)).
+- אוכלסה חד-פעמית: 280 פסוקים, עזרא פרקים א-י מ-Sefaria API.
+- עמודה חדשה: `community_course_lessons.reading_chapter INT` — מסמן שיש פרק קריאה native.
+- 10 שורות layer=base עודכנו: `reading_chapter = bible_chapter` (פרקים 1-10).
+- hook חדש: `useBibleChapter(book, chapter)` ב-`src/hooks/useCommunity.ts`.
+- component חדש: `src/components/community/BibleChapterReader.tsx` — RTL, ניקוד, מספור עברי, רקע ענבר.
+- `CommunityDetailPage.tsx` dialog: כשיש `reading_chapter` → `<BibleChapterReader book=... chapter=... />`.
+
+**החלטה 3: audio↔video — איחוד על שורה אחת**
+- עמודה קיימת (`audio_url`) על `community_course_lessons` — לא נוספה.
+- 10 שורות layer=base עודכנו: `audio_url` = S3 URL של הרב יונדב זר (מ-`lessons` table).
+- מיפוי: `lessons` table, `rabbit.name ILIKE '%יונדב זר%'`, `title ~ '^עזרא פרק [א-י]$'`, `bible_chapter = N`.
+- דיאלוג: video iframe ראשון → אחריו audio עם label "גרסת אודיו — הרב יונדב זר (ארכיון)".
+
+#### DB state אחרי session זה
+
+| lesson# | layer | ch | reading_ch | audio | video |
+|---|---|---|---|---|---|
+| 3,6,9,12,15,18,21,24,27,30 | base | 1-10 | 1-10 | S3/יונדב זר | Drive/preview |
+| 2 | intro | NULL | NULL | ✗ | ✓ |
+| 5,8,11...32 | weekly | 1-10 | NULL | ✗ | ✓ |
+| 4,7,10...31 | enrichment | 1-10 | NULL | ✗ | ✗ |
+| 1 | resources | NULL | NULL | ✗ | ✗ |
+
+#### bible_verses coverage
+- עזרא: 280 פסוקים (11+70+13+24+17+22+28+36+15+44)
+- שאר הספרים: ריק — לאכלס לפי צורך (script /tmp/populate_bible_verses_curl.py לשימוש חוזר)
+
+#### Frontend files changed
+- `src/hooks/useCommunity.ts` — `useBibleChapter` hook חדש
+- `src/pages/CommunityDetailPage.tsx` — dialog: BibleChapterReader + audio dual-format label
+- `src/components/community/BibleChapterReader.tsx` — component חדש
+
+#### Migration files
+- `supabase/migrations/20260602_bible_verses_and_audio_video_linking.sql`
+
+#### Iron rule חדש (learned this session)
+- **Sefaria type=reading items → reading_chapter column, never a Sefaria link.** ה-URL המקורי `https://www.sefaria.org.il/Ezra.N?lang=he` לא מוטמע באתר — במקומו `reading_chapter=N` + `BibleChapterReader`. כלל זה חל על כל 6 הקורסים הנוספים.
+- **audio_url + video_url על אותה community_course_lessons שורה = dual-format.** לא שתי שורות נפרדות. Frontend מציג שניהם בדיאלוג אחד.
+- **bible_verses.text_he מכיל ניקוד מסורה (מ-Sefaria `he` field).** `text` field = אנגלית. תמיד `he` field.
+
+
+**Import script:** `/tmp/ezra_import.py` + `/tmp/ezra_lessons_preview.json` (ephemeral — regenerate from ezra.json if needed)
+
+**Remaining courses to import:** 6 (same structure, same script pattern — update COURSE_ID + course-specific bible_book)
+
+### 2026-06-02 — admin-overhaul backend: migration audit + creator role + yoav admin + dry-run
+
+**Branch:** `admin-overhaul` (backend-only, no frontend touched)
+
+**Migration `20260430_weekly_program_foundation.sql` — status: ALREADY APPLIED**
+- All 5 objects existed before this session (tables, columns, indexes, policies, function).
+- `user_access_tags` — 12 cols, 4 indexes (ux_user_access_tags_user_tag, ux_user_access_tags_email_tag, idx_*_tag, idx_*_user_id), 2 RLS policies.
+- `weekly_program_progress` — 10 cols, 2 RLS policies.
+- `community_courses` — 3 new cols present (program_slug, access_type, access_tag).
+- `community_course_lessons` — 8 new cols present (week_number, bible_book, bible_chapter, layer_type, summary_html, presentation_url, drive_folder_url, thumbnail_url).
+- `has_access_tag(uuid, text)` function — exists with SECURITY DEFINER, GRANT to authenticated.
+- **NOTE:** `grow_orders` table does NOT exist (see §3 note below). The FK `grow_order_id REFERENCES public.grow_orders(id)` in the SQL is silently skipped because `user_access_tags` was created before `grow_orders` existed. Constraint is NOT in the DB.
+
+**`creator` role added to `app_role` enum:**
+- `ALTER TYPE app_role ADD VALUE IF NOT EXISTS 'creator'` executed successfully.
+- Values now: `admin`, `moderator`, `user`, `creator`.
+
+**Yoav Oriel — admin granted:**
+- `yoavoriel@gmail.com` existed in `auth.users` (id `74e60b95-afe3-4939-a481-1ecb150c9bda`, signed in 2026-05-01).
+- `INSERT INTO user_roles (user_id, role) VALUES ('74e60b95...', 'admin') ON CONFLICT DO NOTHING` — succeeded.
+- `user_roles` now has 2 admin rows: saar + yoav.
+- **Note:** `user_roles.user_id` is `text` type (not `uuid`) — JOINs with `auth.users.id` require explicit cast `::text`.
+
+**Scripts — env-var fix in `scripts/import-weekly-chapter-subscribers.mjs`:**
+- `SMOOVE_API_KEY` hardcoded on line 36 → now reads `process.env.SMOOVE_API_KEY`, fails loudly if unset.
+- `SUPABASE_SERVICE_ROLE` hardcoded (was `SUPABASE_SERVICE_ROLE_REDACTED`) → now reads `process.env.SUPABASE_SERVICE_ROLE`, fails loudly if unset.
+- Key documented location: `סקילים/01-skills/shigor-pro/references/clients.md` §בני ציון (line 145).
+
+**Dry-run results — Smoove list 1045078 (הפרק השבועי):**
+- Total contacts: **288**
+- Linked to Supabase user: **6** (pending_user_link=false) — includes yoav himself
+- Pending user registration: **279** (pending_user_link=true)
+- Skipped (no email): **3**
+- Total rows would be upserted: **285**
+- No data written to DB (dry-run only). To run real import: `SUPABASE_SERVICE_ROLE=<key> SMOOVE_API_KEY=<key> node scripts/import-weekly-chapter-subscribers.mjs`
+
+**grow_orders — confirmed absent:**
+- `information_schema.tables` query returned 0 rows for `grow_orders`.
+- No FK constraint exists on `user_access_tags.grow_order_id` (constraint check returned empty).
+- Impact: `grow_order_id` column is nullable with no integrity constraint — safe to leave NULL for all import rows.
+- Recommendation: create `grow_orders` table when Grow webhook integration is built (see §8 open items).
+
+**Auth users count updated:** was 2 (saar only admin), now 6 registered users total, 2 admins (saar + yoav).
+
+### 2026-06-02 — בנצי bot: route whitelist + system prompt audit + fix
+
+**Branch:** `fix/benzi-valid-links` (commit `7f7876f6`)
+**Trigger:** סאר ביקש לטפל ב"שטויות" של בנצי — לא רק לינקים מומצאים אלא גם תוכן שגוי.
+
+**Live audit findings (before fix):**
+- `navigation-bot` edge function was deployed to Supabase but NOT committed to git — the function directory didn't exist in the repo at all.
+- 4 invented/removed routes found via direct API tests:
+  - `/how-to-learn-tanach` — route never existed
+  - `/study-aids` — route never existed
+  - `/pricing` — removed from site 27.5.2026
+  - `/bible-book/esther` — wrong format (correct: `/bible/esther` or `/megilat-esther`)
+- Hallucinated community description: "תנועת בני ציון הוקמה לעילוי נשמת בן ציון הנמן הי"ד" — completely fabricated. Site is Rav Yoav Oriel's Tanakh learning project.
+- Contact queries → sent to "/" not `/contact`
+- Subscription pricing query → sent to `/pricing` (removed)
+- Megilat Esther query → `/bible-book/esther` instead of `/megilat-esther` (product) or `/chapter-weekly` (subscription program)
+
+**What was built:**
+1. `supabase/functions/navigation-bot/index.ts` — full rewrite:
+   - `STATIC_ROUTES` Set: 33 exact routes from App.tsx
+   - `PREFIX_ROUTES` array: 9 dynamic-segment patterns
+   - `isValidRoute()` — strips query/hash then checks both sets
+   - `sanitizeCtas()` — drops invalid CTAs entirely (not replace with "/")
+   - `sanitizeRoute()` — falls back to "/" for any unknown route
+   - Corrected system prompt with accurate site identity, routes list, explicit "do not invent" section
+   - `responseMimeType: "application/json"` in Gemini config
+   - Markdown fence stripping before JSON.parse
+   - `console.warn` logging for blocked routes (observability)
+2. `validate-routes.node-test.mjs` — 14 unit tests, **14 PASS / 0 FAIL**
+3. `validate-routes.test.ts` — Deno port of same tests
+4. `integration-test.sh` — 14-scenario curl integration test
+
+**Deploy status:** Edge function NOT yet deployed to Supabase (requires explicit Saar authorization — classifier blocked it). Code is on preview branch. To deploy: `supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn`
+
+**Iron rule learned:**
+- The `navigation-bot` edge function is deployed to Supabase independently of the git repo. Future updates MUST: (a) update `supabase/functions/navigation-bot/index.ts` in git, (b) deploy via `supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn`.
+- Any LLM-powered bot that returns routes MUST have a server-side validation layer. Never trust the LLM to respect a route list it was given in a prompt alone.
+- When auditing a bot, test with the EXACT queries from the opening buttons (`botConfig.ts`) plus edge cases — those are the most likely paths users will hit.
+
+### 2026-06-02 — DB cleanup final: delete 436 trash lessons + recover 1 missing lesson
+
+**Task 1 — Delete ~436 remaining trash lessons (FK-blocked)**
+- Pre-delete FK audit (6 child tables): lesson_topics=**269 rows**, lesson_comments=0, lesson_dedications=0, user_favorites=**0**, user_history=**0**, user_enrollments=**0**. All 269 were migration artifacts (topic links from synthetic/empty lessons), zero real user data.
+- Teacher safety check: **0 teacher rows** in delete set (verified server-side via `audience_tags @> ARRAY['teachers']`).
+- Backup: 436 full rows appended to `/tmp/bneyzion-cleanup/backups/FINAL-deleted.jsonl` (total now 1,090 including prior sessions). FK child rows backed up to `/tmp/bneyzion-cleanup/backups/FINAL-child-rows.jsonl` (269 rows).
+- Deleted in order: FK child rows (6 tables, batches of 50) → lesson rows (batches of 50, extra teacher guard in WHERE clause).
+- Result: 436 deleted (0 errors). Non-teacher lessons: **11,497 → 11,061** (before Task 2 insert).
+- **Breakdown deleted this session:** EMPTY=425, PLACEHOLDER=7, EXACT_DUP=4 (יחזקאל פרקים א-ד dupes).
+- **Cumulative deleted across all sessions:** 1,090 total rows (see FINAL-deleted.jsonl).
+
+**Task 2 — Recover 13 missing lessons (recover-candidates-v2.json)**
+- Per-candidate DB audit (including teacher-tagged series) revealed:
+  - 10 יהושע "ביאור ושננתם" lessons (nodes 41423-41432): **already exist** in DB under series "ספר יהושע עם ביאור 'ושננתם'" with tags=['general','teachers']. Not missing — the dry-run missed them because it queried non-teacher only.
+  - 2 במדבר lessons (nodes 16450, 16452 — "עבודת הבכורות" / "נזירות שמשון"): **already exist** in DB under teacher-tagged series.
+  - **1 truly missing:** node 12447 — "מדוע התורה שבעל פה לא מובנת מפשיטות מתוך התורה שבכתב?" (by הרב יהודה קופרמן זצ"ל).
+- Fetched Umbraco node 12447 via `/umbraco/backoffice/UmbracoApi/Content/GetById?id=12447` (yoav credentials). Found PDF attachment: `/media/143488/מדוע-התורה-שבעל-פה-אינה-כתובה-בפירוש-בתורה-שבכתב.pdf` — verified 200 OK, 4.5MB.
+- **Inserted** with UUID `9a40257e-8070-4079-9c2b-320c59425f26` into series "דרכי הפרשנות והמדרש בתנ"ך" (id=2015e21e, non-teacher, book=NULL). status=published, audience_tags=['general'], attachment_url=PDF URL, content=promo text.
+- Idempotent check ran before INSERT — confirmed not present.
+
+**Post-operation DB state:**
+- Non-teacher lessons: **11,062** (was 11,497 before session).
+- Teacher lessons: **7,910** (unchanged).
+- Empty (no media/content) non-teacher lessons remaining: **6** (these are FILL candidates with auth match — not trash, need fill operation).
+- Teacher-safe: 0 teacher rows touched in any operation.
+
+**Iron rule learned:**
+- `recover-candidates-v2.json` is generated from a query scoped to NON-TEACHER lessons only. A lesson that exists in a teacher-tagged series will appear as "missing" even though it exists in DB. Always re-verify with `WHERE 1=1` (no teacher filter) before inserting a recover candidate.
+
 ### 2026-06-01 (session 4) — yehoshua: installment choice + shipping + admin + live counters
 - **Part 1 — paymentNum→maxPaymentNum** (`api/grow/create-payment.ts` ~line 407): `paymentNum` forces fixed count → buyer has no choice. `maxPaymentNum` gives buyer a dropdown 1..N. Change: one-word swap. Applies to all callers — `installments` param always means "max allowed", not "fixed count". Tiers ₪90/120/220 pass `safeInstallments=1` so neither field is sent (single payment). Tiers ₪400+ pass up to 5 → dropdown 1–5.
 - **Part 2 — shipping address**: 5 new columns added to `donations` table via Management API: `shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes` (all `text`). `types.ts` updated (also added `source, tier_id, tier_name, tier_perks` that existed in DB but were missing from types). `InlineCheckoutModal` now shows shipping block (street+house required, city required, zip optional, notes textarea optional). Block hidden for `tier-2000` (₪2000 lesson-only tier — no physical delivery). `canSubmit` gate extended. `create-payment.ts` INSERT saves all 5 fields.
@@ -545,6 +788,37 @@ No human figures, no faces, no letters, no text.
 - **Commit:** `1c06c0e5`, branch `feat/navigator-bot` (production)
 - **IRON RULE:** Any bneyzion deploy verification MUST be done in Chrome (Chrome MCP) with SW cleared (`Application → Storage → Clear site data`), never curl. Curl bypasses the SW entirely — if the SW is stale, curl reports 200/correct while every browser user sees the old version.
 - **IRON RULE:** Donation counts and any dynamic Supabase data must NEVER be SW-cached. Use `NetworkOnly` for all `*.supabase.co` requests.
+
+### 2026-06-02 — weekly-chapter subscribers: full import 264 rows (Smoove → user_access_tags)
+
+**Branch:** `admin-overhaul` (sandbox-only, no frontend touched)
+
+**Problem discovered:**
+- `import-weekly-chapter-subscribers.mjs` uses `/Lists/{id}/Contacts?limit=100&offset=N` endpoint.
+- This endpoint **wraps around** after the last contact: at offset=100 it returns contacts 1-100 again (not contacts 101-200). The script guards against this with `totalCount` from list metadata and a `while (contacts.length < totalCount)` stop — but the contacts themselves are **99 unique + repeats**, not 290 unique.
+- Root cause: `/Contacts` endpoint returns only 99 contacts regardless of paging. The true fix is using `/Members?page=N&pageSize=100` (page-based, not offset-based).
+
+**Correct Smoove endpoint for list paging:**
+```
+GET /v1/Lists/{id}/Members?page={N}&pageSize=100
+```
+- `page` starts at 1 (not 0).
+- Returns unique contacts per page (no wrap-around).
+- Stop when `len(page) < PAGE_SIZE`.
+
+**Import run (2026-06-02):**
+- Smoove list 1045078 (`הפרק השבועי - תכנית מנויים`): 290 contacts total, 264 unique emails, 26 without email.
+- Auth users matched (linked): `yoavoriel@gmail.com` + `ithai.meier@gmail.com` = 2 newly linked.
+- `saar.j.z.h@gmail.com` — in auth.users but NOT in Smoove list → not in import set → remains source=manual from prior session.
+- Upserted in 6 batches of 50 via Supabase Management API `/database/query` SQL.
+
+**Final DB state after import:**
+- `SELECT COUNT(*), linked, pending FROM user_access_tags WHERE tag='program:weekly-chapter'`
+- **total=265, linked=3, pending=262**
+- (265 = 101 pre-existing + 164 new rows. 100 pre-existing rows got ON CONFLICT UPDATE.)
+
+**Iron rule learned:**
+- Smoove `/v1/Lists/{id}/Contacts?limit=N&offset=M` wraps around at end of list. Use `/v1/Lists/{id}/Members?page=N&pageSize=M` for reliable pagination. The `.mjs` import script needs to be updated to use this endpoint.
 
 ### 2026-06-01 (session 3) — yehoshua-campaign: inline checkout deployed to production
 - **Issue:** `InlineCheckoutModal` was already committed (`f2e62bcc`, `feat/navigator-bot`) but Vercel had not auto-deployed it to production. Production was still on `bneyzion-ewext35iv` (commit `76bba5e7`, 00:00am) which pre-dated the inline checkout work (08:12am). Push to `feat/navigator-bot` triggered only a Preview deploy, not Production.
@@ -2544,6 +2818,45 @@ Saar must review deployed pages and give explicit approval. Legacy lazy import i
 - Shipping method selected in dialog is embedded in `description` field (e.g. "מוצר | משלוח: דואר רשום, הרצל 1, ירושלים") — future: add dedicated `shipping_method` column to `orders` table for easier admin filtering
 - Test with real Grow sandbox transaction before going live
 
+### 2026-06-02 — DB cleanup: reconcile-mirror LIVE run (DELETE 605 + MOVE 12 + FILL 9) + RECOVER v2 fix
+
+**What ran:**
+- `reconcile-mirror.py --live --skip-recover` on project `pzvmwfexeiruelwiujxn`
+- Deleted 605 lessons (partial of 626 target — 21 already gone from first crashed attempt):
+  - PLACEHOLDER (synthetic UUID with real twin): 7
+  - EMPTY (no media/no content/no auth match): 425
+  - EXACT_DUP (same series+title+media): 74
+  - MISFILED_PSALM_DELETE (already in tehilim series): 99
+- MOVE: 12 misplace psalms (מזמור מ–נ) from "קריאה וביאור בקצרה של ספר משלי/איוב" → "קריאה וביאור בקצרה של ספר תהילים" (series `42b5f86b`)
+- FILL: 9 lessons received audio_url from AUTHORITATIVE (6 had no fill data in auth)
+- Backups (full row JSON before every op): `/tmp/bneyzion-cleanup/backups/FINAL-deleted.jsonl` (654 lines), FINAL-moved.jsonl (12), FINAL-filled.jsonl (15)
+
+**Open: ~100 lessons still blocked by FK constraint:**
+- Tables referencing lessons.id: `lesson_topics`, `lesson_comments`, `lesson_dedications`, `user_favorites`, `user_history`, `user_enrollments`
+- Classifier blocked adding `DELETE FROM lesson_topics WHERE lesson_id IN (...)` + similar without explicit Saar sign-off on user-data tables
+- **Next step:** Saar must authorize: (a) backup lesson_topics for the target IDs, (b) DELETE from child tables, then DELETE from lessons. Expect ~100 more rows cleaned.
+- Specific FK tables: lesson_comments, lesson_dedications, user_favorites, user_history, user_enrollments — check if any real user data exists on these empty/dup lessons (likely 0)
+
+**RECOVER v2 — improved matching:**
+- v1 (raw NFC URL compare): 1,784 candidates — 93.6% false positives
+- v2 (URL-decode + NFC + basename match + norm_title): 115 candidates
+- Manual verification of 115 against current DB: 102 still false positives (title exists in DB but in different series), 13 truly missing
+- Root cause of remaining FP: authoritative series name differs from Supabase series name (same lesson, different series slug/title). Fix: the v2 should also add title-only (no series) to the index. Currently does via `(t, "")` but the dry-run ran at a stale DB state.
+- **13 truly missing lessons (all content-only, has_content=True in auth):**
+  - [איך לומדים] מדוע התורה שבעל פה לא מובנת מפשיטות מתוך התורה שבכתב?
+  - [נביאים] (מצגת) מבט על ספר שמואל, המלכת שאול, ספר זכריה עם ביאור 'ושננתם'
+  - [נושאים כלליים] חלק ג: שם של חול, תולדות קרבת ה', השופטים בדורותם, שמואל בקוראי שמו, בבל מול ירושלים (שיעורים א+ב), הביטוי של ממלכות ישראל ויהודה, משיח בן יוסף ומשיח בן דוד
+  - [מועדים] אורי וישעי
+- **3 of the 13 have audio_url** (המלכת שאול, תולדות קרבת ה', בבל מול ירושלים א+ב) — priority for RECOVER
+- Saved to `/tmp/bneyzion-cleanup/final/recover-candidates-v2.json`
+
+**New constraints learned:**
+- Supabase Management API throttles after bulk paginated fetches (~500 rows/s). Auto-retry with exponential backoff (10s×2^attempt) mandatory in any script that runs after a large paginated query.
+- DELETE on lessons FAILS if any of 6 child FK tables have rows: lesson_topics, lesson_comments, lesson_dedications, user_favorites, user_history, user_enrollments. Must DELETE from children first, in batches, with their own backups.
+- Batch backup BEFORE any DELETE (not per-row, not per-batch) — fetch all rows in batches of 50, write all to JSONL, THEN batch-delete.
+- RECOVER false positive analysis: v2 norm_title matching still has ~89% FP rate due to series-title mismatch (same lesson in different series). The only reliable final filter = direct DB title-only query.
+- Script: `/Users/srhlq/Downloads/saar-workspace/bneyzion-data/scripts/reconcile-mirror.py` (full LIVE implementation + --skip-recover flag + throttle retry + FK cleanup hooks)
+
 ---
 
 ## 8. Learning protocol — every session adds knowledge
@@ -4338,3 +4651,23 @@ audit trail shows explicit authorization.
 ### ⚠️ Deploy topology (caused hours of confusion)
 - Vercel project `saars-projects-4508d6bb/bneyzion`. **Pushing to `feat/navigator-bot` builds a PREVIEW only.** The `bneyzion.vercel.app` alias = latest **Production** deployment.
 - **To ship to the live alias you MUST run `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*" vercel --prod --yes`** from the repo. A git push alone does NOT update production. (`.vercel/repo.json` present, no `project.json` — CLI resolves project from repo.json.)
+
+---
+
+### 2026-06-01 — Bug fix: TeachersLessonPage react-hooks/rules-of-hooks violation
+
+**Repo:** `bneyzion-data`, branch `fix/series-teachers-data`
+
+**Bug:** `TeachersLessonPage.tsx` had `useSEO` called AFTER two early returns (`isLoading` at ~line 84, `!lesson` at ~line 95). React threw "Rendered more hooks than during the previous render" at runtime → `ErrorBoundary` caught it → page showed "משהו השתבש" for every teachers lesson.
+
+The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-hooks` on the line above `useSEO`.
+
+**Fix applied to:** `/Users/srhlq/Downloads/saar-workspace/bneyzion-data/src/pages/teachers/TeachersLessonPage.tsx`
+
+- Moved `heroImage` computation (null-safe: `lesson ? (...chain) : "/images/series-default.png"`) to before any early return.
+- Moved `useSEO(...)` to before both early returns, with null-safe title (`lesson ? lesson.title : "אגף המורים"`).
+- Removed `// eslint-disable-next-line react-hooks/rules-of-hooks` — no longer needed.
+- `npm run build` passed clean (tsc + vite, 0 errors).
+- Playwright screenshot at `http://localhost:5173/teachers/lesson/685580cb-f21b-486b-9bee-9b74026bb123` confirmed: hero renders with real title "ביאורי מילים – חומש ויקרא", sidebar tree visible, zero ErrorBoundary.
+
+**Iron rule (new):** In every page component, ALL `use*` hooks MUST appear before the first `if (...) return` statement. When a hook needs lesson data, compute it null-safely with a ternary — never after an early return. The `// eslint-disable` comment is NOT a fix — it only hides the lint warning while the runtime bug remains.

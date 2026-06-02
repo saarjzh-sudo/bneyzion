@@ -1,4 +1,4 @@
-import { LayoutDashboard, BookOpen, Users2, FolderOpen, Tag, ArrowLeftRight, Shield, Home, Settings, ShoppingBag, Mail, GitCompare, GraduationCap, BarChart3, Bell, PanelTop, ClipboardList, Ticket, HeartPulse } from "lucide-react";
+import { LayoutDashboard, BookOpen, Users2, FolderOpen, Tag, ArrowLeftRight, Shield, Home, Settings, ShoppingBag, Mail, GitCompare, GraduationCap, BarChart3, Bell, PanelTop, ClipboardList, Ticket, HeartPulse, CreditCard } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -25,6 +25,7 @@ const navItems = [
   { title: "נושאים", url: "/admin/topics", icon: Tag },
   { title: "מוצרים", url: "/admin/products", icon: ShoppingBag },
   { title: "הזמנות", url: "/admin/orders", icon: ClipboardList },
+  { title: "סליקות", url: "/admin/payments", icon: CreditCard },
   { title: "קופונים", url: "/admin/coupons", icon: Ticket },
   { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap },
   { title: "מיגרציה", url: "/admin/migration", icon: ArrowLeftRight },
