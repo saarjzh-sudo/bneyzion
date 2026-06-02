@@ -112,6 +112,7 @@ const DesignPreviewYehoshuaAdmin = lazy(() => import("./pages/DesignPreviewYehos
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
+const AdminPayments = lazy(() => import("./pages/admin/Payments"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
@@ -319,6 +320,7 @@ const App = () => (
             <Route path="/admin/orders" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/coupons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-health" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/payments" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminPayments /></Suspense></ProtectedRoute>} />
             {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
                 Available in dev AND production (so Vercel previews work for review). */}
             <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
