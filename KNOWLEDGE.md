@@ -4801,3 +4801,43 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - Dry-run חייב לפני כל INSERT לטבלה ריקה — המשתמש חייב לראות בדיוק מה ייכנס לפני commit.
 
 **ממתין לאישור סאר לפני ייבוא בפועל.**
+
+### 2026-06-02 — admin-overhaul גל 3: grow_orders + payment_products עריכה + Paperless skeleton
+
+**Branch:** `admin-overhaul`
+
+**1. Migration `supabase/migrations/20260602_grow_orders.sql` — נוצר, טרם הוחל:**
+- טבלה חדשה `grow_orders` — 28 עמודות: grow_transaction_id, asmachta, process_id, page_code, merchant_user_id, amount, currency, payment_status, installments, card_suffix/brand/type/exp, payment_method, transaction_type_id, customer_name/email/phone, payment_product_id (FK → payment_products), flow_type, invoice_number/url/id, target_table, linked_record_id, raw_payload, created_at, updated_at.
+- FK: `payment_product_id REFERENCES payment_products(id)`
+- FK שנוסף ל-`user_access_tags.grow_order_id REFERENCES grow_orders(id)` (DO block, idempotent, רק אם עמודה קיימת)
+- RLS: admin all + customer read own (by email)
+- Indexes: transaction_id, asmachta, customer_email (lower), linked_record, payment_product, created_at DESC
+- **להחיל ידנית:** Supabase Dashboard → SQL Editor → הדבק קובץ מלא OR Management API:
+  `POST https://api.supabase.com/v1/projects/pzvmwfexeiruelwiujxn/database/query` + `Authorization: Bearer <service_role>` + `{"query": "<sql content>"}`
+
+**2. `src/integrations/supabase/types.ts` — grow_orders נוסף ידנית:**
+- Row/Insert/Update מלאים, FK relationship ל-payment_products.
+- נוסף בין `dor_site_content` ל-`lesson_comments` (סדר אלפביתי).
+
+**3. `src/pages/admin/Payments.tsx` — PaymentProductsTab עריכה inline:**
+- Toggle `active` מיידי (useMutation → Supabase PATCH). Animated toggle switch.
+- כפתור "ערוך" → `EditProductDialog` עם שדות: display_name, default_amount, max_installments.
+- **page_code_env לא ניתן לעריכה מה-UI** — warning ב-dialog (iron rule: b1dc5e695089=directDebit, efbda303565a=wallet).
+- Mutations: `useToggleProductActive`, `useUpdatePaymentProduct` (useQueryClient invalidation).
+
+**4. `src/pages/admin/Payments.tsx` — כפתור "הפק חשבונית":**
+- `InvoiceButton` component בכל שורת orders/donations ללא invoice_url.
+- לחיצה → `useIssuePaperlessInvoice` mutation → POST ל-edge function.
+- State: loading spinner / done badge / error message.
+
+**5. `supabase/functions/issue-paperless-invoice/index.ts` — SKELETON:**
+- Admin-only (מוודא role מ-user_roles). קורא ל-Paperless API. כותב חזרה invoice_url+invoice_number.
+- **STATUS: SKELETON** — מחזיר 503 כל עוד `PAPERLESS_API_KEY` לא מוגדר.
+- Secrets לשלב הפעלה: `PAPERLESS_API_KEY`, `PAPERLESS_BUSINESS_ID`, `PAPERLESS_API_URL`.
+
+**Build:** `tsc --noEmit` נקי + `npm run build` נקי (0 errors, 4.03s).
+
+**Iron rules נלמדו:**
+- `SUPABASE_URL_RUNTIME` + `SUPABASE_ANON_KEY_RUNTIME` מ-`client.ts` — השתמש ב-fetch ל-edge functions.
+- כפתור הפקת מסמך רשמי → auth check server-side + guard existingInvoice + 409 אם קיים.
+- Paperless edge function: לא להפיק בטסט. לאמת credentials לפני deploy.
