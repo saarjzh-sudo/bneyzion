@@ -778,8 +778,8 @@ function DesignParashaHolidaySection() {
                 {/* CTA */}
                 <button onClick={() =>
                   holiday.seriesId
-                    ? navigate(`/design-series-page/${holiday.seriesId}`)
-                    : navigate("/design-series-list")
+                    ? navigate(`/series/${holiday.seriesId}`)
+                    : navigate("/series")
                 }
                   style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem",
                     border: "none",
@@ -931,7 +931,7 @@ function DesignParashaHolidaySection() {
                   לדף פרשת השבוע ←
                 </button>
                 {firstArticle?.seriesId && (
-                  <button onClick={() => navigate(`/design-series-page/${firstArticle.seriesId}`)}
+                  <button onClick={() => navigate(`/series/${firstArticle.seriesId}`)}
                     style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem",
                       border: `1.5px solid ${onDark ? GOLD_LIGHT : GOLD_DARK}`,
                       background: "transparent",
