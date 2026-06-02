@@ -4509,3 +4509,29 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - Playwright screenshot at `http://localhost:5173/teachers/lesson/685580cb-f21b-486b-9bee-9b74026bb123` confirmed: hero renders with real title "ביאורי מילים – חומש ויקרא", sidebar tree visible, zero ErrorBoundary.
 
 **Iron rule (new):** In every page component, ALL `use*` hooks MUST appear before the first `if (...) return` statement. When a hook needs lesson data, compute it null-safely with a ternary — never after an early return. The `// eslint-disable` comment is NOT a fix — it only hides the lint warning while the runtime bug remains.
+
+---
+
+### 2026-06-02 — Admin Payments page built (branch: admin-overhaul)
+
+- **New file:** `src/pages/admin/Payments.tsx` (~850 lines)
+  - 4 KPI cards: הכנסות החודש (orders+donations paid this month), עסקאות, תרומות, מנויים חוזרים
+  - Tab "הזמנות": טבלת `orders`, פילטר payment_status+status+חיפוש, CSV export, row-click → Sheet drawer עם raw_payload JSON viewer
+  - Tab "תרומות": טבלת `donations`, פילטר סטטוס+monthly, CSV export, drawer עם shipping address + raw_payload
+  - Tab "הגדרות תשלום": טבלת `payment_products` — read-only (edit scheduled for next wave)
+  - Gold/parchment/navy palette, RTL מלא, shimmer loading skeletons, per-badge variant system
+- **Route:** `/admin/payments` added to `src/App.tsx` (ProtectedRoute, lazy-loaded as `AdminPayments`)
+- **Nav:** "סליקות" + CreditCard icon added to `src/components/admin/AdminSidebar.tsx` (after "הזמנות")
+- **Schema notes confirmed:**
+  - `orders.smoove_list_id` is `number` (not string)
+  - `donations.smoove_list_id` is `number` (not string)
+  - `payment_products.smoove_list_id` is `number` (not string)
+  - `donations` phone field = `phone` (not `donor_phone`)
+- **TypeScript:** 0 errors. Vite build emits `Payments-aBu5BlPA.js`. Route in main bundle confirmed.
+- **Commit:** `7bd24a91` on `admin-overhaul`, pushed to remote.
+
+**What's next (next wave for this page):**
+- Edit/toggle `payment_products.active` inline
+- Paperless invoice generation button per row (create receipt from Payments page)
+- Monthly subscriber count — cross-reference `user_access_tags` for program:weekly-chapter
+- Date range filter on KPIs
