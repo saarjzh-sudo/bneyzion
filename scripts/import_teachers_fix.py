@@ -129,12 +129,38 @@ def our_book_series(book):
 
 def backup():
     os.makedirs(BACKUP_DIR, exist_ok=True)
-    stamp=datetime.datetime.now().strftime("%Y%m%d-%H%M%S") if False else "snapshot"  # stamp passed externally
     for tbl in ("series","lessons"):
         data=sb_get_paged(f"{tbl}?select=*")
         p=os.path.join(BACKUP_DIR, f"{tbl}-backup.json")
         json.dump(data, open(p,"w"), ensure_ascii=False)
         print(f"  backup: {tbl} → {p} ({len(data)} rows)")
+
+# cache of all existing series titles (normalized) → avoid duplicates on re-run
+_existing_titles=None
+def existing_series_titles():
+    global _existing_titles
+    if _existing_titles is None:
+        _existing_titles={norm(r['title']) for r in sb_get_paged("series?select=title")}
+    return _existing_titles
+
+_rabbi_cache={}
+def resolve_author(name, execute):
+    """Find a rabbi/creator by name; create one (entity_type) if missing. Returns id or None."""
+    name=(name or "").strip()
+    if not name or name in ("מחבר לא ידוע",): return None
+    if name in _rabbi_cache: return _rabbi_cache[name]
+    r=sb_get(f"rabbis?select=id&name=eq.{urllib.parse.quote(name)}")
+    if r:
+        _rabbi_cache[name]=r[0]['id']; return r[0]['id']
+    if not execute:
+        _rabbi_cache[name]="(would-create)"; return None
+    etype="rabbi" if name.startswith("הרב") or name.startswith("הרבנית") else "content_creator"
+    slug=re.sub(r'[^\w֐-׿]+','-', name).strip('-')[:60]
+    code,body=sb_write("POST","rabbis",{"name":name,"entity_type":etype,"status":"active","slug":slug})
+    if code in ("200","201"):
+        rid=json.loads(body)[0]['id']; _rabbi_cache[name]=rid; return rid
+    print(f"      (author create failed for '{name}': HTTP {code})")
+    return None
 
 def main():
     execute = "--execute" in sys.argv
@@ -145,50 +171,55 @@ def main():
     if execute:
         print("\n== BACKUP (local snapshot before writes) ==")
         backup()
-    plan=[]
+    seen_titles=existing_series_titles()   # dedup vs whole DB (idempotent re-runs)
+    file_plan=[]; scrape_later=[]
     books = [only_book] if only_book else list(BOOK_PAGES)
     for book in books:
         old=parse_old_book(curl_old(BOOK_PAGES[book]))
         ours=our_book_series(book)
         ourTitles={norm(r['title']) for r in ours}
         missing=[s for s in old if norm(s['title']) not in ourTitles
+                 and norm(s['title']) not in seen_titles
                  and norm(s['title'])!=norm(book)]
-        print(f"\n### {book}: old={len(old)} ours={len(ours)} missing={len(missing)}")
+        nf=sum(1 for s in missing if s['file_url']); ns=len(missing)-nf
+        print(f"\n### {book}: old={len(old)} ours={len(ours)} missing={len(missing)}  (file={nf}, multi-lesson={ns})")
         for s in missing:
-            kind = "FILE→1 lesson" if s['file_url'] else "needs lesson scrape"
-            print(f"   + {s['title'][:46]:46} | {s['author'][:18]:18} | {kind}")
-            plan.append((book,s))
-    print(f"\nTOTAL missing series to import: {len(plan)}")
+            s['book']=book
+            if s['file_url']: file_plan.append(s)
+            else: scrape_later.append(s)
+    print(f"\nIMPORTABLE NOW (single-file series): {len(file_plan)}")
+    print(f"MULTI-LESSON (JS-rendered, follow-up needed): {len(scrape_later)}")
     if not execute:
-        print("\n(DRY-RUN — nothing written. Re-run with --execute to apply.)")
+        print("\n(DRY-RUN — nothing written. Re-run with --execute to apply the single-file series.)")
+        if scrape_later:
+            print("multi-lesson series left for follow-up:")
+            for s in scrape_later: print(f"   · {s['book']}: {s['title']}")
         return
-    # --- EXECUTE: insert missing series (+ file lesson) ---
-    print("\n== WRITING ==")
-    for book,s in plan:
-        # resolve/insert rabbi
-        rabbi_id=None
-        if s['author']:
-            r=sb_get(f"rabbis?select=id&name=eq.{urllib.parse.quote(s['author'])}")
-            if r: rabbi_id=r[0]['id']
+    # --- EXECUTE: single-file series (series + 1 attachment lesson, correct author) ---
+    print("\n== WRITING (single-file series) ==")
+    ok=0; fail=0
+    for s in file_plan:
+        book=s['book']
+        rabbi_id=resolve_author(s['author'], execute)
         ser={"title":s['title'],"bible_book":book,"audience_tags":["teachers"],
-             "status":"published","rabbi_id":rabbi_id,
-             "lesson_count":1 if s['file_url'] else (s['count'] or 0)}
+             "status":"published","rabbi_id":rabbi_id,"lesson_count":1}
         code,body=sb_write("POST","series",ser)
         if code not in ("200","201"):
-            print(f"   ✗ series '{s['title'][:30]}' → HTTP {code}: {body[:120]}"); continue
+            print(f"   ✗ {s['title'][:34]:34} series HTTP {code}: {body[:100]}"); fail+=1; continue
         sid=json.loads(body)[0]['id']
-        if s['file_url']:
-            url=s['file_url'] if s['file_url'].startswith('http') else OLD+urllib.parse.quote(s['file_url'])
-            les={"title":s['title'],"series_id":sid,"bible_book":book,"audience_tags":["teachers"],
-                 "status":"published","attachment_url":url,"rabbi_id":rabbi_id,
-                 "source_type":"pdf" if url.lower().endswith('pdf') else "text"}
-            c2,b2=sb_write("POST","lessons",les)
-            print(f"   ✓ {s['title'][:38]:38} series+lesson ({c2})")
-        else:
-            print(f"   ✓ {s['title'][:38]:38} series only (lessons need follow-up scrape)")
-        time.sleep(0.2)
-    print("\nDONE. Verify with: python3 scripts/audit_teachers.py")
-    print("ROLLBACK: restore from scripts/backups/*.json (rows captured pre-write).")
+        url=s['file_url'] if s['file_url'].startswith('http') else OLD+urllib.parse.quote(s['file_url'])
+        ext=url.lower().rsplit('.',1)[-1]
+        les={"title":s['title'],"series_id":sid,"bible_book":book,"audience_tags":["teachers"],
+             "status":"published","attachment_url":url,"rabbi_id":rabbi_id,
+             "source_type":"pdf" if ext=="pdf" else "text"}
+        c2,b2=sb_write("POST","lessons",les)
+        mark="✓" if c2 in ("200","201") else "⚠"
+        print(f"   {mark} {s['title'][:34]:34} | {(s['author'] or '-')[:20]:20} | {ext}")
+        ok+=1; time.sleep(0.15)
+    print(f"\nDONE: {ok} series imported, {fail} failed.")
+    print(f"SKIPPED (multi-lesson, JS-rendered — need follow-up): {len(scrape_later)}")
+    print("Verify: python3 scripts/audit_teachers.py")
+    print("ROLLBACK: scripts/backups/*.json captured the pre-write state.")
 
 if __name__=="__main__":
     main()
