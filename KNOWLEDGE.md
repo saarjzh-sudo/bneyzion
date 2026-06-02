@@ -526,6 +526,62 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-01 — content gap recovery: תהלים +103, משלי +2, small gaps +10 (113 total new lessons)
+
+**Branch:** `fix/series-teachers-data` · **DB only (no frontend change)**
+
+**Scope:** Recovered 113 lessons missing from V2 Supabase vs. Umbraco CMS original site. All insertions had dry-run preview before execution.
+
+**תהלים (103 lessons recovered):**
+- Sדרה: "קריאה וביאור בקצרה של ספר תהילים" (`42b5f86b`)
+- Before: 53 lessons. After: 156 lessons. Umbraco-index total: 156 (excl. 1 unpublished artifact).
+- All lessons: מזמור נא–קנ (psalms 51–150), incl. 4 parts of psalm 119.
+- Audio: `https://s3.us-east-2.amazonaws.com/bneyzion/הרב+יונדב+זר/תנך+20+-+תהילים/20-tehilim-NNN.mp3` — all 200 OK on S3.
+- Rabbi: הרב יונדב זר (`d79a4a34`). bible_book: תהלים. bible_chapter: per psalm number.
+- Script: `scripts/recover-content-gaps.py`
+
+**משלי (2 lessons recovered):**
+- Sדרה: "קריאה וביאור בקצרה של ספר משלי" (`b6da5a68`)
+- Before: 40 lessons (29 פרק + 11 מזמורים from earlier scrape). After: 42.
+- Recovered: "משלי פרק ג" + "משלי פרק כד" — both existed as 200 OK on old site.
+- Audio: `https://bneyzion.s3.us-east-2.amazonaws.com/הרב+יונדב+זר/תנך+21+-+ספר+משלי/21-mishlei-NN.mp3`
+- **Critical discovery:** 116 "מזמור" nodes in Umbraco under משלי path = all 404 (not published). These are scraper artifacts from Umbraco, NOT real lessons. The umbraco-index.json showed 147 items but only 31 are real פרק משלי pages.
+- Script: `scripts/recover-content-gaps.py`
+
+**Small gaps (10 lessons — איך לומדים + נושאים כלליים):**
+- 5 from "איך לומדים תנ"ך" section: הגישה הראויה ללימוד, אם ראשונים כמלאכים, היחס הראוי, דרכי הפרשנות, הרב זלמן מלמד
+- 5 from נושאים כלליים: גלות וגאולה, מלחמת גוג ומגוג, נבואה ונביאים, ארץ ישראל, בית המקדש והכהנים
+- Media: vp4.me embed (shared iframe per series, not per-lesson)
+- Script: `scripts/recover-small-gaps.py`
+
+**Verification (final counts):**
+| Series | Before | After | Umbraco | Status |
+|--------|--------|-------|---------|--------|
+| תהלים | 53 | 156 | 156 | DONE |
+| משלי (real pages) | 40 | 42 | 31 | DONE (42 > 31 — extra מזמורים from old scrape are fine) |
+| יהושע | 26 | 26 | 26 | DONE |
+| שופטים | 26 | 26 | 26 | DONE |
+| יחזקאל | 51 | 97 | 51 | DONE (Supabase has MORE — from deeper scrape) |
+
+**Total published lessons: 19,535** (was 19,422 before session)
+
+**Blockers (unrecoverable):**
+- 12 חגי "פ (4)"–"פ (15)" nodes: HTTP 404 on old site — never published
+- 3 כלי עזר "ציר זמן..." with | char: HTTP 500 IIS error on old site
+- 4 איך לומדים with "?" in URL: HTTP 400 IIS error
+- 1 "לכו אצל אבותיכם": HTTP 404 not published
+- ~22 נושאים כלליים: artifact nodes or inaccessible (total 34 missing, 10 recovered, 24 remain)
+
+**Iron rules learned:**
+1. **Umbraco-index.json is a partial snapshot.** Many series in Supabase have MORE lessons than the index shows (e.g. יחזקאל 97 vs 51 in index). Always compare actual counts, not index counts.
+2. **Nodes with "(N)" in name are scraper artifacts.** Pattern: `פ (5)`, `מזמור ק (1) (5)`, `פרק (1) (4)` = Umbraco nav links Umbraco duplicated with lazy slug. Always return 404 on old site. Filter: `"(1)" in name or "(5)" in name`.
+3. **מזמורים in wrong series path = not real.** The משלי series path in Umbraco contains 116 "מזמור" nodes that are all 404. These entered the index during scraping but were never published.
+4. **S3 audio URL patterns by series:**
+   - תהלים: `s3.us-east-2.amazonaws.com/bneyzion/הרב+יונדב+זר/תנך+20+-+תהילים/20-tehilim-NNN.mp3`
+   - משלי: `bneyzion.s3.us-east-2.amazonaws.com/הרב+יונדב+זר/תנך+21+-+ספר+משלי/21-mishlei-NN.mp3`
+5. **vp4.me iframe is series-level, not lesson-level.** Same GUID across all pages of a series. Acceptable as video_url but doesn't deep-link to specific lesson.
+6. **Pipe char `|` in URL path = IIS 500.** Cannot scrape these pages. "ציר זמן - תקופת המלכים | ..." URLs will always return 500.
+
 ### 2026-06-01 — series-teachers-data: sidebar teacher-filter + weekly-program migration audit
 - **Branch:** `fix/series-teachers-data` (created from `feat/navigator-bot`)
 - **ציר ג' — weekly-program migration**: Migration `20260430_weekly_program_foundation.sql` was already applied in a prior session. Both `user_access_tags` and `weekly_program_progress` tables exist, `has_access_tag()` RPC exists, all columns on `community_courses`/`community_course_lessons` exist. **Dry-run result**: Smoove list 1045078 has 288 contacts → 285 rows to upsert (6 linked to existing Supabase users, 279 pending_user_link=true, 3 skipped no-email). **Real import awaiting Saar authorization.**
@@ -4376,4 +4432,61 @@ audit trail shows explicit authorization.
 - `scripts/import-weekly-chapter-subscribers.mjs` must be run with env var `SUPABASE_SERVICE_ROLE_KEY` set. To get the key use Supabase Management API `GET /v1/projects/pzvmwfexeiruelwiujxn/api-keys` with the PAT from api-keys.md.
 - Smoove list contact count ≠ unique email count. The unique constraint on `(email, tag)` silently deduplicates — upsert always succeeds but count will be lower than the raw Smoove count.
 - Headless Chrome `--virtual-time-budget` does not help async `fetch()` to external APIs (Supabase). Pages with async data show loading spinners in screenshots. This is NOT a code bug — verified by reading the component source.
+
+### 2026-06-01 — Parity audit: old site (Umbraco) vs new site (Supabase) sidebar
+
+**Context:** Audit requested before pushing branch `fix/series-teachers-data`. Objective: verify the public sidebar (תורה/נביאים/כתובים tree + extra sections) is 1:1 with old bneyzion.co.il.
+
+**Sources:**
+- Old site: `scripts/umbraco-index.json` (9,566 items — last scraped during migration)
+- New site: Supabase Management API recursive CTE on series tree from ROOT_IDS (torah/neviim/ketuvim + extra sections)
+- Filter used in `DesignSidebar.tsx`: hide series where `audience_tags.every(t => t === 'teachers')` — i.e. only hide pure teacher series, not `['teachers','general']`
+
+**Key numbers (public sidebar only):**
+| חלק | ישן (Umbraco) | חדש (Supabase) | פער |
+|-----|-------------|----------------|-----|
+| תורה | 2,394 שיעורים | 3,299 שיעורים | +905 (+38%) |
+| נביאים | 3,478 שיעורים | 4,031 שיעורים | +553 (+16%) |
+| כתובים | 1,489 שיעורים | 1,560 שיעורים | +71 (+5%) |
+| הפטרות | 248 | 260 | +12 |
+| מועדים | 60 | 161 | +101 |
+| נושאים כלליים | 420 | 377 | -43 |
+| איך לומדים | 96 | 79 | -17 |
+| ימי עיון | 0 | 221 | new |
+
+**Per-book discrepancies (books where new site has FEWER lessons):**
+| ספר | ישן | חדש | פער | חומרה |
+|-----|-----|-----|-----|-------|
+| משלי | 334 | 224 | -110 | CRITICAL — "קריאה וביאור בקצרה" היתה 147 בישן, 40 בחדש |
+| תהלים | 284 | 183 | -101 | חסר — "קריאה וביאור בקצרה" היתה 157 בישן, 53 בחדש |
+| יהושע | 385 | 335 | -50 | חסר ⚠️ |
+| שופטים | 476 | 437 | -39 | חסר ⚠️ |
+| יחזקאל | 365 | 328 | -37 | חסר ⚠️ |
+| ירמיהו | 436 | 409 | -27 | קל |
+| ישעיהו | 323 | 314 | -9 | קל |
+| חגי | 42 | 36 | -6 | קל |
+
+**Books where new site has MORE lessons (רבנים נוספים שנוספו במיגרציה):**
+שמות +458, במדבר +251, מלכים ב +223, מלכים א +175, זכריה +85, עזרא ונחמיה +85, ישעיהו +284, ירמיהו +269, יחזקאל +233, זכריה +96, הושע +43, עמוס +34, בראשית +118.
+
+**Root cause of gaps (משלי/תהלים):**
+- `קריאה וביאור בקצרה של ספר משלי`: ישן=147 שיעורים, חדש=40. 107 שיעורים חסרים — לא עברו גרידה מלאה (ה-mass-scrape הפסיד חלק מה-lessons בסדרות עם פגינציה).
+- `קריאה וביאור בקצרה של ספר תהילים`: ישן=157, חדש=53. 104 שיעורים חסרים — אותה בעיה.
+- שאר הפערים (יהושע/שופטים/יחזקאל): lesson_count fields עשויים שלא לשקף את מה שבUmbraco. יש 461 drafts שעדיין לא הושלמו מהAumbraco (מתוך KNOWLEDGE §2).
+
+**Media verification (spot-check):**
+- 5 S3 audio URLs (יהושע x2, יחזקאל, תהלים, משלי): כולם 200 OK
+- 5 Supabase attachment URLs (DOC/DOCX/PDF): כולם 200 OK, content-type נכון
+
+**Sidebar structure (new site):**
+- 322 public series (audience_tags @> ['general']) — 19 books with bible_book, 87 ללא bible_book
+- 525 published + 554 active + 357 category series (כולם ציבוריים)
+- 203 teacher-only series (filtered from public sidebar) + 51 mixed ['teachers','general'] (נשארים גלויים)
+
+**What the audit does NOT cover:**
+- מאגר מורים (teachers מאגר) — filtered out by design
+- החלק of lessons where `bible_book = NULL` (4,227 lessons ב-87 series ללא bible_book) — appear in sidebar under "extra sections" / series list, not under specific book nodes
+- קטגוריה "נושאים כלליים": 43 שיעורים חסרים (420→377) — לא נחקרו לעומק
+
+**Conclusion:** הסיידבר הציבורי 1:1 מבחינת מבנה (אותם ספרים, אותם sections). הנתונים עצמם **לא 1:1** — החדש מכיל יותר שיעורים (רבנים נוספים שנוספו), אבל ב-5 ספרים יש פחות. המחסור הגדול ביותר: משלי (-110) ותהלים (-101) — שתי סדרות ספציפיות שה-mass-scrape לא השלים.
 - `SUPABASE_SERVICE_ROLE_REDACTED` in scripts = post-security-incident placeholder. Always replace via Management API before running import scripts.

@@ -36,14 +36,26 @@ export function useContentSidebar() {
     queryFn: async () => {
       const catIds = [ROOT_IDS.torah, ROOT_IDS.neviim, ROOT_IDS.ketuvim];
 
-      // Fetch books under Torah/Neviim/Ketuvim
-      const { data: allBooks } = await supabase
+      // Fetch books under Torah/Ketuvim — active or published (Ketuvim uses published/active for real books)
+      const { data: torahKetuvimBooks } = await supabase
         .from("series")
         .select("id, title, parent_id")
-        .in("parent_id", catIds)
+        .in("parent_id", [ROOT_IDS.torah, ROOT_IDS.ketuvim])
+        .in("status", ["active", "published", "category"])
         .order("title");
 
-      if (!allBooks) return { categories: [], extraSections: [] };
+      // Fetch books under Neviim — only "category" status (all real Neviim books are category;
+      // draft/active non-category entries here are ghost series that must be hidden)
+      const { data: neviimBooks } = await supabase
+        .from("series")
+        .select("id, title, parent_id")
+        .eq("parent_id", ROOT_IDS.neviim)
+        .eq("status", "category")
+        .order("title");
+
+      const allBooks = [...(torahKetuvimBooks || []), ...(neviimBooks || [])];
+
+      if (!allBooks.length) return { categories: [], extraSections: [] };
 
       // Fetch children of Torah books (parshiot etc.)
       const torahBookIds = allBooks
@@ -54,6 +66,7 @@ export function useContentSidebar() {
         .from("series")
         .select("id, title, parent_id, sort_order")
         .in("parent_id", torahBookIds)
+        .in("status", ["active", "published"])
         .order("sort_order")
         .order("title");
 
@@ -66,6 +79,7 @@ export function useContentSidebar() {
         .from("series")
         .select("id, title, parent_id, sort_order")
         .in("parent_id", nkBookIds)
+        .in("status", ["active", "published"])
         .order("sort_order")
         .order("title");
 
@@ -83,6 +97,7 @@ export function useContentSidebar() {
         .from("series")
         .select("id, title, parent_id, sort_order")
         .in("parent_id", expandableIds)
+        .in("status", ["active", "published"])
         .order("sort_order")
         .order("title");
 
@@ -197,6 +212,7 @@ export function useContentSidebar() {
           .from("series")
           .select("id, title, lesson_count, rabbi_id, description")
           .in("id", allIds)
+          .in("status", ["active", "published"])
           .gt("lesson_count", 0)
           .order("lesson_count", { ascending: false })
           .limit(100);
@@ -283,6 +299,7 @@ export function useContentSidebar() {
           .from("series")
           .select("id, title, lesson_count, description")
           .eq("rabbi_id", rabbiId)
+          .in("status", ["active", "published"])
           .gt("lesson_count", 0)
           .order("lesson_count", { ascending: false })
           .limit(100);
