@@ -4765,5 +4765,39 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
   - Gold/parchment/navy palette, RTL, shimmer loading, end-confirmation dialog
 - **Stale nav check:** Notifications, Messages, HomepageManager — all 3 are FULLY IMPLEMENTED, kept in nav.
 - **TypeScript:** 0 errors. Vite build: 291 entries. Commit: `c2a9ce67` on `admin-overhaul`.
-- **"creator" role note:** DB enum currently has `admin|moderator|user` only; `creator` is defined in codebase
-  type only. When yoav gets creator role, the DB enum must be extended first via migration.
+- **"creator" role note:** DB enum currently has `admin|moderator|user|creator` (creator was added by a previous agent). When yoav gets creator role, no DB migration needed — just INSERT to user_roles.
+
+### 2026-06-02 — M7 ייבוא תוכן הפרק השבועי: discovery + importer (branch: admin-overhaul)
+
+**Discovery findings (מה שנמצא):**
+
+- `community_course_lessons` — ריקה לחלוטין (0 שורות). הסכמה הורחבה כבר (migration 20260430) אבל אף שיעור לא יובא.
+- תוכן שיעורי הפרק השבועי יושב ב-`lessons` הרגיל תחת סדרות "לב הפרק":
+  - "לב הפרק" (active): 17 שיעורים — כולם עם audio_url + video_url ב-S3
+  - "לב הפרק - חגי/זכריה/מלאכי": 11 שיעורים (11 audio, 4 video)
+  - "לב הפרק - עזרא/נחמיה": 7 שיעורים
+  - "לב הפרק - שופטים": 2 שיעורים
+- **אין תוכן בגוגל דרייב** — `drive_folder_url` ריק בכל השיעורים. S3 הוא המקור היחיד.
+- `community_courses`: קורס "לחיות תנ"ך - תכנית המנויים" קיים (ID `0668de8c`, status=inactive, smoove_course_id=13495) ללא קישור לשיעורים.
+- `user_access_tags`: 101 רשומות `program:weekly-chapter` (98 smoove_import + 3 אחרות).
+- Smoove רשימה 1045078 ("הפרק השבועי - תכנית מנויים"): 280+ מנויים (לפחות 14 עמודים × 100).
+- **מסקנה:** הייבוא הנכון = קישור lessons קיימים → community_course_lessons, לא ייבוא מדרייב/Smoove.
+
+**מה נבנה:**
+
+- `src/pages/admin/ImportContent.tsx` — ממשק ייבוא admin-only:
+  - שלב 1: בחר סדרת מקור (filter: "לב הפרק", "מגילת אסתר", "קהלת")
+  - שלב 2: בחר community_course יעד
+  - Dry-run: preview מלא עם stats (כמה ייובאו / כבר קיימים / עם/בלי מדיה)
+  - כפתור "אשר ייבוא" מופיע רק אחרי dry-run
+  - Import INSERT ל-community_course_lessons עם bible_book/bible_chapter/layer_type='base'
+  - שמירת `(supabase as any)` כי types.ts עדיין לא מכיל שדות מ-migration 20260430
+- `src/App.tsx`: הוסף lazy import + route `/admin/import-content` (admin-only)
+- `src/components/admin/AdminSidebar.tsx`: הוסף "ייבוא תוכן" (Download icon) בסוף CONTENT_ITEMS (admin-only)
+- TypeScript: 0 errors. Build: clean.
+
+**Iron rule נלמד:**
+- כשה-types.ts לא מסונכרן עם migration חדש: `(supabase as any).from(...)` + comment מסביר. לאחר `supabase gen types` יהיה אפשר להסיר את ה-`as any`.
+- Dry-run חייב לפני כל INSERT לטבלה ריקה — המשתמש חייב לראות בדיוק מה ייכנס לפני commit.
+
+**ממתין לאישור סאר לפני ייבוא בפועל.**

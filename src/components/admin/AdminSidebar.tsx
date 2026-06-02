@@ -2,7 +2,7 @@ import {
   LayoutDashboard, BookOpen, Users2, FolderOpen, Tag, ArrowLeftRight,
   Shield, Home, Settings, ShoppingBag, Mail, GitCompare, GraduationCap,
   BarChart3, Bell, PanelTop, ClipboardList, Ticket, HeartPulse, CreditCard,
-  UserCheck, Upload,
+  UserCheck, Upload, Download,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -44,6 +44,7 @@ const CONTENT_ITEMS: NavItem[] = [
   { title: "נושאים",         url: "/admin/topics",            icon: Tag,           roles: ["admin", "creator"] },
   { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap, roles: ["admin", "creator"] },
   { title: "בריאות תוכן",   url: "/admin/content-health",    icon: HeartPulse,    roles: ["admin", "creator"] },
+  { title: "ייבוא תוכן",    url: "/admin/import-content",    icon: Download,      roles: ["admin"] },
 ];
 
 // ─── Management items — admin only ─────────────────────────────
