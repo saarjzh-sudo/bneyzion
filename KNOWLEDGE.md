@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-02 (session — @hebcal/core dynamic parasha + 17 Tammuz nav fix + polling 30s)
+**Last updated:** 2026-06-02 (session — @hebcal/core dynamic parasha + 17 Tammuz nav fix + polling 30s + Payments wave-3 + admin surgical layer + content gate + ezra pilot + unified merge)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external

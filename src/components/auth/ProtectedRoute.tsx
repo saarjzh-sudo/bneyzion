@@ -1,8 +1,25 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import type { AppRole } from "@/contexts/AuthContext";
 
-export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { user, isAdmin, isLoading } = useAuth();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  /**
+   * Which roles are allowed to access this route.
+   * Defaults to ["admin"] — no change to existing behavior.
+   *
+   * Examples:
+   *   allowedRoles={["admin"]}              — admin only (default)
+   *   allowedRoles={["admin", "creator"]}   — admin + creator
+   */
+  allowedRoles?: AppRole[];
+}
+
+export const ProtectedRoute = ({
+  children,
+  allowedRoles = ["admin"],
+}: ProtectedRouteProps) => {
+  const { user, isAdmin, userRole, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -16,12 +33,24 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!user) return <Navigate to="/auth" replace />;
-  if (!isAdmin) {
+
+  // Admin always passes — they have all permissions
+  if (isAdmin) return <>{children}</>;
+
+  // For non-admin: check if userRole is in the allowedRoles list
+  const hasAccess = userRole != null && allowedRoles.includes(userRole);
+
+  if (!hasAccess) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background" dir="rtl">
         <div className="text-center space-y-4 max-w-md p-8">
           <h1 className="text-2xl font-heading gradient-teal">אין הרשאה</h1>
-          <p className="text-muted-foreground">אין לך הרשאות גישה לדשבורד הניהול. פנה למנהל המערכת.</p>
+          <p className="text-muted-foreground">
+            אין לך הרשאות גישה לדף זה.
+            {userRole === "creator"
+              ? " ניתן לגשת לניהול תוכן בלבד."
+              : " פנה למנהל המערכת."}
+          </p>
         </div>
       </div>
     );
