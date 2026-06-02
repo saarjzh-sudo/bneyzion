@@ -526,6 +526,30 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — Grow webhook targetTable routing bug: yehoshua-campaign donations stuck pending (commit b5b177c)
+
+**Bug:** `api/grow/webhook.ts` line 139 routed `targetTable` by `cField2` alone.
+`payment_products.yehoshua-campaign` has `type="wallet"` → `cField2="wallet"` → fell to `"orders"` → UPDATE found 0 rows in orders → donation stayed `pending` forever.
+7 legacy completed donations worked because they used `cField2="donation"` (pre-Oct path via `/donate` page).
+
+**Root cause confirmed:** `payment_products.yehoshua-campaign` has `target_table="donations"` in DB but webhook ignored it.
+
+**Fix (option B):** If `cField3` (productSlug) is present → query `payment_products.target_table` first. Use that value as `targetTable`.
+Fallback: no productSlug or DB miss → legacy rule (`cField2==="donation" → "donations"`, else `"orders"`). All existing flows (store, subscription, megilat-esther) hit the fallback and behave identically to before.
+Also: Smoove subscribe trigger switched from `flowType==="donation"` to `targetTable==="donations"` for consistency.
+
+**Synthetic test:** cField3="yehoshua-campaign" + cField2="wallet" + cField1=`9a344610-d259-4d34-90b0-75b6abe4f78b` (saar ₪18 test row) → `processed:true`, row moved from `pending` to `completed`. Row reverted to `pending` post-test.
+`yehoshua_campaign_stats` unchanged: supporters=26, raised=₪3,806 (saar ₪18 test row = pending, not counted).
+`rafi.brickner@gmail.com` ₪360 row — still `pending` (real payment, needs separate Grow investigation).
+
+**Deploy:** commit `b5b177c` → push feat/navigator-bot → `vercel --prod` → `dpl_6JW49R7SQGkm7Qy4v5yfMWX6hT3E`, readyState=READY, aliased bneyzion.vercel.app.
+
+**Open:** רפי בריקנר ₪360 pending — likely real Grow webhook delivery failure (not a code bug). Need to check Grow dashboard for webhook delivery logs on that transaction.
+
+**Iron rule learned:** Never route webhook `targetTable` by `cField2` (payment type) alone — `type` and `target_table` can differ. `target_table` in `payment_products` is the authoritative routing field. Always resolve from DB first, fallback to type-based heuristic.
+
+---
+
 ### 2026-06-02 — admin layer surgical deploy to production (commit a5098add)
 
 **Branch:** `admin-to-production` (new branch from `prod-with-content-gate`)
