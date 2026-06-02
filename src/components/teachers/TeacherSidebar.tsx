@@ -17,9 +17,10 @@
  */
 import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import {
   BookOpen,
-  Wrench,
+  Layers,
   Users,
   ChevronDown,
   ChevronLeft,
@@ -29,13 +30,55 @@ import {
 } from "lucide-react";
 import { colors, fonts, radii, shadows } from "@/lib/designTokens";
 import { useTeacherSidebar } from "@/hooks/useTeacherSidebar";
+import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
+
+// ─── Helper: get anon key (same pattern as DesignPreviewTeachersWingV2) ──────
+function getAnonKey(): string {
+  return atob("ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA4bw==");
+}
+
+// ─── Hook: content_type counts with client-side dedup ───────────────────────
+// ד2: dedup by (title+series_id+content_type), filter series_id=null,
+// to neutralize the ×20 lesson inflation from the 2026-05-27 migration.
+interface ContentTypeCount { content_type: string; cnt: number; }
+
+function useContentTypeCountsDeduped() {
+  return useQuery<ContentTypeCount[]>({
+    queryKey: ["teacher-sidebar-content-type-counts-deduped"],
+    queryFn: async () => {
+      const anonKey = getAnonKey();
+      // Fetch title+series_id+content_type for dedup; series_id != null filters orphans
+      const url = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=title,series_id,content_type&audience_tags=cs.%7Bteachers%7D&status=eq.published&content_type=not.is.null&series_id=not.is.null&limit=30000`;
+      const resp = await fetch(url, {
+        headers: { apikey: anonKey, Authorization: `Bearer ${anonKey}` },
+      });
+      if (!resp.ok) return [];
+      const rows: Array<{ title: string; series_id: string; content_type: string }> = await resp.json();
+      // Dedup by composite key
+      const seen = new Set<string>();
+      const map = new Map<string, number>();
+      for (const row of rows) {
+        const key = `${row.title}|${row.series_id}|${row.content_type}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        map.set(row.content_type, (map.get(row.content_type) || 0) + 1);
+      }
+      // NOTE: counts are approximate until DB cleanup completes (2026-05-27 inflation)
+      return Array.from(map.entries())
+        .map(([content_type, cnt]) => ({ content_type, cnt }))
+        .sort((a, b) => b.cnt - a.cnt);
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
 
 // ─── Constants ──────────────────────────────────────────────────────────────
 const STORAGE_KEY   = "bnz.teacher-sidebar.collapsed";
 const SIDEBAR_W_EXP = 280;
 const SIDEBAR_W_COL = 64;
 
-type Tab = "books" | "tools" | "yotzrim";
+// ד2: tabs renamed — ספרים→ראשי, כלים→סוג תוכן, יוצרים unchanged
+type Tab = "books" | "sogTochn" | "yotzrim";
 
 // ─── useMobileViewport ───────────────────────────────────────────────────────
 function useMobileViewport(): boolean {
@@ -73,7 +116,9 @@ export default function TeacherSidebar({
   const [activeTab, setActiveTab] = useState<Tab>("books");
   const [search, setSearch] = useState("");
   const [expandedBooks, setExpandedBooks] = useState<Set<string>>(new Set(["torah"]));
+  // ד2: expandedTools kept for sogTochn accordion (content types don't expand, but pattern reused)
   const [expandedTools, setExpandedTools] = useState<Set<string>>(new Set());
+  const [activeContentType, setActiveContentType] = useState<string | null>(null);
 
   const isMobile   = useMobileViewport();
   const isDrawer   = isMobile;
@@ -82,6 +127,7 @@ export default function TeacherSidebar({
 
   const { torahBooks, neviimBooks, ketuvimBooks, toolsSections, yotzrimRabbis, isLoading } =
     useTeacherSidebar();
+  const contentTypesQ = useContentTypeCountsDeduped();
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -268,69 +314,74 @@ export default function TeacherSidebar({
           </div>
         );
 
-      case "tools":
+      // ד2: "סוג תוכן" tab — content_type list with deduped counts
+      case "sogTochn":
+        if (contentTypesQ.isLoading) {
+          return (
+            <div style={{ padding: "1.5rem", textAlign: "center", color: colors.textSubtle, fontSize: "0.8rem" }}>
+              טוען סוגי תוכן...
+            </div>
+          );
+        }
+        if (!contentTypesQ.data || contentTypesQ.data.length === 0) {
+          return (
+            <div style={{ padding: "1rem 0.75rem", color: colors.textSubtle, fontSize: "0.8rem" }}>
+              לא נמצאו סוגי תוכן
+            </div>
+          );
+        }
         return (
-          <div>
-            {toolsSections.map((section) => {
-              const isSectionOpen = expandedTools.has(section.id);
-              const visibleChildren = section.children.filter((c) => matchSearch(c.title));
-              if (!matchSearch(section.title) && visibleChildren.length === 0) return null;
-
-              return (
-                <div key={section.id}>
-                  <button
-                    onClick={() => {
-                      if (section.children.length > 0) {
-                        toggleExpand(setExpandedTools, section.id);
-                      } else {
-                        handleSeriesClick(section.id);
-                      }
-                    }}
-                    style={{
-                      display: "flex",
-                      width: "100%",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      padding: "0.5rem 0.75rem",
-                      background: "transparent",
-                      border: "none",
-                      cursor: "pointer",
-                      color: colors.textDark,
-                      fontFamily: fonts.body,
-                      fontSize: "0.83rem",
-                      fontWeight: 600,
-                      borderBottom: `1px solid rgba(139,111,71,0.08)`,
-                    }}
-                  >
-                    <span>{section.title}</span>
-                    {section.children.length > 0 &&
-                      (isSectionOpen ? (
-                        <ChevronDown size={13} style={{ color: colors.goldDark }} />
-                      ) : (
-                        <ChevronLeft size={13} style={{ color: colors.textSubtle }} />
-                      ))}
-                  </button>
-
-                  {isSectionOpen && section.children.length > 0 && (
-                    <div style={{ paddingInlineStart: "0.75rem", paddingBottom: "0.25rem" }}>
-                      {visibleChildren.map((child) => (
-                        <button
-                          key={child.id}
-                          onClick={() => handleSeriesClick(child.id)}
-                          style={{
-                            ...itemStyle(activeSeriesId === child.id),
-                            width: "100%",
-                            border: "none",
-                          }}
-                        >
-                          {child.title}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+          <div style={{ padding: "0.25rem 0" }}>
+            {/* "הכל" option */}
+            <button
+              onClick={() => setActiveContentType(null)}
+              style={{
+                display: "flex",
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0.42rem 0.75rem",
+                background: activeContentType === null ? "rgba(139,111,71,0.10)" : "transparent",
+                border: "none",
+                borderInlineStart: activeContentType === null ? `3px solid ${colors.goldDark}` : "3px solid transparent",
+                cursor: "pointer",
+                color: activeContentType === null ? colors.goldDark : colors.textMid,
+                fontSize: "0.82rem",
+                fontFamily: fonts.body,
+                borderBottom: `1px solid rgba(139,111,71,0.06)`,
+              }}
+            >
+              <span>הכל</span>
+              <span style={{ fontSize: "0.72rem", color: colors.textSubtle }}>
+                {contentTypesQ.data.reduce((s, c) => s + c.cnt, 0)}
+              </span>
+            </button>
+            {contentTypesQ.data
+              .filter((ct) => !search.trim() || ct.content_type.includes(search.trim()))
+              .map((ct) => (
+                <button
+                  key={ct.content_type}
+                  onClick={() => setActiveContentType(ct.content_type)}
+                  style={{
+                    display: "flex",
+                    width: "100%",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.42rem 0.75rem",
+                    background: activeContentType === ct.content_type ? "rgba(139,111,71,0.10)" : "transparent",
+                    border: "none",
+                    borderInlineStart: activeContentType === ct.content_type ? `3px solid ${colors.goldDark}` : "3px solid transparent",
+                    cursor: "pointer",
+                    color: activeContentType === ct.content_type ? colors.goldDark : colors.textMid,
+                    fontSize: "0.82rem",
+                    fontFamily: fonts.body,
+                    borderBottom: `1px solid rgba(139,111,71,0.06)`,
+                  }}
+                >
+                  <span>{ct.content_type}</span>
+                  <span style={{ fontSize: "0.72rem", color: colors.textSubtle }}>{ct.cnt}</span>
+                </button>
+              ))}
           </div>
         );
 
@@ -406,9 +457,9 @@ export default function TeacherSidebar({
           <GraduationCap size={22} />
         </button>
         {[
-          { tab: "books" as Tab,    icon: <BookOpen size={18} />,   title: "ספרים" },
-          { tab: "tools" as Tab,    icon: <Wrench size={18} />,     title: "כלים" },
-          { tab: "yotzrim" as Tab,  icon: <Users size={18} />,      title: "יוצרים" },
+          { tab: "books" as Tab,    icon: <BookOpen size={18} />,  title: "ראשי" },
+          { tab: "sogTochn" as Tab, icon: <Layers size={18} />,    title: "סוג תוכן" },
+          { tab: "yotzrim" as Tab,  icon: <Users size={18} />,     title: "יוצרים" },
         ].map(({ tab, icon, title }) => (
           <button
             key={tab}
@@ -547,10 +598,11 @@ export default function TeacherSidebar({
             flexShrink: 0,
           }}
         >
+          {/* ד2: tabs renamed — ראשי / סוג תוכן / יוצרים */}
           {[
-            { tab: "books" as Tab,   label: "ספרים",  icon: <BookOpen size={14} /> },
-            { tab: "tools" as Tab,   label: "כלים",   icon: <Wrench size={14} /> },
-            { tab: "yotzrim" as Tab, label: "יוצרים", icon: <Users size={14} /> },
+            { tab: "books" as Tab,    label: "ראשי",      icon: <BookOpen size={14} /> },
+            { tab: "sogTochn" as Tab, label: "סוג תוכן",  icon: <Layers size={14} /> },
+            { tab: "yotzrim" as Tab,  label: "יוצרים",    icon: <Users size={14} /> },
           ].map(({ tab, label, icon }) => (
             <button
               key={tab}

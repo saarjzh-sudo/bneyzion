@@ -28,7 +28,6 @@ import {
   Video,
   FileDown,
   Loader2,
-  Filter,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -40,8 +39,7 @@ import TeacherLessonModal from "./TeacherLessonModal";
 import { colors, fonts, gradients, radii, shadows, getSeriesCoverImage, formatDuration } from "@/lib/designTokens";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
-type SortMode = "default" | "alpha" | "duration-desc" | "duration-asc";
-type MediaFilter = "all" | "audio" | "video" | "pdf";
+// ד1: SortMode and MediaFilter removed — FilterPanel replaced by SimpleSearchBar
 
 interface LessonItem {
   id: string;
@@ -125,77 +123,38 @@ function useSeriesLessons(seriesId: string) {
   });
 }
 
-// ─── FilterPanel ─────────────────────────────────────────────────────────────
-function FilterPanel({
-  search, onSearch, media, onMedia, sort, onSort,
-  totalCount, filteredCount,
+// ─── SimpleSearchBar — ד1: replaced FilterPanel with lean search only ─────────
+// Full FilterPanel removed; filtering/sorting is via sidebar navigation.
+// A single search bar keeps the UX clean without duplicating sidebar controls.
+function SimpleSearchBar({
+  search, onSearch, totalCount, filteredCount,
 }: {
   search: string; onSearch: (v: string) => void;
-  media: MediaFilter; onMedia: (v: MediaFilter) => void;
-  sort: SortMode; onSort: (v: SortMode) => void;
   totalCount: number; filteredCount: number;
 }) {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <div
       dir="rtl"
-      style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(74,90,46,0.15)", boxShadow: shadows.cardSoft, marginBottom: "1.5rem", overflow: "hidden" }}
+      style={{ marginBottom: "1.5rem", display: "flex", alignItems: "center", gap: "0.75rem" }}
     >
-      {/* Search row (always visible) */}
-      <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.75rem 1rem", borderBottom: expanded ? "1px solid rgba(139,111,71,0.1)" : "none" }}>
-        <div style={{ position: "relative", flex: 1 }}>
-          <Search size={15} style={{ position: "absolute", insetInlineEnd: "0.75rem", top: "50%", transform: "translateY(-50%)", color: colors.textSubtle, pointerEvents: "none" }} />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => onSearch(e.target.value)}
-            placeholder="חיפוש בשיעורים..."
-            style={{ width: "100%", height: 36, paddingInlineEnd: "2.25rem", paddingInlineStart: "0.75rem", borderRadius: radii.md, border: "1px solid rgba(139,111,71,0.2)", fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textDark, background: colors.parchment, outline: "none", direction: "rtl" }}
-          />
-          {search && (
-            <button onClick={() => onSearch("")} style={{ position: "absolute", insetInlineStart: "0.5rem", top: "50%", transform: "translateY(-50%)", border: "none", background: "transparent", cursor: "pointer", color: colors.textSubtle, padding: 0, display: "flex" }}>
-              <X size={13} />
-            </button>
-          )}
-        </div>
-        <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle, whiteSpace: "nowrap", flexShrink: 0 }}>{filteredCount}/{totalCount}</span>
-        <button
-          onClick={() => setExpanded((v) => !v)}
-          style={{ display: "flex", alignItems: "center", gap: "0.35rem", padding: "0.4rem 0.75rem", borderRadius: radii.md, border: `1px solid ${expanded ? colors.oliveDark : "rgba(139,111,71,0.2)"}`, background: expanded ? "rgba(74,90,46,0.08)" : "transparent", color: expanded ? colors.oliveDark : colors.textMuted, fontFamily: fonts.body, fontSize: "0.75rem", cursor: "pointer" }}
-        >
-          <Filter size={13} />
-          סינון
-        </button>
+      <div style={{ position: "relative", flex: 1, maxWidth: 420 }}>
+        <Search size={15} style={{ position: "absolute", insetInlineEnd: "0.75rem", top: "50%", transform: "translateY(-50%)", color: colors.textSubtle, pointerEvents: "none" }} />
+        <input
+          type="text"
+          value={search}
+          onChange={(e) => onSearch(e.target.value)}
+          placeholder="חיפוש בשיעורים..."
+          style={{ width: "100%", height: 38, paddingInlineEnd: "2.25rem", paddingInlineStart: "0.75rem", borderRadius: radii.md, border: "1px solid rgba(139,111,71,0.2)", fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textDark, background: "white", outline: "none", direction: "rtl" }}
+        />
+        {search && (
+          <button onClick={() => onSearch("")} style={{ position: "absolute", insetInlineStart: "0.5rem", top: "50%", transform: "translateY(-50%)", border: "none", background: "transparent", cursor: "pointer", color: colors.textSubtle, padding: 0, display: "flex" }}>
+            <X size={13} />
+          </button>
+        )}
       </div>
-
-      {/* Expanded filters */}
-      {expanded && (
-        <div style={{ padding: "1rem", display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-          {/* Media filter */}
-          <div>
-            <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle, marginBottom: "0.4rem", fontWeight: 700 }}>סוג מדיה</div>
-            <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-              {([["all","הכל"],["audio","שמע"],["video","וידאו"],["pdf","PDF"]] as [MediaFilter, string][]).map(([v, label]) => (
-                <button key={v} onClick={() => onMedia(v)} style={{ padding: "0.3rem 0.8rem", borderRadius: radii.pill, border: `1px solid ${media === v ? colors.oliveDark : "rgba(139,111,71,0.2)"}`, background: media === v ? colors.oliveDark : "transparent", color: media === v ? "white" : colors.textMuted, fontFamily: fonts.body, fontSize: "0.75rem", cursor: "pointer" }}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-          {/* Sort */}
-          <div>
-            <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle, marginBottom: "0.4rem", fontWeight: 700 }}>מיון</div>
-            <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}>
-              {([["default","ברירת מחדל"],["alpha","א-ב"],["duration-desc","ארוכים קודם"],["duration-asc","קצרים קודם"]] as [SortMode, string][]).map(([v, label]) => (
-                <button key={v} onClick={() => onSort(v)} style={{ padding: "0.3rem 0.8rem", borderRadius: radii.pill, border: `1px solid ${sort === v ? colors.oliveDark : "rgba(139,111,71,0.2)"}`, background: sort === v ? colors.oliveDark : "transparent", color: sort === v ? "white" : colors.textMuted, fontFamily: fonts.body, fontSize: "0.75rem", cursor: "pointer" }}>
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle, whiteSpace: "nowrap", flexShrink: 0 }}>
+        {search ? `${filteredCount} / ${totalCount}` : `${totalCount} שיעורים`}
+      </span>
     </div>
   );
 }
@@ -279,40 +238,18 @@ export default function TeachersSeriesPage() {
   const lessonsQ = useSeriesLessons(id);
 
   const [search, setSearch] = useState("");
-  const [media, setMedia] = useState<MediaFilter>("all");
-  const [sort, setSort] = useState<SortMode>("default");
+  // ד1: removed media/sort state — FilterPanel removed. Filtering via sidebar only.
   const [modalLessonId, setModalLessonId] = useState<string | null>(null);
 
   const series = metaQ.data;
   const allLessons = lessonsQ.data || [];
 
+  // ד1: simplified — search only (media/sort removed with FilterPanel)
   const filtered = useMemo(() => {
-    let list = allLessons;
-
-    if (search.trim()) {
-      const q = search.trim();
-      list = list.filter((l) => l.title.includes(q) || (l.description || "").includes(q));
-    }
-
-    if (media !== "all") {
-      list = list.filter((l) => {
-        if (media === "audio")  return !!l.audioUrl && !l.videoUrl;
-        if (media === "video")  return !!l.videoUrl;
-        if (media === "pdf")    return !!l.attachmentUrl;
-        return true;
-      });
-    }
-
-    if (sort === "alpha") {
-      list = [...list].sort((a, b) => a.title.localeCompare(b.title, "he"));
-    } else if (sort === "duration-desc") {
-      list = [...list].sort((a, b) => (b.duration || 0) - (a.duration || 0));
-    } else if (sort === "duration-asc") {
-      list = [...list].sort((a, b) => (a.duration || 0) - (b.duration || 0));
-    }
-
-    return list;
-  }, [allLessons, search, media, sort]);
+    if (!search.trim()) return allLessons;
+    const q = search.trim();
+    return allLessons.filter((l) => l.title.includes(q) || (l.description || "").includes(q));
+  }, [allLessons, search]);
 
   const modalLesson = modalLessonId ? allLessons.find((l) => l.id === modalLessonId) || null : null;
 
@@ -369,10 +306,9 @@ export default function TeachersSeriesPage() {
             </div>
           ) : (
             <>
-              <FilterPanel
-                search={search} onSearch={setSearch}
-                media={media} onMedia={setMedia}
-                sort={sort} onSort={setSort}
+              <SimpleSearchBar
+                search={search}
+                onSearch={setSearch}
                 totalCount={allLessons.length}
                 filteredCount={filtered.length}
               />
@@ -383,7 +319,7 @@ export default function TeachersSeriesPage() {
                 </div>
               ) : filtered.length === 0 ? (
                 <div style={{ textAlign: "center", padding: "2rem", color: colors.textSubtle, fontFamily: fonts.body }}>
-                  לא נמצאו שיעורים. <button onClick={() => { setSearch(""); setMedia("all"); }} style={{ background: "none", border: "none", color: colors.oliveDark, cursor: "pointer", fontFamily: fonts.body }}>אפס סינון</button>
+                  לא נמצאו שיעורים. <button onClick={() => { setSearch(""); }} style={{ background: "none", border: "none", color: colors.oliveDark, cursor: "pointer", fontFamily: fonts.body }}>אפס חיפוש</button>
                 </div>
               ) : (
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1.25rem" }}>

@@ -526,6 +526,33 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 (round-3) — public sidebar + category page + series/lesson/teachers UI fixes (Saar round-2 feedback)
+
+**Branch:** `fix/series-teachers-data` · **Frontend only — NO DB writes (anon key is read-only; no service_role/PAT in env this session).**
+
+**What Saar reported (5 screenshots, angry about migration quality):** single-rabbi attribution on series with many rabbis; "2 חלקי הסדרה" showing 0-lesson draft sub-series; sidebar "כל השיעורים" duplication that scrolls series inline; no category page; lesson popup truncated; lesson full page has no image; teachers sidebar tabs wrong ("כלים" instead of "סוג תוכן"); in-page filter + sidebar both present; בראשית shows only 3 series.
+
+**Done & visually verified (preview, DOM + screenshots):**
+- **ציר ב — CategoryPage (NEW):** `src/pages/CategoryPage.tsx` + route `/category/:id` in `App.tsx`. Hero + "סדרות בנושא" grid (descendant series, `lesson_count>0`, via `useSeriesForNode` = `get_series_descendant_ids` RPC) + "שיעורים בודדים בקטגוריה" (direct lessons, `series_id`=node). cream+gold, RTL. Verified: `/category/62590949…` (איך לומדים תנ״ך) shows 4 series, designed.
+- **ציר א — sidebar dedup removal (`DesignSidebar.tsx`):** **deleted `SeriesInlineList` + `useSeriesForNodeLocal` + `openSeriesNode` state entirely** — this was "הכפילות המתישה" (button that scrolled all series inline). Now: category row (`ExtraSectionBlock` + main `categories.map`) → **title click navigates to `/category/:id` + opens accordion; chevron toggles only**. Book title → `/category/:bookId`. Child → `/series/:childId`. Removed redundant "הכל ב…" button from `ExtraSectionBlock`. Verified click → category page.
+- **ציר ג1 — multi-rabbi attribution (`DesignPreviewSeriesPageV2.tsx`):** `distinctRabbis` useMemo collects unique rabbi names from `lessons` (freq-sorted), shows up to 3 + "ועוד X רבנים". Verified "דרכי הפרשנות" now shows "הרב יוסף קלנר · הרב דודי מתוקי · הרב מישאל רובין · ועוד 3 רבנים" (was single "שמואל אליהו").
+- **ציר ג2 — empty sub-series hidden:** filter `(c.lesson_count ?? 0) > 0` before `SubSeriesGroup`. The 2 קופרמן sub-series were `lesson_count=0, status=draft, 0 published lessons` → now gone.
+- **ציר ג3 — lesson popup full content:** `LessonModal` now renders `lesson.content` (full HTML via `sanitizeHtml`), removed 320-char cap.
+- **ציר ג4/ג5 — lesson page image (`LessonPage.tsx`):** 240px hero image + related-lesson cards with images. Chain: `thumbnail_url → series.image_url → getSeriesCoverImage(title) → /images/series-default.png`. Verified 21 imgs render.
+- **ציר ד1 — removed in-page `FilterPanel`** from `TeachersSeriesPage.tsx` (kept simple search). Verified "סינון" gone.
+- **ציר ד2 — teachers sidebar tabs (`TeacherSidebar.tsx`):** "ספרים/כלים/יוצרים" → **"ראשי / סוג תוכן / יוצרים"**. "סוג תוכן" = `useContentTypeCountsDeduped`. Verified tabs correct, FilterPanel gone.
+
+**⚠️ CRITICAL bug introduced & fixed (rules-of-hooks):** the `distinctRabbis` useMemo was first placed AFTER the early `return`s (loading / !series) → "Rendered more hooks than during the previous render" → whole series page caught by ErrorBoundary ("משהו השתבש"). **tsc does NOT catch this.** Fix: moved the useMemo ABOVE all early returns. **Lesson: any new hook must go before early returns; always load the actual page in preview, never trust tsc-clean alone.**
+
+**⚠️ DATA DISASTER (diagnosed, NOT fixed — blocked on write creds):**
+- DB has **18,923 published lessons vs 7,610 in AUTHORITATIVE-OLD** (Umbraco). **5,786 published lessons have `series_id=NULL`, ALL created 2026-05-27 07:00–08:00** — a script that session created **~20 exact duplicates** of each lesson (verified: title "ביאורי מילים ושאלות - פרשת בראשית" = 22 rows, 20 are 05-27 null-series). This duplication is what inflates every "סוג תוכן" count.
+- This means **ד3 (content_type numbers can't match the old site 475/426/358/354/312/252/213/132/91/36)** until the duplicates are deleted. Live deduped counts are still wrong (and the hook caps at PostgREST 1000 → "הכל 999"). **Fix requires service_role/PAT** which was NOT in env this session → flagged to Saar. Dedup plan: keep canonical row per (title, content_type) preferring WITH-series + oldest; delete the 05-27 null-series copies; backup first (`lessons_pre_cleanup_v3_2026_05_27` table already exists for rollback).
+- **ד4 (בראשית shows 3 series):** `/teachers/series/db78e0a3` shows the 3 direct children of that node. 19 series have `bible_book=בראשית` tagged teachers but they live under other parent nodes. Needs the old-site teacher-tree mapping + data cleanup — not a one-line fix.
+
+**⚠️ DEV-SERVER GOTCHA (cost ~1h this session — document so nobody repeats):** `bneyzion-data` is a **git worktree** of `/Users/…/bneyzion` (main repo). The preview manager's "bneyzion-dev" config runs `the-system-v8/start-bneyzion.js` with **cwd = the MAIN `bneyzion` repo**, so it serves the WRONG branch and your worktree edits never appear. **To preview worktree changes: run vite directly from the worktree** — `cd bneyzion-data && ./node_modules/.bin/vite --port 8090` — then point the preview browser at `http://127.0.0.1:8090`. Verify with `lsof -a -p <pid> -d cwd` that cwd is the worktree. (`.claude/launch.json` updated to call `node_modules/.bin/vite` on 8090, but the preview manager still ignores it and spawns the main launcher.)
+
+**Open / next session:** (1) DB dedup of the 05-27 ×20 duplicates — needs service_role key. (2) ד4 teacher-tree reconciliation for בראשית & all books. (3) `/how-to-learn-tanach` quick-link → 404 (route not registered — separate pre-existing nav item, not touched). (4) re-verify ד3 numbers after dedup.
+
 ### 2026-06-01 — content gap recovery: תהלים +103, משלי +2, small gaps +10 (113 total new lessons)
 
 **Branch:** `fix/series-teachers-data` · **DB only (no frontend change)**

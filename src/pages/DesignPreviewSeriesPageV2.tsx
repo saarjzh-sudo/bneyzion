@@ -68,6 +68,7 @@ import {
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
+import { sanitizeHtml } from "@/lib/sanitize";
 import {
   colors,
   fonts,
@@ -145,14 +146,16 @@ function CompactSeriesHero({
   totalSubSeries,
   totalDuration,
   imageUrl,
+  distinctRabbis,
 }: {
   series: any;
   totalLessons: number;
   totalSubSeries: number;
   totalDuration: string;
   imageUrl: string;
+  /** Distinct rabbi names from loaded lessons (ג1 fix — shows full teacher attribution) */
+  distinctRabbis: string[];
 }) {
-  const rabbiName = series.rabbis?.name || "";
   const [actionsVisible, setActionsVisible] = useState(false);
 
   return (
@@ -304,7 +307,8 @@ function CompactSeriesHero({
             color: "rgba(255,255,255,0.78)",
           }}
         >
-          {rabbiName && (
+          {/* ג1: show distinct rabbis from lessons (up to 3, + "ועוד X" if more) */}
+          {distinctRabbis.length > 0 && (
             <>
               <span
                 style={{
@@ -314,7 +318,8 @@ function CompactSeriesHero({
                   fontSize: "0.95rem",
                 }}
               >
-                {rabbiName}
+                {distinctRabbis.slice(0, 3).join(" · ")}
+                {distinctRabbis.length > 3 && ` · ועוד ${distinctRabbis.length - 3} רבנים`}
               </span>
               <span style={{ opacity: 0.45 }}>·</span>
             </>
@@ -1910,9 +1915,10 @@ function LessonModal({
             );
           })()}
 
-          {/* ── Description ── */}
-          {lesson.description && (
-            <p
+          {/* ── ג3: Full content / description — no truncation ── */}
+          {(lesson as any).content ? (
+            <div
+              className="prose prose-sm max-w-none"
               style={{
                 fontFamily: fonts.body,
                 fontSize: "0.88rem",
@@ -1920,11 +1926,22 @@ function LessonModal({
                 color: colors.textMid,
                 margin: "0 0 1.25rem",
               }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml((lesson as any).content) }}
+            />
+          ) : lesson.description ? (
+            <p
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.88rem",
+                lineHeight: 1.85,
+                color: colors.textMid,
+                margin: "0 0 1.25rem",
+                whiteSpace: "pre-line",
+              }}
             >
-              {lesson.description.replace(/<[^>]*>/g, "").slice(0, 320)}
-              {lesson.description.length > 320 ? "..." : ""}
+              {lesson.description.replace(/<[^>]*>/g, "")}
             </p>
-          )}
+          ) : null}
 
           {/* ── "פתח בעמוד מלא" link ── */}
           <div style={{ marginBottom: "1.25rem" }}>
@@ -2148,6 +2165,19 @@ export default function DesignPreviewSeriesPageV2() {
   const { data: openLessonFallback } = useLesson(needsFallback ? openLessonId ?? undefined : undefined);
   const openLesson = openLessonFromList ?? openLessonFallback ?? null;
 
+  // ג1: collect distinct rabbi names from lessons (not from series.rabbis which is single).
+  // Must be declared BEFORE any early return to keep hook order stable (rules of hooks).
+  const distinctRabbis = useMemo<string[]>(() => {
+    const freq = new Map<string, number>();
+    for (const l of lessons as any[]) {
+      const name: string | undefined = l.rabbis?.name;
+      if (name) freq.set(name, (freq.get(name) || 0) + 1);
+    }
+    return Array.from(freq.entries())
+      .sort((a, b) => b[1] - a[1])
+      .map(([name]) => name);
+  }, [lessons]);
+
   // Loading state
   if (seriesLoading) {
     return (
@@ -2213,11 +2243,13 @@ export default function DesignPreviewSeriesPageV2() {
           totalSubSeries={(childSeries as any[]).length}
           totalDuration={totalDuration}
           imageUrl={heroImageUrl}
+          distinctRabbis={distinctRabbis}
         />
 
         {/* 2. Sub-series group with show-more + optional grouping */}
-        {(childSeries as any[]).length > 0 && (
-          <SubSeriesGroup children={childSeries as any[]} />
+        {/* ג2: filter to children with lesson_count > 0 — hides "0 שיעורים" entries like ספורנו/הדיבור הישיר */}
+        {(childSeries as any[]).filter((c: any) => (c.lesson_count ?? 0) > 0).length > 0 && (
+          <SubSeriesGroup children={(childSeries as any[]).filter((c: any) => (c.lesson_count ?? 0) > 0)} />
         )}
 
         {/* 3. Lessons section with controls */}

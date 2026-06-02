@@ -60,6 +60,7 @@ const CommunityPage = lazy(() => import("./pages/CommunityPage"));
 const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
 const PortalLogin = lazy(() => import("./pages/PortalLogin"));
 const DesignPreviewMyCourses = lazy(() => import("./pages/DesignPreviewMyCourses"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
@@ -295,6 +296,7 @@ const App = () => (
             <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
             <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />
             <Route path="/series/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />
+            <Route path="/category/:id" element={<Suspense fallback={<LazyFallback />}><CategoryPage /></Suspense>} />
             <Route path="/store" element={<Suspense fallback={<LazyFallback />}><StorePage /></Suspense>} />
             <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />

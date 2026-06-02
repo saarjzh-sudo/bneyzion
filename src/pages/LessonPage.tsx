@@ -6,6 +6,8 @@ import { Clock, BookOpen, Calendar, ChevronLeft, Volume2, Headphones, ListPlus, 
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import Layout from "@/components/layout/Layout";
 import { useLesson, useSeriesLessons } from "@/hooks/useLesson";
+import { useSeriesDetail } from "@/hooks/useSeriesDetail";
+import { getSeriesCoverImage } from "@/lib/designTokens";
 import { usePlayer } from "@/contexts/PlayerContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -80,6 +82,8 @@ const LessonPage = () => {
   const { id } = useParams<{ id: string }>();
   const { data: lesson, isLoading } = useLesson(id);
   const { data: relatedLessons } = useSeriesLessons(lesson?.series_id, id);
+  // ג4: fetch series for image_url (useLesson only returns id+title for series)
+  const { data: seriesDetail } = useSeriesDetail(lesson?.series_id ?? undefined);
   const { play, addToQueue, currentTrack } = usePlayer();
   const { user, signInWithGoogle } = useAuth();
   const mediaProgressRef = useMediaProgress(id);
@@ -158,6 +162,13 @@ const LessonPage = () => {
 
   const series = lesson.series as { id: string; title: string } | null;
 
+  // ג4: hero image chain — lesson thumbnail → series image → cover by bible_book/title → default
+  const heroImage =
+    lesson.thumbnail_url ||
+    seriesDetail?.image_url ||
+    (series ? getSeriesCoverImage(series.title) : null) ||
+    "/images/series-default.png";
+
   return (
     <Layout>
       <motion.div
@@ -166,6 +177,42 @@ const LessonPage = () => {
         transition={{ duration: 0.5 }}
         dir="rtl"
       >
+        {/* ג4: Hero image — 240px, sits above breadcrumbs */}
+        <div
+          style={{
+            width: "100%",
+            height: 240,
+            overflow: "hidden",
+            position: "relative",
+            background: "#2d2010",
+          }}
+        >
+          <img
+            src={heroImage}
+            alt={lesson.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center 35%",
+              opacity: 0.7,
+              filter: "brightness(0.85) saturate(0.9)",
+            }}
+            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }}
+          />
+          {/* Bottom gradient for text readability */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: "60%",
+              background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%)",
+            }}
+          />
+        </div>
+
         {/* Breadcrumbs */}
         <LessonBreadcrumbs lesson={lesson} series={series} />
 
@@ -470,24 +517,40 @@ const LessonPage = () => {
           {/* AI Chat Widget */}
           {/* <AIChatWidget context={`שיעור: ${lesson?.title}${rabbi ? ` מאת ${rabbiName}` : ""}`} /> */}
 
-          {/* Related Lessons */}
+          {/* ג5: Related Lessons — with hero images (same chain as LessonCard/LessonPopup) */}
           {relatedLessons && relatedLessons.length > 0 && (
             <section className="mt-16">
               <h2 className="text-xl font-heading text-foreground mb-6">שיעורים נוספים מהסדרה</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {relatedLessons.map((l) => (
-                  <Link key={l.id} to={`/lessons/${l.id}`}>
-                    <Card className="hover:shadow-md transition-shadow group">
-                      <CardContent className="p-4">
-                        <h3 className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors line-clamp-2">{l.title}</h3>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
-                          {(l as any).rabbis?.name && <span>מאת {(l as any).rabbis.name}</span>}
-                          {formatDuration(l.duration) && <span>{(l as any).rabbis?.name ? "•" : ""} {formatDuration(l.duration)}</span>}
+                {relatedLessons.map((l) => {
+                  const lImg =
+                    (l as any).thumbnail_url ||
+                    seriesDetail?.image_url ||
+                    (series ? getSeriesCoverImage(series.title) : null) ||
+                    "/images/series-default.png";
+                  return (
+                    <Link key={l.id} to={`/lessons/${l.id}`}>
+                      <Card className="hover:shadow-md transition-shadow group overflow-hidden">
+                        {/* Thumbnail */}
+                        <div className="h-28 overflow-hidden">
+                          <img
+                            src={lImg}
+                            alt={l.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }}
+                          />
                         </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
+                        <CardContent className="p-4">
+                          <h3 className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors line-clamp-2">{l.title}</h3>
+                          <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                            {(l as any).rabbis?.name && <span>מאת {(l as any).rabbis.name}</span>}
+                            {formatDuration(l.duration) && <span>{(l as any).rabbis?.name ? "•" : ""} {formatDuration(l.duration)}</span>}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  );
+                })}
               </div>
             </section>
           )}
