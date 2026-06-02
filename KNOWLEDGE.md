@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
+**Last updated:** 2026-06-02 (session — admin wave-2: sidebar cleanup + role gating + subscribers screen)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -4623,3 +4623,32 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - Paperless invoice generation button per row (create receipt from Payments page)
 - Monthly subscriber count — cross-reference `user_access_tags` for program:weekly-chapter
 - Date range filter on KPIs
+
+### 2026-06-02 — Admin wave-2: sidebar cleanup + role gating + /admin/subscribers (branch: admin-overhaul)
+
+- **AuthContext.tsx:** exported `AppRole` type (`"admin" | "moderator" | "user" | "creator"`);
+  `checkAdminRole` now fetches raw role from `user_roles` table in addition to the `has_role` RPC;
+  added `userRole: AppRole | null` and `isCreator: boolean` to context (backward-compatible).
+- **ProtectedRoute.tsx:** new optional prop `allowedRoles?: AppRole[]` (default `["admin"]`);
+  admin always passes unconditionally; non-admin checked against allowedRoles array.
+  Iron rule: `allowedRoles` default = `["admin"]` so existing routes break nothing.
+- **AdminSidebar.tsx:** removed "מיגרציה" + "השוואת תוכן" from nav (routes stay in App.tsx for direct-URL debug);
+  split into two sections: CONTENT (admin+creator: lessons/rabbis/series/topics/community-courses/content-health)
+  and MANAGEMENT (admin only: dashboard/subscribers/users/products/orders/payments/coupons/analytics/messages/notifications/homepage/settings);
+  `canSeeItem()` helper hides items based on role.
+- **App.tsx:** all `/admin/*` routes updated with explicit `allowedRoles`; content routes allow `["admin","creator"]`;
+  new `/admin/subscribers` route registered (AdminSubscribers, lazy).
+- **Subscribers.tsx** (`src/pages/admin/Subscribers.tsx`): new admin-only screen for `user_access_tags`
+  with `tag='program:weekly-chapter'`:
+  - 4 KPI cards: מנויים פעילים / מקושרים / ממתין לקישור / פג תוקף
+  - Table: email, link status badge, valid_until, source, created_at, "סיים מנוי" action per row
+  - Search by email/source/grow_order_id; status filter (all/active/linked/pending/expired)
+  - "הוסף מנוי ידנית" dialog → INSERT to user_access_tags with source='admin'
+  - "סיים מנוי" confirmation dialog → SET valid_until=NOW()
+  - "ייבא מ-Smoove" placeholder dialog (UI only, disabled button — runs manually)
+  - CSV export (BOM + 7 columns)
+  - Gold/parchment/navy palette, RTL, shimmer loading, end-confirmation dialog
+- **Stale nav check:** Notifications, Messages, HomepageManager — all 3 are FULLY IMPLEMENTED, kept in nav.
+- **TypeScript:** 0 errors. Vite build: 291 entries. Commit: `c2a9ce67` on `admin-overhaul`.
+- **"creator" role note:** DB enum currently has `admin|moderator|user` only; `creator` is defined in codebase
+  type only. When yoav gets creator role, the DB enum must be extended first via migration.
