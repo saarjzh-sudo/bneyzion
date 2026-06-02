@@ -1,10 +1,14 @@
 /**
- * navigation-bot — Bnei Zion site navigator (בנצי)
+ * navigation-bot-preview — PREVIEW/TEST ONLY — DO NOT USE IN PRODUCTION
+ * Bnei Zion site navigator (בנצי) — fixed version for Saar to review
  *
  * Branch: fix/benzi-valid-links
  * Last updated: 2026-06-02
  *
- * Changes vs. the previously-deployed version (not in git):
+ * This is a SEPARATE function deployed alongside the live navigation-bot.
+ * The live navigation-bot is NOT touched. Deploy only this preview function.
+ *
+ * Changes vs. the live navigation-bot:
  *   1. VALID_ROUTES whitelist — every route that appears in App.tsx as of 2026-06-02.
  *      All CTA routes returned by Gemini are validated against this set before
  *      reaching the client. Invalid routes are replaced with "/" (fallback).
