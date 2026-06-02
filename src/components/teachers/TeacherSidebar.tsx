@@ -28,7 +28,7 @@ import {
   X,
   GraduationCap,
 } from "lucide-react";
-import { colors, fonts, radii, shadows } from "@/lib/designTokens";
+import { colors, fonts, radii, shadows, gradients } from "@/lib/designTokens";
 import { useTeacherSidebar } from "@/hooks/useTeacherSidebar";
 import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
 
@@ -161,7 +161,8 @@ export default function TeacherSidebar({
   const handleRabbiClick = useCallback(
     (rabbiId: string) => {
       onDrawerClose?.();
-      navigate(`/rabbis/${rabbiId}`);
+      // E — navigate to teacher creator page (stays in Teachers Wing), not public /rabbis/:id
+      navigate(`/teachers/creator/${rabbiId}`);
     },
     [navigate, onDrawerClose],
   );
@@ -190,6 +191,9 @@ export default function TeacherSidebar({
   });
 
   // ─── Render books accordion (shared between torah/neviim/ketuvim) ──────────
+  // B — when a book is expanded, shows:
+  //   1. "כל התכנים ב<book>" button → /teachers/book/:book
+  //   2. Child series list → /teachers/series/:id
   const renderBookGroup = (
     label: string,
     groupKey: string,
@@ -232,36 +236,58 @@ export default function TeacherSidebar({
             {visible.map((book) => {
               const bookKey = `${groupKey}::${book.id}`;
               const isBookOpen = expandedBooks.has(bookKey);
-              const hasChildren = book.children.length > 0;
 
               return (
                 <div key={book.id}>
+                  {/* Book row — clicking always expands, arrow navigates to book page */}
                   <button
-                    onClick={() => {
-                      if (hasChildren) {
-                        toggleExpand(setExpandedBooks, bookKey);
-                      } else {
-                        handleSeriesClick(book.id);
-                      }
-                    }}
+                    onClick={() => toggleExpand(setExpandedBooks, bookKey)}
                     style={{
-                      ...itemStyle(activeSeriesId === book.id),
+                      ...itemStyle(false),
                       width: "100%",
                       border: "none",
                       justifyContent: "space-between",
                     }}
                   >
                     <span>{book.title}</span>
-                    {hasChildren &&
-                      (isBookOpen ? (
-                        <ChevronDown size={12} />
-                      ) : (
-                        <ChevronLeft size={12} />
-                      ))}
+                    {isBookOpen ? (
+                      <ChevronDown size={12} />
+                    ) : (
+                      <ChevronLeft size={12} />
+                    )}
                   </button>
 
-                  {isBookOpen && hasChildren && (
+                  {isBookOpen && (
                     <div style={{ paddingInlineStart: "0.75rem" }}>
+                      {/* B.1 — "כל התכנים ב<book>" → /teachers/book/:book */}
+                      <button
+                        onClick={() => {
+                          onDrawerClose?.();
+                          navigate(`/teachers/book/${encodeURIComponent(book.title)}`);
+                        }}
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          alignItems: "center",
+                          gap: "0.4rem",
+                          padding: "0.38rem 0.6rem",
+                          borderRadius: radii.sm,
+                          background: "rgba(74,90,46,0.08)",
+                          border: "none",
+                          cursor: "pointer",
+                          color: colors.oliveDark,
+                          fontSize: "0.77rem",
+                          fontFamily: fonts.body,
+                          fontWeight: 700,
+                          marginBottom: "0.2rem",
+                          textAlign: "right" as const,
+                        }}
+                      >
+                        <span style={{ fontSize: "0.72rem" }}>📚</span>
+                        כל התכנים ב{book.title}
+                      </button>
+
+                      {/* B.2 — child series list */}
                       {book.children
                         .filter((c) => matchSearch(c.title))
                         .map((child) => (
@@ -278,6 +304,12 @@ export default function TeacherSidebar({
                             {child.title}
                           </button>
                         ))}
+
+                      {book.children.length === 0 && (
+                        <div style={{ padding: "0.3rem 0.6rem", fontFamily: fonts.body, fontSize: "0.73rem", color: colors.textSubtle }}>
+                          אין סדרות
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -332,20 +364,23 @@ export default function TeacherSidebar({
         }
         return (
           <div style={{ padding: "0.25rem 0" }}>
-            {/* "הכל" option */}
+            {/* "הכל" option — navigate to /teachers */}
             <button
-              onClick={() => setActiveContentType(null)}
+              onClick={() => {
+                onDrawerClose?.();
+                navigate("/teachers");
+              }}
               style={{
                 display: "flex",
                 width: "100%",
                 alignItems: "center",
                 justifyContent: "space-between",
                 padding: "0.42rem 0.75rem",
-                background: activeContentType === null ? "rgba(139,111,71,0.10)" : "transparent",
+                background: "transparent",
                 border: "none",
-                borderInlineStart: activeContentType === null ? `3px solid ${colors.goldDark}` : "3px solid transparent",
+                borderInlineStart: "3px solid transparent",
                 cursor: "pointer",
-                color: activeContentType === null ? colors.goldDark : colors.textMid,
+                color: colors.textMid,
                 fontSize: "0.82rem",
                 fontFamily: fonts.body,
                 borderBottom: `1px solid rgba(139,111,71,0.06)`,
@@ -356,27 +391,34 @@ export default function TeacherSidebar({
                 {contentTypesQ.data.reduce((s, c) => s + c.cnt, 0)}
               </span>
             </button>
+            {/* D — each content_type → /teachers/content-type/:type */}
             {contentTypesQ.data
               .filter((ct) => !search.trim() || ct.content_type.includes(search.trim()))
               .map((ct) => (
                 <button
                   key={ct.content_type}
-                  onClick={() => setActiveContentType(ct.content_type)}
+                  onClick={() => {
+                    onDrawerClose?.();
+                    navigate(`/teachers/content-type/${encodeURIComponent(ct.content_type)}`);
+                  }}
                   style={{
                     display: "flex",
                     width: "100%",
                     alignItems: "center",
                     justifyContent: "space-between",
                     padding: "0.42rem 0.75rem",
-                    background: activeContentType === ct.content_type ? "rgba(139,111,71,0.10)" : "transparent",
+                    background: "transparent",
                     border: "none",
-                    borderInlineStart: activeContentType === ct.content_type ? `3px solid ${colors.goldDark}` : "3px solid transparent",
+                    borderInlineStart: "3px solid transparent",
                     cursor: "pointer",
-                    color: activeContentType === ct.content_type ? colors.goldDark : colors.textMid,
+                    color: colors.textMid,
                     fontSize: "0.82rem",
                     fontFamily: fonts.body,
                     borderBottom: `1px solid rgba(139,111,71,0.06)`,
+                    transition: "background 0.12s",
                   }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.06)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
                 >
                   <span>{ct.content_type}</span>
                   <span style={{ fontSize: "0.72rem", color: colors.textSubtle }}>{ct.cnt}</span>

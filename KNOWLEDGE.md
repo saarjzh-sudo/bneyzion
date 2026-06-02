@@ -526,6 +526,23 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 (round-4) — Teachers Wing rebuilt to mirror the OLD site (Saar reference screenshot)
+
+**Branch:** `fix/series-teachers-data` · Frontend only. Saar showed the live old-site teacher wing (`bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית`) as the exact reference.
+
+**Data model confirmed:** teacher content for a book = series whose lessons have `bible_book=<book>` + `audience_tags⊇teachers` (בראשית ≈16–19 series), NOT `parent_id` children (that was only 3 — the bug). Content-type page = `lessons.content_type=<type> + teachers`. Creator page = `lessons.rabbi_id=<id> + teachers`. **series table has `bible_book` column but it's null for teacher series → resolve via lessons.bible_book → series_ids → fetch series.**
+
+**Done & verified on 8090:**
+- **A — removed center in-page nav** on `/teachers` (TeachersWingPage): the tabs ספרים/חידות/חומרי לימוד/כלים ומדריכים/איך מלמדים + תורה/נביאים/כתובים accordion are gone. Only hero + sidebar remain (like old site).
+- **B — sidebar book tree (`TeacherSidebar` + `useTeacherSidebar`):** expanding a book now shows "📚 כל התכנים ב<book>" + the book's teacher series. Verified בראשית shows "כל התכנים בבראשית" + 7 series (ביאור הפסוקים, ביאורי מילים, דגשים למלמדים, חוברות, חידות לילדים, פשט הפסוקים, שאלות חזרה).
+- **C — 3 new teacher category pages** (`useTeacherBookContent.ts` hooks + pages): `/teachers/book/:book` (verified בראשית = 16 series, chips הכל144/PDF115/טקסט29), `/teachers/content-type/:type` (verified דפי עבודה = 831, chips audio2/video1/PDF797/text31), `/teachers/creator/:id` (verified הרב אשי בלייכר = 304 lessons, 306 imgs; empty state handled for creators w/o teacher content).
+- **D — "סוג תוכן" tab item click → `/teachers/content-type/:type`** (was a no-op setState).
+- **E — "יוצרים" tab item click → `/teachers/creator/:id`** (was leaving the wing to public `/rabbis/:id`). Stays in wing, teacher content only.
+- **F — every teacher listing page has list/grid toggle + media-type chips** (הכל/אודיו/וידאו/PDF/טקסט), dynamic per available media, like regular series pages.
+- New routes in App.tsx: `/teachers/book/:book`, `/teachers/content-type/:type`, `/teachers/creator/:id`.
+
+**Open:** parshiot entries under each book in the sidebar (old site lists פרשת בראשית/נח/… — not yet added; skipped rather than guess). `/how-to-learn-tanach` quick-link still 404.
+
 ### 2026-06-02 (round-3) — public sidebar + category page + series/lesson/teachers UI fixes (Saar round-2 feedback)
 
 **Branch:** `fix/series-teachers-data` · **Frontend only — NO DB writes (anon key is read-only; no service_role/PAT in env this session).**

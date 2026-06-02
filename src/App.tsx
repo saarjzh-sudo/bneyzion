@@ -26,9 +26,13 @@ import NotFound from "./pages/NotFound";
 
 // Lazy-loaded: less frequently visited pages
 // Teachers Wing v2 — production pages (rollout 2026-05-11)
-const TeachersWingPage    = lazy(() => import("./pages/teachers/TeachersWingPage"));
-const TeachersSeriesPage  = lazy(() => import("./pages/teachers/TeachersSeriesPage"));
-const TeachersLessonPage  = lazy(() => import("./pages/teachers/TeachersLessonPage"));
+const TeachersWingPage        = lazy(() => import("./pages/teachers/TeachersWingPage"));
+const TeachersSeriesPage      = lazy(() => import("./pages/teachers/TeachersSeriesPage"));
+const TeachersLessonPage      = lazy(() => import("./pages/teachers/TeachersLessonPage"));
+// Teachers Wing category pages — 2026-06-02 (B/C/D/E)
+const TeachersBookPage        = lazy(() => import("./pages/teachers/TeachersBookPage"));
+const TeachersContentTypePage = lazy(() => import("./pages/teachers/TeachersContentTypePage"));
+const TeachersCreatorPage     = lazy(() => import("./pages/teachers/TeachersCreatorPage"));
 const ChapterWeekly = lazy(() => import("./pages/ChapterWeekly"));
 const MegilatEsther = lazy(() => import("./pages/MegilatEsther"));
 const Proposal = lazy(() => import("./pages/Proposal"));
@@ -255,6 +259,10 @@ const App = () => (
             <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWingPage /></Suspense>} />
             <Route path="/teachers/series/:id" element={<Suspense fallback={<LazyFallback />}><TeachersSeriesPage /></Suspense>} />
             <Route path="/teachers/lesson/:id" element={<Suspense fallback={<LazyFallback />}><TeachersLessonPage /></Suspense>} />
+            {/* Teachers Wing category pages — 2026-06-02 (B/C/D/E) */}
+            <Route path="/teachers/book/:book" element={<Suspense fallback={<LazyFallback />}><TeachersBookPage /></Suspense>} />
+            <Route path="/teachers/content-type/:type" element={<Suspense fallback={<LazyFallback />}><TeachersContentTypePage /></Suspense>} />
+            <Route path="/teachers/creator/:id" element={<Suspense fallback={<LazyFallback />}><TeachersCreatorPage /></Suspense>} />
             <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
