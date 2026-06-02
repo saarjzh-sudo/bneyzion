@@ -28,8 +28,11 @@ const CommunityPage = () => {
   });
 
   const enrolledIds = new Set(enrollments.map((e: any) => e.course_id));
-  const weeklyCourses = courses?.filter((c: any) => c.course_type === "weekly") ?? [];
-  const onDemandCourses = courses?.filter((c: any) => c.course_type !== "weekly") ?? [];
+  // Hide the weekly-chapter program from the community list — it has its own
+  // dedicated page at /course/weekly-chapter.
+  const visibleCourses = courses?.filter((c: any) => c.program_slug !== "weekly-chapter") ?? [];
+  const weeklyCourses = visibleCourses.filter((c: any) => c.course_type === "weekly");
+  const onDemandCourses = visibleCourses.filter((c: any) => c.course_type !== "weekly");
 
   return (
     <Layout>
@@ -125,7 +128,7 @@ const CommunityPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {enrollments.map((e: any, i: number) => (
                 <motion.div key={e.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link to={`/community/${e.course_id}`}>
+                  <Link to={e.community_courses?.program_slug === "weekly-chapter" ? "/course/weekly-chapter" : `/community/${e.course_id}`}>
                     <Card className="hover:shadow-lg hover:border-primary/30 transition-all group overflow-hidden">
                       {e.community_courses?.image_url && (
                         <div className="h-32 overflow-hidden">

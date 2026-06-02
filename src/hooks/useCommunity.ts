@@ -1,6 +1,120 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
+// ── Types for weekly-chapter data-driven page ──────────────────────────────
+
+export interface CommunityLesson {
+  id: string;
+  course_id: string;
+  title: string;
+  description: string | null;
+  lesson_number: number;
+  video_url: string | null;
+  audio_url: string | null;
+  attachment_url: string | null;
+  content_html: string | null;
+  status: string;
+  published_at: string | null;
+  week_number: number | null;
+  bible_book: string | null;
+  bible_chapter: number | null;
+  layer_type: string | null; // 'base' | 'enrichment' | 'weekly' | 'intro' | 'resources'
+  summary_html: string | null;
+  presentation_url: string | null;
+  drive_folder_url: string | null;
+  thumbnail_url: string | null;
+  reading_chapter: number | null;
+}
+
+export interface ChapterLayers {
+  chapter: number;
+  base: CommunityLesson | null;
+  enrichment: CommunityLesson | null;
+  weekly: CommunityLesson | null;
+}
+
+export interface CourseLayerMap {
+  intro: CommunityLesson | null;
+  resources: CommunityLesson | null;
+  chapters: Map<number, ChapterLayers>;
+  chapterNumbers: number[];
+}
+
+// ── useCourseByProgramSlug ─────────────────────────────────────────────────
+
+export function useCourseByProgramSlug(programSlug: string | undefined) {
+  return useQuery({
+    queryKey: ["course-by-program-slug", programSlug],
+    enabled: !!programSlug,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_courses")
+        .select("*")
+        .eq("program_slug", programSlug!)
+        .maybeSingle();
+      if (error) throw error;
+      return data as Record<string, any> | null;
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ── useChapterLayerMap ─────────────────────────────────────────────────────
+
+export function useChapterLayerMap(courseId: string | undefined) {
+  return useQuery({
+    queryKey: ["chapter-layer-map", courseId],
+    enabled: !!courseId,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_course_lessons")
+        .select("*")
+        .eq("course_id", courseId!)
+        .eq("status", "published")
+        .order("lesson_number", { ascending: true });
+      if (error) throw error;
+
+      const lessons = (data ?? []) as CommunityLesson[];
+
+      const result: CourseLayerMap = {
+        intro: null,
+        resources: null,
+        chapters: new Map(),
+        chapterNumbers: [],
+      };
+
+      for (const lesson of lessons) {
+        const lt = lesson.layer_type?.toLowerCase();
+
+        if (lt === "intro") {
+          result.intro = lesson;
+          continue;
+        }
+        if (lt === "resources") {
+          result.resources = lesson;
+          continue;
+        }
+
+        const ch = lesson.bible_chapter;
+        if (!ch) continue;
+
+        if (!result.chapters.has(ch)) {
+          result.chapters.set(ch, { chapter: ch, base: null, enrichment: null, weekly: null });
+        }
+        const entry = result.chapters.get(ch)!;
+        if (lt === "base") entry.base = lesson;
+        else if (lt === "enrichment") entry.enrichment = lesson;
+        else if (lt === "weekly") entry.weekly = lesson;
+      }
+
+      result.chapterNumbers = Array.from(result.chapters.keys()).sort((a, b) => a - b);
+
+      return result;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
 export function useCommunityCoruses() {
   return useQuery({
     queryKey: ["community-courses"],
@@ -47,7 +161,7 @@ export function useBibleChapter(book: string | undefined, chapter: number | unde
       if (error) throw error;
       return data as Array<{ verse: number; text_he: string }>;
     },
-    staleTime: 1000 * 60 * 60, // 1hr — static text, cache aggressively
+    staleTime: 1000 * 60 * 60,
   });
 }
 
