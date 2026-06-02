@@ -113,6 +113,7 @@ const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewT
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
 const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const AdminPayments = lazy(() => import("./pages/admin/Payments"));
+const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
@@ -301,26 +302,31 @@ const App = () => (
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />
             <Route path="/terms" element={<Suspense fallback={<LazyFallback />}><Terms /></Suspense>} />
             <Route path="/privacy-policy" element={<Navigate to="/terms#privacy" replace />} />
-            <Route path="/admin" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/lessons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Lessons /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/rabbis" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Rabbis /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/series" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><SeriesPage /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/topics" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Topics /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/users" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Users /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/migration" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Migration /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/settings" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminSettings /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/products" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminProducts /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/messages" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/upload" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentUpload /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/content-compare" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentCompare /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/community-courses" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><CommunityCourses /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/analytics" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><Analytics /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/notifications" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminNotifications /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/homepage" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><HomepageManager /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/orders" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/coupons" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/content-health" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/payments" element={<ProtectedRoute><Suspense fallback={<PageSkeleton />}><AdminPayments /></Suspense></ProtectedRoute>} />
+            {/* ── Admin routes — role-gated (wave-2) ───────────────────── */}
+            {/* Admin-only management routes */}
+            <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Users /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/subscribers" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSubscribers /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/settings" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSettings /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/products" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminProducts /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/orders" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPayments /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/coupons" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Analytics /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/messages" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/notifications" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminNotifications /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/homepage" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><HomepageManager /></Suspense></ProtectedRoute>} />
+            {/* Debug-only — not in nav */}
+            <Route path="/admin/migration" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Migration /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/content-compare" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ContentCompare /></Suspense></ProtectedRoute>} />
+            {/* Content routes — admin + creator */}
+            <Route path="/admin/lessons" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Lessons /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/rabbis" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Rabbis /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/series" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><SeriesPage /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/topics" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Topics /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/upload" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentUpload /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/community-courses" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><CommunityCourses /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/content-health" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
             {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
                 Available in dev AND production (so Vercel previews work for review). */}
             <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />

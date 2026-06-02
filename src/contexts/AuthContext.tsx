@@ -2,10 +2,18 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import type { User, Session } from "@supabase/supabase-js";
 
+// app_role mirrors the Supabase enum. "creator" is a future role
+// (not yet in the DB enum) so we extend it locally here.
+export type AppRole = "admin" | "moderator" | "user" | "creator";
+
 interface AuthContextType {
   user: User | null;
   session: Session | null;
   isAdmin: boolean;
+  /** Raw role fetched from user_roles. null while loading or unauthenticated. */
+  userRole: AppRole | null;
+  /** True for admin AND creator — both can access content management routes. */
+  isCreator: boolean;
   isLoading: boolean;
   /**
    * Sign in with Google. Optional `next` param = the path the user should
@@ -23,17 +31,36 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [userRole, setUserRole] = useState<AppRole | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const checkAdminRole = async (userId: string) => {
     try {
+      // First check admin via RPC (existing path — keep working)
       const { data, error } = await supabase.rpc("has_role", {
         _user_id: userId,
         _role: "admin",
       });
       if (!error) setIsAdmin(!!data);
+
+      // Also fetch the raw role for role-gated sidebar/routes
+      const { data: roles } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", userId)
+        .limit(1)
+        .maybeSingle();
+      if (roles?.role) {
+        setUserRole(roles.role as AppRole);
+      } else if (!error && !!data) {
+        // Has admin via RPC but no row — treat as admin
+        setUserRole("admin");
+      } else {
+        setUserRole("user");
+      }
     } catch {
       setIsAdmin(false);
+      setUserRole("user");
     }
   };
 
@@ -72,6 +99,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           // so navigation happens automatically when PortalLogin sees `user && next`.
         } else {
           setIsAdmin(false);
+          setUserRole(null);
         }
         setIsLoading(false);
       }
@@ -113,10 +141,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser(null);
     setSession(null);
     setIsAdmin(false);
+    setUserRole(null);
   };
 
+  const isCreator = isAdmin || userRole === "creator";
+
   return (
-    <AuthContext.Provider value={{ user, session, isAdmin, isLoading, signInWithGoogle, signOut }}>
+    <AuthContext.Provider value={{ user, session, isAdmin, userRole, isCreator, isLoading, signInWithGoogle, signOut }}>
       {children}
     </AuthContext.Provider>
   );
