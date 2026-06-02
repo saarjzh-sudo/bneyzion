@@ -104,27 +104,28 @@ function smooveFetch(path) {
 
 async function fetchAllContacts() {
   // First, get the list metadata to know the real contact count.
-  // Smoove's /Contacts endpoint doesn't stop at the end — it wraps around
-  // and returns contacts from other lists indefinitely. We must cap manually.
   const listMeta = await smooveFetch(`/v1/Lists/${SMOOVE_LIST_ID}`);
   const totalCount = listMeta?.contactsCount ?? Infinity;
   console.log(`  List reports ${totalCount} total contacts.`);
 
+  // IMPORTANT: Use /Members?page=N&pageSize=100 (page-based, starts at 1).
+  // DO NOT use /Contacts?limit=N&offset=N — that endpoint wraps around
+  // after the end of the list and returns the same first contacts again.
+  // Discovered 2026-06-02: /Contacts returns only 99 unique contacts then
+  // repeats; /Members gives correct page-by-page pagination.
   const contacts = [];
-  let offset = 0;
+  let page = 1;
 
   while (contacts.length < totalCount) {
-    const page = await smooveFetch(
-      `/v1/Lists/${SMOOVE_LIST_ID}/Contacts?limit=${PAGE_SIZE}&offset=${offset}`
+    const data = await smooveFetch(
+      `/v1/Lists/${SMOOVE_LIST_ID}/Members?page=${page}&pageSize=${PAGE_SIZE}`
     );
-    if (!Array.isArray(page) || page.length === 0) break;
-    // Only take as many as we still need to reach totalCount
-    const remaining = totalCount - contacts.length;
-    contacts.push(...page.slice(0, remaining));
+    if (!Array.isArray(data) || data.length === 0) break;
+    contacts.push(...data);
     console.log(`  Fetched ${contacts.length}/${totalCount} contacts...`);
-    if (page.length < PAGE_SIZE) break; // genuine last page
+    if (data.length < PAGE_SIZE) break; // genuine last page
     if (contacts.length >= LIMIT) break;
-    offset += PAGE_SIZE;
+    page++;
   }
 
   return contacts.slice(0, LIMIT);

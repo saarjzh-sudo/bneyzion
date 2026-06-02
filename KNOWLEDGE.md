@@ -658,6 +658,37 @@ No human figures, no faces, no letters, no text.
 - **IRON RULE:** Any bneyzion deploy verification MUST be done in Chrome (Chrome MCP) with SW cleared (`Application → Storage → Clear site data`), never curl. Curl bypasses the SW entirely — if the SW is stale, curl reports 200/correct while every browser user sees the old version.
 - **IRON RULE:** Donation counts and any dynamic Supabase data must NEVER be SW-cached. Use `NetworkOnly` for all `*.supabase.co` requests.
 
+### 2026-06-02 — weekly-chapter subscribers: full import 264 rows (Smoove → user_access_tags)
+
+**Branch:** `admin-overhaul` (sandbox-only, no frontend touched)
+
+**Problem discovered:**
+- `import-weekly-chapter-subscribers.mjs` uses `/Lists/{id}/Contacts?limit=100&offset=N` endpoint.
+- This endpoint **wraps around** after the last contact: at offset=100 it returns contacts 1-100 again (not contacts 101-200). The script guards against this with `totalCount` from list metadata and a `while (contacts.length < totalCount)` stop — but the contacts themselves are **99 unique + repeats**, not 290 unique.
+- Root cause: `/Contacts` endpoint returns only 99 contacts regardless of paging. The true fix is using `/Members?page=N&pageSize=100` (page-based, not offset-based).
+
+**Correct Smoove endpoint for list paging:**
+```
+GET /v1/Lists/{id}/Members?page={N}&pageSize=100
+```
+- `page` starts at 1 (not 0).
+- Returns unique contacts per page (no wrap-around).
+- Stop when `len(page) < PAGE_SIZE`.
+
+**Import run (2026-06-02):**
+- Smoove list 1045078 (`הפרק השבועי - תכנית מנויים`): 290 contacts total, 264 unique emails, 26 without email.
+- Auth users matched (linked): `yoavoriel@gmail.com` + `ithai.meier@gmail.com` = 2 newly linked.
+- `saar.j.z.h@gmail.com` — in auth.users but NOT in Smoove list → not in import set → remains source=manual from prior session.
+- Upserted in 6 batches of 50 via Supabase Management API `/database/query` SQL.
+
+**Final DB state after import:**
+- `SELECT COUNT(*), linked, pending FROM user_access_tags WHERE tag='program:weekly-chapter'`
+- **total=265, linked=3, pending=262**
+- (265 = 101 pre-existing + 164 new rows. 100 pre-existing rows got ON CONFLICT UPDATE.)
+
+**Iron rule learned:**
+- Smoove `/v1/Lists/{id}/Contacts?limit=N&offset=M` wraps around at end of list. Use `/v1/Lists/{id}/Members?page=N&pageSize=M` for reliable pagination. The `.mjs` import script needs to be updated to use this endpoint.
+
 ### 2026-06-01 (session 3) — yehoshua-campaign: inline checkout deployed to production
 - **Issue:** `InlineCheckoutModal` was already committed (`f2e62bcc`, `feat/navigator-bot`) but Vercel had not auto-deployed it to production. Production was still on `bneyzion-ewext35iv` (commit `76bba5e7`, 00:00am) which pre-dated the inline checkout work (08:12am). Push to `feat/navigator-bot` triggered only a Preview deploy, not Production.
 - **Fix:** Ran `vercel --prod --yes` from `/Users/saarj/Downloads/saar-workspace/bneyzion`. New production deploy: `bneyzion-ff0xnzyoo-saars-projects-4508d6bb.vercel.app` → live on `bneyzion.vercel.app`.
