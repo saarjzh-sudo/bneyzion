@@ -49,7 +49,11 @@ export type Database = {
           id: string
           lesson_number: number
           published_at: string | null
+          review_note: string | null
+          reviewed_by: string | null
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
           title: string
           video_url: string | null
         }
@@ -63,7 +67,11 @@ export type Database = {
           id?: string
           lesson_number?: number
           published_at?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title: string
           video_url?: string | null
         }
@@ -77,7 +85,11 @@ export type Database = {
           id?: string
           lesson_number?: number
           published_at?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title?: string
           video_url?: string | null
         }
@@ -540,6 +552,116 @@ export type Database = {
         }
         Relationships: []
       }
+      grow_orders: {
+        Row: {
+          id: string
+          grow_transaction_id: string | null
+          asmachta: string | null
+          process_id: string | null
+          process_token: string | null
+          page_code: string | null
+          merchant_user_id: string | null
+          amount: number
+          currency: string
+          payment_status: string
+          installments: number
+          total_installments: number | null
+          card_suffix: string | null
+          card_brand: string | null
+          card_type: string | null
+          card_exp: string | null
+          payment_method: string | null
+          transaction_type_id: number | null
+          customer_name: string | null
+          customer_email: string | null
+          customer_phone: string | null
+          payment_product_id: string | null
+          flow_type: string | null
+          invoice_number: string | null
+          invoice_url: string | null
+          invoice_id: string | null
+          target_table: string | null
+          linked_record_id: string | null
+          raw_payload: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          grow_transaction_id?: string | null
+          asmachta?: string | null
+          process_id?: string | null
+          process_token?: string | null
+          page_code?: string | null
+          merchant_user_id?: string | null
+          amount: number
+          currency?: string
+          payment_status?: string
+          installments?: number
+          total_installments?: number | null
+          card_suffix?: string | null
+          card_brand?: string | null
+          card_type?: string | null
+          card_exp?: string | null
+          payment_method?: string | null
+          transaction_type_id?: number | null
+          customer_name?: string | null
+          customer_email?: string | null
+          customer_phone?: string | null
+          payment_product_id?: string | null
+          flow_type?: string | null
+          invoice_number?: string | null
+          invoice_url?: string | null
+          invoice_id?: string | null
+          target_table?: string | null
+          linked_record_id?: string | null
+          raw_payload?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          grow_transaction_id?: string | null
+          asmachta?: string | null
+          process_id?: string | null
+          process_token?: string | null
+          page_code?: string | null
+          merchant_user_id?: string | null
+          amount?: number
+          currency?: string
+          payment_status?: string
+          installments?: number
+          total_installments?: number | null
+          card_suffix?: string | null
+          card_brand?: string | null
+          card_type?: string | null
+          card_exp?: string | null
+          payment_method?: string | null
+          transaction_type_id?: number | null
+          customer_name?: string | null
+          customer_email?: string | null
+          customer_phone?: string | null
+          payment_product_id?: string | null
+          flow_type?: string | null
+          invoice_number?: string | null
+          invoice_url?: string | null
+          invoice_id?: string | null
+          target_table?: string | null
+          linked_record_id?: string | null
+          raw_payload?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "grow_orders_payment_product_id_fkey"
+            columns: ["payment_product_id"]
+            isOneToOne: false
+            referencedRelation: "payment_products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lesson_comments: {
         Row: {
           avatar_url: string | null
@@ -671,9 +793,13 @@ export type Database = {
           id: string
           published_at: string | null
           rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
           series_id: string | null
           source_type: string
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
           thumbnail_url: string | null
           title: string
           updated_at: string
@@ -695,9 +821,13 @@ export type Database = {
           id?: string
           published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           series_id?: string | null
           source_type?: string
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           thumbnail_url?: string | null
           title: string
           updated_at?: string
@@ -719,9 +849,13 @@ export type Database = {
           id?: string
           published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           series_id?: string | null
           source_type?: string
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           thumbnail_url?: string | null
           title?: string
           updated_at?: string
@@ -1516,9 +1650,14 @@ export type Database = {
           image_url: string | null
           lesson_count: number
           parent_id: string | null
+          published_at: string | null
           rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
           sort_order: number
           status: string
+          submitted_at: string | null
+          submitted_by: string | null
           title: string
         }
         Insert: {
@@ -1529,9 +1668,14 @@ export type Database = {
           image_url?: string | null
           lesson_count?: number
           parent_id?: string | null
+          published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           sort_order?: number
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title: string
         }
         Update: {
@@ -1542,9 +1686,14 @@ export type Database = {
           image_url?: string | null
           lesson_count?: number
           parent_id?: string | null
+          published_at?: string | null
           rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
           sort_order?: number
           status?: string
+          submitted_at?: string | null
+          submitted_by?: string | null
           title?: string
         }
         Relationships: [
