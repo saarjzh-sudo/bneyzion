@@ -49,6 +49,8 @@ function useCampaignStats() {
 
     // Realtime subscription on donations (view doesn't support realtime directly).
     // Any INSERT/UPDATE/DELETE on donations triggers refetch of the view.
+    // NOTE: requires donations table in supabase_realtime publication.
+    // If realtime is not available, the 30s polling below acts as fallback.
     const channel = supabase
       .channel("yehoshua-campaign-stats")
       .on(
@@ -65,8 +67,21 @@ function useCampaignStats() {
       )
       .subscribe();
 
+    // Polling fallback: re-fetch every 30 seconds regardless of realtime status.
+    // This guarantees the bar updates even if realtime subscription fails
+    // (e.g., donations not yet added to supabase_realtime publication).
+    const pollInterval = setInterval(fetchStats, 30_000);
+
+    // Also re-fetch when the user returns to the tab
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") fetchStats();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       supabase.removeChannel(channel);
+      clearInterval(pollInterval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 
