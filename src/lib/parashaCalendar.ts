@@ -75,6 +75,12 @@ export const PARASHA_TO_SERIES_TITLE: Record<string, string> = {
   "וילך": "פרשת וילך | לא",
   "האזינו": "פרשת האזינו | לב",
   "וזאת הברכה": "פרשת וזאת הברכה | לג-לד",
+  // Combined parashiot (5786 Israel cycle) — map to lead parasha series
+  "תזריע-מצורע": "פרשת תזריע | יב-יג",
+  "אחרי מות-קדושים": "פרשת אחרי מות | טז-יח",
+  "בהר-בחוקותי": "פרשת בהר | כה-כו",
+  "מטות-מסעי": "פרשת מטות | ל-לב",
+  "נצבים-וילך": "פרשת נצבים | כט-ל",
 };
 
 // Map parasha to its chumash (book)
@@ -87,6 +93,12 @@ const chumashim = [
   { name: "דברים", parashiot: ["דברים", "ואתחנן", "עקב", "ראה", "שופטים", "כי תצא", "כי תבוא", "נצבים", "וילך", "האזינו", "וזאת הברכה"] },
 ];
 chumashim.forEach(c => c.parashiot.forEach(p => { PARASHA_TO_CHUMASH[p] = c.name; }));
+// Combined parashiot — map to their book
+PARASHA_TO_CHUMASH["תזריע-מצורע"] = "ויקרא";
+PARASHA_TO_CHUMASH["אחרי מות-קדושים"] = "ויקרא";
+PARASHA_TO_CHUMASH["בהר-בחוקותי"] = "ויקרא";
+PARASHA_TO_CHUMASH["מטות-מסעי"] = "במדבר";
+PARASHA_TO_CHUMASH["נצבים-וילך"] = "דברים";
 
 // Featured verses for each parasha
 export const PARASHA_VERSES: Record<string, { text: string; reference: string }> = {
@@ -195,33 +207,31 @@ const SCHEDULE_5786: Array<[number, number, string]> = [
   [2, 21, "פקודי"],
   [2, 28, "ויקרא"],
   [3, 4, "צו"],
-  // Pesach
-  [3, 18, "שמיני"],
-  [3, 25, "תזריע"],
-  [4, 2, "מצורע"],
-  [4, 9, "אחרי מות"],
-  [4, 16, "קדושים"],
-  [4, 23, "אמור"],
-  [4, 30, "בהר"],
-  [5, 6, "בחוקותי"],
-  [5, 13, "במדבר"],
-  [5, 20, "נשא"],
-  [5, 27, "בהעלותך"],
-  [6, 4, "שלח לך"],
-  [6, 11, "קורח"],
-  [6, 18, "חוקת"],
-  [6, 25, "בלק"],
-  [7, 2, "פנחס"],
-  [7, 9, "מטות"],
-  [7, 16, "מסעי"],
-  [7, 23, "דברים"],
-  [7, 30, "ואתחנן"],
-  [8, 6, "עקב"],
-  [8, 13, "ראה"],
-  [8, 20, "שופטים"],
-  [8, 27, "כי תצא"],
-  [9, 3, "כי תבוא"],
-  [9, 10, "נצבים"],
+  // Post-Pesach 5786 (Israel cycle — corrected 2026-06-02)
+  // Pesach ends Apr 8 (21 Nisan). First Shabbat after = Apr 11.
+  // Spring doublings: תזריע-מצורע, אחרי מות-קדושים, בהר-בחוקותי, מטות-מסעי, נצבים-וילך
+  [3, 11, "שמיני"],           // Apr 11
+  [3, 18, "תזריע-מצורע"],    // Apr 18 (combined)
+  [3, 25, "אחרי מות-קדושים"], // Apr 25 (combined)
+  [4, 2, "אמור"],             // May 2
+  [4, 9, "בהר-בחוקותי"],     // May 9 (combined)
+  [4, 16, "במדבר"],           // May 16 (last Shabbat before Shavuot)
+  [4, 23, "נשא"],             // May 23 (Shabbat after Shavuot — Shavuot = May 22 Fri)
+  [4, 30, "בהעלותך"],         // May 30
+  [5, 6, "שלח לך"],           // Jun 6  ← CURRENT (week of Jun 2)
+  [5, 13, "קורח"],            // Jun 13
+  [5, 20, "חוקת"],            // Jun 20
+  [5, 27, "בלק"],             // Jun 27
+  [6, 4, "פנחס"],             // Jul 4
+  [6, 11, "מטות-מסעי"],      // Jul 11 (combined)
+  [6, 18, "דברים"],           // Jul 18
+  [6, 25, "ואתחנן"],          // Jul 25
+  [7, 1, "עקב"],              // Aug 1
+  [7, 8, "ראה"],              // Aug 8
+  [7, 15, "שופטים"],          // Aug 15
+  [7, 22, "כי תצא"],          // Aug 22
+  [7, 29, "כי תבוא"],         // Aug 29
+  [8, 5, "נצבים-וילך"],      // Sep 5 (combined — before Rosh Hashana)
 ];
 
 function getUpcomingParashaFromSchedule(

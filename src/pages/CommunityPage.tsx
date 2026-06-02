@@ -47,7 +47,7 @@ const CommunityPage = () => {
               <GraduationCap className="h-4 w-4 text-primary" />
               <span className="text-sm font-semibold text-primary">קהילת לומדים</span>
             </motion.div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading text-white mb-4 leading-tight">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-kedem-hollow-aaa mb-4 leading-tight drop-shadow-md text-white">
               קהילת הלומדים של בני ציון
             </h1>
             <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8">

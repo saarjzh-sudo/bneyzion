@@ -2,36 +2,42 @@
  * DesignHeader — sandbox header for the v2 redesign.
  *
  * Visual chrome from `DesignPreviewHome`'s `DesignNavBar`, but wraps the real
- * production sub-components (UserMenu, CartButton, NotificationBell, DarkModeToggle,
- * GlobalSearch) so the sandbox uses live functionality, not mocks.
+ * production sub-components (UserMenu, CartButton, NotificationBell, GlobalSearch)
+ * so the sandbox uses live functionality, not mocks.
  *
  * Behavior:
  *  - Sticky top, 96px tall.
  *  - When `transparentOnTop=true` AND scroll < 60px → transparent + bright logo.
- *  - Otherwise → parchment with backdrop-blur + colored logo.
+ *  - Otherwise → parchment (cream warm rgba(250,246,240,0.92)) with backdrop-blur.
  *
  * Pages decide:
  *  - Home / pages with dark hero overlap → `transparentOnTop` + `overlapHero`
  *  - All other pages → solid (default)
+ *
+ * Search scope: סדרות, שיעורים, ספרים, נושאים — לא תוכן מורים.
+ * סינון מורים נעשה ב-useGlobalSearch ע"י .not("audience_tags", "cs", '{"teachers"}').
+ *
+ * Dark mode הוסר בכוונה (2026-06-01) — הרקע cream warm תמידי.
  */
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { Menu, X, GraduationCap, Search } from "lucide-react";
 
 import logoColor from "@/assets/logo-horizontal-color.png";
 import UserMenu from "@/components/layout/UserMenu";
 import CartButton from "@/components/cart/CartButton";
 import NotificationBell from "@/components/layout/NotificationBell";
-import DarkModeToggle from "@/components/ui/dark-mode-toggle";
+import GlobalSearch from "@/components/search/GlobalSearch";
 
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
 // Nav items — updated 2026-05-27 per Saar (second pass):
 // Order (RTL: first item = rightmost, closest to logo):
-// אגף המורים | פרשת השבוע | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
+// אגף המורים | פרשת השבוע | הקורסים שלי | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "אגף המורים", href: "/teachers" },
   { label: "פרשת השבוע", href: "/parasha" },
+  { label: "הקורסים שלי", href: "/design-my-courses" },
   { label: "חנות", href: "/store" },
   { label: "אודותינו", href: "/about" },
 ];
@@ -60,6 +66,7 @@ export default function DesignHeader({
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   // Teacher-context mode: activate on /design-teachers-* routes
   const isTeacherContext = location.pathname.startsWith("/design-teachers-");
@@ -139,6 +146,8 @@ export default function DesignHeader({
             flex: 1,
             justifyContent: "flex-end",
             flexWrap: "wrap",
+            // נדחף מעט ימינה (לכיוון הלוגו) בלבד; ללא הזזה אנכית כדי להישאר מיושר בגובה עם כפתור ההתחברות (Saar 2026-06-01)
+            transform: "translateX(22px)",
           }}
         >
           {/* Teacher context chip — shown instead of the 4 hidden items */}
@@ -239,7 +248,27 @@ export default function DesignHeader({
             flexShrink: 0,
           }}
         >
-          <DarkModeToggle isTransparent={isTransparent} />
+          {/* Search trigger button */}
+          <button
+            onClick={() => setSearchOpen(true)}
+            aria-label="חיפוש (Ctrl+K)"
+            title="חיפוש (Ctrl+K)"
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 12,
+              border: isTransparent ? "1px solid rgba(255,255,255,0.25)" : `1px solid rgba(139,111,71,0.2)`,
+              background: isTransparent ? "rgba(255,255,255,0.08)" : "rgba(250,246,240,0.7)",
+              color: isTransparent ? "rgba(255,255,255,0.85)" : colors.textMuted,
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "all 0.2s",
+            }}
+          >
+            <Search style={{ width: 18, height: 18 }} />
+          </button>
           <NotificationBell isTransparent={isTransparent} />
           <CartButton isTransparent={isTransparent} />
           <UserMenu isTransparent={isTransparent} />
@@ -326,13 +355,17 @@ export default function DesignHeader({
             height: 64px !important;
             padding: 0 0.85rem !important;
           }
-          /* Hide notification bell and dark mode toggle on mobile to reduce clutter */
+          /* Mobile: hide NotificationBell (2nd) and CartButton (3rd) to reduce clutter.
+             Search (1st) stays visible. DarkModeToggle removed — no offset needed. */
           .design-header-actions > *:nth-child(2),
           .design-header-actions > *:nth-child(3) {
             display: none !important;
           }
         }
       `}</style>
+
+      {/* GlobalSearch dialog — scope: סדרות, שיעורים, ספרים (ללא תוכן מורים) */}
+      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
   );
 }
