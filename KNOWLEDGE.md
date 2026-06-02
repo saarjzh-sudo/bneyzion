@@ -552,6 +552,43 @@ No human figures, no faces, no letters, no text.
 - לפני כל `vercel env add` ב-pipeline: בדוק `vercel env ls production | grep KEY` — אם קיים ו-`Encrypted` זה אומר ש-Vercel מציג נכון, לא ריק.
 - כשvercel env vars ריקים ב-production: webhook serverless function רץ ומחזיר `{"received":true,"processed":false}` — לא error, לא 500. **הסימן:** `processed:false` כשהpayload תקין (status=1, orderId קיים).
 
+### 2026-06-02 — admin-overhaul wave 2: content upload wizard + approval workflow
+
+**Branch:** `admin-overhaul`
+
+**Migration: `supabase/migrations/20260602_content_approval_workflow.sql`**
+- Adds `submitted_by` / `reviewed_by` / `submitted_at` / `review_note` to `lessons`, `series`, `community_course_lessons`.
+- Adds partial indexes for `pending_review` status.
+- Idempotent (ADD COLUMN IF NOT EXISTS). Existing rows unchanged.
+- Status model: `draft | pending_review | published | archived` (text column, no enum change needed).
+
+**`src/pages/admin/ContentUpload.tsx` — full 4-step wizard:**
+- Step 1: source-type visual tiles (audio/video/text/document) + title + rabbi + bible book/chapter
+- Step 2: series selector with inline "create new series" toggle + topic selector + audience-tag pills
+- Step 3: file drop zones (audio/video/pdf/cover image) + external video URL + Drive folder URL
+- Step 4: summary review + role-gated submit:
+  - Admin: "פרסם עכשיו" (status=published) or "שמור כטיוטה" (status=draft)
+  - Creator: "שלח לאישור" (status=pending_review, sets submitted_by + submitted_at)
+- Success screen with "העלה עוד" / "צפה ברשימה" CTAs
+- Design: gold/navy/parchment tokens, RTL, animated progress indicator with clickable completed steps
+
+**`src/pages/admin/Lessons.tsx` — approval queue:**
+- 4-tab filter: כל / ממתין לאישור / טיוטות / פורסמו (with live counts)
+- Amber banner with count badge when pending items exist (admin-only)
+- Per-row "אשר ופרסם" + "החזר ליוצר" dialog (with optional note)
+- ColourStatusBadge: gray/amber/green/red with coloured dot
+- `review_note` shown inline under lesson title (with message icon)
+- pending_review rows highlighted amber-50
+- `useApproveLesson` mutation: sets reviewed_by + published_at (approve) or review_note (return)
+
+**`src/hooks/useLessons.ts`:**
+- Extends `Lesson` interface with 4 approval fields.
+- `useUpdateLesson` casts to `any` — Supabase generated types don't include new columns yet.
+
+**Iron rule:**
+- `useAuth().isAdmin` gates the publish button. Creators never see "פרסם עכשיו" — only "שלח לאישור".
+- After migration is applied to live DB, run `supabase gen types typescript --project-id pzvmwfexeiruelwiujxn` to remove the `as any` cast.
+
 ### 2026-06-02 — admin-overhaul backend: migration audit + creator role + yoav admin + dry-run
 
 **Branch:** `admin-overhaul` (backend-only, no frontend touched)
