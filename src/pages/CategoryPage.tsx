@@ -1,26 +1,36 @@
 /**
  * CategoryPage — /category/:id
  *
- * Shows all series under a node (book / topic category) and optionally
- * any "standalone" lessons whose series_id points directly to that node.
+ * Shows all canonical series under a node (book / topic category) and
+ * optionally any "standalone" lessons whose series_id points directly to that node.
  *
- * Data strategy:
- *   - Node name/title: useSeriesDetail (single row)
- *   - Breadcrumb ancestors: useSeriesBreadcrumb (RPC get_series_ancestors)
- *   - Direct child series with lesson_count > 0:
- *       useContentSidebar.useSeriesForNode (RPC get_series_descendant_ids)
- *       — already handles dedup by relying on DB unique IDs.
- *   - Standalone lessons (series_id === nodeId, direct, not via sub-series):
- *       direct Supabase query filtered to the exact nodeId.
+ * Canonical series rule (matches the old site, fixes 4→6 for "איך לומדים"):
+ *   For each unique series title in the descendant tree:
+ *     - If an active/published copy with lesson_count > 0 exists → show it
+ *     - If only a draft copy exists (no active twin) → show it (preserves parity)
+ *     - Never show a draft that has an active/published twin (hidden duplicate)
+ *   Category nodes (status=category) are always excluded — they are containers.
  *
- * Layout: DesignLayout (v2 with sidebar).
- * Cream #FBF6EC hero, gold accents, RTL.
+ * Under each series — lessons are expanded inline with thumbnail images.
+ * Lesson image priority: thumbnail_url → series.image_url → getSeriesCoverImage → default.
+ *
+ * Layout: DesignLayout (v2 with sidebar). Cream+gold, RTL.
  */
 
-import { lazy, Suspense } from "react";
+import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeft, Loader2, BookOpen, Play, Volume2, FileText, AlertCircle } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronDown,
+  Loader2,
+  BookOpen,
+  Play,
+  Volume2,
+  FileText,
+  AlertCircle,
+  Construction,
+} from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import {
@@ -37,22 +47,72 @@ import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
 import { supabase } from "@/integrations/supabase/client";
 
-// ─── helpers ────────────────────────────────────────────────────────────────
+// ─── type for series with canonical fields ───────────────────────────────────
 
-function seriesImage(s: { image_url?: string | null; title: string }): string {
-  return s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+type CanonicalSeries = {
+  id: string;
+  title: string;
+  lessonCount: number | null;
+  rabbiName: string | null;
+  description?: string | null;
+  imageUrl?: string | null;
+  isDraft?: boolean;
+};
+
+// ─── helpers ─────────────────────────────────────────────────────────────────
+
+function resolveSeriesImage(s: { imageUrl?: string | null; title: string }): string {
+  return s.imageUrl || getSeriesCoverImage(s.title) || "/images/series-default.png";
 }
 
-function lessonMediaIcon(l: { video_url?: string | null; audio_url?: string | null; attachment_url?: string | null }) {
+function lessonImage(
+  lesson: { thumbnail_url?: string | null },
+  series: { imageUrl?: string | null; title: string }
+): string {
+  return (
+    lesson.thumbnail_url ||
+    series.imageUrl ||
+    getSeriesCoverImage(series.title) ||
+    "/images/series-default.png"
+  );
+}
+
+function lessonMediaIcon(l: {
+  video_url?: string | null;
+  audio_url?: string | null;
+  attachment_url?: string | null;
+}) {
   if (l.video_url) return <Play size={13} style={{ flexShrink: 0 }} />;
   if (l.audio_url) return <Volume2 size={13} style={{ flexShrink: 0 }} />;
   if (l.attachment_url) return <FileText size={13} style={{ flexShrink: 0 }} />;
   return <BookOpen size={13} style={{ flexShrink: 0 }} />;
 }
 
-// ─── Standalone-lessons hook ─────────────────────────────────────────────────
-// Fetches lessons whose series_id = nodeId directly (not descendant series).
-// Used for the "שיעורים בודדים" section.
+// ─── hook: lessons for one series ────────────────────────────────────────────
+
+function useSeriesLessons(seriesId: string) {
+  return useQuery({
+    queryKey: ["series-lessons-expanded", seriesId],
+    enabled: !!seriesId,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("lessons")
+        .select(
+          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, rabbi_id, rabbis(name)"
+        )
+        .eq("series_id", seriesId)
+        .eq("status", "published")
+        .order("published_at", { ascending: true })
+        .limit(200);
+      if (error) throw error;
+      return data ?? [];
+    },
+  });
+}
+
+// ─── hook: standalone lessons on the category node itself ────────────────────
+
 function useDirectLessons(nodeId: string | undefined) {
   return useQuery({
     queryKey: ["category-direct-lessons", nodeId],
@@ -66,7 +126,6 @@ function useDirectLessons(nodeId: string | undefined) {
         )
         .eq("series_id", nodeId!)
         .eq("status", "published")
-        // Dedup: series_id is set, so null-series duplicates can't appear here.
         .order("published_at", { ascending: false })
         .limit(50);
       if (error) throw error;
@@ -84,18 +143,18 @@ export default function CategoryPage() {
   const { data: node, isLoading: nodeLoading } = useSeriesDetail(id);
   const { data: breadcrumbs = [] } = useSeriesBreadcrumb(id);
 
-  // Series under this node (via useContentSidebar's useSeriesForNode hook)
   const { useSeriesForNode } = useContentSidebar();
   const { data: seriesList = [], isLoading: seriesLoading } = useSeriesForNode(id ?? null);
 
-  // Standalone lessons directly on this node
   const { data: directLessons = [], isLoading: lessonsLoading } = useDirectLessons(id);
 
   const isLoading = nodeLoading || seriesLoading;
 
   const title = node?.title ?? "קטגוריה";
 
-  // ── Render ──
+  // Cast to canonical type (hook now returns extra fields)
+  const canonicalSeries = seriesList as unknown as CanonicalSeries[];
+
   return (
     <DesignLayout>
       {/* ── Hero ── */}
@@ -109,7 +168,7 @@ export default function CategoryPage() {
           overflow: "hidden",
         }}
       >
-        {/* Subtle decorative arc */}
+        {/* Decorative arc */}
         <div
           aria-hidden
           style={{
@@ -223,7 +282,7 @@ export default function CategoryPage() {
         )}
 
         {/* Series count badge */}
-        {!seriesLoading && seriesList.length > 0 && (
+        {!seriesLoading && canonicalSeries.length > 0 && (
           <div
             style={{
               display: "inline-flex",
@@ -241,7 +300,7 @@ export default function CategoryPage() {
             }}
           >
             <BookOpen size={13} />
-            {seriesList.length} סדרות
+            {canonicalSeries.length} סדרות
           </div>
         )}
       </div>
@@ -255,10 +314,10 @@ export default function CategoryPage() {
           padding: "2rem 1.5rem",
         }}
       >
-        {/* ── Series grid ── */}
+        {/* ── Series with expanded lessons ── */}
         {isLoading ? (
           <SeriesGridSkeleton />
-        ) : seriesList.length === 0 ? (
+        ) : canonicalSeries.length === 0 ? (
           <EmptyState title={title} />
         ) : (
           <section>
@@ -276,21 +335,19 @@ export default function CategoryPage() {
             >
               סדרות בנושא
             </h2>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                gap: "1.25rem",
-              }}
-            >
-              {seriesList.map((s) => (
-                <SeriesCard key={s.id} series={s} />
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              {canonicalSeries.map((s) => (
+                <SeriesBlock
+                  key={s.id}
+                  series={s}
+                  onNavigate={(path) => navigate(path)}
+                />
               ))}
             </div>
           </section>
         )}
 
-        {/* ── Direct lessons section ── */}
+        {/* ── Direct / standalone lessons on this category node ── */}
         {!lessonsLoading && directLessons.length > 0 && (
           <section style={{ marginTop: "2.5rem" }}>
             <h2
@@ -309,7 +366,12 @@ export default function CategoryPage() {
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
               {directLessons.map((l) => (
-                <LessonRow key={l.id} lesson={l} onNavigate={(path) => navigate(path)} />
+                <LessonRow
+                  key={l.id}
+                  lesson={l}
+                  fallbackImage={"/images/series-default.png"}
+                  onNavigate={(path) => navigate(path)}
+                />
               ))}
             </div>
           </section>
@@ -326,57 +388,50 @@ export default function CategoryPage() {
   );
 }
 
-// ─── SeriesCard ──────────────────────────────────────────────────────────────
+// ─── SeriesBlock ─────────────────────────────────────────────────────────────
+// Renders a series card header + expandable lessons list below it.
 
-function SeriesCard({
+function SeriesBlock({
   series,
+  onNavigate,
 }: {
-  series: {
-    id: string;
-    title: string;
-    lessonCount: number | null;
-    rabbiName: string | null;
-    description?: string | null;
-  };
+  series: CanonicalSeries;
+  onNavigate: (path: string) => void;
 }) {
-  const imgSrc = seriesImage({ title: series.title });
+  const [expanded, setExpanded] = useState(true); // default open
+  const { data: lessons = [], isLoading } = useSeriesLessons(series.id);
+  const imgSrc = resolveSeriesImage(series);
+  const hasDraftBadge = series.isDraft && (!series.lessonCount || series.lessonCount === 0);
 
   return (
-    <Link
-      to={`/series/${series.id}`}
-      style={{ textDecoration: "none" }}
+    <div
+      style={{
+        borderRadius: radii.lg,
+        overflow: "hidden",
+        background: "white",
+        border: `1px solid rgba(139,111,71,0.10)`,
+        boxShadow: "0 2px 8px rgba(45,31,14,0.06)",
+      }}
     >
+      {/* ── Series header ── */}
       <div
         style={{
-          borderRadius: radii.lg,
-          overflow: "hidden",
-          background: "white",
-          border: `1px solid rgba(139,111,71,0.10)`,
-          boxShadow: "0 2px 8px rgba(45,31,14,0.06)",
-          transition: "transform 0.18s ease, box-shadow 0.18s ease",
-          cursor: "pointer",
-          height: "100%",
           display: "flex",
-          flexDirection: "column",
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
-          (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.card || "0 6px 20px rgba(45,31,14,0.12)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLDivElement).style.transform = "none";
-          (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(45,31,14,0.06)";
+          alignItems: "stretch",
+          gap: 0,
         }}
       >
-        {/* Cover image */}
-        <div
+        {/* Cover image — click navigates to series page */}
+        <Link
+          to={`/series/${series.id}`}
           style={{
-            width: "100%",
-            aspectRatio: "16/9",
+            display: "block",
+            width: 100,
+            flexShrink: 0,
             overflow: "hidden",
-            position: "relative",
             background: "#EDE5D6",
           }}
+          tabIndex={-1}
         >
           <img
             src={imgSrc}
@@ -392,39 +447,75 @@ function SeriesCard({
               (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
             }}
           />
-        </div>
+        </Link>
 
-        {/* Card body */}
-        <div style={{ padding: "0.75rem", flex: 1, display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-          <div
+        {/* Title + rabbi + stats */}
+        <div
+          style={{
+            flex: 1,
+            padding: "0.85rem 1rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.25rem",
+            justifyContent: "center",
+          }}
+        >
+          {/* Draft badge */}
+          {hasDraftBadge && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.3rem",
+                padding: "0.15rem 0.5rem",
+                borderRadius: radii.pill,
+                background: "rgba(139,111,71,0.08)",
+                color: colors.textSubtle,
+                fontFamily: fonts.body,
+                fontSize: "0.68rem",
+                fontWeight: 600,
+                width: "fit-content",
+                marginBottom: "0.1rem",
+              }}
+            >
+              <Construction size={10} />
+              בהכנה
+            </div>
+          )}
+
+          <Link
+            to={`/series/${series.id}`}
             style={{
               fontFamily: fonts.display,
-              fontSize: "0.88rem",
+              fontSize: "1rem",
               fontWeight: 700,
               color: colors.textDark,
               lineHeight: 1.3,
+              textDecoration: "none",
             }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = colors.goldDark)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = colors.textDark)}
           >
             {series.title}
-          </div>
+          </Link>
+
           {series.rabbiName && (
             <div
               style={{
                 fontFamily: fonts.body,
-                fontSize: "0.76rem",
+                fontSize: "0.8rem",
                 color: colors.textMuted,
               }}
             >
               {series.rabbiName}
             </div>
           )}
+
           {series.lessonCount != null && series.lessonCount > 0 && (
             <div
               style={{
-                marginTop: "auto",
-                paddingTop: "0.4rem",
                 fontFamily: fonts.body,
-                fontSize: "0.72rem",
+                fontSize: "0.75rem",
                 color: colors.goldDark,
                 fontWeight: 600,
               }}
@@ -433,32 +524,115 @@ function SeriesCard({
             </div>
           )}
         </div>
+
+        {/* Expand / collapse toggle */}
+        {lessons.length > 0 && (
+          <button
+            onClick={() => setExpanded((e) => !e)}
+            aria-label={expanded ? "כווץ שיעורים" : "הצג שיעורים"}
+            style={{
+              flexShrink: 0,
+              padding: "0.85rem 1rem",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              color: colors.textSubtle,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.3rem",
+              fontFamily: fonts.body,
+              fontSize: "0.75rem",
+              alignSelf: "stretch",
+              borderInlineStart: `1px solid rgba(139,111,71,0.08)`,
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = colors.goldDark)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = colors.textSubtle)}
+          >
+            <ChevronDown
+              size={14}
+              style={{
+                transition: "transform 0.18s",
+                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
+              }}
+            />
+          </button>
+        )}
       </div>
-    </Link>
+
+      {/* ── Expanded lessons ── */}
+      {expanded && (
+        <div
+          style={{
+            borderTop: `1px solid rgba(139,111,71,0.08)`,
+          }}
+        >
+          {isLoading ? (
+            <div style={{ padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <Loader2 size={14} style={{ animation: "spin 1s linear infinite", color: colors.textSubtle }} />
+              <span style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle }}>
+                טוען שיעורים...
+              </span>
+            </div>
+          ) : lessons.length === 0 ? (
+            hasDraftBadge ? (
+              <div
+                style={{
+                  padding: "0.75rem 1rem",
+                  fontFamily: fonts.body,
+                  fontSize: "0.8rem",
+                  color: colors.textSubtle,
+                  fontStyle: "italic",
+                }}
+              >
+                הסדרה בהכנה — שיעורים יתווספו בקרוב
+              </div>
+            ) : null
+          ) : (
+            <div>
+              {lessons.map((l) => (
+                <LessonRow
+                  key={l.id}
+                  lesson={l}
+                  fallbackImage={resolveSeriesImage(series)}
+                  onNavigate={onNavigate}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 
 // ─── LessonRow ───────────────────────────────────────────────────────────────
 
+type LessonRowData = {
+  id: string;
+  title: string;
+  duration?: number | null;
+  published_at?: string | null;
+  thumbnail_url?: string | null;
+  video_url?: string | null;
+  audio_url?: string | null;
+  attachment_url?: string | null;
+  rabbis?: { name: string } | { name: string }[] | null;
+};
+
 function LessonRow({
   lesson,
+  fallbackImage,
   onNavigate,
 }: {
-  lesson: {
-    id: string;
-    title: string;
-    duration?: number | null;
-    published_at?: string | null;
-    video_url?: string | null;
-    audio_url?: string | null;
-    attachment_url?: string | null;
-    rabbis?: { name: string } | { name: string }[] | null;
-  };
+  lesson: LessonRowData;
+  fallbackImage: string;
   onNavigate: (path: string) => void;
 }) {
   const rabbiName = Array.isArray(lesson.rabbis)
     ? lesson.rabbis[0]?.name
     : (lesson.rabbis as { name: string } | null)?.name;
+
+  const imgSrc = lesson.thumbnail_url || fallbackImage;
 
   return (
     <button
@@ -469,33 +643,66 @@ function LessonRow({
         display: "flex",
         alignItems: "center",
         gap: "0.75rem",
-        padding: "0.7rem 0.9rem",
-        borderRadius: radii.md,
-        background: "white",
-        border: `1px solid rgba(139,111,71,0.10)`,
+        padding: "0.55rem 1rem",
+        background: "transparent",
+        border: "none",
+        borderTop: `1px solid rgba(139,111,71,0.06)`,
         cursor: "pointer",
-        transition: "all 0.15s",
+        transition: "background 0.15s",
         fontFamily: fonts.body,
       }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = "rgba(196,162,101,0.06)";
-        e.currentTarget.style.borderColor = "rgba(139,111,71,0.22)";
+        e.currentTarget.style.background = "rgba(196,162,101,0.05)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = "white";
-        e.currentTarget.style.borderColor = "rgba(139,111,71,0.10)";
+        e.currentTarget.style.background = "transparent";
       }}
     >
-      {/* Media icon */}
-      <span style={{ color: colors.goldDark, display: "flex", alignItems: "center" }}>
-        {lessonMediaIcon(lesson)}
-      </span>
+      {/* Thumbnail */}
+      <div
+        style={{
+          width: 48,
+          height: 34,
+          flexShrink: 0,
+          borderRadius: radii.sm,
+          overflow: "hidden",
+          background: "#EDE5D6",
+          position: "relative",
+        }}
+      >
+        <img
+          src={imgSrc}
+          alt=""
+          aria-hidden
+          loading="lazy"
+          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+          }}
+        />
+        {/* Media type overlay */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: 2,
+            insetInlineStart: 2,
+            color: "white",
+            background: "rgba(45,31,14,0.55)",
+            borderRadius: 3,
+            padding: "1px 3px",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {lessonMediaIcon(lesson)}
+        </div>
+      </div>
 
       {/* Title + rabbi */}
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
           style={{
-            fontSize: "0.84rem",
+            fontSize: "0.83rem",
             fontWeight: 600,
             color: colors.textDark,
             overflow: "hidden",
@@ -506,7 +713,7 @@ function LessonRow({
           {lesson.title}
         </div>
         {rabbiName && (
-          <div style={{ fontSize: "0.73rem", color: colors.textMuted, marginTop: "0.1rem" }}>
+          <div style={{ fontSize: "0.72rem", color: colors.textMuted, marginTop: "0.1rem" }}>
             {rabbiName}
           </div>
         )}
@@ -533,14 +740,8 @@ function LessonRow({
 
 function SeriesGridSkeleton() {
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-        gap: "1.25rem",
-      }}
-    >
-      {Array.from({ length: 8 }).map((_, i) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+      {Array.from({ length: 4 }).map((_, i) => (
         <div
           key={i}
           style={{
@@ -548,30 +749,33 @@ function SeriesGridSkeleton() {
             overflow: "hidden",
             background: "white",
             border: `1px solid rgba(139,111,71,0.08)`,
+            display: "flex",
+            height: 80,
           }}
         >
           <div
             style={{
-              width: "100%",
-              aspectRatio: "16/9",
+              width: 100,
               background: "rgba(139,111,71,0.08)",
               animation: "pulse 1.5s ease infinite",
+              flexShrink: 0,
             }}
           />
-          <div style={{ padding: "0.75rem" }}>
+          <div style={{ flex: 1, padding: "0.85rem 1rem" }}>
             <div
               style={{
                 height: 14,
+                width: "60%",
                 borderRadius: radii.sm,
                 background: "rgba(139,111,71,0.08)",
                 animation: "pulse 1.5s ease infinite",
-                marginBottom: "0.4rem",
+                marginBottom: "0.5rem",
               }}
             />
             <div
               style={{
                 height: 11,
-                width: "60%",
+                width: "35%",
                 borderRadius: radii.sm,
                 background: "rgba(139,111,71,0.06)",
                 animation: "pulse 1.5s ease infinite",

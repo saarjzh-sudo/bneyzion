@@ -1056,6 +1056,26 @@ function ExtraSectionBlock({
 
       {isExpanded && (
         <div style={{ paddingInlineStart: "0.75rem", paddingTop: "0.1rem" }}>
+          {/* "כל השיעורים ב..." — links to the full category page (like the old site) */}
+          <button
+            onClick={() => onNavigate(`/category/${section.id}`)}
+            style={{
+              width: "100%",
+              textAlign: "right",
+              padding: "0.32rem 0.55rem",
+              borderRadius: radii.sm,
+              background: "rgba(196,162,101,0.10)",
+              border: "none",
+              color: colors.goldDark,
+              fontFamily: fonts.body,
+              fontSize: "0.78rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              marginBottom: "0.15rem",
+            }}
+          >
+            כל השיעורים ב{section.title}
+          </button>
           {/* Children — navigate to /series/:id */}
           {section.children
             .filter((c) => matchesSearch(c.title))

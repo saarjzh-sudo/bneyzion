@@ -4536,3 +4536,152 @@ audit trail shows explicit authorization.
 
 **Conclusion:** הסיידבר הציבורי 1:1 מבחינת מבנה (אותם ספרים, אותם sections). הנתונים עצמם **לא 1:1** — החדש מכיל יותר שיעורים (רבנים נוספים שנוספו), אבל ב-5 ספרים יש פחות. המחסור הגדול ביותר: משלי (-110) ותהלים (-101) — שתי סדרות ספציפיות שה-mass-scrape לא השלים.
 - `SUPABASE_SERVICE_ROLE_REDACTED` in scripts = post-security-incident placeholder. Always replace via Management API before running import scripts.
+
+
+## Public content structure — data model & placement rules (canonical map)
+
+> Written 2026-06-02 based on deep investigation of `bneyzion-data` branch `fix/series-teachers-data`.
+> Purpose: every future session must understand this model and NOT reinvent it.
+
+### 1. The hierarchy model
+
+Every row in the `series` table has a `parent_id` and a `status`:
+
+| status      | meaning |
+|-------------|---------|
+| `category`  | Container node — groups books or sub-sections. Never shown as a "series". |
+| `active`    | Live series with content. Shown publicly. |
+| `published` | Equivalent to active for display purposes. |
+| `draft`     | In-progress. Shown publicly ONLY when no active/published twin exists (canonical rule). |
+
+The tree is:
+```
+ROOT categories (parent_id = null, status=category)
+  └─ Books / sub-categories (status=category)
+       └─ Series (status=active/published/draft)
+            └─ Lessons (status=published)
+```
+
+ROOT category IDs (hardcoded in `useContentSidebar.ts` as `ROOT_IDS`):
+- `torah`          — `bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b`
+- `neviim`         — `a0472c9f-8212-44ff-8937-ace5fea4b4dc`
+- `ketuvim`        — `5cdd770c-9593-4b0d-9f9e-cda50cf5ef41`
+- `howToLearn`     — `62590949-6187-4e17-b84d-65a518467521`
+- `generalTopics`  — `2d6d28c1-3c5c-4d61-9283-410bc56cd351`
+- `moadim`         — `92130154-e96a-4f98-b032-5a20ac385f63`
+- `haftarot`       — `3327c721-7bc9-471c-878f-0b3aef98b090`
+- `tools`          — `27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7`
+- `yemeiIyun`      — `f4040001-0001-4000-8000-000000000000`
+- `livuyTatim`     — `7cbd261e-03b0-43da-a708-e8ae4402105f`
+- `riddles`        — `c852edd8-d959-4c8d-bf7e-17b5881275fa` (special: חידות לילדים, linked under בראשית)
+
+### 2. The draft/active duplicate pattern
+
+The DB has many series that exist in TWO versions: one `draft` (lc=0) and one `active` (lc>0). These are NOT two separate series — the `active` is the real one; the `draft` is a dead placeholder that was never cleaned up.
+
+**Rule: never show both.**
+
+**Canonical dedup rule** (implemented in `useSeriesForNode`, enforced in `CategoryPage.tsx` and `useContentSidebar.ts`):
+
+For each unique `title.trim()` in a descendant set:
+1. If an `active`/`published` copy with `lesson_count > 0` exists → show it. Hide all drafts with the same title.
+2. If ONLY a `draft` copy exists (no active/published twin) → show it anyway (mirrors old site behavior; series exists publicly on old Umbraco even without lessons).
+3. Never show a `category`-status node as a "series" — it's a container.
+
+**Where the duplicates exist (as of 2026-06-02):**
+- "איך לומדים" tree: `הקדמה ללימוד נביאים` (6e95b813 draft + 19c8308f active), `ללמוד וללמד תנ"ך` (1983f663 draft + 4da05535 active), `"כל האומר דוד חטא"` (4c0bac05 draft + bb516929 active)
+- Same drafts are children of sub-categories (8f089f22 = "הגישה הראויה", 224f701b = "היחס הראוי")
+
+### 3. "איך לומדים תנ"ך" — the deep hierarchy problem
+
+This section (`62590949`) is **two levels deep**, unlike "מועדים" which is flat:
+
+```
+62590949 (category) "איך לומדים תנ"ך"
+  ├─ 8f089f22  (category) "הגישה הראויה ללימוד תנ"ך"
+  │     ├─ 096fc3cd  (active, lc=13)  "איך לומדים תנ"ך"
+  │     ├─ 19c8308f  (active, lc=5)   "הקדמה ללימוד נביאים"
+  │     ├─ 4da05535  (active, lc=8)   "ללמוד וללמד תנ"ך"
+  │     ├─ 6e95b813  (draft, lc=0)    [hidden — twin of 19c8308f]
+  │     └─ 1983f663  (draft, lc=0)    [hidden — twin of 4da05535]
+  ├─ 224f701b (category) "היחס הראוי לאבות"
+  │     ├─ bb516929  (active, lc=2)   '"כל האומר דוד חטא"'
+  │     └─ 4c0bac05  (draft, lc=0)    [hidden — twin of bb516929]
+  └─ 2015e21e (category) "דרכי הפרשנות"
+        ├─ 6b62c4a1  (draft, lc=0)   "'הדיבור הישיר' בתורה"   [NO active twin — SHOW]
+        └─ cd359c27  (draft, lc=0)   "לפני ואחרי במשנת הספורנו" [NO active twin — SHOW]
+```
+
+**The bug:** `useSeriesForNode` originally filtered `lesson_count > 0` → showed 4 series (missed the 2 draft-only ones). The canonical rule fixes this to 6 series.
+
+**The sidebar bug:** `useContentSidebar` originally fetched `parent_id in expandableIds` with `status in [active,published]`. Since the direct children of `62590949` are all `status=category`, ZERO series appeared in the sidebar. Fixed by using `get_series_descendant_ids` RPC for howToLearn specifically.
+
+### 4. Flat sections vs deep sections
+
+| Section | Structure | How children are fetched |
+|---------|-----------|--------------------------|
+| מועדים, הפטרות, נושאים כלליים, כלי עזר, ימי עיון, ליווי ת"תים | Flat — direct children are leaf series | `parent_id in [...]` + `status in [active,published]` |
+| איך לומדים תנ"ך | Deep — has sub-category containers before leaf series | RPC `get_series_descendant_ids` + canonical dedup in JS |
+
+### 5. Code locations
+
+| What | File | Notes |
+|------|------|-------|
+| ROOT_IDS constants | `src/hooks/useContentSidebar.ts` | All hardcoded UUIDs |
+| `useSeriesForNode` | `src/hooks/useContentSidebar.ts` | Canonical dedup — fetch all statuses, dedup by title |
+| `useContentSidebar` sidebarQuery | `src/hooks/useContentSidebar.ts` | howToLearnForSection uses RPC+dedup |
+| Category display | `src/pages/CategoryPage.tsx` | SeriesBlock: shows series header + expanded lessons inline with thumbnail |
+| Sidebar tree | `src/components/layout-v2/DesignSidebar.tsx` | ExtraSectionBlock reads `section.children` (which are now canonical) |
+| Breadcrumb | `src/hooks/useSeriesHierarchy.ts` | RPC `get_series_ancestors` |
+| RPC | Supabase `get_series_descendant_ids(root_id UUID)` | Returns `[{series_id, parent_series_id, series_title}]` |
+| RPC | Supabase `get_series_ancestors(series_uuid UUID)` | Returns `[{id, title, depth}]` |
+
+### 6. Teachers Wing vs public content
+
+These are **two separate systems**:
+
+| Aspect | Public | Teachers Wing |
+|--------|--------|---------------|
+| URL pattern | `/category/:id`, `/series/:id` | `/teachers/book/:book`, `/teachers/content-type/:type`, `/teachers/creator/:name` |
+| Navigation basis | `parent_id` tree from ROOT categories | `bible_book` column + `content_type` column + `creator` field |
+| Sidebar | `DesignSidebar.tsx` | `TeacherSidebar.tsx` |
+| Hook | `useContentSidebar` | `useTeachersWing` |
+| Audience filter | Hides `audience_tags = ['teachers']` | Shows only teachers content |
+| Content type | Lessons as "שיעורים" (audio/video/text) | Docs as "דפי עבודה", "מבחנים", "מפות", etc. |
+
+### 7. Lesson image priority chain
+
+Used consistently across `CategoryPage.tsx`, `SeriesBlock`, `LessonRow`:
+```
+lesson.thumbnail_url
+  → series.image_url
+  → getSeriesCoverImage(series.title)  [from designTokens.ts]
+  → "/images/series-default.png"
+```
+
+### 8. Canonical count per ExtraSection (as of 2026-06-02)
+
+| Section | Current (broken) | Canonical (fixed) |
+|---------|-------------------|-------------------|
+| איך לומדים תנ"ך | 4 | 6 |
+| המועדים | 12 (active+lc>0) | 13 (+1 draft-only "לב הפרק - מועדים") |
+| נושאים כלליים | many active | unchanged (already flat+active) |
+| הפטרות | 7 children | unchanged |
+
+### 2026-06-02 — CategoryPage canonical fix + sidebar howToLearn deep fetch
+
+- **Changed:** `useSeriesForNode` in `src/hooks/useContentSidebar.ts` — removed `lesson_count > 0` filter; added canonical dedup by title (active/published preferred over draft).
+- **Changed:** sidebarQuery in same file — split into `flatExpandableIds` (direct-child fetch) + `howToLearnForSection` (RPC-based deep fetch + canonical dedup).
+- **Changed:** `src/pages/CategoryPage.tsx` — `SeriesBlock` component shows series header + expanded inline lessons with thumbnail images. Draft series show "בהכנה" badge. `LessonRow` shows 48×34 thumbnail with media icon overlay.
+- **Constraint learned:** never filter `lesson_count > 0` globally — draft-only series are valid public content when they have no active twin.
+
+### 2026-06-02 — Payments wave-3 + import script merged to production (commit 9478e2f6)
+
+- **Merged:** `src/pages/admin/Payments.tsx` from `admin-overhaul` (1870 lines) into `admin-to-production` branch. Superset of production — zero features removed.
+- **Added to production:** PaymentProductsTab full inline editing — toggle active on/off (live DB write), `EditProductDialog` for display_name/default_amount/max_installments, page_code_env `b1dc5e695089` directDebit guard.
+- **Added to production:** `InvoiceButton` on every orders/donations row — calls `/functions/v1/issue-paperless-invoice` edge function (returns 503 until PAPERLESS_API_KEY configured — safe no-op in production today).
+- **Mutations added:** `useToggleProductActive`, `useUpdatePaymentProduct`, `useIssuePaperlessInvoice`.
+- **Import script:** `scripts/import-weekly-chapter-subscribers.mjs` — already at production version (Members endpoint fix, 2026-06-02). NOT overwritten with older Contacts endpoint from admin-overhaul.
+- **Comparison finding:** `grow_orders` tab was never in Payments.tsx (in any branch). It's a DB table + managed via Subscribers.tsx. The merge prompt's mention of it was inaccurate — no tab to port.
+- **Iron rule confirmed:** when two branches both wrote the same file independently, the branch with the larger line count (admin-overhaul, 1870) was the superset — verified by manual diff before any write.
+- **Deploy:** production commit `9478e2f6` on `admin-to-production`, `bneyzion.vercel.app` verified — Payments chunk `Payments-BASAYFRH.js` confirmed live with `הפק`, toggle, directDebit guard.
