@@ -529,6 +529,45 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-02 — admin-overhaul integration audit: migration applied + types regen + creator gap fixed
+
+**Branch:** `admin-overhaul` (sandbox-only, no production touch)
+
+**1. enum `app_role` — confirmed `creator` exists in live DB.**
+- `SELECT enum_range(NULL::app_role)` → `{admin,moderator,user,creator}`
+- A previous agent DID run `ALTER TYPE app_role ADD VALUE 'creator'` on the real DB.
+- `AuthContext.tsx` already had `AppRole = "admin" | "moderator" | "user" | "creator"` — in sync.
+- Comment on line 5 was stale ("future role, not yet in DB enum") — left as-is but note it is inaccurate.
+
+**2. Migration `20260602_content_approval_workflow.sql` — applied to live DB.**
+- Columns added (15 total, across 3 tables):
+  - `lessons`: submitted_by, reviewed_by, submitted_at, review_note (published_at already existed)
+  - `series`: submitted_by, reviewed_by, submitted_at, review_note, published_at
+  - `community_course_lessons`: submitted_by, reviewed_by, submitted_at, review_note (published_at already existed)
+- Indexes created: `idx_lessons_pending_review`, `idx_series_pending_review`, `idx_ccl_pending_review`
+- All idempotent — ran without error.
+
+**3. `src/integrations/supabase/types.ts` — manually regenerated (no CLI available).**
+- Added 4 approval columns to Row/Insert/Update for all 3 tables.
+- File: `src/integrations/supabase/types.ts`
+
+**4. `src/hooks/useLessons.ts` — removed `as any` from `useUpdateLesson`.**
+- `update` path: `as any` removed — types now include approval columns so it's safe.
+- `insert` path: `as any` kept with comment — `Partial<Lesson>` makes `title` optional but Supabase Insert requires it. This is a type-system limitation, not a runtime issue.
+
+**5. `src/components/admin/AdminSidebar.tsx` — creator gap fixed.**
+- Gap found: `/admin/upload` (ContentUpload) was protected by `allowedRoles=["admin","creator"]` in App.tsx but had NO sidebar link — creator had to know the URL.
+- Fix: added `{ title: "העלאת תוכן", url: "/admin/upload", icon: Upload, roles: ["admin","creator"] }` as first item in CONTENT_ITEMS.
+- Creator now sees 7 items: העלאת תוכן + שיעורים + רבנים + סדרות + נושאים + קורסים-קהילה + בריאות תוכן.
+- Admin sees all 7 + 12 management items.
+
+**6. Build result:** `tsc --noEmit` clean + `npm run build` clean (0 errors, 3.48s, 4063 modules).
+
+**Iron rules learned:**
+- When using Management API to apply multi-statement SQL: pass the entire file as one `query` string. The API runs it transactionally and returns `[]` on success (not a count).
+- After any DB schema change: always update `src/integrations/supabase/types.ts` manually if `supabase gen types` CLI is not available. Missing columns silently get `as any` casts that accumulate debt.
+- When adding a protected route with `allowedRoles`, immediately add a corresponding sidebar link for the non-admin role. Route-without-link is a discoverability gap.
+
 ### 2026-06-02 — Production webhook fix: SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY
 
 **Problem:** `/api/grow/webhook` נכשל בשקט ב-production. 22 orders נותרו בסטטוס `pending` (מתוכם 19 של סאר עצמו, 3 של לקוחות אמיתיים). הבר של תכנית יהושע הראה 2 במקום הנכון.
