@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-01 (session — yehoshua: maxPaymentNum + shipping address + admin upgrade + live tier counters)
+**Last updated:** 2026-06-02 (session — header GlobalSearch restore + parasha calendar fix + 17 Tammuz verify)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -4671,3 +4671,44 @@ The violation was hidden by `// eslint-disable-next-line react-hooks/rules-of-ho
 - Playwright screenshot at `http://localhost:5173/teachers/lesson/685580cb-f21b-486b-9bee-9b74026bb123` confirmed: hero renders with real title "ביאורי מילים – חומש ויקרא", sidebar tree visible, zero ErrorBoundary.
 
 **Iron rule (new):** In every page component, ALL `use*` hooks MUST appear before the first `if (...) return` statement. When a hook needs lesson data, compute it null-safely with a ternary — never after an early return. The `// eslint-disable` comment is NOT a fix — it only hides the lint warning while the runtime bug remains.
+
+---
+
+### 2026-06-02 — Header GlobalSearch restore + parasha schedule fix + 17 Tammuz verify
+
+**Branch:** `restore/header-search-2026-06-02` → pushed to `feat/navigator-bot` + `vercel --prod`
+**Commit:** `7158e395` (restore) + prior `ae2445cc` (yehoshua polling fix)
+**Triggered by:** ה-push ל-`feat/navigator-bot` ב-2.6 14:32 (smoove-portal-import) + admin wave-3 דרסו את הדר שנבנה ב-`integration/live-2026-06-01`.
+
+**Root cause of header loss:**
+- `integration/live-2026-06-01` נשלח לפרודקשן ידנית ב-1.6 (vercel --prod) אבל **מעולם לא מוזג** ל-`feat/navigator-bot`.
+- כל push עתידי ל-`feat/navigator-bot` (auto-deploy) דרס את ה-header.
+- **לקח:** כל שינוי שצריך לשרוד בפרודקשן חייב להיות ב-`feat/navigator-bot`, לא רק deploy ידני.
+
+**Files restored from integration/live-2026-06-01:**
+- `src/components/layout-v2/DesignHeader.tsx` — GlobalSearch, "הקורסים שלי", close-X RTL
+- `src/components/search/GlobalSearch.tsx` + `src/hooks/useGlobalSearch.ts` + `src/components/ui/command.tsx`
+- `src/index.css` — kedem-serif font face + search styles
+- `public/fonts/kedem-serif-hollow-aaa.otf` — self-hosted
+- Page fixes: `CommunityPage`, `DailyVersePage`, `Donate`, `DorHaplaot`, `KenesShavuot2026`, `MegilatEsther`, `StorePage`, `MemorialContent`
+
+**Parasha calendar fix (root cause analysis):**
+- `src/lib/parashaCalendar.ts` `SCHEDULE_5786` was off by ~1 week from April onward.
+- Error: Shemini marked Apr 18 but actual = Apr 11 (Israel 5786). Spring doublings (תזריע-מצורע, אחרי מות-קדושים, בהר-בחוקותי) listed as separate weeks — wrong.
+- Real 5786 Israel cycle: Shemini Apr 11, תזריע-מצורע Apr 18, אחרי מות-קדושים Apr 25, אמור May 2, בהר-בחוקותי May 9, במדבר May 16, נשא May 23 (Shabbat after Shavuot = May 22 Fri), בהעלותך May 30, **שלח לך Jun 6** (current week of Jun 2), קורח Jun 13, חוקת Jun 20, בלק Jun 27, פנחס Jul 4, מטות-מסעי Jul 11, דברים Jul 18 ... נצבים-וילך Sep 5.
+- Added `PARASHA_TO_SERIES_TITLE` + `PARASHA_TO_CHUMASH` entries for all combined parashiot.
+- **Iron rule:** When editing `SCHEDULE_5786`, verify against real Hebrew calendar (Shavuot anchor = 6 Sivan; count backward from there to set Bamidbar = Shabbat before Shavuot).
+
+**17 Tammuz / שלושת השבועות:**
+- `DesignPreviewHome.tsx` (= `src/pages/Index.tsx`) already had `seriesId: "e36ea5d6-38f8-49ca-874e-ff3324bb3795"` hardcoded.
+- Verified in DB: series `שלושת השבועות`, `status=active`, `lesson_count=7`. No change needed — already correct.
+
+**Deploy gotcha (new instance):**
+- `git push origin restore/...:feat/navigator-bot` triggered a **Preview** deploy, not Production.
+- Workaround: `vercel --prod --yes --scope saars-projects-4508d6bb` from repo root.
+- Confirmed live: `cmdk` (search lib) + "הקורסים שלי" + "שלח לך" all in production bundle.
+
+**Firecrawl aמot:**
+- Home page: "פרשת שלח לך" + "חומש במדבר" ← parasha fix live.
+- "י״ז בתמוז עוד 41 ימים" ← holiday section renders correctly.
+- "כל שיעורי י״ז בתמוז ←" ← links to שלושת השבועות series.
