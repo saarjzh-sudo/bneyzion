@@ -530,6 +530,37 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-03 — Triple-merge: S3+S2+S1 → merge/triple-2026-06-03 (preview)
+
+**Branch:** `merge/triple-2026-06-03` (preview only — not yet on feat/navigator-bot)
+**Backup tag:** `backup-pre-triple-merge-2026-06-03`
+**Preview URL:** `https://bneyzion-1j9b98mn8-saars-projects-4508d6bb.vercel.app`
+
+**Merge order:** S3 (fix/benzi-knowledge-upgrade) → S2 (admin-overhaul) → S1 (fix/series-teachers-data)
+
+**S3 — fast-forward (no conflicts):**
+- `navigation-bot/index.ts` upgraded: DB-driven knowledge (`benzi_knowledge` table), `loadKnowledgeFromDB`, FALLBACK_KNOWLEDGE, richer system prompt
+- `src/pages/admin/BenziKnowledge.tsx` + `/admin/benzi` route (admin CRUD for benzi knowledge)
+- `supabase/migrations/20260603_benzi_knowledge.sql`
+
+**S2 — conflicts resolved:**
+- `navigation-bot/index.ts`: kept S3 (HEAD = superset with DB-driven knowledge)
+- `App.tsx`: merged BenziKnowledge route (S3) + all admin routes (S2)
+- `KNOWLEDGE.md`: kept all sections from both sides
+- `import-weekly-chapter-subscribers.mjs`: auto-merged (SUPABASE_SERVICE_ROLE fix)
+- Additions: Payments.tsx (grow_orders UI), Subscribers.tsx, ImportContent.tsx, issue-paperless-invoice, navigation-bot-preview
+
+**S1 — conflicts resolved:**
+- `KNOWLEDGE.md`: kept all sections from both sides
+- `import-weekly-chapter-subscribers.mjs`: unified env var — accepts SUPABASE_SERVICE_ROLE OR SUPABASE_SERVICE_ROLE_KEY
+- Additions: CategoryPage.tsx, TeachersBookPage/ContentTypePage/CreatorPage/ParashaPage/WorksheetsPage, useTeacherBookContent, useTeacherParashaContent, sidebar overhaul, LessonPage hero fix, `20260603_get_public_rabbis_rpc.sql`
+
+**Build:** clean (exit 0, 0 TypeScript errors, 0 Vite errors)
+**Migrations:** both `20260602_content_approval_workflow.sql` + `20260602_grow_orders.sql` confirmed already applied to production DB
+**Status:** awaiting Saar review + explicit "פרוס" to merge into feat/navigator-bot
+
+---
+
 ### 2026-06-02 — Grow webhook targetTable routing bug: yehoshua-campaign donations stuck pending (commit b5b177c)
 
 **Bug:** `api/grow/webhook.ts` line 139 routed `targetTable` by `cField2` alone.
