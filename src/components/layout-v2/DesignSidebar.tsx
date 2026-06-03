@@ -1,16 +1,22 @@
 /**
- * DesignSidebar v4 — accordion tree pulled from Supabase via useContentSidebar.
+ * DesignSidebar v5 — accordion tree pulled from Supabase via useContentSidebar.
+ *
+ * v5 changes (2026-06-02):
+ *   - Removed all SeriesInlineList rendering from ContentTree and ExtraSectionBlock.
+ *     Instead every node click navigates to a full page:
+ *       book title / chevron  →  toggle accordion (+ navigate to /category/:id on text click)
+ *       "כל השיעורים ב-X"    →  navigate('/category/:bookId')
+ *       child (parasha/ch.)  →  navigate('/series/:childId')
+ *       extra section child  →  navigate('/series/:childId')
+ *       "הכל ב..." button    →  navigate('/category/:sectionId')
+ *       חידות לילדים        →  navigate('/series/:riddlesId')
+ *     "כל השיעורים ב-X" is hidden when the book has only 1 child (no need for
+ *     a category overview when there is exactly one sub-series).
  *
  * Mirrors the live SeriesList sidebar 1:1:
  *   - 3 accordion levels: Category → Book → Child (parasha/chapter)
- *   - 4th level: series list rendered inline on child click
- *   - No navigation to /bible/* — all interaction stays inside the sidebar
- *   - Tabs: ראשי / נושאים / רבנים / מורים
+ *   - Tabs: ראשי / נושאים / רבנים
  *   - Gold primary banner + search + sticky
- *
- * Tabs: "main" | "topics" | "rabbis" | "teachers"
- * The "teachers" tab renders the same tree (same data) — future audience_tags
- * filter will be added once the DB column exists.
  */
 
 import { useEffect, useMemo, useState, useCallback } from "react";
@@ -27,65 +33,22 @@ import {
   Filter,
   Sparkles,
   GraduationCap,
-  FolderOpen,
-  Loader2,
   Heart,
   Home,
   CalendarDays,
 } from "lucide-react";
-import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
 import type { SidebarCategory, ExtraSection } from "@/hooks/useContentSidebar";
 import { usePublicRabbis } from "@/hooks/useRabbis";
-import { supabase } from "@/integrations/supabase/client";
-import { useQuery } from "@tanstack/react-query";
 
 // ────────────────────────────────────────────────────────────────────────
 const STORAGE_KEY = "bnz.sidebar.collapsed";
 const SIDEBAR_W_EXPANDED = 290;
 const SIDEBAR_W_COLLAPSED = 68;
 
-type Tab = "main" | "topics" | "rabbis" | "teachers";
-
-// ────────────────────────────────────────────────────────────────────────
-// Hook: series for a specific node ID (book or child)
-function useSeriesForNodeLocal(nodeId: string | null) {
-  return useQuery({
-    queryKey: ["dsb-series", nodeId],
-    queryFn: async () => {
-      if (!nodeId) return [];
-      const { data: descendants } = await supabase.rpc("get_series_descendant_ids", {
-        root_id: nodeId,
-      });
-      const allIds = [nodeId, ...(descendants || []).map((d: { series_id: string }) => d.series_id)];
-      const { data: series } = await supabase
-        .from("series")
-        .select("id, title, lesson_count, rabbi_id, audience_tags")
-        .in("id", allIds)
-        .gt("lesson_count", 0)
-        .order("lesson_count", { ascending: false })
-        .limit(80);
-      if (!series || series.length === 0) return [];
-      const rabbiIds = [...new Set(series.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
-      let rabbiMap = new Map<string, string>();
-      if (rabbiIds.length > 0) {
-        const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
-        rabbiMap = new Map(rabbis?.map((r) => [r.id, r.name]) || []);
-      }
-      return series.map((s) => ({
-        id: s.id,
-        title: s.title,
-        lessonCount: s.lesson_count ?? 0,
-        rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
-        audienceTags: (s.audience_tags as string[] | null) ?? null,
-      }));
-    },
-    enabled: !!nodeId,
-    staleTime: 1000 * 60 * 5,
-  });
-}
+type Tab = "main" | "topics" | "rabbis";
 
 // ────────────────────────────────────────────────────────────────────────
 interface DesignSidebarProps {
@@ -102,13 +65,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const [search, setSearch] = useState("");
 
   // Accordion state (separate per tab so tabs don't clash)
-  // Format: "categoryId" | "categoryId::bookId" | "categoryId::bookId::childId"
   const [expandedMain, setExpandedMain] = useState<Set<string>>(new Set(["torah"]));
-  const [expandedTeachers, setExpandedTeachers] = useState<Set<string>>(new Set(["torah"]));
   const [expandedExtras, setExpandedExtras] = useState<Set<string>>(new Set());
-
-  // Which child node is showing its series list inline
-  const [openSeriesNode, setOpenSeriesNode] = useState<string | null>(null);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -118,7 +76,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const isDrawer = isMobile;
   const drawerVisible = isDrawer && !!drawerOpen;
 
-  const { categories, extraSections, rabbis, riddlesSeriesId, isLoading } = useContentSidebar();
+  const { categories, extraSections, riddlesSeriesId, isLoading } = useContentSidebar();
   const { data: rabbisRaw = [] } = usePublicRabbis();
 
   const topRabbis = useMemo(() => {
@@ -146,10 +104,10 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 
   const navigate = useNavigate();
 
-  const handleSeriesClick = useCallback(
-    (seriesId: string) => {
+  const handleNavigate = useCallback(
+    (path: string) => {
       onDrawerClose?.();
-      navigate(`/series/${seriesId}`);
+      navigate(path);
     },
     [navigate, onDrawerClose]
   );
@@ -268,6 +226,56 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
+        {/* Search */}
+        {(!collapsed || isDrawer) && (
+          <div style={{ padding: "0.3rem 0.85rem 0.4rem" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.35rem 0.55rem",
+                background: "rgba(139,111,71,0.06)",
+                borderRadius: radii.sm,
+                border: `1px solid rgba(139,111,71,0.12)`,
+              }}
+            >
+              <Search size={12} style={{ color: colors.textSubtle, flexShrink: 0 }} />
+              <input
+                type="text"
+                placeholder="חיפוש..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                style={{
+                  flex: 1,
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  fontFamily: fonts.body,
+                  fontSize: "0.78rem",
+                  color: colors.textMid,
+                  direction: "rtl",
+                }}
+              />
+              {search && (
+                <button
+                  onClick={() => setSearch("")}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: colors.textSubtle,
+                    padding: 0,
+                    lineHeight: 1,
+                  }}
+                >
+                  <X size={11} />
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Tabs */}
         {(!collapsed || isDrawer) && (
           <div
@@ -352,13 +360,10 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               expandedExtras={expandedExtras}
               onToggle={(key) => toggle(setExpandedMain, key)}
               onToggleExtra={(key) => toggle(setExpandedExtras, key)}
-              openSeriesNode={openSeriesNode}
-              onOpenSeriesNode={setOpenSeriesNode}
-              onSeriesClick={handleSeriesClick}
               collapsed={collapsed && !isDrawer}
               search={search}
               matchesSearch={matchesSearch}
-              onDrawerClose={onDrawerClose}
+              onNavigate={handleNavigate}
             />
           )}
 
@@ -368,71 +373,10 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               extraSections={extraSections}
               expandedExtras={expandedExtras}
               onToggleExtra={(key) => toggle(setExpandedExtras, key)}
-              openSeriesNode={openSeriesNode}
-              onOpenSeriesNode={setOpenSeriesNode}
-              onSeriesClick={handleSeriesClick}
               search={search}
               matchesSearch={matchesSearch}
+              onNavigate={handleNavigate}
             />
-          )}
-
-          {/* ═══ TEACHERS tab — same tree, teacher-context banner ═══ */}
-          {activeTab === "teachers" && !isLoading && (!collapsed || isDrawer) && (
-            <div>
-              <div
-                style={{
-                  padding: "0.6rem 0.75rem",
-                  marginBottom: "0.5rem",
-                  borderRadius: radii.md,
-                  background:
-                    "linear-gradient(135deg, rgba(74,90,46,0.12) 0%, rgba(196,162,101,0.1) 100%)",
-                  border: `1px solid rgba(74,90,46,0.2)`,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                }}
-              >
-                <GraduationCap size={14} style={{ color: colors.goldDark, flexShrink: 0 }} />
-                <div>
-                  <div
-                    style={{
-                      fontFamily: fonts.display,
-                      fontWeight: 700,
-                      fontSize: "0.78rem",
-                      color: colors.textDark,
-                    }}
-                  >
-                    תכנים למורים
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: fonts.body,
-                      fontSize: "0.67rem",
-                      color: colors.textMuted,
-                      marginTop: "0.1rem",
-                    }}
-                  >
-                    אותו עץ ניווט — סדרות לפי ספר
-                  </div>
-                </div>
-              </div>
-              <ContentTree
-                categories={categories}
-                extraSections={extraSections}
-                riddlesSeriesId={riddlesSeriesId}
-                expanded={expandedTeachers}
-                expandedExtras={expandedExtras}
-                onToggle={(key) => toggle(setExpandedTeachers, key)}
-                onToggleExtra={(key) => toggle(setExpandedExtras, key)}
-                openSeriesNode={openSeriesNode}
-                onOpenSeriesNode={setOpenSeriesNode}
-                onSeriesClick={handleSeriesClick}
-                collapsed={false}
-                search={search}
-                matchesSearch={matchesSearch}
-                onDrawerClose={onDrawerClose}
-              />
-            </div>
           )}
 
           {/* ═══ RABBIS tab ═══ */}
@@ -631,7 +575,13 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 }
 
 // ────────────────────────────────────────────────────────────────────────
-// ContentTree — the full 3-level (+ series) accordion tree
+// ContentTree — the full 3-level accordion tree.
+// Navigation model (v5):
+//   book text click  → navigate('/category/:bookId') + toggle accordion
+//   book chevron     → toggle accordion only
+//   "כל השיעורים"   → navigate('/category/:bookId') — hidden if ≤1 child
+//   child click      → navigate('/series/:childId')
+//   חידות לילדים    → navigate('/series/:riddlesId')
 // ────────────────────────────────────────────────────────────────────────
 interface ContentTreeProps {
   categories: SidebarCategory[];
@@ -641,13 +591,10 @@ interface ContentTreeProps {
   expandedExtras: Set<string>;
   onToggle: (key: string) => void;
   onToggleExtra: (key: string) => void;
-  openSeriesNode: string | null;
-  onOpenSeriesNode: (id: string | null) => void;
-  onSeriesClick: (id: string) => void;
   collapsed: boolean;
   search: string;
   matchesSearch: (t: string) => boolean;
-  onDrawerClose?: () => void;
+  onNavigate: (path: string) => void;
 }
 
 function ContentTree({
@@ -658,16 +605,12 @@ function ContentTree({
   expandedExtras,
   onToggle,
   onToggleExtra,
-  openSeriesNode,
-  onOpenSeriesNode,
-  onSeriesClick,
   collapsed,
   search,
   matchesSearch,
-  onDrawerClose,
+  onNavigate,
 }: ContentTreeProps) {
   if (collapsed) {
-    // Collapsed mode: show category dividers only
     return (
       <div>
         {categories.map((cat) => (
@@ -689,7 +632,6 @@ function ContentTree({
       {/* פרשת השבוע — top link */}
       <Link
         to="/parasha"
-        onClick={onDrawerClose}
         style={{
           display: "flex",
           alignItems: "center",
@@ -718,11 +660,9 @@ function ContentTree({
             section={section}
             isExpanded={expandedExtras.has(section.id)}
             onToggle={() => onToggleExtra(section.id)}
-            openSeriesNode={openSeriesNode}
-            onOpenSeriesNode={onOpenSeriesNode}
-            onSeriesClick={onSeriesClick}
             matchesSearch={matchesSearch}
             variant="gold"
+            onNavigate={onNavigate}
           />
         ))}
 
@@ -739,8 +679,8 @@ function ContentTree({
         if (!catVisible) return null;
         return (
           <div key={cat.id} style={{ marginBottom: "0.2rem" }}>
-            <button
-              onClick={() => onToggle(cat.id)}
+            {/* Category row: title navigates to /category/:id + opens accordion; chevron toggles only */}
+            <div
               style={{
                 width: "100%",
                 display: "flex",
@@ -749,25 +689,51 @@ function ContentTree({
                 padding: "0.5rem 0.75rem",
                 borderRadius: radii.sm,
                 background: catOpen ? "rgba(196,162,101,0.12)" : "rgba(139,111,71,0.06)",
-                border: "none",
                 color: catOpen ? colors.goldDark : colors.textMid,
-                fontFamily: fonts.display,
-                fontSize: "0.88rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                textAlign: "right",
               }}
             >
-              <span>{cat.title}</span>
-              <ChevronDown
-                size={13}
-                style={{
-                  transition: "transform 0.18s",
-                  transform: catOpen ? "rotate(180deg)" : "rotate(0deg)",
-                  color: catOpen ? colors.goldDark : colors.textSubtle,
+              <button
+                onClick={() => {
+                  if (!catOpen) onToggle(cat.id);
+                  onNavigate(`/category/${cat.id}`);
                 }}
-              />
-            </button>
+                style={{
+                  flex: 1,
+                  background: "none",
+                  border: "none",
+                  color: "inherit",
+                  fontFamily: fonts.display,
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  textAlign: "right",
+                  padding: 0,
+                }}
+              >
+                {cat.title}
+              </button>
+              <button
+                onClick={() => onToggle(cat.id)}
+                aria-label={catOpen ? "כווץ" : "הרחב"}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "0 0 0 0.25rem",
+                }}
+              >
+                <ChevronDown
+                  size={13}
+                  style={{
+                    transition: "transform 0.18s",
+                    transform: catOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    color: catOpen ? colors.goldDark : colors.textSubtle,
+                  }}
+                />
+              </button>
+            </div>
 
             {catOpen && (
               <div style={{ paddingInlineStart: "0.5rem", paddingTop: "0.15rem" }}>
@@ -783,8 +749,8 @@ function ContentTree({
                     const bookOpen = expanded.has(bookKey);
                     return (
                       <div key={book.id} style={{ marginBottom: "0.1rem" }}>
-                        <button
-                          onClick={() => onToggle(bookKey)}
+                        {/* Book row: text navigates to category, chevron toggles */}
+                        <div
                           style={{
                             width: "100%",
                             display: "flex",
@@ -792,41 +758,66 @@ function ContentTree({
                             justifyContent: "space-between",
                             padding: "0.4rem 0.65rem",
                             borderRadius: radii.sm,
-                            background: bookOpen
-                              ? "rgba(196,162,101,0.09)"
-                              : "transparent",
-                            border: "none",
-                            color: bookOpen ? colors.goldDark : colors.textMuted,
-                            fontFamily: fonts.body,
-                            fontSize: "0.82rem",
-                            fontWeight: bookOpen ? 600 : 500,
-                            cursor: "pointer",
-                            textAlign: "right",
+                            background: bookOpen ? "rgba(196,162,101,0.09)" : "transparent",
                           }}
                           onMouseEnter={(e) => {
                             if (!bookOpen)
-                              e.currentTarget.style.background =
-                                "rgba(139,111,71,0.05)";
+                              (e.currentTarget as HTMLDivElement).style.background = "rgba(139,111,71,0.05)";
                           }}
                           onMouseLeave={(e) => {
-                            if (!bookOpen) e.currentTarget.style.background = "transparent";
+                            if (!bookOpen) (e.currentTarget as HTMLDivElement).style.background = "transparent";
                           }}
                         >
-                          <span style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                            <BookOpen size={12} style={{ opacity: 0.6 }} />
+                          {/* Book title — navigates to /category/:id */}
+                          <button
+                            onClick={() => {
+                              onToggle(bookKey);
+                              onNavigate(`/category/${book.id}`);
+                            }}
+                            style={{
+                              flex: 1,
+                              background: "none",
+                              border: "none",
+                              color: bookOpen ? colors.goldDark : colors.textMuted,
+                              fontFamily: fonts.body,
+                              fontSize: "0.82rem",
+                              fontWeight: bookOpen ? 600 : 500,
+                              cursor: "pointer",
+                              textAlign: "right",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.4rem",
+                              padding: 0,
+                            }}
+                          >
+                            <BookOpen size={12} style={{ opacity: 0.6, flexShrink: 0 }} />
                             {book.title}
-                          </span>
+                          </button>
+                          {/* Chevron — toggle only */}
                           {book.children.length > 0 && (
-                            <ChevronDown
-                              size={11}
+                            <button
+                              onClick={() => onToggle(bookKey)}
+                              aria-label={bookOpen ? "סגור" : "פתח"}
                               style={{
-                                transition: "transform 0.15s",
-                                transform: bookOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                background: "none",
+                                border: "none",
+                                cursor: "pointer",
+                                padding: "0 0.15rem",
                                 color: colors.textSubtle,
+                                display: "flex",
+                                alignItems: "center",
                               }}
-                            />
+                            >
+                              <ChevronDown
+                                size={11}
+                                style={{
+                                  transition: "transform 0.15s",
+                                  transform: bookOpen ? "rotate(180deg)" : "rotate(0deg)",
+                                }}
+                              />
+                            </button>
                           )}
-                        </button>
+                        </div>
 
                         {bookOpen && (
                           <div
@@ -836,145 +827,108 @@ function ContentTree({
                               paddingBottom: "0.2rem",
                             }}
                           >
-                            {/* "כל השיעורים בספר/בחומש" */}
-                            <button
-                              onClick={() => {
-                                const nodeId = book.id;
-                                onOpenSeriesNode(openSeriesNode === `ALL::${nodeId}` ? null : `ALL::${nodeId}`);
-                              }}
-                              style={{
-                                width: "100%",
-                                textAlign: "right",
-                                padding: "0.35rem 0.55rem",
-                                marginBottom: "0.15rem",
-                                borderRadius: radii.sm,
-                                background:
-                                  openSeriesNode === `ALL::${book.id}`
-                                    ? gradients.goldButton
-                                    : "rgba(196,162,101,0.10)",
-                                border: "none",
-                                color: openSeriesNode === `ALL::${book.id}` ? "white" : colors.goldDark,
-                                fontFamily: fonts.body,
-                                fontSize: "0.74rem",
-                                fontWeight: 600,
-                                cursor: "pointer",
-                              }}
-                            >
-                              כל השיעורים {cat.title === "תורה" ? "בחומש" : "בספר"} {book.title}
-                            </button>
-
-                            {/* Inline series list for "כל" */}
-                            {openSeriesNode === `ALL::${book.id}` && (
-                              <SeriesInlineList
-                                nodeId={book.id}
-                                onSeriesClick={onSeriesClick}
-                              />
+                            {/* "כל השיעורים בספר/בחומש" — shown only when >1 child */}
+                            {book.children.length > 1 && (
+                              <button
+                                onClick={() => onNavigate(`/category/${book.id}`)}
+                                style={{
+                                  width: "100%",
+                                  textAlign: "right",
+                                  padding: "0.35rem 0.55rem",
+                                  marginBottom: "0.15rem",
+                                  borderRadius: radii.sm,
+                                  background: "rgba(196,162,101,0.10)",
+                                  border: "none",
+                                  color: colors.goldDark,
+                                  fontFamily: fonts.body,
+                                  fontSize: "0.74rem",
+                                  fontWeight: 600,
+                                  cursor: "pointer",
+                                }}
+                                onMouseEnter={(e) =>
+                                  (e.currentTarget.style.background = "rgba(196,162,101,0.18)")
+                                }
+                                onMouseLeave={(e) =>
+                                  (e.currentTarget.style.background = "rgba(196,162,101,0.10)")
+                                }
+                              >
+                                כל השיעורים {cat.title === "תורה" ? "בחומש" : "בספר"} {book.title}
+                              </button>
                             )}
 
-                            {/* Children (parshiot / chapters) */}
+                            {/* Children (parshiot / chapters) — navigate to /series/:id */}
                             {book.children
                               .filter((c) => !search.trim() || matchesSearch(c.title))
-                              .map((child) => {
-                                const childKey = child.id;
-                                const childOpen = openSeriesNode === childKey;
-                                return (
-                                  <div key={child.id}>
-                                    <button
-                                      onClick={() =>
-                                        onOpenSeriesNode(childOpen ? null : childKey)
-                                      }
-                                      style={{
-                                        width: "100%",
-                                        textAlign: "right",
-                                        padding: "0.32rem 0.55rem",
-                                        borderRadius: radii.sm,
-                                        background: childOpen
-                                          ? "rgba(196,162,101,0.14)"
-                                          : "transparent",
-                                        border: "none",
-                                        color: childOpen ? colors.goldDark : colors.textMuted,
-                                        fontFamily: fonts.body,
-                                        fontSize: "0.76rem",
-                                        fontWeight: childOpen ? 600 : 400,
-                                        cursor: "pointer",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "space-between",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        if (!childOpen)
-                                          e.currentTarget.style.background =
-                                            "rgba(139,111,71,0.05)";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        if (!childOpen)
-                                          e.currentTarget.style.background = "transparent";
-                                      }}
-                                    >
-                                      <span>{child.title}</span>
-                                      <ChevronDown
-                                        size={10}
-                                        style={{
-                                          transition: "transform 0.15s",
-                                          transform: childOpen ? "rotate(180deg)" : "rotate(0deg)",
-                                          color: colors.textSubtle,
-                                          flexShrink: 0,
-                                        }}
-                                      />
-                                    </button>
-                                    {childOpen && (
-                                      <SeriesInlineList
-                                        nodeId={child.id}
-                                        onSeriesClick={onSeriesClick}
-                                      />
-                                    )}
-                                  </div>
-                                );
-                              })}
-
-                            {/* חידות לילדים — only under Torah */}
-                            {cat.title === "תורה" &&
-                              book.title === "בראשית" /* show once under first book */ && (
+                              .map((child) => (
                                 <button
-                                  onClick={() =>
-                                    onOpenSeriesNode(
-                                      openSeriesNode === riddlesSeriesId ? null : riddlesSeriesId
-                                    )
-                                  }
+                                  key={child.id}
+                                  onClick={() => onNavigate(`/series/${child.id}`)}
                                   style={{
                                     width: "100%",
                                     textAlign: "right",
                                     padding: "0.32rem 0.55rem",
                                     borderRadius: radii.sm,
-                                    background:
-                                      openSeriesNode === riddlesSeriesId
-                                        ? "rgba(196,162,101,0.14)"
-                                        : "transparent",
+                                    background: "transparent",
                                     border: "none",
-                                    color:
-                                      openSeriesNode === riddlesSeriesId
-                                        ? colors.goldDark
-                                        : colors.textMuted,
+                                    color: colors.textMuted,
                                     fontFamily: fonts.body,
                                     fontSize: "0.76rem",
-                                    fontWeight:
-                                      openSeriesNode === riddlesSeriesId ? 600 : 400,
+                                    fontWeight: 400,
                                     cursor: "pointer",
                                     display: "flex",
                                     alignItems: "center",
-                                    gap: "0.3rem",
-                                    marginTop: "0.1rem",
+                                    justifyContent: "space-between",
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.background = "rgba(139,111,71,0.05)";
+                                    e.currentTarget.style.color = colors.goldDark;
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.background = "transparent";
+                                    e.currentTarget.style.color = colors.textMuted;
                                   }}
                                 >
-                                  <Sparkles size={10} />
-                                  חידות לילדים פ״ש
+                                  <span>{child.title}</span>
+                                  <ChevronRight
+                                    size={10}
+                                    style={{ color: colors.textSubtle, flexShrink: 0 }}
+                                  />
                                 </button>
-                              )}
-                            {openSeriesNode === riddlesSeriesId && cat.title === "תורה" && (
-                              <SeriesInlineList
-                                nodeId={riddlesSeriesId}
-                                onSeriesClick={onSeriesClick}
-                              />
+                              ))}
+
+                            {/* חידות לילדים — only under Torah / בראשית */}
+                            {cat.title === "תורה" && book.title === "בראשית" && (
+                              <button
+                                onClick={() => onNavigate(`/series/${riddlesSeriesId}`)}
+                                style={{
+                                  width: "100%",
+                                  textAlign: "right",
+                                  padding: "0.32rem 0.55rem",
+                                  borderRadius: radii.sm,
+                                  background: "transparent",
+                                  border: "none",
+                                  color: colors.textMuted,
+                                  fontFamily: fonts.body,
+                                  fontSize: "0.76rem",
+                                  fontWeight: 400,
+                                  cursor: "pointer",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "0.3rem",
+                                  marginTop: "0.1rem",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.background = "rgba(139,111,71,0.05)";
+                                  e.currentTarget.style.color = colors.goldDark;
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.background = "transparent";
+                                  e.currentTarget.style.color = colors.textMuted;
+                                }}
+                              >
+                                <Sparkles size={10} />
+                                חידות לילדים פ״ש
+                              </button>
                             )}
                           </div>
                         )}
@@ -996,11 +950,9 @@ function ContentTree({
             section={section}
             isExpanded={expandedExtras.has(section.id)}
             onToggle={() => onToggleExtra(section.id)}
-            openSeriesNode={openSeriesNode}
-            onOpenSeriesNode={onOpenSeriesNode}
-            onSeriesClick={onSeriesClick}
             matchesSearch={matchesSearch}
             variant="neutral"
+            onNavigate={onNavigate}
           />
         ))}
     </div>
@@ -1008,26 +960,26 @@ function ContentTree({
 }
 
 // ────────────────────────────────────────────────────────────────────────
-// ExtraSectionBlock — collapsible section with children + inline series
+// ExtraSectionBlock — collapsible section with children.
+// Navigation model (v5):
+//   section header  → toggle accordion
+//   "הכל ב..."      → navigate('/category/:sectionId')
+//   child click     → navigate('/series/:childId')
 // ────────────────────────────────────────────────────────────────────────
 function ExtraSectionBlock({
   section,
   isExpanded,
   onToggle,
-  openSeriesNode,
-  onOpenSeriesNode,
-  onSeriesClick,
   matchesSearch,
   variant,
+  onNavigate,
 }: {
   section: ExtraSection;
   isExpanded: boolean;
   onToggle: () => void;
-  openSeriesNode: string | null;
-  onOpenSeriesNode: (id: string | null) => void;
-  onSeriesClick: (id: string) => void;
   matchesSearch: (t: string) => boolean;
   variant: "gold" | "neutral";
+  onNavigate: (path: string) => void;
 }) {
   const bg =
     variant === "gold"
@@ -1046,8 +998,8 @@ function ExtraSectionBlock({
 
   return (
     <div style={{ marginBottom: "0.2rem" }}>
-      <button
-        onClick={onToggle}
+      {/* Section row: title navigates to /category/:id + opens accordion; chevron toggles only */}
+      <div
         style={{
           width: "100%",
           display: "flex",
@@ -1056,109 +1008,113 @@ function ExtraSectionBlock({
           padding: "0.45rem 0.75rem",
           borderRadius: radii.sm,
           background: bg,
-          border: "none",
           color: isExpanded ? colors.goldDark : colors.textMid,
-          fontFamily: fonts.body,
-          fontSize: "0.82rem",
-          fontWeight: 600,
-          cursor: "pointer",
-          textAlign: "right",
         }}
       >
-        <span>{section.title}</span>
-        <ChevronDown
-          size={12}
-          style={{
-            transition: "transform 0.15s",
-            transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
-            color: colors.textSubtle,
+        <button
+          onClick={() => {
+            if (!isExpanded) onToggle();
+            onNavigate(`/category/${section.id}`);
           }}
-        />
-      </button>
+          style={{
+            flex: 1,
+            background: "none",
+            border: "none",
+            color: "inherit",
+            fontFamily: fonts.body,
+            fontSize: "0.82rem",
+            fontWeight: 600,
+            cursor: "pointer",
+            textAlign: "right",
+            padding: 0,
+          }}
+        >
+          {section.title}
+        </button>
+        <button
+          onClick={onToggle}
+          aria-label={isExpanded ? "כווץ" : "הרחב"}
+          style={{
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            padding: "0 0 0 0.25rem",
+          }}
+        >
+          <ChevronDown
+            size={12}
+            style={{
+              transition: "transform 0.15s",
+              transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+              color: colors.textSubtle,
+            }}
+          />
+        </button>
+      </div>
 
       {isExpanded && (
         <div style={{ paddingInlineStart: "0.75rem", paddingTop: "0.1rem" }}>
-          {/* "הכל ב..." button */}
+          {/* "כל השיעורים ב..." — links to the full category page (like the old site) */}
           <button
-            onClick={() =>
-              onOpenSeriesNode(
-                openSeriesNode === `ALL::${section.id}` ? null : `ALL::${section.id}`
-              )
-            }
+            onClick={() => onNavigate(`/category/${section.id}`)}
             style={{
               width: "100%",
               textAlign: "right",
               padding: "0.32rem 0.55rem",
-              marginBottom: "0.1rem",
               borderRadius: radii.sm,
-              background:
-                openSeriesNode === `ALL::${section.id}`
-                  ? "rgba(196,162,101,0.14)"
-                  : "rgba(196,162,101,0.07)",
+              background: "rgba(196,162,101,0.10)",
               border: "none",
               color: colors.goldDark,
               fontFamily: fonts.body,
-              fontSize: "0.75rem",
+              fontSize: "0.78rem",
               fontWeight: 600,
               cursor: "pointer",
+              marginBottom: "0.15rem",
             }}
           >
-            הכל ב{section.title}
+            כל השיעורים ב{section.title}
           </button>
-          {openSeriesNode === `ALL::${section.id}` && (
-            <SeriesInlineList nodeId={section.id} onSeriesClick={onSeriesClick} />
-          )}
-
-          {/* Children */}
+          {/* Children — navigate to /series/:id */}
           {section.children
             .filter((c) => matchesSearch(c.title))
-            .map((child) => {
-              const childOpen = openSeriesNode === child.id;
-              return (
-                <div key={child.id}>
-                  <button
-                    onClick={() => onOpenSeriesNode(childOpen ? null : child.id)}
-                    style={{
-                      width: "100%",
-                      textAlign: "right",
-                      padding: "0.32rem 0.55rem",
-                      borderRadius: radii.sm,
-                      background: childOpen ? "rgba(196,162,101,0.12)" : "transparent",
-                      border: "none",
-                      color: childOpen ? colors.goldDark : colors.textMuted,
-                      fontFamily: fonts.body,
-                      fontSize: "0.76rem",
-                      fontWeight: childOpen ? 600 : 400,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!childOpen)
-                        e.currentTarget.style.background = "rgba(139,111,71,0.04)";
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!childOpen) e.currentTarget.style.background = "transparent";
-                    }}
-                  >
-                    <span>{child.title}</span>
-                    <ChevronDown
-                      size={10}
-                      style={{
-                        transition: "transform 0.15s",
-                        transform: childOpen ? "rotate(180deg)" : "rotate(0deg)",
-                        color: colors.textSubtle,
-                        flexShrink: 0,
-                      }}
-                    />
-                  </button>
-                  {childOpen && (
-                    <SeriesInlineList nodeId={child.id} onSeriesClick={onSeriesClick} />
-                  )}
-                </div>
-              );
-            })}
+            .map((child) => (
+              <button
+                key={child.id}
+                onClick={() => onNavigate(`/series/${child.id}`)}
+                style={{
+                  width: "100%",
+                  textAlign: "right",
+                  padding: "0.32rem 0.55rem",
+                  borderRadius: radii.sm,
+                  background: "transparent",
+                  border: "none",
+                  color: colors.textMuted,
+                  fontFamily: fonts.body,
+                  fontSize: "0.76rem",
+                  fontWeight: 400,
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "rgba(139,111,71,0.04)";
+                  e.currentTarget.style.color = colors.goldDark;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "transparent";
+                  e.currentTarget.style.color = colors.textMuted;
+                }}
+              >
+                <span>{child.title}</span>
+                <ChevronRight
+                  size={10}
+                  style={{ color: colors.textSubtle, flexShrink: 0 }}
+                />
+              </button>
+            ))}
         </div>
       )}
     </div>
@@ -1172,20 +1128,19 @@ function TopicsTab({
   extraSections,
   expandedExtras,
   onToggleExtra,
-  openSeriesNode,
-  onOpenSeriesNode,
-  onSeriesClick,
+  search,
   matchesSearch,
+  onNavigate,
 }: {
   extraSections: ExtraSection[];
   expandedExtras: Set<string>;
   onToggleExtra: (key: string) => void;
-  openSeriesNode: string | null;
-  onOpenSeriesNode: (id: string | null) => void;
-  onSeriesClick: (id: string) => void;
   search: string;
   matchesSearch: (t: string) => boolean;
+  onNavigate: (path: string) => void;
 }) {
+  // suppress unused warning — search is used by matchesSearch closure
+  void search;
   return (
     <div>
       {extraSections.map((section) => (
@@ -1194,117 +1149,10 @@ function TopicsTab({
           section={section}
           isExpanded={expandedExtras.has(section.id)}
           onToggle={() => onToggleExtra(section.id)}
-          openSeriesNode={openSeriesNode}
-          onOpenSeriesNode={onOpenSeriesNode}
-          onSeriesClick={onSeriesClick}
           matchesSearch={matchesSearch}
           variant="neutral"
+          onNavigate={onNavigate}
         />
-      ))}
-    </div>
-  );
-}
-
-// ────────────────────────────────────────────────────────────────────────
-// SeriesInlineList — fetches and renders series for a node, inline
-// ────────────────────────────────────────────────────────────────────────
-function SeriesInlineList({
-  nodeId,
-  onSeriesClick,
-}: {
-  nodeId: string;
-  onSeriesClick: (id: string) => void;
-}) {
-  const { data: series = [], isLoading } = useSeriesForNodeLocal(nodeId);
-
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          padding: "0.5rem 0.55rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.4rem",
-          color: colors.textSubtle,
-          fontFamily: fonts.body,
-          fontSize: "0.72rem",
-        }}
-      >
-        <Loader2 size={11} style={{ animation: "spin 1s linear infinite" }} />
-        טוען סדרות...
-      </div>
-    );
-  }
-
-  if (series.length === 0) {
-    return (
-      <div
-        style={{
-          padding: "0.4rem 0.55rem",
-          color: colors.textSubtle,
-          fontFamily: fonts.body,
-          fontSize: "0.72rem",
-        }}
-      >
-        אין סדרות
-      </div>
-    );
-  }
-
-  return (
-    <div
-      style={{
-        paddingInlineStart: "0.4rem",
-        paddingBottom: "0.2rem",
-        borderInlineStart: `2px solid rgba(196,162,101,0.25)`,
-        marginInlineStart: "0.3rem",
-        marginBottom: "0.2rem",
-      }}
-    >
-      {series.map((s) => (
-        <button
-          key={s.id}
-          onClick={() => onSeriesClick(s.id)}
-          title={s.rabbiName ? `${s.title} — ${s.rabbiName}` : s.title}
-          style={{
-            width: "100%",
-            textAlign: "right",
-            padding: "0.28rem 0.5rem",
-            borderRadius: radii.sm,
-            background: "transparent",
-            border: "none",
-            color: colors.textMuted,
-            fontFamily: fonts.body,
-            fontSize: "0.72rem",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.35rem",
-            lineHeight: 1.4,
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.background = "rgba(139,111,71,0.06)")
-          }
-          onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-        >
-          <FolderOpen size={11} style={{ flexShrink: 0, opacity: 0.6 }} />
-          <span style={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {s.title}
-          </span>
-          <TeacherContentBadge tags={(s as { audienceTags?: string[] | null }).audienceTags} variant="small" />
-          {s.lessonCount > 0 && (
-            <span
-              style={{
-                fontSize: "0.62rem",
-                color: colors.textSubtle,
-                flexShrink: 0,
-                marginInlineStart: "0.2rem",
-              }}
-            >
-              {s.lessonCount}
-            </span>
-          )}
-        </button>
       ))}
     </div>
   );

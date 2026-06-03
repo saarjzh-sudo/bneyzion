@@ -26,9 +26,16 @@ import NotFound from "./pages/NotFound";
 
 // Lazy-loaded: less frequently visited pages
 // Teachers Wing v2 — production pages (rollout 2026-05-11)
-const TeachersWingPage    = lazy(() => import("./pages/teachers/TeachersWingPage"));
-const TeachersSeriesPage  = lazy(() => import("./pages/teachers/TeachersSeriesPage"));
-const TeachersLessonPage  = lazy(() => import("./pages/teachers/TeachersLessonPage"));
+const TeachersWingPage        = lazy(() => import("./pages/teachers/TeachersWingPage"));
+const TeachersSeriesPage      = lazy(() => import("./pages/teachers/TeachersSeriesPage"));
+const TeachersLessonPage      = lazy(() => import("./pages/teachers/TeachersLessonPage"));
+// Teachers Wing category pages — 2026-06-02 (B/C/D/E)
+const TeachersBookPage        = lazy(() => import("./pages/teachers/TeachersBookPage"));
+const TeachersContentTypePage = lazy(() => import("./pages/teachers/TeachersContentTypePage"));
+const TeachersCreatorPage     = lazy(() => import("./pages/teachers/TeachersCreatorPage"));
+// Teachers Wing parasha + worksheets pages — 2026-06-02 (F)
+const TeachersParashaPage    = lazy(() => import("./pages/teachers/TeachersParashaPage"));
+const TeachersWorksheetsPage = lazy(() => import("./pages/teachers/TeachersWorksheetsPage"));
 const ChapterWeekly = lazy(() => import("./pages/ChapterWeekly"));
 const MegilatEsther = lazy(() => import("./pages/MegilatEsther"));
 const Proposal = lazy(() => import("./pages/Proposal"));
@@ -60,6 +67,7 @@ const CommunityPage = lazy(() => import("./pages/CommunityPage"));
 const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
 const PortalLogin = lazy(() => import("./pages/PortalLogin"));
 const DesignPreviewMyCourses = lazy(() => import("./pages/DesignPreviewMyCourses"));
+const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
@@ -115,6 +123,7 @@ const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const AdminPayments = lazy(() => import("./pages/admin/Payments"));
 const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
 const ImportContent = lazy(() => import("./pages/admin/ImportContent"));
+const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
@@ -280,6 +289,13 @@ const App = () => (
             <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWingPage /></Suspense>} />
             <Route path="/teachers/series/:id" element={<Suspense fallback={<LazyFallback />}><TeachersSeriesPage /></Suspense>} />
             <Route path="/teachers/lesson/:id" element={<Suspense fallback={<LazyFallback />}><TeachersLessonPage /></Suspense>} />
+            {/* Teachers Wing category pages — 2026-06-02 (B/C/D/E) */}
+            <Route path="/teachers/book/:book" element={<Suspense fallback={<LazyFallback />}><TeachersBookPage /></Suspense>} />
+            <Route path="/teachers/content-type/:type" element={<Suspense fallback={<LazyFallback />}><TeachersContentTypePage /></Suspense>} />
+            <Route path="/teachers/creator/:id" element={<Suspense fallback={<LazyFallback />}><TeachersCreatorPage /></Suspense>} />
+            {/* Teachers Wing parasha + worksheets — 2026-06-02 (F) */}
+            <Route path="/teachers/parasha/:book/:parasha" element={<Suspense fallback={<LazyFallback />}><TeachersParashaPage /></Suspense>} />
+            <Route path="/teachers/worksheets/:book" element={<Suspense fallback={<LazyFallback />}><TeachersWorksheetsPage /></Suspense>} />
             <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
@@ -326,6 +342,7 @@ const App = () => (
             <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
             <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />
             <Route path="/series/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />
+            <Route path="/category/:id" element={<Suspense fallback={<LazyFallback />}><CategoryPage /></Suspense>} />
             <Route path="/store" element={<Suspense fallback={<LazyFallback />}><StorePage /></Suspense>} />
             <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />
@@ -357,6 +374,7 @@ const App = () => (
             <Route path="/admin/community-courses" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><CommunityCourses /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-health" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
             <Route path="/admin/import-content" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ImportContent /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/benzi" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><BenziKnowledge /></Suspense></ProtectedRoute>} />
             {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
                 Available in dev AND production (so Vercel previews work for review). */}
             <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />

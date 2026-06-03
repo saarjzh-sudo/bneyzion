@@ -1,22 +1,24 @@
 /**
- * navigation-bot — Bnei Zion knowledge assistant (בנצי)
+ * navigation-bot-preview — PREVIEW/TEST ONLY — DO NOT USE IN PRODUCTION
+ * Bnei Zion site navigator (בנצי) — fixed version for Saar to review
  *
- * Branch: fix/benzi-knowledge-upgrade
- * Last updated: 2026-06-03
+ * Branch: fix/benzi-valid-links
+ * Last updated: 2026-06-02
  *
- * Changes in this version (v3 — continuous training):
- *   1. ידע עובדתי הוצא מהקוד לטבלת `benzi_knowledge` ב-Supabase.
- *      עריכה = שינוי טקסט ב-/admin/benzi, נכנס לתוקף מיד, בלי deploy.
- *   2. תיקון: מגילת אסתר = ספר/מוצר, לא תכנית.
- *      תכנית הפרק השבועי היא התכנית היחידה.
- *   3. הרב יואב אוריאל — ביוגרפיה מלאה ומדויקת מדף /chapter-weekly.
- *   4. "מידע קשיח" (routes, פורמט JSON, הוראות) נשאר בקוד.
- *      רק הידע העובדתי שמשתנה חי ב-DB.
- *   5. fallback: אם DB לא זמין — מוצג ידע מינימלי מהקוד (graceful).
+ * This is a SEPARATE function deployed alongside the live navigation-bot.
+ * The live navigation-bot is NOT touched. Deploy only this preview function.
+ *
+ * Changes vs. the live navigation-bot:
+ *   1. VALID_ROUTES whitelist — every route that appears in App.tsx as of 2026-06-02.
+ *      All CTA routes returned by Gemini are validated against this set before
+ *      reaching the client. Invalid routes are replaced with "/" (fallback).
+ *   2. Corrected system prompt — removed invented pages (/how-to-learn-tanach,
+ *      /study-aids, /pricing), corrected site identity and subscription info,
+ *      corrected megilat-esther vs chapter-weekly distinction, added contact page.
+ *   3. Hardened JSON extraction — strips markdown fences before JSON.parse.
  */
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -29,7 +31,8 @@ const corsHeaders = {
 //
 // Iron rule: add to this list only when the corresponding <Route> exists in
 // App.tsx. The bot MUST NOT suggest a route that is not in this list.
-// Dynamic-segment routes use a prefix pattern — the validator checks prefix.
+// Dynamic-segment routes use a prefix pattern (e.g. "/rabbis/") — the validator
+// checks prefix membership for those.
 // ─────────────────────────────────────────────────────────────────────────────
 const STATIC_ROUTES = new Set([
   "/",
@@ -68,6 +71,7 @@ const STATIC_ROUTES = new Set([
   "/privacy-policy",
 ]);
 
+// Prefix-based: bot may suggest these with any valid suffix
 const PREFIX_ROUTES = [
   "/lessons/",
   "/rabbis/",
@@ -82,7 +86,7 @@ const PREFIX_ROUTES = [
 
 function isValidRoute(route: string): boolean {
   if (!route || typeof route !== "string") return false;
-  const clean = route.split("?")[0].split("#")[0];
+  const clean = route.split("?")[0].split("#")[0]; // strip query + hash
   if (STATIC_ROUTES.has(clean)) return true;
   for (const prefix of PREFIX_ROUTES) {
     if (clean.startsWith(prefix) && clean.length > prefix.length) return true;
@@ -101,165 +105,97 @@ function sanitizeCtas(
   return ctas
     .filter((c) => c && typeof c.label === "string" && c.label.trim())
     .map((c) => ({ ...c, route: sanitizeRoute(c.route) }))
-    .filter((c) => c.route !== "/")
-    .slice(0, 3);
+    .filter((c) => c.route !== "/")     // drop invalid CTAs entirely
+    .slice(0, 3);                        // max 3 buttons
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// FALLBACK KNOWLEDGE — מינימום קשוח אם DB לא זמין
+// SYSTEM PROMPT — corrected 2026-06-02
 // ─────────────────────────────────────────────────────────────────────────────
-const FALLBACK_KNOWLEDGE = `
-זהות האתר:
-אתר בני ציון — פרויקט לימוד תנ"ך שייסד הרב יואב אוריאל.
-12,718+ שיעורים, 203+ רבנים, 1,500+ סדרות.
-
-הרב יואב אוריאל — המייסד:
-ראש ומייסד תנועת "בני ציון". מחבר "מכלל יופי". מרצה 15+ שנה.
-מנהל תכנית הפרק השבועי (/chapter-weekly).
-
-תכנית הפרק השבועי:
-שיעור זום שבועי בהנחיית הרב יואב, 110 ₪/חודש, ללא התחייבות.
-ספר נוכחי: חגי, זכריה ומלאכי. 250+ לומדים.
-`.trim();
-
-// ─────────────────────────────────────────────────────────────────────────────
-// LOAD KNOWLEDGE FROM DB — טוען את כל הרשומות הפעילות ומחבר לבלוק טקסט
-// ─────────────────────────────────────────────────────────────────────────────
-async function loadKnowledgeFromDB(supabaseUrl: string, supabaseKey: string): Promise<string> {
-  try {
-    const supabase = createClient(supabaseUrl, supabaseKey);
-    const { data, error } = await supabase
-      .from("benzi_knowledge")
-      .select("title, content")
-      .eq("is_active", true)
-      .order("id");
-
-    if (error || !data || data.length === 0) {
-      console.warn("[navigation-bot] benzi_knowledge query issue:", error?.message ?? "empty");
-      return FALLBACK_KNOWLEDGE;
-    }
-
-    // מחבר כל הרשומות לבלוק אחד: כותרת + תוכן
-    return data
-      .map((row: { title: string; content: string }) => `${row.title}:\n${row.content.trim()}`)
-      .join("\n\n");
-  } catch (e) {
-    console.error("[navigation-bot] loadKnowledgeFromDB error:", e);
-    return FALLBACK_KNOWLEDGE;
-  }
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SYSTEM PROMPT — ידע עובדתי מוזרק מבחוץ (dynamicKnowledge)
-// קוד זה מכיל רק:
-//   1. הוראות הגהה (מה לענות, מה לא, פורמט)
-//   2. רשימת דפים (routes)
-//   3. הזרקת dynamicKnowledge מה-DB
-// ─────────────────────────────────────────────────────────────────────────────
-function buildSystemPrompt(
-  currentRoute: string | null,
-  currentParasha: string | null,
-  dynamicKnowledge: string
-): string {
+function buildSystemPrompt(currentRoute: string | null, currentParasha: string | null): string {
   const routeCtx = currentRoute ? `\nהמשתמש נמצא כרגע בדף: ${currentRoute}` : "";
-  const parashaCtx = currentParasha
-    ? `\nפרשת השבוע הנוכחית (לוח ישראל): ${currentParasha}`
-    : "\n(פרשת השבוע לא נמסרה — אם נשאל, אמור שאינך בטוח ותפנה ל-/parasha)";
+  const parashaCtx = currentParasha ? `\nפרשת השבוע הנוכחית: ${currentParasha}` : "";
 
-  return `אתה בנצי — עוזר ידע של אתר בני ציון (bneyzion.vercel.app).
-
-תפקידך: לענות לשאלות על תנ"ך, על האתר ותכניו, ולכוון לדפים הרלוונטיים.
-אתה עונה תוכן ישירות. אתה לא חומה זהירה ולא מנווט שרק מפנה לדפים.
-אם אתה יודע את התשובה — תן אותה עכשיו. אם לא — תגיד שאינך יודע ותפנה למקור.
+  return `אתה בנצי — הסוכן המנווט של אתר בני ציון (bneyzion.vercel.app).
+תפקידך: להבין מה המשתמש מחפש ולהפנות אותו לדף הנכון באתר. תשובות קצרות (עד 2 פסקאות), עברית ישירה ונוחה.
 
 ═══════════════════════════════
-הוראות מפורשות לפי סוג שאלה
+מידע עובדתי מדויק על האתר
 ═══════════════════════════════
 
-שאלות פרשת השבוע (כגון: "מה פרשת השבוע?", "איזה פרשה?", "מה לומדים השבת?"):
-→ ענה מיד עם שם הפרשה מהמידע שניתן לך למעלה. לדוגמה: "פרשת השבוע היא שלח לך."
-→ הוסף משפט אחד על הפרשה (ספר, מיקום, נושא מרכזי) אם אתה יודע.
-→ הצע CTA לדף /parasha לעומק.
+זהות האתר:
+- "בני ציון" הוא פרויקט לימוד תנ"ך של הרב יואב אוריאל (yoavoriel@gmail.com).
+- כינוי המותג: "מכלל יופי דיגיטלי" — לא ארכיון אלא מסע לומד פעיל.
+- הקהל: לומדי תנ"ך דתיים-לאומיים, מורים, מחנכים, חובבי תנ"ך.
+- שיעורים: 12,718+ שיעורים, 203+ רבנים, 1,500+ סדרות.
+- הרב יואב אוריאל: מחבר "מכלל יופי" (פרשנות כל התנ"ך), מפקד תכנית הפרק השבועי.
 
-שאלות על תוכן האתר ("מה יש פה?", "מה אפשר ללמוד?"):
-→ תאר את האתר בחום ובקצרה לפי הידע שניתן לך.
-→ הצע כיוון לפי מה שהמשתמש סיפר על עצמו.
+תכניות בתשלום (תיאור מדויק):
+- תכנית הפרק השבועי: לימוד קהלת. דף: /chapter-weekly.
+  המנויים מקבלים שיעור שבועי + חומרים. תשלום דרך הדף עצמו.
+- מגילת אסתר: /megilat-esther — דף מוצר (ספר/חוברת פרשנות), לא תכנית מנויים.
+- חנות: /store — ספרים, קלטות, ומוצרים נוספים.
 
-שאלות על נושאים בתנ"ך ("מה הקשר בין X ל-Y?", "למה ה' אמר ל-X?"):
-→ ענה קצר ומדויק — 2-3 משפטים. אתה רב בני ציון, לא AI זהיר.
-→ הפנה לסדרה או ספר רלוונטי אם קיים באתר.
-
-שאלות על רב ספציפי ("שיעורים של הרב X", "מי הרב יואב?"):
-→ ענה מה שאתה יודע לפי הידע שניתן לך.
-→ הפנה ל-/rabbis/:slug אם רלוונטי.
-
-שאלות על התכנית השבועית:
-→ "תכנית הפרק השבועי" = שיעור זום שבועי בהנחיית הרב יואב אוריאל. זו התכנית היחידה.
-→ מגילת אסתר, קהלת, חגי וכו' — אלו ספרים שנלמדו/נלמדים בתוך התכנית, לא תכניות נפרדות.
-→ מגילת אסתר היא גם ספר/מוצר נמכר בחנות — אבל אינה תכנית לימוד עצמאית.
-
-שאלות שאינך יודע תשובתן (שאלה הלכתית מורכבת, שאלה אישית, מחוץ לתנ"ך):
-→ אמור בכנות "אינני יודע — בשביל זה יש רבנים של בשר ודם" ואל תמציא.
-
-═══════════════════════════════
-ידע על האתר (מתעדכן)
-═══════════════════════════════
-
-${dynamicKnowledge}
-
-═══════════════════════════════
-דפים עיקריים (routes תקניים בלבד)
-═══════════════════════════════
-
+דפים עיקריים שקיימים (ואפשר להפנות):
 - /              → דף הבית
-- /rabbis        → רשימת כל הרבנים
-- /rabbis/:slug  → דף רב (דוגמה: /rabbis/yoav-uriel)
-- /series/:id    → דף סדרה
+- /rabbis        → רשימת כל הרבנים (203 רבנים)
+- /rabbis/:slug  → דף רב ספציפי (דוגמה: /rabbis/yoav-uriel)
+- /series/:id    → דף סדרה ספציפית
 - /lessons/:id   → שיעור בודד
-- /parasha       → דף פרשת השבוע
-- /teachers      → אגף המורים
-- /bible/:book   → לפי ספר (דוגמה: /bible/bereshit)
-- /chapter-weekly → תכנית הפרק השבועי
-- /megilat-esther → ספר מגילת אסתר (מוצר)
-- /community     → שיעורים קהילתיים
+- /parasha       → פרשת השבוע
+- /teachers      → אגף המורים (כלים, חידות, דפי עבודה)
+- /teachers/series/:id → סדרה ספציפית בתוך אגף המורים
+- /bible/:book   → לפי ספר תנ"ך (דוגמה: /bible/bereshit)
+- /chapter-weekly → תכנית הפרק השבועי + הצטרפות
+- /megilat-esther → מוצר: ספר מגילת אסתר
+- /community     → קהילה ושיעורים קהילתיים
 - /store         → חנות
-- /donate        → תרומה
+- /store/:slug   → מוצר ספציפי
+- /donate        → תרומה לאתר
 - /contact       → יצירת קשר
-- /about         → אודות
-- /portal        → פורטל מנוי (דורש כניסה)
-- /daily-verse   → פסוק יומי
+- /about         → אודות האתר
+- /memorial      → זיכרון (אנדרטאות)
 - /memorial/saadia → זיכרון לסעדיה יעקב דרעי הי"ד
+- /portal        → האזור האישי של המנוי (דורש כניסה)
+- /daily-verse   → פסוק יומי
+- /kenes         → כנס
 
-דפים שאינם קיימים — אל תציע:
-❌ /pricing, /how-to-learn-tanach, /study-aids, /bible-book/*
+דפים שאינם קיימים (אל תמציא מסלולים אלה):
+❌ /pricing — הוסר מהאתר
+❌ /how-to-learn-tanach — לא קיים
+❌ /study-aids — לא קיים
+❌ /bible-book/* — פורמט שגוי. הנכון: /bible/:book
+❌ /courses — קיים אך לא ציבורי עדיין. אל תציע.
+❌ כל נתיב אחר שלא מופיע ברשימה למעלה.
 ${routeCtx}${parashaCtx}
 
 ═══════════════════════════════
 פורמט התשובה — JSON בלבד
 ═══════════════════════════════
 
-ענה אך ורק בפורמט JSON (ללא markdown, ללא טקסט מחוץ ל-JSON):
+ענה אך ורק בפורמט JSON הבא (ללא markdown, ללא הסברים מחוץ ל-JSON):
 
 {
-  "reply_text": "תשובה בעברית ישירה וחמה. עד 3 משפטים. ענה תוכן — אל תפנה כברירת מחדל.",
+  "reply_text": "תשובה קצרה בעברית (עד 2 פסקאות)",
   "cta_buttons": [
-    { "label": "טקסט (עד 20 תווים)", "route": "/נתיב-תקני-בלבד", "icon": "book" }
+    { "label": "טקסט הכפתור (עד 20 תווים)", "route": "/נתיב-תקני-בלבד", "icon": "book" }
   ],
-  "intent_detected": "one of: parasha|haftarah|how_to_learn|search|rabbi|creator|topic|moed|digital_tanach|study_aids|dedication|donation|persona_question|memorial_question|content_answered|off_topic|other",
+  "intent_detected": "one of: parasha|haftarah|how_to_learn|search|rabbi|creator|topic|moed|digital_tanach|study_aids|dedication|donation|persona_question|memorial_question|content_question_redirected|off_topic|other",
   "persona_guess": null,
   "route_suggestion": "/נתיב-תקני-בלבד",
   "refused_content": false
 }
 
 כללי CTA:
-- route חייב להיות מדפים ברשימה למעלה בלבד.
-- עד 3 כפתורים — רק אם יש ערך ממשי בניווט לשם.
+- לכל כפתור: route חייב להיות מדפים שקיימים ברשימה למעלה בלבד.
+- עד 3 כפתורים.
 - icon: book|search|compass|graduation|sparkle|heart|calendar|map|video|donation
-- אם אין נתיב מתאים — השתמש ב-"/" בלבד (לא תמציא נתיבים).`;
+
+אם אין נתיב מתאים מהרשימה, השתמש ב-"/" (דף הבית).`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Strip markdown code fences
+// Strip markdown code fences from a string before JSON.parse
 // ─────────────────────────────────────────────────────────────────────────────
 function stripMarkdownFences(s: string): string {
   return s
@@ -269,7 +205,7 @@ function stripMarkdownFences(s: string): string {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Fallback response
+// Fallback response (used when Gemini fails or returns bad JSON)
 // ─────────────────────────────────────────────────────────────────────────────
 const FALLBACK_RESPONSE = {
   reply_text: "משהו השתבש. אפשר לנסות שוב?",
@@ -316,22 +252,14 @@ serve(async (req) => {
       );
     }
 
-    // ── טעינת ידע מ-DB ──────────────────────────────────────────────────────
-    const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
-    const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+    // Build conversation messages for Gemini
+    const systemPrompt = buildSystemPrompt(current_route, current_parasha);
 
-    let dynamicKnowledge = FALLBACK_KNOWLEDGE;
-    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
-      dynamicKnowledge = await loadKnowledgeFromDB(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-    } else {
-      console.warn("[navigation-bot] Supabase env vars missing — using fallback knowledge");
-    }
-
-    // ── בניית הפרומפט ────────────────────────────────────────────────────────
-    const systemPrompt = buildSystemPrompt(current_route, current_parasha, dynamicKnowledge);
+    // Append persona context to system prompt if known
     const personaNote = persona
       ? `\nהמשתמש זוהה כ: ${persona}. התאם את הצעותיך בהתאם.`
       : "";
+
     const fullSystemPrompt = systemPrompt + personaNote;
 
     // Convert history (last 6 turns) to Gemini format
@@ -357,14 +285,17 @@ serve(async (req) => {
         { role: "user", parts: [{ text: message }] },
       ],
       generationConfig: {
-        temperature: 0.5,
-        maxOutputTokens: 600,
+        temperature: 0.3,
+        // gemini-2.5-flash spends part of this budget on internal "thinking".
+        // Hard queries (e.g. "מחירים", "מגילת אסתר") can use ~490 thinking tokens,
+        // so 512 truncated the JSON (MAX_TOKENS → empty → fallback). 2048 leaves room.
+        maxOutputTokens: 2048,
         responseMimeType: "application/json",
       },
     };
 
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -393,12 +324,13 @@ serve(async (req) => {
       );
     }
 
-    // Parse JSON
+    // Parse JSON (strip fences defensively)
     let parsed: Record<string, unknown>;
     try {
       parsed = JSON.parse(stripMarkdownFences(rawText));
     } catch (e) {
       console.error("[navigation-bot] JSON parse error:", e, "raw:", rawText.slice(0, 300));
+      // Attempt to extract JSON from inside the text
       const match = rawText.match(/\{[\s\S]*\}/);
       if (match) {
         try {
@@ -429,12 +361,15 @@ serve(async (req) => {
       refused_content: parsed.refused_content === true,
     };
 
+    // Log any route violations for debugging
     const origCtaRoutes = ((parsed.cta_buttons as Array<{ route?: string }>) ?? []).map((c) => c?.route ?? "");
+    const safeCtaRoutes = safeResponse.cta_buttons.map((c) => c.route);
     const violations = origCtaRoutes.filter((r) => r && !isValidRoute(r));
     if (violations.length > 0) {
       console.warn("[navigation-bot] Invalid routes blocked:", violations.join(", "));
     }
 
+    // Ensure at least 1 CTA (fallback to home if all were invalid)
     if (safeResponse.cta_buttons.length === 0) {
       safeResponse.cta_buttons = [{ label: "דף הבית", route: "/", icon: "compass" }];
     }

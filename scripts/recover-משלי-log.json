@@ -1,0 +1,34 @@
+[
+  {
+    "id": "8c65956e-8e01-4989-960f-1bcf2a737a87",
+    "title": "משלי פרק ג",
+    "status": "published",
+    "series_id": "b6da5a68-8d26-4e9d-96db-ed69fa784e91",
+    "rabbi_id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+    "bible_book": "משלי",
+    "bible_chapter": 3,
+    "source_type": "audio",
+    "audio_url": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%AA%D7%A0%D7%9A+21+-+%D7%A1%D7%A4%D7%A8+%D7%9E%D7%A9%D7%9C%D7%99/21-mishlei-03.mp3",
+    "video_url": null,
+    "attachment_url": null,
+    "content": null,
+    "umbraco_id": "42600",
+    "umbraco_url": "/מאגר-השיעורים-והמאמרים/כתובים/משלי/קריאה-וביאור-בקצרה-של-ספר-משלי/משלי-פרק-ג/"
+  },
+  {
+    "id": "a74712e2-6001-48db-a3a1-eb72640329b8",
+    "title": "משלי פרק כד",
+    "status": "published",
+    "series_id": "b6da5a68-8d26-4e9d-96db-ed69fa784e91",
+    "rabbi_id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+    "bible_book": "משלי",
+    "bible_chapter": 24,
+    "source_type": "audio",
+    "audio_url": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%AA%D7%A0%D7%9A+21+-+%D7%A1%D7%A4%D7%A8+%D7%9E%D7%A9%D7%9C%D7%99/21-mishlei-24.mp3",
+    "video_url": null,
+    "attachment_url": null,
+    "content": null,
+    "umbraco_id": "42621",
+    "umbraco_url": "/מאגר-השיעורים-והמאמרים/כתובים/משלי/קריאה-וביאור-בקצרה-של-ספר-משלי/משלי-פרק-כד/"
+  }
+]

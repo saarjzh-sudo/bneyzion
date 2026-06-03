@@ -36,14 +36,26 @@ export function useContentSidebar() {
     queryFn: async () => {
       const catIds = [ROOT_IDS.torah, ROOT_IDS.neviim, ROOT_IDS.ketuvim];
 
-      // Fetch books under Torah/Neviim/Ketuvim
-      const { data: allBooks } = await supabase
+      // Fetch books under Torah/Ketuvim — active or published (Ketuvim uses published/active for real books)
+      const { data: torahKetuvimBooks } = await supabase
         .from("series")
         .select("id, title, parent_id")
-        .in("parent_id", catIds)
+        .in("parent_id", [ROOT_IDS.torah, ROOT_IDS.ketuvim])
+        .in("status", ["active", "published", "category"])
         .order("title");
 
-      if (!allBooks) return { categories: [], extraSections: [] };
+      // Fetch books under Neviim — only "category" status (all real Neviim books are category;
+      // draft/active non-category entries here are ghost series that must be hidden)
+      const { data: neviimBooks } = await supabase
+        .from("series")
+        .select("id, title, parent_id")
+        .eq("parent_id", ROOT_IDS.neviim)
+        .eq("status", "category")
+        .order("title");
+
+      const allBooks = [...(torahKetuvimBooks || []), ...(neviimBooks || [])];
+
+      if (!allBooks.length) return { categories: [], extraSections: [] };
 
       // Fetch children of Torah books (parshiot etc.)
       const torahBookIds = allBooks
@@ -54,6 +66,7 @@ export function useContentSidebar() {
         .from("series")
         .select("id, title, parent_id, sort_order")
         .in("parent_id", torahBookIds)
+        .in("status", ["active", "published"])
         .order("sort_order")
         .order("title");
 
@@ -66,12 +79,12 @@ export function useContentSidebar() {
         .from("series")
         .select("id, title, parent_id, sort_order")
         .in("parent_id", nkBookIds)
+        .in("status", ["active", "published"])
         .order("sort_order")
         .order("title");
 
-      // Fetch children of expandable sections
-      const expandableIds = [
-        ROOT_IDS.howToLearn,
+      // Fetch children of expandable sections (flat sections: direct children are the leaf series)
+      const flatExpandableIds = [
         ROOT_IDS.generalTopics,
         ROOT_IDS.moadim,
         ROOT_IDS.haftarot,
@@ -82,9 +95,59 @@ export function useContentSidebar() {
       const { data: expandableChildren } = await supabase
         .from("series")
         .select("id, title, parent_id, sort_order")
-        .in("parent_id", expandableIds)
+        .in("parent_id", flatExpandableIds)
+        .in("status", ["active", "published"])
         .order("sort_order")
         .order("title");
+
+      // "איך לומדים" is a DEEP section: its direct children are sub-category nodes (status=category),
+      // and the actual leaf series live 2 levels deep. We fetch ALL descendants via RPC and apply
+      // the canonical dedup rule (active/published with lessons preferred; draft-only allowed when no twin).
+      const { data: howToLearnDesc } = await supabase.rpc("get_series_descendant_ids", {
+        root_id: ROOT_IDS.howToLearn,
+      });
+      const howToLearnDescIds = (howToLearnDesc || []).map((d: any) => d.series_id as string);
+      const { data: howToLearnAll } = howToLearnDescIds.length > 0
+        ? await supabase
+            .from("series")
+            .select("id, title, parent_id, sort_order, status, lesson_count")
+            .in("id", howToLearnDescIds)
+            .in("status", ["active", "published", "draft"])
+            .order("lesson_count", { ascending: false })
+            .order("title")
+        : { data: [] };
+
+      // Apply canonical dedup for howToLearn children (same rules as useSeriesForNode):
+      // normalize quotes in the title key + drop direct-child empty draft placeholders.
+      const normHtl = (t: string) => t.trim().replace(/[״"'׳‘’“”`]/g, "").replace(/\s+/g, " ");
+      const howToLearnCanonicalMap = new Map<string, { id: string; title: string; parent_id: string | null; sort_order: number | null; status: string; lesson_count: number }>();
+      for (const s of (howToLearnAll || [])) {
+        if (s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === ROOT_IDS.howToLearn) continue;
+        const key = normHtl(s.title);
+        const existing = howToLearnCanonicalMap.get(key);
+        if (!existing) {
+          howToLearnCanonicalMap.set(key, s as any);
+        } else {
+          const existScore = (existing.status !== "draft" ? 2 : 0) + (existing.lesson_count > 0 ? 1 : 0);
+          const newScore = (s.status !== "draft" ? 2 : 0) + (s.lesson_count > 0 ? 1 : 0);
+          if (newScore > existScore) howToLearnCanonicalMap.set(key, s as any);
+        }
+      }
+      // Sort: active/published with lessons first, drafts last, alphabetical within group
+      const howToLearnChildren = Array.from(howToLearnCanonicalMap.values())
+        .sort((a, b) => {
+          const aScore = (a.status !== "draft" ? 2 : 0) + (a.lesson_count > 0 ? 1 : 0);
+          const bScore = (b.status !== "draft" ? 2 : 0) + (b.lesson_count > 0 ? 1 : 0);
+          if (bScore !== aScore) return bScore - aScore;
+          return a.title.localeCompare(b.title, "he");
+        });
+      // Add fake parent_id field matching howToLearn root for getChildren() to work
+      const howToLearnForSection = howToLearnChildren.map((s) => ({
+        id: s.id,
+        title: s.title,
+        parent_id: ROOT_IDS.howToLearn,
+        sort_order: s.sort_order ?? 0,
+      }));
 
       // Build children map
       const childrenByBook = new Map<string, SidebarChild[]>();
@@ -144,7 +207,8 @@ export function useContentSidebar() {
         {
           id: ROOT_IDS.howToLearn,
           title: 'איך לומדים תנ"ך',
-          children: getChildren(ROOT_IDS.howToLearn),
+          // Use the canonical deep children (all descendant leaf series, deduped)
+          children: howToLearnForSection,
         },
         {
           id: ROOT_IDS.generalTopics,
@@ -183,38 +247,91 @@ export function useContentSidebar() {
     staleTime: 1000 * 60 * 10,
   });
 
-  // Fetch series for a node
+  // Fetch series for a node — canonical dedup rule:
+  // For each unique title in the descendant tree:
+  //   - If an active/published copy with lesson_count > 0 exists → show it
+  //   - Else if only a draft copy exists (no active twin) → show it (mirrors old site)
+  //   - Never show a draft that has an active/published twin (bad duplicate)
+  // Excludes the root node itself and intermediate category nodes (status=category).
   const useSeriesForNode = (nodeId: string | null) => {
     return useQuery({
-      queryKey: ["content-series", nodeId],
+      queryKey: ["content-series-canonical", nodeId],
       queryFn: async () => {
         if (!nodeId) return [];
         const { data: descendants } = await supabase.rpc("get_series_descendant_ids", {
           root_id: nodeId,
         });
-        const allIds = [nodeId, ...(descendants || []).map((d: any) => d.series_id)];
+        const allIds = [...(descendants || []).map((d: any) => d.series_id)];
+        if (allIds.length === 0) return [];
+
+        // Fetch ALL statuses (active, published, draft) — we apply canonical filter in JS
+        // Exclude "category" nodes (those are sub-category containers, not leaf series)
         const { data: series } = await supabase
           .from("series")
-          .select("id, title, lesson_count, rabbi_id, description")
+          .select("id, title, lesson_count, rabbi_id, description, status, image_url, parent_id")
           .in("id", allIds)
-          .gt("lesson_count", 0)
+          .in("status", ["active", "published", "draft"])
           .order("lesson_count", { ascending: false })
-          .limit(100);
+          .limit(200);
         if (!series || series.length === 0) return [];
-        const rabbiIds = [...new Set(series.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
+
+        // Normalize a title for dedup: strip Hebrew/ASCII quote variants + collapse whitespace,
+        // so 'כל האומר דוד…' and '"כל האומר דוד…"' (active vs draft twin) collapse to one key.
+        const normTitle = (t: string) =>
+          t.trim().replace(/[״"'׳‘’“”`]/g, "").replace(/\s+/g, " ");
+
+        // Drop direct-child placeholder sub-categories: a draft node with 0 lessons whose parent IS
+        // the requested node is a sub-category shell (old site shows it in the sidebar, not as a
+        // center series). Deeper draft-only leaves (e.g. parent = a sub-category) are kept.
+        const seriesFiltered = series.filter(
+          (s) => !(s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === nodeId),
+        );
+
+        // Canonical dedup: group by normalized title, pick best version
+        const byTitle = new Map<string, typeof series[number]>();
+        // First pass: pick active/published with lessons
+        for (const s of seriesFiltered) {
+          const key = normTitle(s.title);
+          const existing = byTitle.get(key);
+          if (!existing) {
+            byTitle.set(key, s);
+          } else {
+            // Prefer active/published with lessons over draft/empty
+            const existingScore = (existing.status !== "draft" ? 2 : 0) + (existing.lesson_count > 0 ? 1 : 0);
+            const newScore = (s.status !== "draft" ? 2 : 0) + (s.lesson_count > 0 ? 1 : 0);
+            if (newScore > existingScore) byTitle.set(key, s);
+          }
+        }
+
+        // Filter: include only if it's the best version of its title.
+        // Additionally exclude drafts that have an active twin (we kept only the active twin above).
+        const canonical = Array.from(byTitle.values());
+
+        const rabbiIds = [...new Set(canonical.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
         let rabbiMap = new Map<string, string>();
         if (rabbiIds.length > 0) {
           const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
           rabbiMap = new Map(rabbis?.map((r) => [r.id, r.name]) || []);
         }
-        return series.map((s) => ({
+
+        // Sort: active/published with lessons first, then by lesson_count desc, drafts last
+        canonical.sort((a, b) => {
+          const aActive = a.status !== "draft" && a.lesson_count > 0 ? 1 : 0;
+          const bActive = b.status !== "draft" && b.lesson_count > 0 ? 1 : 0;
+          if (bActive !== aActive) return bActive - aActive;
+          return (b.lesson_count ?? 0) - (a.lesson_count ?? 0);
+        });
+
+        return canonical.map((s) => ({
           id: s.id,
           title: s.title,
           lessonCount: s.lesson_count,
           rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
           sourceType: null,
           description: s.description,
-        })) as SeriesRow[];
+          imageUrl: s.image_url ?? null,
+          isDraft: s.status === "draft",
+        })) as (SeriesRow & { imageUrl: string | null; isDraft: boolean })[];
       },
       enabled: !!nodeId,
       staleTime: 1000 * 60 * 5,
@@ -283,6 +400,7 @@ export function useContentSidebar() {
           .from("series")
           .select("id, title, lesson_count, description")
           .eq("rabbi_id", rabbiId)
+          .in("status", ["active", "published"])
           .gt("lesson_count", 0)
           .order("lesson_count", { ascending: false })
           .limit(100);

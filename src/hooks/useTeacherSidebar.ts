@@ -83,22 +83,96 @@ export function useTeacherSidebar(): TeacherSidebarData {
 
       const books = booksRaw || [];
 
-      // ── 2. Get teacher-tagged children of those books ─────────────────────
-      const bookIds = books.map((b) => b.id);
-      const { data: childrenRaw } = await supabase
-        .from("series")
-        .select("id, title, parent_id")
-        .in("parent_id", bookIds)
+      // ── 2. ד4 fix: find series that have teacher-tagged LESSONS (not series.audience_tags)
+      // Root cause analysis (2026-06-02):
+      //   - DB stores audience_tags on LESSONS, not series nodes.
+      //   - Teacher series are sometimes grandchildren of books (book → sub-folder → teacher-series),
+      //     not direct children. Old direct-child lookup missed them.
+      //   - Example: "בראשית" teacher series (8 items) are under parent "בראשית"(2e248097)
+      //     which is under "תורה"(livuyTatim tree), not under torah root directly.
+      // New approach: 3 steps
+      //   a) Get distinct series_ids from teacher lessons
+      //   b) Get their parent_ids (and grandparent_ids via a second fetch)
+      //   c) Match against bookIds to build childrenByBook
+      const { data: teacherLessonsRaw } = await supabase
+        .from("lessons")
+        .select("series_id")
         .contains("audience_tags", ["teachers"])
-        .gt("lesson_count", 0)
-        .order("title");
+        .eq("status", "published")
+        .not("series_id", "is", null)
+        .limit(10000);
 
-      const children = childrenRaw || [];
+      const teacherSeriesIds = [
+        ...new Set((teacherLessonsRaw || []).map((l: any) => l.series_id as string).filter(Boolean)),
+      ];
+
+      // Fetch those series to get id/title/parent_id (up to 500)
+      let teacherSeriesMeta: { id: string; title: string; parent_id: string | null }[] = [];
+      if (teacherSeriesIds.length > 0) {
+        const { data } = await supabase
+          .from("series")
+          .select("id, title, parent_id")
+          .in("id", teacherSeriesIds.slice(0, 500))
+          .gt("lesson_count", 0)
+          .order("title");
+        teacherSeriesMeta = (data || []) as { id: string; title: string; parent_id: string | null }[];
+      }
+
+      const bookIds = books.map((b) => b.id);
+      // Build a book-title → book-id map for matching by title (handles alternate path)
+      const bookByTitle = new Map(books.map((b) => [b.title, b.id]));
+
+      // Step b: collect unique parentIds of teacher series that are NOT already bookIds
+      const intermediateParentIds = [
+        ...new Set(
+          teacherSeriesMeta
+            .map((s) => s.parent_id)
+            .filter((pid): pid is string => !!pid && !bookIds.includes(pid))
+        ),
+      ];
+
+      // Fetch those intermediate nodes to get their parent_id (grandparent)
+      let intermediateMeta: { id: string; title: string; parent_id: string | null }[] = [];
+      if (intermediateParentIds.length > 0) {
+        const { data } = await supabase
+          .from("series")
+          .select("id, title, parent_id")
+          .in("id", intermediateParentIds.slice(0, 300));
+        intermediateMeta = (data || []) as { id: string; title: string; parent_id: string | null }[];
+      }
+
+      // Build: intermediateId → bookId (if intermediate's parent is a book OR intermediate IS a book)
+      const intermediateToBook = new Map<string, string>();
+      for (const im of intermediateMeta) {
+        if (im.parent_id && bookIds.includes(im.parent_id)) {
+          // intermediate's parent is a book — intermediate is a sub-folder under the book
+          intermediateToBook.set(im.id, im.parent_id);
+        } else {
+          // Try matching intermediate by title to a known book
+          const bookIdByTitle = bookByTitle.get(im.title);
+          if (bookIdByTitle) intermediateToBook.set(im.id, bookIdByTitle);
+        }
+      }
+
+      // Step c: build childrenByBook — resolve each teacher series to its book
       const childrenByBook = new Map<string, { id: string; title: string }[]>();
-      for (const c of children) {
-        const arr = childrenByBook.get(c.parent_id!) || [];
-        arr.push({ id: c.id, title: c.title });
-        childrenByBook.set(c.parent_id!, arr);
+      for (const ts of teacherSeriesMeta) {
+        let targetBookId: string | null = null;
+        if (ts.parent_id && bookIds.includes(ts.parent_id)) {
+          targetBookId = ts.parent_id;
+        } else if (ts.parent_id && intermediateToBook.has(ts.parent_id)) {
+          targetBookId = intermediateToBook.get(ts.parent_id)!;
+        }
+        if (targetBookId) {
+          const arr = childrenByBook.get(targetBookId) || [];
+          arr.push({ id: ts.id, title: ts.title });
+          childrenByBook.set(targetBookId, arr);
+        }
+      }
+
+      // Sort each bucket alphabetically
+      for (const [k, v] of childrenByBook.entries()) {
+        childrenByBook.set(k, v.sort((a, b) => a.title.localeCompare(b.title, "he")));
       }
 
       // ── 3. Build book trees ───────────────────────────────────────────────

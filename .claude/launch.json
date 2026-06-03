@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "bneyzion-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 8080
+      "runtimeExecutable": "node_modules/.bin/vite",
+      "runtimeArgs": ["--port", "8090", "--strictPort", "--host", "127.0.0.1"],
+      "port": 8090
     }
   ]
 }

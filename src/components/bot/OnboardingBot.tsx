@@ -1,9 +1,12 @@
 // Top-level bot wrapper — handles open/close + first-visit pop logic
 // Path in repo: src/components/bot/OnboardingBot.tsx
 // Updated 28.5.2026: fixed hooks-order bug + injected Ploni font + brand "בנצי"
+// Updated 2026-06-03: self-computes currentParasha via parashaCalendar so the bot
+//   always receives the real parasha without requiring a prop from App.tsx.
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { getCurrentParasha } from "@/lib/parashaCalendar";
 import { BotButton } from "./BotButton";
 import { BotPanel } from "./BotPanel";
 import { BOT_CONFIG } from "./botConfig";
@@ -53,11 +56,19 @@ const PLONI_FONT_CSS = `
 `;
 
 export function OnboardingBot({
-  currentParasha = null,
+  currentParasha: currentParashaProp = null,
   disabledOnRoutes = ["/admin", "/design-"],
 }: Props) {
   // ── ALL hooks must be called unconditionally (React rules) ────────────
   const location = useLocation();
+
+  // Self-compute parasha — don't depend on caller to pass it.
+  // If a prop is given (e.g. from a page that already computed it) use that;
+  // otherwise fall back to dynamic computation from parashaCalendar.ts.
+  const currentParasha = useMemo(
+    () => currentParashaProp ?? getCurrentParasha(),
+    [currentParashaProp]
+  );
   const [isOpen, setIsOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
 

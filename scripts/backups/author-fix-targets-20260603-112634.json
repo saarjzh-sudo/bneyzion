@@ -1,0 +1,56 @@
+[
+ {
+  "id": "f45b01af-1fca-49ee-bd7d-7171ae974222",
+  "title": "מדריכים למורה - יהושע",
+  "rabbi_id": "1be980e3-a688-47aa-9eaf-adfa23b105b6",
+  "description": null,
+  "rabbis": {
+   "name": "מכון דעת סופרים"
+  }
+ },
+ {
+  "id": "b525d0b4-b234-491e-bd32-ed071b5eb2c1",
+  "title": "מדריכים למורה - שופטים",
+  "rabbi_id": "1be980e3-a688-47aa-9eaf-adfa23b105b6",
+  "description": null,
+  "rabbis": {
+   "name": "מכון דעת סופרים"
+  }
+ },
+ {
+  "id": "09a14cdd-41f4-43bc-8bc0-0cbeedab3493",
+  "title": "סיכומים על ספר יהושע",
+  "rabbi_id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "description": null,
+  "rabbis": {
+   "name": "הרב שמעון לוי"
+  }
+ },
+ {
+  "id": "229e96bf-52b5-4760-9451-15cf29ee5bd7",
+  "title": "סיכומים על ספר יהושע",
+  "rabbi_id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "description": null,
+  "rabbis": {
+   "name": "הרב שמעון לוי"
+  }
+ },
+ {
+  "id": "8caa1cbd-4b4d-4604-89b6-16808ea07685",
+  "title": "סיכומים על ספר שופטים",
+  "rabbi_id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "description": null,
+  "rabbis": {
+   "name": "הרב שמעון לוי"
+  }
+ },
+ {
+  "id": "0664a155-f6cd-40b1-8d9f-7443805f7b3b",
+  "title": "סיכומים על ספר שופטים",
+  "rabbi_id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "description": null,
+  "rabbis": {
+   "name": "הרב שמעון לוי"
+  }
+ }
+]
