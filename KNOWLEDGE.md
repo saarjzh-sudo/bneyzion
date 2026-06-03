@@ -585,6 +585,37 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-04 — Re-sync merge: origin/feat/navigator-bot → feat/weekly-chapter-data-driven (commit 3a9f2857)
+
+**Branch:** `feat/weekly-chapter-data-driven`
+**Preview deploy:** `https://bneyzion-oq78gde47-saars-projects-4508d6bb.vercel.app` (readyState=READY)
+
+**What was merged in:**
+- TeachersWingPage + 5 category pages (TeachersBookPage/ContentTypePage/CreatorPage/ParashaPage/WorksheetsPage)
+- CategoryPage + `/category/:id` route
+- BenziKnowledge admin CRUD + `/admin/benzi` route
+- navigation-bot DB-driven upgrade (benzi_knowledge table + loadKnowledgeFromDB)
+- navigation-bot-preview edge function
+- OnboardingBot: `getCurrentParasha` auto-compute via `useMemo` (from navigator-bot)
+- 4 migrations: content_approval_workflow, grow_orders, benzi_knowledge, get_public_rabbis_rpc
+- useTeacherBookContent + useTeacherParashaContent hooks
+- Sidebar/author/LessonPage fixes, backfill scripts, yehoshua reel video
+- Grow webhook targetTable fix (b5b177c)
+
+**Conflicts resolved (3 files):**
+1. `KNOWLEDGE.md` — 2 conflict hunks: (a) header metadata → kept HEAD (2026-06-04 date), (b) §7 history → kept BOTH entries (weekly-chapter section + triple-merge section)
+2. `src/components/bot/OnboardingBot.tsx` — auto-merged cleanly by git (self-hosted Ploni from HEAD + getCurrentParasha from theirs — perfect combination)
+3. `src/App.tsx` — auto-merged cleanly (all routes from both sides present, no conflict)
+
+**Verified both sides survived:**
+- Weekly-chapter routes: `/program/weekly-chapter` (WeeklyProgramLibrary), `/course/:slug` (WeeklyBookDetailOrLegacy), `/course/weekly-chapter` → redirect, `/courses` (catalog)
+- Production routes: All Teachers Wing routes, `/category/:id`, `/admin/benzi`, bot with disabledOnRoutes=["/admin","/design-","/course/","/program/"]
+- OnboardingBot Ploni: self-hosted (`/fonts/*.otf`) — cdnfonts.com 404s since 2026-06-03 — the merge kept our fix
+
+**TS:** clean. **Build:** clean (✓ 4.44s). **Push:** feat/weekly-chapter-data-driven only. **No --prod.**
+
+---
+
 ### 2026-06-03 — ייבוא 5 ספרים + community_courses + payment_products + webhook (274 שורות)
 
 **Branch:** `feat/weekly-chapter-data-driven` (ללא push/deploy — checkpoint בלבד)
