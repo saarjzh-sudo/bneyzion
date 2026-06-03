@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-02 (session — polling 30s + visibilitychange pushed + deployed to bneyzion.vercel.app · REGRESSION GUARD added for Yehoshua donations pipeline)
+**Last updated:** 2026-06-03 (merge — feat/weekly-chapter-data-driven ← origin/feat/navigator-bot; multi-book weekly program + @hebcal/core + header + webhook targetTable)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -5062,72 +5062,6 @@ lesson.thumbnail_url
 
 הגדרת משתנה ב-"Preview" לא מעתיקה אותו ל-"Production". בכל הגדרת env var חדש: לבדוק שמסומן גם Production. ב-webhook שנכשל בשקט — לבדוק Vercel env vars לפני כל debug אחר.
 
-### 2026-06-02 — Yehoshua campaign donations stuck pending: two-layer bug RESOLVED (commit b5b177c)
-
-**רקע:** דף שותפים יהושע (`/yehoshua` → `DesignPreviewYehoshuaCampaign.tsx`). בר ההתקדמות תקוע על 7 שותפים / ₪900 למרות שסליקות אמיתיות נכנסו.
-
-#### הסימפטום שהסיח דעת
-- לקוח עם מספר בית "200" נתקע בטופס — נראה כמו באג ולידציה. האבחון הראשוני ריצד סביב זה.
-- בפועל: הדף קורא `yehoshua_campaign_stats` חי בכל טעינה (Vite SPA, ללא build-time caching). deploy לא נדרש לתצוגה — הבר קורא DB חי. הסחה.
-
-#### שתי תקלות שכבדו זו על זו
-
-**תקלה 1 — משתני סביבה חסרים בפרודקשן:**
-- `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` הוגדרו רק ב-Vercel **Preview** environment, לא ב-**Production**.
-- `api/grow/webhook.ts` קרא `createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY)` — בפרודקשן קיבל `createClient("", "")`.
-- Supabase client עם מחרוזת ריקה נכשל בשקט: אין throw, ה-webhook החזיר 200 ל-Grow, אבל 0 שורות עודכנו ב-DB.
-- **תיקון:** הוסיף שני ה-env ל-Production env vars ב-Vercel dashboard + redeploy.
-
-**תקלה 2 — באג ניתוב טבלה ב-webhook.ts:**
-- `payment_products` record של `yehoshua-campaign` מוגדר `type="wallet"`.
-- `create-payment` בונה את payload ל-Grow עם `cField2 = product.type` → שלח `cField2="wallet"`.
-- `webhook.ts` ניתב: `flowType === "donation" ? "donations" : "orders"` — וה-`cField2` ב-Grow webhook הוא `flowType`.
-- `"wallet"` ≠ `"donation"` → נפל לענף `"orders"` → ניסה `UPDATE orders SET payment_status='completed' WHERE id=<donation_uuid>` → 0 שורות affected (UUID לא קיים ב-orders) → pending לנצח.
-- **למה 7 הישנות עבדו?** הסליקות מ-30-31/5 נשלחו עם `cField2="donation"` (לפני deploy שהעביר לזרימת-מוצר). deploy ב-~31/5 החל לשלוח `cField2="wallet"` ושבר כל מה שאחריו.
-- **תיקון (commit b5b177c):** `webhook.ts` — `targetTable` נקבע לפי `payment_products.target_table` דרך `cField3` (productSlug) — המקור האמין. fallback ללוגיקה הישנה (cField2) כשאין productSlug, כדי לא לשבור store/subscription.
-- **אימות:** שורת טסט בטבלת donations עברה pending→completed עם `cField2=wallet` + `cField3=yehoshua-campaign`.
-
-#### תבנית אבחון "סליקות תקועות pending" — לשימוש חוזר
-
-בדוק לפי הסדר, עצור בראשון שנכשל:
-
-| שלב | בדיקה | כלי |
-|-----|--------|------|
-| א | השורה ב-DB בכלל? | `SELECT * FROM donations/orders WHERE id=<uuid>` |
-| ב | webhook מגיע לפונקציה? | POST ידני ל-`/api/grow/webhook` → 200? Vercel SSO לא חוסם API routes |
-| ג | מעדכן טבלה נכונה? | `cField2` vs `target_table` — **הבאג הזה!** |
-| ד | נספר ב-view? | `SELECT * FROM yehoshua_campaign_stats` — מסנן `payment_status='completed'` |
-| ה | תצוגה? | הדף קורא חי — אין cache; רענון מספיק |
-
-#### עובדות תשתית שהתבררו
-
-- **Grow/Meshulam: אין API לרשימת עסקאות.** נוסו 26 endpoints. רק dashboard ב-`secure.meshulam.co.il`. אימות עסקה בודדת דורש `processToken`/`transactionToken` שנוצר ב-create-payment — **לא שמרנו אותו** בטבלת donations.
-- **Webhook שנשרף לא נשלח שוב מ-Grow** — סליקות שנתקעו לפני התיקון דורשות backfill ידני.
-- **תצוגה חיה:** `DesignPreviewYehoshuaCampaign.tsx` קורא `yehoshua_campaign_stats` בכל mount — SPA, לא SSG. אין צורך ב-deploy לעדכון תצוגה.
-- **realtime:** `donations` הוגדר `REPLICA IDENTITY FULL` אבל לא ב-publication `supabase_realtime` — דורש Supabase Management PAT חדש (הישן פג). polling 30s + visibilitychange נפרס כ-fallback (commit ae2445c).
-- **Deploy pattern:** `productionBranch=main` ב-Vercel. עבודה על `feat/navigator-bot` → push → auto-deploy יוצא כ-preview בלבד. חייבים `vercel link + vercel --prod` ידני לפרודקשן. git author חייב `saar.j.z.h@gmail.com` אחרת Vercel חוסם ב-BLOCKED state.
-
-#### Backfill שבוצע (2.6.2026)
-
-19 תורמים אמיתיים שנתקעו pending סומנו completed ידנית → הבר עלה מ-7/₪900 ל-26/₪3,806.
-
-#### TODO פתוח
-
-- רפי בריקנר ₪360 + pending נוספים אחרי ה-backfill — לאמת מול Grow dashboard וסמן.
-- שמור `processId`/`processToken` ב-`create-payment` (עמודה ב-`donations`) → יאפשר אימות מול `getPaymentProcessInfo` בעתיד.
-- הקשחת webhook: `return 500` כשמשתני env חסרים (במקום 200 שקט) כדי ש-Grow ינסה retry.
-- Realtime publication: `ALTER PUBLICATION supabase_realtime ADD TABLE donations` (דורש Supabase PAT חדש מסאר).
-- יישור `payment_products.yehoshua-campaign`: `type="wallet"` + `page_code_env="DONATIONS"` — סתירה פנימית. לשקול ליישר `type` לערך עקבי.
-
-#### לקח ברזל: webhook silent-200 = תקלה הכי קשה לאבחון
-
-כאשר API מחזיר 200 אבל לא עושה כלום — אין שגיאה, אין log, אין סימן. **תמיד** להוסיף log מפורש ל-webhook (`console.log("updated rows:", data?.length)`) ו-guard על env vars בתחילת הפונקציה (`if (!url || !key) return new Response("missing env", {status:500})`).
-
-#### לקח ברזל: env vars — Production ≠ Preview בVercel
-
-הגדרת משתנה ב-"Preview" לא מעתיקה אותו ל-"Production". בכל הגדרת env var חדש: לבדוק שמסומן גם Production. ב-webhook שנכשל בשקט — לבדוק Vercel env vars לפני כל debug אחר.
-- **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
-
 ### 2026-06-03 — multi-book weekly program navigation (feat/weekly-chapter-data-driven, commit b8579f5f)
 
 **Branch:** `feat/weekly-chapter-data-driven`
@@ -5199,3 +5133,28 @@ Both hooks ALWAYS called unconditionally. Admin gets toggle: subscriber/locked p
 - Eliminates 8 console 404 errors on every page load.
 
 **TS:** clean. **Build:** clean. **Push:** feat/weekly-chapter-data-driven. **Deployed:** preview only (no --prod).
+- **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
+
+### 2026-06-02 — @hebcal/core dynamic parasha calc + 17 Tammuz nav fix (commit fdcc79b9)
+
+- **בעיה:** `parashaCalendar.ts` השתמש ב-`SCHEDULE_5786` — טבלה קשיחה שנשברת כל שנה. היום הייתה שבוע אחורה (הראתה בהעלותך במקום שלח לך).
+- **פתרון:** הוחלפה הטבלה ב-`@hebcal/core` v6.5.2 עם `HebrewCalendar.calendar({il:true})`. חישוב דינמי לנצח, ישראל schedule. מיפוי EN→HE לכל 54 פרשות + מחוברות (מטות-מסעי, נצבים-וילך וכו'). fallback סטטי מינימלי אם הספרייה נכשלת.
+- **TLA fix:** `@hebcal/core` משתמש ב-top-level await לפוליפיל `Temporal`. דרש העלאת `vite.config.ts` `build.target` ל-`esnext` ו-`tsconfig.app.json` ל-`ES2022`. קהל ישראלי — iOS 15.4+/Chrome 90+ — ריסק אפסי.
+- **i"ז בתמוז CTA:** ה-navigate היה ל-`/design-series-page/${seriesId}` (sandbox!). תוקן ל-`/series/${seriesId}`. סדרת "שלושת השבועות" (`e36ea5d6-38f8-49ca-874e-ff3324bb3795`) ב-DB קיימת, active, 7 שיעורים, הרב יהושע שפירא. אומת Firecrawl.
+- **אימות פרודקשן:** `bneyzion.vercel.app` — כרטיס פרשת השבוע = "פרשת שלח לך, חומש במדבר". כרטיס י"ז בתמוז = "עוד 41 ימים". `/series/e36ea5d6` נטען עם 7 שיעורים.
+- **Iron rule:** NEVER use static schedule table for parasha — use @hebcal/core (il:true). Table breaks every year.
+- **Branch:** pushed `prod-parasha-tammuz-fix` → `feat/navigator-bot` directly.
+
+### 2026-06-02 — Branch regression recovery: unified merge feat/navigator-bot + admin-to-production
+
+- **בעיה:** שני branches של 2.6.2026 התפצלו מ-`9a51791e`. deploy מ-`feat/navigator-bot` (hebcal+header) דרס admin wave-3 + content gate שחיו ב-`admin-to-production`. Payments chunk `Payments-q34Vg-wW.js` = 0 סמני wave-3 בפרודקשן.
+- **פתרון:** merge branch `merge/unified-production` מ-`feat/navigator-bot` + `git merge origin/admin-to-production`. קונפליקט יחיד: `KNOWLEDGE.md` — union של שני הצדדים. כל שאר הקבצים = auto-merge נקי (אין overlap מחוץ ל-KNOWLEDGE.md).
+- **merge commit:** `0a42778a` on `feat/navigator-bot`.
+- **Deploy:** `dpl_8Ya4WDjAj4eJcYLW8Hikk1eM1GWG`, `readyState=READY`, aliased ל-`bneyzion.vercel.app`.
+- **אימות (א):** Firecrawl homepage — "פרשת שלח לך, חומש במדבר" ✓
+- **אימות (ב):** י"ז בתמוז = "עוד 41 ימים" + navigate ל-`/series/e36ea5d6` ✓ (לא sandbox)
+- **אימות (ג):** `cmdk`/`hebcal` ב-main bundle ✓ (GlobalSearch + hebcal dynamic)
+- **אימות (ד):** Payments chunk `Payments-bZxUC4vk.js` — `directDebit` (3x) + `issue-paperless-invoice` + `הפק` ✓ (wave-3)
+- **אימות (ה):** Subscribers chunk — `user_access_tags` (4x) + `weekly-chapter` (2x) ✓ (content gate)
+- **Iron rule — לקח ברזל:** לפני deploy לפרודקשן — לוודא שה-branch הנפרס הוא superset של מה שכבר חי (`git log --oneline origin/prod..other-branch`). deploy "מתקדם" יכול לדרוס feature אחר שחי מ-branch מקביל. אם שני branches התפצלו מאותו base — merge לפני deploy.
+- **Deploy topology reminder:** כל `git push` ל-`feat/navigator-bot` יוצא כ-preview (productionBranch=main ב-Vercel). לפרודקשן תמיד `vercel --prod --yes` עם `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID`.

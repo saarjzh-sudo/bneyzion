@@ -49,8 +49,15 @@ function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const hours = Math.floor(diff / 3600000);
   if (hours < 1) return "לפני דקות";
-  if (hours < 24) return `לפני ${hours} שעות`;
-  return `לפני ${Math.floor(hours / 24)} ימים`;
+  if (hours < 24) {
+    if (hours === 1) return "לפני שעה";
+    if (hours === 2) return "לפני שעתיים";
+    return `לפני ${hours} שעות`;
+  }
+  const days = Math.floor(hours / 24);
+  if (days === 1) return "לפני יום";
+  if (days === 2) return "לפני יומיים";
+  return `לפני ${days} ימים`;
 }
 
 // ─────────────────────────────────────────────
@@ -397,7 +404,7 @@ const Donate = () => {
               }}
             >
               <TrustCard icon={<Shield size={20} />} label="תשלום מאובטח" sub="SSL / PCI" />
-              <TrustCard icon={<CheckCircle2 size={20} />} label="זיכוי מס 46%" sub="עמותה מוכרת" />
+              <TrustCard icon={<CheckCircle2 size={20} />} label="זיכוי מס סעיף 46" sub="עמותה מוכרת" />
               <TrustCard icon={<Award size={20} />} label="קבלה מיידית" sub="למייל שלך" />
             </div>
 

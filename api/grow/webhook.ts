@@ -134,9 +134,43 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const supabase = getSupabaseAdmin();
 
-    // Decide which table to update. Donations stay in `donations`, everything
-    // else (products + subscriptions) lives in `orders`.
-    const targetTable = flowType === "donation" ? "donations" : "orders";
+    // Decide which table to update.
+    //
+    // Strategy (fix 2026-06-02): if cField3 (productSlug) is present, look up
+    // the product's `target_table` in payment_products first — this is the
+    // authoritative source because create-payment wrote the row there.
+    // Example: yehoshua-campaign has type="wallet" but target_table="donations".
+    // Using cField2 alone (the old approach) routed it to "orders" → 0 rows
+    // updated → donation stuck pending forever.
+    //
+    // Fallback: if no productSlug or product not found, use the legacy rule
+    // (cField2==="donation" → "donations", everything else → "orders").
+    // This keeps store products, subscriptions, and any pre-existing flow intact.
+    let targetTable: string;
+    if (productSlug) {
+      try {
+        const { data: ppRow } = await supabase
+          .from("payment_products")
+          .select("target_table")
+          .eq("id", productSlug)
+          .maybeSingle();
+        if (ppRow?.target_table) {
+          targetTable = ppRow.target_table;
+          console.log(`Webhook: targetTable resolved from payment_products("${productSlug}") → "${targetTable}"`);
+        } else {
+          // Product not found in DB — fall through to legacy logic
+          targetTable = flowType === "donation" ? "donations" : "orders";
+          console.log(`Webhook: product "${productSlug}" not in payment_products, fallback targetTable="${targetTable}"`);
+        }
+      } catch (e) {
+        // Table query failed — fall through to legacy logic
+        targetTable = flowType === "donation" ? "donations" : "orders";
+        console.warn(`Webhook: payment_products lookup failed, fallback targetTable="${targetTable}"`, e);
+      }
+    } else {
+      targetTable = flowType === "donation" ? "donations" : "orders";
+      console.log(`Webhook: no productSlug, legacy targetTable="${targetTable}" (flowType="${flowType}")`);
+    }
 
     // Preserve existing raw_payload (e.g. consent audit from create-payment)
     let mergedPayload: any = { webhook: payload };
@@ -224,7 +258,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Donations: subscribe the donor to the Smoove marketing list. Skips
     // silently if SMOOVE_API_KEY is unset, the email is empty, or the call
     // fails — donation completion is never blocked on this.
-    if (flowType === "donation" && statusCode === "2") {
+    // Note: check targetTable (not flowType) so wallet-type donations like
+    // yehoshua-campaign are also subscribed correctly.
+    if (targetTable === "donations" && statusCode === "2") {
       await subscribeToSmoove({
         email: txData.payerEmail,
         fullName: txData.fullName || "",

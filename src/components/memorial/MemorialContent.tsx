@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import saadiaTefillin from "@/assets/saadia-tefillin.png";
 import saadiaSoldier from "@/assets/saadia-soldier.jpg";
-import landscapeSunrise from "@/assets/memorial-landscape-sunrise.jpg";
-import landscapePath from "@/assets/memorial-landscape-path.jpg";
-import torahScroll from "@/assets/memorial-torah-scroll.jpg";
 
 type CardVariant = "cream" | "forest" | "gold" | "sage";
 
@@ -122,19 +118,6 @@ const PhotoBlock = ({
   </motion.figure>
 );
 
-const LandscapeBanner = ({ src, alt, delay = 0 }: { src: string; alt: string; delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0 }}
-    whileInView={{ opacity: 1 }}
-    viewport={{ once: true }}
-    transition={{ delay, duration: 1 }}
-    className="rounded-2xl overflow-hidden"
-    style={{ boxShadow: "0 4px 30px rgba(56,79,71,0.08)" }}
-  >
-    <img src={src} alt={alt} className="w-full aspect-[21/8] object-cover" loading="lazy" />
-  </motion.div>
-);
-
 /* Full-width colored divider between sections */
 const SectionDivider = ({ variant = "gold" }: { variant?: "gold" | "forest" | "sage" }) => {
   const colors = {
@@ -206,14 +189,14 @@ const MemorialContent = () => (
         </div>
       </SectionCard>
 
-      {/* ── Landscape: Sunrise ── */}
-      <LandscapeBanner src={landscapeSunrise} alt="נוף הרי שומרון בזריחה" />
-
       {/* ── Section 3: Life story — DARK forest card ── */}
       <SectionCard title="ספרא וסייפא: הבית ביפו והגמרא על הטנק" variant="forest" delay={0.05}>
         <div className="space-y-5">
           <Paragraph light>
-            יחד עם אשתו רחלי, הקים סעדיה את ביתו ביפו, מתוך רצון לחיות חיי תורה שמחוברים לעם על כל גווניו. הוא היה אברך שקדן שלמד בהתמדה למבחני הרבנות, ולצד זאת החל את לימודיו לתואר ראשון בהוראה. הוא לא שמר את התורה לעצמו – הוא מסר שיעורי "דף יומי" לתלמידי הישיבה במסירות עצומה. מעל הכל, סעדיה היה אבא אוהב, נוכח ומסור להללי ולינון הקטנים (ולאחר נופלו התברר שרחלי נושאת ברחמה תינוק נוסף).
+            יחד עם אשתו רחלי, הקים סעדיה את ביתו ביפו, מתוך רצון לחיות חיי תורה שמחוברים לעם על כל גווניו. הוא היה אברך שקדן שלמד בהתמדה למבחני הרבנות, ולצד זאת החל את לימודיו לתואר ראשון בהוראה. הוא לא שמר את התורה לעצמו — הוא מסר שיעורי "דף יומי" לתלמידי הישיבה במסירות עצומה.
+          </Paragraph>
+          <Paragraph light>
+            מעל הכל, סעדיה היה אבא אוהב, נוכח ומסור להללי ולינון הקטנים — ולאחר נופלו התברר שרחלי נושאת ברחמה תינוק נוסף.
           </Paragraph>
           <Paragraph light>
             בשמחת תורה התייצב סעדיה מיד בצו 8 כלוחם בחטיבת אלכסנדרוני. התמונות שפורסמו מהקרבות בעזה – סעדיה עטור בתפילין, או יושב על טנק בציוד לחימה מלא, קורן מאושר ושוקע בלימוד גמרא – הפכו לסמל המובהק ביותר של תורת ארץ ישראל.
@@ -236,13 +219,7 @@ const MemorialContent = () => (
         </div>
       </SectionCard>
 
-      {/* ── Photo: Tefillin in Gaza ── */}
-      <PhotoBlock src={saadiaTefillin} alt="סעדיה מניח תפילין בעזה" caption="לומד בכל מצב — סעדיה עטור תפילין בין הקרבות בעזה" delay={0.05} />
-
       <SectionDivider variant="gold" />
-
-      {/* ── Torah scroll landscape ── */}
-      <LandscapeBanner src={torahScroll} alt="ספר תורה פתוח" />
 
       {/* ── Section 4: Torah Treasures — warm gold card ── */}
       <SectionCard title="אוצרותיו של סעדיה" variant="gold" delay={0.05}>
@@ -263,9 +240,6 @@ const MemorialContent = () => (
         </div>
       </SectionCard>
 
-      {/* ── Landscape: Path ── */}
-      <LandscapeBanner src={landscapePath} alt="שביל עתיק בנוף ישראלי" />
-
       <SectionDivider variant="forest" />
 
       {/* ── Stats — sage background ── */}
@@ -276,8 +250,8 @@ const MemorialContent = () => (
         className="grid grid-cols-3 gap-4"
       >
         {[
-          { value: "2,500+", label: "שיעורים באתר" },
-          { value: "50+", label: "רבנים מלמדים" },
+          { value: "11,000+", label: "שיעורים ומאמרים" },
+          { value: "200+", label: "רבנים ומרצים" },
           { value: "∞", label: "לומדים ברחבי העולם" },
         ].map((stat, i) => (
           <div

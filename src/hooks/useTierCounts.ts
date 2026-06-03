@@ -35,7 +35,9 @@ export function useTierCounts(): Record<string, number> {
   useEffect(() => {
     fetchCounts();
 
-    // Re-fetch whenever any yehoshua-campaign donation changes
+    // Realtime subscription — triggers when a donation row changes.
+    // NOTE: requires donations table in supabase_realtime publication.
+    // The 30s polling below acts as fallback if realtime is unavailable.
     const channel = supabase
       .channel("yehoshua-tier-counts")
       .on(
@@ -50,8 +52,20 @@ export function useTierCounts(): Record<string, number> {
       )
       .subscribe();
 
+    // Polling fallback: re-fetch tier counts every 30 seconds.
+    // Guarantees sold counts stay current even without realtime.
+    const pollInterval = setInterval(fetchCounts, 30_000);
+
+    // Refresh when user returns to tab
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "visible") fetchCounts();
+    };
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
       supabase.removeChannel(channel);
+      clearInterval(pollInterval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
 

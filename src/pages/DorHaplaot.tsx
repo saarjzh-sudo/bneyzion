@@ -323,7 +323,7 @@ export default function DorHaplaot() {
               alt="לוגו בני ציון"
               className="h-24 md:h-28 mx-auto mb-6 drop-shadow-lg"
             />
-            <h1 className="font-kedem text-5xl sm:text-6xl md:text-7xl mb-4 leading-tight text-white drop-shadow-lg font-bold">
+            <h1 className="font-kedem-hollow-aaa text-5xl sm:text-6xl md:text-7xl mb-4 leading-tight drop-shadow-lg text-white">
               דור הפלאות
             </h1>
             <p className="font-kedem text-xl md:text-2xl text-white/90 mb-2">
