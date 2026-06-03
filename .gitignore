@@ -40,3 +40,7 @@ scripts/media-map-w*.json
 __pycache__/
 *.pyc
 secrets/
+
+# Large backup dumps — don't commit to git (too big)
+scripts/backups/lessons-backup.json
+scripts/backups/series-backup.json

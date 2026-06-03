@@ -40,6 +40,24 @@ export function usePublicRabbis() {
   return useQuery({
     queryKey: ["rabbis-public"],
     queryFn: async () => {
+      // Use get_public_rabbis() RPC which filters to rabbis who have at least 1
+      // 'general'-tagged series — excluding teacher-only creators (ישקו העדרים,
+      // מכון דעת סופרים, הרב עדי איצקוביץ', תלמוד תורה מורשה, etc.) that
+      // should only appear in the Teachers Wing.
+      // Migration: supabase/migrations/20260603_get_public_rabbis_rpc.sql
+      // Fallback: if RPC not yet applied, falls back to the old query.
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: rpcData, error: rpcError } = await (supabase as any)
+        .rpc("get_public_rabbis");
+      if (!rpcError && rpcData) {
+        const sorted = (rpcData as Rabbi[]).slice().sort((a, b) => {
+          const tierDiff = getRabbiTier(a.name) - getRabbiTier(b.name);
+          if (tierDiff !== 0) return tierDiff;
+          return (b.lesson_count ?? 0) - (a.lesson_count ?? 0);
+        });
+        return sorted;
+      }
+      // Fallback (RPC not yet deployed)
       const { data, error } = await supabase
         .from("rabbis")
         .select("*")

@@ -81,6 +81,22 @@ export default function TeachersLessonPage() {
   const { id = "" } = useParams<{ id: string }>();
   const { data: lesson, isLoading } = useLessonFull(id);
 
+  // ── Lesson trio image chain — null-safe so useSEO can be called unconditionally ──
+  const heroImage = lesson
+    ? (lesson.thumbnail_url ||
+        lesson.series?.image_url ||
+        (lesson.series ? getSeriesCoverImage(lesson.series.title) : null) ||
+        "/images/series-default.png")
+    : "/images/series-default.png";
+
+  // useSEO MUST be called before any early return (rules-of-hooks)
+  useSEO({
+    title: lesson ? `${lesson.title} — אגף המורים` : "אגף המורים",
+    description: lesson?.description || undefined,
+    image: heroImage,
+    url: `https://bneyzion.co.il/teachers/lesson/${id}`,
+  });
+
   if (isLoading) {
     return (
       <TeachersLayout>
@@ -102,21 +118,6 @@ export default function TeachersLessonPage() {
       </TeachersLayout>
     );
   }
-
-  // Lesson trio image chain
-  const heroImage =
-    lesson.thumbnail_url ||
-    lesson.series?.image_url ||
-    (lesson.series ? getSeriesCoverImage(lesson.series.title) : null) ||
-    "/images/series-default.png";
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useSEO({
-    title: `${lesson.title} — אגף המורים`,
-    description: lesson.description || undefined,
-    image: heroImage,
-    url: `https://bneyzion.co.il/teachers/lesson/${id}`,
-  });
 
   return (
     <>

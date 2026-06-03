@@ -31,16 +31,19 @@ import https from "node:https";
 // SUPABASE_SERVICE_ROLE must be set in environment — never hardcode.
 // Retrieve via: curl -s --noproxy '*' -H "Authorization: Bearer $SUPABASE_ACCESS_TOKEN"
 //   https://api.supabase.com/v1/projects/pzvmwfexeiruelwiujxn/api-keys | jq '.[]|select(.name=="service_role").api_key'
-if (!process.env.SUPABASE_SERVICE_ROLE) {
+// Also accepts SUPABASE_SERVICE_ROLE_KEY as fallback (used by some callers).
+const SUPABASE_URL =
+  process.env.SUPABASE_URL || "https://pzvmwfexeiruelwiujxn.supabase.co";
+const SUPABASE_SERVICE_ROLE =
+  process.env.SUPABASE_SERVICE_ROLE || process.env.SUPABASE_SERVICE_ROLE_KEY;
+if (!SUPABASE_SERVICE_ROLE) {
   console.error(
-    "ERROR: SUPABASE_SERVICE_ROLE environment variable is not set.\n" +
+    "ERROR: SUPABASE_SERVICE_ROLE (or SUPABASE_SERVICE_ROLE_KEY) environment variable is not set.\n" +
     "Usage: SUPABASE_SERVICE_ROLE=<key> SMOOVE_API_KEY=<key> node scripts/import-weekly-chapter-subscribers.mjs\n" +
     "Key: retrieve from Supabase Management API (see api-keys.md)"
   );
   process.exit(1);
 }
-const SUPABASE_URL = "https://pzvmwfexeiruelwiujxn.supabase.co";
-const SUPABASE_SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE;
 
 // ── Smoove ─────────────────────────────────────────────────────────────────────
 // SMOOVE_API_KEY must be set in environment — never hardcode.
