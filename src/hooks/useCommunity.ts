@@ -15,6 +15,7 @@ export interface WeeklyCourse {
   sort_order: number | null;
   status: string;
   lesson_count: number | null;
+  total_lessons: number | null;
   // for payment:
   payment_product_id: string | null; // e.g. 'book-ezra'
 }

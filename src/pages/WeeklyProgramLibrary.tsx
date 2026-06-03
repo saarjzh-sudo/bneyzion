@@ -67,7 +67,7 @@ function BookCard({ course }: { course: WeeklyCourse }) {
   const slug = course.program_slug ?? "";
   const accent = BOOK_ACCENTS[slug] ?? colors.goldDark;
   const gradient = BOOK_GRADIENTS[slug] ?? `linear-gradient(140deg, ${accent} 0%, ${accent}99 100%)`;
-  const chapterCount = course.lesson_count ?? 0;
+  const chapterCount = course.total_lessons ?? course.lesson_count ?? 0;
   const isBase = course.access_type === "open";
   const isLocked = !hasAccess && !isBase;
 
