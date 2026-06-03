@@ -34,10 +34,12 @@ import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 // Nav items — updated 2026-05-27 per Saar (second pass):
 // Order (RTL: first item = rightmost, closest to logo):
 // אגף המורים | פרשת השבוע | הקורסים שלי | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
+// 2026-06-03: "הקורסים שלי" → /courses (קטלוג ציבורי עם ספרי הפרק השבועי)
+// /design-my-courses remains accessible via portal; /program/weekly-chapter reachable from /courses catalog
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "אגף המורים", href: "/teachers" },
   { label: "פרשת השבוע", href: "/parasha" },
-  { label: "הקורסים שלי", href: "/design-my-courses" },
+  { label: "הקורסים שלי", href: "/courses" },
   { label: "חנות", href: "/store" },
   { label: "אודותינו", href: "/about" },
 ];
