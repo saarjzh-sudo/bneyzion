@@ -799,6 +799,28 @@ Also: Smoove subscribe trigger switched from `flowType==="donation"` to `targetT
 - Any LLM-powered bot that returns routes MUST have a server-side validation layer. Never trust the LLM to respect a route list it was given in a prompt alone.
 - When auditing a bot, test with the EXACT queries from the opening buttons (`botConfig.ts`) plus edge cases — those are the most likely paths users will hit.
 
+### 2026-06-03 — בנצי: שדרוג מ"מנווט זהיר" לעוזר ידע מלא (branch fix/benzi-knowledge-upgrade, commit cc7e85cf)
+
+**Trigger:** יואב (הבעלים) אמר לסאר שבנצי "מרגיש סתום" — נותן תשובות גנריות ומפנה לדפים במקום לענות. אפילו "מה פרשת השבוע?" — מפנה ל-/parasha ולא עונה.
+
+**אבחון שורש — 3 בעיות:**
+1. **System prompt** הגדיר את בנצי כ-"מנווט" בלבד: "תפקידך: לנווט". Gemini ציית לזה ולא ענה תוכן.
+2. **`currentParasha` תמיד `null`**: `OnboardingBot` מקבל פרשה כ-prop אבל `App.tsx` קורא `<OnboardingBot />` בלי prop. בנצי לא ידע מה הפרשה.
+3. **temperature=0.3** גרם לשמרנות — LLM מחוזק לקחת את הדרך הבטוחה (הפניה) במקום תשובה ישירה.
+
+**מה שונה (3 קבצים, commit cc7e85cf):**
+- `supabase/functions/navigation-bot/index.ts`: שכתוב system prompt — בנצי עכשיו מחויב לענות תוכן ישירות. הוראות מפורשות לפי סוג שאלה (פרשה, תוכן אתר, שאלת תנ"ך, שאלה שלא יודע). temperature 0.3→0.5, maxOutputTokens 512→600.
+- `src/components/bot/OnboardingBot.tsx`: מחשב `currentParasha` בפנים דרך `getCurrentParasha()` מ-`parashaCalendar.ts`. לא תלוי עוד בprop מ-App.tsx.
+- `src/components/bot/types.ts`: הוסיף `content_answered` intent.
+
+**כלל ברזל חדש:**
+- בנצי הוא עוזר ידע — לא מנווט. system prompt חייב לאפשר לו לענות תוכן ישירות.
+- `currentParasha` חייב להיות מחושב בצד הקליינט. OnboardingBot מחשב בעצמו, לא מסתמך על prop חיצוני.
+
+**סטטוס deploy:**
+- Edge function ממתינה ל-deploy מאושר: `supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn`
+- קוד על branch `fix/benzi-knowledge-upgrade`. לא מוזג ל-prod עדיין.
+
 ### 2026-06-02 — DB cleanup final: delete 436 trash lessons + recover 1 missing lesson
 
 **Task 1 — Delete ~436 remaining trash lessons (FK-blocked)**
