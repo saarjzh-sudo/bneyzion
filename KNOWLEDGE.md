@@ -4948,6 +4948,18 @@ lesson.thumbnail_url
 - **Iron rule:** NEVER use static schedule table for parasha — use @hebcal/core (il:true). Table breaks every year.
 - **Branch:** pushed `prod-parasha-tammuz-fix` → `feat/navigator-bot` directly.
 
+### 2026-06-03 — בנצי: תיקון ידע + מנגנון אימון מתמשך (branch fix/benzi-knowledge-upgrade)
+
+- **מה השתנה:**
+  - `supabase/functions/navigation-bot/index.ts` — ידע עובדתי הועבר מקוד קשיח לטבלת DB `benzi_knowledge`. edge function טוענת ב-runtime עם `loadKnowledgeFromDB()` + graceful fallback לקוד אם DB לא זמין.
+  - **תיקון:** מגילת אסתר תוקנה — הוצגה בטעות כ"תכנית". כעת: ספר/מוצר בלבד, לא תכנית עצמאית. "תכנית הפרק השבועי" = התכנית היחידה.
+  - **הרב יואב אוריאל — ביוגרפיה מורחבת:** מ-`MeetRabbi.tsx` ב-/chapter-weekly: "ראש תנועת בני ציון", מרצה 15+ שנה, מכללה ירושלים, ישיבות וכנסים, קהל מגוון. 4 גישות: סקרנות של ילד / בהירות / שילוב פשט+עומק / חיבור לימינו.
+  - `supabase/migrations/20260603_benzi_knowledge.sql` — DDL + RLS + ידע ראשוני (5 בלוקים: site_identity, rabbi_yoav, weekly_program, content_structure, products_and_store).
+  - `src/pages/admin/BenziKnowledge.tsx` — דף אדמין חדש `/admin/benzi`. textarea עריכה לכל בלוק, toggle פעיל/כבוי, שמירה חיה לסופהבייס.
+  - `src/App.tsx` — route חדש `/admin/benzi` (admin-only).
+- **כדי להפעיל:** הרץ המיגרציה `20260603_benzi_knowledge.sql` על DB הפרודקשן. אחרי כן עריכה ב-/admin/benzi נכנסת לתוקף מיד.
+- **מנגנון אימון לסאר:** עריכה ב-`/admin/benzi` → שמור → בנצי יידע בשיחה הבאה. ללא deploy, ללא קוד.
+
 ### 2026-06-02 — Branch regression recovery: unified merge feat/navigator-bot + admin-to-production
 
 - **בעיה:** שני branches של 2.6.2026 התפצלו מ-`9a51791e`. deploy מ-`feat/navigator-bot` (hebcal+header) דרס admin wave-3 + content gate שחיו ב-`admin-to-production`. Payments chunk `Payments-q34Vg-wW.js` = 0 סמני wave-3 בפרודקשן.

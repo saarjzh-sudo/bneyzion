@@ -115,6 +115,7 @@ const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const AdminPayments = lazy(() => import("./pages/admin/Payments"));
 const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
 const ImportContent = lazy(() => import("./pages/admin/ImportContent"));
+const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
@@ -329,6 +330,7 @@ const App = () => (
             <Route path="/admin/community-courses" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><CommunityCourses /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-health" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
             <Route path="/admin/import-content" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ImportContent /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/benzi" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><BenziKnowledge /></Suspense></ProtectedRoute>} />
             {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
                 Available in dev AND production (so Vercel previews work for review). */}
             <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
