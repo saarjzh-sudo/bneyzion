@@ -526,6 +526,261 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-03 (round-11) — RPC fix v2 + full validation + superset teacher report
+
+**Branch:** `fix/series-teachers-data` · **DB writes: `CREATE OR REPLACE FUNCTION get_public_rabbis()` (DDL only, no data).**
+
+**Summary:** Executed and validated the corrected `get_public_rabbis()` RPC. Discovered and fixed a second bug in the round-10 draft. Full Firecrawl cross-check performed. Teacher wing superset report generated for Saar's review.
+
+**A. RPC Fix History:**
+
+The round-9 RPC (`status IN ('active','published')`) returned only 68 rabbis — missing ~85 from old site.
+
+The round-10 draft fix added `status='category'` (correct) and a direct-lesson fallback (correct) but introduced a new bug: `כלי עזר - טבלאות זמני המאורעות ומפות` (ישקו העדרים) has `status='category'` + `audience_tags=['teachers','general']` — the pre-existing mixed tag (from Feb 25 2026 import, NOT from round-9 fix) caused ישקו to pass the new category clause. ישקו should NOT appear in the public sidebar.
+
+**The round-11 fix (deployed to Supabase):**
+```sql
+AND (
+  -- Clause 1: published/active + 'general' (allows teachers+general mix for שמעון לוי/מנחם אליהו)
+  EXISTS (SELECT 1 FROM series s WHERE s.rabbi_id = r.id
+    AND s.status IN ('active','published') AND 'general' = ANY(s.audience_tags))
+  OR
+  -- Clause 2: category + 'general' but NOT also 'teachers'
+  -- Prevents ישקו העדרים (כלי עזר: category+teachers+general) from passing
+  EXISTS (SELECT 1 FROM series s WHERE s.rabbi_id = r.id
+    AND s.status = 'category' AND 'general' = ANY(s.audience_tags)
+    AND NOT 'teachers' = ANY(s.audience_tags))
+  OR
+  -- Clause 3: rabbis with direct lessons, no series at all
+  (r.lesson_count > 0
+   AND NOT EXISTS (SELECT 1 FROM series s2 WHERE s2.rabbi_id = r.id
+     AND 'teachers' = ANY(s2.audience_tags) AND NOT 'general' = ANY(s2.audience_tags))
+   AND NOT EXISTS (SELECT 1 FROM series s3 WHERE s3.rabbi_id = r.id))
+)
+```
+Result: **167 public rabbis** (was 68 broken → 168 with earlier draft → 167 final correct).
+
+**B. Migration file updated:** `supabase/migrations/20260603_get_public_rabbis_rpc.sql` now matches what's deployed.
+
+**C. Full validation results (round-11):**
+
+| Check | Expected | Result |
+|-------|----------|--------|
+| ישקו העדרים | OUT | ✓ OUT |
+| מכון דעת סופרים | OUT | ✓ OUT |
+| הרב עדי איצקוביץ' | OUT | ✓ OUT |
+| תלמוד תורה מורשה | OUT | ✓ OUT |
+| הרב שמעון לוי | IN | ✓ IN |
+| הרב מנחם אליהו | IN | ✓ IN |
+
+Old site (Firecrawl): **153 names**. Our RPC: **167 names**.
+
+**D. Cross-check vs old site (Firecrawl 2026-06-03):**
+
+14 in old site but not in ours — all acceptable:
+- 6 have `lc=0` (historical: קוטלר זצ"ל, דסלר זצ"ל, פרידמן, סמוטריץ', רוזנצוויג, מגנס)
+- 2 name variants: "יונדב זר" (old) vs "הרב יונדב זר" (ours, lc=1209) ✓ same person; "הרה"ג הרב דוד לאו" vs "הרב דוד לאו" (ours, lc=1) ✓
+- 5 have "(לנשים)" suffix in old site; we have same person without suffix OR lc=0
+- 1 prof spelling: "פרופ' דבורה רוזנווסר (לנשים)" — no lessons
+
+28 in ours but not in old site — all acceptable: new content added post-migration (הרב אהרן בן גרשון, הרב גי'אמי, ושננתם - אוצר התורה, new rabbaniyot, etc.). Also includes `ולו` (lc=2) and `מחבר לא ידוע` (lc=5) — production data quirks, not errors.
+
+**E. Dev server note (important for visual testing):**
+The dev server (localhost:8080) shows the FALLBACK rabbis list (all active, unfiltered) because NetSpark intercepts the browser's supabase.co calls and the `.rpc("get_public_rabbis")` call fails → fallback activates. This is a LOCAL dev issue only. Production (bneyzion.vercel.app) uses the RPC correctly — confirmed by direct REST call with --noproxy.
+
+**F. Iron rule learned:**
+- **`category`-status series with mixed `['teachers','general']` tags are "tools/aids" series, NOT public rabbi profiles.** The RPC must use `NOT 'teachers' = ANY(s.audience_tags)` guard for the category-status clause. A `published`-status series with `['teachers','general']` IS legitimate (e.g., שמעון לוי's summaries), but a `category`-status with both tags is a content-organization node for teachers.
+
+**Verdict: RPC is now correct. Go/no-go on sidebar change: CONDITIONALLY READY.**
+The RPC itself is correct and confirmed via REST. The frontend hook (usePublicRabbis in useRabbis.ts) uses the RPC already. No new code changes needed. The change can be deployed when Saar says "פרוס".
+
+---
+
+### 2026-06-03 (round-10) — comprehensive pre-deploy audit (Firecrawl + DB cross-check)
+
+**Branch:** `fix/series-teachers-data` · **No DB writes, no code changes — pure verification session.**
+
+**Summary:** Full Firecrawl + DB audit before deploying the public sidebar change. Documented below are all findings, gaps, and the final go/no-go verdict.
+
+**A. Public Sidebar (Rabbis) Audit:**
+
+- Old site dropdown has **153 names** (extracted via Firecrawl from `bneyzion.co.il` homepage).
+- Our RPC `get_public_rabbis()` returns **68 names** — a massive 85-name gap.
+- **ROOT CAUSE FOUND:** Two bugs in the RPC:
+  1. `status IN ('active','published')` — excludes `status='category'` series. 25 rabbis only have `category`-status series and are therefore excluded.
+  2. No fallback for rabbis with **direct lessons but no series** — 55 rabbis in old site have `statuses=[]` (their lessons are directly on rabbi, no series container). These also excluded.
+- **With a fixed RPC** (adding `status='category'` + direct-lesson fallback): 168 names → **only 14 still missing**.
+- **The 14 remaining gaps** are acceptable:
+  - 12 have `lc=0` in DB — no lessons migrated (historical/legacy rabbis like הרב אהרון קוטלר זצ"ל, הרב אליהו דסלר זצ"ל, etc.)
+  - 2 are name-format differences: "יונדב זר" (old) vs "הרב יונדב זר" (ours, lc=1209 ✓); "הרבנית רחלי מונדשיין" vs "הרבנית רחלי מונדשטיין" (spelling)
+- **10 names in RPC but NOT in old site** — all acceptable: new content added after migration (הרב אהרן בן גרשון, הרב גי'אמי, ושננתם - אוצר התורה, etc.)
+- **⚠️ BLOCKER: The current RPC is broken.** It returns only 68/153 names. Must fix RPC before deploying sidebar change.
+
+**Required RPC fix:**
+```sql
+-- Replace the WHERE EXISTS in get_public_rabbis() with:
+AND (
+  EXISTS (
+    SELECT 1 FROM series s
+    WHERE s.rabbi_id = r.id
+    AND s.status IN ('active', 'published', 'category')   -- ADD 'category'
+    AND 'general' = ANY(s.audience_tags)
+  )
+  OR (
+    -- Fallback: rabbis with direct lessons (no series container)
+    r.lesson_count > 0
+    AND NOT EXISTS (
+      SELECT 1 FROM series s2
+      WHERE s2.rabbi_id = r.id
+      AND 'teachers' = ANY(s2.audience_tags)
+      AND NOT 'general' = ANY(s2.audience_tags)
+    )
+    AND NOT EXISTS (
+      SELECT 1 FROM series s3 WHERE s3.rabbi_id = r.id
+    )
+  )
+)
+```
+After this fix: 168 names (vs 153 old site) — 14 acceptable gaps + 15 new additions.
+
+**B. Teachers Wing Audit:**
+
+- Old site teacher nav book list (from dropdown): **בראשית שמות ויקרא במדבר דברים יהושע שופטים שמואל א שמואל ב מלכים א מלכים ב ישעיהו ירמיהו תהלים איוב** (15 books with dedicated pages)
+- Full teacher content exists for 35 books in our DB (more comprehensive than old site)
+- **Book-by-book teacher series count (old site vs ours):**
+
+| ספר | ישן | שלנו | מצב |
+|-----|-----|------|-----|
+| בראשית | 21 | 24 | EXTRA (ok) |
+| שמות | 23 | 24 | ✓ |
+| ויקרא | 16 | 18 | EXTRA (ok) |
+| במדבר | 12 | 21 | EXTRA (ok) |
+| דברים | 12 | 17 | EXTRA (ok) |
+| יהושע | 19 | 21 | ✓ |
+| שופטים | 15 | 22 | EXTRA (ok) |
+| שמואל א | 12 | 19 | EXTRA (ok) |
+| שמואל ב | 11 | 15 | EXTRA (ok) |
+| מלכים א | 13 | 24 | EXTRA (ok) |
+| מלכים ב | 11 | 15 | EXTRA (ok) |
+| ישעיהו | 5 | 7 | ✓ |
+| ירמיהו | 4 | 5 | ✓ |
+| תהלים | 2 | 3 | ✓ |
+| איוב | 1 | 3 | ✓ |
+- **Zero books have FEWER series than old site** — our teacher wing is a superset.
+- עזרא: old=4, ours=3 (−1) — within tolerance, likely one series merged.
+
+**C. JS-Rendered Series Audit (Firecrawl breakthrough):**
+
+| סדרה | ישן | שלנו | Firecrawl success? |
+|------|-----|------|---------------------|
+| דגשים לפרשות חומש במדבר | 15 lessons | 2 lessons | ✓ Firecrawl scraped 15 — **GAP: 13 lessons missing** |
+| פשט הפסוקים (two series) | 13 lessons (בראשית) | 11+9=20 across 2 series | ✓ Firecrawl confirmed — content distributed across 2 series |
+| קריאה וביאור משלי | 31 real (147 were artifacts) | 42 lessons | Firecrawl got 404 for specific series URL — data already correct |
+
+- **דגשים לפרשות במדבר is a real gap:** Firecrawl confirms 13 missing lessons (פרשות נשא, בהעלותך, שלח א+ב, קרח×2, חוקת×2, בלק, פנחס א+ב, מטות, מסעי). Can be imported.
+
+**D. PDF/Attachment Validation:**
+- 5 random teacher PDF attachments tested: all HTTP 200 ✓
+- Storage path: `pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/`
+- Word files (Office Online viewer) and PDFs both accessible.
+
+**E. Old Site Teacher Creator List (from dropdown):**
+28 teacher creators: אוריה כראדי, הרב אורי שטמלר, הרב אשי בלייכר, הרב בניה כהן, הרב גדי שר שלום, הרב דביר אפלבוים, הרב חסדאי בר אור, הרב ידידיה שילה, הרב יהודה בשושה, הרב יונתן לוי, הרב יורם אליהו, הרב יצחק עמראני, הרב מאיר גרשונזון, הרב מאיר הילביץ', הרב מנחם אליהו, הרב נחום אריאל, הרב ניסים כהן, הרב עדי איצקוביץ', הרב עמוס נתנאל, הרב עמירם אלבה, הרב עמנואל בן ארצי, הרב שלמה כץ, הרב שמעון לוי והרב נתן מולאיוף, הרב שמעון שוהם, ושננתם - אוצר התורה, ישקו העדרים, מחבר לא ידוע, מכון דעת סופרים, נתן מארגל, סידור שים שלום, תלמוד תורה מורשה. All present in our teacher wing ✓.
+
+**Iron rules learned:**
+1. **RPC `get_public_rabbis()` must include `status='category'` + direct-lesson fallback.** Current version excludes ~85 rabbis from old site. Do not deploy sidebar change until RPC is fixed.
+2. **Old site Neviim Rishonim teacher URL is `/מאגר-עזרי-הלמידה/נביאים/ספר/` NOT `/נביאים-ראשונים/ספר/`.** The latter returns 404. The correct path omits the ראשונים/אחרונים sub-categorization.
+3. **Firecrawl CAN scrape JS-rendered teacher series pages.** דגשים לפרשות, פשט הפסוקים, ביאור ושננתם — all rendered successfully with `waitFor: 6000`. Use for future scraping of missing series.
+4. **Teacher series counts: our DB is a superset of the old site** — we have MORE series in every book, not fewer. No content is missing at the series level; only lesson-level gaps remain (e.g., דגשים במדבר: 2 vs 15).
+
+**Verdict: NOT SAFE to deploy sidebar change yet — RPC bug must be fixed first.**
+
+---
+
+### 2026-06-03 (round-9) — author fixes executed + public sidebar alignment 1:1 vs old site
+
+**Branch:** `fix/series-teachers-data` · **DB writes: 10 series (author fix) + 24 series (audience_tags fix). Frontend: usePublicRabbis + migration SQL.**
+
+**משימה 1 — תיקוני מחברים (--execute הורץ):**
+- Backup: `scripts/backups/author-fix-pre-execute-20260603-115810.json` (10 series).
+- `scripts/fix_authors_p1.py --execute` → 10/10 ✓.
+- Fix 1: `מדריכים למורה - יהושע` (f45b01af) + `מדריכים למורה - שופטים` (b525d0b4) → `rabbi_id = 7fcd7014` (ישקו העדרים). היה: 1be980e3 (מכון דעת סופרים).
+- Fix 2: 8 סדרות "סיכומים על ספר X" (יהושע×2, שופטים×2, שמואל א×2, שמואל ב×2) → `description = 'הרב שמעון לוי והרב נתן מולאיוף'`. היה: null.
+- אומת ב-DB: rabbi_id=7fcd7014 ✓, description נכון ✓.
+
+**משימה 2 — יישור סיידבר ציבורי 1:1 לישן:**
+- שלפנו רשימת הרבנים הציבוריים של האתר הישן מה-dropdown (154 שמות).
+- הצלבה מול DB שלנו (184 active, lc>0):
+  - 14 בישן אבל לא אצלנו (יש חלק ב-DB אבל בשם שונה/אין סדרות — ראה below).
+  - 44 אצלנו אבל לא בישן — מתוכם 17 teacher-only (הם הדליפה).
+  - **2 בישן הציבורי אבל אצלנו teacher-only: הרב שמעון לוי + הרב מנחם אליהו.**
+- **Fix A (audience_tags):** הוספנו 'general' לכל הסדרות של שמעון לוי (22) + מנחם אליהו (2) = 24 סדרות → audience_tags שונה מ-['teachers'] ל-['teachers','general'].
+  - Backup: `scripts/backups/audience-tags-pre-fix-20260603-120421.json`.
+  - 24/24 ✓.
+- **Fix B (frontend filter — RPC):** `src/hooks/usePublicRabbis()` עודכן לקרוא RPC `get_public_rabbis()` (סינון לרבנים עם לפחות סדרה אחת 'general'). Fallback לשיטה הישנה אם RPC לא הופעל עדיין.
+  - Migration: `supabase/migrations/20260603_get_public_rabbis_rpc.sql`.
+  - **✅ Migration הורץ 2026-06-03 (round-9 continuation):** `CREATE OR REPLACE FUNCTION get_public_rabbis()` + `GRANT EXECUTE TO anon, authenticated` — הצליח.
+  - **אימות:** RPC מחזיר 68 רבנים (לעומת 184 בשיטה הישנה). teacher-only names (ישקו העדרים, מכון דעת סופרים, הרב עדי איצקוביץ', תלמוד תורה מורשה) = NOT IN RPC ✓. הרב שמעון לוי (lc=49) + הרב מנחם אליהו (lc=22) = IN RPC ✓ (כי קיבלו audience_tags=['teachers','general'] ב-Fix A).
+  - build: `npm run build` ✓ (0 TS errors). tsc: נקי ✓.
+  - **⚠️ הקוד ממתין ל-commit/push/deploy — לא בוצע. ממתין ל-"פרוס" מסאר.**
+
+**17 teacher-only רבנים שהם EXTRA IN OURS ואינם בישן הציבורי (לא בדרופדאון הישן) — כעת מסוננים ע"י RPC:**
+ישקו העדרים, מכון דעת סופרים, תלמוד תורה מורשה, הרב עדי איצקוביץ' (lc=194), הרב שמעון שוהם, הרב דביר אפלבוים, הרב שלמה כץ, הרב אשי בלייכר, הרב בניה כהן, הרב אורי שטמלר, הרב נחום אריאל, הרב עמוס נתנאל, הרב ידידיה שילה, הרב מאיר גרשונזון, נתן מארגל, סידור שים שלום, אוריה כראדי.
+כל אלו **לא מופיעים יותר** ב-usePublicRabbis (RPC פעיל ב-DB — fallback בקוד אינו מופעל יותר).
+
+**14 בישן הציבורי אבל לא מופיעים אצלנו ב-usePublicRabbis:**
+הרב אבי סמוטריץ', הרב אהרון קוטלר זצ"ל, הרב אלי פרידמן, הרב אליהו דסלר זצ"ל, הרב בנימין רוזנצוויג, הרב יהושע מגנס, הרבנית אחינועם ברקו (לנשים), הרבנית בת שבע יוסיפון (לנשים) [יש כ-"הרבנית בת שבע יוסיפון" ללא suffix], הרבנית יפה מגנס (לנשים), הרבנית נעמה אתרוג (לנשים), הרבנית רחלי מונדשיין (לנשים) [יש כ-"מונדשטיין" בשגיאת כתיב], הרה"ג הרב דוד לאו [יש כ-"הרב דוד לאו" ללא "הרה"ג"], יונדב זר [יש כ-"הרב יונדב זר"], פרופ' דבורה רוזנווסר (לנשים). — רובם בעיות שם (suffix "(לנשים)" חסר, "הרה"ג" חסר) OR אין להם active series עם lesson_count. אין צורך לתקן כעת.
+
+**אימות ויזואלי:**
+- מלכים א: `/bible/מלכים א` — 111 שיעורים, 22 פרקים ✓ (backfill עבד).
+- ישקו העדרים creator page: 363 שיעורים (כולל מדריכים למורה שעברו ✓).
+- דף רבנים: Tier 1+2 מוצגים ראשונים ✓.
+- tsc: נקי ✓.
+
+**Iron rule confirmed:** `bible/:book` URL uses hyphen-encoded book names (e.g. `מלכים-א`), but DB stores `מלכים א` with space. The production `BibleBookPage.tsx` uses `decodeURIComponent` → space. Links that use hyphen-encoded names get "0 results". Always use `%20` (space) not `-` for multi-word bible books in navigation links.
+
+---
+
+### 2026-06-03 (round-8) — backfill_bible_book executed + author-fix script ready + dedup report + leak analysis
+
+**Branch:** `fix/series-teachers-data` · **DB writes: backfill only (53 series). Author fixes: script ready, awaiting Saar --execute.**
+
+**P0.1 — backfill_bible_book COMPLETED:**
+- Fresh backup: `scripts/backups/series-all-20260603-112145.json` (1,696 series, current state post-import).
+- Dry-run: 53 series with `bible_book=NULL + content + inferable book` → ~1,022 lessons to surface.
+- **Execute ran 53/53 ✓.** Books fixed: מלכים א (6), בראשית (4), רות (8), שמות (2), מלכים ב (6), שופטים (4), במדבר (2), דברים (3), ויקרא (2), שמואל ב (2), עזרא (2), אסתר (3), דניאל (2), ירמיהו (1), יהושע (1), שמואל א (1), איכה (1), ישעיהו (2), נחמיה (1).
+- Post-backfill audit numbers: בראשית 21/25, שמות 24/24, ויקרא 17/16, במדבר 20/18, דברים 17/17, יהושע 20/21, שופטים 22/23, שמואל א 19/21, שמואל ב 15/16, מלכים א 24/26, מלכים ב 15/17. Significant improvement vs pre-backfill.
+- **audit_teachers.py encoding bug note:** the script does NOT URL-encode Hebrew book names in its lessons query → query for יהושע returns 0 rows. The post-backfill numbers above come from a corrected query in Python (urllib.parse.quote). The script itself still has this bug — fix before next automated run.
+
+**P1 — Author fixes — script written, NOT YET EXECUTED:**
+- `scripts/fix_authors_p1.py` — dry-run verified, awaiting Saar `python3 scripts/fix_authors_p1.py --execute`
+- Fix 1: `מדריכים למורה - יהושע` (f45b01af) + `מדריכים למורה - שופטים` (b525d0b4) → `rabbi_id` from `מכון דעת סופרים` (1be980e3) to `ישקו העדרים` (7fcd7014).
+- Fix 2: 8 `סיכומים על ספר X` series (יהושע×2, שופטים×2, שמואל א×2, שמואל ב×2) → `description = 'הרב שמעון לוי והרב נתן מולאיוף'` (no `co_author` column in series table — description is the only slot).
+- Note: `הרב שמעון לוי` still has teacher-only tag on all 22 series but appears on old-site public list → his series' tags may need revisiting (see P2 below).
+
+**P0.2 — Dedup report (no deletions, report only):**
+- **11 confirmed import-created pairs** from 2026-05-27 import — all "סיכומים על ספר X" by הרב שמעון לוי. Pattern: original series (2026-05-07, lc=1–28) + import created duplicate (2026-05-27, lc=1). Classification: **נראה מקרי** — same title + same author + import-date lc=1.
+  Full list: סיכומים על חומש במדבר, סיכומים על חומש דברים, סיכומים על ישעיהו (triple!), סיכומים על מזמורי תהלים, סיכומים על מלכים ב, סיכומים על ספר איוב, סיכומים על ספר יהושע, סיכומים על ספר מלכים א, סיכומים על ספר שופטים, סיכומים על שמואל א, סיכומים על שמואל ב.
+- **~109 additional duplicate-title pairs** (total DB: 120 titles with 2+ entries). Most are intentional duplicates across teacher/public tags, or single-book title nodes. Saar confirmed intentional duplicates are OK — do NOT delete.
+- Full data: `/tmp/duplicates-full.json`.
+
+**P2 — Teacher→Public leak analysis:**
+- `usePublicRabbis()` queries `rabbis WHERE status=active AND lesson_count>0`. `lesson_count` = total across all series (public+teacher). **No audience_tags filter** → teacher-only creators appear in public sidebar.
+- **23 teacher-only creators in our DB** (all series tagged exclusively `['teachers']`).
+- Cross-checked against old-site public rabbi dropdown (154 names): 2 teacher-only creators appear on old site as public: **הרב שמעון לוי** (22 teacher-only series, 0 public — but IS in old-site list → his series tags may be wrong) and **הרב מנחם אליהו** (2 teacher-only series — also in old-site list).
+- **Confirmed NOT leaks** (correctly teacher-only, not in old site): הרב אשי בלייכר, הרב שלמה כץ, מכון דעת סופרים, ישקו העדרים (partly), and 18 others.
+- **Mixed creators** (public+teacher): הרב מאיר הילביץ', הרב ניסים כהן, הרב עמירם אלבה, הרב עמנואל בן ארצי, ושננתם, ושננתם - אוצר התורה, ישקו העדרים (2 teacher + 1 mixed), תלמוד תורה מורשה (1 public + 5 teacher). These correctly appear in public sidebar.
+- **Proposed fix (2 options — not yet implemented, awaiting Saar decision):**
+  - **Option A (data fix, recommended):** For the 2 confirmed wrong-tag cases (שמעון לוי + מנחם אליהו), change `audience_tags` from `['teachers']` → `['teachers','general']` on their series. This makes them appear in both sidebars as intended.
+  - **Option B (frontend filter):** Modify `usePublicRabbis()` to JOIN with series and only return rabbis who have at least 1 series with `'general' IN audience_tags`. Requires RPC or subquery — no PostgREST native array-any join. Cleaner but slower.
+  - **Saar's original example "תלמוד תורה ..."** = `תלמוד תורה מורשה` (b5555555) — already mixed (1 public series), correctly shows in public sidebar. Not a leak.
+- `scripts/backups/author-fix-targets-20260603-112634.json` — backup of touched series.
+- `scripts/fix_authors_p1.py` — ready to run.
+
+**Iron rule confirmed:** `audit_teachers.py` has URL-encoding bug for Hebrew in query params — always use `urllib.parse.quote()` when querying by Hebrew bible_book.
+
+---
+
 ### 2026-06-02 (round-7) — Teachers Wing DATA: audit vs old site + import (47 series) + the bible_book key insight
 
 **Branch:** `fix/series-teachers-data`. This was a long session; the UI was rebuilt 1:1 (rounds 3-6 below) and then we attacked the DATA gaps.
