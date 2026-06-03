@@ -1,6 +1,6 @@
 # Bnei Zion — Full Site Knowledge Base
 
-**Last updated:** 2026-06-02 (session — polling 30s + visibilitychange pushed + deployed to bneyzion.vercel.app)
+**Last updated:** 2026-06-02 (session — polling 30s + visibilitychange pushed + deployed to bneyzion.vercel.app · REGRESSION GUARD added for Yehoshua donations pipeline)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
 ALL site knowledge — migration history, content structure, external
@@ -10,6 +10,62 @@ adds to (not overwrites) institutional memory.
 > 📘 **Companion doc:** `REDESIGN.md` (this repo) covers the v2 sandbox
 > redesign work specifically. This file (`KNOWLEDGE.md`) covers
 > *everything else* — site history, content, data, integrations.
+
+---
+
+## ⛔ REGRESSION GUARD — אסור לשבור (Yehoshua donations pipeline, תוקן 2026-06-02)
+
+> **חובה לקרוא לפני כל deploy / merge / שינוי ב: payments, webhook, env vars, DB schema, או הקובץ `DesignPreviewYehoshuaCampaign.tsx`.**
+> הכלל הזה נכתב ב-save-on-demand handshake מפורש מסאר: "תזהיר את הסוכן שלא יפגע במה שעשינו היום בשום עדכון של חלקים אחרים באתר."
+
+### 1. הסיכון מס' 1 — merge ל-main ידרוס את התיקונים
+
+התיקונים חיים על ה-commits:
+- `b5b177c` — webhook routing via `payment_products.target_table` + cField3 (productSlug)
+- `ae2445c` — polling 30s + visibilitychange ב-useCampaignStats + useTierCounts
+
+שני ה-commits **נפרסו ידנית** `vercel --prod` מ-branch צדדי. **main עדיין לא מכיל אותם.**
+כל push ל-main שייפרס אוטומטית ידרוס את הפרודקשן ויחזיר את הבאג.
+
+**חובה: למזג את b5b177c + ae2445c ל-main (production branch) לפני כל deploy עתידי של main.**
+עד שזה ממוזג — **אסור לדחוף ל-main בלי לכלול את שני ה-commits.**
+
+### 2. webhook.ts — routing חייב להישאר via target_table
+
+`api/grow/webhook.ts` חייב לנתב לפי `payment_products.target_table` דרך lookup של `cField3` (productSlug) עם fallback ל-`cField2`.
+
+**אסור לחזור ל-`flowType==="donation" ? "donations" : "orders"` בלבד** — זה הבאג המקורי שתקע את כל התרומות ב-donations pipeline.
+
+### 3. Vercel env vars — Production scope חובה
+
+`SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` חייבים להישאר ב-**Production** scope (לא Preview בלבד).
+בלעדיהם ה-webhook מחזיר 200 אבל לא כותב שום שורה ל-DB (silent failure).
+**אל תמחק / תדרוס / תשנה scope של env vars בלי לעבור על הרשימה הזו.**
+
+### 4. DB state — אל תאפס
+
+- טבלת `donations`: חייבת `REPLICA IDENTITY FULL`. אל תשנה.
+- 19+ שורות עם `payment_status = 'completed'` שסומנו ידנית — **אסור לאפס**.
+- View `yehoshua_campaign_stats`: סופר `completed` ישירות. **אסור להוסיף `tier_id IS NOT NULL`** למונה הראשי — ישבור את הספירה.
+
+### 5. ה-polling אסור לחיות תחת caching / static generation
+
+הדף `/design-yehoshua-campaign` הוא Vite SPA — קורא `yehoshua_campaign_stats` בכל טעינה ובכל 30 שניות.
+**אסור להוסיף caching / ISR / static-generation למספרים.** הוקסים `useCampaignStats` + `useTierCounts` אסור להסיר.
+
+### 6. אימות חובה אחרי כל deploy שנוגע באזורים האלה
+
+לא להכריז DONE בלי שלושת אלה:
+
+1. `POST /api/grow/webhook` עם `cField3=yehoshua-campaign` על שורת `pending` → ודא מעבר ל-`completed`.
+2. Firecrawl על `/design-yehoshua-campaign` → ודא שהמספר הנכון מוצג.
+3. ודא ב-Vercel dashboard שה-env vars עדיין ב-Production scope.
+
+### 7. כלל-גג
+
+שינויים ב"חלקים אחרים" (חנות, מנויים, אדמין, פרשת שבוע, sidebar) — **מותרים**,
+אבל אם הם נוגעים ב: `webhook.ts` / `create-payment.ts` / env vars / branch main / DB schema payments → **עבור על הרשימה הזו קודם.**
+עבודה ב-sandbox, deploy סדרתי יחיד, אימות ויזואלי — **לפני DONE.**
 
 ---
 
@@ -525,6 +581,39 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-03 — ייבוא 5 ספרים + community_courses + payment_products + webhook (274 שורות)
+
+**Branch:** `feat/weekly-chapter-data-driven` (ללא push/deploy — checkpoint בלבד)
+
+**What changed:**
+
+1. `ALTER TABLE community_courses ADD COLUMN IF NOT EXISTS in_weekly_program boolean DEFAULT false` — בוצע ב-DB החי.
+2. **community_courses עודכנו/נוצרו:**
+   - עזרא (`35e7d37b-...`) — program_slug=book-ezra, access_tag=course:ezra, access_type=requires_tag, in_weekly_program=true
+   - נחמיה (`e1ec3ebc-...`) — book-nehemiah / course:nehemiah / in_weekly_program=true
+   - דניאל (`ccee8278-...`) — book-daniel / course:daniel / recorded
+   - אסתר (`e3ee44dd-...`) — book-esther / course:esther / recorded
+   - חגי-זכריה-מלאכי (`dff61c84-...`) **NEW** — book-haggai-zechariah-malachi / course:haggai-zechariah-malachi
+   - איכה (`3f9742e3-...`) **NEW** — book-lamentations / course:lamentations
+3. `scripts/import-all-books-drive-content.mjs` **NEW** — סקריפט פרמטרי לייבוא כל הספרים. 274 שורות הוכנסו:
+   - נחמיה: 77 (8 פרקים: 1,2,3,8,9,10,11,13)
+   - דניאל: 75 (12 פרקים כולל resources/seley_lessons)
+   - אסתר: 58 (5 זוגות: 1,3,5,7,9 + intro + summary)
+   - חגי-זכריה-מלאכי: 24 (זכריה 1-2 weekly, חגי 1-2 base, מלאכי 1-3 base)
+   - איכה: 40 (5 פרקים מלאים)
+4. `payment_products` — נוצרו 6 שורות: book-ezra, book-nehemiah, book-daniel, book-esther, book-haggai-zechariah-malachi, book-lamentations. כולם: type=wallet, default_amount=0 (placeholder), target_table=orders, active=true.
+5. `api/grow/webhook.ts` — נוסף ל-`PRODUCT_ACCESS_TAGS`: 6 ספרים → course:* tags. נוסף ל-`PRODUCT_VALID_DURATION_DAYS`: null (forever) לכולם.
+
+**Constraints learned:**
+- נחמיה 4-7, 12 ריקים במניפסט — לא יובאו (אין תוכן).
+- דניאל: פרק 5 קיים **רק** כ-seley_lesson (resources layer), לא base/weekly.
+- אסתר: structure=pair_weeks, bible_chapter=chapter_first של הזוג.
+- חגי-זכריה-מלאכי: structure=three_sub_books, bible_book=שם הספר-משנה. זכריה 3-14 ריקים.
+- docx עם pdf זהה לאותו role+chapter → pdf מנצח (dedupPdfDocx).
+- `total_lessons` ב-community_courses = מספר פרקים-עם-תוכן (לא ספירת קבצים).
+
+**TS check:** clean. **build:** clean. **⛔ לא פושה, לא נפרסה.**
 
 ### 2026-06-02 — Ezra Drive import + CourseDetail v4 UI (feat/weekly-chapter-data-driven, commit 7c3a3361)
 
@@ -5038,3 +5127,37 @@ lesson.thumbnail_url
 
 הגדרת משתנה ב-"Preview" לא מעתיקה אותו ל-"Production". בכל הגדרת env var חדש: לבדוק שמסומן גם Production. ב-webhook שנכשל בשקט — לבדוק Vercel env vars לפני כל debug אחר.
 - **אזהרה:** כל push ל-`feat/navigator-bot` מ-GitHub יוצא כ-preview בלבד (productionBranch=main). לפרודקשן תמיד `vercel link + vercel --prod` אחרי ה-push.
+
+### 2026-06-03 — multi-book weekly program navigation (feat/weekly-chapter-data-driven, commit b8579f5f)
+
+**Branch:** `feat/weekly-chapter-data-driven`
+**Preview deploy:** `https://bneyzion-garsbax8k-saars-projects-4508d6bb.vercel.app` · readyState=READY
+
+**Files created:**
+- `src/pages/WeeklyProgramLibrary.tsx` — `/program/weekly-chapter` — 6 book cards from DB, access state per user, CTA for non-subscribers
+- `src/pages/WeeklyBookDetail.tsx` — `/course/book-<slug>` — fully data-driven: BookSwitcher dropdown, Esther chapter-pairs, HZM sub-books, Daniel resources layer, per-book accent colors, admin toggle, Drive iframe embeds
+
+**Files updated:**
+- `src/hooks/useCommunity.ts` — added: `useWeeklyBooks`, `useWeeklyBookBySlug`, `usePaymentProduct`, `useAllPaymentProducts`, `useCourseDataWithResources` (includes resources layer), `WeeklyCourse`+`PaymentProduct` types
+- `src/pages/DesignPreviewCoursesCatalog.tsx` — added live DB section at top (weekly book cards + prices from payment_products; 0=בקרוב/disabled)
+- `src/App.tsx` — `/program/weekly-chapter` route + `WeeklyBookDetailOrLegacy` dispatcher (book-* → new, else → legacy) + `/course/weekly-chapter` → Navigate redirect + bot disabledOnRoutes expanded to `/course/` and `/program/`
+
+**Access logic (iron rule going forward):**
+`hasAccess = useUserAccess(book.access_tag).hasAccess || useUserAccess('program:weekly-chapter').hasAccess`
+Both hooks ALWAYS called unconditionally. Admin gets toggle: subscriber/locked preview.
+
+**Special cases:**
+- Esther (`book-esther`): chapters rendered as pairs via `estherPairLabel` (1-2, 3-4, ...)
+- HZM (`book-haggai-zechariah-malachi`): 3 sub-books grouped by `community_course_lessons.bible_book` column
+- Daniel (any book with resources layer): dedicated "תכנים נוספים" section, accessible via sidebar
+
+**Routes summary:**
+- `/program/weekly-chapter` → WeeklyProgramLibrary (NEW)
+- `/course/weekly-chapter` → Navigate redirect to `/program/weekly-chapter` (back-compat)
+- `/course/book-<slug>` → WeeklyBookDetail (NEW — dispatched via WeeklyBookDetailOrLegacy)
+- `/course/<other>` → DesignPreviewCourseDetail (legacy unchanged)
+- `/courses` → DesignPreviewCoursesCatalog (updated with live section)
+
+**Constraint:** `payment_products` rows for books have `default_amount=0` (placeholder). Catalog shows "בקרוב" and disables purchase button when amount=0 — prevents ₪0 charges.
+
+**TS:** clean. **Build:** clean (43s). **Push:** feat/weekly-chapter-data-driven. **Deployed:** preview only (no --prod).
