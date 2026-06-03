@@ -343,6 +343,16 @@ When Saar approves the sandbox for production:
   contains critical hardcodes (supabase URL, keys). A rollback silently discards commits
   merged after the target deployment was built. Prefer **roll-forward** (`vercel --prod`
   from current HEAD) over roll-backward when recent commits contain connectivity fixes.
+- ❌ Don't use Gemini model names with a preview/date suffix in edge functions.
+  `gemini-2.5-flash-preview-05-20` was pulled from service and returns 404. Always use
+  the stable stable alias: `gemini-2.5-flash`. When a Gemini edge function returns silent
+  fallback — check the model name first, before anything else. (Learned 2026-06-02.)
+- ❌ Don't set `maxOutputTokens` below 2048 for any thinking-capable Gemini model.
+  Internal "thinking" burns ~490 tokens before generating output — with 512 limit the
+  response is truncated silently and the function falls back. (Learned 2026-06-02.)
+- ❌ Don't rely on a system prompt alone to constrain route output from an LLM bot.
+  Always add a server-side `isValidRoute()` + `sanitizeCtas()` layer. Without it,
+  the model will invent routes under pressure. (Learned 2026-06-02, navigation-bot-preview.)
 
 ---
 
