@@ -51,19 +51,31 @@ function useBookAccess(course: WeeklyCourse): boolean {
   return bookAccess || programAccess;
 }
 
+// ── Book gradient backgrounds (unique per book) ───────────────────────────
+const BOOK_GRADIENTS: Record<string, string> = {
+  "book-ezra":                    "linear-gradient(140deg, #6B4C28 0%, #9B7A50 45%, #C4A265 100%)",
+  "book-nehemiah":                "linear-gradient(140deg, #2D4A1E 0%, #4A7A2E 45%, #78A84A 100%)",
+  "book-daniel":                  "linear-gradient(140deg, #3A1F5C 0%, #6B3EA8 45%, #9B6AD4 100%)",
+  "book-esther":                  "linear-gradient(140deg, #6B1212 0%, #A52A2A 45%, #D45050 100%)",
+  "book-haggai-zechariah-malachi":"linear-gradient(140deg, #1B4A52 0%, #3A7A85 45%, #5AABB8 100%)",
+  "book-lamentations":            "linear-gradient(140deg, #3A2A1A 0%, #7A5A3A 45%, #A88060 100%)",
+};
+
 // ── BookCard ──────────────────────────────────────────────────────────────
 function BookCard({ course }: { course: WeeklyCourse }) {
   const hasAccess = useBookAccess(course);
   const slug = course.program_slug ?? "";
   const accent = BOOK_ACCENTS[slug] ?? colors.goldDark;
+  const gradient = BOOK_GRADIENTS[slug] ?? `linear-gradient(140deg, ${accent} 0%, ${accent}99 100%)`;
   const chapterCount = course.lesson_count ?? 0;
   const isBase = course.access_type === "open";
+  const isLocked = !hasAccess && !isBase;
 
   return (
     <Link
       to={`/course/${slug}`}
       style={{ textDecoration: "none", display: "block" }}
-      aria-label={`${course.title} — ${hasAccess || isBase ? "פתוח" : "נעול"}`}
+      aria-label={`${course.title} — ${isLocked ? "נעול" : "פתוח"}`}
     >
       <div
         dir="rtl"
@@ -73,21 +85,21 @@ function BookCard({ course }: { course: WeeklyCourse }) {
           boxShadow: shadows.cardSoft,
           border: `1px solid rgba(139,111,71,0.09)`,
           overflow: "hidden",
-          transition: "box-shadow 0.2s, transform 0.18s",
+          transition: "box-shadow 0.22s, transform 0.18s",
           cursor: "pointer",
           position: "relative",
         }}
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLDivElement).style.boxShadow = `0 12px 32px rgba(139,111,71,0.18)`;
-          (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
+          (e.currentTarget as HTMLDivElement).style.boxShadow = `0 14px 36px ${accent}30`;
+          (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
         }}
         onMouseLeave={(e) => {
           (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.cardSoft;
           (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
         }}
       >
-        {/* Cover */}
-        <div style={{ position: "relative", height: 160, background: `linear-gradient(135deg, ${accent}22 0%, ${accent}08 100%)`, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {/* Cover — gradient hero when no image */}
+        <div style={{ position: "relative", height: 168, background: course.image_url ? `${accent}22` : gradient, overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
           {course.image_url ? (
             <img
               src={course.image_url}
@@ -95,44 +107,64 @@ function BookCard({ course }: { course: WeeklyCourse }) {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           ) : (
-            <BookMarked size={48} style={{ color: accent, opacity: 0.35 }} />
-          )}
-          {/* Lock overlay */}
-          {!hasAccess && !isBase && (
-            <div style={{ position: "absolute", inset: 0, background: "rgba(255,255,255,0.45)", backdropFilter: "blur(2px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div style={{ width: 44, height: 44, borderRadius: "50%", background: "white", boxShadow: "0 2px 12px rgba(0,0,0,0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <Lock size={18} style={{ color: colors.textMuted }} />
+            /* No image: show book title large + icon on gradient */
+            <div style={{ textAlign: "center", padding: "0 1.5rem", position: "relative", zIndex: 1 }}>
+              <BookMarked size={32} style={{ color: "rgba(255,255,255,0.55)", marginBottom: "0.55rem", display: "block", margin: "0 auto 0.55rem" }} />
+              <div style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1rem, 3.5vw, 1.35rem)", color: "white", lineHeight: 1.2, textShadow: "0 2px 8px rgba(0,0,0,0.35)" }}>
+                {course.title}
               </div>
             </div>
           )}
-          {/* Chapter count badge */}
-          <div style={{ position: "absolute", top: 10, insetInlineStart: 10, background: "rgba(255,255,255,0.92)", borderRadius: radii.pill, padding: "0.18rem 0.6rem", fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, color: accent, boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
-            {chapterCount > 0 ? `${chapterCount} פרקים` : "פרקים"}
-          </div>
+
+          {/* Locked overlay */}
+          {isLocked && (
+            <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.28)", backdropFilter: "blur(1.5px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 46, height: 46, borderRadius: "50%", background: "rgba(255,255,255,0.92)", boxShadow: "0 4px 14px rgba(0,0,0,0.18)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <Lock size={20} style={{ color: accent }} />
+              </div>
+            </div>
+          )}
+
+          {/* Chapter count badge — top-start */}
+          {chapterCount > 0 && (
+            <div style={{ position: "absolute", top: 10, insetInlineStart: 10, background: course.image_url ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.18)", backdropFilter: course.image_url ? "none" : "blur(6px)", borderRadius: radii.pill, padding: "0.2rem 0.65rem", fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, color: course.image_url ? accent : "white", boxShadow: "0 1px 4px rgba(0,0,0,0.08)", border: course.image_url ? "none" : "1px solid rgba(255,255,255,0.25)" }}>
+              {chapterCount} פרקים
+            </div>
+          )}
         </div>
 
         {/* Body */}
-        <div style={{ padding: "1.1rem 1.25rem" }}>
-          <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: colors.textDark, margin: "0 0 0.35rem", lineHeight: 1.25 }}>
-            {course.title}
-          </h3>
+        <div style={{ padding: "1rem 1.25rem 1.1rem" }}>
+          {/* Show title in body only when there's a cover image (otherwise shown on gradient) */}
+          {course.image_url && (
+            <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: colors.textDark, margin: "0 0 0.35rem", lineHeight: 1.25 }}>
+              {course.title}
+            </h3>
+          )}
+          {!course.image_url && (
+            /* When using gradient cover, show smaller subtitle-style title in body */
+            <h3 style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.88rem", color: colors.textMid, margin: "0 0 0.3rem", lineHeight: 1.3 }}>
+              הפרק השבועי בתנ״ך
+            </h3>
+          )}
           {course.description && (
             <p style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted, margin: "0 0 0.9rem", lineHeight: 1.6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
               {course.description}
             </p>
           )}
-          {/* Status */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            {(hasAccess || isBase) ? (
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.22rem 0.6rem", borderRadius: radii.pill, background: `${accent}15`, color: accent, fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700 }}>
-                <BookOpen size={10} /> פתוח
-              </span>
-            ) : (
+
+          {/* Status row */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: course.description ? 0 : "0.5rem" }}>
+            {isLocked ? (
               <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.22rem 0.6rem", borderRadius: radii.pill, background: "rgba(139,111,71,0.07)", color: colors.textMuted, fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700 }}>
                 <Lock size={10} /> דרוש מנוי
               </span>
+            ) : (
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.22rem 0.6rem", borderRadius: radii.pill, background: `${accent}15`, color: accent, fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700 }}>
+                <BookOpen size={10} /> פתוח
+              </span>
             )}
-            <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, marginInlineStart: "auto", display: "flex", alignItems: "center", gap: "0.2rem" }}>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: accent, marginInlineStart: "auto", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.2rem" }}>
               כנס <ChevronLeft size={12} style={{ transform: "rotate(180deg)" }} />
             </span>
           </div>

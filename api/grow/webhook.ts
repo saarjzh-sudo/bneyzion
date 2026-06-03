@@ -287,15 +287,29 @@ async function loadProductConfig(
 // Maps a payment_products slug to the access tag it grants.
 // Extend this map when new subscription products are added.
 const PRODUCT_ACCESS_TAGS: Record<string, string> = {
-  "weekly-chapter-subscription": "program:weekly-chapter",
+  "weekly-chapter-subscription":         "program:weekly-chapter",
+  // הפרק השבועי — ספרי תנ"ך (one-time course access)
+  "book-ezra":                           "course:ezra",
+  "book-nehemiah":                       "course:nehemiah",
+  "book-daniel":                         "course:daniel",
+  "book-esther":                         "course:esther",
+  "book-haggai-zechariah-malachi":       "course:haggai-zechariah-malachi",
+  "book-lamentations":                   "course:lamentations",
 };
 
 // How long does a successful charge extend the subscription?
 // For direct-debit (monthly) we add 35 days (5-day grace period over 30-day month).
 // For one-time wallet purchases with no recurrence we set null (forever).
 const PRODUCT_VALID_DURATION_DAYS: Record<string, number | null> = {
-  "weekly-chapter-subscription": 35, // monthly direct debit — 30 days + 5-day grace
-  "book-megilat-esther": null,         // one-time purchase — forever
+  "weekly-chapter-subscription":         35,   // monthly direct debit — 30 days + 5-day grace
+  "book-megilat-esther":                 null, // legacy one-time purchase — forever
+  // הפרק השבועי books — one-time purchase → access forever
+  "book-ezra":                           null,
+  "book-nehemiah":                       null,
+  "book-daniel":                         null,
+  "book-esther":                         null,
+  "book-haggai-zechariah-malachi":       null,
+  "book-lamentations":                   null,
 };
 
 async function grantAccessTag(params: {

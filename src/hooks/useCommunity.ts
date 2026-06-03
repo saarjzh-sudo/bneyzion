@@ -21,10 +21,12 @@ export interface WeeklyCourse {
 
 export interface PaymentProduct {
   id: string;
-  name: string;
+  display_name: string;
   default_amount: number;
-  currency: string;
+  active: boolean;
+  type: string | null;
   target_table: string | null;
+  description: string | null;
 }
 
 // useWeeklyBooks — all courses with in_weekly_program=true, sorted
@@ -70,7 +72,7 @@ export function usePaymentProduct(productId: string | undefined) {
     queryFn: async () => {
       const { data, error } = await (supabase as any)
         .from("payment_products")
-        .select("id, name, default_amount, currency, target_table")
+        .select("id, display_name, default_amount, active, type, target_table, description")
         .eq("id", productId!)
         .maybeSingle();
       if (error) throw error;
@@ -87,7 +89,7 @@ export function useAllPaymentProducts() {
     queryFn: async () => {
       const { data, error } = await (supabase as any)
         .from("payment_products")
-        .select("id, name, default_amount, currency, target_table");
+        .select("id, display_name, default_amount, active, type, target_table, description");
       if (error) throw error;
       return (data ?? []) as PaymentProduct[];
     },
@@ -118,6 +120,7 @@ export function useCourseDataWithResources(courseId: string | undefined) {
         resources: [],
         chapters: new Map(),
         chapterNumbers: [],
+        rawLessons: [],
       };
 
       for (const lesson of lessons) {
@@ -128,6 +131,9 @@ export function useCourseDataWithResources(courseId: string | undefined) {
 
         const ch = lesson.bible_chapter;
         if (!ch) continue;
+
+        // rawLessons: all non-intro/resources lessons (used for HZM sub-book grouping)
+        result.rawLessons.push(lesson);
 
         if (!result.chapters.has(ch)) {
           result.chapters.set(ch, {
@@ -158,6 +164,8 @@ export interface CourseDataWithResources {
   resources: CommunityLesson[];
   chapters: Map<number, ChapterLayersMulti>;
   chapterNumbers: number[];
+  /** Raw lessons (all non-intro/resources), used by HZM sub-book grouping */
+  rawLessons: CommunityLesson[];
 }
 
 // ── Types for weekly-chapter data-driven page ──────────────────────────────

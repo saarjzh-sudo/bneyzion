@@ -15,32 +15,37 @@ interface Props {
   disabledOnRoutes?: string[];
 }
 
-// Ploni font @font-face — injected once on mount (clearest Hebrew font)
+// Ploni font @font-face — injected once on mount
+// Self-hosted from /public/fonts/ (cdnfonts.com 404s since 2026-06-03).
+// The files already exist in public/fonts/ and are declared in index.css,
+// but index.css @font-face may not be parsed inside the bot's injected <style>.
+// Injecting here guarantees Ploni loads in the bot widget even if index.css
+// declaration is later moved.
 const PLONI_FONT_CSS = `
 @font-face {
   font-family: "Ploni";
-  src: url("https://fonts.cdnfonts.com/s/22050/ploni-light-aaa.woff") format("woff");
+  src: url("/fonts/ploni-light-aaa.otf") format("opentype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Ploni";
-  src: url("https://fonts.cdnfonts.com/s/22050/ploni-regular-aaa.woff") format("woff");
+  src: url("/fonts/ploni-regular-aaa.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Ploni";
-  src: url("https://fonts.cdnfonts.com/s/22050/ploni-medium-aaa.woff") format("woff");
+  src: url("/fonts/ploni-medium-aaa.otf") format("opentype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "Ploni";
-  src: url("https://fonts.cdnfonts.com/s/22050/ploni-bold-aaa.woff") format("woff");
+  src: url("/fonts/ploni-bold-aaa.otf") format("opentype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;

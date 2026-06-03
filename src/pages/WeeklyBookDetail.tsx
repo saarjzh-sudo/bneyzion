@@ -168,19 +168,36 @@ export default function WeeklyBookDetail() {
   function selectNav(nav: NavItem) { setActiveNav(nav); setActiveTab("base"); setEmbeddedId(null); }
 
   // ── Special: Haggai-Zechariah-Malachi sub-books ─────────────────────────
-  // Group chapters by bible_book column
+  // Group by bible_book directly from rawLessons — not from chapters Map.
+  // The chapters Map mixes all 3 sub-books per chapter number (ch1 has
+  // חגי+זכריה+מלאכי lessons), so using it for grouping gives wrong results.
+  // rawLessons preserves each lesson's own bible_book field.
+  //
+  // Desired order: זכריה → חגי → מלאכי (canonical Tanakh order for these books)
+  const HZM_ORDER = ["זכריה", "חגי", "מלאכי"];
+
   const hzmSubBooks: Map<string, number[]> = new Map();
   if (isHZM(slug) && courseData) {
-    for (const [ch, chData] of courseData.chapters) {
-      const lessons = [...chData.base, ...chData.enrichment, ...chData.weekly];
-      const bibleBook = lessons[0]?.bible_book ?? "unknown";
-      if (!hzmSubBooks.has(bibleBook)) hzmSubBooks.set(bibleBook, []);
-      hzmSubBooks.get(bibleBook)!.push(ch);
+    for (const lesson of courseData.rawLessons) {
+      const bk = lesson.bible_book ?? "unknown";
+      const ch = lesson.bible_chapter;
+      if (!ch) continue; // skip null-chapter lessons (intro handled separately)
+      if (!hzmSubBooks.has(bk)) hzmSubBooks.set(bk, []);
+      const existing = hzmSubBooks.get(bk)!;
+      if (!existing.includes(ch)) existing.push(ch);
     }
-    // Sort chapters within each sub-book
+    // Sort chapter numbers within each sub-book
     for (const [, chs] of hzmSubBooks) chs.sort((a, b) => a - b);
   }
-  const hzmSubBookKeys = Array.from(hzmSubBooks.keys());
+  // Sort sub-book keys by canonical order; unknown books go last
+  const hzmSubBookKeys = Array.from(hzmSubBooks.keys()).sort((a, b) => {
+    const ai = HZM_ORDER.indexOf(a);
+    const bi = HZM_ORDER.indexOf(b);
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
 
   // ── Special: Esther pairs ────────────────────────────────────────────────
   // Each pair = odd chapter (1, 3, 5, 7, 9). Both chapters combined into one slot.
@@ -199,17 +216,19 @@ export default function WeeklyBookDetail() {
     if (activeNav === "intro") return null;
     if (!courseData) return null;
     if (isHZM(slug)) {
-      // sub-book level: merge all chapters of that sub-book into one "chapter" entry
-      const subChapters = hzmSubBooks.get(activeNav as string) ?? [];
-      if (subChapters.length === 0) return null;
-      const merged: ChapterLayersMulti = { chapter: subChapters[0], topic: null, base: [], enrichment: [], weekly: [] };
-      for (const ch of subChapters) {
-        const chd = courseData.chapters.get(ch);
-        if (!chd) continue;
-        if (!merged.topic && chd.topic) merged.topic = chd.topic;
-        merged.base.push(...chd.base);
-        merged.enrichment.push(...chd.enrichment);
-        merged.weekly.push(...chd.weekly);
+      // sub-book level: collect lessons by bible_book directly from rawLessons.
+      // This correctly handles the case where a sub-book has only 'weekly' layers
+      // (like זכריה) and no 'base' layer — it would be invisible otherwise.
+      const targetBook = activeNav as string;
+      const subLessons = courseData.rawLessons.filter((l) => l.bible_book === targetBook);
+      if (subLessons.length === 0) return null;
+      const merged: ChapterLayersMulti = { chapter: 1, topic: null, base: [], enrichment: [], weekly: [] };
+      for (const lesson of subLessons) {
+        const lt = lesson.layer_type?.toLowerCase();
+        if (lt === "base") merged.base.push(lesson);
+        else if (lt === "enrichment") merged.enrichment.push(lesson);
+        else if (lt === "weekly") merged.weekly.push(lesson);
+        if (!merged.topic && lesson.description) merged.topic = lesson.description;
       }
       return merged;
     }
@@ -446,17 +465,16 @@ export default function WeeklyBookDetail() {
           {/* ── Intro ─────────────────────────────────────────── */}
           {activeNav === "intro" && (
             <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              {introItems.length === 0 && (
-                <EmptyState icon={<BookOpen size={32} />} title="תכני ההקדמה עדיין לא נטענו" desc="הפעל את ה-import script כדי לטעון תכנים." />
+              {introItems.length === 0 ? null : (
+                <>
+                  <div style={{ padding: "0.9rem 1.1rem", background: "rgba(139,111,71,0.05)", borderRadius: radii.lg, fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMid, lineHeight: 1.7, borderInlineStart: `3px solid ${accent}` }}>
+                    לפני שצוללים לפרקים — כמה פריטי פתיחה שיעזרו לך להיכנס לרוח הספר.
+                  </div>
+                  {introItems.map((item, idx) => (
+                    <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={setEmbeddedId} accent={accent} />
+                  ))}
+                </>
               )}
-              {introItems.length > 0 && (
-                <div style={{ padding: "0.9rem 1.1rem", background: "rgba(139,111,71,0.05)", borderRadius: radii.lg, fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMid, lineHeight: 1.7, borderInlineStart: `3px solid ${accent}` }}>
-                  לפני שצוללים לפרקים — כמה פריטי פתיחה שיעזרו לך להיכנס לרוח הספר.
-                </div>
-              )}
-              {introItems.map((item, idx) => (
-                <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={setEmbeddedId} accent={accent} />
-              ))}
             </div>
           )}
 
@@ -499,8 +517,8 @@ export default function WeeklyBookDetail() {
                   items={activeChapterData?.base ?? []}
                   embeddedId={embeddedId}
                   onEmbed={setEmbeddedId}
-                  emptyTitle="תכני הבסיס טרם פורסמו"
-                  emptyDesc="הפרק עדיין לא הגיע בתוכנית — תכנים יפורסמו כשיגיע תורו."
+                  emptyTitle="התוכן יתווסף בקרוב"
+                  emptyDesc=""
                   noData={!activeChapterData && chapterNumbers.length > 0}
                   accent={accent}
                 />
@@ -512,8 +530,8 @@ export default function WeeklyBookDetail() {
                       items={activeChapterData?.enrichment ?? []}
                       embeddedId={embeddedId}
                       onEmbed={setEmbeddedId}
-                      emptyTitle="תכני ההרחבה יתווספו בקרוב"
-                      emptyDesc="שיעורי ההרחבה לפרק זה עדיין לא הועלו."
+                      emptyTitle="התוכן יתווסף בקרוב"
+                      emptyDesc=""
                       noData={!activeChapterData && chapterNumbers.length > 0}
                       accent={accent}
                     />
@@ -525,8 +543,8 @@ export default function WeeklyBookDetail() {
                       items={activeChapterData?.weekly ?? []}
                       embeddedId={embeddedId}
                       onEmbed={setEmbeddedId}
-                      emptyTitle="הקלטת השיעור טרם פורסמה"
-                      emptyDesc="השיעור השבועי עדיין לא הגיע — ההקלטה תפורסם אחרי השיעור."
+                      emptyTitle="התוכן יתווסף בקרוב"
+                      emptyDesc=""
                       noData={!activeChapterData && chapterNumbers.length > 0}
                       accent={accent}
                     />
