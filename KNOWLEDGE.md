@@ -5161,3 +5161,41 @@ Both hooks ALWAYS called unconditionally. Admin gets toggle: subscriber/locked p
 **Constraint:** `payment_products` rows for books have `default_amount=0` (placeholder). Catalog shows "בקרוב" and disables purchase button when amount=0 — prevents ₪0 charges.
 
 **TS:** clean. **Build:** clean (43s). **Push:** feat/weekly-chapter-data-driven. **Deployed:** preview only (no --prod).
+
+### 2026-06-03 — 5 UI bugs fixed (feat/weekly-chapter-data-driven, commit 447f3225)
+
+**Branch:** `feat/weekly-chapter-data-driven`
+**Preview deploy:** `https://bneyzion-5nncd7nv0-saars-projects-4508d6bb.vercel.app` · readyState=READY
+
+**Bug 1 — HZM sub-book grouping (CRITICAL):**
+- Root cause: `hzmSubBooks` was built from `courseData.chapters` Map. That Map groups by `bible_chapter` number — chapter 1 contains lessons from all 3 sub-books (חגי+זכריה+מלאכי mixed). Taking `lessons[0]?.bible_book` from a mixed chapter gave wrong results — זכריה vanished.
+- Fix: Added `rawLessons: CommunityLesson[]` field to `CourseDataWithResources` (hook: `useCourseDataWithResources`). `hzmSubBooks` now built from `rawLessons` filtered by `bible_book` — each lesson knows its own book.
+- `getActiveChapterData` for HZM now filters `rawLessons` by `bible_book` directly (not chapters Map).
+- Canonical order: זכריה → חגי → מלאכי (Tanakh order).
+- Sub-books with only `weekly` layer (no `base`) now correctly appear in sidebar.
+- **Constraint:** HZM DB data has chapters 1,2,3 shared across books. `bible_book` column is the reliable discriminator.
+
+**Bug 2 — payment_products 400:**
+- `PaymentProduct` interface had non-existent columns: `name`, `currency`.
+- Real columns: `id, display_name, default_amount, active, type, target_table, description`.
+- Fixed in `useCommunity.ts` (interface + both select() calls).
+- Table returns 200 but empty array `[]` for anon (RLS). Did NOT add public policy — table is empty anyway. If 403 appears after data is added, add: `CREATE POLICY payment_products_public_read ON payment_products FOR SELECT USING (true);`
+
+**Bug 3 — Empty states:**
+- Removed all dev-facing strings ("הפעל את ה-import script") from intro section and layer tabs.
+- Intro section: show nothing when `introItems.length === 0` (empty div, no EmptyState card).
+- Layer tabs: "התוכן יתווסף בקרוב" (uniform, no technical desc).
+
+**Bug 4 — Library cards:**
+- `WeeklyProgramLibrary.tsx`: `BOOK_GRADIENTS` map with unique gradient per book (6 distinct color schemes).
+- When no `image_url`: gradient cover + book title large + chapter count badge (glass effect).
+- Locked state: dark overlay + book-accent-colored lock icon.
+- Hover: lift with book accent shadow.
+
+**Bug 5 — Ploni font 404:**
+- `OnboardingBot.tsx` was loading Ploni from `fonts.cdnfonts.com/s/22050/ploni-*.woff` → 404.
+- Files exist in `/public/fonts/ploni-*.otf` (and declared in `src/index.css`).
+- Fixed: PLONI_FONT_CSS now points to `/fonts/ploni-*.otf` (self-hosted, OTF format).
+- Eliminates 8 console 404 errors on every page load.
+
+**TS:** clean. **Build:** clean. **Push:** feat/weekly-chapter-data-driven. **Deployed:** preview only (no --prod).
