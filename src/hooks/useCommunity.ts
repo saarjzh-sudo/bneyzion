@@ -1,6 +1,165 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 
+// ── WeeklyCourse — full course record for weekly-program books ────────────
+
+export interface WeeklyCourse {
+  id: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  program_slug: string | null;
+  access_type: string | null; // 'open' | 'requires_tag' | 'subscribers_only'
+  access_tag: string | null;  // e.g. 'course:ezra' or 'program:weekly-chapter'
+  in_weekly_program: boolean;
+  sort_order: number | null;
+  status: string;
+  lesson_count: number | null;
+  // for payment:
+  payment_product_id: string | null; // e.g. 'book-ezra'
+}
+
+export interface PaymentProduct {
+  id: string;
+  name: string;
+  default_amount: number;
+  currency: string;
+  target_table: string | null;
+}
+
+// useWeeklyBooks — all courses with in_weekly_program=true, sorted
+export function useWeeklyBooks() {
+  return useQuery({
+    queryKey: ["weekly-books"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_courses")
+        .select("*")
+        .eq("in_weekly_program", true)
+        .order("sort_order", { ascending: true, nullsFirst: false });
+      if (error) throw error;
+      return (data ?? []) as WeeklyCourse[];
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// useWeeklyBookBySlug — single book by program_slug (e.g. 'book-ezra')
+export function useWeeklyBookBySlug(slug: string | undefined) {
+  return useQuery({
+    queryKey: ["weekly-book-by-slug", slug],
+    enabled: !!slug,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_courses")
+        .select("*")
+        .eq("program_slug", slug!)
+        .maybeSingle();
+      if (error) throw error;
+      return data as WeeklyCourse | null;
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// usePaymentProduct — fetch payment product row by id (e.g. 'book-ezra')
+export function usePaymentProduct(productId: string | undefined) {
+  return useQuery({
+    queryKey: ["payment-product", productId],
+    enabled: !!productId,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("payment_products")
+        .select("id, name, default_amount, currency, target_table")
+        .eq("id", productId!)
+        .maybeSingle();
+      if (error) throw error;
+      return data as PaymentProduct | null;
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// useAllPaymentProducts — fetch all for catalog view
+export function useAllPaymentProducts() {
+  return useQuery({
+    queryKey: ["all-payment-products"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("payment_products")
+        .select("id, name, default_amount, currency, target_table");
+      if (error) throw error;
+      return (data ?? []) as PaymentProduct[];
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ── useCourseDataMultiBySlug — like useCourseDataMulti but accepts book slug
+// Includes 'resources' layer for books like Daniel
+export function useCourseDataWithResources(courseId: string | undefined) {
+  return useQuery({
+    queryKey: ["course-data-resources", courseId],
+    enabled: !!courseId,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_course_lessons")
+        .select("*")
+        .eq("course_id", courseId!)
+        .eq("status", "published")
+        .order("bible_chapter", { ascending: true, nullsFirst: true })
+        .order("lesson_number", { ascending: true });
+      if (error) throw error;
+
+      const lessons = (data ?? []) as CommunityLesson[];
+
+      const result: CourseDataWithResources = {
+        intro: [],
+        resources: [],
+        chapters: new Map(),
+        chapterNumbers: [],
+      };
+
+      for (const lesson of lessons) {
+        const lt = lesson.layer_type?.toLowerCase();
+
+        if (lt === "intro") { result.intro.push(lesson); continue; }
+        if (lt === "resources") { result.resources.push(lesson); continue; }
+
+        const ch = lesson.bible_chapter;
+        if (!ch) continue;
+
+        if (!result.chapters.has(ch)) {
+          result.chapters.set(ch, {
+            chapter: ch,
+            topic: lesson.description ?? null,
+            base: [],
+            enrichment: [],
+            weekly: [],
+          });
+        }
+        const entry = result.chapters.get(ch)!;
+        if (!entry.topic && lesson.description) entry.topic = lesson.description;
+
+        if (lt === "base") entry.base.push(lesson);
+        else if (lt === "enrichment") entry.enrichment.push(lesson);
+        else if (lt === "weekly") entry.weekly.push(lesson);
+      }
+
+      result.chapterNumbers = Array.from(result.chapters.keys()).sort((a, b) => a - b);
+      return result;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+export interface CourseDataWithResources {
+  intro: CommunityLesson[];
+  resources: CommunityLesson[];
+  chapters: Map<number, ChapterLayersMulti>;
+  chapterNumbers: number[];
+}
+
 // ── Types for weekly-chapter data-driven page ──────────────────────────────
 
 export interface CommunityLesson {

@@ -1,19 +1,15 @@
 /**
- * /design-courses — Courses catalog page v2.
+ * /courses — Courses catalog page v3 (live DB data).
  *
- * Changes vs v1 (2026-04-30):
- *   - Removed Daniel/Esther as locked courses — they are not standalone courses.
- *   - "הפרק השבועי" card upgraded: mini-timeline of 8 books inside the card.
- *   - Added 3 real independent mock courses: "איך ללמוד תנ״ך", "פרשת השבוע", "פרקי אבות".
- *   - Two sections: "הקורסים שלי" (owned/active) + "קורסים נוספים שתאהב".
- *   - Breadcrumb back to portal.
+ * v3 changes (2026-06-03):
+ *   - "ספרי התכנית" section at top: live data from community_courses (in_weekly_program=true)
+ *   - Each book card links to /course/book-<slug> with price from payment_products
+ *   - default_amount=0 → "בקרוב" / disabled purchase (no ₪0 charge)
+ *   - "הקורסים שלי" section below: live access check via useUserAccess
+ *   - Kept mock MY_COURSES + MORE_COURSES for design reference only (below live section)
  *
- * v2.1 (2026-04-30):
- *   - previewMode toggle (subscriber / member) so Saar can see both states.
- *   - For "member" mode: weekly-chapter card shows lock overlay + subscribe CTA.
- *   - Available courses show lock + "רכוש קורס" CTA for member.
- *
- * Sandbox-only (/design-* route). No production files touched.
+ * v2.1 (2026-04-30): previewMode toggle
+ * v2 (2026-04-30): TIMELINE_MINI, independent courses
  */
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -27,10 +23,20 @@ import {
   Sparkles,
   ShoppingBag,
   Star,
+  BookMarked,
+  Loader2,
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
+import {
+  useWeeklyBooks,
+  useAllPaymentProducts,
+  type WeeklyCourse,
+  type PaymentProduct,
+} from "@/hooks/useCommunity";
+import { useUserAccess } from "@/hooks/useUserAccess";
+import { useAuth } from "@/contexts/AuthContext";
 
 type PreviewMode = "subscriber" | "member";
 
@@ -133,9 +139,77 @@ const MORE_COURSES: CourseCard[] = [
   },
 ];
 
+// ── Live weekly-book card (for catalog) ───────────────────────────────────
+const BOOK_ACCENTS: Record<string, string> = {
+  "book-ezra":                    "#8B6F47",
+  "book-nehemiah":                "#5B6E3A",
+  "book-daniel":                  "#6B4E8B",
+  "book-esther":                  "#A52A2A",
+  "book-haggai-zechariah-malachi":"#3A7A85",
+  "book-lamentations":            "#7A5A3A",
+};
+
+function LiveBookCard({ book, product }: { book: WeeklyCourse; product: PaymentProduct | undefined }) {
+  const slug = book.program_slug ?? "";
+  const accent = BOOK_ACCENTS[slug] ?? colors.goldDark;
+  // Both access hooks always called
+  const { hasAccess: bookAccess } = useUserAccess(book.access_tag ?? `course:${slug.replace("book-","")}`);
+  const { hasAccess: programAccess } = useUserAccess("program:weekly-chapter");
+  const hasAccess = bookAccess || programAccess;
+  const { isAdmin } = useAuth();
+  const price = product?.default_amount ?? 0;
+  const priceDisplay = price > 0 ? `₪${price}` : "בקרוב";
+  const canBuy = price > 0 && !hasAccess && !isAdmin;
+
+  return (
+    <div dir="rtl" style={{ background: "white", borderRadius: radii.xl, border: `1px solid rgba(139,111,71,0.1)`, boxShadow: shadows.cardSoft, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      {/* Cover strip */}
+      <div style={{ height: 6, background: `linear-gradient(90deg, ${accent} 0%, ${accent}80 100%)` }} />
+      <div style={{ padding: "1.25rem 1.35rem", flex: 1, display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem", marginBottom: "0.75rem" }}>
+          <div style={{ width: 44, height: 44, borderRadius: radii.md, background: `${accent}14`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            {book.image_url
+              ? <img src={book.image_url} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: radii.md }} />
+              : <BookMarked size={20} style={{ color: accent }} />}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.textDark, lineHeight: 1.25 }}>{book.title}</div>
+            {book.description && (
+              <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted, marginTop: "0.2rem", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{book.description}</div>
+            )}
+          </div>
+        </div>
+        {/* Status + price */}
+        <div style={{ marginTop: "auto", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
+          {hasAccess || isAdmin ? (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.2rem 0.55rem", borderRadius: radii.pill, background: `${accent}14`, color: accent, fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700 }}>
+              <BookOpen size={10} /> פתוח
+            </span>
+          ) : (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.2rem 0.55rem", borderRadius: radii.pill, background: "rgba(139,111,71,0.07)", color: colors.textMuted, fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700 }}>
+              <Lock size={10} /> {priceDisplay}
+            </span>
+          )}
+          <Link
+            to={`/course/${slug}`}
+            style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", padding: "0.42rem 0.9rem", borderRadius: radii.md, background: hasAccess || isAdmin ? `${accent}14` : gradients.goldButton, color: hasAccess || isAdmin ? accent : "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.75rem", textDecoration: "none", boxShadow: hasAccess || isAdmin ? "none" : shadows.goldGlow, transition: "all 0.15s" }}
+          >
+            {hasAccess || isAdmin ? "כנס לספר" : canBuy ? "רכישה" : "גלה עוד"}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function DesignPreviewCoursesCatalog() {
   const [filter, setFilter] = useState<"all" | "active" | "completed" | "available">("all");
   const [previewMode, setPreviewMode] = useState<PreviewMode>("subscriber");
+
+  // Live data
+  const { data: weeklyBooks = [], isLoading: booksLoading } = useWeeklyBooks();
+  const { data: allProducts = [] } = useAllPaymentProducts();
+  const productMap = new Map(allProducts.map((p) => [p.id, p]));
 
   const isSubscriber = previewMode === "subscriber";
 
@@ -191,6 +265,33 @@ export default function DesignPreviewCoursesCatalog() {
             ))}
           </div>
         </div>
+
+        {/* ── Live: ספרי תכנית הפרק השבועי ─────────────────────────── */}
+        <section dir="rtl" style={{ background: "white", padding: "2rem 1.5rem", borderBottom: `1px solid rgba(139,111,71,0.08)` }}>
+          <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.25rem", gap: "1rem", flexWrap: "wrap" }}>
+              <div>
+                <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 0.2rem" }}>ספרי תכנית הפרק השבועי</h2>
+                <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted, margin: 0 }}>נתונים חיים מ-DB · {weeklyBooks.length} ספרים</p>
+              </div>
+              <Link to="/program/weekly-chapter" style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", padding: "0.4rem 0.9rem", borderRadius: radii.md, background: "rgba(139,111,71,0.08)", color: colors.goldDark, fontFamily: fonts.body, fontWeight: 700, fontSize: "0.78rem", textDecoration: "none", border: `1px solid rgba(139,111,71,0.14)` }}>
+                ספרייה מלאה <ChevronLeft size={13} style={{ transform: "rotate(180deg)" }} />
+              </Link>
+            </div>
+            {booksLoading ? (
+              <div style={{ display: "flex", justifyContent: "center", padding: "2rem 0" }}>
+                <Loader2 size={24} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "1rem" }}>
+                {weeklyBooks.map((book) => (
+                  <LiveBookCard key={book.id} book={book} product={productMap.get(book.payment_product_id ?? `book-${book.program_slug?.replace("book-","")}`)} />
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* ── Page header ─────────────────────────────────────────────── */}
         <section

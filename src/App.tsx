@@ -118,11 +118,34 @@ const ImportContent = lazy(() => import("./pages/admin/ImportContent"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
+const WeeklyProgramLibrary = lazy(() => import("./pages/WeeklyProgramLibrary"));
+const WeeklyBookDetail = lazy(() => import("./pages/WeeklyBookDetail"));
 
 /** Redirect /design-teachers-series/:id → /teachers/series/:id (client-side fallback) */
 function SandboxSeriesRedirect() {
   const { id } = useParams<{ id: string }>();
   return <Navigate to={`/teachers/series/${id}`} replace />;
+}
+
+/**
+ * Route dispatcher for /course/:slug.
+ * - book-* slugs → WeeklyBookDetail (data-driven multi-book page)
+ * - anything else → DesignPreviewCourseDetail (legacy single hardcoded page)
+ */
+function WeeklyBookDetailOrLegacy() {
+  const { slug = "" } = useParams<{ slug: string }>();
+  if (slug.startsWith("book-")) {
+    return (
+      <Suspense fallback={<LazyFallback />}>
+        <WeeklyBookDetail />
+      </Suspense>
+    );
+  }
+  return (
+    <Suspense fallback={<LazyFallback />}>
+      <DesignPreviewCourseDetail />
+    </Suspense>
+  );
 }
 
 const LazyFallback = () => (
@@ -246,8 +269,8 @@ const App = () => (
           <FloatingPlayer />
           <ScrollToTop />
           <InstallPrompt />
-          {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, and /course/weekly-chapter (bot covers card buttons there). */}
-          <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/weekly-chapter"]} />
+          {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/* (bot covers card buttons there), and /program/* */}
+          <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/"]} />
           {/* <GlobalAIChat /> */}
           <ChunkErrorBoundary>
           <ErrorBoundary>
@@ -264,7 +287,12 @@ const App = () => (
             {/* PRODUCTION — new design (2026-04-30 swap) */}
             <Route path="/portal" element={<RequireAuth><Suspense fallback={<LazyFallback />}><DesignPreviewPortalSubscriber /></Suspense></RequireAuth>} />
             <Route path="/courses" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCoursesCatalog /></Suspense>} />
-            <Route path="/course/:slug" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCourseDetail /></Suspense>} />
+            {/* Weekly program library + per-book detail */}
+            <Route path="/program/weekly-chapter" element={<Suspense fallback={<LazyFallback />}><WeeklyProgramLibrary /></Suspense>} />
+            {/* Back-compat: /course/weekly-chapter → library (was hardcoded ezra) */}
+            <Route path="/course/weekly-chapter" element={<Navigate to="/program/weekly-chapter" replace />} />
+            {/* /course/:slug — WeeklyBookDetail handles book-* slugs; DesignPreviewCourseDetail handles the rest */}
+            <Route path="/course/:slug" element={<Suspense fallback={<LazyFallback />}><WeeklyBookDetailOrLegacy /></Suspense>} />
             {/* LEGACY — archived, accessible for rollback comparison */}
             <Route path="/portal-old" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />
             <Route path="/portal/course/:id" element={<RequireAuth><Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense></RequireAuth>} />
