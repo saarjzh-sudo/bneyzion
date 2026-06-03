@@ -6080,3 +6080,39 @@ lesson.thumbnail_url
 
 URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 (SSO-protected — רק חשבון סאר. לשיתוף עם יואב להשתמש ב-URL ציבורי של `bneyzion.vercel.app`)
+
+---
+
+### 2026-06-04 — פרישה לפרודקשן: triple merge (S1+S2+S3) + benzi_knowledge migration + navigation-bot v5
+
+**הורשה מפורשת:** סאר אמר "פרוס" (2026-06-04).
+
+**שלב 0 — שער אימות (עבר):**
+- DesignHeader.tsx: GlobalSearch קיים (import שורה 30, usage שורה 368). "הקורסים שלי" קיים (href=/design-my-courses — זהה לפרודקשן).
+- diff DesignHeader + GlobalSearch בין `merge/triple-2026-06-03` ל-`feat/navigator-bot` — אפס שינויים.
+- App.tsx: כל routes קיימים מהפרודקשן נשמרו, נוספו routes חדשים בלבד.
+
+**שלב 1 — Migration `20260603_benzi_knowledge.sql`:**
+- הופעל ב-Management API על project `pzvmwfexeiruelwiujxn`.
+- תיקון נדרש: פוליסי RLS `user_roles.user_id = auth.uid()` → הוסיף `::text` cast (user_id הוא text, לא uuid).
+- אימות: 5 בלוקים ב-`benzi_knowledge` — site_identity, rabbi_yoav, weekly_program, content_structure, products_and_store. כולם `is_active=true`.
+
+**שלב 2 — Edge function navigation-bot v5:**
+- `SUPABASE_GO_BINARY=/Users/srhlq/.local/share/supabase/supabase-go supabase functions deploy navigation-bot`
+- status: ACTIVE, version 5, deploy נוצר.
+
+**שלב 3 — Push frontend:**
+- `git push origin merge/triple-2026-06-03:feat/navigator-bot` — commit `bfc3f3ee`
+- Vercel deploy `dpl_4crLxZ5oQM9VVdmD5TurJ6PvZ6Bc` → READY
+- Alias לפרודקשן: `bneyzion.vercel.app` → deploy חדש.
+
+**שלב 4 — אימות חי (Firecrawl):**
+- דף הבית: תקין — "פרשת שלח לך, חומש במדבר", י"ז בתמוז "עוד 41 ימים".
+- DesignHeader בbundle: `הקורסים שלי` + `design-my-courses` + `GlobalSearch` × 4 — קיים.
+- מלכים א (`/bible/מלכים א`): 111 שיעורים, 22 פרקים — תקין.
+- אגף מורים `/teachers`: נטען עם תוכן מלא.
+- רבנים: שמעון לוי + מנחם אליהו קיימים.
+- Chunks חדשים: `BenziKnowledge-CNZKeyOd.js`, `CategoryPage-CIF1pBen.js`, `TeachersBookPage-BsQpykn4.js` — כולם ב-production bundle.
+
+**כלל ברזל חדש:**
+- `supabase/migrations/20260603_benzi_knowledge.sql` — פוליסי RLS שמשווה `user_roles.user_id` ל-`auth.uid()` דורש `::text` cast. ה-user_id בטבלה הוא text, לא uuid. תמיד לבדוק type לפני cast ב-RLS.
