@@ -526,6 +526,47 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-03 (round-12) — commit + push + preview deploy + visual validation
+
+**Branch:** `fix/series-teachers-data` · **No code changes — commit/push/verify session.**
+
+**What happened:**
+- Staged: `KNOWLEDGE.md` (rounds 9-11) + `src/hooks/useRabbis.ts` + `supabase/migrations/20260603_get_public_rabbis_rpc.sql` + `scripts/fix_authors_p1.py` + 7 small backup JSONs + `.gitignore` update.
+- Excluded from commit: `scripts/backups/lessons-backup.json` (84MB) + `scripts/backups/series-backup.json` (861KB) — added to `.gitignore`.
+- git author set to `saar.j.z.h@gmail.com` before commit (prevents Vercel BLOCKED).
+- **Commit hash: `6a513313`** — `fix/series-teachers-data` only, NOT merged to `feat/navigator-bot`.
+- **Push succeeded** → Vercel auto-deployed preview.
+
+**Deployment:**
+- Deployment UID: `dpl_Abs9Dbp5vmNeDkGLCbg9YD7GXTrw`
+- Specific URL: `https://bneyzion-50baq4rc9-saars-projects-4508d6bb.vercel.app`
+- Branch alias: `https://bneyzion-git-fix-series-teachers-data-saars-projects-4508d6bb.vercel.app`
+- readyState: `READY` (preview, NOT production)
+- Access: SSO-protected → bypass token `3m5i6ufaWTMjL7rfxt9KZouflSHOyXYI` required for automated access.
+  Saar opens it directly in his browser — no bypass needed (he's Vercel team member).
+
+**Visual validation (RPC direct REST, 8/8 PASS):**
+| Check | Expected | Result |
+|-------|----------|--------|
+| ישקו העדרים | OUT | PASS (not found) |
+| מכון דעת סופרים | OUT | PASS (not found) |
+| הרב עדי איצקוביץ' | OUT | PASS (not found) |
+| תלמוד תורה מורשה | OUT | PASS (not found) |
+| הרב שמעון לוי | IN | PASS (found) |
+| הרב מנחם אליהו | IN | PASS (found) |
+| הרב יואב אוריאל | IN | PASS (found) |
+| הרב יונדב זר | IN | PASS (found) |
+| Total count | 167 | PASS (167) |
+
+**Bundle verification:** `get_public_rabbis` string confirmed in `/assets/main-BtdJo0a_.js`.
+
+**New iron rule:**
+- **Large DB dump files (lessons-backup.json, series-backup.json) must NEVER be committed to git.** Add to `.gitignore` before staging. 84MB binary JSON kills the push and inflates the repo permanently.
+
+**Status:** CONDITIONALLY READY for merge to production. Waiting for Saar visual review at preview URL + explicit "פרוס" before merging to `feat/navigator-bot`.
+
+---
+
 ### 2026-06-03 (round-11) — RPC fix v2 + full validation + superset teacher report
 
 **Branch:** `fix/series-teachers-data` · **DB writes: `CREATE OR REPLACE FUNCTION get_public_rabbis()` (DDL only, no data).**
