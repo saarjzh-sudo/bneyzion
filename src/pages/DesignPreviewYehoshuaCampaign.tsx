@@ -1655,6 +1655,110 @@ function DonationToast({ tier, onClose }: { tier: Tier; onClose: () => void }) {
   );
 }
 
+/* ─── Video Section ─────────────────────────────────────── */
+// Placed immediately after the Hero, before the ProofStrip.
+// The reel is vertical (9:16, 540×960 web version, 75s, H264+AAC).
+// Audio + captions are baked-in → controls=true, NO autoplay.
+function VideoSection() {
+  const { ref, visible } = useInView(0.1);
+  return (
+    <section
+      ref={ref}
+      style={{
+        background: "hsl(215 55% 12%)",
+        padding: "64px 24px 56px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: 24,
+      }}
+    >
+      {/* Label */}
+      <div
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "none" : "translateY(14px)",
+          transition: "opacity 0.55s ease, transform 0.55s ease",
+          textAlign: "center",
+        }}
+      >
+        <p
+          style={{
+            color: "hsl(38 85% 66%)",
+            fontWeight: 700,
+            fontSize: 12,
+            letterSpacing: "0.12em",
+            margin: "0 0 8px",
+          }}
+        >
+          סרטון הגיוס
+        </p>
+        <h2
+          style={{
+            fontSize: "clamp(20px, 2.6vw, 30px)",
+            fontWeight: 900,
+            color: "white",
+            margin: 0,
+            lineHeight: 1.2,
+          }}
+        >
+          הרב יואב מספר — ממש מהשטח
+        </h2>
+      </div>
+
+      {/* Video player — 9:16 vertical, max width 360px on desktop */}
+      <div
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "none" : "translateY(20px)",
+          transition: "opacity 0.65s ease 0.12s, transform 0.65s ease 0.12s",
+          width: "100%",
+          maxWidth: 360,
+          borderRadius: 18,
+          overflow: "hidden",
+          border: "2px solid hsl(38 75% 55% / 0.35)",
+          boxShadow: "0 24px 60px hsl(215 55% 8% / 0.55)",
+          background: "hsl(215 55% 8%)",
+          aspectRatio: "9 / 16",
+          position: "relative",
+        }}
+      >
+        <video
+          controls
+          preload="metadata"
+          poster="/video/yehoshua-reel-poster.jpg"
+          playsInline
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+          }}
+        >
+          <source src="/video/yehoshua-reel.mp4" type="video/mp4" />
+          הדפדפן שלך אינו תומך בנגן וידאו.
+        </video>
+      </div>
+
+      {/* Caption */}
+      <p
+        style={{
+          opacity: visible ? 1 : 0,
+          transform: visible ? "none" : "translateY(10px)",
+          transition: "opacity 0.55s ease 0.22s, transform 0.55s ease 0.22s",
+          fontSize: 13,
+          color: "hsl(215 10% 50%)",
+          margin: 0,
+          textAlign: "center",
+          maxWidth: 360,
+        }}
+      >
+        הרב יואב אוריאל — מגבול סוריה, סיון תשפ"ו
+      </p>
+    </section>
+  );
+}
+
 function StickyMobileBar({ onSupportClick, progressPct }: { onSupportClick: () => void; progressPct: number }) {
   return (
     <div
@@ -1793,6 +1897,9 @@ export default function DesignPreviewYehoshuaCampaign() {
 
       {/* ── 1. HERO ── */}
       <HeroSection onSupportClick={scrollToTiers} raised={raised} supporters={supporters} progressPct={progressPct} />
+
+      {/* ── 1b. VIDEO REEL ── */}
+      <VideoSection />
 
       {/* ── 2. PROOF STRIP ── */}
       <ProofStrip supporters={supporters} />
