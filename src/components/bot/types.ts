@@ -28,7 +28,8 @@ export type BotIntent =
   | "donation"
   | "persona_question"
   | "memorial_question"
-  | "content_question_redirected"
+  | "content_answered"          // new: bot answered content directly (no redirect)
+  | "content_question_redirected" // legacy: kept for backwards compat
   | "off_topic"
   | "other";
 
