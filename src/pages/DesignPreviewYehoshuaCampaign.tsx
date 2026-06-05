@@ -2025,7 +2025,7 @@ function InlineCheckoutModal({
     try {
       await startPayment({
         sum: tier.price,
-        description: `${tier.headline} — קמפיין ספר יהושע`,
+        description: "תרומה — קמפיין ספר יהושע",
         fullName: donorName,
         phone: donorPhone,
         email: donorEmail,
