@@ -6355,3 +6355,20 @@ Both hooks ALWAYS called unconditionally. Admin gets toggle: subscriber/locked p
 
 URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 (SSO-protected — רק חשבון סאר. לשיתוף עם יואב להשתמש ב-URL ציבורי של `bneyzion.vercel.app`)
+
+---
+
+### 2026-06-05 — תיקון שורת פריט בקבלה — קמפיין יהושוע
+
+**Branch:** `feat/navigator-bot` · **Commit:** `bbaecc18`
+**ריפו:** `/Users/saarj/Downloads/saar-workspace/bneyzion`
+
+#### מה בוצע
+- תיקון `src/pages/DesignPreviewYehoshuaCampaign.tsx` שורה 2028: description שהיה דינמי (`${tier.headline} — קמפיין ספר יהושע`) שונה לסטרינג קבוע: `"תרומה — קמפיין ספר יהושע"` — לפי אישור סאר המפורש.
+- נבדק ואומת: `webhook.ts` lines 507-526 (`description.includes("משלוח:")`) רלוונטי **רק** ל-`isStoreProduct` flag — לא לזרימת donations של יהושוע. פולפילמנט יהושוע נשען על `tier_id` + `shipping_*` + `cField3` (productSlug) — לא על description.
+- **Deploy:** push ל-`feat/navigator-bot` + alias manual של `bneyzion.vercel.app` → `dpl_96YRsQRoWwveLov7r8TRrwaTfKHz`.
+- **אימות:** chunk `DesignPreviewYehoshuaCampaign-Xvha4PQx.js` ב-production מכיל `"תרומה — קמפיין ספר יהושע"` ולא מכיל `"תמיכה בספר יהושע"`.
+- **אזהרה לסשנים הבאים:** ה-`main` branch ב-GitHub הוא legacy stub ללא codebase. push ל-main גורם ל-Vercel build ב-ERROR (כי אין package.json / vite.config). ה-production branch האמיתי הוא `feat/navigator-bot`. **אסור לדחוף ל-main לעולם.** אחרי push ל-main בשגיאה — לאמת שה-alias של `bneyzion.vercel.app` עדיין מצביע על deployment READY מ-`feat/navigator-bot` ולא על ה-ERROR.
+
+#### כלל ברזל חדש
+- **`main` = legacy stub — NEVER PUSH.** כל קוד production עובר דרך `feat/navigator-bot` בלבד. שינוי alias ידני (`/v10/deployments/{uid}/aliases`) = הדרך הבטוחה אם git push לא מספיק.
