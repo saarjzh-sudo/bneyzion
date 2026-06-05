@@ -1713,7 +1713,7 @@ function DonationModal({ tier, onClose, onSuccess, onWalletReady }: DonationModa
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           sum: amount,
-          description: `תמיכה בספר יהושע — ${tier?.name ?? "תרומה חופשית"}`,
+          description: "תרומה — קמפיין ספר יהושע",
           fullName: donorName,
           phone: donorPhone,
           email: donorEmail,
