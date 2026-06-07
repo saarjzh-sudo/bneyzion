@@ -42,6 +42,8 @@ import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
 import type { SidebarCategory, ExtraSection } from "@/hooks/useContentSidebar";
 import { usePublicRabbis } from "@/hooks/useRabbis";
+import { useTopicsSidebar } from "@/hooks/useTopicsSidebar";
+import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
 
 // ────────────────────────────────────────────────────────────────────────
 const STORAGE_KEY = "bnz.sidebar.collapsed";
@@ -78,6 +80,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 
   const { categories, extraSections, riddlesSeriesId, isLoading } = useContentSidebar();
   const { data: rabbisRaw = [] } = usePublicRabbis();
+  const { data: thematicTopics = [], isLoading: topicsLoading } = useTopicsSidebar();
 
   const topRabbis = useMemo(() => {
     const list = (rabbisRaw as { id: string; slug?: string; name?: string; lesson_count?: number }[])
@@ -367,12 +370,11 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             />
           )}
 
-          {/* ═══ TOPICS tab — extra sections only (no book tree) ═══ */}
-          {activeTab === "topics" && !isLoading && (!collapsed || isDrawer) && (
+          {/* ═══ TOPICS tab — thematic taxonomy from themes-root ═══ */}
+          {activeTab === "topics" && (!collapsed || isDrawer) && (
             <TopicsTab
-              extraSections={extraSections}
-              expandedExtras={expandedExtras}
-              onToggleExtra={(key) => toggle(setExpandedExtras, key)}
+              topics={thematicTopics}
+              isLoading={topicsLoading}
               search={search}
               matchesSearch={matchesSearch}
               onNavigate={handleNavigate}
@@ -1122,37 +1124,119 @@ function ExtraSectionBlock({
 }
 
 // ────────────────────────────────────────────────────────────────────────
-// TopicsTab — shows extra sections as the "topics" view
+// TopicsTab — thematic taxonomy (children of themes-root), real DB data
 // ────────────────────────────────────────────────────────────────────────
 function TopicsTab({
-  extraSections,
-  expandedExtras,
-  onToggleExtra,
+  topics,
+  isLoading,
   search,
   matchesSearch,
   onNavigate,
 }: {
-  extraSections: ExtraSection[];
-  expandedExtras: Set<string>;
-  onToggleExtra: (key: string) => void;
+  topics: TopicSidebarItem[];
+  isLoading: boolean;
   search: string;
   matchesSearch: (t: string) => boolean;
   onNavigate: (path: string) => void;
 }) {
-  // suppress unused warning — search is used by matchesSearch closure
-  void search;
+  void search; // used via matchesSearch closure
+
+  const visible = topics.filter((t) => matchesSearch(t.name));
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          padding: "1.5rem 0.75rem",
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+        }}
+      >
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            style={{
+              height: "2rem",
+              borderRadius: radii.sm,
+              background: "rgba(139,111,71,0.08)",
+              animation: "pulse 1.5s ease-in-out infinite",
+              opacity: 1 - i * 0.1,
+            }}
+          />
+        ))}
+      </div>
+    );
+  }
+
+  if (visible.length === 0) {
+    return (
+      <div
+        style={{
+          padding: "1.5rem",
+          textAlign: "center",
+          fontFamily: fonts.body,
+          fontSize: "0.8rem",
+          color: colors.textSubtle,
+        }}
+      >
+        {topics.length === 0 ? "לא נמצאו נושאים" : "אין תוצאות"}
+      </div>
+    );
+  }
+
   return (
-    <div>
-      {extraSections.map((section) => (
-        <ExtraSectionBlock
-          key={section.id}
-          section={section}
-          isExpanded={expandedExtras.has(section.id)}
-          onToggle={() => onToggleExtra(section.id)}
-          matchesSearch={matchesSearch}
-          variant="neutral"
-          onNavigate={onNavigate}
-        />
+    <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+      {visible.map((topic) => (
+        <button
+          key={topic.id}
+          onClick={() => onNavigate(`/topic/${topic.slug}`)}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "100%",
+            padding: "0.45rem 0.7rem",
+            borderRadius: radii.sm,
+            border: "none",
+            background: "transparent",
+            cursor: "pointer",
+            fontFamily: fonts.body,
+            fontSize: "0.78rem",
+            color: colors.textMuted,
+            textAlign: "start",
+            transition: "all 0.15s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background =
+              "rgba(139,111,71,0.06)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = "transparent";
+          }}
+        >
+          <span
+            style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {topic.name}
+          </span>
+          {topic.lessonCount > 0 && (
+            <span
+              style={{
+                fontSize: "0.65rem",
+                color: colors.textSubtle,
+                flexShrink: 0,
+                marginInlineStart: "0.4rem",
+              }}
+            >
+              ({topic.lessonCount})
+            </span>
+          )}
+        </button>
       ))}
     </div>
   );

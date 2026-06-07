@@ -205,15 +205,17 @@ export default function TeacherLessonModal({
             const isDocx = lower.includes(".docx") || lower.includes(".doc");
 
             if (isPdf) {
+              const encoded = encodeURIComponent(url);
               return (
                 <div style={{ marginBottom: "0.5rem" }}>
                   <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginBottom: "0.4rem", fontWeight: 600 }}>
                     תצוגת מסמך:
                   </div>
                   <iframe
-                    src={url}
+                    src={`https://docs.google.com/gview?url=${encoded}&embedded=true`}
                     title="PDF viewer"
                     style={{ width: "100%", height: 320, border: "1px solid rgba(139,111,71,0.15)", borderRadius: radii.lg }}
+                    loading="lazy"
                   />
                 </div>
               );
