@@ -315,14 +315,6 @@ const FAMILY_BIBLE_CARDS = [
     disabled: false,
   },
   {
-    id: "daily-video",
-    title: "קריאת כיוון",
-    desc: "המצפן היומי שלך בתנ\"ך",
-    href: "/daily-video",
-    image: "/family-bible/abstract-compass.png",
-    disabled: false,
-  },
-  {
     id: "kids-podcast",
     title: "סיפורי התנ\"ך לילדים",
     desc: "פודקאסט מבית בני ציון · בקרוב!",
@@ -379,7 +371,7 @@ function FamilyBibleSection() {
 
         {/* Chapel-arch cards grid */}
         <style>{`
-          .family-bible-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+          .family-bible-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
           @media (max-width: 900px) { .family-bible-grid { grid-template-columns: repeat(2, 1fr); } }
           @media (max-width: 480px) { .family-bible-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; } }
         `}</style>

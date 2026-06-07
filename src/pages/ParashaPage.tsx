@@ -250,6 +250,15 @@ const ParashaPage = () => {
         }}
         className="relative overflow-hidden"
       >
+        {/* Parasha hero image — behind all text, blended with gradient */}
+        <img
+          src="/family-bible/parasha-shavua.png"
+          alt=""
+          aria-hidden
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          style={{ opacity: 0.13, mixBlendMode: "luminosity", pointerEvents: "none" }}
+        />
+
         {/* Subtle diagonal texture */}
         <div
           className="absolute inset-0 opacity-[0.04]"
