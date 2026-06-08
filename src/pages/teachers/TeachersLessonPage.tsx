@@ -269,9 +269,8 @@ export default function TeachersLessonPage() {
                 {isPdf && (
                   <div style={{ borderRadius: radii.xl, overflow: "hidden", border: "1px solid rgba(139,111,71,0.15)" }}>
                     <iframe
-                      src={`https://docs.google.com/gview?url=${encoded}&embedded=true`}
-                      style={{ width: "100%", border: "none", height: "75vh", minHeight: "500px", display: "block" }}
-                      loading="lazy"
+                      src={url}
+                      style={{ width: "100%", border: "none", height: "75vh", minHeight: "500px", display: "block", background: "#fff" }}
                       title="PDF Viewer"
                     />
                   </div>

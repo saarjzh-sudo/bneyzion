@@ -1902,7 +1902,7 @@ function LessonModal({
                   <div style={{ borderRadius: radii.xl, overflow: "hidden", border: "1px solid rgba(139,111,71,0.15)" }}>
                     <iframe
                       src={isPdf
-                        ? `https://docs.google.com/gview?url=${encoded}&embedded=true`
+                        ? url
                         : `https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`
                       }
                       style={{ width: "100%", border: "none", height: "70vh", minHeight: "480px", display: "block" }}

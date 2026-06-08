@@ -488,7 +488,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
               <div className="space-y-3">
                 <div className="rounded-lg border border-border overflow-hidden bg-muted/30" style={{ height: '75vh', minHeight: '500px' }}>
                   <iframe
-                    src={`https://docs.google.com/gview?url=${encodeURIComponent((lesson as any).attachment_url)}&embedded=true`}
+                    src={(lesson as any).attachment_url}
                     className="w-full h-full"
                     title="תצוגת PDF"
                     style={{ border: 'none' }}

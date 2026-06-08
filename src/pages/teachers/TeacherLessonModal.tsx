@@ -205,17 +205,25 @@ export default function TeacherLessonModal({
             const isDocx = lower.includes(".docx") || lower.includes(".doc");
 
             if (isPdf) {
-              const encoded = encodeURIComponent(url);
               return (
                 <div style={{ marginBottom: "0.5rem" }}>
-                  <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, marginBottom: "0.4rem", fontWeight: 600 }}>
-                    תצוגת מסמך:
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+                    <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle, fontWeight: 600 }}>
+                      תצוגת מסמך:
+                    </div>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontFamily: fonts.body, fontSize: "0.8rem", fontWeight: 700, color: "#fff", background: "#3f6b4c", padding: "0.3rem 0.9rem", borderRadius: radii.lg, textDecoration: "none" }}
+                    >
+                      פתח PDF בכרטיסייה חדשה ↗
+                    </a>
                   </div>
                   <iframe
-                    src={`https://docs.google.com/gview?url=${encoded}&embedded=true`}
+                    src={url}
                     title="PDF viewer"
-                    style={{ width: "100%", height: 320, border: "1px solid rgba(139,111,71,0.15)", borderRadius: radii.lg }}
-                    loading="lazy"
+                    style={{ width: "100%", height: 420, border: "1px solid rgba(139,111,71,0.15)", borderRadius: radii.lg, background: "#fff" }}
                   />
                 </div>
               );

@@ -365,7 +365,7 @@ const LessonPage = () => {
                       </div>
                     </div>
                     <iframe
-                      src={`https://docs.google.com/gview?url=${encoded}&embedded=true`}
+                      src={url}
                       className="w-full border-0"
                       style={{ height: "75vh", minHeight: "500px" }}
                       loading="lazy"

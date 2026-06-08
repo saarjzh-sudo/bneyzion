@@ -172,7 +172,7 @@ const CommunityCoursePage = () => {
                       <div className="rounded-lg overflow-hidden border border-border">
                         <iframe
                           src={isPdf
-                            ? `https://docs.google.com/gview?url=${encoded}&embedded=true`
+                            ? url
                             : `https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`
                           }
                           className="w-full border-0"
