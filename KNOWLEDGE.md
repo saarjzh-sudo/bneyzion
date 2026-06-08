@@ -6372,3 +6372,37 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 
 #### כלל ברזל חדש
 - **`main` = legacy stub — NEVER PUSH.** כל קוד production עובר דרך `feat/navigator-bot` בלבד. שינוי alias ידני (`/v10/deployments/{uid}/aliases`) = הדרך הבטוחה אם git push לא מספיק.
+
+---
+
+## 🗓️ סשן 2026-06-08 — תיקון מחדל פערי תוכן (לפני הגשה ללקוח) ⭐⭐⭐
+
+סער הציף 10 בעיות באתר. אבחון-שורש עם ~12 סוכנים הוכיח: **התוכן קיים (19,019 שיעורים, 98% התאמה לאתר הישן) — הבעיה חיווט/תיוג/רנדור, לא דאטה חסרה. תוקן, לא נבנה מחדש.** הכל פרוס חי על `bneyzion.vercel.app` ואומת ברינדור דפדפן.
+
+### גיבוי הפיך (אם צריך rollback)
+טבלאות גיבוי ב-Supabase (pzvmwfexeiruelwiujxn): `series_bak_20260607`, `lessons_bak_20260607`, `topics_bak_20260607`, `lesson_topics_bak_20260607`. שחזור: `UPDATE/INSERT ... FROM *_bak_20260607`.
+
+### תיקוני DATA שבוצעו (חיים)
+1. **טקסונומיית נושאים (D5)** — נוצר טופיק-אב `topics.slug='themes-root'` (שם 'נושאים') + **126 נושאים-בנים** + ~1,313 קישורי `lesson_topics`. זה מה שמזין את טאב "נושאים" בסיידבר. דוד המלך=53, גאולה=51, מלכות=38, ימי העיון=245, שלושת השבועות=26. **המקור:** `/tmp/d4_subject_to_lessonids.json` (גרידת 127 דפי `?subject=` מהאתר הישן). הסיידבר שולף `children of themes-root ORDER BY count DESC` — לכן רק התמטיים, לא המבניים.
+2. **Reparent 160 יתומות** — סדרות `parent_id=null` שהיו בלתי-נראות → עץ הספרים. **חובה לעותק אגף-המורים** של הספר (לכל ספר יש 2 שורשים: teacher-wing תחת תורה=2e248097/נביאים=42ac131e/כתובים=cb088913, ו-public). יתומות עם שיעורים: 167→8 (הנותרות = קטגוריות ציבוריות לגיטימיות). "ושננתם מלכים ב" → תחת מלכים ב teacher-wing.
+3. **סגירת הדלפת מורים (D2/D3)** — `audience_tags` הוסר 'general' מ-160 סדרות + 1,156 שיעורי 6 יוצרי-מורים (ושננתם-אוצר 6f4b2572, ושננתם e6c81665, מכון דעת סופרים, ישקו העדרים, ת"ת מורשה, נתן מארגל). **"מערכת בני ציון" 274f4480 נשאר ציבורי בכוונה (החלטת סער).**
+4. **ניקוי רבנים (D6/D7)** — RPC `get_public_rabbis()` מסנן לפי "יש סדרת general". הוסתרו 3 ע"י `status='hidden'`: צמד-מורים 0ae09e02, מחבר לא ידוע d4e5f6a7, ולו f6ce1953. אוחדו 15 כפילויות (repoint rabbi_id). ציבורי: 160 (תואם אתר ישן ~154).
+5. **D9 + counts** — bible_book תהילים→תהלים; `lesson_count` חושב מחדש לכל series+rabbis.
+6. **נדחה: D8 (5 שיעורים "מזוהמים")** — נבדק = false-positive (מחברים אמיתיים באוספי ושננתם, אסור לשנות rabbi_id).
+
+### תיקוני CODE שבוצעו (6 commits ב-feat/navigator-bot, פרוסים)
+- **C1** — `useTopicsSidebar.ts` (חדש) + `TopicPage.tsx` (חדש, route `/topic/:slug`) + `DesignSidebar.tsx` TopicsTab מחווט ל-themes-root.
+- **C2 + תיקון gview** — ⚠️ הלקח הגדול: `https://docs.google.com/gview?url=...&embedded=true` **מת — מחזיר 200 עם content-length:0**. כל ה-PDF באתר היו ריקים. הוחלף ב-**iframe native** `src={url}` (Supabase לא שולח X-Frame-Options → הדפדפן מרנדר PDF ישירות) + כפתור "פתח PDF" ב-7 קבצים: TeacherLessonModal, TeachersLessonPage, LessonDialog, CommunityDetailPage, CommunityCoursePage, DesignPreviewSeriesPageV2, LessonPage. **לעולם לא gview.**
+- **C4** — דף בית: כרטיס 'קריאת כיוון' נמחק מ-`DesignPreviewHome.tsx`, גריד 4→3.
+- **C5** — `ParashaPage.tsx`: תמונת הדר `/family-bible/parasha-shavua.png` opacity 0.55 + overlay כהה (rgba(40,22,18)) לקריאוּת.
+
+### אומת חי (headless Chrome screenshot): דף PDF בראשית מרנדר ✅ · דף בית 3 כרטיסים ✅ · /topic/דוד-המלך 53 שיעורים ✅ · רבנים נקי ✅ · הדר פרשה ✅.
+
+### 🔧 פתוח לסשן הבא (סער ימשיך תיקונים)
+- **ניקוי git:** ה-commit של gview כלל בטעות `.vite/deps_temp_*`, `scripts/import-all-books-drive-content.mjs`, `supabase/.temp/` — לנקות מהמעקב (`git rm --cached`).
+- **ספרים מפוצלים** (שמואל/מלכים/דברי הימים): `bible_book` קיים כ'מלכים' + 'מלכים א' + 'מלכים ב' בנפרד — דף ספר צריך `UNION {base,א,ב}` בשאילתה (לוגיקת UI, לא דאטה).
+- **כפילות שורשי-ספרים** (teacher-wing vs public per book) — dedup מלא נדחה.
+- **SW "צריך רענון"** — ה-ChunkErrorBoundary עובד by-design; אפשר להוסיף `ReloadPrompt` מסודר (נדחה).
+- **תמונת פרשה** — אם סער ירצה עדין/חזק יותר: opacity ב-`ParashaPage.tsx`.
+
+### קבצי עבודה (ב-/tmp, עלולים להימחק): oldsite_subjects_full.json, d4_subject_to_lessonids.json, newdb_lessons.json, fixes/*.json, bneyzion_DATA_migration_20260607.md.
