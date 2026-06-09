@@ -83,7 +83,7 @@ import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 import { useLesson } from "@/hooks/useLesson";
 import { useSeriesChildren, useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
-import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
+// TeacherContentBadge import removed — badge no longer shown on regular series page (2026-06-09 fix)
 
 // Stable default series for no-param route: "איכה" — has 9 active sub-series
 const SUB_SERIES_DEMO_ID = "35781f30-76a7-4fc6-aa06-52a1db4a4054";
@@ -588,7 +588,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                             >
                               {child.title}
                             </div>
-                            <TeacherContentBadge tags={child.audience_tags} variant="small" />
+                            {/* TeacherContentBadge removed from regular series page — teachers content stays in /teachers wing only */}
                           </div>
                           <div
                             style={{
@@ -894,6 +894,8 @@ function LessonCard({
   const imgUrl = lessonImage(lesson, seriesImageUrl, seriesTitle);
   const mediaType = getLessonMediaType(lesson);
 
+  // Bug-fix 2026-06-09: text-only lessons must NOT show a Play overlay — it implies
+  // playable media. Show null for text so the button div is skipped entirely.
   const mediaIcon =
     mediaType === "video" ? (
       <Play style={{ width: 14, height: 14, color: colors.textDark }} fill={colors.textDark} />
@@ -901,9 +903,7 @@ function LessonCard({
       <Volume2 style={{ width: 14, height: 14, color: colors.textDark }} />
     ) : mediaType === "pdf" ? (
       <FileText style={{ width: 14, height: 14, color: colors.textDark }} />
-    ) : (
-      <Play style={{ width: 14, height: 14, color: colors.textDark }} fill={colors.textDark} />
-    );
+    ) : null; // text → no play button
 
   return (
     <div
@@ -970,28 +970,27 @@ function LessonCard({
         >
           {lessonTypeLabel(lesson.source_type)}
         </span>
-        {/* Teacher badge */}
-        <div style={{ position: "absolute", top: 9, left: 9 }}>
-          <TeacherContentBadge tags={lesson.audience_tags} variant="small" />
-        </div>
-        {/* Play/Listen/PDF button */}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 9,
-            left: 9,
-            width: 34,
-            height: 34,
-            borderRadius: "50%",
-            background: "rgba(255,255,255,0.93)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.28)",
-          }}
-        >
-          {mediaIcon}
-        </div>
+        {/* TeacherContentBadge removed from regular series page — only in /teachers wing */}
+        {/* Play/Listen/PDF button — only when lesson has playable/downloadable media */}
+        {mediaIcon !== null && (
+          <div
+            style={{
+              position: "absolute",
+              bottom: 9,
+              left: 9,
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              background: "rgba(255,255,255,0.93)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.28)",
+            }}
+          >
+            {mediaIcon}
+          </div>
+        )}
       </div>
 
       {/* Card body */}
@@ -1174,7 +1173,7 @@ function LessonRow({
       >
         {mediaType === "audio" ? "אודיו" : mediaType === "video" ? "וידאו" : mediaType === "pdf" ? "PDF" : "טקסט"}
       </span>
-      <TeacherContentBadge tags={lesson.audience_tags} variant="small" />
+      {/* TeacherContentBadge removed from regular series page */}
 
       {/* Arrow */}
       <ChevronRight
