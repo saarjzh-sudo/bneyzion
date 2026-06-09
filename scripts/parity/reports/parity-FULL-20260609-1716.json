@@ -1,0 +1,1172 @@
+{
+  "crawled_pages": 200,
+  "old_items": 174,
+  "new_lessons": 19019,
+  "found": 77,
+  "parity_pct": 44.3,
+  "missing": [
+    {
+      "title": "איך לומדים תנ\"ך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 2,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/1146/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/1147/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/1148/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/1150/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/1167/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/142418/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/142419/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/142420/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/142906/הרב-קוטלר-ההבנה-האמיתית-של-דברי-התורה.pdf",
+        "https://www.bneyzion.co.il/media/142907/מושגי-התורה-בהגדרת-החטא.pdf",
+        "https://www.bneyzion.co.il/media/142908/הרב-דסלר-חטאיהם-של-גדולי-עולם.pdf",
+        "https://www.bneyzion.co.il/media/143078/על-מדרש-ופרשנות-הרב-משה-גנץ-מתוך-המעיין.pdf",
+        "https://www.bneyzion.co.il/media/143080/תנך-בגובה-האני-העליון.pdf",
+        "https://www.bneyzion.co.il/media/143111/קדושת-פשוטו-של-מקרא-פרשת-ויצא.pdf",
+        "https://www.bneyzion.co.il/media/143259/קדושת-פשוטו-של-מקרא-אמור_1-7.pdf",
+        "https://www.bneyzion.co.il/media/143262/קדושת-פשוטו-של-מקרא-בהר_1-5.pdf",
+        "https://www.bneyzion.co.il/media/143265/קדושת-פשוטו-של-מקרא-בחוקתי.pdf",
+        "https://www.bneyzion.co.il/media/143282/קדושת-פשוטו-של-מקרא-פרשת-לך-לך11-14.pdf",
+        "https://www.bneyzion.co.il/media/143283/קדושת-פשוטו-של-מקרא-פרשת-לך-לך15-19.pdf",
+        "https://www.bneyzion.co.il/media/143286/קדושת-פשוטו-של-מקרא-פרשת-תולדות_1-3.pdf",
+        "https://www.bneyzion.co.il/media/143294/קדושת-פשוטו-של-מקרא-פרשת-נח1.pdf",
+        "https://www.bneyzion.co.il/media/143296/קדושת-פשוטו-של-מקרא-פרשת-נח4.pdf",
+        "https://www.bneyzion.co.il/media/143303/קדושת-פשוטו-של-מקרא-פרשת-נשא1-3.pdf",
+        "https://www.bneyzion.co.il/media/143309/קדושת-פשוטו-של-מקרא-פרשת-נשא9-16.pdf",
+        "https://www.bneyzion.co.il/media/143316/קדושת-פשוטו-של-מקרא-פרשת-קרח1-4.pdf",
+        "https://www.bneyzion.co.il/media/143321/קדושת-פשוטו-של-מקרא-פרשת-קרח5-9.pdf",
+        "https://www.bneyzion.co.il/media/143326/קדושת-פשוטו-של-מקרא-פרשת-בלק_10-12_.pdf",
+        "https://www.bneyzion.co.il/media/143338/קדושת-פשוטו-של-מקרא-פרשת-מסעי3-6.pdf",
+        "https://www.bneyzion.co.il/media/143347/קדושת-פשוטו-של-מקרא-פרשת-דברים23-25.pdf",
+        "https://www.bneyzion.co.il/media/143372/קדושת-פשוטו-של-מקרא-פרשת-וילךpdf.pdf",
+        "https://www.bneyzion.co.il/media/143481/בינו-שנות-דור-ודור.pdf",
+        "https://www.bneyzion.co.il/media/143482/אין-מקרא-יוצא-מדי-פשוטו.pdf",
+        "https://www.bneyzion.co.il/media/143488/מדוע-התורה-שבעל-פה-אינה-כתובה-בפירוש-בתורה-שבכתב.pdf",
+        "https://www.bneyzion.co.il/media/143489/התוקף-הנצחי-של-מה-שנכתב-בתורה.pdf",
+        "https://www.bneyzion.co.il/media/143490/דרכי-האמירה-והכתיבה-של-חומש-דברים.pdf",
+        "https://www.bneyzion.co.il/media/143491/תהליך-מתן-תורה-בכתב-ובעל-פה-מחתומה-למגילה.pdf",
+        "https://www.bneyzion.co.il/media/143492/תהליך-מתן-תורה-בכתב-ובעל-פה-ממגילה-לחתומה.pdf",
+        "https://www.bneyzion.co.il/media/143494/מבוא-לפירוש-המשך-חכמה.pdf",
+        "https://www.bneyzion.co.il/media/143499/דרך-הפירוש-של-רשבם-הפשטות-המתחדשים.pdf",
+        "https://www.bneyzion.co.il/media/143500/האישים-שזכו-להשתתף-בהוספת-פרשיות-לתורה.pdf",
+        "https://www.bneyzion.co.il/media/143501/השורש-של-תקנות-וגזירות-חזל-בחיי-האבות.pdf",
+        "https://www.bneyzion.co.il/media/143502/הניידות-של-המצוה-כיחידה-מורכבת.pdf",
+        "https://www.bneyzion.co.il/media/143506/פשוטו-של-מקרא-על-פי-שיטת-המהרל.pdf",
+        "https://www.bneyzion.co.il/media/143507/שני-בתי-המדרש-בסוגיית-הפשט-והדרש.pdf",
+        "https://www.bneyzion.co.il/media/143510/פשוטו-של-מקרא-ב-קופרמן-יהודה-בן-אברהם-שמחה-עמוד-1.pdf",
+        "https://www.bneyzion.co.il/media/143520/נבואה-שהוצרכה-לדורות-ונבואה-שנכתבה-לדורות.pdf",
+        "https://www.bneyzion.co.il/media/143527/פשוטו-של-מקרא-כרך-א.pdf",
+        "https://www.bneyzion.co.il/media/143533/שיטת-הנציב-על-כתיבה-מאוחרת-של-נבואות-קדומות.pdf",
+        "https://www.bneyzion.co.il/media/143749/יציאת-ידי-חובת-שנים-מקרא-ואחד-תרגום-בפירושים-על-התורה.pdf",
+        "https://www.bneyzion.co.il/media/144358/הרב-יהושע-צוקרמן-הגישה-ללימוד-תנך-נשים-שלישי.pdf",
+        "https://www.bneyzion.co.il/media/144363/הרב-דודו-מתוקי-אין-מוקדם-ומאוחר-בתורה-רביעי-נשים.pdf",
+        "https://www.bneyzion.co.il/media/144381/הרב-שמואל-אליהו-על-חובת-לימוד-תנך.pdf",
+        "https://www.bneyzion.co.il/media/144706/הרב-יהושע-צוקרמן-יום-שלישי-ז-אב.pdf",
+        "https://www.bneyzion.co.il/media/144770/הרב-פינקוס-היחס-לגדולי-האומה-בדורות-הקדומים.pdf"
+      ],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך?",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך?",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%94%D7%92%D7%99%D7%A9%D7%94-%D7%94%D7%A8%D7%90%D7%95%D7%99%D7%94-%D7%9C%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך?",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%A2%D7%95%D7%93-%D7%91%D7%A2%D7%A0%D7%99%D7%9F-%D7%94%D7%92%D7%99%D7%A9%D7%94-%D7%9C%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "תהלים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%94%D7%92%D7%99%D7%A9%D7%94-%D7%94%D7%A8%D7%90%D7%95%D7%99%D7%94-%D7%9C%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%AA%D7%A0%D7%9A/%D7%90%D7%99%D7%9A-%D7%99%D7%A9-%D7%9C%D7%94%D7%91%D7%99%D7%9F-%D7%AA%D7%9C%D7%95%D7%A0%D7%95%D7%AA-%D7%A2%D7%9C-%D7%94%D7%A7%D7%91%D7%94-%D7%91%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%94%D7%92%D7%99%D7%A9%D7%94-%D7%94%D7%A8%D7%90%D7%95%D7%99%D7%94-%D7%9C%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%AA%D7%A0%D7%9A/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%97%D7%95%D7%91%D7%AA-%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 3,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/1146/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/1147/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/1148/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/1150/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/1167/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/142418/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/142419/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/142420/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/142906/הרב-קוטלר-ההבנה-האמיתית-של-דברי-התורה.pdf",
+        "https://www.bneyzion.co.il/media/142907/מושגי-התורה-בהגדרת-החטא.pdf",
+        "https://www.bneyzion.co.il/media/142908/הרב-דסלר-חטאיהם-של-גדולי-עולם.pdf",
+        "https://www.bneyzion.co.il/media/143078/על-מדרש-ופרשנות-הרב-משה-גנץ-מתוך-המעיין.pdf",
+        "https://www.bneyzion.co.il/media/143080/תנך-בגובה-האני-העליון.pdf",
+        "https://www.bneyzion.co.il/media/143111/קדושת-פשוטו-של-מקרא-פרשת-ויצא.pdf",
+        "https://www.bneyzion.co.il/media/143259/קדושת-פשוטו-של-מקרא-אמור_1-7.pdf",
+        "https://www.bneyzion.co.il/media/143262/קדושת-פשוטו-של-מקרא-בהר_1-5.pdf",
+        "https://www.bneyzion.co.il/media/143265/קדושת-פשוטו-של-מקרא-בחוקתי.pdf",
+        "https://www.bneyzion.co.il/media/143282/קדושת-פשוטו-של-מקרא-פרשת-לך-לך11-14.pdf",
+        "https://www.bneyzion.co.il/media/143283/קדושת-פשוטו-של-מקרא-פרשת-לך-לך15-19.pdf",
+        "https://www.bneyzion.co.il/media/143286/קדושת-פשוטו-של-מקרא-פרשת-תולדות_1-3.pdf",
+        "https://www.bneyzion.co.il/media/143294/קדושת-פשוטו-של-מקרא-פרשת-נח1.pdf",
+        "https://www.bneyzion.co.il/media/143296/קדושת-פשוטו-של-מקרא-פרשת-נח4.pdf",
+        "https://www.bneyzion.co.il/media/143303/קדושת-פשוטו-של-מקרא-פרשת-נשא1-3.pdf",
+        "https://www.bneyzion.co.il/media/143309/קדושת-פשוטו-של-מקרא-פרשת-נשא9-16.pdf",
+        "https://www.bneyzion.co.il/media/143316/קדושת-פשוטו-של-מקרא-פרשת-קרח1-4.pdf",
+        "https://www.bneyzion.co.il/media/143321/קדושת-פשוטו-של-מקרא-פרשת-קרח5-9.pdf",
+        "https://www.bneyzion.co.il/media/143326/קדושת-פשוטו-של-מקרא-פרשת-בלק_10-12_.pdf",
+        "https://www.bneyzion.co.il/media/143338/קדושת-פשוטו-של-מקרא-פרשת-מסעי3-6.pdf",
+        "https://www.bneyzion.co.il/media/143347/קדושת-פשוטו-של-מקרא-פרשת-דברים23-25.pdf",
+        "https://www.bneyzion.co.il/media/143372/קדושת-פשוטו-של-מקרא-פרשת-וילךpdf.pdf",
+        "https://www.bneyzion.co.il/media/143481/בינו-שנות-דור-ודור.pdf",
+        "https://www.bneyzion.co.il/media/143482/אין-מקרא-יוצא-מדי-פשוטו.pdf",
+        "https://www.bneyzion.co.il/media/143488/מדוע-התורה-שבעל-פה-אינה-כתובה-בפירוש-בתורה-שבכתב.pdf",
+        "https://www.bneyzion.co.il/media/143489/התוקף-הנצחי-של-מה-שנכתב-בתורה.pdf",
+        "https://www.bneyzion.co.il/media/143490/דרכי-האמירה-והכתיבה-של-חומש-דברים.pdf",
+        "https://www.bneyzion.co.il/media/143491/תהליך-מתן-תורה-בכתב-ובעל-פה-מחתומה-למגילה.pdf",
+        "https://www.bneyzion.co.il/media/143492/תהליך-מתן-תורה-בכתב-ובעל-פה-ממגילה-לחתומה.pdf",
+        "https://www.bneyzion.co.il/media/143494/מבוא-לפירוש-המשך-חכמה.pdf",
+        "https://www.bneyzion.co.il/media/143499/דרך-הפירוש-של-רשבם-הפשטות-המתחדשים.pdf",
+        "https://www.bneyzion.co.il/media/143500/האישים-שזכו-להשתתף-בהוספת-פרשיות-לתורה.pdf",
+        "https://www.bneyzion.co.il/media/143501/השורש-של-תקנות-וגזירות-חזל-בחיי-האבות.pdf",
+        "https://www.bneyzion.co.il/media/143502/הניידות-של-המצוה-כיחידה-מורכבת.pdf",
+        "https://www.bneyzion.co.il/media/143506/פשוטו-של-מקרא-על-פי-שיטת-המהרל.pdf",
+        "https://www.bneyzion.co.il/media/143507/שני-בתי-המדרש-בסוגיית-הפשט-והדרש.pdf",
+        "https://www.bneyzion.co.il/media/143510/פשוטו-של-מקרא-ב-קופרמן-יהודה-בן-אברהם-שמחה-עמוד-1.pdf",
+        "https://www.bneyzion.co.il/media/143520/נבואה-שהוצרכה-לדורות-ונבואה-שנכתבה-לדורות.pdf",
+        "https://www.bneyzion.co.il/media/143527/פשוטו-של-מקרא-כרך-א.pdf",
+        "https://www.bneyzion.co.il/media/143533/שיטת-הנציב-על-כתיבה-מאוחרת-של-נבואות-קדומות.pdf",
+        "https://www.bneyzion.co.il/media/143749/יציאת-ידי-חובת-שנים-מקרא-ואחד-תרגום-בפירושים-על-התורה.pdf",
+        "https://www.bneyzion.co.il/media/144358/הרב-יהושע-צוקרמן-הגישה-ללימוד-תנך-נשים-שלישי.pdf",
+        "https://www.bneyzion.co.il/media/144363/הרב-דודו-מתוקי-אין-מוקדם-ומאוחר-בתורה-רביעי-נשים.pdf",
+        "https://www.bneyzion.co.il/media/144381/הרב-שמואל-אליהו-על-חובת-לימוד-תנך.pdf",
+        "https://www.bneyzion.co.il/media/144706/הרב-יהושע-צוקרמן-יום-שלישי-ז-אב.pdf",
+        "https://www.bneyzion.co.il/media/144770/הרב-פינקוס-היחס-לגדולי-האומה-בדורות-הקדומים.pdf"
+      ],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%9B%D7%9C-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%91%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 3,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/1146/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/1147/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/1148/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/1150/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/1167/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/142418/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/142419/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/142420/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/142906/הרב-קוטלר-ההבנה-האמיתית-של-דברי-התורה.pdf",
+        "https://www.bneyzion.co.il/media/142907/מושגי-התורה-בהגדרת-החטא.pdf",
+        "https://www.bneyzion.co.il/media/142908/הרב-דסלר-חטאיהם-של-גדולי-עולם.pdf",
+        "https://www.bneyzion.co.il/media/143078/על-מדרש-ופרשנות-הרב-משה-גנץ-מתוך-המעיין.pdf",
+        "https://www.bneyzion.co.il/media/143080/תנך-בגובה-האני-העליון.pdf",
+        "https://www.bneyzion.co.il/media/143111/קדושת-פשוטו-של-מקרא-פרשת-ויצא.pdf",
+        "https://www.bneyzion.co.il/media/143259/קדושת-פשוטו-של-מקרא-אמור_1-7.pdf",
+        "https://www.bneyzion.co.il/media/143262/קדושת-פשוטו-של-מקרא-בהר_1-5.pdf",
+        "https://www.bneyzion.co.il/media/143265/קדושת-פשוטו-של-מקרא-בחוקתי.pdf",
+        "https://www.bneyzion.co.il/media/143282/קדושת-פשוטו-של-מקרא-פרשת-לך-לך11-14.pdf",
+        "https://www.bneyzion.co.il/media/143283/קדושת-פשוטו-של-מקרא-פרשת-לך-לך15-19.pdf",
+        "https://www.bneyzion.co.il/media/143286/קדושת-פשוטו-של-מקרא-פרשת-תולדות_1-3.pdf",
+        "https://www.bneyzion.co.il/media/143294/קדושת-פשוטו-של-מקרא-פרשת-נח1.pdf",
+        "https://www.bneyzion.co.il/media/143296/קדושת-פשוטו-של-מקרא-פרשת-נח4.pdf",
+        "https://www.bneyzion.co.il/media/143303/קדושת-פשוטו-של-מקרא-פרשת-נשא1-3.pdf",
+        "https://www.bneyzion.co.il/media/143309/קדושת-פשוטו-של-מקרא-פרשת-נשא9-16.pdf",
+        "https://www.bneyzion.co.il/media/143316/קדושת-פשוטו-של-מקרא-פרשת-קרח1-4.pdf",
+        "https://www.bneyzion.co.il/media/143321/קדושת-פשוטו-של-מקרא-פרשת-קרח5-9.pdf",
+        "https://www.bneyzion.co.il/media/143326/קדושת-פשוטו-של-מקרא-פרשת-בלק_10-12_.pdf",
+        "https://www.bneyzion.co.il/media/143338/קדושת-פשוטו-של-מקרא-פרשת-מסעי3-6.pdf",
+        "https://www.bneyzion.co.il/media/143347/קדושת-פשוטו-של-מקרא-פרשת-דברים23-25.pdf",
+        "https://www.bneyzion.co.il/media/143372/קדושת-פשוטו-של-מקרא-פרשת-וילךpdf.pdf",
+        "https://www.bneyzion.co.il/media/143481/בינו-שנות-דור-ודור.pdf",
+        "https://www.bneyzion.co.il/media/143482/אין-מקרא-יוצא-מדי-פשוטו.pdf",
+        "https://www.bneyzion.co.il/media/143488/מדוע-התורה-שבעל-פה-אינה-כתובה-בפירוש-בתורה-שבכתב.pdf",
+        "https://www.bneyzion.co.il/media/143489/התוקף-הנצחי-של-מה-שנכתב-בתורה.pdf",
+        "https://www.bneyzion.co.il/media/143490/דרכי-האמירה-והכתיבה-של-חומש-דברים.pdf",
+        "https://www.bneyzion.co.il/media/143491/תהליך-מתן-תורה-בכתב-ובעל-פה-מחתומה-למגילה.pdf",
+        "https://www.bneyzion.co.il/media/143492/תהליך-מתן-תורה-בכתב-ובעל-פה-ממגילה-לחתומה.pdf",
+        "https://www.bneyzion.co.il/media/143494/מבוא-לפירוש-המשך-חכמה.pdf",
+        "https://www.bneyzion.co.il/media/143499/דרך-הפירוש-של-רשבם-הפשטות-המתחדשים.pdf",
+        "https://www.bneyzion.co.il/media/143500/האישים-שזכו-להשתתף-בהוספת-פרשיות-לתורה.pdf",
+        "https://www.bneyzion.co.il/media/143501/השורש-של-תקנות-וגזירות-חזל-בחיי-האבות.pdf",
+        "https://www.bneyzion.co.il/media/143502/הניידות-של-המצוה-כיחידה-מורכבת.pdf",
+        "https://www.bneyzion.co.il/media/143506/פשוטו-של-מקרא-על-פי-שיטת-המהרל.pdf",
+        "https://www.bneyzion.co.il/media/143507/שני-בתי-המדרש-בסוגיית-הפשט-והדרש.pdf",
+        "https://www.bneyzion.co.il/media/143510/פשוטו-של-מקרא-ב-קופרמן-יהודה-בן-אברהם-שמחה-עמוד-1.pdf",
+        "https://www.bneyzion.co.il/media/143520/נבואה-שהוצרכה-לדורות-ונבואה-שנכתבה-לדורות.pdf",
+        "https://www.bneyzion.co.il/media/143527/פשוטו-של-מקרא-כרך-א.pdf",
+        "https://www.bneyzion.co.il/media/143533/שיטת-הנציב-על-כתיבה-מאוחרת-של-נבואות-קדומות.pdf",
+        "https://www.bneyzion.co.il/media/143749/יציאת-ידי-חובת-שנים-מקרא-ואחד-תרגום-בפירושים-על-התורה.pdf",
+        "https://www.bneyzion.co.il/media/144358/הרב-יהושע-צוקרמן-הגישה-ללימוד-תנך-נשים-שלישי.pdf",
+        "https://www.bneyzion.co.il/media/144363/הרב-דודו-מתוקי-אין-מוקדם-ומאוחר-בתורה-רביעי-נשים.pdf",
+        "https://www.bneyzion.co.il/media/144381/הרב-שמואל-אליהו-על-חובת-לימוד-תנך.pdf",
+        "https://www.bneyzion.co.il/media/144706/הרב-יהושע-צוקרמן-יום-שלישי-ז-אב.pdf",
+        "https://www.bneyzion.co.il/media/144770/הרב-פינקוס-היחס-לגדולי-האומה-בדורות-הקדומים.pdf"
+      ],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "איך לומדים תנ\"ך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%90%D7%99%D7%9A-%D7%9C%D7%95%D7%9E%D7%93%D7%99%D7%9D-%D7%AA%D7%A0%D7%9A/%D7%A2%D7%9C-%D7%97%D7%95%D7%91%D7%AA-%D7%9C%D7%99%D7%9E%D7%95%D7%93-%D7%AA%D7%A0%D7%9A/",
+      "repo": "public",
+      "depth": 3,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/1146/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/1147/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/1148/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/1150/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/1167/הרב-קוטלר.pdf",
+        "https://www.bneyzion.co.il/media/142418/שעורי-דעת-שיעור-קומה.pdf",
+        "https://www.bneyzion.co.il/media/142419/כל-הגדול-מחברו-מקוצר.pdf",
+        "https://www.bneyzion.co.il/media/142420/אם-ראשונים-כמלאכים.pdf",
+        "https://www.bneyzion.co.il/media/142906/הרב-קוטלר-ההבנה-האמיתית-של-דברי-התורה.pdf",
+        "https://www.bneyzion.co.il/media/142907/מושגי-התורה-בהגדרת-החטא.pdf",
+        "https://www.bneyzion.co.il/media/142908/הרב-דסלר-חטאיהם-של-גדולי-עולם.pdf",
+        "https://www.bneyzion.co.il/media/143078/על-מדרש-ופרשנות-הרב-משה-גנץ-מתוך-המעיין.pdf",
+        "https://www.bneyzion.co.il/media/143080/תנך-בגובה-האני-העליון.pdf",
+        "https://www.bneyzion.co.il/media/143111/קדושת-פשוטו-של-מקרא-פרשת-ויצא.pdf",
+        "https://www.bneyzion.co.il/media/143259/קדושת-פשוטו-של-מקרא-אמור_1-7.pdf",
+        "https://www.bneyzion.co.il/media/143262/קדושת-פשוטו-של-מקרא-בהר_1-5.pdf",
+        "https://www.bneyzion.co.il/media/143265/קדושת-פשוטו-של-מקרא-בחוקתי.pdf",
+        "https://www.bneyzion.co.il/media/143282/קדושת-פשוטו-של-מקרא-פרשת-לך-לך11-14.pdf",
+        "https://www.bneyzion.co.il/media/143283/קדושת-פשוטו-של-מקרא-פרשת-לך-לך15-19.pdf",
+        "https://www.bneyzion.co.il/media/143286/קדושת-פשוטו-של-מקרא-פרשת-תולדות_1-3.pdf",
+        "https://www.bneyzion.co.il/media/143294/קדושת-פשוטו-של-מקרא-פרשת-נח1.pdf",
+        "https://www.bneyzion.co.il/media/143296/קדושת-פשוטו-של-מקרא-פרשת-נח4.pdf",
+        "https://www.bneyzion.co.il/media/143303/קדושת-פשוטו-של-מקרא-פרשת-נשא1-3.pdf",
+        "https://www.bneyzion.co.il/media/143309/קדושת-פשוטו-של-מקרא-פרשת-נשא9-16.pdf",
+        "https://www.bneyzion.co.il/media/143316/קדושת-פשוטו-של-מקרא-פרשת-קרח1-4.pdf",
+        "https://www.bneyzion.co.il/media/143321/קדושת-פשוטו-של-מקרא-פרשת-קרח5-9.pdf",
+        "https://www.bneyzion.co.il/media/143326/קדושת-פשוטו-של-מקרא-פרשת-בלק_10-12_.pdf",
+        "https://www.bneyzion.co.il/media/143338/קדושת-פשוטו-של-מקרא-פרשת-מסעי3-6.pdf",
+        "https://www.bneyzion.co.il/media/143347/קדושת-פשוטו-של-מקרא-פרשת-דברים23-25.pdf",
+        "https://www.bneyzion.co.il/media/143372/קדושת-פשוטו-של-מקרא-פרשת-וילךpdf.pdf",
+        "https://www.bneyzion.co.il/media/143481/בינו-שנות-דור-ודור.pdf",
+        "https://www.bneyzion.co.il/media/143482/אין-מקרא-יוצא-מדי-פשוטו.pdf",
+        "https://www.bneyzion.co.il/media/143488/מדוע-התורה-שבעל-פה-אינה-כתובה-בפירוש-בתורה-שבכתב.pdf",
+        "https://www.bneyzion.co.il/media/143489/התוקף-הנצחי-של-מה-שנכתב-בתורה.pdf",
+        "https://www.bneyzion.co.il/media/143490/דרכי-האמירה-והכתיבה-של-חומש-דברים.pdf",
+        "https://www.bneyzion.co.il/media/143491/תהליך-מתן-תורה-בכתב-ובעל-פה-מחתומה-למגילה.pdf",
+        "https://www.bneyzion.co.il/media/143492/תהליך-מתן-תורה-בכתב-ובעל-פה-ממגילה-לחתומה.pdf",
+        "https://www.bneyzion.co.il/media/143494/מבוא-לפירוש-המשך-חכמה.pdf",
+        "https://www.bneyzion.co.il/media/143499/דרך-הפירוש-של-רשבם-הפשטות-המתחדשים.pdf",
+        "https://www.bneyzion.co.il/media/143500/האישים-שזכו-להשתתף-בהוספת-פרשיות-לתורה.pdf",
+        "https://www.bneyzion.co.il/media/143501/השורש-של-תקנות-וגזירות-חזל-בחיי-האבות.pdf",
+        "https://www.bneyzion.co.il/media/143502/הניידות-של-המצוה-כיחידה-מורכבת.pdf",
+        "https://www.bneyzion.co.il/media/143506/פשוטו-של-מקרא-על-פי-שיטת-המהרל.pdf",
+        "https://www.bneyzion.co.il/media/143507/שני-בתי-המדרש-בסוגיית-הפשט-והדרש.pdf",
+        "https://www.bneyzion.co.il/media/143510/פשוטו-של-מקרא-ב-קופרמן-יהודה-בן-אברהם-שמחה-עמוד-1.pdf",
+        "https://www.bneyzion.co.il/media/143520/נבואה-שהוצרכה-לדורות-ונבואה-שנכתבה-לדורות.pdf",
+        "https://www.bneyzion.co.il/media/143527/פשוטו-של-מקרא-כרך-א.pdf",
+        "https://www.bneyzion.co.il/media/143533/שיטת-הנציב-על-כתיבה-מאוחרת-של-נבואות-קדומות.pdf",
+        "https://www.bneyzion.co.il/media/143749/יציאת-ידי-חובת-שנים-מקרא-ואחד-תרגום-בפירושים-על-התורה.pdf",
+        "https://www.bneyzion.co.il/media/144358/הרב-יהושע-צוקרמן-הגישה-ללימוד-תנך-נשים-שלישי.pdf",
+        "https://www.bneyzion.co.il/media/144363/הרב-דודו-מתוקי-אין-מוקדם-ומאוחר-בתורה-רביעי-נשים.pdf",
+        "https://www.bneyzion.co.il/media/144381/הרב-שמואל-אליהו-על-חובת-לימוד-תנך.pdf",
+        "https://www.bneyzion.co.il/media/144706/הרב-יהושע-צוקרמן-יום-שלישי-ז-אב.pdf",
+        "https://www.bneyzion.co.il/media/144770/הרב-פינקוס-היחס-לגדולי-האומה-בדורות-הקדומים.pdf"
+      ],
+      "audio": true,
+      "video": true
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%91%D7%98%D7%A8%D7%9D-%D7%90%D7%A6%D7%95%D7%A8%D7%9A-%D7%91%D7%91%D7%98%D7%9F-%D7%99%D7%93%D7%A2%D7%AA%D7%99%D7%9A/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%92%D7%99%D7%91%D7%95%D7%A8-%D7%97%D7%99%D7%9C/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%94%D7%92%D7%99%D7%93-%D7%9C%D7%9A-%D7%90%D7%93%D7%9D-%D7%9E%D7%94-%D7%98%D7%95%D7%91/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%94%D7%94%D7%9E%D7%99%D7%A8-%D7%92%D7%95%D7%99-%D7%90%D7%9C%D7%95%D7%94%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%94%D7%A1%D7%99%D7%A8%D7%95-%D7%94%D7%91%D7%92%D7%93%D7%99%D7%9D-%D7%94%D7%A6%D7%95%D7%90%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%95%D7%90%D7%9E%D7%A8%D7%AA%D7%99-%D7%9C%D7%9C%D7%90-%D7%A2%D7%9E%D7%99-%D7%A2%D7%9E%D7%99-%D7%90%D7%AA%D7%94/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%95%D7%99%D7%A8%D7%95%D7%A5-%D7%9C%D7%A4%D7%A0%D7%99-%D7%90%D7%97%D7%90%D7%91/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%9C%D7%A8%D7%92%D7%9C-%D7%90%D7%9C-%D7%94%D7%9C%D7%91/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%A8%D7%95%D7%97-%D7%94%D7%A7%D7%A0%D7%90%D7%94-%D7%95%D7%A8%D7%95%D7%97-%D7%94%D7%A0%D7%96%D7%99%D7%A8%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%A9%D7%9E%D7%A8%D7%95-%D7%A2%D7%93%D7%95%D7%AA%D7%99%D7%95-%D7%95%D7%97%D7%95%D7%A7-%D7%A0%D7%AA%D7%9F-%D7%9C%D7%9E%D7%95/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות פרשת חוקת",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%97%D7%95%D7%A7%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144764/שופטים-יא-האם-יפתח-העלה-את-בתו-לעולה.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות פרשת קורח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%A7%D7%95%D7%A8%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת פרשת בהעלותך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%91%D7%94%D7%A2%D7%9C%D7%95%D7%AA%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת פרשת בלק",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%91%D7%9C%D7%A7/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת פרשת במדבר",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות פרשת מטות",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%9E%D7%98%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת פרשת מסעי",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%9E%D7%A1%D7%A2%D7%99/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת פרשת נשא",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%A0%D7%A9%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144762/שופטים-יג-מדוע-ציוה-ד-ששמשון-יהיה-נזיר.doc",
+        "https://www.bneyzion.co.il/media/144763/שופטים-יג-מה-הסוד-מאחורי-פרשת-מנוח-ואשתו-המעודכן.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות פרשת פנחס",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%A4%D7%A0%D7%97%D7%A1/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת פרשת שלח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%A9%D7%9C%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144619/ב-מדוע-שלח-יהושע-מרגלים.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות במדבר",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%9E%D7%93%D7%91%D7%A8/%D7%97%D7%95%D7%9E%D7%A9-%D7%91%D7%9E%D7%93%D7%91%D7%A8-%D7%9B%D7%9C-%D7%94%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת בראשית",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ויגש",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%92%D7%A9/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ויחי",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%97%D7%99/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ויצא",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%A6%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת וירא",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%A8%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת וישב",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%A9%D7%91/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת וישלח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%A9%D7%9C%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת חיי שרה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%97%D7%99%D7%99-%D7%A9%D7%A8%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת לך לך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%9C%D7%9A-%D7%9C%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת מקץ",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%9E%D7%A7%D7%A5/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת נח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A0%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת תולדות",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%AA%D7%95%D7%9C%D7%93%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות בראשית",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA/%D7%97%D7%95%D7%9E%D7%A9-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA-%D7%9B%D7%9C-%D7%94%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 3,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%91%D7%9E%D7%94-%D7%96%D7%9B%D7%94-%D7%99%D7%A9%D7%A2%D7%99%D7%94%D7%95-%D7%A9%D7%A8%D7%95%D7%91-%D7%A0%D7%91%D7%95%D7%90%D7%95%D7%AA%D7%99%D7%95-%D7%A0%D7%91%D7%95%D7%90%D7%95%D7%AA-%D7%A0%D7%97%D7%9E%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%90%D7%91%D7%A0%D7%99-%D7%97%D7%A4%D7%A5/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%90%D7%9E%D7%A8%D7%99-%D7%9C%D7%A2%D7%A8%D7%99-%D7%99%D7%94%D7%95%D7%93%D7%94/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%94%D7%AA%D7%A9%D7%9B%D7%97-%D7%90%D7%99%D7%A9%D7%94-%D7%A2%D7%95%D7%9C%D7%94/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%95%D7%90%D7%A6%D7%A8%D7%95%D7%A3-%D7%9B%D7%91%D7%95%D7%A8-%D7%A1%D7%99%D7%92%D7%99%D7%99%D7%9A/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%95%D7%A2%D7%9C%D7%99%D7%99%D7%9A-%D7%99%D7%96%D7%A8%D7%97-%D7%93/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%9C%D7%A0%D7%98%D7%95%D7%A2-%D7%A9%D7%9E%D7%99%D7%9D-%D7%95%D7%9C%D7%99%D7%A1%D7%95%D7%93-%D7%90%D7%A8%D7%A5/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%9E%D7%9E%D7%A9%D7%94-%D7%9C%D7%99%D7%94%D7%95%D7%A9%D7%A2/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%A4%D7%95%D7%A8%D7%94-%D7%93%D7%A8%D7%9B%D7%AA%D7%99-%D7%9C%D7%91%D7%93%D7%99/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים - הרב מנחם שחור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%94%D7%A8%D7%91-%D7%9E%D7%A0%D7%97%D7%9D-%D7%A9%D7%97%D7%95%D7%A8/%D7%A8%D7%A0%D7%99-%D7%A2%D7%A7%D7%A8%D7%94/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת דברים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת האזינו",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95/%D7%A9%D7%99%D7%A8%D7%AA-%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95-%D7%95%D7%A9%D7%99%D7%A8%D7%AA-%D7%93%D7%95%D7%93/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ואתחנן",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "הפטרת וזאת הברכה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%96%D7%90%D7%AA-%D7%94%D7%91%D7%A8%D7%9B%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת וילך",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%95%D7%99%D7%9C%D7%9A/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת כי תבוא",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%9B%D7%99-%D7%AA%D7%91%D7%95%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת כי תצא",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%9B%D7%99-%D7%AA%D7%A6%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת נצבים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A0%D7%A6%D7%91%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת עקב",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A2%D7%A7%D7%91/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ראה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A8%D7%90%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ראה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A8%D7%90%D7%94/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A4%D7%A8%D7%A9%D7%AA-%D7%A8%D7%90%D7%94-%D7%9B%D7%9C-%D7%9B%D7%9C%D7%99-%D7%99%D7%95%D7%A6%D7%A8-%D7%A2%D7%9C%D7%99%D7%9A-%D7%9C%D7%90-%D7%99%D7%A6%D7%9C%D7%97/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שופטים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%97%D7%95%D7%9E%D7%A9-%D7%93%D7%91%D7%A8%D7%99%D7%9D-%D7%9B%D7%9C-%D7%94%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A1%D7%93%D7%A8-%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%A4%D7%95%D7%A8%D7%A2%D7%A0%D7%95%D7%AA-%D7%95%D7%A9%D7%91%D7%A2-%D7%93%D7%A0%D7%97%D7%9E%D7%AA%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות דברים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A9%D7%91%D7%A2-%D7%A9%D7%90%D7%9C%D7%95%D7%AA-%D7%A2%D7%9C-%D7%A9%D7%91%D7%A2-%D7%93%D7%A0%D7%97%D7%9E%D7%AA%D7%90/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות המועדים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 3,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144566/ב-ט-הפטרת-שבת-הגדול-עם-ישראל-ישאר-לנצח.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת יום הכיפורים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%99%D7%95%D7%9D-%D7%94%D7%9B%D7%99%D7%A4%D7%95%D7%A8%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "הפטרת יום העצמאות",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%99%D7%95%D7%9D-%D7%94%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA/%D7%A2%D7%95%D7%93-%D7%94%D7%99%D7%95%D7%9D-%D7%91%D7%A0%D7%91-%D7%9C%D7%A2%D7%9E%D7%95%D7%93-%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%99%D7%95%D7%9D-%D7%94%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת יום ראשון של סוכות",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%99%D7%95%D7%9D-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%A9%D7%9C-%D7%A1%D7%95%D7%9B%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "הפטרת ערב ראש חודש",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A2%D7%A8%D7%91-%D7%A8%D7%90%D7%A9-%D7%97%D7%95%D7%93%D7%A9/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ראש חודש",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A8%D7%90%D7%A9-%D7%97%D7%95%D7%93%D7%A9/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת ראשון של פסח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A8%D7%90%D7%A9%D7%95%D7%9F-%D7%A9%D7%9C-%D7%A4%D7%A1%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שביעי של פסח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%99%D7%A2%D7%99-%D7%A9%D7%9C-%D7%A4%D7%A1%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144751/ה-מדוע-האריך-הנביא-בסיפור-האנשים-שמתו-במדבר-החדש.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת הגדול",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%94%D7%92%D7%93%D7%95%D7%9C/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144566/ב-ט-הפטרת-שבת-הגדול-עם-ישראל-ישאר-לנצח.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת הגדול",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%94%D7%92%D7%93%D7%95%D7%9C/%D7%9C%D7%9E%D7%94-%D7%A7%D7%95%D7%A8%D7%90%D7%99%D7%9D-%D7%90%D7%AA-%D7%A0%D7%91%D7%95%D7%90%D7%AA-%D7%9E%D7%9C%D7%90%D7%9B%D7%99-%D7%91%D7%A9%D7%91%D7%AA-%D7%A9%D7%9C%D7%A4%D7%A0%D7%99-%D7%A4%D7%A1%D7%97/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144566/ב-ט-הפטרת-שבת-הגדול-עם-ישראל-ישאר-לנצח.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת הגדול",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%94%D7%92%D7%93%D7%95%D7%9C/%D7%A2%D7%9D-%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%99%D7%A9%D7%90%D7%A8-%D7%9C%D7%A0%D7%A6%D7%97-%D7%95%D7%99%D7%92%D7%90%D7%9C/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144566/ב-ט-הפטרת-שבת-הגדול-עם-ישראל-ישאר-לנצח.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת החודש",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%94%D7%97%D7%95%D7%93%D7%A9/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת זכור",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%96%D7%9B%D7%95%D7%A8/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144525/כיצד-יתכן-שתורתנו-הקדושה.doc",
+        "https://www.bneyzion.co.il/media/144743/מלכים-א-פרק-יא-מה-היתה-טעותו-של-יואב-בענין-עמלק.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת חול המועד סוכות",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%97%D7%95%D7%9C-%D7%94%D7%9E%D7%95%D7%A2%D7%93-%D7%A1%D7%95%D7%9B%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת חול המועד פסח",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%97%D7%95%D7%9C-%D7%94%D7%9E%D7%95%D7%A2%D7%93-%D7%A4%D7%A1%D7%97/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת חנוכה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%97%D7%A0%D7%95%D7%9B%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת נחמו",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%A0%D7%97%D7%9E%D7%95/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת פרה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%A4%D7%A8%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144609/הרב-אביר-חוקת-התשעה.docx"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת שקלים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%A9%D7%A7%D7%9C%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144736/ב-מלכים-ב-פרק-יא-כמה-בריתות-כרת-יהוידע.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת שבת תשובה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%91%D7%AA-%D7%AA%D7%A9%D7%95%D7%91%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "מינוי יהושע | פרק א",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%A9%D7%9E%D7%97%D7%AA-%D7%AA%D7%95%D7%A8%D7%94/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144354/הרב-מישאל-רובין-יהושע-משרת-משה-תכנית-ערב-נשים.pdf",
+        "https://www.bneyzion.co.il/media/144645/א-יהושע-פרק-א-מאמר-מה-ניתן-ללמוד-מהפסוק-הראשון-בספר.doc",
+        "https://www.bneyzion.co.il/media/144646/א-יהושע-פרק-א-מדוע-אמר-ד-ליהושע-משה-עבדי-מת.doc",
+        "https://www.bneyzion.co.il/media/144647/א-יהושע-פרק-א-כיצד-יתכן-להרוג-את-מי-שאינו-מבצע-את-פקודת-המלך.doc"
+      ],
+      "audio": true,
+      "video": false
+    },
+    {
+      "title": "יום א של ראש השנה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%99%D7%95%D7%9D-%D7%90-%D7%A9%D7%9C-%D7%A8%D7%90%D7%A9-%D7%94%D7%A9%D7%A0%D7%94/%D7%94%D7%98%D7%95%D7%91%D7%94-%D7%94%D7%92%D7%93%D7%95%D7%9C%D7%94-%D7%A9%D7%91%D7%90%D7%94-%D7%9E%D7%94%D7%A8-%D7%90%D7%A4%D7%A8%D7%99%D7%9D-%D7%9B%D7%AA%D7%99%D7%A7%D7%95%D7%9F-%D7%9C%D7%A8%D7%A2%D7%95%D7%AA-%D7%A9%D7%99%D7%A6%D7%90%D7%95-%D7%9E%D7%A9%D7%9D/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "יום ב של ראש השנה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%99%D7%95%D7%9D-%D7%91-%D7%A9%D7%9C-%D7%A8%D7%90%D7%A9-%D7%94%D7%A9%D7%A0%D7%94/%D7%90%D7%94%D7%91%D7%AA-%D7%93-%D7%9C%D7%A2%D7%9D-%D7%99%D7%A9%D7%A8%D7%90%D7%9C-%D7%94%D7%AA%D7%A9%D7%95%D7%91%D7%94-%D7%95%D7%94%D7%92%D7%90%D7%95%D7%9C%D7%94/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "יום ב של ראש השנה",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%99%D7%95%D7%9D-%D7%91-%D7%A9%D7%9C-%D7%A8%D7%90%D7%A9-%D7%94%D7%A9%D7%A0%D7%94/%D7%9E%D7%93%D7%95%D7%A2-%D7%9E%D7%A4%D7%98%D7%99%D7%A8%D7%99%D7%9D-%D7%91%D7%A8%D7%90%D7%A9-%D7%94%D7%A9%D7%A0%D7%94-%D7%94%D7%91%D7%9F-%D7%99%D7%A7%D7%99%D7%A8-%D7%9C%D7%99-%D7%90%D7%A4%D7%A8%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 5,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות המועדים",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%9B%D7%9C-%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144566/ב-ט-הפטרת-שבת-הגדול-עם-ישראל-ישאר-לנצח.doc"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "שבת חזון",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%94%D7%9E%D7%95%D7%A2%D7%93%D7%99%D7%9D/%D7%A9%D7%91%D7%AA-%D7%97%D7%96%D7%95%D7%9F/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/144454/סדר-ההפטרות.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרות ויקרא",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%95%D7%99%D7%A7%D7%A8%D7%90/",
+      "repo": "public",
+      "depth": 3,
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/143155/קדושת-פשוטו-של-מקרא-מצורע.pdf"
+      ],
+      "audio": false,
+      "video": false
+    },
+    {
+      "title": "הפטרת אחרי מות",
+      "url": "https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA/%D7%94%D7%A4%D7%98%D7%A8%D7%95%D7%AA-%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%94%D7%A4%D7%98%D7%A8%D7%AA-%D7%90%D7%97%D7%A8%D7%99-%D7%9E%D7%95%D7%AA/",
+      "repo": "public",
+      "depth": 4,
+      "pdfs": [],
+      "audio": false,
+      "video": false
+    }
+  ],
+  "attachments_on_old_site": []
+}

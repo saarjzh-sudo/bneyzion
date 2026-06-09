@@ -149,6 +149,23 @@ def main():
 
     print("שלב C+E — התאמה קנונית + diff דו-כיווני...")
     d = diff_inventories(old, new, old_title_key="title", new_title_key="title")
+
+    # Global missing-verification: a section diff can flag an item as "missing" only
+    # because it lives under the OTHER audience (general↔teachers) or a hyphen/spacing
+    # title variant. Re-check every "missing" against the ENTIRE new lesson set before
+    # declaring it truly absent. (Bereshit: this turned 26 false-missing → 0.)
+    from parity_engine import canonical_match as _cm
+    all_titles = [r.get("title", "") for r in sql_query("SELECT title FROM lessons")]
+    all_norm = {normalize_he(t) for t in all_titles}
+    really_missing = []
+    for m in d.missing:
+        nt = normalize_he(m.get("title", ""))
+        if nt in all_norm:
+            continue
+        if any(_cm(m.get("title", ""), t).score >= 0.8 for t in all_titles):
+            continue
+        really_missing.append(m)
+    d.missing = really_missing
     s = d.summary()
 
     print("שלב D — בדיקת attachments (Rule 13 + PDF אמיתי)...")
