@@ -285,3 +285,21 @@ env -u HTTPS_PROXY -u HTTP_PROXY NO_PROXY='*' \
 
 **ריצה ראשונה — בראשית (אגף מורים):** ישן 156 / חדש 262 / מותאמים 129 (82.7%) / חוסרים 26 / תוספות 132 / **0 על האתר הישן (Rule 13 ✓)** / 252 attachments תקינים (154 PDF + 98 Word — Word הוא לגיטימי, לא שבור).
 **הערות לדיוק:** crawl ישן הוא teachers-only וחלקי (גרנולריות series↔lesson) → "תוספות 132" מנופח. צריך: (א) crawl גם של `/מאגר-השיעורים-והמאמרים/` לציבורי, (ב) פירוק series-leaf לשיעורים בודדים. attachments מקבלים עכשיו גם Word/Office.
+
+---
+
+## ✅ תוצאות ריצה מלאה (9.6.2026) — האתר כולו
+
+**crawl הושלם: 10,157 עמודים (שני המאגרים).** הכלי הפיק:
+- **0 attachments על bneyzion.co.il site-wide** (Rule 13 מחזיק — אחרי re-host של 373).
+- **אגף מורים: 0 חוסרים** (מאומת מלא).
+- **צד ציבורי: 409 חוסרים אמיתיים** (~101 עם PDF) — `reports/missing-FINAL.json`. אחרי narrowing: raw 3,643 → dedup (פי~7 כפילות) → 1,325 ייחודיים → סינון+אימות גלובלי → 409.
+
+**Entry points עובדים:**
+- ספר בודד: `python3 scripts/parity/audit_book.py --book <ספר>` (אימות-חוסרים גלובלי מובנה)
+- כל האתר: `python3 scripts/parity/audit_full.py --max-pages 9000 --workers 8` (--resume עד "הושלם ✓") → `analyze_missing.py`
+- ⚠️ `step_a_old_inventory.py` הישן שבור (crawl ל-0) — להשתמש ב-audit_book/audit_full.
+
+**לקח מפתח:** כל מספר-חוסרים גולמי מנופח ע"י דפי קטגוריה/סדרה + כפילויות URL + וריאנטי-ניסוח (מקף/"פרשת"/audience). חובה לנפות לפני שמדווחים — אחרת false-alarm (בראשית: 26 "חוסרים" = 0 אמיתיים).
+
+**פרומפט סגירת פערים:** `GOLDEN-PROMPT-v2-gap-closing.md`.

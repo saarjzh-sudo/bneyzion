@@ -6581,3 +6581,34 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 **⭐ Rule 13 (כלל ברזל חדש, בסקיל+סוכן):** כל קובץ מצורף חייב לשבת על **Supabase Storage של האתר עצמו**. **אסור** להצביע על bneyzion.co.il (יימחק→יהפוך לאתר החדש) או כל host חיצוני. בדיקת parity חייבת לכלול: attachment על Storage (לא חיצוני) + מרנדר inline בפופאפ.
 
 **כלי parity חדש:** `scripts/parity/SKILL.md` + סוכן `.claude/agents/bneyzion-migrator.md` (אימות 1:1 ישן↔חדש). ⚠️ סקריפטי ה-pipeline (step_a/b/d, parity_engine) עדיין לא נכתבו — להשלים בסשן הבא.
+
+---
+
+## סשן 9.6.2026 (ערב→לילה) — סיכום מלא: תיקוני אתר + rehost + כלי parity 1:1
+
+### א. תיקוני אתר (pushed + deployed + אומת)
+- **באג "חומר להוראה" בצד הרגיל** — `TeacherContentBadge` הוסר מ-`DesignPreviewSeriesPageV2` (=`/series/:id` הרגיל). שאר השימושים ב-`/design-*` (sandbox) בלבד.
+- **באג ▶ Play על כרטיס טקסט** — `mediaIcon=null` לטקסט ב-`DesignPreviewSeriesPageV2`; דפי `/teachers/*` כבר השתמשו באייקונים מותנים. רוחבי.
+- **8 סדרות "דפי עבודה" שדלפו לרגיל** — `array_remove(audience_tags,'general')` (גיבוי `series_bak_20260609`).
+- **619 שיעורי מורים ריקים** — 307 מולאו PDF (התאמת-פרשה מדויקת), 130 טקסט/HTML מהאתר הישן, ~36 ל-yoav. גיבויים `lessons_bak/bak2_20260609`.
+
+### ב. ⭐⭐ מפת ראוטים מאומתת (מקור: src/App.tsx) — לסגור בלבול חוזר
+- `/` → Index · `/series/:id` → **DesignPreviewSeriesPageV2** (השם מטעה אבל זו הסדרה הרגילה הציבורית) · `/category/:id` → CategoryPage · `/lessons/:id` → LessonPage
+- `/teachers` → TeachersWingPage · `/teachers/series/:id` → TeachersSeriesPage · `/teachers/lesson/:id` → TeachersLessonPage · `/teachers/book/:book` → TeachersBookPage · פופאפ = TeacherLessonModal
+- `/design-*` = sandbox בלבד (לא פרודקשן). אגף מורים URL = `/teachers/...` (בלי "design").
+
+### ג. ⭐⭐⭐ Rule 13 + re-host (קריטי) — attachments self-hosted
+- 373 `attachment_url` הצביעו על bneyzion.co.il. שתי תקלות: (1) האתר הישן יימחק→הדומיין יעבור לאתר החדש→שבירה; (2) האתר הישן שולח **x-frame-options: sameorigin**→הפופאפ הראה "לא ניתן להתחבר אל www.bneyzion.co.il" במקום PDF.
+- תוקן: 373/373 הורדו→הועלו ל-Supabase Storage (`pzvmwfexeiruelwiujxn`, bucket `lesson-attachments`)→`attachment_url` עודכן, ישן נשמר ב-`legacy_attachment_url`. **DB: 0 על bneyzion.co.il, 8,980 על Storage.** גיבוי `lessons_bak3_20260609`.
+- service_role נשלף (באישור סער) ונשמר ב-api-keys.md (שורת "bnei-zion service_role"). נדרש להעלאות Storage.
+- סקריפט: `scripts/rehost_bneyzion_attachments.py` (--audit/--sample/--run --resume; db_query מקבל 200+201).
+
+### ד. ⭐⭐ כלי parity 1:1 — בנוי, עובד, רץ על כל האתר
+- `scripts/parity/`: `parity_engine.py` (normalize_he+canonical_match 4-רמות+diff), `audit_book.py` (ספר בודד, אימות-חוסרים גלובלי), `audit_full.py` (crawl רקורסיבי של שני המאגרים, **checkpoint+resume+concurrency 8** — שורד kills), `analyze_missing.py` (dedup+סינון nav+אימות גלובלי). סוכן `.claude/agents/bneyzion-migrator.md`.
+- **תוצאת crawl מלא: כל 10,157 העמודים של שני המאגרים נסרקו.** Narrowing: 9,879 פריטים→dedup 1,325 ייחודיים (האתר מוכפל ~פי7)→**409 חוסרים אמיתיים** (כולם ציבורי/general, **אגף מורים=0**), ~101 עם PDF. רשימה: `scripts/parity/reports/missing-FINAL.json`. קטגוריות: איוב פרק-פרק, תהלים, יהושע פרק-פרק, הפטרות מיוחדות, ימי עיון, מועדים, מפות.
+- **לקח: כל מספר-חוסרים גולמי מנופח** (קטגוריות+כפילויות+וריאנטי-ניסוח "מקף"/"פרשת"). תמיד לנפות (3,643→409). 26 "חוסרי בראשית" היו 100% false-positives (וריאנט מקף).
+- **פרומפטי זהב:** `scripts/parity/GOLDEN-PROMPT.md` (הרצה כללית) + `GOLDEN-PROMPT-v2-gap-closing.md` (סגירת 409 + זיהוי פערים חדשים, כולל סכמת INSERT).
+
+### ה. סכמת lessons ל-INSERT (אומת): רק `title` NOT NULL; defaults: source_type='text', status='draft', audience_tags=['general'], views_count=0. עמודות מדיה: attachment_url/audio_url/video_url/content/description/bible_book/bible_chapter/series_id/legacy_attachment_url/published_at.
+
+**פתוח לסשן הבא:** סגירת 409 הפערים הציבוריים (התחל מ-101 עם PDF) לפי GOLDEN-PROMPT-v2. כל הקוד ב-commits מקומיים (תיקוני האתר pushed; rehost+parity לא pushed — DB חי ממילא).
