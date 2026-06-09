@@ -139,6 +139,36 @@ UPDATE lessons SET audience_tags = '{}' WHERE ...;
 - count לא מספיק — צריך לראות שהפיצול (רבנים/יוצרי תוכן) נכון ויזואלית.
 - אם Chrome MCP לא זמין — תזהיר את סאר ותציע alt (screenshot URL manual).
 
+### ⚠️ Rule 13: attachment_url חייב להיות על Supabase Storage בלבד — לעולם לא bneyzion.co.il
+
+**כלל ברזל קריטי (נלמד 2026-06-09, מגיפת 307 URLs שבורים):**
+
+```
+אסור בהחלט:  attachment_url = "https://www.bneyzion.co.il/media/..."
+מחויב:       attachment_url = "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/..."
+```
+
+**למה:**
+1. `bneyzion.co.il` יוחלף בקרוב על ידי האתר החדש (Vercel DNS cutover). כל URL שמצביע עליו ייהפך ל-404.
+2. האתר הישן חוסם iframe embeds → PDF לא מרנדר inline בפופאפ.
+3. Supabase Storage = self-hosted, תומך inline embed, לא תלוי בדומיין חיצוני.
+
+**בדיקה נדרשת (שני שלבים, חייבים שניהם):**
+- (א) `attachment_url` מצביע על `pzvmwfexeiruelwiujxn.supabase.co/storage/...`
+- (ב) PDF מרנדר **inline** ב-TeacherLessonModal — לא רק לינק חיצוני
+
+**זרימת re-host:**
+1. הורד: `curl --noproxy '*' -sL "$OLD_URL" -o /tmp/lesson.pdf` → ודא PDF אמיתי (>0 bytes, Content-Type: application/pdf)
+2. העלה ל-Storage bucket `lesson-attachments` path: `{bible_book}/{series_slug}/{lesson_id[:8]}.pdf`
+3. עדכן `lessons.attachment_url` לכתובת Storage הציבורית
+4. אמת inline render בפופאפ
+
+**ביקורת (אחרי כל batch):**
+```sql
+SELECT COUNT(*) FROM lessons WHERE attachment_url LIKE '%bneyzion.co.il%';
+-- Expected: 0 (אפס URLים חיצוניים)
+```
+
 ---
 
 ## Per-Section Migration Workflow

@@ -585,6 +585,41 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-09 — סשן ד׳: fill-teacher-content — 130/312 description מולאו, 36 ריקים ליואב
+
+**Branch:** `feat/navigator-bot` | **DB-only, ללא push/deploy**
+
+**מה בוצע:**
+- סקריפט חדש: `scripts/fill-teacher-content.py` — מלא `description` ל-312 שיעורים מ-not-found.json
+- גיבוי `lessons_bak2_20260609` קיים (19,019 שורות, מסשן קודם)
+- מתוך 312 שיעורים:
+  - **112** קיבלו description מחילוץ content קיים (strip HTML → 250 תווים)
+  - **18** נשלפו מהאתר הישן (H1 match ≥0.75, scraped content+description)
+  - **146** כבר היה להם description (הועברו)
+  - **36** נשארו ריקים → רשימה ליואב ב-`scripts/teacher-content-for-yoav.md`
+
+**פילוח 36 ריקים:**
+- ביאור ושננתם (בראשית/שמות/מלכים א/מלכים ב/שמואל ב): 19 שיעורים — כנראה URL שבור בבסיס
+- שאלות חזרה/דגשים: 6 — placeholder או קישורי קובץ חיצוני שנמחק
+- דפי עבודה + מפות: 5 — ייתכן JPG (לא PDF) — לא נסחרף בסקריפט
+- "מעבר לקריאה/שיעורים..." series: 6 — שיעורי redirect-placeholder
+- יחידות בודדות: 5 — מגוון
+
+**אימות חי (3 פופאפים, Firecrawl):**
+- ✅ `שופטים` series — "הוראת סוגיית פילגש בגבעה" מציג description מלא בכרטיס
+- ✅ `חידות לילדים - פרשת השבוע` — כל כרטיס מציג description פר-פרשה
+- ✅ `ספר יהושע עם ביאור 'ושננתם'` — ביאור מלא פרק פרק בכרטיסים
+
+**State file:** `scripts/fill-teacher-content-state.json`
+**Not-found (ריקים):** `scripts/fill-teacher-content-still-empty.json` (36)
+**רשימה ליואב:** `scripts/teacher-content-for-yoav.md` (מפורט + IDs)
+
+**Iron rule שנלמד:**
+- שיעורים עם `content` קיים ב-DB אך `description` ריק → `make_description(content)` (strip HTML, 250 תווים) — מהיר, ללא scraping
+- שיעורים ריקים לגמרי (42) → scraping מהאתר הישן, H1-gate ≥0.75 — ה-majority נכשל כי הם בסדרות ושננתם שיש להם page נפרד ללא URL ישיר בהיררכיה המצופה
+
+---
+
 ### 2026-06-09 — סשן ג׳: fill-teacher-attachments-v2 — 307/619 שיעורים מולאו
 
 **Branch:** `feat/navigator-bot` | **DB-only, ללא push/deploy**
@@ -6530,3 +6565,19 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 - **תמונת פרשה** — אם סער ירצה עדין/חזק יותר: opacity ב-`ParashaPage.tsx`.
 
 ### קבצי עבודה (ב-/tmp, עלולים להימחק): oldsite_subjects_full.json, d4_subject_to_lessonids.json, newdb_lessons.json, fixes/*.json, bneyzion_DATA_migration_20260607.md.
+
+---
+
+## סשן 9.6.2026 (ערב) — re-host attachments off the dying old site + Rule 13
+
+**הבעיה שתוקנה:** ~373 `attachment_url` הצביעו על `https://www.bneyzion.co.il/media/...` (האתר הישן). שתי תקלות: (1) האתר הישן עומד להימחק והדומיין יצביע על האתר החדש → כל ה-URLs יישברו; (2) האתר הישן שולח `x-frame-options: sameorigin` → הפופאפ (TeacherLessonModal/worksheets) הציג "לא ניתן להתחבר אל www.bneyzion.co.il" במקום PDF.
+
+**הפתרון:** הורדה מהישן → העלאה ל-Supabase Storage (`pzvmwfexeiruelwiujxn`, bucket `lesson-attachments`) → עדכון `attachment_url` ל-URL של ה-Storage; ה-URL הישן נשמר ב-`legacy_attachment_url` (הפיך). Storage מגיש `access-control-allow-origin: *` בלי x-frame-options → מרנדר inline.
+
+**תוצאה:** 373/373 אורחו (כולל קובץ 11MB שהורד ידנית בגלל timeout). DB: 0 על bneyzion.co.il, 8,980 על Storage. גיבוי `lessons_bak3_20260609`. אומת: headers + רינדור עמוד 1 של בראשית.
+
+**סקריפט:** `scripts/rehost_bneyzion_attachments.py` (--audit / --sample / --run --resume, state file, x-upsert).
+
+**⭐ Rule 13 (כלל ברזל חדש, בסקיל+סוכן):** כל קובץ מצורף חייב לשבת על **Supabase Storage של האתר עצמו**. **אסור** להצביע על bneyzion.co.il (יימחק→יהפוך לאתר החדש) או כל host חיצוני. בדיקת parity חייבת לכלול: attachment על Storage (לא חיצוני) + מרנדר inline בפופאפ.
+
+**כלי parity חדש:** `scripts/parity/SKILL.md` + סוכן `.claude/agents/bneyzion-migrator.md` (אימות 1:1 ישן↔חדש). ⚠️ סקריפטי ה-pipeline (step_a/b/d, parity_engine) עדיין לא נכתבו — להשלים בסשן הבא.

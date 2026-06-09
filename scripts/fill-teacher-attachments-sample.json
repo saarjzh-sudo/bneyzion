@@ -1,0 +1,92 @@
+[
+  {
+    "id": "02aa570a-7a48-4f98-9d21-2d43314eb0fc",
+    "title": "חוברת עבודה לתלמיד - וירא",
+    "bible_book": "בראשית",
+    "series_id": "e44b2edb-a1b4-4d82-add0-ae2432469146",
+    "series_title": "חוברת עבודה לתלמיד- חומש בראשית",
+    "pdf_url": "https://www.bneyzion.co.il/media/142992/חוברת-עבודה-בראשית-נח.pdf",
+    "status": "found"
+  },
+  {
+    "id": "04929b54-8066-48c7-adac-24df4078c8d3",
+    "title": "דגשים לפרשות חומש בראשית",
+    "bible_book": "בראשית",
+    "series_id": "42fbc58b-ab46-40ba-b4da-288d8dad29f8",
+    "series_title": "שאלות חזרה - בראשית",
+    "pdf_url": "https://www.bneyzion.co.il/media/143024/ושננתם-בראשית-הרב-יצחק-עמראני.pdf",
+    "status": "found"
+  },
+  {
+    "id": "004e3ceb-1028-4344-af94-e3e2e1e9554c",
+    "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+    "bible_book": "יהושע",
+    "series_id": "c0c7fc56-9f95-4958-b318-a1304bd42c9f",
+    "series_title": "יהושע",
+    "pdf_url": "https://www.bneyzion.co.il/media/142983/דפי-עבודה-ספר-יהושע-הרב-ניסים-כהן.pdf",
+    "status": "found"
+  },
+  {
+    "id": "0200c4fe-4e2b-453a-8ec0-fd2975a50dcb",
+    "title": "דגשים לספר יהושע",
+    "bible_book": "יהושע",
+    "series_id": "e18aa562-4a8c-4f8f-aeb8-663fa79d0091",
+    "series_title": "דגשים לספר יהושע",
+    "pdf_url": "https://www.bneyzion.co.il/media/142831/דגשים-על-ספר-יהושע-פרקים-א-יא.docx",
+    "status": "found"
+  },
+  {
+    "id": "030bc6ed-604a-4836-90b2-aefe0324baa1",
+    "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ג",
+    "bible_book": "שופטים",
+    "series_id": "9aa7afdb-e029-4d82-af65-5584e320ca75",
+    "series_title": "ספר שופטים עם ביאור \"ושננתם\" מחולק לפי פרקים",
+    "pdf_url": "https://www.bneyzion.co.il/media/142985/דפי-עבודה-ספר-שופטים-הרב-ניסים-כהן.pdf",
+    "status": "found"
+  },
+  {
+    "id": "073ecbb4-80b1-47b7-ac42-26562e4ab0a8",
+    "title": "ספר שופטים פרקים יא-יב",
+    "bible_book": "שופטים",
+    "series_id": "a8416cc9-5e2c-4d94-8481-24ad076abd10",
+    "series_title": "מדריך להוראת ספר שופטים",
+    "pdf_url": "https://www.bneyzion.co.il/media/143893/שיעורי-דעת-שופטים-פרק-א.pdf",
+    "status": "found"
+  },
+  {
+    "id": "06b60689-e0cc-4627-90f1-0b7d8b1aced2",
+    "title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ח'",
+    "bible_book": "שמואל",
+    "series_id": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+    "series_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+    "pdf_url": "https://www.bneyzion.co.il/media/142987/דפי-עבודה-ספר-שמואל-א-הרב-ניסים-כהן.pdf",
+    "status": "found"
+  },
+  {
+    "id": "079e535b-b854-4cc2-b419-12ec713255dc",
+    "title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ד'",
+    "bible_book": "שמואל",
+    "series_id": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+    "series_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+    "pdf_url": "https://www.bneyzion.co.il/media/142987/דפי-עבודה-ספר-שמואל-א-הרב-ניסים-כהן.pdf",
+    "status": "found"
+  },
+  {
+    "id": "006c1510-0875-4c57-9f61-ccfd62c367d6",
+    "title": "פרשת יתרו",
+    "bible_book": "שמות",
+    "series_id": "ab14792d-d96a-4242-9dba-4474bebcdad1",
+    "series_title": "חוברות - חומש שמות",
+    "pdf_url": "https://www.bneyzion.co.il/media/1184/yitro.pdf",
+    "status": "found"
+  },
+  {
+    "id": "01fb344f-a52c-4de6-ad75-0202c1ed8681",
+    "title": "פרשת שמות",
+    "bible_book": "שמות",
+    "series_id": "ab14792d-d96a-4242-9dba-4474bebcdad1",
+    "series_title": "חוברות - חומש שמות",
+    "pdf_url": "https://www.bneyzion.co.il/media/1180/shmot.pdf",
+    "status": "found"
+  }
+]
