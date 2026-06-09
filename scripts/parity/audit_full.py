@@ -64,51 +64,92 @@ def links_under_roots(html: str) -> list[str]:
     return sorted(out)
 
 
-def crawl(max_pages: int) -> list[dict]:
-    seen: set[str] = set()
-    queue: deque[str] = deque()
-    children: dict[str, list[str]] = {}
-    pages: dict[str, dict] = {}  # path -> {h1, media}
-    for r in ROOTS:
-        queue.append(r); seen.add(r)
-    n = 0
-    while queue and n < max_pages:
-        path = queue.popleft()
-        html = fetch_html(OLD_SITE + enc(path))
-        n += 1
-        if n % 50 == 0:
-            print(f"  ...{n} pages, {len(pages)} content pages", flush=True)
-        if not html:
-            continue
-        kids = [l for l in links_under_roots(html) if l.startswith(path) and l != path]
-        children[path] = kids
-        pages[path] = {"h1": h1_of(html), "media": media_of(html)}
-        for k in kids:
-            if k not in seen:
-                seen.add(k); queue.append(k)
-        time.sleep(0.05)
-    # An item = a real lesson/article page:
-    #   has its own media file  OR  (terminal page AND deep enough to be content, not a category)
-    # Category/nav pages (shallow, list children, repo roots, bare book names) are excluded.
+STATE = Path(__file__).parent / "audit_full_state.json"
+
+
+def _fetch(path: str) -> str | None:
+    import subprocess
+    try:
+        r = subprocess.run(["curl", "--noproxy", "*", "-sL", "--max-time", "25",
+                            "-A", "Mozilla/5.0", OLD_SITE + enc(path)],
+                           capture_output=True, timeout=30)
+    except Exception:
+        return None
+    html = r.stdout.decode("utf-8", errors="replace")
+    if not html or len(html) < 200 or "Page not found" in html:
+        return None
+    return html
+
+
+def _save_state(seen, frontier, pages, children, n):
+    STATE.write_text(json.dumps({
+        "seen": list(seen), "frontier": list(frontier),
+        "pages": pages, "children": children, "n": n,
+    }, ensure_ascii=False), encoding="utf-8")
+
+
+def _load_state():
+    d = json.loads(STATE.read_text(encoding="utf-8"))
+    return set(d["seen"]), deque(d["frontier"]), d["pages"], d["children"], d.get("n", 0)
+
+
+def build_items(pages: dict, children: dict) -> list[dict]:
+    """Filter crawled pages → real lesson/article items (exclude category/nav pages)."""
     CATEGORY_TITLES = {normalize_he(t) for t in (
         "מאגר השיעורים והמאמרים", "מאגר עזרי הלמידה", "הפטרות", "פרשת השבוע",
         "תורה", "נביאים", "כתובים", "בראשית", "שמות", "ויקרא", "במדבר", "דברים",
     )}
     items = []
     for path, info in pages.items():
-        depth = len([s for s in path.strip("/").split("/")])  # segments incl. repo root
+        depth = len([s for s in path.strip("/").split("/")])
         is_terminal = not children.get(path)
-        has_media = bool(info["media"]["pdfs"] or info["media"]["audio"] or info["media"]["video"])
-        title = info["h1"] or unquote(path.rstrip("/").split("/")[-1]).replace("-", " ")
+        media = info.get("media", {})
+        has_media = bool(media.get("pdfs") or media.get("audio") or media.get("video"))
+        title = info.get("h1") or unquote(path.rstrip("/").split("/")[-1]).replace("-", " ")
         tnorm = normalize_he(title)
         if not tnorm or tnorm in CATEGORY_TITLES:
             continue
         if has_media or (is_terminal and depth >= 4):
             items.append({"title": title, "url": OLD_SITE + enc(path),
                           "repo": "teachers" if "עזרי-הלמידה" in path else "public",
-                          "depth": depth, "pdfs": info["media"]["pdfs"],
-                          "audio": info["media"]["audio"], "video": info["media"]["video"]})
-    return items, n
+                          "depth": depth, "pdfs": media.get("pdfs", []),
+                          "audio": media.get("audio", False), "video": media.get("video", False)})
+    return items
+
+
+def crawl(max_pages: int, resume: bool = False, workers: int = 8):
+    """Concurrent BFS over both repos, checkpointed to disk so it survives kills.
+    Returns (items, pages_done, complete: bool)."""
+    from concurrent.futures import ThreadPoolExecutor
+    if resume and STATE.exists():
+        seen, frontier, pages, children, n = _load_state()
+        print(f"  resume: {n} עמודים, {len(frontier)} בתור, {len(pages)} נשמרו", flush=True)
+    else:
+        seen, frontier, pages, children, n = set(), deque(), {}, {}, 0
+        for r in ROOTS:
+            seen.add(r); frontier.append(r)
+    budget = max_pages
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        while frontier and budget > 0:
+            batch = [frontier.popleft() for _ in range(min(workers, len(frontier)))]
+            for path, html in ex.map(lambda p: (p, _fetch(p)), batch):
+                n += 1; budget -= 1
+                if not html:
+                    pages[path] = {"h1": "", "media": {"pdfs": [], "audio": False, "video": False}}
+                    children[path] = []
+                    continue
+                kids = [l for l in links_under_roots(html) if l.startswith(path) and l != path]
+                children[path] = kids
+                pages[path] = {"h1": h1_of(html), "media": media_of(html)}
+                for k in kids:
+                    if k not in seen:
+                        seen.add(k); frontier.append(k)
+            if n % 100 < workers:
+                _save_state(seen, frontier, pages, children, n)
+                print(f"  ...{n} עמודים, {len(frontier)} בתור, {len(pages)} נשמרו", flush=True)
+    _save_state(seen, frontier, pages, children, n)
+    complete = not frontier
+    return build_items(pages, children), n, complete
 
 
 def new_all() -> list[dict]:
@@ -127,13 +168,17 @@ def build_index(items: list[dict], key="title"):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--max-pages", type=int, default=4000)
+    ap.add_argument("--max-pages", type=int, default=4000,
+                    help="עמודים לסבב הנוכחי (resume ממשיך מהמצב השמור)")
+    ap.add_argument("--resume", action="store_true", help="המשך מה-checkpoint")
+    ap.add_argument("--workers", type=int, default=8)
     args = ap.parse_args()
 
-    print(f"=== SITE-WIDE parity audit (max {args.max_pages} pages) ===\n")
+    print(f"=== SITE-WIDE parity audit (batch {args.max_pages} pages, resume={args.resume}) ===\n")
     print("שלב A — crawl גלובלי של שני המאגרים הישנים...")
-    old, crawled = crawl(args.max_pages)
-    print(f"  נסרקו {crawled} עמודים → {len(old)} פריטי תוכן ישנים\n")
+    old, crawled, complete = crawl(args.max_pages, resume=args.resume, workers=args.workers)
+    status = "הושלם ✓" if complete else "חלקי — הרץ שוב עם --resume"
+    print(f"  נסרקו {crawled} עמודים (סבב זה) → {len(old)} פריטי תוכן · crawl {status}\n")
 
     print("שלב B — כל השיעורים בחדש (Supabase)...")
     new = new_all()
@@ -176,9 +221,12 @@ def main():
         for m in missing[:12]:
             print(f"   - [{m['repo']}] {m['title']}")
 
+    if not complete:
+        print("\n  ⚠️ ה-crawl עוד לא הושלם — הרץ שוב עם --resume להמשך. המספרים חלקיים.")
     out = REPORTS / f"parity-FULL-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M')}.json"
     out.write_text(json.dumps({
-        "crawled_pages": crawled, "old_items": len(old), "new_lessons": len(new),
+        "crawl_complete": complete, "crawled_pages": crawled,
+        "old_items": len(old), "new_lessons": len(new),
         "found": len(old) - len(missing), "parity_pct": parity,
         "missing": missing, "attachments_on_old_site": on_old,
     }, ensure_ascii=False, indent=2), encoding="utf-8")
