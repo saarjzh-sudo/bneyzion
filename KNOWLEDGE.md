@@ -585,6 +585,48 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-09 — סשן ב׳: תיקוני דאטה + קוד (commit 606890ae)
+
+**Branch:** `feat/navigator-bot` | **2 commits unpushed לאחר סשן זה**
+
+**מסקנה בסיסית שנעגנה (אסור לשכוח):**
+- מקור ה-PDF/חומרים החסרים = האתר הישן `bneyzion.co.il` + Umbraco.
+- URL structure: `https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/[ספר]/[פרק]/[סדרה]/[שיעור]/`
+- דוגמה אמיתית שעבדה: `https://www.bneyzion.co.il/%D7%9E%D7%90%D7%92%D7%A8-%D7%A2%D7%96%D7%A8%D7%99-%D7%94%D7%9C%D7%9E%D7%99%D7%93%D7%94/`
+- PDFs בנתיב: `https://www.bneyzion.co.il/media/{id}/{filename}.pdf`
+- **NEVER** לומר "הקבצים אבדו ב-Lovable" — זו טעות, הם חיים ב-bneyzion.co.il
+
+**מספר אמיתי של שיעורי מורים ריקים:**
+- **474 שיעורים** עם attachment_url=null + audio_url=null + video_url=null + description=null
+- (לא 98 ולא 200 כפי שנאמר בסשנים קודמים — נספר ישירות מ-DB)
+- Top series: מדריכים למורה - יהושע (25), שמואל א (22), שופטים (22), מלכים ב (21), מלכים א (20)
+
+**דוגמה קצה-לקצה שהוכחה:**
+- שיעור ריק: `f334e566` = "דפי עבודה על ספר בראשית" (series: dd5de67e)
+- URL ציבורי האתר הישן: `/מאגר-עזרי-הלמידה/תורה/בראשית/דפי-עבודה-בראשית/`
+- PDF שנמצא: `https://www.bneyzion.co.il/media/142943/%D7%A9%D7%95%D7%AA-%D7%91%D7%A8%D7%90%D7%A9%D7%99%D7%AA-%D7%9E%D7%A0%D7%95%D7%A7%D7%93.pdf` (200 ✅)
+- UPDATE בוצע, שיעור כעת עם attachment_url
+
+**תיקוני קוד (commit 606890ae):**
+- **באג 2 — Play overlay על טקסט:** ב-`DesignPreviewSeriesPageV2.tsx` (משמש ב-`/series/:id`), כשמדיה=text הוצג `<Play>` icon מעל הכרטיס. תוקן: `mediaIcon=null` כשאין video/audio/pdf, overlay div לא מרונדר.
+- **באג 1א — תגית 'למורים' בצד רגיל:** `TeacherContentBadge` הוצגה ב-3 מקומות ב-`DesignPreviewSeriesPageV2` (שורות 591, 975, 1177). הוסרה לחלוטין — שייכת ל-/teachers בלבד.
+
+**תיקוני DB בוצעו:**
+- `series_bak_20260609` נוצר (1,696 שורות)
+- 8 סדרות "דפי עבודה - X" הוסר מהן tag `general` → נשאר `teachers` בלבד (הושע/יונה/יחזקאל/ירמיהו/ישעיהו/מלכים א/מלכים ב/עובדיה)
+- 7 סדרות לגיטימיות עם general+teachers נשארו ללא שינוי
+
+**טכנולוגיה שהוכחה:**
+- Umbraco editor (yoav) אינו יכול לקרוא GetById (417) — editor permissions only
+- GetById blocked, אבל public HTML pages עובדות (200) עם PDF links ב-href
+- URL structure: `/מאגר-עזרי-הלמידה/` = root of teachers wing
+- ב-Umbraco tree: node 2294 = מאגר-עזרי-הלמידה root; 8916=תורה, 8917=נביאים, 8918=כתובים
+
+**פתוח — ריצה המונית:**
+- 474 שיעורים ריקים, מהם 25 ב-"מדריכים למורה - יהושע" (top priority)
+- נדרש סקריפט המבצע: (1) לכל שיעור ריק → מצא URL ציבורי ב-bneyzion.co.il → שלוף PDF → עדכן attachment_url
+- לפני ריצה: צריך אישור סאר +"push" מפורש
+
 ### 2026-06-09 — תיקון 3 באגים Teachers Wing (commit 2883975b)
 
 **Branch:** `feat/navigator-bot`
