@@ -152,19 +152,24 @@ export default function TopicPage() {
         {/* ─── Hero / header ─────────────────────────────────────────────── */}
         <section
           style={{
-            background: `linear-gradient(135deg, ${colors.oliveDark} 0%, ${colors.oliveMain} 100%)`,
+            background: `linear-gradient(160deg, #FBF6EC 0%, #F5EFE0 60%, #EDE5D0 100%)`,
+            borderBottom: `1px solid rgba(139,111,71,0.12)`,
             padding: "3rem 1.5rem 2.5rem",
             position: "relative",
             overflow: "hidden",
           }}
         >
-          {/* subtle radial glow */}
+          {/* Decorative arc (matches CategoryPage) */}
           <div
             aria-hidden
             style={{
               position: "absolute",
-              inset: 0,
-              background: "radial-gradient(ellipse 70% 60% at 50% 0%, rgba(255,255,255,0.07), transparent)",
+              insetInlineEnd: "-60px",
+              top: "-80px",
+              width: 280,
+              height: 280,
+              borderRadius: "50%",
+              background: "rgba(196,162,101,0.07)",
               pointerEvents: "none",
             }}
           />
@@ -179,23 +184,23 @@ export default function TopicPage() {
                 marginBottom: "1.5rem",
                 fontFamily: fonts.body,
                 fontSize: "0.78rem",
-                color: "rgba(255,255,255,0.6)",
+                color: colors.textSubtle,
               }}
             >
               <Link
                 to="/"
-                style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none" }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.95)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+                style={{ color: colors.textSubtle, textDecoration: "none" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = colors.goldDark)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = colors.textSubtle)}
               >
                 דף הבית
               </Link>
               <ChevronLeft size={12} style={{ transform: "rotate(180deg)" }} />
-              <span style={{ color: "rgba(255,255,255,0.85)" }}>נושאים</span>
+              <span style={{ color: colors.textSubtle }}>נושאים</span>
               {topic && (
                 <>
                   <ChevronLeft size={12} style={{ transform: "rotate(180deg)" }} />
-                  <span style={{ color: "rgba(255,255,255,0.95)", fontWeight: 600 }}>{topic.name}</span>
+                  <span style={{ color: colors.goldDark, fontWeight: 600 }}>{topic.name}</span>
                 </>
               )}
             </nav>
@@ -203,12 +208,12 @@ export default function TopicPage() {
             {/* Title */}
             {topic ? (
               <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
-                <Tag size={22} style={{ color: "rgba(255,255,255,0.8)", flexShrink: 0 }} />
+                <Tag size={22} style={{ color: colors.goldDark, flexShrink: 0 }} />
                 <h1
                   style={{
                     fontFamily: fonts.display,
                     fontSize: "clamp(1.6rem, 4vw, 2.4rem)",
-                    color: "#fff",
+                    color: colors.textDark,
                     margin: 0,
                     lineHeight: 1.2,
                   }}
@@ -217,7 +222,7 @@ export default function TopicPage() {
                 </h1>
               </div>
             ) : isLoading ? (
-              <div style={{ height: "2.4rem", width: "200px", background: "rgba(255,255,255,0.15)", borderRadius: radii.sm }} />
+              <div style={{ height: "2.4rem", width: "200px", background: "rgba(139,111,71,0.1)", borderRadius: radii.sm }} />
             ) : null}
 
             {/* Description */}
@@ -226,7 +231,7 @@ export default function TopicPage() {
                 style={{
                   fontFamily: fonts.body,
                   fontSize: "0.9rem",
-                  color: "rgba(255,255,255,0.72)",
+                  color: colors.textSubtle,
                   marginTop: "0.6rem",
                   marginBottom: 0,
                   maxWidth: 560,
@@ -243,7 +248,7 @@ export default function TopicPage() {
                 style={{
                   fontFamily: fonts.body,
                   fontSize: "0.8rem",
-                  color: "rgba(255,255,255,0.55)",
+                  color: colors.textSubtle,
                   marginTop: "0.75rem",
                   marginBottom: 0,
                 }}
@@ -315,7 +320,7 @@ export default function TopicPage() {
               {filtered.map((lesson) => (
                 <Link
                   key={lesson.id}
-                  to={`/lesson/${lesson.id}`}
+                  to={`/lessons/${lesson.id}`}
                   style={{ textDecoration: "none" }}
                 >
                   <div

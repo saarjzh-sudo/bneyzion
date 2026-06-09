@@ -67,6 +67,9 @@ export function useContentSidebar() {
         .select("id, title, parent_id, sort_order")
         .in("parent_id", torahBookIds)
         .in("status", ["active", "published"])
+        // Public tree must never show teacher-wing content (worksheets etc.).
+        // Exclude any series whose audience_tags contains 'teachers'.
+        .not("audience_tags", "cs", "{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -80,6 +83,8 @@ export function useContentSidebar() {
         .select("id, title, parent_id, sort_order")
         .in("parent_id", nkBookIds)
         .in("status", ["active", "published"])
+        // Public tree must never show teacher-wing content (worksheets etc.).
+        .not("audience_tags", "cs", "{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -271,6 +276,8 @@ export function useContentSidebar() {
           .select("id, title, lesson_count, rabbi_id, description, status, image_url, parent_id")
           .in("id", allIds)
           .in("status", ["active", "published", "draft"])
+          // Public category page must never surface teacher-wing series.
+          .not("audience_tags", "cs", "{teachers}")
           .order("lesson_count", { ascending: false })
           .limit(200);
         if (!series || series.length === 0) return [];

@@ -90,18 +90,18 @@ const NotFound = () => {
                 לדף הבית
               </Link>
               <Link
-                to="/series"
+                to="/parasha"
                 className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground rounded-xl font-display text-sm hover:border-primary/30 transition-colors"
               >
                 <Search className="h-4 w-4" />
-                חיפוש
+                פרשת השבוע
               </Link>
               <Link
-                to="/series"
+                to="/rabbis"
                 className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground rounded-xl font-display text-sm hover:border-primary/30 transition-colors"
               >
                 <Library className="h-4 w-4" />
-                שיעורים
+                שיעורים לפי רב
               </Link>
             </div>
           </motion.div>

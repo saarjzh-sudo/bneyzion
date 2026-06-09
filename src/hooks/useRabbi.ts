@@ -108,9 +108,19 @@ export function useRabbiLessons(rabbiId: string | undefined) {
         .eq("rabbi_id", rabbiId!)
         .eq("status", "published")
         .order("published_at", { ascending: false })
-        .limit(20);
+        .limit(60);
       if (error) throw error;
-      return data;
+      // Collapse duplicate rows (the migration cross-listed the same lesson into several
+      // series, so a rabbi's lesson can appear multiple times). Dedup by normalized title,
+      // keep the first (newest), cap at 20.
+      const seen = new Set<string>();
+      const deduped = (data || []).filter((l) => {
+        const key = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      return deduped.slice(0, 20);
     },
   });
 }
