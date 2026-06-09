@@ -63,7 +63,6 @@ def fetch_series_for_book(book: str, audience: str) -> list[dict]:
       s.bible_book,
       s.audience_tags,
       s.status,
-      s.slug,
       COUNT(l.id) AS lesson_count
     FROM series s
     LEFT JOIN lessons l ON l.series_id = s.id AND l.status = 'published'

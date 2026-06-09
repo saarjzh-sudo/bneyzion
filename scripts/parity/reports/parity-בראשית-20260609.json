@@ -1,0 +1,1658 @@
+{
+  "book": "בראשית",
+  "old_count": 156,
+  "new_count": 262,
+  "summary": {
+    "matched": 129,
+    "missing": 26,
+    "extras": 132,
+    "mismatches": 1
+  },
+  "parity_pct": 82.7,
+  "attachments": {
+    "ok": 154,
+    "no_media": 10,
+    "on_old_site_RULE13": [],
+    "broken_pdf": [
+      "ביאור הפסוקים - פרשת בראשית — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת ויגש — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת ויחי — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת ויצא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת וירא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת וישב — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת וישלח — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת חיי שרה — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת לך לך — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת מקץ — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת נח — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאור הפסוקים - פרשת תולדות — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאורי מילים ושאלות - פרשת בראשית — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת בראשית (10) — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת בראשית (9) — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת ויגש — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת וירא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "ביאורי מילים ושאלות - פרשת וישב — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת וישלח — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת חיי שרה — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת לך לך — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת נח — Content-Type: application/msword",
+      "ביאורי מילים ושאלות - פרשת תולדות — Content-Type: application/msword",
+      "בראשית עם ביאור — Content-Type: application/msword",
+      "חוברת שאלות (עם תשובות) חזרה על בראשית - תלמידי תיכון — Content-Type: application/msword",
+      "חוברת שאלות חזרה על בראשית -תלמידי תיכון — Content-Type: application/msword",
+      "שאלות ותשובות על פרשיות חומש בראשית — Content-Type: application/msword",
+      "שאלות חזרה - בראשית — Content-Type: application/msword",
+      "דגשים - פרשת בראשית — Content-Type: application/msword",
+      "דגשים - פרשת ויגש — Content-Type: application/msword",
+      "דגשים - פרשת ויחי — Content-Type: application/msword",
+      "דגשים - פרשת ויצא — Content-Type: application/msword",
+      "דגשים - פרשת וירא — Content-Type: application/msword",
+      "דגשים - פרשת וישב — Content-Type: application/msword",
+      "דגשים - פרשת וישלח — Content-Type: application/msword",
+      "דגשים - פרשת חיי שרה — Content-Type: application/msword",
+      "דגשים - פרשת לך לך — Content-Type: application/msword",
+      "דגשים - פרשת מקץ — Content-Type: application/msword",
+      "דגשים - פרשת נח — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "דגשים - פרשת תולדות — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת בראשית — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת ויגש — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת ויחי — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת ויצא — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת וירא — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת וישב — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת וישלח — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת חיי שרה — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת לך לך — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת מקץ — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת נח — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת תולדות — Content-Type: application/msword",
+      "חידות על פי אב פרשת בראשית — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת ויגש — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת וישב — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת מקץ — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת בראשית — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת ויחי — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת ויצא — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת וירא — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת וישלח — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת חיי שרה — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת לך לך — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת נח — Content-Type: application/msword",
+      "חידות רש\"י על פי א\"ב פרשת תולדות — Content-Type: application/msword",
+      "חידות רשי על פי אב פרשת בראשית — Content-Type: application/msword",
+      "ביאורי מילים - חומש בראשית — Content-Type: application/msword",
+      "בראשית עם ביאור — Content-Type: application/msword",
+      "דפי עבודה על ספר בראשית — Content-Type: application/msword",
+      "חוברת שאלות חזרה על בראשית -תלמידי תיכון — Content-Type: application/msword",
+      "חידות על פי א\"ב פרשת בראשית — Content-Type: application/msword",
+      "שאלות חזרה - בראשית — Content-Type: application/msword",
+      "שאלות חזרה על פרשת ויגש — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת ויחי — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת ויצא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת וירא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת וישב — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת וישלח — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת חיי שרה — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת לך לך — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת מקץ — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות חזרה על פרשת תולדות — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות ותשובות על כל חומש בראשית — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשיות בראשית-נח — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת ויגש — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת ויחי — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת ויצא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת וירא — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת וישב — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת וישלח — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת חיי שרה — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת לך לך — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת מקץ — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "שאלות מקיפות - פרשת תולדות — Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "פרשת חיי שרה — Content-Type: application/msword",
+      "פרשת חיי שרה — Content-Type: application/msword",
+      "פרשת לך לך — Content-Type: application/msword",
+      "פרשת לך לך — Content-Type: application/msword"
+    ],
+    "self_hosted_pct": 61.1
+  },
+  "missing": [
+    {
+      "title": "דגשים לפרשת ויצא ויעקב איש תם",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/דגשים-לפרשות-חומש-בראשית/דגשים-לפרשת-ויצא-ויעקב-איש-תם/",
+      "series": "דגשים לפרשות חומש בראשית",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "דגשים לפרשת וירא עקדת יצחק",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/דגשים-לפרשות-חומש-בראשית/דגשים-לפרשת-וירא-עקדת-יצחק/",
+      "series": "דגשים לפרשות חומש בראשית",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "דגשים לפרשת וישב מכירת יוסף",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/דגשים-לפרשות-חומש-בראשית/דגשים-לפרשת-וישב-מכירת-יוסף/",
+      "series": "דגשים לפרשות חומש בראשית",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "דגשים לפרשת לך לך הברכות לאברהם",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/דגשים-לפרשות-חומש-בראשית/דגשים-לפרשת-לך-לך-הברכות-לאברהם/",
+      "series": "דגשים לפרשות חומש בראשית",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חוברת שאלות עם תשובות חזרה על בראשית תלמידי תיכון",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חוברת-שאלות-עם-תשובות-חזרה-על-בראשית-תלמידי-תיכון/",
+      "series": "חוברת שאלות עם תשובות חזרה על בראשית תלמידי תיכון",
+      "type": "leaf",
+      "pdfs": [
+        "https://www.bneyzion.co.il/media/142943/שות-בראשית-מנוקד.pdf",
+        "https://www.bneyzion.co.il/media/143024/ושננתם-בראשית-הרב-יצחק-עמראני.pdf",
+        "https://www.bneyzion.co.il/media/143039/ערכים-ומידות-בראשית-הרב-יצחק-עמראני.pdf",
+        "https://www.bneyzion.co.il/media/143048/מקרא-מבואר-בראשית-הרב-יצחק-עמראני.pdf",
+        "https://www.bneyzion.co.il/media/143422/בראשית.pdf",
+        "https://www.bneyzion.co.il/media/143462/שאלות-חזרה-בראשית.pdf",
+        "https://www.bneyzion.co.il/media/145674/חוברת-עבודה-לתלמיד-על-ספר-בראשית-חלק-א-שאלות.pdf",
+        "https://www.bneyzion.co.il/media/145676/חוברת-עבודה-לתלמיד-על-ספר-בראשית-חלק-א-תשובות-למורה.pdf"
+      ],
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת ויגש",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-ויגש/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת ויחי",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-ויחי/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת וירא",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-וירא/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת וישב",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-וישב/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת וישלח",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-וישלח/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת חיי שרה",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-חיי-שרה/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת לך לך",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-לך-לך/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת מקץ",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-מקץ/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת נח",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-נח/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "חידות לילדים פרשת תולדות",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-תולדות/",
+      "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת ויגש",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-ויגש/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת ויחי",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-ויחי/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת ויצא",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-ויצא/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת וירא",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-וירא/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת וישב",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-וישב/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת וישלח",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-וישלח/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת חיי שרה",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-חיי-שרה/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת לך לך",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-לך-לך/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת מקץ",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-מקץ/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת נח",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-נח/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    },
+    {
+      "title": "ביאור פשט הפסוקים פרשת תולדות",
+      "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פשט-הפסוקים/ביאור-פשט-הפסוקים-פרשת-תולדות/",
+      "series": "פשט הפסוקים",
+      "type": "lesson",
+      "_reason": "not found in new"
+    }
+  ],
+  "extras": [
+    {
+      "id": "c12c82b1-2452-4661-81f0-f3bb145e2529",
+      "title": "ביאורי מילים ושאלות - פרשת בראשית (10)",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/c12c82b1-2452-4661-81f0-f3bb145e2529_he-b91d57ff3e.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ביאורי מילים ושאלות חזרה חומש בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "43ef6557-3d61-4d3e-958d-2d87ec1bcfcf",
+      "title": "ביאורי מילים ושאלות - פרשת בראשית (9)",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/43ef6557-3d61-4d3e-958d-2d87ec1bcfcf_he-60c32cd2bb.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ביאורי מילים ושאלות חזרה חומש בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "974e4366-9999-44b4-8b1b-746c1edc6991",
+      "title": "ביאורי מילים - חומש בראשית",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "draft",
+      "series_title": "בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "7980c1c4-64c6-45be-bea1-21f67a8de0b7",
+      "title": "חוברת שאלות (עם תשובות) חזרה על בראשית - תלמידי תיכון",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/7980c1c4-64c6-45be-bea1-21f67a8de0b7_he-ed940948c5.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "74c08493-5f15-4201-be4a-2992baadd1d2",
+      "title": "בראשית עם ביאור",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/74c08493_he-a5538e9088.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "בראשית עם ביאור",
+      "_reason": "not in old"
+    },
+    {
+      "id": "3f4739b3-ff0c-45ec-bc07-94bc3a48e67d",
+      "title": "חוברת שאלות (עם תשובות) חזרה על בראשית - תלמידי תיכון",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3f4739b3_he-b750759e53.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "חוברת שאלות (עם תשובות) חזרה על בראשית - תלמידי תיכון",
+      "_reason": "not in old"
+    },
+    {
+      "id": "d98ff65e-4c2f-4a7e-83fe-3c5c544dcc2c",
+      "title": "חוברת שאלות חזרה על בראשית -תלמידי תיכון",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d98ff65e_he-f83bff6197.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "חוברת שאלות חזרה על בראשית -תלמידי תיכון",
+      "_reason": "not in old"
+    },
+    {
+      "id": "706770a6-e282-4357-9d43-9155a7e1d9c2",
+      "title": "'יעקב שלם' - מדוע יעקב אבינו נשא שתי אחיות?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/e2e4fc0cbc_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "28a945f9-250d-43e8-8ca0-148d0c3910db",
+      "title": "'פלך של שתיקה' - עוצמת השתיקה של רחל",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/fd58f27541_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "05786feb-a26b-46d5-b26e-073a87885443",
+      "title": "\"בא אחיך במרמה\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/132ff40d56_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "8b5d76c9-2457-4faf-b85c-f3bf31312df2",
+      "title": "\"ביום השלישי בהיותם כואבים\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/a7ba41d7dc_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "ca88d018-770d-4e51-a20c-f90ad2156685",
+      "title": "\"בְּעֶצֶם הַיּוֹם הַזֶּה\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1b6ed81a26_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "2828581f-3137-4146-84ab-f894901bbf43",
+      "title": "\"וְדוֹר רְבִיעִי יָשׁוּבוּ הֵנָּה\" – רביעי למה?",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "a4ab5569-ec73-44a9-859c-f2edb28beffb",
+      "title": "\"וַהֲקִמֹתִי אֶת בְּרִיתִי אִתָּךְ\" - איזו ברית?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/99f5fb0d9d_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "472501af-0113-40ba-b5ef-2b917f98ff52",
+      "title": "\"ויפגע במקום ההוא\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/bd4ebdcd61_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "a82d19d1-c615-4532-b67b-458ec196e480",
+      "title": "\"ולאום מלאום יאמץ\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/e6f862b185_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "9430856d-a206-4874-b6f4-899b1bf73a9a",
+      "title": "\"ערומים ולא התבוששו\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/8188432a20_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "965209ff-8ce3-499a-ac92-f207b5e0cdf1",
+      "title": "\"צחוק עשה לי אלוקים\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/0fc2bf77e9_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "308d6192-124f-4171-a71c-5d34637126ba",
+      "title": "(מצגת) כיבושי ארבעת המלכים - נדידת עמים ביחס לישראל ולעמים",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "15614744-e3e4-4a2a-8e9f-99ca80119070",
+      "title": "איזו מיתה נגזרה על האדם בעקבות אכילת עץ הדעת?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/86bace3f6c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "7e246006-5d9d-4fdf-9afd-c1d27d0c9885",
+      "title": "בחירתו החופשית של עשו",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/f936c4a467_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "40ca629f-01e4-4672-b7c5-1070c561004f",
+      "title": "בין רחל ללאה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/21b8c8bb42_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "67d08116-c3b8-48ff-9fef-527475e5017f",
+      "title": "בין שער סדום לשער בית לחם",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1ae9a81b1b_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "9c42d388-dd37-4f5b-baf9-b364f9a082bb",
+      "title": "בני האלקים ובנות האדם",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/0c005682f9_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "e656d1da-b978-4ebb-82f8-6570375084cd",
+      "title": "ברית בין הבתרים - המשמעות הסמלית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d73358ee2a_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "290bd84a-2abc-4f72-9ede-d51332657df0",
+      "title": "ברית עולם",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/299a3ae66e_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "0dfd8940-1e8c-4322-81c5-0f2ac2bd1eba",
+      "title": "בשדה ועל הבאר",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/34fdb0f809_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "280437c1-ef38-4bb2-8bac-2cb28f5a9d3d",
+      "title": "גילויים בפרשה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/5263455433_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "c293a198-3304-494d-9a8c-886f374c00db",
+      "title": "גניבת התרפים על ידי רחל",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/5aee716b8a_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "40ae000f-4ed4-48f3-9e58-8e7dbd90ad0f",
+      "title": "גניבת נשי האבות ונסיונות חטיפה נוספים",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "94abe980-d96c-436e-a49d-e668554576ee",
+      "title": "דבר תורה לשולחן השבת - בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1424da14f9_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "24f76659-309d-4b74-8e8a-54a9e749a595",
+      "title": "דברי אברהם לעבד שלא להשיב את בנו לחרן",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/7669bfcee8_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f4da0938-af6a-4a80-9aa1-91074721227f",
+      "title": "דמותו וצדקותו של נח",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/832ff36471_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f4526fb7-115e-4629-b131-f01516753c0b",
+      "title": "דמותו של חנוך",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/cd92871430_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "e105a88a-be0e-4ed1-90a4-e4579701a489",
+      "title": "האמת והשלום אהבו",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1c20937512_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "ca9b2cac-fa01-4c99-9a3e-ba4107071897",
+      "title": "הארות באונקלוס",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/05d83a4d00_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "ec062556-ee3f-423a-abe8-08eed1da0d38",
+      "title": "ההבדל בין שמעון ללוי",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/de2e186e92_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f10a9087-191d-44e4-89a2-c3c9c7d5c7bd",
+      "title": "הכל מן האישה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/31623f7bd1_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "83c3ae60-0bf7-4fc6-bd35-46a81c32a86c",
+      "title": "הרב אבינר על פרשיות בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/e96db75739_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "4bd519d8-4a59-4bdd-888c-63a6ab015417",
+      "title": "הרב שלמה אבינר על פרשיות בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/87476d7ed2_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "503d69aa-85da-4f32-970d-c0316a471050",
+      "title": "חומש בראשית - קריאה בטעמים אשכנזי",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/89c5068d49_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "d02568a1-35b2-4e78-83ec-f5a406b4b3d6",
+      "title": "חומש בראשית - קריאה עם ביאור פשוט",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/b73c78f627_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "eb97aa21-12a2-43a2-9780-73096fb25583",
+      "title": "חלומות בספר בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/a5a050c5ec_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "53bcef62-81f1-4a36-8ee0-a7f30c77fd42",
+      "title": "טבלת עשרים הדורות הראשונים",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/81e1b2f4dc_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "440f45c4-f376-4d1a-9a11-0bccfbdb98c0",
+      "title": "טבלת שנות השיעבוד במצרים",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/0fadb94dff_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "28721800-6a48-4347-8dd7-572327d10c47",
+      "title": "טבלת תולדות יעקב",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/8d747ad497_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "aacb0ef4-6966-4753-85f7-b5a716543111",
+      "title": "יוסף - מאחד הבית או מוקד המחלוקת?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/df07d679ff_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "c909ed9e-9d5b-413f-b676-f6d642617e2d",
+      "title": "יוסף ואחיו",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/fd8dc1384c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "87f2b41e-db33-4b90-8974-b4f1699c7a37",
+      "title": "כוונת יהודה במכירת יוסף",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/bed05412dd_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "afccc831-3db1-4329-a2f9-3e264800666e",
+      "title": "לבן ביקש להשמיד את הכל",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/12b74a6214_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "4452bf50-3a11-4bf4-a2f5-cf979fb8b32c",
+      "title": "למה כעס יעקב על רחל?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/58e3b34278_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "9a3eb404-57c1-43e1-92e9-109f6b10dd91",
+      "title": "לשון הקודש בפרשה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/a70ddc068c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "658a13e8-1cc3-4823-b67b-09fea4e3d31f",
+      "title": "מאבקי יצחק על הבארות",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/c983425c4d_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "38576b45-ca21-496f-9da7-2659194b6c39",
+      "title": "מאמרים - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/b03792c30f_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "547b181c-bc9b-4ffe-8a2d-c61dd9540b31",
+      "title": "מאמרים על הפרשה - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/eb2fb758f4_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "6bbb62e3-ea09-4ebb-ba67-3d21aa044927",
+      "title": "מאמרים על פרשיות בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/4c65c4cbbd_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "815eeef8-1d90-4d27-b5a9-c6befb5763da",
+      "title": "מאמרים על פרשיות בראשית - הרב ערן טמיר",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/8cba8003d1_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "a0bbe52f-93ea-44ee-bf35-26f5664f2256",
+      "title": "מאמרים קצרים - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/adbe65469f_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "9a9cda7e-bb39-4ae6-8f8e-4f47cef08d38",
+      "title": "מבט מגבוה על חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/33a8a2fc12_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "0e1e6342-294e-4784-b8c0-a12cf1a1e38b",
+      "title": "מדוע יש תולדות יצחק ותולדות יעקב אך לא תולדות אברהם?",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "36d906b1-4d6d-41d5-ad08-26c82943f48a",
+      "title": "מה פירוש המושג 'עזר כנגדו'?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/208d51cf3e_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "a5a77a46-a131-4598-a475-58340174f9e1",
+      "title": "מה פירוש המושג 'צלם אלוקים'?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/adef011005_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "6740f33e-45a7-44c9-8ec0-898be13617c8",
+      "title": "מהותה וייעודה של סדום",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "bb71a5a0-1b3a-402f-bff6-66b98955f940",
+      "title": "מידות בפרשה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/c69acc781b_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "1df6c525-1fca-4f42-aba0-e5ed25ecd79b",
+      "title": "נצחיות שבט יהודה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/33e4e34aed_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f158278f-b13a-4f31-a2d1-ba3af583f712",
+      "title": "נשיקת יעקב לרחל",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/51e70c7c38_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "7c2dd8d5-a95e-4731-96e6-44d2b8b7f3db",
+      "title": "עולמות חדשים בפרשה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/e6f8192288_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "0648d990-bec8-49b5-bdcd-dd805442b4f4",
+      "title": "עונש המוות בעקבות אכילת עץ הדעת",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/b59c2e4cab_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "b888086a-59e4-46e5-b1ae-ea3fac5225b7",
+      "title": "עצמיות בדורנו לאור העקדה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/378b954cce_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "6d2d108d-ac63-4aac-8c09-79d3f7643508",
+      "title": "פילגש בתנ\"ך ובהלכה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/deb3e7d587_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f693fc79-a0be-4dd6-94c4-17068691fc4b",
+      "title": "פירוש האבן עזרא על \"מצחק\"",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1f442c7881_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "46240b94-6173-441d-b294-276dc2b461f2",
+      "title": "פלך של שתיקה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/e56f876163_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "3e83e506-6d22-4181-9ac1-17752c116f8c",
+      "title": "פרשיות בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/a6aa38e4f5_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "b9281c2b-4331-4c85-b950-e183b7a81e7e",
+      "title": "פרשת השבוע עפ\"י הרמב\"ן",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/914a461922_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "e9a6c5f7-bbbc-4ca8-b081-ee1ab49e7870",
+      "title": "פרשת יהודה ותמר",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/f3130b4af3_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "8750c6f3-acd9-4d7d-83c9-29d910c8bb13",
+      "title": "פרשת שבוע-בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/83baed0ed7_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "e315d97c-d24d-49b8-9e9a-ad47cdefc9cf",
+      "title": "פשט בפרשה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d88079708a_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "8825c197-a977-4ac8-a275-6553a301a40c",
+      "title": "קדושת פשוטו של מקרא - בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d069f450fb_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "14c2f238-b840-40fe-bc57-8e3fc0fa150d",
+      "title": "קין - בעל תשובה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/aa8f01bf49_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "4b7e7772-4019-44dd-8e58-d1b0008fea7a",
+      "title": "קללת כנען",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/bdab3bb7f3_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "7fc3436e-389f-4ace-a8dd-2eaa0364718e",
+      "title": "קנין מקומות בארץ ישראל בכסף",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/64264f32ab_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "5c9daab1-a666-468c-885e-cbb9ffd0f374",
+      "title": "ראובן - פוחז או בכור?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/56f56a8465_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "2b4a5c78-600e-4a9a-8365-537f324b085d",
+      "title": "ראובן - פוחז או בכור?",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/56f56a8465_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "0973a43c-ce3c-4a38-9f2f-59951959e164",
+      "title": "רחל ולאה בבניין בית ישראל",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/61e01adf1c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "889839e2-db78-4eef-abd8-1492c9943ab0",
+      "title": "רחל, לאה והולדת השבטים (לנשים בלבד)",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/128504e182_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f597b191-7548-4c15-bac6-fd1a4fe8bf5a",
+      "title": "שיעורים על התנ\"ך - בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/f4d9fe6160_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "89bf6d9f-50c6-4855-8236-2d6e0f646bb5",
+      "title": "שיעורים על ספר בראשית - אורות מודיעין",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/ffad4d5118_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "472f716f-1875-4821-8016-297b9451219d",
+      "title": "שיעורים קצרים על ספר בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/fd246fca6c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f9a479e0-e2c2-48c7-b773-15dc9a531c4e",
+      "title": "שיעורים-חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1f851a326c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "8563cf4b-8569-4283-98d6-3d34f06cb4f3",
+      "title": "שירתו של למך לשתי נשיו",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1200ee7eb8_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "6b589aa9-11c9-4b3a-8068-00475d1c88fa",
+      "title": "תאריך לבריאת העולם של הציווי 'לך לך'",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/69c16f9629_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "505ef454-9c74-4229-a5fb-2c6524ea9e79",
+      "title": "תולדות קרבת ה' לאדם - מבראשית לאורך חומשי התורה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/c155c1808c_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ספר בראשית עם ביאור ושננתם",
+      "_reason": "not in old"
+    },
+    {
+      "id": "1ee0476d-7c9c-4712-b88f-11dabd2feb9b",
+      "title": "ערכים ומידות העולים מפסוקי חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1ee0476d_he-5686d2a5eb.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "ערכים ומידות העולים מפסוקי חומש בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "bc73857f-8549-43ff-b46e-2dd24b0d33ef",
+      "title": "שאלות ותשובות על פרשיות חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/bc73857f_he-bd3c1514af.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות ותשובות על פרשיות חומש בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "3562eb8d-6287-413a-82e1-1cb04b56ae6e",
+      "title": "ביאור הפסוקים חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/4fd3424bca_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "ed8dd9e0-78d7-49e3-ae81-52a1971ca447",
+      "title": "ביאורי מילים - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/db3f554d-9a50-409b-8df7-72c17cb27f3c_he-b91d57ff3e.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "655435c9-bc18-4f07-94c3-5e1014be7e9e",
+      "title": "ביאורי מילים ושאלות חזרה חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/733efd03f9_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "d1f4d7d6-7da5-454a-800b-9d5fc367f66f",
+      "title": "בראשית עם ביאור",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/db3f554d-9a50-409b-8df7-72c17cb27f3c_he-b91d57ff3e.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "deac829e-450f-47c3-b9b1-f2e776879e5b",
+      "title": "דגשים למלמדים - חומש בראשית",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "04929b54-8066-48c7-adac-24df4078c8d3",
+      "title": "דגשים לפרשות חומש בראשית",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "1731a348-446b-45aa-96b1-ce459d71c05a",
+      "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/4fd5d1d93b_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "f2df90f9-c679-4680-830b-e761e40e68ec",
+      "title": "חוברות - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/45752046ab_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "2f1d1da1-9141-4722-8d8e-0bf21bf38bd0",
+      "title": "חוברת עבודה לתלמיד- חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/2f1d1da1-9141-4722-8d8e-0bf21bf38bd0_he-00f8fda30b.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "fc14ffb4-a8da-4a66-b089-ce88b36dfdc9",
+      "title": "חוברת שאלות (עם תשובות) חזרה על בראשית - תלמידי תיכון",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3cffe41d5d_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "11c003c6-76d5-4fe6-bad0-13b7eb9a64da",
+      "title": "חוברת שאלות חזרה על בראשית -תלמידי תיכון",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/11c003c6-76d5-4fe6-bad0-13b7eb9a64da_he-890a034cc7.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "3797c75b-fa4d-47ad-8d42-395326091c61",
+      "title": "חידות על פי א\"ב - חומש בראשית",
+      "attachment_url": null,
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "3f0d45ac-1a79-4bcf-921e-df0ad5176c7a",
+      "title": "חידות על פי א\"ב פרשת בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3f0d45ac_he-60c32cd2bb.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "601b1dd0-4145-449a-b63e-f46e3ac4eb6b",
+      "title": "חידות על פירוש רש\"י על פי א\"ב - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/7d06d62c36_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "ca7f200f-a170-40c0-afd0-2a6e9eabc249",
+      "title": "חידות רש\"י על פי א\"ב פרשת בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/88d5132420_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "5418a7b4-68c4-424f-bb7f-797f871c37ac",
+      "title": "מפת מקומות ונחלות בארץ ישראל",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/c37364d960_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "4a3aabe4-821b-4132-8227-71cc8040b351",
+      "title": "ספר בראשית עם ביאור ושננתם",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/ffbcc52b7f_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "8592f689-75ea-41de-b55e-27cd3750d63c",
+      "title": "ערכים ומידות העולים מפסוקי חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/b85095ead9_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "0793070d-f2b9-463a-b84e-8dd681ab378f",
+      "title": "פשט הפסוקים",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/88aa6cf97e_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "bdf318f7-f437-4eb1-b28b-5142b69f0e64",
+      "title": "שאלות ותשובות על פרשיות חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/64719cf0b5_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "d19f89da-5d0b-4856-a1b9-78cc74cf9847",
+      "title": "שאלות חזרה - בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d19f89da-5d0b-4856-a1b9-78cc74cf9847_he-890a034cc7.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "9c288375-1e5b-4a89-9fa7-03233c8a17d3",
+      "title": "שאלות חזרה על חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/45d51229c3_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "ff180f28-ff97-4e8d-bd63-9a7f7923bff7",
+      "title": "שאלות מקיפות למורה ולתלמיד - חומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/0b3f206b75_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": "שאלות חזרה - בראשית",
+      "_reason": "not in old"
+    },
+    {
+      "id": "cdbb024e-6ff9-4230-bac8-75a874fdc835",
+      "title": "דפי עבודה בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3c023f1ed8_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "eaf87e3c-c499-4fb7-9a24-054de7a07dd1",
+      "title": "דפי עבודה בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3c023f1ed8_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "b8501387-6731-449f-ad5b-2b3a6315b254",
+      "title": "כל התכנים בחומש בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/68915a4db0_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "65e93c46-31c9-4f3c-83b2-d0ffbd838de5",
+      "title": "פרשת בראשית",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/ce35b8db14_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "29a83cfd-b529-4da4-942b-0f36f27aae7e",
+      "title": "פרשת ויגש",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/0aa9713268_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "d242a871-391b-4ce8-a77b-0c40957b7429",
+      "title": "פרשת ויחי",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/990721bc7b_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "14719af4-abfc-4dea-b93f-436389b51f19",
+      "title": "פרשת ויצא",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d5f8a4b15e_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "9a0cce45-666e-4697-8c40-a53059b36948",
+      "title": "פרשת וירא",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/88686e9adc_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "4a9ac380-1e2f-4687-a449-7a4622cf7f82",
+      "title": "פרשת וישב",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/d2845418b0_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "83d56b17-2edd-4ac1-a2f8-0826567e87d0",
+      "title": "פרשת וישלח",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3569d5b1c6_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "ca12a8b3-fc11-4e20-8cfb-5f9823597997",
+      "title": "פרשת חיי שרה",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/ca12a8b3-fc11-4e20-8cfb-5f9823597997_he-589ca268f2.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "f0ec058d-4c6b-4b47-b05d-9a87c1e8b616",
+      "title": "פרשת לך לך",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/f0ec058d-4c6b-4b47-b05d-9a87c1e8b616_he-f5a99890ef.doc",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "bb8d4697-d000-4826-8fb9-62177b7af026",
+      "title": "פרשת מקץ",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/28a7c5b084_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "18aaa35f-c48b-4995-b507-13df99ebd439",
+      "title": "פרשת נח",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/3721938a55_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    },
+    {
+      "id": "df45f248-50b5-44e7-8257-9b0266ec5f83",
+      "title": "פרשת תולדות",
+      "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/64b1b841ec_page-render.pdf",
+      "audio_url": null,
+      "video_url": null,
+      "status": "published",
+      "series_title": null,
+      "_reason": "not in old"
+    }
+  ],
+  "mismatches": [
+    {
+      "old": {
+        "title": "חידות לילדים פרשת בראשית",
+        "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/חידות-לילדים-פרשת-השבוע-לפי-סדר-העולים-לתורה/חידות-לילדים-פרשת-בראשית/",
+        "series": "חידות לילדים פרשת השבוע לפי סדר העולים לתורה",
+        "type": "lesson"
+      },
+      "new": {
+        "id": "06420bb5-6460-47f7-8182-d7d7dbc805b9",
+        "title": "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה",
+        "attachment_url": "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-attachments/1b5763d018_page-render.pdf",
+        "audio_url": null,
+        "video_url": null,
+        "status": "published",
+        "series_title": "שאלות חזרה - בראשית"
+      },
+      "match_level": "prefix14",
+      "match_score": 0.311,
+      "issues": [
+        "title mismatch (prefix14 0.31)"
+      ]
+    }
+  ]
+}

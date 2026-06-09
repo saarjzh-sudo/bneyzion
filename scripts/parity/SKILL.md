@@ -269,3 +269,19 @@ scripts/parity/
 ---
 
 *Skill created 2026-06-09. Agent: bneyzion-migrator. Replaces parity-audit.py (partial).*
+
+---
+
+## ✅ v1 working entry point (2026-06-09)
+
+`step_a_old_inventory.py` השתמש ב-crawl שגוי (`/פרשת-השבוע/?book=`) והחזיר 0 פריטים.
+**העובד:** `audit_book.py` — משתמש בנתיב המוכח `/מאגר-עזרי-הלמידה/{ספר}/` (כמו ה-rehost) + פונקציות parity_engine.
+
+```bash
+env -u HTTPS_PROXY -u HTTP_PROXY NO_PROXY='*' \
+  SUPABASE_MANAGEMENT_API_TOKEN=sbp_... \
+  python3 scripts/parity/audit_book.py --book בראשית
+```
+
+**ריצה ראשונה — בראשית (אגף מורים):** ישן 156 / חדש 262 / מותאמים 129 (82.7%) / חוסרים 26 / תוספות 132 / **0 על האתר הישן (Rule 13 ✓)** / 252 attachments תקינים (154 PDF + 98 Word — Word הוא לגיטימי, לא שבור).
+**הערות לדיוק:** crawl ישן הוא teachers-only וחלקי (גרנולריות series↔lesson) → "תוספות 132" מנופח. צריך: (א) crawl גם של `/מאגר-השיעורים-והמאמרים/` לציבורי, (ב) פירוק series-leaf לשיעורים בודדים. attachments מקבלים עכשיו גם Word/Office.
