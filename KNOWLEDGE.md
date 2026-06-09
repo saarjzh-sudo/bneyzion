@@ -585,6 +585,51 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-09 — תיקון 3 באגים Teachers Wing (commit 2883975b)
+
+**Branch:** `feat/navigator-bot`
+
+**באגים שנחקרו ותוקנו:**
+
+**באג 3ב — ריבוע לבן בפופאפ (`TeacherLessonModal.tsx`):**
+- שורש הבעיה: כשלשיעור אין description/video/audio/attachment, ה-Body ריק לגמרי
+- תיקון: הוספת fallback block "תוכן השיעור זמין בדף המלא" כשכל 4 שדות null
+- אומת חי: firecrawl + Chrome headless screenshot
+
+**באג 1ב — תגית "אגף המורים" עודפת (`TeachersSeriesPage.tsx`):**
+- תגית "אגף המורים" הוצגה על כל כרטיס בדף הסדרה — כפל מיותר
+- הוסרה מ-LessonCard ב-TeachersSeriesPage (עמוד כבר נמצא בתוך TeachersLayout)
+- ב-TeachersBookPage תגית contentType נשארת (שם היא מאפיינת את הסוג)
+
+**באג 2 — Play על כרטיס טקסט:**
+- נחקר לעומק: אין Play button בקוד הנוכחי
+- בדיקת bundle production (TeachersSeriesPage chunk): Video icon מוצג ONLY כש-`t.videoUrl && jsx(L...)`
+- Video/Headphones icons קיימים ב-LessonCard footer — מוצגים רק כשיש URL
+- **מסקנה:** ייתכן שסאר ראה Video icon (מצלמה) ופירש כ-Play, או cache ישן. בפרודקשן הנוכחי אין בעיה
+
+**SQL לבאג 1 — דאטה (ממתין להרצה על ידי יואב/סאר):**
+```sql
+-- גיבוי לפני:
+CREATE TABLE series_bak_20260609 AS SELECT * FROM series;
+-- תיקון 8 סדרות "דפי עבודה" שדלפו לצד הרגיל:
+UPDATE series SET audience_tags = array_remove(audience_tags,'general')
+WHERE title LIKE 'דפי עבודה - %' AND status='active'
+  AND audience_tags @> ARRAY['teachers']::text[] AND audience_tags @> ARRAY['general']::text[];
+-- מאמת: 8 שורות מושפעות
+```
+
+**באג 3א — 200 שיעורי מורים ריקים:**
+- 200 שיעורים (לא 98) עם attachment_url=null+description=null
+- הקבצים היו ב-Lovable Storage ולא הועברו ל-Supabase Storage החדש
+- Umbraco לא מכיל קבצים אלה (הם ב-Storage ישן, לא ב-CMS)
+- **פעולה נדרשת מיואב:** להעלות קבצים ידנית לאגף המורים
+- רשימה מלאה: 39 סדרות × 200 שיעורים — מפורטות בסשן זה
+
+**כלי שהוכיחו עצמם:**
+- Chrome headless `--virtual-time-budget=10000` לצילום SPA
+- firecrawl לתצוגת טקסט מהירה של SPA
+- bundle analysis: grep chunk names מ-main.js → curl chunk → analyze
+
 ### 2026-06-04 — Re-sync merge: origin/feat/navigator-bot → feat/weekly-chapter-data-driven (commit 3a9f2857)
 
 **Branch:** `feat/weekly-chapter-data-driven`
