@@ -585,6 +585,43 @@ No human figures, no faces, no letters, no text.
 
 ## 7. Major work history (sessions log)
 
+### 2026-06-09 — סשן ג׳: fill-teacher-attachments-v2 — 307/619 שיעורים מולאו
+
+**Branch:** `feat/navigator-bot` | **DB-only, ללא push/deploy**
+
+**מה בוצע:**
+- סקריפט v2 חדש: `scripts/fill-teacher-attachments-v2.py` — confidence-gated, זיווג h3↔PDF מ-TR rows
+- גיבוי `lessons_bak_20260609` נוצר (19,019 שורות)
+- 10 שגיאות מהדגימה הישנה (v1) אופסו ל-NULL (`--fix-sample-errors`)
+- ריצה מלאה על 619 שיעורים ריקים: **307 מולאו, 312 הושארו ריקים**
+  - exact match (per-parasha/per-chapter): 282 (45%)
+  - PDF-סדרה (per-series single PDF): 25 (4%)
+  - הושארו ריקים: 312 (50%)
+
+**הבעיה שנפתרה:**
+- v1 השתמש ב-`find_first_pdf_in_html` כ-fallback לסדרות per-parasha → שיעור "וירא" קיבל "נח.pdf"
+- v2 בונה מפת `TR[data-tooltip] → {title_norm: pdf_href}` מהדף, ומתאים לפי exact match או substring≥75%
+- אם per-parasha ואין התאמה ודאית → **הושאר ריק** (לא PDF שגוי)
+
+**אימות:**
+- "חוברת עבודה לתלמיד - וירא" → `חוברת-עבודה-וירא.pdf` (תוקן)
+- "מדריכים למורה - יהושע פרק א-כה" → PDFים נכונים פר-פרק
+- 312 ריקים = חידות לילדים (105, אין PDFים), ביאורים "ושננתם" (88, HTML בלבד), מפות (15), סיכומים (30), שונות
+
+**State file:** `scripts/fill-teacher-attachments-v2-state.json`
+**Not-found list:** `scripts/fill-teacher-attachments-v2-not-found.json` (312 שיעורים לטיפול יואב)
+
+**למה 312 ריקים הגיוני:**
+- חידות לילדים: אין PDFים באתר הישן — תוכן HTML בלבד
+- ביאורים "ושננתם" (שמואל א/ב, שופטים, יהושע): HTML lessons, לא קבצים
+- מפות: ייתכן שיש JPG ולא PDF — לא נסחרפ בסקריפט
+- שאלות חזרה, סיכומים: חלקם ב-external URLs שאינם /media/
+
+**Iron rule שנלמד:**
+- בסדרות per-parasha: **אסור** `first_pdf_in_page` כ-fallback. חייב title-match מדויק (TR row).
+- בסדרות per-series (PDF אחד): מותר לתת לכל שיעורי הסדרה.
+- זיווג h3↔PDF ב-HTML של האתר הישן מתבצע דרך `<tr data-tooltip>` rows — לא lessonBlock divs.
+
 ### 2026-06-09 — סשן ב׳: תיקוני דאטה + קוד (commit 606890ae)
 
 **Branch:** `feat/navigator-bot` | **2 commits unpushed לאחר סשן זה**
