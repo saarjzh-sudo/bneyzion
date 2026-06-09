@@ -195,11 +195,6 @@ function LessonCard({
 
       {/* Body */}
       <div style={{ padding: "0.85rem", display: "flex", flexDirection: "column", gap: "0.4rem", flex: 1 }}>
-        {/* Teacher badge */}
-        <span style={{ fontFamily: fonts.body, fontSize: "0.6rem", color: colors.oliveDark, background: "rgba(74,90,46,0.1)", padding: "0.1rem 0.5rem", borderRadius: radii.pill, fontWeight: 700, alignSelf: "flex-start" }}>
-          אגף המורים
-        </span>
-
         <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "0.88rem", color: colors.textDark, margin: 0, lineHeight: 1.4 }}>
           {lesson.title}
         </h3>

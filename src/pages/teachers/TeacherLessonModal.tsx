@@ -197,6 +197,19 @@ export default function TeacherLessonModal({
             </div>
           )}
 
+          {/* Fallback: no content at all */}
+          {!lesson.description && !lesson.videoUrl && !lesson.audioUrl && !lesson.attachmentUrl && (
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1rem", gap: "0.6rem", color: colors.textSubtle, fontFamily: fonts.body, textAlign: "center" }}>
+              <FileDown size={32} style={{ color: colors.goldDark, opacity: 0.4 }} />
+              <p style={{ margin: 0, fontSize: "0.85rem" }}>
+                תוכן השיעור זמין בדף המלא.
+              </p>
+              <p style={{ margin: 0, fontSize: "0.78rem", color: colors.textSubtle }}>
+                לחץ על "לדף המלא" כדי לצפות בחומר.
+              </p>
+            </div>
+          )}
+
           {/* PDF / Word inline viewer */}
           {lesson.attachmentUrl && !lesson.videoUrl && (() => {
             const url = lesson.attachmentUrl!;
