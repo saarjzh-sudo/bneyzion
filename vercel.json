@@ -7,6 +7,18 @@
   ],
   "redirects": [
     {
+      "source": "/design-yehoshua-campaign",
+      "has": [{ "type": "host", "value": "bneyzion.vercel.app" }],
+      "destination": "https://bneyzion-yehoshua.vercel.app/design-yehoshua-campaign",
+      "permanent": true
+    },
+    {
+      "source": "/design-yehoshua-admin",
+      "has": [{ "type": "host", "value": "bneyzion.vercel.app" }],
+      "destination": "https://bneyzion-yehoshua.vercel.app/design-yehoshua-admin",
+      "permanent": true
+    },
+    {
       "source": "/rabbis/1acd517c-1e18-4bdc-a18e-0ecf5924e50f",
       "destination": "/rabbis/abrhm-vsrmn",
       "permanent": true
