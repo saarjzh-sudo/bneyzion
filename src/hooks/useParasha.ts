@@ -31,33 +31,37 @@ export function useParasha() {
   const seriesTitle = getParashaSeriesTitle(parasha);
   const chumash = getParashaChumash(parasha);
 
-  // Get the parasha series and its lessons
+  // Get ALL published lessons for the current parasha (Saar feedback 10.6.2026: the page was
+  // thin — it only read ONE exact-title series). The old site's parasha page aggregated many
+  // sources, so we collect every public lesson whose title mentions the parasha, across all
+  // series, exclude teacher-wing content, and dedup by title+rabbi.
   const parashaLessonsQuery = useQuery({
-    queryKey: ["parasha-lessons", seriesTitle],
+    queryKey: ["parasha-lessons-all", parasha],
     queryFn: async () => {
-      if (!seriesTitle) return [];
-      
-      // Find the series
-      const { data: series } = await supabase
-        .from("series")
-        .select("id")
-        .eq("title", seriesTitle)
-        .single();
+      if (!parasha) return [];
 
-      if (!series) return [];
-
-      // Get lessons from this series
       const { data: lessons } = await supabase
         .from("lessons")
-        .select("id, title, description, source_type, audio_url, video_url, content, duration, rabbi_id")
-        .eq("series_id", series.id)
+        .select("id, title, description, source_type, audio_url, video_url, content, duration, rabbi_id, series_id, series(title)")
         .eq("status", "published")
-        .order("title");
+        .ilike("title", `%${parasha}%`)
+        .not("audience_tags", "cs", "{teachers}")
+        .order("title")
+        .limit(150);
 
       if (!lessons || lessons.length === 0) return [];
 
+      // Dedup by normalized title + rabbi (the migration cross-listed/duplicated lessons)
+      const seen = new Set<string>();
+      const deduped = lessons.filter((l) => {
+        const key = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ") + "::" + (l.rabbi_id || "");
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+
       // Get rabbi names
-      const rabbiIds = [...new Set(lessons.filter(l => l.rabbi_id).map(l => l.rabbi_id!))];
+      const rabbiIds = [...new Set(deduped.filter(l => l.rabbi_id).map(l => l.rabbi_id!))];
       const { data: rabbis } = await supabase
         .from("rabbis")
         .select("id, name")
@@ -65,10 +69,10 @@ export function useParasha() {
 
       const rabbiMap = new Map(rabbis?.map(r => [r.id, r.name]) || []);
 
-      return lessons.map(l => ({
+      return deduped.map(l => ({
         ...l,
         rabbi_name: l.rabbi_id ? rabbiMap.get(l.rabbi_id) || null : null,
-        series_title: seriesTitle,
+        series_title: (l as any).series?.title || seriesTitle,
       })) as ParashaLesson[];
     },
   });

@@ -44,7 +44,7 @@
  *   - /design-series-page-v2/41b62e31-0643-4368-b8ff-04dc25dc2603  →  שיר השירים (18L, no children)
  */
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams, useSearchParams, Link } from "react-router-dom";
+import { useParams, useSearchParams, Link, Navigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import {
   Share2,
@@ -2209,12 +2209,19 @@ export default function DesignPreviewSeriesPageV2() {
           dir="rtl"
         >
           לא נמצאה סדרה.{" "}
-          <a href="/series" style={{ color: colors.goldDark }}>
-            חזור לרשימת הסדרות
+          <a href="/" style={{ color: colors.goldDark }}>
+            חזרה לדף הבית
           </a>
         </div>
       </DesignLayout>
     );
+  }
+
+  // Teacher-wing content must never render on the public series page (Saar feedback 10.6.2026):
+  // worksheet series stayed reachable via /series/:id even after being hidden from the sidebar.
+  // Any series carrying the 'teachers' audience belongs in the teachers wing — redirect there.
+  if (Array.isArray((series as any).audience_tags) && (series as any).audience_tags.includes("teachers")) {
+    return <Navigate to={`/teachers/series/${series.id}`} replace />;
   }
 
   const totalLessons = (lessons as any[]).length || series.lesson_count || 0;

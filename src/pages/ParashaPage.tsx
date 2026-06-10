@@ -136,6 +136,17 @@ const ParashaPage = () => {
     [articleSeries]
   );
 
+  // Combined audio + all-parasha lessons, deduped by id (the comprehensive lessons query
+  // overlaps with the audio-reading query).
+  const combinedItems = useMemo(() => {
+    const seen = new Set<string>();
+    return [...audioLessons, ...lessons].filter((l: any) => {
+      if (seen.has(l.id)) return false;
+      seen.add(l.id);
+      return true;
+    });
+  }, [audioLessons, lessons]);
+
   const hasAudio = audioLessons.length > 0;
   const hasRiddle = !!(riddle?.content);
   const hasLessons = lessons.length > 0;
@@ -791,13 +802,13 @@ const ParashaPage = () => {
                     שיעורי שמע ותכנים נוספים
                   </h2>
                   <p className="text-sm mt-0.5" style={{ color: colors.textMuted, fontFamily: fonts.body }}>
-                    {audioLessons.length + lessons.length} פריטים
+                    {combinedItems.length} פריטים
                   </p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[...audioLessons, ...lessons].map((lesson) => (
+                {combinedItems.map((lesson) => (
                   <button
                     key={lesson.id}
                     onClick={() => setSelectedLessonId(lesson.id)}
