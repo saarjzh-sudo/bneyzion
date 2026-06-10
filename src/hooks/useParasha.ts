@@ -26,25 +26,50 @@ export interface ParashaArticleSeries {
   lessonContent: string | null;
 }
 
+// Some parasha names in the DB are shortened (e.g. "שלח" instead of "שלח לך").
+// Build an array of search terms for each parasha, shortest first, so we get
+// the most specific match but also the short form as a fallback.
+function getParashaSearchTerms(parasha: string): string[] {
+  const terms: string[] = [parasha]; // full name always first
+  // Common two-word parashiot where DB titles use only the first word
+  const shortForms: Record<string, string> = {
+    "שלח לך": "שלח",
+    "לך לך": "לך לך", // keep as-is, already unambiguous
+    "כי תשא": "כי תשא",
+    "כי תצא": "כי תצא",
+    "כי תבוא": "כי תבוא",
+    "חיי שרה": "חיי שרה",
+    "אחרי מות": "אחרי מות",
+  };
+  const short = shortForms[parasha];
+  if (short && short !== parasha) terms.push(short);
+  return terms;
+}
+
 export function useParasha() {
   const parasha = getCurrentParasha();
   const seriesTitle = getParashaSeriesTitle(parasha);
   const chumash = getParashaChumash(parasha);
+  const parashaSearchTerms = getParashaSearchTerms(parasha);
 
   // Get ALL published lessons for the current parasha (Saar feedback 10.6.2026: the page was
   // thin — it only read ONE exact-title series). The old site's parasha page aggregated many
   // sources, so we collect every public lesson whose title mentions the parasha, across all
   // series, exclude teacher-wing content, and dedup by title+rabbi.
+  // 11.6.2026: Added short-form fallback — "שלח לך" lessons are titled "פרשת שלח" in DB.
   const parashaLessonsQuery = useQuery({
     queryKey: ["parasha-lessons-all", parasha],
     queryFn: async () => {
       if (!parasha) return [];
 
+      // Build OR filter for all search terms (full name + short form)
+      const orFilter = parashaSearchTerms.map(t => `title.ilike.%${t}%`).join(",");
+
       const { data: lessons } = await supabase
         .from("lessons")
         .select("id, title, description, source_type, audio_url, video_url, content, duration, rabbi_id, series_id, series(title)")
         .eq("status", "published")
-        .ilike("title", `%${parasha}%`)
+        .or(orFilter)
         .not("audience_tags", "cs", "{teachers}")
         .order("title")
         .limit(150);
@@ -148,14 +173,19 @@ export function useParasha() {
         let lessonContent: string | null = null;
 
         if (series) {
-          const { data: lessons } = await supabase
-            .from("lessons")
-            .select("id, title, content")
-            .eq("series_id", series.id)
-            .eq("status", "published")
-            .ilike("title", `%${parasha}%`)
-            .limit(1);
-          const lesson = lessons?.[0] || null;
+          // Try each search term in order — most specific first (e.g. "שלח לך"),
+          // then short form (e.g. "שלח") so "פרשת שלח" articles are found.
+          let lesson: { id: string; title: string; content: string | null } | null = null;
+          for (const term of parashaSearchTerms) {
+            const { data: lessons } = await supabase
+              .from("lessons")
+              .select("id, title, content")
+              .eq("series_id", series.id)
+              .eq("status", "published")
+              .ilike("title", `%${term}%`)
+              .limit(1);
+            if (lessons?.[0]) { lesson = lessons[0]; break; }
+          }
           
           if (lesson) {
             lessonId = lesson.id;

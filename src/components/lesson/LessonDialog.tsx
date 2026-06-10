@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
 import { Clock, Calendar, BookOpen, Volume2, Video, Printer, Share2, FileDown, Heart, LogIn, ChevronLeft } from "lucide-react";
+import { colors, fonts } from "@/lib/designTokens";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
@@ -326,7 +327,17 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto" dir="rtl">
+      <DialogContent
+        className="max-w-4xl max-h-[85vh] overflow-y-auto"
+        dir="rtl"
+        style={{
+          background: colors.parchment,
+          borderRadius: 16,
+          border: `1px solid rgba(139,111,71,0.18)`,
+          boxShadow: "0 24px 64px rgba(45,31,14,0.18)",
+          fontFamily: fonts.body,
+        }}
+      >
         {isLoading ? (
           <div className="space-y-4 p-2">
             <Skeleton className="h-6 w-2/3" />
@@ -387,9 +398,12 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                     <TooltipContent>שליחה במייל</TooltipContent>
                   </Tooltip>
                 </div>
-                <DialogTitle className="text-xl font-heading leading-tight flex-1 text-right">{lesson.title}</DialogTitle>
+                <DialogTitle
+                  className="text-xl leading-tight flex-1 text-right"
+                  style={{ fontFamily: fonts.display, color: colors.textDark, fontWeight: 700 }}
+                >{lesson.title}</DialogTitle>
               </div>
-              <div className="flex flex-wrap items-center gap-3 mt-2 text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-3 mt-2 text-sm" style={{ color: colors.textMuted }}>
                 {rabbi && (
                   <span className="flex items-center gap-1">
                     <span className="text-muted-foreground">מאת</span>
@@ -417,7 +431,15 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
               </div>
               {series && (
                 <Link to={`/series/${series.id}`} onClick={() => onOpenChange(false)}>
-                  <Badge variant="secondary" className="mt-2">{series.title}</Badge>
+                  <span
+                    className="inline-block mt-2 px-3 py-1 rounded-full text-xs font-medium transition-colors"
+                    style={{
+                      background: `rgba(139,111,71,0.10)`,
+                      color: colors.goldDark,
+                      border: `1px solid rgba(139,111,71,0.22)`,
+                      fontFamily: fonts.body,
+                    }}
+                  >{series.title}</span>
                 </Link>
               )}
             </DialogHeader>
@@ -475,9 +497,18 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                 </div>
               )
             ) : lesson.audio_url ? (
-              <div className="rounded-lg bg-secondary/40 border border-border p-4 flex items-center gap-4">
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                  <Volume2 className="h-5 w-5 text-primary" />
+              <div
+                className="rounded-xl p-4 flex items-center gap-4"
+                style={{
+                  background: `linear-gradient(135deg, rgba(139,111,71,0.08), rgba(196,162,101,0.04))`,
+                  border: `1px solid rgba(139,111,71,0.18)`,
+                }}
+              >
+                <div
+                  className="h-10 w-10 rounded-xl flex items-center justify-center shrink-0"
+                  style={{ background: `rgba(139,111,71,0.14)` }}
+                >
+                  <Volume2 className="h-5 w-5" style={{ color: colors.goldDark }} />
                 </div>
                 <audio ref={mediaProgressRef} controls src={lesson.audio_url} className="w-full h-10" />
               </div>
@@ -540,18 +571,41 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
 
             {/* Auth CTA for non-logged-in users */}
             {!user && (
-              <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 flex items-center gap-4">
-                <div className="shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                  <LogIn className="h-5 w-5 text-primary" />
+              <div
+                className="rounded-xl p-4 flex items-center gap-4"
+                style={{
+                  background: `linear-gradient(135deg, rgba(45,125,125,0.07), rgba(45,125,125,0.03))`,
+                  border: `1px solid rgba(45,125,125,0.18)`,
+                }}
+              >
+                <div
+                  className="shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: `rgba(45,125,125,0.14)` }}
+                >
+                  <LogIn className="h-5 w-5" style={{ color: "#2D7D7D" }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-display text-foreground">נהנית מהשיעור? תמשיך מאיפה שעצרת</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">התחבר ונשמור לך את המקום — בכל מכשיר, בכל זמן</p>
+                  <p className="text-sm font-medium" style={{ fontFamily: fonts.display, color: colors.textDark }}>
+                    נהנית מהשיעור? תמשיך מאיפה שעצרת
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: colors.textMuted, fontFamily: fonts.body }}>
+                    התחבר ונשמור לך את המקום — בכל מכשיר, בכל זמן
+                  </p>
                 </div>
-                <Button size="sm" onClick={() => signInWithGoogle()} className="shrink-0 gap-1.5">
+                <button
+                  onClick={() => signInWithGoogle()}
+                  className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                  style={{
+                    background: `linear-gradient(135deg, ${colors.goldDark}, ${colors.goldLight})`,
+                    color: "white",
+                    border: "none",
+                    cursor: "pointer",
+                    fontFamily: fonts.body,
+                  }}
+                >
                   <LogIn className="h-3.5 w-3.5" />
                   התחברות
-                </Button>
+                </button>
               </div>
             )}
           </div>
