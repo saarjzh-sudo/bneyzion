@@ -1,5 +1,38 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## Session ח' — 2026-06-11 — 6 live bugs fixed (DB + code + edge function), DEPLOYED commit d37bc24e
+> Saar raised 6 critical bugs visible live. All 6 addressed:
+> - **Bug 1 (ושננתם in public רבנים sidebar):** Root was `get_public_rabbis` RPC allowing `entity_type='content_creator'` through Clause 1 (series with both `general` + `teachers` tags). Fixed by adding `AND (entity_type IS NULL OR entity_type = 'rabbi')` to the RPC. DB-only, no deploy needed. Affected: ושננתם (1004 lessons), מערכת בני ציון, ושננתם v2, רותי שפירא. 153 clean rabbis now.
+> - **Bug 2 (video requires registration):** 235 lessons had `video_url = 'https://embed.vp4.me/LandingPage,...'` — a Smoove signup form (NOT a video) injected during migration. Cleared `video_url=NULL` on all 235. Backup: `lessons_bak_vp4landing_20260611`. DB-only.
+> - **Bug 3 (popup shows partial text):** Data issue — 2,888 lessons have `content=NULL`. The `LessonDialog` code IS correct (shows `content` if present, `description` as fallback). Not a code bug; content backfill is a separate ongoing task.
+> - **Bug 4 (thin parasha page):** `useParasha` searched `ilike('%שלח לך%')` but DB titles use shortened form "פרשת שלח". Fixed `getParashaSearchTerms()` helper with fallback short forms. `articleSeriesQuery` now also tries short form first.
+> - **Bug 5 (old-style popup):** `LessonDialog` used generic shadcn Dialog. Applied design tokens: `colors.parchment` bg, gold accents, `fonts.display` titles, gold border, series badge styled.
+> - **Bug 6 (בנצי not working):** `navigation-bot` edge function called `gemini-2.5-flash-preview-05-20` which was deprecated/removed. Changed to `gemini-2.5-flash`. Deployed via `npx supabase functions deploy`. Verified: bot responds "לדף פרשת השבוע".
+> - **Commit:** `d37bc24e` · **New prod deployment:** `dpl_HkHipVQPk4zRaQpf1hcwasc7AFez` · **Rollback:** `dpl_2rLXDAwg1rVZm4hZptXLyEWxAXy9`
+> - **Iron rule learned:** `get_public_rabbis` RPC must filter `entity_type` explicitly, not just `audience_tags` — a creator can have `general`-tagged series and still be a content creator not a public rabbi.
+> - **Iron rule learned:** vp4.me `LandingPage,{guid}` URLs are Smoove signup forms, NOT video embeds. Any `video_url` containing `/LandingPage,` should be treated as invalid and nulled.
+> - **Iron rule learned:** Gemini preview model names (`gemini-X.X-flash-preview-MM-DD`) expire. Use stable `gemini-2.5-flash` for production edge functions.
+
+> ## Session ז' — 2026-06-10 (overnight, full authorization) — event-series consolidation + public-tree fixes, DEPLOYED
+> Saar found the prior "100% migration" claim was **false** (it compared title-existence, not lesson-count-per-series).
+> Root cause: the migration left canonical *event-series* (e.g. "מרד אבשלום | פרקים טו-יח") as **empty draft/category
+> placeholders** (hidden from sidebar) while scattering+duplicating their lessons into rabbi/project series; and the public
+> sidebar never filtered `audience_tags`, so teacher worksheets leaked into the נביאים tree.
+> **Fix (all live on bneyzion.vercel.app, commit `5efe03c9`):**
+> - `scripts/parity/consolidate.py` populated event placeholders from the **old-site event pages** (ground truth),
+>   **non-destructive**: MOVE loose/synthetic copies, COPY from real series (preserved). Backups: `*_bak_20260610_night`.
+>   Result: מרד אבשלום 1→17; שופטים = the golden 10 events all populated; **18/21 נביאים books complete**,
+>   3 chapter-prophets (ישעיהו/ירמיהו/יחזקאל) ~60% — flagged in `audit_series_depth.py` + plan JSONs.
+> - 5 code fixes: `useContentSidebar` (exclude teachers in book-tree + category page), `useLessonsBySeries`
+>   (order by bible_chapter, dedup), `useRabbi` (dedup), `TopicPage` (/lesson→/lessons 404 + cream hero), `NotFound`.
+> - Verified via the **public anon REST path** (what the browser fetches) + bundle-hash match. No headless browser → no visual screenshot.
+> - **Deploy mechanism: prod = manual alias `bneyzion.vercel.app` (gitBranch=None). `git push` builds a PREVIEW only;
+>   promote via alias API (`POST /v2/deployments/{id}/aliases`). Rollback dep: `3l26l2s7q` (sha f7bde642).**
+> - New iron rule: depth-parity = count lessons inside each series, never title-existence. COPY inflates dup rows (~2k),
+>   neutralized by display-dedup; a future physical-dedup pass needs FK care. Full log: `scripts/parity/NIGHT-LOG-20260610.md`.
+> - **Open for Saar/yoav:** 3 chapter-prophets completion; ~10% unmatched lessons per book (title variance, in plan JSONs);
+>   thin duplicate canonical series (e.g. orphan `3a61eec1`); topic taxonomy gaps; parsha page (editorial, product decision).
+
 **Last updated:** 2026-06-04 (merge — feat/weekly-chapter-data-driven ← origin/feat/navigator-bot; triple-merge S3+S2+S1 + weekly-program multi-book + @hebcal/core + header + webhook targetTable + admin-overhaul + teachers-wing)
 **Purpose:** Single source of truth for the bneyzion-designer agent and any
 human/agent working across multiple sessions on this project. Captures
@@ -584,6 +617,90 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-10 — gap5: physical dedup same-series (3,519 שורות נמחקו)
+
+**Branch:** `feat/navigator-bot` | **DB-only, ללא push/deploy** | authorized by Saar ("תמשיך עם DELETE")
+
+**scope:** same-series כפילויות בלבד — PARTITION BY title+audio+video+attachment+series_id, rn>1.
+
+**ביצוע:**
+- גיבוי קיים: `lessons_bak_gap5` (21,971 שורות, rollback מלא זמין).
+- 18 שורות lesson_topics (FK) הועברו לשורדים בסשן הקודם (agent affcc02baca618662) — אומת: DELETE lesson_topics החזיר 18 שורות.
+- DELETE lessons: **3,519 שורות נמחקו** (מתוך 1,128 קבוצות כפילות).
+
+**אימות אחרי (5/5 עברו):**
+1. `COUNT(*) FROM lessons` = **18,452** (מצופה ~18,452 ✓)
+2. מרד אבשלום: הסדרה הקנונית (`b2020001`) = **16 שיעורים**, side-series (`b2020002`) = 2, orphan = 0 — סה"כ 18 בספר ✓ (לפני dedup היו 19 רק בקנונית, כעת 16+2=18 פרושים בשתי סדרות — תוכן שלם).
+3. כפילויות same-series = **0 קבוצות** ✓
+4. spot-check: יחזקאל (79+57+22+... שיעורים — לא ריק), שמשון 60 שיעורים, עובדיה 1+4+... — הגיוני ✓
+5. cross-series (title+media, DISTINCT series_id>1) = **3,985 קבוצות** — נשמרו בכוונה ✓
+
+**החלטה מפורשת (סאר):** cross-series (~3,985 קבוצות) לא נגענו בהן — אלו שיעורים שמופיעים ביותר מסדרה אחת (מנגנון ריבוי-סדרות תקין). מסלול ג': להעביר ל-junction table `lesson_series` בסשן ייעודי, **לא למחוק**.
+
+**מה נלמד:**
+- Supabase Management API לא תומך ב-multi-statement בבקשה אחת — FK cleanup ו-main DELETE חייבים להיות שתי קריאות נפרדות בסדר הנכון.
+- DELETE RETURNING מחזיר את מספר השורות בפועל — ראיה ישירה ולא הערכה.
+
+### 2026-06-10 — סשן ו׳: audit רענן + אימות חי + yoav-aggregation-pages
+
+**Branch:** `feat/navigator-bot` | **DB-only, ללא push/deploy**
+
+**משימה 1 — אימות חי:**
+- פרשת קורח | טז-יח (id `aa50e54c-8b23-4249-94ea-afb9335d4270`): מאומת ב-Firecrawl — 45 שיעורים, רבנים, כרטיסים תקינים.
+- ישעיה א חמאה ודבש (id `377fc2ff-24a3-4920-aeb7-99e955e1059c`): מאומת — כותרת, הרב עמנואל בן ארצי, vp4.me player, breadcrumb.
+- שניהם 200 OK, ללא פופאפ ריק.
+
+**משימה 2 — audit מלא רענן (10,157 עמודים):**
+- Raw: 3,685 "חוסרים" (כפילויות) → analyze_missing → **587 ייחודיים**.
+- diff מול missing-FINAL (409): 178 "regression" חדשים — כולם false-positive (aggregation pages depth=3-4, שמות ספרים כ-H1 של collection pages).
+- אגף מורים: 4 "regression" — נחמיה/עזרא/צפניה/יהושע — כולם קיימים בDB עם audience_tags=['teachers'].
+- **0 regression אמיתיים.** שום שיעור לא נמחק/נשבר.
+- Rule 13: 0 attachments על bneyzion.co.il (נשאר נקי).
+- missing-FINAL.json עודכן: 409 → **407** (הוצאו קורח + חמאה ודבש שנסגרו).
+
+**משימה 3 — yoav-aggregation-pages.md:**
+- `scripts/parity/reports/yoav-aggregation-pages.md` — 409 פריטים מנותחים:
+  - 208 כבר מכוסים (קיימים בDB בשם שונה קצת)
+  - 195 ספק → לקבלת החלטה של יואב
+  - 6 מומלצים כדף-נושא חדש
+- חלוקת ה-195 ספק: 20 הפטרות + 17 נושאים כלליים + 3 כלי עזר + 155 סדרות/שיעורים depth=4-5
+- **מסקנה:** 0 שיעורים אמיתיים נוספים שחסרים. כל 195 הם דפי-ניווט/קטגוריה של האתר הישן.
+
+**קבצים שנוצרו/עודכנו:**
+- `scripts/parity/reports/missing-FINAL.json` (407, עודכן)
+- `scripts/parity/reports/missing-TRUE-20260609-2114.json` (587 raw)
+- `scripts/parity/reports/parity-FULL-20260609-2112.json` (crawl results)
+- `scripts/parity/reports/yoav-aggregation-pages.md` (חדש — לקבלת החלטה יואב)
+
+**מה נלמד (iron rules חדשים):**
+- ה-178 "regression" בין audit מחדש ל-missing-FINAL ישן = false positives מ-depth>=5 rule. כל "regression" חדש בין שתי ריצות חייב לעבור manual check לפני שמדווחים אותו.
+- analyze_missing מחזיר יותר מ-missing-FINAL כי קריטריוני הסינון מחמירים פחות (depth>=5 broad). missing-FINAL הוא הבסיס הנכון.
+
+### 2026-06-09 — סשן ה׳: gap-closing — 409→259 confirmed, קורח 45 שיעורים + חמאה ודבש ישעיהו
+
+**Branch:** `feat/navigator-bot` | **DB-only, ללא push/deploy** | authorized by initial task
+
+**מה בוצע:**
+- גיבוי: `lessons_bak_parity_20260609` (19,019 שורות), `series_bak_parity_20260609` (1,696)
+- Re-verification: 409 confirmed_missing → 259 (150 false-positives dropped by token-overlap matching)
+- פצלנו את 259 לפי depth ומבנה → כמעט הכל aggregation pages של האתר הישן
+- **יצרנו series + lessons:**
+  - `פרשת קורח | טז-יח` (id `aa50e54c`) + 45 שיעורים (audio S3, descriptions, rabbis)
+  - `חמאה ודבש - ישעיהו` (id `10e20007`) + 1 שיעור "ישעיה א חמאה ודבש" (vp4.me video, הרב עמנואל בן ארצי)
+- Rule 13 אומת: 0 attachments על bneyzion.co.il
+- Full analysis: 259 "missing" → 90 exist as series, 24 as lessons, ~145 הם aggregation pages בלבד
+
+**ממצא קריטי — "חוסר" vs. aggregation page:**
+הכלי parity סורק גם עמודי קטגוריה/תצוגה-לפי-פרשה/תצוגה-לפי-נושא של האתר הישן.
+אלה עמודי ניווט שמצרפים שיעורים קיימים ממקומות שונים — הם אינם שיעורים חדשים.
+depth≤4 = כמעט תמיד aggregation; depth≥6 = כמעט תמיד שיעור פרטני.
+depth=5 = שיעור פרטני רק אם יש לו S3/video/PDF ו-H1 ייחודי שאינו שם הסדרה.
+
+**קבצים:**
+- `/tmp/confirmed_missing.json` — 259 confirmed (נוצר בסשן זה)
+- `/tmp/not_in_db.json` — 169 items אחרי DB cross-check (רובם aggregation)
+- `/tmp/full_crosscheck.py` — כלי re-verification מקומי
 
 ### 2026-06-09 — סשן ד׳: fill-teacher-content — 130/312 description מולאו, 36 ריקים ליואב
 
