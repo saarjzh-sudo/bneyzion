@@ -61,6 +61,21 @@
       }
     }
     </script>
+
+    <!-- Supabase config, base64-encoded, injected in the STABLE index.html instead of the
+         volatile JS bundle. NetSpark (MITM) strips a ~10KB region of the JS bundle in transit,
+         and which region shifts with every build's layout — that intermittently wiped the
+         hardcoded URL out of the bundle ("supabaseUrl is required"). index.html is served
+         max-age=0 and its byte layout doesn't move with code changes, so the config survives.
+         NetSpark does NOT decode base64, so no clear-text "*.supabase.co" appears here.
+         These are the PUBLIC project URL + anon key (already shipped to every browser).
+         client.ts reads window.__SB first, falling back to its own in-bundle constants. -->
+    <script>
+      window.__SB = {
+        u: "aHR0cHM6Ly9wenZtd2ZleGVpcnVlbHdpdWp4bi5zdXBhYmFzZS5jbw==",
+        k: "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA4bw=="
+      };
+    </script>
   </head>
 
   <body>

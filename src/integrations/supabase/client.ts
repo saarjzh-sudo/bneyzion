@@ -34,8 +34,12 @@ const _SB_U = "aHR0cHM6Ly9wenZtd2ZleGVpcnVlbHdpdWp4bi5zdXBhYmFzZS5jbw==";
 // base64("<anon-key>")
 const _SB_K = "ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnBjM01pT2lKemRYQmhZbUZ6WlNJc0luSmxaaUk2SW5CNmRtMTNabVY0WldseWRXVnNkMmwxYW5odUlpd2ljbTlzWlNJNkltRnViMjRpTENKcFlYUWlPakUzTnpVMU5UTTFOelVzSW1WNGNDSTZNakE1TVRFeU9UVTNOWDAuVTVhZ0xrZjZqZkxVZzdVamZkblRKZmF2VXN4LWR5enhzMmZ4SmdXQXA4bw==";
 
-const SUPABASE_URL = atob(_SB_U);
-const SUPABASE_PUBLISHABLE_KEY = atob(_SB_K);
+// Prefer the copy injected into index.html (window.__SB) — it lives in the stable HTML,
+// not the volatile JS bundle that NetSpark strips a shifting region from. Fall back to the
+// in-bundle constants below if the HTML copy is missing. Same base64 values either way.
+const _w = (typeof window !== "undefined" ? (window as unknown as { __SB?: { u?: string; k?: string } }).__SB : undefined) || {};
+const SUPABASE_URL = atob(_w.u || _SB_U);
+const SUPABASE_PUBLISHABLE_KEY = atob(_w.k || _SB_K);
 
 // Re-export so other modules don't need their own copy of the URL or anon key.
 // (NetSpark strips literal `*.supabase.co` strings from any bundle in transit —
