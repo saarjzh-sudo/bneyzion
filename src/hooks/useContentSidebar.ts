@@ -429,10 +429,15 @@ export function useContentSidebar() {
   const rabbisQuery = useQuery({
     queryKey: ["content-rabbis"],
     queryFn: async () => {
-      const { data } = await supabase
+      // Public רבנים tab = individual rabbis only. Content creators / institutions
+      // (ושננתם, מכון דעת סופרים, תלמוד תורה מורשה…) are entity_type='content_creator'
+      // and belong to the teachers wing — never the public rabbis list. (Saar 10.6.2026)
+      // Cast to any: entity_type isn't in the generated types yet but exists in the DB.
+      const { data } = await (supabase as any)
         .from("rabbis")
         .select("id, name, lesson_count")
         .eq("status", "active")
+        .eq("entity_type", "rabbi")
         .gt("lesson_count", 0)
         .order("lesson_count", { ascending: false })
         .limit(50);

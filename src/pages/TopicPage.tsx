@@ -99,21 +99,34 @@ function useTopicLessons(topicId: string | undefined) {
            lessons!inner(
              id, title, duration, published_at,
              thumbnail_url, video_url, audio_url, attachment_url,
-             series_id,
+             series_id, rabbi_id,
              rabbis(name),
              series(title, image_url)
            )`
         )
         .eq("topic_id", topicId!)
         .eq("lessons.status", "published")
-        .limit(300);
+        // Public topic pages must never surface teacher-wing content (worksheets etc.).
+        .not("lessons.audience_tags", "cs", "{teachers}")
+        .limit(500);
 
       if (error) throw error;
 
-      // PostgREST returns lessons nested — flatten them, then sort client-side
-      const lessons = (data || [])
+      // PostgREST returns lessons nested — flatten them
+      const flat = (data || [])
         .map((row: any) => row.lessons)
-        .filter(Boolean) as TopicLesson[];
+        .filter(Boolean) as (TopicLesson & { rabbi_id?: string | null })[];
+
+      // Dedup by normalized title + rabbi — the migration cross-listed/duplicated the same
+      // worksheet many times, so topics like "דפי עבודה" showed hundreds of identical cards.
+      const seen = new Set<string>();
+      const lessons = flat.filter((l) => {
+        const key = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ")
+          + "::" + ((l as any).rabbi_id || "");
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      }) as TopicLesson[];
 
       // Sort by published_at desc (newest first)
       lessons.sort((a, b) => {

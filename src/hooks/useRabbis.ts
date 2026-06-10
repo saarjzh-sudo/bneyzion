@@ -50,18 +50,26 @@ export function usePublicRabbis() {
       const { data: rpcData, error: rpcError } = await (supabase as any)
         .rpc("get_public_rabbis");
       if (!rpcError && rpcData) {
-        const sorted = (rpcData as Rabbi[]).slice().sort((a, b) => {
+        // Belt-and-suspenders: never list content creators / institutions as "rabbis"
+        // (entity_type='content_creator'). If the row has no entity_type the RPC already
+        // filtered it, so keep it. (Saar 10.6.2026)
+        const rabbisOnly = (rpcData as any[]).filter(
+          (r) => r.entity_type === undefined || r.entity_type === null || r.entity_type === "rabbi"
+        );
+        const sorted = (rabbisOnly as Rabbi[]).slice().sort((a, b) => {
           const tierDiff = getRabbiTier(a.name) - getRabbiTier(b.name);
           if (tierDiff !== 0) return tierDiff;
           return (b.lesson_count ?? 0) - (a.lesson_count ?? 0);
         });
         return sorted;
       }
-      // Fallback (RPC not yet deployed)
-      const { data, error } = await supabase
+      // Fallback (RPC not yet deployed). Cast to any: entity_type isn't in the generated
+      // types yet but exists in the DB (rabbi vs content_creator).
+      const { data, error } = await (supabase as any)
         .from("rabbis")
         .select("*")
         .eq("status", "active")
+        .eq("entity_type", "rabbi")
         .gt("lesson_count", 0)
         .order("lesson_count", { ascending: false });
       if (error) throw error;

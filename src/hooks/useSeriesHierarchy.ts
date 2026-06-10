@@ -10,7 +10,15 @@ export function useSeriesBreadcrumb(seriesId: string | undefined) {
         series_uuid: seriesId!,
       });
       if (error) throw error;
-      return data as { id: string; title: string; depth: number }[];
+      // Collapse consecutive ancestors with the same title — the migration left some books
+      // as both a category node AND a same-named series under it, which rendered as a
+      // duplicated crumb (e.g. "כתובים › רות › רות"). Keep the first of each run. (Saar 10.6.2026)
+      const rows = (data as { id: string; title: string; depth: number }[]) || [];
+      const norm = (t: string) => (t || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+      const deduped = rows.filter(
+        (r, i) => i === 0 || norm(r.title) !== norm(rows[i - 1].title)
+      );
+      return deduped;
     },
   });
 }

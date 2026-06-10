@@ -233,7 +233,18 @@ export default function TeachersContentTypePage() {
   };
 
   const filteredLessons = useMemo(() => {
-    let result = lessons;
+    // Dedup: the migration cross-listed the same worksheet under many teachers, so a
+    // content-type showed hundreds of identical cards (same title + same attached file).
+    // Collapse by attachment file when present, else by normalized title. (Saar 10.6.2026)
+    const seen = new Set<string>();
+    let result = lessons.filter((l: any) => {
+      const key = l.attachmentUrl
+        ? `f:${l.attachmentUrl}`
+        : `t:${(l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ")}::${l.rabbiName || ""}`;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
     if (search.trim()) {
       const q = search.trim();
       result = result.filter((l) => l.title.includes(q) || (l.description || "").includes(q));
