@@ -17,11 +17,13 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { X, Headphones, Video, FileDown, ExternalLink, GraduationCap } from "lucide-react";
 import { colors, fonts, radii, shadows, getSeriesCoverImage, formatDuration } from "@/lib/designTokens";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 interface LessonItem {
   id: string;
   title: string;
   description: string | null;
+  content?: string | null;
   duration: number | null;
   sourceType: string | null;
   audioUrl: string | null;
@@ -174,12 +176,24 @@ export default function TeacherLessonModal({
             )}
           </div>
 
-          {/* Description */}
-          {lesson.description && (
+          {/* Full content (HTML) — shown when available; falls back to plain description */}
+          {lesson.content ? (
+            <div
+              style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMid, lineHeight: 1.75, margin: "0 0 1rem" }}
+              className="prose prose-sm max-w-none
+                [&_p]:mb-3 [&_p]:leading-relaxed
+                [&_h2]:text-base [&_h2]:font-bold [&_h2]:mt-4 [&_h2]:mb-2
+                [&_h3]:text-sm [&_h3]:font-bold [&_h3]:mt-3 [&_h3]:mb-1
+                [&_strong]:font-bold
+                [&_blockquote]:border-r-4 [&_blockquote]:border-amber-400/50 [&_blockquote]:pr-3 [&_blockquote]:italic [&_blockquote]:text-stone-500"
+              dir="rtl"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(lesson.content) }}
+            />
+          ) : lesson.description ? (
             <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMid, lineHeight: 1.65, margin: "0 0 1rem" }}>
               {lesson.description}
             </p>
-          )}
+          ) : null}
 
           {/* Media player / embed (video first, then audio) */}
           {lesson.videoUrl && (
@@ -198,7 +212,7 @@ export default function TeacherLessonModal({
           )}
 
           {/* Fallback: no content at all */}
-          {!lesson.description && !lesson.videoUrl && !lesson.audioUrl && !lesson.attachmentUrl && (
+          {!lesson.content && !lesson.description && !lesson.videoUrl && !lesson.audioUrl && !lesson.attachmentUrl && (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1rem", gap: "0.6rem", color: colors.textSubtle, fontFamily: fonts.body, textAlign: "center" }}>
               <FileDown size={32} style={{ color: colors.goldDark, opacity: 0.4 }} />
               <p style={{ margin: 0, fontSize: "0.85rem" }}>

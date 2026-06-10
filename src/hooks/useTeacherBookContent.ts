@@ -172,6 +172,7 @@ export interface TeacherContentTypeLesson {
   id: string;
   title: string;
   description: string | null;
+  content: string | null;
   duration: number | null;
   audioUrl: string | null;
   videoUrl: string | null;
@@ -196,7 +197,8 @@ export function useTeacherContentTypeContent(contentType: string): TeacherConten
       const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}` };
 
       // Paginated fetch of teacher lessons by content_type
-      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,rabbi_id,series_id&content_type=eq.${encodeURIComponent(contentType)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
+      // content is included so TeacherLessonModal can render the full text without a second fetch
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,rabbi_id,series_id&content_type=eq.${encodeURIComponent(contentType)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
       const allRaw: any[] = [];
       const PAGE = 1000;
       for (let start = 0; ; start += PAGE) {
@@ -233,6 +235,7 @@ export function useTeacherContentTypeContent(contentType: string): TeacherConten
         id: l.id,
         title: l.title,
         description: l.description,
+        content: l.content ?? null,
         duration: l.duration,
         audioUrl: l.audio_url,
         videoUrl: l.video_url,
@@ -259,6 +262,7 @@ export interface TeacherCreatorLesson {
   id: string;
   title: string;
   description: string | null;
+  content: string | null;
   duration: number | null;
   audioUrl: string | null;
   videoUrl: string | null;
@@ -296,7 +300,7 @@ export function useTeacherCreatorContent(rabbiId: string): TeacherCreatorResult 
       // Teacher lessons for this rabbi (paginated)
       const anonKey = getAnonKey();
       const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}` };
-      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,series_id,content_type&rabbi_id=eq.${encodeURIComponent(rabbiId)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,series_id,content_type&rabbi_id=eq.${encodeURIComponent(rabbiId)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
       const allRaw: any[] = [];
       const PAGE = 1000;
       for (let start = 0; ; start += PAGE) {
@@ -325,6 +329,7 @@ export function useTeacherCreatorContent(rabbiId: string): TeacherCreatorResult 
         id: l.id,
         title: l.title,
         description: l.description,
+        content: l.content ?? null,
         duration: l.duration,
         audioUrl: l.audio_url,
         videoUrl: l.video_url,

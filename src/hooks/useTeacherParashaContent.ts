@@ -117,6 +117,7 @@ export interface TeacherParashaLesson {
   id: string;
   title: string;
   description: string | null;
+  content: string | null;
   duration: number | null;
   audioUrl: string | null;
   videoUrl: string | null;
@@ -157,7 +158,7 @@ export function useTeacherParashaContent(
       const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}` };
 
       // 1. Fetch all teacher lessons for this book (paginated)
-      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
       const allRaw: any[] = [];
       const PAGE = 1000;
       for (let start = 0; ; start += PAGE) {
@@ -210,6 +211,7 @@ export function useTeacherParashaContent(
         id: l.id,
         title: l.title,
         description: l.description,
+        content: l.content ?? null,
         duration: l.duration,
         audioUrl: l.audio_url,
         videoUrl: l.video_url,
@@ -258,6 +260,7 @@ export interface TeacherWorksheetLesson {
   id: string;
   title: string;
   description: string | null;
+  content: string | null;
   duration: number | null;
   audioUrl: string | null;
   videoUrl: string | null;
@@ -304,7 +307,7 @@ export function useTeacherWorksheetsContent(book: string): TeacherWorksheetsResu
 
       // Strategy: fetch all teacher lessons for the book, filter by worksheet content_type
       // This is more reliable than querying by content_type (too many variants)
-      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
       const allRaw: any[] = [];
       const PAGE = 1000;
       for (let start = 0; ; start += PAGE) {
@@ -346,6 +349,7 @@ export function useTeacherWorksheetsContent(book: string): TeacherWorksheetsResu
         id: l.id,
         title: l.title,
         description: l.description,
+        content: l.content ?? null,
         duration: l.duration,
         audioUrl: l.audio_url,
         videoUrl: l.video_url,

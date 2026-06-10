@@ -45,6 +45,7 @@ interface LessonItem {
   id: string;
   title: string;
   description: string | null;
+  content?: string | null;
   duration: number | null;
   sourceType: string | null;
   audioUrl: string | null;
@@ -93,7 +94,7 @@ function useSeriesLessons(seriesId: string) {
     queryFn: async () => {
       const { data } = await supabase
         .from("lessons")
-        .select("id, title, description, duration, source_type, audio_url, video_url, attachment_url, thumbnail_url, rabbi_id")
+        .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, thumbnail_url, rabbi_id")
         .eq("series_id", seriesId)
         .eq("status", "published")
         .order("title")
@@ -109,6 +110,7 @@ function useSeriesLessons(seriesId: string) {
         id:            l.id,
         title:         l.title,
         description:   l.description,
+        content:       (l as any).content ?? null,
         duration:      l.duration,
         sourceType:    l.source_type,
         audioUrl:      l.audio_url,

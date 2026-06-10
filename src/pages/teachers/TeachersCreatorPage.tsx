@@ -345,7 +345,7 @@ export default function TeachersCreatorPage() {
 
       {modalLesson && (
         <TeacherLessonModal
-          lesson={{ id: modalLesson.id, title: modalLesson.title, description: modalLesson.description, duration: modalLesson.duration, sourceType: null, audioUrl: modalLesson.audioUrl, videoUrl: modalLesson.videoUrl, attachmentUrl: modalLesson.attachmentUrl, thumbnailUrl: modalLesson.thumbnailUrl, rabbiName: rabbi?.name || null }}
+          lesson={{ id: modalLesson.id, title: modalLesson.title, description: modalLesson.description, content: modalLesson.content ?? null, duration: modalLesson.duration, sourceType: null, audioUrl: modalLesson.audioUrl, videoUrl: modalLesson.videoUrl, attachmentUrl: modalLesson.attachmentUrl, thumbnailUrl: modalLesson.thumbnailUrl, rabbiName: rabbi?.name || null }}
           seriesId={modalLesson.seriesId || ""}
           seriesImageUrl={null}
           seriesTitle={modalLesson.seriesTitle || ""}

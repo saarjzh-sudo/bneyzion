@@ -412,6 +412,7 @@ export default function TeachersParashaPage() {
             id: modalLesson.id,
             title: modalLesson.title,
             description: modalLesson.description,
+            content: modalLesson.content ?? null,
             duration: modalLesson.duration,
             sourceType: null,
             audioUrl: modalLesson.audioUrl,
