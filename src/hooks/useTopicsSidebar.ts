@@ -55,19 +55,23 @@ export function useTopicsSidebar() {
       if (childError) throw childError;
       if (!children || children.length === 0) return [];
 
-      // Step 3: fetch lesson counts for all child topic ids in one query
+      // Step 3: fetch lesson counts — filtered to published + non-teacher lessons so the
+      // number in the sidebar matches what TopicPage actually renders (R-TOP3 / R-SB3 fix).
       const childIds = children.map((c) => c.id);
       const { data: counts, error: countError } = await supabase
         .from("lesson_topics")
-        .select("topic_id")
-        .in("topic_id", childIds);
+        .select("topic_id, lessons!inner(status, audience_tags)")
+        .in("topic_id", childIds)
+        .eq("lessons.status", "published")
+        .not("lessons.audience_tags", "cs", "{teachers}");
 
       if (countError) throw countError;
 
       // Build a count map
       const countMap: Record<string, number> = {};
-      for (const row of counts || []) {
-        countMap[row.topic_id] = (countMap[row.topic_id] || 0) + 1;
+      for (const row of (counts || []) as any[]) {
+        const tid: string = row.topic_id;
+        countMap[tid] = (countMap[tid] || 0) + 1;
       }
 
       // Merge and sort by count desc

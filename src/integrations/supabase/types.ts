@@ -1117,6 +1117,7 @@ export type Database = {
           status: string
           submitted_at: string | null
           submitted_by: string | null
+          sort_order: number | null
           thumbnail_url: string | null
           title: string
           updated_at: string
@@ -1143,6 +1144,7 @@ export type Database = {
           review_note?: string | null
           reviewed_by?: string | null
           series_id?: string | null
+          sort_order?: number | null
           source_type?: string
           status?: string
           submitted_at?: string | null
@@ -1173,6 +1175,7 @@ export type Database = {
           review_note?: string | null
           reviewed_by?: string | null
           series_id?: string | null
+          sort_order?: number | null
           source_type?: string
           status?: string
           submitted_at?: string | null
@@ -3323,6 +3326,44 @@ export type Database = {
           id?: string
         }
         Relationships: []
+      }
+      rabbi_page_items: {
+        Row: {
+          id: string
+          rabbi_id: string
+          kind: string
+          series_id: string | null
+          lesson_id: string | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          rabbi_id: string
+          kind: string
+          series_id?: string | null
+          lesson_id?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          rabbi_id?: string
+          kind?: string
+          series_id?: string | null
+          lesson_id?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rabbi_page_items_rabbi_id_fkey"
+            columns: ["rabbi_id"]
+            isOneToOne: false
+            referencedRelation: "rabbis"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       rabbis: {
         Row: {

@@ -17,7 +17,7 @@ export function useTopSeries(limit = 50) {
       const { data, error } = await supabase
         .from("series")
         .select("*, rabbis(name)")
-        .eq("status", "active")
+        .in("status", ["active", "published"])   // R-LIB1: include 'published' series
         .gt("lesson_count", 0)
         .not("audience_tags", "cs", '{"teachers"}')
         .order("lesson_count", { ascending: false })

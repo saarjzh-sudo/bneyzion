@@ -514,31 +514,83 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
               </div>
             ) : null}
 
-            {/* PDF viewer */}
-            {(lesson as any).attachment_url && (
-              <div className="space-y-3">
-                <div className="rounded-lg border border-border overflow-hidden bg-muted/30" style={{ height: '75vh', minHeight: '500px' }}>
-                  <iframe
-                    src={(lesson as any).attachment_url}
-                    className="w-full h-full"
-                    title="תצוגת PDF"
-                    style={{ border: 'none' }}
-                  />
-                </div>
-                <div className="flex items-center justify-between">
-                  <p className="text-xs text-muted-foreground">אם התצוגה לא נטענת, ניתן להוריד את הקובץ</p>
+            {/* Attachment viewer — R-DLG1: aligned with LessonPage (PDF/Word/fallback) */}
+            {(lesson as any).attachment_url && (() => {
+              const url: string = String((lesson as any).attachment_url);
+              const lower = url.toLowerCase();
+              const isPdf = lower.includes(".pdf");
+              const isWord = lower.includes(".doc") || lower.includes(".docx");
+              const encoded = encodeURIComponent(url);
+
+              if (isPdf) {
+                return (
+                  <div className="rounded-lg overflow-hidden border border-border bg-muted/20">
+                    <div className="flex items-center justify-between bg-secondary/40 px-4 py-2 border-b border-border">
+                      <span className="text-sm font-semibold text-foreground">קובץ מצורף</span>
+                      <div className="flex items-center gap-3">
+                        <a href={url} download className="text-xs bg-primary text-primary-foreground px-3 py-1 rounded-md font-semibold hover:opacity-90 transition-opacity">
+                          ↓ הורד PDF
+                        </a>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline">
+                          פתח בחלון חדש ↗
+                        </a>
+                      </div>
+                    </div>
+                    <iframe
+                      src={url}
+                      className="w-full border-0"
+                      style={{ height: "60vh", minHeight: "400px" }}
+                      loading="lazy"
+                      title="PDF Viewer"
+                    />
+                  </div>
+                );
+              }
+
+              if (isWord) {
+                return (
+                  <div className="rounded-lg overflow-hidden border border-border bg-muted/20">
+                    <div className="flex items-center justify-between bg-secondary/40 px-4 py-2 border-b border-border">
+                      <span className="text-sm font-semibold text-foreground">קובץ Word מצורף</span>
+                      <div className="flex items-center gap-3">
+                        <a href={url} download className="text-xs bg-primary text-primary-foreground px-3 py-1 rounded-md font-semibold hover:opacity-90 transition-opacity">
+                          ↓ הורד קובץ
+                        </a>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="text-xs text-primary hover:underline">
+                          פתח בחלון חדש ↗
+                        </a>
+                      </div>
+                    </div>
+                    <iframe
+                      src={`https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`}
+                      className="w-full border-0"
+                      style={{ height: "60vh", minHeight: "400px" }}
+                      loading="lazy"
+                      title="Word Viewer"
+                    />
+                  </div>
+                );
+              }
+
+              // Fallback — unknown type (Google Drive / other): download button only, no blank iframe
+              return (
+                <div className="rounded-lg border border-border bg-secondary/20 px-5 py-4 flex items-center justify-between gap-4">
+                  <span className="text-sm font-semibold text-foreground flex items-center gap-2">
+                    <FileDown className="h-4 w-4 text-primary" />
+                    קובץ מצורף
+                  </span>
                   <a
-                    href={(lesson as any).attachment_url}
+                    href={url}
+                    download
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:opacity-90 transition-opacity"
+                    className="text-xs bg-primary text-primary-foreground px-4 py-2 rounded-md font-semibold hover:opacity-90 transition-opacity"
                   >
-                    <FileDown className="h-4 w-4" />
-                    הורד PDF
+                    ↓ פתח / הורד קובץ
                   </a>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* Full content */}
             {(lesson as any).content ? (

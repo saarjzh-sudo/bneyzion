@@ -111,13 +111,14 @@ export function useGlobalSearch(query: string) {
           .select("id, slug, name, title, image_url, lesson_count")
           .or(rabbiOrClauses)
           .eq("status", "active")
+          .eq("entity_type", "rabbi")          // R-SRC1: exclude content_creator institutions
           .order("lesson_count", { ascending: false })
           .limit(6),
         supabase
           .from("series")
           .select("id, title, lesson_count, rabbis(name)")
           .or(patterns.map(p => `title.ilike.${p}`).join(","))
-          .eq("status", "active")
+          .in("status", ["active", "published"]) // R-SRC2: include 'published' series
           .not("audience_tags", "cs", '{"teachers"}')
           .order("lesson_count", { ascending: false })
           .limit(8),

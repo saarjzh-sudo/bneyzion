@@ -97,17 +97,30 @@ function useSeriesLessons(seriesId: string) {
     enabled: !!seriesId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
+      // R-CAT3 fix: align order with /series/:id (bible_chapter nullsLast, then title).
+      // R-CAT4 fix: add dedup to avoid count mismatch between CategoryPage and SeriesPage.
       const { data, error } = await supabase
         .from("lessons")
         .select(
-          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, rabbi_id, rabbis(name)"
+          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, rabbis(name)"
         )
         .eq("series_id", seriesId)
         .eq("status", "published")
-        .order("published_at", { ascending: true })
+        .order("bible_chapter", { ascending: true, nullsFirst: false })
+        .order("title", { ascending: true })
         .limit(200);
       if (error) throw error;
-      return data ?? [];
+      // Dedup by enriched key: norm(title)|norm(rabbi)|basename(attachment)|audio|video
+      const seen = new Set<string>();
+      return (data ?? []).filter((l: any) => {
+        const normTitle = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        const normRabbi = (l.rabbis?.name || l.rabbi_id || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        const attBase = l.attachment_url ? l.attachment_url.split("/").pop()?.split("?")[0] || "" : "";
+        const key = `${normTitle}|${normRabbi}|${attBase}|${l.audio_url || ""}|${l.video_url || ""}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
     },
   });
 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { sanitizeHtml } from "@/lib/sanitize";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Clock, BookOpen, Calendar, ChevronLeft, Volume2, Headphones, ListPlus, LogIn } from "lucide-react";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
@@ -158,6 +158,12 @@ const LessonPage = () => {
         </div>
       </Layout>
     );
+  }
+
+  // R-LES1: teacher-wing lessons must not render on the public /lessons/:id URL.
+  // Mirror the same guard that DesignPreviewSeriesPageV2 applies at the series level.
+  if (Array.isArray((lesson as any).audience_tags) && (lesson as any).audience_tags.includes("teachers")) {
+    return <Navigate to={`/teachers/lesson/${lesson.id}`} replace />;
   }
 
   const series = lesson.series as { id: string; title: string } | null;

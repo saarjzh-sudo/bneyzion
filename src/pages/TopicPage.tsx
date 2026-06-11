@@ -117,12 +117,15 @@ function useTopicLessons(topicId: string | undefined) {
         .map((row: any) => row.lessons)
         .filter(Boolean) as (TopicLesson & { rabbi_id?: string | null })[];
 
-      // Dedup by normalized title + rabbi — the migration cross-listed/duplicated the same
-      // worksheet many times, so topics like "דפי עבודה" showed hundreds of identical cards.
+      // Dedup by enriched key: norm(title)|norm(rabbi)|basename(attachment)|audio_url|video_url
+      // Absorbs COPY-duplicates from migration while keeping genuinely distinct same-title
+      // lessons that differ by media (R-TOP dedup alignment with series page).
       const seen = new Set<string>();
       const lessons = flat.filter((l) => {
-        const key = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ")
-          + "::" + ((l as any).rabbi_id || "");
+        const normTitle = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        const normRabbi = (l.rabbis?.name || (l as any).rabbi_id || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        const attBase = l.attachment_url ? l.attachment_url.split("/").pop()?.split("?")[0] || "" : "";
+        const key = `${normTitle}|${normRabbi}|${attBase}|${l.audio_url || ""}|${l.video_url || ""}`;
         if (seen.has(key)) return false;
         seen.add(key);
         return true;

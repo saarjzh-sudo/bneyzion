@@ -28,10 +28,16 @@ export function useSeriesChildren(parentId: string | undefined | null) {
     queryKey: ["series-children", parentId],
     enabled: !!parentId,
     queryFn: async () => {
+      // R-SER1: order by sort_order first (for chapter/event series), then title.
+      // R-SER2: filter to content statuses only (no category containers).
+      // R-SER3: exclude teacher-tagged children from the public series page.
       const { data, error } = await supabase
         .from("series")
-        .select("id, title, description, image_url, lesson_count, status, rabbi_id, rabbis(name)")
+        .select("id, title, description, image_url, lesson_count, status, audience_tags, rabbi_id, rabbis(name)")
         .eq("parent_id", parentId!)
+        .in("status", ["active", "published", "category"])
+        .not("audience_tags", "cs", '{"teachers"}')
+        .order("sort_order", { ascending: true, nullsFirst: false })
         .order("title");
       if (error) throw error;
       return data;

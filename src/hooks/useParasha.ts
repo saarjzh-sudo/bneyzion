@@ -46,6 +46,31 @@ function getParashaSearchTerms(parasha: string): string[] {
   return terms;
 }
 
+/**
+ * R-PAR1 fix: bare ilike '%<name>%' over-matches short names (נח/בא/צו/ראה…).
+ * After the DB fetch we apply a strict JS-side word-boundary check.
+ * A lesson title passes if it contains the parasha name preceded by a word
+ * separator (start-of-string, space, "|", "–", "-", "פרשת") and followed by
+ * the same, or by end-of-string.
+ *
+ * Examples that MUST pass:  "פרשת נח", "נח - דף עבודה", "שיעור בנח |א"
+ * Examples that MUST fail:  "מנחם", "מנחה", "ברכה" (contains "כה" not "כי")
+ */
+function titleMatchesParasha(title: string, terms: string[]): boolean {
+  const separators = "(?:^|[\\s|–\\-/״\'׳`\"(])";
+  const afterSeps  = "(?:[\\s|–\\-/״\'׳`\"()]|$)";
+  for (const term of terms) {
+    // Escape regex special chars in the term (Hebrew letters are safe but |, . etc. are not)
+    const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(`${separators}${escaped}${afterSeps}`, "");
+    if (re.test(title)) return true;
+    // Also accept "פרשת <term>" as a prefix (common DB pattern)
+    if (title.includes(`פרשת ${term}`)) return true;
+    if (title.includes(`פרשה ${term}`)) return true;
+  }
+  return false;
+}
+
 export function useParasha() {
   const parasha = getCurrentParasha();
   const seriesTitle = getParashaSeriesTitle(parasha);
@@ -76,9 +101,15 @@ export function useParasha() {
 
       if (!lessons || lessons.length === 0) return [];
 
+      // R-PAR1: apply strict word-boundary filter client-side to reject false matches
+      // from short parasha names (נח/בא/צו/ראה/שלח/בלק/עקב/אמור).
+      const wordBoundaryFiltered = lessons.filter((l) =>
+        titleMatchesParasha(l.title, parashaSearchTerms)
+      );
+
       // Dedup by normalized title + rabbi (the migration cross-listed/duplicated lessons)
       const seen = new Set<string>();
-      const deduped = lessons.filter((l) => {
+      const deduped = wordBoundaryFiltered.filter((l) => {
         const key = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ") + "::" + (l.rabbi_id || "");
         if (seen.has(key)) return false;
         seen.add(key);

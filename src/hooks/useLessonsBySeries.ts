@@ -25,12 +25,16 @@ export function useLessonsBySeries(seriesId: string | undefined) {
         .order("title", { ascending: true });
       if (error) throw error;
       // Collapse duplicate rows within a series (the migration cross-listed/duplicated the
-      // same lesson). Dedup by normalized title + rabbi, keeping the first (richest content
-      // wins on tie via the sort). Different rabbis on the same title stay separate.
+      // same lesson). Dedup by enriched key: norm(title)|norm(rabbi)|basename(attachment)|
+      // audio_url|video_url — absorbs COPY-duplicates while keeping genuinely distinct
+      // same-title same-rabbi lessons that differ by media (multi-part shiurim recorded
+      // separately). Different rabbis on the same title always stay separate.
       const seen = new Set<string>();
       const deduped = (data || []).filter((l: any) => {
-        const key = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ")
-          + "::" + (l.rabbi_id || "");
+        const normTitle = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        const normRabbi = ((l.rabbis as any)?.name || l.rabbi_id || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
+        const attBase = l.attachment_url ? l.attachment_url.split("/").pop()?.split("?")[0] || "" : "";
+        const key = `${normTitle}|${normRabbi}|${attBase}|${l.audio_url || ""}|${l.video_url || ""}`;
         if (seen.has(key)) return false;
         seen.add(key);
         return true;

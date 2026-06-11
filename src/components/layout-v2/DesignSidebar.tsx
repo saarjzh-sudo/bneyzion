@@ -195,7 +195,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               {[
                 { to: "/", label: "ראשי", icon: Home },
                 { to: "/parasha", label: "פרשת השבוע", icon: BookOpen },
-                { to: "/how-to-learn-tanach", label: "איך לומדים תנ״ך", icon: Sparkles },
+                // R-SB4: /how-to-learn-tanach had no route → now points to the real category node
+                { to: "/category/62590949-6187-4e17-b84d-65a518467521", label: "איך לומדים תנ״ך", icon: Sparkles },
               ].map(({ to, label, icon: Icon }) => (
                 <Link
                   key={to}
