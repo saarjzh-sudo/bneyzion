@@ -57,13 +57,15 @@ export function useTopicsSidebar() {
 
       // Step 3: fetch lesson counts — filtered to published + non-teacher lessons so the
       // number in the sidebar matches what TopicPage actually renders (R-TOP3 / R-SB3 fix).
+      // limit(10000) to beat the PostgREST 1000-row default cap on large topic sets.
       const childIds = children.map((c) => c.id);
       const { data: counts, error: countError } = await supabase
         .from("lesson_topics")
         .select("topic_id, lessons!inner(status, audience_tags)")
         .in("topic_id", childIds)
         .eq("lessons.status", "published")
-        .not("lessons.audience_tags", "cs", "{teachers}");
+        .not("lessons.audience_tags", "cs", "{teachers}")
+        .limit(10000);
 
       if (countError) throw countError;
 

@@ -12,7 +12,7 @@ export function useFavorites() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("user_favorites")
-        .select("id, created_at, lesson_id, lessons(id, title, duration, audio_url, video_url, rabbis(id, name))")
+        .select("id, created_at, lesson_id, lessons(id, title, duration, audio_url, video_url, rabbis!lessons_rabbi_id_fkey(id, name))")
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false });
       if (error) throw error;

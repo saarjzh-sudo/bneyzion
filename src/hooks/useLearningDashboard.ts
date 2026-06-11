@@ -14,7 +14,7 @@ export function useLearningDashboard() {
     queryFn: async () => {
       const { data } = await supabase
         .from("user_history")
-        .select("lesson_id, watched_at, progress_seconds, completed, lessons(id, title, duration, audio_url, video_url, thumbnail_url, source_type, series_id, rabbis(id, name), series(id, title))")
+        .select("lesson_id, watched_at, progress_seconds, completed, lessons(id, title, duration, audio_url, video_url, thumbnail_url, source_type, series_id, rabbis!lessons_rabbi_id_fkey(id, name), series(id, title))")
         .eq("user_id", user!.id)
         .eq("completed", false)
         .order("watched_at", { ascending: false })

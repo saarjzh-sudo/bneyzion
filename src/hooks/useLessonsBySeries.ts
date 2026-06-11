@@ -19,7 +19,7 @@ export function useLessonsBySeries(seriesId: string | undefined) {
       const fetchPage = async (from: number, to: number) => {
         const { data, error } = await supabase
           .from("lessons")
-          .select("*, rabbis(name)")
+          .select("*, rabbis!lessons_rabbi_id_fkey(name)")
           .eq("series_id", seriesId)
           .eq("status", "published")
           .order("sort_order", { ascending: true, nullsFirst: false })

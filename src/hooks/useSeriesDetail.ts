@@ -8,7 +8,7 @@ export function useSeriesDetail(id: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("series")
-        .select("*, rabbis(id, name, image_url)")
+        .select("*, rabbis!series_rabbi_id_fkey(id, name, image_url)")
         .eq("id", id!)
         .single();
       if (error) throw error;
@@ -24,7 +24,7 @@ export function useSeriesLessonsList(seriesId: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("id, title, duration, published_at, thumbnail_url, video_url, audio_url, rabbi_id, rabbis(name)")
+        .select("id, title, duration, published_at, thumbnail_url, video_url, audio_url, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)")
         .eq("series_id", seriesId!)
         .eq("status", "published")
         .order("published_at", { ascending: true });

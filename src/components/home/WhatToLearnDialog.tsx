@@ -52,7 +52,7 @@ const WhatToLearnDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
     queryFn: async () => {
       let query = supabase
         .from("lessons")
-        .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, description, rabbis(id, name, image_url), series(id, title)")
+        .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, description, rabbis!lessons_rabbi_id_fkey(id, name, image_url), series(id, title)")
         .eq("status", "published")
         .order("views_count", { ascending: false })
         .limit(4);
@@ -61,11 +61,11 @@ const WhatToLearnDialog = ({ open, onOpenChange }: { open: boolean; onOpenChange
       if (selectedTopic) query = query.or(`title.ilike.%${selectedTopic}%,description.ilike.%${selectedTopic}%`);
 
       const { data } = await query;
-      
+
       if (!data || data.length < 2) {
         const fallbackQuery = supabase
           .from("lessons")
-          .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, description, rabbis(id, name, image_url), series(id, title)")
+          .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, description, rabbis!lessons_rabbi_id_fkey(id, name, image_url), series(id, title)")
           .eq("status", "published")
           .order("views_count", { ascending: false })
           .limit(4);

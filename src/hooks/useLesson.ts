@@ -8,7 +8,7 @@ export function useLesson(id: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("*, rabbis(id, name, image_url, title), series(id, title), audience_tags")
+        .select("*, rabbis!lessons_rabbi_id_fkey(id, name, image_url, title), series(id, title), audience_tags")
         .eq("id", id!)
         .eq("status", "published")
         .maybeSingle();
@@ -26,7 +26,7 @@ export function useSeriesLessons(seriesId: string | undefined | null, excludeId?
       // §5 R-LES2: order §0.1 (sort_order NULLS LAST, bible_chapter NULLS LAST, title) instead of published_at
       let query = supabase
         .from("lessons")
-        .select("id, title, duration, thumbnail_url, published_at, audience_tags, rabbis(name)")
+        .select("id, title, duration, thumbnail_url, published_at, audience_tags, rabbis!lessons_rabbi_id_fkey(name)")
         .eq("series_id", seriesId!)
         .eq("status", "published")
         .order("sort_order", { ascending: true, nullsFirst: false })

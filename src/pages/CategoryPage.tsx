@@ -104,7 +104,7 @@ function useSeriesLessons(seriesId: string) {
       const { data, error } = await supabase
         .from("lessons")
         .select(
-          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, rabbis(name)"
+          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)"
         )
         .eq("series_id", seriesId)
         .eq("status", "published")
@@ -137,7 +137,7 @@ function useDirectLessons(nodeId: string | undefined) {
       const { data, error } = await supabase
         .from("lessons")
         .select(
-          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, rabbi_id, rabbis(name)"
+          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)"
         )
         .eq("series_id", nodeId!)
         .eq("status", "published")

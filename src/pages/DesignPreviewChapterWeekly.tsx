@@ -31,7 +31,7 @@ function useChapterLessons() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("id,title,bible_book,bible_chapter,duration,source_type,rabbis(name),series_id")
+        .select("id,title,bible_book,bible_chapter,duration,source_type,rabbis!lessons_rabbi_id_fkey(name),series_id")
         .not("bible_book", "is", null)
         .eq("status", "published")
         .order("bible_book")

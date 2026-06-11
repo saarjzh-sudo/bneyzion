@@ -62,7 +62,7 @@ const ParashaHolidaySection = () => {
       for (const term of holiday.seriesSearchTerms) {
         const { data } = await supabase
           .from("series")
-          .select("id, title, lesson_count, rabbi_id, rabbis(name)")
+          .select("id, title, lesson_count, rabbi_id, rabbis!series_rabbi_id_fkey(name)")
           .eq("status", "active")
           .gt("lesson_count", 0)
           .ilike("title", `%${term}%`)
@@ -76,7 +76,7 @@ const ParashaHolidaySection = () => {
               if (!rabbiName) {
                 const { data: lessonRabbi } = await supabase
                   .from("lessons")
-                  .select("rabbis(name)")
+                  .select("rabbis!lessons_rabbi_id_fkey(name)")
                   .eq("series_id", s.id)
                   .not("rabbi_id", "is", null)
                   .limit(1);

@@ -14,7 +14,7 @@ export default function Analytics() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("id, title, views_count, rabbis(name)")
+        .select("id, title, views_count, rabbis!lessons_rabbi_id_fkey(name)")
         .order("views_count", { ascending: false })
         .limit(10);
       if (error) throw error;

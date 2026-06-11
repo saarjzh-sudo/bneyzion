@@ -41,7 +41,7 @@ export function useLastLesson() {
       if (user) {
         const { data, error } = await supabase
           .from("user_history")
-          .select("lesson_id, progress_seconds, watched_at, lessons(title, duration, rabbis(name, title))")
+          .select("lesson_id, progress_seconds, watched_at, lessons(title, duration, rabbis!lessons_rabbi_id_fkey(name, title))")
           .eq("user_id", user.id)
           .order("watched_at", { ascending: false })
           .limit(1)

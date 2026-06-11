@@ -37,7 +37,7 @@ const Profile = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from("user_favorites")
-        .select("lesson_id, created_at, lessons(id, title, rabbi_id, source_type, rabbis(name))")
+        .select("lesson_id, created_at, lessons(id, title, rabbi_id, source_type, rabbis!lessons_rabbi_id_fkey(name))")
         .eq("user_id", user!.id)
         .order("created_at", { ascending: false })
         .limit(50);
@@ -52,7 +52,7 @@ const Profile = () => {
     queryFn: async () => {
       const { data } = await supabase
         .from("user_history")
-        .select("lesson_id, watched_at, completed, lessons(id, title, rabbi_id, source_type, rabbis(name))")
+        .select("lesson_id, watched_at, completed, lessons(id, title, rabbi_id, source_type, rabbis!lessons_rabbi_id_fkey(name))")
         .eq("user_id", user!.id)
         .order("watched_at", { ascending: false })
         .limit(50);

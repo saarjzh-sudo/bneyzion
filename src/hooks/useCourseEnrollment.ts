@@ -8,7 +8,7 @@ export function useCommunityCoursesPublic() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("community_courses")
-        .select("*, rabbis(id, name, image_url)")
+        .select("*, rabbis!community_courses_rabbi_id_fkey(id, name, image_url)")
         .eq("status", "active")
         .order("sort_order");
       if (error) throw error;
@@ -24,7 +24,7 @@ export function useCourseDetail(courseId: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("community_courses")
-        .select("*, rabbis(id, name, image_url, title)")
+        .select("*, rabbis!community_courses_rabbi_id_fkey(id, name, image_url, title)")
         .eq("id", courseId!)
         .single();
       if (error) throw error;
@@ -74,7 +74,7 @@ export function useMyEnrollments() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("course_enrollments" as any)
-        .select("*, community_courses(id, title, image_url, course_type, total_lessons, rabbis(name))")
+        .select("*, community_courses(id, title, image_url, course_type, total_lessons, rabbis!community_courses_rabbi_id_fkey(name))")
         .eq("user_id", user!.id)
         .order("enrolled_at", { ascending: false });
       if (error) throw error;

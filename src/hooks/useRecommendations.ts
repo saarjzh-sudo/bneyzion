@@ -53,7 +53,7 @@ export function useRecommendations(limit = 6) {
         // No signals — return popular lessons
         const { data } = await supabase
           .from("lessons")
-          .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, views_count, rabbis(id, name, image_url), series(id, title)")
+          .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, views_count, rabbis!lessons_rabbi_id_fkey(id, name, image_url), series(id, title)")
           .eq("status", "published")
           .order("views_count", { ascending: false })
           .limit(limit);
@@ -68,7 +68,7 @@ export function useRecommendations(limit = 6) {
 
       const { data: candidates } = await supabase
         .from("lessons")
-        .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, views_count, rabbi_id, series_id, bible_book, rabbis(id, name, image_url), series(id, title)")
+        .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, views_count, rabbi_id, series_id, bible_book, rabbis!lessons_rabbi_id_fkey(id, name, image_url), series(id, title)")
         .eq("status", "published")
         .or(filters.join(","))
         .limit(100);

@@ -48,7 +48,7 @@ export function useBibleChapterLessons(book: string | undefined, chapter: number
 
       const { data, error } = await supabase
         .from("lessons")
-        .select("id, title, description, duration, bible_verse, rabbi_id, series_id, audio_url, video_url, source_type, rabbis(id, name, title)")
+        .select("id, title, description, duration, bible_verse, rabbi_id, series_id, audio_url, video_url, source_type, rabbis!lessons_rabbi_id_fkey(id, name, title)")
         .eq("bible_book", book)
         .eq("bible_chapter", chapter)
         .eq("status", "published")
@@ -76,7 +76,7 @@ export function useBibleBookSeries(bookCategoryId: string | undefined) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { data, error } = await (supabase as any)
         .from("series")
-        .select("id, title, lesson_count, sort_order, image_url, status, rabbis(name)")
+        .select("id, title, lesson_count, sort_order, image_url, status, rabbis!series_rabbi_id_fkey(name)")
         .eq("parent_id", bookCategoryId)
         .in("status", ["active", "published"])
         .not("audience_tags", "cs", "{teachers}")

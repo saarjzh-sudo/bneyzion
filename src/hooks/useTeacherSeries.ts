@@ -24,7 +24,7 @@ export function useTeacherSeries() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("series")
-        .select("id, title, lesson_count, parent_id, status, audience_tags, rabbis(name)")
+        .select("id, title, lesson_count, parent_id, status, audience_tags, rabbis!series_rabbi_id_fkey(name)")
         .contains("audience_tags", ["teachers"])
         .in("status", ["active", "published"])
         .order("lesson_count", { ascending: false });

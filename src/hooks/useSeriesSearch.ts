@@ -33,13 +33,13 @@ function useSeriesSearchQuery(query: string) {
       const [seriesRes, lessonsRes] = await Promise.all([
         supabase
           .from("series")
-          .select("id, title, description, image_url, lesson_count, status, rabbis(name), parent:series!series_parent_id_fkey(title)")
+          .select("id, title, description, image_url, lesson_count, status, rabbis!series_rabbi_id_fkey(name), parent:series!series_parent_id_fkey(title)")
           .ilike("title", pattern)
           .not("audience_tags", "cs", '{"teachers"}')
           .limit(12),
         supabase
           .from("lessons")
-          .select("id, title, duration, video_url, audio_url, series:series!lessons_series_id_fkey(id, title), rabbis(name)")
+          .select("id, title, duration, video_url, audio_url, series:series!lessons_series_id_fkey(id, title), rabbis!lessons_rabbi_id_fkey(name)")
           .eq("status", "published")
           .ilike("title", pattern)
           .not("audience_tags", "cs", '{"teachers"}')

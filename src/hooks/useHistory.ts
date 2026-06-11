@@ -10,7 +10,7 @@ export function useHistory() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("user_history")
-        .select("id, watched_at, completed, progress_seconds, lesson_id, lessons(id, title, duration, audio_url, video_url, rabbis(id, name))")
+        .select("id, watched_at, completed, progress_seconds, lesson_id, lessons(id, title, duration, audio_url, video_url, rabbis!lessons_rabbi_id_fkey(id, name))")
         .eq("user_id", user!.id)
         .order("watched_at", { ascending: false })
         .limit(100);

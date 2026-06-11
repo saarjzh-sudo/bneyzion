@@ -102,14 +102,15 @@ function useTopicLessons(topicId: string | undefined) {
              id, title, duration, published_at,
              thumbnail_url, video_url, audio_url, attachment_url,
              series_id, rabbi_id,
-             rabbis(name),
+             rabbis!lessons_rabbi_id_fkey(name),
              series(title, image_url)
            )`
         )
         .eq("topic_id", topicId!)
         .eq("lessons.status", "published")
         // §0.3: dual-audience filter — exclude teacher-only content
-        .or("lessons.audience_tags.cs.{general},lessons.audience_tags.not.cs.{teachers}")
+        // referencedTable required for PostgREST .or() on embedded table (fixes PGRST100)
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}", { referencedTable: "lessons" })
         .limit(500);
 
       if (error) throw error;

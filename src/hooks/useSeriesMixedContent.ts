@@ -69,7 +69,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         const chunk = allSeriesIds.slice(i, i + chunkSize);
         const { data: seriesData } = await supabase
           .from("series")
-          .select("id, lesson_count, rabbi_id, rabbis(name), sort_order")
+          .select("id, lesson_count, rabbi_id, rabbis!series_rabbi_id_fkey(name), sort_order")
           .in("id", chunk);
         for (const s of seriesData ?? []) {
           lessonCountMap.set(s.id, s.lesson_count);
@@ -104,7 +104,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         const chunk = leafSeriesIds.slice(i, i + chunkSize);
         const { data: seriesData } = await supabase
           .from("series")
-          .select("id, title, lesson_count, rabbis(name)")
+          .select("id, title, lesson_count, rabbis!series_rabbi_id_fkey(name)")
           .in("id", chunk);
         for (const s of seriesData ?? []) {
           leafSeriesInfo.set(s.id, {
@@ -122,7 +122,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         const chunk = nonLeafSeriesIds.slice(i, i + chunkSize);
         const { data: lessons, error } = await supabase
           .from("lessons")
-          .select("id, title, description, duration, video_url, audio_url, rabbi_id, source_type, series_id, rabbis(name)")
+          .select("id, title, description, duration, video_url, audio_url, rabbi_id, source_type, series_id, rabbis!lessons_rabbi_id_fkey(name)")
           .in("series_id", chunk)
           .eq("status", "published")
           .order("published_at", { ascending: true })
@@ -163,7 +163,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         if (matchingTopic) {
           const { data: taggedLessons } = await supabase
             .from("lesson_topics")
-            .select("lesson_id, lessons!inner(id, title, description, duration, video_url, audio_url, source_type, status, rabbis(name))")
+            .select("lesson_id, lessons!inner(id, title, description, duration, video_url, audio_url, source_type, status, rabbis!lessons_rabbi_id_fkey(name))")
             .eq("topic_id", matchingTopic.id)
             .eq("lessons.status", "published")
             .limit(500);

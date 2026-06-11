@@ -39,7 +39,7 @@ export default function ContentHealth() {
       while (hasMore) {
         const { data, error } = await supabase
           .from("lessons")
-          .select("id, title, rabbi_id, series_id, duration, video_url, audio_url, content, attachment_url, published_at, rabbis(name), series(title)")
+          .select("id, title, rabbi_id, series_id, duration, video_url, audio_url, content, attachment_url, published_at, rabbis!lessons_rabbi_id_fkey(name), series(title)")
           .eq("status", "published")
           .or("video_url.is.null,audio_url.is.null,content.is.null,attachment_url.is.null")
           .order("title", { ascending: true })

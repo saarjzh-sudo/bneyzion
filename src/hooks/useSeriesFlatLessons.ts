@@ -58,7 +58,7 @@ export function useSeriesFlatLessons(seriesId: string | undefined) {
         const chunk = allSeriesIds.slice(i, i + chunkSize);
         const { data: lessons, error } = await supabase
           .from("lessons")
-          .select("id, title, duration, video_url, audio_url, rabbi_id, series_id, rabbis(name)")
+          .select("id, title, duration, video_url, audio_url, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)")
           .in("series_id", chunk)
           .eq("status", "published")
           .order("published_at", { ascending: true })

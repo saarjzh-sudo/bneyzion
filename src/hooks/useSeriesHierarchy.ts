@@ -33,7 +33,7 @@ export function useSeriesChildren(parentId: string | undefined | null) {
       // R-SER3: exclude teacher-tagged children from the public series page.
       const { data, error } = await supabase
         .from("series")
-        .select("id, title, description, image_url, lesson_count, status, audience_tags, rabbi_id, rabbis(name)")
+        .select("id, title, description, image_url, lesson_count, status, audience_tags, rabbi_id, rabbis!series_rabbi_id_fkey(name)")
         .eq("parent_id", parentId!)
         .in("status", ["active", "published", "category"])
         .not("audience_tags", "cs", '{"teachers"}')
@@ -51,7 +51,7 @@ export function useRootSeries() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("series")
-        .select("id, title, description, image_url, lesson_count, status, rabbi_id, rabbis(name)")
+        .select("id, title, description, image_url, lesson_count, status, rabbi_id, rabbis!series_rabbi_id_fkey(name)")
         .is("parent_id", null)
         .order("title");
       if (error) throw error;
@@ -67,7 +67,7 @@ export function useSeriesLinkedChildren(seriesId: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("series_links" as any)
-        .select("linked_series_id, link_type, sort_order, series:linked_series_id(id, title, description, image_url, lesson_count, status, rabbi_id, rabbis(name))")
+        .select("linked_series_id, link_type, sort_order, series:linked_series_id(id, title, description, image_url, lesson_count, status, rabbi_id, rabbis!series_rabbi_id_fkey(name))")
         .eq("source_series_id", seriesId!)
         .eq("link_type", "includes")
         .order("sort_order");

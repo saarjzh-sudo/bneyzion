@@ -550,7 +550,7 @@ function DesignParashaHolidaySection() {
       const out: Array<{ id: string; title: string; lesson_count: number; rabbi_name: string | null }> = [];
       for (const term of holiday.terms) {
         const { data } = await supabase
-          .from("series").select("id, title, lesson_count, rabbis(name)")
+          .from("series").select("id, title, lesson_count, rabbis!series_rabbi_id_fkey(name)")
           .eq("status", "active").gt("lesson_count", 0)
           .ilike("title", `%${term}%`).limit(5);
         for (const s of data ?? []) {
@@ -580,7 +580,7 @@ function DesignParashaHolidaySection() {
       if (!firstHolidaySeries) return null;
       const { data } = await supabase
         .from("lessons")
-        .select("id, title, content, rabbis(name)")
+        .select("id, title, content, rabbis!lessons_rabbi_id_fkey(name)")
         .eq("series_id", firstHolidaySeries.id)
         .eq("status", "published")
         .order("order_index")

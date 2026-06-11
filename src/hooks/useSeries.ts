@@ -18,7 +18,7 @@ export function useSeries() {
   return useQuery({
     queryKey: ["series"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("series").select("*, rabbis(name)").order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("series").select("*, rabbis!series_rabbi_id_fkey(name)").order("created_at", { ascending: false });
       if (error) throw error;
       return data;
     },

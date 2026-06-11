@@ -116,7 +116,7 @@ export function useGlobalSearch(query: string) {
           .limit(6),
         supabase
           .from("series")
-          .select("id, title, lesson_count, rabbis(name)")
+          .select("id, title, lesson_count, rabbis!series_rabbi_id_fkey(name)")
           .or(patterns.map(p => `title.ilike.${p}`).join(","))
           .in("status", ["active", "published"]) // R-SRC2: include 'published' series
           .not("audience_tags", "cs", '{"teachers"}')
@@ -125,7 +125,7 @@ export function useGlobalSearch(query: string) {
         // §10 R-SRC3: order lessons by sort_order NULLS LAST then title (was unordered cap 8 → effectively random)
         supabase
           .from("lessons")
-          .select("id, title, rabbis(name), series(title)")
+          .select("id, title, rabbis!lessons_rabbi_id_fkey(name), series(title)")
           .or(patterns.map(p => `title.ilike.${p}`).join(","))
           .eq("status", "published")
           .not("audience_tags", "cs", '{"teachers"}')

@@ -16,7 +16,7 @@ export function useTopSeries(limit = 50) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("series")
-        .select("*, rabbis(name)")
+        .select("*, rabbis!series_rabbi_id_fkey(name)")
         .in("status", ["active", "published"])   // R-LIB1: include 'published' series
         .gt("lesson_count", 0)
         .not("audience_tags", "cs", '{"teachers"}')
