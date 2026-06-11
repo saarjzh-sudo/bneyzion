@@ -101,13 +101,39 @@ export function getParashaVariants(parashaName: string): string[] {
   return CANONICAL_PARSHIOT[parashaName] || [parashaName];
 }
 
-/** Check if a lesson title contains the given parasha (any variant) */
+/** Check if a lesson title contains the given parasha (any variant) — R-TCH6 fix */
 export function titleMatchesParasha(title: string, parashaName: string): boolean {
   const variants = getParashaVariants(parashaName);
-  const lower = title.toLowerCase();
+  // §11 R-TCH6: extend matching to cover:
+  //   - "פרשת-<name>" (hyphen prefix form in DB)
+  //   - "<name>-<suffix>" (e.g. "בא-דף עבודה")
+  //   - start/end of string
+  const separators = /[\s|–\-/״'"׳`"()[\]]/;
   return variants.some((v) => {
-    const vl = v.toLowerCase();
-    return lower.includes(`פרשת ${vl}`) || lower.includes(`פרשה ${vl}`) || lower.includes(` ${vl} `) || lower.includes(` ${vl}$`) || lower === `פרשת ${vl}`;
+    const vl = v;
+    // Prefix forms
+    if (title.includes(`פרשת ${vl}`) || title.includes(`פרשת-${vl}`)) return true;
+    if (title.includes(`פרשה ${vl}`) || title.includes(`פרשה-${vl}`)) return true;
+    // Starts with (e.g. "נח - דף עבודה")
+    if (title === vl || title.startsWith(`${vl} `) || title.startsWith(`${vl}-`)) return true;
+    // Ends with
+    if (title.endsWith(` ${vl}`) || title.endsWith(`-${vl}`)) return true;
+    // Word-boundary: surrounded by separators
+    const idx = title.indexOf(` ${vl} `);
+    if (idx >= 0) return true;
+    // Additional: "/<name>" or "<name>|"
+    if (title.includes(` ${vl}|`) || title.includes(`|${vl} `) ||
+        title.includes(`/${vl}`) || title.includes(`${vl}/`)) return true;
+    // Check each separator boundary
+    const beforeIdx = title.indexOf(vl);
+    if (beforeIdx >= 0) {
+      const before = beforeIdx === 0 ? null : title[beforeIdx - 1];
+      const after = beforeIdx + vl.length >= title.length ? null : title[beforeIdx + vl.length];
+      const validBefore = before === null || separators.test(before);
+      const validAfter = after === null || separators.test(after);
+      if (validBefore && validAfter) return true;
+    }
+    return false;
   });
 }
 

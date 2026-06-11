@@ -99,6 +99,8 @@ function useSeriesLessons(seriesId: string) {
     queryFn: async () => {
       // R-CAT3 fix: align order with /series/:id (bible_chapter nullsLast, then title).
       // R-CAT4 fix: add dedup to avoid count mismatch between CategoryPage and SeriesPage.
+      // §0.1 order: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC
+      // §3: raise limit 200→1000 (כתובים root needs 280+, תהילים needs 151 series)
       const { data, error } = await supabase
         .from("lessons")
         .select(
@@ -106,19 +108,16 @@ function useSeriesLessons(seriesId: string) {
         )
         .eq("series_id", seriesId)
         .eq("status", "published")
+        .order("sort_order", { ascending: true, nullsFirst: false })
         .order("bible_chapter", { ascending: true, nullsFirst: false })
         .order("title", { ascending: true })
-        .limit(200);
+        .limit(1000);
       if (error) throw error;
-      // Dedup by enriched key: norm(title)|norm(rabbi)|basename(attachment)|audio|video
+      // §0.2 dedup by physical id only
       const seen = new Set<string>();
       return (data ?? []).filter((l: any) => {
-        const normTitle = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
-        const normRabbi = (l.rabbis?.name || l.rabbi_id || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
-        const attBase = l.attachment_url ? l.attachment_url.split("/").pop()?.split("?")[0] || "" : "";
-        const key = `${normTitle}|${normRabbi}|${attBase}|${l.audio_url || ""}|${l.video_url || ""}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
+        if (seen.has(l.id)) return false;
+        seen.add(l.id);
         return true;
       });
     },
@@ -133,6 +132,8 @@ function useDirectLessons(nodeId: string | undefined) {
     enabled: !!nodeId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
+      // §0.1 order: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC
+      // §3: lift cap from 50 → 1000 (book nodes receive שו"ת and direct lessons beyond 50)
       const { data, error } = await supabase
         .from("lessons")
         .select(
@@ -140,8 +141,10 @@ function useDirectLessons(nodeId: string | undefined) {
         )
         .eq("series_id", nodeId!)
         .eq("status", "published")
-        .order("published_at", { ascending: false })
-        .limit(50);
+        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("bible_chapter", { ascending: true, nullsFirst: false })
+        .order("title", { ascending: true })
+        .limit(1000);
       if (error) throw error;
       return data ?? [];
     },

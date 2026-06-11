@@ -191,13 +191,17 @@ export function useParasha() {
       const results: ParashaArticleSeries[] = [];
       
       for (const articleSeries of PARASHA_ARTICLE_SERIES) {
-        // Find the series by exact title
-        const { data: series } = await supabase
+        // Find the series by exact title — §9 R-PAR3: accept active OR published
+        // §9 R14: use .limit(2) + pick instead of .maybeSingle() to avoid silent error on dupe titles
+        const { data: seriesMatches } = await supabase
           .from("series")
-          .select("id")
+          .select("id, status")
           .eq("title", articleSeries.seriesTitle)
-          .eq("status", "active")
-          .maybeSingle();
+          .in("status", ["active", "published"])
+          .limit(2);
+        const series = seriesMatches && seriesMatches.length > 0
+          ? (seriesMatches.find((s) => s.status === "active") ?? seriesMatches[0])
+          : null;
 
         let lessonId: string | null = null;
         let lessonTitle: string | null = null;
@@ -256,16 +260,24 @@ export function useParasha() {
   });
 
   // Get the series ID for the current parasha (for the "כל תכני הפרשה" CTA)
+  // §9 R14: maybeSingle() → .limit(2) + deterministic pick to avoid silent error on duplicate titles.
   const parashaSeriesIdQuery = useQuery({
     queryKey: ["parasha-series-id", seriesTitle],
     queryFn: async () => {
       if (!seriesTitle) return null;
-      const { data: series } = await supabase
+      const { data: seriesList } = await supabase
         .from("series")
-        .select("id")
+        .select("id, status")
         .eq("title", seriesTitle)
-        .maybeSingle();
-      return series?.id || null;
+        .in("status", ["active", "published"])
+        .limit(2);
+      if (!seriesList || seriesList.length === 0) return null;
+      if (seriesList.length > 1) {
+        // Pick active over published; if tie pick first
+        const active = seriesList.find((s) => s.status === "active");
+        if (active) return active.id;
+      }
+      return seriesList[0].id;
     },
   });
 

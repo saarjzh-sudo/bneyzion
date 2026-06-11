@@ -82,11 +82,12 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const { data: rabbisRaw = [] } = usePublicRabbis();
   const { data: thematicTopics = [], isLoading: topicsLoading } = useTopicsSidebar();
 
+  // §2.7: full rabbi list — old sidebar showed ~153 rabbis; cap-30 was a known regression (R-SB2).
+  // Tier-pinning removed per §2.7 (tier pins stay on /rabbis cards if yoav wants them, not here).
   const topRabbis = useMemo(() => {
-    const list = (rabbisRaw as { id: string; slug?: string; name?: string; lesson_count?: number }[])
+    return (rabbisRaw as { id: string; slug?: string; name?: string; lesson_count?: number }[])
       .filter((r) => r.name)
       .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
-    return list.slice(0, 30);
   }, [rabbisRaw]);
 
   // ── Helper: toggle a key in a Set ──
@@ -194,6 +195,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             >
               {[
                 { to: "/", label: "ראשי", icon: Home },
+                // §2.2 tree CA1: "ניווט באתר לפי ספר ופרק" → /bible index page
+                { to: "/bible", label: "ניווט לפי ספר ופרק", icon: BookOpen },
                 { to: "/parasha", label: "פרשת השבוע", icon: BookOpen },
                 // R-SB4: /how-to-learn-tanach had no route → now points to the real category node
                 { to: "/category/62590949-6187-4e17-b84d-65a518467521", label: "איך לומדים תנ״ך", icon: Sparkles },

@@ -44,11 +44,14 @@ function useLessonFull(id: string) {
   return useQuery({
     queryKey: ["teacher-lesson-full", id],
     queryFn: async () => {
+      // §11 R-TCH4: add status='published' guard (was missing — drafts were renderable)
+      // No audience filter needed on the teachers lesson page (it's inside the teachers wing)
       const { data: lesson } = await supabase
         .from("lessons")
-        .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, additional_attachments, thumbnail_url, rabbi_id, series_id, bible_book, bible_chapter")
+        .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, additional_attachments, thumbnail_url, rabbi_id, series_id, bible_book, bible_chapter, audience_tags")
         .eq("id", id)
-        .single();
+        .eq("status", "published")
+        .maybeSingle();
       if (!lesson) return null;
 
       // Fetch rabbi name

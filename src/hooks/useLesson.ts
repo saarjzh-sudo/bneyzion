@@ -23,12 +23,15 @@ export function useSeriesLessons(seriesId: string | undefined | null, excludeId?
     queryKey: ["series-lessons", seriesId, excludeId],
     enabled: !!seriesId,
     queryFn: async () => {
+      // §5 R-LES2: order §0.1 (sort_order NULLS LAST, bible_chapter NULLS LAST, title) instead of published_at
       let query = supabase
         .from("lessons")
         .select("id, title, duration, thumbnail_url, published_at, audience_tags, rabbis(name)")
         .eq("series_id", seriesId!)
         .eq("status", "published")
-        .order("published_at", { ascending: true })
+        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("bible_chapter", { ascending: true, nullsFirst: false })
+        .order("title", { ascending: true })
         .limit(20);
       if (excludeId) query = query.neq("id", excludeId);
       const { data, error } = await query;

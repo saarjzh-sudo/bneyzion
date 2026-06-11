@@ -11,10 +11,30 @@ export interface Topic {
 }
 
 export function useTopics() {
+  // §7 R-LIB2: library strip must show only thematic topics (children of 'themes-root'),
+  // NOT structural topics (נביאים/תורה/כתובים under a different parent).
+  // Returning ALL topics was showing structural taxonomy in the /series library topics strip.
   return useQuery({
-    queryKey: ["topics"],
+    queryKey: ["topics-themes-only"],
     queryFn: async () => {
-      const { data, error } = await supabase.from("topics").select("*").order("sort_order").order("name");
+      // Find the themes-root parent first
+      const { data: parent } = await supabase
+        .from("topics")
+        .select("id")
+        .eq("slug", "themes-root")
+        .limit(1);
+      if (!parent || parent.length === 0) {
+        // Fallback: return all topics (safe degradation)
+        const { data, error } = await supabase.from("topics").select("*").order("sort_order").order("name");
+        if (error) throw error;
+        return data as Topic[];
+      }
+      const { data, error } = await supabase
+        .from("topics")
+        .select("*")
+        .eq("parent_id", parent[0].id)
+        .order("sort_order")
+        .order("name");
       if (error) throw error;
       return data as Topic[];
     },

@@ -92,10 +92,12 @@ function useTopicLessons(topicId: string | undefined) {
     enabled: !!topicId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
+      // §7: select sort_order from lesson_topics for curated ordering (replaces published_at desc)
+      // §5 R-TOP1: limit(500) on link rows — applied after filter (largest topic 246 items)
       const { data, error } = await supabase
         .from("lesson_topics")
         .select(
-          `lesson_id,
+          `lesson_id, sort_order,
            lessons!inner(
              id, title, duration, published_at,
              thumbnail_url, video_url, audio_url, attachment_url,
@@ -106,8 +108,8 @@ function useTopicLessons(topicId: string | undefined) {
         )
         .eq("topic_id", topicId!)
         .eq("lessons.status", "published")
-        // Public topic pages must never surface teacher-wing content (worksheets etc.).
-        .not("lessons.audience_tags", "cs", "{teachers}")
+        // §0.3: dual-audience filter — exclude teacher-only content
+        .or("lessons.audience_tags.cs.{general},lessons.audience_tags.not.cs.{teachers}")
         .limit(500);
 
       if (error) throw error;
@@ -117,28 +119,45 @@ function useTopicLessons(topicId: string | undefined) {
         .map((row: any) => row.lessons)
         .filter(Boolean) as (TopicLesson & { rabbi_id?: string | null })[];
 
-      // Dedup by enriched key: norm(title)|norm(rabbi)|basename(attachment)|audio_url|video_url
-      // Absorbs COPY-duplicates from migration while keeping genuinely distinct same-title
-      // lessons that differ by media (R-TOP dedup alignment with series page).
+      // §0.2 dedup by physical lesson id only (R-SER4 alignment).
+      // lesson_topics.sort_order is the curated order; same-title lessons are intentional.
       const seen = new Set<string>();
       const lessons = flat.filter((l) => {
-        const normTitle = (l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
-        const normRabbi = (l.rabbis?.name || (l as any).rabbi_id || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ");
-        const attBase = l.attachment_url ? l.attachment_url.split("/").pop()?.split("?")[0] || "" : "";
-        const key = `${normTitle}|${normRabbi}|${attBase}|${l.audio_url || ""}|${l.video_url || ""}`;
-        if (seen.has(key)) return false;
-        seen.add(key);
+        if (seen.has(l.id)) return false;
+        seen.add(l.id);
         return true;
       }) as TopicLesson[];
 
-      // Sort by published_at desc (newest first)
-      lessons.sort((a, b) => {
-        const ta = a.published_at ? new Date(a.published_at).getTime() : 0;
-        const tb = b.published_at ? new Date(b.published_at).getTime() : 0;
-        return tb - ta;
-      });
+      // §7: order by lesson_topics.sort_order (curated, matches old site order).
+      // PostgREST embeds the row including the sort_order from lesson_topics.
+      // The join returns lesson_topics rows; we need to propagate sort_order onto lessons.
+      // Since we flat-mapped rows.lessons, sort_order is on the parent row.
+      // Re-derive from the raw data with sort_order.
+      const lessonsWithOrder = (data || []).map((row: any) => ({
+        ...(row.lessons as TopicLesson),
+        _sortOrder: (row as any).sort_order as number | null,
+      }));
+      // Dedup by id (keep first occurrence in sort_order order)
+      const seenForOrder = new Set<string>();
+      const orderedLessons = lessonsWithOrder
+        .filter((l) => {
+          if (seenForOrder.has((l as any).id)) return false;
+          seenForOrder.add((l as any).id);
+          return true;
+        })
+        .sort((a: any, b: any) => {
+          // §7: sort_order ASC NULLS LAST
+          const ao = a._sortOrder;
+          const bo = b._sortOrder;
+          if (ao == null && bo == null) return 0;
+          if (ao == null) return 1;
+          if (bo == null) return -1;
+          return ao - bo;
+        })
+        .map(({ _sortOrder: _s, ...rest }: any) => rest) as TopicLesson[];
 
-      return lessons;
+      // Use orderedLessons if sort_order data is available, otherwise deduped flat
+      return orderedLessons.length > 0 ? orderedLessons : lessons;
     },
   });
 }

@@ -95,9 +95,12 @@ function useSeriesLessons(seriesId: string) {
       const { data } = await supabase
         .from("lessons")
         .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, thumbnail_url, rabbi_id")
+        // §0.1 / §11: sort_order NULLS LAST, bible_chapter NULLS LAST, title
         .eq("series_id", seriesId)
         .eq("status", "published")
-        .order("title")
+        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("bible_chapter", { ascending: true, nullsFirst: false })
+        .order("title", { ascending: true })
         .limit(300);
       if (!data || data.length === 0) return [];
       const rabbiIds = [...new Set(data.filter((l) => l.rabbi_id).map((l) => l.rabbi_id!))];

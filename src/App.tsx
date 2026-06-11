@@ -63,6 +63,8 @@ const DailyVersePage = lazy(() => import("./pages/DailyVersePage"));
 const DailyVideoPage = lazy(() => import("./pages/DailyVideoPage"));
 const DevPages = lazy(() => import("./pages/DevPages"));
 const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
+// §12 / tree CA1: /bible index — "ניווט באתר לפי ספר ופרק" sidebar entry
+const BibleIndexPage = lazy(() => import("./pages/BibleIndexPage"));
 // 27.5.2026 — /pricing removed per Saar
 const CommunityPage = lazy(() => import("./pages/CommunityPage"));
 const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
@@ -341,6 +343,8 @@ const App = () => (
             )}
             {/* 27.5.2026 — /series restored as SeriesLibrary (new page), /pricing still removed */}
             <Route path="/series" element={<Suspense fallback={<LazyFallback />}><SeriesLibrary /></Suspense>} />
+            {/* §12 / tree CA1: /bible index — book+chapter navigation */}
+            <Route path="/bible" element={<Suspense fallback={<LazyFallback />}><BibleIndexPage /></Suspense>} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
             <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
             <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />

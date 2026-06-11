@@ -160,9 +160,14 @@ const LessonPage = () => {
     );
   }
 
-  // R-LES1: teacher-wing lessons must not render on the public /lessons/:id URL.
-  // Mirror the same guard that DesignPreviewSeriesPageV2 applies at the series level.
-  if (Array.isArray((lesson as any).audience_tags) && (lesson as any).audience_tags.includes("teachers")) {
+  // R-LES1: teachers-ONLY lessons must not render on the public /lessons/:id URL.
+  // §0.3: dual-tagged ['general','teachers'] lessons stay on public URL (they belong on both).
+  // Only pure teachers-only lessons (no 'general' tag) redirect to /teachers/lesson/:id.
+  const lessonAudienceTags = (lesson as any).audience_tags;
+  const lessonIsTeachersOnly = Array.isArray(lessonAudienceTags) &&
+    lessonAudienceTags.includes("teachers") &&
+    !lessonAudienceTags.includes("general");
+  if (lessonIsTeachersOnly) {
     return <Navigate to={`/teachers/lesson/${lesson.id}`} replace />;
   }
 

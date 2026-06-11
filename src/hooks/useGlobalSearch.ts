@@ -122,12 +122,15 @@ export function useGlobalSearch(query: string) {
           .not("audience_tags", "cs", '{"teachers"}')
           .order("lesson_count", { ascending: false })
           .limit(8),
+        // §10 R-SRC3: order lessons by sort_order NULLS LAST then title (was unordered cap 8 → effectively random)
         supabase
           .from("lessons")
           .select("id, title, rabbis(name), series(title)")
           .or(patterns.map(p => `title.ilike.${p}`).join(","))
           .eq("status", "published")
           .not("audience_tags", "cs", '{"teachers"}')
+          .order("sort_order", { ascending: true, nullsFirst: false })
+          .order("title", { ascending: true })
           .limit(8),
         // ספרים — חנות (products). מאגר ציבורי, ללא audience_tags של מורים.
         supabase

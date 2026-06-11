@@ -105,24 +105,36 @@ export function useBookCategoryId(bookName: string | undefined) {
         "a0472c9f-8212-44ff-8937-ace5fea4b4dc", // neviim
         "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41", // ketuvim
       ];
+      // §8 R-BIB1 / R14: .maybeSingle() throws silently on duplicate book nodes.
+      // Use .limit(2) + deterministic pick: prefer category > active > published.
+      const pickBest = (rows: { id: string; status: string }[]): string | null => {
+        if (!rows || rows.length === 0) return null;
+        const ORDER = ["category", "active", "published"];
+        const sorted = [...rows].sort((a, b) => ORDER.indexOf(a.status) - ORDER.indexOf(b.status));
+        if (rows.length > 1) {
+          console.warn("[useBookCategoryId] duplicate book nodes:", rows.map((r) => r.id));
+        }
+        return sorted[0].id;
+      };
       // Try exact match first
-      const { data: exact } = await supabase
+      const { data: exactList } = await supabase
         .from("series")
-        .select("id")
+        .select("id, status")
         .eq("title", bookName)
         .in("parent_id", ROOT_IDS)
         .in("status", ["active", "published", "category"])
-        .maybeSingle();
-      if (exact?.id) return exact.id;
+        .limit(2);
+      const exactPick = pickBest(exactList || []);
+      if (exactPick) return exactPick;
       // Fallback: ilike (handles minor spacing/punctuation variants)
-      const { data: fuzzy } = await supabase
+      const { data: fuzzyList } = await supabase
         .from("series")
-        .select("id")
+        .select("id, status")
         .ilike("title", bookName)
         .in("parent_id", ROOT_IDS)
         .in("status", ["active", "published", "category"])
-        .maybeSingle();
-      return fuzzy?.id ?? null;
+        .limit(2);
+      return pickBest(fuzzyList || []);
     },
     enabled: !!bookName,
     staleTime: 1000 * 60 * 10,

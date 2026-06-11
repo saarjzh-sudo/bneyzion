@@ -2217,10 +2217,14 @@ export default function DesignPreviewSeriesPageV2() {
     );
   }
 
-  // Teacher-wing content must never render on the public series page (Saar feedback 10.6.2026):
-  // worksheet series stayed reachable via /series/:id even after being hidden from the sidebar.
-  // Any series carrying the 'teachers' audience belongs in the teachers wing — redirect there.
-  if (Array.isArray((series as any).audience_tags) && (series as any).audience_tags.includes("teachers")) {
+  // Teacher-wing redirect: only for teachers-ONLY series (not dual-tagged general+teachers).
+  // §0.3: dual-tagged ['general','teachers'] series appear on both public and teachers wing.
+  // Pure teachers series (no 'general' tag) must redirect to /teachers/series/:id.
+  const audienceTags = (series as any).audience_tags;
+  const isTeachersOnly = Array.isArray(audienceTags) &&
+    audienceTags.includes("teachers") &&
+    !audienceTags.includes("general");
+  if (isTeachersOnly) {
     return <Navigate to={`/teachers/series/${series.id}`} replace />;
   }
 

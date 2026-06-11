@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { sortByBiblicalOrder } from "@/lib/biblicalOrder";
-import { sortByCustomOrder } from "@/lib/sidebarOrder";
+// sortByCustomOrder is intentionally unused since §2.1 — band sort_order from DB replaces it.
 import type { SidebarCategory, SidebarBook, SidebarChild, SeriesRow, LessonRow, RabbiInfo } from "@/hooks/useTeachersWing";
 
 // Re-export types
@@ -62,14 +62,16 @@ export function useContentSidebar() {
         .filter((b) => b.parent_id === ROOT_IDS.torah)
         .map((b) => b.id);
 
+      // §2.1: band-driven children — only sort_order 1..99 appear in sidebar.
+      // §0.3: dual-audience filter — exclude teacher-only, keep general+teachers dual-tagged.
       const { data: torahChildren } = await supabase
         .from("series")
         .select("id, title, parent_id, sort_order")
         .in("parent_id", torahBookIds)
         .in("status", ["active", "published"])
-        // Public tree must never show teacher-wing content (worksheets etc.).
-        // Exclude any series whose audience_tags contains 'teachers'.
-        .not("audience_tags", "cs", "{teachers}")
+        .gte("sort_order", 1)
+        .lte("sort_order", 99)
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -83,12 +85,15 @@ export function useContentSidebar() {
         .select("id, title, parent_id, sort_order")
         .in("parent_id", nkBookIds)
         .in("status", ["active", "published"])
-        // Public tree must never show teacher-wing content (worksheets etc.).
-        .not("audience_tags", "cs", "{teachers}")
+        .gte("sort_order", 1)
+        .lte("sort_order", 99)
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order")
         .order("title");
 
       // Fetch children of expandable sections (flat sections: direct children are the leaf series)
+      // §2.1: band-driven — sidebar shows only sort_order 1..99 per parent, ordered by sort_order ASC.
+      // §0.3: dual-audience filter — exclude teacher-only rows (but keep dual-tagged general+teachers).
       const flatExpandableIds = [
         ROOT_IDS.generalTopics,
         ROOT_IDS.moadim,
@@ -102,6 +107,11 @@ export function useContentSidebar() {
         .select("id, title, parent_id, sort_order")
         .in("parent_id", flatExpandableIds)
         .in("status", ["active", "published"])
+        // §2.1: only sidebar-band items (sort_order 1-99). 0/NULL = page-only. >=100 = parked.
+        .gte("sort_order", 1)
+        .lte("sort_order", 99)
+        // §0.3: exclude teacher-only series from public tree
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -155,20 +165,18 @@ export function useContentSidebar() {
       }));
 
       // Build children map
+      // §2.1: DB already filters 1..99 band and orders sort_order ASC — just build the map.
+      // The sortByBiblicalOrder fallback is retired: band sort_order is now authoritative.
       const childrenByBook = new Map<string, SidebarChild[]>();
       for (const c of [...(torahChildren || []), ...(nkChildren || [])]) {
         const existing = childrenByBook.get(c.parent_id!) || [];
         existing.push({ id: c.id, title: c.title, sortOrder: (c as any).sort_order ?? 0 });
         childrenByBook.set(c.parent_id!, existing);
       }
-      // Sort children: if any child has sort_order > 0, use sort_order; otherwise use biblical order
-      for (const [key, children] of childrenByBook) {
-        const hasManualSort = children.some((c: any) => c.sortOrder > 0);
-        if (hasManualSort) {
-          children.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0) || a.title.localeCompare(b.title, 'he'));
-        } else {
-          childrenByBook.set(key, sortByBiblicalOrder(children));
-        }
+      // Sort by sort_order then title — DB result is already in this order, but JS sort ensures
+      // stability if multiple rows share the same sort_order.
+      for (const [, children] of childrenByBook) {
+        children.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0) || a.title.localeCompare(b.title, 'he'));
       }
 
       // Filter out non-chumash items from Torah books (like "דפי פרשת שבוע")
@@ -204,7 +212,9 @@ export function useContentSidebar() {
         },
       ];
 
-      // Build expandable extra sections with proper ordering
+      // Build expandable extra sections.
+      // §2.1: sortByCustomOrder is retired — DB returns sort_order-ordered results (band 1-99).
+      // The order from the DB query (sort_order ASC NULLS LAST, title) is the canonical order.
       const getChildren = (parentId: string) =>
         (expandableChildren || []).filter((c) => c.parent_id === parentId);
 
@@ -218,22 +228,22 @@ export function useContentSidebar() {
         {
           id: ROOT_IDS.generalTopics,
           title: 'נושאים כלליים בתנ"ך',
-          children: sortByCustomOrder(getChildren(ROOT_IDS.generalTopics), "generalTopics"),
+          children: getChildren(ROOT_IDS.generalTopics),
         },
         {
           id: ROOT_IDS.moadim,
           title: "המועדים",
-          children: sortByCustomOrder(getChildren(ROOT_IDS.moadim), "moadim"),
+          children: getChildren(ROOT_IDS.moadim),
         },
         {
           id: ROOT_IDS.haftarot,
           title: "הפטרות",
-          children: sortByCustomOrder(getChildren(ROOT_IDS.haftarot), "haftarot"),
+          children: getChildren(ROOT_IDS.haftarot),
         },
         {
           id: ROOT_IDS.tools,
           title: "כלי עזר - טבלאות זמני המאורעות ומפות",
-          children: sortByCustomOrder(getChildren(ROOT_IDS.tools), "tools"),
+          children: getChildren(ROOT_IDS.tools),
         },
         {
           id: ROOT_IDS.yemeiIyun,
@@ -271,15 +281,19 @@ export function useContentSidebar() {
 
         // Fetch ALL statuses (active, published, draft) — we apply canonical filter in JS
         // Exclude "category" nodes (those are sub-category containers, not leaf series)
+        // §3: raise limit 200→1000 (כתובים root has 280+ series, psalms 151 series)
+        // §0.3: dual-audience filter — keep general+teachers dual-tagged, exclude teachers-only
         const { data: series } = await supabase
           .from("series")
-          .select("id, title, lesson_count, rabbi_id, description, status, image_url, parent_id")
+          .select("id, title, lesson_count, rabbi_id, description, status, image_url, parent_id, sort_order")
           .in("id", allIds)
           .in("status", ["active", "published", "draft"])
-          // Public category page must never surface teacher-wing series.
-          .not("audience_tags", "cs", "{teachers}")
-          .order("lesson_count", { ascending: false })
-          .limit(200);
+          // §0.3: exclude teacher-only series from public category page
+          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+          // §0.1 sort: sort_order band first, then title (canonical series order)
+          .order("sort_order", { ascending: true, nullsFirst: false })
+          .order("title", { ascending: true })
+          .limit(1000);
         if (!series || series.length === 0) return [];
 
         // Normalize a title for dedup: strip Hebrew/ASCII quote variants + collapse whitespace,
@@ -321,10 +335,22 @@ export function useContentSidebar() {
           rabbiMap = new Map(rabbis?.map((r) => [r.id, r.name]) || []);
         }
 
-        // Sort: active/published with lessons first, then by lesson_count desc, drafts last
-        canonical.sort((a, b) => {
-          const aActive = a.status !== "draft" && a.lesson_count > 0 ? 1 : 0;
-          const bActive = b.status !== "draft" && b.lesson_count > 0 ? 1 : 0;
+        // §0.1 sort: sort_order band (1-99 first), then parked (>=100), then 0/NULL page-only,
+        // then by lesson_count desc within same group, drafts last.
+        canonical.sort((a: any, b: any) => {
+          const aOrder = (a as any).sort_order;
+          const bOrder = (b as any).sort_order;
+          // Band category: 1-99 = sidebar (main), 0/NULL = page-only, >=100 = parked
+          const bandA = aOrder == null || aOrder === 0 ? 2 : aOrder >= 100 ? 1 : 0;
+          const bandB = bOrder == null || bOrder === 0 ? 2 : bOrder >= 100 ? 1 : 0;
+          if (bandA !== bandB) return bandA - bandB;
+          // Within main band: sort by sort_order
+          if (bandA === 0) {
+            if ((aOrder || 0) !== (bOrder || 0)) return (aOrder || 0) - (bOrder || 0);
+          }
+          // Within same position: active/published with lessons before drafts
+          const aActive = a.status !== "draft" && (a.lesson_count ?? 0) > 0 ? 1 : 0;
+          const bActive = b.status !== "draft" && (b.lesson_count ?? 0) > 0 ? 1 : 0;
           if (bActive !== aActive) return bActive - aActive;
           return (b.lesson_count ?? 0) - (a.lesson_count ?? 0);
         });
@@ -336,7 +362,7 @@ export function useContentSidebar() {
           rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
           sourceType: null,
           description: s.description,
-          imageUrl: s.image_url ?? null,
+          imageUrl: (s as any).image_url ?? null,
           isDraft: s.status === "draft",
         })) as (SeriesRow & { imageUrl: string | null; isDraft: boolean })[];
       },
