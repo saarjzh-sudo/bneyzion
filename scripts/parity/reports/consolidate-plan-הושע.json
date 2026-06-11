@@ -1,0 +1,623 @@
+{
+  "book": "הושע",
+  "book_id": "5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d",
+  "plan": [
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000001",
+      "event_title": "הושע פרק א",
+      "lesson_id": "ba01fbf6-8bd6-4fb2-b5aa-e21f904c85e3",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "הצירים האפשריים לתקון באומה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000001",
+      "event_title": "הושע פרק א",
+      "lesson_id": "2de47aed-0666-4494-ad2e-23f3dba03eee",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "הושע פרק א",
+      "old_title": "הקדמה להושע",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000001",
+      "event_title": "הושע פרק א",
+      "lesson_id": "72a2e86d-8d32-4276-bd34-64ee1c02023c",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "הושע פרק א",
+      "old_title": "הושע פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "cd1db52c-1979-4d4a-8113-adcce854e1f8",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "השיבה אל ''אישי הראשון''- שיבה אל הקב''ה וחידוש האהבה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "a6ef3429-e2c0-40bb-8b3f-3ea465a06140",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "הושע פרק ב",
+      "old_title": "מטרת הגולה - החזרת העבודה מאהבה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "409406f4-89e5-4c39-96ed-d48898ac197d",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "הושע פרק ב",
+      "old_title": "כחול הים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "b047ef16-f1ef-4b4a-96da-3ba65fc3f5a3",
+      "mode": "copy",
+      "from_series": "3b0e5c87-6461-4123-bf31-56b234ceff7a",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר הושע",
+      "old_title": "המדבר והכרם",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "2572bc7f-ba56-412a-94f5-0c607e6843af",
+      "mode": "copy",
+      "from_series": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר הושע",
+      "old_title": "הושע פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "d6c6dd7f-5520-4610-8279-ef51acf587e1",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "הושע פרק ב",
+      "old_title": "לגדולת ישראל אין מספר",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000002",
+      "event_title": "הושע פרק ב",
+      "lesson_id": "40808960-bc68-4edc-9f48-ea8b682716a4",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "הושע פרק ב",
+      "old_title": "\"וארשתיך לי\"",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000003",
+      "event_title": "הושע פרק ג",
+      "lesson_id": "d8ed4635-2b98-49f1-80a2-c665d121fdb9",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "הושע פרק ג",
+      "old_title": "באור משמעות הגלות",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000003",
+      "event_title": "הושע פרק ג",
+      "lesson_id": "515c35e5-c0cb-42cc-94d1-80df864894f2",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "הושע פרק ב",
+      "old_title": "המדבר והכרם",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000003",
+      "event_title": "הושע פרק ג",
+      "lesson_id": "09e43b13-3113-4b84-8f89-55f65e81d543",
+      "mode": "copy",
+      "from_series": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר הושע",
+      "old_title": "הושע פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000003",
+      "event_title": "הושע פרק ג",
+      "lesson_id": "34beb14e-a861-4a8e-8188-d342278aba25",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "הושע פרק ג",
+      "old_title": "בקשת ד', בקשת דוד ובקשת בית המקדש",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000004",
+      "event_title": "הושע פרק ד",
+      "lesson_id": "2b991340-c87c-4874-865f-1becf5db9454",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "הושע פרק ד",
+      "old_title": "תוכחה לעשרת השבטים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000004",
+      "event_title": "הושע פרק ד",
+      "lesson_id": "6ea343d6-4537-4ee9-b2f3-daf2591c4cd4",
+      "mode": "copy",
+      "from_series": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר הושע",
+      "old_title": "הושע פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000005",
+      "event_title": "הושע פרק ה",
+      "lesson_id": "3dfb5f8d-8ab4-4eef-b717-f22210faf930",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "הייסורים והתרחקות השכינה המשיבים את העם בתשובה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000005",
+      "event_title": "הושע פרק ה",
+      "lesson_id": "417252cc-dc41-4baf-9588-a39ef1079614",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "הושע פרק ה",
+      "old_title": "דין או פורענות",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000005",
+      "event_title": "הושע פרק ה",
+      "lesson_id": "e2b14764-abc2-426c-9ff5-1a503acf946d",
+      "mode": "copy",
+      "from_series": "3b0e5c87-6461-4123-bf31-56b234ceff7a",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר הושע",
+      "old_title": "ישראל בטח בה'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000005",
+      "event_title": "הושע פרק ה",
+      "lesson_id": "f76a69eb-53ab-472b-aea4-f35f0d44282e",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "הושע פרק ה",
+      "old_title": "הושע פרק ה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000006",
+      "event_title": "הושע פרק ו",
+      "lesson_id": "eacca24c-c2c1-4c6a-9a7b-dce4d58b236e",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "דרישת ה' לתשובה פנימית",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000006",
+      "event_title": "הושע פרק ו",
+      "lesson_id": "a4177cf5-ae9c-4617-9aa7-aa2f98c22d75",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "הושע פרק ו",
+      "old_title": "הושע פרק ו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000007",
+      "event_title": "הושע פרק ז",
+      "lesson_id": "9d7a1407-72b7-4644-afbc-023925ec58f7",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "בגידת העם בקב''ה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000007",
+      "event_title": "הושע פרק ז",
+      "lesson_id": "f420b57c-15d1-4a54-a461-a99600ca2519",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000007",
+      "from_status": "active",
+      "from_title": "הושע פרק ז",
+      "old_title": "הושע פרק ז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000008",
+      "event_title": "הושע פרק ח",
+      "lesson_id": "3a55120c-0442-4cf8-80b7-1b2e4583e1ef",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000008",
+      "from_status": "active",
+      "from_title": "הושע פרק ח",
+      "old_title": "עזיבת התורה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000008",
+      "event_title": "הושע פרק ח",
+      "lesson_id": "a2dd85a4-16f6-4693-a674-62130d28a3a7",
+      "mode": "copy",
+      "from_series": "3b0e5c87-6461-4123-bf31-56b234ceff7a",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר הושע",
+      "old_title": "?מה בין ישראל ליהודה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000008",
+      "event_title": "הושע פרק ח",
+      "lesson_id": "f4af675e-b26b-466c-b408-8bd051eb39e4",
+      "mode": "copy",
+      "from_series": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר הושע",
+      "old_title": "הושע פרק ח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000009",
+      "event_title": "הושע פרק ט",
+      "lesson_id": "ec7533fb-016e-438e-a66a-59d90e71e123",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "איבוד השורשים- שורשי הזהות, החיים והצמיחה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000009",
+      "event_title": "הושע פרק ט",
+      "lesson_id": "acd79ecc-6da0-4390-8167-eb5e5506509f",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "הושע פרק ט",
+      "old_title": "הושע פרק ט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000010",
+      "event_title": "הושע פרק י",
+      "lesson_id": "2687f255-435a-46ea-8b48-486267cb9409",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "חשבון הנפש של המלוכה בישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000010",
+      "event_title": "הושע פרק י",
+      "lesson_id": "81cc4986-9371-4ede-bdaf-6af255ed888a",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000010",
+      "from_status": "active",
+      "from_title": "הושע פרק י",
+      "old_title": "ההתנגדות של עם ישראל לחזור בתשובה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000010",
+      "event_title": "הושע פרק י",
+      "lesson_id": "0e9f28d9-22f8-4464-a5d7-1fed9c546cb5",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000010",
+      "from_status": "active",
+      "from_title": "הושע פרק י",
+      "old_title": "הושע פרק י",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000011",
+      "event_title": "הושע פרק יא",
+      "lesson_id": "4bdc9561-3bc4-4afe-a669-13dbc59eed81",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000011",
+      "from_status": "active",
+      "from_title": "הושע פרק יא",
+      "old_title": "רצון ה' להרים את עם ישראל למרות התרחקותם",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000011",
+      "event_title": "הושע פרק יא",
+      "lesson_id": "227f3369-805e-4ee2-8e26-a9814841d338",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000011",
+      "from_status": "active",
+      "from_title": "הושע פרק יא",
+      "old_title": "הושע פרק יא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000011",
+      "event_title": "הושע פרק יא",
+      "lesson_id": "6ad308d3-ed31-4d04-8f73-2f5240ff4fa6",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000011",
+      "from_status": "active",
+      "from_title": "הושע פרק יא",
+      "old_title": "סוד הקיום הישראלי",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000012",
+      "event_title": "הושע פרק יב",
+      "lesson_id": "1c7dc589-ebc6-4548-a603-4273c3055587",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "המשך תוכחת אפרים מרידת שבט אפרים למרות חסדי ה'",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000012",
+      "event_title": "הושע פרק יב",
+      "lesson_id": "394d5a57-e789-418a-8d99-bd834024ead8",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000012",
+      "from_status": "active",
+      "from_title": "הושע פרק יב",
+      "old_title": "עבודה זרה וגזל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000012",
+      "event_title": "הושע פרק יב",
+      "lesson_id": "80b48e33-b3d7-4b4f-b9a9-d828a5eaf923",
+      "mode": "copy",
+      "from_series": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר הושע",
+      "old_title": "הושע פרק יב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000012",
+      "event_title": "הושע פרק יב",
+      "lesson_id": "678f65ed-0fe2-43b7-86d0-d5f7f988214f",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000012",
+      "from_status": "active",
+      "from_title": "הושע פרק יב",
+      "old_title": "סוד הקיום הישראלי",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000012",
+      "event_title": "הושע פרק יב",
+      "lesson_id": "33b88a91-a1fd-4b69-931e-38571fd0dafd",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000012",
+      "from_status": "active",
+      "from_title": "הושע פרק יב",
+      "old_title": "טובת ה' גם בשעת הצרות",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000013",
+      "event_title": "הושע פרק יג",
+      "lesson_id": "f41efb26-a0b7-40ca-9489-70f7cb798bf2",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "סיכום גדולת אפרים וחטאו",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000013",
+      "event_title": "הושע פרק יג",
+      "lesson_id": "21731664-7766-4b43-bb95-4f49b25bc566",
+      "mode": "copy",
+      "from_series": "3b0e5c87-6461-4123-bf31-56b234ceff7a",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר הושע",
+      "old_title": "עגלים ישקון",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000013",
+      "event_title": "הושע פרק יג",
+      "lesson_id": "64e98a6e-7ee8-4013-8576-d92ffbea6667",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000013",
+      "from_status": "active",
+      "from_title": "הושע פרק יג",
+      "old_title": "הושע פרק יג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000014",
+      "event_title": "הושע פרק יד",
+      "lesson_id": "31427d1e-d53b-4204-a73a-b418f372aca1",
+      "mode": "copy",
+      "from_series": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר הושע",
+      "old_title": "תשובה אמתית של האדם ותשובה לאומית",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000014",
+      "event_title": "הושע פרק יד",
+      "lesson_id": "a77fc17f-1265-4487-be33-9e79ee7c736b",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000014",
+      "from_status": "active",
+      "from_title": "הושע פרק יד",
+      "old_title": "נצרכה לשעה ולעתיד לבוא",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000014",
+      "event_title": "הושע פרק יד",
+      "lesson_id": "a9bbd080-7df4-45ca-a154-ba954e1266a8",
+      "mode": "copy",
+      "from_series": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר הושע",
+      "old_title": "הושע פרק יד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b1010001-0001-4000-8000-000000000014",
+      "event_title": "הושע פרק יד",
+      "lesson_id": "a32d7b94-1aa5-4e87-bb45-01f97d894c61",
+      "mode": "copy",
+      "from_series": "b1010001-0001-4000-8000-000000000014",
+      "from_status": "active",
+      "from_title": "הושע פרק יד",
+      "old_title": "כוחה של התשובה",
+      "old_rabbi": "הרב יואב אוריאל"
+    }
+  ],
+  "report": [
+    {
+      "event": "הושע פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-א/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ב/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ג/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ד/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ה/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ו/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ז/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ח/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק ט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-ט/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק י",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-י/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק יא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-יא/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק יב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-יב/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק יג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-יג/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "הושע פרק יד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/הושע/הושע-פרק-יד/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    }
+  ]
+}

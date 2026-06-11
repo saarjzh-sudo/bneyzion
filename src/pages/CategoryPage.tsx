@@ -30,6 +30,7 @@ import {
   FileText,
   AlertCircle,
   Construction,
+  ExternalLink,
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -421,7 +422,7 @@ function SeriesBlock({
           gap: 0,
         }}
       >
-        {/* Cover image — click navigates to series page */}
+        {/* Cover image — stays a Link to series page; stopPropagation prevents toggle */}
         <Link
           to={`/series/${series.id}`}
           style={{
@@ -432,6 +433,7 @@ function SeriesBlock({
             background: "#EDE5D6",
           }}
           tabIndex={-1}
+          onClick={(e) => e.stopPropagation()}
         >
           <img
             src={imgSrc}
@@ -449,119 +451,114 @@ function SeriesBlock({
           />
         </Link>
 
-        {/* Title + rabbi + stats */}
-        <div
+        {/* Entire title row is now a toggle button */}
+        <button
+          onClick={() => setExpanded((e) => !e)}
+          aria-expanded={expanded}
+          aria-controls={`series-lessons-${series.id}`}
           style={{
             flex: 1,
-            padding: "0.85rem 1rem",
             display: "flex",
-            flexDirection: "column",
-            gap: "0.25rem",
-            justifyContent: "center",
+            alignItems: "center",
+            padding: "0.85rem 1rem",
+            background: "none",
+            border: "none",
+            cursor: "pointer",
+            textAlign: "right",
+            gap: 0,
           }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(250,246,240,0.7)")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
         >
-          {/* Draft badge */}
-          {hasDraftBadge && (
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.3rem",
-                padding: "0.15rem 0.5rem",
-                borderRadius: radii.pill,
-                background: "rgba(139,111,71,0.08)",
-                color: colors.textSubtle,
-                fontFamily: fonts.body,
-                fontSize: "0.68rem",
-                fontWeight: 600,
-                width: "fit-content",
-                marginBottom: "0.1rem",
-              }}
-            >
-              <Construction size={10} />
-              בהכנה
-            </div>
-          )}
-
-          <Link
-            to={`/series/${series.id}`}
+          {/* Content column */}
+          <div
             style={{
-              fontFamily: fonts.display,
-              fontSize: "1rem",
-              fontWeight: 700,
-              color: colors.textDark,
-              lineHeight: 1.3,
-              textDecoration: "none",
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.25rem",
+              alignItems: "flex-start",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = colors.goldDark)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = colors.textDark)}
           >
-            {series.title}
-          </Link>
+            {/* Draft badge */}
+            {hasDraftBadge && (
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.3rem",
+                  padding: "0.15rem 0.5rem",
+                  borderRadius: radii.pill,
+                  background: "rgba(139,111,71,0.08)",
+                  color: colors.textSubtle,
+                  fontFamily: fonts.body,
+                  fontSize: "0.68rem",
+                  fontWeight: 600,
+                  width: "fit-content",
+                  marginBottom: "0.1rem",
+                }}
+              >
+                <Construction size={10} />
+                בהכנה
+              </div>
+            )}
 
-          {series.rabbiName && (
-            <div
+            <span
               style={{
-                fontFamily: fonts.body,
-                fontSize: "0.8rem",
-                color: colors.textMuted,
+                fontFamily: fonts.display,
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: colors.textDark,
+                lineHeight: 1.3,
               }}
             >
-              {series.rabbiName}
-            </div>
-          )}
+              {series.title}
+            </span>
 
-          {series.lessonCount != null && series.lessonCount > 0 && (
-            <div
-              style={{
-                fontFamily: fonts.body,
-                fontSize: "0.75rem",
-                color: colors.goldDark,
-                fontWeight: 600,
-              }}
-            >
-              {series.lessonCount} שיעורים
-            </div>
-          )}
-        </div>
+            {series.rabbiName && (
+              <span
+                style={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.8rem",
+                  color: colors.textMuted,
+                }}
+              >
+                {series.rabbiName}
+              </span>
+            )}
 
-        {/* Expand / collapse toggle */}
-        {lessons.length > 0 && (
-          <button
-            onClick={() => setExpanded((e) => !e)}
-            aria-label={expanded ? "כווץ שיעורים" : "הצג שיעורים"}
+            {series.lessonCount != null && series.lessonCount > 0 && (
+              <span
+                style={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.75rem",
+                  color: colors.goldDark,
+                  fontWeight: 600,
+                }}
+              >
+                {series.lessonCount} שיעורים
+              </span>
+            )}
+          </div>
+
+          {/* Chevron */}
+          <ChevronDown
+            size={16}
             style={{
               flexShrink: 0,
-              padding: "0.85rem 1rem",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
+              transition: "transform 0.18s",
+              transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
               color: colors.textSubtle,
-              display: "flex",
-              alignItems: "center",
-              gap: "0.3rem",
-              fontFamily: fonts.body,
-              fontSize: "0.75rem",
-              alignSelf: "stretch",
-              borderInlineStart: `1px solid rgba(139,111,71,0.08)`,
+              marginInlineStart: "0.75rem",
             }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = colors.goldDark)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = colors.textSubtle)}
-          >
-            <ChevronDown
-              size={14}
-              style={{
-                transition: "transform 0.18s",
-                transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-              }}
-            />
-          </button>
-        )}
+          />
+        </button>
       </div>
 
       {/* ── Expanded lessons ── */}
       {expanded && (
         <div
+          id={`series-lessons-${series.id}`}
           style={{
             borderTop: `1px solid rgba(139,111,71,0.08)`,
           }}
@@ -597,6 +594,31 @@ function SeriesBlock({
                   onNavigate={onNavigate}
                 />
               ))}
+              {/* Link to full series page */}
+              <div
+                style={{
+                  padding: "0.5rem 1rem",
+                  borderTop: `1px solid rgba(139,111,71,0.05)`,
+                }}
+              >
+                <Link
+                  to={`/series/${series.id}`}
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.78rem",
+                    color: colors.goldDark,
+                    textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.25rem",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
+                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
+                >
+                  לדף הסדרה המלאה
+                  <ExternalLink size={11} />
+                </Link>
+              </div>
             </div>
           )}
         </div>

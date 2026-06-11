@@ -9,7 +9,7 @@
  *
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import {
   BookOpen,
   Lock,
@@ -181,6 +181,14 @@ export default function WeeklyProgramLibrary() {
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
 
+  // Redirect to the current book when one is marked is_current=true.
+  // Admin still sees the full library (to switch books via the toggle).
+  // WeeklyCourse.is_current is boolean|null after the regen.
+  const currentBook = books.find((b) => b.is_current === true);
+  if (!isLoading && currentBook && !isAdmin) {
+    return <Navigate to={`/course/${currentBook.program_slug}`} replace />;
+  }
+
   return (
     <DesignLayout sidebar={false}>
       {/* ── Hero ── */}
@@ -199,7 +207,7 @@ export default function WeeklyProgramLibrary() {
         <div style={{ maxWidth: 960, margin: "0 auto", position: "relative" }}>
           {/* Breadcrumb */}
           <div style={{ marginBottom: "1rem" }}>
-            <Link to="/courses" style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontFamily: fonts.body, fontSize: "0.75rem", color: "rgba(232,213,160,0.5)", textDecoration: "none" }}>
+            <Link to="/design-my-courses" style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontFamily: fonts.body, fontSize: "0.75rem", color: "rgba(232,213,160,0.5)", textDecoration: "none" }}>
               <ChevronLeft size={13} />הקורסים שלי
             </Link>
           </div>

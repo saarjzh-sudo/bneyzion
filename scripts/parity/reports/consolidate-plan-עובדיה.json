@@ -1,0 +1,91 @@
+{
+  "book": "עובדיה",
+  "book_id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+  "plan": [
+    {
+      "event_id": "58a30a8e-d5d8-43ad-9665-98d33d6009c2",
+      "event_title": "עובדיה - מוקלט | ללא טעמים",
+      "lesson_id": "e5b14e68-0822-41a0-8a3f-d3aa510f184e",
+      "mode": "copy",
+      "from_series": "58a30a8e-d5d8-43ad-9665-98d33d6009c2",
+      "from_status": "active",
+      "from_title": "עובדיה - מוקלט | ללא טעמים",
+      "old_title": "עובדיה מוקלט - פרק א | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "91aee664-1a7c-43ef-bde0-8bdcb4ec25c6",
+      "event_title": "עובדיה בבקיאות",
+      "lesson_id": "5ef89ac3-1c4a-4955-8657-a8016705803e",
+      "mode": "move",
+      "from_series": "2a0387c7-ec11-437c-a19f-f795985ce204",
+      "from_status": "category",
+      "from_title": "עובדיה",
+      "old_title": "עובדיה בבקיאות",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "10d1a9a5-d47b-4800-bcb4-12f4f13b7bab",
+      "event_title": "קריאה וביאור בקצרה של ספר עובדיה",
+      "lesson_id": "81648903-4c30-44a9-9373-c450d0aa3e5e",
+      "mode": "copy",
+      "from_series": "10d1a9a5-d47b-4800-bcb4-12f4f13b7bab",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר עובדיה",
+      "old_title": "עובדיה פרק א",
+      "old_rabbi": ""
+    },
+    {
+      "event_id": "c00e3463-8625-4eb1-93dd-1a7d0cc8b2a8",
+      "event_title": "שיעורים על ספר עובדיה",
+      "lesson_id": "14b59e62-8a4f-4b3e-94d0-2a8de63795dd",
+      "mode": "copy",
+      "from_series": "c00e3463-8625-4eb1-93dd-1a7d0cc8b2a8",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר עובדיה",
+      "old_title": "הקרב מול אדום",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c00e3463-8625-4eb1-93dd-1a7d0cc8b2a8",
+      "event_title": "שיעורים על ספר עובדיה",
+      "lesson_id": "8deac660-7052-4ee7-852f-1e1f002eade4",
+      "mode": "copy",
+      "from_series": "c00e3463-8625-4eb1-93dd-1a7d0cc8b2a8",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר עובדיה",
+      "old_title": "השותפות של מלכות אדום בחורבן ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    }
+  ],
+  "report": [
+    {
+      "event": "עובדיה - מוקלט | ללא טעמים",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/עובדיה-מוקלט-ללא-טעמים/",
+      "matched": 1,
+      "old_lessons": 1,
+      "unmatched": []
+    },
+    {
+      "event": "עובדיה בבקיאות",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/עובדיה-בבקיאות/",
+      "matched": 1,
+      "old_lessons": 1,
+      "unmatched": []
+    },
+    {
+      "event": "קריאה וביאור בקצרה של ספר עובדיה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/קריאה-וביאור-בקצרה-של-ספר-עובדיה/",
+      "matched": 1,
+      "old_lessons": 1,
+      "unmatched": []
+    },
+    {
+      "event": "שיעורים על ספר עובדיה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/שיעורים-על-ספר-עובדיה/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    }
+  ]
+}

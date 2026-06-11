@@ -13,7 +13,7 @@
  *     tabs inside a course require subscription. This page itself is gated only
  *     for non-authenticated users.
  */
-import { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   BookOpen,
@@ -50,9 +50,6 @@ import {
 } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useUserAccess } from "@/hooks/useUserAccess";
-
-// ── Preview mode (sandbox) ─────────────────────────────────────────────────
-type PreviewMode = "subscriber" | "member" | "guest";
 
 // ── Mock data ──────────────────────────────────────────────────────────────
 const SUBSCRIBER_STATS = {
@@ -121,12 +118,9 @@ export default function DesignPreviewPortalSubscriber() {
   const { data: topSeries = [], isLoading: seriesLoading } = useTopSeries(8);
   const { hasAccess: realAccess, isLoading: accessLoading, isAuthenticated, user } = useUserAccess("program:weekly-chapter");
 
-  // Sandbox preview toggle — lets Saar see all states without needing to be authenticated
-  const [previewMode, setPreviewMode] = useState<PreviewMode>("subscriber");
-
-  // Derived access state (sandbox overrides real state)
-  const isAuth = previewMode !== "guest" || isAuthenticated;
-  const hasSubscription = previewMode === "subscriber" || realAccess;
+  // Real access state — portal is always behind RequireAuth so isAuthenticated is always true here
+  const isAuth = isAuthenticated;
+  const hasSubscription = realAccess;
 
   // Suggestion series (from real data)
   const suggestions = (topSeries as any[]).slice(0, 4);
@@ -151,68 +145,6 @@ export default function DesignPreviewPortalSubscriber() {
 
   return (
     <DesignLayout>
-      {/* ─── Sandbox preview toggle ────────────────────────────────────── */}
-      <div
-        dir="rtl"
-        style={{
-          background: "rgba(45,31,14,0.97)",
-          borderBottom: "1px solid rgba(232,213,160,0.15)",
-          padding: "0.55rem 1.5rem",
-          display: "flex",
-          alignItems: "center",
-          gap: "0.85rem",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.7rem",
-            color: "rgba(232,213,160,0.55)",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-          }}
-        >
-          תצוגה מקדימה
-        </span>
-        <div
-          style={{
-            display: "inline-flex",
-            background: "rgba(255,255,255,0.07)",
-            borderRadius: 20,
-            padding: "0.2rem",
-            gap: "0.15rem",
-          }}
-        >
-          {(
-            [
-              { key: "subscriber" as const, label: "מנוי פעיל" },
-              { key: "member" as const, label: "חבר רשום" },
-              { key: "guest" as const, label: "אורח" },
-            ]
-          ).map((opt) => (
-            <button
-              key={opt.key}
-              onClick={() => setPreviewMode(opt.key)}
-              style={{
-                padding: "0.3rem 0.85rem",
-                borderRadius: 16,
-                border: "none",
-                cursor: "pointer",
-                fontFamily: fonts.body,
-                fontWeight: 700,
-                fontSize: "0.75rem",
-                background: previewMode === opt.key ? gradients.goldButton : "transparent",
-                color: previewMode === opt.key ? "white" : "rgba(232,213,160,0.55)",
-                transition: "all 0.18s",
-              }}
-            >
-              {opt.label}
-            </button>
-          ))}
-        </div>
-      </div>
-
       {/* ─── Guest gate ────────────────────────────────────────────────── */}
       {!isAuth && <GuestGate />}
 
@@ -253,7 +185,7 @@ export default function DesignPreviewPortalSubscriber() {
             >
               {/* Avatar */}
               <div style={{ position: "relative" }}>
-                {avatarUrl && previewMode === "subscriber" ? (
+                {avatarUrl ? (
                   <img
                     src={avatarUrl}
                     alt={displayName}
@@ -393,8 +325,8 @@ export default function DesignPreviewPortalSubscriber() {
               </div>
 
               {/* Settings */}
-              <Link
-                to="/profile"
+              <a
+                href="#settings"
                 style={{
                   padding: "0.65rem 1.15rem",
                   borderRadius: radii.lg,
@@ -415,7 +347,7 @@ export default function DesignPreviewPortalSubscriber() {
               >
                 <Settings size={13} />
                 הגדרות
-              </Link>
+              </a>
             </div>
 
             <style>{`
@@ -565,7 +497,7 @@ export default function DesignPreviewPortalSubscriber() {
                   icon={<BookOpen size={20} />}
                   label="הקורסים שלי"
                   sub="1 פעיל"
-                  to="/courses"
+                  to="/design-my-courses"
                   color={colors.oliveMain}
                   bg="rgba(91,110,58,0.08)"
                 />
@@ -1392,6 +1324,97 @@ export default function DesignPreviewPortalSubscriber() {
               </div>
             </section>
           )}
+
+          {/* ─── Account settings ────────────────────────────────────── */}
+          <section id="settings" style={{ background: colors.parchment, padding: "3.5rem 1.5rem" }}>
+            <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
+              <SectionLabel icon={<Settings size={16} />} eyebrow="חשבון" title="הגדרות אישיות" color={colors.goldDark} />
+              <div
+                style={{
+                  background: "white",
+                  borderRadius: radii.xl,
+                  border: "1px solid rgba(139,111,71,0.1)",
+                  boxShadow: shadows.cardSoft,
+                  padding: "2rem",
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "1.5rem",
+                }}
+                className="settings-grid"
+              >
+                {/* Profile info */}
+                <div>
+                  <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.textDark, marginBottom: "1rem" }}>
+                    פרטי חשבון
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                      <label style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.goldDark, letterSpacing: "0.1em", textTransform: "uppercase" }}>שם</label>
+                      <div style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textDark, padding: "0.6rem 0.85rem", background: colors.parchment, borderRadius: radii.md, border: "1px solid rgba(139,111,71,0.12)" }}>
+                        {displayName}
+                      </div>
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                      <label style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.goldDark, letterSpacing: "0.1em", textTransform: "uppercase" }}>אימייל</label>
+                      <div style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textDark, padding: "0.6rem 0.85rem", background: colors.parchment, borderRadius: radii.md, border: "1px solid rgba(139,111,71,0.12)", direction: "ltr", textAlign: "right" }}>
+                        {user?.email || "—"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div>
+                  <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1rem", color: colors.textDark, marginBottom: "1rem" }}>
+                    פעולות
+                  </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                    <Link
+                      to="/favorites"
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "0.6rem",
+                        padding: "0.7rem 1rem", borderRadius: radii.md,
+                        background: colors.parchment, border: "1px solid rgba(139,111,71,0.12)",
+                        color: colors.textDark, fontFamily: fonts.body,
+                        fontSize: "0.88rem", textDecoration: "none",
+                        transition: "background 0.15s",
+                      }}
+                    >
+                      <Heart size={14} style={{ color: colors.oliveMain }} />
+                      שיעורים מועדפים
+                    </Link>
+                    <Link
+                      to="/history"
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "0.6rem",
+                        padding: "0.7rem 1rem", borderRadius: radii.md,
+                        background: colors.parchment, border: "1px solid rgba(139,111,71,0.12)",
+                        color: colors.textDark, fontFamily: fonts.body,
+                        fontSize: "0.88rem", textDecoration: "none",
+                      }}
+                    >
+                      <Clock size={14} style={{ color: colors.tealMain }} />
+                      היסטוריית צפייה
+                    </Link>
+                    <Link
+                      to="/contact"
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: "0.6rem",
+                        padding: "0.7rem 1rem", borderRadius: radii.md,
+                        background: colors.parchment, border: "1px solid rgba(139,111,71,0.12)",
+                        color: colors.textDark, fontFamily: fonts.body,
+                        fontSize: "0.88rem", textDecoration: "none",
+                      }}
+                    >
+                      <Bell size={14} style={{ color: colors.goldDark }} />
+                      יצירת קשר ותמיכה
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <style>{`.settings-grid { } @media (max-width: 640px) { .settings-grid { grid-template-columns: 1fr !important; } }`}</style>
+            </div>
+          </section>
 
           {/* ─── Membership footer ────────────────────────────────────── */}
           <section

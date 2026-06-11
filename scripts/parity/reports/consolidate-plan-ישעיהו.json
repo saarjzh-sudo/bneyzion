@@ -1,0 +1,4585 @@
+{
+  "book": "ישעיהו",
+  "book_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+  "plan": [
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "afb9fb1b-0747-4b4b-8006-621a4f375a30",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק א | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "49962922-af92-4634-9a31-19d4c70e54f3",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "9ff67bbc-0172-4b0f-8c90-82d1f1676027",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ג | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "6d9e837c-f0dd-48b2-8893-f549560d4cc7",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ד | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "e22c29b5-3180-41f8-b257-4c3885757e11",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ה | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "d6b3470f-729d-4117-868e-8a46f94f3e0e",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ו | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "3678065b-d205-4e5a-ad67-3c164e5b17fd",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "19120267-ad35-4bd3-915d-1979de1a929f",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ח | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "b4d78173-d10f-42e3-9115-3a42d07fe4d4",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ט | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "dab0b313-7e89-415b-9b5e-9bf907ab8ce3",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק י | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "7e8fdff4-e508-4a85-a16c-12f7b6ec14fd",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק יא | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "d45143f1-f995-4bb4-b678-115eab308912",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק יג | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "d6b234fa-5000-47c3-aee2-79fd94c24ac7",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק יד | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "c5355f2b-ba14-4b71-aba8-1f1526fb1944",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק טו | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "48164a0d-6f48-4f3b-9025-7ec25625e039",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק טז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "e2476541-4b52-4aae-89f8-db7ea7d67c22",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק יז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "c8782d77-c084-4d06-9d2f-bd7a67c18a81",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק יח | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "f6987f0a-4a08-491d-9296-4fdc9891c872",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק יט | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "80363748-5eb5-41db-8eec-0422c4c8c08f",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כ | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "07052063-423c-4622-861d-b5479f1e38d6",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כא | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "b471b976-6be1-4f22-ada2-ba1ff8e67e42",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "6f28cd28-8539-45b0-89c7-6ef4c248f777",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כג | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "c889d9b3-1d1f-44aa-ae4d-7f752f7a849d",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כד | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "ce57b6b8-6c8a-4d56-b7bc-929e2967f99f",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כה | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "d9a8bcd6-5b65-4cfc-b8ea-e2bca8876d13",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כו | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "739b8ad3-a06c-4068-8538-d94cd94f68d4",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "a73f7662-e8f9-42df-b436-f5b3e1a028ac",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כח | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "2b100ec9-f19c-47f2-997e-bec2af6da2c8",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק כט | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "fe6e5d9c-9957-441c-9de9-ef3ff0caeeea",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק ל | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "27cff5e0-7b61-456d-81d8-fc2c5df30c00",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לא | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "cc78756a-fd44-4bef-8cc1-3113bbca65d8",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "867842c4-e678-4109-83c9-c18bb1e33f4a",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לג | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "3d5a2849-2a57-4639-b0ce-33d91c15ff3a",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לד | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "494342cd-0df4-429f-8927-893cf2e4b753",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לה | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "e5bee896-4a13-4129-8e13-b1749ba17dab",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לו | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "event_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "lesson_id": "3618b38a-f613-4491-bdf2-a9bb66929781",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ישעיהו מוקלט - פרק לז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "c04d1a73-a15b-4703-bff5-128d9c426237",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים א-ב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "b1010001-0001-4000-8000-000000000020",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים ג-ד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "aacf528d-66b3-4339-b38b-269fac93221a",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים ה-ו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "b3e1b4fd-67df-463c-a5f6-f74db96e8302",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים ז-ח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "faeab42e-3206-41af-98bf-a1a5a413289c",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים ט-י",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "ea1d8555-8fd5-4729-9f3e-f90d15d0abd4",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים יא-יב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "8189ef57-9683-4eb3-808a-3f0bbf379e9c",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים יג-יד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "9f66da54-3bc5-4b35-9aa9-53ecbc360268",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים טו-טז",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "5f407111-f1fc-4d95-bdc4-7ca5eedd174d",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים יז-יח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "1401dee6-d8f4-44ec-a568-47e7cfdd4286",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים יט-כ",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "eb67bbe2-0004-43e8-ba0e-c17404da837f",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים כא-כב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "639c56dd-0326-4ffc-ab0b-2be1efc8ecc1",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים כג-כד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "7590c398-f62a-43c2-b3b1-2dfe5fb11103",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים כה-כו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "24d3adbe-8f03-4a7b-8850-62752f748857",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים כז-כח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "30093f07-770c-4a28-ab4f-feac1548d7a7",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים כט-ל",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "a19ff51c-7c58-498f-a6e9-a465a4a5bf6b",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים לא-לב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "c000450a-3c23-4ed2-9994-f25d077ac376",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים לג-לד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "b3bf0196-994c-401c-95b0-79d1c07e6100",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים לג-לד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "3cd154f2-90ef-4716-b369-602ea8f6c3aa",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים לה-לו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "1e694c31-b770-466f-aca1-62a05a8cb34d",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים לז-לח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "4dee1d65-105d-4dc0-9823-e6d124e2bb8e",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים לט-מ",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "c1326049-867d-4c7f-bc79-2def110f0ff7",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים מא-מב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "2c3e2c19-d797-4b89-8a03-b54e5006432b",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים מג-מד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "009eace5-580e-4c41-96cf-92603dd92816",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים מה-מו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "2b606591-e79d-4dd2-a613-d09e0a74ecfb",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים מז-מח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "1ab3d756-005e-424b-baf8-7d4cc739ac2d",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים מט-נ (פסוק כ)",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "a2fc750f-5480-42f3-b7cd-37d7af48c09b",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ירמיהו בבקיאות פרקים נ-נא",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "d6f0f8d6-638d-484b-a1dc-f41b394ff8e1",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים נא-נב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "b097094f-3423-4d3b-9422-a54cc79f9525",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים סא-סב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "event_title": "ישעיהו בבקיאות",
+      "lesson_id": "1496ea0c-dc1a-4bd4-9fcd-3d138c38e516",
+      "mode": "copy",
+      "from_series": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+      "from_status": "active",
+      "from_title": "ישעיהו בבקיאות",
+      "old_title": "ישעיהו בבקיאות פרקים סה-סו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "0f7c9153-8f8d-4784-bd02-18fecae77670",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "סיבת ההוכחה שמוכיח ישעיהו את ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "1e708065-1bef-499e-a46f-7c1544ff83eb",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "b010ee8d-33a4-4113-981b-b3c2b3339808",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "\"צדק ילין בה\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "377fc2ff-24a3-4920-aeb7-99e955e1059c",
+      "mode": "copy",
+      "from_series": "10e20007-1475-4156-ae34-44483c4f5eae",
+      "from_status": "published",
+      "from_title": "חמאה ודבש - ישעיהו",
+      "old_title": "ישעיה א חמאה ודבש",
+      "old_rabbi": "הרב עמנואל בן ארצי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "b1010001-0001-4000-8000-000000000007",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "תפקיד פרק א",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "b1010001-0001-4000-8000-000000000008",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "צביעות דתית",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000001",
+      "event_title": "ישעיהו פרק א",
+      "lesson_id": "b1010001-0001-4000-8000-000000000005",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "התוכן של עבודת ה'",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000002",
+      "event_title": "ישעיהו פרק ב",
+      "lesson_id": "8e6bb6fd-4d68-4f79-a4aa-cfe5f474bc6d",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "חזון הגדולה באחרית הימים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000002",
+      "event_title": "ישעיהו פרק ב",
+      "lesson_id": "6d38ba8a-9ee6-4fcb-86a1-3ea4bae84473",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "עליה וירידה בדמות אדם",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000002",
+      "event_title": "ישעיהו פרק ב",
+      "lesson_id": "cf976ee3-7c4c-437a-a798-25df114de8b3",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000002",
+      "event_title": "ישעיהו פרק ב",
+      "lesson_id": "b1010001-0001-4000-8000-000000000014",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "עושר מביא לחטא",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000003",
+      "event_title": "ישעיהו פרק ג",
+      "lesson_id": "19e97981-8f6b-4e1f-8118-a7c08a8d4e12",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הביטחון ב - ד'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000003",
+      "event_title": "ישעיהו פרק ג",
+      "lesson_id": "ad6fde61-bbe6-48c2-9c8a-c3ab8b63d73a",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "הסרת השביסים והעכסים",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000003",
+      "event_title": "ישעיהו פרק ג",
+      "lesson_id": "787edb7f-ff61-4fe9-ae39-6e0e84013a09",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000004",
+      "event_title": "ישעיהו פרק ד",
+      "lesson_id": "2471c954-ac6d-413a-81c7-9c674e50f097",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000005",
+      "event_title": "ישעיהו פרק ה",
+      "lesson_id": "751347a0-a10d-4f1d-9b98-fe2b76cffa66",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "משל הכרם",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000005",
+      "event_title": "ישעיהו פרק ה",
+      "lesson_id": "8342be51-4562-4c39-9db7-84a68af50dba",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "כרם הענבים הבאושים",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000005",
+      "event_title": "ישעיהו פרק ה",
+      "lesson_id": "39448b81-99fa-47d4-90ae-9adb553c3459",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "תוכחה ונחמה בהוי",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000005",
+      "event_title": "ישעיהו פרק ה",
+      "lesson_id": "126ffce8-db9a-4360-89f2-1c0989c245c5",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b509e12e-747a-4d5e-b78c-df0a0c393f8b",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "התגלות כבוד השכינה לישעיהו",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "0beecc64-4a2c-474e-90e7-161a41b3d3da",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "משל הכרם",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "1fb359a0-5522-4393-a6ef-84b9685c0cfd",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "בשנת מות המלך עוזיהו - נבואת ישעיה מתוך נוע אמות הסיפים",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "ccbb1bba-4e3f-47e9-8094-8c2d9bab5735",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000037",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "נבואת ההקדשה",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000038",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "תפקיד הנביא",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000033",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "החזונות המניעים",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000034",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "\"עד מתי ה'?\"",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000035",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "נבואות המינוי של ישעיהו, ירמיהו ויחזקאל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000006",
+      "event_title": "ישעיהו פרק ו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000039",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "עד כמה צריך להיזהר מלדבר רע על עם ישראל",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000007",
+      "event_title": "ישעיהו פרק ז",
+      "lesson_id": "11d66cbb-df9e-4d96-93a3-88570b5aada2",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "שמות  הילדים ומשמעותם",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000007",
+      "event_title": "ישעיהו פרק ז",
+      "lesson_id": "f7136195-0889-4f8e-8082-265796e5b220",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "נבואת נחמה למלך רשע",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000007",
+      "event_title": "ישעיהו פרק ז",
+      "lesson_id": "00405258-8263-4d6e-ae55-69b2d216369c",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000008",
+      "event_title": "ישעיהו פרק ח",
+      "lesson_id": "435ca637-5b64-43cc-9e8a-610dfe6bdc7f",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "מלכות בית דוד מול מלכות ישראל ואשור",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000008",
+      "event_title": "ישעיהו פרק ח",
+      "lesson_id": "5e4f4d3c-187c-4bba-97a6-870c34ace509",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הודעת ישעיהו לאחז",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000008",
+      "event_title": "ישעיהו פרק ח",
+      "lesson_id": "24ee4a0e-ce9a-49c3-b912-258be1d2c4b9",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "קשר של חולשה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000008",
+      "event_title": "ישעיהו פרק ח",
+      "lesson_id": "93b46ed8-3012-4e32-bf45-a6cf23ce3484",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "לתורה ולתעודה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000008",
+      "event_title": "ישעיהו פרק ח",
+      "lesson_id": "149bc519-df4b-482e-8e19-7f611b3e95fd",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000008",
+      "event_title": "ישעיהו פרק ח",
+      "lesson_id": "b1010001-0001-4000-8000-000000000051",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "החזרה בתשובה",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000009",
+      "event_title": "ישעיהו פרק ט",
+      "lesson_id": "45100ff7-13cf-4795-8950-943d113d8008",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "כינון מלכות חזקיה ומפלת מלכות ישראל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000009",
+      "event_title": "ישעיהו פרק ט",
+      "lesson_id": "3ac8d679-fe5f-4e77-b363-83a7abda8ff1",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "לו או לא הגדלת השמחה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000009",
+      "event_title": "ישעיהו פרק ט",
+      "lesson_id": "a06b99bb-9f5c-4331-835c-81a9239c8701",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000015",
+      "event_title": "ישעיהו פרק טו",
+      "lesson_id": "36095c7e-c0a6-4c6c-abe3-c93f4508b298",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' ממואב",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000015",
+      "event_title": "ישעיהו פרק טו",
+      "lesson_id": "d77c93f5-5034-482b-993f-73822b2d4b59",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "העיקרון היסודי במשאות ישעיהו על העמים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000015",
+      "event_title": "ישעיהו פרק טו",
+      "lesson_id": "344eee71-8558-44fb-9d36-d9c5f943ac67",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "מעמדם העולמי של ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000015",
+      "event_title": "ישעיהו פרק טו",
+      "lesson_id": "6c4a99ea-44d2-4767-bcdd-ef2f05927e42",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "משא מואב מבפנים החוצה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000015",
+      "event_title": "ישעיהו פרק טו",
+      "lesson_id": "83cbfef9-e050-4d35-8b69-ebaaa3fbf98e",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק טו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000016",
+      "event_title": "ישעיהו פרק טז",
+      "lesson_id": "9cb321ad-2061-4aee-b193-ccf6d753626e",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "המשך נקמת ד' ממואב",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000016",
+      "event_title": "ישעיהו פרק טז",
+      "lesson_id": "7c6d09ce-979e-4a8a-ac29-a33ec2e19b4d",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק טז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000010",
+      "event_title": "ישעיהו פרק י",
+      "lesson_id": "fba012f0-b16e-4599-aabd-3f6ced6089c4",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "עונש ממלכת אשור",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000010",
+      "event_title": "ישעיהו פרק י",
+      "lesson_id": "01699e2f-ac73-4ac2-92f3-f276b3d55194",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "הוי אשור שבט אפי",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000010",
+      "event_title": "ישעיהו פרק י",
+      "lesson_id": "d1dcbe57-be00-4bf6-b23e-88de261b9a26",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק י",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000011",
+      "event_title": "ישעיהו פרק יא",
+      "lesson_id": "960b01dc-ddcc-49e8-a24d-545388f66d28",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "ימות המשיח",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000011",
+      "event_title": "ישעיהו פרק יא",
+      "lesson_id": "027e8d14-0871-4f19-b9a1-6423183bac7b",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "גאולה טבעית או ניסית?",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000011",
+      "event_title": "ישעיהו פרק יא",
+      "lesson_id": "955af4a9-da9d-4285-84ea-756363b63c27",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "ונחה עליו רוח ה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000011",
+      "event_title": "ישעיהו פרק יא",
+      "lesson_id": "80915faf-90ad-4bc5-98f2-aab772a3fb75",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000012",
+      "event_title": "ישעיהו פרק יב",
+      "lesson_id": "3dedca54-cc02-49f0-8c5f-ca31cf37e4a4",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "אודך ה' כי אנפת בי",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000012",
+      "event_title": "ישעיהו פרק יב",
+      "lesson_id": "072aa066-1f91-4336-8ebf-ec20347fe58a",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000013",
+      "event_title": "ישעיהו פרק יג",
+      "lesson_id": "a1bd2f83-39e4-4402-977d-cdc03cfbb453",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' מממלכת בבל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000013",
+      "event_title": "ישעיהו פרק יג",
+      "lesson_id": "94b8a28d-f86f-4077-932e-80228c390c85",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "הנבואה על בבל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000013",
+      "event_title": "ישעיהו פרק יג",
+      "lesson_id": "892d45a1-9d72-453c-93e3-309291b48c0c",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "נחמת ישראל בפורענות בבל",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000013",
+      "event_title": "ישעיהו פרק יג",
+      "lesson_id": "a9765dde-4953-4cbb-b389-26e1ed40252c",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000014",
+      "event_title": "ישעיהו פרק יד",
+      "lesson_id": "2c56694d-d716-42a8-ba90-9621acfa562e",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "דברי הנביאים על ממלכת בבל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000014",
+      "event_title": "ישעיהו פרק יד",
+      "lesson_id": "3ef6ba76-6eb4-47db-a153-0cc3240eed8e",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "ונהפוכו של מלך בבל",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000014",
+      "event_title": "ישעיהו פרק יד",
+      "lesson_id": "e6c9c26f-6d04-4068-925a-62d6b1c16290",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000017",
+      "event_title": "ישעיהו פרק יז",
+      "lesson_id": "056b6693-cbb6-4345-9607-3619b32416ca",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' מדמשק ואפרים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000017",
+      "event_title": "ישעיהו פרק יז",
+      "lesson_id": "6ead19d1-024f-4db6-b672-cc6f868d9b7f",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "נבואות על מפלת האומות",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000017",
+      "event_title": "ישעיהו פרק יז",
+      "lesson_id": "7072d075-5946-481a-8246-afc58daf151a",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "ביום ההוא יעשה האדם אל עושהו",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000017",
+      "event_title": "ישעיהו פרק יז",
+      "lesson_id": "b0cf4f41-e635-487d-aa3a-4c6d7d93cbd6",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000018",
+      "event_title": "ישעיהו פרק יח",
+      "lesson_id": "3109921d-7c2d-4778-ac72-d623c5af9610",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הניצחון על גוג ומגוג",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000018",
+      "event_title": "ישעיהו פרק יח",
+      "lesson_id": "39b57bb8-98fa-4ff9-bd1a-d0b80a15ee14",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "נבואה לגאולה העתידה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000018",
+      "event_title": "ישעיהו פרק יח",
+      "lesson_id": "38b84d62-3b94-4ffb-b200-4a20ae4cb057",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000019",
+      "event_title": "ישעיהו פרק יט",
+      "lesson_id": "e2042f5a-1158-4d5f-a429-91a08d61366b",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' ממצרים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000019",
+      "event_title": "ישעיהו פרק יט",
+      "lesson_id": "97b925a3-b8bd-4672-bcf8-7e018947240a",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "השגחת ה' במפלת מצרים ובחזרתם בתשובה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000019",
+      "event_title": "ישעיהו פרק יט",
+      "lesson_id": "5e76bf36-edbf-4cb5-bc31-dff49740221f",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "משא מצרים על כל העמים",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000019",
+      "event_title": "ישעיהו פרק יט",
+      "lesson_id": "a7089159-7c9b-4d5f-aedf-38a24258ba18",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק יט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000020",
+      "event_title": "ישעיהו פרק כ",
+      "lesson_id": "52b8d733-2fa6-410d-bd3b-d92eec9745ca",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "כאשר הלך עבדי ישעיהו ערום ויחף שלוש שנים",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000020",
+      "event_title": "ישעיהו פרק כ",
+      "lesson_id": "adde1593-b536-4d33-af29-9fb4a6804ba1",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כ",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000020",
+      "event_title": "ישעיהו פרק כ",
+      "lesson_id": "b258ec0b-bb60-4dd5-8847-4cfdf9779d56",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "האם ישעיהו הלך ערום?!",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000021",
+      "event_title": "ישעיהו פרק כא",
+      "lesson_id": "e3248067-1eb2-446f-b21f-8d18978b8e27",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' מבבל אדום וערב",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000021",
+      "event_title": "ישעיהו פרק כא",
+      "lesson_id": "a67cd443-ee6b-4f21-897b-2f811ecb9785",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "נפלאות גלות וגאולה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000021",
+      "event_title": "ישעיהו פרק כא",
+      "lesson_id": "bd61a643-5109-4875-bae6-72e752a0fb63",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000022",
+      "event_title": "ישעיהו פרק כב",
+      "lesson_id": "61b213c7-2e43-4b35-9ba1-0f59d1be4136",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "חורבן ירושלים ועונשו של שבנא",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000022",
+      "event_title": "ישעיהו פרק כב",
+      "lesson_id": "19aea5cd-0b46-4933-bce1-a889d926f6b7",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "התוכחה על ירושלים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000022",
+      "event_title": "ישעיהו פרק כב",
+      "lesson_id": "3e2ac3fb-6521-4e2c-baa6-60f2d36945b2",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "אדישות ומעשיות בעת צרה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000022",
+      "event_title": "ישעיהו פרק כב",
+      "lesson_id": "00c6f99f-08e3-4c13-a8c6-3e093157f951",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000022",
+      "event_title": "ישעיהו פרק כב",
+      "lesson_id": "1963abd2-9874-4ee8-8a83-51b83b723a07",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "משא גיא חיזיון",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000023",
+      "event_title": "ישעיהו פרק כג",
+      "lesson_id": "9bb4a4c8-3025-4825-a028-423aab45ce50",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' מצור ומצידון",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000023",
+      "event_title": "ישעיהו פרק כג",
+      "lesson_id": "c6073e2c-62ea-48bb-9f67-e10aeeb6c6af",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "שכרם של ישראל לעתיד לבוא",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000023",
+      "event_title": "ישעיהו פרק כג",
+      "lesson_id": "eb03f385-ca03-4064-a5d1-c03beaeb601b",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "מפלת צור בניין ליושבים לפני ה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000023",
+      "event_title": "ישעיהו פרק כג",
+      "lesson_id": "5f99ac0e-c271-4770-9133-ebb1363e5486",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000023",
+      "event_title": "ישעיהו פרק כג",
+      "lesson_id": "e6a858f5-e931-4420-af88-1ecd58c41047",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "משא צר",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000024",
+      "event_title": "ישעיהו פרק כד",
+      "lesson_id": "86d16f36-d239-42cc-842b-bfbe70e99ff4",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "גלות ישראל והגאולה ממנה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000024",
+      "event_title": "ישעיהו פרק כד",
+      "lesson_id": "98e46fba-9027-40f7-8f02-c95735e0a319",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הכל מכוון לטובת ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000024",
+      "event_title": "ישעיהו פרק כד",
+      "lesson_id": "2a967d14-d18a-435e-908e-ae71432da3f2",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000025",
+      "event_title": "ישעיהו פרק כה",
+      "lesson_id": "4604b069-d8ea-47ab-9bd7-e495de9538c1",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הודיה ל - ד' על גאולת ישראל לעתיד לבוא",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000025",
+      "event_title": "ישעיהו פרק כה",
+      "lesson_id": "4ed50096-894c-4314-9c4a-972aa7feb581",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "עצות מרחוק אמונה אמן",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000025",
+      "event_title": "ישעיהו פרק כה",
+      "lesson_id": "26b1d33f-50c6-46a7-af8e-3e3a4c455993",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000026",
+      "event_title": "ישעיהו פרק כו",
+      "lesson_id": "47b3e54c-aadb-4607-8e2d-d4492d17dc48",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "שיר גאולה",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000026",
+      "event_title": "ישעיהו פרק כו",
+      "lesson_id": "e0378b02-b0eb-4e5d-a3ce-72c223116826",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "אמונת ישראל- גאולתו",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000026",
+      "event_title": "ישעיהו פרק כו",
+      "lesson_id": "8fc19e87-6b28-41a1-980b-21d7410628f7",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000027",
+      "event_title": "ישעיהו פרק כז",
+      "lesson_id": "50a95529-7c6b-4c6b-a514-82e95eadcf6f",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הנהגת ד' את ישראל בגלות ובגאולה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000027",
+      "event_title": "ישעיהו פרק כז",
+      "lesson_id": "18575c2d-a2ec-4523-b938-9cb9815a39c5",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "נחמה בחסד ובדין",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000027",
+      "event_title": "ישעיהו פרק כז",
+      "lesson_id": "fe5a2e76-54c4-4836-9ebc-4b3d02b980f7",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000027",
+      "event_title": "ישעיהו פרק כז",
+      "lesson_id": "b1010001-0001-4000-8000-000000000141",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "הגלות המצמיחה",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000027",
+      "event_title": "ישעיהו פרק כז",
+      "lesson_id": "b1010001-0001-4000-8000-000000000140",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "\"ובאו האובדים\"",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "9694fbd2-2347-415e-8f2c-3b1bbe69d2d1",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "גלות ישראל ויהודה מחמת קשיות עורפם וביזוי הנביאים ודבריהם",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "b1010001-0001-4000-8000-000000000147",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "התהליך והסדר שבקריאה \"הוי\"",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "4ab61ac8-c651-4ad7-9daf-0e6b731fb83a",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "תוכחה לחלקים שונים בעם ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "e1763af6-e7ea-4881-8caa-433c85837455",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "דברי משל ותוכחה לבני ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "17db3dff-ba58-4603-9e7a-57fbbbc52375",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "גאווה שיכורה מיין",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "ee713121-4b4c-4e03-a88c-2dc7c1f4639a",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "ברית עם השאול או משל לצמיחה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "34db0bfa-e3bf-4238-9ff2-0b2a9a3eca54",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "69139f4b-46f3-4a22-9584-215c9110a0ee",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "עטרת גאות שיכורי אפרים",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "b1010001-0001-4000-8000-000000000153",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "אנשי לצון",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000028",
+      "event_title": "ישעיהו פרק כח",
+      "lesson_id": "b1010001-0001-4000-8000-000000000154",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "עטרת צבי",
+      "old_rabbi": "הרב אוהד תירוש"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000029",
+      "event_title": "ישעיהו פרק כט",
+      "lesson_id": "89c359a2-b256-4743-ac5a-360a8dba5672",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הצלת ירושלים מידי אשור ותוכחה לדורו של אחז",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000029",
+      "event_title": "ישעיהו פרק כט",
+      "lesson_id": "a035f3ba-917a-45c5-a49c-35d52cc8e76f",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "התהליך והסדר שבקריאה \"הוי\"",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000029",
+      "event_title": "ישעיהו פרק כט",
+      "lesson_id": "59a4f499-0260-4052-8df4-9f22ace58c8d",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "ואבדה חכמת חכמיו",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000029",
+      "event_title": "ישעיהו פרק כט",
+      "lesson_id": "5be903c2-debb-48a4-8a51-5fe07a17f40e",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק כט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000029",
+      "event_title": "ישעיהו פרק כט",
+      "lesson_id": "b1010001-0001-4000-8000-000000000157",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"הוי אריאל\" - מבוכת המנהיגים ביהודה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000030",
+      "event_title": "ישעיהו פרק ל",
+      "lesson_id": "d45c5d4a-cc4c-4930-87b6-a46bf3fd6d3f",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "גם בקושי הגדול הנחמה מסתתרת",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000030",
+      "event_title": "ישעיהו פרק ל",
+      "lesson_id": "ed62d80b-f4c4-425a-9a1d-f2d34d4be7ba",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "תוכחה לנשענים על מצרים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000030",
+      "event_title": "ישעיהו פרק ל",
+      "lesson_id": "f5d147f8-d2c0-4cee-8005-5b95e40e6bf7",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ל",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000030",
+      "event_title": "ישעיהו פרק ל",
+      "lesson_id": "72ca966e-ffe3-4607-a2fe-f59dd08cda4f",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "הברית הבעייתית בין ישראל למצרים",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000031",
+      "event_title": "ישעיהו פרק לא",
+      "lesson_id": "8eac4654-042d-446b-b97d-78c157dccb9e",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "בטחון אפרים במצרים מול בטחון יהודה ב - ד'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000031",
+      "event_title": "ישעיהו פרק לא",
+      "lesson_id": "7700bd16-1acc-42f3-a933-7e3b958c8c7e",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000032",
+      "event_title": "ישעיהו פרק לב",
+      "lesson_id": "c1010001-0001-4000-8000-000000000005",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "'ציון במשפט תפדה ושביה בצדקה'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000032",
+      "event_title": "ישעיהו פרק לב",
+      "lesson_id": "4d2e3278-6af7-4bad-b9e3-7ee73d002ae3",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "קינת הנשים על ירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000032",
+      "event_title": "ישעיהו פרק לב",
+      "lesson_id": "5d445855-46f2-4ce0-8a08-f756d5f341e5",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000033",
+      "event_title": "ישעיהו פרק לג",
+      "lesson_id": "70505824-ad26-4ae3-88de-ab00071c361a",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "אמונת הצדיקים לעומת פחד החוטאים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000033",
+      "event_title": "ישעיהו פרק לג",
+      "lesson_id": "0148b1ba-302e-49e2-a937-41eed75210b2",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000034",
+      "event_title": "ישעיהו פרק לד",
+      "lesson_id": "af4cd6fd-e8fc-4092-bc68-95b096c2346b",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "קודם אדום תיפול",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000034",
+      "event_title": "ישעיהו פרק לד",
+      "lesson_id": "878229ac-a679-4954-be6d-fe74458aa522",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000035",
+      "event_title": "ישעיהו פרק לה",
+      "lesson_id": "b73bee3e-73e1-444c-9ab8-b696337bd713",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "גאולת ישראל ותקומתם",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000035",
+      "event_title": "ישעיהו פרק לה",
+      "lesson_id": "4a4a4830-903f-4614-93f0-24f5560066f8",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000035",
+      "event_title": "ישעיהו פרק לה",
+      "lesson_id": "dc445858-8b59-4c33-8b56-25b9b7635de3",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"פרוח תפרח ותגל",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000036",
+      "event_title": "ישעיהו פרק לו",
+      "lesson_id": "3cb9f8f9-e36e-41dd-b71a-ff9210d52370",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "סנחריב האויב המיוחד",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000036",
+      "event_title": "ישעיהו פרק לו",
+      "lesson_id": "36070603-131e-4d31-99c2-7462953af1be",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "מצור אשור בימי חזקיהו",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000036",
+      "event_title": "ישעיהו פרק לו",
+      "lesson_id": "f153df0d-ef1e-45a2-889b-6adb6251c0e8",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000036",
+      "event_title": "ישעיהו פרק לו",
+      "lesson_id": "1324160c-8db4-41b6-995b-9671e74af8cb",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "חזקיהו וסנחריב - מאפלה לאור גדול (א)",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "7ddd3e96-b0b5-4c43-bae7-fa2c2de1e1e6",
+      "mode": "move",
+      "from_series": "965e0675-6911-480c-b392-64048d469549",
+      "from_status": "category",
+      "from_title": "ישעיהו פרק לז",
+      "old_title": "כיצד יכל חזקיהו להיות המשיח?",
+      "old_rabbi": "הרב דוד טורנר"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "2b7ec510-fd8d-45f9-b054-e8a16acbed36",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "תפילת חזקיהו ומפלת אשור",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "9277c5c3-0baf-4182-8486-b72d0a2c3485",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "החמצת הגאולה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "1cdcf3da-2b18-49ff-86a3-070e09855e85",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "מפלת סנחריב",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "8dde18e5-922b-461e-820a-750c078e1d3f",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "נבואות ישעיהו על סנחריב",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "9ab5c06c-84c0-478e-80e3-66ff6d96b0ab",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "965e0675-6911-480c-b392-64048d469549",
+      "event_title": "ישעיהו פרק לז",
+      "lesson_id": "9f9476cc-e94a-4ece-8dc1-5a00bd5a24b4",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "חזקיהו וסנחריב - מאפלה לאור גדול (ב)",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000038",
+      "event_title": "ישעיהו פרק לח",
+      "lesson_id": "bd7fe00b-4a7a-4772-b218-dee5eddcabf6",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "חטא חזקיהו ורפואתו",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000038",
+      "event_title": "ישעיהו פרק לח",
+      "lesson_id": "8f3290ce-930d-4def-9525-e82de211dd78",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "מחלת חזקיהו",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000038",
+      "event_title": "ישעיהו פרק לח",
+      "lesson_id": "85aebaa5-74bd-4b99-b0f0-c6329543be7c",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000038",
+      "event_title": "ישעיהו פרק לח",
+      "lesson_id": "c1010001-0001-4000-8000-000000000037",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"חי חי הוא יודך\" - ממחלה להחלמה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000039",
+      "event_title": "ישעיהו פרק לט",
+      "lesson_id": "4f115c69-c440-4013-b092-10c3fed5274d",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "גאוות חזקיהו כמקור לגלות ישראל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000039",
+      "event_title": "ישעיהו פרק לט",
+      "lesson_id": "561367ac-2bf2-44d9-a32f-951ca92453a0",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק לט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "9f1a997c-fdab-4ca6-91f7-31815527f51b",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "ישראל יודעי ד' נגאלים, גויים שכחי אלו-ה כלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "27e24a33-9b13-4e80-9faa-df8370415a19",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הקדמה לנבואות הנחמה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "9095de97-6834-4019-854b-b581481196a9",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "נחמו נחמו עמי",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "6574943c-294c-48f9-ac95-f6e191c64337",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "נבואת נחמה ועידוד לבני ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "0034acdf-97e6-411b-8bdd-00fbe9b30be0",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מ",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "c00c2b73-0215-4013-9514-ca33f1ff04c8",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "במה זכה ישעיהו שרוב נבואותיו הן נבואות נחמה?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "f947ccc1-9c40-4025-b8e1-2cfb493d94e5",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "שבע שאלות כלליות על \"שבע דנחמתא\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "c1010001-0001-4000-8000-000000000052",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "מבט חדש על בריאת העולם",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000040",
+      "event_title": "ישעיהו פרק מ",
+      "lesson_id": "c1010001-0001-4000-8000-000000000042",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הנחמה העתידית מופיעה בהווה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000041",
+      "event_title": "ישעיהו פרק מא",
+      "lesson_id": "ade4f4ed-a4da-474d-958d-b35aa3d7671d",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "נבואה על הגאולה",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000041",
+      "event_title": "ישעיהו פרק מא",
+      "lesson_id": "cf4f9970-728d-4f4a-a21a-36a75715daaf",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000042",
+      "event_title": "ישעיהו פרק מב",
+      "lesson_id": "299d9cc4-1067-444c-9cb9-f80d25ac0f49",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הגאולה הנשגבת מבינתנו",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000042",
+      "event_title": "ישעיהו פרק מב",
+      "lesson_id": "33227deb-a1b1-48f6-a9b4-af75cd2936ad",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000042",
+      "event_title": "ישעיהו פרק מב",
+      "lesson_id": "c1010001-0001-4000-8000-000000000053",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "ממעשה בראשית אל הגאולה",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000043",
+      "event_title": "ישעיהו פרק מג",
+      "lesson_id": "bea1d9f8-06fa-41c6-be65-df8e8ac08817",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "ייחודו של עם ישראל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000043",
+      "event_title": "ישעיהו פרק מג",
+      "lesson_id": "97cc6f35-07a1-4a8a-831d-1a78f961b8f5",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "גודל אהבת ה' אלינו",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000043",
+      "event_title": "ישעיהו פרק מג",
+      "lesson_id": "2d17b11f-d0fb-4b35-8989-156f15ad3f87",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "הבחירה האלוקית בישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000043",
+      "event_title": "ישעיהו פרק מג",
+      "lesson_id": "9341dcdf-2f5b-4624-a7d5-131b3ffe8daf",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000043",
+      "event_title": "ישעיהו פרק מג",
+      "lesson_id": "c1010001-0001-4000-8000-000000000063",
+      "mode": "copy",
+      "from_series": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+      "from_status": "active",
+      "from_title": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_title": "מהי הקרבה אמתית",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000043",
+      "event_title": "ישעיהו פרק מג",
+      "lesson_id": "c1010001-0001-4000-8000-000000000060",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "\"ובישראל יתפאר\"",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000044",
+      "event_title": "ישעיהו פרק מד",
+      "lesson_id": "1ad12a79-be11-4f0a-82da-82720d9e0a34",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "אפסות העבודה זרה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000044",
+      "event_title": "ישעיהו פרק מד",
+      "lesson_id": "72200151-740d-4ecd-997f-ce307b9bf1a5",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000045",
+      "event_title": "ישעיהו פרק מה",
+      "lesson_id": "1c952f5f-f00c-46a9-ad1e-223215daceea",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "כורש כשליח ד'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000045",
+      "event_title": "ישעיהו פרק מה",
+      "lesson_id": "6c7058b8-4eba-42e2-ac39-45131d38a67c",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "מינוי כורש עוד לפני שנולד",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000045",
+      "event_title": "ישעיהו פרק מה",
+      "lesson_id": "20d49e4e-3eed-4b3b-a541-9bd3f1a7de99",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "מתי יתגלה שלטון הקב\"ה?",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000045",
+      "event_title": "ישעיהו פרק מה",
+      "lesson_id": "f1b50006-9be5-4522-8c86-a2ffd4c49164",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000046",
+      "event_title": "ישעיהו פרק מו",
+      "lesson_id": "68c58126-4ed2-4ee0-9fc5-570a66834069",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000047",
+      "event_title": "ישעיהו פרק מז",
+      "lesson_id": "dd8ad385-e080-440a-8ad1-ad280b4d36ea",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נפילת בבל בגלל עבודה זרה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000047",
+      "event_title": "ישעיהו פרק מז",
+      "lesson_id": "3e570d36-f3f6-45d1-bed9-90ccbdf20ee8",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000047",
+      "event_title": "ישעיהו פרק מז",
+      "lesson_id": "7258a529-6f20-4eea-9fd6-2aa85f731185",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "שְׁבִי־לָאָרֶץ אֵין־כִּסֵּא בַּת־כַּשְׂדִּים",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000048",
+      "event_title": "ישעיהו פרק מח",
+      "lesson_id": "6d89cfb5-c0c1-4a2b-af0e-62e96321419e",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הבטחת הגאולה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000048",
+      "event_title": "ישעיהו פרק מח",
+      "lesson_id": "d8172682-0cff-4c37-83e9-e3e7b1bca805",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000048",
+      "event_title": "ישעיהו פרק מח",
+      "lesson_id": "deba2948-a4d6-4c95-8030-16216fc600bd",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "הבריחה מבבל",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "b8d1e991-21c3-4879-8c54-e381f9cf228c",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "f5a0b12b-bb42-4ab4-aaa7-31803829ecfa",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "ישעיהו מתנבא על עם ישראל ועל עצמו",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "7ce345ac-dfd4-40ea-b665-42ba5b4711cc",
+      "mode": "copy",
+      "from_series": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - ישעיהו",
+      "old_title": "ישעיהו כמחולל גאולת ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "b33519cc-d1e0-488a-84ba-440dbdfc63f8",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק מט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "5bb66ef8-5ff8-4e83-b273-c36065fd87e6",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "שיבת ישראל לארצם וקיבוץ הגלויות",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "c1010001-0001-4000-8000-000000000085",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "ודאות הגאולה של ישעיהו",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000049",
+      "event_title": "ישעיהו פרק מט",
+      "lesson_id": "c1010001-0001-4000-8000-000000000086",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "התנערות מעייפות הגלות",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000050",
+      "event_title": "ישעיהו פרק נ",
+      "lesson_id": "acb0eb4d-9861-4c6e-93ea-dd11f8cc6a00",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "מעשיך יקרבוך מעשיך ירחיקוך",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000050",
+      "event_title": "ישעיהו פרק נ",
+      "lesson_id": "e63f09e4-c102-4e18-b2c3-08baf5e07104",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נ",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000050",
+      "event_title": "ישעיהו פרק נ",
+      "lesson_id": "70570452-9b8e-45fd-af10-c70c772209db",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"ספר כריתות אמכם\"",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000051",
+      "event_title": "ישעיהו פרק נא",
+      "lesson_id": "c871a158-9fac-49b5-a884-5b634d744532",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000051",
+      "event_title": "ישעיהו פרק נא",
+      "lesson_id": "c1010001-0001-4000-8000-000000000094",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הנחמות הכפולות של ישעיהו",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000051",
+      "event_title": "ישעיהו פרק נא",
+      "lesson_id": "c1010001-0001-4000-8000-000000000095",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "קריאה להתעוררות ירושלים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000052",
+      "event_title": "ישעיהו פרק נב",
+      "lesson_id": "2ac56423-c875-4227-a873-a69435fc2a42",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "עורי עורי",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000052",
+      "event_title": "ישעיהו פרק נב",
+      "lesson_id": "daaa68dd-aff4-4826-bb66-22367cd0ca23",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000053",
+      "event_title": "ישעיהו פרק נג",
+      "lesson_id": "506f9192-85f5-44f8-9184-a50a73383748",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "לב האומות",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000053",
+      "event_title": "ישעיהו פרק נג",
+      "lesson_id": "b48c2c7f-eae3-4237-a648-27b5335b19d5",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000053",
+      "event_title": "ישעיהו פרק נג",
+      "lesson_id": "384d2e5e-0c84-49dd-868e-7e4fac4d1df8",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "מיהו 'עבד ה' האמור ב'הנה ישכיל עבדי'?",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000054",
+      "event_title": "ישעיהו פרק נד",
+      "lesson_id": "934d9a96-c3ab-461d-8d8e-d9e5fd758f4f",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "כנסת ישראל וקב\"ה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000054",
+      "event_title": "ישעיהו פרק נד",
+      "lesson_id": "227adf9a-7307-401a-9f64-25389b08170e",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000054",
+      "event_title": "ישעיהו פרק נד",
+      "lesson_id": "c1010001-0001-4000-8000-000000000120",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "הפטרת פרשת ראה: \"כל כלי יוצר עליך לא יצלח\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000054",
+      "event_title": "ישעיהו פרק נד",
+      "lesson_id": "c1010001-0001-4000-8000-000000000108",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הגדולה העתידית של ירושלים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000054",
+      "event_title": "ישעיהו פרק נד",
+      "lesson_id": "c1010001-0001-4000-8000-000000000109",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "שמחה בעקרות?",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000055",
+      "event_title": "ישעיהו פרק נה",
+      "lesson_id": "59f4c154-8606-4ef2-b804-1fb4ed4ce898",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "החשיבות בקיום תורה ומצוות בשביל הגאולה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000055",
+      "event_title": "ישעיהו פרק נה",
+      "lesson_id": "2beb2964-3fad-4f99-8f0a-85e54e2fd993",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000056",
+      "event_title": "ישעיהו פרק נו",
+      "lesson_id": "40b1c756-125a-4c3a-bdde-8bc8939c6b11",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000057",
+      "event_title": "ישעיהו פרק נז",
+      "lesson_id": "7cdec0b5-f9c1-4c3b-b138-e1bd1f707959",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הנטיה החומרית",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000057",
+      "event_title": "ישעיהו פרק נז",
+      "lesson_id": "e2c82951-a9a0-4c45-8e40-58afbfa39489",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הבטחת ה' לעמ\"י",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000057",
+      "event_title": "ישעיהו פרק נז",
+      "lesson_id": "42597031-84e1-496d-8547-07ea74de853e",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000057",
+      "event_title": "ישעיהו פרק נז",
+      "lesson_id": "50b3b402-90df-40bf-8b35-d5be3fdeaf87",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "ההשפעה של מיתת צדיקים",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000057",
+      "event_title": "ישעיהו פרק נז",
+      "lesson_id": "54bcd6a2-ea23-4f12-899d-f82369230c53",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "תוכחה לעובדי עבודה זרה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000058",
+      "event_title": "ישעיהו פרק נח",
+      "lesson_id": "13743ebd-355b-4ae9-b1bb-c0d5525991bb",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "שילובים בעבודת ד'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000058",
+      "event_title": "ישעיהו פרק נח",
+      "lesson_id": "a3a1e136-49a2-4373-9246-39c22fa7880e",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "883d44a5-3756-4a5d-b170-afd08c6c9046",
+      "event_title": "ישעיהו פרק נט",
+      "lesson_id": "c1893c56-0771-4fe3-a16b-f8fb68a7a864",
+      "mode": "move",
+      "from_series": "883d44a5-3756-4a5d-b170-afd08c6c9046",
+      "from_status": "category",
+      "from_title": "ישעיהו פרק נט",
+      "old_title": "הביטו אל אברהם אביכם",
+      "old_rabbi": "הרב רוני אגלטל"
+    },
+    {
+      "event_id": "883d44a5-3756-4a5d-b170-afd08c6c9046",
+      "event_title": "ישעיהו פרק נט",
+      "lesson_id": "eac42737-f439-4f0f-a466-73f8c1f7ef22",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "גאולה מתוך חילול ה'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "883d44a5-3756-4a5d-b170-afd08c6c9046",
+      "event_title": "ישעיהו פרק נט",
+      "lesson_id": "20722987-7769-4316-8859-32ed81c179e9",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק נט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000060",
+      "event_title": "ישעיהו פרק ס",
+      "lesson_id": "c93fb7b4-9ac2-4699-ad75-7f93ca2f0c29",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "קיבוץ גלויות בעקבות ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000060",
+      "event_title": "ישעיהו פרק ס",
+      "lesson_id": "581854b8-65cf-4f77-93dc-53e42d24af57",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "השיא של נבואות הנחמה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000060",
+      "event_title": "ישעיהו פרק ס",
+      "lesson_id": "f84a7bb3-a4e8-4eb8-82fd-fb39226314b1",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק ס",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000060",
+      "event_title": "ישעיהו פרק ס",
+      "lesson_id": "caca1d99-d9df-401b-9308-2e400d48db11",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "אור ישראל בגאולה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000060",
+      "event_title": "ישעיהו פרק ס",
+      "lesson_id": "c1010001-0001-4000-8000-000000000142",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "ההארה באור ה'",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000061",
+      "event_title": "ישעיהו פרק סא",
+      "lesson_id": "025b4ea2-00b6-4f85-a95d-0812977bf6ce",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק סא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000061",
+      "event_title": "ישעיהו פרק סא",
+      "lesson_id": "7b129807-e653-45a8-a380-b7bfecbc3913",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "פאר תחת אפר",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000061",
+      "event_title": "ישעיהו פרק סא",
+      "lesson_id": "8b515eaf-2fd3-4255-b8bf-8ae8e2e7a234",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "היחס בין ישראל והגויים בזמן הגאולה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000061",
+      "event_title": "ישעיהו פרק סא",
+      "lesson_id": "c1010001-0001-4000-8000-000000000147",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "החתן והכלה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000062",
+      "event_title": "ישעיהו פרק סב",
+      "lesson_id": "15db1ce5-16ab-404a-a5fa-3581c14ce318",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "קב\"ה וישראל חד הם",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000062",
+      "event_title": "ישעיהו פרק סב",
+      "lesson_id": "9617aab1-1c42-49af-b33d-9f1c9c1e2dd4",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק סב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000062",
+      "event_title": "ישעיהו פרק סב",
+      "lesson_id": "fc10a8a7-1669-4547-840a-f2d8776bfdd0",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "גאולת ירושלים",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000062",
+      "event_title": "ישעיהו פרק סב",
+      "lesson_id": "1f044a06-82ba-4e13-a6ab-dc401499baec",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "שבועת ה' על הגאולה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000063",
+      "event_title": "ישעיהו פרק סג",
+      "lesson_id": "2a640692-5903-4f5f-ac22-0c1ec706b38d",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "מידת הדין",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000063",
+      "event_title": "ישעיהו פרק סג",
+      "lesson_id": "f68629bc-8f3c-4d27-8dda-4eb2d8513afc",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "תוכחות קשות, למה עכשיו?",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000063",
+      "event_title": "ישעיהו פרק סג",
+      "lesson_id": "1b39c84d-65df-4632-840e-ef51a757a3fc",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק סג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000064",
+      "event_title": "ישעיהו פרק סד",
+      "lesson_id": "2d782676-df98-4358-b083-bd519dd65a9d",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "הארת ה'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000064",
+      "event_title": "ישעיהו פרק סד",
+      "lesson_id": "66c686f9-5374-4d02-b3b6-7f3f3ecde3b7",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק סד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000065",
+      "event_title": "ישעיהו פרק סה",
+      "lesson_id": "04fbc6ec-b561-4301-9755-0608285bf04a",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "דירשו את ה'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000065",
+      "event_title": "ישעיהו פרק סה",
+      "lesson_id": "c37af09a-342d-413d-a373-a281711e5199",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק סה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000066",
+      "event_title": "ישעיהו פרק סו",
+      "lesson_id": "68c92a56-78b8-43af-97ea-c416ae0e6339",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "להיות טוב וישר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000066",
+      "event_title": "ישעיהו פרק סו",
+      "lesson_id": "ac495c9e-c166-4d96-9035-e1707077ef0c",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "ישעיהו סיום",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000066",
+      "event_title": "ישעיהו פרק סו",
+      "lesson_id": "6a7475e9-a3d3-4848-8fd3-80e3c3abcc46",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "ישעיהו פרק סו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000066",
+      "event_title": "ישעיהו פרק סו",
+      "lesson_id": "c1010001-0001-4000-8000-000000000163",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "מהי עבודת ה' אמיתית?",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "a1010001-0002-4000-8000-000000000066",
+      "event_title": "ישעיהו פרק סו",
+      "lesson_id": "c1010001-0001-4000-8000-000000000160",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הגאולה כבריאה חדשה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "event_title": "מאמרים - ספר ישעיהו",
+      "lesson_id": "b1010001-0001-4000-8000-000000000009",
+      "mode": "copy",
+      "from_series": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר ישעיהו",
+      "old_title": "\"צדק ילין בה\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "event_title": "מאמרים על ספר ישעיהו",
+      "lesson_id": "26b74bbf-1cad-43cf-963a-266aeff71a76",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"הוי אריאל\" - מבוכת המנהיגים ביהודה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "event_title": "מאמרים על ספר ישעיהו",
+      "lesson_id": "c1010001-0001-4000-8000-000000000019",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"פרוח תפרח ותגל",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "event_title": "מאמרים על ספר ישעיהו",
+      "lesson_id": "0d3c0ae0-add0-4916-bef7-2b45bb37dea3",
+      "mode": "copy",
+      "from_series": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+      "from_status": "active",
+      "from_title": "מאמרים על ספר ישעיהו",
+      "old_title": "\"חי חי הוא יודך\" - ממחלה להחלמה",
+      "old_rabbi": "הרב עדיאל לוי"
+    },
+    {
+      "event_id": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "event_title": "ספר ישעיהו",
+      "lesson_id": "1998f2c6-54b4-4942-826c-10da90303cbc",
+      "mode": "move",
+      "from_series": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+      "from_status": "category",
+      "from_title": "ספר ישעיהו",
+      "old_title": "נבואת הפורענות והנחמה",
+      "old_rabbi": "הרב יעקב ידיד"
+    },
+    {
+      "event_id": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "event_title": "ספר ישעיהו - כלל ופרט",
+      "lesson_id": "ebb76298-1c92-44dd-9e1d-49b3fc4991bf",
+      "mode": "copy",
+      "from_series": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+      "from_status": "active",
+      "from_title": "ספר ישעיהו - כלל ופרט",
+      "old_title": "הקדמה לספר ישעיהו",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "event_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "lesson_id": "c0e304f3-6c0a-4cb9-aa11-b649b6b34653",
+      "mode": "move",
+      "from_series": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+      "from_status": "category",
+      "from_title": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_title": "כל ספר ישעיהו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "event_title": "שיעורים על  ספר ישעיהו",
+      "lesson_id": "02fb8e36-338d-4280-97c7-77878761ec3a",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "מצור אשור על ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "event_title": "שיעורים על  ספר ישעיהו",
+      "lesson_id": "562b0bc1-ddd1-45fa-a206-b0e2def958da",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "נקמת ד' מכוש וממצרים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "event_title": "שיעורים על  ספר ישעיהו",
+      "lesson_id": "67119be5-d3a1-4576-8b71-33d0e6f9b569",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "תוכחה לבוטחים במלכויות הגויים ולא ב - ד'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "event_title": "שיעורים על  ספר ישעיהו",
+      "lesson_id": "d9e444a4-daff-4e40-9bae-287caa1e0310",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "'ציון במשפט תפדה ושביה בצדקה'",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "event_title": "שיעורים על  ספר ישעיהו",
+      "lesson_id": "281cea20-4628-425f-95ce-d33bae012436",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "\"מי חכם וישמור אלה ויתבוננו חסדי ד' \"",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "event_title": "שיעורים על  ספר ישעיהו",
+      "lesson_id": "8ad1274e-993b-49d9-90f0-a1dd4fc68b24",
+      "mode": "copy",
+      "from_series": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+      "from_status": "active",
+      "from_title": "שיעורים על  ספר ישעיהו",
+      "old_title": "דירשו ה' והימצאו",
+      "old_rabbi": "הרב אחיקם גץ"
+    }
+  ],
+  "report": [
+    {
+      "event": "ישעיהו -  מוקלט | ללא טעמים",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-מוקלט-ללא-טעמים/",
+      "matched": 36,
+      "old_lessons": 36,
+      "unmatched": []
+    },
+    {
+      "event": "ישעיהו בבקיאות",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-בבקיאות/",
+      "matched": 30,
+      "old_lessons": 30,
+      "unmatched": []
+    },
+    {
+      "event": "ישעיהו פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-א/",
+      "matched": 7,
+      "old_lessons": 12,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים א-ב",
+        "ישעיהו מוקלט - פרק א | ללא טעמים",
+        "ישעיה בעיון פרק א פירוש ארוך",
+        "ישעיה א לב הפרק",
+        "התשובה הודאית של ישראל"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ב/",
+      "matched": 4,
+      "old_lessons": 8,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים א-ב",
+        "סיבת ההוכחה שמוכיח ישעיהו את ישראל",
+        "ישעיהו מוקלט - פרק ב | ללא טעמים",
+        "מידת הגאוה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ג/",
+      "matched": 3,
+      "old_lessons": 8,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים ג-ד",
+        "סיבת ההוכחה שמוכיח ישעיהו את ישראל",
+        "ישעיהו מוקלט - פרק ג | ללא טעמים",
+        "עושר מביא לחטא",
+        "הסכנה במידת הגאוה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ד/",
+      "matched": 1,
+      "old_lessons": 5,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים ג-ד",
+        "סיבת ההוכחה שמוכיח ישעיהו את ישראל",
+        "הסרת השביסים והעכסים",
+        "ישעיהו מוקלט - פרק ד | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ה/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים ה-ו",
+        "ישעיהו מוקלט - פרק ה | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ו/",
+      "matched": 10,
+      "old_lessons": 12,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים ה-ו",
+        "ישעיהו מוקלט - פרק ו | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ז/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים ז-ח",
+        "משל הכרם",
+        "ישעיהו מוקלט - פרק ז | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ח/",
+      "matched": 6,
+      "old_lessons": 9,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים ז-ח",
+        "שמות  הילדים ומשמעותם",
+        "ישעיהו מוקלט - פרק ח | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ט/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים ט-י",
+        "הודעת ישעיהו לאחז",
+        "שמות  הילדים ומשמעותם",
+        "ישעיהו מוקלט - פרק ט | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק טו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-טו/",
+      "matched": 5,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים טו-טז",
+        "ישעיהו מוקלט - פרק טו | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק טז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-טז/",
+      "matched": 2,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים טו-טז",
+        "העיקרון היסודי במשאות ישעיהו על העמים",
+        "מעמדם העולמי של ישראל",
+        "משא מואב מבפנים החוצה",
+        "ישעיהו מוקלט - פרק טז | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק י",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-י/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים ט-י",
+        "הודעת ישעיהו לאחז",
+        "שמות  הילדים ומשמעותם",
+        "ישעיהו מוקלט - פרק י | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יא/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יא-יב",
+        "ישעיהו מוקלט - פרק יא | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יב/",
+      "matched": 2,
+      "old_lessons": 5,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יא-יב",
+        "ימות המשיח",
+        "גאולה טבעית או ניסית?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יג/",
+      "matched": 4,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יג-יד",
+        "גאולה טבעית או ניסית?",
+        "ישעיהו מוקלט - פרק יג | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יד/",
+      "matched": 3,
+      "old_lessons": 9,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יג-יד",
+        "גאולה טבעית או ניסית?",
+        "העיקרון היסודי במשאות ישעיהו על העמים",
+        "הנבואה על בבל",
+        "מעמדם העולמי של ישראל",
+        "ישעיהו מוקלט - פרק יד | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יז/",
+      "matched": 4,
+      "old_lessons": 8,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יז-יח",
+        "העיקרון היסודי במשאות ישעיהו על העמים",
+        "מעמדם העולמי של ישראל",
+        "ישעיהו מוקלט - פרק יז | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יח/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יז-יח",
+        "העיקרון היסודי במשאות ישעיהו על העמים",
+        "נבואות על מפלת האומות",
+        "ישעיהו מוקלט - פרק יח | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק יט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-יט/",
+      "matched": 4,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יט-כ",
+        "נבואות על מפלת האומות",
+        "ישעיהו מוקלט - פרק יט | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כ",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כ/",
+      "matched": 3,
+      "old_lessons": 8,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים יט-כ",
+        "השגחת ה' במפלת מצרים ובחזרתם בתשובה",
+        "נבואות על מפלת האומות",
+        "משא מצרים על כל העמים",
+        "ישעיהו מוקלט - פרק כ | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כא/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כא-כב",
+        "השגחת ה' במפלת מצרים ובחזרתם בתשובה",
+        "נבואות על מפלת האומות",
+        "ישעיהו מוקלט - פרק כא | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כב/",
+      "matched": 5,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כא-כב",
+        "ישעיהו מוקלט - פרק כב | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כג/",
+      "matched": 5,
+      "old_lessons": 8,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כג-כד",
+        "התוכחה על ירושלים",
+        "ישעיהו מוקלט - פרק כג | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כד/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כג-כד",
+        "שכרם של ישראל לעתיד לבוא",
+        "ישעיהו מוקלט - פרק כד | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כה/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כה-כו",
+        "הכל מכוון לטובת ישראל",
+        "שכרם של ישראל לעתיד לבוא",
+        "ישעיהו מוקלט - פרק כה | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כו/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כה-כו",
+        "הכל מכוון לטובת ישראל",
+        "שכרם של ישראל לעתיד לבוא",
+        "ישעיהו מוקלט - פרק כו | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כז/",
+      "matched": 5,
+      "old_lessons": 9,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כז-כח",
+        "הכל מכוון לטובת ישראל",
+        "שיר גאולה",
+        "ישעיהו מוקלט - פרק כז | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כח/",
+      "matched": 10,
+      "old_lessons": 12,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כז-כח",
+        "ישעיהו מוקלט - פרק כח | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק כט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-כט/",
+      "matched": 5,
+      "old_lessons": 9,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כט-ל",
+        "תוכחה לחלקים שונים בעם ישראל",
+        "דברי משל ותוכחה לבני ישראל",
+        "ישעיהו מוקלט - פרק כט | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ל/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים כט-ל",
+        "ישעיהו מוקלט - פרק ל | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לא/",
+      "matched": 2,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לא-לב",
+        "גם בקושי הגדול הנחמה מסתתרת",
+        "הברית הבעייתית בין ישראל למצרים",
+        "ישעיהו מוקלט - פרק לא | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לב/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לא-לב",
+        "גם בקושי הגדול הנחמה מסתתרת",
+        "ישעיהו מוקלט - פרק לב | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לג/",
+      "matched": 2,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לג-לד",
+        "ירמיהו בבקיאות פרקים לג-לד",
+        "גם בקושי הגדול הנחמה מסתתרת",
+        "קינת הנשים על ירושלים",
+        "ישעיהו מוקלט - פרק לג | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לד/",
+      "matched": 2,
+      "old_lessons": 5,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לג-לד",
+        "ירמיהו בבקיאות פרקים לג-לד",
+        "ישעיהו מוקלט - פרק לד | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לה/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לה-לו",
+        "קודם אדום תיפול",
+        "ישעיהו מוקלט - פרק לה | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לו/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לה-לו",
+        "ישעיהו מוקלט - פרק לו | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לז/",
+      "matched": 7,
+      "old_lessons": 11,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים לז-לח",
+        "סנחריב האויב המיוחד",
+        "מצור אשור בימי חזקיהו",
+        "ישעיהו מוקלט - פרק לז | ללא טעמים"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לח/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים לז-לח",
+        "החמצת הגאולה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק לט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-לט/",
+      "matched": 2,
+      "old_lessons": 4,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לט-מ",
+        "החמצת הגאולה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מ",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מ/",
+      "matched": 9,
+      "old_lessons": 16,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים לט-מ",
+        "מלחמת הגויים בישראל",
+        "ניצחון אברהם עומד לדורות",
+        "מקור הכוח בישראל ובעמים",
+        "שלושת גווני ההשגחה",
+        "שבע שאלות על 'שבע דנחמתא'",
+        "במה זכה ישעיהו שרוב נבואותיו - נבואות נחמה?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מא/",
+      "matched": 2,
+      "old_lessons": 5,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים מא-מב",
+        "הקדמה לנבואות הנחמה",
+        "נבואת נחמה ועידוד לבני ישראל"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מב/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים מא-מב",
+        "נבואה על הגאולה",
+        "מבט חדש על בריאת העולם"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מג/",
+      "matched": 6,
+      "old_lessons": 9,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים מג-מד",
+        "הגאולה הנשגבת מבינתנו",
+        "מבט חדש על בריאת העולם"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מד/",
+      "matched": 2,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים מג-מד",
+        "הגאולה הנשגבת מבינתנו",
+        "גודל אהבת ה' אלינו",
+        "הבחירה האלוקית בישראל"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מה/",
+      "matched": 4,
+      "old_lessons": 5,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים מה-מו"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מו/",
+      "matched": 1,
+      "old_lessons": 4,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים מה-מו",
+        "מינוי כורש עוד לפני שנולד",
+        "מתי יתגלה שלטון הקב\"ה?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מז/",
+      "matched": 3,
+      "old_lessons": 5,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים מז-מח",
+        "מתי יתגלה שלטון הקב\"ה?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מח/",
+      "matched": 3,
+      "old_lessons": 5,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים מז-מח",
+        "מתי יתגלה שלטון הקב\"ה?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק מט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-מט/",
+      "matched": 7,
+      "old_lessons": 8,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים מט-נ (פסוק כ)"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נ",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נ/",
+      "matched": 3,
+      "old_lessons": 8,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים מט-נ (פסוק כ)",
+        "ירמיהו בבקיאות פרקים נ-נא",
+        "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה",
+        "ישעיהו מתנבא על עם ישראל ועל עצמו",
+        "ישעיהו כמחולל גאולת ישראל"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נא/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "ירמיהו בבקיאות פרקים נ-נא",
+        "ישעיהו בבקיאות פרקים נא-נב",
+        "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נב/",
+      "matched": 2,
+      "old_lessons": 4,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים נא-נב",
+        "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נג/",
+      "matched": 3,
+      "old_lessons": 4,
+      "unmatched": [
+        "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נד/",
+      "matched": 5,
+      "old_lessons": 10,
+      "unmatched": [
+        "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה",
+        "מטרת המבול",
+        "ודאות הגאולה",
+        "ההופעה העתידית של נח",
+        "הפטרת כי תצא (ישעיהו נד) – העקרה היולדת"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נה/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "ישעיהו פרק נו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נו/",
+      "matched": 1,
+      "old_lessons": 2,
+      "unmatched": [
+        "החשיבות בקיום תורה ומצוות בשביל הגאולה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נז/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "ישעיהו פרק נח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נח/",
+      "matched": 2,
+      "old_lessons": 3,
+      "unmatched": [
+        "הבטחת ה' לעמ\"י"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק נט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-נט/",
+      "matched": 3,
+      "old_lessons": 4,
+      "unmatched": [
+        "הבטחת ה' לעמ\"י"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק ס",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-ס/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "ישעיהו פרק סא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-סא/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים סא-סב",
+        "השיא של נבואות הנחמה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק סב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-סב/",
+      "matched": 4,
+      "old_lessons": 6,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים סא-סב",
+        "השיא של נבואות הנחמה"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק סג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-סג/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "ישעיהו פרק סד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-סד/",
+      "matched": 2,
+      "old_lessons": 3,
+      "unmatched": [
+        "תוכחות קשות, למה עכשיו?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק סה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-סה/",
+      "matched": 2,
+      "old_lessons": 4,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים סה-סו",
+        "תוכחות קשות, למה עכשיו?"
+      ]
+    },
+    {
+      "event": "ישעיהו פרק סו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ישעיהו-פרק-סו/",
+      "matched": 5,
+      "old_lessons": 7,
+      "unmatched": [
+        "ישעיהו בבקיאות פרקים סה-סו",
+        "תוכחות קשות, למה עכשיו?"
+      ]
+    },
+    {
+      "event": "מאמרים - ספר ישעיהו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/מאמרים-ספר-ישעיהו/",
+      "matched": 1,
+      "old_lessons": 4,
+      "unmatched": [
+        "האם ישעיהו הלך ערום?!",
+        "במה זכה ישעיהו שרוב נבואותיו הן נבואות נחמה?",
+        "שבע שאלות כלליות על \"שבע דנחמתא\""
+      ]
+    },
+    {
+      "event": "מאמרים על ספר ישעיהו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/מאמרים-על-ספר-ישעיהו/",
+      "matched": 3,
+      "old_lessons": 21,
+      "unmatched": [
+        "משא גיא חיזיון",
+        "משא צר",
+        "עטרת גאות שיכורי אפרים",
+        "הברית הבעייתית בין ישראל למצרים",
+        "חזקיהו וסנחריב - מאפלה לאור גדול (א)",
+        "חזקיהו וסנחריב - מאפלה לאור גדול (ב)",
+        "שְׁבִי־לָאָרֶץ אֵין־כִּסֵּא בַּת־כַּשְׂדִּים",
+        "הבריחה מבבל",
+        "שיבת ישראל לארצם וקיבוץ הגלויות",
+        "\"ספר כריתות אמכם\"",
+        "מיהו 'עבד ה' האמור ב'הנה ישכיל עבדי'?",
+        "ההשפעה של מיתת צדיקים",
+        "תוכחה לעובדי עבודה זרה",
+        "אור ישראל בגאולה",
+        "פאר תחת אפר",
+        "היחס בין ישראל והגויים בזמן הגאולה",
+        "גאולת ירושלים",
+        "שבועת ה' על הגאולה"
+      ]
+    },
+    {
+      "event": "ספר ישעיהו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ספר-ישעיהו/",
+      "matched": 1,
+      "old_lessons": 29,
+      "unmatched": [
+        "עליה וירידה בדמות אדם",
+        "הסרת השביסים והעכסים",
+        "כרם הענבים הבאושים",
+        "תוכחה ונחמה בהוי",
+        "בשנת מות המלך עוזיהו - נבואת ישעיה מתוך נוע אמות הסיפים",
+        "נבואת נחמה למלך רשע",
+        "קשר של חולשה",
+        "לתורה ולתעודה",
+        "לו או לא הגדלת השמחה",
+        "הוי אשור שבט אפי",
+        "ונחה עליו רוח ה",
+        "אודך ה' כי אנפת בי",
+        "נחמת ישראל בפורענות בבל",
+        "ונהפוכו של מלך בבל",
+        "משא מואב מבפנים החוצה",
+        "ביום ההוא יעשה האדם אל עושהו",
+        "נבואה לגאולה העתידה",
+        "משא מצרים על כל העמים",
+        "כאשר הלך עבדי ישעיהו ערום ויחף שלוש שנים",
+        "נפלאות גלות וגאולה",
+        "אדישות ומעשיות בעת צרה",
+        "מפלת צור בניין ליושבים לפני ה",
+        "עצות מרחוק אמונה אמן",
+        "אמונת ישראל- גאולתו",
+        "נחמה בחסד ובדין",
+        "גאווה שיכורה מיין",
+        "ברית עם השאול או משל לצמיחה",
+        "ואבדה חכמת חכמיו"
+      ]
+    },
+    {
+      "event": "ספר ישעיהו - כלל ופרט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/ספר-ישעיהו-כלל-ופרט/",
+      "matched": 1,
+      "old_lessons": 24,
+      "unmatched": [
+        "סיבת ההוכחה שמוכיח ישעיהו את ישראל",
+        "משל הכרם",
+        "הודעת ישעיהו לאחז",
+        "גאולה טבעית או ניסית?",
+        "העיקרון היסודי במשאות ישעיהו על העמים",
+        "השגחת ה' במפלת מצרים ובחזרתם בתשובה",
+        "התוכחה על ירושלים",
+        "הכל מכוון לטובת ישראל",
+        "התהליך והסדר שבקריאה \"הוי\"",
+        "גם בקושי הגדול הנחמה מסתתרת",
+        "קודם אדום תיפול",
+        "סנחריב האויב המיוחד",
+        "החמצת הגאולה",
+        "הקדמה לנבואות הנחמה",
+        "הגאולה הנשגבת מבינתנו",
+        "גודל אהבת ה' אלינו",
+        "מינוי כורש עוד לפני שנולד",
+        "מתי יתגלה שלטון הקב\"ה?",
+        "ישראל מתקשים להבין איך יכול להיות שבסוף תהיה גאולה",
+        "החשיבות בקיום תורה ומצוות בשביל הגאולה",
+        "הבטחת ה' לעמ\"י",
+        "השיא של נבואות הנחמה",
+        "תוכחות קשות, למה עכשיו?"
+      ]
+    },
+    {
+      "event": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/קריאה-וביאור-בקצרה-של-ספר-ישעיהו/",
+      "matched": 1,
+      "old_lessons": 67,
+      "unmatched": [
+        "ישעיהו פרק א",
+        "ישעיהו פרק ב",
+        "ישעיהו פרק ג",
+        "ישעיהו פרק ד",
+        "ישעיהו פרק ה",
+        "ישעיהו פרק ו",
+        "ישעיהו פרק ז",
+        "ישעיהו פרק ח",
+        "ישעיהו פרק ט",
+        "ישעיהו פרק י",
+        "ישעיהו פרק יא",
+        "ישעיהו פרק יב",
+        "ישעיהו פרק יג",
+        "ישעיהו פרק יד",
+        "ישעיהו פרק טו",
+        "ישעיהו פרק טז",
+        "ישעיהו פרק יז",
+        "ישעיהו פרק יח",
+        "ישעיהו פרק יט",
+        "ישעיהו פרק כ",
+        "ישעיהו פרק כא",
+        "ישעיהו פרק כב",
+        "ישעיהו פרק כג",
+        "ישעיהו פרק כד",
+        "ישעיהו פרק כה",
+        "ישעיהו פרק כו",
+        "ישעיהו פרק כז",
+        "ישעיהו פרק כח",
+        "ישעיהו פרק כט",
+        "ישעיהו פרק ל",
+        "ישעיהו פרק לא",
+        "ישעיהו פרק לב",
+        "ישעיהו פרק לג",
+        "ישעיהו פרק לד",
+        "ישעיהו פרק לה",
+        "ישעיהו פרק לו",
+        "ישעיהו פרק לז",
+        "ישעיהו פרק לח",
+        "ישעיהו פרק לט",
+        "ישעיהו פרק מ",
+        "ישעיהו פרק מא",
+        "ישעיהו פרק מב",
+        "ישעיהו פרק מג",
+        "ישעיהו פרק מד",
+        "ישעיהו פרק מה",
+        "ישעיהו פרק מו",
+        "ישעיהו פרק מז",
+        "ישעיהו פרק מח",
+        "ישעיהו פרק מט",
+        "ישעיהו פרק נ",
+        "ישעיהו פרק נא",
+        "ישעיהו פרק נב",
+        "ישעיהו פרק נג",
+        "ישעיהו פרק נד",
+        "ישעיהו פרק נה",
+        "ישעיהו פרק נו",
+        "ישעיהו פרק נז",
+        "ישעיהו פרק נח",
+        "ישעיהו פרק נט",
+        "ישעיהו פרק ס",
+        "ישעיהו פרק סא",
+        "ישעיהו פרק סב",
+        "ישעיהו פרק סג",
+        "ישעיהו פרק סד",
+        "ישעיהו פרק סה",
+        "ישעיהו פרק סו"
+      ]
+    },
+    {
+      "event": "שיעורים על  ספר ישעיהו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/שיעורים-על-ספר-ישעיהו/",
+      "matched": 6,
+      "old_lessons": 54,
+      "unmatched": [
+        "חזון הגדולה באחרית הימים",
+        "הביטחון ב - ד'",
+        "משל הכרם",
+        "התגלות כבוד השכינה לישעיהו",
+        "מלכות בית דוד מול מלכות ישראל ואשור",
+        "כינון מלכות חזקיה ומפלת מלכות ישראל",
+        "עונש ממלכת אשור",
+        "ימות המשיח",
+        "נקמת ד' מממלכת בבל",
+        "נקמת ד' ממואב",
+        "המשך נקמת ד' ממואב",
+        "נקמת ד' מדמשק ואפרים",
+        "הניצחון על גוג ומגוג",
+        "נקמת ד' ממצרים",
+        "נקמת ד' מבבל אדום וערב",
+        "חורבן ירושלים ועונשו של שבנא",
+        "נקמת ד' מצור ומצידון",
+        "גלות ישראל והגאולה ממנה",
+        "הודיה ל - ד' על גאולת ישראל לעתיד לבוא",
+        "הנהגת ד' את ישראל בגלות ובגאולה",
+        "גלות ישראל ויהודה מחמת קשיות עורפם וביזוי הנביאים ודבריהם",
+        "הצלת ירושלים מידי אשור ותוכחה לדורו של אחז",
+        "בטחון אפרים במצרים מול בטחון יהודה ב - ד'",
+        "אמונת הצדיקים לעומת פחד החוטאים",
+        "גאולת ישראל ותקומתם",
+        "תפילת חזקיהו ומפלת אשור",
+        "חטא חזקיהו ורפואתו",
+        "גאוות חזקיהו כמקור לגלות ישראל",
+        "ישראל יודעי ד' נגאלים, גויים שכחי אלו-ה כלים",
+        "ייחודו של עם ישראל",
+        "אפסות העבודה זרה",
+        "כורש כשליח ד'",
+        "נפילת בבל בגלל עבודה זרה",
+        "הבטחת הגאולה",
+        "מעשיך יקרבוך מעשיך ירחיקוך",
+        "עורי עורי",
+        "לב האומות",
+        "כנסת ישראל וקב\"ה",
+        "הנטיה החומרית",
+        "שילובים בעבודת ד'",
+        "גאולה מתוך חילול ה'",
+        "קיבוץ גלויות בעקבות ירושלים",
+        "קב\"ה וישראל חד הם",
+        "מידת הדין",
+        "הארת ה'",
+        "דירשו את ה'",
+        "להיות טוב וישר",
+        "ישעיהו סיום"
+      ]
+    },
+    {
+      "event": "שיעורים על התנ\"ך - ישעיהו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/שיעורים-על-התנך-ישעיהו/",
+      "matched": 0,
+      "old_lessons": 21,
+      "unmatched": [
+        "שמות  הילדים ומשמעותם",
+        "הנבואה על בבל",
+        "דברי הנביאים על ממלכת בבל",
+        "מעמדם העולמי של ישראל",
+        "נבואות על מפלת האומות",
+        "שכרם של ישראל לעתיד לבוא",
+        "שיר גאולה",
+        "תוכחה לחלקים שונים בעם ישראל",
+        "דברי משל ותוכחה לבני ישראל",
+        "תוכחה לנשענים על מצרים",
+        "קינת הנשים על ירושלים",
+        "מצור אשור בימי חזקיהו",
+        "מפלת סנחריב",
+        "נבואות ישעיהו על סנחריב",
+        "מחלת חזקיהו",
+        "נחמו נחמו עמי",
+        "נבואת נחמה ועידוד לבני ישראל",
+        "נבואה על הגאולה",
+        "הבחירה האלוקית בישראל",
+        "ישעיהו מתנבא על עם ישראל ועל עצמו",
+        "ישעיהו כמחולל גאולת ישראל"
+      ]
+    }
+  ]
+}

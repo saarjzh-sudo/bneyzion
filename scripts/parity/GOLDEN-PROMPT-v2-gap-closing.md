@@ -9,12 +9,18 @@
 המשימה: לסגור את הפערים הקיימים בין האתר הישן (bneyzion.co.il) לחדש (bneyzion.vercel.app + Supabase),
 ולזהות פערים חדשים. קרא קודם: scripts/parity/SKILL.md + KNOWLEDGE.md + scripts/parity/reports/missing-FINAL.json.
 
-═══════ מצב נוכחי (9.6.2026) ═══════
+═══════ מצב נוכחי (9.6.2026 ✓ updated) ═══════
 - כל האתר הישן נסרק (10,157 עמודים, שני המאגרים). אגף המורים מאומת 100% (0 חוסרים, כל 373 ה-attachments
-  הועברו ל-Supabase Storage, 0 על האתר הישן).
-- נותרו ~409 חוסרים אמיתיים בצד הציבורי (כולם general), ~101 עם PDF. הרשימה: scripts/parity/reports/missing-FINAL.json
-  (כל פריט: title, url, repo, depth, pdfs[]). קטגוריות: איוב פרק-פרק, תהלים/מזמורים, יהושע פרק-פרק,
-  הפטרות לשבתות מיוחדות, ימי עיון בתנ"ך, מועדים, מפות/כלי עזר.
+  הועברו ל-Supabase Storage, 0 על האתר הישן). Rule 13 violations = 0.
+- missing-FINAL.json = 409 → אחרי re-verification בסשן ה׳: 259 confirmed → **2 גיתות אמיתיות בלבד**:
+  - `פרשת קורח | טז-יח` (45 שיעורים, id aa50e54c) — הוכנס
+  - `חמאה ודבש - ישעיהו` (1 שיעור, id 10e20007) — הוכנס
+- שאר 259 ה"חוסרים" = aggregation/navigation pages של האתר הישן. לא שיעורים פרטניים.
+  **כלל Depth:** depth≤4 = כמעט תמיד category/series-listing page (לא lesson). depth≥6 = lesson פרטני.
+  depth=5 = lesson רק אם יש S3/video/PDF ייחודי + H1 שונה משם הסדרה.
+- **פרשנות למספרי אתר ישן:** "ימי עיון" 33-43 PDFs = handouts בכנסים, לא שיעורים חדשים (הם כבר בDB).
+  "הפטרות מועדים" = aggregation pages שמקשרות לשיעורים קיימים.
+  "פרשת X" depth=4 = series page קיימת (אפילו אם הtoken-overlap נכשל). בדוק ישירות: SELECT FROM series WHERE title ILIKE '%ראשי הכותרת%'.
 
 ═══════ מפתחות (מ-api-keys.md, מחוץ ל-git) ═══════
 - SUPABASE_MANAGEMENT_API_TOKEN = sbp_...   (SQL — Management API)

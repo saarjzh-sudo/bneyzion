@@ -1,0 +1,1111 @@
+{
+ "scraped_at": "2026-06-11 23:54:40",
+ "source": "https://www.bneyzion.co.il/אגף-המורים/",
+ "selectors": {
+  "facets": "3x nav.sideNav on root page, order: by_book / by_content_type / by_creator",
+  "by_book": "ul.nav.cats > a (depth1) ; ul.nav.subCats (depth2=book) ; ul.nav.subSubCats (depth3=collection)",
+  "by_content_type": "a[href*='/מאגר-עזרי-הלמידה/נושאים/?subject='] text 'TITLE (N)'",
+  "by_creator": "a[href*='/מאגר-עזרי-הלמידה/יוצרים/?rav='] text 'NAME (N)'"
+ },
+ "by_book": [
+  {
+   "title": "פרשת השבוע",
+   "title_norm": "פרשת השבוע",
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/פרשת-השבוע/",
+   "order": 1,
+   "children": []
+  },
+  {
+   "title": "איך מלמדים תנ\"ך",
+   "title_norm": "איך מלמדים תנ\"ך",
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/איך-מלמדים-תנך/",
+   "order": 2,
+   "children": []
+  },
+  {
+   "title": "תורה",
+   "title_norm": "תורה",
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/",
+   "order": 3,
+   "children": [
+    {
+     "title": "בראשית",
+     "title_norm": "בראשית",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/",
+     "order": 1,
+     "children": [
+      {
+       "title": "כל התכנים בחומש בראשית",
+       "title_norm": "כל התכנים בחומש בראשית",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/כל-התכנים-בחומש-בראשית/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - בראשית",
+       "title_norm": "דפי עבודה - בראשית",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/דפי-עבודה-בראשית/",
+       "order": 2,
+       "children": []
+      },
+      {
+       "title": "פרשת בראשית",
+       "title_norm": "פרשת בראשית",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-בראשית/",
+       "order": 3,
+       "children": []
+      },
+      {
+       "title": "פרשת נח",
+       "title_norm": "פרשת נח",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-נח/",
+       "order": 4,
+       "children": []
+      },
+      {
+       "title": "פרשת לך לך",
+       "title_norm": "פרשת לך לך",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-לך-לך/",
+       "order": 5,
+       "children": []
+      },
+      {
+       "title": "פרשת וירא",
+       "title_norm": "פרשת וירא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-וירא/",
+       "order": 6,
+       "children": []
+      },
+      {
+       "title": "פרשת חיי שרה",
+       "title_norm": "פרשת חיי שרה",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-חיי-שרה/",
+       "order": 7,
+       "children": []
+      },
+      {
+       "title": "פרשת תולדות",
+       "title_norm": "פרשת תולדות",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-תולדות/",
+       "order": 8,
+       "children": []
+      },
+      {
+       "title": "פרשת ויצא",
+       "title_norm": "פרשת ויצא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-ויצא/",
+       "order": 9,
+       "children": []
+      },
+      {
+       "title": "פרשת וישלח",
+       "title_norm": "פרשת וישלח",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-וישלח/",
+       "order": 10,
+       "children": []
+      },
+      {
+       "title": "פרשת וישב",
+       "title_norm": "פרשת וישב",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-וישב/",
+       "order": 11,
+       "children": []
+      },
+      {
+       "title": "פרשת מקץ",
+       "title_norm": "פרשת מקץ",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-מקץ/",
+       "order": 12,
+       "children": []
+      },
+      {
+       "title": "פרשת ויגש",
+       "title_norm": "פרשת ויגש",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-ויגש/",
+       "order": 13,
+       "children": []
+      },
+      {
+       "title": "פרשת ויחי",
+       "title_norm": "פרשת ויחי",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/בראשית/פרשת-ויחי/",
+       "order": 14,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "שמות",
+     "title_norm": "שמות",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/",
+     "order": 2,
+     "children": [
+      {
+       "title": "כל התכנים בחומש שמות",
+       "title_norm": "כל התכנים בחומש שמות",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/כל-התכנים-בחומש-שמות/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - שמות",
+       "title_norm": "דפי עבודה - שמות",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/דפי-עבודה-שמות/",
+       "order": 2,
+       "children": []
+      },
+      {
+       "title": "פרשת שמות",
+       "title_norm": "פרשת שמות",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-שמות/",
+       "order": 3,
+       "children": []
+      },
+      {
+       "title": "פרשת וארא",
+       "title_norm": "פרשת וארא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-וארא/",
+       "order": 4,
+       "children": []
+      },
+      {
+       "title": "פרשת בא",
+       "title_norm": "פרשת בא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-בא/",
+       "order": 5,
+       "children": []
+      },
+      {
+       "title": "פרשת בשלח",
+       "title_norm": "פרשת בשלח",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-בשלח/",
+       "order": 6,
+       "children": []
+      },
+      {
+       "title": "פרשת יתרו",
+       "title_norm": "פרשת יתרו",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-יתרו/",
+       "order": 7,
+       "children": []
+      },
+      {
+       "title": "פרשת משפטים",
+       "title_norm": "פרשת משפטים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-משפטים/",
+       "order": 8,
+       "children": []
+      },
+      {
+       "title": "פרשת תרומה",
+       "title_norm": "פרשת תרומה",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-תרומה/",
+       "order": 9,
+       "children": []
+      },
+      {
+       "title": "פרשת תצוה",
+       "title_norm": "פרשת תצוה",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-תצוה/",
+       "order": 10,
+       "children": []
+      },
+      {
+       "title": "פרשת כי תשא",
+       "title_norm": "פרשת כי תשא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-כי-תשא/",
+       "order": 11,
+       "children": []
+      },
+      {
+       "title": "פרשת ויקהל",
+       "title_norm": "פרשת ויקהל",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-ויקהל/",
+       "order": 12,
+       "children": []
+      },
+      {
+       "title": "פרשת פקודי",
+       "title_norm": "פרשת פקודי",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/שמות/פרשת-פקודי/",
+       "order": 13,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "ויקרא",
+     "title_norm": "ויקרא",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/",
+     "order": 3,
+     "children": [
+      {
+       "title": "כל התכנים בחומש ויקרא",
+       "title_norm": "כל התכנים בחומש ויקרא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/כל-התכנים-בחומש-ויקרא/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - ויקרא",
+       "title_norm": "דפי עבודה - ויקרא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/דפי-עבודה-ויקרא/",
+       "order": 2,
+       "children": []
+      },
+      {
+       "title": "פרשת ויקרא",
+       "title_norm": "פרשת ויקרא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-ויקרא/",
+       "order": 3,
+       "children": []
+      },
+      {
+       "title": "פרשת צו",
+       "title_norm": "פרשת צו",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-צו/",
+       "order": 4,
+       "children": []
+      },
+      {
+       "title": "פרשת שמיני",
+       "title_norm": "פרשת שמיני",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-שמיני/",
+       "order": 5,
+       "children": []
+      },
+      {
+       "title": "פרשת תזריע",
+       "title_norm": "פרשת תזריע",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-תזריע/",
+       "order": 6,
+       "children": []
+      },
+      {
+       "title": "פרשת מצורע",
+       "title_norm": "פרשת מצורע",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-מצורע/",
+       "order": 7,
+       "children": []
+      },
+      {
+       "title": "פרשת אחרי מות",
+       "title_norm": "פרשת אחרי מות",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-אחרי-מות/",
+       "order": 8,
+       "children": []
+      },
+      {
+       "title": "פרשת קדושים",
+       "title_norm": "פרשת קדושים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-קדושים/",
+       "order": 9,
+       "children": []
+      },
+      {
+       "title": "פרשת אמור",
+       "title_norm": "פרשת אמור",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-אמור/",
+       "order": 10,
+       "children": []
+      },
+      {
+       "title": "פרשת בהר",
+       "title_norm": "פרשת בהר",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-בהר/",
+       "order": 11,
+       "children": []
+      },
+      {
+       "title": "פרשת בחוקותי",
+       "title_norm": "פרשת בחוקותי",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/ויקרא/פרשת-בחוקותי/",
+       "order": 12,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "במדבר",
+     "title_norm": "במדבר",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/",
+     "order": 4,
+     "children": [
+      {
+       "title": "כל התכנים בחומש במדבר",
+       "title_norm": "כל התכנים בחומש במדבר",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/כל-התכנים-בחומש-במדבר/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - במדבר",
+       "title_norm": "דפי עבודה - במדבר",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/דפי-עבודה-במדבר/",
+       "order": 2,
+       "children": []
+      },
+      {
+       "title": "פרשת במדבר",
+       "title_norm": "פרשת במדבר",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-במדבר/",
+       "order": 3,
+       "children": []
+      },
+      {
+       "title": "פרשת נשא",
+       "title_norm": "פרשת נשא",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-נשא/",
+       "order": 4,
+       "children": []
+      },
+      {
+       "title": "פרשת בהעלותך",
+       "title_norm": "פרשת בהעלותך",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-בהעלותך/",
+       "order": 5,
+       "children": []
+      },
+      {
+       "title": "פרשת שלח",
+       "title_norm": "פרשת שלח",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-שלח/",
+       "order": 6,
+       "children": []
+      },
+      {
+       "title": "פרשת קרח",
+       "title_norm": "פרשת קרח",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-קרח/",
+       "order": 7,
+       "children": []
+      },
+      {
+       "title": "פרשת חוקת",
+       "title_norm": "פרשת חוקת",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-חוקת/",
+       "order": 8,
+       "children": []
+      },
+      {
+       "title": "פרשת בלק",
+       "title_norm": "פרשת בלק",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-בלק/",
+       "order": 9,
+       "children": []
+      },
+      {
+       "title": "פרשת פנחס",
+       "title_norm": "פרשת פנחס",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-פנחס/",
+       "order": 10,
+       "children": []
+      },
+      {
+       "title": "פרשת מטות",
+       "title_norm": "פרשת מטות",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-מטות/",
+       "order": 11,
+       "children": []
+      },
+      {
+       "title": "פרשת מסעי",
+       "title_norm": "פרשת מסעי",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/במדבר/פרשת-מסעי/",
+       "order": 12,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "דברים",
+     "title_norm": "דברים",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/",
+     "order": 5,
+     "children": [
+      {
+       "title": "כל התכנים בחומש דברים",
+       "title_norm": "כל התכנים בחומש דברים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/כל-התכנים-בחומש-דברים/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - דברים",
+       "title_norm": "דפי עבודה - דברים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/דפי-עבודה-דברים/",
+       "order": 2,
+       "children": []
+      },
+      {
+       "title": "פרשת דברים",
+       "title_norm": "פרשת דברים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/פרשת-דברים/",
+       "order": 3,
+       "children": []
+      },
+      {
+       "title": "פרשת ואתחנן",
+       "title_norm": "פרשת ואתחנן",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/פרשת-ואתחנן/",
+       "order": 4,
+       "children": []
+      },
+      {
+       "title": "פרשת עקב",
+       "title_norm": "פרשת עקב",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/פרשת-עקב/",
+       "order": 5,
+       "children": []
+      },
+      {
+       "title": "פרשת ראה",
+       "title_norm": "פרשת ראה",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/תורה/דברים/פרשת-ראה/",
+       "order": 6,
+       "children": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "title": "נביאים",
+   "title_norm": "נביאים",
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/",
+   "order": 4,
+   "children": [
+    {
+     "title": "יהושע",
+     "title_norm": "יהושע",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/יהושע/",
+     "order": 1,
+     "children": [
+      {
+       "title": "כל התכנים בספר יהושע",
+       "title_norm": "כל התכנים בספר יהושע",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/יהושע/כל-התכנים-בספר-יהושע/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - יהושע",
+       "title_norm": "דפי עבודה - יהושע",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/יהושע/דפי-עבודה-יהושע/",
+       "order": 2,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "שופטים",
+     "title_norm": "שופטים",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שופטים/",
+     "order": 2,
+     "children": [
+      {
+       "title": "כל התכנים בספר שופטים",
+       "title_norm": "כל התכנים בספר שופטים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שופטים/כל-התכנים-בספר-שופטים/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - שופטים",
+       "title_norm": "דפי עבודה - שופטים",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שופטים/דפי-עבודה-שופטים/",
+       "order": 2,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "שמואל א",
+     "title_norm": "שמואל א",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שמואל-א/",
+     "order": 3,
+     "children": [
+      {
+       "title": "כל התכנים בספר שמואל א",
+       "title_norm": "כל התכנים בספר שמואל א",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שמואל-א/כל-התכנים-בספר-שמואל-א/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - שמואל א",
+       "title_norm": "דפי עבודה - שמואל א",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שמואל-א/דפי-עבודה-שמואל-א/",
+       "order": 2,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "שמואל ב",
+     "title_norm": "שמואל ב",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שמואל-ב/",
+     "order": 4,
+     "children": [
+      {
+       "title": "כל התכנים בספר שמואל ב",
+       "title_norm": "כל התכנים בספר שמואל ב",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שמואל-ב/כל-התכנים-בספר-שמואל-ב/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - שמואל ב",
+       "title_norm": "דפי עבודה - שמואל ב",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/שמואל-ב/דפי-עבודה-שמואל-ב/",
+       "order": 2,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "מלכים א",
+     "title_norm": "מלכים א",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלכים-א/",
+     "order": 5,
+     "children": [
+      {
+       "title": "כל התכנים בספר מלכים א",
+       "title_norm": "כל התכנים בספר מלכים א",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלכים-א/כל-התכנים-בספר-מלכים-א/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה ומבחנים - מלכים א",
+       "title_norm": "דפי עבודה ומבחנים - מלכים א",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלכים-א/דפי-עבודה-ומבחנים-מלכים-א/",
+       "order": 2,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "מלכים ב",
+     "title_norm": "מלכים ב",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלכים-ב/",
+     "order": 6,
+     "children": [
+      {
+       "title": "כל התכנים בספר מלכים ב",
+       "title_norm": "כל התכנים בספר מלכים ב",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלכים-ב/כל-התכנים-בספר-מלכים-ב/",
+       "order": 1,
+       "children": []
+      },
+      {
+       "title": "דפי עבודה - מלכים ב",
+       "title_norm": "דפי עבודה - מלכים ב",
+       "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלכים-ב/דפי-עבודה-מלכים-ב/",
+       "order": 2,
+       "children": []
+      }
+     ]
+    },
+    {
+     "title": "ישעיהו",
+     "title_norm": "ישעיהו",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/ישעיהו/",
+     "order": 7,
+     "children": []
+    },
+    {
+     "title": "ירמיהו",
+     "title_norm": "ירמיהו",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/ירמיהו/",
+     "order": 8,
+     "children": []
+    },
+    {
+     "title": "יחזקאל",
+     "title_norm": "יחזקאל",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/יחזקאל/",
+     "order": 9,
+     "children": []
+    },
+    {
+     "title": "הושע",
+     "title_norm": "הושע",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/הושע/",
+     "order": 10,
+     "children": []
+    },
+    {
+     "title": "יואל",
+     "title_norm": "יואל",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/יואל/",
+     "order": 11,
+     "children": []
+    },
+    {
+     "title": "עמוס",
+     "title_norm": "עמוס",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/עמוס/",
+     "order": 12,
+     "children": []
+    },
+    {
+     "title": "עובדיה",
+     "title_norm": "עובדיה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/עובדיה/",
+     "order": 13,
+     "children": []
+    },
+    {
+     "title": "יונה",
+     "title_norm": "יונה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/יונה/",
+     "order": 14,
+     "children": []
+    },
+    {
+     "title": "מיכה",
+     "title_norm": "מיכה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מיכה/",
+     "order": 15,
+     "children": []
+    },
+    {
+     "title": "נחום",
+     "title_norm": "נחום",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/נחום/",
+     "order": 16,
+     "children": []
+    },
+    {
+     "title": "חבקוק",
+     "title_norm": "חבקוק",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/חבקוק/",
+     "order": 17,
+     "children": []
+    },
+    {
+     "title": "צפניה",
+     "title_norm": "צפניה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/צפניה/",
+     "order": 18,
+     "children": []
+    },
+    {
+     "title": "חגי",
+     "title_norm": "חגי",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/חגי/",
+     "order": 19,
+     "children": []
+    },
+    {
+     "title": "זכריה",
+     "title_norm": "זכריה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/זכריה/",
+     "order": 20,
+     "children": []
+    },
+    {
+     "title": "מלאכי",
+     "title_norm": "מלאכי",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נביאים/מלאכי/",
+     "order": 21,
+     "children": []
+    }
+   ]
+  },
+  {
+   "title": "כתובים",
+   "title_norm": "כתובים",
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/",
+   "order": 5,
+   "children": [
+    {
+     "title": "תהלים",
+     "title_norm": "תהלים",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/תהלים/",
+     "order": 1,
+     "children": []
+    },
+    {
+     "title": "איוב",
+     "title_norm": "איוב",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/איוב/",
+     "order": 2,
+     "children": []
+    },
+    {
+     "title": "שיר השירים",
+     "title_norm": "שיר השירים",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/שיר-השירים/",
+     "order": 3,
+     "children": []
+    },
+    {
+     "title": "רות",
+     "title_norm": "רות",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/רות/",
+     "order": 4,
+     "children": []
+    },
+    {
+     "title": "איכה",
+     "title_norm": "איכה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/איכה/",
+     "order": 5,
+     "children": []
+    },
+    {
+     "title": "אסתר",
+     "title_norm": "אסתר",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/אסתר/",
+     "order": 6,
+     "children": []
+    },
+    {
+     "title": "דניאל",
+     "title_norm": "דניאל",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/דניאל/",
+     "order": 7,
+     "children": []
+    },
+    {
+     "title": "עזרא",
+     "title_norm": "עזרא",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/עזרא/",
+     "order": 8,
+     "children": []
+    },
+    {
+     "title": "נחמיה",
+     "title_norm": "נחמיה",
+     "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/כתובים/נחמיה/",
+     "order": 9,
+     "children": []
+    }
+   ]
+  }
+ ],
+ "by_content_type": [
+  {
+   "title": "סיכום הפרקים והנושאים בקצרה",
+   "title_norm": "סיכום הפרקים והנושאים בקצרה",
+   "count": 475,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=סיכום הפרקים והנושאים בקצרה"
+  },
+  {
+   "title": "הכוונה והדרכה למורה",
+   "title_norm": "הכוונה והדרכה למורה",
+   "count": 426,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=הכוונה והדרכה למורה"
+  },
+  {
+   "title": "ביאור הפסוקים",
+   "title_norm": "ביאור הפסוקים",
+   "count": 358,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=ביאור הפסוקים"
+  },
+  {
+   "title": "חידות חזרה",
+   "title_norm": "חידות חזרה",
+   "count": 354,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=חידות חזרה"
+  },
+  {
+   "title": "שאלות ותשובות על סדר הפרקים",
+   "title_norm": "שאלות ותשובות על סדר הפרקים",
+   "count": 312,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=שאלות ותשובות על סדר הפרקים"
+  },
+  {
+   "title": "דגשים והכוונה על סדר הפרקים",
+   "title_norm": "דגשים והכוונה על סדר הפרקים",
+   "count": 252,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=דגשים והכוונה על סדר הפרקים"
+  },
+  {
+   "title": "דפי עבודה",
+   "title_norm": "דפי עבודה",
+   "count": 213,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=דפי עבודה"
+  },
+  {
+   "title": "ביאורי מילים",
+   "title_norm": "ביאורי מילים",
+   "count": 132,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=ביאורי מילים"
+  },
+  {
+   "title": "שאלות ותשובות",
+   "title_norm": "שאלות ותשובות",
+   "count": 91,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=שאלות ותשובות"
+  },
+  {
+   "title": "מפות",
+   "title_norm": "מפות",
+   "count": 36,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=מפות"
+  },
+  {
+   "title": "ערכים ומידות העולים מן הפסוקים",
+   "title_norm": "ערכים ומידות העולים מן הפסוקים",
+   "count": 33,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=ערכים ומידות העולים מן הפסוקים"
+  },
+  {
+   "title": "מקורות עזר לפרקים",
+   "title_norm": "מקורות עזר לפרקים",
+   "count": 27,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=מקורות עזר לפרקים"
+  },
+  {
+   "title": "מי אמר למי",
+   "title_norm": "מי אמר למי",
+   "count": 6,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=מי אמר למי"
+  },
+  {
+   "title": "ספר שופטים",
+   "title_norm": "ספר שופטים",
+   "count": 6,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=ספר שופטים"
+  },
+  {
+   "title": "חידון",
+   "title_norm": "חידון",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=חידון"
+  },
+  {
+   "title": "מבחן כללי ספר שופטים",
+   "title_norm": "מבחן כללי ספר שופטים",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=מבחן כללי ספר שופטים"
+  },
+  {
+   "title": "מבחנים",
+   "title_norm": "מבחנים",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=מבחנים"
+  },
+  {
+   "title": "חוברת עבודה",
+   "title_norm": "חוברת עבודה",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=חוברת עבודה"
+  },
+  {
+   "title": "ספר יהושע",
+   "title_norm": "ספר יהושע",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=ספר יהושע"
+  },
+  {
+   "title": "ספר מלכים",
+   "title_norm": "ספר מלכים",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=ספר מלכים"
+  },
+  {
+   "title": "שאלות חזרה",
+   "title_norm": "שאלות חזרה",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=שאלות חזרה"
+  },
+  {
+   "title": "שאלות עיון",
+   "title_norm": "שאלות עיון",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/נושאים/?subject=שאלות עיון"
+  }
+ ],
+ "by_creator": [
+  {
+   "title": "אוריה כראדי",
+   "title_norm": "אוריה כראדי",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=אוריה כראדי"
+  },
+  {
+   "title": "הרב אורי שטמלר",
+   "title_norm": "הרב אורי שטמלר",
+   "count": 63,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב אורי שטמלר"
+  },
+  {
+   "title": "הרב אשי בלייכר",
+   "title_norm": "הרב אשי בלייכר",
+   "count": 57,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב אשי בלייכר"
+  },
+  {
+   "title": "הרב בניה כהן",
+   "title_norm": "הרב בניה כהן",
+   "count": 120,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב בניה כהן"
+  },
+  {
+   "title": "הרב גדי שר שלום",
+   "title_norm": "הרב גדי שר שלום",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב גדי שר שלום"
+  },
+  {
+   "title": "הרב דביר אפלבוים",
+   "title_norm": "הרב דביר אפלבוים",
+   "count": 84,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב דביר אפלבוים"
+  },
+  {
+   "title": "הרב חסדאי בר אור",
+   "title_norm": "הרב חסדאי בר אור",
+   "count": 6,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב חסדאי בר אור"
+  },
+  {
+   "title": "הרב ידידיה שילה",
+   "title_norm": "הרב ידידיה שילה",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב ידידיה שילה"
+  },
+  {
+   "title": "הרב יהודה בשושה",
+   "title_norm": "הרב יהודה בשושה",
+   "count": 18,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב יהודה בשושה"
+  },
+  {
+   "title": "הרב יונתן לוי",
+   "title_norm": "הרב יונתן לוי",
+   "count": 28,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב יונתן לוי"
+  },
+  {
+   "title": "הרב יורם אליהו",
+   "title_norm": "הרב יורם אליהו",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב יורם אליהו"
+  },
+  {
+   "title": "הרב יצחק עמראני",
+   "title_norm": "הרב יצחק עמראני",
+   "count": 63,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב יצחק עמראני"
+  },
+  {
+   "title": "הרב מאיר גרשונזון",
+   "title_norm": "הרב מאיר גרשונזון",
+   "count": 9,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב מאיר גרשונזון"
+  },
+  {
+   "title": "הרב מאיר הילביץ'",
+   "title_norm": "הרב מאיר הילביץ'",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב מאיר הילביץ'"
+  },
+  {
+   "title": "הרב מנחם אליהו",
+   "title_norm": "הרב מנחם אליהו",
+   "count": 78,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב מנחם אליהו"
+  },
+  {
+   "title": "הרב נחום אריאל",
+   "title_norm": "הרב נחום אריאל",
+   "count": 39,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב נחום אריאל"
+  },
+  {
+   "title": "הרב ניסים כהן",
+   "title_norm": "הרב ניסים כהן",
+   "count": 27,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב ניסים כהן"
+  },
+  {
+   "title": "הרב עדי איצקוביץ'",
+   "title_norm": "הרב עדי איצקוביץ'",
+   "count": 453,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב עדי איצקוביץ'"
+  },
+  {
+   "title": "הרב עמוס נתנאל",
+   "title_norm": "הרב עמוס נתנאל",
+   "count": 12,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב עמוס נתנאל"
+  },
+  {
+   "title": "הרב עמירם אלבה",
+   "title_norm": "הרב עמירם אלבה",
+   "count": 204,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב עמירם אלבה"
+  },
+  {
+   "title": "הרב עמנואל בן ארצי",
+   "title_norm": "הרב עמנואל בן ארצי",
+   "count": 18,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב עמנואל בן ארצי"
+  },
+  {
+   "title": "הרב שלמה כץ",
+   "title_norm": "הרב שלמה כץ",
+   "count": 84,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב שלמה כץ"
+  },
+  {
+   "title": "הרב שמעון לוי והרב נתן מולאיוף",
+   "title_norm": "הרב שמעון לוי והרב נתן מולאיוף",
+   "count": 480,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב שמעון לוי והרב נתן מולאיוף"
+  },
+  {
+   "title": "הרב שמעון שוהם",
+   "title_norm": "הרב שמעון שוהם",
+   "count": 66,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=הרב שמעון שוהם"
+  },
+  {
+   "title": "ושננתם - אוצר התורה",
+   "title_norm": "ושננתם - אוצר התורה",
+   "count": 140,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=ושננתם - אוצר התורה"
+  },
+  {
+   "title": "ישקו העדרים",
+   "title_norm": "ישקו העדרים",
+   "count": 228,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=ישקו העדרים"
+  },
+  {
+   "title": "מחבר לא ידוע",
+   "title_norm": "מחבר לא ידוע",
+   "count": 12,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=מחבר לא ידוע"
+  },
+  {
+   "title": "מכון דעת סופרים",
+   "title_norm": "מכון דעת סופרים",
+   "count": 333,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=מכון דעת סופרים"
+  },
+  {
+   "title": "נתן מארגל",
+   "title_norm": "נתן מארגל",
+   "count": 173,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=נתן מארגל"
+  },
+  {
+   "title": "סידור שים שלום",
+   "title_norm": "סידור שים שלום",
+   "count": 3,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=סידור שים שלום"
+  },
+  {
+   "title": "תלמוד תורה מורשה",
+   "title_norm": "תלמוד תורה מורשה",
+   "count": 201,
+   "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/יוצרים/?rav=תלמוד תורה מורשה"
+  }
+ ]
+}

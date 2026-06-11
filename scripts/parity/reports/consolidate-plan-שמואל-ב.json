@@ -1,0 +1,1324 @@
+{
+  "book": "שמואל ב",
+  "book_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+  "plan": [
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "7f034d81-b556-402e-b315-e481d367f747",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000201",
+      "from_status": "published",
+      "from_title": "בשורת מות שאול | פרק א'",
+      "old_title": "דוד מתבשר על מות שאול",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "ad50e45b-6316-42cb-825d-2b8b4a40e7b9",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000201",
+      "from_status": "published",
+      "from_title": "בשורת מות שאול | פרק א'",
+      "old_title": "קינת דוד",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "5bcd2b05-9237-4e87-b086-2e0f9abbe3ef",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000201",
+      "from_status": "published",
+      "from_title": "בשורת מות שאול | פרק א'",
+      "old_title": "קינת דוד",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "acb64846-cc15-438b-a00c-52cc550a46a9",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000201",
+      "from_status": "published",
+      "from_title": "בשורת מות שאול | פרק א'",
+      "old_title": "בשורת מות שאול",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "fb446a26-3601-47bd-bf4a-37674a5c6703",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "f195957c-2b11-456b-bffb-770d9c56e287",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק א | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000001",
+      "event_title": "בשורת מות שאול | פרק א'",
+      "lesson_id": "7235b528-40b2-4826-9828-3183b7b2dc77",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק א'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "042bf69b-055c-4b87-aa1b-6b961324420e",
+      "mode": "move",
+      "from_series": "69b2e007-177f-4dbc-a3a3-acbe75498825",
+      "from_status": "category",
+      "from_title": "דוד ומפיבושת | פרק ט",
+      "old_title": "דוד ומפיבושת - פשט ודרש",
+      "old_rabbi": "הרב יהושע שפירא"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "8e15daf3-ec8e-4b80-aac0-54e15e60f5ec",
+      "mode": "copy",
+      "from_series": "15df7711-164d-4eca-a9bb-390300a5a403",
+      "from_status": "active",
+      "from_title": "פירושים והערות על ספר שמואל ב",
+      "old_title": "דוד ומפיבושת",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "442fb534-9fb9-42bb-9d96-4d478f4ce3bb",
+      "mode": "copy",
+      "from_series": "9f853880-e419-495b-8e1e-16c0e8f8936c",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך -שמואל ב",
+      "old_title": "כבושי דוד, דוד גומל חסד עם מפיבושת",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "647e9801-0b90-472e-a358-72e9ace66ab2",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000209",
+      "from_status": "published",
+      "from_title": "דוד ומפיבושת | פרק ט'",
+      "old_title": "חסד עם בית יהונתן",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "609a5c55-bb7d-46a5-ab2c-e20e19b3f355",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000209",
+      "from_status": "published",
+      "from_title": "דוד ומפיבושת | פרק ט'",
+      "old_title": "דוד ומפיבושת",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "7684cb8f-9714-45da-ae2f-2a89e31d8e61",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "4078fd37-f60e-4300-b0d7-7626e152440b",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ט | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000009",
+      "event_title": "דוד ומפיבושת | פרק ט'",
+      "lesson_id": "e1a34076-662a-4959-9870-baaea7e0a374",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ט'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "a9e27ae2-ec25-4c9b-90cf-918f2f05ec4a",
+      "mode": "move",
+      "from_series": "32220864-1327-49ee-91e0-fcf109198c61",
+      "from_status": "category",
+      "from_title": "דוד, בת שבע ואוריה | פרק יא",
+      "old_title": "הקדמות למעשה דוד ובת שבע",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "9377ad79-33f1-457d-b426-df68d72fe37d",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000211",
+      "from_status": "published",
+      "from_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "old_title": "דוד ובת שבע",
+      "old_rabbi": "הרב צפניה דרורי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "ec57490a-7830-4164-a5be-92cba6532c1b",
+      "mode": "move",
+      "from_series": "32220864-1327-49ee-91e0-fcf109198c61",
+      "from_status": "category",
+      "from_title": "דוד, בת שבע ואוריה | פרק יא",
+      "old_title": "פרשת דוד ובת שבע",
+      "old_rabbi": "הרב יהושע שפירא"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "5a27e67d-4e50-41f8-a454-f5f0d67da7bb",
+      "mode": "move",
+      "from_series": "32220864-1327-49ee-91e0-fcf109198c61",
+      "from_status": "category",
+      "from_title": "דוד, בת שבע ואוריה | פרק יא",
+      "old_title": "בת שבע - אם המלכות",
+      "old_rabbi": "הרבנית ברוריה בן שחר (לנשים)"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "8a7b6901-27e7-4178-bb74-b30b4ff17d8c",
+      "mode": "move",
+      "from_series": "32220864-1327-49ee-91e0-fcf109198c61",
+      "from_status": "category",
+      "from_title": "דוד, בת שבע ואוריה | פרק יא",
+      "old_title": "דוד המלך ובת שבע",
+      "old_rabbi": "הרב יוסף קלנר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "d50913d1-d6d7-4baf-9ef6-f9e07c2ded1a",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000211",
+      "from_status": "published",
+      "from_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "old_title": "קונטרס דוד ובת שבע",
+      "old_rabbi": ""
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "4cf1d0a6-872e-4924-8c89-30207bb78986",
+      "mode": "move",
+      "from_series": "32220864-1327-49ee-91e0-fcf109198c61",
+      "from_status": "category",
+      "from_title": "דוד, בת שבע ואוריה | פרק יא",
+      "old_title": "מעשה דוד ובת שבע על פי הפשט",
+      "old_rabbi": "הרב עמנואל בן ארצי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "d11c4343-63ec-47b7-90b2-8b42665b643f",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000211",
+      "from_status": "published",
+      "from_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "old_title": "דוד ובת שבע",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "cd001717-c809-443d-b421-7f9572242301",
+      "mode": "copy",
+      "from_series": "e3d22762-6c2b-4e95-8685-c255b06bd84a",
+      "from_status": "active",
+      "from_title": "שיעורים קצרים - קריאה וביאור ספר שמואל ב",
+      "old_title": "דוד, בת שבע ואוריה",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "ae7aebca-4ad7-4072-93fb-1555340ef5bf",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק יא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "5116d6dc-15da-4915-b3e5-a38f905cf7cf",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק יא | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000011",
+      "event_title": "דוד, בת שבע ואוריה | פרק י\"א",
+      "lesson_id": "d5e09d08-efff-46d5-a9aa-b68500c4d557",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק י\"א",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "b1a00583-7f90-4cd9-a556-3c683b745635",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000205",
+      "from_status": "published",
+      "from_title": "המלכת דוד | פרק ה'",
+      "old_title": "יסוד מלכות דוד על כל ישראל",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "b10cec11-33b8-4cdd-b227-2aec53379be0",
+      "mode": "copy",
+      "from_series": "9f853880-e419-495b-8e1e-16c0e8f8936c",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך -שמואל ב",
+      "old_title": "הריגת איש בשת, דוד מולך על כל ישראל, כבוש ירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "e10f18e1-dbc5-4901-b638-edfed40d8ee2",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000205",
+      "from_status": "published",
+      "from_title": "המלכת דוד | פרק ה'",
+      "old_title": "מה בין שאול לדוד?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "4a16d237-3d27-44eb-b2e6-db355ae65e1d",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000205",
+      "from_status": "published",
+      "from_title": "המלכת דוד | פרק ה'",
+      "old_title": "דוד וירושלים",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "c5933d7a-6c37-40c9-a24e-f2313bbd6557",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000205",
+      "from_status": "published",
+      "from_title": "המלכת דוד | פרק ה'",
+      "old_title": "המלכת דוד",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "da06ba3f-7924-415d-b37e-2396c4856ef1",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "973ba041-17b2-46f4-88dc-a663482da17a",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ה | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000005",
+      "event_title": "המלכת דוד | פרק ה'",
+      "lesson_id": "9c752cc3-1d22-4e97-912c-12e2b8245ba0",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ה'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "1447e1dd-be46-4bcc-a2fa-51c6a291ae94",
+      "mode": "move",
+      "from_series": "643b3ffd-7485-4292-b1f6-e0508d948542",
+      "from_status": "category",
+      "from_title": "העלאת הארון | פרק ו",
+      "old_title": "(מצגת) היחס הנכון אל הקודש, דרך סוגיית העלאת הארון",
+      "old_rabbi": "הרב מנחם שחור"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "23d1ae22-0e29-4241-a317-6262bf0bcce7",
+      "mode": "move",
+      "from_series": "643b3ffd-7485-4292-b1f6-e0508d948542",
+      "from_status": "category",
+      "from_title": "העלאת הארון | פרק ו",
+      "old_title": "מבט כללי על העלאת הארון לירושלים",
+      "old_rabbi": "הרב יעקב אפשטיין"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "783c187c-a972-47a7-86c0-ff0b225138cb",
+      "mode": "move",
+      "from_series": "643b3ffd-7485-4292-b1f6-e0508d948542",
+      "from_status": "category",
+      "from_title": "העלאת הארון | פרק ו",
+      "old_title": "\"ותבז לו בלבה\"",
+      "old_rabbi": "הרב חננאל אתרוג"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "e1497cce-8b4f-40c5-b0bd-363d2e15098f",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "דוד מעלה את הארון לירושלים",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "2cf56616-0815-4890-bfae-f7c48a18e6ae",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "העלאת  ארון ד' לירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "d91cb532-2885-45af-b8fc-02dd704d75a4",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "מדוע לא העלה דוד את הארון למשכן?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "3639abd2-451a-494f-9665-38b957ae84e4",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "האם דוד טעה בנשאו את הארון בעגלה?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "9602ba87-ff15-48f1-89ad-fe5d31f183a9",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "העלאת הארון לירושלים",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "adabeebb-d636-449d-b610-c84a19d7d0a2",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "העלאת הארון",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "64790f4d-fc3e-4f12-9923-cc84728ed088",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "8bec5876-6d6a-4989-a9be-079a61359301",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ו | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "cd72d9e4-c171-412c-96e1-7429ea6cbb0e",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ו'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "25c2348f-c9b7-4126-bdcd-74d03ea4ce4b",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "מיתת הצדיקים מקרבת",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000006",
+      "event_title": "העלאת הארון | פרק ו'",
+      "lesson_id": "a126092e-055e-463c-a082-69e003e8f3e1",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000206",
+      "from_status": "published",
+      "from_title": "העלאת הארון | פרק ו'",
+      "old_title": "דוד בונה המקדש",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000004",
+      "event_title": "מות איש בושת | פרק ד'",
+      "lesson_id": "1b8167b8-bb46-41a1-aa10-bf8c86288428",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000204",
+      "from_status": "published",
+      "from_title": "מות איש בושת | פרק ד'",
+      "old_title": "מדוע נזכר מפיבשת בפרקנו?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000004",
+      "event_title": "מות איש בושת | פרק ד'",
+      "lesson_id": "b9aba9a1-9a3a-4777-a45f-252d9683dab1",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000203",
+      "from_status": "published",
+      "from_title": "עריקת אבנר ומותו | פרק ג'",
+      "old_title": "מות אבנר",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000004",
+      "event_title": "מות איש בושת | פרק ד'",
+      "lesson_id": "3b54bf1e-273d-4836-84ab-bf8b4f702109",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000204",
+      "from_status": "published",
+      "from_title": "מות איש בושת | פרק ד'",
+      "old_title": "מות איש בושת",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000004",
+      "event_title": "מות איש בושת | פרק ד'",
+      "lesson_id": "5523c73d-1134-4573-9ebe-b96462fbff42",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000004",
+      "event_title": "מות איש בושת | פרק ד'",
+      "lesson_id": "f4d48e2c-f1a0-4e9d-8faa-78f0f976faba",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ד | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000004",
+      "event_title": "מות איש בושת | פרק ד'",
+      "lesson_id": "079e535b-b854-4cc2-b419-12ec713255dc",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ד'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "dcaaf877-7ca5-408a-82b2-bfda4c224978",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000208",
+      "from_status": "published",
+      "from_title": "מלחמות דוד | פרק ח'",
+      "old_title": "מלחמות דוד המלך",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "4e26455d-0993-4d21-af8a-9cb73f60bd12",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000208",
+      "from_status": "published",
+      "from_title": "מלחמות דוד | פרק ח'",
+      "old_title": "מדוע התנהג דוד באכזריות כלפי אויבי ישראל?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "2c2f4667-ed5c-419b-9192-0eca14c8920c",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000208",
+      "from_status": "published",
+      "from_title": "מלחמות דוד | פרק ח'",
+      "old_title": "איש מלחמה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "68618e1a-09e9-4ccf-a0b7-1198fd470f57",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000208",
+      "from_status": "published",
+      "from_title": "מלחמות דוד | פרק ח'",
+      "old_title": "מלחמות דוד",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "ae949bb1-3815-44e2-9347-4382fd0583af",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "12a37af0-52ac-46b5-b977-9f3085eae101",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ח | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000008",
+      "event_title": "מלחמות דוד | פרק ח'",
+      "lesson_id": "06b60689-e0cc-4627-90f1-0b7d8b1aced2",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ח'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000010",
+      "event_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "lesson_id": "08bac92b-8ba3-4f06-80a2-0c8b2fc55588",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000210",
+      "from_status": "published",
+      "from_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "old_title": "האם היה מותר לדוד לשלוח מנחמים לחנון בן נחש?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000010",
+      "event_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "lesson_id": "8f482b9e-7918-4419-8a2a-c9cac9abe3cf",
+      "mode": "copy",
+      "from_series": "210fc4e1-a52d-4cb1-b1eb-ac3cfa369c43",
+      "from_status": "active",
+      "from_title": "שיעורים-שמואל ב",
+      "old_title": "חסד עם בית יהונתן",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000010",
+      "event_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "lesson_id": "98a2a1d6-315c-4307-b118-c9f029814a11",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000210",
+      "from_status": "published",
+      "from_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "old_title": "מלחמת דוד בעמון וארם",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000010",
+      "event_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "lesson_id": "6fa97bed-d845-419f-b580-2915e06ec7bd",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק י",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000010",
+      "event_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "lesson_id": "2ae17e7c-0fcf-44dd-bdc8-1714bffa33d9",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק י | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000010",
+      "event_title": "מלחמת דוד בעמון וארם | פרק י'",
+      "lesson_id": "adf34ee9-f945-4fcd-ae39-4131bc5aa936",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק י'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "effd6373-0b68-4121-aa92-663f15074d0e",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000202",
+      "from_status": "published",
+      "from_title": "מלחמת יואב ואבנר | פרק ב'",
+      "old_title": "המלכת דוד בחברון",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "b018f903-9b05-4a3b-98f4-ba6638bca5f0",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000202",
+      "from_status": "published",
+      "from_title": "מלחמת יואב ואבנר | פרק ב'",
+      "old_title": "מלחמת בית דוד ובית שאול, הריגת אבנר",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "e8125311-d007-4d17-90c2-9cec489616dd",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000202",
+      "from_status": "published",
+      "from_title": "מלחמת יואב ואבנר | פרק ב'",
+      "old_title": "מלחמת הנערים",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "1f984623-72aa-47c0-9187-2cf3683e60c3",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000202",
+      "from_status": "published",
+      "from_title": "מלחמת יואב ואבנר | פרק ב'",
+      "old_title": "מלחמת יואב ואבנר",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "063a6149-e4bf-4be3-965c-21516965f200",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "23bc7746-f789-45a3-a2e1-cd4a7fceedca",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000002",
+      "event_title": "מלחמת יואב ואבנר | פרק ב'",
+      "lesson_id": "902178c4-6147-4268-9fdc-dc39c92781dc",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ב'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "aa1e7ca4-9623-4ff2-b2da-c96bc7db5d35",
+      "mode": "move",
+      "from_series": "3a61eec1-8a28-4b0f-9107-c7521676be83",
+      "from_status": "category",
+      "from_title": "מרד אבשלום | פרקים טו-יח",
+      "old_title": "מרד אבשלום - בין דוד ליואב",
+      "old_rabbi": "הרב דני סטיסקין"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "71d999dd-7f6e-4d84-932c-4a90acc0dfda",
+      "mode": "copy",
+      "from_series": "210fc4e1-a52d-4cb1-b1eb-ac3cfa369c43",
+      "from_status": "active",
+      "from_title": "שיעורים-שמואל ב",
+      "old_title": "מרד אבשלום",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "1a5cc3de-7d9d-4f48-b11a-803ba0b90120",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000214",
+      "from_status": "published",
+      "from_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "old_title": "מרד אבשלום",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "1582cfbc-e4df-44d2-b0af-61c53c15e215",
+      "mode": "copy",
+      "from_series": "210fc4e1-a52d-4cb1-b1eb-ac3cfa369c43",
+      "from_status": "active",
+      "from_title": "שיעורים-שמואל ב",
+      "old_title": "עצת אחיתפל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "e67ba65c-aa60-4011-852b-8b7ff5795f20",
+      "mode": "copy",
+      "from_series": "210fc4e1-a52d-4cb1-b1eb-ac3cfa369c43",
+      "from_status": "active",
+      "from_title": "שיעורים-שמואל ב",
+      "old_title": "חזרת העם אל דוד",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "efb54be2-d784-4f35-ae99-78d3edecef86",
+      "mode": "copy",
+      "from_series": "210fc4e1-a52d-4cb1-b1eb-ac3cfa369c43",
+      "from_status": "active",
+      "from_title": "שיעורים-שמואל ב",
+      "old_title": "מות אבשלום",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "da53e087-819a-4f3d-a6b3-26c3d4139104",
+      "mode": "copy",
+      "from_series": "e3d22762-6c2b-4e95-8685-c255b06bd84a",
+      "from_status": "active",
+      "from_title": "שיעורים קצרים - קריאה וביאור ספר שמואל ב",
+      "old_title": "מרד אבשלום- המשך",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "c34f5519-fe01-4f6d-9a89-6cc67e0bc62a",
+      "mode": "copy",
+      "from_series": "e3d22762-6c2b-4e95-8685-c255b06bd84a",
+      "from_status": "active",
+      "from_title": "שיעורים קצרים - קריאה וביאור ספר שמואל ב",
+      "old_title": "מרד אבשלום- המשך 2",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "cc736134-0597-4842-8b30-5027ded53b19",
+      "mode": "copy",
+      "from_series": "e3d22762-6c2b-4e95-8685-c255b06bd84a",
+      "from_status": "active",
+      "from_title": "שיעורים קצרים - קריאה וביאור ספר שמואל ב",
+      "old_title": "מרד אבשלום- המשך 3",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "b81c0a5f-9e74-4dfa-a337-eccec5208685",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק טו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "35d9ee0e-2002-4f3a-b82b-18e4091ab83e",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק טז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "41900139-9b00-48e4-ba76-391b6f6a061e",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק יז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "4e2dc7d2-e19b-4ff0-9e28-b251e82d4f4b",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק יח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "fb88c024-b169-4cac-a5fb-d203bcf08c2e",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק טו | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "493fc01a-3ae8-4556-b719-b57cb05b83b5",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק טז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "12ce08bf-59fb-456f-9891-eecbcfb61f51",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק יז | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000015",
+      "event_title": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "lesson_id": "f613f48b-d98d-413f-b55f-9fd3827f6bca",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק יח | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "53cadd6c-9b2d-4f22-abeb-e0a40ab65701",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000203",
+      "from_status": "published",
+      "from_title": "עריקת אבנר ומותו | פרק ג'",
+      "old_title": "\"דוד הולך וחזק\"",
+      "old_rabbi": "הרב צבי שוויגר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "87b69a67-bedf-44d1-805e-1f5514aada1b",
+      "mode": "copy",
+      "from_series": "9f853880-e419-495b-8e1e-16c0e8f8936c",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך -שמואל ב",
+      "old_title": "מלחמת בית דוד ובית שאול, הריגת אבנר",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "98293d69-c7f7-4994-87df-9ea6661a6945",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000203",
+      "from_status": "published",
+      "from_title": "עריקת אבנר ומותו | פרק ג'",
+      "old_title": "החזרת דוד את מיכל",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "8f3231c8-db63-4426-8ea2-6a41bacdd76d",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000203",
+      "from_status": "published",
+      "from_title": "עריקת אבנר ומותו | פרק ג'",
+      "old_title": "שמות בני דוד",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "f02cfef7-16a2-47c1-afd6-02a5a114d915",
+      "mode": "copy",
+      "from_series": "210fc4e1-a52d-4cb1-b1eb-ac3cfa369c43",
+      "from_status": "active",
+      "from_title": "שיעורים-שמואל ב",
+      "old_title": "מות אבנר",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "5769a4e1-1ff5-448a-bb92-dc238f7d4756",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000203",
+      "from_status": "published",
+      "from_title": "עריקת אבנר ומותו | פרק ג'",
+      "old_title": "עריקת אבנר ומותו",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "6c99ba92-0449-4489-94a9-7cbc4991e59b",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "5cdf68fd-95ab-4c3c-9360-69cf2cca31c6",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק ג | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "d346cb7f-87b9-4ba9-bc96-fee7b2f7b1a8",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ג'",
+      "old_rabbi": "ושננתם"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000003",
+      "event_title": "עריקת אבנר ומותו | פרק ג'",
+      "lesson_id": "695c7dbe-f27c-432e-bddc-33640c62d9be",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000203",
+      "from_status": "published",
+      "from_title": "עריקת אבנר ומותו | פרק ג'",
+      "old_title": "נטרול מחבל על פי משפט שלמה",
+      "old_rabbi": "הרב יעקב אריאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "878080df-599f-4eb7-9d51-c2a6f6d1947d",
+      "mode": "move",
+      "from_series": "7eaefa2b-6189-4842-a608-1d30d4ece2e1",
+      "from_status": "category",
+      "from_title": "תוכחת נתן לדוד | פרק יב",
+      "old_title": "מי היא כבשת הרש?",
+      "old_rabbi": "הרב דני סטיסקין"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "522829da-2a0c-48f5-b9ee-e3f95c8c664f",
+      "mode": "copy",
+      "from_series": "ca117e7c-b8e4-4c6c-bb78-882ba3a1f591",
+      "from_status": "published",
+      "from_title": "ספר שמואל ב עם ביאור 'ושננתם'",
+      "old_title": "דוד ובת שבע",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "d647682f-4fa9-41c5-a425-7ef755fa6fbf",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000212",
+      "from_status": "published",
+      "from_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "old_title": "מלחמת בני עמון",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "8a3bafe4-ccf6-43b6-b321-aa6454f70ee6",
+      "mode": "move",
+      "from_series": "b2020002-0001-4000-8000-000000000212",
+      "from_status": "published",
+      "from_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "old_title": "תוכחת נתן לדוד",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "71012293-bf13-4c8d-8c0a-b3c2b67d0731",
+      "mode": "copy",
+      "from_series": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר שמואל ב",
+      "old_title": "שמואל ב פרק יב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "f072cc74-4a29-4e0e-9771-396949a9cc66",
+      "mode": "copy",
+      "from_series": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+      "from_status": "active",
+      "from_title": "שמואל ב - מוקלט | ללא טעמים",
+      "old_title": "שמואל ב מוקלט - פרק יב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "b2020001-0001-4000-8000-000000000012",
+      "event_title": "תוכחת נתן לדוד | פרק י\"ב",
+      "lesson_id": "81b2e559-9ed1-4af3-805c-fbc26a3f538e",
+      "mode": "copy",
+      "from_series": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+      "from_status": "active",
+      "from_title": "ספר שמואל ב' עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ביאור \"ושננתם\" לספר שמואל ב' פרק י\"ב",
+      "old_rabbi": "ושננתם"
+    }
+  ],
+  "report": [
+    {
+      "event": "אמנון, תמר ואבשלום | פרקים י\"ג-י\"ד",
+      "old_page": null,
+      "matched": 0,
+      "old_lessons": 0,
+      "unmatched": []
+    },
+    {
+      "event": "בקשת בניין המקדש | פרק ז'",
+      "old_page": null,
+      "matched": 0,
+      "old_lessons": 0,
+      "unmatched": []
+    },
+    {
+      "event": "בשורת מות שאול | פרק א'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/בשורת-מות-שאול-פרק-א/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    },
+    {
+      "event": "דוד ומפיבושת | פרק ט'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/דוד-ומפיבושת-פרק-ט/",
+      "matched": 8,
+      "old_lessons": 8,
+      "unmatched": []
+    },
+    {
+      "event": "דוד, בת שבע ואוריה | פרק י\"א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/דוד-בת-שבע-ואוריה-פרק-יא/",
+      "matched": 12,
+      "old_lessons": 13,
+      "unmatched": [
+        "דוד ובת שבע"
+      ]
+    },
+    {
+      "event": "המלכת דוד | פרק ה'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/המלכת-דוד-פרק-ה/",
+      "matched": 8,
+      "old_lessons": 8,
+      "unmatched": []
+    },
+    {
+      "event": "העלאת הארון | פרק ו'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/העלאת-הארון-פרק-ו/",
+      "matched": 14,
+      "old_lessons": 14,
+      "unmatched": []
+    },
+    {
+      "event": "מות איש בושת | פרק ד'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/מות-איש-בושת-פרק-ד/",
+      "matched": 6,
+      "old_lessons": 7,
+      "unmatched": [
+        "הריגת איש בשת, דוד מולך על כל ישראל, כבוש ירושלים"
+      ]
+    },
+    {
+      "event": "מלחמות דוד | פרק ח'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/מלחמות-דוד-פרק-ח/",
+      "matched": 7,
+      "old_lessons": 8,
+      "unmatched": [
+        "כבושי דוד, דוד גומל חסד עם מפיבושת"
+      ]
+    },
+    {
+      "event": "מלחמת דוד בעמון וארם | פרק י'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/מלחמת-דוד-בעמון-וארם-פרק-י/",
+      "matched": 6,
+      "old_lessons": 7,
+      "unmatched": [
+        "כבושי דוד, דוד גומל חסד עם מפיבושת"
+      ]
+    },
+    {
+      "event": "מלחמת יואב ואבנר | פרק ב'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/מלחמת-יואב-ואבנר-פרק-ב/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    },
+    {
+      "event": "מרד אבשלום | פרקים ט\"ו-י\"ח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/מרד-אבשלום-פרקים-טו-יח/",
+      "matched": 17,
+      "old_lessons": 18,
+      "unmatched": [
+        "מרד אבשלום"
+      ]
+    },
+    {
+      "event": "עריקת אבנר ומותו | פרק ג'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/עריקת-אבנר-ומותו-פרק-ג/",
+      "matched": 10,
+      "old_lessons": 11,
+      "unmatched": [
+        "הריגת איש בשת, דוד מולך על כל ישראל, כבוש ירושלים"
+      ]
+    },
+    {
+      "event": "פרקי הסיום | פרקים י\"ט-כ\"ד",
+      "old_page": null,
+      "matched": 0,
+      "old_lessons": 0,
+      "unmatched": []
+    },
+    {
+      "event": "תוכחת נתן לדוד | פרק י\"ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/תוכחת-נתן-לדוד-פרק-יב/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    }
+  ]
+}

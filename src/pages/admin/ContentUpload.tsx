@@ -1,23 +1,26 @@
 /**
  * ContentUpload.tsx — Guided content upload wizard
- * Gal 2 of admin-overhaul: approval workflow
+ * Batch A upgrade: Feature 1 (smart book autocomplete), Feature 2 (visual location picker),
+ * Feature 4 (search inside picker). Orphan parent_id bug fixed.
+ * Batch B upgrade: Feature 3 (multi-rabbi selector + inline add), Feature 5 (AI cover gen).
  *
  * Flow:
  *   Admin  → "פרסם עכשיו" or "שמור כטיוטה"
  *   Creator → "שלח לאישור" (status=pending_review)
  *
  * Steps:
- *   1. סוג תוכן + כותרת + יוצר/רב
- *   2. שיוך — קטגוריה/נושא + סדרה + audience tags
- *   3. מדיה — אודיו/וידאו/קובץ + תמונת כיסוי + drive URL
+ *   1. סוג תוכן + כותרת + רבנים (multi) + ספר (autocomplete)
+ *   2. שיוך — ContentLocationPicker + נושא + audience tags
+ *   3. מדיה — אודיו/וידאו/קובץ + תמונת כיסוי (+ AI gen) + drive URL
  *   4. סקירה ושליחה
  */
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Upload, FileText, Headphones, Video, Loader2,
   ChevronLeft, ChevronRight, CheckCircle2, BookOpen,
   Tag, Image, FolderOpen, Users, AlertCircle, BookMarked,
+  Sparkles,
 } from "lucide-react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -30,6 +33,10 @@ import {
   SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useContentSidebar } from "@/hooks/useContentSidebar";
+import { ContentLocationPicker, type SelectedLocation } from "@/components/admin/ContentLocationPicker";
+import { MultiRabbiSelector } from "@/components/admin/MultiRabbiSelector";
+import { useLessonRabbis } from "@/hooks/useRabbiMultiSelect";
 
 // ─── design tokens ──────────────────────────────────────────────────
 const GOLD   = "#8B6F47";
@@ -69,12 +76,14 @@ interface FormState {
   title:       string;
   description: string;
   sourceType:  string;
-  rabbiId:     string;
+  rabbiId:     string;    // primary rabbi — backward compat with lessons.rabbi_id
+  rabbiIds:    string[];  // Feature 3: multi-select, index 0 = primary
   // step 2
-  seriesId:       string;
-  newSeriesTitle: string;
-  topicId:        string;
-  audienceTags:   string[];
+  seriesId:          string;
+  newSeriesTitle:    string;
+  newSeriesParentId: string;   // parent_id for createSeries — from picker node (fix: was always empty)
+  topicId:           string;
+  audienceTags:      string[];
   // step 3
   audioFile:    File | null;
   videoFile:    File | null;
@@ -83,16 +92,17 @@ interface FormState {
   videoUrl:     string;
   driveFolderUrl: string;
   // step 1 extra
-  bibleBook:    string;
-  bibleChapter: string;
+  bibleBook:       string;
+  bibleChapter:    string;
+  bookCategoryId:  string;   // book-node id from sidebar — used for picker pre-expand ONLY (critique I/L)
 }
 
 const EMPTY: FormState = {
-  title: "", description: "", sourceType: "audio", rabbiId: "",
-  seriesId: "", newSeriesTitle: "", topicId: "", audienceTags: ["general"],
+  title: "", description: "", sourceType: "audio", rabbiId: "", rabbiIds: [],
+  seriesId: "", newSeriesTitle: "", newSeriesParentId: "", topicId: "", audienceTags: ["general"],
   audioFile: null, videoFile: null, pdfFile: null, coverFile: null,
   videoUrl: "", driveFolderUrl: "",
-  bibleBook: "", bibleChapter: "",
+  bibleBook: "", bibleChapter: "", bookCategoryId: "",
 };
 
 // ─── helper ─────────────────────────────────────────────────────────
@@ -118,20 +128,49 @@ const ContentUpload = () => {
   const [stepErrors, setStepErrors] = useState<Record<number, string>>({});
   const [creatingNewSeries, setCreatingNewSeries] = useState(false);
 
-  // ── data queries ─────────────────────────────────────────────────
-  const { data: seriesList } = useQuery({
-    queryKey: ["admin-series-list"],
-    queryFn: async () => {
-      const { data } = await supabase
-        .from("series")
-        .select("id, title")
-        .in("status", ["active", "published", "draft"])
-        .order("title")
-        .limit(500);
-      return data ?? [];
-    },
-  });
+  // Feature 2 — location picker state (separate from FormState — not serializable)
+  const [locationValue, setLocationValue] = useState<SelectedLocation | null>(null);
 
+  // Feature 5 — AI cover generation state
+  const [generatingCover, setGeneratingCover] = useState(false);
+  const [generatedCoverUrl, setGeneratedCoverUrl] = useState<string | null>(null);
+
+  // Feature 1 — book autocomplete state
+  const [bookInput, setBookInput] = useState("");
+  const [bookDropdownOpen, setBookDropdownOpen] = useState(false);
+  const bookInputRef = useRef<HTMLInputElement>(null);
+  const bookDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Feature 3 — multi-rabbi hook
+  const { insertLessonRabbis } = useLessonRabbis();
+
+  // ── sidebar data (feature 1 + 2) ────────────────────────────────
+  const { categories } = useContentSidebar();
+
+  // Feature 1: flat list of book nodes only (critique K — no series titles)
+  const allBookNodes = categories.flatMap(cat =>
+    cat.books.map(b => ({ id: b.id, title: b.title, category: cat.title }))
+  );
+
+  const filteredBooks = bookInput.length >= 1
+    ? allBookNodes.filter(b => b.title.includes(bookInput) || b.title.toLowerCase().includes(bookInput.toLowerCase()))
+    : [];
+
+  // Close book dropdown on outside click
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (
+        bookDropdownRef.current && !bookDropdownRef.current.contains(e.target as Node) &&
+        bookInputRef.current && !bookInputRef.current.contains(e.target as Node)
+      ) {
+        setBookDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  // ── data queries ─────────────────────────────────────────────────
   const { data: rabbisList } = useQuery({
     queryKey: ["admin-rabbis-list"],
     queryFn: async () => {
@@ -158,10 +197,16 @@ const ContentUpload = () => {
 
   // ── mutations ───────────────────────────────────────────────────
   const createSeries = useMutation({
-    mutationFn: async (title: string) => {
+    mutationFn: async ({ title, parentId }: { title: string; parentId: string }) => {
       const { data, error } = await supabase
         .from("series")
-        .insert({ title, status: "draft", audience_tags: form.audienceTags } as any)
+        .insert({
+          title,
+          status: "draft",
+          audience_tags: form.audienceTags,
+          // Fix: attach parent_id from the picker node — previously always missing (orphan bug)
+          parent_id: parentId || null,
+        } as any)
         .select("id, title")
         .single();
       if (error) throw error;
@@ -171,6 +216,7 @@ const ContentUpload = () => {
       queryClient.invalidateQueries({ queryKey: ["admin-series-list"] });
       set("seriesId", newSeries.id);
       set("newSeriesTitle", "");
+      set("newSeriesParentId", "");
       setCreatingNewSeries(false);
       toast({ title: `סדרה "${newSeries.title}" נוצרה` });
     },
@@ -188,11 +234,29 @@ const ContentUpload = () => {
       if (form.videoFile)  videoUrl      = await uploadToStorage(form.videoFile,  "video");
       if (form.pdfFile)    attachmentUrl = await uploadToStorage(form.pdfFile,    "pdf");
       if (form.coverFile)  thumbnailUrl  = await uploadToStorage(form.coverFile,  "covers");
+      // Feature 5: use AI-generated cover if no manual cover uploaded
+      if (!form.coverFile && generatedCoverUrl) {
+        thumbnailUrl = generatedCoverUrl;
+      }
+
+      // Determine effective seriesId — if new series needs to be created first, do it now
+      let effectiveSeriesId = form.seriesId || null;
+      if (
+        locationValue?.mode === "new_series_in_node" &&
+        locationValue.seriesTitle?.trim() &&
+        !form.seriesId
+      ) {
+        const newSeries = await createSeries.mutateAsync({
+          title: locationValue.seriesTitle.trim(),
+          parentId: locationValue.parentNodeId || "",
+        });
+        effectiveSeriesId = newSeries.id;
+      }
 
       const payload: Record<string, unknown> = {
         title:          form.title.trim(),
         description:    form.description || null,
-        series_id:      form.seriesId   || null,
+        series_id:      effectiveSeriesId,
         rabbi_id:       form.rabbiId    || null,
         source_type:    form.sourceType,
         audio_url:      audioUrl,
@@ -208,24 +272,26 @@ const ContentUpload = () => {
         published_at:   intentStatus === "published" ? new Date().toISOString() : null,
       };
 
-      const { error } = await supabase.from("lessons").insert(payload as any);
+      const { data: insertedLesson, error } = await supabase
+        .from("lessons")
+        .insert(payload as any)
+        .select("id")
+        .single();
       if (error) throw error;
 
-      // link topic if chosen
-      if (form.topicId) {
-        const { data: lesson } = await supabase
-          .from("lessons")
-          .select("id")
-          .eq("title", form.title.trim())
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
-        if (lesson) {
-          await supabase.from("lesson_topics").insert({
-            lesson_id: lesson.id,
-            topic_id:  form.topicId,
-          });
-        }
+      const lessonId = insertedLesson?.id;
+
+      // Feature 3: populate lesson_rabbis join table (all selected rabbis)
+      if (lessonId && form.rabbiIds.length > 0) {
+        await insertLessonRabbis.mutateAsync({ lessonId, rabbiIds: form.rabbiIds });
+      }
+
+      // link topic if chosen (use returned ID — not title search to avoid dup race)
+      if (form.topicId && lessonId) {
+        await supabase.from("lesson_topics").insert({
+          lesson_id: lessonId,
+          topic_id:  form.topicId,
+        });
       }
     },
     onSuccess: () => {
@@ -266,7 +332,75 @@ const ContentUpload = () => {
   const next = () => { if (validateStep(step)) setStep(s => Math.min(s + 1, 4)); };
   const back = () => setStep(s => Math.max(s - 1, 1));
 
-  const resetAll = () => { setForm(EMPTY); setStep(1); setDone(false); setStepErrors({}); };
+  const resetAll = () => {
+    setForm(EMPTY);
+    setStep(1);
+    setDone(false);
+    setStepErrors({});
+    setLocationValue(null);
+    setBookInput("");
+    setGeneratedCoverUrl(null);
+  };
+
+  // Feature 5 — AI cover generation handler
+  const handleGenerateCover = async () => {
+    if (!form.title.trim()) {
+      toast({ title: "נא להזין כותרת תחילה", variant: "destructive" });
+      return;
+    }
+    setGeneratingCover(true);
+    setGeneratedCoverUrl(null);
+    try {
+      const { data, error } = await supabase.functions.invoke("generate-cover", {
+        body: {
+          title: form.title.trim(),
+          series_id: form.seriesId || undefined,
+        },
+      });
+      if (error) throw error;
+      if (!data?.image_url) throw new Error("לא התקבל URL תמונה מהשרת");
+      setGeneratedCoverUrl(data.image_url as string);
+      toast({ title: "תמונת כיסוי נוצרה" });
+    } catch (e: any) {
+      toast({ title: "שגיאה ביצירת תמונה", description: e.message, variant: "destructive" });
+    } finally {
+      setGeneratingCover(false);
+    }
+  };
+
+  // ── location picker handler ──────────────────────────────────────
+  const handleLocationSelect = (loc: SelectedLocation) => {
+    setLocationValue(loc);
+    if (loc.mode === "existing_series") {
+      set("seriesId", loc.seriesId!);
+      set("newSeriesParentId", "");
+      set("newSeriesTitle", "");
+      setCreatingNewSeries(false);
+    } else if (loc.mode === "new_series_in_node") {
+      set("seriesId", "");
+      set("newSeriesParentId", loc.parentNodeId!);
+      set("newSeriesTitle", loc.seriesTitle || "");
+      setCreatingNewSeries(true);
+    } else {
+      // standalone
+      set("seriesId", "");
+      set("newSeriesParentId", "");
+      set("newSeriesTitle", "");
+      setCreatingNewSeries(false);
+    }
+  };
+
+  // ── book autocomplete handler ────────────────────────────────────
+  const handleBookSelect = (bookId: string, bookTitle: string, _categoryTitle: string) => {
+    setBookInput(bookTitle);
+    set("bibleBook", bookTitle);
+    set("bookCategoryId", bookId);
+    setBookDropdownOpen(false);
+  };
+
+  // Derive badge text from current selection
+  const selectedBookNode = allBookNodes.find(b => b.id === form.bookCategoryId);
+
 
   // ── success screen ───────────────────────────────────────────────
   if (done) {
@@ -382,7 +516,7 @@ const ContentUpload = () => {
         >
 
           {/* ═══════════════════════════════════════════════════════
-              STEP 1 — סוג תוכן + כותרת + רב
+              STEP 1 — סוג תוכן + כותרת + רב + ספר (autocomplete)
           ═══════════════════════════════════════════════════════ */}
           {step === 1 && (
             <div className="space-y-6">
@@ -448,36 +582,89 @@ const ContentUpload = () => {
                 />
               </div>
 
-              {/* rabbi */}
+              {/* Feature 3 — multi-rabbi selector */}
               <div>
                 <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
                   רב / יוצר
+                  <span className="font-normal text-xs mr-1" style={{ color: TXT_M }}>(ניתן לבחור כמה)</span>
                 </label>
-                <Select value={form.rabbiId} onValueChange={v => set("rabbiId", v)}>
-                  <SelectTrigger style={{ direction: "rtl" }}>
-                    <SelectValue placeholder="בחר רב (אופציונלי)" />
-                  </SelectTrigger>
-                  <SelectContent dir="rtl">
-                    {rabbisList?.map(r => (
-                      <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <MultiRabbiSelector
+                  rabbisList={rabbisList?.map(r => ({ id: r.id, name: r.name, entity_type: null })) ?? []}
+                  selectedIds={form.rabbiIds}
+                  onChange={ids => {
+                    set("rabbiIds", ids);
+                    // Keep rabbiId (primary) in sync for backward compat
+                    set("rabbiId", ids[0] ?? "");
+                  }}
+                  onRabbiCreated={r => {
+                    // Add to rabbiIds after creation
+                    set("rabbiIds", [...form.rabbiIds, r.id]);
+                    set("rabbiId", form.rabbiIds[0] ?? r.id);
+                  }}
+                />
               </div>
 
-              {/* bible ref */}
+              {/* ── Feature 1: bible book autocomplete ─────────────── */}
               <div className="grid grid-cols-2 gap-4">
-                <div>
+                <div className="relative">
                   <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
                     ספר בתנ"ך
                   </label>
                   <Input
-                    value={form.bibleBook}
-                    onChange={e => set("bibleBook", e.target.value)}
-                    placeholder="בראשית"
+                    ref={bookInputRef}
+                    value={bookInput}
+                    onChange={e => {
+                      setBookInput(e.target.value);
+                      set("bibleBook", e.target.value);
+                      // Clear bookCategoryId if user types manually without picking
+                      if (form.bookCategoryId && e.target.value !== selectedBookNode?.title) {
+                        set("bookCategoryId", "");
+                      }
+                      setBookDropdownOpen(true);
+                    }}
+                    onFocus={() => bookInput.length >= 1 && setBookDropdownOpen(true)}
+                    placeholder="בראשית, יהושע..."
                     style={{ direction: "rtl" }}
+                    autoComplete="off"
                   />
+
+                  {/* dropdown */}
+                  {bookDropdownOpen && filteredBooks.length > 0 && (
+                    <div
+                      ref={bookDropdownRef}
+                      className="absolute z-30 mt-1 w-full rounded-xl shadow-lg overflow-hidden"
+                      style={{ background: "#fff", border: `1px solid ${GOLD_S}`, top: "100%" }}
+                    >
+                      {filteredBooks.slice(0, 8).map(b => (
+                        <button
+                          key={b.id}
+                          type="button"
+                          onMouseDown={e => {
+                            e.preventDefault(); // prevent blur before click
+                            handleBookSelect(b.id, b.title, b.category);
+                          }}
+                          className="w-full flex items-center justify-between gap-3 px-4 py-2.5 text-right hover:bg-amber-50 transition-colors"
+                        >
+                          <span className="text-sm font-display" style={{ color: TXT }}>{b.title}</span>
+                          <span className="text-xs" style={{ color: TXT_M }}>{b.category}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* badge — shown when a book node is selected (critique K) */}
+                  {selectedBookNode && (
+                    <div
+                      className="mt-1.5 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-display"
+                      style={{ background: `${GOLD}18`, color: GOLD, border: `1px solid ${GOLD_S}` }}
+                    >
+                      <span style={{ color: TXT_M }}>{selectedBookNode.category}</span>
+                      <span>›</span>
+                      <span>{selectedBookNode.title}</span>
+                    </div>
+                  )}
                 </div>
+
                 <div>
                   <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
                     פרק
@@ -495,58 +682,39 @@ const ContentUpload = () => {
           )}
 
           {/* ═══════════════════════════════════════════════════════
-              STEP 2 — שיוך: סדרה + נושא + audience tags
+              STEP 2 — שיוך: ContentLocationPicker + נושא + audience tags
           ═══════════════════════════════════════════════════════ */}
           {step === 2 && (
             <div className="space-y-6">
               <StepTitle icon={Tag} title="שיוך ותיוג" step={2} />
 
-              {/* series */}
+              {/* ── Feature 2: visual location picker ────────────── */}
               <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="text-sm font-display" style={{ color: TXT }}>
-                    סדרה
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setCreatingNewSeries(v => !v)}
-                    className="text-xs font-display underline"
-                    style={{ color: GOLD }}
-                  >
-                    {creatingNewSeries ? "בחר סדרה קיימת" : "+ סדרה חדשה"}
-                  </button>
-                </div>
-
-                {creatingNewSeries ? (
-                  <div className="flex gap-2">
+                <label className="block text-sm font-display mb-2" style={{ color: TXT }}>
+                  מיקום בעץ התוכן
+                </label>
+                <ContentLocationPicker
+                  audienceTags={form.audienceTags}
+                  initialBookId={form.bookCategoryId || undefined}
+                  value={locationValue}
+                  onSelect={handleLocationSelect}
+                />
+                {/* new series title input — shown when mode=new_series_in_node */}
+                {locationValue?.mode === "new_series_in_node" && (
+                  <div className="mt-3">
+                    <label className="block text-xs font-display mb-1" style={{ color: TXT_M }}>
+                      שם הסדרה החדשה <span style={{ color: "#DC2626" }}>*</span>
+                    </label>
                     <Input
                       value={form.newSeriesTitle}
                       onChange={e => set("newSeriesTitle", e.target.value)}
-                      placeholder="שם הסדרה החדשה"
-                      className="flex-1"
+                      placeholder="הזן שם לסדרה החדשה"
                       style={{ direction: "rtl" }}
                     />
-                    <button
-                      type="button"
-                      onClick={() => form.newSeriesTitle.trim() && createSeries.mutate(form.newSeriesTitle.trim())}
-                      disabled={!form.newSeriesTitle.trim() || createSeries.isPending}
-                      className="px-4 py-2 rounded-lg text-sm font-display"
-                      style={{ background: GOLD, color: "#fff", opacity: form.newSeriesTitle.trim() ? 1 : 0.5 }}
-                    >
-                      {createSeries.isPending ? "יוצר..." : "צור"}
-                    </button>
+                    <p className="text-xs mt-1" style={{ color: TXT_M }}>
+                      הסדרה תיווצר אוטומטית תחת "{locationValue.parentNodeTitle}" בעת שמירת השיעור.
+                    </p>
                   </div>
-                ) : (
-                  <Select value={form.seriesId} onValueChange={v => set("seriesId", v)}>
-                    <SelectTrigger style={{ direction: "rtl" }}>
-                      <SelectValue placeholder="בחר סדרה (אופציונלי)" />
-                    </SelectTrigger>
-                    <SelectContent dir="rtl">
-                      {seriesList?.map(s => (
-                        <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                 )}
               </div>
 
@@ -657,16 +825,74 @@ const ContentUpload = () => {
                 icon={BookMarked}
               />
 
-              <FileDropZone
-                id="cover-upload"
-                accept="image/*"
-                label="תמונת כיסוי (אופציונלי)"
-                hint="JPG, PNG — 1200×630 מומלץ"
-                file={form.coverFile}
-                onChange={f => set("coverFile", f)}
-                icon={Image}
-                preview
-              />
+              {/* Feature 5 — AI cover generation */}
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-sm font-display" style={{ color: TXT }}>
+                    תמונת כיסוי (אופציונלי)
+                  </label>
+                  <button
+                    type="button"
+                    disabled={generatingCover || !form.title.trim()}
+                    onClick={handleGenerateCover}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display transition-opacity"
+                    style={{
+                      background: `linear-gradient(135deg, ${GOLD} 0%, ${GOLD_L} 100%)`,
+                      color: "#fff",
+                      opacity: (!form.title.trim() || generatingCover) ? 0.5 : 1,
+                    }}
+                  >
+                    {generatingCover
+                      ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />מייצר...</>
+                      : <><Sparkles className="h-3.5 w-3.5" />ג׳נרוט ב-AI</>
+                    }
+                  </button>
+                </div>
+
+                {/* AI-generated preview */}
+                {generatedCoverUrl && !form.coverFile && (
+                  <div
+                    className="mb-2 rounded-xl overflow-hidden border"
+                    style={{ borderColor: GOLD_S }}
+                  >
+                    <img
+                      src={generatedCoverUrl}
+                      alt="תמונת כיסוי שנוצרה"
+                      className="w-full h-40 object-cover"
+                    />
+                    <div
+                      className="flex items-center justify-between px-3 py-2"
+                      style={{ background: PARCH_D }}
+                    >
+                      <span className="text-xs font-display" style={{ color: TXT_M }}>
+                        תמונה שנוצרה ב-AI
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setGeneratedCoverUrl(null)}
+                        className="text-xs font-display"
+                        style={{ color: "#DC2626" }}
+                      >
+                        הסר
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                <FileDropZone
+                  id="cover-upload"
+                  accept="image/*"
+                  label=""
+                  hint="JPG, PNG — 1200×630 מומלץ (מחליף תמונת AI)"
+                  file={form.coverFile}
+                  onChange={f => {
+                    set("coverFile", f);
+                    if (f) setGeneratedCoverUrl(null); // manual upload overrides AI
+                  }}
+                  icon={Image}
+                  preview
+                />
+              </div>
 
               <div>
                 <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
@@ -698,19 +924,45 @@ const ContentUpload = () => {
                 <SummaryRow label="כותרת"    value={form.title || "—"} />
                 <SummaryRow label="סוג"      value={SOURCE_TYPES.find(t => t.value === form.sourceType)?.label ?? form.sourceType} />
                 <SummaryRow label="רב"       value={rabbisList?.find(r => r.id === form.rabbiId)?.name ?? "לא נבחר"} />
-                <SummaryRow label="סדרה"     value={seriesList?.find((s: any) => s.id === form.seriesId)?.title ?? "לא שויך"} />
+                {/* Feature 2: dynamic location summary (critique I/L) */}
+                <SummaryRow label="מיקום"    value={
+                  locationValue?.mode === "existing_series"
+                    ? `סדרה: ${locationValue.seriesTitle ?? ""}`
+                    : locationValue?.mode === "new_series_in_node"
+                      ? `תחת: ${locationValue.parentNodeTitle ?? ""} (סדרה חדשה: ${form.newSeriesTitle || "—"})`
+                      : "ללא שיוך (שיעור עצמאי)"
+                } />
                 <SummaryRow label="קהל יעד"  value={
                   form.audienceTags
                     .map(t => AUDIENCE_TAGS.find(a => a.value === t)?.label ?? t)
                     .join(", ")
                 } />
-                <SummaryRow label="תמונה"    value={form.coverFile ? form.coverFile.name : "ללא"} />
+                <SummaryRow label="תמונה"    value={
+                  form.coverFile
+                    ? form.coverFile.name
+                    : generatedCoverUrl
+                      ? "תמונת AI (נוצרה)"
+                      : "ללא"
+                } />
                 <SummaryRow label="שמע"      value={form.audioFile ? form.audioFile.name : form.videoUrl || "ללא"} />
                 <SummaryRow label="מסמך"     value={form.pdfFile ? form.pdfFile.name : "ללא"} />
                 {form.bibleBook && (
                   <SummaryRow label="ספר"    value={`${form.bibleBook}${form.bibleChapter ? ` פרק ${form.bibleChapter}` : ""}`} />
                 )}
               </div>
+
+              {/* standalone warning */}
+              {locationValue?.mode === "standalone" && (
+                <div
+                  className="flex items-start gap-3 p-4 rounded-xl"
+                  style={{ background: "#FFFBEB", border: "1px solid #FDE68A" }}
+                >
+                  <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "#D97706" }} />
+                  <p className="text-sm" style={{ color: "#92400E" }}>
+                    שיעור ללא סדרה לא יופיע בעץ הניווט של האתר. ניתן להוסיף לסדרה מאוחר יותר.
+                  </p>
+                </div>
+              )}
 
               {!isAdmin && (
                 <div

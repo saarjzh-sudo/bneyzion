@@ -1,0 +1,145 @@
+{
+  "book": "חגי",
+  "book_id": "273e3b3c-318d-4335-b026-d03dc4c8a602",
+  "plan": [
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000001",
+      "event_title": "חגי פרק א",
+      "lesson_id": "65073f6a-3b98-41ee-b647-3a2648a94108",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "חגי פרק א",
+      "old_title": "הציפיה לבית המקדש כבסיס לברכה החומרית",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000001",
+      "event_title": "חגי פרק א",
+      "lesson_id": "10fb8ac3-b617-42bf-ae53-5f0f9f097550",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "חגי פרק א",
+      "old_title": "יחסי הגומלין בהתעוררות העם וה' בשיבת ציון",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000001",
+      "event_title": "חגי פרק א",
+      "lesson_id": "27624e83-9d99-42a0-9bff-3f87e682e8d0",
+      "mode": "copy",
+      "from_series": "775d97af-54b1-4b2e-8d74-a090ac31c67f",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר חגי",
+      "old_title": "חגי פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000001",
+      "event_title": "חגי פרק א",
+      "lesson_id": "14cc9e7b-bfed-4203-85f6-1c9cab7758ef",
+      "mode": "copy",
+      "from_series": "45c0cd22-0744-41c3-94ff-efdf3f63f1f7",
+      "from_status": "active",
+      "from_title": "חגי - מוקלט | ללא טעמים",
+      "old_title": "חגי מוקלט - פרק א | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "2aa83806-b63a-47d9-9e4a-77145b2227f3",
+      "mode": "move",
+      "from_series": "1b9c0df1-89d3-49d1-b2bb-422ee34a9d56",
+      "from_status": "category",
+      "from_title": "חגי פרק ב",
+      "old_title": "גדול יהיה כבוד הבית הזה האחרון מן הראשון",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "41b64711-b504-43b5-9119-a04796fc9c5e",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חגי פרק ב",
+      "old_title": "יחסי הגומלין בהתעוררות העם וה' בשיבת ציון",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "e8d03171-bef2-41cc-8b8a-5dc7478205da",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חגי פרק ב",
+      "old_title": "הפגישה עם סתרי תורה דווקא בבית שני",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "8366c56f-b77f-4d00-a110-71c65045470c",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חגי פרק ב",
+      "old_title": "הברכה המגיעה בעקבות תחילת הבניין",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "f6ee5590-474d-482b-8233-d82222429273",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חגי פרק ב",
+      "old_title": "היחס בין שלושת בתי המקדש",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "a908bc24-c070-4b06-b04f-94348ca97d46",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חגי פרק ב",
+      "old_title": "חגי פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2090001-0001-4000-8000-000000000002",
+      "event_title": "חגי פרק ב",
+      "lesson_id": "50d6231a-75e5-4f50-893b-5432107a9710",
+      "mode": "copy",
+      "from_series": "c2090001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חגי פרק ב",
+      "old_title": "חגי מוקלט - פרק ב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    }
+  ],
+  "report": [
+    {
+      "event": "חגי פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/חגי/חגי-פרק-א/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "חגי פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/חגי/חגי-פרק-ב/",
+      "matched": 7,
+      "old_lessons": 8,
+      "unmatched": [
+        "\"וד' נתן קולו'' - קולות ד' מול קולות האדם"
+      ]
+    }
+  ]
+}

@@ -16,6 +16,7 @@ export interface WeeklyCourse {
   status: string;
   lesson_count: number | null;
   total_lessons: number | null;
+  is_current: boolean | null; // admin-set: which book is being studied now
   // for payment:
   payment_product_id: string | null; // e.g. 'book-ezra'
 }

@@ -1,0 +1,4235 @@
+{
+  "book": "יחזקאל",
+  "book_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+  "plan": [
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "0a3f686f-291c-42c2-83c2-d68cf5f152a2",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק א",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "ec06d61a-57a0-49be-bd09-0c04a9974350",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ב",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "a128fdf2-7575-416b-9411-8f1313ffd664",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ג",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "8788d451-6dc7-4669-b354-c86f540669b1",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ד",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "ed4f69f1-589c-4e5e-9d66-9a06e6a9e781",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ה",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "f303e093-a698-49ea-8596-172aee61f743",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ו",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "9aa19b87-192f-43e8-bcc6-cb2f1f85aabf",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ז",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "8d6d8cc7-7f56-4164-b215-c97e82df3781",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ח",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "8b7527f1-dbba-4c12-8360-d99adf2fd604",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ט",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "5fa15600-b9aa-457e-b00b-34628f1fbd2e",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק י",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "670419aa-30a1-4316-9d44-3370bb27a3ce",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יא",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "c92fcb5d-9863-437f-b74c-e1188a80b691",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יב",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "c3bf896f-eaa0-451f-9caf-2cdd7cbda15d",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יג",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "b768ec70-cf7b-454f-9d74-e34148d3edda",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יד",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "3e150bcf-9265-489e-aa02-2c9fe37ac840",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק טו",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "c11b4fe2-f993-4a8b-871b-d9c5fdea7a47",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יז",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "7778c84e-7079-4b0b-8fbd-f0598a7ef025",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יח",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "a02e6344-9444-4f0b-b32e-6d1cde971488",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק יט",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "7370ed66-7e7c-40d2-9fae-18b5a3ee0e9b",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כ",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "1b79f45e-17d8-4699-91de-f52cbb75ad0a",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כא",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "c30e93af-5eee-4365-9114-a522aae889d3",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כב",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "2818afd7-b9fb-49f7-838d-88fdb07bd94f",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כג",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "13e6ab24-d6e9-4310-9190-99060d850ca6",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כד",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "3b1e0b47-e51b-46e1-bec4-0ccd5f2a512d",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כה",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "b793c4c5-7d97-4dd1-a0c9-92d645dc1f65",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כו",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "bd3a7c34-7c12-484c-bc9b-87ef63e0d5cd",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כז",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "fd23e3cb-a741-4ccd-bd2f-8c4d90b2cc1a",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כח",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "703add5d-e5ad-451c-b686-efe539294d8f",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק כט",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "624bf26b-90e0-462b-ac80-3342baaf47b9",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק ל",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "975556a9-2d24-4bf3-bc5b-44d6273fbf2b",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לא",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "e239de58-4759-4753-9c5a-86087e0a058f",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לב",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "8ce48c7f-c4a3-4704-a7c6-48c0889923c0",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לג",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "ea5a47de-99fb-4640-8687-138253cd9f3c",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לד",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "a85fa809-47ea-4ca3-b91f-456ca84bda9b",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לה",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "8cc4f47c-74da-404f-a917-34ce78ea5049",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לו",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "d14e7f24-5520-441d-9108-7a7b17717589",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לז",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "5d7555b9-41eb-472c-96c4-b3360e2d9e38",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לח",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "59d4ec1a-d0c9-47e2-b65c-45880166c971",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק לט",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "c7908cbc-3992-413b-bc84-c96c5b7c1821",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מ",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "31f96f25-c332-443e-b9c2-78ea8da9bc8f",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מא",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "d2fd1d8c-bdea-4eeb-b6aa-26e343b1fc23",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מב",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "ea378c3c-d896-498d-9c11-5da4b07d6da3",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מג",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "c75d6833-66ee-48a8-985e-8c5b7aeac553",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מה",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "ace58c74-bb88-4745-aa16-df6977eecf98",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מו",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "bb6063d5-0633-46cf-9dbd-8d38c3f0e504",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - סוף מו ומז",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "event_title": "יחזקאל - מוקלט | אשכנזי",
+      "lesson_id": "24a9620a-7118-436e-aabe-d91fac472f13",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "יחזקאל מוקלט - פרק מח",
+      "old_rabbi": "מערכת בני ציון"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "0ea2e64c-8b96-492f-8373-1a3fe011257a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק א'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "0a56cebf-c66a-4afd-92e6-df1dd15656a5",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ב'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "d18b878c-3222-41b3-8028-daef6ae7681c",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ג'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "ea287ca1-04b6-4458-86a1-6ddd152b8d15",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ד'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "b01e5876-a8a6-4f0a-86b7-c97d8fc5cf3c",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ה'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "04464bcf-0be1-4f5e-9c09-0e996f8afc90",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ו'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "a7e69ca8-f146-4ad5-8913-139206d1654f",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל  פרק ז'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "700bf953-3e9d-4100-882d-1e3d0e2c95aa",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ח'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "7c6005aa-723f-400c-9b60-80e06e12316a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ט'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "2be20c00-bfe4-423c-90b9-6468878e24bd",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "7cf85fbf-2787-486e-967e-7236bc451811",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"א",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "e468ef11-618c-47ab-a267-6cb2efb0724d",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"ב",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "befc52f3-4fd7-41a8-9b0d-5c313c1ded09",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"ג",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "cf5c321a-17ce-4cbb-a7ef-5d846fb1752a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"ד",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "89597b1b-b84f-40ab-a8d0-8ad4fca5a17a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ט\"ו",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "01243b0a-18ae-463a-93d8-70b0364b7f1f",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ט\"ז",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "976c619c-0355-4e2e-8ccb-cec41ecf4c06",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"ז",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "faae10c0-d5ac-4ca5-852b-0784fe19f373",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"ח",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "76ce2da2-3585-4078-a4bd-05446b4e0f63",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק י\"ט",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "2fce5c5f-9e70-400f-8edf-c3a224339dc1",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "שמואל א' פרק כ'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "8ea58c03-b543-421a-aefe-db1c5999172a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"א",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "e1331128-85c8-48d4-b73f-70ffa2bd216d",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ב",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "01928fc1-eac6-442a-9c36-c4bbb0badf6a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ג",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "0d85b8b1-080d-49a6-b525-0beba4ae638a",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ד",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "4409b1e3-9902-4ddf-8635-dd4e6fdf8b5e",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ה",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "6653ccdf-ca39-40b8-b079-fe8c2d607846",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ו",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "64d1b7e8-9cf3-4fa0-86dc-6e909a0f5ebf",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ז",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "7e90a922-7af0-4adc-add9-2f585fdebdde",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל' פרק כ\"ח",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "aedc361c-1852-401d-a713-9942c5decd77",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק כ\"ט",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "b387a53d-41b0-4a9f-ab50-4de7aa55b3f6",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ל'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "a14112fa-d51f-4518-a2bc-f353f1f47552",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ל\"א",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "95a060fa-fcbe-429d-9618-0693a7ca2843",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ל\"ב",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "2d102c40-4f2f-417a-b4ec-fd263cf90cae",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ל\"ג",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "a44e267f-e048-4979-be7f-a0181550ebe9",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ל\"ד",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "event_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "lesson_id": "5d9b77f9-61c1-4c45-ad1b-1faa7c4500b7",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ל\"ה",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "72f2ed53-87f2-4408-a98c-b0ca27e92e8f",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים א-ב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "988af3f5-6ead-4b62-b4ab-deb63025ec55",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים ג-ד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "d812398b-2228-44bd-b5d2-e55d22981a99",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים ה-ו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "32bf2901-96ce-4d03-879b-587d128a3eb9",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים ז-ח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "82614050-8104-424a-af9e-2a99dfb9692b",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים יא-יב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "f24d4c11-a51d-486a-8c8d-ca2ca1ec4e8b",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים יג-יד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "c518210c-15c5-426f-ad31-5f12ba152683",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים טו-טז",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "109cbf07-039e-4cba-bf0c-52366b68cdf9",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים יז-יח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "f52233bc-33ef-4454-9e8a-a12daefd0105",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים יט-כ",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "9bd7cef4-750e-425e-8248-f2841c27f5ed",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים כא-כב",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "2b1451c5-e225-4e3d-845c-df9588764e4f",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים כג-כד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "c697b55e-836e-410a-bc1a-3c030e8dd478",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים כד-כה",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "ca06542a-d1a2-4d3b-9321-879cac06cea1",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים כו-כז",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "3529b306-4e81-4808-8f34-7aec044e8e50",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים כח-כט",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "a5f5a026-bb39-4a25-863d-2d6f0f97b3a6",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים ל-לא",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "9ef962a5-725c-4cfc-8b17-8c88e9b7418e",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים לב-לג",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "cc10b595-ad47-4a50-bb14-b1cc0b3a3b5d",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים לד-לה",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "545151c4-d5e6-4b9d-82cf-7e48f1881fd6",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים לו-לז",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "1e0ec565-74d4-463b-813f-7f41cd435601",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים לח-לט",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "260900fb-a383-4512-a430-cfed38e2ccc0",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים מג-מד",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "900a59a5-e299-454d-a02f-a5ebf146f1f6",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים מה-מו",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "event_title": "יחזקאל בבקיאות",
+      "lesson_id": "2700dd0b-41fd-4be6-ad58-25546080a1d5",
+      "mode": "copy",
+      "from_series": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+      "from_status": "active",
+      "from_title": "יחזקאל בבקיאות",
+      "old_title": "יחזקאל בבקיאות פרקים מז-מח",
+      "old_rabbi": "הרב דרור טוויל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000001",
+      "event_title": "יחזקאל פרק א",
+      "lesson_id": "1a8457d1-a395-495e-a29c-bc963e720805",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "מבנה המרכבה - אדם מול בעלי החיים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000001",
+      "event_title": "יחזקאל פרק א",
+      "lesson_id": "a4ae27b8-f56e-4bfe-8c7e-995eb17b4659",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "פתיחה לנבואת יחזקאל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000001",
+      "event_title": "יחזקאל פרק א",
+      "lesson_id": "94769242-7251-4c5a-a0d2-ae05dc646e95",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000001",
+      "event_title": "יחזקאל פרק א",
+      "lesson_id": "f2010000-0001-4000-8000-000000000002",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "נבואות המינוי של ישעיהו, ירמיהו ויחזקאל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000002",
+      "event_title": "יחזקאל פרק ב",
+      "lesson_id": "d5d3af9e-0f68-4e2c-8aa4-803479cef968",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "שליחת יחזקאל להתנבא אל גולי בבל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000002",
+      "event_title": "יחזקאל פרק ב",
+      "lesson_id": "b481a03b-0054-45eb-831f-90bb25fdc28d",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "הגדרת השליחות של יחזקאל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000002",
+      "event_title": "יחזקאל פרק ב",
+      "lesson_id": "a684fd2b-b9bd-4408-81d2-a9b7681834ba",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000003",
+      "event_title": "יחזקאל פרק ג",
+      "lesson_id": "3db92287-e6d8-4c3f-b767-eb53ff0d55c5",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "'ותשאני רוח ואשמע אחרי קול רעש גדול'",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000003",
+      "event_title": "יחזקאל פרק ג",
+      "lesson_id": "c87005c1-514c-4ff1-ba27-ddd707859267",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "פעולות המסמלות את המצור על ירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000003",
+      "event_title": "יחזקאל פרק ג",
+      "lesson_id": "a5e4e048-4b65-4c13-8a16-79711295ab43",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000004",
+      "event_title": "יחזקאל פרק ד",
+      "lesson_id": "c44e6417-ff35-4e17-be0c-b71702e2361d",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "יחזקאל מכפר על ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000004",
+      "event_title": "יחזקאל פרק ד",
+      "lesson_id": "05ee1e48-ee24-4ad8-88e4-2e0a221f5881",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "למה יחזקאל מעמיד עצמו בתנאים קשים?",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000004",
+      "event_title": "יחזקאל פרק ד",
+      "lesson_id": "25bacfa7-52b3-4b83-81b5-5f8df0d729c5",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "פעולות הנביא להמחשת המצור על ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000004",
+      "event_title": "יחזקאל פרק ד",
+      "lesson_id": "a33bcb4a-37ec-4fb4-9ba2-ed013ee717aa",
+      "mode": "copy",
+      "from_series": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_title": "יחזקאל פרק ד'",
+      "old_rabbi": "הרב לוי סודרי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000005",
+      "event_title": "יחזקאל פרק ה",
+      "lesson_id": "cd7ee3b5-e44a-4910-aff4-8d15a8ac95fd",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "הכוונה האלוקית לשים את ירושלים לחרפה בגויים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000005",
+      "event_title": "יחזקאל פרק ה",
+      "lesson_id": "f889a74d-75dc-416e-b375-da487c198a14",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000006",
+      "event_title": "יחזקאל פרק ו",
+      "lesson_id": "6ca6ead4-69e7-470c-ad3a-f74d6bb94347",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "האדם הזמן והמקום",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000006",
+      "event_title": "יחזקאל פרק ו",
+      "lesson_id": "d1a40f85-24c8-4bcc-987a-c9c171191727",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "סיבות חורבן ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000006",
+      "event_title": "יחזקאל פרק ו",
+      "lesson_id": "dc7e2cd8-1134-40b4-a42e-6aa41c82b0e7",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000007",
+      "event_title": "יחזקאל פרק ז",
+      "lesson_id": "3e975eb7-7553-4bb5-a4bf-98df2fa5371d",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואה על קיצה של ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000007",
+      "event_title": "יחזקאל פרק ז",
+      "lesson_id": "d22a9010-8eea-4ce0-afc6-350483a0b52a",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000008",
+      "event_title": "יחזקאל פרק ח",
+      "lesson_id": "ba3028a1-3f2d-4efb-bd25-0a41698e81a4",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "השכינה חוזרת לירושלים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000008",
+      "event_title": "יחזקאל פרק ח",
+      "lesson_id": "13fb551d-e09a-4598-a096-56697c5e33fb",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "החזון שנעשה בבל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000008",
+      "event_title": "יחזקאל פרק ח",
+      "lesson_id": "8148d1a3-7f0a-4187-81d2-93febc04f8ad",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "מראה  התועבות הגדולות שבירושלים והפורענות",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000008",
+      "event_title": "יחזקאל פרק ח",
+      "lesson_id": "9ca38485-03c3-4e61-8a58-ac5458712b55",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "יחזקאל רואה בחזון את חטאי ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000008",
+      "event_title": "יחזקאל פרק ח",
+      "lesson_id": "11d0bbf9-6ceb-45b4-8fc9-27c80e542658",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000009",
+      "event_title": "יחזקאל פרק ט",
+      "lesson_id": "f253141f-21f3-4c7a-aeff-0ed3e909d54b",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "קריאה למשחיתים להשחית את יושבי ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000015",
+      "event_title": "יחזקאל פרק טו",
+      "lesson_id": "64f142e0-40f1-4393-869a-0d3ce5190987",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "ההתמודדות עם נביאי השקר",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000015",
+      "event_title": "יחזקאל פרק טו",
+      "lesson_id": "1077fedc-4fa9-4b93-942e-d2ce44ddfc6a",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "זכות הצדיקים לא תציל את הרשעים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000015",
+      "event_title": "יחזקאל פרק טו",
+      "lesson_id": "3bef5a8c-b417-4167-904f-992c2925e339",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק טו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000015",
+      "event_title": "יחזקאל פרק טו",
+      "lesson_id": "262b2991-6d01-4a54-b064-58d9d21acd22",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "מה פירוש המושג \"אף כי\"?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000016",
+      "event_title": "יחזקאל פרק טז",
+      "lesson_id": "80b2c760-4399-4c3b-922a-7ca5bedace4e",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "המשל הקשה על עם ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000016",
+      "event_title": "יחזקאל פרק טז",
+      "lesson_id": "64cddcfa-62f2-407e-a719-5950507c2952",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "'ואומר לך בדמייך חיי'",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000016",
+      "event_title": "יחזקאל פרק טז",
+      "lesson_id": "1dcf0056-55c3-4aa3-982b-3551a9ec747f",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "השוואה בין ירושלים לסדום",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000016",
+      "event_title": "יחזקאל פרק טז",
+      "lesson_id": "52fba2ff-31cd-446c-97fb-d450e42cacf2",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "משל הילדה האסופית",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000016",
+      "event_title": "יחזקאל פרק טז",
+      "lesson_id": "11f80c7b-3be0-4108-8916-049c68b43b1a",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואת פורענות על ירושלים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000016",
+      "event_title": "יחזקאל פרק טז",
+      "lesson_id": "8c3e4e77-be1d-40ca-9bf8-9f45d76ce033",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק טז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000010",
+      "event_title": "יחזקאל פרק י",
+      "lesson_id": "ae7bf49f-dbd0-4588-bf42-8efd511fd7e9",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "השינויים במראה המרכבה בירושלים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000010",
+      "event_title": "יחזקאל פרק י",
+      "lesson_id": "f2010000-0001-4000-8000-000000000050",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "גלות השכינה",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000010",
+      "event_title": "יחזקאל פרק י",
+      "lesson_id": "1c7b4260-3f07-4622-a55d-7dc67b9604ff",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק י",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000011",
+      "event_title": "יחזקאל פרק יא",
+      "lesson_id": "eb0e750f-8e13-4525-ba56-397290c6ccc9",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000012",
+      "event_title": "יחזקאל פרק יב",
+      "lesson_id": "22a5db71-a426-4b63-ac76-793ee5d7b59c",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "יחזקאל פונה לבני הגולה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000012",
+      "event_title": "יחזקאל פרק יב",
+      "lesson_id": "988fc6ce-601f-4b42-8bda-78744434bea2",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "הנבואות לבית המרי",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000012",
+      "event_title": "יחזקאל פרק יב",
+      "lesson_id": "23d2c374-037c-42ad-932a-38c18d51536e",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000012",
+      "event_title": "יחזקאל פרק יב",
+      "lesson_id": "297afacb-a130-47a5-b987-3d882f91d06d",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "עיניו של צדקיהו מלך יהודה",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000013",
+      "event_title": "יחזקאל פרק יג",
+      "lesson_id": "0cd82130-e836-4fa4-bdf3-af7d92f4c032",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000014",
+      "event_title": "יחזקאל פרק יד",
+      "lesson_id": "ce87b2a0-5e2a-4e2f-95e4-0d3d4335677e",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "המצב הרוחני המורכב של החוטאים בזמן בית ראשון",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000014",
+      "event_title": "יחזקאל פרק יד",
+      "lesson_id": "6f5aef6d-bd61-4ea5-b7f8-240739137274",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "האנשים אשר באו לפני יחזקאל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000014",
+      "event_title": "יחזקאל פרק יד",
+      "lesson_id": "1c6f7dc5-5e40-4afa-9aa6-116ba94cef34",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000014",
+      "event_title": "יחזקאל פרק יד",
+      "lesson_id": "ab9ab999-38b6-4595-b14e-74b793c8978e",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "נח דניאל ואיוב",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000017",
+      "event_title": "יחזקאל פרק יז",
+      "lesson_id": "46261e16-d9a4-4bcb-99dd-f959ea150d5d",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "המשל על הגפן והארז",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000017",
+      "event_title": "יחזקאל פרק יז",
+      "lesson_id": "7f67ae65-55f5-4f6f-b3a2-67ac2cad17d0",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "חידת הנשר הגדול והגפן  הסורחת",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000017",
+      "event_title": "יחזקאל פרק יז",
+      "lesson_id": "bd9b19da-e842-48e4-a3ae-093bf13dd251",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "משל הנשר הגדול והגפן ההסורחת",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000017",
+      "event_title": "יחזקאל פרק יז",
+      "lesson_id": "b17c75c8-1f1f-4937-9f85-3a7e3484de5a",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "ענישת צדקיהו על ידי נבוכדנצר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000017",
+      "event_title": "יחזקאל פרק יז",
+      "lesson_id": "bf9139ba-59c9-4ed1-b25d-606adfddf40d",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000018",
+      "event_title": "יחזקאל פרק יח",
+      "lesson_id": "a48528cf-94c3-424e-a3dc-cca957e368cc",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "קריאה לתשובה לעם ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000018",
+      "event_title": "יחזקאל פרק יח",
+      "lesson_id": "7464e75b-0205-408b-84d5-76398345e774",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "דמותו של הצדיק",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000018",
+      "event_title": "יחזקאל פרק יח",
+      "lesson_id": "2a5f2633-c5af-44c3-8cc8-c5fb987db713",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000019",
+      "event_title": "יחזקאל פרק יט",
+      "lesson_id": "d582ef2d-0b85-4668-8297-b42314449b8a",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "עם ישראל בכל מצב עבדי ה'",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000019",
+      "event_title": "יחזקאל פרק יט",
+      "lesson_id": "d106844b-6ff8-41d1-ace4-2087812fd78c",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "קינה על מלכות בית דוד",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000019",
+      "event_title": "יחזקאל פרק יט",
+      "lesson_id": "488724e6-e8b0-40bf-b815-2368ce342e53",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק יט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000019",
+      "event_title": "יחזקאל פרק יט",
+      "lesson_id": "4b18e79f-2475-46d4-9529-a71423b07bd1",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "הקינה על נשיאי ישראל",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "2af5c609-8d2d-423c-9ff6-29a52e133f0e",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "תוכחות קשות לישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "075a83a8-2e67-4154-a6c7-86ce517e8701",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "הבחירה האלוקית בישראל שהתגלתה ביציאת מצרים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "3d601bb7-3a35-4691-befa-eb272b4bfb73",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "תהליך התשובה הנצחי של עם ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "4876f08e-7cb0-4f82-a455-2310ea650daa",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "השפעת חטאי דור המדבר על הדורות הבאים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "637e7c40-bfda-470d-8ea9-2b3c800b4f70",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "תוקף הברית בין הקב\"ה וישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "422e624a-5f76-4829-b37a-8a367cbd4bf4",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "קידוש ד' שיהיה בקיבוץ הגלויות",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "b8d59f05-009f-4768-a688-8b9f32f7c2a2",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "חטאי ישראל במצרים ובמדבר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "4c94454e-4153-4ad0-951d-3ba9fd56a6fa",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "תוקף הברית בין  ד' וישראל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "cd8b76b5-2e2d-48f2-8452-a3a1a87c0e26",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כ",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000020",
+      "event_title": "יחזקאל פרק כ",
+      "lesson_id": "f2010000-0001-4000-8000-000000000118",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "שקולה שבת כנגד כל המצוות",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000021",
+      "event_title": "יחזקאל פרק כא",
+      "lesson_id": "fe78b8ff-5a93-48ac-83fb-ab7b8ca68fdc",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "נבוכדנצר מהסס לעלות על ירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000021",
+      "event_title": "יחזקאל פרק כא",
+      "lesson_id": "224a9483-02c8-46a5-b13a-ecb3d5d68717",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואה על שרפת המקדש",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000021",
+      "event_title": "יחזקאל פרק כא",
+      "lesson_id": "8fd49152-5026-49a1-a0ab-5e2937e8e269",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000021",
+      "event_title": "יחזקאל פרק כא",
+      "lesson_id": "c992244d-c988-4893-8470-59b8db3db3b5",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "\"ואתה חלל רשע נשיא ישראל\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000022",
+      "event_title": "יחזקאל פרק כב",
+      "lesson_id": "3d12754d-1893-4f32-b88c-cc383e5824d5",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "יחזקאל כדוגמא לעם ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000022",
+      "event_title": "יחזקאל פרק כב",
+      "lesson_id": "c20bc485-cf61-4d2f-b4b9-d4bf6ddff788",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "פרוט עוונות ירושלים הגורמים לחורבנה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000022",
+      "event_title": "יחזקאל פרק כב",
+      "lesson_id": "fbc91114-3b81-43df-bd38-207330ed6409",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000023",
+      "event_title": "יחזקאל פרק כג",
+      "lesson_id": "0cab8436-d210-414a-a99b-6b87fc4c0dab",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "משל שתי הנשים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000023",
+      "event_title": "יחזקאל פרק כג",
+      "lesson_id": "1b8eef19-581e-417c-b224-7d196b61ee07",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000024",
+      "event_title": "יחזקאל פרק כד",
+      "lesson_id": "56e73e2d-ff55-4452-889f-cfdcc2fbdc44",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "התחלת המצור על ירושלים כשורש החורבן",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000024",
+      "event_title": "יחזקאל פרק כד",
+      "lesson_id": "c6da80d4-6c96-4f45-ae0e-128006f220a9",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "פטירת אשת יחזקאל כמשל לחורבן בית המקדש",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000024",
+      "event_title": "יחזקאל פרק כד",
+      "lesson_id": "8300b3da-d6a1-4b15-87d7-7022bc916b16",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000025",
+      "event_title": "יחזקאל פרק כה",
+      "lesson_id": "3b98a79e-df83-4575-9388-a204265df348",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "פרקי הגויים ביחזקאל - מבט כללי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000025",
+      "event_title": "יחזקאל פרק כה",
+      "lesson_id": "a44aa4dc-0346-42b9-aa03-13071c034f46",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "ניסיון ליצור אלטרנטיבה ירושלים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000025",
+      "event_title": "יחזקאל פרק כה",
+      "lesson_id": "2a3045f1-2427-458d-bca3-0f262145202f",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "נבואת פורענות על האומות השכנות",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000025",
+      "event_title": "יחזקאל פרק כה",
+      "lesson_id": "9733b4f4-41c5-4376-b194-f1e4c7ca71cd",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואות פורענות על עמי האזור",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000025",
+      "event_title": "יחזקאל פרק כה",
+      "lesson_id": "d2b41c89-51b4-4689-94dc-6e13f8626cb6",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000026",
+      "event_title": "יחזקאל פרק כו",
+      "lesson_id": "24264def-e135-4c8a-8f00-bd3303232584",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "עונש צור ומלחמת רומי העתידית",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000026",
+      "event_title": "יחזקאל פרק כו",
+      "lesson_id": "52c72c3c-6443-4e6a-b818-a9d737c3ad3c",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000028",
+      "event_title": "יחזקאל פרק כח",
+      "lesson_id": "5b0f690b-8cdf-4d86-885b-754b174e76bb",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואה על מלך צור ועל צידון",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000028",
+      "event_title": "יחזקאל פרק כח",
+      "lesson_id": "639a3d04-d4d4-4a46-abdf-407e3bb37f36",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000028",
+      "event_title": "יחזקאל פרק כח",
+      "lesson_id": "f2010000-0001-4000-8000-000000000159",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "מכות מצרים עוד לא תמו",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000028",
+      "event_title": "יחזקאל פרק כח",
+      "lesson_id": "f2010000-0001-4000-8000-000000000160",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "מצרים = סכנה רוחנית",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000029",
+      "event_title": "יחזקאל פרק כט",
+      "lesson_id": "36851fc4-895c-4f46-ba1d-51caa358d5f0",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "הכח החומרי- המצרים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000029",
+      "event_title": "יחזקאל פרק כט",
+      "lesson_id": "7f783739-81f9-474c-96ed-1e9b9bac656c",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "נבואות פורענות על מצרים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000029",
+      "event_title": "יחזקאל פרק כט",
+      "lesson_id": "43518e01-1534-420b-8bc5-c9e837243d83",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואת פורענות על פרעה ועל מצרים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000029",
+      "event_title": "יחזקאל פרק כט",
+      "lesson_id": "0452f26b-f1ce-4896-8c31-41f64c2cbd1b",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000030",
+      "event_title": "יחזקאל פרק ל",
+      "lesson_id": "18b06dc2-f706-4450-81a6-f40a8a5a7d2f",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ל",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000032",
+      "event_title": "יחזקאל פרק לב",
+      "lesson_id": "f6879c65-9edd-478b-9b91-51a6879e3762",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000032",
+      "event_title": "יחזקאל פרק לב",
+      "lesson_id": "1618b68a-10a4-4a8c-9a05-5ceb3a4327eb",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000033",
+      "event_title": "יחזקאל פרק לג",
+      "lesson_id": "3b24b8cc-9da1-4032-ab3c-a139eff812e2",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "פתיחת הפה של יחזקאל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000033",
+      "event_title": "יחזקאל פרק לג",
+      "lesson_id": "d6384c51-fe41-4768-be7c-0a307dda001c",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "יחזקאל- נביא או משורר?!",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000033",
+      "event_title": "יחזקאל פרק לג",
+      "lesson_id": "5d271370-a63a-4e65-a735-2cec7d447474",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "תפקיד הנביא בישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000033",
+      "event_title": "יחזקאל פרק לג",
+      "lesson_id": "7c0ae70c-e31c-415a-be4f-2b9aa1211a14",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "\"אחד היה אברהם\"",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000033",
+      "event_title": "יחזקאל פרק לג",
+      "lesson_id": "02ff2e65-f682-409e-81bd-63b9b1900624",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "תפקיד הנביא נמשל לצופה המזהיר את יושבי העיר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000033",
+      "event_title": "יחזקאל פרק לג",
+      "lesson_id": "bc299adb-8625-4865-9e03-c79e4672f51e",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000034",
+      "event_title": "יחזקאל פרק לד",
+      "lesson_id": "c17c4370-cd1a-4695-8c62-2a34de99e73b",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "תוכחה לרועי העם, ולעומתם - הנהגת העם בזמן הגאולה",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000034",
+      "event_title": "יחזקאל פרק לד",
+      "lesson_id": "7667da5b-0627-4e56-b6fe-95cb0f650541",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000035",
+      "event_title": "יחזקאל פרק לה",
+      "lesson_id": "002d790d-2cc2-4dc6-84df-6e83e5646c1c",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "הנבואה על הר שעיר",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000035",
+      "event_title": "יחזקאל פרק לה",
+      "lesson_id": "48a5e957-58fd-4987-8a53-bb45a17501a3",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "חורבן הר שעיר וגאולת הרי ישראל",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000035",
+      "event_title": "יחזקאל פרק לה",
+      "lesson_id": "159cc1ac-4655-4bd1-845a-422b701df701",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "נבואה על חורבן אדום",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000035",
+      "event_title": "יחזקאל פרק לה",
+      "lesson_id": "ae09c8f3-fb8e-4386-9d82-9cd51204ec50",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "45f80b2a-1c32-4e50-8f7b-58faa2df8878",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "נבואת הגאולה הגדולה של יחזקאל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "452de127-d7d2-47bb-983d-98c14eb1931d",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "גאולת ישראל שלב אחר שלב",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "ebc9d24c-722b-47d7-83a3-a8127445c2ce",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "טומאת ישראל כטומאת הנידה",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "0ba88de6-1885-46d5-bd06-3a05d1a04dd7",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "גאולת ישראל למען שם ד'",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "f2010000-0001-4000-8000-000000000208",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "קיבוץ הגלויות",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "8129be9a-0b59-4621-99ec-0bd6b916b7e3",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "f2010000-0001-4000-8000-000000000204",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "טהרת ישראל בארץ ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000036",
+      "event_title": "יחזקאל פרק לו",
+      "lesson_id": "f2010000-0001-4000-8000-000000000205",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "טהרה מן השמים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "ee9b33ad-aa95-4b00-98bb-40a9d9647764",
+      "event_title": "יחזקאל פרק לז",
+      "lesson_id": "a87aadc1-eec9-47db-903b-a807f231f9db",
+      "mode": "move",
+      "from_series": "ee9b33ad-aa95-4b00-98bb-40a9d9647764",
+      "from_status": "category",
+      "from_title": "יחזקאל פרק לז",
+      "old_title": "עיון חדש בחזון העצמות היבשות",
+      "old_rabbi": "הרב דרור אריה"
+    },
+    {
+      "event_id": "ee9b33ad-aa95-4b00-98bb-40a9d9647764",
+      "event_title": "יחזקאל פרק לז",
+      "lesson_id": "df551fc9-fcf1-4c99-b4fc-8345c294fab1",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "חזון העצמות היבשות",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "ee9b33ad-aa95-4b00-98bb-40a9d9647764",
+      "event_title": "יחזקאל פרק לז",
+      "lesson_id": "87a6bb59-fdbd-459a-bb00-7b571eb63fc5",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "ee9b33ad-aa95-4b00-98bb-40a9d9647764",
+      "event_title": "יחזקאל פרק לז",
+      "lesson_id": "f2010000-0001-4000-8000-000000000218",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "הרכבת חלקי ישראל",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "ee9b33ad-aa95-4b00-98bb-40a9d9647764",
+      "event_title": "יחזקאל פרק לז",
+      "lesson_id": "f2010000-0001-4000-8000-000000000213",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "האיחוד הניסי של יהודה ואפרים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000038",
+      "event_title": "יחזקאל פרק לח",
+      "lesson_id": "28ce42ff-c368-45d1-bc4d-5df1bac324f5",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "מלחמת גוג ומגוג במבט כלל תנכ\"י",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000038",
+      "event_title": "יחזקאל פרק לח",
+      "lesson_id": "3de31374-5208-4689-82d2-9694bdbe3bb9",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "מלחמת גוג ומגוג",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000038",
+      "event_title": "יחזקאל פרק לח",
+      "lesson_id": "8c7c1725-82f4-4559-803c-ac15f220e62e",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "מניעים למלחמת גוג ומגוג",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000038",
+      "event_title": "יחזקאל פרק לח",
+      "lesson_id": "5da088cb-7a1b-46a1-a86b-d948e7ebba98",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000038",
+      "event_title": "יחזקאל פרק לח",
+      "lesson_id": "f2010000-0001-4000-8000-000000000227",
+      "mode": "move",
+      "from_series": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "from_status": "category",
+      "from_title": "יחזקאל פרק מ",
+      "old_title": "לב הפרק - הקדמה לגוג ומגוג",
+      "old_rabbi": "הרב עמנואל בן ארצי"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000039",
+      "event_title": "יחזקאל פרק לט",
+      "lesson_id": "5f4b69be-a9b7-451e-821f-dcd3ec168041",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "המשך גוג ומגוג",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000039",
+      "event_title": "יחזקאל פרק לט",
+      "lesson_id": "daae0d27-4a28-43f1-a0b8-53cdd39989fe",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק לט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000039",
+      "event_title": "יחזקאל פרק לט",
+      "lesson_id": "e4865dd5-fedd-4121-9603-98d948a113c9",
+      "mode": "copy",
+      "from_series": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יחזקאל",
+      "old_title": "ד' משלם שכר על מעשה טוב גם אחרי אלפי שנים",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "event_title": "יחזקאל פרק מ",
+      "lesson_id": "bd60fb97-663b-44bc-8d23-3b1575f6f33a",
+      "mode": "move",
+      "from_series": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "from_status": "category",
+      "from_title": "יחזקאל פרק מ",
+      "old_title": "שרטוט בית המקדש ביחזקאל לפי שיטות המלבי\"ם רש\"י ומצודות",
+      "old_rabbi": "הרב עמנואל בן ארצי"
+    },
+    {
+      "event_id": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "event_title": "יחזקאל פרק מ",
+      "lesson_id": "d28f1a8f-359b-4192-a8b3-29c6ade7e25f",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "event_title": "יחזקאל פרק מ",
+      "lesson_id": "af229e71-49cb-43d3-8de7-446d33b5540d",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "event_title": "יחזקאל פרק מ",
+      "lesson_id": "50924211-5d36-4976-aeac-5309fc636c5c",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "תיאור בית המקדש השלישי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "event_title": "יחזקאל פרק מ",
+      "lesson_id": "5b4f2ceb-609c-494a-aa5c-4979c04f307d",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "תאור בית המקדש השלישי",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "d7d63cdf-b5c5-4a6b-a21c-718f9181a1f1",
+      "event_title": "יחזקאל פרק מ",
+      "lesson_id": "ad2d81e0-31de-49ea-bc7d-a970515c89f9",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מ",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000041",
+      "event_title": "יחזקאל פרק מא",
+      "lesson_id": "9738beb1-fd5e-4c5d-af4f-10e3a2164afa",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מא",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000042",
+      "event_title": "יחזקאל פרק מב",
+      "lesson_id": "b5ed547a-e608-4f78-bd4e-dac22723dd17",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000043",
+      "event_title": "יחזקאל פרק מג",
+      "lesson_id": "68ff72ba-0183-4265-b327-81af7d08c2c2",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "היחיד שיכנס בשער המזרחי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000043",
+      "event_title": "יחזקאל פרק מג",
+      "lesson_id": "c256402a-51b4-4643-bcac-33baa4f2e825",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "חזרת השכינה לבית המקדש",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000043",
+      "event_title": "יחזקאל פרק מג",
+      "lesson_id": "4a9da6a5-f8c0-4641-83e5-05f0f06ad3b2",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000043",
+      "event_title": "יחזקאל פרק מג",
+      "lesson_id": "f2010000-0001-4000-8000-000000000249",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "איחוד שלושת המקדשים",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000043",
+      "event_title": "יחזקאל פרק מג",
+      "lesson_id": "f2010000-0001-4000-8000-000000000245",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "חזון הבית השלישי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "9d51a353-ae7a-4c24-b841-72158b21ab47",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "השער המזרחי הסגור",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "c0bc6bd5-905d-4ec1-9e0e-3808be448284",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "עבודת הכוהנים בבית המקדש השלישי",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "4eb1fb99-65b3-4210-a436-cc54d0c65467",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "עבודת הכוהנים בבית המקדש",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "68d3724b-03fd-45a9-a722-dd811bfc8dcf",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "f2010000-0001-4000-8000-000000000251",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "שלוש דרכי הכהונה של בני אהרון",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "f2010000-0001-4000-8000-000000000259",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "התנשאות הכהנים",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "f2010000-0001-4000-8000-000000000252",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "חמש הבחירות של כהני ה'",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "f2010000-0001-4000-8000-000000000253",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "התעלות כהני בית המקדש העתידי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000044",
+      "event_title": "יחזקאל פרק מד",
+      "lesson_id": "f2010000-0001-4000-8000-000000000254",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "חזון בית המקדש השלישי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000045",
+      "event_title": "יחזקאל פרק מה",
+      "lesson_id": "08218b5e-e5ff-4435-9002-afdcf4f8a51f",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "הכהנים בני צדוק והנשיא",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000045",
+      "event_title": "יחזקאל פרק מה",
+      "lesson_id": "aae2a50e-3a47-4330-8b98-2e3f7ba907fc",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "מאזני צדק ואיפת צדק",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000045",
+      "event_title": "יחזקאל פרק מה",
+      "lesson_id": "6b3d6d82-1224-48e4-9513-8ed85b1d96b8",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "קרבנות המועדים לעתיד לבוא",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000045",
+      "event_title": "יחזקאל פרק מה",
+      "lesson_id": "ceb6953a-dd8e-4da4-b27f-96531c1c2573",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "מידות בית המקדש והעיר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000045",
+      "event_title": "יחזקאל פרק מה",
+      "lesson_id": "25d40325-5f65-4c94-ab43-d1fbe538c2e4",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000045",
+      "event_title": "יחזקאל פרק מה",
+      "lesson_id": "f2010000-0001-4000-8000-000000000261",
+      "mode": "copy",
+      "from_series": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+      "from_status": "active",
+      "from_title": "יחזקאל - מוקלט | אשכנזי",
+      "old_title": "הנשיא בבית המקדש העתידי",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000046",
+      "event_title": "יחזקאל פרק מו",
+      "lesson_id": "20e75021-2d6c-403e-be21-6fb7555de407",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000047",
+      "event_title": "יחזקאל פרק מז",
+      "lesson_id": "a529fadf-b2ef-43f6-9077-65bd07906b87",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "המעיין היוצא מקודש הקדשים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000047",
+      "event_title": "יחזקאל פרק מז",
+      "lesson_id": "46de4bca-2c43-4abf-a09b-601ca7b1aa2e",
+      "mode": "copy",
+      "from_series": "1718a555-23cd-4ff7-a117-747bb6976425",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יחזקאל",
+      "old_title": "גבולות ונחלות - סיום הספר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000047",
+      "event_title": "יחזקאל פרק מז",
+      "lesson_id": "526d1b26-dbe9-4b2b-88c7-9a7bc6ef615a",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000048",
+      "event_title": "יחזקאל פרק מח",
+      "lesson_id": "fea70588-aee3-414c-bf99-9d0f21be89ac",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "שם העיר ירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "f1010001-0002-4000-8000-000000000048",
+      "event_title": "יחזקאל פרק מח",
+      "lesson_id": "008fd993-51e7-43a7-9efb-ccd6c2445cb8",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק מח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "e70c5ffb-013a-4b11-a043-cb7e0d023ee4",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "רקע היסטורי וגיאוגרפי ליחזקאל",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "58387d6f-9c88-4895-a882-5775ffda3a1f",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "בן אדם ובית המרי",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "b0a1243a-7af0-48ca-8857-393d8797b45a",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "מעשה מרכבה",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "64301bca-2564-44ed-8fdc-1cc5712fcbe9",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "מעשה מרכבה-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "15a4ab08-7397-4a0c-8f3b-8cb2bda49468",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "נבואת ההקדשה",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "0b358436-a3cf-4126-bce3-011f974720e4",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "נבואת ההקדשה-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "c3ecd3bf-b483-465f-9d8b-9ce4ae84a5cf",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "תורת הגמול",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "7be18685-eecd-4589-b32d-9fcec46dce73",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "תורת הגמול-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "3fadf3af-2b57-4f0a-9e09-ae035e6ac9e8",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "תורת הגמול-המשך2",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "fc329f19-008d-494c-9058-072265f35133",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "מעשים סמליים",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "a60a41f9-8e65-4f8c-9966-847a424a2916",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "מעשים סמליים-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "9cec875a-a77a-40d5-84b1-277f0fc43095",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "מעשים סמליים-המשך2",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "1ea3f9b5-10b5-426f-ba4b-cd9fd94ceb1e",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "משלים",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "af6e1cc4-ce83-43dd-9cdb-03f09036e6c5",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "משלים-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "d1382e68-0622-4301-892b-320d3a217aad",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "משלים-המשך2",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "7ea66d78-147f-4275-9579-cc588d482e4a",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "יחס הנביא לעבודה זרה",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "133eba74-7e34-4729-af0e-4c7bbd586280",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "יחס הנביא לעבודה זרה-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "a7fe0f74-370f-4224-8a32-715251b99a39",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "סיור וירטואלי במקדש",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "e9140f4b-53be-47b9-84d0-d6faa6d10202",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "סיור וירטואלי במקדש-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "f208dac8-d39f-43a1-ba6e-b579ef670b30",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "תוצאות טבעיות",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "8d75044e-ff23-43e1-bf67-493245dfcb7a",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "סקירות הסטוריות",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "5d8bc30d-a6f3-4e5f-bae8-20ea45a0f83d",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "סקירות הסטוריות-המשך",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "086c3f15-0597-40a6-948b-a2d2e8c8b8a3",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "הישענות על גויים",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "01dbccb3-7810-43b6-8cd2-153ffc33e473",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "סקירות היסטוריות",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "event_title": "ספר יחזקאל",
+      "lesson_id": "e441357d-c905-4a66-9d7a-5345bf6ccf55",
+      "mode": "copy",
+      "from_series": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל",
+      "old_title": "מסגרות זמן בפרקי נבואות העמים",
+      "old_rabbi": "הרב נועם וידר"
+    },
+    {
+      "event_id": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "event_title": "ספר יחזקאל - כלל ופרט",
+      "lesson_id": "b26326f6-7a57-4532-b96a-9e1abf709cd5",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "הקדמה לספר יחזקאל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "event_title": "ספר יחזקאל - כלל ופרט",
+      "lesson_id": "430e57c6-f38e-483f-96cf-0ea7a43f8e63",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "מעשה מרכבה - השכינה בחורבן הבית",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "event_title": "ספר יחזקאל - כלל ופרט",
+      "lesson_id": "9873e976-e9f7-4ddf-b242-a3e17d2fb35b",
+      "mode": "copy",
+      "from_series": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+      "from_status": "active",
+      "from_title": "ספר יחזקאל - כלל ופרט",
+      "old_title": "השינויים בחלוקת ארץ ישראל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "721544df-114c-4f68-a180-81e0179647d3",
+      "event_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "lesson_id": "de381612-340c-43d4-a240-b48d15e08cdd",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "כל ספר יחזקאל",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "721544df-114c-4f68-a180-81e0179647d3",
+      "event_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "lesson_id": "538d6b27-5355-445b-a3ec-b4345b498810",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק ט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "721544df-114c-4f68-a180-81e0179647d3",
+      "event_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "lesson_id": "53cbc05a-50dd-4c88-9cbf-5cf547eb2e4f",
+      "mode": "copy",
+      "from_series": "721544df-114c-4f68-a180-81e0179647d3",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_title": "יחזקאל פרק כז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "event_title": "שיעורים על התנ\"ך - יחזקאל",
+      "lesson_id": "4dbed6d5-ca79-45ad-8b56-a9791e784ae7",
+      "mode": "copy",
+      "from_series": "b7b24b9b-133f-495c-b88c-690a60154cea",
+      "from_status": "active",
+      "from_title": "שיעורים על התנ\"ך - יחזקאל",
+      "old_title": "נבואה על שרפת ירושלים",
+      "old_rabbi": "הרב יצחק בן שחר"
+    },
+    {
+      "event_id": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "event_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "lesson_id": "bbfd6bae-b1b6-4a7b-8655-3ec68e8e28b0",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "גלות יהויכין",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "event_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "lesson_id": "764583f5-a224-4aca-991f-ec520024aa77",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "יחזקאל - נביא בגולה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "event_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "lesson_id": "0cabb22c-665c-4c59-af62-e557a024f04c",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "יחזקאל - נבואה בבל",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "event_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "lesson_id": "b935248d-6111-4bbf-94ec-5cffd3aa13ff",
+      "mode": "copy",
+      "from_series": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+      "from_status": "active",
+      "from_title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_title": "מעלת יחזקאל ומטרת נבואתו",
+      "old_rabbi": "הרב יואב אוריאל"
+    }
+  ],
+  "report": [
+    {
+      "event": "יחזקאל - מוקלט | אשכנזי",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-מוקלט-אשכנזי/",
+      "matched": 46,
+      "old_lessons": 46,
+      "unmatched": []
+    },
+    {
+      "event": "יחזקאל - מוקלט | נוסח אשכנזי",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-מוקלט-נוסח-אשכנזי/",
+      "matched": 35,
+      "old_lessons": 35,
+      "unmatched": []
+    },
+    {
+      "event": "יחזקאל בבקיאות",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-בבקיאות/",
+      "matched": 22,
+      "old_lessons": 22,
+      "unmatched": []
+    },
+    {
+      "event": "יחזקאל פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-א/",
+      "matched": 4,
+      "old_lessons": 7,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים א-ב",
+        "יחזקאל מוקלט - פרק א",
+        "יחזקאל פרק א'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ב/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים א-ב",
+        "יחזקאל מוקלט - פרק ב",
+        "יחזקאל פרק ב'",
+        "נבואות המינוי של ישעיהו, ירמיהו ויחזקאל"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ג/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים ג-ד",
+        "יחזקאל מוקלט - פרק ג",
+        "יחזקאל פרק ג'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ד/",
+      "matched": 4,
+      "old_lessons": 7,
+      "unmatched": [
+        "פעולות המסמלות את המצור על ירושלים",
+        "יחזקאל בבקיאות פרקים ג-ד",
+        "יחזקאל מוקלט - פרק ד"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ה/",
+      "matched": 2,
+      "old_lessons": 7,
+      "unmatched": [
+        "יחזקאל מכפר על ישראל",
+        "למה יחזקאל מעמיד עצמו בתנאים קשים?",
+        "יחזקאל בבקיאות פרקים ה-ו",
+        "יחזקאל מוקלט - פרק ה",
+        "יחזקאל פרק ה'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ו/",
+      "matched": 3,
+      "old_lessons": 8,
+      "unmatched": [
+        "למה יחזקאל מעמיד עצמו בתנאים קשים?",
+        "הכוונה האלוקית לשים את ירושלים לחרפה בגויים",
+        "יחזקאל בבקיאות פרקים ה-ו",
+        "יחזקאל מוקלט - פרק ו",
+        "יחזקאל פרק ו'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ז/",
+      "matched": 2,
+      "old_lessons": 7,
+      "unmatched": [
+        "האדם הזמן והמקום",
+        "למה יחזקאל מעמיד עצמו בתנאים קשים?",
+        "יחזקאל בבקיאות פרקים ז-ח",
+        "יחזקאל מוקלט - פרק ז",
+        "יחזקאל  פרק ז'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ח/",
+      "matched": 5,
+      "old_lessons": 8,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים ז-ח",
+        "יחזקאל מוקלט - פרק ח",
+        "יחזקאל פרק ח'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ט/",
+      "matched": 1,
+      "old_lessons": 5,
+      "unmatched": [
+        "השכינה חוזרת לירושלים",
+        "החזון שנעשה בבל",
+        "יחזקאל מוקלט - פרק ט",
+        "יחזקאל פרק ט'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק טו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-טו/",
+      "matched": 4,
+      "old_lessons": 7,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים טו-טז",
+        "יחזקאל מוקלט - פרק טו",
+        "יחזקאל פרק ט\"ו"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק טז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-טז/",
+      "matched": 6,
+      "old_lessons": 8,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים טו-טז",
+        "יחזקאל פרק ט\"ז"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק י",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-י/",
+      "matched": 3,
+      "old_lessons": 6,
+      "unmatched": [
+        "החזון שנעשה בבל",
+        "יחזקאל מוקלט - פרק י",
+        "יחזקאל פרק י'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יא/",
+      "matched": 1,
+      "old_lessons": 7,
+      "unmatched": [
+        "השינויים במראה המרכבה בירושלים",
+        "החזון שנעשה בבל",
+        "גלות השכינה",
+        "יחזקאל בבקיאות פרקים יא-יב",
+        "יחזקאל מוקלט - פרק יא",
+        "יחזקאל פרק י\"א"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יב/",
+      "matched": 4,
+      "old_lessons": 8,
+      "unmatched": [
+        "ההתמודדות עם נביאי השקר",
+        "יחזקאל בבקיאות פרקים יא-יב",
+        "יחזקאל מוקלט - פרק יב",
+        "יחזקאל פרק י\"ב"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יג/",
+      "matched": 1,
+      "old_lessons": 6,
+      "unmatched": [
+        "יחזקאל פונה לבני הגולה",
+        "ההתמודדות עם נביאי השקר",
+        "יחזקאל בבקיאות פרקים יג-יד",
+        "יחזקאל מוקלט - פרק יג",
+        "יחזקאל פרק י\"ג"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יד/",
+      "matched": 4,
+      "old_lessons": 9,
+      "unmatched": [
+        "ההתמודדות עם נביאי השקר",
+        "זכות הצדיקים לא תציל את הרשעים",
+        "יחזקאל בבקיאות פרקים יג-יד",
+        "יחזקאל מוקלט - פרק יד",
+        "יחזקאל פרק י\"ד"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יז/",
+      "matched": 5,
+      "old_lessons": 9,
+      "unmatched": [
+        "יחזקאל",
+        "יחזקאל בבקיאות פרקים יז-יח",
+        "יחזקאל מוקלט - פרק יז",
+        "יחזקאל פרק י\"ז"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יח/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "יחזקאל",
+        "יחזקאל בבקיאות פרקים יז-יח",
+        "יחזקאל מוקלט - פרק יח",
+        "יחזקאל פרק י\"ח"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק יט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-יט/",
+      "matched": 4,
+      "old_lessons": 8,
+      "unmatched": [
+        "חידת הנשר הגדול והגפן  הסורחת",
+        "יחזקאל בבקיאות פרקים יט-כ",
+        "יחזקאל מוקלט - פרק יט",
+        "יחזקאל פרק י\"ט"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כ",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כ/",
+      "matched": 10,
+      "old_lessons": 14,
+      "unmatched": [
+        "עם ישראל בכל מצב עבדי ה'",
+        "יחזקאל בבקיאות פרקים יט-כ",
+        "יחזקאל מוקלט - פרק כ",
+        "שמואל א' פרק כ'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כא/",
+      "matched": 4,
+      "old_lessons": 9,
+      "unmatched": [
+        "תוכחות קשות לישראל",
+        "עם ישראל בכל מצב עבדי ה'",
+        "יחזקאל בבקיאות פרקים כא-כב",
+        "יחזקאל מוקלט - פרק כא",
+        "יחזקאל פרק כ\"א"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כב/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "נבוכדנצר מהסס לעלות על ירושלים",
+        "יחזקאל בבקיאות פרקים כא-כב",
+        "יחזקאל מוקלט - פרק כב",
+        "יחזקאל פרק כ\"ב"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כג/",
+      "matched": 2,
+      "old_lessons": 6,
+      "unmatched": [
+        "יחזקאל כדוגמא לעם ישראל",
+        "יחזקאל בבקיאות פרקים כג-כד",
+        "יחזקאל מוקלט - פרק כג",
+        "יחזקאל פרק כ\"ג"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כד/",
+      "matched": 3,
+      "old_lessons": 8,
+      "unmatched": [
+        "יחזקאל כדוגמא לעם ישראל",
+        "יחזקאל בבקיאות פרקים כג-כד",
+        "יחזקאל בבקיאות פרקים כד-כה",
+        "יחזקאל מוקלט - פרק כד",
+        "יחזקאל פרק כ\"ד"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כה/",
+      "matched": 5,
+      "old_lessons": 8,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים כד-כה",
+        "יחזקאל מוקלט - פרק כה",
+        "יחזקאל פרק כ\"ה"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כו/",
+      "matched": 2,
+      "old_lessons": 7,
+      "unmatched": [
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "ניסיון ליצור אלטרנטיבה ירושלים",
+        "יחזקאל בבקיאות פרקים כו-כז",
+        "יחזקאל מוקלט - פרק כו",
+        "יחזקאל פרק כ\"ו"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כ/",
+      "matched": 0,
+      "old_lessons": 14,
+      "unmatched": [
+        "תוכחות קשות לישראל",
+        "עם ישראל בכל מצב עבדי ה'",
+        "הבחירה האלוקית בישראל שהתגלתה ביציאת מצרים",
+        "תהליך התשובה הנצחי של עם ישראל",
+        "השפעת חטאי דור המדבר על הדורות הבאים",
+        "תוקף הברית בין הקב\"ה וישראל",
+        "קידוש ד' שיהיה בקיבוץ הגלויות",
+        "חטאי ישראל במצרים ובמדבר",
+        "תוקף הברית בין  ד' וישראל",
+        "יחזקאל בבקיאות פרקים יט-כ",
+        "יחזקאל פרק כ",
+        "שקולה שבת כנגד כל המצוות",
+        "יחזקאל מוקלט - פרק כ",
+        "שמואל א' פרק כ'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כח/",
+      "matched": 4,
+      "old_lessons": 9,
+      "unmatched": [
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "ניסיון ליצור אלטרנטיבה ירושלים",
+        "יחזקאל בבקיאות פרקים כח-כט",
+        "יחזקאל מוקלט - פרק כח",
+        "יחזקאל' פרק כ\"ח"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק כט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-כט/",
+      "matched": 4,
+      "old_lessons": 9,
+      "unmatched": [
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "יחזקאל בבקיאות פרקים כח-כט",
+        "יחזקאל מוקלט - פרק כט",
+        "יחזקאל פרק כ\"ט",
+        "מצרים = סכנה רוחנית"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק ל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-ל/",
+      "matched": 1,
+      "old_lessons": 7,
+      "unmatched": [
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "הכח החומרי- המצרים",
+        "נבואות פורענות על מצרים",
+        "יחזקאל בבקיאות פרקים ל-לא",
+        "יחזקאל מוקלט - פרק ל",
+        "יחזקאל פרק ל'"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לא/",
+      "matched": 0,
+      "old_lessons": 5,
+      "unmatched": [
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "הכח החומרי- המצרים",
+        "יחזקאל בבקיאות פרקים ל-לא",
+        "יחזקאל מוקלט - פרק לא",
+        "יחזקאל פרק ל\"א"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לב/",
+      "matched": 2,
+      "old_lessons": 7,
+      "unmatched": [
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "הכח החומרי- המצרים",
+        "יחזקאל בבקיאות פרקים לב-לג",
+        "יחזקאל מוקלט - פרק לב",
+        "יחזקאל פרק ל\"ב"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לג/",
+      "matched": 6,
+      "old_lessons": 9,
+      "unmatched": [
+        "יחזקאל בבקיאות פרקים לב-לג",
+        "יחזקאל מוקלט - פרק לג",
+        "יחזקאל פרק ל\"ג"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לד/",
+      "matched": 2,
+      "old_lessons": 6,
+      "unmatched": [
+        "יחזקאל- נביא או משורר?!",
+        "יחזקאל בבקיאות פרקים לד-לה",
+        "יחזקאל מוקלט - פרק לד",
+        "יחזקאל פרק ל\"ד"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לה/",
+      "matched": 4,
+      "old_lessons": 8,
+      "unmatched": [
+        "יחזקאל- נביא או משורר?!",
+        "יחזקאל בבקיאות פרקים לד-לה",
+        "יחזקאל מוקלט - פרק לה",
+        "יחזקאל פרק ל\"ה"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לו/",
+      "matched": 8,
+      "old_lessons": 11,
+      "unmatched": [
+        "חורבן הר שעיר וגאולת הרי ישראל",
+        "יחזקאל בבקיאות פרקים לו-לז",
+        "יחזקאל מוקלט - פרק לו"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לז/",
+      "matched": 5,
+      "old_lessons": 11,
+      "unmatched": [
+        "גאולת ישראל שלב אחר שלב",
+        "גאולת ישראל למען שם ד'",
+        "חזון העצמות היבשות",
+        "חזון העצמות היבשות",
+        "יחזקאל בבקיאות פרקים לו-לז",
+        "יחזקאל מוקלט - פרק לז"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לח/",
+      "matched": 5,
+      "old_lessons": 9,
+      "unmatched": [
+        "מלחמת גוג ומגוג",
+        "מלחמת גוג ומגוג",
+        "יחזקאל בבקיאות פרקים לח-לט",
+        "יחזקאל מוקלט - פרק לח"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק לט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-לט/",
+      "matched": 3,
+      "old_lessons": 10,
+      "unmatched": [
+        "מלחמת גוג ומגוג במבט כלל תנכ\"י",
+        "מלחמת גוג ומגוג",
+        "מניעים למלחמת גוג ומגוג",
+        "מלחמת גוג ומגוג",
+        "יחזקאל בבקיאות פרקים לח-לט",
+        "יחזקאל מוקלט - פרק לט",
+        "לב הפרק - הקדמה לגוג ומגוג"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מ",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מ/",
+      "matched": 6,
+      "old_lessons": 7,
+      "unmatched": [
+        "יחזקאל מוקלט - פרק מ"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מא",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מא/",
+      "matched": 1,
+      "old_lessons": 7,
+      "unmatched": [
+        "שרטוט בית המקדש ביחזקאל לפי שיטות המלבי\"ם רש\"י ומצודות",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "תיאור בית המקדש השלישי",
+        "תאור בית המקדש השלישי",
+        "יחזקאל מוקלט - פרק מא"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מב/",
+      "matched": 1,
+      "old_lessons": 7,
+      "unmatched": [
+        "שרטוט בית המקדש ביחזקאל לפי שיטות המלבי\"ם רש\"י ומצודות",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "תיאור בית המקדש השלישי",
+        "תאור בית המקדש השלישי",
+        "יחזקאל מוקלט - פרק מב"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מג/",
+      "matched": 5,
+      "old_lessons": 11,
+      "unmatched": [
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "תיאור בית המקדש השלישי",
+        "תאור בית המקדש השלישי",
+        "יחזקאל בבקיאות פרקים מג-מד",
+        "יחזקאל מוקלט - פרק מג"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מד/",
+      "matched": 9,
+      "old_lessons": 13,
+      "unmatched": [
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "היחיד שיכנס בשער המזרחי",
+        "יחזקאל בבקיאות פרקים מג-מד"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מה/",
+      "matched": 6,
+      "old_lessons": 11,
+      "unmatched": [
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "היחיד שיכנס בשער המזרחי",
+        "יחזקאל בבקיאות פרקים מה-מו",
+        "יחזקאל מוקלט - פרק מה"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מו/",
+      "matched": 1,
+      "old_lessons": 10,
+      "unmatched": [
+        "שרטוט בית המקדש ביחזקאל לפי שיטות המלבי\"ם רש\"י ומצודות",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "הכהנים בני צדוק והנשיא",
+        "היחיד שיכנס בשער המזרחי",
+        "קרבנות המועדים לעתיד לבוא",
+        "יחזקאל בבקיאות פרקים מה-מו",
+        "יחזקאל מוקלט - פרק מו",
+        "יחזקאל מוקלט - סוף מו ומז"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מז/",
+      "matched": 3,
+      "old_lessons": 7,
+      "unmatched": [
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "יחזקאל בבקיאות פרקים מז-מח",
+        "יחזקאל מוקלט - סוף מו ומז"
+      ]
+    },
+    {
+      "event": "יחזקאל פרק מח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק-מח/",
+      "matched": 2,
+      "old_lessons": 8,
+      "unmatched": [
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "המעיין היוצא מקודש הקדשים",
+        "גבולות ונחלות - סיום הספר",
+        "יחזקאל בבקיאות פרקים מז-מח",
+        "יחזקאל מוקלט - פרק מח"
+      ]
+    },
+    {
+      "event": "מאמרים - ספר יחזקאל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/מאמרים-ספר-יחזקאל/",
+      "matched": 0,
+      "old_lessons": 7,
+      "unmatched": [
+        "עיניו של צדקיהו מלך יהודה",
+        "נח דניאל ואיוב",
+        "מה פירוש המושג \"אף כי\"?",
+        "הקינה על נשיאי ישראל",
+        "שקולה שבת כנגד כל המצוות",
+        "\"ואתה חלל רשע נשיא ישראל\"",
+        "ד' משלם שכר על מעשה טוב גם אחרי אלפי שנים"
+      ]
+    },
+    {
+      "event": "ספר יחזקאל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/ספר-יחזקאל/",
+      "matched": 25,
+      "old_lessons": 25,
+      "unmatched": []
+    },
+    {
+      "event": "ספר יחזקאל - כלל ופרט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/ספר-יחזקאל-כלל-ופרט/",
+      "matched": 3,
+      "old_lessons": 16,
+      "unmatched": [
+        "למה יחזקאל מעמיד עצמו בתנאים קשים?",
+        "החזון שנעשה בבל",
+        "ההתמודדות עם נביאי השקר",
+        "יחזקאל",
+        "עם ישראל בכל מצב עבדי ה'",
+        "יחזקאל כדוגמא לעם ישראל",
+        "ניסיון ליצור אלטרנטיבה ירושלים",
+        "הכח החומרי- המצרים",
+        "יחזקאל- נביא או משורר?!",
+        "גאולת ישראל שלב אחר שלב",
+        "מניעים למלחמת גוג ומגוג",
+        "תיאור בית המקדש השלישי",
+        "היחיד שיכנס בשער המזרחי"
+      ]
+    },
+    {
+      "event": "קריאה וביאור בקצרה של ספר יחזקאל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/קריאה-וביאור-בקצרה-של-ספר-יחזקאל/",
+      "matched": 3,
+      "old_lessons": 49,
+      "unmatched": [
+        "יחזקאל פרק א",
+        "יחזקאל פרק ב",
+        "יחזקאל פרק ג",
+        "יחזקאל פרק ד",
+        "יחזקאל פרק ה",
+        "יחזקאל פרק ו",
+        "יחזקאל פרק ז",
+        "יחזקאל פרק ח",
+        "יחזקאל פרק י",
+        "יחזקאל פרק יא",
+        "יחזקאל פרק יב",
+        "יחזקאל פרק יג",
+        "יחזקאל פרק יד",
+        "יחזקאל פרק טו",
+        "יחזקאל פרק טז",
+        "יחזקאל פרק יז",
+        "יחזקאל פרק יח",
+        "יחזקאל פרק יט",
+        "יחזקאל פרק כ",
+        "יחזקאל פרק כא",
+        "יחזקאל פרק כב",
+        "יחזקאל פרק כג",
+        "יחזקאל פרק כד",
+        "יחזקאל פרק כה",
+        "יחזקאל פרק כו",
+        "יחזקאל פרק כח",
+        "יחזקאל פרק כט",
+        "יחזקאל פרק ל",
+        "יחזקאל פרק לא",
+        "יחזקאל פרק לב",
+        "יחזקאל פרק לג",
+        "יחזקאל פרק לד",
+        "יחזקאל פרק לה",
+        "יחזקאל פרק לו",
+        "יחזקאל פרק לז",
+        "יחזקאל פרק לח",
+        "יחזקאל פרק לט",
+        "יחזקאל פרק מ",
+        "יחזקאל פרק מא",
+        "יחזקאל פרק מב",
+        "יחזקאל פרק מג",
+        "יחזקאל פרק מד",
+        "יחזקאל פרק מה",
+        "יחזקאל פרק מו",
+        "יחזקאל פרק מז",
+        "יחזקאל פרק מח"
+      ]
+    },
+    {
+      "event": "שיעורים על התנ\"ך - יחזקאל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/שיעורים-על-התנך-יחזקאל/",
+      "matched": 1,
+      "old_lessons": 40,
+      "unmatched": [
+        "פתיחה לנבואת יחזקאל",
+        "שליחת יחזקאל להתנבא אל גולי בבל",
+        "'ותשאני רוח ואשמע אחרי קול רעש גדול'",
+        "פעולות המסמלות את המצור על ירושלים",
+        "הכוונה האלוקית לשים את ירושלים לחרפה בגויים",
+        "מראה  התועבות הגדולות שבירושלים והפורענות",
+        "גלות השכינה",
+        "המצב הרוחני המורכב של החוטאים בזמן בית ראשון",
+        "זכות הצדיקים לא תציל את הרשעים",
+        "'ואומר לך בדמייך חיי'",
+        "השוואה בין ירושלים לסדום",
+        "חידת הנשר הגדול והגפן  הסורחת",
+        "קריאה לתשובה לעם ישראל",
+        "דמותו של הצדיק",
+        "הבחירה האלוקית בישראל שהתגלתה ביציאת מצרים",
+        "תהליך התשובה הנצחי של עם ישראל",
+        "השפעת חטאי דור המדבר על הדורות הבאים",
+        "תוקף הברית בין הקב\"ה וישראל",
+        "קידוש ד' שיהיה בקיבוץ הגלויות",
+        "נבוכדנצר מהסס לעלות על ירושלים",
+        "התחלת המצור על ירושלים כשורש החורבן",
+        "פטירת אשת יחזקאל כמשל לחורבן בית המקדש",
+        "נבואת פורענות על האומות השכנות",
+        "נבואות פורענות על מצרים",
+        "תפקיד הנביא בישראל",
+        "\"אחד היה אברהם\"",
+        "תוכחה לרועי העם, ולעומתם - הנהגת העם בזמן הגאולה",
+        "חורבן הר שעיר וגאולת הרי ישראל",
+        "טומאת ישראל כטומאת הנידה",
+        "גאולת ישראל למען שם ד'",
+        "חזון העצמות היבשות",
+        "מלחמת גוג ומגוג",
+        "תאור בית המקדש השלישי",
+        "השער המזרחי הסגור",
+        "עבודת הכוהנים בבית המקדש השלישי",
+        "מאזני צדק ואיפת צדק",
+        "קרבנות המועדים לעתיד לבוא",
+        "המעיין היוצא מקודש הקדשים",
+        "שם העיר ירושלים"
+      ]
+    },
+    {
+      "event": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/שיעורים-על-יחזקאל-בית-המדרש-לתנך/",
+      "matched": 4,
+      "old_lessons": 24,
+      "unmatched": [
+        "מבנה המרכבה - אדם מול בעלי החיים",
+        "יחזקאל מכפר על ישראל",
+        "האדם הזמן והמקום",
+        "השכינה חוזרת לירושלים",
+        "השינויים במראה המרכבה בירושלים",
+        "יחזקאל פונה לבני הגולה",
+        "המשל הקשה על עם ישראל",
+        "המשל על הגפן והארז",
+        "תוכחות קשות לישראל",
+        "משל שתי הנשים",
+        "פרקי הגויים ביחזקאל - מבט כללי",
+        "פתיחת הפה של יחזקאל",
+        "הנבואה על הר שעיר",
+        "נבואת הגאולה הגדולה של יחזקאל",
+        "חזון העצמות היבשות",
+        "מלחמת גוג ומגוג במבט כלל תנכ\"י",
+        "מלחמת גוג ומגוג",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור ראשון",
+        "מבט רחב על חזון המקדש ביחזקאל שיעור שני",
+        "הכהנים בני צדוק והנשיא"
+      ]
+    },
+    {
+      "event": "שיעורים על ספר יחזקאל",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/שיעורים-על-ספר-יחזקאל/",
+      "matched": 0,
+      "old_lessons": 31,
+      "unmatched": [
+        "הגדרת השליחות של יחזקאל",
+        "פעולות הנביא להמחשת המצור על ירושלים",
+        "סיבות חורבן ירושלים",
+        "נבואה על קיצה של ירושלים",
+        "יחזקאל רואה בחזון את חטאי ירושלים",
+        "קריאה למשחיתים להשחית את יושבי ירושלים",
+        "הנבואות לבית המרי",
+        "האנשים אשר באו לפני יחזקאל",
+        "משל הילדה האסופית",
+        "נבואת פורענות על ירושלים",
+        "משל הנשר הגדול והגפן ההסורחת",
+        "ענישת צדקיהו על ידי נבוכדנצר",
+        "קינה על מלכות בית דוד",
+        "חטאי ישראל במצרים ובמדבר",
+        "תוקף הברית בין  ד' וישראל",
+        "נבואה על שרפת המקדש",
+        "פרוט עוונות ירושלים הגורמים לחורבנה",
+        "נבואות פורענות על עמי האזור",
+        "עונש צור ומלחמת רומי העתידית",
+        "נבואה על מלך צור ועל צידון",
+        "נבואת פורענות על פרעה ועל מצרים",
+        "תפקיד הנביא נמשל לצופה המזהיר את יושבי העיר",
+        "נבואה על חורבן אדום",
+        "קיבוץ הגלויות",
+        "חזון העצמות היבשות",
+        "מלחמת גוג ומגוג",
+        "המשך גוג ומגוג",
+        "חזרת השכינה לבית המקדש",
+        "עבודת הכוהנים בבית המקדש",
+        "מידות בית המקדש והעיר",
+        "גבולות ונחלות - סיום הספר"
+      ]
+    }
+  ]
+}

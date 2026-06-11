@@ -14,6 +14,105 @@ export type Database = {
   }
   public: {
     Tables: {
+      benzi_knowledge: {
+        Row: {
+          content: string
+          id: string
+          is_active: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          id: string
+          is_active?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          id?: string
+          is_active?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      bible_verses: {
+        Row: {
+          book: string
+          chapter: number
+          created_at: string
+          id: string
+          text_he: string
+          verse: number
+        }
+        Insert: {
+          book: string
+          chapter: number
+          created_at?: string
+          id?: string
+          text_he: string
+          verse: number
+        }
+        Update: {
+          book?: string
+          chapter?: number
+          created_at?: string
+          id?: string
+          text_he?: string
+          verse?: number
+        }
+        Relationships: []
+      }
+      bot_sessions: {
+        Row: {
+          created_at: string
+          history: Json
+          id: string
+          intents_detected: string[]
+          ip_country: string | null
+          last_route: string | null
+          links_clicked: Json
+          persona: string | null
+          refused_content: boolean
+          session_id: string
+          updated_at: string
+          user_agent: string | null
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          history?: Json
+          id?: string
+          intents_detected?: string[]
+          ip_country?: string | null
+          last_route?: string | null
+          links_clicked?: Json
+          persona?: string | null
+          refused_content?: boolean
+          session_id: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          history?: Json
+          id?: string
+          intents_detected?: string[]
+          ip_country?: string | null
+          last_route?: string | null
+          links_clicked?: Json
+          persona?: string | null
+          refused_content?: boolean
+          session_id?: string
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       chapters: {
         Row: {
           miracle_range: string
@@ -42,56 +141,83 @@ export type Database = {
         Row: {
           attachment_url: string | null
           audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
           content_html: string | null
           course_id: string
           created_at: string
           description: string | null
+          drive_folder_url: string | null
           id: string
+          layer_type: string
           lesson_number: number
+          presentation_url: string | null
           published_at: string | null
+          reading_chapter: number | null
           review_note: string | null
           reviewed_by: string | null
           status: string
           submitted_at: string | null
           submitted_by: string | null
+          summary_html: string | null
+          thumbnail_url: string | null
           title: string
           video_url: string | null
+          week_number: number | null
         }
         Insert: {
           attachment_url?: string | null
           audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
           content_html?: string | null
           course_id: string
           created_at?: string
           description?: string | null
+          drive_folder_url?: string | null
           id?: string
+          layer_type?: string
           lesson_number?: number
+          presentation_url?: string | null
           published_at?: string | null
+          reading_chapter?: number | null
           review_note?: string | null
           reviewed_by?: string | null
           status?: string
           submitted_at?: string | null
           submitted_by?: string | null
+          summary_html?: string | null
+          thumbnail_url?: string | null
           title: string
           video_url?: string | null
+          week_number?: number | null
         }
         Update: {
           attachment_url?: string | null
           audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
           content_html?: string | null
           course_id?: string
           created_at?: string
           description?: string | null
+          drive_folder_url?: string | null
           id?: string
+          layer_type?: string
           lesson_number?: number
+          presentation_url?: string | null
           published_at?: string | null
+          reading_chapter?: number | null
           review_note?: string | null
           reviewed_by?: string | null
           status?: string
           submitted_at?: string | null
           submitted_by?: string | null
+          summary_html?: string | null
+          thumbnail_url?: string | null
           title?: string
           video_url?: string | null
+          week_number?: number | null
         }
         Relationships: [
           {
@@ -105,12 +231,17 @@ export type Database = {
       }
       community_courses: {
         Row: {
+          access_tag: string | null
+          access_type: string
           course_type: string
           created_at: string
           description: string | null
           id: string
           image_url: string | null
+          in_weekly_program: boolean | null
+          is_current: boolean | null
           price: number | null
+          program_slug: string | null
           rabbi_id: string | null
           smoove_course_id: number | null
           sort_order: number
@@ -120,12 +251,17 @@ export type Database = {
           zoom_link: string | null
         }
         Insert: {
+          access_tag?: string | null
+          access_type?: string
           course_type?: string
           created_at?: string
           description?: string | null
           id?: string
           image_url?: string | null
+          in_weekly_program?: boolean | null
+          is_current?: boolean | null
           price?: number | null
+          program_slug?: string | null
           rabbi_id?: string | null
           smoove_course_id?: number | null
           sort_order?: number
@@ -135,12 +271,17 @@ export type Database = {
           zoom_link?: string | null
         }
         Update: {
+          access_tag?: string | null
+          access_type?: string
           course_type?: string
           created_at?: string
           description?: string | null
           id?: string
           image_url?: string | null
+          in_weekly_program?: boolean | null
+          is_current?: boolean | null
           price?: number | null
+          program_slug?: string | null
           rabbi_id?: string | null
           smoove_course_id?: number | null
           sort_order?: number
@@ -423,6 +564,96 @@ export type Database = {
           },
         ]
       }
+      cover_generations: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      daily_verses: {
+        Row: {
+          commentary: string | null
+          created_at: string | null
+          date: string
+          group_id: string | null
+          id: string
+          image_url: string | null
+          raw_caption: string | null
+          verse_source: string | null
+          verse_text: string
+        }
+        Insert: {
+          commentary?: string | null
+          created_at?: string | null
+          date: string
+          group_id?: string | null
+          id?: string
+          image_url?: string | null
+          raw_caption?: string | null
+          verse_source?: string | null
+          verse_text: string
+        }
+        Update: {
+          commentary?: string | null
+          created_at?: string | null
+          date?: string
+          group_id?: string | null
+          id?: string
+          image_url?: string | null
+          raw_caption?: string | null
+          verse_source?: string | null
+          verse_text?: string
+        }
+        Relationships: []
+      }
+      daily_videos: {
+        Row: {
+          created_at: string | null
+          date: string
+          description: string | null
+          group_id: string | null
+          id: string
+          thumbnail_url: string | null
+          title: string
+          topic: string | null
+          video_url: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          description?: string | null
+          group_id?: string | null
+          id?: string
+          thumbnail_url?: string | null
+          title: string
+          topic?: string | null
+          video_url?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          group_id?: string | null
+          id?: string
+          thumbnail_url?: string | null
+          title?: string
+          topic?: string | null
+          video_url?: string | null
+        }
+        Relationships: []
+      }
       donations: {
         Row: {
           amount: number
@@ -554,102 +785,102 @@ export type Database = {
       }
       grow_orders: {
         Row: {
-          id: string
-          grow_transaction_id: string | null
-          asmachta: string | null
-          process_id: string | null
-          process_token: string | null
-          page_code: string | null
-          merchant_user_id: string | null
           amount: number
-          currency: string
-          payment_status: string
-          installments: number
-          total_installments: number | null
-          card_suffix: string | null
+          asmachta: string | null
           card_brand: string | null
-          card_type: string | null
           card_exp: string | null
-          payment_method: string | null
-          transaction_type_id: number | null
-          customer_name: string | null
+          card_suffix: string | null
+          card_type: string | null
+          created_at: string
+          currency: string
           customer_email: string | null
+          customer_name: string | null
           customer_phone: string | null
-          payment_product_id: string | null
           flow_type: string | null
+          grow_transaction_id: string | null
+          id: string
+          installments: number
+          invoice_id: string | null
           invoice_number: string | null
           invoice_url: string | null
-          invoice_id: string | null
-          target_table: string | null
           linked_record_id: string | null
+          merchant_user_id: string | null
+          page_code: string | null
+          payment_method: string | null
+          payment_product_id: string | null
+          payment_status: string
+          process_id: string | null
+          process_token: string | null
           raw_payload: Json | null
-          created_at: string
+          target_table: string | null
+          total_installments: number | null
+          transaction_type_id: number | null
           updated_at: string
         }
         Insert: {
-          id?: string
-          grow_transaction_id?: string | null
-          asmachta?: string | null
-          process_id?: string | null
-          process_token?: string | null
-          page_code?: string | null
-          merchant_user_id?: string | null
           amount: number
-          currency?: string
-          payment_status?: string
-          installments?: number
-          total_installments?: number | null
-          card_suffix?: string | null
+          asmachta?: string | null
           card_brand?: string | null
-          card_type?: string | null
           card_exp?: string | null
-          payment_method?: string | null
-          transaction_type_id?: number | null
-          customer_name?: string | null
+          card_suffix?: string | null
+          card_type?: string | null
+          created_at?: string
+          currency?: string
           customer_email?: string | null
+          customer_name?: string | null
           customer_phone?: string | null
-          payment_product_id?: string | null
           flow_type?: string | null
+          grow_transaction_id?: string | null
+          id?: string
+          installments?: number
+          invoice_id?: string | null
           invoice_number?: string | null
           invoice_url?: string | null
-          invoice_id?: string | null
-          target_table?: string | null
           linked_record_id?: string | null
+          merchant_user_id?: string | null
+          page_code?: string | null
+          payment_method?: string | null
+          payment_product_id?: string | null
+          payment_status?: string
+          process_id?: string | null
+          process_token?: string | null
           raw_payload?: Json | null
-          created_at?: string
+          target_table?: string | null
+          total_installments?: number | null
+          transaction_type_id?: number | null
           updated_at?: string
         }
         Update: {
-          id?: string
-          grow_transaction_id?: string | null
-          asmachta?: string | null
-          process_id?: string | null
-          process_token?: string | null
-          page_code?: string | null
-          merchant_user_id?: string | null
           amount?: number
-          currency?: string
-          payment_status?: string
-          installments?: number
-          total_installments?: number | null
-          card_suffix?: string | null
+          asmachta?: string | null
           card_brand?: string | null
-          card_type?: string | null
           card_exp?: string | null
-          payment_method?: string | null
-          transaction_type_id?: number | null
-          customer_name?: string | null
+          card_suffix?: string | null
+          card_type?: string | null
+          created_at?: string
+          currency?: string
           customer_email?: string | null
+          customer_name?: string | null
           customer_phone?: string | null
-          payment_product_id?: string | null
           flow_type?: string | null
+          grow_transaction_id?: string | null
+          id?: string
+          installments?: number
+          invoice_id?: string | null
           invoice_number?: string | null
           invoice_url?: string | null
-          invoice_id?: string | null
-          target_table?: string | null
           linked_record_id?: string | null
+          merchant_user_id?: string | null
+          page_code?: string | null
+          payment_method?: string | null
+          payment_product_id?: string | null
+          payment_status?: string
+          process_id?: string | null
+          process_token?: string | null
           raw_payload?: Json | null
-          created_at?: string
+          target_table?: string | null
+          total_installments?: number | null
+          transaction_type_id?: number | null
           updated_at?: string
         }
         Relationships: [
@@ -747,6 +978,45 @@ export type Database = {
           },
         ]
       }
+      lesson_rabbis: {
+        Row: {
+          created_at: string
+          lesson_id: string
+          rabbi_id: string
+          role: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          lesson_id: string
+          rabbi_id: string
+          role?: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          lesson_id?: string
+          rabbi_id?: string
+          role?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_rabbis_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lesson_rabbis_rabbi_id_fkey"
+            columns: ["rabbi_id"]
+            isOneToOne: false
+            referencedRelation: "rabbis"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       lesson_topics: {
         Row: {
           lesson_id: string
@@ -777,9 +1047,54 @@ export type Database = {
           },
         ]
       }
+      lesson_topics_bak_20260607: {
+        Row: {
+          lesson_id: string | null
+          topic_id: string | null
+        }
+        Insert: {
+          lesson_id?: string | null
+          topic_id?: string | null
+        }
+        Update: {
+          lesson_id?: string | null
+          topic_id?: string | null
+        }
+        Relationships: []
+      }
+      lesson_topics_bak_20260610: {
+        Row: {
+          lesson_id: string | null
+          topic_id: string | null
+        }
+        Insert: {
+          lesson_id?: string | null
+          topic_id?: string | null
+        }
+        Update: {
+          lesson_id?: string | null
+          topic_id?: string | null
+        }
+        Relationships: []
+      }
+      lesson_topics_bak_gap4_20260610_2200: {
+        Row: {
+          lesson_id: string | null
+          topic_id: string | null
+        }
+        Insert: {
+          lesson_id?: string | null
+          topic_id?: string | null
+        }
+        Update: {
+          lesson_id?: string | null
+          topic_id?: string | null
+        }
+        Relationships: []
+      }
       lessons: {
         Row: {
-          additional_attachments: string[] | null
+          additional_attachments: Json | null
           attachment_url: string | null
           audience_tags: string[]
           audio_url: string | null
@@ -787,10 +1102,12 @@ export type Database = {
           bible_chapter: number | null
           bible_verse: number | null
           content: string | null
+          content_type: string | null
           created_at: string
           description: string | null
           duration: number | null
           id: string
+          legacy_attachment_url: string | null
           published_at: string | null
           rabbi_id: string | null
           review_note: string | null
@@ -807,7 +1124,7 @@ export type Database = {
           views_count: number
         }
         Insert: {
-          additional_attachments?: string[] | null
+          additional_attachments?: Json | null
           attachment_url?: string | null
           audience_tags?: string[]
           audio_url?: string | null
@@ -815,10 +1132,12 @@ export type Database = {
           bible_chapter?: number | null
           bible_verse?: number | null
           content?: string | null
+          content_type?: string | null
           created_at?: string
           description?: string | null
           duration?: number | null
           id?: string
+          legacy_attachment_url?: string | null
           published_at?: string | null
           rabbi_id?: string | null
           review_note?: string | null
@@ -835,7 +1154,7 @@ export type Database = {
           views_count?: number
         }
         Update: {
-          additional_attachments?: string[] | null
+          additional_attachments?: Json | null
           attachment_url?: string | null
           audience_tags?: string[]
           audio_url?: string | null
@@ -843,10 +1162,12 @@ export type Database = {
           bible_chapter?: number | null
           bible_verse?: number | null
           content?: string | null
+          content_type?: string | null
           created_at?: string
           description?: string | null
           duration?: number | null
           id?: string
+          legacy_attachment_url?: string | null
           published_at?: string | null
           rabbi_id?: string | null
           review_note?: string | null
@@ -885,6 +1206,1392 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      lessons_backup_bereshit_recovery_2026_06_01: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_backup_pre_teachers_migration_2026_05_27: {
+        Row: {
+          audience_tags: string[] | null
+          id: string | null
+          series_id: string | null
+          status: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          id?: string | null
+          series_id?: string | null
+          status?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          id?: string | null
+          series_id?: string | null
+          status?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      lessons_bak_20260607: {
+        Row: {
+          audience_tags: string[] | null
+          content_type: string | null
+          id: string | null
+          series_id: string | null
+          status: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          content_type?: string | null
+          id?: string | null
+          series_id?: string | null
+          status?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          content_type?: string | null
+          id?: string | null
+          series_id?: string | null
+          status?: string | null
+        }
+        Relationships: []
+      }
+      lessons_bak_20260609: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_20260610_night: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_gap1_20260610_2011: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_gap2_20260610_2005: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_gap3_20260610_1959: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_gap5: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_korach_dup_20260611: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_parity_20260609: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak_vp4landing_20260611: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak2_20260609: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_bak3_20260609: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          legacy_attachment_url: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          legacy_attachment_url?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_pre_cleanup_2026_05_27_v2: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_pre_cleanup_v3_2026_05_27: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
+      }
+      lessons_pre_scrape_2026_05_27_part2: {
+        Row: {
+          additional_attachments: Json | null
+          attachment_url: string | null
+          audience_tags: string[] | null
+          audio_url: string | null
+          bible_book: string | null
+          bible_chapter: number | null
+          bible_verse: number | null
+          content: string | null
+          content_type: string | null
+          created_at: string | null
+          description: string | null
+          duration: number | null
+          id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          series_id: string | null
+          source_type: string | null
+          status: string | null
+          thumbnail_url: string | null
+          title: string | null
+          updated_at: string | null
+          video_url: string | null
+          views_count: number | null
+        }
+        Insert: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Update: {
+          additional_attachments?: Json | null
+          attachment_url?: string | null
+          audience_tags?: string[] | null
+          audio_url?: string | null
+          bible_book?: string | null
+          bible_chapter?: number | null
+          bible_verse?: number | null
+          content?: string | null
+          content_type?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration?: number | null
+          id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          series_id?: string | null
+          source_type?: string | null
+          status?: string | null
+          thumbnail_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+          video_url?: string | null
+          views_count?: number | null
+        }
+        Relationships: []
       }
       migration_batches: {
         Row: {
@@ -1124,6 +2831,48 @@ export type Database = {
             referencedColumns: ["number"]
           },
         ]
+      }
+      newsletter_subscribers: {
+        Row: {
+          agreed_to_terms: boolean | null
+          consent_at: string
+          consent_ip: unknown
+          created_at: string
+          email: string
+          exported_at: string | null
+          first_name: string | null
+          id: string
+          smoove_id: number | null
+          source: string | null
+          unsubscribed_at: string | null
+        }
+        Insert: {
+          agreed_to_terms?: boolean | null
+          consent_at?: string
+          consent_ip?: unknown
+          created_at?: string
+          email: string
+          exported_at?: string | null
+          first_name?: string | null
+          id?: string
+          smoove_id?: number | null
+          source?: string | null
+          unsubscribed_at?: string | null
+        }
+        Update: {
+          agreed_to_terms?: boolean | null
+          consent_at?: string
+          consent_ip?: unknown
+          created_at?: string
+          email?: string
+          exported_at?: string | null
+          first_name?: string | null
+          id?: string
+          smoove_id?: number | null
+          source?: string | null
+          unsubscribed_at?: string | null
+        }
+        Relationships: []
       }
       ohp_chat_messages: {
         Row: {
@@ -1579,6 +3328,7 @@ export type Database = {
         Row: {
           bio: string | null
           created_at: string
+          entity_type: string | null
           id: string
           image_url: string | null
           lesson_count: number
@@ -1591,6 +3341,7 @@ export type Database = {
         Insert: {
           bio?: string | null
           created_at?: string
+          entity_type?: string | null
           id?: string
           image_url?: string | null
           lesson_count?: number
@@ -1603,6 +3354,7 @@ export type Database = {
         Update: {
           bio?: string | null
           created_at?: string
+          entity_type?: string | null
           id?: string
           image_url?: string | null
           lesson_count?: number
@@ -1644,6 +3396,7 @@ export type Database = {
       series: {
         Row: {
           audience_tags: string[]
+          bible_book: string | null
           created_at: string
           description: string | null
           id: string
@@ -1662,6 +3415,7 @@ export type Database = {
         }
         Insert: {
           audience_tags?: string[]
+          bible_book?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -1680,6 +3434,7 @@ export type Database = {
         }
         Update: {
           audience_tags?: string[]
+          bible_book?: string | null
           created_at?: string
           description?: string | null
           id?: string
@@ -1719,6 +3474,426 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      series_bak_20260607: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      series_bak_20260609: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      series_bak_20260610: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      series_bak_20260610_night: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      series_bak_gap1_20260610_2011: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      series_bak_gap3_20260610_1959: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
+      series_bak_parity_20260609: {
+        Row: {
+          audience_tags: string[] | null
+          bible_book: string | null
+          created_at: string | null
+          description: string | null
+          id: string | null
+          image_url: string | null
+          lesson_count: number | null
+          parent_id: string | null
+          published_at: string | null
+          rabbi_id: string | null
+          review_note: string | null
+          reviewed_by: string | null
+          sort_order: number | null
+          status: string | null
+          submitted_at: string | null
+          submitted_by: string | null
+          title: string | null
+        }
+        Insert: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Update: {
+          audience_tags?: string[] | null
+          bible_book?: string | null
+          created_at?: string | null
+          description?: string | null
+          id?: string | null
+          image_url?: string | null
+          lesson_count?: number | null
+          parent_id?: string | null
+          published_at?: string | null
+          rabbi_id?: string | null
+          review_note?: string | null
+          reviewed_by?: string | null
+          sort_order?: number | null
+          status?: string | null
+          submitted_at?: string | null
+          submitted_by?: string | null
+          title?: string | null
+        }
+        Relationships: []
       }
       series_links: {
         Row: {
@@ -1767,6 +3942,76 @@ export type Database = {
           {
             foreignKeyName: "series_links_source_series_id_fkey"
             columns: ["source_series_id"]
+            isOneToOne: false
+            referencedRelation: "series_with_audience"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      series_links_bak_20260610_night: {
+        Row: {
+          id: string | null
+          link_type: string | null
+          linked_series_id: string | null
+          sort_order: number | null
+          source_series_id: string | null
+        }
+        Insert: {
+          id?: string | null
+          link_type?: string | null
+          linked_series_id?: string | null
+          sort_order?: number | null
+          source_series_id?: string | null
+        }
+        Update: {
+          id?: string | null
+          link_type?: string | null
+          linked_series_id?: string | null
+          sort_order?: number | null
+          source_series_id?: string | null
+        }
+        Relationships: []
+      }
+      series_rabbis: {
+        Row: {
+          created_at: string
+          rabbi_id: string
+          role: string
+          series_id: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          rabbi_id: string
+          role?: string
+          series_id: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          rabbi_id?: string
+          role?: string
+          series_id?: string
+          sort_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "series_rabbis_rabbi_id_fkey"
+            columns: ["rabbi_id"]
+            isOneToOne: false
+            referencedRelation: "rabbis"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "series_rabbis_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "series_rabbis_series_id_fkey"
+            columns: ["series_id"]
             isOneToOne: false
             referencedRelation: "series_with_audience"
             referencedColumns: ["id"]
@@ -1822,6 +4067,167 @@ export type Database = {
             columns: ["parent_id"]
             isOneToOne: false
             referencedRelation: "topics"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      topics_bak_20260607: {
+        Row: {
+          description: string | null
+          id: string | null
+          name: string | null
+          parent_id: string | null
+          slug: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
+      topics_bak_20260610: {
+        Row: {
+          description: string | null
+          id: string | null
+          name: string | null
+          parent_id: string | null
+          slug: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
+      topics_bak_20260610_night: {
+        Row: {
+          description: string | null
+          id: string | null
+          name: string | null
+          parent_id: string | null
+          slug: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
+      topics_bak_gap4_20260610_2200: {
+        Row: {
+          description: string | null
+          id: string | null
+          name: string | null
+          parent_id: string | null
+          slug: string | null
+          sort_order: number | null
+        }
+        Insert: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Update: {
+          description?: string | null
+          id?: string | null
+          name?: string | null
+          parent_id?: string | null
+          slug?: string | null
+          sort_order?: number | null
+        }
+        Relationships: []
+      }
+      user_access_tags: {
+        Row: {
+          created_at: string
+          email: string | null
+          granted_at: string
+          grow_order_id: string | null
+          id: string
+          notes: string | null
+          pending_user_link: boolean
+          source: string
+          tag: string
+          updated_at: string
+          user_id: string | null
+          valid_until: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          granted_at?: string
+          grow_order_id?: string | null
+          id?: string
+          notes?: string | null
+          pending_user_link?: boolean
+          source?: string
+          tag: string
+          updated_at?: string
+          user_id?: string | null
+          valid_until?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          granted_at?: string
+          grow_order_id?: string | null
+          id?: string
+          notes?: string | null
+          pending_user_link?: boolean
+          source?: string
+          tag?: string
+          updated_at?: string
+          user_id?: string | null
+          valid_until?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_access_tags_grow_order_id_fkey"
+            columns: ["grow_order_id"]
+            isOneToOne: false
+            referencedRelation: "grow_orders"
             referencedColumns: ["id"]
           },
         ]
@@ -2219,8 +4625,68 @@ export type Database = {
         }
         Relationships: []
       }
+      weekly_program_progress: {
+        Row: {
+          chapters_completed: number
+          created_at: string
+          current_book: string | null
+          current_chapter: number | null
+          id: string
+          last_activity_at: string | null
+          program_slug: string
+          streak_weeks: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chapters_completed?: number
+          created_at?: string
+          current_book?: string | null
+          current_chapter?: number | null
+          id?: string
+          last_activity_at?: string | null
+          program_slug?: string
+          streak_weeks?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chapters_completed?: number
+          created_at?: string
+          current_book?: string | null
+          current_chapter?: number | null
+          id?: string
+          last_activity_at?: string | null
+          program_slug?: string
+          streak_weeks?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
+      bot_analytics_summary: {
+        Row: {
+          anonymous_sessions: number | null
+          authenticated_sessions: number | null
+          avg_messages_per_session: number | null
+          day: string | null
+          personas_detected: string[] | null
+          refused_content_alerts: number | null
+          sessions_with_clicks: number | null
+          total_sessions: number | null
+        }
+        Relationships: []
+      }
+      bot_intents_breakdown: {
+        Row: {
+          intent: string | null
+          occurrences: number | null
+          unique_users: number | null
+        }
+        Relationships: []
+      }
       series_with_audience: {
         Row: {
           audience_tags: string[] | null
@@ -2242,6 +4708,63 @@ export type Database = {
           },
         ]
       }
+      v_yehoshua_campaign_report: {
+        Row: {
+          amount: number | null
+          asmachta: string | null
+          card_suffix: string | null
+          created_at: string | null
+          donor_email: string | null
+          donor_name: string | null
+          id: string | null
+          invoice_number: string | null
+          invoice_url: string | null
+          payment_id: string | null
+          payment_status: string | null
+          phone: string | null
+          raw_payload: Json | null
+          tier_id: string | null
+          tier_name: string | null
+          tier_perks: Json | null
+        }
+        Insert: {
+          amount?: number | null
+          asmachta?: string | null
+          card_suffix?: string | null
+          created_at?: string | null
+          donor_email?: string | null
+          donor_name?: string | null
+          id?: string | null
+          invoice_number?: string | null
+          invoice_url?: string | null
+          payment_id?: string | null
+          payment_status?: string | null
+          phone?: string | null
+          raw_payload?: Json | null
+          tier_id?: string | null
+          tier_name?: string | null
+          tier_perks?: Json | null
+        }
+        Update: {
+          amount?: number | null
+          asmachta?: string | null
+          card_suffix?: string | null
+          created_at?: string | null
+          donor_email?: string | null
+          donor_name?: string | null
+          id?: string | null
+          invoice_number?: string | null
+          invoice_url?: string | null
+          payment_id?: string | null
+          payment_status?: string | null
+          phone?: string | null
+          raw_payload?: Json | null
+          tier_id?: string | null
+          tier_name?: string | null
+          tier_perks?: Json | null
+        }
+        Relationships: []
+      }
       weekly_leaderboard: {
         Row: {
           avatar_url: string | null
@@ -2255,20 +4778,35 @@ export type Database = {
       }
       yehoshua_campaign_stats: {
         Row: {
-          raised: number
-          supporters: number
+          raised: number | null
+          supporters: number | null
         }
         Relationships: []
       }
       yehoshua_tier_counts: {
         Row: {
-          tier_id: string
-          sold: number
+          sold: number | null
+          tier_id: string | null
         }
         Relationships: []
       }
     }
     Functions: {
+      get_public_rabbis: {
+        Args: never
+        Returns: {
+          bio: string
+          created_at: string
+          id: string
+          image_url: string
+          lesson_count: number
+          name: string
+          slug: string
+          specialty: string
+          status: string
+          title: string
+        }[]
+      }
       get_series_ancestors: {
         Args: { series_uuid: string }
         Returns: {
@@ -2285,6 +4823,10 @@ export type Database = {
           series_title: string
         }[]
       }
+      has_access_tag: {
+        Args: { p_tag: string; p_user_id: string }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -2294,7 +4836,7 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "moderator" | "user"
+      app_role: "admin" | "moderator" | "user" | "creator"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2422,7 +4964,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "moderator", "user"],
+      app_role: ["admin", "moderator", "user", "creator"],
     },
   },
 } as const

@@ -10,12 +10,104 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Plus, Search, Pencil, Trash2, Tag, GraduationCap, Users } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Tag, GraduationCap, Users, CheckCircle, RotateCcw, Clock, AlertCircle } from "lucide-react";
 import { useSeries, useCreateSeries, useUpdateSeries, useDeleteSeries } from "@/hooks/useSeries";
 import { useRabbis } from "@/hooks/useRabbis";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+// ── Feature 6: status design tokens (mirrors Lessons.tsx) ──────────────────
+const SERIES_STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; dot: string }> = {
+  draft:          { label: "טיוטה",        bg: "bg-slate-100",   text: "text-slate-600",   dot: "#94A3B8" },
+  pending_review: { label: "ממתין לאישור", bg: "bg-amber-50",    text: "text-amber-700",   dot: "#D97706" },
+  active:         { label: "פעילה",        bg: "bg-emerald-50",  text: "text-emerald-700", dot: "#059669" },
+  completed:      { label: "הושלמה",       bg: "bg-blue-50",     text: "text-blue-700",    dot: "#2563EB" },
+  category:       { label: "קטגוריה",      bg: "bg-purple-50",   text: "text-purple-700",  dot: "#7C3AED" },
+};
+
+const SeriesStatusBadge = ({ status }: { status: string }) => {
+  const cfg = SERIES_STATUS_CONFIG[status] ?? SERIES_STATUS_CONFIG.draft;
+  return (
+    <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-display ${cfg.bg} ${cfg.text}`}>
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: cfg.dot }} />
+      {cfg.label}
+    </span>
+  );
+};
+
+// ── Feature 6: useApproveSeries mutation ────────────────────────────────────
+function useApproveSeries() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      id, action, note, reviewerId,
+    }: {
+      id: string;
+      action: "approve" | "return";
+      note?: string;
+      reviewerId: string;
+    }) => {
+      const updates: Record<string, unknown> =
+        action === "approve"
+          ? {
+              status:      "active",
+              reviewed_by: reviewerId,
+              published_at: new Date().toISOString(),
+              updated_at:  new Date().toISOString(),
+            }
+          : {
+              status:      "draft",
+              reviewed_by: reviewerId,
+              review_note: note ?? null,
+              updated_at:  new Date().toISOString(),
+            };
+      const { error } = await supabase.from("series").update(updates as any).eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["series"] }),
+  });
+}
+
+// ── Feature 6: ReturnSeriesDialog ───────────────────────────────────────────
+const ReturnSeriesDialog = ({
+  series,
+  onReturn,
+}: {
+  series: any;
+  onReturn: (id: string, note: string) => void;
+}) => {
+  const [note, setNote]   = useState("");
+  const [open, setOpen]   = useState(false);
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="ghost" size="sm" className="gap-1.5 text-xs font-display text-amber-700 hover:bg-amber-50">
+          <RotateCcw className="h-3.5 w-3.5" />
+          החזר
+        </Button>
+      </DialogTrigger>
+      <DialogContent dir="rtl" className="max-w-sm">
+        <DialogHeader>
+          <DialogTitle className="font-heading text-right">החזרת סדרה ליוצר</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4 py-2">
+          <p className="text-sm text-muted-foreground">"{series.title}"</p>
+          <div>
+            <Label>הערה ליוצר (אופציונלי)</Label>
+            <Textarea value={note} onChange={e => setNote(e.target.value)} placeholder="מה צריך לתקן?" rows={3} dir="rtl" className="mt-1.5" />
+          </div>
+          <Button className="w-full font-display" variant="outline"
+            onClick={() => { onReturn(series.id, note); setOpen(false); setNote(""); }}>
+            <RotateCcw className="h-4 w-4 ml-1.5" />
+            שלח חזרה ליוצר
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
 
 // Available audience tags — extend here as needed
 const AUDIENCE_TAG_OPTIONS: { value: string; label: string; color: string }[] = [
@@ -41,17 +133,22 @@ const TAG_LABELS: Record<string, string> = {
 
 type AudienceFilter = "all" | "teachers" | "general";
 
+type SeriesTab = "all" | "pending_review" | "active" | "draft";
+
 export default function SeriesPage() {
+  const { user, isAdmin } = useAuth();
   const { data: seriesList, isLoading } = useSeries();
   const { data: rabbis } = useRabbis();
   const createSeries = useCreateSeries();
   const updateSeries = useUpdateSeries();
   const deleteSeries = useDeleteSeries();
+  const approveSeries = useApproveSeries();
   const { toast } = useToast();
   const qc = useQueryClient();
 
   const [search, setSearch] = useState("");
   const [audienceFilter, setAudienceFilter] = useState<AudienceFilter>("all");
+  const [activeTab, setActiveTab] = useState<SeriesTab>("all");
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState({
@@ -63,6 +160,30 @@ export default function SeriesPage() {
   // Bulk-tag state
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkTagging, setBulkTagging] = useState(false);
+
+  // Feature 6: pending count
+  const pendingCount = (seriesList ?? []).filter((s: any) => s.status === "pending_review").length;
+
+  // Feature 6: approve/return handlers
+  const handleApprove = async (seriesId: string) => {
+    if (!user?.id) return;
+    try {
+      await approveSeries.mutateAsync({ id: seriesId, action: "approve", reviewerId: user.id });
+      toast({ title: "הסדרה פורסמה" });
+    } catch (e: any) {
+      toast({ title: "שגיאה", description: e.message, variant: "destructive" });
+    }
+  };
+
+  const handleReturn = async (seriesId: string, note: string) => {
+    if (!user?.id) return;
+    try {
+      await approveSeries.mutateAsync({ id: seriesId, action: "return", note, reviewerId: user.id });
+      toast({ title: "הסדרה הוחזרה ליוצר" });
+    } catch (e: any) {
+      toast({ title: "שגיאה", description: e.message, variant: "destructive" });
+    }
+  };
 
   const resetForm = () => {
     setForm({ title: "", description: "", rabbi_id: "", parent_id: "", image_url: "", status: "draft", audience_tags: ["general"] });
@@ -142,10 +263,11 @@ export default function SeriesPage() {
     }
   };
 
-  // Filtering: audience + search
+  // Filtering: audience + search + tab
   const filtered = (seriesList ?? []).filter((s: any) => {
     const matchSearch = s.title.includes(search);
     if (!matchSearch) return false;
+    if (activeTab !== "all" && s.status !== activeTab) return false;
     if (audienceFilter === "all") return true;
     const tags: string[] = s.audience_tags ?? ["general"];
     if (audienceFilter === "teachers") return tags.includes("teachers");
@@ -218,12 +340,16 @@ export default function SeriesPage() {
                 <div><Label>קישור תמונה</Label><Input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} /></div>
                 <div>
                   <Label>סטטוס</Label>
+                  {/* Feature 6: non-admin sees only draft/pending_review */}
                   <Select value={form.status} onValueChange={(v) => setForm({ ...form, status: v })}>
                     <SelectTrigger><SelectValue /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="draft">טיוטה</SelectItem>
-                      <SelectItem value="active">פעילה</SelectItem>
-                      <SelectItem value="completed">הושלמה</SelectItem>
+                      {!isAdmin && (
+                        <SelectItem value="pending_review">שלח לאישור</SelectItem>
+                      )}
+                      {isAdmin && <SelectItem value="active">פעילה</SelectItem>}
+                      {isAdmin && <SelectItem value="completed">הושלמה</SelectItem>}
                     </SelectContent>
                   </Select>
                 </div>
@@ -313,6 +439,52 @@ export default function SeriesPage() {
           )}
         </div>
 
+        {/* Feature 6: Pending review banner (admin only) */}
+        {isAdmin && pendingCount > 0 && (
+          <div
+            className="flex items-center gap-3 p-4 rounded-xl"
+            style={{ background: "#FFFBEB", border: "1px solid #FDE68A" }}
+          >
+            <AlertCircle className="h-5 w-5 shrink-0" style={{ color: "#D97706" }} />
+            <p className="text-sm font-display" style={{ color: "#92400E" }}>
+              {pendingCount} סדרות ממתינות לאישור
+            </p>
+            <button
+              type="button"
+              onClick={() => setActiveTab("pending_review")}
+              className="mr-auto text-xs font-display underline"
+              style={{ color: "#92400E" }}
+            >
+              הצג
+            </button>
+          </div>
+        )}
+
+        {/* Feature 6: Status tabs */}
+        <div className="flex items-center rounded-lg border bg-card overflow-hidden w-fit">
+          {([
+            { id: "all",            label: `הכל (${(seriesList ?? []).length})` },
+            { id: "pending_review", label: `ממתין (${pendingCount})`, highlight: pendingCount > 0 },
+            { id: "active",         label: "פעילות" },
+            { id: "draft",          label: "טיוטות" },
+          ] as { id: SeriesTab; label: string; highlight?: boolean }[]).map(tab => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors ${
+                activeTab === tab.id
+                  ? "bg-primary text-primary-foreground"
+                  : tab.highlight
+                    ? "text-amber-700 bg-amber-50 hover:bg-amber-100"
+                    : "text-muted-foreground hover:bg-muted"
+              }`}
+            >
+              {tab.id === "pending_review" && <Clock className="h-3.5 w-3.5" />}
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
         {/* Table */}
         <Card>
           <CardHeader className="pb-3">
@@ -374,12 +546,24 @@ export default function SeriesPage() {
                           </div>
                         </TableCell>
                         <TableCell>
-                          <Badge variant={s.status === "active" ? "default" : "secondary"}>
-                            {s.status}
-                          </Badge>
+                          <SeriesStatusBadge status={s.status} />
                         </TableCell>
                         <TableCell>
-                          <div className="flex gap-1">
+                          <div className="flex gap-1 items-center">
+                            {/* Feature 6: approve/return for pending_review */}
+                            {isAdmin && s.status === "pending_review" && (
+                              <>
+                                <Button
+                                  variant="ghost" size="sm"
+                                  className="gap-1.5 text-xs font-display text-emerald-700 hover:bg-emerald-50"
+                                  onClick={() => handleApprove(s.id)}
+                                >
+                                  <CheckCircle className="h-3.5 w-3.5" />
+                                  אשר
+                                </Button>
+                                <ReturnSeriesDialog series={s} onReturn={handleReturn} />
+                              </>
+                            )}
                             <Button variant="ghost" size="icon" onClick={() => openEdit(s)}>
                               <Pencil className="h-4 w-4" />
                             </Button>

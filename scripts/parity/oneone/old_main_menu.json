@@ -1,0 +1,86 @@
+{
+ "source": "old_home_20260611.html — header ul.mainNav + ul.IconsNav + sidebar tabs",
+ "saved_date": "2026-06-11",
+ "selectors": {
+  "main_menu": "ul.mainNav.nav.nav-justified > li > a",
+  "icons_nav": "ul.IconsNav > li > a",
+  "sidebar_tabs": "div.sideNavBar > ul.nav-tabs > li > a"
+ },
+ "main_menu_total": 6,
+ "main_menu": [
+  {
+   "title": "פרשת השבוע",
+   "title_norm": "פרשת השבוע",
+   "url": "/פרשת-השבוע/",
+   "target": null,
+   "order_index": 0
+  },
+  {
+   "title": "אגף המורים",
+   "title_norm": "אגף המורים",
+   "url": "/אגף-המורים/",
+   "target": null,
+   "order_index": 1
+  },
+  {
+   "title": "חנות הספרים והקורסים",
+   "title_norm": "חנות הספרים והקורסים",
+   "url": "https://club.bneyzion.co.il/",
+   "target": "_blank",
+   "order_index": 2
+  },
+  {
+   "title": "אודותינו",
+   "title_norm": "אודותינו",
+   "url": "/אודותינו/",
+   "target": null,
+   "order_index": 3
+  },
+  {
+   "title": "תרומות",
+   "title_norm": "תרומות",
+   "url": "/תרומות/",
+   "target": null,
+   "order_index": 4
+  },
+  {
+   "title": "צור קשר",
+   "title_norm": "צור קשר",
+   "url": "/צור-קשר/",
+   "target": null,
+   "order_index": 5
+  }
+ ],
+ "icons_nav_total": 2,
+ "icons_nav": [
+  {
+   "title": "מקורות על חשיבות לימוד תנ\"ך",
+   "title_norm": "מקורות על חשיבות לימוד תנ\"ך",
+   "url": "/מקורות-על-חשיבות-לימוד-תנך/",
+   "order_index": 0
+  },
+  {
+   "title": "דרך לימוד התנ\"ך",
+   "title_norm": "דרך לימוד התנ\"ך",
+   "url": "/דרך-לימוד-התנך/",
+   "order_index": 1
+  }
+ ],
+ "sidebar_tabs": [
+  {
+   "title": "ראשי",
+   "href": "#books",
+   "order_index": 0
+  },
+  {
+   "title": "נושאים",
+   "href": "#tags",
+   "order_index": 1
+  },
+  {
+   "title": "רבנים",
+   "href": "#rabanim",
+   "order_index": 2
+  }
+ ]
+}

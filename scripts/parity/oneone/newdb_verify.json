@@ -1,0 +1,116 @@
+{
+ "public_tables": 98,
+ "series_count": {
+  "db": 1698,
+  "dumped": 1698
+ },
+ "lessons_count": {
+  "db": 18452,
+  "dumped": 18452
+ },
+ "rabbis_count": {
+  "db": 214,
+  "dumped": 214
+ },
+ "topics_count": {
+  "db": 864,
+  "dumped": 864
+ },
+ "lesson_topics_count": {
+  "db": 12369,
+  "dumped": 12369
+ },
+ "lesson_rabbis_count": {
+  "db": 0,
+  "dumped": 0
+ },
+ "series_rabbis_count": {
+  "db": 0,
+  "dumped": 0
+ },
+ "tree": {
+  "roots": 18,
+  "orphan_parent_missing": 0,
+  "total_nodes": 1698
+ },
+ "series_by_status": [
+  {
+   "status": "active",
+   "n": 823
+  },
+  {
+   "status": "published",
+   "n": 574
+  },
+  {
+   "status": "draft",
+   "n": 157
+  },
+  {
+   "status": "category",
+   "n": 144
+  }
+ ],
+ "lessons_by_status": [
+  {
+   "status": "published",
+   "n": 18405
+  },
+  {
+   "status": "draft",
+   "n": 47
+  }
+ ],
+ "lessons_by_audience": [
+  {
+   "aud": "general",
+   "n": 13024
+  },
+  {
+   "aud": "teachers",
+   "n": 5289
+  },
+  {
+   "aud": "empty/null",
+   "n": 139
+  }
+ ],
+ "lessons_audience_raw": [
+  {
+   "audience_tags": [
+    "general"
+   ],
+   "n": 13024
+  },
+  {
+   "audience_tags": [
+    "teachers"
+   ],
+   "n": 5141
+  },
+  {
+   "audience_tags": [],
+   "n": 139
+  },
+  {
+   "audience_tags": [
+    "teachers",
+    "general"
+   ],
+   "n": 134
+  },
+  {
+   "audience_tags": [
+    "general",
+    "teachers"
+   ],
+   "n": 14
+  }
+ ],
+ "lessons_series_id_null": 3042,
+ "dup_titles_same_series": {
+  "dup_groups": 97,
+  "extra_rows": "99"
+ },
+ "lessons_content_null": 12334
+}

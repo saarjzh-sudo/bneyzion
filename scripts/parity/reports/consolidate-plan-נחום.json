@@ -1,0 +1,150 @@
+{
+  "book": "נחום",
+  "book_id": "e8f7ed1c-fa87-4186-ba01-8d2dd4e40b88",
+  "plan": [
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000001",
+      "event_title": "נחום פרק א",
+      "lesson_id": "eb6a3ad5-b99f-491e-9d6d-0c846194e7dc",
+      "mode": "copy",
+      "from_series": "c18f848a-2a11-4730-b17a-6a38f97616e5",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר נחום",
+      "old_title": "נקמה בגויים דרך תהליך הסטורי טבעי",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000001",
+      "event_title": "נחום פרק א",
+      "lesson_id": "ecca2c86-6fca-4bde-9c01-715d36d1a7b4",
+      "mode": "copy",
+      "from_series": "ad879685-aa01-4eaf-bd64-1916eaa21881",
+      "from_status": "active",
+      "from_title": "מאמרים קצרים - ספר נחום",
+      "old_title": "חוק נקמת השם",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000001",
+      "event_title": "נחום פרק א",
+      "lesson_id": "a9871d7b-e2d0-48f7-93f8-657e4b620119",
+      "mode": "copy",
+      "from_series": "c2060001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "נחום פרק א",
+      "old_title": "נחום פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000002",
+      "event_title": "נחום פרק ב",
+      "lesson_id": "c237b411-6d1f-4d97-ac0d-13cd5e0a0ac8",
+      "mode": "copy",
+      "from_series": "c2060001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "נחום פרק ב",
+      "old_title": "הנבואה הגדולה נגד אשור - העוצמה תחרב בין רגע",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000002",
+      "event_title": "נחום פרק ב",
+      "lesson_id": "b547f6a7-f376-4d3d-882b-fd02f91f6f77",
+      "mode": "copy",
+      "from_series": "7e9d3cc4-23cb-4a1d-90aa-f11027d67ce3",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר נחום",
+      "old_title": "הצבא",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000002",
+      "event_title": "נחום פרק ב",
+      "lesson_id": "0f3333f0-708c-4b1c-bf23-c710450b8b26",
+      "mode": "copy",
+      "from_series": "ad879685-aa01-4eaf-bd64-1916eaa21881",
+      "from_status": "active",
+      "from_title": "מאמרים קצרים - ספר נחום",
+      "old_title": "קריאה לחירות תרבותית כהד לחזון מפלת נינוה",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000002",
+      "event_title": "נחום פרק ב",
+      "lesson_id": "8abdcac5-2342-4a66-b06a-6ee25e078ab1",
+      "mode": "copy",
+      "from_series": "c2060001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "נחום פרק ב",
+      "old_title": "נחום פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000003",
+      "event_title": "נחום פרק ג",
+      "lesson_id": "9ce2cb59-4e75-435b-85aa-7f34bc9a1890",
+      "mode": "copy",
+      "from_series": "c18f848a-2a11-4730-b17a-6a38f97616e5",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר נחום",
+      "old_title": "נפילת נינווה - מידה כנגד מידה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000003",
+      "event_title": "נחום פרק ג",
+      "lesson_id": "551c05bd-6f1b-4d57-baac-b89e8fdd0074",
+      "mode": "copy",
+      "from_series": "7e9d3cc4-23cb-4a1d-90aa-f11027d67ce3",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר נחום",
+      "old_title": "עיר דמים",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000003",
+      "event_title": "נחום פרק ג",
+      "lesson_id": "9b7d626d-a374-457c-bd6b-57169d55e620",
+      "mode": "copy",
+      "from_series": "c2060001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "נחום פרק ג",
+      "old_title": "קץ לסיוט אימפריית אשור",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2060001-0001-4000-8000-000000000003",
+      "event_title": "נחום פרק ג",
+      "lesson_id": "5d5fed12-65fb-4274-b5a3-29c85a385a36",
+      "mode": "copy",
+      "from_series": "c2060001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "נחום פרק ג",
+      "old_title": "נחום פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    }
+  ],
+  "report": [
+    {
+      "event": "נחום פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/נחום/נחום-פרק-א/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "נחום פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/נחום/נחום-פרק-ב/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "נחום פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/נחום/נחום-פרק-ג/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    }
+  ]
+}

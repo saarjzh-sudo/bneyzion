@@ -17,7 +17,8 @@
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
 import { useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { GlobalWeeklyNav } from "@/components/weekly/GlobalWeeklyNav";
 import {
   BookOpen, Lock, Play, Headphones, FileText,
   ChevronLeft, ChevronDown, Heart, Clock, Loader2,
@@ -160,8 +161,15 @@ export default function WeeklyBookDetail() {
   const accent = BOOK_ACCENTS[slug] ?? colors.goldDark;
   const isLoading = accessLoading || courseLoading || lessonsLoading;
 
+  // ?chapter=N from GlobalWeeklyNav cross-book navigation
+  const [searchParams] = useSearchParams();
+  const initialChapter: NavItem = (() => {
+    const ch = Number(searchParams.get("chapter"));
+    return ch > 0 ? ch : "intro";
+  })();
+
   // Navigation state
-  const [activeNav, setActiveNav] = useState<NavItem>("intro");
+  const [activeNav, setActiveNav] = useState<NavItem>(initialChapter);
   const [activeTab, setActiveTab] = useState<TabKey>("base");
   const [embeddedId, setEmbeddedId] = useState<string | null>(null);
 
@@ -362,90 +370,19 @@ export default function WeeklyBookDetail() {
       {/* ── Two-column layout ─────────────────────────────────────── */}
       <div dir="rtl" style={{ display: "grid", gridTemplateColumns: "min(280px, 30%) 1fr", minHeight: "calc(100vh - 200px)", background: colors.parchment }} className="book-detail-grid">
 
-        {/* ── Sidebar ────────────────────────────────────────────── */}
-        <aside style={{ background: "white", borderInlineStart: `1px solid rgba(139,111,71,0.08)`, overflowY: "auto", position: "sticky", top: 96, maxHeight: "calc(100vh - 96px)" }}>
-          {/* Header */}
-          <div style={{ padding: "1rem", borderBottom: `1px solid rgba(139,111,71,0.07)`, background: colors.parchment }}>
-            <div style={{ fontFamily: fonts.body, fontSize: "0.6rem", fontWeight: 700, color: accent, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.12rem" }}>
-              {bookTitle} · {chapterNumbers.length} פרקים
-            </div>
-            <div style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: colors.textMuted }}>תכנית הפרק השבועי</div>
-          </div>
-
-          {/* Intro */}
-          <SbRow
-            label="הקדמה"
-            subtitle={introItems.length > 0 ? `${introItems.length} פריטים` : ""}
-            isActive={activeNav === "intro"}
-            accent={accent}
-            done
-            onClick={() => selectNav("intro")}
-          />
-
-          {/* ── HZM: sub-books ─────────────────────────────────── */}
-          {isHZM(slug) && hzmSubBookKeys.map((subBook) => {
-            const chs = hzmSubBooks.get(subBook) ?? [];
-            return (
-              <SbRow
-                key={subBook}
-                label={`ספר ${subBookLabel(subBook)}`}
-                subtitle={`${chs.length} פרקים`}
-                isActive={activeNav === subBook}
-                accent={accent}
-                done={chs.length > 0}
-                onClick={() => selectNav(subBook)}
-              />
-            );
-          })}
-
-          {/* ── Esther: pairs ─────────────────────────────────── */}
-          {isEsther(slug) && estherPairs.map((oddCh) => (
-            <SbRow
-              key={oddCh}
-              label={estherPairLabel(oddCh)}
-              subtitle={courseData?.chapters?.get(oddCh)?.topic ?? ""}
-              isActive={activeNav === oddCh}
-              accent={accent}
-              done
-              onClick={() => selectNav(oddCh)}
-            />
-          ))}
-
-          {/* ── Normal: chapters ──────────────────────────────── */}
-          {!isHZM(slug) && !isEsther(slug) && (
-            (chapterNumbers.length > 0 ? chapterNumbers : []).map((ch) => {
-              const chd = courseData?.chapters?.get(ch);
-              return (
-                <SbRow
-                  key={ch}
-                  label={chapterLabel(ch)}
-                  subtitle={chd?.topic ?? ""}
-                  isActive={activeNav === ch}
-                  accent={accent}
-                  done={chapterNumbers.length > 0}
-                  onClick={() => selectNav(ch)}
-                />
-              );
-            })
-          )}
-
-          {/* Resources divider (Daniel etc.) */}
-          {resourceItems.length > 0 && (
-            <div style={{ padding: "0.45rem 1rem", background: "rgba(139,111,71,0.03)", borderTop: `1px solid rgba(139,111,71,0.06)`, borderBottom: `1px solid rgba(139,111,71,0.06)` }}>
-              <div style={{ fontFamily: fonts.body, fontSize: "0.58rem", fontWeight: 700, color: colors.textSubtle, letterSpacing: "0.12em", textTransform: "uppercase" }}>תכנים נוספים</div>
-            </div>
-          )}
-          {resourceItems.length > 0 && (
-            <SbRow
-              label="תכנים נוספים"
-              subtitle={`${resourceItems.length} פריטים`}
-              isActive={activeNav === "resources"}
-              accent={accent}
-              done
-              onClick={() => selectNav("resources")}
-            />
-          )}
-        </aside>
+        {/* ── Sidebar — GlobalWeeklyNav (all books accordion) ──── */}
+        {/*
+          Critique #13 safety: GlobalWeeklyNav only handles navigation.
+          All access/payment logic (hasAccess, previewMode, isAdmin) lives
+          exclusively in the main content section below — untouched.
+          GlobalWeeklyNav.onNavSelect calls selectNav() which is defined here.
+        */}
+        <GlobalWeeklyNav
+          currentSlug={slug}
+          activeNav={activeNav}
+          onNavSelect={selectNav}
+          accent={accent}
+        />
 
         {/* ── Main content ─────────────────────────────────────── */}
         <main style={{ padding: "2rem", maxWidth: 900 }}>

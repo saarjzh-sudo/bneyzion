@@ -171,7 +171,7 @@ const LearningDashboard = () => {
                   <BookOpen className="h-3.5 w-3.5" />
                   קורסים פעילים
                 </h3>
-                <Link to="/profile" className="text-xs text-primary hover:text-primary/80">
+                <Link to="/portal" className="text-xs text-primary hover:text-primary/80">
                   הכל ←
                 </Link>
               </div>

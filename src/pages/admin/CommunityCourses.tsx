@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Plus, Pencil, Trash2, BookOpen, ChevronRight, GripVertical,
   Eye, EyeOff, Video, Headphones, Paperclip, GraduationCap,
-  Users, BarChart3, ArrowRight, Sparkles, FileText
+  Users, BarChart3, ArrowRight, Sparkles, FileText, Star,
 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
@@ -306,6 +306,32 @@ export default function CommunityCourses() {
     },
   });
 
+  // ── set-current-book mutation ──────────────────────────────────────────────
+  // Sets is_current=true on the selected book and false on all others.
+  // Mutually exclusive: only one book can be "current" at a time.
+  const setCurrentBook = useMutation({
+    mutationFn: async (id: string) => {
+      // First clear all
+      const { error: clearErr } = await (supabase as any)
+        .from("community_courses")
+        .update({ is_current: false })
+        .eq("in_weekly_program", true);
+      if (clearErr) throw clearErr;
+      // Then set this one
+      const { error: setErr } = await (supabase as any)
+        .from("community_courses")
+        .update({ is_current: true })
+        .eq("id", id);
+      if (setErr) throw setErr;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-community-courses"] });
+      queryClient.invalidateQueries({ queryKey: ["weekly-books"] });
+      toast.success("הספר הנוכחי עודכן — כניסה ל-/program/weekly-chapter תנתב אליו");
+    },
+    onError: (e: Error) => toast.error("שגיאה: " + e.message),
+  });
+
   /* ════════════════════════════════════════════════════════
    *  LESSONS VIEW
    * ════════════════════════════════════════════════════════ */
@@ -571,6 +597,48 @@ export default function CommunityCourses() {
                           <BookOpen className="h-3.5 w-3.5" />
                           {course.total_lessons} שיעורים
                         </span>
+
+                        {/* is_current toggle — only for weekly-program books */}
+                        {(course as any).in_weekly_program && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (!(course as any).is_current) {
+                                    setCurrentBook.mutate(course.id);
+                                  }
+                                }}
+                                title={(course as any).is_current ? "הספר הנוכחי" : "הגדר כספר הנוכחי"}
+                                style={{
+                                  background: "none",
+                                  border: "none",
+                                  cursor: (course as any).is_current ? "default" : "pointer",
+                                  padding: "0.2rem 0.4rem",
+                                  borderRadius: "0.375rem",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  gap: "0.25rem",
+                                  fontSize: "0.65rem",
+                                  fontWeight: 700,
+                                  color: (course as any).is_current ? "#8B6F47" : "#9CA3AF",
+                                }}
+                              >
+                                <Star
+                                  size={13}
+                                  fill={(course as any).is_current ? "#C4A265" : "none"}
+                                  color={(course as any).is_current ? "#8B6F47" : "#9CA3AF"}
+                                />
+                                {(course as any).is_current ? "נוכחי" : ""}
+                              </button>
+                            </TooltipTrigger>
+                            <TooltipContent side="top">
+                              {(course as any).is_current
+                                ? "ספר זה הוא הנוכחי — /program/weekly-chapter מנתב אליו"
+                                : "הגדר כספר הנלמד כעת — ינתב את הכניסה לתכנית אוטומטית"}
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
 
                         <div className="flex items-center gap-1" onClick={(e) => e.stopPropagation()}>
                           <Select value={course.status} onValueChange={(val) => updateCourseStatus.mutate({ id: course.id, status: val })}>

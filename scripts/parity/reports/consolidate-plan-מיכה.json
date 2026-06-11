@@ -1,0 +1,310 @@
+{
+  "book": "מיכה",
+  "book_id": "895474b3-1a1c-4693-820c-a6e645c4e853",
+  "plan": [
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000001",
+      "event_title": "מיכה פרק א",
+      "lesson_id": "a53812c9-254f-48b8-b2f8-6fc9fc5dc06b",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "מיכה פרק א",
+      "old_title": "מיהו מיכה? העמידה של הנביא על האמת גם במחיר אישי",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000001",
+      "event_title": "מיכה פרק א",
+      "lesson_id": "56daadd8-890b-4cc0-be7d-5c8f4fca8971",
+      "mode": "copy",
+      "from_series": "c4deeada-4d82-444f-a2ce-6fb53d3745cc",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר מיכה",
+      "old_title": "מיכה פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000002",
+      "event_title": "מיכה פרק ב",
+      "lesson_id": "6b7ca2fb-df8c-42fa-8201-33f67fa60555",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "מיכה פרק ב",
+      "old_title": "החמדה הגזל והעושק כראש לכל הנפילות",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000002",
+      "event_title": "מיכה פרק ב",
+      "lesson_id": "034ad11b-8111-4842-b22c-2918810b4da7",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "מיכה פרק ב",
+      "old_title": "מיכה פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000003",
+      "event_title": "מיכה פרק ג",
+      "lesson_id": "cbdcb17c-c561-4c59-9a63-74c4b83e921e",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מיכה פרק ג",
+      "old_title": "תוכחת ההווה מתוך העבר",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000003",
+      "event_title": "מיכה פרק ג",
+      "lesson_id": "2bb5eb67-28ec-459d-a1f9-b0b4369b620a",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מיכה פרק ג",
+      "old_title": "מיכה פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000004",
+      "event_title": "מיכה פרק ד",
+      "lesson_id": "e494d590-62c5-40a4-9691-b245971c8bde",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "מיכה פרק ד",
+      "old_title": "תוכחת ההווה מתוך העבר",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000004",
+      "event_title": "מיכה פרק ד",
+      "lesson_id": "994bdb2b-571c-4706-adf5-79ffb7367ab2",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "מיכה פרק ד",
+      "old_title": "גאולת ישראל גוררת את מלחמת גוג ומגוג",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000004",
+      "event_title": "מיכה פרק ד",
+      "lesson_id": "00178498-dac5-4e0a-9a93-7fa364a981cb",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "מיכה פרק ד",
+      "old_title": "פאר תחת אפר",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000004",
+      "event_title": "מיכה פרק ד",
+      "lesson_id": "0434dec0-1193-4845-9105-12d8571641a6",
+      "mode": "copy",
+      "from_series": "c4deeada-4d82-444f-a2ce-6fb53d3745cc",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר מיכה",
+      "old_title": "מיכה פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000005",
+      "event_title": "מיכה פרק ה",
+      "lesson_id": "c6aff880-bf8e-4380-b89b-891e5eae71f0",
+      "mode": "copy",
+      "from_series": "36d0a892-714d-4cdd-8dc5-9a32154e3228",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר מיכה",
+      "old_title": "גאולת ישראל גוררת את מלחמת גוג ומגוג",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000005",
+      "event_title": "מיכה פרק ה",
+      "lesson_id": "6cbf749a-2fd8-4d3d-bdef-a4f8a988c907",
+      "mode": "copy",
+      "from_series": "36d0a892-714d-4cdd-8dc5-9a32154e3228",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר מיכה",
+      "old_title": "ציפיית ה' מברואיו בתוך עשיית טובותיו",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000005",
+      "event_title": "מיכה פרק ה",
+      "lesson_id": "efe762a1-3fdd-4b9c-9f09-239aeeaf0966",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "מיכה פרק ה",
+      "old_title": "מיכה פרק ה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000005",
+      "event_title": "מיכה פרק ה",
+      "lesson_id": "a7d88ad0-839e-4457-ba71-a3a6517dd597",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "מיכה פרק ה",
+      "old_title": "התפקיד של בלעם",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000005",
+      "event_title": "מיכה פרק ה",
+      "lesson_id": "be91f209-ad30-4c5b-84d4-d68deadfac64",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "מיכה פרק ה",
+      "old_title": "החיקוי של בלעם",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000005",
+      "event_title": "מיכה פרק ה",
+      "lesson_id": "c0fd1b05-f3f4-45e4-a42a-cbd334d60e08",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "מיכה פרק ה",
+      "old_title": "תמצית התורה כולה על פי מיכה",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000006",
+      "event_title": "מיכה פרק ו",
+      "lesson_id": "28bbb460-7d16-4950-9e93-1d179e8863b2",
+      "mode": "copy",
+      "from_series": "ea50c399-ad83-42bc-bbd6-55237181fc00",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר מיכה",
+      "old_title": "ריב ה' עם ישראל בפני ההרים והגבעות",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000006",
+      "event_title": "מיכה פרק ו",
+      "lesson_id": "08513709-c2a3-4c90-b215-559c03e74b07",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "מיכה פרק ו",
+      "old_title": "מיכה פרק ו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000006",
+      "event_title": "מיכה פרק ו",
+      "lesson_id": "030f8a88-3e7c-436c-941e-e3ecefc827f7",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "מיכה פרק ו",
+      "old_title": "\"מן השטים עד הגלגל\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000006",
+      "event_title": "מיכה פרק ו",
+      "lesson_id": "7ec0b717-8af9-44b1-be8b-34e07eab5c3a",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "מיכה פרק ו",
+      "old_title": "\"ואשלח לפניך את משה, אהרן ומרים\"",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000006",
+      "event_title": "מיכה פרק ו",
+      "lesson_id": "04ad9d58-674b-4b24-84e2-74dc94481ec2",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "מיכה פרק ו",
+      "old_title": "מדוע נקבעה הפטרת בלק בנבואת מיכה?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000007",
+      "event_title": "מיכה פרק ז",
+      "lesson_id": "bc83db15-accd-4d5c-98c1-3fa905156176",
+      "mode": "copy",
+      "from_series": "36d0a892-714d-4cdd-8dc5-9a32154e3228",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר מיכה",
+      "old_title": "דברי תוכחה ונחמה לעם ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2050001-0001-4000-8000-000000000007",
+      "event_title": "מיכה פרק ז",
+      "lesson_id": "c8c9cb6b-d12e-4d52-b81f-1b9b5eeb70ec",
+      "mode": "copy",
+      "from_series": "c2050001-0001-4000-8000-000000000007",
+      "from_status": "active",
+      "from_title": "מיכה פרק ז",
+      "old_title": "מיכה פרק ז",
+      "old_rabbi": "הרב יונדב זר"
+    }
+  ],
+  "report": [
+    {
+      "event": "מיכה פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-א/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "מיכה פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-ב/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "מיכה פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-ג/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "מיכה פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-ד/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "מיכה פרק ה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-ה/",
+      "matched": 6,
+      "old_lessons": 6,
+      "unmatched": []
+    },
+    {
+      "event": "מיכה פרק ו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-ו/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "מיכה פרק ז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מיכה/מיכה-פרק-ז/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    }
+  ]
+}

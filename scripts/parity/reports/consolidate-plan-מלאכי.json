@@ -1,0 +1,172 @@
+{
+  "book": "מלאכי",
+  "book_id": "3684f720-fd9d-400e-bdb4-24343cbd51b6",
+  "plan": [
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000001",
+      "event_title": "מלאכי פרק א",
+      "lesson_id": "551c9985-768c-4864-924a-fa8d70d84d9c",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "מלאכי פרק א",
+      "old_title": "האהבה, הציפייה ותוכחת האכזבה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000001",
+      "event_title": "מלאכי פרק א",
+      "lesson_id": "53e59df8-c8ac-4637-96c6-b4321ae9f18c",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "מלאכי פרק א",
+      "old_title": "מלאכי פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000001",
+      "event_title": "מלאכי פרק א",
+      "lesson_id": "0d81d762-7043-4265-baf0-9c47e06b99eb",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "מלאכי פרק א",
+      "old_title": "ויתור על ברכת הארץ?",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000001",
+      "event_title": "מלאכי פרק א",
+      "lesson_id": "903dcc8e-0e97-4269-9aeb-d18c7e8063b8",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "מלאכי פרק א",
+      "old_title": "שנאת ה' את עשיו",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000002",
+      "event_title": "מלאכי פרק ב",
+      "lesson_id": "3d595ba0-feee-4538-b650-531d569f2209",
+      "mode": "copy",
+      "from_series": "cf4a888d-0eca-4c52-8db3-23839d4ecc08",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר מלאכי",
+      "old_title": "בגידת הברית על ידי הכהנים והעם",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000002",
+      "event_title": "מלאכי פרק ב",
+      "lesson_id": "cd48da05-ebc7-4634-aeb8-6ede3535f6ba",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "מלאכי פרק ב",
+      "old_title": "מלאכי פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "a1cdbc6d-1c29-4e23-900a-266450bc879f",
+      "mode": "move",
+      "from_series": "97a15bbe-a5f1-4bde-a468-529d96545008",
+      "from_status": "category",
+      "from_title": "מלאכי פרק  ג",
+      "old_title": "עם ישראל ישאר לנצח",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "fb72c18d-86c1-4ef8-a42f-203046e8cf3b",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מלאכי פרק ג",
+      "old_title": "דברים שרואים מכאן לא רואים משם - השכר והעונש לצדיקים ולרשעים",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "451978c5-0fb3-447d-92db-3ad59e5b2a4a",
+      "mode": "copy",
+      "from_series": "6e5c2b52-4812-4fb6-8ab4-7c7c3f4efec8",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר מלאכי",
+      "old_title": "מלאכי פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "755b4aaa-c625-48bb-8d6a-be9ac462b8e9",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מלאכי פרק ג",
+      "old_title": "למה קוראים את נבואת מלאכי בשבת שלפני פסח?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "8948fd69-ae58-4598-a025-7eabf9d37ab4",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מלאכי פרק ג",
+      "old_title": "עם ישראל ישאר לנצח ויגאל!",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "f8da4efc-d3b8-44be-884a-59d9f4d8af28",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מלאכי פרק ג",
+      "old_title": "ההתכוננות ליום ה'",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2110001-0001-4000-8000-000000000003",
+      "event_title": "מלאכי פרק ג",
+      "lesson_id": "e3500519-ef4f-4d66-9b2b-9d3f52ffa4fc",
+      "mode": "copy",
+      "from_series": "c2110001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "מלאכי פרק ג",
+      "old_title": "מנחת ירושלים מתקבלת",
+      "old_rabbi": "הרב יואב אוריאל"
+    }
+  ],
+  "report": [
+    {
+      "event": "מלאכי פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מלאכי/מלאכי-פרק-א/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "מלאכי פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מלאכי/מלאכי-פרק-ב/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "מלאכי פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/מלאכי/מלאכי-פרק-ג/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    }
+  ]
+}

@@ -134,7 +134,7 @@ export default function DesignPreviewCourseDetail() {
           <p style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMuted, marginBottom: "1.5rem" }}>
             {courseError ? "שגיאה בטעינת הקורס." : `הקורס "${slug}" לא קיים.`}
           </p>
-          <Link to="/courses" style={{ color: colors.goldDark, fontFamily: fonts.body, fontWeight: 700 }}>חזרה לקורסים</Link>
+          <Link to="/design-my-courses" style={{ color: colors.goldDark, fontFamily: fonts.body, fontWeight: 700 }}>חזרה לקורסים</Link>
         </div>
       </DesignLayout>
     );
@@ -149,7 +149,7 @@ export default function DesignPreviewCourseDetail() {
       {/* ─── Top bar ──────────────────────────────────────────────── */}
       <div dir="rtl" style={{ background: gradients.warmDark, padding: "1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-          <Link to="/courses" style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.6)", textDecoration: "none" }}>
+          <Link to="/design-my-courses" style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.6)", textDecoration: "none" }}>
             <ChevronLeft size={13} />הקורסים שלי
           </Link>
           <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.12)" }} />

@@ -105,7 +105,7 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link to="/profile" className="flex items-center gap-2">
+          <Link to="/portal" className="flex items-center gap-2">
             <UserCircle className="h-4 w-4" />
             האזור האישי
           </Link>

@@ -1,0 +1,201 @@
+{
+  "book": "יואל",
+  "book_id": "a8797de2-98f1-461f-b5f1-6b1143df5597",
+  "plan": [
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000001",
+      "event_title": "יואל פרק א",
+      "lesson_id": "f39a2024-d83c-408c-bc78-b42804fed395",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יואל פרק א",
+      "old_title": "רקע לספר יואל - מיהו יואל ומהו עברו?",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000001",
+      "event_title": "יואל פרק א",
+      "lesson_id": "98ebb117-cdf3-439e-9f7b-93d748ad2ec5",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יואל פרק א",
+      "old_title": "היין - סמל השמחה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000001",
+      "event_title": "יואל פרק א",
+      "lesson_id": "693710b4-4ae4-4dc5-bc53-ce7ab48876ba",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יואל פרק א",
+      "old_title": "הקדמה ליואל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000001",
+      "event_title": "יואל פרק א",
+      "lesson_id": "5ab2c87c-1f60-42ec-a110-4835e7d2a1ee",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יואל פרק א",
+      "old_title": "יואל פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000001",
+      "event_title": "יואל פרק א",
+      "lesson_id": "599b2a3e-2d76-4787-b34b-a9f4893dc3c8",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יואל פרק א",
+      "old_title": "צרת הארבה ותשובת מנשה על פי יואל ונחום",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000002",
+      "event_title": "יואל פרק ב",
+      "lesson_id": "57443bab-dd12-4a78-a6b0-a21f16100390",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "יואל פרק ב",
+      "old_title": "תהליך החזרה בתשובה מאהבה של עם ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000002",
+      "event_title": "יואל פרק ב",
+      "lesson_id": "10989acf-e476-47ab-9985-8cd959bad7ac",
+      "mode": "copy",
+      "from_series": "50986914-9a57-4404-8a63-bca33b2ba336",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יואל",
+      "old_title": "יואל פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000002",
+      "event_title": "יואל פרק ב",
+      "lesson_id": "57b0d910-b038-49aa-957e-ac9d2ab3cc5e",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "יואל פרק ב",
+      "old_title": "צרת הארבה ותשובת מנשה על פי יואל ונחום",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000003",
+      "event_title": "יואל פרק ג",
+      "lesson_id": "02dea258-340d-48e4-b37f-37b636ede7cd",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יואל פרק ג",
+      "old_title": "מדרגת ''ואשפוך רוחי על כל בשר'' והשלכותיה על מלחמת גוג ומגוג",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000003",
+      "event_title": "יואל פרק ג",
+      "lesson_id": "44d553d2-c488-4c75-a0a2-de7180bdbeab",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יואל פרק ג",
+      "old_title": "נבואה חלום וחזון",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000003",
+      "event_title": "יואל פרק ג",
+      "lesson_id": "72ab8529-c6d8-450f-b902-b33b48aabbc5",
+      "mode": "copy",
+      "from_series": "50986914-9a57-4404-8a63-bca33b2ba336",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יואל",
+      "old_title": "יואל פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000003",
+      "event_title": "יואל פרק ג",
+      "lesson_id": "046ee0f4-abe3-4741-a5bd-008517443f20",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יואל פרק ג",
+      "old_title": "צרת הארבה ותשובת מנשה על פי יואל ונחום",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000004",
+      "event_title": "יואל פרק ד",
+      "lesson_id": "823b3bc0-0e92-4e57-948c-5858f6d46eb2",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "יואל פרק ד",
+      "old_title": "יהודה וירושלים",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000004",
+      "event_title": "יואל פרק ד",
+      "lesson_id": "6f523e04-ba26-4d30-8ed7-f1c86ab211a4",
+      "mode": "copy",
+      "from_series": "5c5ad7ed-2b70-4656-a110-9eb76927f810",
+      "from_status": "active",
+      "from_title": "שיעורים על ספר יואל",
+      "old_title": "הנקמה שתבוא לגויים",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2010001-0001-4000-8000-000000000004",
+      "event_title": "יואל פרק ד",
+      "lesson_id": "4b9158c4-e8a5-4eac-9dd2-e2253569b5da",
+      "mode": "copy",
+      "from_series": "c2010001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "יואל פרק ד",
+      "old_title": "יואל פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    }
+  ],
+  "report": [
+    {
+      "event": "יואל פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יואל/יואל-פרק-א/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "יואל פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יואל/יואל-פרק-ב/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "יואל פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יואל/יואל-פרק-ג/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "יואל פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יואל/יואל-פרק-ד/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+node_modules/
+scripts/
+.git/
+dist/
+dist-ssr/
+build/
+*.log
+bneyzion-data/

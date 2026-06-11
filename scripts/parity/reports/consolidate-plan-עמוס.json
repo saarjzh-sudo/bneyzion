@@ -1,0 +1,456 @@
+{
+  "book": "עמוס",
+  "book_id": "9526c5b5-68ec-495f-a3ca-49ec3feb3c4a",
+  "plan": [
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000001",
+      "event_title": "עמוס פרק א",
+      "lesson_id": "a70ac2cb-222f-44e5-b8b0-65a8547436b1",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "עמוס פרק ט",
+      "old_title": "(מצגת) כיבושי ארבעת המלכים - נדידת עמים ביחס לישראל ולעמים",
+      "old_rabbi": "הרב מנחם שחור"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000001",
+      "event_title": "עמוס פרק א",
+      "lesson_id": "4d742d6c-930d-47be-b836-181e32d40784",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "עמוס פרק א",
+      "old_title": "מהות ספר עמוס מתוך הכרת מקצועו של הנביא",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000001",
+      "event_title": "עמוס פרק א",
+      "lesson_id": "ef2e3434-185e-4b9b-9b2e-1541f8fbe3c1",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "עמוס פרק א",
+      "old_title": "יציאה מהגבול - החטא שלא נסלח",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000001",
+      "event_title": "עמוס פרק א",
+      "lesson_id": "d2100762-a260-47f5-a79b-c7cb841a78c9",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "עמוס פרק א",
+      "old_title": "הקדמה לעמוס",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000001",
+      "event_title": "עמוס פרק א",
+      "lesson_id": "88e7b8a4-4186-4ab5-939a-8f255e4eb7f4",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "עמוס פרק א",
+      "old_title": "עמוס פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000002",
+      "event_title": "עמוס פרק ב",
+      "lesson_id": "f47da435-6a2c-4410-883d-d2c1cbc00463",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "עמוס פרק ג",
+      "old_title": "הביקורת על חוסר האחווה של ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000002",
+      "event_title": "עמוס פרק ב",
+      "lesson_id": "434cec5a-8918-4dc6-810f-0f66edd0ab15",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "עמוס פרק ב",
+      "old_title": "עמוס פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000002",
+      "event_title": "עמוס פרק ב",
+      "lesson_id": "81c8bee9-b756-413b-9433-7cd90c9baf2a",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "עמוס פרק ב",
+      "old_title": "ההשלכות של מכירת יוסף",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000002",
+      "event_title": "עמוס פרק ב",
+      "lesson_id": "67731a6e-8523-4fa4-8c67-f54d85c90c64",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "עמוס פרק ב",
+      "old_title": "ה' מספר הכל לנביאים",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000002",
+      "event_title": "עמוס פרק ב",
+      "lesson_id": "a252e5df-1224-4b50-84d7-9aab27c4876e",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "עמוס פרק ב",
+      "old_title": "ההבדל בין ישראל לעמים לאורך ספר עמוס",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000003",
+      "event_title": "עמוס פרק ג",
+      "lesson_id": "bed0a360-48a6-4052-8cfc-8ec335d9133b",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "עמוס פרק ב",
+      "old_title": "הביקורת על חוסר האחווה של ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000003",
+      "event_title": "עמוס פרק ג",
+      "lesson_id": "2b6d1e15-f8f6-4eb4-b6c9-81062de7416d",
+      "mode": "copy",
+      "from_series": "98f2d8bd-ec37-430f-a883-f9657ce95773",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר עמוס",
+      "old_title": "בקשת העם מהנביא להפסיק להתנבא",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000003",
+      "event_title": "עמוס פרק ג",
+      "lesson_id": "f69d460a-47bd-47b1-a3ef-bac46d312758",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "עמוס פרק ג",
+      "old_title": "עמוס פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000004",
+      "event_title": "עמוס פרק ד",
+      "lesson_id": "2cfb93ba-5973-47b1-8409-be508a85427d",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "עמוס פרק ד",
+      "old_title": "פרות הבשן - חטא הנהנתנות והעושק במסדרונות הממשל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000004",
+      "event_title": "עמוס פרק ד",
+      "lesson_id": "8b0b8a4a-6d3f-47c3-9fb0-69bc65015fcd",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "עמוס פרק ד",
+      "old_title": "פרות הבשן",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000004",
+      "event_title": "עמוס פרק ד",
+      "lesson_id": "b7170b63-f27b-4acc-9968-aa258f260e73",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "עמוס פרק ד",
+      "old_title": "עמוס פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000005",
+      "event_title": "עמוס פרק ה",
+      "lesson_id": "2a58eda5-1dfa-4812-995e-627ebb02affc",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000005",
+      "from_status": "active",
+      "from_title": "עמוס פרק ה",
+      "old_title": "אין תקנה למלכות ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000005",
+      "event_title": "עמוס פרק ה",
+      "lesson_id": "f39f328e-7398-42ea-86e2-291d318b1f96",
+      "mode": "copy",
+      "from_series": "98f2d8bd-ec37-430f-a883-f9657ce95773",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר עמוס",
+      "old_title": "קינה על עם ישראל",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000005",
+      "event_title": "עמוס פרק ה",
+      "lesson_id": "0087a41c-7a38-4f22-b2d3-6de0b3b1226e",
+      "mode": "copy",
+      "from_series": "7816f311-bbed-4fe8-95da-ddc47eb1203d",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר עמוס",
+      "old_title": "עמוס פרק ה",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000006",
+      "event_title": "עמוס פרק ו",
+      "lesson_id": "7509719a-267c-45d4-8560-e486567157e9",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "עמוס פרק ו",
+      "old_title": "תוכחת יהודה ביחסם לגלות ישראל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000006",
+      "event_title": "עמוס פרק ו",
+      "lesson_id": "c2cc1aa9-40a0-4a6a-9504-342fd76c13c3",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "עמוס פרק ו",
+      "old_title": "רצון ה' לענישה כללית ותפילת עמוס לענישה פרטית",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000006",
+      "event_title": "עמוס פרק ו",
+      "lesson_id": "5a66b0a8-334f-4117-add4-39ee4b54dd82",
+      "mode": "copy",
+      "from_series": "98f2d8bd-ec37-430f-a883-f9657ce95773",
+      "from_status": "active",
+      "from_title": "שיעורים - ספר עמוס",
+      "old_title": "ירושלים ושומרון",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000006",
+      "event_title": "עמוס פרק ו",
+      "lesson_id": "223f9f60-4950-45a3-8839-c61d33fcef0b",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000006",
+      "from_status": "active",
+      "from_title": "עמוס פרק ו",
+      "old_title": "עמוס פרק ו",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000007",
+      "event_title": "עמוס פרק ז",
+      "lesson_id": "477b38b6-0486-4219-ac57-db34a3e264db",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000007",
+      "from_status": "active",
+      "from_title": "עמוס פרק ז",
+      "old_title": "הרצון לסתום את פיו של עמוס",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000007",
+      "event_title": "עמוס פרק ז",
+      "lesson_id": "a38d2648-c630-497c-a4e8-e81ed2490484",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000007",
+      "from_status": "active",
+      "from_title": "עמוס פרק ז",
+      "old_title": "סלח נא",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000007",
+      "event_title": "עמוס פרק ז",
+      "lesson_id": "66e598f4-9158-450a-915a-77307ed5aed8",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000007",
+      "from_status": "active",
+      "from_title": "עמוס פרק ז",
+      "old_title": "עמוס פרק ז",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000008",
+      "event_title": "עמוס פרק ח",
+      "lesson_id": "8127b66a-15f0-4151-b7b8-7190d8126ca1",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000008",
+      "from_status": "active",
+      "from_title": "עמוס פרק ח",
+      "old_title": "הנבואה שחותמת את גזר דין הגלות",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000008",
+      "event_title": "עמוס פרק ח",
+      "lesson_id": "1a98a46d-643e-4e59-8276-96ce672dc060",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000008",
+      "from_status": "active",
+      "from_title": "עמוס פרק ח",
+      "old_title": "עמוס פרק ח",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "80f9e99d-a086-4179-863c-3fda4a6eb46a",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "עמוס פרק א",
+      "old_title": "(מצגת) כיבושי ארבעת המלכים - נדידת עמים ביחס לישראל ולעמים",
+      "old_rabbi": "הרב מנחם שחור"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "c95b00a0-58aa-4a48-9e4c-14dc1e66824f",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "עמוס פרק ט",
+      "old_title": "פסוקי הנחמה בעמוס",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "077dfcad-2aed-407d-9e63-3981315551d7",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "עמוס פרק ט",
+      "old_title": "גלות השכינה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "887ad3e8-d539-4c8d-a168-a141036f0bc4",
+      "mode": "copy",
+      "from_series": "7816f311-bbed-4fe8-95da-ddc47eb1203d",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר עמוס",
+      "old_title": "עמוס פרק ט",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "2f872f02-4da2-406f-88e8-16485d7e5066",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "עמוס פרק ט",
+      "old_title": "קדושים בכל מצב",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "544744bf-e895-4776-9e20-ae76af83a227",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "עמוס פרק ט",
+      "old_title": "ישראל כבני כושיים?!",
+      "old_rabbi": "הרב יואב אוריאל"
+    },
+    {
+      "event_id": "c2020001-0001-4000-8000-000000000009",
+      "event_title": "עמוס פרק ט",
+      "lesson_id": "9542f474-75d2-46d0-bcfe-25caafdfba50",
+      "mode": "copy",
+      "from_series": "c2020001-0001-4000-8000-000000000009",
+      "from_status": "active",
+      "from_title": "עמוס פרק ט",
+      "old_title": "הגאולה היא בלתי הפיכה!",
+      "old_rabbi": "הרב יואב אוריאל"
+    }
+  ],
+  "report": [
+    {
+      "event": "עמוס פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-א/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ב/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ג/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ד/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ה",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ה/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ו",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ו/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ז",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ז/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ח",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ח/",
+      "matched": 2,
+      "old_lessons": 2,
+      "unmatched": []
+    },
+    {
+      "event": "עמוס פרק ט",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/עמוס/עמוס-פרק-ט/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    }
+  ]
+}

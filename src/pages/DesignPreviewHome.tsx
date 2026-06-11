@@ -148,7 +148,7 @@ function DesignNavBar() {
                     <div style={{ fontSize: "0.85rem", color: TEXT_DARK, fontWeight: 600 }}>{displayName}</div>
                     <div style={{ fontSize: "0.72rem", color: TEXT_MUTED, marginTop: 2 }}>{user.email}</div>
                   </div>
-                  <button onClick={() => { setMenuOpen(false); navigate("/profile"); }}
+                  <button onClick={() => { setMenuOpen(false); navigate("/portal"); }}
                     style={{ display: "block", width: "100%", textAlign: "right",
                              padding: "0.6rem 1rem", border: "none", background: "transparent",
                              color: TEXT_DARK, fontSize: "0.82rem", cursor: "pointer" }}>

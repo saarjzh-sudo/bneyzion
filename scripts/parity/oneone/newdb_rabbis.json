@@ -1,0 +1,2142 @@
+[
+ {
+  "id": "0104ccd7-2814-47fc-a397-682b2254ba7d",
+  "name": "הרב צפניה דרורי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "tzpnyh-drvry",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "02dfa84d-1a8f-4454-8ef7-c82a7a6defd5",
+  "name": "הרב גי'אמי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 124,
+  "slug": "jiami",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "03dea711-7cb7-4720-be1e-042d83577bee",
+  "name": "הרבנית רחלי מונדשיין (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "rchly-mvndshyyn",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "04b3f54f-a91a-4054-a8b0-887f8faaec07",
+  "name": "הרב טוביה לפשיץ",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 178,
+  "slug": "tovia-lapshitz",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "06a6954f-b65b-4fa4-ae1d-5ea643faff10",
+  "name": "הרב אלחנן בן נון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 33,
+  "slug": "elchanan-ben-nun",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "06cafb42-023b-4491-926e-74ae5dee8b88",
+  "name": "הרב חנניה מלכה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 261,
+  "slug": "chanania-malka",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "0aa03897-79ce-4016-aaf8-72c090b0ea60",
+  "name": "הרב יהושע שפירא",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 177,
+  "slug": "yehoshua-shapira",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "0ae09e02-2089-4a99-a1d5-8a6b0a503f81",
+  "name": "הרב שמעון לוי והרב נתן מולאיוף",
+  "entity_type": "rabbi",
+  "status": "hidden",
+  "lesson_count": 419,
+  "slug": "rav-shimon-levi-natan-mulaof",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "103442a2-5724-44cf-94f3-9ba75a342aec",
+  "name": "הרב שמעון כהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 97,
+  "slug": "shimon-cohen",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "11087a99-ce82-4297-ac6e-881a700b00e9",
+  "name": "הרב יצחק בן ישראל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 13,
+  "slug": "ytzchk-bn-yshral",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "12bf37dd-1e71-43bf-a369-14ac93384bfa",
+  "name": "הרב אופיר כהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "avpyr-khn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "1371e495-c30b-44f5-b3d7-8b3d08f4ca75",
+  "name": "הרב חסדאי בר אור",
+  "entity_type": "rabbi",
+  "status": "published",
+  "lesson_count": 292,
+  "slug": "חסדאי-בר-אור",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "13905f4d-590d-4ca8-bb48-372ac15186e9",
+  "name": "הרב גדי הרלינג",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "gdy-hrlyng",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "13a134db-1268-45b3-9870-1fd79a2ba490",
+  "name": "הרב טוביה אריאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 13,
+  "slug": "tvbyh-aryal",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "167ed180-6ced-45af-b5d7-e97a916fa93a",
+  "name": "הרב אשי בלייכר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 304,
+  "slug": "הרב-אשי-בלייכר-167ed180",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "177c7a79-ece0-467f-9360-103b25ece1f2",
+  "name": "הרב אורן טרבלסי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "avrn-trblsy",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "1acd517c-1e18-4bdc-a18e-0ecf5924e50f",
+  "name": "הרב אברהם וסרמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 21,
+  "slug": "abrhm-vsrmn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "1b8d2627-f1ce-49a0-bdca-bef3cc0f13b8",
+  "name": "הרב יוסף הורוביץ",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 157,
+  "slug": "yosef-horovitz",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "1be980e3-a688-47aa-9eaf-adfa23b105b6",
+  "name": "מכון דעת סופרים",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 398,
+  "slug": "מכון-דעת-סופרים-1be980e3",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "1e46fe39-8488-4c69-a7de-63e8cd295729",
+  "name": "הרב שמואל ישמח",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 12,
+  "slug": "shmval-yshmch",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "1f1815e8-c20c-4b49-997f-f62927ae7a07",
+  "name": "הרב מנחם מן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "mnchm-mn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "1f347997-d999-4250-987e-a7ae619b15a2",
+  "name": "הרבנית חגית אלרן (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "chgyt-alrn",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "1f51f188-3d0b-45b4-9c93-55d32e67ca3e",
+  "name": "הרב מאיר נאמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "mayr-namn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "200cc932-cb41-4be8-bf7a-d7f0ed96ede6",
+  "name": "הרב יהודה סדן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "yhvdh-sdn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "205bdd49-2c88-4fbb-8df0-bd961861e298",
+  "name": "הרב ברוך סליי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 78,
+  "slug": "baruch-seley",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "21815917-0c20-4ad2-b6ab-3943956c9a55",
+  "name": "הרב מנחם אליהו",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 287,
+  "slug": "mnchm-alyhv",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "274f4480-cc34-4331-842e-138c2e1f6175",
+  "name": "מערכת בני ציון",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 158,
+  "slug": "maarechet-bnei-zion",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "2754844c-8149-4c50-922a-331664b4124e",
+  "name": "הרב יוסף שילר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 182,
+  "slug": "yosef-shiler",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "277e3084-aaff-44e6-a83a-5facf893607e",
+  "name": "הרב שלמה אבינר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 170,
+  "slug": "shlomo-aviner",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "27e770f5-cf5f-4dd5-8a72-a59d45c546c6",
+  "name": "הרב מיכאל טוביאנו",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 12,
+  "slug": "mykal-tvbyanv",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "2ca95063-4e0b-4756-a8e1-1a83fb0118e9",
+  "name": "הרב ארי לנדא",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 6,
+  "slug": "ary-lnda",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "330639b2-b447-41d8-a3e5-e9f14d677a38",
+  "name": "הרב דוד טורנר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "dvd-tvrnr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "33865aa7-c9a6-4166-ae07-47466ec92e9f",
+  "name": "הרב אליעזר קשתיאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 611,
+  "slug": "eliezer-kashtiel",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "34ef8dae-5352-4dfe-9887-ab7c3b8bcdd8",
+  "name": "הרב אריק אוריאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 133,
+  "slug": "arik-uriel",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "356f3470-86cf-4da4-8c34-ba76370ebe4d",
+  "name": "הרב יונתן לוי",
+  "entity_type": "rabbi",
+  "status": "published",
+  "lesson_count": 293,
+  "slug": "יונתן-לוי",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "38d9893b-6250-40fa-9d97-8066391f0ca6",
+  "name": "הרב מתניה ידיד",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "mtnyh-ydyd",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "38f96d08-5a07-4669-96fe-d806627cc1bd",
+  "name": "הרב משה הגר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "mshh-hgr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "3a3eac56-4546-4803-9d38-1fceb0c1452d",
+  "name": "הרב יהונתן מיכאלי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 309,
+  "slug": "yehonatan-michaeli",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "3a54e4e3-4b11-4cb8-bda5-21902ea81b40",
+  "name": "הרב אביעד תפוחי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "abyd-tpvchy",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "3b77b33d-65e4-43a1-92bd-534f45ff9392",
+  "name": "הרב צבי הירש קלישר זצ\"ל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 42,
+  "slug": "tzby-hyrsh-klyshr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "3ca3c8b7-c061-4997-82dc-50f81e738e2a",
+  "name": "הרב צבי קוסטינר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 6,
+  "slug": "tzby-kvstynr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "3da1df9d-4ed5-48ba-9ffa-e3c5271d40e1",
+  "name": "הרב עמירם אלבה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 368,
+  "slug": "amiram-alva",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "44abc5d4-1cac-4c62-8259-c5e719b83abc",
+  "name": "הרב דוד הוברפלד",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "dvd-hvbrpld",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "44dcb2cc-b408-457f-92e6-08f6340e33ad",
+  "name": "הרב יוסף קלנר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 28,
+  "slug": "yvsp-klnr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "46366d84-b0c2-4917-8362-d3acf1d30b76",
+  "name": "הרב נועם אליצור",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "nvm-alytzvr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "47569464-d3c7-4e9d-93c5-8ceaebdb031f",
+  "name": "הרב יורם אליהו",
+  "entity_type": "rabbi",
+  "status": "published",
+  "lesson_count": 288,
+  "slug": "יורם-אליהו",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "479caee9-502f-4e5a-a2c9-08364968aab9",
+  "name": "הרב יעקב יצחק הלוי רודרמן זצ\"ל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 142,
+  "slug": "ykb-ytzchk-hlvy-rvdrmn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "4822f2bb-9d1c-4adc-9554-d2a2db7bdbc8",
+  "name": "הרב מנחם שחור",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 215,
+  "slug": "menachem-shachor",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "48460b4e-a597-43ad-b8fb-fce8bcd7e858",
+  "name": "הרב רפאל למפרט",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "rpal-lmprt",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "4a12bee1-429c-4db5-a0d8-1c933eb96696",
+  "name": "הרב יחזקאל קופלד",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 31,
+  "slug": "ychzkal-kvpld",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "4d3e31bc-420c-4d24-8a20-bbc181e55a9c",
+  "name": "הרב ברק עוקבי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "brk-vkby",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "4dc6c4a3-ebe3-43e5-b8d7-6d565be405eb",
+  "name": "הרב נתן רוטמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 53,
+  "slug": "natan-rotman",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "52a4aa8b-fff0-421b-85c1-70e03d6e8993",
+  "name": "הרב מנחם בורשטיין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "mnchm-bvrshtyyn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "52b071b1-8ab5-4ca3-a8ce-900eceec590c",
+  "name": "הרב אלעזר נאה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 37,
+  "slug": "elazar-nae",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "52c215fe-b60e-42b6-a5ce-feb1703f65cd",
+  "name": "הרב יוסף מילר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 20,
+  "slug": "yvsp-mylr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "53089efa-5913-40ed-a530-f6e47a5c10c2",
+  "name": "הרבנית נורית גאל דור (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 16,
+  "slug": "nvryt-gal-dvr",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "58096c73-c03b-4bc9-91e1-11259bfe7792",
+  "name": "הרב דוד אמיתי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "dvd-amyty",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "5af49987-719c-4c36-a4fb-e88dcde11161",
+  "name": "הרב יהושע צוקרמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 6,
+  "slug": "yhvsh-tzvkrmn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "5f7c6551-76fc-410f-b838-7c0d57ce7972",
+  "name": "הרב אלישע וישליצקי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 7,
+  "slug": "alysh-vyshlytzky",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6001d928-dc8c-4e0f-bc24-0f05fcc6203a",
+  "name": "הרב איתיאל אמיתי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "aytyal-amyty",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "62db3ad6-731b-4463-85d3-eb2424cbde57",
+  "name": "הרב אלי אדלר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 54,
+  "slug": "eli-adler",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "648b46f4-8578-46bb-a601-c551c718dc3e",
+  "name": "הרב דודי מתוקי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "dvdy-mtvky",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "678c4f71-1e70-4444-9046-3b79182294e2",
+  "name": "הרב צבי שוויגר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 84,
+  "slug": "zvi-shvaiger",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6806733c-9606-466e-b48e-68946fdaa671",
+  "name": "הרב דוב ביגון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "dvb-bygvn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6948b005-8390-45f0-b14b-7ede0f05c671",
+  "name": "הרב לייב מינצברג",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 17,
+  "slug": "lyyb-myntzbrg",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6b6e048d-cee2-4214-af04-f50528658fd1",
+  "name": "פרופ' דבורה רוזנווסר (לנשים)",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "prof-dvora-rozenwaser",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6bcd10bd-b127-4ff0-8f2c-b2f2b98efbea",
+  "name": "הרב אילן אלפונטה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "ayln-alpvnth",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6c7db943-6918-4761-9097-1b2e48000a10",
+  "name": "הרבנית נעמי שפירא (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "nmy-shpyra-2",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "6e2327b3-735a-45d6-abec-b1c4f1ec3209",
+  "name": "הרב דרור אריה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "drvr-aryh",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6e709b09-2a24-445d-94ad-6aa7f593b6df",
+  "name": "הרב חיים דרוקמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 13,
+  "slug": "chyym-drvkmn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "6f4b2572-b019-4832-9547-de7e8bc6d909",
+  "name": "ושננתם - אוצר התורה",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 1004,
+  "slug": "veshinantam-otzar-hatorah",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "71aa933c-5548-4ea7-8be0-dfb659202660",
+  "name": "הרב מאיר הילביץ'",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 92,
+  "slug": "meir-hilvitz",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "723c69b7-a119-42f5-9684-c4a05388475a",
+  "name": "הרב אס\"ף בנדל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "asp-bndl",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "73fd07b7-4fbe-49b7-87b1-0da37ae5dfee",
+  "name": "הרב אליהו דסלר זצ\"ל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "alyhv-dslr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "7443c208-f2f2-42f5-bf05-af2554855fbd",
+  "name": "הרב יהודה בשושה",
+  "entity_type": "rabbi",
+  "status": "published",
+  "lesson_count": 69,
+  "slug": "יהודה-בשושה",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "744da303-22be-4062-a822-4ba8e8f1b02d",
+  "name": "הרב עמנואל בן ארצי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 537,
+  "slug": "emanueal-ben-artzi",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "75254424-9675-47ec-a934-ff086c6f7f47",
+  "name": "הרב חן חלמיש",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "chn-chlmysh",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "75614e8d-32d5-43c8-bbe5-444702e961df",
+  "name": "הרב גדי שלוין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "gdy-shlvyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "7658e8ac-a4c5-4c1d-80dd-3f8070f2a742",
+  "name": "הרב דרור טוויל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 202,
+  "slug": "dror-tvil",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "776ac9f7-577c-489a-8522-3a41d3c94e04",
+  "name": "הרב חננאל אתרוג",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 115,
+  "slug": "chananel-etrog",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "7a570390-7995-4bac-98a6-15efa87f9c7a",
+  "name": "הרב חיים סבתו",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "chyym-sbtv",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "7a9524c6-fa70-42af-8e15-d39750fd34d6",
+  "name": "הרב יאיר הס",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 20,
+  "slug": "yayr-hs",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "7fcd7014-5eef-4e9b-b792-e6460d75e720",
+  "name": "ישקו העדרים",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 387,
+  "slug": "yishko-hadarim",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "80cca8ce-f10c-4ee0-a2b0-63d49c1ed57c",
+  "name": "סיוון רהב-מאיר (לנשים בלבד)",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "sivan-rahav-meir",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "80fefb33-e324-4eee-9e47-0502724ae149",
+  "name": "הרב גדי שר שלום",
+  "entity_type": "rabbi",
+  "status": "published",
+  "lesson_count": 288,
+  "slug": "גדי-שר-שלום",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "81e9d9d2-7e99-4b4c-aab0-e4300f3d4fde",
+  "name": "הרב יהושע מגנס",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "yhvsh-mgns",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "8269f8b6-08ca-4510-840b-f3689216c257",
+  "name": "הרב יחזקאל כהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 9,
+  "slug": "ychzkal-khn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "8301fc29-5cb9-4476-93ab-af9fa8aea58c",
+  "name": "הרב מנחם בורשטין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 9,
+  "slug": "mnchm-bvrshtyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "86dd0d3d-1c51-4728-8c86-3ca5461553db",
+  "name": "הרב שמואל אליהו",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 38,
+  "slug": "shmuel-eliyahu",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "87411a99-c469-4300-8e2d-74e81a8aaadb",
+  "name": "הרב מנחם אהור",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "mnchm-ahvr",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "8866dfed-392d-4912-bcda-a8d6754c6887",
+  "name": "הרב אריה מרזר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "aryh-mrzr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "886d3045-8262-4e47-ba07-9d3f4d25893b",
+  "name": "הרב אלי פרידמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "aly-prydmn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "8923c7a2-b4d4-4a3f-a38b-534e1bb26606",
+  "name": "הרב מנחם לוי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "mnchm-lvy",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "8a709507-b4ac-4d45-9051-9e4e6bdeb856",
+  "name": "הרב דן בארי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 740,
+  "slug": "dan-bari",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "8c386317-623c-46fa-a28b-f436c6ab2c71",
+  "name": "הרב חגי לונדין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 15,
+  "slug": "chgy-lvndyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "8e80e5c2-58d6-4f99-81b0-7432ffefd050",
+  "name": "הרב עדי איצקוביץ",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "הרב-עדי-איצקוביץ",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "8fba6175-4dd7-4be4-9446-c7f375728949",
+  "name": "הרב אהרון קוטלר זצ\"ל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "ahrvn-kvtlr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "905cca79-9bcf-42ba-829a-ec3b9e907167",
+  "name": "הרב ראובן ששון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "reuven-sasson",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "90ec036a-c87b-4cbe-9fbf-9df0d2aded6c",
+  "name": "הרבנית אחינועם ברקו (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "achynvm-brkv",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "9135d874-b42b-4952-b7c6-97f0fb7fbfe6",
+  "name": "הרב יהודה קופרמן זצ\"ל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 113,
+  "slug": "yehuda-kuperman",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "9244511d-a2b2-4d0c-a097-b52595990c69",
+  "name": "הרב יוסף אטון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 10,
+  "slug": "yvsp-atvn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "92f3c15f-750a-438c-9413-7edeb50e754b",
+  "name": "הרב קובי דביר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 11,
+  "slug": "kvby-dbyr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "954bb8a5-4536-4468-8481-9197b434417c",
+  "name": "הרבנית עידית איצקוביץ' (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "ydyt-aytzkvbytz",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "97d20921-c6b2-47f4-96a7-97e6dcaddfbf",
+  "name": "הרב עקיבא קשתיאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "kyba-kshtyal",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "98af6a27-12db-4e4a-867e-c03e92e8445c",
+  "name": "הרב דוד ג'יאמי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 40,
+  "slug": "david-jiami",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "9985d06a-0dd2-4314-85f2-6610993ceb32",
+  "name": "הרבנית יפה מגנס (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "yph-mgns-2",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "99ed0fc4-7174-42ce-8411-58e861149f44",
+  "name": "הרב יהונתן פוזן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "yhvntn-pvzn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "99f94412-7f26-4699-af2f-eb97f75b2105",
+  "name": "הרב עידו רוזנטל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "ydv-rvzntl",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "9bb528c0-94c9-4f6c-aa59-4990af66cb4e",
+  "name": "הרב לוי סודרי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 106,
+  "slug": "levi-sudri",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "9f357f02-5557-4dba-a941-fdb1ef681f4a",
+  "name": "הרב מאיר גרשונזון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "הרב-מאיר-גרשונזון-9f357f02",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "9f93561f-45d9-4055-96de-5bba915ea1b4",
+  "name": "הרבנית בת שבע אליהו (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "bt-shb-alyhv",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "name": "הרב שמעון לוי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 48,
+  "slug": "shmvn-lvy",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "9fb9a5b1-8318-4a18-af93-268c4fa3698c",
+  "name": "הרב עדיאל לוי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 31,
+  "slug": "adiel-levi",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "a004d473-6b88-4237-b66c-fb2146bcbfdd",
+  "name": "הרב אהרן בן גרשון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 9,
+  "slug": "ahrn-bn-grshvn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "a1a4fa3e-b4e4-4774-aa55-0f248e627d5b",
+  "name": "הרבנית נעמה אתרוג (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "nmh-atrvg",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "a1a6925b-64c4-4cfe-a6a7-9daaddbfe7d8",
+  "name": "הרב שלמה מונדשיין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 20,
+  "slug": "shlmh-mvndshyyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "a1b2c3d4-1111-4444-aaaa-111111111111",
+  "name": "אוריה כראדי",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "oria-keradi",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "a2059c69-f0e1-442d-a38c-8ec5d4b91ee0",
+  "name": "הרב אוהד תירוש",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 211,
+  "slug": "ohad-tirosh",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "a24c2f68-2381-4965-a03c-5958ffc163ca",
+  "name": "כל הרבנים",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "kol-harabanim",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "a2bbca4b-30ba-4362-995c-50d727589545",
+  "name": "הרב רמי גליקשטיין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 16,
+  "slug": "rmy-glykshtyyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "a43e5133-5987-4065-86f2-cf22ff4c6f90",
+  "name": "הרבנית גילה שרים (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "gylh-shrym",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "a5480276-3dcc-4423-84f7-4ef305c63d15",
+  "name": "הרבנית עידית שילה (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "ydyt-shylh",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "a5c3d9ec-a8fb-49e4-bc54-f266156ec6f4",
+  "name": "הרב אבי סמוטריץ'",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "aby-smvtrytz",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "a90410a1-89e7-4e0e-b93d-0e132768bbbf",
+  "name": "הרב קלמן בר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "klmn-br",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "ac592618-3115-4d39-be84-f68edb4a5e8e",
+  "name": "הרב אשר חלפון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 12,
+  "slug": "ashr-chlpvn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "acd34d0f-1288-47b8-9e8e-38e69599c294",
+  "name": "הרב יואב אוריאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 882,
+  "slug": "yoav-uriel",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "acede66e-8b83-4abd-b737-ac9c79e1b119",
+  "name": "הרב מרדכי קופרמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "mrdky-kvprmn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "ad1e342e-30a8-43b7-9c91-e5660402e3a5",
+  "name": "הרב מישאל רובין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 23,
+  "slug": "myshal-rvbyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "afb0d3c5-4447-40c5-ac3e-2fc41716360c",
+  "name": "הרב יצחק בן שחר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 236,
+  "slug": "yitzhak-ben-shachar",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000001",
+  "name": "הרבנית ורדית אביחי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "vrdyt-abychy-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000002",
+  "name": "הרבנית חגית אלון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "chgyt-alvn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000003",
+  "name": "הרבנית תהילה הרץ",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "thylh-hrtz-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000004",
+  "name": "הרבנית יפה מגנס",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "yph-mgns",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000005",
+  "name": "הרבנית רחלי מונדשטיין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "rchly-mvndshtyyn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000006",
+  "name": "הרבנית דניאלה ון-דייק",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "dnyalh-vn-dyyk",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000007",
+  "name": "רותי שפירא - ד\"ר",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "ruti-shapira",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000008",
+  "name": "הרבנית נעמי שפירא",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "nmy-shpyra",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000009",
+  "name": "הרבנית ברוריה בן שחר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "brvryh-bn-shchr-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000010",
+  "name": "הרבנית גילה שרים",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "gylh-shrym-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000011",
+  "name": "הרבנית דינה ראף",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "dynh-rap-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000012",
+  "name": "הרבנית נורית גאל דור",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "nvryt-gal-dvr-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000013",
+  "name": "הרבנית בת שבע יוסיפון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "bt-shb-yvsypvn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b1010001-0001-4000-8000-000000000014",
+  "name": "הרב נחום נריה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "nchvm-nryh-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b28770d5-1504-46ad-8613-3c3ca37a641c",
+  "name": "הרב חגי ולוסקי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 296,
+  "slug": "chagai-velosski",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "b2c3d4e5-2222-4444-bbbb-222222222222",
+  "name": "סידור שים שלום",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "sidur-sim-shalom",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b545bcbd-97a8-482e-a69f-6b7e1ed3c939",
+  "name": "הרב יהונתן עידן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 42,
+  "slug": "yehonatan-idan",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "b5555555-5555-5555-5555-555555555555",
+  "name": "תלמוד תורה מורשה",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 397,
+  "slug": "talmud-torah-morasha",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "b5f822f8-22e3-49fb-bad9-b262bab3bd75",
+  "name": "הרב עמוס קליגר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "mvs-klygr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "bc6e5c0b-2465-4ed1-9de6-1fc28250c387",
+  "name": "הרבנית בת שבע יוסיפון (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "bt-shb-yvsypvn-2",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "be153d0e-b68e-4704-a108-56f5af7d0ca9",
+  "name": "הרב איתן שנדורפי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 775,
+  "slug": "etan-shandorfi",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "be9d2c21-7e47-4dcb-9c1d-daf85877d63f",
+  "name": "הרבנית דניאלה ון-דייק (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "dnyalh-vn-dyyk-2",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "bf5948a7-d84a-4dff-b488-2646b378d4f3",
+  "name": "הרב יהושע ון-דייק",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 13,
+  "slug": "yhvsh-vn-dyyk",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "bf93edb7-8845-4a95-b13c-d2bc237ddb8a",
+  "name": "הרב יעקב אפשטיין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 9,
+  "slug": "ykb-apshtyyn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "c0999db2-4cb5-4ebf-bbca-b75427839a5f",
+  "name": "הרב משה שטרנברג",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "mshh-shtrnbrg",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "c0da1cd2-63ea-4c4b-ae14-004168209bbb",
+  "name": "הרב אריה אוריאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 11,
+  "slug": "aryh-avryal",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "c1f5a0d9-6727-48a3-9ab7-86cc493ffdb9",
+  "name": "הרב צבי לבנברג",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "tzby-lbnbrg",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "c25c124d-752a-42f7-ba5f-39fc391f2e44",
+  "name": "הרבנית שיפי גולדשטיין (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "shypy-gvldshtyyn",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "c3d4e5f6-3333-4444-cccc-333333333333",
+  "name": "הרב ידידיה שילה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "ydydyh-shylh",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "c61c9582-5f5f-4b63-ac8d-8bb18aafb9c5",
+  "name": "הרב אריאל כהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "aryal-khn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "c77f633b-162e-4128-b7a6-d1fdf30d4748",
+  "name": "הרה\"ג הרב דוד לאו",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "dvd-lav-2",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "cc169a16-6fac-4da9-915c-b484c7b24b11",
+  "name": "הרב דוד חי הכהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 7,
+  "slug": "dvd-chy-hkhn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "cc5b9459-774b-4a10-b65b-4d8f6d9d49c9",
+  "name": "הרב דוד לאו",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "dvd-lav",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "cdb6545e-ce50-4e10-a544-2fa57d57ddff",
+  "name": "הרב שלמה יוסף ויצן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "shlmh-yvsp-vytzn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d149c8bb-2c74-42ca-b28d-a6aeba4e41bf",
+  "name": "הרב יואל מנוביץ'",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 38,
+  "slug": "yoel-manowitz",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d34528da-ee89-433e-a059-874a653fea78",
+  "name": "הרב אלישב אביחיל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 9,
+  "slug": "alyshb-abychyl",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d4e5f6a7-4444-4444-dddd-444444444444",
+  "name": "הרב שלמה כץ",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 336,
+  "slug": "shlmh-ktz",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "d4e5f6a7-5555-5555-eeee-555555555555",
+  "name": "מחבר לא ידוע",
+  "entity_type": "content_creator",
+  "status": "hidden",
+  "lesson_count": 5,
+  "slug": "mechaber-lo-yadua",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "d4e5f6a7-6666-6666-ffff-666666666666",
+  "name": "הרב שמעון שוהם",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 347,
+  "slug": "shmvn-shvhm",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "d5e60001-0001-4000-8000-000000000001",
+  "name": "הרב איתן טוקר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "aytn-tvkr",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "d6666666-6666-6666-6666-666666666666",
+  "name": "הרב ניסים כהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 318,
+  "slug": "nysym-khn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d67b0194-efcd-45a1-a04b-3cf1b8ceb9bc",
+  "name": "הרב אסף שטראוס",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "asp-shtravs",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d68b38ad-fd70-47d3-b667-20f68af6d8c4",
+  "name": "הרב יוסי ברינר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 9,
+  "slug": "yvsy-brynr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+  "name": "הרב יונדב זר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1139,
+  "slug": "yondav-zer",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "d80ccef5-c33b-4bd0-8367-0c3ebbb123a7",
+  "name": "הרבנית דנה סליי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "dnh-slyy-2",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "d81a67ab-3da1-478d-8fff-8a7c190ac0d1",
+  "name": "הרב יעקב אריאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 30,
+  "slug": "yaakov-ariel",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "da074c0f-eda5-42f5-85b0-4202a5a8449b",
+  "name": "הרב אריאל בראלי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "aryal-braly",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "dcb63ace-ad6a-494f-ba95-365d680cb22b",
+  "name": "הרבנית דנה סליי (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 8,
+  "slug": "dnh-slyy",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "dd10db16-faaf-457a-82cb-49590864e29a",
+  "name": "הרב יעקב ידיד",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 125,
+  "slug": "yaakov-yadid",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111101",
+  "name": "הרב דביר אפלבוים",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 312,
+  "slug": "dbyr-aplbvym",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111102",
+  "name": "הרב עדי איצקוביץ'",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 184,
+  "slug": "dy-aytzkvbytz",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111103",
+  "name": "נתן מארגל",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 344,
+  "slug": "natan-margel",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111104",
+  "name": "הרב עמוס נתנאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 10,
+  "slug": "mvs-ntnal",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111105",
+  "name": "הרב אורי שטמלר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 304,
+  "slug": "avry-shtmlr",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111120",
+  "name": "הרב נחום אריאל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 289,
+  "slug": "nchvm-aryal",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e1111111-1111-1111-1111-111111111121",
+  "name": "הרב בניה כהן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 291,
+  "slug": "bnyh-khn",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e13dda79-e8b5-4c69-8c36-86507f3beac3",
+  "name": "הרב נועם ונגרובר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 29,
+  "slug": "nvm-vngrvbr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e19e7faf-ddab-4dff-9b1d-e249e05c8b84",
+  "name": "הרב אוהד קרקובר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "avhd-krkvbr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e1f5b75e-3080-4e7d-a316-9484757adb49",
+  "name": "הרב יגאל שפרן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "ygal-shprn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e3ae8794-b48d-4a7f-9634-c814e4fc52d3",
+  "name": "הרב חיים שפירא",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 34,
+  "slug": "chaim-shapira",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "e3c3449c-1e81-41f7-b416-87c2b4abb568",
+  "name": "הרב בנימין רוזנצוויג",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "bnymyn-rvzntzvvyg",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e5d69c5f-1c5c-4401-83c6-f95809952696",
+  "name": "הרב דני סטיסקין",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 105,
+  "slug": "danny-stiskin",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e6c81665-5737-4c82-b96e-7527cc0e6ee6",
+  "name": "ושננתם",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 50,
+  "slug": "veshinantam",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e6e04daf-0aa6-4a07-911e-2a7cacd9b5fe",
+  "name": "הרב אחיקם גץ",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 296,
+  "slug": "achikam-gatz",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e772bb3b-34cb-4616-9dcd-b8ca92e006a0",
+  "name": "הרב מיכה הלוי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "mykh-hlvy",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e8d6a202-0e6a-45ae-82ca-49e638b2f57e",
+  "name": "הרבנית תהילה הרץ (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "thylh-hrtz",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "e97e2b67-5f0f-436f-9fc1-54f706a7a20e",
+  "name": "הרב יצחק עמראני",
+  "entity_type": "rabbi",
+  "status": "published",
+  "lesson_count": 324,
+  "slug": "יצחק-עמראני",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "e9af5074-fc56-44f8-91d7-2fc934887852",
+  "name": "הרבנית ברוריה בן שחר (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "brvryh-bn-shchr",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "ed629999-adaf-48f9-af75-60a516596021",
+  "name": "הרב ערן טמיר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 71,
+  "slug": "eran-tamir",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "ef010001-0001-4000-8000-000000000001",
+  "name": "הרב צבי ענבל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "tzby-nbl",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "ef010001-0001-4000-8000-000000000002",
+  "name": "הרב ישי פלס",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 0,
+  "slug": "yshy-pls",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "efcae8b9-5fa5-4b74-933e-8e681653dfdb",
+  "name": "הרב בנימין סופר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "bnymyn-svpr",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "f16ac6fa-ba12-4792-815e-2457548df247",
+  "name": "הרב רוני אגלטל",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 1,
+  "slug": "rvny-agltl",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "f3cb36a5-ce6f-453d-939b-37a987b2fd9d",
+  "name": "הרב אריה אברמסון",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 7,
+  "slug": "aryh-abrmsvn",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "f437e7a9-2cf0-43df-a20b-4dcb34851212",
+  "name": "הרבנית דינה ראפ (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 4,
+  "slug": "dynh-rap",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "f6ce1953-241f-42b7-964f-fa103c6e1958",
+  "name": "ולו",
+  "entity_type": "content_creator",
+  "status": "hidden",
+  "lesson_count": 2,
+  "slug": "velo",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "f6d239d6-6c9d-4a65-8167-b2b3ab01de51",
+  "name": "הרב נחום נריה",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "nchvm-nryh",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "f8bf13ea-efd1-4a1f-b4c0-ba85244e1735",
+  "name": "הרב אלי קוהנוב",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 10,
+  "slug": "aly-kvhnvb",
+  "has_image": false,
+  "title": null
+ },
+ {
+  "id": "f8cd6298-a593-4b80-9fa6-6d7cd43203fe",
+  "name": "הרב יואב אוריאל והרב עמנואל בן ארצי",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 7,
+  "slug": "yoav-uriel-veemanueal-ben-artzi",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "fa715fa1-23fb-4977-b761-6df1dcfdd798",
+  "name": "הרב אליהו ידיד",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 5,
+  "slug": "alyhv-ydyd",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "fbf45d02-d83a-4d47-a48a-f7035fb15b0c",
+  "name": "הרב איתן קופמן",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 39,
+  "slug": "etan-kopman",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "fcf12848-4f60-438b-85e7-19d6ad728663",
+  "name": "הרבנית ורדית אביחי (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 8,
+  "slug": "vrdyt-abychy",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "fec85b7a-af58-4008-a867-733472a0c7aa",
+  "name": "רותי שפירא - ד\"ר (לנשים)",
+  "entity_type": "content_creator",
+  "status": "active",
+  "lesson_count": 2,
+  "slug": "ruti-shapira-lanashim",
+  "has_image": false,
+  "title": "הרב"
+ },
+ {
+  "id": "feff2daf-983f-4c9d-b66a-1dc2c7cfc2e2",
+  "name": "הרבנית נעמה בן פנחס (לנשים)",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 3,
+  "slug": "nmh-bn-pnchs",
+  "has_image": false,
+  "title": "רבנית"
+ },
+ {
+  "id": "ff233638-a99c-4049-9613-41d44a12f90a",
+  "name": "הרב נועם וידר",
+  "entity_type": "rabbi",
+  "status": "active",
+  "lesson_count": 83,
+  "slug": "noam-vider",
+  "has_image": false,
+  "title": "הרב"
+ }
+]

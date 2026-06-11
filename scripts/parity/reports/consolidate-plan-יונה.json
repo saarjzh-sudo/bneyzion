@@ -1,0 +1,373 @@
+{
+  "book": "יונה",
+  "book_id": "0f69e7e1-c6d4-4ede-9c42-006ee99ea995",
+  "plan": [
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "702534c4-7b25-44db-950c-4d6e52b93e23",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יונה פרק א",
+      "old_title": "התמודדויות הנשמה בעולם הזה ובגוף",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "f80d34ec-b27c-4464-8bb7-354582a9ebf3",
+      "mode": "copy",
+      "from_series": "04d418d7-34ef-499b-b36d-5baf0ea25361",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יונה",
+      "old_title": "מדוע ברח יונה מלפני ד'?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "c7744c07-d664-4f65-aeb0-7422c34f3f82",
+      "mode": "copy",
+      "from_series": "04d418d7-34ef-499b-b36d-5baf0ea25361",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יונה",
+      "old_title": "האם שייך לברוח מלפני ד'?! והרי מלֹא כל הארץ כבודו!",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "417e1dc6-742a-4341-bd39-6a27804a830e",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יונה פרק א",
+      "old_title": "יונה באוניה",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "2c0a65cc-b4bf-4e0f-b981-45308e204032",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "יונה פרק ב",
+      "old_title": "שליחת הקב\"ה וסירוב יונה לשליחות",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "20f4def2-5075-4c16-9035-18ff046869c5",
+      "mode": "copy",
+      "from_series": "a9712c8e-aec1-42dc-9147-3db273d93886",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יונה",
+      "old_title": "יונה פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000001",
+      "event_title": "יונה פרק א",
+      "lesson_id": "19b78456-2e41-4ae9-aca9-d50e0d5c5cd0",
+      "mode": "copy",
+      "from_series": "da8f6bf7-2427-4638-86e1-7abc584f4fc2",
+      "from_status": "active",
+      "from_title": "יונה - מוקלט | ללא טעמים",
+      "old_title": "יונה מוקלט - פרק א | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000002",
+      "event_title": "יונה פרק ב",
+      "lesson_id": "33ac3b02-c66c-4b59-8c37-fc7fb3c1c364",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "יונה פרק ב",
+      "old_title": "התכנסות פנימה של הנשמה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000002",
+      "event_title": "יונה פרק ב",
+      "lesson_id": "91ef4310-57c6-4704-8240-d70e1a12d3d5",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "יונה פרק ב",
+      "old_title": "השגחת ה' על כל העולם",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000002",
+      "event_title": "יונה פרק ב",
+      "lesson_id": "7cda897f-bb96-4aef-9d17-ecf160bfef91",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "יונה פרק א",
+      "old_title": "שליחת הקב\"ה וסירוב יונה לשליחות",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000002",
+      "event_title": "יונה פרק ב",
+      "lesson_id": "99543465-5e83-4abf-8142-474e484ea56a",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יונה פרק ג",
+      "old_title": "יונה במצולות הים",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000002",
+      "event_title": "יונה פרק ב",
+      "lesson_id": "2c73b6b8-52cb-4b0e-84d7-1622b34e8190",
+      "mode": "copy",
+      "from_series": "a9712c8e-aec1-42dc-9147-3db273d93886",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר יונה",
+      "old_title": "יונה פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000002",
+      "event_title": "יונה פרק ב",
+      "lesson_id": "58c37328-1f17-4a21-a173-62dc8109d8d8",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "יונה פרק ב",
+      "old_title": "יונה מוקלט - פרק ב | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000003",
+      "event_title": "יונה פרק ג",
+      "lesson_id": "b1660cae-944b-4d39-a4d6-5c37dec78e49",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יונה פרק ג",
+      "old_title": "החזרה של הנשמה אל ניסיון מחודש לבצע את תפקידה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000003",
+      "event_title": "יונה פרק ג",
+      "lesson_id": "b86ea2a6-9cb4-4213-b27e-5db8b4235371",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יונה פרק ג",
+      "old_title": "תשובת אנשי נינוה",
+      "old_rabbi": "הרב אחיקם גץ"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000003",
+      "event_title": "יונה פרק ג",
+      "lesson_id": "18f70145-dfa7-40cc-9b01-48ebb0f38dd5",
+      "mode": "copy",
+      "from_series": "73c9cec7-1923-4fa8-b017-56a636d7aaa0",
+      "from_status": "active",
+      "from_title": "שיעורים קצרים - קריאה וביאור ספר יונה",
+      "old_title": "חזרתם בתשובה של אנשי נינווה",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000003",
+      "event_title": "יונה פרק ג",
+      "lesson_id": "f7b6774a-5392-49a5-8cbd-8ed6a56ff1a6",
+      "mode": "copy",
+      "from_series": "24d7c943-8899-4b29-be66-e8ac59060c49",
+      "from_status": "active",
+      "from_title": "שיעורים - יונה",
+      "old_title": "יונה במצולות הים",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000003",
+      "event_title": "יונה פרק ג",
+      "lesson_id": "ef2976ab-b71f-408c-bad3-f2dfaef2fab7",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יונה פרק ג",
+      "old_title": "יונה פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000003",
+      "event_title": "יונה פרק ג",
+      "lesson_id": "501e7933-34bd-4108-9f91-5234085ea7c3",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "יונה פרק ג",
+      "old_title": "יונה מוקלט - פרק ג | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000004",
+      "event_title": "יונה פרק ד",
+      "lesson_id": "03032345-35ed-495d-9577-ac1955358a51",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "יונה פרק ד",
+      "old_title": "מורכבות יחסי הנשמה והעולם הזה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000004",
+      "event_title": "יונה פרק ד",
+      "lesson_id": "ad6cf14b-bb84-4b20-b5a7-8beef2e987d8",
+      "mode": "copy",
+      "from_series": "04d418d7-34ef-499b-b36d-5baf0ea25361",
+      "from_status": "active",
+      "from_title": "מאמרים - ספר יונה",
+      "old_title": "האם הנבואה \"עוד ארבעים יום ונינוה נהפכת\" התקיימה?",
+      "old_rabbi": "הרב איתן שנדורפי"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000004",
+      "event_title": "יונה פרק ד",
+      "lesson_id": "30c527d9-a388-4e00-a9f6-3d595e5a739a",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "יונה פרק ד",
+      "old_title": "הקיקיון",
+      "old_rabbi": "הרב חנניה מלכה"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000004",
+      "event_title": "יונה פרק ד",
+      "lesson_id": "fff5ff19-c8a1-4ad4-b1c8-c37f6781999a",
+      "mode": "copy",
+      "from_series": "24d7c943-8899-4b29-be66-e8ac59060c49",
+      "from_status": "active",
+      "from_title": "שיעורים - יונה",
+      "old_title": "יונה במעי הדגה",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000004",
+      "event_title": "יונה פרק ד",
+      "lesson_id": "32821cd9-de42-4ea7-be6c-f8f6ff0c4b81",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "יונה פרק ד",
+      "old_title": "יונה פרק ד",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2040001-0001-4000-8000-000000000004",
+      "event_title": "יונה פרק ד",
+      "lesson_id": "648093d1-79fd-4862-ad91-5e0c611ec0c7",
+      "mode": "copy",
+      "from_series": "c2040001-0001-4000-8000-000000000004",
+      "from_status": "active",
+      "from_title": "יונה פרק ד",
+      "old_title": "יונה מוקלט - פרק ד | ללא טעמים",
+      "old_rabbi": "הרב דן בארי"
+    },
+    {
+      "event_id": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "event_title": "ספר יונה הרב מאיר הילביץ'",
+      "lesson_id": "890633f2-95fd-4574-a86f-df7db7e2d302",
+      "mode": "copy",
+      "from_series": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "from_status": "active",
+      "from_title": "ספר יונה הרב מאיר הילביץ'",
+      "old_title": "הקדמה לספר יונה",
+      "old_rabbi": "הרב מאיר הילביץ'"
+    },
+    {
+      "event_id": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "event_title": "ספר יונה הרב מאיר הילביץ'",
+      "lesson_id": "928dcaa4-2a42-4116-9bb6-7084bc0a3b50",
+      "mode": "copy",
+      "from_series": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "from_status": "active",
+      "from_title": "ספר יונה הרב מאיר הילביץ'",
+      "old_title": "המשך הקדמה לספר יונה",
+      "old_rabbi": "הרב מאיר הילביץ'"
+    },
+    {
+      "event_id": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "event_title": "ספר יונה הרב מאיר הילביץ'",
+      "lesson_id": "e6c1f7a2-0604-4521-b2ef-7a137e5d566a",
+      "mode": "copy",
+      "from_series": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "from_status": "active",
+      "from_title": "ספר יונה הרב מאיר הילביץ'",
+      "old_title": "ספר יונה פרק א",
+      "old_rabbi": "הרב מאיר הילביץ'"
+    },
+    {
+      "event_id": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "event_title": "ספר יונה הרב מאיר הילביץ'",
+      "lesson_id": "cb002b52-2224-4680-a923-6be1e59a13b2",
+      "mode": "copy",
+      "from_series": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "from_status": "active",
+      "from_title": "ספר יונה הרב מאיר הילביץ'",
+      "old_title": "ספר יונה פרק ב",
+      "old_rabbi": "הרב מאיר הילביץ'"
+    },
+    {
+      "event_id": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "event_title": "ספר יונה הרב מאיר הילביץ'",
+      "lesson_id": "64818150-5f65-42f1-926e-db380c60e3dc",
+      "mode": "copy",
+      "from_series": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+      "from_status": "active",
+      "from_title": "ספר יונה הרב מאיר הילביץ'",
+      "old_title": "ספר יונה פרקים ד-ה",
+      "old_rabbi": "הרב מאיר הילביץ'"
+    }
+  ],
+  "report": [
+    {
+      "event": "יונה פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יונה/יונה-פרק-א/",
+      "matched": 7,
+      "old_lessons": 7,
+      "unmatched": []
+    },
+    {
+      "event": "יונה פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יונה/יונה-פרק-ב/",
+      "matched": 6,
+      "old_lessons": 6,
+      "unmatched": []
+    },
+    {
+      "event": "יונה פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יונה/יונה-פרק-ג/",
+      "matched": 6,
+      "old_lessons": 6,
+      "unmatched": []
+    },
+    {
+      "event": "יונה פרק ד",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יונה/יונה-פרק-ד/",
+      "matched": 6,
+      "old_lessons": 6,
+      "unmatched": []
+    },
+    {
+      "event": "ספר יונה הרב מאיר הילביץ'",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/יונה/ספר-יונה-הרב-מאיר-הילביץ/",
+      "matched": 5,
+      "old_lessons": 5,
+      "unmatched": []
+    }
+  ]
+}

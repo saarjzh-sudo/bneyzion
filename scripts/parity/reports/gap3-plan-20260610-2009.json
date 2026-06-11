@@ -1,0 +1,199 @@
+{
+  "ts": "20260610-2009",
+  "plan": [],
+  "yoav": [],
+  "summary": [
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק ד",
+      "old_listed": 5,
+      "db_before": 5,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק טז",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק י",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק יב",
+      "old_listed": 5,
+      "db_before": 5,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק יד",
+      "old_listed": 9,
+      "db_before": 9,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק יח",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק כ",
+      "old_listed": 8,
+      "db_before": 8,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק כו",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק לג",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק מד",
+      "old_listed": 6,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק מו",
+      "old_listed": 4,
+      "db_before": 5,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ישעיהו פרק נ",
+      "old_listed": 8,
+      "db_before": 9,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "ספר ישעיהו",
+      "old_listed": 29,
+      "db_before": 34,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "ישעיהו",
+      "event": "קריאה וביאור בקצרה של ספר ישעיהו",
+      "old_listed": 67,
+      "db_before": 67,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק יא",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק כז",
+      "old_listed": 14,
+      "db_before": 17,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק ל",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק לז",
+      "old_listed": 11,
+      "db_before": 11,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק לט",
+      "old_listed": 10,
+      "db_before": 10,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק מא",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק מב",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק מו",
+      "old_listed": 10,
+      "db_before": 10,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק מז",
+      "old_listed": 7,
+      "db_before": 7,
+      "adds": 0,
+      "unmatched": 0
+    },
+    {
+      "book": "יחזקאל",
+      "event": "יחזקאל פרק מח",
+      "old_listed": 8,
+      "db_before": 8,
+      "adds": 0,
+      "unmatched": 0
+    }
+  ]
+}

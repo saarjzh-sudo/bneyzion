@@ -1,5 +1,153 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
+> Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
+> - **Feature 3 — Multi-rabbi + inline creator add:**
+>   - `FormState` gains `rabbiIds: string[]` (multi). `rabbiId` preserved as primary for backward compat.
+>   - New component `src/components/admin/MultiRabbiSelector.tsx`: chips with X, autocomplete search, "+ הוסף יוצר חדש" inline form (name → slug validation → entity_type select → INSERT → add to chips). First chip = primary (gold badge).
+>   - New hook `src/hooks/useRabbiMultiSelect.ts`: `useLessonRabbis()` + `useSeriesRabbis()` mutations for join tables.
+>   - DB migration `supabase/migrations/20260612_multi_rabbi_join_tables.sql`: `series_rabbis` + `lesson_rabbis` tables (PK, FK cascade). Applied to prod DB.
+>   - RLS (critique B fix): FOR INSERT for authenticated — NOT FOR ALL. Admin-only UPDATE/DELETE via `has_role(_role:='admin'::app_role, _user_id:=auth.uid()::text)`.
+>   - After lesson INSERT returns `id`, `insertLessonRabbis` populates join table. Backward compat: `lessons.rabbi_id` still set to `rabbiIds[0]`.
+>   - Slug uniqueness: client-side round-trip SELECT count before INSERT; user edits slug manually; no silent autogenerate.
+> - **Feature 5 — AI cover generation:**
+>   - New edge function `supabase/functions/generate-cover/index.ts`. Deployed live.
+>   - Auth (critique C): JWT verify → `user_roles` check → admin or creator required. No auth → 401. Wrong role → 403.
+>   - Rate limit (critique I): `cover_generations` table, max 5 calls/hour/user via service-role SELECT count. Exceeds → 429.
+>   - Model (critique G verified): `imagen-4.0-fast-generate-001` primary (confirmed in models API), Gemini 2.0 Flash image generation as fallback.
+>   - Storage: `bnei-zion-thumbnails` bucket (confirmed public, pre-existing). Path = `series/{uuid}.png` or `series/generated-{ts}-{rand}.png` (ASCII only).
+>   - UI: gold "✨ ג׳נרוט ב-AI" button in step 3, disabled if no title or generating. Preview panel with "הסר" button. AI cover appears in step 4 summary. Manual upload overrides AI.
+>   - Secret `GEMINI_API_KEY` set in Supabase project secrets.
+> - **Feature 6 — Series approval flow:**
+>   - `src/pages/admin/Series.tsx`: added `useApproveSeries` mutation (approve→`active`, return→`draft`+note). `ReturnSeriesDialog` component. Status tabs (all/pending/active/draft). Amber pending banner. Approve/Return buttons on pending rows (admin only).
+>   - `SeriesStatusBadge` component with color tokens matching Lessons.tsx.
+>   - Non-admin status select: only `draft` + `pending_review` visible (no `active`/`completed` for creators).
+>   - ContentUpload.tsx non-admin flow unchanged — still shows only "שלח לאישור" button.
+>   - **RLS hardening on `lessons`/`series` is NOT done in this batch.** Per critique blobker 1+2: enabling RLS on these 11K+ row tables without careful index analysis and service-role audit could break public queries + payment flow. This is a FOLLOW-UP security task requiring dedicated session with EXPLAIN ANALYZE. Saar is aware.
+> - **DB migrations applied (additive, no destructive changes):**
+>   - `series_rabbis` table: lesson/series many-to-many rabbis. RLS enabled (anon SELECT, auth INSERT, admin UPDATE/DELETE).
+>   - `lesson_rabbis` table: same pattern.
+>   - `cover_generations` table: rate-limit log. RLS deny-all for client, service-role only.
+>   - `bnei-zion-thumbnails` bucket: already existed (public). Storage policies applied via migration file (for documentation; bucket pre-existed).
+> - **Types regen:** `npx supabase gen types typescript --project-id pzvmwfexeiruelwiujxn` run after migrations. `lesson_rabbis`, `series_rabbis`, `cover_generations` all in generated types (8 occurrences).
+> - **tsc:** clean (0 errors)
+> - **Preview URL:** https://bneyzion-5xnl0njk6-saars-projects-4508d6bb.vercel.app (behind Vercel SSO)
+> - **Preview deployment ID:** `dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx`
+> - **Edge function deployed:** `generate-cover` (project pzvmwfexeiruelwiujxn). Dashboard: https://supabase.com/dashboard/project/pzvmwfexeiruelwiujxn/functions
+> - **Current prod (unchanged):** `dpl_E9uMVVc11oebLyymnydeT6hmyqkD`
+> - **Admin-gated:** `/admin/upload` behind `ProtectedRoute allowedRoles=["admin","creator"]`. Multi-rabbi selector and AI cover button are visible only inside the wizard (no public exposure). generate-cover edge function requires admin/creator role via JWT check.
+> - **What to validate manually (all require admin/creator login):**
+>   1. `/admin/upload` step 1: rabbi field shows chip-based multi-selector. Type a name → autocomplete. Add 2 rabbis → first shows "ראשי" gold badge.
+>   2. Step 1: "+ הוסף יוצר חדש" → inline form. Enter name → slug auto-fills. Enter unique slug → "צור והוסף" → new rabbi appears as chip.
+>   3. Step 3: "✨ ג׳נרוט ב-AI" button active (title must be filled). Click → spinner → preview image appears. "הסר" removes it. Step 4 summary shows "תמונת AI (נוצרה)".
+>   4. Step 3: upload manual cover → AI preview disappears (manual wins).
+>   5. Submit lesson → check `lesson_rabbis` table for rows matching all selected rabbit IDs.
+>   6. `/admin/series` → "ממתין" tab shows pending series with amber banner. Approve → status changes to "פעילה". Return → dialog with note → status → "טיוטה".
+>   7. Non-admin in Series dialog: status select shows only "טיוטה" + "שלח לאישור" (no "פעילה"/"הושלמה").
+>   8. generate-cover edge function: call without auth header → 401. Call with non-admin/creator user → 403. Call 6x in 1 hour → 429 on 6th.
+> - **RLS hardening follow-up note (KNOWLEDGE rule):** Do NOT enable RLS on `lessons`/`series` tables without: (a) EXPLAIN ANALYZE on typical public queries, (b) verifying all edge functions use service_role key not anon, (c) confirming payment flow (/design-yehoshua-campaign) is unaffected. Schedule as dedicated security session.
+> - **Files modified:** `src/pages/admin/ContentUpload.tsx`, `src/pages/admin/Series.tsx`, `src/integrations/supabase/types.ts`
+> - **New files:** `src/components/admin/MultiRabbiSelector.tsx`, `src/hooks/useRabbiMultiSelect.ts`, `supabase/functions/generate-cover/index.ts`, `supabase/migrations/20260612_multi_rabbi_join_tables.sql`
+
+> ## Session י"א Batch A — 2026-06-11 — Upload Wizard upgrade: smart book autocomplete + visual location picker + search (PREVIEW dpl_AQUqxiToJfvWEcntQP9Ff99B3yiH)
+> Content upload wizard — 3 features deployed as preview (NOT yet aliased to prod):
+> - **Feature 1 — Book autocomplete (step 1):** `bibleBook` field replaced with autocomplete Input connected to `useContentSidebar().categories`. Dropdown shows book-nodes ONLY (`categories.flatMap(c => c.books)`) — NOT series titles (critique K). Selecting a book: sets `bibleBook` (title) + `bookCategoryId` (node id for pre-expand). Badge shows `תורה › בראשית` when selected.
+> - **Feature 2 — Visual location picker (step 2):** New `src/components/admin/ContentLocationPicker.tsx`. Replaces the old series `<Select>`. Three modes: `existing_series` / `new_series_in_node` / `standalone`. Accordion tree mirrors DesignSidebar: תנ"ך (תורה/נביאים/כתובים) + נושאים/מועדים tabs. `NodeSeriesPanel` shows existing series per node + "צור סדרה חדשה כאן". Uses `useSeriesForNode` from `useContentSidebar` (read-only, never modified). Teachers-leakage filter inherited automatically.
+> - **Feature 4 — Location search (inside picker):** Search input above tabs. Filters all categories/books/children + extraSections/children. Up to 12 results with breadcrumb. Click result → auto-expand correct tab/category/book + select node.
+> - **Orphan parent_id bug fixed:** `createSeries.mutate` previously inserted `parent_id: null` always. Now uses `newSeriesParentId` from picker node — series created under the selected tree node, not as orphan.
+> - **Critique I/L (bookCategoryId clarification):** `bookCategoryId` is used ONLY for pre-expanding the picker accordion — it is NOT used as `parent_id` in createSeries. The `parent_id` comes exclusively from `locationValue.parentNodeId` (what user actually selected in the picker tree).
+> - **SummaryRow (step 4):** Shows dynamic location: "סדרה: X" / "תחת: X (סדרה חדשה: Y)" / "ללא שיוך".
+> - **Standalone warning:** Step 4 shows amber warning when mode=standalone.
+> - **main.tsx `vite:preloadError` handler:** Verified present (added session ז').
+> - **tsc:** clean (0 errors)
+> - **Preview URL:** https://bneyzion-giu89pyhu-saars-projects-4508d6bb.vercel.app (behind Vercel SSO)
+> - **Preview deployment ID:** `dpl_AQUqxiToJfvWEcntQP9Ff99B3yiH`
+> - **Current prod (unchanged):** `dpl_E9uMVVc11oebLyymnydeT6hmyqkD`
+> - **Admin-gated:** `/admin/upload` is behind `ProtectedRoute allowedRoles=["admin","creator"]`. To test, must be logged in as admin/creator.
+> - **What to validate manually:**
+>   1. `/admin/upload` logged in as admin → step 1: type "ישע" in ספר field → dropdown shows "ישעיהו" with "נביאים" badge → click → badge appears "נביאים › ישעיהו".
+>   2. Step 2: picker tree opens → expand נביאים → expand ישעיהו → see parsha/chapter children → click child → NodeSeriesPanel shows existing series + "צור סדרה חדשה" button.
+>   3. Step 2: search "מלכים" in search field → results show breadcrumb "נביאים › מלכים א" etc. → click result → tree auto-expands.
+>   4. Step 2: book selected in step 1 → picker auto-opens to that book (pre-expand via `initialBookId`).
+>   5. Step 4 summary: "מיקום" row shows selected series name / "סדרה חדשה תחת: X" / "ללא שיוך".
+>   6. "ללא שיוך" tab: amber warning visible, button "המשך ללא שיוך" clickable.
+>   7. Teacher tag selected in audience → green banner "תוכן עם תיוג מורים לא יופיע בעץ הציבורי" appears in picker.
+> - **Files modified:** `src/pages/admin/ContentUpload.tsx`, **new:** `src/components/admin/ContentLocationPicker.tsx`
+> - **NOT in this batch (Batch B):** multi-rabbi, AI cover gen, approval-flow notifications, RLS migrations, schema changes.
+
+> ## Session י"א Batch 3 — 2026-06-11 — איחוד אזור אישי: /profile→/portal, /courses→/design-my-courses, portal polish (PREVIEW dpl_ETymk8xtRqq1LrXTeVZHtHsSoY9n)
+> Personal area consolidation — 5 changes deployed as preview:
+> - **1. `/profile` → redirect to `/portal`:** `App.tsx` route changed to `<Navigate to="/portal" replace />`. Links updated: `UserMenu.tsx` ("האזור האישי"), `DesignPreviewHome.tsx` (`navigate`), `PointsBadge.tsx`, `LearningDashboard.tsx`.
+> - **2. `/courses` → redirect to `/design-my-courses`:** `App.tsx` route changed to `<Navigate to="/design-my-courses" replace />`. Links updated in: `DesignPreviewPortalSubscriber.tsx` (QuickTile), `DesignPreviewCourseDetail.tsx` (×2 — breadcrumb + error fallback), `WeeklyProgramLibrary.tsx` (breadcrumb).
+> - **3. Settings button fix in `/portal`:** Was `Link to="/profile"` — would infinite-redirect after change #1. Fixed to `<a href="#settings">` (anchor scroll). Added `id="settings"` section at bottom of portal with account info (name, email) + quick links (favorites, history, contact).
+> - **4. Removed preview widget:** Stripped the dark top bar ("תצוגה מקדימה · מנוי פעיל · חבר רשום · אורח") from `DesignPreviewPortalSubscriber`. Removed `useState<PreviewMode>`, `type PreviewMode`, the derived `isAuth`/`hasSubscription` now use real hook values (`isAuthenticated`, `realAccess`). Portal is behind `RequireAuth` so user is always authenticated.
+> - **5. Portal UI polish:** Settings section added (RTL, design tokens, parchment bg, 2-col grid on desktop, 1-col mobile). `import { useState }` removed (unused), replaced with `import React` for JSX. Avatar condition simplified (`avatarUrl` without `previewMode` check).
+> - **tsc:** clean (0 errors)
+> - **Preview URL:** https://bneyzion-9ng88fca5-saars-projects-4508d6bb.vercel.app (behind Vercel SSO)
+> - **Preview deployment ID:** `dpl_ETymk8xtRqq1LrXTeVZHtHsSoY9n`
+> - **Current prod (unchanged):** `dpl_E9uMVVc11oebLyymnydeT6hmyqkD`
+> - **What to validate manually (all require login):**
+>   1. Visit `/profile` logged in → should redirect to `/portal` instantly.
+>   2. Visit `/courses` logged out + in → should redirect to `/design-my-courses`.
+>   3. `/portal` — settings button (top-right of hero) → page scrolls to "הגדרות אישיות" section at bottom.
+>   4. `/portal` — no dark preview bar at top (no "תצוגה מקדימה / מנוי פעיל / חבר רשום / אורח").
+>   5. `/portal` → QuickTile "הקורסים שלי" → navigates to `/design-my-courses`.
+>   6. `UserMenu` dropdown → "האזור האישי" → `/portal` (not `/profile`).
+>   7. Auth-gated check: visit `/portal` logged out → redirected to login (RequireAuth intact).
+> - **Iron rule reinforced:** When adding a redirect from route A → route B, scan ALL links/navigate() calls to A and update them too, otherwise infinite redirect loops can form (e.g. settings button on `/portal` pointed to `/profile` which would redirect back). Lateral fix is mandatory.
+
+> ## Session י"א Batch 2 — 2026-06-11 — קורס הפרק השבועי: is_current + GlobalWeeklyNav (PREVIEW dpl_Bdr34sGNCbsJKyB4HvSRhNxm1YoY)
+> Weekly-program course flow — admin-controlled current book + all-books accordion sidebar:
+> - **DB migration:** `ALTER TABLE community_courses ADD COLUMN IF NOT EXISTS is_current BOOLEAN DEFAULT false`. `book-ezra` seeded `is_current=true` as placeholder (Saar/Yoav should update via admin). Verified via anon REST.
+> - **Types regen:** `npx supabase gen types typescript --project-id pzvmwfexeiruelwiujxn > src/integrations/supabase/types.ts`. `is_current: boolean | null` now in generated types. `WeeklyCourse` interface updated with `is_current` field.
+> - **New files:**
+>   - `src/components/weekly/shared.ts` — `SbRow`, `BOOK_ACCENTS`, `HEB_NUMS` extracted from WeeklyBookDetail to avoid circular dependency (critique #6+#20).
+>   - `src/components/weekly/GlobalWeeklyNav.tsx` — all-books accordion sidebar. Each book = accordion row; current book open by default. `?chapter=N` passed to cross-book navigation. Mobile: grid collapses to 1-col, aside stacks (critique #10).
+> - **Modified files:**
+>   - `src/hooks/useCommunity.ts` — `WeeklyCourse.is_current: boolean | null` added to interface.
+>   - `src/pages/WeeklyBookDetail.tsx` — import `useSearchParams` + `GlobalWeeklyNav`. `?chapter=N` initializes `activeNav`. Old `<aside>` replaced with `<GlobalWeeklyNav>`. Access/payment/esther/HZM paths untouched (critique #13).
+>   - `src/pages/WeeklyProgramLibrary.tsx` — redirect to `currentBook.program_slug` when `is_current=true` AND NOT admin. Admin still sees full library (to manage the toggle). Navigate imported.
+>   - `src/pages/admin/CommunityCourses.tsx` — `setCurrentBook` mutation (clears all → sets one). Star icon button on each `in_weekly_program=true` card. Mutually exclusive.
+>   - `src/integrations/supabase/types.ts` — regenerated (includes `is_current`, `in_weekly_program`, all weekly fields that were missing).
+> - **Verified:** `is_current` visible via anon REST. TS passed clean. Access/payment flows not changed.
+> - **Preview URL:** https://bneyzion-9csl0ean8-saars-projects-4508d6bb.vercel.app (behind Vercel SSO)
+> - **Preview deployment ID:** `dpl_Bdr34sGNCbsJKyB4HvSRhNxm1YoY`
+> - **Batch 1 preview still pending prod alias:** `dpl_9FwncaiNXwnktgFp3UASxh8aVtfd`
+> - **Current prod (unchanged):** `dpl_E9uMVVc11oebLyymnydeT6hmyqkD`
+> - **What to validate manually:**
+>   1. `/course/book-esther` — sidebar shows ALL books accordion, אסתר book open with pairs (א-ב etc.) — verify pairs still render correctly.
+>   2. `/course/book-haggai-zechariah-malachi` — HZM sub-books (זכריה/חגי/מלאכי) still work as nav items.
+>   3. Access-lock: visit `/course/book-ezra` logged out → "הרחבה" and "שיעור שבועי" tabs still show lock.
+>   4. `/program/weekly-chapter` logged in (non-admin) → should redirect to `/course/book-ezra` (current is_current book).
+>   5. `/program/weekly-chapter` as admin → should show full library grid (no redirect).
+>   6. Admin `/admin/community-courses` → books with `in_weekly_program=true` show gold star; click star on a different book → it becomes "נוכחי", others clear.
+>   7. Cross-book nav: in GlobalWeeklyNav, click a chapter row of a different book → navigates to `/course/book-X?chapter=N` and that chapter is auto-selected.
+> - **Iron rule reinforced (critique #14):** after any DB ALTER on a table used by typed hooks → always run supabase gen types + update the interface manually — silent `undefined` otherwise.
+
+> ## Session י"א — 2026-06-11 — Batch 1 navigation: /series + /bible/:book + CategoryPage toggle (PREVIEW dpl_9FwncaiNXwnktgFp3UASxh8aVtfd)
+> Three UX changes deployed as preview (NOT yet aliased to prod):
+> - **A. CategoryPage SeriesBlock toggle:** entire title row is now a `<button>` with `aria-expanded`/`aria-controls`. Image stays `<Link>` with `stopPropagation`. Added "לדף הסדרה המלאה" link at expanded bottom. `ExternalLink` icon added. Default expanded kept as `true` (saar's golden rule #5 — not changed globally). `id={series-lessons-${series.id}}` added.
+> - **B. SeriesLibrary (`/series`):** new page `src/pages/SeriesLibrary.tsx` + `App.tsx` lazy route. Sections: hero+search, "סדרות נבחרות" (lesson_count+views_count sort, exact-title filter for "שיעורים כלליים"), Bible book pills (useContentSidebar mapping→/category/:id, fallback /bible/:book), רבנים grid (usePublicRabbis), נושאים pills (root topics, no size-by-count per critique #2). vercel.json redirect /מאגר-השיעורים → /series still active.
+> - **C. BibleBookPage rewrite:** replaced chapter-grid (broken due to bible_chapter=NULL on 94%) with event-series list using `useBibleBookSeries(bookCategoryId)`. Layout switched Layout v1 → DesignLayout v2. Teacher filter on all useBible hooks. `useBookCategoryId` hook with ilike fallback. Footer `/bible/bereshit` → `/bible/בראשית` (Hebrew literal, not encoded).
+> - **New hooks in useBible.ts:** `useBibleBookSeries` (supabase `any` cast — bible_chapter exists in DB but not in generated types), `useBookCategoryId` (exact + ilike fallback).
+> - **Preview URL:** https://bneyzion-fcym8o21z-saars-projects-4508d6bb.vercel.app (behind Vercel SSO — need Saar to bypass or promote to prod for testing)
+> - **Preview deployment ID:** `dpl_9FwncaiNXwnktgFp3UASxh8aVtfd`
+> - **Current prod (unchanged):** `dpl_E9uMVVc11oebLyymnydeT6hmyqkD`
+> - **Iron rule reinforced:** do NOT change `useState(true)` in SeriesBlock to `false` globally — that would collapse all 200+ category pages. Only change expanded default if saar explicitly asks per-category. Per critique #5/#15.
+> - **Iron rule reinforced:** useTopics has no `lesson_count` field → never use size-by-count in topics display. Per critique #2/#19.
+> - **New vercelignore:** `.vercelignore` created to exclude `scripts/` (3.8GB audio), preventing upload abort.
+
+> ## Session י' — 2026-06-11 — Korach duplicate lesson video_url fix (DB-only)
+> Follow-up from session ח' Bug 2 (vp4.me NULL sweep): one lesson was an exception.
+> - **`f9653c4c-391e-436e-84a1-3ff15b5ac1ce`** ("איך העיז קורח ולמה דוקא קטורת", series `77adb8ce`) had `video_url=NULL` after the sweep. Root: it is a duplicate of **`ef803466-c078-48b7-a02d-479db28f545a`** ("איך העיז קורח, ולמה דוקא קטורת?", same series), which already had the real S3 MP4.
+> - **Fix:** Copied `video_url` from `ef803466` to `f9653c4c`. No other fields touched (title, content, series_id all preserved).
+>   - `video_url` set to: `https://bneyzion.s3.us-east-2.amazonaws.com/הרב יואב אוריאל/סרטונים לפרשה/סרטון פרשת השבוע - קורח.mp4`
+>   - S3 HEAD: HTTP 200, `video/mp4`. Anon REST path confirms `video_url` populated.
+> - **Backup:** `lessons_bak_korach_dup_20260611` (single row, `video_url=NULL` state preserved for rollback).
+> - **235 NULL sweep summary:** All 235 vp4.me/LandingPage URLs correctly set to NULL (Smoove signup forms, not videos). `f9653c4c` was the sole exception — it had a valid counterpart with the real video.
+> - **Pending (yoav decision):** Whether to physically delete the duplicate `ef803466` (same series, nearly identical title). Deferred — FK/slug/history review needed before any deletion.
+> - **No deploy needed.** DB change is live immediately on `bneyzion.vercel.app/lessons/f9653c4c-391e-436e-84a1-3ff15b5ac1ce`.
+
 > ## Session ט' — 2026-06-11 — Teacher popup content fix (תקלה A) + parasha popup confirmed fixed
 > Two issues carried forward from session ח':
 > - **תקלה A (TeacherLessonModal shows description not content) — CODE BUG, not data:** Session ח' misdiagnosed this as "2,888 lessons with content=NULL". Proof: `/teachers/lesson/3fc14a99...` renders FULL text → `content` IS in DB. Root: every teacher hook omitted `content` from REST select, every interface had no `content` field, every caller passed only `description` to `TeacherLessonModal`. Fixed laterally across all 5 teacher popup paths: `useTeacherBookContent` (TeacherContentTypeLesson + TeacherCreatorLesson), `useTeacherParashaContent` (TeacherParashaLesson + TeacherWorksheetLesson), `TeachersSeriesPage` inline hook — all REST selects now include `content`, all map `l.content`, all interfaces extended, all callers pass `content` to modal. `TeacherLessonModal` now renders HTML via `dangerouslySetInnerHTML`+`sanitizeHtml` when content present, plain description as fallback.
@@ -6738,3 +6886,32 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 ### ה. סכמת lessons ל-INSERT (אומת): רק `title` NOT NULL; defaults: source_type='text', status='draft', audience_tags=['general'], views_count=0. עמודות מדיה: attachment_url/audio_url/video_url/content/description/bible_book/bible_chapter/series_id/legacy_attachment_url/published_at.
 
 **פתוח לסשן הבא:** סגירת 409 הפערים הציבוריים (התחל מ-101 עם PDF) לפי GOLDEN-PROMPT-v2. כל הקוד ב-commits מקומיים (תיקוני האתר pushed; rehost+parity לא pushed — DB חי ממילא).
+
+---
+
+## סשן 11.6.2026 — ניווט תנ״ך + פורטל + שדרוג אשף-העלאה (5 batches חיים על prod)
+
+**דפוס דיפלוי (קבוע):** prod=alias ידני, `main`=stub, push=preview בלבד. ⟹ `vercel deploy` (preview, בלי `--prod`, בלי git push) → אימות → `POST api.vercel.com/v2/deployments/{id}/aliases?teamId=team_AQm7yu5xy862A0d8SDFSl9rI {"alias":"bneyzion.vercel.app"}`. כל dpl מצטבר. rollback=alias ל-dpl קודם. token `vcp_6fYI...`, project `prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x`.
+
+**אימות preview מוגן (התוסף Chrome מתנתק):** previews חסומים 401 (ssoProtection). secret bypass מ-`GET /v9/projects/bneyzion` שדה `protectionBypass` (`3m5i6ufaWTMjL7rfxt9KZouflSHOyXYI`) → **Firecrawl v2** `headers:{"x-vercel-protection-bypass":<secret>}` מרנדר+מצלם. prod ציבורי.
+
+**מה נפרס:**
+- **תקלות:** ושננתם-בסיידבר (RPC entity_type), וידאו-הרשמה (235 vp4.me=Smoove→NULL; כפיל `f9653c4c`←video מ-`ef803466`), פופאפ-מורים חלקי (`TeacherLessonModal` מעולם לא ביקש `content` — 7 קבצים), בוט (Gemini מיושן→gemini-2.5-flash).
+- **Batch 1:** `/series` קטלוג (היה 404), `/bible/:book` סדרות-לפי-ספר, `/category` שורה-לחיצה. **באג קריטי:** `useBibleBookSeries` select/order על `series.bible_chapter` שלא קיים→400→ריק. הוסר.
+- **Batch 2:** `is_current` + כפתור-כוכב אדמין, redirect לפרק-נוכחי, `GlobalWeeklyNav` סיידבר כל-הספרים. ספר נוכחי=חגי-זכריה-מלאכי.
+- **Batch 3:** `/profile`→`/portal`, `/courses`→`/design-my-courses` + לינקים; תיקון לולאת-הגדרות; הסרת widget role-preview.
+- **Batch A+B אשף:** autocomplete-ספר, `ContentLocationPicker` (מורים/ציבור→עץ→סדרה/חדשה), חיפוש, **תיקון orphan parent_id**; multi-rabbi (`series_rabbis`/`lesson_rabbis` join, RLS INSERT-only, rabbi_id ראשי נשמר) + הוסף-יוצר; `generate-cover` edge fn (imagen-4.0-fast, auth+rate-limit, bucket `bnei-zion-thumbnails`); `/admin/series` אזור-אישורים.
+- ⚠️ **RLS על `lessons`/`series` נדחה במכוון** — היה שובר קריאות anon ציבוריות + payment flow. follow-up אבטחה (EXPLAIN ANALYZE + לוודא edge-fns על service_role).
+
+### ⭐ מודל הנתונים — series vs lessons (סער שאל "למה יש lessons בכלל")
+- **`series` (1,698)** = תיקייה/ניווט בלבד, **בלי עמודות-תוכן**. עץ parent_id: 18 שורשים→144 category(ספרים)→~1,400 סדרות.
+- **`lessons` (18,452)** = כל התוכן (video/audio/content/PDF). series_id מקשר.
+- **אי-אפשר "רק series"** — לסדרה אין איפה להחזיק תוכן. תיקיות מול קבצים.
+- **3,042 lessons standalone** (בלי series_id) = רובם חומרי-מורים לפי content_type (ביאור הפסוקים, דפי-עבודה, שאלות-חזרה), נגישים ב-`/teachers/content-type/:type`. אלה ה"שיעורים המרחפים" — בחירת-ארגון, לא פגם. (+395 series ריקות.)
+
+### ⭐ ארכיטקטורת מידע (IA) — איך האתר מאורגן
+מאגר אחד, פיצול ראשוני **לפי קהל** (`audience_tags`): ציבור (13,172 שיעורים) / מורים (5,289). אותו תוכן נחשף דרך כמה **"עדשות"** (אותו `lessons`, חיתוך בזווית אחרת):
+- **ציבור:** לפי תנ״ך (ספר→פרק→סדרה, הסיידבר+`/bible`) · לפי סדרה (`/series`) · לפי רב (214, `/rabbis`) · לפי נושא (864, `/topic`) · פרשת השבוע (`/parasha`, מאגד) · קורס הפרק (`/course`, רמות גישה).
+- **מורים:** לפי `content_type` (`/teachers/content-type/:type`).
+- **"חוסר-עקביות" = שני קהלים, שני מודלים:** ציבור=מיקום-בתנ״ך, מורה=סוג-חומר. זו הסיבה ש"פה לפי סוג ופה לפי סדרה".
+- **3 נקודות בלגן (ניקוי, לא מבנה):** (1) 18 השורשים מעורבבים — קטגוריות-תנ״ך + סדרות-בודדות שהושלכו לשורש (חמאה ודבש, מידות בפרשה, סימן לבנים); (2) 3,042 lessons בלי series_id; (3) 395 series ריקות.

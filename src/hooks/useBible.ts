@@ -17,7 +17,8 @@ export function useBibleBook(book: string | undefined) {
         .select("bible_chapter")
         .eq("bible_book", book)
         .eq("status", "published")
-        .not("bible_chapter", "is", null);
+        .not("bible_chapter", "is", null)
+        .not("audience_tags", "cs", "{teachers}");
 
       if (error) throw error;
 
@@ -51,6 +52,7 @@ export function useBibleChapterLessons(book: string | undefined, chapter: number
         .eq("bible_book", book)
         .eq("bible_chapter", chapter)
         .eq("status", "published")
+        .not("audience_tags", "cs", "{teachers}")
         .order("bible_verse", { ascending: true, nullsFirst: false })
         .order("title");
 
@@ -58,6 +60,72 @@ export function useBibleChapterLessons(book: string | undefined, chapter: number
       return data || [];
     },
     enabled: !!book && !!chapter,
+  });
+}
+
+/**
+ * useBibleBookSeries — fetches event-series that are direct children of a
+ * bible-book category node (e.g. "ספר יהושע" category → its parshiot/events).
+ * Ordered by bible_chapter then title. Teacher-wing series are excluded.
+ */
+export function useBibleBookSeries(bookCategoryId: string | undefined) {
+  return useQuery({
+    queryKey: ["bible-book-series", bookCategoryId],
+    queryFn: async () => {
+      if (!bookCategoryId) return [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data, error } = await (supabase as any)
+        .from("series")
+        .select("id, title, lesson_count, sort_order, image_url, status, rabbis(name)")
+        .eq("parent_id", bookCategoryId)
+        .in("status", ["active", "published"])
+        .not("audience_tags", "cs", "{teachers}")
+        .gt("lesson_count", 0)
+        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("title") as { data: Array<{ id: string; title: string; lesson_count: number | null; sort_order: number | null; image_url: string | null; status: string; rabbis: { name: string } | { name: string }[] | null }> | null; error: unknown };
+      if (error) throw error;
+      return data || [];
+    },
+    enabled: !!bookCategoryId,
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+/**
+ * useBookCategoryId — resolves a book name (Hebrew) to its category node ID
+ * in the series tree. Tries exact match first, then ilike fallback.
+ */
+export function useBookCategoryId(bookName: string | undefined) {
+  return useQuery({
+    queryKey: ["book-category-id", bookName],
+    queryFn: async () => {
+      if (!bookName) return null;
+      const ROOT_IDS = [
+        "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b", // torah
+        "a0472c9f-8212-44ff-8937-ace5fea4b4dc", // neviim
+        "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41", // ketuvim
+      ];
+      // Try exact match first
+      const { data: exact } = await supabase
+        .from("series")
+        .select("id")
+        .eq("title", bookName)
+        .in("parent_id", ROOT_IDS)
+        .in("status", ["active", "published", "category"])
+        .maybeSingle();
+      if (exact?.id) return exact.id;
+      // Fallback: ilike (handles minor spacing/punctuation variants)
+      const { data: fuzzy } = await supabase
+        .from("series")
+        .select("id")
+        .ilike("title", bookName)
+        .in("parent_id", ROOT_IDS)
+        .in("status", ["active", "published", "category"])
+        .maybeSingle();
+      return fuzzy?.id ?? null;
+    },
+    enabled: !!bookName,
+    staleTime: 1000 * 60 * 10,
   });
 }
 

@@ -1,0 +1,150 @@
+{
+  "book": "חבקוק",
+  "book_id": "4a17b976-362f-4abe-9c75-965b50a4a1f7",
+  "plan": [
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000001",
+      "event_title": "חבקוק פרק א",
+      "lesson_id": "5361df18-5ee1-4442-8c64-34fafb56ad4c",
+      "mode": "copy",
+      "from_series": "c2070001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "חבקוק פרק א",
+      "old_title": "התחזקות הרוע בעולם ללא פרופורציות והגיון",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000001",
+      "event_title": "חבקוק פרק א",
+      "lesson_id": "82b8110c-fb0a-46f6-a5b4-e00f671b4bb4",
+      "mode": "copy",
+      "from_series": "c2070001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "חבקוק פרק א",
+      "old_title": "ניצחון הרשע?",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000001",
+      "event_title": "חבקוק פרק א",
+      "lesson_id": "c7aa601f-556a-492d-bc09-0b19cdd21282",
+      "mode": "copy",
+      "from_series": "c2070001-0001-4000-8000-000000000001",
+      "from_status": "active",
+      "from_title": "חבקוק פרק א",
+      "old_title": "נבואת חבקוק על בבל",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000001",
+      "event_title": "חבקוק פרק א",
+      "lesson_id": "56613652-fa85-4265-a6fd-0a8b9202dd73",
+      "mode": "copy",
+      "from_series": "c3f0ca7b-8ff2-40b0-81c6-0d0e140ae60f",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר חבקוק",
+      "old_title": "חבקוק פרק א",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000002",
+      "event_title": "חבקוק פרק ב",
+      "lesson_id": "53841b02-70cc-45ad-ab40-7c44b1807aa8",
+      "mode": "copy",
+      "from_series": "c2070001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חבקוק פרק ב",
+      "old_title": "הנבואה על מפלת בבל",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000002",
+      "event_title": "חבקוק פרק ב",
+      "lesson_id": "e15b8271-89f1-40ea-9f67-d2c381f3c018",
+      "mode": "copy",
+      "from_series": "a6b5adf5-07da-4bfd-bff7-8c6f5a7b5e01",
+      "from_status": "active",
+      "from_title": "מאמרים קצרים - ספר חבקוק",
+      "old_title": "התשובה לתמיהת חבקוק: מפלת בבל",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000002",
+      "event_title": "חבקוק פרק ב",
+      "lesson_id": "bd7c30b1-6868-46ed-8dd3-b4f93e0554d8",
+      "mode": "copy",
+      "from_series": "c2070001-0001-4000-8000-000000000002",
+      "from_status": "active",
+      "from_title": "חבקוק פרק ב",
+      "old_title": "הנפילה הפתאומית של בבל",
+      "old_rabbi": "הרב נתן רוטמן"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000002",
+      "event_title": "חבקוק פרק ב",
+      "lesson_id": "008b7ed1-f001-4095-bac5-ea5485ecddb4",
+      "mode": "copy",
+      "from_series": "c3f0ca7b-8ff2-40b0-81c6-0d0e140ae60f",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר חבקוק",
+      "old_title": "חבקוק פרק ב",
+      "old_rabbi": "הרב יונדב זר"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000003",
+      "event_title": "חבקוק פרק ג",
+      "lesson_id": "6614fd05-fc79-4d66-b421-a258a4dab2a8",
+      "mode": "copy",
+      "from_series": "c2070001-0001-4000-8000-000000000003",
+      "from_status": "active",
+      "from_title": "חבקוק פרק ג",
+      "old_title": "תפילה להצלה מהגלות וציפיה לגאולה",
+      "old_rabbi": "הרב אליעזר קשתיאל"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000003",
+      "event_title": "חבקוק פרק ג",
+      "lesson_id": "d0c4deab-946a-4603-a014-b016f5b073df",
+      "mode": "copy",
+      "from_series": "a6b5adf5-07da-4bfd-bff7-8c6f5a7b5e01",
+      "from_status": "active",
+      "from_title": "מאמרים קצרים - ספר חבקוק",
+      "old_title": "סקירה נבואית הסטורית של גדולת ישראל",
+      "old_rabbi": "הרב יוסף הורוביץ"
+    },
+    {
+      "event_id": "c2070001-0001-4000-8000-000000000003",
+      "event_title": "חבקוק פרק ג",
+      "lesson_id": "0de11268-df75-4c0d-9b89-e11d11e571bc",
+      "mode": "copy",
+      "from_series": "c3f0ca7b-8ff2-40b0-81c6-0d0e140ae60f",
+      "from_status": "active",
+      "from_title": "קריאה וביאור בקצרה של ספר חבקוק",
+      "old_title": "חבקוק פרק ג",
+      "old_rabbi": "הרב יונדב זר"
+    }
+  ],
+  "report": [
+    {
+      "event": "חבקוק פרק א",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/חבקוק/חבקוק-פרק-א/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "חבקוק פרק ב",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/חבקוק/חבקוק-פרק-ב/",
+      "matched": 4,
+      "old_lessons": 4,
+      "unmatched": []
+    },
+    {
+      "event": "חבקוק פרק ג",
+      "old_page": "/מאגר-השיעורים-והמאמרים/נביאים/חבקוק/חבקוק-פרק-ג/",
+      "matched": 3,
+      "old_lessons": 3,
+      "unmatched": []
+    }
+  ]
+}

@@ -95,7 +95,7 @@ const Footer = () => {
               {/* 27.5.2026 — /series removed */}
               <li><Link to="/rabbis" className="hover:text-primary transition-colors">רבנים</Link></li>
               <li><Link to="/parasha" className="hover:text-primary transition-colors">פרשת השבוע</Link></li>
-              <li><Link to="/bible/bereshit" className="hover:text-primary transition-colors">ספרי התנ״ך</Link></li>
+              <li><Link to="/bible/בראשית" className="hover:text-primary transition-colors">ספרי התנ״ך</Link></li>
               <li><Link to="/store" className="hover:text-primary transition-colors">חנות</Link></li>
             </ul>
           </div>

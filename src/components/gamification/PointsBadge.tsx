@@ -11,7 +11,7 @@ const PointsBadge = () => {
 
   return (
     <Link
-      to="/profile"
+      to="/portal"
       className="flex items-center gap-1 px-2 py-1 rounded-full bg-accent/15 text-accent-foreground hover:bg-accent/25 transition-colors"
       title="הנקודות שלי"
     >

@@ -23,6 +23,15 @@
 
 ground-truth: עמודי-האירוע הישנים (`lessonBlock` → `h3>a` כותרת + `.author` רב). תיעוד מלא: `scripts/parity/NIGHT-LOG-20260610.md` + `[[bneyzion-migration-rules-saar]]` בזיכרון.
 
+### 🔒 פרוטוקול מקביליות (סער מריץ כמה סוכנים בו-זמנית — חובה!)
+כשסער פותח כמה סשנים במקביל על פערים שונים, **כל סוכן עובד דאטה-בלבד**:
+- ⛔ **אסור בהחלט בסשן מקבילי:** `vercel` (deploy/alias/promote), `git push/commit/checkout/merge`, עריכת קבצי קוד ב-`src/`/`api/`/`vercel.json`/`index.html`. **דיפלוי נעשה רק בסשן יחיד ייעודי, אחרי שכל המקבילים סיימו, באישור מפורש של סער.** אם הפער שלך דורש שינוי קוד — כתוב את השינוי המוצע לקובץ דוח (לא ל-src) ועצור.
+- ✅ **מותר:** קריאת קבצים, SELECT/INSERT/UPDATE ב-Supabase **בתחום הפער שלך בלבד**, כתיבת דוחות.
+- **גיבויים בלי התנגשות:** שם גיבוי ייחודי `lessons_bak_gap<N>_<YYYYMMDD_HHMM>`. **לעולם לא `DROP TABLE` על גיבוי קיים** (סוכן אחר אולי תלוי בו).
+- **תחום נעול לכל פער:** gap2=עדכון `content` בלבד לשיעורים עם content IS NULL · gap3=שיוכי ישעיהו/יחזקאל בלבד · gap1=אגף מורים (audience teachers) בלבד · gap4=טבלאות topics/lesson_topics בלבד · gap5=מחיקת כפילויות רק אחרי שכל השאר סיימו (לא במקביל אליהם!). אל תיגע בשורות מחוץ לתחום שלך.
+- **דוחות בקבצים ייחודיים:** `scripts/parity/reports/gap<N>-report-<timestamp>.md` — לא לדרוס קובץ משותף, לא לערוך KNOWLEDGE.md במקביל (כתוב לקובץ הדוח שלך; המיזוג ל-KNOWLEDGE בסוף בסשן אחד).
+- **עותק יהושע `bneyzion-yehoshua.vercel.app` — לא נוגעים. נקודה.**
+
 ### עדכון מביקורת-הבוקר של סער (10.6.2026) — בדוק את אלה בכל מעבר
 10. **רבנים מול יוצרים:** טבלת `rabbis` כוללת `entity_type` ∈ {`rabbi`(198), `content_creator`(16)}. כל רשימת-רבנים ציבורית (טאב סיידבר + `/rabbis` + RPC `get_public_rabbis`) חייבת `entity_type='rabbi'`. יוצרים (ושננתם, מכון דעת סופרים, תלמוד תורה מורשה, מערכת בני ציון) שייכים לאגף המורים בלבד. ⚠️ COPY של שיעורי-יוצר לאירועי-general "מבריח" אותם לרשימת הרבנים — סנן entity_type, אל תסמוך על "יש סדרת-general".
 11. **כפילויות-תצוגה (לא מחיקה):** המיגרציה שכפלה כל שיעור לכמה סדרות → רשימות מוצפות בכרטיסים זהים. דדפ בתצוגה לפי **קובץ (attachment_url) או כותרת+רב** ב: דף-סדרה, דף-רב, TopicPage, אגף-מורים content-type. לא למחוק שורות (FK).
@@ -176,4 +185,23 @@ SELECT COUNT(*) FROM lessons WHERE attachment_url NOT LIKE '%supabase.co%'
 
 ---
 
-*Agent created 2026-06-09.*
+## מודל הנתונים — series vs lessons (אומת 11.6.2026, שאלת סער "למה יש lessons בכלל")
+
+זה הבסיס לכל מיגרציה. **שתי טבלאות, תפקידים שונים:**
+
+- **`series` (1,698 שורות)** = **תיקייה/ניווט בלבד**. עמודות: `title, image_url, parent_id, rabbi_id, lesson_count, status, audience_tags, sort_order, bible_book, description`. **אין שום עמודת-תוכן** — לא video_url, לא audio_url, לא content, לא attachment. זה **עץ adjacency-list** דרך `parent_id`:
+  - 18 שורשים (parent_id NULL) — תורה/נביאים/כתובים/נושאים/מועדים...
+  - 144 `status='category'` = ספרים/צמתי-ניווט (יהושע, ישעיהו...) — מחזיקים ילדים, לא תוכן.
+  - ~1,400 `status` active/published = סדרות אמיתיות (קולקציות).
+  - 157 draft, 395 עם lesson_count=0 (ריקות/nav).
+- **`lessons` (18,452 שורות)** = **כל התוכן בפועל**. כל video_url/audio_url/content(HTML)/attachment_url(PDF)/content_type/source_type/duration/views_count/bible_book/chapter/verse. מקושר לסדרה דרך `series_id`.
+
+**מסקנה למיגרציה:** אי-אפשר "רק series" — לסדרה אין איפה להחזיק תוכן. תיקיות (series) מול קבצים (lessons). כל שיעור/מאמר/PDF/אודיו = שורת lesson. כשמייבאים תוכן: יוצרים/מוצאים series (תיקייה) ואז INSERT ל-lessons עם series_id.
+
+**3,042 lessons בלי series_id (standalone):** כולם `source_type=text`, רובם **חומרי מורים** לפי content_type (ביאור הפסוקים, שאלות-ותשובות, דפי-עבודה, חידות-חזרה, ביאורי-מילים) — נגישים דרך `/teachers/content-type/:type`, לא דרך סדרה. **לא יתומים-למחיקה — בחירת-ארגון.** אם רוצים לקבץ אותם לסדרות זו מיגרציה אופציונלית (reparent), לא מחיקת-טבלה.
+
+← תיעוד סשן מלא: OMS memory [[bneyzion-nav-portal-upload-11jun]]
+
+---
+
+*Agent created 2026-06-09. · עודכן 11.6.2026: מודל series/lessons.*

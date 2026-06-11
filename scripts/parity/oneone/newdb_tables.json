@@ -1,0 +1,394 @@
+[
+ {
+  "table_name": "benzi_knowledge",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "bible_verses",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "bot_analytics_summary",
+  "table_type": "VIEW"
+ },
+ {
+  "table_name": "bot_intents_breakdown",
+  "table_type": "VIEW"
+ },
+ {
+  "table_name": "bot_sessions",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "chapters",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "community_course_lessons",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "community_courses",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "community_member_courses",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "community_members",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "contact_messages",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "coupons",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "course_enrollments",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "course_sessions",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "cover_generations",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "daily_verses",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "daily_videos",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "donations",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "dor_site_content",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "grow_orders",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_comments",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_dedications",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_rabbis",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_topics",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_topics_bak_20260607",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_topics_bak_20260610",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lesson_topics_bak_gap4_20260610_2200",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_backup_bereshit_recovery_2026_06_01",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_backup_pre_teachers_migration_2026_05_27",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak2_20260609",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak3_20260609",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_20260607",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_20260609",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_20260610_night",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_gap1_20260610_2011",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_gap2_20260610_2005",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_gap3_20260610_1959",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_gap5",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_korach_dup_20260611",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_parity_20260609",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_bak_vp4landing_20260611",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_pre_cleanup_2026_05_27_v2",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_pre_cleanup_v3_2026_05_27",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "lessons_pre_scrape_2026_05_27_part2",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "migration_batches",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "migration_items",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "migration_logs",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "migration_redirects",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "miracles",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "newsletter_subscribers",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "ohp_chat_messages",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "ohp_messages",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "ohp_send_logs",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "order_items",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "orders",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "payment_products",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "product_categories",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "products",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "profiles",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "rabbis",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "registrations",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_20260607",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_20260609",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_20260610",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_20260610_night",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_gap1_20260610_2011",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_gap3_20260610_1959",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_bak_parity_20260609",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_links",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_links_bak_20260610_night",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_rabbis",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "series_with_audience",
+  "table_type": "VIEW"
+ },
+ {
+  "table_name": "site_settings",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "topics",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "topics_bak_20260607",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "topics_bak_20260610",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "topics_bak_20260610_night",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "topics_bak_gap4_20260610_2200",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_access_tags",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_challenge_progress",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_daily_activity",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_enrollments",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_favorite_rabbis",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_favorite_series",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_favorites",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_history",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_notifications",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_points",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_points_log",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "user_roles",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "v_yehoshua_campaign_report",
+  "table_type": "VIEW"
+ },
+ {
+  "table_name": "weekly_challenges",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "weekly_leaderboard",
+  "table_type": "VIEW"
+ },
+ {
+  "table_name": "weekly_program_progress",
+  "table_type": "BASE TABLE"
+ },
+ {
+  "table_name": "yehoshua_campaign_stats",
+  "table_type": "VIEW"
+ },
+ {
+  "table_name": "yehoshua_tier_counts",
+  "table_type": "VIEW"
+ }
+]

@@ -20,6 +20,7 @@ import LessonPage from "./pages/LessonPage";
 import RabbiPage from "./pages/RabbiPage";
 // 27.5.2026 — SeriesList route removed per Saar. Import preserved for potential rollback.
 // import SeriesList from "./pages/SeriesList";
+const SeriesLibrary = lazy(() => import("./pages/SeriesLibrary"));
 import RabbisList from "./pages/RabbisList";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -303,7 +304,7 @@ const App = () => (
             <Route path="/thank-you" element={<Suspense fallback={<LazyFallback />}><ThankYou /></Suspense>} />
             {/* PRODUCTION — new design (2026-04-30 swap) */}
             <Route path="/portal" element={<RequireAuth><Suspense fallback={<LazyFallback />}><DesignPreviewPortalSubscriber /></Suspense></RequireAuth>} />
-            <Route path="/courses" element={<Suspense fallback={<LazyFallback />}><DesignPreviewCoursesCatalog /></Suspense>} />
+            <Route path="/courses" element={<Navigate to="/design-my-courses" replace />} />
             {/* Weekly program library + per-book detail */}
             <Route path="/program/weekly-chapter" element={<Suspense fallback={<LazyFallback />}><WeeklyProgramLibrary /></Suspense>} />
             {/* Back-compat: /course/weekly-chapter → library (was hardcoded ezra) */}
@@ -321,7 +322,7 @@ const App = () => (
             <Route path="/rabbis" element={<RabbisList />} />
             <Route path="/rabbis/:id" element={<RabbiPage />} />
             <Route path="/parasha" element={<Suspense fallback={<LazyFallback />}><ParashaPage /></Suspense>} />
-            <Route path="/profile" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Profile /></Suspense></RequireAuth>} />
+            <Route path="/profile" element={<Navigate to="/portal" replace />} />
             <Route path="/favorites" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Favorites /></Suspense></RequireAuth>} />
             <Route path="/history" element={<RequireAuth><Suspense fallback={<LazyFallback />}><HistoryPage /></Suspense></RequireAuth>} />
             <Route path="/memorial" element={<Suspense fallback={<LazyFallback />}><Memorial /></Suspense>} />
@@ -338,7 +339,8 @@ const App = () => (
             {import.meta.env.DEV && (
               <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
             )}
-            {/* 27.5.2026 — /series & /pricing removed per Saar */}
+            {/* 27.5.2026 — /series restored as SeriesLibrary (new page), /pricing still removed */}
+            <Route path="/series" element={<Suspense fallback={<LazyFallback />}><SeriesLibrary /></Suspense>} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
             <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
             <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />
