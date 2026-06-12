@@ -28,6 +28,7 @@ import {
   Search,
   ChevronRight,
   ChevronDown,
+  ChevronLeft,
   Flame,
   X,
   Filter,
@@ -1000,6 +1001,95 @@ function ContentTree({
 //   "הכל ב..."      → navigate('/category/:sectionId')
 //   child click     → navigate('/series/:childId')
 // ────────────────────────────────────────────────────────────────────────
+// Nested second-level child inside an extra section (old-site depth-3: e.g. הפטרות → הפטרות-בראשית → הפטרת-X)
+function NestedSectionChild({
+  child,
+  matchesSearch,
+  onNavigate,
+}: {
+  child: { id: string; title: string; children?: { id: string; title: string }[] };
+  matchesSearch: (t: string) => boolean;
+  onNavigate: (path: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        style={{
+          width: "100%",
+          textAlign: "right",
+          padding: "0.32rem 0.55rem",
+          borderRadius: radii.sm,
+          background: "transparent",
+          border: "none",
+          color: open ? colors.goldDark : colors.textMuted,
+          fontFamily: fonts.body,
+          fontSize: "0.76rem",
+          fontWeight: 600,
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <span>{child.title}</span>
+        {open ? (
+          <ChevronDown size={10} style={{ color: colors.goldDark, flexShrink: 0 }} />
+        ) : (
+          <ChevronLeft size={10} style={{ color: colors.textSubtle, flexShrink: 0 }} />
+        )}
+      </button>
+      {open && (
+        <div style={{ paddingInlineStart: "0.7rem" }}>
+          <button
+            onClick={() => onNavigate(`/series/${child.id}`)}
+            style={{
+              width: "100%",
+              textAlign: "right",
+              padding: "0.28rem 0.5rem",
+              borderRadius: radii.sm,
+              background: "rgba(196,162,101,0.08)",
+              border: "none",
+              color: colors.goldDark,
+              fontFamily: fonts.body,
+              fontSize: "0.73rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              marginBottom: "0.1rem",
+            }}
+          >
+            לעמוד {child.title}
+          </button>
+          {(child.children || [])
+            .filter((g) => matchesSearch(g.title))
+            .map((g) => (
+              <button
+                key={g.id}
+                onClick={() => onNavigate(`/series/${g.id}`)}
+                style={{
+                  width: "100%",
+                  textAlign: "right",
+                  padding: "0.26rem 0.5rem",
+                  borderRadius: radii.sm,
+                  background: "transparent",
+                  border: "none",
+                  color: colors.textMuted,
+                  fontFamily: fonts.body,
+                  fontSize: "0.73rem",
+                  fontWeight: 400,
+                  cursor: "pointer",
+                }}
+              >
+                {g.title}
+              </button>
+            ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ExtraSectionBlock({
   section,
   isExpanded,
@@ -1112,10 +1202,18 @@ function ExtraSectionBlock({
             {SECTION_ALIAS[section.title] ?? `כל השיעורים ב${section.title}`}
           </button>
           )}
-          {/* Children — navigate to /series/:id */}
+          {/* Children — leafs navigate to /series/:id; children-with-children nest (old depth-3: הפטרות/מועדים) */}
           {section.children
             .filter((c) => matchesSearch(c.title))
-            .map((child) => (
+            .map((child) =>
+              child.children && child.children.length > 0 ? (
+                <NestedSectionChild
+                  key={child.id}
+                  child={child}
+                  matchesSearch={matchesSearch}
+                  onNavigate={onNavigate}
+                />
+              ) : (
               <button
                 key={child.id}
                 onClick={() => onNavigate(`/series/${child.id}`)}
@@ -1150,7 +1248,8 @@ function ExtraSectionBlock({
                   style={{ color: colors.textSubtle, flexShrink: 0 }}
                 />
               </button>
-            ))}
+              ),
+            )}
         </div>
       )}
     </div>

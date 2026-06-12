@@ -7,10 +7,17 @@ import type { SidebarCategory, SidebarBook, SidebarChild, SeriesRow, LessonRow, 
 // Re-export types
 export type { SidebarCategory, SidebarBook, SidebarChild, SeriesRow, LessonRow, RabbiInfo };
 
+export interface ExtraSectionChild {
+  id: string;
+  title: string;
+  parent_id?: string | null;
+  children?: { id: string; title: string; parent_id?: string | null }[];
+}
+
 export interface ExtraSection {
   id: string;
   title: string;
-  children: { id: string; title: string; parent_id?: string | null }[];
+  children: ExtraSectionChild[];
 }
 
 // Root category IDs for the full content tree
@@ -125,6 +132,23 @@ export function useContentSidebar() {
         .order("sort_order")
         .order("title");
 
+      // Old-site sections are TWO levels deep (e.g. הפטרות → הפטרות-בראשית → 83 individual
+      // haftarot; מועדים → יום הכיפורים/סוכות → sub-series). Fetch grandchildren with the
+      // same band+audience filters and nest them under their section child.
+      const sectionChildIds = (expandableChildren || []).map((c) => c.id);
+      const { data: sectionGrandchildren } = sectionChildIds.length
+        ? await supabase
+            .from("series")
+            .select("id, title, parent_id, sort_order")
+            .in("parent_id", sectionChildIds)
+            .in("status", ["active", "published"])
+            .gte("sort_order", 1)
+            .lte("sort_order", 999)
+            .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+            .order("sort_order")
+            .order("title")
+        : { data: [] as any[] };
+
       // “איך לומדים” is treated as a flat section like the other expandable sections:
       // only its direct children with sort_order 1..999 appear in the sidebar (old site showed 5 leaf series).
       // The deep-RPC approach was fetching all descendants (20+) which broke parity.
@@ -190,7 +214,12 @@ export function useContentSidebar() {
       // §2.1: sortByCustomOrder is retired — DB returns sort_order-ordered results (band 1-999).
       // The order from the DB query (sort_order ASC NULLS LAST, title) is the canonical order.
       const getChildren = (parentId: string) =>
-        (expandableChildren || []).filter((c) => c.parent_id === parentId);
+        (expandableChildren || [])
+          .filter((c) => c.parent_id === parentId)
+          .map((c) => ({
+            ...c,
+            children: (sectionGrandchildren || []).filter((g) => g.parent_id === c.id),
+          }));
 
       const extraSections: ExtraSection[] = [
         {

@@ -155,6 +155,16 @@ for _i, _n in enumerate(NEVIIM_BOOKS + KETUVIM_BOOKS):
     BOOKS_MAP.setdefault(_n, _i)
 
 
+SECTION_ALIAS = {
+    'נושאים כלליים בתנ\"ך': 'כל השיעורים בנושאים הכלליים',
+    'מועדים': 'כל השיעורים על המועדים',
+    'ימי עיון בתנ\"ך': 'כל השיעורים מימי עיון בתנך',
+    'הפטרות': None,
+    'כלי עזר - טבלאות זמני המאורעות ומפות': None,
+    'ליווי ת\"תים': None,
+    'פרוייקט התנ\"ך המוקלט - מתעדכן': None,
+}
+
 def _extract_biblical(title):
     m = re.search(r"פרשת\s+([^|–\-]+)", title or "")
     if m:
@@ -522,7 +532,8 @@ def render_book_children(cat_title, book):
 
 
 def render_section_children(section):
-    rows = [{"title": f"כל השיעורים ב{section['title']}", "kind": "alias"}]
+    _al = SECTION_ALIAS.get(section['title'], f"כל השיעורים ב{section['title']}")
+    rows = [{"title": _al, "kind": "alias"}] if _al else []
     for c in section["children"]:
         rows.append({"title": c["title"], "kind": "child", "id": c.get("id"),
                      "status": c.get("status"), "audience_tags": c.get("audience_tags")})

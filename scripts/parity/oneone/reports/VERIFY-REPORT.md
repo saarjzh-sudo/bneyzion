@@ -1,5 +1,5 @@
 # VERIFY — oneone verification report
-*Generated 2026-06-12 11:30 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
+*Generated 2026-06-12 11:40 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
 
 REST calls: 3039 (cache hits 73, errors 0)
 
@@ -7,7 +7,7 @@ REST calls: 3039 (cache hits 73, errors 0)
 
 | Section | Pass | Total | Pass rate |
 |---|---|---|---|
-| Sidebar (top categories) | 5 | 13 | 38.5% |
+| Sidebar (top categories) | 8 | 13 | 61.5% |
 | Listing pages | 795 | 1273 | 62.5% |
 | Rabbi pages | 128 | 154 | 83.1% |
 | Topics sidebar | PASS | 1 | — |
@@ -47,7 +47,7 @@ REST calls: 3039 (cache hits 73, errors 0)
     - extra: ['כל השיעורים על מגילת אסתר']
 
 ### ❌ נושאים כלליים בתנ"ך (section)
-- old=16 (incl. alias) order_ok=True missing=['כל השיעורים בנושאים הכלליים'] extra=['כל השיעורים בנושאים כלליים בתנך']
+- old=16 (incl. alias) order_ok=True missing=[] extra=[]
 - ⚠️ old grandchildren not renderable by one-level sidebar: 1
 
 ### ❌ מועדים (section)
@@ -55,20 +55,20 @@ REST calls: 3039 (cache hits 73, errors 0)
 - ⚠️ old grandchildren not renderable by one-level sidebar: 4
 
 ### ❌ הפטרות (section)
-- old=7 (incl. alias) order_ok=True missing=[] extra=['כל השיעורים בהפטרות']
+- old=7 (incl. alias) order_ok=True missing=[] extra=[]
 - ⚠️ old grandchildren not renderable by one-level sidebar: 83
 
-### ❌ ימי עיון בתנ"ך (section)
-- old=8 (incl. alias) order_ok=True missing=['כל השיעורים מימי עיון בתנך'] extra=['כל השיעורים בימי עיון בתנך']
+### ✅ ימי עיון בתנ"ך (section)
+- old=8 (incl. alias) order_ok=True missing=[] extra=[]
 
-### ❌ כלי עזר - טבלאות זמני המאורעות ומפות (section)
-- old=1 (incl. alias) order_ok=True missing=[] extra=['כל השיעורים בכלי עזר טבלאות זמני המאורעות ומפות']
+### ✅ כלי עזר - טבלאות זמני המאורעות ומפות (section)
+- old=1 (incl. alias) order_ok=True missing=[] extra=[]
 
 ### ❌ פרוייקט התנ"ך המוקלט - מתעדכן (static_link)
 - quick-link rendered: False
 
-### ❌ ליווי ת"תים (section)
-- old=2 (incl. alias) order_ok=True missing=[] extra=['כל השיעורים בליווי תתים']
+### ✅ ליווי ת"תים (section)
+- old=2 (incl. alias) order_ok=True missing=[] extra=[]
 
 ## 2. Listing pages
 
@@ -309,19 +309,19 @@ rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-se
 
 - Teacher-only items in PUBLIC simulations: listings lessons=0, topic lessons=0, sidebar children=0 (rabbi-page lessons=192 — intentional per code comment, info only)
 - Draft items in public sidebar: 0
-- Popup sample (60 lessons): content-null=28, fully-empty (no content+no media)=1 — known-debt, not FAIL
+- Popup sample (60 lessons): content-null=29, fully-empty (no content+no media)=1 — known-debt, not FAIL
 | Section | Sampled | content NULL | empty popup |
 |---|---|---|---|
-| איך-לומדים-תנך | 6 | 3 | 0 |
+| איך-לומדים-תנך | 6 | 4 | 0 |
 | הפטרות | 6 | 1 | 0 |
-| ימי-עיון-בתנך | 6 | 6 | 0 |
+| ימי-עיון-בתנך | 6 | 5 | 0 |
 | כלי-עזר-טבלאות-זמני-המאורעות-ומפות | 6 | 2 | 0 |
-| כתובים | 6 | 4 | 0 |
+| כתובים | 6 | 5 | 0 |
 | ליווי-תתים | 6 | 2 | 0 |
-| מועדים | 6 | 1 | 0 |
-| נביאים | 6 | 6 | 1 |
-| נושאים-כלליים-בתנך | 6 | 3 | 0 |
-| תורה | 6 | 1 | 0 |
+| מועדים | 6 | 0 | 0 |
+| נביאים | 6 | 5 | 1 |
+| נושאים-כלליים-בתנך | 6 | 4 | 0 |
+| תורה | 6 | 2 | 0 |
 
 ## Harness notes / limitations
 
