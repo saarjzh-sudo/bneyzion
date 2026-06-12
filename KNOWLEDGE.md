@@ -6957,3 +6957,8 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 - רשימות: 795/1,273 strict (החריגים: דפי-alias שהם לינקים, roll-up תוספתי, ושאריות מתועדות ב-YOAV-FINAL.md — 935 פריטי-ספק עם ראיות)
 **יישום:** 27,039 ops + 3 סבבי-תיקון מאושרים + תור-גירוד (181 פורסמו עם טקסט מלא). 4,819 שורות חדשות (copied_from). תיקון חירום PGRST201 (FK כפול multi-rabbi) החזיר את הפרוד לתפקוד.
 **קוד:** 10 קומיטים, build נקי, לא pushed — ממתין ל"פרוס" של סער. חובה: הקוד אחרי הדאטה (הדאטה כבר חיה).
+
+### 🚀 פריסה (12.6.2026 ~12:10, "פרוס" מסער)
+- deploy `dpl_AkncaMQaBGSPySDUwUBSb6M7tCLT` (bundle `main-BtRodNA0.js`) ← alias `bneyzion.vercel.app`. **rollback: alias ל-`dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx`.**
+- NetSpark: base64 config שורד ב-index.html דרך הפרוקסי (1=בטוח) ✓
+- אומת חי: דף בראשית 38 סדרות/1,302 שיעורים (roll-up מעבר ל-1000 עובד) ✓ · דף רב שנדורפי: 102 פריטים, פילטרי מדיה, סדרות-ככרטיסים לפי rabbi_page_items ✓
