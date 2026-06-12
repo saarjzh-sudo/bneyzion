@@ -492,7 +492,7 @@ def sim_sidebar():
             if c["parent_id"] != pid: continue
             gs = [g for g in sec_grand if g["parent_id"] == c["id"]]
             # NestedSectionChild renders a "כל <child>" alias row above the grandchildren
-            if gs:
+            if gs and c["title"] in ("הפטרות המועדים",):
                 gs = [{"id": c["id"], "title": f"כל {c['title']}", "parent_id": c["id"]}] + gs
             out.append(dict(c, children=gs))
         return out
