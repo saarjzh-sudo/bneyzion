@@ -1,17 +1,17 @@
 # VERIFY — oneone verification report
-*Generated 2026-06-12 09:58 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
+*Generated 2026-06-12 11:25 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
 
-REST calls: 3043 (cache hits 73, errors 0)
+REST calls: 3039 (cache hits 73, errors 0)
 
 ## Summary
 
 | Section | Pass | Total | Pass rate |
 |---|---|---|---|
 | Sidebar (top categories) | 5 | 13 | 38.5% |
-| Listing pages | 781 | 1273 | 61.4% |
-| Rabbi pages | 113 | 154 | 73.4% |
+| Listing pages | 795 | 1273 | 62.5% |
+| Rabbi pages | 121 | 154 | 78.6% |
 | Topics sidebar | PASS | 1 | — |
-| Topic pages | 58 | 128 | 45.3% |
+| Topic pages | 102 | 128 | 79.7% |
 | Teachers content-types | 22 | 22 | 100.0% |
 | Teachers creators | 28 | 31 | 90.3% |
 | Teachers by-book | 11 | 35 | 31.4% |
@@ -76,14 +76,14 @@ Simulated 1273 pages (skipped 47 unmapped).
 
 | Section | Pages | Pass | Old items | New items | Missing | Unexplained extra | Planned extras | Planned removals | Order fails | Rabbi mism. |
 |---|---|---|---|---|---|---|---|---|---|---|
-| נביאים | 546 | 264 (48.4%) | 7503 | 21410 | 711 | 14570 | 30 | 18 | 21 | 284 |
-| כתובים | 365 | 320 (87.7%) | 2209 | 6720 | 52 | 4048 | 79 | 436 | 23 | 36 |
-| תורה | 185 | 92 (49.7%) | 5066 | 14419 | 300 | 8899 | 594 | 160 | 7 | 383 |
+| נביאים | 546 | 267 (48.9%) | 7503 | 21772 | 358 | 14585 | 26 | 16 | 23 | 288 |
+| כתובים | 365 | 323 (88.5%) | 2209 | 6777 | 15 | 4072 | 75 | 436 | 24 | 37 |
+| תורה | 185 | 97 (52.4%) | 5066 | 14488 | 234 | 8899 | 593 | 164 | 7 | 383 |
 | הפטרות | 87 | 66 (75.9%) | 582 | 1233 | 15 | 609 | 47 | 10 | 0 | 1 |
-| נושאים-כלליים-בתנך | 37 | 20 (54.1%) | 628 | 1056 | 26 | 387 | 33 | 34 | 0 | 20 |
-| מועדים | 23 | 8 (34.8%) | 513 | 884 | 16 | 339 | 42 | 6 | 0 | 17 |
-| איך-לומדים-תנך | 13 | 6 (46.2%) | 326 | 215 | 162 | 21 | 30 | 0 | 0 | 0 |
-| ימי-עיון-בתנך | 8 | 1 (12.5%) | 673 | 946 | 3 | 140 | 136 | 0 | 0 | 9 |
+| נושאים-כלליים-בתנך | 37 | 20 (54.1%) | 628 | 1069 | 19 | 393 | 33 | 34 | 1 | 20 |
+| מועדים | 23 | 8 (34.8%) | 513 | 886 | 14 | 339 | 42 | 6 | 1 | 17 |
+| איך-לומדים-תנך | 13 | 8 (61.5%) | 326 | 231 | 147 | 23 | 29 | 0 | 0 | 0 |
+| ימי-עיון-בתנך | 8 | 2 (25.0%) | 673 | 946 | 1 | 140 | 134 | 0 | 1 | 9 |
 | כלי-עזר-טבלאות-זמני-המאורעות-ומפות | 6 | 3 (50.0%) | 46 | 43 | 5 | 2 | 0 | 0 | 0 | 0 |
 | ליווי-תתים | 3 | 1 (33.3%) | 2 | 6 | 0 | 4 | 0 | 0 | 0 | 0 |
 
@@ -92,128 +92,122 @@ Note: 48 of the pages are category/book aggregation nodes — since r2 the harne
 ### Top-20 worst pages
 
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/` *(kind=category)*
-  - old=263 new=7291 matched=150 in_order=22 missing=113 extra=7141 (planned keep 0, planned remove 10, unexplained 7131) order_ok=False rabbi_mm=0
-  - missing sample: ['מצגת מבט על ספר שמואל כיצד פעל דוד להחליף את מלכות שאול', 'ספר מלכים א עם ביאור ושננתם', 'מלך יריחו והמרגלים שבאו לרחב', 'ההבדל בין יהושע לשופטים', 'כריתת ברית עם יושב הארץ', 'רשי הראשון על התורה והנך', 'מדוע לא השלים יהושע את כיבוש הארץ', 'המלכים שהיכה יהושע ומלך חברון']
-  - extra sample: ['ביאור ושננתם לספר שמואל א פרק ט', 'הבאת שמואל לעלי', 'מבט רחב על חזון המקדש ביחזקאל שיעור ראשון', 'מבט רחב על חזון המקדש ביחזקאל שיעור ראשון', 'מגלת יהויכין עד חורבן הבית', 'מגלת יהויכין עד חורבן הבית', 'מפת שלושים ואחד המלכים', 'נבואה אישית לצדקיהו']
+  - old=263 new=7411 matched=262 in_order=24 missing=1 extra=7149 (planned keep 0, planned remove 9, unexplained 7140) order_ok=False rabbi_mm=0
+  - missing sample: ['בין משכן למקדש']
+  - extra sample: ['ביאור ושננתם לספר שמואל א פרק ט', 'אין מוקדם ומאוחר בתורה', 'הבאת שמואל לעלי', 'המלחמה בחמשת מלכי האמורי', 'השנה הרביעית ליהויקים', 'כל ספר ישעיהו', 'מבט רחב על חזון המקדש ביחזקאל שיעור ראשון', 'מבט רחב על חזון המקדש ביחזקאל שיעור ראשון']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/` *(kind=category)*
-  - old=159 new=4722 matched=115 in_order=6 missing=44 extra=4607 (planned keep 0, planned remove 83, unexplained 4524) order_ok=False rabbi_mm=0
-  - missing sample: ['ספר בראשית עם ביאור ושננתם', 'ספר שמות עם ביאור ושננתם', 'ספר ויקרא עם ביאור ושננתם', 'ספר במדבר עם ביאור ושננתם', 'עונש המוות בעקבות אכילת עץ הדעת', 'קללת כנען', 'תאריך לבריאת העולם של הציווי לך לך', 'מדוע יש תולדות יצחק ותולדות יעקב אך לא תולדות אברהם']
+  - old=159 new=4731 matched=124 in_order=8 missing=35 extra=4607 (planned keep 0, planned remove 85, unexplained 4522) order_ok=False rabbi_mm=0
+  - missing sample: ['עונש המוות בעקבות אכילת עץ הדעת', 'קללת כנען', 'תאריך לבריאת העולם של הציווי לך לך', 'מדוע יש תולדות יצחק ותולדות יעקב אך לא תולדות אברהם', 'גניבת נשי האבות ונסיונות חטיפה נוספים', 'פירוש האבן עזרא על מצחק', 'קנין מקומות בארץ ישראל בכסף', 'דברי אברהם לעבד שלא להשיב את בנו לחרן']
   - extra sample: ['שמות מוקלט פרק א ללא טעמים', 'ארבע רוחות השמיים', 'דף פרשת שבוע האזינו תשפד', 'דף פרשת שבוע תצוה תשפג', 'חידות לילדים פרשת בראשית', 'יחסי האדם והאדמה בפרשיות בראשית לך לך', 'מה תפקידו של המדבר בחיים שלנו', 'מצוות מינוי שופטים']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/` *(kind=category)*
-  - old=94 new=2333 matched=87 in_order=82 missing=7 extra=2246 (planned keep 65, planned remove 218, unexplained 1963) order_ok=False rabbi_mm=2
-  - missing sample: ['ספר דניאל עם ביאור ותרגום ושננתם', 'שאלות על מגילת רות', 'היחס בין מגילת אסתר לספר עזרא', 'מדוע מרדכי הציל את אחשורוש', 'מדוע מרדכי מצוה על אסתר להכנס אל אחשורוש מיד', 'מניין שנות מלכי פרס', 'בענין מועד גילוי מקום המקדש']
+  - old=94 new=2349 matched=93 in_order=83 missing=1 extra=2256 (planned keep 65, planned remove 218, unexplained 1973) order_ok=False rabbi_mm=2
+  - missing sample: ['ספר דניאל עם ביאור ותרגום ושננתם']
   - extra sample: ['ושננתם קיום מצוות מחיית עמלק במגילת אסתר', 'צדיק הוא ד כי פיהו מריתי', 'הילד דניאל בארמון נבוכדנצר', 'משלי פרק ג', 'איוב פרק ד', 'נחמיה בבקיאות פרקים ז ח', 'איוב פרק ח', 'איוב פרק ט']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/` *(kind=book)*
-  - old=63 new=1065 matched=38 in_order=13 missing=25 extra=1027 (planned keep 0, planned remove 1, unexplained 1026) order_ok=False rabbi_mm=0
-  - missing sample: ['מצגת מבט על ספר שמואל כיצד פעל דוד להחליף את מלכות שאול', 'שמואל בקוראי שמו מבוא לספר שמואל', 'למה חמל שאול על אגג', 'הריגת כוהני נוב', 'שהות דוד בארץ פלשתים', 'בן שנה שאול במלכו האמנם', 'האם שאול היה אמור לזכות למלכות נצחית', 'עשהאל ואבנר']
+  - old=63 new=1090 matched=63 in_order=38 missing=0 extra=1027 (planned keep 0, planned remove 1, unexplained 1026) order_ok=False rabbi_mm=0
   - extra sample: ['ביאור ושננתם לספר שמואל א פרק א', 'שמואל א מוקלט פרק א ללא טעמים', 'שמואל א פרק א', 'ביאור ושננתם לספר שמואל א פרק ו', 'ביאור ושננתם לספר שמואל א פרק ט', 'ביאור ושננתם לספר שמואל א פרק יא', 'ביאור ושננתם לספר שמואל א פרק יב', 'ביאור ושננתם לספר שמואל א פרק טו']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/` *(kind=book)*
-  - old=59 new=1037 matched=37 in_order=4 missing=22 extra=1000 (planned keep 1, planned remove 29, unexplained 970) order_ok=False rabbi_mm=0
-  - missing sample: ['ראובן פוחז או בכור', 'ספר בראשית עם ביאור ושננתם', 'עונש המוות בעקבות אכילת עץ הדעת', 'קללת כנען', 'תאריך לבריאת העולם של הציווי לך לך', 'מדוע יש תולדות יצחק ותולדות יעקב אך לא תולדות אברהם', 'גניבת נשי האבות ונסיונות חטיפה נוספים', 'פירוש האבן עזרא על מצחק']
-  - extra sample: ['בראשית', 'ראשית', 'לא טוב היות האדם לבדו', 'ראה ריח בני כריח שדה אשר ברכו ה', 'האיש הזקן ביותר בעולם', 'הברית עפי הראבע והרמבן', 'הופעת הקבה בעולם על פי שמותיו אלוקים יקוק דין ורחמים', 'המבול והתורה']
+  - old=59 new=1040 matched=40 in_order=6 missing=19 extra=1000 (planned keep 1, planned remove 32, unexplained 967) order_ok=False rabbi_mm=0
+  - missing sample: ['ראובן פוחז או בכור', 'עונש המוות בעקבות אכילת עץ הדעת', 'קללת כנען', 'תאריך לבריאת העולם של הציווי לך לך', 'מדוע יש תולדות יצחק ותולדות יעקב אך לא תולדות אברהם', 'גניבת נשי האבות ונסיונות חטיפה נוספים', 'פירוש האבן עזרא על מצחק', 'קנין מקומות בארץ ישראל בכסף']
+  - extra sample: ['בראשית', 'בראשית מוקלט פרק א ללא טעמים', 'ראשית', 'לא טוב היות האדם לבדו', 'ראה ריח בני כריח שדה אשר ברכו ה', 'האיש הזקן ביותר בעולם', 'הברית עפי הראבע והרמבן', 'הופעת הקבה בעולם על פי שמותיו אלוקים יקוק דין ורחמים']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/שמות/` *(kind=book)*
-  - old=38 new=1003 matched=26 in_order=2 missing=12 extra=977 (planned keep 2, planned remove 27, unexplained 948) order_ok=False rabbi_mm=0
-  - missing sample: ['ספר שמות עם ביאור ושננתם', 'מתי נזכרות הנהגות ומידות טובות של הנביאים בכתוב', 'שאלות בפרשת שמות', 'מכת בכורות', 'הציווי על מצות לפני יציאת מצרים', 'מועד אמירת התורה ומצוותיה למשה', 'הזכרת מעמד הר סיני בתנך', 'פוקד עוון אבות על בנים']
+  - old=38 new=1006 matched=29 in_order=5 missing=9 extra=977 (planned keep 2, planned remove 27, unexplained 948) order_ok=False rabbi_mm=0
+  - missing sample: ['מתי נזכרות הנהגות ומידות טובות של הנביאים בכתוב', 'שאלות בפרשת שמות', 'מכת בכורות', 'הציווי על מצות לפני יציאת מצרים', 'מועד אמירת התורה ומצוותיה למשה', 'הזכרת מעמד הר סיני בתנך', 'פוקד עוון אבות על בנים', 'האם מצות עליה לרגל נוהגת במשכן']
   - extra sample: ['ערכים ומידות העולים מפסוקי חומש שמות', 'שמות מוקלט פרק א ללא טעמים', 'פרק ב של הבריאה', 'ביאור שם הויה', 'בלבת אש מתוך הסנה', 'גלות מצרים', 'הבאים מצרימה', 'הגאולה בחומש שמות']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/` *(kind=book)*
-  - old=15 new=932 matched=10 in_order=7 missing=5 extra=922 (planned keep 0, planned remove 0, unexplained 922) order_ok=False rabbi_mm=1
-  - missing sample: ['מגלות יהויכין עד חורבן הבית', 'ירמיהו נביא לכל העמים', 'שארית הפליטה לאחר חורבן בית ראשון', 'לימוד חטאי בית ראשון בדורינו', 'נבואות ירמיהו על הגויים']
+  - old=15 new=935 matched=14 in_order=11 missing=1 extra=921 (planned keep 0, planned remove 0, unexplained 921) order_ok=False rabbi_mm=1
+  - missing sample: ['מגלות יהויכין עד חורבן הבית']
   - extra sample: ['מגלת יהויכין עד חורבן הבית', 'ירמיהו בבקיאות פרקים א ב', 'אזהרה מפני בוא האויב', 'בני יונדב בן רכב', 'ברוך בן נריה', 'ד ממנה את ירמיהו לנביא', 'הגאולה העתידה', 'הוויכוח בין ירמיהו לבין יושבי מצרים']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/` *(kind=book)*
-  - old=35 new=912 matched=33 in_order=11 missing=2 extra=879 (planned keep 1, planned remove 15, unexplained 863) order_ok=False rabbi_mm=0
-  - missing sample: ['ספר במדבר עם ביאור ושננתם', 'מדוע התלוננו בני ישראל בפרשת בהעלתך שאין להם בשר והרי היה להם שלו']
+  - old=35 new=916 matched=35 in_order=12 missing=0 extra=881 (planned keep 1, planned remove 15, unexplained 865) order_ok=False rabbi_mm=0
   - extra sample: ['ערכים ומידות העולים מפסוקי חומש במדבר', 'במדבר מוקלט פרק א ללא טעמים', 'ארבע רוחות השמיים', 'הדרך ממצרים לירושלים', 'החומש של דור המדבר', 'הכנה לקבלת התורה', 'המסלול בדרך לארץ ישראל', 'המסלול המפתיע של המרגלים']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/` *(kind=book)*
-  - old=41 new=869 matched=27 in_order=11 missing=14 extra=842 (planned keep 0, planned remove 0, unexplained 842) order_ok=False rabbi_mm=1
-  - missing sample: ['השופטים בדורותם מבוא לספר שופטים', 'האם בתקופת השופטים חלה התקדמות', 'השופטים הקטנים', 'יאיר בן מנשה מחומש במדבר ויאיר הגלעדי מספר שופטים', 'בני רחל בספר שופטים', 'חזרת מעשה עתניאל ועכסה ביהושע ובשופטים', 'איך הגיעו ישראל לשפל של פילגש בגבעה', 'מעגל הקסמים בספר שופטים']
+  - old=41 new=886 matched=41 in_order=25 missing=0 extra=845 (planned keep 0, planned remove 0, unexplained 845) order_ok=False rabbi_mm=1
   - extra sample: ['ביאור ושננתם לספר שופטים פרק א', 'ספר שופטים מוקלט פרק א', 'שופטים מוקלט פרק א ללא טעמים', 'ביאור ושננתם לספר שופטים פרק ב', 'ביאור ושננתם לספר שופטים פרק ט', 'ביאור ושננתם לספר שופטים פרק יז', 'מי יעלה לנו אל הכנעני בתחלה להלחם בו', 'אופי התקופה']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/` *(kind=book)*
-  - old=16 new=853 matched=10 in_order=7 missing=6 extra=843 (planned keep 0, planned remove 0, unexplained 843) order_ok=False rabbi_mm=0
-  - missing sample: ['עבודה זרה וגאוה', 'ישעיהו כולו נחמה', 'בן נכר וסריסים', 'ציון וירושלים', 'על איזו תקופה מדברות נבואות הנביאים האחרונים', 'הנבואה הקדומה על החרבת האומות בידי סנחריב']
+  - old=16 new=860 matched=16 in_order=13 missing=0 extra=844 (planned keep 0, planned remove 0, unexplained 844) order_ok=False rabbi_mm=0
   - extra sample: ['ישעיה א חמאה ודבש', 'ירמיהו בבקיאות פרקים ג ד', 'ירמיהו בבקיאות פרקים ג ד', 'ישעיהו בבקיאות פרקים יט כ', 'ישעיהו בבקיאות פרקים כא כב', 'ישעיהו בבקיאות פרקים כא כב', 'ישעיהו בבקיאות פרקים כג כד', 'ישעיהו בבקיאות פרקים כג כד']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/` *(kind=book)*
-  - old=38 new=806 matched=23 in_order=10 missing=15 extra=783 (planned keep 0, planned remove 1, unexplained 782) order_ok=False rabbi_mm=0
-  - missing sample: ['הסבר פשוט על מבנה ארץ ישראל', 'נחלת ארץ ישראל', 'מלך יריחו והמרגלים שבאו לרחב', 'ההבדל בין יהושע לשופטים', 'כריתת ברית עם יושב הארץ', 'רשי הראשון על התורה והנך', 'מדוע לא השלים יהושע את כיבוש הארץ', 'המלכים שהיכה יהושע ומלך חברון']
+  - old=38 new=820 matched=37 in_order=26 missing=1 extra=783 (planned keep 0, planned remove 1, unexplained 782) order_ok=False rabbi_mm=0
+  - missing sample: ['הסבר פשוט על מבנה ארץ ישראל']
   - extra sample: ['הסבר פשוט על מבנה ארץ ישראל והנחלות', 'ביאור ושננתם על ספר יהושע פרק א', 'יהושע מוקלט פרק א ללא טעמים', 'ספר יהושע מוקלט פרק ב', 'פרשת הגבעונים', 'ספר יהושע מוקלט פרק יג', 'ספר יהושע מוקלט פרק טז', 'מצגת כיצד נחלקה הארץ בין השבטים']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/` *(kind=book)*
-  - old=18 new=795 matched=13 in_order=4 missing=5 extra=782 (planned keep 0, planned remove 3, unexplained 779) order_ok=False rabbi_mm=1
-  - missing sample: ['מגלות יהויכין עד חורבן הבית', 'בבל מול ירושלים בקעה מול הרים שיעור ראשון', 'בבל מול ירושלים בקעה מול הרים שיעור שני', 'פתחון פיו של יחזקאל', 'פתיחת פיו של יחזקאל']
-  - extra sample: ['מגלת יהויכין עד חורבן הבית', 'יחזקאל מוקלט פרק א', 'יחזקאל פרק א', 'יחזקאל פרקים יז יח', 'שרטוט בית המקדש ביחזקאל לפי שיטות המלבים רשי ומצודות', 'שרטוט בית המקדש ביחזקאל לפי שיטות המלבים רשי ומצודות', 'שרטוט בית המקדש ביחזקאל על פי שיטות המלבים רשי ומצודות', 'ותשאני רוח ואשמע אחרי קול רעש גדול']
+  - old=18 new=796 matched=15 in_order=6 missing=3 extra=781 (planned keep 0, planned remove 2, unexplained 779) order_ok=False rabbi_mm=1
+  - missing sample: ['מגלות יהויכין עד חורבן הבית', 'בבל מול ירושלים בקעה מול הרים שיעור ראשון', 'בבל מול ירושלים בקעה מול הרים שיעור שני']
+  - extra sample: ['מגלת יהויכין עד חורבן הבית', 'יחזקאל מוקלט פרק א', 'יחזקאל פרק א', 'יחזקאל פרקים יז יח', 'שרטוט בית המקדש ביחזקאל לפי שיטות המלבים רשי ומצודות', 'שרטוט בית המקדש ביחזקאל לפי שיטות המלבים רשי ומצודות', 'שרטוט בית המקדש ביחזקאל לפי שיטות המלבים רשי ומצודות', 'ותשאני רוח ואשמע אחרי קול רעש גדול']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/` *(kind=book)*
-  - old=16 new=743 matched=14 in_order=9 missing=2 extra=729 (planned keep 3, planned remove 5, unexplained 721) order_ok=False rabbi_mm=0
-  - missing sample: ['דיברה תורה כנגד יצר הרע', 'אם משה היה נכנס לארץ האם התורה היתה ממשיכה להיכתב גם בארץ ישראל']
+  - old=16 new=744 matched=16 in_order=9 missing=0 extra=728 (planned keep 3, planned remove 4, unexplained 721) order_ok=False rabbi_mm=0
   - extra sample: ['כי תבואו אל הארץ', 'ערכים ומידות העולים מפסוקי חומש דברים', 'מוסר המלחמה בספר דברים', 'דברים מוקלט פרק א ללא טעמים', 'איכה', 'אני כהן', 'ארבע רשויות ההנהגה בעם ישראל', 'בכיה של חינם']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/` *(kind=book)*
-  - old=22 new=709 matched=21 in_order=6 missing=1 extra=688 (planned keep 1, planned remove 1, unexplained 686) order_ok=False rabbi_mm=0
-  - missing sample: ['ספר ויקרא עם ביאור ושננתם']
+  - old=22 new=713 matched=22 in_order=6 missing=0 extra=691 (planned keep 1, planned remove 1, unexplained 689) order_ok=False rabbi_mm=0
   - extra sample: ['ערכים ומידות העולים מפסוקי חומש ויקרא', 'גוף ונשמה בחומש ויקרא הרב עמירם אלבה', 'ויקרא מוקלט פרק א ללא טעמים', 'ויקרא', 'אחריות אישית', 'אשרי תבחר ותקרב', 'בין הכרח לתענוג האיסור להקריב שאור ודבש', 'ההגיון של קרבן תודה']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/` *(kind=category)*
   - old=31 new=680 matched=31 in_order=31 missing=0 extra=649 (planned keep 31, planned remove 10, unexplained 608) order_ok=True rabbi_mm=0
   - extra sample: ['רבות מחשבות בלב איש ועצת ד היא תקום', 'ויתור על ברכת הארץ', 'התפקיד של בלעם', 'הגנת משה ואליהו', 'איחוד שלושת המקדשים', 'הגלות המצמיחה', 'הכוח של דברי ה', 'הפטרת פרשת ראה כל כלי יוצר עליך לא יצלח']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/תהלים/` *(kind=book)*
-  - old=12 new=554 matched=12 in_order=11 missing=0 extra=542 (planned keep 4, planned remove 55, unexplained 483) order_ok=False rabbi_mm=3
+  - old=12 new=555 matched=12 in_order=11 missing=0 extra=543 (planned keep 4, planned remove 55, unexplained 484) order_ok=False rabbi_mm=3
   - extra sample: ['מעבר לקריאה וביאור בקצרה של ספר תהילים', 'מזמור סד', 'מזמור ע', 'מזמור עה', 'מזמור פ', 'מזמור פב', 'מזמור פג', 'מזמור פח']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/` *(kind=book)*
-  - old=29 new=456 matched=18 in_order=6 missing=11 extra=438 (planned keep 0, planned remove 0, unexplained 438) order_ok=False rabbi_mm=1
-  - missing sample: ['המלכויות בישראל מלכות עשרת השבטים', 'חטאו ועונשו של גיחזי', 'הניסים הפרטיים שעשה אלישע', 'מקבץ שאלות על מלכים ב', 'יונה חסד או אמת', 'אורך התקופה של ספר מלכים', 'הכותים האריות שד שלח בהם וכיצד הוסרו האריות', 'כלי המקדש בתקופת אחשוורוש']
-  - extra sample: ['מגלת יהויכין עד חורבן הבית', 'ערכים ומידות העולים מפסוקי ספר מלכים ב', 'מלכות אחזיהו ומותו', 'מלכים ב מוקלט פרק א ללא טעמים', 'כיצד יתכן שיהושפט המלך הצדיק התחבר עם מלכי ישראל הרשעים', 'מהפכת יהוא', 'מעשה עתליה ומעשה יהושבע', 'דמותו של יהואש']
+  - old=29 new=468 matched=28 in_order=16 missing=1 extra=440 (planned keep 0, planned remove 0, unexplained 440) order_ok=False rabbi_mm=1
+  - missing sample: ['המלכויות בישראל מלכות עשרת השבטים']
+  - extra sample: ['מגלת יהויכין עד חורבן הבית', 'ערכים ומידות העולים מפסוקי ספר מלכים ב', 'מלכות אחזיהו ומותו', 'כיצד יתכן שיהושפט המלך הצדיק התחבר עם מלכי ישראל הרשעים', 'מהפכת יהוא', 'מעשה עתליה ומעשה יהושבע', 'דמותו של יהואש', 'אהבת ה']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/` *(kind=book)*
-  - old=35 new=448 matched=17 in_order=10 missing=18 extra=431 (planned keep 1, planned remove 3, unexplained 427) order_ok=False rabbi_mm=0
-  - missing sample: ['ספר מלכים א עם ביאור ושננתם', 'המלכויות בישראל מבוא לספר מלכים', 'המלכויות בישראל מלכות עשרת השבטים', 'בין משכן למקדש', 'דוד ואבישג', 'מהות העגלים שהקים ירבעם', 'מדוע רץ אליהו לפני אחאב', 'האם חטא איש האלוקים מיהודה']
+  - old=35 new=465 matched=34 in_order=22 missing=1 extra=431 (planned keep 1, planned remove 3, unexplained 427) order_ok=False rabbi_mm=1
+  - missing sample: ['בין משכן למקדש']
   - extra sample: ['מפת שלושים ואחד המלכים', 'ערכים ומידות העולים מפסוקי ספר מלכים א', 'רבות מחשבות בלב איש ועצת ד היא תקום', 'מלכים א מוקלט פרק א ללא טעמים', 'שיעור 1 במלכים מלכים א פרק א', 'המלכת שלמה והריגת אדוניהו', 'חלום שלמה בגבעון משפט שלמה', 'מלכות שלמה']
 - `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/` *(kind=category)*
-  - old=101 new=533 matched=96 in_order=96 missing=5 extra=437 (planned keep 23, planned remove 34, unexplained 380) order_ok=True rabbi_mm=6
-  - missing sample: ['הסבר פשוט על מבנה ארץ ישראל', 'מדינת הלכה על פי התנך', 'שאלת איסור הבמות', 'חסרון האורים ותומים בבית שני', 'מקורות על אזור אשדוד אשקלון וקרית גת']
+  - old=101 new=538 matched=98 in_order=97 missing=3 extra=440 (planned keep 23, planned remove 34, unexplained 383) order_ok=False rabbi_mm=6
+  - missing sample: ['הסבר פשוט על מבנה ארץ ישראל', 'מדינת הלכה על פי התנך', 'שאלת איסור הבמות']
   - extra sample: ['הסבר פשוט על מבנה ארץ ישראל והנחלות', 'פרק א יחודו של חבל הלבנון', 'המקום אשר יבחר', 'אבל בית מעכה', 'אבל בית מעכה', 'אברהם וארבעת המלכים', 'איש אשר רוח בו מבוא לספר יהושע', 'אנשי לצון']
-- `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/` *(kind=book)*
-  - old=44 new=363 matched=23 in_order=10 missing=21 extra=340 (planned keep 0, planned remove 0, unexplained 340) order_ok=False rabbi_mm=2
-  - missing sample: ['יואב בן צרויה', 'מי היו הכרתי והפלתי', 'דוד ואנשי יבש גלעד', 'יהונתן בן שמעה אחי דוד', 'מלכות איש בשת', 'השבט שאליו השתייכה בת שבע', 'תגובות שונות של דוד המלך למות בניו', 'המשך בירור בעניין מרד אבשלום']
-  - extra sample: ['מעבר לקריאה וביאור בקצרה של ספר שמואל ב', 'מעבר לשיעורים קצרים על ספר שמואל ב', 'ערכים ומידות העולים מפסוקי ספר שמואל ב', 'דוד מתבשר על מות שאול', 'קינת דוד', 'המלכת דוד בחברון', 'דוד הולך וחזק', 'יסוד מלכות דוד על כל ישראל']
+- `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/` *(kind=category)*
+  - old=58 new=440 matched=57 in_order=56 missing=1 extra=383 (planned keep 42, planned remove 6, unexplained 335) order_ok=False rabbi_mm=4
+  - missing sample: ['אורי וישעי']
+  - extra sample: ['ארבעת בגדי הכהן הגדול ביום הכיפורים', 'ארבעת בגדי הכהן הגדול ביום הכיפורים', 'גאולת מצרים והגאולה העתידה', 'הקטורת והשראת השכינה', 'זכר עמלק', 'לב הפרק זכריה פרק ד', 'מדוע ירושלים נקראת צדק ושלם', 'מה מיוחד בירושלים']
 
 ## 3. Rabbi pages
 
-rabbi_page_items table: available; used for 131 rabbis (rest = fallback owned-series + lessons).
+rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-series + lessons).
 
-113/154 PASS. Worst 15 by missing lessons:
+121/154 PASS. Worst 15 by missing lessons:
 
-- **ושננתם**: series old=6 new=6 missing=0 | lessons old=34 new=29 missing=7 extra=2 order_ok=True
-- **הרב חגי ולוסקי**: series old=5 new=1 missing=4 | lessons old=5 new=3 missing=2 extra=0 order_ok=True
-- **הרב יואב אוריאל**: series old=50 new=50 missing=0 | lessons old=94 new=114 missing=6 extra=26 order_ok=True
-- **הרב יהונתן מיכאלי**: series old=5 new=1 missing=4 | lessons old=0 new=0 missing=0 extra=0 order_ok=True
-- **הרב יוסף שילר**: series old=5 new=1 missing=4 | lessons old=11 new=25 missing=0 extra=14 order_ok=True
-- **הרב שלמה אבינר**: series old=11 new=8 missing=4 | lessons old=0 new=0 missing=0 extra=0 order_ok=True
-- **הרב איתן שנדורפי**: series old=30 new=30 missing=0 | lessons old=73 new=94 missing=2 extra=23 order_ok=True
+- **הרב יואב אוריאל**: series old=50 new=50 missing=0 | lessons old=94 new=115 missing=5 extra=26 order_ok=True
+- **הרב עמנואל בן ארצי**: series old=26 new=27 missing=0 | lessons old=22 new=27 missing=3 extra=8 order_ok=True
 - **הרב אריה אוריאל**: series old=0 new=0 missing=0 | lessons old=2 new=10 missing=2 extra=10 order_ok=True
-- **הרב יהונתן עידן**: series old=3 new=1 missing=2 | lessons old=0 new=0 missing=0 extra=0 order_ok=True
 - **הרב מנחם שחור**: series old=7 new=7 missing=0 | lessons old=64 new=81 missing=2 extra=19 order_ok=True
-- **הרב עמנואל בן ארצי**: series old=26 new=27 missing=0 | lessons old=22 new=26 missing=2 extra=6 order_ok=False
 - **מערכת בני ציון**: series old=6 new=6 missing=0 | lessons old=2 new=0 missing=2 extra=0 order_ok=True
-- **הרב אס"ף בנדל**: series old=0 new=0 missing=0 | lessons old=15 new=20 missing=1 extra=6 order_ok=True
-- **הרב אריה אברמסון**: series old=0 new=0 missing=0 | lessons old=5 new=5 missing=1 extra=1 order_ok=True
-- **הרב יוסי ברינר**: series old=0 new=0 missing=0 | lessons old=31 new=46 missing=1 extra=16 order_ok=True
+- **הרב איתן שנדורפי**: series old=30 new=30 missing=0 | lessons old=73 new=94 missing=1 extra=22 order_ok=True
+- **הרב אביעד תפוחי**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
+- **הרב אוהד קרקובר**: series old=0 new=0 missing=0 | lessons old=0 new=2 missing=0 extra=2 order_ok=True
+- **הרב אורן טרבלסי**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
+- **הרב אס"ף בנדל**: series old=0 new=0 missing=0 | lessons old=15 new=21 missing=0 extra=6 order_ok=True
+- **הרב אסף שטראוס**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
+- **הרב אריאל בראלי**: series old=0 new=0 missing=0 | lessons old=0 new=2 missing=0 extra=2 order_ok=True
+- **הרב אריאל כהן**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
+- **הרב אריה מרזר**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
+- **הרב אריק אוריאל**: series old=2 new=2 missing=0 | lessons old=1 new=3 missing=0 extra=2 order_ok=True
 
 ## 4. Topics
 
-- Sidebar: PASS — old=127 new=127 missing=0 extra=0 order_ok=True count-mismatches=87
+- Sidebar: PASS — old=127 new=127 missing=0 extra=0 order_ok=True count-mismatches=78
 - ⚠️ HARNESS FINDING: the sidebar count query returns exactly 1000 rows (PostgREST cap) — the app sends NO limit, so the badge counts in production are computed from a truncated row set.
 - series_topics table: present (nonempty=True) — series-card checks enabled
-- Topic pages: 58/128 PASS
+- Topic pages: 102/128 PASS
 
-- **ארץ ישראל**: old=34 new=37 missing=2 extra=5 order_ok=True old_series_cards=0
-- **ארון הברית**: old=16 new=16 missing=1 extra=1 order_ok=True old_series_cards=0
-- **דוד המלך**: old=54 new=57 missing=1 extra=4 order_ok=True old_series_cards=4
+- **ארון הברית**: old=16 new=15 missing=1 extra=0 order_ok=True old_series_cards=0
+- **ארץ ישראל**: old=34 new=33 missing=1 extra=0 order_ok=True old_series_cards=0
+- **דוד המלך**: old=54 new=55 missing=1 extra=2 order_ok=True old_series_cards=4
+- **התשובה**: old=5 new=16 missing=1 extra=12 order_ok=False old_series_cards=0
+- **ירושלים**: old=28 new=27 missing=1 extra=0 order_ok=True old_series_cards=1
+- **כריתת ברית**: old=11 new=10 missing=1 extra=0 order_ok=True old_series_cards=0
 - **__meta__**: old=None new=None missing=None extra=None order_ok=None old_series_cards=None
-- **אליהו הנביא**: old=8 new=9 missing=0 extra=1 order_ok=True old_series_cards=0
-- **ביטחון ב-ד'**: old=2 new=3 missing=0 extra=1 order_ok=True old_series_cards=0
-- **בית המקדש**: old=37 new=38 missing=0 extra=1 order_ok=True old_series_cards=1
-- **בית המקדש השלישי**: old=7 new=12 missing=0 extra=5 order_ok=True old_series_cards=0
-- **בית שני**: old=34 new=36 missing=0 extra=2 order_ok=True old_series_cards=1
-- **ברית מילה**: old=7 new=8 missing=0 extra=1 order_ok=True old_series_cards=0
-- **גאולה**: old=53 new=65 missing=0 extra=12 order_ok=False old_series_cards=0
-- **גוג ומגוג**: old=10 new=12 missing=0 extra=2 order_ok=False old_series_cards=0
-- **גלות**: old=19 new=24 missing=0 extra=5 order_ok=True old_series_cards=0
-- **גן עדן**: old=1 new=2 missing=0 extra=1 order_ok=True old_series_cards=0
+- **גאולה**: old=53 new=53 missing=0 extra=0 order_ok=False old_series_cards=0
+- **גוג ומגוג**: old=10 new=10 missing=0 extra=0 order_ok=False old_series_cards=0
 - **האבות**: old=4 new=5 missing=0 extra=1 order_ok=True old_series_cards=0
+- **האזנה לפסוקים עם ביאור פשוט**: old=0 new=2 missing=0 extra=2 order_ok=True old_series_cards=55
+- **חנ**: old=None new=None missing=None extra=None order_ok=None old_series_cards=None
+- **חנוכה**: old=None new=None missing=None extra=None order_ok=None old_series_cards=None
+- **יום העצמאות**: old=None new=None missing=None extra=None order_ok=None old_series_cards=None
+- **לימוד בקצב של פרק לשיעור**: old=None new=None missing=None extra=None order_ok=None old_series_cards=None
 
 ## 5. Teachers wing
 
@@ -262,7 +256,7 @@ rabbi_page_items table: available; used for 131 rabbis (rest = fallback owned-se
   - ✅ הרב עדי איצקוביץ' (rabbi_page_items): old=13 new=13 matched=13 missing=0 extra=0 order_ok=True
   - ✅ הרב עמוס נתנאל (rabbi_page_items): old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
   - ❌ הרב עמירם אלבה (rabbi_page_items): old=19 new=20 matched=19 missing=0 extra=1 order_ok=True
-  - ❌ הרב עמנואל בן ארצי (rabbi_page_items): old=48 new=48 matched=46 missing=2 extra=2 order_ok=False
+  - ❌ הרב עמנואל בן ארצי (rabbi_page_items): old=48 new=49 matched=45 missing=3 extra=4 order_ok=True
   - ✅ הרב שלמה כץ (rabbi_page_items): old=21 new=21 matched=21 missing=0 extra=0 order_ok=True
   - ✅ הרב שמעון לוי והרב נתן מולאיוף (rabbi_page_items): old=11 new=11 matched=11 missing=0 extra=0 order_ok=True
   - ✅ הרב שמעון שוהם (rabbi_page_items): old=22 new=22 matched=22 missing=0 extra=0 order_ok=True
@@ -315,17 +309,17 @@ rabbi_page_items table: available; used for 131 rabbis (rest = fallback owned-se
 
 - Teacher-only items in PUBLIC simulations: listings lessons=0, topic lessons=0, sidebar children=0 (rabbi-page lessons=192 — intentional per code comment, info only)
 - Draft items in public sidebar: 0
-- Popup sample (60 lessons): content-null=32, fully-empty (no content+no media)=0 — known-debt, not FAIL
+- Popup sample (60 lessons): content-null=29, fully-empty (no content+no media)=0 — known-debt, not FAIL
 | Section | Sampled | content NULL | empty popup |
 |---|---|---|---|
 | איך-לומדים-תנך | 6 | 3 | 0 |
 | הפטרות | 6 | 1 | 0 |
-| ימי-עיון-בתנך | 6 | 6 | 0 |
+| ימי-עיון-בתנך | 6 | 5 | 0 |
 | כלי-עזר-טבלאות-זמני-המאורעות-ומפות | 6 | 2 | 0 |
-| כתובים | 6 | 3 | 0 |
+| כתובים | 6 | 4 | 0 |
 | ליווי-תתים | 6 | 2 | 0 |
-| מועדים | 6 | 3 | 0 |
-| נביאים | 6 | 6 | 0 |
+| מועדים | 6 | 1 | 0 |
+| נביאים | 6 | 5 | 0 |
 | נושאים-כלליים-בתנך | 6 | 4 | 0 |
 | תורה | 6 | 3 | 0 |
 

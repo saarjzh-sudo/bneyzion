@@ -1,0 +1,959 @@
+# דוח יואב מרוכז — סשן אחד-לאחד 12.6.2026
+
+כל פריט כאן = ספק שהמערכת סירבה להמציא לו פתרון. מקור-ראיה מצורף לכל שורה.
+**סה"כ: 935 פריטים**
+
+## lessons_plan_ketuvim — 274 פריטים
+- cross_section_sub_link
+- cross_section_sub_link
+- cross_section_sub_link
+- cross_section_sub_link
+- title_drift
+- matched_lesson_not_published
+- title_drift
+- old_admin_attribution_kept_db_rabbi
+- old_admin_attribution_kept_db_rabbi
+- old_admin_attribution_kept_db_rabbi
+- old_admin_attribution_kept_db_rabbi
+- old_admin_attribution_kept_db_rabbi
+- old_admin_attribution_kept_db_rabbi
+- old_admin_attribution_kept_db_rabbi
+- rabbi_attribution_conflict
+- title_drift
+- dual_audience_lesson
+- matched_lesson_not_published
+- dual_audience_lesson
+- same_page_duplicate_row
+- dual_audience_lesson
+- title_drift_suspect_match
+- title_drift_suspect_match
+- title_drift
+- rabbi_attribution_conflict
+- title_drift_suspect_match
+- rabbi_attribution_conflict
+- title_drift
+- rabbi_attribution_conflict
+- title_drift_suspect_match
+- rabbi_attribution_conflict
+- rabbi_attribution_conflict
+- dual_audience_lesson
+- dual_audience_lesson
+- dual_audience_lesson
+- title_drift
+- title_drift
+- title_drift
+- nested_sub_series_cross_parent
+- insert_cross_scope_dedup
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+- extra_lesson_not_on_old_page
+
+## lessons_plan_moadim_misc — 203 פריטים
+- page הפטרות/הפטרות-שמות/מאמרים-הפטרות-ספר-שמות was item-matched onto series 269dc17c-0cc1-4484-82e5-b7538b28f948 ("מאמרים על הפטרות שמות") owned by another old page; re-targeted to f1553df7-4a1d-4ca6-bd85-9d0ba7dff366 ("מאמרים - הפטרות ספר 
+- old page הפטרות shows series card "דרכי הפרשה מתגלות בהפטרה - בראשית" but the series' parent in newdb is "הפטרות בראשית" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code,
+- old page הפטרות shows series card "מאמרים על הפטרות בראשית" but the series' parent in newdb is "הפטרות בראשית" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or repare
+- old page הפטרות shows series card "מאמרים - הפטרות בראשית" but the series' parent in newdb is "הפטרות בראשית" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparen
+- old page הפטרות shows series card "מאמרים על הפטרות בראשית - הרב מנחם שחור" but the series' parent in newdb is "הפטרות בראשית" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via
+- old page הפטרות shows series card "דרכי הפרשה מתגלות בהפטרה - שמות" but the series' parent in newdb is "הפטרות שמות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or 
+- old page הפטרות shows series card "מאמרים על הפטרות שמות" but the series' parent in newdb is "הפטרות שמות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page הפטרות shows series card "מאמרים על הפטרות שמות" but the series' parent in newdb is "הפטרות שמות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page הפטרות shows series card "הפטרות שמות - הרב מנחם שחור" but the series' parent in newdb is "הפטרות שמות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or repa
+- old page הפטרות shows series card "דרכי הפרשה מתגלות בהפטרה - ויקרא" but the series' parent in newdb is "הפטרות ויקרא" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, o
+- old page הפטרות shows series card "מאמרים על הפטרות ויקרא" but the series' parent in newdb is "הפטרות ויקרא" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page הפטרות shows series card "הפטרות ויקרא - הרב מנחם שחור" but the series' parent in newdb is "הפטרות ויקרא" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or re
+- old page הפטרות shows series card "דרכי הפרשה מתגלות בהפטרה - במדבר" but the series' parent in newdb is "הפטרות במדבר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, o
+- old page הפטרות shows series card "מאמרים על הפטרות במדבר" but the series' parent in newdb is "הפטרות במדבר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page הפטרות shows series card "מאמרים - הפטרות במדבר" but the series' parent in newdb is "הפטרות במדבר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page הפטרות shows series card "מאמרים על הפטרות דברים" but the series' parent in newdb is "הפטרות דברים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page הפטרות shows series card "מאמרים על הפטרות המועדים" but the series' parent in newdb is "הפטרות המועדים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or repa
+- old page הפטרות shows series card "הפטרות המועדים - הרב מנחם שחור" but the series' parent in newdb is "הפטרות המועדים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, o
+- "ואמרתי ללא עמי" () on הפטרות/הפטרות-במדבר/הפטרות-במדבר-הרב-מנחם-שחור — confirm it is not genuinely-new content that should stay
+- "שמשון" () on הפטרות/הפטרות-במדבר/מאמרים-על-הפטרות-במדבר — confirm it is not genuinely-new content that should stay
+- "'כי מי נח' - סגולה מרוכזת הצומחת באיטיות" on הפטרות/הפטרות-בראשית/הפטרת-נח: picked bfa09995-1a7a-46e4-97a2-c365ffaf69d2 of ['bfa09995', 'c1010001'] — confirm which row the old page shows
+- a second old item on הפטרות/הפטרות-בראשית/מאמרים-הפטרות-בראשית matched the same db row ed4c33c2-88ec-4936-a8f2-fc1d46b8f457 (detail: old page order idx=4: ""רבות מחשבות בלב איש, ועצת ד' היא תקום"") — old page shows more rows than newdb has;
+- a second old item on הפטרות/הפטרות-בראשית/מאמרים-הפטרות-בראשית matched the same db row ed4c33c2-88ec-4936-a8f2-fc1d46b8f457 (detail: old page order idx=5: ""רבות מחשבות בלב איש, ועצת ד' היא תקום"") — old page shows more rows than newdb has;
+- "'כי מי נח'" () on הפטרות/הפטרות-בראשית/מאמרים-על-הפטרות-בראשית-הרב-מנחם-שחור — confirm it is not genuinely-new content that should stay
+- "ישם מדבר לאגם מים" (הרב יהושע שפירא) on הפטרות/הפטרות-דברים/מאמרים-על-הפטרות-דברים — confirm it is not genuinely-new content that should stay
+- והיה לעת ערב יהיה אור: old=הרב מנחם שחור db=הרב יהושע שפירא (recovered pair)
+- "בני גד ובני ראובן" (הרב איתן שנדורפי) on הפטרות/הפטרות-המועדים/הפטרת-שמחת-תורה — confirm it is not genuinely-new content that should stay
+- a second old item on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים matched the same db row 5f13afe1-9e52-447e-8cea-59db334cc612 (detail: old page order idx=26: "ושביה בצדקה") — old page shows more rows than newdb has; first position kept
+- "הקדמה לשבע דנחמתא" () on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- "ברוח ה' ובידי זרובבל" () on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- "מנורת זכריה ונס חנוכה" () on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- "לא תשכח!" () on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- "הנשיא בבית המקדש העתידי (1)" (הרב יואב אוריאל) on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- "אבן הראשה" () on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- "המבחן של מלך ישראל" () on הפטרות/הפטרות-המועדים/מאמרים-על-הפטרות-המועדים — confirm it is not genuinely-new content that should stay
+- קין - בעל תשובה: old=הרבנית חגית אלרן (לנשים) new=הרבנית חגית אלון (old taken as truth)
+- "בת שבע - אם המלכות" () on ימי-עיון-בתנך — confirm it is not genuinely-new content that should stay
+- "התפלגות המלוכה" (הרב אוהד תירוש) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעו — confirm it is not genuinely-new content that should stay
+- "לשון הכתוב ומשמעותה" (הרב יצחק בן שחר) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעו — confirm it is not genuinely-new content that should stay
+- "בן בעור ובעל פעור" (הרב ברוך סליי) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעו — confirm it is not genuinely-new content that should stay
+- "בנין ירושלים בתקופת נחמיה" (הרב מישאל רובין) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעו — confirm it is not genuinely-new content that should stay
+- משמעות השינויים בסדר השבטים: old=פרופ' דבורה רוזנווסר (לנשים) new=הרב יואב אוריאל (old taken as truth)
+- "עכסה ועתניאל - מנהיגות משלימה" (הרב אלישב אביחיל) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעז — confirm it is not genuinely-new content that should stay
+- "פרשת אשת יפת תואר" (הרב יהושע ון-דייק) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "השמיטה והיובל" (הרב אליעזר קשתיאל) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "הברזל הצף במים ושליחותו של אלישע" (הרב אלחנן בן נון) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "מבחן המידות בקבלת הנבואה" (הרב אלישע וישליצקי) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "שאול ודוד - זמניות מול נצח" (הרב מיכאל טוביאנו) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "נבואות חורבן ונבואות נחמה" (הרב שמואל אליהו) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "שיבת ציון - הישגים ונסיגות" (הרב ארי לנדא) on ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח — confirm it is not genuinely-new content that should stay
+- "אל הנער הזה התפללתי": old=הרבנית דינה ראפ (לנשים) new=הרבנית דינה ראף (old taken as truth)
+- "ונתתי לכם לב חדש": old=הרבנית רחלי מונדשיין (לנשים) new=הרבנית רחלי מונדשטיין (old taken as truth)
+- "מפת עזר לזיהוי אתרי התנ"ך בארץ ישראל" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "ציר זמן יהושע שופטים" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "ציר זמן גלות בבל" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "ציר זמן שנה וחצי ראשונות במדבר" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "שרטוט בית המקדש ביחזקאל לפי שיטות המלבי"ם רש"י ומצודות" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- old page כלי-עזר-טבלאות-זמני-המאורעות-ומפות shows series card "מפות עזר לספר יהושע" but the series' parent in newdb is "יהושע" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via
+- old page כלי-עזר-טבלאות-זמני-המאורעות-ומפות shows series card "מפות עזר לספר שופטים" but the series' parent in newdb is "שופטים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card v
+- old page כלי-עזר-טבלאות-זמני-המאורעות-ומפות shows series card "ציר זמן - תקופת המלכים" but the series' parent in newdb is "מאגר עזרי הלמידה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and a
+- old page כלי-עזר-טבלאות-זמני-המאורעות-ומפות shows series card "מבנה ירושלים בסוף תקופת בית ראשון ותחילת תקופ" but the series' parent in newdb is "מאגר עזרי הלמידה" — new /series page only renders parent_id children; decide: keep sidebar par
+- "מפת המזרח התיכון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מחנה ישראל ליד ערבות מואב" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת מלחמת הדרום" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת מלחמת הצפון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת שלושים ואחד המלכים" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלות השבטים" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלות עבר הירדן המזרחי" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלת שבט יהודה" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלת שבטי יוסף" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלת שבט מנשה" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלת שבט בנימין" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלות דן ושמעון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת נחלות שבטי הצפון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת ערי הלויים" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת ארץ ישראל" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק ד | דבורה וברק" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק ח | גדעון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק ט | גדעון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק י | גדעון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק יא | יפתח" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק טו | שמשון" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק יח | מסע שבט דן" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק כ | נחלת בנימין" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מפת עזר שופטים פרק כ | גבולות השבטים" appears on old PUBLIC page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-שופטים AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- old page ליווי-תתים shows series card "לב הפרק - שופטים" but the series' parent in newdb is "שופטים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- "ערכים ומידות העולים מפסוקי ספר שופטים" () on ליווי-תתים/שופטים — confirm it is not genuinely-new content that should stay
+- "סיכום נושאי הפרקים בספר שופטים" extra on ליווי-תתים/שופטים — not on old listing pages but present in old topic/rabbi/teachers ground truth; kept published (would need a better home, not hiding)
+- "אורי וישעי" (הרב יהושע שפירא) shown on מועדים but its canonical page כתובים/תהלים/מזמור-כז-לדוד-ה-אורי belongs to another scope plan — verify that plan inserts it
+- old page מועדים shows series card "השראת השכינה, הקטורת ויום הכיפורים" but the series' parent in newdb is "כל השיעורים ליום הכיפורים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept c
+- old page מועדים shows series card "המסע אל ירושלים" but the series' parent in newdb is "יום ירושלים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- "אורי וישעי" (הרב יהושע שפירא) shown on מועדים/חודש-אלול-וימי-התשובה but its canonical page כתובים/תהלים/מזמור-כז-לדוד-ה-אורי belongs to another scope plan — verify that plan inserts it
+- old page מועדים/חודש-אלול-וימי-התשובה shows series card "יג מידות הרחמים" but the series' parent in newdb is "נושאים כלליים בתנ"ך" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card
+- שלוש החנוכות של חודש כסליו: old=הרב יואב אוריאל db=הרב איתן שנדורפי (recovered pair)
+- נס השמן הדולק - מבניית המשכן ועד חנוכה: old=הרב יואב אוריאל new=הרב איתן שנדורפי (old taken as truth)
+- old page מועדים/יום-הכיפורים shows series card "השראת השכינה, הקטורת ויום הכיפורים" but the series' parent in newdb is "כל השיעורים ליום הכיפורים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended)
+- "הענן חוזר למקדש" extra on מועדים/יום-הכיפורים/כל-השיעורים-ליום-הכיפורים — not on old listing pages but present in old topic/rabbi/teachers ground truth; kept published (would need a better home, not hiding)
+- "הקטורת והשראת השכינה" (הרב יואב אוריאל) on מועדים/יום-הכיפורים/כל-השיעורים-ליום-הכיפורים — confirm it is not genuinely-new content that should stay
+- קיבוץ הגלויות: old=הרב טוביה לפשיץ new=הרב אחיקם גץ (old taken as truth)
+- a second old item on מועדים/יום-העצמאות matched the same db row e6060601-c003-4000-8000-000000000001 (detail: old page order idx=17: "קיבוץ הגלויות") — old page shows more rows than newdb has; first position kept
+- "המסע אל ירושלים" (הרב יואב אוריאל) on מועדים/יום-ירושלים — confirm it is not genuinely-new content that should stay
+- a second old item on מועדים/סוכות/כל-השיעורים-על-חג-הסוכות matched the same db row a94d7551-0e14-4e45-a8c2-ac4d94bb8b9d (detail: old page order idx=14: "השמחה בחג הסוכות") — old page shows more rows than newdb has; first position kept
+- a second old item on מועדים/סוכות/כל-השיעורים-על-חג-הסוכות matched the same db row ebe71b4a-146f-497e-bbcf-b26aea3d5810 (detail: old page order idx=15: "סוכות – החג של ארץ ישראל") — old page shows more rows than newdb has; first position ke
+- old page מועדים/סוכות/מעבר-לשיעורים-על-גוג-ומגוג shows series card "מלחמת גוג ומגוג" but the series' parent in newdb is "נושאים כלליים בתנ"ך" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and 
+- "ולא יזח החשן מעל האפוד" (הרב יהושע שפירא) shown on מועדים/פורים but its canonical page תורה/שמות/מאמרים-על-פרשיות-שמות belongs to another scope plan — verify that plan inserts it
+- "רוצה להיות מלכה" on מועדים/פורים: picked 496a7521-0b1e-419a-972d-fa3b97b85f96 of ['496a7521', 'f0e948b3', '457c7b99'] — confirm which row the old page shows
+- a second old item on מועדים/פורים matched the same db row f5050501-a002-4000-a000-000000000001 (detail: old page order idx=39: "מגילת אסתר – מגילת הַסֵתֶר") — old page shows more rows than newdb has; first position kept
+- old page מועדים/פורים shows series card "שיעורים על מגילת אסתר" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/פורים shows series card "שיעורים - מגילת אסתר" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/פורים shows series card "מבט כללי על מגילת אסתר" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/פורים shows series card "מגילת אסתר" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/פורים shows series card "מאמרים - מגילת אסתר" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/פורים shows series card "אסתר - מוקלט | ללא טעמים" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/פורים shows series card "חמאה ודבש - פירוש פשט על מגילת אסתר" but the series' parent in newdb is "אסתר" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, 
+- "מבט כללי על מגילת אסתר" (הרב יואב אוריאל) on מועדים/פורים — confirm it is not genuinely-new content that should stay
+- "מגילת רות ויום מתן תורה, שער לקבלת התורה מרצון" (הרב חגי ולוסקי) on מועדים/שבועות: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- "מגילת רות עם ביאור ושננתם - פרק ב" appears on old PUBLIC page מועדים/שבועות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מגילת רות עם ביאור ושננתם - פרק ג" appears on old PUBLIC page מועדים/שבועות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- "מגילת רות עם ביאור ושננתם - פרק ד" appears on old PUBLIC page מועדים/שבועות AND in old teachers wing — needs dual-audience support (see code_asks), not a retag
+- old page מועדים/שבועות shows series card "שיעורים על מגילת רות" but the series' parent in newdb is "רות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/שבועות shows series card "שיעורים קצרים - קריאה וביאור מגילת רות" but the series' parent in newdb is "רות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via cod
+- old page מועדים/שבועות shows series card "מאמרים על מגילת רות לקראת חג שבועות" but the series' parent in newdb is "רות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, 
+- old page מועדים/שבועות shows series card "מאמרים - מגילת רות" but the series' parent in newdb is "רות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page מועדים/שלושת-השבועות shows series card "שיעורים - מגילת איכה" but the series' parent in newdb is "איכה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or repa
+- old page מועדים/שלושת-השבועות shows series card "שיעורים על מגילת איכה" but the series' parent in newdb is "איכה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or rep
+- old page מועדים/שלושת-השבועות shows series card "מגילת איכה" but the series' parent in newdb is "איכה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- "אהבת חנם (1)" (הרב יהושע שפירא) on מועדים/שלושת-השבועות — confirm it is not genuinely-new content that should stay
+- ""ויהיו מלעבים במלאכי האלקים..."" (הרב איתן שנדורפי) on מועדים/שלושת-השבועות — confirm it is not genuinely-new content that should stay
+- ההלכות שנתעלמו ממשה רבנו: old=הרב יהודה קופרמן זצ"ל new=הרב יואב אוריאל (old taken as truth)
+- המספרים במקרא - מדויקים או מעוגלים?: old=ושננתם db=הרב יואב אוריאל (recovered pair)
+- תורה - נביאים - כתובים: old=ושננתם db=הרב יואב אוריאל (recovered pair)
+- a second old item on נושאים-כלליים-בתנך matched the same db row 3a8136dc-2a69-4e3b-8f20-d6318eeddad5 (detail: old page order idx=125: "מדינת הלכה על פי התנ"ך") — old page shows more rows than newdb has; first position kept
+- "מקורות על אזור אשדוד, אשקלון וקרית גת" (הרב יואב אוריאל) on נושאים-כלליים-בתנך: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- old page נושאים-כלליים-בתנך shows series card "יחסי ישראל והגויים בגאולה" but the series' parent in newdb is "גלות וגאולה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via cod
+- old page נושאים-כלליים-בתנך shows series card "השינויים במבנה ארץ ישראל בזמן הגאולה" but the series' parent in newdb is "גלות וגאולה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept c
+- old page נושאים-כלליים-בתנך shows series card "ערב לימוד חרבות הברזל" but the series' parent in newdb is "מלחמה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or repa
+- old page נושאים-כלליים-בתנך shows series card "בכח התנ"ך ננצח" but the series' parent in newdb is "מלחמה" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page נושאים-כלליים-בתנך shows series card "המלכות והנבואה בישראל" but the series' parent in newdb is "נבואה ונביאים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code,
+- old page נושאים-כלליים-בתנך shows series card "מי הם נביאי השקר?" but the series' parent in newdb is "נבואה ונביאים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or 
+- old page נושאים-כלליים-בתנך shows series card "המסע אל ירושלים" but the series' parent in newdb is "ירושלים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page נושאים-כלליים-בתנך shows series card "הלבנון" but the series' parent in newdb is "סקירות תנ"כיות על אזורים בארץ ישראל" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card vi
+- old page נושאים-כלליים-בתנך shows series card "מידות על פי התנ"ך" but the series' parent in newdb is "בנין המידות על פי התנ"ך" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via
+- old page נושאים-כלליים-בתנך shows series card "השוואות בין דוד המלך לגדולי התנ"ך" but the series' parent in newdb is "דוד המלך" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card vi
+- old page נושאים-כלליים-בתנך shows series card "מקומות בתנ"ך" but the series' parent in newdb is "נושאים נוספים" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or repar
+- old page נושאים-כלליים-בתנך shows series card "פודקאסט הפרק הבא - גוג ומגוג" but the series' parent in newdb is "פודקאסט - הפרק הבא - על הנבואות מהתנ"ך שעוד מחכות לנו" — new /series page only renders parent_id children; decide: keep sidebar
+- old page נושאים-כלליים-בתנך shows series card "המלך בישראל" but the series' parent in newdb is "כל השיעורים בספר שמואל א'" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via cod
+- old page נושאים-כלליים-בתנך shows series card "ירמיהו ופועלו" but the series' parent in newdb is "ירמיהו" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or reparent
+- old page נושאים-כלליים-בתנך shows series card "מרות עד דוד - חסד, יסורים ומסירות לעם" but the series' parent in newdb is "רות" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via
+- old page נושאים-כלליים-בתנך shows series card "יאשיהו המלך הצדיק ומותו" but the series' parent in newdb is "מלכים ב" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept card via code, or 
+- "בזכות נשים מרירות נגאלו ישראל" () on נושאים-כלליים-בתנך — confirm it is not genuinely-new content that should stay
+- "ארץ ישראל - הארץ טובה" () on נושאים-כלליים-בתנך — confirm it is not genuinely-new content that should stay
+- old page נושאים-כלליים-בתנך/ארץ-ישראל shows series card "הלבנון" but the series' parent in newdb is "סקירות תנ"כיות על אזורים בארץ ישראל" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and acce
+- "הסבר פשוט על מבנה ארץ ישראל" () on נושאים-כלליים-בתנך/ארץ-ישראל — confirm it is not genuinely-new content that should stay
+- "בבל מול ירושלים - בקעה מול הרים שיעור ראשון" () shown on נושאים-כלליים-בתנך/בבל-מול-ירושלים-בקעה-מול-הר-גבוה but its canonical page נביאים/יחזקאל belongs to another scope plan — verify that plan inserts it
+- "בבל מול ירושלים - בקעה מול הרים שיעור שני" () shown on נושאים-כלליים-בתנך/בבל-מול-ירושלים-בקעה-מול-הר-גבוה but its canonical page נביאים/יחזקאל belongs to another scope plan — verify that plan inserts it
+- "חלק ג: שם של חול - פרשת פסל מיכה" (הרב מנחם שחור) on נושאים-כלליים-בתנך/בין-דן-ליהודה: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- "שאלת איסור הבמות" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/בית-המקדש-והכהנים: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- "חסרון ה'אורים ותומים' בבית שני" (הרב יוסף שילר) on נושאים-כלליים-בתנך/בית-המקדש-והכהנים: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- "בית המקדש והכהנים" () on נושאים-כלליים-בתנך/בית-המקדש-והכהנים — confirm it is not genuinely-new content that should stay
+- old page נושאים-כלליים-בתנך/דוד-המלך shows series card "המלך בישראל" but the series' parent in newdb is "כל השיעורים בספר שמואל א'" — new /series page only renders parent_id children; decide: keep sidebar parent (recommended) and accept car
+- "הביטוי של ממלכות ישראל ויהודה בחברה הישראלית כיום" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/יהודה-וישראל-אז-והיום: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- "משיח בן יוסף ומשיח בן דוד" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/יהודה-וישראל-אז-והיום: no media on the old row — apply stage must scrape the old item modal/page text (cache/ has the HTML)
+- "איך תיראה ירושלים בעתיד?" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "מה מיוחד בירושלים" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "לראות את ירושלים" (הרב גדי שלוין) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "חזון ישעיהו וזכריה על ירושלים" (הרב אוהד תירוש) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "מדוע ירושלים נמצאת דוקא פה?" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "הפתעת העיר הקדושה" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "גדולת ירושלים על פי ירמיהו הנביא" (הרב ברוך סליי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "כיצד הר המוריה הפך להיות הר?" (הרב אורן טרבלסי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "איך מתפללים על ירושלים" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "איך נראתה חומת ירושלים?" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "שמואל הנביא ויום ירושלים" (הרב גדי שלוין) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "המקום אשר יבחר ה'" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "ירושלים - מקום מסתורי" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "הטופוגרפיה של ירושלים" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "המבנה הפנימי של ירושלים בעבר" (הרב עמנואל בן ארצי) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "ירושלים עיר קרובה - רחוקה" (הרב יואב אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- "ארבעת חדרי הלב של ירושלים" (הרב אריה אוריאל) on נושאים-כלליים-בתנך/ירושלים/המסע-אל-ירושלים — confirm it is not genuinely-new content that should stay
+- מסירות נפש: old=הרב מישאל רובין new=הרב מאיר הילביץ' (old taken as truth)
+- וירש זרעך: old=הרב אבי סמוטריץ' new=הרב יואב אוריאל (old taken as truth)
+- דברי הימים: old=הרב יהושע שפירא new=הרב יואב אוריאל (old taken as truth)
+- לימוד זכות על ישראל: old=הרב אליעזר קשתיאל new=הרב נתן רוטמן (old taken as truth)
+- "השופטים בדורותם - מבוא לספר שופטים" (הרב יוסף מילר) shown on נושאים-כלליים-בתנך/נושאי-יסוד-בנביאים-בראי-ההלכה but its canonical page נביאים/שופטים belongs to another scope plan — verify that plan inserts it
+- "שמואל בקוראי שמו - מבוא לספר שמואל" (הרב יוסף מילר) shown on נושאים-כלליים-בתנך/נושאי-יסוד-בנביאים-בראי-ההלכה but its canonical page נביאים/שמואל-א belongs to another scope plan — verify that plan inserts it
+- "המלכויות בישראל - מבוא לספר מלכים" (הרב יוסף מילר) shown on נושאים-כלליים-בתנך/נושאי-יסוד-בנביאים-בראי-ההלכה but its canonical page נביאים/מלכים-א belongs to another scope plan — verify that plan inserts it
+- "המלכויות בישראל - מלכות עשרת השבטים" (הרב יוסף מילר) shown on נושאים-כלליים-בתנך/נושאי-יסוד-בנביאים-בראי-ההלכה but its canonical page נביאים/מלכים-א belongs to another scope plan — verify that plan inserts it
+- "נחלת ארץ ישראל" (הרב יוסף מילר) shown on נושאים-כלליים-בתנך/נושאי-יסוד-בנביאים-בראי-ההלכה but its canonical page נביאים/יהושע belongs to another scope plan — verify that plan inserts it
+- "תולדות קרבת ה' לאדם - ביציאת מצרים ובמתן תורה" (הרב יואב אוריאל) shown on נושאים-כלליים-בתנך/תולדות-קרבת-ה-לאדם-מבראשית-לאורך-חומשי-התורה but its canonical page תורה/שמות/פרשת-יתרו-יח-כ belongs to another scope plan — verify that plan inse
+- old page ימי-עיון-בתנך/כל-השיעורים-מימי-עיון-בתנך shows the same items as the owner page of series f4040001-0001-4000-8000-000000000000 (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /seri
+- old page מועדים/כל-השיעורים-על-המועדים shows the same items as the owner page of series 92130154-e96a-4f98-b032-5a20ac385f63 (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /series/92130154
+- old page הפטרות/הפטרות-במדבר/חומש-במדבר-כל-ההפטרות shows the same items as the owner page of series acbc90f0-8c04-4296-ad7f-36898bc322f5 (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /ser
+- old page הפטרות/הפטרות-בראשית/חומש-בראשית-כל-ההפטרות shows the same items as the owner page of series dd740e04-3521-49bc-bcdd-2b3ed845a204 (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /s
+- old page הפטרות/הפטרות-דברים/חומש-דברים-כל-ההפטרות shows the same items as the owner page of series fa618d10-224e-4a95-b7d3-1fa949cf465c (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /ser
+- old page הפטרות/הפטרות-ויקרא/חומש-ויקרא-כל-ההפטרות shows the same items as the owner page of series 2cfbe6e4-c237-44e3-b896-defc4a78316e (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /ser
+- old page הפטרות/הפטרות-שמות/חומש-שמות-כל-ההפטרות shows the same items as the owner page of series 70bb80dc-2dc0-4bb4-aa23-6ddbc3d68586 (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to /serie
+- old page מועדים/יום-הכיפורים/מעבר-לשיעורים-על-ספר-יונה shows the same items as the owner page of series 0f69e7e1-c6d4-4ede-9c42-006ee99ea995 (overlap 1.0). Its sidebar node (where unmatched in tree_map) must ALIAS the owner series (link to 
+- old page /מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-וילך is genuinely empty (0 items). The series must EXIST and render an empty state, not 404 — status per tree_plan.
+- old page /מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/כל-השיעורים-בספר-ישעיהו/לב-הפרק-ישעיהו/ is the second genuinely-empty page named in the task — it lives in the נביאים scope; coordinating note only (status per tree_plan, must not 404).
+- old מועדים root and ימי-עיון root/kol pages show ~58/~204 items while their subtrees hold more; this is old-site pagination/curation, not data. New aggregation pages should show the FULL subtree (sane behavior, not bug-replication).
+- פרוייקט-התנ"ך-המוקלט page = 33 series cards whose series live under their book parents in newdb; needs a code-level section/route + tree_plan root node, no lesson ops (see code_asks).
+- old credits "ושננתם" where newdb rabbi row is "ושננתם - אוצר התורה" — treated as the same entity (token containment), display-name difference left to the rabbi plan.
+- old "מעבר ל…" pages (מעבר-לשיעורים-על-ספר-יונה, מעבר-לשיעורים-על-גוג-ומגוג) are cross-section portals whose content belongs to the target book/series (owner pages elsewhere). New site should LINK (card → /series/:id of the target), not dupl
+
+## lessons_plan_neviim_aharonim — 22 פריטים
+- old/new titles differ (matched via media file) — verify before moving
+- old/new titles differ (matched via media file) — verify before moving
+- 13 recorded-Tanach (מוקלט) lessons: old site credits 'מערכת בני ציון', new DB credits 'הרב דן בארי' (the narrator). Decide once: keep narrator attribution (recommended — the generic old credit is arguably the old-site bug, and policy says d
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- unmatched lesson whose canonical home belongs to the neviim_rishonim plan (מלכים ב). That plan should insert it; afterwards add copy_lesson rows to the pages listed here (this plan deliberately does NOT insert, to avoid a double-insert acro
+- unmatched lesson whose canonical home belongs to the general-topics (נושאים-כלליים) plan. That plan should insert it; afterwards add copy_lesson rows to the pages listed here (this plan deliberately does NOT insert, to avoid a double-insert
+- unmatched lesson whose canonical home belongs to the general-topics (נושאים-כלליים) plan. That plan should insert it; afterwards add copy_lesson rows to the pages listed here (this plan deliberately does NOT insert, to avoid a double-insert
+- old page shows a series card whose canonical home is another section; new schema is single-parent — needs either a code-level related-series mechanism or an accepted parity gap
+- old page shows a series card whose canonical home is another section; new schema is single-parent — needs either a code-level related-series mechanism or an accepted parity gap
+- old page shows a series card whose canonical home is another section; new schema is single-parent — needs either a code-level related-series mechanism or an accepted parity gap
+- old page shows a series card whose canonical home is another section; new schema is single-parent — needs either a code-level related-series mechanism or an accepted parity gap
+- 3 migration placeholders (status=draft, parent=נביאים root) remapped to populated twins for this plan: 'שיעורים על התנך יחזקאל'→b7b24b9b-133f-495c-b88c-690a60154cea, 'שיעורים על התנך ירמיהו'→6948ae1e-ad5a-4cbb-ae12-c08e7cd03eb5, 'ישעיהו מוק
+- after the 2 move_lesson ops (חלוקת ספר יונה וזמן נבואתו, מעשיו של יונה) this draft series (parent: יום הכיפורים) is emptied; no old-site counterpart page maps to it. Already draft, flag for cleanup.
+- this plan creates 286 copy_lesson rows to reproduce old cross-listings (book pages aggregating ימי-עיון/הפטרות/כלי-עזר/נושאים lessons + chapter-vs-series double-homing). Mirrors the night-session COPY pattern; UI dedup is per-series only so
+- 17 inserted Q&A rows (insert_lesson source_type=qa) may also be generated by the rabbi-pages plan from old rav pages. Dedup key before apply: normalized (title, rabbi_name). All 17 carry old_url under /נביאים/{book}/{book}/.
+
+## lessons_plan_neviim_rishonim — 139 פריטים
+- migration placeholders (status=draft, 0 published rows) remapped to their populated same-title twins for this plan: נביאים/יהושע/שיעורים-יהושע: d5ef79b3-9d97-471f-80e3-2e4ff2deaf62 → 497d3550-5aea-4b80-89ff-ff5dd29d92d4; נביאים/מלכים-ב/שיעו
+- old page נביאים/יהושע/מינוי-יהושע-פרק-א shows the same items as owner page הפטרות/הפטרות-המועדים/הפטרת-שמחת-תורה (overlap 1.0) — old-site duplicate view; no data ops emitted, items covered via the owner page
+- old page נביאים/יהושע/מפות-עזר-לספר-יהושע shows the same items as owner page כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע (overlap 1.0) — old-site duplicate view; no data ops emitted, items covered via the owner page
+- old page נביאים/שמואל-א/כל-השיעורים-בספר-שמואל-א/ספר-שמואל-א shows the same items as owner page נביאים/שמואל-א/ספר-שמואל-א (alias-shadow path (same page reachable at the alias-stripped URL)) — old-site duplicate view; no data ops emitted, i
+- old/new titles differ (matched via media file) — verify before copying
+- old/new titles differ (matched via media file) — verify before copying
+- old/new titles differ (matched via media file) — verify before moving
+- old/new titles differ (matched via media file) — verify before copying
+- old/new titles differ (matched via media file) — verify before moving
+- old page נביאים/מלכים-א shows series card "בין דוד לשלמה" but the series' post-tree parent in newdb is "כל השיעורים בספר שמואל ב'" — new page renders parent children only; keep sidebar parent (recommended) and accept the card via code, or r
+- old page נביאים/מלכים-א/אדוניהו-והמלכת-שלמה-פרק-א shows series card "בין דוד לשלמה" but the series' post-tree parent in newdb is "כל השיעורים בספר שמואל ב'" — new page renders parent children only; keep sidebar parent (recommended) and acce
+- old page נביאים/מלכים-ב/יהוא-ופעולותיו-פרקים-ט-י shows series card "בין יהושפט לאחאב" but the series' post-tree parent in newdb is "כל השיעורים בספר מלכים א'" — new page renders parent children only; keep sidebar parent (recommended) and ac
+- old page נביאים/מלכים-ב/ניצחון-המלכים-על-מואב-פרק-ג shows series card "בין יהושפט לאחאב" but the series' post-tree parent in newdb is "כל השיעורים בספר מלכים א'" — new page renders parent children only; keep sidebar parent (recommended) and
+- old/new titles differ (matched via media file) — verify before copying
+- old page נביאים/שמואל-א shows series card "שופטים, שמואל ורות - מהעדר מלכות לבניינה" but the series' post-tree parent in newdb is "כל השיעורים בספר שופטים" — new page renders parent children only; keep sidebar parent (recommended) and accep
+- old page נביאים/שמואל-א shows series card "מרות עד דוד - חסד, יסורים ומסירות לעם" but the series' post-tree parent in newdb is "רות" — new page renders parent children only; keep sidebar parent (recommended) and accept the card via code, or
+- old/new titles differ (matched via media file) — verify before copying
+- "תפילת חנה" on נביאים/שמואל-א/חנה-והולדת-שמואל-פרק-א: picked d3bb7823 of ['d3bb7823', 'ecfc64f9', '62ff6fee', '839a9d76', 'dfb94eab', '37e0cc9c'] — confirm which row the old page shows
+- old page נביאים/שמואל-א/מות-שאול-ובניו-פרק-לא shows series card "בין שאול לדוד" but the series' post-tree parent in newdb is "כל השיעורים בספר שמואל א'" — new page renders parent children only; keep sidebar parent (recommended) and accept t
+- "תפילת חנה" on נביאים/שמואל-א/ספר-שמואל-א-בעיון: picked d3bb7823 of ['d3bb7823', 'ecfc64f9', '37e0cc9c', '78d77991', 'f8304379', '62ff6fee'] — confirm which row the old page shows
+- old/new titles differ (matched via media file) — verify before moving
+- "קונטרס דוד ובת שבע" on נביאים/שמואל-ב: picked d50913d1 of ['1655b665', 'd50913d1'] — confirm which row the old page shows
+- old page נביאים/שמואל-ב shows series card "מרות עד דוד - חסד, יסורים ומסירות לעם" but the series' post-tree parent in newdb is "רות" — new page renders parent children only; keep sidebar parent (recommended) and accept the card via code, or
+- old page נביאים/שמואל-ב/בשורת-מות-שאול-פרק-א shows series card "בין שאול לדוד" but the series' post-tree parent in newdb is "כל השיעורים בספר שמואל א'" — new page renders parent children only; keep sidebar parent (recommended) and accept th
+- old page נביאים/שמואל-ב/המגפה-וגורן-ארונה-פרק-כד shows series card "בין דוד לשלמה" but the series' post-tree parent in newdb is "כל השיעורים בספר שמואל ב'" — new page renders parent children only; keep sidebar parent (recommended) and accep
+- "קינת דוד" on נביאים/שמואל-ב/שיעורים-על-התנך-שמואל-ב: picked 5bcd2b05 of ['5bcd2b05', 'efd392d4'] — confirm which row the old page shows
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- old page and new DB attribute this lesson to different people — verify before set_lesson_rabbi
+- "המרגלים ששלח יהושע" (הרבנית עידית איצקוביץ' (ל) sits in series of נביאים/יהושע/המרגלים-ששלח-יהושע-פרק-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "הפרידה משניים וחצי השבטים" (הרב דני סטיסקין) sits in series of נביאים/יהושע/כל-השיעורים-בספר-יהושע/ספר-יהושע but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "יהושע פרק (10)" (הרב יונדב זר) sits in series of נביאים/יהושע/קריאה-וביאור-בקצרה-של-ספר-יהושע but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "חלוקת הארץ לשבטים - תכונות הנחישות והחלוציות של ראובן ג" (הרב אליעזר קשתיאל) sits in series of נביאים/יהושע/שיעורים-בספר-יהושע but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genui
+- "הגלעד בירדן ובגלגל" (הרב אריק אוריאל) sits in series of נביאים/יהושע/שיעורים-בספר-יהושע-על-פי-הלב-אהרון but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "ערי המקלט" (הרב אריק אוריאל) sits in series of נביאים/יהושע/שיעורים-בספר-יהושע-על-פי-הלב-אהרון but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "בנות צלפחד" (הרב אריק אוריאל) sits in series of נביאים/יהושע/שיעורים-בספר-יהושע-על-פי-הלב-אהרון but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "ערכים ומידות העולים מפסוקי ספר מלכים א" () sits in series of נביאים/מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מדוע חלה המלך אסא ברגליו?" in series 95db7b7c-4680-487f-a5ae-04297e042f66 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "בין דוד לשלמה" (הרב מנחם שחור) sits in series of נביאים/מלכים-א/אדוניהו-והמלכת-שלמה-פרק-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "אליהו בהר הכרמל - חלק א' וב'" (הרב חנניה מלכה) sits in series of נביאים/מלכים-א/אליהו-בהר-הכרמל-פרק-יח but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מדרגת אליהו ומדרגת אלישע והמפגש ביניהם" (הרב דני סטיסקין) sits in series of נביאים/מלכים-א/בריחת-אליהו-להר-חורב-פרק-יט but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new
+- "מלכת שבא ומלכות שלמה" in series c1010001-0001-4000-8000-000000000009 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "משפט שלמה" in series c1010001-0001-4000-8000-000000000003 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "האם היו הבמות מותרות בתחילת מלכות שלמה?" in series c1010001-0001-4000-8000-000000000003 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "מלכים א פרק ו / פרק ז" (הרב יונדב זר) sits in series of נביאים/מלכים-א/המקדש-ובית-שלמה-פרקים-ו-ז but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק ד / פרק ה" (הרב יונדב זר) sits in series of נביאים/מלכים-א/הצלחת-שלמה-ועושרו-פרקים-ד-ה but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שלמה המלך וחירם מלך צור" in series c1010001-0001-4000-8000-000000000004 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "לב הפרק - מלכים א פרק ד / פרק ה" (הרב עמנואל בן ארצי) sits in series of נביאים/מלכים-א/הצלחת-שלמה-ועושרו-פרקים-ד-ה but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new con
+- "שלמה המלך וחירם מלך צור - המשך" in series c1010001-0001-4000-8000-000000000004 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "יהושפט ומות אחאב - חלק א' וב'" (הרב חנניה מלכה) sits in series of נביאים/מלכים-א/יהושפט-ומות-אחאב-פרק-כב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "בין יהושפט לאחאב" (הרב מנחם שחור) sits in series of נביאים/מלכים-א/יהושפט-ומות-אחאב-פרק-כב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "לב הפרק - דניאל פרק ג" (הרב עמנואל בן ארצי) sits in series of נביאים/מלכים-א/לב-הפרק but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "לב הפרק - דניאל פרק ב חלק ראשון" (הרב עמנואל בן ארצי) sits in series of נביאים/מלכים-א/לב-הפרק but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "לב הפרק - דניאל פרק ו" (הרב עמנואל בן ארצי) sits in series of נביאים/מלכים-א/לב-הפרק but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "לב הפרק - דניאל פרק א" (הרב עמנואל בן ארצי) sits in series of נביאים/מלכים-א/לב-הפרק but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "לב הפרק - דניאל פרק ב חלק שני" (הרב עמנואל בן ארצי) sits in series of נביאים/מלכים-א/לב-הפרק but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "סדר השרים של שלמה מול סדר השרים של דוד (4)" (הרב איתן שנדורפי) sits in series of נביאים/מלכים-א/מאמרים-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new con
+- "מלחמות אחאב וארם - חלק א' וב'" (הרב חנניה מלכה) sits in series of נביאים/מלכים-א/מלחמות-אחאב-וארם-פרק-כ but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "סיום בניין המקדש, תפילת שלמה" (הרב יצחק בן שחר) sits in series of נביאים/מלכים-א/מעמד-חנוכת-המקדש-פרק-ח but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מעמד חנוכת המקדש - חלקים א, ב, ג" (הרב חנניה מלכה) sits in series of נביאים/מלכים-א/מעמד-חנוכת-המקדש-פרק-ח but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "כיפור וכפרה בחנוכת המקדש" in series c1010001-0001-4000-8000-000000000008 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "תפילת שלמה" in series c1010001-0001-4000-8000-000000000008 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "סוף עניין אדוניהו, צוואת דוד לשלמה" (הרב יצחק בן שחר) sits in series of נביאים/מלכים-א/צוואת-דוד-לשלמה-פרק-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "ציווי דוד על יואב בן צרויה" in series c1010001-0001-4000-8000-000000000002 duplicates a bound row but carries lesson_topics links — kept published, dedup by hand after links are moved
+- "מלכים א פרק (29)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (24)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (28)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (26)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (27)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (23)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (25)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "מלכים א פרק (30)" (הרב יונדב זר) sits in series of נביאים/מלכים-א/קריאה-וביאור-בקצרה-של-ספר-מלכים-א but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "ערכים ומידות העולים מפסוקי ספר מלכים ב" () sits in series of נביאים/מלכים-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "דבורה, יעל ואמו של סיסרא" (הרב חגי לונדין) sits in series of נביאים/שופטים/דבורה-וברק-פרקים-ד-ה but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "הצעיר באלפי מנשה" (הרב אלחנן בן נון) sits in series of נביאים/שופטים/מאמרים-על-ספר-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שירת דבורה" (הרב יצחק בן שחר) sits in series of נביאים/שופטים/ספר-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שופטים פרק (9)" (הרב יונדב זר) sits in series of נביאים/שופטים/קריאה-וביאור-בקצרה-של-ספר-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שופטים פרק (10)" (הרב יונדב זר) sits in series of נביאים/שופטים/קריאה-וביאור-בקצרה-של-ספר-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שופטים פרק (8)" (הרב יונדב זר) sits in series of נביאים/שופטים/קריאה-וביאור-בקצרה-של-ספר-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "חידת שמשון" (הרב אריק אוריאל) sits in series of נביאים/שופטים/שיעורים-קצרים-קריאה-וביאור-ספר-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "המשך הקדמה" () sits in series of נביאים/שופטים/שיעורים-שופטים but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "ערכים ומידות העולים מפסוקי ספר שמואל ב" () sits in series of נביאים/שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שמואל ב פרק (30)" (הרב יונדב זר) sits in series of נביאים/שמואל-ב/קריאה-וביאור-בקצרה-של-ספר-שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שמואל ב פרק (27)" (הרב יונדב זר) sits in series of נביאים/שמואל-ב/קריאה-וביאור-בקצרה-של-ספר-שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שמואל ב פרק (29)" (הרב יונדב זר) sits in series of נביאים/שמואל-ב/קריאה-וביאור-בקצרה-של-ספר-שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שמואל ב פרק (28)" (הרב יונדב זר) sits in series of נביאים/שמואל-ב/קריאה-וביאור-בקצרה-של-ספר-שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שמואל ב פרק (26)" (הרב יונדב זר) sits in series of נביאים/שמואל-ב/קריאה-וביאור-בקצרה-של-ספר-שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- "שמואל ב פרק (25)" (הרב יונדב זר) sits in series of נביאים/שמואל-ב/קריאה-וביאור-בקצרה-של-ספר-שמואל-ב but appears nowhere in old ground truth — kept published per policy (draft only exact-dups); confirm it is genuinely-new content
+- 22 old rows are exact duplicates of an earlier row on the SAME page (identical title + identical media) — old-site bugs, not replicated per policy; the new page shows the row once. Rows: נביאים/יהושע/הפסח-המילה-והמלאך-פרק-ה #25 "תמה תקופת ה
+- teachers→general retags by current series (rows shown on old PUBLIC pages and absent from old teachers ground truth — dominated by the per-chapter ושננתם split series, mirroring the aharonim plan's ספר-X-עם-ביאור-ושננתם retags): ספר שמואל א
+- lesson f1422687-d9a1-4bf2-a9aa-589b2e0cb676 "מגלת יהויכין עד חורבן הבית" (הרב אריה אברמסון) carries an audio_url pointing at a הרב-חנניה-מלכה מלכים-ב file, while the old site serves s3…/bneyzion/ימי עיון תשעד/הרב אריה אברמסון - מגלות יהויכי
+- after 1 move_lesson ops this series is emptied; no old-site counterpart documents it. Already active, flag for cleanup.
+- this plan creates 616 copy_lesson rows to reproduce old cross-listings (book pages aggregating intro/cross-section lessons + chapter-event pages double-homing rows that live in per-rabbi series). Mirrors the night-session COPY pattern; UI d
+- 97 inserted Q&A rows (insert_lesson source_type=qa) may also be generated by the rabbis plan from old rav pages. Dedup key before apply: normalized (title, rabbi_name). All carry old_url under /נביאים/<book>/….
+- the 6 "כל-השיעורים-בספר-X" pages are flat aggregations (alias nodes in tree_map); their new-UI equivalent is /category/:bookId code-level descendant aggregation. No ops emitted from them; their rows are covered via the canonical pages (veri
+
+## lessons_plan_torah — 50 פריטים
+- page_unmapped
+- lesson_not_published
+- lesson_not_published
+- lesson_not_published
+- page_unmapped
+- page_unmapped
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- rabbi_attribution_differs
+- shared_series_many_old_pages
+- shared_series_many_old_pages
+- shared_series_many_old_pages
+- shared_series_many_old_pages
+- dup_extra_has_engagement
+- sub_series_unmatched_in_tree
+- sub_series_unmatched_in_tree
+- sub_series_unmatched_in_tree
+- sub_series_unmatched_in_tree
+- sub_series_unmatched_in_tree
+- sub_series_unmatched_in_tree
+
+## rabbis_plan — 59 פריטים
+- survivor 'הרבנית בת שבע יוסיפון (לנשים)' (bc6e5c0b-2465-4ed1-9de6-1fc28250c387) matches the old sidebar name but had 0 lessons; absorbing 2 lessons from twin 'הרבנית בת שבע יוסיפון' (b1010001-0001-4000-8000-000000000013). Verify same person
+- survivor 'הרה"ג הרב דוד לאו' (c77f633b-162e-4128-b7a6-d1fdf30d4748) matches the old sidebar name but had 0 lessons; absorbing 1 lessons from twin 'הרב דוד לאו' (cc5b9459-774b-4a10-b65b-4d8f6d9d49c9). Verify same person.
+- old sidebar entry 'ולו (1)' is a data-junk creator; its old page is EMPTY (0 rows). New DB row f6ce1953 is already status=hidden + entity_type=content_creator → stays out of the new sidebar. NOT replicating. Approve keeping hidden.
+- old sidebar has BOTH 'הרב יונדב זר (1035)' and 'יונדב זר (21)'; the second's page is EMPTY (0 rows) — an old-site dup bug. New DB has a single rabbi d79a4a34; new sidebar shows ONE entry. NOT replicating the dup.
+- old רבנים sidebar lists content creators 'ושננתם (157)' and 'מערכת בני ציון (204)' alongside rabbis. In newdb they are correctly entity_type=content_creator (e6c81665, 274f4480) — the strict entity_type='rabbi' filter would drop them and th
+- newdb has TWO ושננתם creators: 'ושננתם' e6c81665 (50 lessons; the one the old public sidebar entry maps to) and 'ושננתם - אוצר התורה' 6f4b2572 (1004 lessons, teachers-wing import). NOT auto-merged (different scopes). Decide: merge or keep s
+- old nav shows (408) but the old rav page renders 0 rows — server-side bug on the old site. NOT replicated: the new page will show his actual content via the no-rabbi_page_items fallback (dynamic listing). newdb has 'הרב שמעון לוי' 9f9362d5 
+- old sidebar lists BOTH 'הרב אריה אוריאל (149)' and 'הרב אריק אוריאל (5)', but the אריה page renders only 2 rows and BOTH are attributed 'הרב אריק אוריאל' (מאת column). newdb: אריה c0da1cd2 (11 lessons), אריק 34ef8dae (133). Counts look swap
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 0. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 2, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 2, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 3, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 6. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 3, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 10. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conte
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- 'מידות בפרשה' (row #1) resolves to series a72009c1-ce50-4ffe-9345-0f98109fbee4 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'מידות בפרשה' (row #2) resolves to series a72009c1-ce50-4ffe-9345-0f98109fbee4 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'מידות בפרשה' (row #3) resolves to series a72009c1-ce50-4ffe-9345-0f98109fbee4 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'מידות בפרשה' (row #4) resolves to series a72009c1-ce50-4ffe-9345-0f98109fbee4 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- row #7 'מגילת אסתר – מגילת הַסֵתֶר' (שיעור) matched lesson f5050501-a002-4000-a000-000000000001 which is already placed on this page by an earlier row — old page listed the item twice OR the matcher collapsed two distinct old rows into one 
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- 'לשון הקודש בפרשה' (row #1) resolves to series cc4b127b-4f23-4f87-83e3-d1ec82f74455 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'לשון הקודש בפרשה' (row #2) resolves to series cc4b127b-4f23-4f87-83e3-d1ec82f74455 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'לשון הקודש בפרשה' (row #3) resolves to series cc4b127b-4f23-4f87-83e3-d1ec82f74455 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'לשון הקודש בפרשה' (row #4) resolves to series cc4b127b-4f23-4f87-83e3-d1ec82f74455 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'הארות באונקלוס' (row #1) resolves to series adefd7ce-414e-4de2-914f-8aee48dc3279 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'הארות באונקלוס' (row #2) resolves to series adefd7ce-414e-4de2-914f-8aee48dc3279 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- old nav count 5, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 10. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conte
+- 'עולמות חדשים בפרשה' (row #1) resolves to series e21c697e-2df2-4cf7-999d-36d3691d61bb already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'עולמות חדשים בפרשה' (row #2) resolves to series e21c697e-2df2-4cf7-999d-36d3691d61bb already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'עולמות חדשים בפרשה' (row #3) resolves to series e21c697e-2df2-4cf7-999d-36d3691d61bb already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'עולמות חדשים בפרשה' (row #4) resolves to series e21c697e-2df2-4cf7-999d-36d3691d61bb already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- old nav count 2, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 1, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 2. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- 'פשט בפרשה' (row #7) resolves to series 3610bdba-ae55-40a5-b764-b31dec4ae7e6 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'פשט בפרשה' (row #8) resolves to series 3610bdba-ae55-40a5-b764-b31dec4ae7e6 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'פשט בפרשה' (row #9) resolves to series 3610bdba-ae55-40a5-b764-b31dec4ae7e6 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'פשט בפרשה' (row #10) resolves to series 3610bdba-ae55-40a5-b764-b31dec4ae7e6 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'לב הפרק' (row #21) resolves to series a5b3d9ba-b813-4658-9940-eecf9cab649a already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- row #37 'ציר זמן יהושע שופטים' (שיעור) matched lesson beb53387-7fb7-4567-8917-dd303613e0e8 which is already placed on this page by an earlier row — old page listed the item twice OR the matcher collapsed two distinct old rows into one lesso
+- row #38 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (שיעור) matched lesson 5dae4141-3671-4afa-92cf-3ffd59bc1a17 which is already placed on this page by an earlier row — old page listed the item twice OR the matcher collapsed two distinct old rows
+- row #45 'שרטוט בית המקדש ביחזקאל לפי שיטות המלבי"ם רש"י ומצודות' (שיעור) matched lesson 2752644d-3a66-45a1-beb7-41e4725a71fc which is already placed on this page by an earlier row — old page listed the item twice OR the matcher collapsed tw
+- old nav count 2, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- old nav count 2, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- 'הרב שלמה אבינר על פרשיות בראשית' (row #2) resolves to series 9de1aa21-ee7a-4f53-a07f-b718688c2ba3 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'הרב אבינר על פרשיות שמות' (row #4) resolves to series 1ff919db-25cc-4935-8e68-f12483693e8f already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- 'הרב שלמה אבינר על פרשיות במדבר' (row #8) resolves to series 6ba0b449-f49a-4414-9b74-dc6e3f97a149 already placed on this page (old page listed it twice, e.g. via the alias path). Single rabbi_page_item kept.
+- old nav count 2, but the old rav page renders 0 rows (old-site bug). New DB public-lesson signal for this rabbi: 4. Fallback dynamic listing will show whatever exists; if 0 the rabbi is hidden from the sidebar (effective count 0). No conten
+- row 'רוצה להיות מלכה' (שיעור) has multiple newdb candidates with no safe winner: 496a7521-0b1e-419a-972d-fa3b97b85f96 'רוצה להיות מלכה'; f0e948b3-981b-44b7-9c29-70f4ea40f861 'רוצה להיות מלכה'; 457c7b99-fc0a-41c1-b2b6-60ffe3b8f318 'כתבוני לד
+- series 029d7341-3f5b-4624-83de-ee9435cdd9c9 ('המסע אל ירושלים') appears as a card on the old rav pages of: הרב יואב אוריאל, מערכת בני ציון. series.rabbi_id is single-valued (currently acd34d0f-1288-47b8-9e8e-38e69599c294); rabbi_page_items 
+- series 269dc17c-0cc1-4484-82e5-b7538b28f948 ('מאמרים על הפטרות שמות') appears as a card on the old rav pages of: הרב איתן שנדורפי, הרב יואב אוריאל. series.rabbi_id is single-valued (currently acd34d0f-1288-47b8-9e8e-38e69599c294); rabbi_pag
+- series d05f0213-5ee5-4df4-a77f-1c168335bf85 ('ספר שמואל א') appears as a card on the old rav pages of: הרב דני סטיסקין, הרב טוביה לפשיץ. series.rabbi_id is single-valued (currently 04b3f54f-a91a-4054-a8b0-887f8faaec07); rabbi_page_items pla
+- 9 old rows render on one rabbi page but are authored by another (מאת column). Old-site quirk NOT replicated — each row was placed on the TRUE author's page (sort_order 9000+ = appended at end): 'כתבי הקודש - מעטפה ותוכן' [שיעור] של הרב אריק
+- 6 newdb rabbi rows carry status='published' — the get_public_rabbis RPC filters status='active' so they are invisible in the sidebar. None of them existed on the old site (teachers-wing imports). If they should be public, normalize status t
+- on the OLD site, the sidebar number next to 85/154 rabbis disagrees with what their page actually renders (e.g. הרב יונדב זר nav=1035, page effective=770). Old-site counting bug — NOT replicated. New sidebar counts use the effective-count f
+
+## teachers_plan — 38 פריטים
+- series row on old content-type page with no new-DB series; container likely handled by tree_plan — do not invent here
+- series row on old content-type page with no new-DB series; container likely handled by tree_plan — do not invent here
+- matcher found several equal candidates — human pick, then add teacher_listing_item + content_type fix
+- matcher found several equal candidates — human pick, then add teacher_listing_item + content_type fix
+- same lesson gets two different values from two old pages — needs a human pick
+- matcher found several equal candidates — human pick, then add teacher_listing_item + content_type fix
+- matcher found several equal candidates — human pick, then add teacher_listing_item + content_type fix
+- same lesson gets two different values from two old pages — needs a human pick
+- same lesson gets two different values from two old pages — needs a human pick
+- content_type value exists only in new DB (not one of the 22 old types). Sidebar must render only the 22; decide whether to remap these lessons or leave them reachable via series/book pages only.
+- content_type value exists only in new DB (not one of the 22 old types). Sidebar must render only the 22; decide whether to remap these lessons or leave them reachable via series/book pages only.
+- content_type value exists only in new DB (not one of the 22 old types). Sidebar must render only the 22; decide whether to remap these lessons or leave them reachable via series/book pages only.
+- name-subset alias between non-creator rows — NOT merged automatically (could be an individual vs a duo); human decision
+- name-subset alias between non-creator rows — NOT merged automatically (could be an individual vs a duo); human decision
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- appears on old יוצרים sidebar AND has public lessons. Flipping entity_type to content_creator could drop him from the public /rabbis page. Recommend keeping entity_type=rabbi and including him in the creators tab via the fixed 31-name list 
+- status=hidden in new DB; old site shows the creator. Unhide is safe for /rabbis only if entity_type=content_creator (public RPC excludes creators); confirm.
+- status=hidden in new DB; old site shows the creator. Unhide is safe for /rabbis only if entity_type=content_creator (public RPC excludes creators); confirm.
+- series row on old creator page with no new-DB series (tree_plan owns containers)
+- series row on old creator page with no new-DB series (tree_plan owns containers)
+- series row on old creator page with no new-DB series (tree_plan owns containers)
+- series row on old creator page with no new-DB series (tree_plan owns containers)
+- series row on old creator page with no new-DB series (tree_plan owns containers)
+- old creator page renders an empty table (verified: header row only) while the sidebar says 18 — old CMS bug. Per policy we do NOT replicate: the new creator page should fall back to the rabbi's actual teacher content when no rabbi_page_item
+- old sidebar count=3 but the page renders 5 rows (3x rule inverted). Plan follows the page rows (5 rabbi_page_item ops).
+- old sidebar count=18 but the page renders 48 rows. Plan follows the page rows.
+- old sidebar counts are ~3x the real distinct rows (CMS bug, 16/22 content types exactly 3.0x). The new site shows REAL counts — sane behavior, intentionally NOT replicating the bug.
+- new DB holds ~5.3K teacher lessons vs ~1.0K unique lessons itemized on old listing pages — the rest live inside book/series pages (old pages list series cards, not every member). NOT extras to delete; the explicit teacher_listing_items mode
+
+## topics_plan — 30 פריטים
+- topic exists only on the NEW site (sidebar parity break: old has exactly 127 tags). Kept at end (sort 9999). Decide: keep visible / remove from themes-root (needs a reparent/hide op not in vocabulary).
+- old sidebar lists 4 separate tags (תשובה 8, התשובה 5, ניסים 2, נסים 3 — duplicate-tag data bug on the old site). gap4 (10.6) already merged them in DB. We keep the merge (sane behavior, not replicating the bug): merged topics will show 13 a
+- old junk tag (1 item) — Saar already deleted it in new DB. Kept deleted. Its single lesson exists and is reachable: קרבנות בני הגולה, חנוכת המשכן, ולעתיד לבוא (86f6b071-351d-4dff-a6ad-220a63c070fb).
+- two old self-mismatches verified by re-fetch: תנ"ך מוקלט badge 40 vs 33 page items; האזנה לפסוקים badge 56 vs 55 items. Plan targets the PAGE truth (33/55). New sidebar counts will equal rendered counts per code_ask CA1.
+- 17 whole-book 'ספר X עם ביאור ושננתם' public PDF lessons missing from newdb (the same-named series in newdb are teachers-wing chapter series — name coincidence, must stay out of public paths). Inserted as public lessons into each book's pub
+- qa item גניבת נשי האבות: inserted as public שו"ת by הרב יואב אוריאל (per old page). Same-titled teachers worksheet exists in DB (40ae000f…) — verify they are indeed distinct and confirm full answer text import from the old lesson page.
+- attribution conflict on שלוש החנוכות של חודש כסליו: old topic page credits הרב יואב אוריאל, newdb credits הרב איתן שנדורפי, old listings card shows no rabbi. Linked without changing rabbi — confirm correct attribution.
+- רוצה להיות מלכה (הרבנית בת שבע יוסיפון) is a duplicated row; linked 496a7521… (in the ימי-עיון series). If physical dedup later keeps the other copy (f0e948b3…), re-point the link.
+- series-card 'ספר יהושע עם ביאור 'ושננתם'' matched a TEACHERS-tagged series (d241183d…) — confirm it is the public series or retag/relocate
+- series-card 'ספר שופטים עם ביאור "ושננתם" מחולק לפי פרקים' matched a TEACHERS-tagged series (9aa7afdb…) — confirm it is the public series or retag/relocate
+- series-card 'ספר שמואל א' עם ביאור "ושננתם" מחולק לפי פרקים' matched a TEACHERS-tagged series (5bd63b0e…) — confirm it is the public series or retag/relocate
+- series-card 'ספר שמואל ב' עם ביאור "ושננתם" מחולק לפי פרקים' matched a TEACHERS-tagged series (527f4aca…) — confirm it is the public series or retag/relocate
+- matched lesson 'ספר דניאל עם ביאור ותרגום 'ושננתם'' has status=draft — must be published for parity
+- matched lesson 'הרד"ק - ר' דוד קמחי' has status=draft — must be published for parity
+- matched lesson 'הרשב"ם - ר' שמואל בן ר' מאיר' has status=draft — must be published for parity
+- matched lesson 'רס"ג - ר' סעדיה גאון' has status=draft — must be published for parity
+- matched lesson 'רש"ר הירש ורבנו בחיי בן אשר' has status=draft — must be published for parity
+- matched lesson 'ר' יצחק בר יהודה אברבנאל' has status=draft — must be published for parity
+- matched lesson 'ר' אברהם אבן עזרא' has status=draft — must be published for parity
+- matched lesson 'ר' יוסף בכור שור' has status=draft — must be published for parity
+- matched lesson 'הכתב והקבלה - ר' יעקב צבי מקלנבורג' has status=draft — must be published for parity
+- matched lesson 'הכלי יקר - ר' שלמה אפרים מלונטשיץ' has status=draft — must be published for parity
+- matched lesson 'התורה תמימה - ר' יחיאל אפשטיין' has status=draft — must be published for parity
+- matched lesson 'הרמב"ן - ר' משה בן נחמן | חלק א' has status=draft — must be published for parity
+- matched lesson 'הרמב"ן - ר' משה בן נחמן | חלק ב' has status=draft — must be published for parity
+- matched lesson 'הרב אברהם יצחק הכהן קוק' has status=draft — must be published for parity
+- matched lesson 'ה'פרי צדיק' - ר' צדוק הכהן מלובלין' has status=draft — must be published for parity
+- matched lesson 'ה'חפץ חיים' - ר' ישראל מאיר הכהן מראדין' has status=draft — must be published for parity
+- matched lesson 'האלשיך הקדוש' has status=draft — must be published for parity
+- 162 general-audience published lessons are linked to topics in newdb but absent from the old topic pages. Kept (genuine content, possibly tagged after the old snapshot) and flagged — Yoav decides keep/unlink per topic. Exact old-order parit
+
+## tree_plan — 19 פריטים
+- 'סדרות על החומש' (/מאגר-השיעורים-והמאמרים/תורה/בראשית/סדרות-על-החומש/) is shown in the old sidebar but its old page lists 0 items. Created as an empty active series for label parity — confirm or demote.
+- old node 'כל עזרא ונחמיה' (/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/כל-עזרא-ונחמיה/) was unmatched; it is a 'all lessons of the section' link — rendered as a code link to /category/5896c267-01b2-44d0-9fa4-f0d3b357ccc1, no series row creat
+- old node 'כל השיעורים על המועדים' (/מאגר-השיעורים-והמאמרים/מועדים/כל-השיעורים-על-המועדים/) was unmatched; it is a 'all lessons of the section' link — rendered as a code link to /category/92130154-e96a-4f98-b032-5a20ac385f63, no series row c
+- 'הפטרת וילך' (/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-וילך/) is shown in the old sidebar but its old page lists 0 items. Created as an empty active series for label parity — confirm or demote.
+- old node 'כל השיעורים מימי עיון בתנ"ך' (/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/כל-השיעורים-מימי-עיון-בתנך/) was unmatched; it is a 'all lessons of the section' link — rendered as a code link to /category/f4040001-0001-4000-8000-000000000000,
+- 'פרשת נשא | ד-ז' (9cb69292-166f-4114-98d3-ca8812c81787) is in the old PUBLIC sidebar but tagged ['general', 'teachers'] in newdb -> set to ['general']. Confirm it is not needed by the teachers wing.
+- 'חידות לילדים - פרשת השבוע' (c852edd8-d959-4c8d-bf7e-17b5881275fa) is in the old PUBLIC sidebar but tagged ['teachers', 'general'] in newdb -> set to ['general']. Confirm it is not needed by the teachers wing.
+- 'כלי עזר - טבלאות זמני המאורעות ומפות' (27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7) is in the old PUBLIC sidebar but tagged ['teachers'] in newdb -> set to ['general']. Confirm it is not needed by the teachers wing.
+- 'הפרשה במבט רחב' (a1111111) reparented under תורה root at sort 100 (kept out of the sidebar). Old site served it via the פרשת-השבוע page. Confirm placement.
+- 'סימן לבנים' (a2222222) reparented under תורה root at sort 101 (kept out of the sidebar). Old site served it via the פרשת-השבוע page. Confirm placement.
+- 'מידות בפרשה' (a3333333) reparented under תורה root at sort 102 (kept out of the sidebar). Old site served it via the פרשת-השבוע page. Confirm placement.
+- 'דרך לימוד התנ"ך' (a8e770fd) parked under איך לומדים תנ"ך at sort 100 (out of sidebar). The old sidebar node 'אוסף הדרכות בלימוד תנ"ך' (matched f8a82688, empty draft) may be the intended container for this content — decide whether to merge/
+- e577cd74 ('אוסף מקורות על חשיבות לימוד תנ"ך', draft, empty) is superseded by 68582fdf — candidate for future merge; left as draft.
+- 'מקומות בספר מלכים א (לפי א-ב)' (d6a13cc3) parked under מפות עזר לתנ"ך. Not found on the old public כלי-עזר page listing — confirm it is teachers-wing material.
+- 'שיעורים כלליים' (cab4229a) remains a root outside the sidebar — confirm or pick a home.
+- 115 matched old sidebar nodes are currently EMPTY draft/category placeholders (0 lessons, 0 children) promoted to 'active' for sidebar parity. Their old pages DO have items — the listings plan must populate them (same tmp/id refs). If a con
+- 14 nodes matched fuzzily keep the NEW title — strict label parity would need a rename. Decide per item: old 'חידות לילדים פ"ש' -> new 'חידות לילדים - פרשת השבוע' (c852edd8, fuzzy_in_parent); old 'דוד בקעילה ובזיף | פרק כג' -> new 'דוד בקעיל
+- these kept extras are skeleton-equal to a sidebar sibling — candidates for merge: c5177c6b 'ערי המקלט והלוויים | פרקים כ-כא' ~= sidebar child 'ערי המקלט והלויים | פרקים כ-כא' (parent /מאגר-השיעורים-והמאמרים/נביאים/יהושע/)
+- aa111111 'עזרא' and bb222222 'נחמיה' (night-session split under כתובים) lose their chapter children to the old combined book 'עזרא ונחמיה' (5896c267) per the old sidebar; they keep only 2/1 direct lessons and stay page-only (sort 0). Candid
+
+## סבב-3 חוסרי-רשימות — 101 פריטים
+- {"what": "demoted to draft: 'קידוש ה' שיהיה בקיבוץ הגלויות' (f2010000-…113)", "why": "real audio (ירמיהו/23655.mp3) but the title appears on no old page — possible mistitled ירמיהו lesson; demoted (reversible), needs a human call on its tru
+- {"what": "demoted to draft: 'עיין חדש בחזון העצמות היבשות' (03011661)", "why": "typo-twin of the ימי-עיון lesson 'עיון חדש בחזון העצמות היבשות'; audio likely duplicates 09ee99f9/164cb9ef — confirm before deleting/merging"}
+- {"what": "demoted to draft: 'אפסות העבודה זרה' copy c7a4171e in שיעורים-על-התנ\"ך-ירמיהו", "why": "audio is the ישעיהו פרק-מד recording (הרב אחיקם גץ) — misfiled under ירמיהו; ישעיהו-פרק-מד already renders its own row; confirm identity befo
+- {"what": "'רוצה להיות מלכה' on /כתובים/אסתר/כל-השיעורים-על-מגילת-אסתר/ — no usable DB row", "why": "never matched; candidates ['496a7521/published', 'd1d1b800/published', 'eb2139d2/published']; old media: https://bneyzion.s3.us-east-2.amazo
+- {"what": "match conflict: /הפטרות/הפטרות-שמות/מאמרים-הפטרות-ספר-שמות/ shares series 269dc17c with a PASSING old page", "why": "both old pages map to one series; its content satisfies -השיעורים-והמאמרים/הפטרות/הפטרות-שמות/מאמרים-על-הפטרות-שמ
+- {"what": "draft-with-no-content in scope: \"ספר דניאל עם ביאור ותרגום 'ושננתם'\" (23125b63)", "why": "old page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/ lists it; publishing an empty row would show a blank popup — needs cont
+- {"what": "draft-with-no-content in scope: \"ספר דניאל עם ביאור ותרגום 'ושננתם'\" (23125b63)", "why": "old page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/דניאל/ lists it; publishing an empty row would show a blank popup — need
+- {"what": "draft-with-no-content in scope: 'שאול אינו מקיים את הציווי במלואו ותשובת הקב\"ה' (9de778fd)", "why": "old page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת lists it; publishing an empty row would show a b
+- {"what": "old page lists 'אין מקרא יוצא מדי פשוטו' more than once, DB has one row (ba617633)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/ — duplicating the row would clone content; decide if the old dupli
+- {"what": "title drift: old 'דרכיה דרכי נועם' vs DB 'מחשב מסלול מחדש' (c998edab)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מידות-בפרשה/'] — renaming would break them;
+- {"what": "old page lists 'אין מקרא יוצא מדי פשוטו' more than once, DB has one row (ba617633)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/דרכי-הפרשנ — duplicating the row would clone content; decide if the
+- {"what": "title drift: old 'דרכיה דרכי נועם' vs DB 'מחשב מסלול מחדש' (c998edab)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מידות-בפרשה/'] — renaming would break them;
+- {"what": "old page lists 'הגישה לחטאים של גדולי האומה' more than once, DB has one row (f29ba355)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/היחס-הראוי — duplicating the row would clone content; decide if
+- {"what": "old page lists 'לימודים לדורות מהאשה השונמית' more than once, DB has one row (38e59c6d)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטר — duplicating the row would clone content; decide i
+- {"what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (228137e2)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטר — duplicating the row would clone co
+- {"what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (ed4c33c2)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/מאמר — duplicating the row would clone co
+- {"what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (ed4c33c2)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/מאמר — duplicating the row would clone co
+- {"what": "title drift: old 'בני גד ובני ראובן' vs DB 'הפסח במדבר' (f9d0a5f2)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-בהעלותך-ח-יב/', 'https://www.bneyzion.co.
+- {"what": "old page lists 'ושביה בצדקה' more than once, DB has one row (5f13afe1)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/מאמ — duplicating the row would clone content; decide if the old duplica
+- {"what": "old page lists 'שיבת ציון הצלחות ומשברים' more than once, DB has one row (20f29c50)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/ — duplicating the row would clone content; decide if the old 
+- {"what": "old page lists 'שיבת ציון הצלחות ומשברים' more than once, DB has one row (20f29c50)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/כל-עזר — duplicating the row would clone content; decide if th
+- {"what": "old page lists 'הצהרת כורש' more than once, DB has one row (6a9abe51)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/עזרא-פ — duplicating the row would clone content; decide if the old duplicat
+- {"what": "old page lists 'קיבוץ הגלויות' more than once, DB has one row (e6060601)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/יום-העצמאות/ — duplicating the row would clone content; decide if the old duplication
+- {"what": "old page lists 'סודו של ראש השנה' more than once, DB has one row (140383ea)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/כל-השיעורים-על-המו — duplicating the row would clone content; decide if the old du
+- {"what": "old page lists 'השמחה בחג הסוכות' more than once, DB has one row (a94d7551)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/ — duplicating the row would clone content; decide if the old duplication is
+- {"what": "old page lists 'סוכות – החג של ארץ ישראל' more than once, DB has one row (ebe71b4a)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/ — duplicating the row would clone content; decide if the old duplic
+- {"what": "old page lists 'השמחה בחג הסוכות' more than once, DB has one row (a94d7551)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/כל-השיעורים- — duplicating the row would clone content; decide if the old du
+- {"what": "old page lists 'סוכות – החג של ארץ ישראל' more than once, DB has one row (ebe71b4a)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/כל-השיעורים- — duplicating the row would clone content; decide if th
+- {"what": "old page lists 'מגילת אסתר – מגילת הַסֵתֶר' more than once, DB has one row (f5050501)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/פורים/ — duplicating the row would clone content; decide if the old dupl
+- {"what": "title drift: old \"ספר מלכים א עם ביאור 'ושננתם'\" vs DB 'מפת שלושים ואחד המלכים' (3bfe8dad)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני-המאורעות-ומ
+- {"what": "title drift: old 'הסבר פשוט על מבנה ארץ ישראל' vs DB 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (5dae4141)", "why": "the DB title is demanded by other old pages [] — renaming would break them; likely needs a copy-with-retitle decision"
+- {"what": "old page lists 'תמה תקופת המן והחלה תקופת העומר' more than once, DB has one row (b722b172)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/הפסח-המילה-ו — duplicating the row would clone content; decid
+- {"what": "title drift: old 'בני גד ובני ראובן' vs DB 'הפסח במדבר' (f9d0a5f2)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-בהעלותך-ח-יב/', 'https://www.bneyzion.co.
+- {"what": "old page lists 'מלחמת מלכי הדרום' more than once, DB has one row (ece96406)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/מלחמת-מלכי-ה — duplicating the row would clone content; decide if the old du
+- {"what": "old page lists 'ערי המקלט' more than once, DB has one row (14fcb53a)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/ערי-המקלט-וה — duplicating the row would clone content; decide if the old duplicati
+- {"what": "old page lists 'חזון העצמות היבשות' more than once, DB has one row (5c7af8ab)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק- — duplicating the row would clone content; decide if the old 
+- {"what": "old page lists 'מלחמת גוג ומגוג' more than once, DB has one row (444289bf)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק- — duplicating the row would clone content; decide if the old dup
+- {"what": "old page lists 'על מה אבדה הארץ?' more than once, DB has one row (a44c49b0)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/ירמיהו-פרק- — duplicating the row would clone content; decide if the old du
+- {"what": "title drift: old \"ספר מלכים א עם ביאור 'ושננתם'\" vs DB 'מפת שלושים ואחד המלכים' (3bfe8dad)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני-המאורעות-ומ
+- {"what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (228137e2)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/אדוניהו-וה — duplicating the row would clone co
+- {"what": "old page lists 'כיצד יתכן ששלמה המלך כרת ברית עם חירם מל' more than once, DB has one row (0b07e143)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/הצלחת-שלמה — duplicating the row would clone conte
+- {"what": "old page lists 'כיצד יתכן ששלמה המלך כרת ברית עם חירם מל' more than once, DB has one row (0b07e143)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/מאמרים-ספר — duplicating the row would clone conte
+- {"what": "old page lists 'לימודים לדורות מהאשה השונמית' more than once, DB has one row (eee69e75)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/ניסי-אלישע — duplicating the row would clone content; decide i
+- {"what": "old page lists 'מדוע נהרג יאשיהו המלך הצדיק בגיל צעיר?' more than once, DB has one row (68b4ec10)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/תשובת-יאשי — duplicating the row would clone content
+- {"what": "old page lists 'שירת דבורה' more than once, DB has one row (14547861)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/דבורה-וברק- — duplicating the row would clone content; decide if the old duplicat
+- {"what": "old page lists 'יהודה יעלה' more than once, DB has one row (199bcb7c)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/מצב-הכיבושי — duplicating the row would clone content; decide if the old duplicat
+- {"what": "old page lists 'שמואל א פרק ח' more than once, DB has one row (b7bbd85a)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/בקשת-המלך- — duplicating the row would clone content; decide if the old dupli
+- {"what": "old page lists 'שמואל א פרק כג' more than once, DB has one row (440fd911)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-בקעילה — duplicating the row would clone content; decide if the old dupl
+- {"what": "old page lists 'דוד וגלית' more than once, DB has one row (56bae857)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-וגלית- — duplicating the row would clone content; decide if the old duplicati
+- {"what": "old page lists 'נדודי דוד' more than once, DB has one row (36f37de7)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-והריגת — duplicating the row would clone content; decide if the old duplicati
+- {"what": "old page lists 'שמואל א פרק כ' more than once, DB has one row (7f848873)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-יונתן- — duplicating the row would clone content; decide if the old dupli
+- {"what": "old page lists 'שמואל א פרק ז' more than once, DB has one row (191aca4f)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/הניצחון-על — duplicating the row would clone content; decide if the old dupli
+- {"what": "old page lists 'שמואל א פרק ו' more than once, DB has one row (a8e62cf4)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/חזרת-הארון — duplicating the row would clone content; decide if the old dupli
+- {"what": "old page lists 'שמואל א פרק יג' more than once, DB has one row (7bc37fc5)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/יונתן-והפל — duplicating the row would clone content; decide if the old dupl
+- {"what": "old page lists 'שמואל א פרק יד' more than once, DB has one row (08d0263d)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/יונתן-והפל — duplicating the row would clone content; decide if the old dupl
+- {"what": "old page lists 'שמואל א פרק כט' more than once, DB has one row (f8f95ac6)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-דוד- — duplicating the row would clone content; decide if the old dupl
+- {"what": "old page lists 'שמואל א פרק ל' more than once, DB has one row (8c560f77)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-דוד- — duplicating the row would clone content; decide if the old dupli
+- {"what": "old page lists 'שמואל א פרק טו' more than once, DB has one row (778fb6f6)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-שאול — duplicating the row would clone content; decide if the old dupl
+- {"what": "old page lists 'שמואל א פרק טז' more than once, DB has one row (ff66828e)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/משיחת-דוד- — duplicating the row would clone content; decide if the old dupl
+- {"what": "old page lists 'שמואל א פרק ג' more than once, DB has one row (e21e4a13)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/נבואת-שמוא — duplicating the row would clone content; decide if the old dupli
+- {"what": "title drift: old 'הסבר פשוט על מבנה ארץ ישראל' vs DB 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (5dae4141)", "why": "the DB title is demanded by other old pages [] — renaming would break them; likely needs a copy-with-retitle decision"
+- {"what": "old page lists 'מדינת הלכה על פי התנ\"ך' more than once, DB has one row (3a8136dc)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ — duplicating the row would clone content; decide if the old d
+- {"what": "title drift: old 'הסבר פשוט על מבנה ארץ ישראל' vs DB 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (5dae4141)", "why": "the DB title is demanded by other old pages [] — renaming would break them; likely needs a copy-with-retitle decision"
+- {"what": "old page lists '\"המקום אשר יבחר\"' more than once, DB has one row (d386a1bb)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ירושלי — duplicating the row would clone content; decide if the old 
+- {"what": "old page lists 'מניין כפול?!' more than once, DB has one row (9488e8a3)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מאמרים-על-פרשי — duplicating the row would clone content; decide if the old duplic
+- {"what": "old page lists 'בני גד ובני ראובן' more than once, DB has one row (256c7dea)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-מטות-ל-לב — duplicating the row would clone content; decide if the old d
+- {"what": "title drift: old 'דרכיה דרכי נועם' vs DB 'מחשב מסלול מחדש' (c998edab)", "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מידות-בפרשה/'] — renaming would break them;
+- {"what": "old page lists 'ראובן - פוחז או בכור?' more than once, DB has one row (5c1b917f)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/ — duplicating the row would clone content; decide if the old duplicatio
+- {"what": "old page lists 'פרשת יהודה ותמר' more than once, DB has one row (242929e1)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-וישב-לז- — duplicating the row would clone content; decide if the old dup
+- {"what": "old page lists '(מצגת) כיבושי ארבעת המלכים - נדידת עמים ' more than once, DB has one row (17b0d495)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך-לך-יב — duplicating the row would clone conte
+- {"what": "old page lists 'כעיר שחברה לה יחדו' more than once, DB has one row (820a5576)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-ואתחנן-ד- — duplicating the row would clone content; decide if the old 
+- {"what": "old page lists 'היום השמיני המפתיע' more than once, DB has one row (03134565)", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שמיני-ט-י — duplicating the row would clone content; decide if the old 
+- {"what": "\"'כי מי נח' - סגולה מרוכזת הצומחת באיטיות\" missing on /הפטרות/הפטרות-בראשית/הפטרת-נח/", "why": "published row(s) with this exact title exist elsewhere (['bfa09995@81509bbe', 'c1010001@8152f12a']) but the matcher never linked the
+- {"what": "'והיה לעת ערב יהיה אור' missing on /הפטרות/הפטרות-המועדים/הפטרות-המועדים-הרב-מנח", "why": "published row(s) with this exact title exist elsewhere (['3fb0a9cb@aab1289b', '62aab708@3b6c298e', '8c388434@e33c840d']) but the matcher ne
+- {"what": "'המחשות של ירושלים בזמן בית ראשון מול ירושלים ' — only bneyzion.co.il media (/media/145720/מפת-ירושלים-להפוך-לתמונות.pdf)", "why": "Rule 13: old-domain media must be rehosted before insert; page https://www.bneyzion.co.il/מאגר-השי
+- {"what": "'ציר זמן - תקופת המלכים | כמות מידע בינונית' — only bneyzion.co.il media (/media/144703/ציר-זמן-מלכי-ישראל-ויהודה-ללא-אירועים.pdf)", "why": "Rule 13: old-domain media must be rehosted before insert; page https://www.bneyzion.co.il
+- {"what": "'ציר זמן - תקופת המלכים | כל המידע' — only bneyzion.co.il media (/media/144704/ציר-זמן-מלכי-ישראל-ויהודה.pdf)", "why": "Rule 13: old-domain media must be rehosted before insert; page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמר
+- {"what": "'רוצה להיות מלכה' missing on /כתובים/אסתר/כל-השיעורים-על-מגילת-אסתר/", "why": "published row(s) with this exact title exist elsewhere (['496a7521@f4040001', 'd1d1b800@4915aec2', 'eb2139d2@5cdd770c']) but the matcher never linked t
+- {"what": "'נעשה ונשמע' missing on /כתובים/משלי/ביאור-ספר-משלי/", "why": "published row(s) with this exact title exist elsewhere (['93442618@cc7825e1', 'bda49d84@dfb8c480']) but the matcher never linked them — copy candidate, needs eyeball (
+- {"what": "'רוצה להיות מלכה' missing on /מועדים/פורים/", "why": "published row(s) with this exact title exist elsewhere (['496a7521@f4040001', 'd1d1b800@4915aec2', 'eb2139d2@5cdd770c']) but the matcher never linked them — copy candidate, nee
+- {"what": "'בבל מול ירושלים - בקעה מול הרים שיעור ראשון' missing on /נביאים/יחזקאל/", "why": "published row(s) with this exact title exist elsewhere (['57bbbd2e@6be34cb5']) but the matcher never linked them — copy candidate, needs eyeball (d
+- {"what": "'בבל מול ירושלים - בקעה מול הרים שיעור שני' missing on /נביאים/יחזקאל/", "why": "published row(s) with this exact title exist elsewhere (['151a5d32@6be34cb5']) but the matcher never linked them — copy candidate, needs eyeball (dif
+- {"what": "'אלקנה, חנה ופנינה' missing on /נביאים/שמואל-א/חנה-והולדת-שמואל-פרק-א/", "why": "published row(s) with this exact title exist elsewhere (['03368b0c@258d2fb6', '1c5bfb24@d05f0213', '29f071af@a1010001']) but the matcher never linked
+- {"what": "'משיח בן יוסף ומשיח בן דוד' (הרב עמנואל בן ארצי) — no media, no DB candidate", "why": "text lesson needing old-page scrape; page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/י row idx=15, href /מאגר-השיעורי
+- {"what": "'אם משה היה נכנס לארץ - האם התורה היתה ממשיכה ' missing on /תורה/", "why": "published row(s) with this exact title exist elsewhere (['663a5dbe@3af005f9']) but the matcher never linked them — copy candidate, needs eyeball (differen
+- {"what": "'המספרים במקרא - מדויקים או מעוגלים?' missing on /תורה/במדבר/פרשת-במדבר-א-ד/", "why": "published row(s) with this exact title exist elsewhere (['f8166389@2d6d28c1']) but the matcher never linked them — copy candidate, needs eyebal
+- {"what": "'אם משה היה נכנס לארץ - האם התורה היתה ממשיכה ' missing on /תורה/דברים/", "why": "published row(s) with this exact title exist elsewhere (['663a5dbe@3af005f9']) but the matcher never linked them — copy candidate, needs eyeball (di
+- {"what": "\"תולדות קרבת ה' לאדם - ביציאת מצרים ובמתן תורה\" missing on /תורה/שמות/פרשת-יתרו-יח-כ/", "why": "published row(s) with this exact title exist elsewhere (['e9ca1179@d7a37161']) but the matcher never linked them — copy candidate, n
+- {"what": "applied ops but no row in scope: 'הבית של חסרי הבית'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-בהעל idx=41 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"}
+- {"what": "applied ops but no row in scope: 'סדר וזהות - סוד הדיוק והמשמעת הפנימית במ'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-במדב idx=34 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'a
+- {"what": "applied ops but no row in scope: 'מדוע פירטה התורה באיזה גיל הוליד כל אחד '", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-ברא idx=12 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'a
+- {"what": "applied ops but no row in scope: 'את מי רצה אברהם אבינו להציל - את סדום או'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-ויר idx=6 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'ap
+- {"what": "applied ops but no row in scope: 'מדוע התורה לא כתבה על צדקותו של אברהם אב'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך- idx=9 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'ap
+- {"what": "applied ops but no row in scope: 'על מה נכרתה ברית בין הבתרים ומה משמעותה '", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך- idx=12 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'a
+- {"what": "applied ops but no row in scope: '\"ותענה שרי\" - היאך יתכן שאשה צדקת כשרה א'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך- idx=14 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 
+- {"what": "applied ops but no row in scope: 'סוד הקדושה שבלב הקהילה'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אחרי idx=30 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"}
+- {"what": "applied ops but no row in scope: 'סודם של מתנות עניים בלב פרשת המועדות'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אמור idx=39 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'appli
+- {"what": "applied ops but no row in scope: 'המסע אל אומנות השתיקה'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-מצור idx=27 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"}
+- {"what": "applied ops but no row in scope: 'סוד הקדושה שבלב הקהילה'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-קדוש idx=31 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"}
+- {"what": "applied ops but no row in scope: 'המסע אל אומנות השתיקה'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-תזרי idx=35 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"}
+- {"what": "applied ops but no row in scope: 'אין מוקדם ומאוחר בתורה'", "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/שמות/פרשת-תרומה idx=27 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"}

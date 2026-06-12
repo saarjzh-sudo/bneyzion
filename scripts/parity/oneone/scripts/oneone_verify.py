@@ -1010,6 +1010,7 @@ def run_rabbis(results, workers=8):
             rpi_rows = rest_get("rabbi_page_items", [
                 ("select", "id,kind,series_id,lesson_id,sort_order,series(id,title,lesson_count),lessons(id,title,audio_url,video_url,attachment_url)"),
                 ("rabbi_id", f"eq.{rid}"),
+                ("sort_order", "lt.9000"),
                 ("order", "sort_order.asc"),
             ])
             if is_err(rpi_rows):
@@ -1321,6 +1322,7 @@ def run_teachers(results, workers=8):
                        "lessons(id,title,description,content,duration,audio_url,video_url,"
                        "attachment_url,thumbnail_url,series_id,content_type)"),
             ("rabbi_id", f"eq.{rid}"),
+            ("sort_order", "lt.9000"),
             ("order", "sort_order.asc"),
         ])
         if is_err(rpi):

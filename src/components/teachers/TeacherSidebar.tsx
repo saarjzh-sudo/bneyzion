@@ -196,6 +196,13 @@ export default function TeacherSidebar({
   // Special case: מלכים א uses "דפי עבודה ומבחנים - מלכים א".
   const TORAH_BOOKS = new Set(["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]);
 
+  // Old-site teachers tree: ONLY these 11 books had child rows ("כל התכנים", "דפי עבודה");
+  // all other books are plain links to /teachers/book/:book with no expandable rows (1:1).
+  const BOOKS_WITH_ROWS = new Set([
+    "בראשית", "שמות", "ויקרא", "במדבר", "דברים",
+    "יהושע", "שופטים", "שמואל א", "שמואל ב", "מלכים א", "מלכים ב",
+  ]);
+
   const allContentLabel = (bookTitle: string): string => {
     if (TORAH_BOOKS.has(bookTitle)) return `כל התכנים בחומש ${bookTitle}`;
     return `כל התכנים בספר ${bookTitle}`;
@@ -257,6 +264,26 @@ export default function TeacherSidebar({
               const isBookOpen = expandedBooks.has(bookKey);
               const parshiot = PARSHIOT_BY_BOOK[book.title] || [];
 
+              if (!BOOKS_WITH_ROWS.has(book.title)) {
+                // 1:1 with old tree: row-less book = plain link, no accordion
+                return (
+                  <button
+                    key={book.id}
+                    onClick={() => {
+                      onDrawerClose?.();
+                      navigate(`/teachers/book/${encodeURIComponent(book.title)}`);
+                    }}
+                    style={{
+                      ...itemStyle(false),
+                      width: "100%",
+                      border: "none",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <span>{book.title}</span>
+                  </button>
+                );
+              }
               return (
                 <div key={book.id}>
                   {/* Book row — clicking expands */}
