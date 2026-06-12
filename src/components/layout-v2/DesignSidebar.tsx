@@ -84,10 +84,11 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
 
   // §2.7: full rabbi list — old sidebar showed ~153 rabbis; cap-30 was a known regression (R-SB2).
   // Tier-pinning removed per §2.7 (tier pins stay on /rabbis cards if yoav wants them, not here).
+  // Sort: he-alpha by name (א-ב), matching the old site sidebar order.
   const topRabbis = useMemo(() => {
     return (rabbisRaw as { id: string; slug?: string; name?: string; lesson_count?: number }[])
       .filter((r) => r.name)
-      .sort((a, b) => (b.lesson_count || 0) - (a.lesson_count || 0));
+      .sort((a, b) => (a.name || "").localeCompare(b.name || "", "he"));
   }, [rabbisRaw]);
 
   // ── Helper: toggle a key in a Set ──
@@ -196,7 +197,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               {[
                 { to: "/", label: "ראשי", icon: Home },
                 // §2.2 tree CA1: "ניווט באתר לפי ספר ופרק" → /bible index page
-                { to: "/bible", label: "ניווט לפי ספר ופרק", icon: BookOpen },
+                { to: "/bible", label: "ניווט באתר לפי ספר ופרק", icon: BookOpen },
                 { to: "/parasha", label: "פרשת השבוע", icon: BookOpen },
                 // R-SB4: /how-to-learn-tanach had no route → now points to the real category node
                 { to: "/category/62590949-6187-4e17-b84d-65a518467521", label: "איך לומדים תנ״ך", icon: Sparkles },
@@ -751,6 +752,38 @@ function ContentTree({
                       b.children.some((c) => matchesSearch(c.title))
                   )
                   .map((book) => {
+                    // §2.5 tree CA8: חידות לילדים — synthetic 6th Torah entry, navigate /series/:id
+                    if (book.id === riddlesSeriesId) {
+                      if (!matchesSearch(book.title) && search.trim()) return null;
+                      return (
+                        <div key={book.id} style={{ marginBottom: "0.1rem" }}>
+                          <button
+                            onClick={() => onNavigate(`/series/${riddlesSeriesId}`)}
+                            style={{
+                              width: "100%",
+                              textAlign: "right",
+                              padding: "0.4rem 0.65rem",
+                              borderRadius: radii.sm,
+                              background: "transparent",
+                              border: "none",
+                              color: colors.textMuted,
+                              fontFamily: fonts.body,
+                              fontSize: "0.82rem",
+                              fontWeight: 500,
+                              cursor: "pointer",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: "0.4rem",
+                            }}
+                            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(139,111,71,0.05)"; e.currentTarget.style.color = colors.goldDark; }}
+                            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = colors.textMuted; }}
+                          >
+                            <Sparkles size={11} style={{ flexShrink: 0, opacity: 0.7 }} />
+                            {book.title}
+                          </button>
+                        </div>
+                      );
+                    }
                     const bookKey = `${cat.id}::${book.id}`;
                     const bookOpen = expanded.has(bookKey);
                     return (
@@ -902,45 +935,12 @@ function ContentTree({
                                 </button>
                               ))}
 
-                            {/* חידות לילדים — only under Torah / בראשית */}
-                            {cat.title === "תורה" && book.title === "בראשית" && (
-                              <button
-                                onClick={() => onNavigate(`/series/${riddlesSeriesId}`)}
-                                style={{
-                                  width: "100%",
-                                  textAlign: "right",
-                                  padding: "0.32rem 0.55rem",
-                                  borderRadius: radii.sm,
-                                  background: "transparent",
-                                  border: "none",
-                                  color: colors.textMuted,
-                                  fontFamily: fonts.body,
-                                  fontSize: "0.76rem",
-                                  fontWeight: 400,
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "0.3rem",
-                                  marginTop: "0.1rem",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.background = "rgba(139,111,71,0.05)";
-                                  e.currentTarget.style.color = colors.goldDark;
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.background = "transparent";
-                                  e.currentTarget.style.color = colors.textMuted;
-                                }}
-                              >
-                                <Sparkles size={10} />
-                                חידות לילדים פ״ש
-                              </button>
-                            )}
                           </div>
                         )}
                       </div>
                     );
                   })}
+
               </div>
             )}
           </div>

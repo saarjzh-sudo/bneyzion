@@ -55,23 +55,29 @@ export function useTopicsSidebar() {
       if (childError) throw childError;
       if (!children || children.length === 0) return [];
 
-      // Step 3: fetch lesson counts — filtered to published + non-teacher lessons so the
-      // number in the sidebar matches what TopicPage actually renders (R-TOP3 / R-SB3 fix).
-      // limit(10000) to beat the PostgREST 1000-row default cap on large topic sets.
+      // Step 3: fetch lesson counts using paginated .range() to bypass PostgREST 1000-row cap.
+      // Uses the same dual-audience filter as TopicPage (§0.3) so sidebar badge == page count.
+      // referencedTable: "lessons" is required for .or() on an embedded join (avoids PGRST100).
       const childIds = children.map((c) => c.id);
-      const { data: counts, error: countError } = await supabase
-        .from("lesson_topics")
-        .select("topic_id, lessons!inner(status, audience_tags)")
-        .in("topic_id", childIds)
-        .eq("lessons.status", "published")
-        .not("lessons.audience_tags", "cs", "{teachers}")
-        .limit(10000);
-
-      if (countError) throw countError;
+      const countRows: { topic_id: string }[] = [];
+      const PAGE = 2000;
+      for (let start = 0; ; start += PAGE) {
+        const { data: page, error: pageErr } = await supabase
+          .from("lesson_topics")
+          .select("topic_id, lessons!inner(status, audience_tags)")
+          .in("topic_id", childIds)
+          .eq("lessons.status", "published")
+          // §0.3 dual-audience: referencedTable targets the embedded lessons join (avoids PGRST100)
+          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}", { referencedTable: "lessons" })
+          .range(start, start + PAGE - 1);
+        if (pageErr || !page || page.length === 0) break;
+        for (const r of page as any[]) countRows.push({ topic_id: r.topic_id });
+        if (page.length < PAGE) break;
+      }
 
       // Build a count map
       const countMap: Record<string, number> = {};
-      for (const row of (counts || []) as any[]) {
+      for (const row of countRows) {
         const tid: string = row.topic_id;
         countMap[tid] = (countMap[tid] || 0) + 1;
       }

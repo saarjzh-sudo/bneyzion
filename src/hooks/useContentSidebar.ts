@@ -179,8 +179,11 @@ export function useContentSidebar() {
         children.sort((a: any, b: any) => (a.sortOrder || 0) - (b.sortOrder || 0) || a.title.localeCompare(b.title, 'he'));
       }
 
-      // Filter out non-chumash items from Torah books (like "דפי פרשת שבוע")
-      const torahBooks = TORAH_BOOK_ORDER
+      // Filter out non-chumash items from Torah books (like "דפי פרשת שבוע").
+      // §2.5 tree CA8: append חידות לילדים פ״ש as the 6th entry (after דברים) — synthetic book
+      // entry so the verifier and sidebar both see it in the correct position under תורה.
+      // Its id = riddles series id; DesignSidebar detects this and routes to /series/:id.
+      const torahChumashBooks = TORAH_BOOK_ORDER
         .map((name) => allBooks.find((b) => b.title === name && b.parent_id === ROOT_IDS.torah))
         .filter(Boolean)
         .map((b) => ({
@@ -188,6 +191,10 @@ export function useContentSidebar() {
           title: b!.title,
           children: childrenByBook.get(b!.id) || [],
         }));
+      const torahBooks = [
+        ...torahChumashBooks,
+        { id: ROOT_IDS.riddles, title: 'חידות לילדים פ״ש', children: [] },
+      ];
 
       // Build Torah/Neviim/Ketuvim categories
       const categories: SidebarCategory[] = [
