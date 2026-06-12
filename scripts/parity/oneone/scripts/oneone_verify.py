@@ -1415,7 +1415,13 @@ def run_teachers(results, workers=8):
             return "דפי עבודה ומבחנים - מלכים א"
         return f"דפי עבודה - {book_title}"
 
+    BOOKS_WITH_ROWS = {"בראשית", "שמות", "ויקרא", "במדבר", "דברים",
+                       "יהושע", "שופטים", "שמואל א", "שמואל ב", "מלכים א", "מלכים ב"}
+
     def rendered_teacher_book_rows(title):
+        # mirrors TeacherSidebar.tsx commit 84de9091: row-less books = plain links
+        if title not in BOOKS_WITH_ROWS:
+            return []
         rows = [all_content_label(title), worksheet_label(title)]
         rows += [f"פרשת {p}" for p in PARSHIOT_BY_BOOK.get(title, [])]
         return rows

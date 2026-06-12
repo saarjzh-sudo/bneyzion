@@ -1,5 +1,5 @@
 # VERIFY — oneone verification report
-*Generated 2026-06-12 11:25 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
+*Generated 2026-06-12 11:30 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
 
 REST calls: 3039 (cache hits 73, errors 0)
 
@@ -9,12 +9,12 @@ REST calls: 3039 (cache hits 73, errors 0)
 |---|---|---|---|
 | Sidebar (top categories) | 5 | 13 | 38.5% |
 | Listing pages | 795 | 1273 | 62.5% |
-| Rabbi pages | 121 | 154 | 78.6% |
+| Rabbi pages | 128 | 154 | 83.1% |
 | Topics sidebar | PASS | 1 | — |
 | Topic pages | 102 | 128 | 79.7% |
 | Teachers content-types | 22 | 22 | 100.0% |
-| Teachers creators | 28 | 31 | 90.3% |
-| Teachers by-book | 11 | 35 | 31.4% |
+| Teachers creators | 30 | 31 | 96.8% |
+| Teachers by-book | 35 | 35 | 100.0% |
 | Guards | PASS | — | — |
 
 ## 1. Sidebar
@@ -168,23 +168,23 @@ Note: 48 of the pages are category/book aggregation nodes — since r2 the harne
 
 rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-series + lessons).
 
-121/154 PASS. Worst 15 by missing lessons:
+128/154 PASS. Worst 15 by missing lessons:
 
-- **הרב יואב אוריאל**: series old=50 new=50 missing=0 | lessons old=94 new=115 missing=5 extra=26 order_ok=True
-- **הרב עמנואל בן ארצי**: series old=26 new=27 missing=0 | lessons old=22 new=27 missing=3 extra=8 order_ok=True
+- **הרב יואב אוריאל**: series old=50 new=50 missing=0 | lessons old=94 new=89 missing=5 extra=0 order_ok=True
+- **הרב עמנואל בן ארצי**: series old=26 new=26 missing=0 | lessons old=22 new=20 missing=3 extra=1 order_ok=True
 - **הרב אריה אוריאל**: series old=0 new=0 missing=0 | lessons old=2 new=10 missing=2 extra=10 order_ok=True
-- **הרב מנחם שחור**: series old=7 new=7 missing=0 | lessons old=64 new=81 missing=2 extra=19 order_ok=True
+- **הרב מנחם שחור**: series old=7 new=7 missing=0 | lessons old=64 new=62 missing=2 extra=0 order_ok=True
 - **מערכת בני ציון**: series old=6 new=6 missing=0 | lessons old=2 new=0 missing=2 extra=0 order_ok=True
-- **הרב איתן שנדורפי**: series old=30 new=30 missing=0 | lessons old=73 new=94 missing=1 extra=22 order_ok=True
+- **הרב איתן שנדורפי**: series old=30 new=30 missing=0 | lessons old=73 new=72 missing=1 extra=0 order_ok=True
 - **הרב אביעד תפוחי**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
 - **הרב אוהד קרקובר**: series old=0 new=0 missing=0 | lessons old=0 new=2 missing=0 extra=2 order_ok=True
 - **הרב אורן טרבלסי**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
-- **הרב אס"ף בנדל**: series old=0 new=0 missing=0 | lessons old=15 new=21 missing=0 extra=6 order_ok=True
 - **הרב אסף שטראוס**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
 - **הרב אריאל בראלי**: series old=0 new=0 missing=0 | lessons old=0 new=2 missing=0 extra=2 order_ok=True
 - **הרב אריאל כהן**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
 - **הרב אריה מרזר**: series old=0 new=0 missing=0 | lessons old=0 new=1 missing=0 extra=1 order_ok=True
-- **הרב אריק אוריאל**: series old=2 new=2 missing=0 | lessons old=1 new=3 missing=0 extra=2 order_ok=True
+- **הרב ברק עוקבי**: series old=0 new=0 missing=0 | lessons old=0 new=3 missing=0 extra=3 order_ok=True
+- **הרב גדי שלוין**: series old=0 new=0 missing=0 | lessons old=0 new=3 missing=0 extra=3 order_ok=True
 
 ## 4. Topics
 
@@ -235,7 +235,7 @@ rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-se
   - ✅ שאלות ותשובות על סדר הפרקים (teacher_listing_items): old=99 new=99 matched=99 missing=0 extra=0
   - ✅ שאלות חזרה (teacher_listing_items): old=1 new=1 matched=1 missing=0 extra=0
   - ✅ שאלות עיון (teacher_listing_items): old=1 new=1 matched=1 missing=0 extra=0
-- Creators: 28/31 PASS
+- Creators: 30/31 PASS
   - ✅ אוריה כראדי (rabbi_page_items): old=1 new=1 matched=1 missing=0 extra=0 order_ok=True
   - ✅ הרב אורי שטמלר (rabbi_page_items): old=3 new=3 matched=3 missing=0 extra=0 order_ok=True
   - ✅ הרב אשי בלייכר (rabbi_page_items): old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
@@ -249,14 +249,14 @@ rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-se
   - ✅ הרב יורם אליהו (rabbi_page_items): old=1 new=1 matched=1 missing=0 extra=0 order_ok=True
   - ✅ הרב יצחק עמראני (rabbi_page_items): old=21 new=21 matched=21 missing=0 extra=0 order_ok=True
   - ✅ הרב מאיר גרשונזון (rabbi_page_items): old=1 new=1 matched=1 missing=0 extra=0 order_ok=True
-  - ❌ הרב מאיר הילביץ' (rabbi_page_items): old=5 new=6 matched=5 missing=0 extra=1 order_ok=True
+  - ✅ הרב מאיר הילביץ' (rabbi_page_items): old=5 new=5 matched=5 missing=0 extra=0 order_ok=True
   - ✅ הרב מנחם אליהו (rabbi_page_items): old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
   - ✅ הרב נחום אריאל (rabbi_page_items): old=1 new=1 matched=1 missing=0 extra=0 order_ok=True
   - ✅ הרב ניסים כהן (rabbi_page_items): old=9 new=9 matched=9 missing=0 extra=0 order_ok=True
   - ✅ הרב עדי איצקוביץ' (rabbi_page_items): old=13 new=13 matched=13 missing=0 extra=0 order_ok=True
   - ✅ הרב עמוס נתנאל (rabbi_page_items): old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
-  - ❌ הרב עמירם אלבה (rabbi_page_items): old=19 new=20 matched=19 missing=0 extra=1 order_ok=True
-  - ❌ הרב עמנואל בן ארצי (rabbi_page_items): old=48 new=49 matched=45 missing=3 extra=4 order_ok=True
+  - ✅ הרב עמירם אלבה (rabbi_page_items): old=19 new=19 matched=19 missing=0 extra=0 order_ok=True
+  - ❌ הרב עמנואל בן ארצי (rabbi_page_items): old=48 new=45 matched=44 missing=4 extra=1 order_ok=True
   - ✅ הרב שלמה כץ (rabbi_page_items): old=21 new=21 matched=21 missing=0 extra=0 order_ok=True
   - ✅ הרב שמעון לוי והרב נתן מולאיוף (rabbi_page_items): old=11 new=11 matched=11 missing=0 extra=0 order_ok=True
   - ✅ הרב שמעון שוהם (rabbi_page_items): old=22 new=22 matched=22 missing=0 extra=0 order_ok=True
@@ -268,7 +268,7 @@ rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-se
   - ✅ סידור שים שלום (rabbi_page_items): old=1 new=1 matched=1 missing=0 extra=0 order_ok=True
   - ✅ תלמוד תורה מורשה (rabbi_page_items): old=6 new=6 matched=6 missing=0 extra=0 order_ok=True
 - By-book sim = the RENDERED TeacherSidebar rows (per-book: 'כל התכנים ב<book>', 'דפי עבודה — <book>', + hard-coded parshiot for Torah). KNOWN code-ask: the old sidebar labeled the alias 'כל התכנים בחומש/בספר <book>' (with per-book variants like 'דפי עבודה ומבחנים מלכים א'), and books with 0 old children now show the 2 synthetic rows — label parity needs a component fix, not data.
-- By-book tree: 11/35 PASS
+- By-book tree: 35/35 PASS
   - ✅ בראשית: old=14 new=14 matched=14 missing=0 extra=0 order_ok=True
   - ✅ שמות: old=13 new=13 matched=13 missing=0 extra=0 order_ok=True
   - ✅ ויקרא: old=12 new=12 matched=12 missing=0 extra=0 order_ok=True
@@ -280,48 +280,48 @@ rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-se
   - ✅ שמואל ב: old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
   - ✅ מלכים א: old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
   - ✅ מלכים ב: old=2 new=2 matched=2 missing=0 extra=0 order_ok=True
-  - ❌ ישעיהו: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ ירמיהו: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ יחזקאל: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ הושע: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ יואל: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ עמוס: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ עובדיה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ יונה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ מיכה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ נחום: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ חבקוק: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ צפניה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ חגי: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ זכריה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ מלאכי: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ תהלים: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ איוב: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ שיר השירים: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ רות: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ איכה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ אסתר: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ דניאל: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ עזרא: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
-  - ❌ נחמיה: old=0 new=2 matched=0 missing=0 extra=2 order_ok=True
+  - ✅ ישעיהו: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ ירמיהו: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ יחזקאל: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ הושע: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ יואל: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ עמוס: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ עובדיה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ יונה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ מיכה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ נחום: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ חבקוק: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ צפניה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ חגי: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ זכריה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ מלאכי: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ תהלים: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ איוב: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ שיר השירים: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ רות: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ איכה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ אסתר: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ דניאל: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ עזרא: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
+  - ✅ נחמיה: old=0 new=0 matched=0 missing=0 extra=0 order_ok=True
 
 ## 6. Guards
 
 - Teacher-only items in PUBLIC simulations: listings lessons=0, topic lessons=0, sidebar children=0 (rabbi-page lessons=192 — intentional per code comment, info only)
 - Draft items in public sidebar: 0
-- Popup sample (60 lessons): content-null=29, fully-empty (no content+no media)=0 — known-debt, not FAIL
+- Popup sample (60 lessons): content-null=28, fully-empty (no content+no media)=1 — known-debt, not FAIL
 | Section | Sampled | content NULL | empty popup |
 |---|---|---|---|
 | איך-לומדים-תנך | 6 | 3 | 0 |
 | הפטרות | 6 | 1 | 0 |
-| ימי-עיון-בתנך | 6 | 5 | 0 |
+| ימי-עיון-בתנך | 6 | 6 | 0 |
 | כלי-עזר-טבלאות-זמני-המאורעות-ומפות | 6 | 2 | 0 |
 | כתובים | 6 | 4 | 0 |
 | ליווי-תתים | 6 | 2 | 0 |
 | מועדים | 6 | 1 | 0 |
-| נביאים | 6 | 5 | 0 |
-| נושאים-כלליים-בתנך | 6 | 4 | 0 |
-| תורה | 6 | 3 | 0 |
+| נביאים | 6 | 6 | 1 |
+| נושאים-כלליים-בתנך | 6 | 3 | 0 |
+| תורה | 6 | 1 | 0 |
 
 ## Harness notes / limitations
 

@@ -63,6 +63,17 @@ function bookAliasLabel(catTitle: string, bookTitle: string): string {
   return `כל השיעורים בספר ${bookTitle}`;
 }
 
+// sectionAliasLabel — exact old-site alias wording per section; null = old site had NO alias row.
+const SECTION_ALIAS: Record<string, string | null> = {
+  'נושאים כלליים בתנ"ך': "כל השיעורים בנושאים הכלליים",
+  "מועדים": "כל השיעורים על המועדים",
+  'ימי עיון בתנ"ך': "כל השיעורים מימי עיון בתנך",
+  "הפטרות": null,
+  "כלי עזר - טבלאות זמני המאורעות ומפות": null,
+  'ליווי ת"תים': null,
+  'פרוייקט התנ"ך המוקלט - מתעדכן': null,
+};
+
 const STORAGE_KEY = "bnz.sidebar.collapsed";
 const SIDEBAR_W_EXPANDED = 290;
 const SIDEBAR_W_COLLAPSED = 68;
@@ -1077,9 +1088,10 @@ function ExtraSectionBlock({
         </button>
       </div>
 
-      {isExpanded && (
+      {isExpanded && section.children.length > 0 && (
         <div style={{ paddingInlineStart: "0.75rem", paddingTop: "0.1rem" }}>
-          {/* "כל השיעורים ב..." — links to the full category page (like the old site) */}
+          {/* "כל השיעורים..." — exact old wording; hidden where the old site had none */}
+          {SECTION_ALIAS[section.title] !== null && (
           <button
             onClick={() => onNavigate(`/category/${section.id}`)}
             style={{
@@ -1097,8 +1109,9 @@ function ExtraSectionBlock({
               marginBottom: "0.15rem",
             }}
           >
-            כל השיעורים ב{section.title}
+            {SECTION_ALIAS[section.title] ?? `כל השיעורים ב${section.title}`}
           </button>
+          )}
           {/* Children — navigate to /series/:id */}
           {section.children
             .filter((c) => matchesSearch(c.title))

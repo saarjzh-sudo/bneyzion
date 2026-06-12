@@ -15,6 +15,7 @@ export interface ExtraSection {
 
 // Root category IDs for the full content tree
 const ROOT_IDS = {
+  recordedProject: "041ce810-92ae-59e4-9e07-11fd014255fa",
   torah: "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b",
   neviim: "a0472c9f-8212-44ff-8937-ace5fea4b4dc",
   ketuvim: "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
@@ -42,6 +43,10 @@ export function useContentSidebar() {
         .select("id, title, parent_id")
         .in("parent_id", [ROOT_IDS.torah, ROOT_IDS.ketuvim])
         .in("status", ["active", "published", "category"])
+        // §2.1: book level is band-driven too (old order; excludes page-only nodes like split עזרא/נחמיה)
+        .gte("sort_order", 1)
+        .lte("sort_order", 999)
+        .order("sort_order")
         .order("title");
 
       // Fetch books under Neviim — only "category" status (all real Neviim books are category;
@@ -51,6 +56,9 @@ export function useContentSidebar() {
         .select("id, title, parent_id")
         .eq("parent_id", ROOT_IDS.neviim)
         .eq("status", "category")
+        .gte("sort_order", 1)
+        .lte("sort_order", 999)
+        .order("sort_order")
         .order("title");
 
       const allBooks = [...(torahKetuvimBooks || []), ...(neviimBooks || [])];
@@ -198,7 +206,7 @@ export function useContentSidebar() {
         },
         {
           id: ROOT_IDS.moadim,
-          title: "המועדים",
+          title: "מועדים", // old-site exact title
           children: getChildren(ROOT_IDS.moadim),
         },
         {
@@ -206,15 +214,21 @@ export function useContentSidebar() {
           title: "הפטרות",
           children: getChildren(ROOT_IDS.haftarot),
         },
+        // old-site top-level order: ימי עיון → כלי עזר → פרוייקט המוקלט → ליווי ת"תים
+        {
+          id: ROOT_IDS.yemeiIyun,
+          title: 'ימי עיון בתנ"ך',
+          children: getChildren(ROOT_IDS.yemeiIyun),
+        },
         {
           id: ROOT_IDS.tools,
           title: "כלי עזר - טבלאות זמני המאורעות ומפות",
           children: getChildren(ROOT_IDS.tools),
         },
         {
-          id: ROOT_IDS.yemeiIyun,
-          title: 'ימי עיון בתנ"ך',
-          children: getChildren(ROOT_IDS.yemeiIyun),
+          id: ROOT_IDS.recordedProject,
+          title: 'פרוייקט התנ"ך המוקלט - מתעדכן',
+          children: [], // standalone link on the old site (no sub-entries)
         },
         {
           id: ROOT_IDS.livuyTatim,
