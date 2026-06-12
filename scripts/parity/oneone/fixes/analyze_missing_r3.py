@@ -458,9 +458,36 @@ TWINS = [
     ("שיעורים-יהושע", "d5ef79b3", "497d3550"),
     ("שיעורים-על-התנך-ירמיהו", "aeea0713", "6948ae1e"),
 ]
-sid_full = {}
+_sid_pref = defaultdict(list)
 for s in SERIES.values():
-    sid_full[s["id"][:8]] = s["id"]
+    _sid_pref[s["id"][:8]].append(s["id"])
+
+
+def sid_lookup(prefix):
+    """8-char prefix → full series id, ASSERTING uniqueness (synthetic id families like
+    d2020001-0001/-0002 share prefixes — silent collisions here corrupted a draft run)."""
+    hits = _sid_pref.get(prefix, [])
+    if len(hits) != 1:
+        raise RuntimeError(f"series prefix {prefix} is not unique: {hits}")
+    return hits[0]
+
+
+class _SidFull(dict):
+    def __getitem__(self, k):
+        return sid_lookup(k)
+
+
+sid_full = _SidFull()
+
+# full post-repick sid per failing page url (verify ground truth — never prefix-derived)
+PAGE_SID = {rec["url"]: rec["series_id"] for rec in fail_pages}
+
+
+def lesson_by_prefix(prefix):
+    hits = [l for l in LESSONS.values() if l["id"].startswith(prefix)]
+    if len(hits) != 1:
+        raise RuntimeError(f"lesson prefix {prefix} is not unique: {[h['id'] for h in hits]}")
+    return hits[0]
 
 for frag, d8, a8 in TWINS:
     draft, active = sid_full[d8], sid_full[a8]
@@ -473,7 +500,7 @@ mk_old = old_lesson_items("https://www.bneyzion.co.il/מאגר-השיעורים-
 mk_active = sid_full["5578c087"]
 max_sort = max((r.get("sort_order") or 0) for r in LESSONS.values() if r["series_id"] == mk_active)
 for i, lid8 in enumerate(("78d7087b", "c953bf5d")):          # פ (14), פ (15) — old rows 60, 61
-    lid = next(l["id"] for l in LESSONS.values() if l["id"].startswith(lid8))
+    lid = lesson_by_prefix(lid8)["id"]
     sql_actions.append({"kind": "move", "lid": lid, "tgt": mk_active, "slot": max_sort + 10 * (i + 1),
                         "ev": f"old page …/שיעורים-קצרים…מלכים-ב/ rows 60-61 ('פ (14)','פ (15)' הרב חנניה מלכה); "
                               f"rows currently stranded in the stray draft twin c466c2fc"})
@@ -504,13 +531,13 @@ yoav.append({"what": "demoted to draft: 'עיין חדש בחזון העצמות
 # 1e ירמיהו: the active twin holds 2 surplus unsorted dups
 # 'על מה אבדה הארץ': twin has a7160a62(so=80)+c8775828(unsorted, same audio ירמיהו 12.mp3);
 # old ירמיהו-פרק-ט lists the title TWICE but its series d1010001 has only one row → move the dup there.
-prk9 = sid_full["d1010001"]
+prk9 = PAGE_SID["https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/ירמיהו-פרק-ט/"]
 prk9_max = max((r.get("sort_order") or 0) for r in LESSONS.values() if r["series_id"] == prk9)
-c87 = next(l for l in LESSONS.values() if l["id"].startswith("c8775828"))
+c87 = lesson_by_prefix("c8775828")
 sql_actions.append({"kind": "move", "lid": c87["id"], "tgt": prk9, "slot": prk9_max + 10,
                     "ev": "twin 6948ae1e holds 'על מה אבדה הארץ' twice (a7160a62 sorted + c8775828 unsorted, "
                           "same audio); old …/ירמיהו-פרק-ט/ lists the title twice and its series has one row"})
-c7a = next(l for l in LESSONS.values() if l["id"].startswith("c7a4171e"))
+c7a = lesson_by_prefix("c7a4171e")
 sql_actions.append({"kind": "demote", "lid": c7a["id"],
                     "ev": "twin 6948ae1e holds a second 'אפסות העבודה זרה' whose audio is ישעיהו '42 פרק מד.MP3' "
                           "(another rabbi) — a misfiled ישעיהו recording; old ירמיהו page lists the title once "
@@ -557,7 +584,31 @@ else:
 # page's parent category, otherwise guarded copy); assign sorts 10·position when the page can
 # fully match (0 extras expected). Falls back to append-at-end when extras exist.
 
+PAGE_PASS = {p["url"]: p["pass"] for p in VR["pages"]}
+SID_CO_PAGES = defaultdict(list)
+for _u, _p in IM.items():
+    if _p.get("mapped_series_id"):
+        SID_CO_PAGES[_p["mapped_series_id"]].append(_u)
+
+
 def fix_page_full(url, tgt, move_from=None, repack=True):
+    # MATCH-CONFLICT GUARD: if another old page maps to the SAME series and currently
+    # PASSES, filling this page's items would surface as unexplained extras there and
+    # un-flip it. One series cannot satisfy two different old listings → matcher issue.
+    co = [u for u in SID_CO_PAGES.get(tgt, []) if u != url and PAGE_PASS.get(u)]
+    if co:
+        report_notes["match_conflict"].append(
+            f"{url} shares mapped series {tgt[:8]} with PASSING page(s) {co} — no data fix possible "
+            f"without breaking them; page needs its own series mapping (matcher)")
+        for o in occurrences:
+            if o["url"] == url:
+                o["match_conflict"] = True
+        yoav.append({"what": f"match conflict: {url.split('/מאגר-השיעורים-והמאמרים')[1][:60]} shares series "
+                             f"{tgt[:8]} with a PASSING old page",
+                     "why": f"both old pages map to one series; its content satisfies {co[0][-60:]} — "
+                            f"this page's {sum(1 for o in occurrences if o['url']==url)} missing rows need a "
+                            f"separate series + remap (matcher/orchestrator)"})
+        return
     old_items = old_lesson_items(url)
     match_by = {it.get("idx"): it for it in ((IM.get(url) or {}).get("items") or [])}
     tgt_rows = [r for r in LESSONS.values() if r["series_id"] == tgt]
@@ -621,20 +672,20 @@ def fix_page_full(url, tgt, move_from=None, repack=True):
 
 # §2 אסתר — old page is the real 'כל השיעורים על מגילת אסתר' series (1 row live); 14 of its
 # lessons sit as DIRECT lessons of the book node 8600dfad (its parent) → moves; rest → copies.
-fix_page_full("https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/אסתר/כל-השיעורים-על-מגילת-אסתר/",
-              sid_full["0ab89828"], move_from=sid_full["8600dfad"], repack=True)
+_est_url = "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/אסתר/כל-השיעורים-על-מגילת-אסתר/"
+fix_page_full(_est_url, PAGE_SID[_est_url], move_from=sid_full["8600dfad"], repack=True)
 
-# §3 small OP_MISSING series pages — copies + full repack (these pages have 0 extras)
-fix_page_full("https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/מאמרים-הפטרות-ספר-שמות/",
-              sid_full["269dc17c"], repack=True)
-fix_page_full("https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/מלחמת-גוג-ומגוג/",
-              sid_full["c76ac534"], repack=True)
-fix_page_full("https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/מנשה-ואמון-פרק-כא/",
-              sid_full["d2020001"], repack=True)
-fix_page_full("https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/פסל-מיכה-פרקים-יז-יח/",
-              sid_full["f5050001"], repack=True)
-fix_page_full("https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/דוד-בת-שבע-ואוריה-פרק-יא/",
-              sid_full["b2020001"], repack=True)
+# §3 small OP_MISSING series pages — copies + full repack (these pages have 0 extras);
+# targets are the FULL post-repick sids from verify_results (prefix lookups collide on the
+# synthetic id families).
+for _u in (
+    "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/מאמרים-הפטרות-ספר-שמות/",
+    "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/מלחמת-גוג-ומגוג/",
+    "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/מנשה-ואמון-פרק-כא/",
+    "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/פסל-מיכה-פרקים-יז-יח/",
+    "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/דוד-בת-שבע-ואוריה-פרק-יא/",
+):
+    fix_page_full(_u, PAGE_SID[_u], repack=True)
 
 # §4 deferred-low copies (4 occurrences; copy ops authored by the plans but conf=low → never ran)
 seen_dl = set()
@@ -1003,6 +1054,8 @@ moved_ids = {a["lid"] for a in moves}
 def route(o):
     if o["class"] == "ALIAS_PAGE_CODE":
         return "code-alias"
+    if o.get("match_conflict"):
+        return "match-artifact"
     if o["url"] in TWIN_URLS:
         return "sql"
     if o["url"] in FIXED_PAGES:

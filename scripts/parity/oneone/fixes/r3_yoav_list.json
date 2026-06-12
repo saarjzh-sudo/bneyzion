@@ -16,8 +16,8 @@
   "why": "never matched; candidates ['496a7521/published', 'd1d1b800/published', 'eb2139d2/published']; old media: https://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99+%D7%A2%D7%99%D7%95%D7%9F+%D7%91%D7%AA%D7%A0%D7%9A+%D7%AA%D7%A9%D7%A2%D7%98/%D7%A0%D7%A9%D7%99%D7%9D+%D7%A9%D7%A0%D7%99+%D7%90%D7%95%D7%9C%D7%9D+3/%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA+%D7%91%D7%AA+%D7%A9%D7%91%D7%A2+%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%95%D7%9F+%D7%A8%D7%95%D7%A6%D7%94+%D7%9C%D7%94%D7%99%D7%95%D7%AA+%D7%9E%D7%9C%D7%9B%D7%94+%D7%A9%D7%A0%D7%99+%D7%A0%D7%A9%D7%99%D7%9D.MP3, /media/144347/הרבנית-בת-שבע-יוסיפון-רוצה-להיות-מלכה-שני-נשים.pdf"
  },
  {
-  "what": "'ביאור \"ושננתם\" לספר שופטים פרק י\"ח' on /נביאים/שופטים/פסל-מיכה-פרקים-יז-יח/ — no usable DB row",
-  "why": "never matched; candidates ['9e415e46/published', 'e1195e1e/published']; text lesson — needs scrape"
+  "what": "match conflict: /הפטרות/הפטרות-שמות/מאמרים-הפטרות-ספר-שמות/ shares series 269dc17c with a PASSING old page",
+  "why": "both old pages map to one series; its content satisfies -השיעורים-והמאמרים/הפטרות/הפטרות-שמות/מאמרים-על-הפטרות-שמות/ — this page's 7 missing rows need a separate series + remap (matcher/orchestrator)"
  },
  {
   "what": "draft-with-no-content in scope: \"ספר דניאל עם ביאור ותרגום 'ושננתם'\" (23125b63)",

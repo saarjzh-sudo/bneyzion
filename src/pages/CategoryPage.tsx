@@ -205,23 +205,28 @@ function useRollupLessons(nodeId: string | undefined, hasDirectChildren: boolean
       //    (get_series_descendant_ids returns ALL — we filter lessons by audience below)
       // 3. Fetch lessons from descendant series in chunks of 40
       const CHUNK = 40;
+      const PAGE = 1000; // PostgREST hard-caps a response at 1000 rows — page within each chunk
       const allLessons: RollupLesson[] = [];
       for (let i = 0; i < descendantIds.length; i += CHUNK) {
         const chunk = descendantIds.slice(i, i + CHUNK);
-        const { data, error } = await supabase
-          .from("lessons")
-          .select(
-            "id, title, duration, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)"
-          )
-          .in("series_id", chunk)
-          .eq("status", "published")
-          // §0.3: exclude teacher-only lessons from public category pages
-          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
-          .order("sort_order", { ascending: true, nullsFirst: false })
-          .order("bible_chapter", { ascending: true, nullsFirst: false })
-          .order("title", { ascending: true })
-          .limit(1000);
-        if (!error && data) allLessons.push(...(data as RollupLesson[]));
+        for (let from = 0; ; from += PAGE) {
+          const { data, error } = await supabase
+            .from("lessons")
+            .select(
+              "id, title, duration, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)"
+            )
+            .in("series_id", chunk)
+            .eq("status", "published")
+            // §0.3: exclude teacher-only lessons from public category pages
+            .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+            .order("sort_order", { ascending: true, nullsFirst: false })
+            .order("bible_chapter", { ascending: true, nullsFirst: false })
+            .order("title", { ascending: true })
+            .range(from, from + PAGE - 1);
+          if (error || !data) break;
+          allLessons.push(...(data as RollupLesson[]));
+          if (data.length < PAGE) break;
+        }
       }
 
       // 4. Dedup by id (§0.2 — physical id dedup)
