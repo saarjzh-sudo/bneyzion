@@ -1,0 +1,4663 @@
+{
+ "expected_parents": 95,
+ "unresolved_members": [],
+ "band_demote": [
+  {
+   "id": "e577cd74-43ae-49a4-a3d6-9a11277cb2ca",
+   "title": "אוסף מקורות על חשיבות לימוד תנ\"ך",
+   "parent_id": "62590949-6187-4e17-b84d-65a518467521",
+   "sort_order": 5,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "b2020001-0001-4000-8000-000000000019",
+   "title": "פרקי הסיום | פרקים י\"ט-כ\"ד",
+   "parent_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+   "sort_order": 15,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+   "title": "קריאה וביאור בקצרה של ספר ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 7,
+   "status": "active",
+   "lesson_count": 67
+  },
+  {
+   "id": "3aeb7c5c-4c3a-5bf0-ba6c-4dbea8d0af12",
+   "title": "תנ\"ך בעיון - ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 11,
+   "status": "active",
+   "lesson_count": 0
+  },
+  {
+   "id": "341eaab8-89f5-4d31-8cb0-1a9f27979b96",
+   "title": "ספר ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 6,
+   "status": "active",
+   "lesson_count": 34
+  },
+  {
+   "id": "8152f12a-9735-4aea-9be4-6c6b8d52d6bf",
+   "title": "מאמרים - ספר ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 8,
+   "status": "active",
+   "lesson_count": 9
+  },
+  {
+   "id": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+   "title": "ספר ישעיהו - כלל ופרט",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 4,
+   "status": "active",
+   "lesson_count": 45
+  },
+  {
+   "id": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+   "title": "שיעורים על התנ\"ך - ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 5,
+   "status": "active",
+   "lesson_count": 21
+  },
+  {
+   "id": "3e1a09a2-51c0-4f2a-923d-570c3d9e9163",
+   "title": "מאמרים על ספר ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 9,
+   "status": "active",
+   "lesson_count": 25
+  },
+  {
+   "id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+   "title": "שיעורים על  ספר ישעיהו",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 3,
+   "status": "active",
+   "lesson_count": 56
+  },
+  {
+   "id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+   "title": "ישעיהו -  מוקלט | ללא טעמים",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 87
+  },
+  {
+   "id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+   "title": "ישעיהו בבקיאות",
+   "parent_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "sort_order": 2,
+   "status": "active",
+   "lesson_count": 31
+  },
+  {
+   "id": "6948ae1e-ad5a-4cbb-ae12-c08e7cd03eb5",
+   "title": "שיעורים על התנ\"ך - ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 7,
+   "status": "active",
+   "lesson_count": 22
+  },
+  {
+   "id": "76c7c4b9-8cfb-4db1-9bb5-8bccdb038107",
+   "title": "ספר ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 1,
+   "status": "active",
+   "lesson_count": 83
+  },
+  {
+   "id": "e1dae55d-b3d4-4de7-8845-7f60c68fd25b",
+   "title": "ירמיהו בבקיאות",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 3,
+   "status": "active",
+   "lesson_count": 27
+  },
+  {
+   "id": "36306721-6e4b-4355-8f29-33830c58cf08",
+   "title": "ירמיהו ופועלו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 12,
+   "status": "active",
+   "lesson_count": 3
+  },
+  {
+   "id": "0ab468e8-ce2a-47f7-81f4-dc14a2d951d4",
+   "title": "מאמרים - ספר ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 4,
+   "status": "active",
+   "lesson_count": 41
+  },
+  {
+   "id": "42c91cf7-bcb5-48e9-ac0c-868b8ed6cbc1",
+   "title": "קריאה וביאור בקצרה של ספר ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 9,
+   "status": "active",
+   "lesson_count": 53
+  },
+  {
+   "id": "7efc5863-476b-4719-a7b1-39ca33baa10b",
+   "title": "מאמרים קצרים - ספר ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 8,
+   "status": "active",
+   "lesson_count": 61
+  },
+  {
+   "id": "840fae06-6e0c-4077-a400-bfae40c9c40b",
+   "title": "ספר ירמיהו - כלל ופרט",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 2,
+   "status": "active",
+   "lesson_count": 13
+  },
+  {
+   "id": "23b45495-a3d0-4c95-b50f-9aaa6afd8e70",
+   "title": "שיעורים - ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 6,
+   "status": "active",
+   "lesson_count": 31
+  },
+  {
+   "id": "b80c3821-d8f9-4c57-8bc3-a064bd0298a5",
+   "title": "מאמרים על ספר ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 11,
+   "status": "active",
+   "lesson_count": 4
+  },
+  {
+   "id": "d71719fc-9ea3-40f3-b006-5d38c4c6abad",
+   "title": "שיעורים על ספר ירמיהו",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 5,
+   "status": "active",
+   "lesson_count": 26
+  },
+  {
+   "id": "a6735e4d-4f83-4204-9d45-e6756f1e7314",
+   "title": "ירמיהו - מוקלט | אשכנזי",
+   "parent_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 48
+  },
+  {
+   "id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+   "title": "יחזקאל - מוקלט | אשכנזי",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 9,
+   "status": "active",
+   "lesson_count": 79
+  },
+  {
+   "id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+   "title": "יחזקאל - מוקלט | נוסח אשכנזי",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 57
+  },
+  {
+   "id": "b7b24b9b-133f-495c-b88c-690a60154cea",
+   "title": "שיעורים על התנ\"ך - יחזקאל",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 3,
+   "status": "active",
+   "lesson_count": 41
+  },
+  {
+   "id": "1718a555-23cd-4ff7-a117-747bb6976425",
+   "title": "שיעורים על ספר יחזקאל",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 4,
+   "status": "active",
+   "lesson_count": 32
+  },
+  {
+   "id": "27a38352-e594-4e58-964b-5aa6a320b4dd",
+   "title": "ספר יחזקאל",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 5,
+   "status": "active",
+   "lesson_count": 27
+  },
+  {
+   "id": "721544df-114c-4f68-a180-81e0179647d3",
+   "title": "קריאה וביאור בקצרה של ספר יחזקאל",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 7,
+   "status": "active",
+   "lesson_count": 49
+  },
+  {
+   "id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+   "title": "יחזקאל בבקיאות",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 6,
+   "status": "active",
+   "lesson_count": 22
+  },
+  {
+   "id": "a7899ae4-b11b-4a1f-bae5-f5b90a70937b",
+   "title": "מאמרים - ספר יחזקאל",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 8,
+   "status": "active",
+   "lesson_count": 7
+  },
+  {
+   "id": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+   "title": "ספר יחזקאל - כלל ופרט",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 2,
+   "status": "active",
+   "lesson_count": 16
+  },
+  {
+   "id": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+   "title": "שיעורים על יחזקאל - בית המדרש לתנ\"ך",
+   "parent_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "sort_order": 1,
+   "status": "active",
+   "lesson_count": 24
+  },
+  {
+   "id": "c2b7b9b2-2a53-41d7-a031-2703991c71fd",
+   "title": "ספר יונה הרב מאיר הילביץ'",
+   "parent_id": "0f69e7e1-c6d4-4ede-9c42-006ee99ea995",
+   "sort_order": 3,
+   "status": "active",
+   "lesson_count": 5
+  },
+  {
+   "id": "5e047676-73af-4320-88fe-0eb1a0a22b75",
+   "title": "יאשיהו המלך הצדיק ומותו",
+   "parent_id": "6cda749b-1b47-463b-9e27-107acbc8aa3e",
+   "sort_order": 1,
+   "status": "active",
+   "lesson_count": 3
+  },
+  {
+   "id": "bcd78881-360f-4063-a976-39f95c60fd8f",
+   "title": "לב הפרק - מועדים",
+   "parent_id": "92130154-e96a-4f98-b032-5a20ac385f63",
+   "sort_order": 30,
+   "status": "draft",
+   "lesson_count": 1
+  },
+  {
+   "id": "81509bbe-c035-45cf-aaf2-e23b635114cb",
+   "title": "מאמרים על הפטרות בראשית - הרב מנחם שחור",
+   "parent_id": "dd740e04-3521-49bc-bcdd-2b3ed845a204",
+   "sort_order": 40,
+   "status": "active",
+   "lesson_count": 13
+  },
+  {
+   "id": "90a4dfe8-b1db-4419-ba31-3519c8aae99e",
+   "title": "מאמרים על הפטרות בראשית",
+   "parent_id": "dd740e04-3521-49bc-bcdd-2b3ed845a204",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 21
+  },
+  {
+   "id": "c394bfe7-17b4-4175-ad94-1edd7e84582a",
+   "title": "מאמרים - הפטרות בראשית",
+   "parent_id": "dd740e04-3521-49bc-bcdd-2b3ed845a204",
+   "sort_order": 30,
+   "status": "active",
+   "lesson_count": 3
+  },
+  {
+   "id": "4a5b3be9-0e78-4f0b-8327-c86a77e61719",
+   "title": "דרכי הפרשה מתגלות בהפטרה - בראשית",
+   "parent_id": "dd740e04-3521-49bc-bcdd-2b3ed845a204",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 12
+  },
+  {
+   "id": "042ea3f7-846e-42a8-9d2d-91a05e7e3883",
+   "title": "דרכי הפרשה מתגלות בהפטרה - שמות",
+   "parent_id": "70bb80dc-2dc0-4bb4-aa23-6ddbc3d68586",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 10
+  },
+  {
+   "id": "269dc17c-0cc1-4484-82e5-b7538b28f948",
+   "title": "מאמרים על הפטרות שמות",
+   "parent_id": "70bb80dc-2dc0-4bb4-aa23-6ddbc3d68586",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 16
+  },
+  {
+   "id": "c04fb3c8-641f-4c79-9363-603b04ff4fec",
+   "title": "הפטרות שמות - הרב מנחם שחור",
+   "parent_id": "70bb80dc-2dc0-4bb4-aa23-6ddbc3d68586",
+   "sort_order": 40,
+   "status": "active",
+   "lesson_count": 10
+  },
+  {
+   "id": "adf263fc-5c32-4929-958a-40825f182a14",
+   "title": "מאמרים על הפטרות ויקרא",
+   "parent_id": "2cfbe6e4-c237-44e3-b896-defc4a78316e",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 12
+  },
+  {
+   "id": "a2f4b2e9-5c5c-4bde-8842-6d0a4a2ba16a",
+   "title": "הפטרות ויקרא - הרב מנחם שחור",
+   "parent_id": "2cfbe6e4-c237-44e3-b896-defc4a78316e",
+   "sort_order": 30,
+   "status": "active",
+   "lesson_count": 9
+  },
+  {
+   "id": "9cc10f98-ad56-438d-955f-6bc9bcfa6339",
+   "title": "דרכי הפרשה מתגלות בהפטרה - ויקרא",
+   "parent_id": "2cfbe6e4-c237-44e3-b896-defc4a78316e",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 7
+  },
+  {
+   "id": "0bee42ac-a63d-4ea4-a03b-0677749f3179",
+   "title": "דרכי הפרשה מתגלות בהפטרה - במדבר",
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 8
+  },
+  {
+   "id": "e54c3352-62ec-422d-b552-55cb584a827e",
+   "title": "מאמרים על הפטרות במדבר",
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 17
+  },
+  {
+   "id": "af2bbd63-c2a0-4538-a59e-73e5aac4b7f5",
+   "title": "מאמרים - הפטרות במדבר",
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "sort_order": 30,
+   "status": "active",
+   "lesson_count": 3
+  },
+  {
+   "id": "6bffb80a-93d6-4001-bdbf-cc67a54d0dc4",
+   "title": "מאמרים על הפטרות דברים",
+   "parent_id": "fa618d10-224e-4a95-b7d3-1fa949cf465c",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 12
+  },
+  {
+   "id": "77f0fb27-97f1-41c0-9250-fb2f1fa4d7a1",
+   "title": "מאמרים על הפטרות המועדים",
+   "parent_id": "85531d21-3749-47e4-880b-ad938bd3ca6d",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 25
+  },
+  {
+   "id": "6eb03dcb-2bb6-47a8-bcc5-4c739a64dc05",
+   "title": "הפטרות המועדים - הרב מנחם שחור",
+   "parent_id": "85531d21-3749-47e4-880b-ad938bd3ca6d",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 15
+  },
+  {
+   "id": "91aee664-1a7c-43ef-bde0-8bdcb4ec25c6",
+   "title": "עובדיה בבקיאות",
+   "parent_id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+   "sort_order": 1,
+   "status": "active",
+   "lesson_count": 1
+  },
+  {
+   "id": "58a30a8e-d5d8-43ad-9665-98d33d6009c2",
+   "title": "עובדיה - מוקלט | ללא טעמים",
+   "parent_id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+   "sort_order": 4,
+   "status": "active",
+   "lesson_count": 1
+  },
+  {
+   "id": "c00e3463-8625-4eb1-93dd-1a7d0cc8b2a8",
+   "title": "שיעורים על ספר עובדיה",
+   "parent_id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+   "sort_order": 2,
+   "status": "active",
+   "lesson_count": 2
+  },
+  {
+   "id": "10d1a9a5-d47b-4800-bcb4-12f4f13b7bab",
+   "title": "קריאה וביאור בקצרה של ספר עובדיה",
+   "parent_id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+   "sort_order": 3,
+   "status": "active",
+   "lesson_count": 1
+  },
+  {
+   "id": "82c5f7cb-dbe6-4454-8fc9-9883af315299",
+   "title": "השינויים במבנה ארץ ישראל בזמן הגאולה",
+   "parent_id": "e10a89e2-3ce3-4b7d-b80d-d8380ac35e5b",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 3
+  },
+  {
+   "id": "339e818b-7977-4a9f-85c1-fe2f14bead68",
+   "title": "יחסי ישראל והגויים בגאולה",
+   "parent_id": "e10a89e2-3ce3-4b7d-b80d-d8380ac35e5b",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 5
+  },
+  {
+   "id": "91155ac8-3b82-464a-a051-15c55f9e837c",
+   "title": "ערב לימוד חרבות הברזל",
+   "parent_id": "ad05c65f-b2c3-4be0-a3bd-74e1fabb50b6",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 3
+  },
+  {
+   "id": "b6eac28f-ee7f-4e3b-8b56-3946a00a979a",
+   "title": "בכח התנ\"ך ננצח",
+   "parent_id": "ad05c65f-b2c3-4be0-a3bd-74e1fabb50b6",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 154
+  },
+  {
+   "id": "8602cf4f-0afa-4726-a0f3-d5ac09f64d7d",
+   "title": "המלכות והנבואה בישראל",
+   "parent_id": "5f298ac3-b98a-4822-9ed6-45b01b2905fe",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 16
+  },
+  {
+   "id": "3958b461-17d0-4865-9df3-711ddadbcde1",
+   "title": "מי הם נביאי השקר?",
+   "parent_id": "5f298ac3-b98a-4822-9ed6-45b01b2905fe",
+   "sort_order": 20,
+   "status": "active",
+   "lesson_count": 2
+  },
+  {
+   "id": "029d7341-3f5b-4624-83de-ee9435cdd9c9",
+   "title": "המסע אל ירושלים",
+   "parent_id": "7717adb7-6f57-43f0-836c-26f3d7abc96a",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 8
+  },
+  {
+   "id": "22f325a0-bbff-45b1-85ce-282966d05364",
+   "title": "מידות על פי התנ\"ך",
+   "parent_id": "1ca0d5c5-f460-4812-9313-fd58842aa09c",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 23
+  },
+  {
+   "id": "34d499ae-39e7-49b3-a128-b25d7ad08e27",
+   "title": "השוואות בין דוד המלך לגדולי התנ\"ך",
+   "parent_id": "0d332add-7a15-49e4-8618-16112e6ecb6d",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 19
+  },
+  {
+   "id": "8fab8f18-568c-4f41-9a5f-381486ecf169",
+   "title": "פודקאסט הפרק הבא - גוג ומגוג",
+   "parent_id": "721d2ee3-dc2d-4b11-a023-59d5d5cc90d0",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 5
+  },
+  {
+   "id": "d714fb34-6a0e-4efe-ae29-7d75ecfa559b",
+   "title": "המסע אל ירושלים",
+   "parent_id": "7f948c8e-3302-431a-88a9-071822050c97",
+   "sort_order": 10,
+   "status": "category",
+   "lesson_count": 17
+  },
+  {
+   "id": "4d78557b-da8b-4b1f-8d8e-09d74ff3070a",
+   "title": "מפות עזר לתנ\"ך",
+   "parent_id": "27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7",
+   "sort_order": 40,
+   "status": "active",
+   "lesson_count": 2
+  },
+  {
+   "id": "54552a4a-2777-4c35-b40c-e0a125b43526",
+   "title": "לב הפרק - שופטים",
+   "parent_id": "a4248a3e-db30-4292-8455-dde339dbc60d",
+   "sort_order": 10,
+   "status": "active",
+   "lesson_count": 2
+  }
+ ],
+ "renames": [
+  {
+   "id": "c852edd8-d959-4c8d-bf7e-17b5881275fa",
+   "current": "חידות לילדים - פרשת השבוע",
+   "old_label": "חידות לילדים פ\"ש",
+   "overlap": 0.67,
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b",
+   "old_url": "/מאגר-השיעורים-והמאמרים/תורה/חידות-לילדים-פש"
+  },
+  {
+   "id": "a1010001-0001-4000-8000-000000000023",
+   "current": "דוד בקעילה ובזיף / במערה | פרקים כ\"ג-כ\"ד",
+   "old_label": "דוד בקעילה ובזיף | פרק כג",
+   "overlap": 0.8,
+   "parent_id": "d4dd089a-1ba3-420d-b130-78f0ef90cb69",
+   "old_url": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-בקעילה-ובזיף-פרק-כג"
+  },
+  {
+   "id": "a1010001-0001-4000-8000-000000000029",
+   "current": "מלחמת דוד בעמלק / מות שאול | פרקים כ\"ט-ל\"א",
+   "old_label": "מלחמת דוד בעמלק | פרקים כט-ל",
+   "overlap": 0.83,
+   "parent_id": "d4dd089a-1ba3-420d-b130-78f0ef90cb69",
+   "old_url": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-דוד-בעמלק-פרקים-כט-ל"
+  },
+  {
+   "id": "b2020001-0001-4000-8000-000000000007",
+   "current": "בקשת בניין המקדש | פרק ז'",
+   "old_label": "בקשת בנין המקדש | פרק ז",
+   "overlap": 0.8,
+   "parent_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+   "old_url": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/בקשת-בנין-המקדש-פרק-ז"
+  },
+  {
+   "id": "b2020001-0001-4000-8000-000000000013",
+   "current": "אמנון, תמר ואבשלום | פרקים י\"ג-י\"ד",
+   "old_label": "אמנון, תמר ואבשלום | פרק יג",
+   "overlap": 0.8,
+   "parent_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+   "old_url": "/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/אמנון-תמר-ואבשלום-פרק-יג"
+  },
+  {
+   "id": "95db7b7c-4680-487f-a5ae-04297e042f66",
+   "current": "אביהם, אסא, נדב ובעשא | פרק ט\"ו",
+   "old_label": "אבים, אסא, נדב ובעשא | פרק טו",
+   "overlap": 0.83,
+   "parent_id": "ff96641e-68f3-4e4c-92ee-2175b77f6e75",
+   "old_url": "/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/אבים-אסא-נדב-ובעשא-פרק-טו"
+  },
+  {
+   "id": "8ff48316-10c7-4ea7-a05f-f6f9b3f96e99",
+   "current": "עליית אליהו לשמים | פרק ב'",
+   "old_label": "עלית אליהו לשמים | פרק ב",
+   "overlap": 0.8,
+   "parent_id": "75b7c62c-50e2-4874-bcf5-2d8ddf646771",
+   "old_url": "/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/עלית-אליהו-לשמים-פרק-ב"
+  },
+  {
+   "id": "d4040401-0002-4000-a000-000000000002",
+   "current": "שיעורים על גוג ומגוג",
+   "old_label": "מעבר לשיעורים על גוג ומגוג",
+   "overlap": 0.75,
+   "parent_id": "00e0dd03-54de-49fc-9f0d-3b295363ede7",
+   "old_url": "/מאגר-השיעורים-והמאמרים/מועדים/סוכות/מעבר-לשיעורים-על-גוג-ומגוג"
+  },
+  {
+   "id": "a7070704-0001-4000-8000-000000000001",
+   "current": "הפטרת במדבר",
+   "old_label": "הפטרת פרשת במדבר",
+   "overlap": 1.0,
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "old_url": "/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-במדבר"
+  },
+  {
+   "id": "a7070704-0002-4000-8000-000000000001",
+   "current": "הפטרת נשא",
+   "old_label": "הפטרת פרשת נשא",
+   "overlap": 1.0,
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "old_url": "/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-נשא"
+  },
+  {
+   "id": "a7070704-0003-4000-8000-000000000001",
+   "current": "הפטרת בהעלותך",
+   "old_label": "הפטרת פרשת בהעלותך",
+   "overlap": 1.0,
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "old_url": "/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-בהעלותך"
+  },
+  {
+   "id": "a7070704-0004-4000-8000-000000000001",
+   "current": "הפטרת שלח",
+   "old_label": "הפטרת פרשת שלח",
+   "overlap": 1.0,
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "old_url": "/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-שלח"
+  },
+  {
+   "id": "a7070704-0007-4000-8000-000000000001",
+   "current": "הפטרת בלק",
+   "old_label": "הפטרת פרשת בלק",
+   "overlap": 1.0,
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "old_url": "/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-בלק"
+  },
+  {
+   "id": "a7070704-0009-4000-8000-000000000001",
+   "current": "הפטרת מסעי",
+   "old_label": "הפטרת פרשת מסעי",
+   "overlap": 1.0,
+   "parent_id": "acbc90f0-8c04-4296-ad7f-36898bc322f5",
+   "old_url": "/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-מסעי"
+  }
+ ],
+ "rename_flags": [],
+ "order_fixes": [
+  {
+   "id": "c76ac534-76b4-4f2c-ba9a-05ed95e7145c",
+   "title": "מלחמת גוג ומגוג",
+   "parent_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351",
+   "current_sort": 30,
+   "expected": 2
+  },
+  {
+   "id": "bafc63d2-e62f-497a-9b4c-c58377b831a1",
+   "title": "יג מידות הרחמים",
+   "parent_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351",
+   "current_sort": 60,
+   "expected": 4
+  }
+ ],
+ "status_fixes": [
+  {
+   "id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "title": "בראשית",
+   "status": "category",
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b"
+  },
+  {
+   "id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "title": "שמות",
+   "status": "category",
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b"
+  },
+  {
+   "id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "title": "ויקרא",
+   "status": "category",
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b"
+  },
+  {
+   "id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "title": "במדבר",
+   "status": "category",
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b"
+  },
+  {
+   "id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+   "title": "דברים",
+   "status": "category",
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b"
+  },
+  {
+   "id": "831d1ccb-a1a4-4a1f-b3b1-2608e7b6da16",
+   "title": "יהושע",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "ebdb355f-6a9f-44a5-9aa0-2f858434cc17",
+   "title": "שופטים",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "d4dd089a-1ba3-420d-b130-78f0ef90cb69",
+   "title": "שמואל א",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+   "title": "שמואל ב",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "ff96641e-68f3-4e4c-92ee-2175b77f6e75",
+   "title": "מלכים א",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "75b7c62c-50e2-4874-bcf5-2d8ddf646771",
+   "title": "מלכים ב",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+   "title": "ישעיהו",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+   "title": "ירמיהו",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+   "title": "יחזקאל",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d",
+   "title": "הושע",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "a8797de2-98f1-461f-b5f1-6b1143df5597",
+   "title": "יואל",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "9526c5b5-68ec-495f-a3ca-49ec3feb3c4a",
+   "title": "עמוס",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+   "title": "עובדיה",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "0f69e7e1-c6d4-4ede-9c42-006ee99ea995",
+   "title": "יונה",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "895474b3-1a1c-4693-820c-a6e645c4e853",
+   "title": "מיכה",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "e8f7ed1c-fa87-4186-ba01-8d2dd4e40b88",
+   "title": "נחום",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "4a17b976-362f-4abe-9c75-965b50a4a1f7",
+   "title": "חבקוק",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "bab915ba-8220-4a76-8d55-690875543b3a",
+   "title": "צפניה",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "273e3b3c-318d-4335-b026-d03dc4c8a602",
+   "title": "חגי",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "c6285a2a-5b5a-4005-bad0-6712206d5ed6",
+   "title": "זכריה",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "3684f720-fd9d-400e-bdb4-24343cbd51b6",
+   "title": "מלאכי",
+   "status": "category",
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc"
+  },
+  {
+   "id": "7dc34ac8-e332-47e5-87d5-9400a85fa85d",
+   "title": "תהלים",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "f71c762a-4d9d-4cc3-af23-adfdd629885c",
+   "title": "משלי",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "ec9ae746-373b-4a2d-b478-d0dcb67c0b3c",
+   "title": "איוב",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "16b824c5-6cea-4a4f-bda5-6aac870b2689",
+   "title": "שיר השירים",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "35781f30-76a7-4fc6-aa06-52a1db4a4054",
+   "title": "איכה",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "4472645d-c8bc-4657-bfe1-fba960edd8e3",
+   "title": "קהלת",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "8600dfad-9e4d-41af-8b85-ccc325ee1298",
+   "title": "אסתר",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "6cda749b-1b47-463b-9e27-107acbc8aa3e",
+   "title": "דניאל",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  },
+  {
+   "id": "5896c267-01b2-44d0-9fa4-f0d3b357ccc1",
+   "title": "עזרא ונחמיה",
+   "status": "category",
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41"
+  }
+ ],
+ "missing_members": [],
+ "draft_in_sidebar": [
+  {
+   "id": "e577cd74-43ae-49a4-a3d6-9a11277cb2ca",
+   "title": "אוסף מקורות על חשיבות לימוד תנ\"ך",
+   "parent_id": "62590949-6187-4e17-b84d-65a518467521",
+   "sort_order": 5,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "a86ddd34-c0d8-4c04-ba38-b420fce8f5f6",
+   "title": "כל המקורות",
+   "parent_id": "68582fdf-9d89-4327-9d50-a87147604103",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "cd359c27-71b3-4552-8aa2-90cd4cece81c",
+   "title": "לפני ואחרי במשנת הספורנו",
+   "parent_id": "2015e21e-be07-4800-8d15-eb19387d65d6",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 4
+  },
+  {
+   "id": "1983f663-4b23-4918-8e04-4cd547201f00",
+   "title": "ללמוד וללמד תנ\"ך",
+   "parent_id": "8f089f22-3ccf-443d-8fc6-7ffe353e379d",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "4c0bac05-f68b-42b9-93ee-156fae8a95b3",
+   "title": "\"כל האומר דוד חטא אינו אלא טועה\"",
+   "parent_id": "224f701b-a542-42ff-a784-533ac7ccc112",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "6b62c4a1-fb78-4b01-a9ac-c74e571dde20",
+   "title": "'הדיבור הישיר' בתורה",
+   "parent_id": "2015e21e-be07-4800-8d15-eb19387d65d6",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 7
+  },
+  {
+   "id": "6e95b813-ba07-436b-9200-1ee6714c7e60",
+   "title": "הקדמה ללימוד נביאים - 'חסד למשיחו'",
+   "parent_id": "8f089f22-3ccf-443d-8fc6-7ffe353e379d",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "b27f87eb-7896-4b66-8fec-382f23f4683f",
+   "title": "כל ההדרכות",
+   "parent_id": "a8e770fd-6967-4628-893c-342f7a817feb",
+   "sort_order": 0,
+   "status": "draft",
+   "lesson_count": 0
+  },
+  {
+   "id": "bcd78881-360f-4063-a976-39f95c60fd8f",
+   "title": "לב הפרק - מועדים",
+   "parent_id": "92130154-e96a-4f98-b032-5a20ac385f63",
+   "sort_order": 30,
+   "status": "draft",
+   "lesson_count": 1
+  }
+ ],
+ "leaks": [
+  {
+   "id": "be5754c7-2816-52c4-af90-9a66178de078",
+   "title": "ביאור \"ושננתם\" לספר שמואל ב' פרק ז'",
+   "series_id": "b2020001-0001-4000-8000-000000000007",
+   "series_title": "בקשת בניין המקדש | פרק ז'",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 100,
+   "on_old_public_page": true
+  },
+  {
+   "id": "8017dcf7-ca72-445e-a8ce-9f2129ced7f6",
+   "title": "שאלות חזרה - דברים",
+   "series_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+   "series_title": "דברים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": false
+  },
+  {
+   "id": "e35b6e89-1307-5df8-b9e9-e7b8ea20f5da",
+   "title": "ביאור \"ושננתם\" לספר שמואל א' פרק כ\"ג",
+   "series_id": "a1010001-0001-4000-8000-000000000023",
+   "series_title": "דוד בקעילה ובזיף / במערה | פרקים כ\"ג-כ\"ד",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 30,
+   "on_old_public_page": true
+  },
+  {
+   "id": "4184c571-9968-40c9-b493-f829559795e7",
+   "title": "שאלות חזרה - ויקרא",
+   "series_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "series_title": "ויקרא",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": false
+  },
+  {
+   "id": "c1cd9121-fac6-40dd-82ca-21d0b4ff97ae",
+   "title": "ביאור ושננתם על ספר יהושע פרק א'",
+   "series_id": "58e49444-38cf-455c-8d83-5af19d0e1cb0",
+   "series_title": "מינוי יהושע | פרק א",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 40,
+   "on_old_public_page": true
+  },
+  {
+   "id": "e9124305-286b-5674-ad71-a80497fdd58e",
+   "title": "ביאור \"ושננתם\" לספר שמואל א' פרק כ\"ט",
+   "series_id": "a1010001-0001-4000-8000-000000000029",
+   "series_title": "מלחמת דוד בעמלק / מות שאול | פרקים כ\"ט-ל\"א",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 10,
+   "on_old_public_page": true
+  },
+  {
+   "id": "b6405271-54ad-5c0a-a38b-2f19990f79de",
+   "title": "ביאור \"ושננתם\" לספר שמואל א' פרק ל'",
+   "series_id": "a1010001-0001-4000-8000-000000000029",
+   "series_title": "מלחמת דוד בעמלק / מות שאול | פרקים כ\"ט-ל\"א",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 20,
+   "on_old_public_page": true
+  },
+  {
+   "id": "bf29764c-7b0c-51ff-959a-b7daa653a392",
+   "title": "ביאור ושננתם על ספר יהושע פרק י\"א",
+   "series_id": "ea110001-0001-4000-8000-000000000001",
+   "series_title": "מלחמת מלכי הצפון | פרק יא",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 40,
+   "on_old_public_page": true
+  },
+  {
+   "id": "ef806ab9-2e57-4847-915c-3a83e22c2b3a",
+   "title": "ספר מלכים ב עם ביאור 'ושננתם'",
+   "series_id": "75b7c62c-50e2-4874-bcf5-2d8ddf646771",
+   "series_title": "מלכים ב",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 20,
+   "on_old_public_page": true
+  },
+  {
+   "id": "82eea810-5ea2-4c05-89c2-fb3778a77fcb",
+   "title": "מחנה ישראל ליד ערבות מואב",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 20,
+   "on_old_public_page": true
+  },
+  {
+   "id": "d19d3ee8-610e-4cbb-8134-4a60a8197e50",
+   "title": "מפות על ספר יהושע",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": false
+  },
+  {
+   "id": "fe60feb7-74b1-4b08-a1cd-1229bbd8d0e2",
+   "title": "מפת המזרח התיכון",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 10,
+   "on_old_public_page": true
+  },
+  {
+   "id": "71458979-430d-4a58-a2e7-af03b3633f3f",
+   "title": "מפת מלחמת הדרום",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 30,
+   "on_old_public_page": true
+  },
+  {
+   "id": "6715af8d-a70d-43d6-a27e-844e9281b688",
+   "title": "מפת מלחמת הצפון",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 40,
+   "on_old_public_page": true
+  },
+  {
+   "id": "bc873a62-cd6f-480b-b9d5-74c665d625a8",
+   "title": "מפת נחלות דן ושמעון",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 120,
+   "on_old_public_page": true
+  },
+  {
+   "id": "81dcd441-3f18-4ce9-9620-da11fcdec8bd",
+   "title": "מפת נחלות השבטים",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 60,
+   "on_old_public_page": true
+  },
+  {
+   "id": "ea249860-8c49-447b-92b9-853e0b72e388",
+   "title": "מפת נחלות עבר הירדן המזרחי",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 70,
+   "on_old_public_page": true
+  },
+  {
+   "id": "14ba8464-1ab5-484a-8d4c-0cad94a12932",
+   "title": "מפת נחלות שבטי הצפון",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 130,
+   "on_old_public_page": true
+  },
+  {
+   "id": "654fbeed-03b6-438e-9aa5-10e5c1be5ef2",
+   "title": "מפת נחלת שבט בנימין",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 110,
+   "on_old_public_page": true
+  },
+  {
+   "id": "44908052-48f3-43d4-804e-8d9331d496dc",
+   "title": "מפת נחלת שבט יהודה",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 80,
+   "on_old_public_page": true
+  },
+  {
+   "id": "3482c280-d20c-4e4b-ba36-a28bb4cbb5b1",
+   "title": "מפת נחלת שבט מנשה",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 100,
+   "on_old_public_page": true
+  },
+  {
+   "id": "a676dbc4-e39d-4a20-a5f4-eb34b05ee24e",
+   "title": "מפת נחלת שבטי יוסף",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 90,
+   "on_old_public_page": true
+  },
+  {
+   "id": "f6fcbf0a-fdd7-4f6e-8057-77c20a9fb4b8",
+   "title": "מפת ערי הלויים",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 140,
+   "on_old_public_page": true
+  },
+  {
+   "id": "7787824c-ea91-46ac-9d33-141bf1993541",
+   "title": "מפת שלושים ואחד המלכים",
+   "series_id": "08a87de3-2938-43aa-962f-8ea95096e564",
+   "series_title": "מפות על ספר יהושע",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 50,
+   "on_old_public_page": true
+  },
+  {
+   "id": "c9ce4337-f6cd-4170-aa1d-cfa83d010d51",
+   "title": "מפות על ספר שופטים",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": false
+  },
+  {
+   "id": "9b483c2a-18f9-4f70-ab98-ad2d4e0eb849",
+   "title": "מפת ארץ ישראל",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 10,
+   "on_old_public_page": true
+  },
+  {
+   "id": "314b7a6e-40a9-45a2-8a12-54b3ccbc971d",
+   "title": "מפת עזר שופטים פרק ד | דבורה וברק",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 20,
+   "on_old_public_page": true
+  },
+  {
+   "id": "478236f0-aeee-43d7-ba48-f2b53ac299ac",
+   "title": "מפת עזר שופטים פרק ח | גדעון",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 30,
+   "on_old_public_page": true
+  },
+  {
+   "id": "bbbbd8ef-9f41-413d-8dec-aff461b11aeb",
+   "title": "מפת עזר שופטים פרק ט | גדעון",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 40,
+   "on_old_public_page": true
+  },
+  {
+   "id": "5976ad96-9d59-417f-894e-17084c4e9650",
+   "title": "מפת עזר שופטים פרק טו | שמשון",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 70,
+   "on_old_public_page": true
+  },
+  {
+   "id": "121bbd7f-27bf-4abc-9b4c-67a73547c1f6",
+   "title": "מפת עזר שופטים פרק י | גדעון",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 50,
+   "on_old_public_page": true
+  },
+  {
+   "id": "db3fd73c-288f-44b5-918d-258d3380cc4e",
+   "title": "מפת עזר שופטים פרק יא | יפתח",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 60,
+   "on_old_public_page": true
+  },
+  {
+   "id": "7f675b34-bfc1-457f-a437-820e0b66331a",
+   "title": "מפת עזר שופטים פרק יח | מסע שבט דן",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 80,
+   "on_old_public_page": true
+  },
+  {
+   "id": "f4de4cab-36c0-48a4-9e69-9f69a9777beb",
+   "title": "מפת עזר שופטים פרק כ | גבולות השבטים",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 100,
+   "on_old_public_page": true
+  },
+  {
+   "id": "60a6d9f1-c5f2-420c-bd32-475b792f5601",
+   "title": "מפת עזר שופטים פרק כ | נחלת בנימין",
+   "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+   "series_title": "מפות על ספר שופטים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 90,
+   "on_old_public_page": true
+  },
+  {
+   "id": "6b7c29ba-96aa-59cf-a264-79f0b8fb6b79",
+   "title": "האם דניאל היה נביא?",
+   "series_id": "5f298ac3-b98a-4822-9ed6-45b01b2905fe",
+   "series_title": "נבואה ונביאים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 280,
+   "on_old_public_page": true
+  },
+  {
+   "id": "7b8d0f11-de82-5b44-bb69-3cb726ad3775",
+   "title": "עבודת הבכורות בבית המקדש",
+   "series_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351",
+   "series_title": "נושאים כלליים בתנ\"ך",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 840,
+   "on_old_public_page": true
+  },
+  {
+   "id": "eb49daa7-c78a-578b-9769-9729a5a7ae36",
+   "title": "ביאור ושננתם על ספר יהושע פרק כ'",
+   "series_id": "ed200001-0002-4000-8000-000000000001",
+   "series_title": "ערי המקלט והלויים | פרקים כ-כא",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 60,
+   "on_old_public_page": true
+  },
+  {
+   "id": "b2b7335f-4c04-542d-8808-c69b8e782b41",
+   "title": "ביאור ושננתם על ספר יהושע פרק כ\"א",
+   "series_id": "ed200001-0002-4000-8000-000000000001",
+   "series_title": "ערי המקלט והלויים | פרקים כ-כא",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 70,
+   "on_old_public_page": true
+  },
+  {
+   "id": "dd1d3dcc-16b9-5515-ba82-126e66401020",
+   "title": "מגילת אסתר עם ביאור 'ושננתם'",
+   "series_id": "381ebb6c-8c16-43d6-bd61-7e96445efa34",
+   "series_title": "פורים",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 170,
+   "on_old_public_page": true
+  },
+  {
+   "id": "a2b08e72-ca87-517c-a20a-4d1f51e195a8",
+   "title": "עבודת הבכורות בבית המקדש",
+   "series_id": "bf16434c-3391-4566-a854-9b055d8825e2",
+   "series_title": "פרשת במדבר | א-ד",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 40,
+   "on_old_public_page": true
+  },
+  {
+   "id": "38481fe8-0cdb-444a-8315-5054d5fe4093",
+   "title": "חידות לילדים - פרשת נשא",
+   "series_id": "9cb69292-166f-4114-98d3-ca8812c81787",
+   "series_title": "פרשת נשא | ד-ז",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": false
+  },
+  {
+   "id": "88322b6b-9038-59e4-8f4a-3dd4ee5e4cdb",
+   "title": "עבודת הבכורות בבית המקדש",
+   "series_id": "531a3635-53d0-4fac-b9c2-ee37086e499a",
+   "series_title": "פרשת תצוה | כז-ל",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 460,
+   "on_old_public_page": true
+  },
+  {
+   "id": "ce9398ac-6c0e-45bc-abd6-eb6e61e973db",
+   "title": "מגילת רות עם ביאור ושננתם",
+   "series_id": "a14dbc35-1caf-4675-9eba-75b5df118925",
+   "series_title": "רות",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": false
+  },
+  {
+   "id": "68ddb117-51ea-52c1-96ed-91ba28b42e6c",
+   "title": "מגילת רות עם ביאור ושננתם - פרק א",
+   "series_id": "cc7825e1-67a3-49b8-b632-9543f3aa3787",
+   "series_title": "שבועות",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 320,
+   "on_old_public_page": true
+  },
+  {
+   "id": "245cf4d1-152a-527c-9a7b-f7fb2dcd03b2",
+   "title": "מגילת רות עם ביאור ושננתם - פרק ב",
+   "series_id": "cc7825e1-67a3-49b8-b632-9543f3aa3787",
+   "series_title": "שבועות",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 330,
+   "on_old_public_page": true
+  },
+  {
+   "id": "71d5170c-d3f8-5639-80e8-005a99f59e21",
+   "title": "מגילת רות עם ביאור ושננתם - פרק ג",
+   "series_id": "cc7825e1-67a3-49b8-b632-9543f3aa3787",
+   "series_title": "שבועות",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 340,
+   "on_old_public_page": true
+  },
+  {
+   "id": "53beb033-c21a-54ee-a5f9-ce4ef7a21489",
+   "title": "מגילת רות עם ביאור ושננתם - פרק ד",
+   "series_id": "cc7825e1-67a3-49b8-b632-9543f3aa3787",
+   "series_title": "שבועות",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 350,
+   "on_old_public_page": true
+  },
+  {
+   "id": "e1e8b701-98b8-559f-93f3-1edf96a60732",
+   "title": "ספר שמואל ב עם ביאור 'ושננתם'",
+   "series_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+   "series_title": "שמואל ב",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": 10,
+   "on_old_public_page": true
+  },
+  {
+   "id": "5c775889-1924-4774-970e-ac250d33ac17",
+   "title": "דוד ובת שבע",
+   "series_id": "b2020001-0001-4000-8000-000000000012",
+   "series_title": "תוכחת נתן לדוד | פרק י\"ב",
+   "audience_tags": [
+    "teachers"
+   ],
+   "status": "published",
+   "sort_order": null,
+   "on_old_public_page": true
+  }
+ ],
+ "empties": [
+  {
+   "id": "694763f2-77a3-4f37-ba06-19b3bc4e0865",
+   "title": "מגילת איכה עם ביאור ושננתם",
+   "status": "published",
+   "series_id": "35781f30-76a7-4fc6-aa06-52a1db4a4054",
+   "series_title": "איכה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
+   "parent_title": "כתובים",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "5c961fd8-77d4-4684-a7ff-12894d312843",
+   "title": "אסתר קרקע עולם",
+   "status": "published",
+   "series_id": "8600dfad-9e4d-41af-8b85-ccc325ee1298",
+   "series_title": "אסתר",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
+   "parent_title": "כתובים",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "a1010101-0001-4000-8000-000000000024",
+   "title": "מי תקן את משמרות הכהונה?",
+   "status": "published",
+   "series_id": "2c9c593e-fd97-431b-86b4-ab2b62b6542c",
+   "series_title": "דברי הימים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
+   "parent_title": "כתובים",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "81e8f519-a9ac-4ae5-9b50-8bc5f3a03cfd",
+   "title": "דפי עבודה על ספר בראשית",
+   "status": "published",
+   "series_id": "c5555555-5555-5555-5555-555555555555",
+   "series_title": "חוברת עבודה לתלמיד - חומש בראשית",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "15245c4a-db26-4c97-b279-50948455b6a9",
+   "title": "בהר ה' יראה",
+   "status": "published",
+   "series_id": "7717adb7-6f57-43f0-836c-26f3d7abc96a",
+   "series_title": "ירושלים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351",
+   "parent_title": "נושאים כלליים בתנ\"ך",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "47e62174-d185-5c15-8422-2f8e5aacbac4",
+   "title": "אסתר קרקע עולם",
+   "status": "published",
+   "series_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
+   "series_title": "כתובים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "72c55833-9d13-58ef-b004-044043b9a798",
+   "title": "מי תקן את משמרות הכהונה?",
+   "status": "published",
+   "series_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
+   "series_title": "כתובים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "3bfe8dad-ec4e-490c-9fb6-c5a65d5f9b21",
+   "title": "מפת שלושים ואחד המלכים",
+   "status": "published",
+   "series_id": "ff96641e-68f3-4e4c-92ee-2175b77f6e75",
+   "series_title": "מלכים א",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "a0472c9f-8212-44ff-8937-ace5fea4b4dc",
+   "parent_title": "נביאים",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "220c656a-7326-557a-ab5b-41debc61ad34",
+   "title": "בהר ה' יראה",
+   "status": "published",
+   "series_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351",
+   "series_title": "נושאים כלליים בתנ\"ך",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "2db8f8d7-806d-5a74-b010-2981b8e1955e",
+   "title": "מי תקן את משמרות הכהונה?",
+   "status": "published",
+   "series_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351",
+   "series_title": "נושאים כלליים בתנ\"ך",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "98700ee7-33dc-4f09-9617-89d6ad164d1e",
+   "title": "דפי עבודה על ספר נחמיה",
+   "status": "published",
+   "series_id": "bb222222-bbbb-4444-bbbb-bbbbbbbbbbbb",
+   "series_title": "נחמיה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5cdd770c-9593-4b0d-9f9e-cda50cf5ef41",
+   "parent_title": "כתובים",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "44ff8853-a03a-5296-bb7d-296b9478e7a6",
+   "title": "אסתר קרקע עולם",
+   "status": "published",
+   "series_id": "381ebb6c-8c16-43d6-bd61-7e96445efa34",
+   "series_title": "פורים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "92130154-e96a-4f98-b032-5a20ac385f63",
+   "parent_title": "מועדים",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": false,
+   "verdict": "general"
+  },
+  {
+   "id": "8db23319-a872-413f-899e-979048ac6f4d",
+   "title": "חידות לילדים - פרשות אחרי מות קדושים",
+   "status": "published",
+   "series_id": "078783d0-4ede-4801-a75c-6226c4e9eab1",
+   "series_title": "פרשת אחרי מות | טז-יח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "9094b87b-d98b-44f2-9dc0-c3b56a85fb9f",
+   "title": "פרשת אחרי מות",
+   "status": "published",
+   "series_id": "078783d0-4ede-4801-a75c-6226c4e9eab1",
+   "series_title": "פרשת אחרי מות | טז-יח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "2d886d96-091b-40d1-8253-85d357438c6d",
+   "title": "חידות לילדים - פרשת אמור",
+   "status": "published",
+   "series_id": "ee966caf-ff8b-4ca4-89f7-d174ac92ce76",
+   "series_title": "פרשת אמור | כא-כד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "64963e60-c467-4dc9-9a01-a4cc630252b4",
+   "title": "פרשת אמור",
+   "status": "published",
+   "series_id": "ee966caf-ff8b-4ca4-89f7-d174ac92ce76",
+   "series_title": "פרשת אמור | כא-כד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "f378fc5f-cef3-49a8-9b64-e2dfc987b355",
+   "title": "חוברת עבודה לתלמיד - בא",
+   "status": "published",
+   "series_id": "aab1289b-808f-44be-b177-a81d204f8ab1",
+   "series_title": "פרשת בא | י-יג",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "7fc46ef8-e928-4ff6-885e-7bbfdb91b7f1",
+   "title": "חידות לילדים - פרשת בא",
+   "status": "published",
+   "series_id": "aab1289b-808f-44be-b177-a81d204f8ab1",
+   "series_title": "פרשת בא | י-יג",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "5ac2c796-d4e2-40e0-9acc-8708dfe4b470",
+   "title": "שיעור פרשת בא",
+   "status": "published",
+   "series_id": "aab1289b-808f-44be-b177-a81d204f8ab1",
+   "series_title": "פרשת בא | י-יג",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "4aea71df-4fa1-490e-bb50-66d9e5f3d453",
+   "title": "חידות לילדים - פרשת בהעלותך",
+   "status": "published",
+   "series_id": "158b38e7-9bc0-42f1-b60f-36afe0bc46ed",
+   "series_title": "פרשת בהעלותך | ח-יב",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "4286b301-b56c-4b25-99df-8cd296436158",
+   "title": "פרשת בהעלותך",
+   "status": "published",
+   "series_id": "158b38e7-9bc0-42f1-b60f-36afe0bc46ed",
+   "series_title": "פרשת בהעלותך | ח-יב",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "1a7c2364-a31d-4980-8da1-1e7f73681c1d",
+   "title": "חידות לילדים - פרשות בהר בחוקותי",
+   "status": "published",
+   "series_id": "d9e88a01-f060-48ff-bec4-9d09653245dc",
+   "series_title": "פרשת בהר | כה-כו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "5198bc36-8b37-4dfd-be21-4b47d93da682",
+   "title": "חידות לילדים - פרשות בהר בחוקותי",
+   "status": "published",
+   "series_id": "448fcf01-3ace-4ed9-9999-27797b132fcd",
+   "series_title": "פרשת בחוקותי | כו-כז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "67d228f9-4996-4f48-90ab-27fc018567a9",
+   "title": "חידות לילדים - פרשת בחוקותי",
+   "status": "published",
+   "series_id": "448fcf01-3ace-4ed9-9999-27797b132fcd",
+   "series_title": "פרשת בחוקותי | כו-כז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "dee8a1b6-06fa-49b2-a434-9f7c453d8fe4",
+   "title": "פרשת בחוקותי",
+   "status": "published",
+   "series_id": "448fcf01-3ace-4ed9-9999-27797b132fcd",
+   "series_title": "פרשת בחוקותי | כו-כז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "b3f020a9-a6fd-48ac-a6aa-c43530525573",
+   "title": "חידות לילדים - פרשת בלק",
+   "status": "published",
+   "series_id": "580c5476-1432-4b1c-83ff-0d2eb25ef341",
+   "series_title": "פרשת בלק | כב-כה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "06e15d82-1b61-4862-a6c9-e9e49cfba42a",
+   "title": "הקדמה ופרשת במדבר",
+   "status": "published",
+   "series_id": "bf16434c-3391-4566-a854-9b055d8825e2",
+   "series_title": "פרשת במדבר | א-ד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "a15d4c1c-f5b1-496f-8d84-7175dc76373f",
+   "title": "חידות לילדים - פרשת במדבר",
+   "status": "published",
+   "series_id": "bf16434c-3391-4566-a854-9b055d8825e2",
+   "series_title": "פרשת במדבר | א-ד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "c86303fe-d2b5-4870-a0d8-7cc5e18ef0d1",
+   "title": "חוברת עבודה לתלמיד - בראשית נח",
+   "status": "published",
+   "series_id": "b8bfb329-6b3b-46a5-ab1f-eff2c4dda28e",
+   "series_title": "פרשת בראשית | א-ו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "261bb493-76ad-499a-8c20-e331d53270f7",
+   "title": "חידות לילדים - פרשת בראשית",
+   "status": "published",
+   "series_id": "b8bfb329-6b3b-46a5-ab1f-eff2c4dda28e",
+   "series_title": "פרשת בראשית | א-ו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "b9cc0466-1b88-453f-9d3e-d5bcdf24686d",
+   "title": "פרשות בראשית - נח",
+   "status": "published",
+   "series_id": "b8bfb329-6b3b-46a5-ab1f-eff2c4dda28e",
+   "series_title": "פרשת בראשית | א-ו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "130dff29-f639-4690-b08f-e964f2f00f01",
+   "title": "חוברת עבודה לתלמיד - בשלח",
+   "status": "published",
+   "series_id": "a13807d1-e4a7-491c-8433-d6329fd26955",
+   "series_title": "פרשת בשלח | יג-יז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "8589db96-e64a-4d35-8831-4d53966809a1",
+   "title": "חידות לילדים - פרשת בשלח",
+   "status": "published",
+   "series_id": "a13807d1-e4a7-491c-8433-d6329fd26955",
+   "series_title": "פרשת בשלח | יג-יז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "982859e0-3c44-4680-9dcf-5912187f69f2",
+   "title": "שיעור פרשת בשלח",
+   "status": "published",
+   "series_id": "a13807d1-e4a7-491c-8433-d6329fd26955",
+   "series_title": "פרשת בשלח | יג-יז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "1c8c1a9e-8cf8-48b1-9c69-a08cac55580a",
+   "title": "חידות לילדים - פרשת דברים",
+   "status": "published",
+   "series_id": "8e8346f2-758f-4e91-baf7-0ba3876aae6e",
+   "series_title": "פרשת דברים | א-ד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+   "parent_title": "דברים",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "38d2abbd-71ef-49cf-90a5-178bcc3eccd5",
+   "title": "חוברת עבודה לתלמיד - וארא",
+   "status": "published",
+   "series_id": "0608bd06-c81a-411b-b3bb-a13188926dad",
+   "series_title": "פרשת וארא | ו-ט",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "47fbaf78-71e5-41b9-9d05-4ceef8636e01",
+   "title": "חידות לילדים - פרשת וארא",
+   "status": "published",
+   "series_id": "0608bd06-c81a-411b-b3bb-a13188926dad",
+   "series_title": "פרשת וארא | ו-ט",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "4fcf6fbb-3bce-4372-a7d8-45b418469eab",
+   "title": "חידות לילדים - פרשת ואתחנן",
+   "status": "published",
+   "series_id": "09b3e988-e795-460e-b0b2-a86fc627736c",
+   "series_title": "פרשת ואתחנן | ד-ז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+   "parent_title": "דברים",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "aa7bfb53-ca06-4f8f-92ae-39117cbcf68e",
+   "title": "חוברת עבודה לתלמיד - ויגש",
+   "status": "published",
+   "series_id": "45293720-e656-4708-b42b-209ffbb5757a",
+   "series_title": "פרשת ויגש | מד-מז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "563152ae-5ff6-4e36-a526-85fee5b43fdc",
+   "title": "חידות לילדים - פרשת ויגש",
+   "status": "published",
+   "series_id": "45293720-e656-4708-b42b-209ffbb5757a",
+   "series_title": "פרשת ויגש | מד-מז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "90e4fe50-607d-4b13-b974-1b8d0c8c5eb3",
+   "title": "פרשת ויגש",
+   "status": "published",
+   "series_id": "45293720-e656-4708-b42b-209ffbb5757a",
+   "series_title": "פרשת ויגש | מד-מז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "a373a3bf-cc73-4075-9ae0-5e8d9ee6c30c",
+   "title": "חוברת עבודה לתלמיד - ויחי",
+   "status": "published",
+   "series_id": "e3ee103d-ec5e-40bb-82c8-54a53805f9dd",
+   "series_title": "פרשת ויחי | מז-נ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "bb4dbd5c-d66a-4943-9bb5-803db18a4b8d",
+   "title": "חידות לילדים - פרשת ויחי",
+   "status": "published",
+   "series_id": "e3ee103d-ec5e-40bb-82c8-54a53805f9dd",
+   "series_title": "פרשת ויחי | מז-נ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "58c74e73-d316-486c-81f7-a89d18a41710",
+   "title": "פרשת ויחי",
+   "status": "published",
+   "series_id": "e3ee103d-ec5e-40bb-82c8-54a53805f9dd",
+   "series_title": "פרשת ויחי | מז-נ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "92fc455b-d58e-43d4-9d48-adccc3671408",
+   "title": "חוברת עבודה לתלמיד - ויצא",
+   "status": "published",
+   "series_id": "88710799-12dc-42f7-9a62-6a853dd39a1b",
+   "series_title": "פרשת ויצא | כח-לב",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "65cb37b3-7293-4924-a38d-2de65e0f30f5",
+   "title": "חוברת עבודה לתלמיד - ויקהל פקודי",
+   "status": "published",
+   "series_id": "9cd15d5d-f1b4-40ef-a080-e06cfac64a7f",
+   "series_title": "פרשת ויקהל | לה-לח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "0745dd78-15ee-4b94-9e47-ef58ff622d54",
+   "title": "חידות לילדים - פרשות ויקהל פקודי",
+   "status": "published",
+   "series_id": "9cd15d5d-f1b4-40ef-a080-e06cfac64a7f",
+   "series_title": "פרשת ויקהל | לה-לח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "316af6d9-2da7-40b2-8fb4-b3388767f969",
+   "title": "שיעור פרשות ויקהל - פקודי",
+   "status": "published",
+   "series_id": "9cd15d5d-f1b4-40ef-a080-e06cfac64a7f",
+   "series_title": "פרשת ויקהל | לה-לח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "abd221ae-6461-469b-b0a2-a8b5a3c9b8af",
+   "title": "חידות לילדים - פרשת ויקרא",
+   "status": "published",
+   "series_id": "402cce40-e231-43e5-bb8f-c6d1f1731b76",
+   "series_title": "פרשת ויקרא | א-ה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "00f3564d-c55e-4b36-ac28-6835194887ef",
+   "title": "פרשת ויקרא",
+   "status": "published",
+   "series_id": "402cce40-e231-43e5-bb8f-c6d1f1731b76",
+   "series_title": "פרשת ויקרא | א-ה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "11f7069d-1871-4bb0-bc13-84a1102a9a85",
+   "title": "חוברת עבודה לתלמיד - וירא",
+   "status": "published",
+   "series_id": "5b99dce0-31fa-4d5a-8e04-be8e2aa8bf77",
+   "series_title": "פרשת וירא | יח-כב",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "0e0fab92-68c5-47bd-925c-fd6bd2bf0ffc",
+   "title": "חידות לילדים - פרשת וירא",
+   "status": "published",
+   "series_id": "5b99dce0-31fa-4d5a-8e04-be8e2aa8bf77",
+   "series_title": "פרשת וירא | יח-כב",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "c2fb8899-c3e3-4d13-beda-3154b4d586f4",
+   "title": "חוברת עבודה לתלמיד - וישב",
+   "status": "published",
+   "series_id": "59437ac3-e350-44ab-9796-d409cf4f06ca",
+   "series_title": "פרשת וישב | לז-מ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "b1530a31-458b-452b-9775-fb48f1b7e6ed",
+   "title": "חידות לילדים - פרשת וישב",
+   "status": "published",
+   "series_id": "59437ac3-e350-44ab-9796-d409cf4f06ca",
+   "series_title": "פרשת וישב | לז-מ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "fd6d37b7-c895-47b1-9fd1-4078722ac3d4",
+   "title": "פרשת וישב",
+   "status": "published",
+   "series_id": "59437ac3-e350-44ab-9796-d409cf4f06ca",
+   "series_title": "פרשת וישב | לז-מ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "6d3796e9-b6cd-436f-8d3c-85426e4c499a",
+   "title": "חוברת עבודה לתלמיד - וישלח",
+   "status": "published",
+   "series_id": "089dd80d-dab9-4a9b-bfcc-e78b6db42eb8",
+   "series_title": "פרשת וישלח |לב-לו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "e68e8229-ac18-4988-a0e0-09c10082b982",
+   "title": "חידות לילדים - פרשת וישלח",
+   "status": "published",
+   "series_id": "089dd80d-dab9-4a9b-bfcc-e78b6db42eb8",
+   "series_title": "פרשת וישלח |לב-לו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "2b3ca214-7d17-4d34-8c24-6bf60943717b",
+   "title": "חוברת עבודה לתלמיד - חיי שרה",
+   "status": "published",
+   "series_id": "7d170b1e-fdb1-48e4-9006-c0a536c06b59",
+   "series_title": "פרשת חיי שרה | כג-כה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "998bb1b3-93fe-4050-9e6c-708a8d8d6d3b",
+   "title": "חידות לילדים - פרשת חיי שרה",
+   "status": "published",
+   "series_id": "7d170b1e-fdb1-48e4-9006-c0a536c06b59",
+   "series_title": "פרשת חיי שרה | כג-כה",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "ee2bf129-2a08-469d-9de5-aa689e154eed",
+   "title": "חוברת עבודה לתלמיד - יתרו",
+   "status": "published",
+   "series_id": "e0c50172-363a-4437-ac87-5ac9f5c82960",
+   "series_title": "פרשת יתרו | יח-כ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "19a12260-ff83-41fa-8e5a-7554855039dc",
+   "title": "חידות לילדים - פרשת יתרו",
+   "status": "published",
+   "series_id": "e0c50172-363a-4437-ac87-5ac9f5c82960",
+   "series_title": "פרשת יתרו | יח-כ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "578fa482-f006-4cd8-892f-604b98574fc9",
+   "title": "שיעור פרשת יתרו",
+   "status": "published",
+   "series_id": "e0c50172-363a-4437-ac87-5ac9f5c82960",
+   "series_title": "פרשת יתרו | יח-כ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "ac75ecd4-65a3-4746-9c2f-f1446f2af010",
+   "title": "חוברת עבודה לתלמיד - כי תשא",
+   "status": "published",
+   "series_id": "1d0641ae-6d2e-40df-b326-306b1e474e69",
+   "series_title": "פרשת כי תשא | ל-לד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "a170b849-5202-460c-8d50-e6ffc5e6a288",
+   "title": "חידות לילדים - פרשת כי תשא",
+   "status": "published",
+   "series_id": "1d0641ae-6d2e-40df-b326-306b1e474e69",
+   "series_title": "פרשת כי תשא | ל-לד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "2b551c75-5d49-4a19-8c4d-3bda01e3ef87",
+   "title": "שיעור פרשת כי תשא",
+   "status": "published",
+   "series_id": "1d0641ae-6d2e-40df-b326-306b1e474e69",
+   "series_title": "פרשת כי תשא | ל-לד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "bdef9e1d-d63f-47f7-b3eb-dd901ef8e4d3",
+   "title": "חוברת עבודה לתלמיד - לך לך",
+   "status": "published",
+   "series_id": "7e8d543c-cd93-4ba3-a822-bccba62380f0",
+   "series_title": "פרשת לך לך | יב-יז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "fe907feb-b1c9-4133-86ba-074016d9b59a",
+   "title": "חידות לילדים - פרשת לך לך",
+   "status": "published",
+   "series_id": "7e8d543c-cd93-4ba3-a822-bccba62380f0",
+   "series_title": "פרשת לך לך | יב-יז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "996a1ea0-2333-41df-8801-b5a7302bd7d1",
+   "title": "חידות לילדים - פרשת מטות",
+   "status": "published",
+   "series_id": "68bb7053-894e-46f7-bc31-222c70a8e33d",
+   "series_title": "פרשת מטות | ל-לב",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "0b88099d-c600-46e1-9eae-e08f2884b221",
+   "title": "חידות לילדים - פרשת מסעי",
+   "status": "published",
+   "series_id": "46d24bbf-9560-48c5-b811-38b450467697",
+   "series_title": "פרשת מסעי | לג-לו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "16b0a754-4431-4bf8-92e7-73232fe2dac4",
+   "title": "חידות לילדים - פרשת מצורע שבת הגדול",
+   "status": "published",
+   "series_id": "606fbbf3-27e7-4439-864a-8e1063e81477",
+   "series_title": "פרשת מצורע | יד-טו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "5278e2ef-c597-4bf6-b6ba-7ebd7f3f24ef",
+   "title": "פרשת מצורע",
+   "status": "published",
+   "series_id": "606fbbf3-27e7-4439-864a-8e1063e81477",
+   "series_title": "פרשת מצורע | יד-טו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "807a3410-ce4a-4df8-8be1-9dd0ffb98001",
+   "title": "חוברת עבודה לתלמיד - מקץ",
+   "status": "published",
+   "series_id": "7a286582-271d-488a-8b82-58766c664bd2",
+   "series_title": "פרשת מקץ | מא-מד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "b27da985-20bc-4766-80a7-dda8d39f06e0",
+   "title": "חידות לילדים - פרשת מקץ",
+   "status": "published",
+   "series_id": "7a286582-271d-488a-8b82-58766c664bd2",
+   "series_title": "פרשת מקץ | מא-מד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "ee7024b0-7e74-49ca-9b91-4564da68f99f",
+   "title": "פרשת מקץ",
+   "status": "published",
+   "series_id": "7a286582-271d-488a-8b82-58766c664bd2",
+   "series_title": "פרשת מקץ | מא-מד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "274e41be-2976-4aad-910a-60f9b690bc7f",
+   "title": "חוברת עבודה לתלמיד - משפטים",
+   "status": "published",
+   "series_id": "caa86602-9853-4273-89a3-49ca48fd5656",
+   "series_title": "פרשת משפטים | כא-כד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "c60327a6-f2e7-442f-b951-5b3423dd1b82",
+   "title": "חידות לילדים - פרשת משפטים",
+   "status": "published",
+   "series_id": "caa86602-9853-4273-89a3-49ca48fd5656",
+   "series_title": "פרשת משפטים | כא-כד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "1a57f535-6b58-4c04-8c50-0080160ab3cd",
+   "title": "שיעור פרשת משפטים",
+   "status": "published",
+   "series_id": "caa86602-9853-4273-89a3-49ca48fd5656",
+   "series_title": "פרשת משפטים | כא-כד",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "3362a65a-4b7d-4df0-a718-901bdbd7955a",
+   "title": "חוברת עבודה לתלמיד - בראשית נח",
+   "status": "published",
+   "series_id": "52540731-cd46-483d-9514-cb17ae6ca6c8",
+   "series_title": "פרשת נח | ו-יא",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "fd2f2db9-4cae-4ed2-854c-168304a2383a",
+   "title": "חידות לילדים - פרשת נח",
+   "status": "published",
+   "series_id": "52540731-cd46-483d-9514-cb17ae6ca6c8",
+   "series_title": "פרשת נח | ו-יא",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "b26579ce-da27-42b6-b506-07a8c0b107b8",
+   "title": "פרשות בראשית - נח",
+   "status": "published",
+   "series_id": "52540731-cd46-483d-9514-cb17ae6ca6c8",
+   "series_title": "פרשת נח | ו-יא",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "dd232358-dda3-4698-8a78-4342c71c8d18",
+   "title": "חידות לילדים - פרשת עקב",
+   "status": "published",
+   "series_id": "2982bb96-ef32-484b-98a6-4125267b0e61",
+   "series_title": "פרשת עקב | ז-יא",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+   "parent_title": "דברים",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "3865f5b4-4437-4ea0-a695-fd96836ecde8",
+   "title": "חידות לילדים - פרשת פנחס",
+   "status": "published",
+   "series_id": "02e69fcc-f1d2-4a41-9835-4f96211350e6",
+   "series_title": "פרשת פנחס | כה-ל",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "af007387-2467-40a8-931f-1698c5296eae",
+   "title": "פרשת פינחס",
+   "status": "published",
+   "series_id": "02e69fcc-f1d2-4a41-9835-4f96211350e6",
+   "series_title": "פרשת פנחס | כה-ל",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "1c3d1304-75ac-4822-828a-89fdce3ca41a",
+   "title": "חוברת עבודה לתלמיד - ויקהל פקודי",
+   "status": "published",
+   "series_id": "06efb206-6bf2-4ac2-8a5e-91cd9e9d59f6",
+   "series_title": "פרשת פקודי | לח-מ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "02e834bb-15da-4e37-8e19-b83dfb6278b8",
+   "title": "חידות לילדים - פרשות ויקהל פקודי",
+   "status": "published",
+   "series_id": "06efb206-6bf2-4ac2-8a5e-91cd9e9d59f6",
+   "series_title": "פרשת פקודי | לח-מ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "dfc4f31a-f00d-4e27-a192-03be117ba368",
+   "title": "שיעור פרשות ויקהל - פקודי",
+   "status": "published",
+   "series_id": "06efb206-6bf2-4ac2-8a5e-91cd9e9d59f6",
+   "series_title": "פרשת פקודי | לח-מ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "a15025ac-a353-415b-a4f7-018f52475c56",
+   "title": "חידות לילדים - פרשת צו",
+   "status": "published",
+   "series_id": "004ceb75-a8a4-4f78-a2a1-6f5e457d25a3",
+   "series_title": "פרשת צו | ו-ח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "364606c7-9c8c-4eeb-b179-9c0bd2196aa9",
+   "title": "חידות לילדים - פרשת שמיני - פרה",
+   "status": "published",
+   "series_id": "004ceb75-a8a4-4f78-a2a1-6f5e457d25a3",
+   "series_title": "פרשת צו | ו-ח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "b5c2c33d-c636-4105-a5ba-4947062bef07",
+   "title": "פרשת צו",
+   "status": "published",
+   "series_id": "004ceb75-a8a4-4f78-a2a1-6f5e457d25a3",
+   "series_title": "פרשת צו | ו-ח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "7cb01ccf-f60a-4ed2-b91c-d34acd300fab",
+   "title": "חידות לילדים - פרשות אחרי מות קדושים",
+   "status": "published",
+   "series_id": "de87714a-bc00-48ff-9ef4-412903e89388",
+   "series_title": "פרשת קדושים | יט-כ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "c85fc742-f428-4c23-a6cc-a66e1aa760c6",
+   "title": "חידות לילדים - פרשת קדושים",
+   "status": "published",
+   "series_id": "de87714a-bc00-48ff-9ef4-412903e89388",
+   "series_title": "פרשת קדושים | יט-כ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "c5936445-aec4-4623-a9aa-9ea52a37f0f6",
+   "title": "פרשת קדושים",
+   "status": "published",
+   "series_id": "de87714a-bc00-48ff-9ef4-412903e89388",
+   "series_title": "פרשת קדושים | יט-כ",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "e52a0fce-2b76-4924-bd06-20c10a502f32",
+   "title": "חידות לילדים - פרשת קורח",
+   "status": "published",
+   "series_id": "6adf155c-15f9-42b2-ae47-38d543af6200",
+   "series_title": "פרשת קורח | טז-יח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "f4d049a7-d0c5-4fb0-9f55-f170447d34c7",
+   "title": "חידות לילדים - פרשת ראה",
+   "status": "published",
+   "series_id": "591226c6-f3d5-4641-99ad-55e9a6cd05f8",
+   "series_title": "פרשת ראה | יא-טז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+   "parent_title": "דברים",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "fb2d3ea9-d8f1-486a-a6a0-cd3333178487",
+   "title": "חידות לפרשה - פרשת שלח",
+   "status": "published",
+   "series_id": "d2f47e60-0a6c-44f3-8942-48a326610095",
+   "series_title": "פרשת שלח לך | יג-טו",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+   "parent_title": "במדבר",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "7b24c272-9d43-4ae5-bc45-1f3c10189888",
+   "title": "פרשת שמיני",
+   "status": "published",
+   "series_id": "d21cff78-1566-4d59-87be-b48b9ec1f061",
+   "series_title": "פרשת שמיני | ט-יא",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "fea5475e-4f5f-49b6-b21c-a599d2c43fb5",
+   "title": "חוברת עבודה לתלמיד - תולדות",
+   "status": "published",
+   "series_id": "2b7c2d84-17e0-4d15-922b-96fc154a8e5a",
+   "series_title": "פרשת תולדות | כה-כח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "7a3912b1-acf4-401f-80e9-ca18be4fd0b1",
+   "title": "חידות לילדים - פרשת תולדות",
+   "status": "published",
+   "series_id": "2b7c2d84-17e0-4d15-922b-96fc154a8e5a",
+   "series_title": "פרשת תולדות | כה-כח",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+   "parent_title": "בראשית",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "767fefbb-bbef-4068-b712-6c231cb5f648",
+   "title": "חידות לילדים פרשת תזריע - החודש",
+   "status": "published",
+   "series_id": "98723061-c3aa-4e95-8507-1e936bdb2e87",
+   "series_title": "פרשת תזריע | יב-יג",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "28f11e3a-280a-4138-a1b2-9bfe3374ab6b",
+   "title": "פרשת תזריע",
+   "status": "published",
+   "series_id": "98723061-c3aa-4e95-8507-1e936bdb2e87",
+   "series_title": "פרשת תזריע | יב-יג",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "6267feb7-de69-4106-aa02-172411e070cd",
+   "parent_title": "ויקרא",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "41b5719a-5488-492f-9c41-80cfc0e382ca",
+   "title": "חוברת עבודה לתלמיד - תרומה תצוה",
+   "status": "published",
+   "series_id": "531a3635-53d0-4fac-b9c2-ee37086e499a",
+   "series_title": "פרשת תצוה | כז-ל",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "3b6591e7-8bf1-4fa7-98c4-4d7d4b69d8a9",
+   "title": "חידות לילדים - פרשת תצוה",
+   "status": "published",
+   "series_id": "531a3635-53d0-4fac-b9c2-ee37086e499a",
+   "series_title": "פרשת תצוה | כז-ל",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "3ab4b4fd-97b5-4618-b19f-9a17a54af58b",
+   "title": "סיכום פרטי המשכן, כליו ובגדי הכהונה",
+   "status": "published",
+   "series_id": "531a3635-53d0-4fac-b9c2-ee37086e499a",
+   "series_title": "פרשת תצוה | כז-ל",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "961acc66-07db-4e70-bcb3-47a889e66387",
+   "title": "שיעור פרשות תרומה - תצוה",
+   "status": "published",
+   "series_id": "531a3635-53d0-4fac-b9c2-ee37086e499a",
+   "series_title": "פרשת תצוה | כז-ל",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "7ed1651c-411c-45a7-bd33-8a4a1b3a45ea",
+   "title": "חוברת עבודה לתלמיד - תרומה תצוה",
+   "status": "published",
+   "series_id": "203af438-5444-4ec5-b31a-6228761ab445",
+   "series_title": "פרשת תרומה | כה-כז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": true,
+   "verdict": "teachers"
+  },
+  {
+   "id": "2c28dc2d-016c-4771-98c5-149f540e4b78",
+   "title": "סיכום פרטי המשכן, כליו ובגדי הכהונה",
+   "status": "published",
+   "series_id": "203af438-5444-4ec5-b31a-6228761ab445",
+   "series_title": "פרשת תרומה | כה-כז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "19f71f34-33c9-4a53-89e7-662cb6ed8639",
+   "title": "שיעור פרשות תרומה - תצוה",
+   "status": "published",
+   "series_id": "203af438-5444-4ec5-b31a-6228761ab445",
+   "series_title": "פרשת תרומה | כה-כז",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "parent_title": "שמות",
+   "on_old_public_page": false,
+   "on_old_public_anywhere": false,
+   "on_old_teachers_listing": false,
+   "verdict": "general_flag"
+  },
+  {
+   "id": "76ae403a-c059-4a9d-a457-b1da97ab0f63",
+   "title": "מחנה ישראל ליד ערבות מואב",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "8f7c5642-abc3-4b92-8be2-e41c05b5e042",
+   "title": "מפת ארץ ישראל",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "4e46b4e9-6cdf-4e5d-85c6-ce89cb603be0",
+   "title": "מפת המזרח התיכון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "64798426-9770-46eb-998d-d4eb08918935",
+   "title": "מפת מלחמת הדרום",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "dfc99a57-44ea-42c2-8eb1-32045c969c25",
+   "title": "מפת מלחמת הצפון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "40cab62f-1a75-452a-877f-c6c0a2e7f762",
+   "title": "מפת נחלות דן ושמעון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "83268d91-1a21-4d0b-bfb6-5728293246c6",
+   "title": "מפת נחלות השבטים",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "5bc376e8-1d6f-4b01-a6d5-c90af5a8afd4",
+   "title": "מפת נחלות עבר הירדן המזרחי",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "8df3a093-e714-4c17-af46-8a69508541c2",
+   "title": "מפת נחלות שבטי הצפון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "68f2380e-2960-4783-829c-408c04086ff4",
+   "title": "מפת נחלת שבט בנימין",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "b9b6d628-25ab-4796-8aaa-9bc434b38e55",
+   "title": "מפת נחלת שבט יהודה",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "64b5537a-e29b-4eb8-afad-9e0fb12b56fb",
+   "title": "מפת נחלת שבט מנשה",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "6c095d7c-1345-4722-8bef-ca81326a25f3",
+   "title": "מפת נחלת שבטי יוסף",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "b0bf7e73-dc69-4805-9058-bf50111d7877",
+   "title": "מפת עזר שופטים פרק ד | דבורה וברק",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "6764f32e-cbec-4688-a77d-3f432b44acf0",
+   "title": "מפת עזר שופטים פרק ח | גדעון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "30c4bfad-8c20-40d7-94c7-8964703725ab",
+   "title": "מפת עזר שופטים פרק ט | גדעון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "81254b3e-1c7b-46de-aefb-5d2a9835b73d",
+   "title": "מפת עזר שופטים פרק טו | שמשון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "d5711266-cfcf-47bf-b8aa-304cdb36a56c",
+   "title": "מפת עזר שופטים פרק י | גדעון",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "b51c3517-f548-4eb6-921e-f6b3b8b9b220",
+   "title": "מפת עזר שופטים פרק יא | יפתח",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "bf4ba06c-2cf6-489b-ac2e-e989d2e6b4f4",
+   "title": "מפת עזר שופטים פרק יח | מסע שבט דן",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "09ca94a4-ad5e-444f-874d-f4f8e5633cc9",
+   "title": "מפת עזר שופטים פרק כ | גבולות השבטים",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "ef3669f0-506f-4b94-a5a1-51a737b2248c",
+   "title": "מפת עזר שופטים פרק כ | נחלת בנימין",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "cbec9cfa-442c-4bee-a1cc-51c49b9ccde2",
+   "title": "מפת ערי הלויים",
+   "status": "published",
+   "series_id": "cab4229a-50d5-495e-9b68-b1967355fc6c",
+   "series_title": "שיעורים כלליים",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": null,
+   "parent_title": null,
+   "on_old_public_page": false,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  },
+  {
+   "id": "f6f0dcef-37fc-5475-a9bc-b29b079e1017",
+   "title": "סיכום פרטי המשכן, כליו ובגדי הכהונה",
+   "status": "published",
+   "series_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+   "series_title": "שמות",
+   "series_aud": [
+    "general"
+   ],
+   "parent_id": "bb14b5a5-9f8f-4b54-ae10-bea3e2ff610b",
+   "parent_title": "תורה",
+   "on_old_public_page": true,
+   "on_old_public_anywhere": true,
+   "on_old_teachers_listing": true,
+   "verdict": "dual"
+  }
+ ],
+ "topics": {
+  "root": "13ca4b52-c317-4bbc-8847-84ecc9e3691b",
+  "live_count": 125,
+  "missing": [
+   {
+    "title": "התשובה",
+    "title_norm": "התשובה",
+    "raw_text": "התשובה (5)",
+    "count": 5,
+    "url": "/מאגר-השיעורים-והמאמרים/נושאים/?subject=התשובה",
+    "order_index": 68
+   },
+   {
+    "title": "נסים",
+    "title_norm": "נסים",
+    "raw_text": "נסים (3)",
+    "count": 3,
+    "url": "/מאגר-השיעורים-והמאמרים/נושאים/?subject=נסים",
+    "order_index": 80
+   },
+   {
+    "title": "חנ",
+    "title_norm": "חנ",
+    "raw_text": "חנ (1)",
+    "count": 1,
+    "url": "/מאגר-השיעורים-והמאמרים/נושאים/?subject=חנ",
+    "order_index": 114
+   }
+  ],
+  "extra": [
+   {
+    "id": "e6060601-0006-4000-8000-000000000001",
+    "name": "שלושת השבועות",
+    "slug": "shloshet-hashavuot",
+    "parent_id": "13ca4b52-c317-4bbc-8847-84ecc9e3691b",
+    "sort_order": 9999
+   }
+  ],
+  "missing_lookup": {
+   "התשובה": [
+    {
+     "id": "e3030301-0001-4000-8000-000000000001",
+     "name": "חודש אלול וימי התשובה",
+     "slug": "elul-teshuva",
+     "parent_id": null,
+     "sort_order": 0
+    }
+   ],
+   "נסים": [],
+   "חנ": [
+    {
+     "id": "76870bc4-5410-4652-95f7-5633ee741032",
+     "name": "חנוכה",
+     "slug": "theme-חנוכה",
+     "parent_id": "13ca4b52-c317-4bbc-8847-84ecc9e3691b",
+     "sort_order": 24
+    },
+    {
+     "id": "2253218f-f03a-44b8-960e-ef6d4cf08a5c",
+     "name": "פרשת ואתחנן | ד-ז",
+     "slug": "parashat-vaetchanan-4-7",
+     "parent_id": null,
+     "sort_order": 0
+    },
+    {
+     "id": "4cbe20c6-18d9-4f2d-97b3-2c6e061fea5b",
+     "name": "מזמור ל | מזמור שיר חנוכת",
+     "slug": "mizmor-30",
+     "parent_id": null,
+     "sort_order": 30
+    },
+    {
+     "id": "f5050501-0002-4000-a000-000000000001",
+     "name": "חנוכה",
+     "slug": "hanukkah",
+     "parent_id": null,
+     "sort_order": 0
+    },
+    {
+     "id": "b7070705-0002-4000-8000-000000000001",
+     "name": "הפטרת ואתחנן",
+     "slug": "haftarat-vaetchanan",
+     "parent_id": null,
+     "sort_order": 2
+    }
+   ]
+  },
+  "order": [
+   {
+    "old_title": "ימי העיון בתנ\"ך",
+    "expected_sort": 1,
+    "id": "f2e01ca3-5f8b-4b05-b857-cd39142da1b9",
+    "live_sort": 1,
+    "live_name": "ימי העיון בתנ\"ך"
+   },
+   {
+    "old_title": "דוד המלך",
+    "expected_sort": 2,
+    "id": "ce599885-4cdf-4e8a-9bb6-180262c04d6e",
+    "live_sort": 2,
+    "live_name": "דוד המלך"
+   },
+   {
+    "old_title": "האזנה לפסוקים עם ביאור פשוט",
+    "expected_sort": 3,
+    "id": "e7d60a4c-a1e6-4f76-9c25-217b7c4f9ca0",
+    "live_sort": 3,
+    "live_name": "האזנה לפסוקים עם ביאור פשוט"
+   },
+   {
+    "old_title": "גאולה",
+    "expected_sort": 4,
+    "id": "8118697c-ccdf-4607-b48e-8afe6097f15e",
+    "live_sort": 4,
+    "live_name": "גאולה"
+   },
+   {
+    "old_title": "מלכות",
+    "expected_sort": 5,
+    "id": "af0762d4-3f18-4391-81b0-bf97dee16931",
+    "live_sort": 5,
+    "live_name": "מלכות"
+   },
+   {
+    "old_title": "תנ\"ך מוקלט",
+    "expected_sort": 6,
+    "id": "06bfa535-2d97-5191-a9d3-f5c5ec4bb444",
+    "live_sort": 6,
+    "live_name": "תנ\"ך מוקלט"
+   },
+   {
+    "old_title": "נבואה",
+    "expected_sort": 7,
+    "id": "64362bbf-afdf-4b78-a3c0-551de9671480",
+    "live_sort": 7,
+    "live_name": "נבואה"
+   },
+   {
+    "old_title": "בית המקדש",
+    "expected_sort": 8,
+    "id": "1a134c5f-d007-4005-a2f9-62e030bec12b",
+    "live_sort": 8,
+    "live_name": "בית המקדש"
+   },
+   {
+    "old_title": "לימוד בקצב של פרק לשיעור",
+    "expected_sort": 9,
+    "id": "0aa783fb-8a12-5226-8b55-f5ca6ece466d",
+    "live_sort": 9,
+    "live_name": "לימוד בקצב של פרק לשיעור"
+   },
+   {
+    "old_title": "ארץ ישראל",
+    "expected_sort": 10,
+    "id": "3c03af46-8e01-400b-a46a-24d2b812893c",
+    "live_sort": 10,
+    "live_name": "ארץ ישראל"
+   },
+   {
+    "old_title": "בית שני",
+    "expected_sort": 11,
+    "id": "f4690adf-a787-42e6-8f55-7b7017d9ffc8",
+    "live_sort": 11,
+    "live_name": "בית שני"
+   },
+   {
+    "old_title": "כהונה",
+    "expected_sort": 12,
+    "id": "a42f9db6-6e3b-4df6-9f22-609df0bfb943",
+    "live_sort": 12,
+    "live_name": "כהונה"
+   },
+   {
+    "old_title": "קריאת הפסוקים עם ביאור פשוט",
+    "expected_sort": 13,
+    "id": "aac96137-a9e3-4cf4-9016-831b293668b3",
+    "live_sort": 13,
+    "live_name": "קריאת הפסוקים עם ביאור פשוט"
+   },
+   {
+    "old_title": "ירושלים",
+    "expected_sort": 14,
+    "id": "69c74afa-cdc4-4c55-b964-aaeab59918bf",
+    "live_sort": 14,
+    "live_name": "ירושלים"
+   },
+   {
+    "old_title": "קרבנות",
+    "expected_sort": 15,
+    "id": "22938735-84bc-411d-9be2-2b399450fa73",
+    "live_sort": 15,
+    "live_name": "קרבנות"
+   },
+   {
+    "old_title": "מבט רחב על ספרים ונושאים",
+    "expected_sort": 16,
+    "id": "b20c5891-f7ee-4be7-b75a-ecf056806e7f",
+    "live_sort": 16,
+    "live_name": "מבט רחב על ספרים ונושאים"
+   },
+   {
+    "old_title": "המשכן וכליו",
+    "expected_sort": 17,
+    "id": "66776121-fea5-47a5-a884-ed8b92d415df",
+    "live_sort": 17,
+    "live_name": "המשכן וכליו"
+   },
+   {
+    "old_title": "שיעורים לנשים",
+    "expected_sort": 18,
+    "id": "e708018f-22a8-4b84-9302-87df5dac5656",
+    "live_sort": 18,
+    "live_name": "שיעורים לנשים"
+   },
+   {
+    "old_title": "מפרשי המקרא",
+    "expected_sort": 19,
+    "id": "fba8198a-7daf-42b7-85f9-50e88762950a",
+    "live_sort": 19,
+    "live_name": "מפרשי המקרא"
+   },
+   {
+    "old_title": "מתן תורה",
+    "expected_sort": 20,
+    "id": "d1d08e3d-657a-4492-85e7-2f5b96b5a858",
+    "live_sort": 20,
+    "live_name": "מתן תורה"
+   },
+   {
+    "old_title": "גלות",
+    "expected_sort": 21,
+    "id": "dee7dca0-baeb-44f5-b7eb-dd16f9c883c4",
+    "live_sort": 21,
+    "live_name": "גלות"
+   },
+   {
+    "old_title": "חורבן בית המקדש",
+    "expected_sort": 22,
+    "id": "bcfa9e3f-63a8-41ea-8199-065b88b5f24f",
+    "live_sort": 22,
+    "live_name": "חורבן בית המקדש"
+   },
+   {
+    "old_title": "שבטים",
+    "expected_sort": 23,
+    "id": "d0f08877-0c59-414f-b5c3-29510499f6c4",
+    "live_sort": 23,
+    "live_name": "שבטים"
+   },
+   {
+    "old_title": "חנוכה",
+    "expected_sort": 24,
+    "id": "76870bc4-5410-4652-95f7-5633ee741032",
+    "live_sort": 24,
+    "live_name": "חנוכה"
+   },
+   {
+    "old_title": "משה רבנו",
+    "expected_sort": 25,
+    "id": "555e8133-268f-421d-b899-1a6c180fa16c",
+    "live_sort": 25,
+    "live_name": "משה רבנו"
+   },
+   {
+    "old_title": "ארון הברית",
+    "expected_sort": 26,
+    "id": "726d9512-5baf-4e8c-90b2-ec45d1d2a3eb",
+    "live_sort": 26,
+    "live_name": "ארון הברית"
+   },
+   {
+    "old_title": "שאול המלך",
+    "expected_sort": 27,
+    "id": "1b015f32-2581-412f-a955-eb71bb4bbffd",
+    "live_sort": 27,
+    "live_name": "שאול המלך"
+   },
+   {
+    "old_title": "יוסף",
+    "expected_sort": 28,
+    "id": "4b66b000-2cfe-4d7c-80ac-480da0c17032",
+    "live_sort": 28,
+    "live_name": "יוסף"
+   },
+   {
+    "old_title": "צרעת",
+    "expected_sort": 29,
+    "id": "421406a6-e3f7-4eae-ae5f-4cf2076df571",
+    "live_sort": 29,
+    "live_name": "צרעת"
+   },
+   {
+    "old_title": "קרבן פסח",
+    "expected_sort": 30,
+    "id": "6d364030-5bf1-42db-b387-3749d9c4feda",
+    "live_sort": 30,
+    "live_name": "קרבן פסח"
+   },
+   {
+    "old_title": "כריתת ברית",
+    "expected_sort": 31,
+    "id": "f2404dfa-29b5-46b9-a5e0-6775f34073ee",
+    "live_sort": 31,
+    "live_name": "כריתת ברית"
+   },
+   {
+    "old_title": "קיום ברית",
+    "expected_sort": 32,
+    "id": "3ab4ead6-8d55-4958-901b-f7c08231aa28",
+    "live_sort": 32,
+    "live_name": "קיום ברית"
+   },
+   {
+    "old_title": "המנורה",
+    "expected_sort": 33,
+    "id": "d582bc8f-bf46-4449-b9ce-e83ab2941d1a",
+    "live_sort": 33,
+    "live_name": "המנורה"
+   },
+   {
+    "old_title": "נזיר",
+    "expected_sort": 34,
+    "id": "f0e1801e-e9c3-41b3-8d94-0786733643c2",
+    "live_sort": 34,
+    "live_name": "נזיר"
+   },
+   {
+    "old_title": "גוג ומגוג",
+    "expected_sort": 35,
+    "id": "4b3a7f6d-e404-4577-8874-bd3d2ba895fc",
+    "live_sort": 35,
+    "live_name": "גוג ומגוג"
+   },
+   {
+    "old_title": "מלחמה",
+    "expected_sort": 36,
+    "id": "a56d182a-e73d-4f01-b75f-64653f4862be",
+    "live_sort": 36,
+    "live_name": "מלחמה"
+   },
+   {
+    "old_title": "עבדות",
+    "expected_sort": 37,
+    "id": "09545fd1-7bfd-4aed-b8ae-11e666dc86e1",
+    "live_sort": 37,
+    "live_name": "עבדות"
+   },
+   {
+    "old_title": "ישראל והעמים",
+    "expected_sort": 38,
+    "id": "47948720-87de-4edd-b949-7a33cfeafe84",
+    "live_sort": 38,
+    "live_name": "ישראל והעמים"
+   },
+   {
+    "old_title": "כיבוש הארץ",
+    "expected_sort": 39,
+    "id": "01fa31aa-de58-44e0-b248-2866aea02157",
+    "live_sort": 39,
+    "live_name": "כיבוש הארץ"
+   },
+   {
+    "old_title": "יציאת מצרים",
+    "expected_sort": 40,
+    "id": "b1221c0b-bafa-41c9-b32b-fa167d3ad48c",
+    "live_sort": 40,
+    "live_name": "יציאת מצרים"
+   },
+   {
+    "old_title": "השגחת ה'",
+    "expected_sort": 41,
+    "id": "b0fc200a-4adf-4432-8f31-f6212e3e5d7a",
+    "live_sort": 41,
+    "live_name": "השגחת ה'"
+   },
+   {
+    "old_title": "אליהו הנביא",
+    "expected_sort": 42,
+    "id": "4975bd6b-6ed5-4b77-a2d0-ebcd464432fa",
+    "live_sort": 42,
+    "live_name": "אליהו הנביא"
+   },
+   {
+    "old_title": "שבת",
+    "expected_sort": 43,
+    "id": "63387da1-d867-4ea4-a8e9-4ad74efb5597",
+    "live_sort": 43,
+    "live_name": "שבת"
+   },
+   {
+    "old_title": "שמות ה'",
+    "expected_sort": 44,
+    "id": "25a5a8a2-2187-4518-8100-1ee025402e3b",
+    "live_sort": 44,
+    "live_name": "שמות ה'"
+   },
+   {
+    "old_title": "תשובה",
+    "expected_sort": 45,
+    "id": "1c4b4a22-adff-437e-84e0-472e76bbf0b8",
+    "live_sort": 45,
+    "live_name": "תשובה"
+   },
+   {
+    "old_title": "חטא המרגלים",
+    "expected_sort": 46,
+    "id": "d4d9bae8-5371-4352-aa7e-96c4adf2b7ba",
+    "live_sort": 46,
+    "live_name": "חטא המרגלים"
+   },
+   {
+    "old_title": "בית המקדש השלישי",
+    "expected_sort": 47,
+    "id": "ad056506-c07d-48ee-beb9-0b8f3bbcf34a",
+    "live_sort": 47,
+    "live_name": "בית המקדש השלישי"
+   },
+   {
+    "old_title": "נביאי השקר",
+    "expected_sort": 48,
+    "id": "35c4b4ea-66a2-4d1b-aabb-70566f80c269",
+    "live_sort": 48,
+    "live_name": "נביאי השקר"
+   },
+   {
+    "old_title": "משכן שילה",
+    "expected_sort": 49,
+    "id": "81822c01-2b56-4d02-af28-203d6e18ada1",
+    "live_sort": 49,
+    "live_name": "משכן שילה"
+   },
+   {
+    "old_title": "שלמה המלך",
+    "expected_sort": 50,
+    "id": "cffdf87b-9502-4475-91ec-75a3cf1a6437",
+    "live_sort": 50,
+    "live_name": "שלמה המלך"
+   },
+   {
+    "old_title": "מצרים",
+    "expected_sort": 51,
+    "id": "04894baf-a54c-4d25-b1ad-558967a5abac",
+    "live_sort": 51,
+    "live_name": "מצרים"
+   },
+   {
+    "old_title": "עמי כנען",
+    "expected_sort": 52,
+    "id": "29a532e0-b5b2-4c7e-9d42-79127a322380",
+    "live_sort": 52,
+    "live_name": "עמי כנען"
+   },
+   {
+    "old_title": "אהבת ה'",
+    "expected_sort": 53,
+    "id": "c8fe56f6-ba1d-4875-9152-003ffa86d569",
+    "live_sort": 53,
+    "live_name": "אהבת ה'"
+   },
+   {
+    "old_title": "יהושפט",
+    "expected_sort": 54,
+    "id": "061a4c9f-e7d0-4f21-8218-b1b44fdf05d5",
+    "live_sort": 54,
+    "live_name": "יהושפט"
+   },
+   {
+    "old_title": "חזקיהו",
+    "expected_sort": 55,
+    "id": "df3a90b5-ec72-4205-b637-e490eb20e0fc",
+    "live_sort": 55,
+    "live_name": "חזקיהו"
+   },
+   {
+    "old_title": "הבמות",
+    "expected_sort": 56,
+    "id": "2a231853-8deb-418e-a442-5b3f65f7b6e8",
+    "live_sort": 56,
+    "live_name": "הבמות"
+   },
+   {
+    "old_title": "פלשתים",
+    "expected_sort": 57,
+    "id": "ba5f05b6-c4f8-4234-97bd-f7bac2146354",
+    "live_sort": 57,
+    "live_name": "פלשתים"
+   },
+   {
+    "old_title": "ברית מילה",
+    "expected_sort": 58,
+    "id": "08514444-a7e9-441e-8126-f6926c3dd356",
+    "live_sort": 58,
+    "live_name": "ברית מילה"
+   },
+   {
+    "old_title": "אלישע הנביא",
+    "expected_sort": 59,
+    "id": "ec22c3c0-d774-4784-becc-ebe9c3cca386",
+    "live_sort": 59,
+    "live_name": "אלישע הנביא"
+   },
+   {
+    "old_title": "יהושע בן נון",
+    "expected_sort": 60,
+    "id": "5362493f-f3c8-492d-883e-826c9a9ac1a1",
+    "live_sort": 60,
+    "live_name": "יהושע בן נון"
+   },
+   {
+    "old_title": "עמלק",
+    "expected_sort": 61,
+    "id": "10ff930e-a151-4f5a-a967-f35425151d18",
+    "live_sort": 61,
+    "live_name": "עמלק"
+   },
+   {
+    "old_title": "חטא העגל",
+    "expected_sort": 62,
+    "id": "7f689042-6d4b-42e8-abfc-46f92c319508",
+    "live_sort": 62,
+    "live_name": "חטא העגל"
+   },
+   {
+    "old_title": "הקטורת",
+    "expected_sort": 63,
+    "id": "f0fd36be-d5f5-4b28-8491-74b56bec6a0b",
+    "live_sort": 63,
+    "live_name": "הקטורת"
+   },
+   {
+    "old_title": "נשים בתנ\"ך",
+    "expected_sort": 64,
+    "id": "8c836bf6-29fd-4e3c-995c-5cd5549dbc9c",
+    "live_sort": 64,
+    "live_name": "נשים בתנ\"ך"
+   },
+   {
+    "old_title": "שמחה",
+    "expected_sort": 65,
+    "id": "167f01f5-534a-45a7-b448-6dffc0d59fcb",
+    "live_sort": 65,
+    "live_name": "שמחה"
+   },
+   {
+    "old_title": "שמיטה",
+    "expected_sort": 66,
+    "id": "0542027a-c542-401b-93de-24af019ed981",
+    "live_sort": 66,
+    "live_name": "שמיטה"
+   },
+   {
+    "old_title": "הכניסה לארץ",
+    "expected_sort": 67,
+    "id": "17e5f023-d5aa-4b14-864a-02ed2974073e",
+    "live_sort": 67,
+    "live_name": "הכניסה לארץ"
+   },
+   {
+    "old_title": "האבות",
+    "expected_sort": 68,
+    "id": "66085fa8-4355-4bd2-94b4-db1899d365a0",
+    "live_sort": 68,
+    "live_name": "האבות"
+   },
+   {
+    "old_title": "התשובה",
+    "expected_sort": 69,
+    "id": null,
+    "live_sort": null,
+    "live_name": null
+   },
+   {
+    "old_title": "יבום",
+    "expected_sort": 70,
+    "id": "4967bf41-d734-44ea-8651-e65d1618c4c8",
+    "live_sort": 70,
+    "live_name": "יבום"
+   },
+   {
+    "old_title": "תפילה",
+    "expected_sort": 71,
+    "id": "8cd49e77-112f-423c-b625-65e26b7bcacc",
+    "live_sort": 71,
+    "live_name": "תפילה"
+   },
+   {
+    "old_title": "ישעיהו",
+    "expected_sort": 72,
+    "id": "e06e2901-c18e-4476-a448-faaedb92bc30",
+    "live_sort": 72,
+    "live_name": "ישעיהו"
+   },
+   {
+    "old_title": "מרגלים",
+    "expected_sort": 73,
+    "id": "ce2b2831-c566-4077-be2b-8bb411b9b0d0",
+    "live_sort": 73,
+    "live_name": "מרגלים"
+   },
+   {
+    "old_title": "הנביא והמלך",
+    "expected_sort": 74,
+    "id": "f94c8d45-62c1-4728-8bd4-66d074ee026c",
+    "live_sort": 74,
+    "live_name": "הנביא והמלך"
+   },
+   {
+    "old_title": "יום כיפור",
+    "expected_sort": 75,
+    "id": "b13e3bf6-7592-4e93-b346-014598c27d50",
+    "live_sort": 75,
+    "live_name": "יום כיפור"
+   },
+   {
+    "old_title": "מאמרים קצרים",
+    "expected_sort": 76,
+    "id": "37d3754a-a3df-42d0-8235-7ebfd3ca521f",
+    "live_sort": 76,
+    "live_name": "מאמרים קצרים"
+   },
+   {
+    "old_title": "קרבן שלמים",
+    "expected_sort": 77,
+    "id": "a4c15894-c6a1-4d2b-b7e0-e583b4c4dd12",
+    "live_sort": 77,
+    "live_name": "קרבן שלמים"
+   },
+   {
+    "old_title": "יובל",
+    "expected_sort": 78,
+    "id": "80ee605a-c019-4503-a825-d66e8842810e",
+    "live_sort": 78,
+    "live_name": "יובל"
+   },
+   {
+    "old_title": "ירמיהו",
+    "expected_sort": 79,
+    "id": "9f52fca3-a7c2-40b1-b576-47328cec54cc",
+    "live_sort": 79,
+    "live_name": "ירמיהו"
+   },
+   {
+    "old_title": "יג מידות הרחמים",
+    "expected_sort": 80,
+    "id": "de8b321f-e354-4b4a-b4af-c15ef68865b7",
+    "live_sort": 80,
+    "live_name": "יג מידות הרחמים"
+   },
+   {
+    "old_title": "נסים",
+    "expected_sort": 81,
+    "id": null,
+    "live_sort": null,
+    "live_name": null
+   },
+   {
+    "old_title": "צומות",
+    "expected_sort": 82,
+    "id": "e85dd1a5-f899-4be5-bdfd-b1c4d65d1c33",
+    "live_sort": 82,
+    "live_name": "צומות"
+   },
+   {
+    "old_title": "יהודה",
+    "expected_sort": 83,
+    "id": "6425f994-b58b-4c8a-96fe-3baba83fc4f2",
+    "live_sort": 83,
+    "live_name": "יהודה"
+   },
+   {
+    "old_title": "דניאל",
+    "expected_sort": 84,
+    "id": "138d2cbd-e772-4639-ac96-4e656d21dc93",
+    "live_sort": 84,
+    "live_name": "דניאל"
+   },
+   {
+    "old_title": "יתרו והקיני",
+    "expected_sort": 85,
+    "id": "db17c8bc-3801-4223-843c-fec88e26ca74",
+    "live_sort": 85,
+    "live_name": "יתרו והקיני"
+   },
+   {
+    "old_title": "נבואות הקץ",
+    "expected_sort": 86,
+    "id": "b22f843b-18ee-44c7-b6e6-d7528f1d535a",
+    "live_sort": 86,
+    "live_name": "נבואות הקץ"
+   },
+   {
+    "old_title": "יאשיהו",
+    "expected_sort": 87,
+    "id": "353e8877-e1bd-4b56-9c46-86019fc78cda",
+    "live_sort": 87,
+    "live_name": "יאשיהו"
+   },
+   {
+    "old_title": "ניסים",
+    "expected_sort": 88,
+    "id": "b5ddc44d-b351-4ddb-b445-e235ba5c097c",
+    "live_sort": 88,
+    "live_name": "ניסים"
+   },
+   {
+    "old_title": "ערי המקלט",
+    "expected_sort": 89,
+    "id": "f9a7e705-13ef-4216-b3dc-616e3f179424",
+    "live_sort": 89,
+    "live_name": "ערי המקלט"
+   },
+   {
+    "old_title": "חלום",
+    "expected_sort": 90,
+    "id": "c7d895a3-32e7-4e35-8173-92dbd27e5219",
+    "live_sort": 90,
+    "live_name": "חלום"
+   },
+   {
+    "old_title": "שכר ועונש",
+    "expected_sort": 91,
+    "id": "d139dbe5-edd7-4139-9960-064360da7b9d",
+    "live_sort": 91,
+    "live_name": "שכר ועונש"
+   },
+   {
+    "old_title": "קרבן תמיד",
+    "expected_sort": 92,
+    "id": "db342ef9-d31b-473d-8f01-90e96d9d10c7",
+    "live_sort": 92,
+    "live_name": "קרבן תמיד"
+   },
+   {
+    "old_title": "ראש השנה",
+    "expected_sort": 93,
+    "id": "55ec8ff5-e808-47cc-90ff-ed426bb0942f",
+    "live_sort": 93,
+    "live_name": "ראש השנה"
+   },
+   {
+    "old_title": "ספירת העומר",
+    "expected_sort": 94,
+    "id": "fbb59594-c8a0-4282-b1f3-6474cd65bf6a",
+    "live_sort": 94,
+    "live_name": "ספירת העומר"
+   },
+   {
+    "old_title": "חגים",
+    "expected_sort": 95,
+    "id": "b129b4bc-ff76-4821-90b5-7d926e5a2130",
+    "live_sort": 95,
+    "live_name": "חגים"
+   },
+   {
+    "old_title": "ביטחון ב-ד'",
+    "expected_sort": 96,
+    "id": "655ed7dd-dd71-415d-af5b-d7a5139f4024",
+    "live_sort": 96,
+    "live_name": "ביטחון ב-ד'"
+   },
+   {
+    "old_title": "בכורות",
+    "expected_sort": 97,
+    "id": "8d2a70eb-cde7-4b52-835e-7add407c5291",
+    "live_sort": 97,
+    "live_name": "בכורות"
+   },
+   {
+    "old_title": "יום העצמאות",
+    "expected_sort": 98,
+    "id": "671eb0e7-9a94-4be7-ac61-cfcb0018b3ba",
+    "live_sort": 98,
+    "live_name": "יום העצמאות"
+   },
+   {
+    "old_title": "שבט לוי",
+    "expected_sort": 99,
+    "id": "17013688-0311-41f3-8ea6-90e0c626e696",
+    "live_sort": 99,
+    "live_name": "שבט לוי"
+   },
+   {
+    "old_title": "עבודה זרה",
+    "expected_sort": 100,
+    "id": "2e106448-741b-4e7e-aac8-05b160d9c64b",
+    "live_sort": 100,
+    "live_name": "עבודה זרה"
+   },
+   {
+    "old_title": "מנשה",
+    "expected_sort": 101,
+    "id": "dd95f6d0-074b-4c03-bf8b-f9880cec71ab",
+    "live_sort": 101,
+    "live_name": "מנשה"
+   },
+   {
+    "old_title": "בני גד ובני ראובן",
+    "expected_sort": 102,
+    "id": "11682377-ce55-4ce3-8813-b6e125edf8f9",
+    "live_sort": 102,
+    "live_name": "בני גד ובני ראובן"
+   },
+   {
+    "old_title": "עקדת יצחק",
+    "expected_sort": 103,
+    "id": "33d7c5d4-a823-404a-a813-71438c6a1a39",
+    "live_sort": 103,
+    "live_name": "עקדת יצחק"
+   },
+   {
+    "old_title": "משיח",
+    "expected_sort": 104,
+    "id": "eb752356-f9f6-4205-bde1-4a1eb34efaaf",
+    "live_sort": 104,
+    "live_name": "משיח"
+   },
+   {
+    "old_title": "קרבן עולה",
+    "expected_sort": 105,
+    "id": "f4ec8c43-46bb-4b50-b555-0dd595db4058",
+    "live_sort": 105,
+    "live_name": "קרבן עולה"
+   },
+   {
+    "old_title": "עשיו",
+    "expected_sort": 106,
+    "id": "579e1c00-9f80-487f-a581-0976a6b5de4d",
+    "live_sort": 106,
+    "live_name": "עשיו"
+   },
+   {
+    "old_title": "נישואים",
+    "expected_sort": 107,
+    "id": "54431b57-1b16-4458-ad2c-b857e6b9d1a3",
+    "live_sort": 107,
+    "live_name": "נישואים"
+   },
+   {
+    "old_title": "יופי",
+    "expected_sort": 108,
+    "id": "7d43a544-a837-47ef-a308-4be3f7dc7859",
+    "live_sort": 108,
+    "live_name": "יופי"
+   },
+   {
+    "old_title": "ירבעם",
+    "expected_sort": 109,
+    "id": "68ab01b0-ce1c-4f83-9ca0-210e44493a73",
+    "live_sort": 109,
+    "live_name": "ירבעם"
+   },
+   {
+    "old_title": "מעמד הר סיני",
+    "expected_sort": 110,
+    "id": "79cf7ecb-f935-421c-8594-b5c00a9f9cde",
+    "live_sort": 110,
+    "live_name": "מעמד הר סיני"
+   },
+   {
+    "old_title": "רש\"י",
+    "expected_sort": 111,
+    "id": "ad014991-7616-48d2-85cf-a787974ed667",
+    "live_sort": 111,
+    "live_name": "רש\"י"
+   },
+   {
+    "old_title": "ארבע מלכויות",
+    "expected_sort": 112,
+    "id": "d68fefb7-7711-4eb5-ad7e-d0bc59c62a5a",
+    "live_sort": 112,
+    "live_name": "ארבע מלכויות"
+   },
+   {
+    "old_title": "מנייני השנים בתנ\"ך",
+    "expected_sort": 113,
+    "id": "c21ee321-de0d-4d87-92e2-67fa091985a8",
+    "live_sort": 113,
+    "live_name": "מנייני השנים בתנ\"ך"
+   },
+   {
+    "old_title": "עזרא הסופר",
+    "expected_sort": 114,
+    "id": "b37f3f93-a8aa-47df-aa04-119daf581fc0",
+    "live_sort": 114,
+    "live_name": "עזרא הסופר"
+   },
+   {
+    "old_title": "חנ",
+    "expected_sort": 115,
+    "id": null,
+    "live_sort": null,
+    "live_name": null
+   },
+   {
+    "old_title": "גן עדן",
+    "expected_sort": 116,
+    "id": "5040f749-cd5e-4dbd-9736-b60775586f22",
+    "live_sort": 116,
+    "live_name": "גן עדן"
+   },
+   {
+    "old_title": "קרבן מנחה",
+    "expected_sort": 117,
+    "id": "0dd1f3d1-da60-4f6b-ba59-53706ffc8f8d",
+    "live_sort": 117,
+    "live_name": "קרבן מנחה"
+   },
+   {
+    "old_title": "קרבן חטאת",
+    "expected_sort": 118,
+    "id": "2281fe05-3c36-4b3d-a87c-9ce3b0597091",
+    "live_sort": 118,
+    "live_name": "קרבן חטאת"
+   },
+   {
+    "old_title": "חירם",
+    "expected_sort": 119,
+    "id": "f8ba70e2-ae2a-4000-ad3d-177114649bf7",
+    "live_sort": 119,
+    "live_name": "חירם"
+   },
+   {
+    "old_title": "יותם",
+    "expected_sort": 120,
+    "id": "08c3b030-0c69-40be-b47e-318f4d57842d",
+    "live_sort": 120,
+    "live_name": "יותם"
+   },
+   {
+    "old_title": "אחז",
+    "expected_sort": 121,
+    "id": "487418c9-e243-445b-bd5e-8e406d54f90d",
+    "live_sort": 121,
+    "live_name": "אחז"
+   },
+   {
+    "old_title": "כורש",
+    "expected_sort": 122,
+    "id": "f970e21e-14b4-4211-af96-27210a8843fa",
+    "live_sort": 122,
+    "live_name": "כורש"
+   },
+   {
+    "old_title": "חולדה הנביאה",
+    "expected_sort": 123,
+    "id": "1bf5239a-de26-4610-9700-fb5bc8930921",
+    "live_sort": 123,
+    "live_name": "חולדה הנביאה"
+   },
+   {
+    "old_title": "אחאב",
+    "expected_sort": 124,
+    "id": "87a5cdfc-a033-4ff4-bc28-c5401b2cc748",
+    "live_sort": 124,
+    "live_name": "אחאב"
+   },
+   {
+    "old_title": "בית עלי",
+    "expected_sort": 125,
+    "id": "21bc0ef2-1fcc-479a-b707-42905410c7fa",
+    "live_sort": 125,
+    "live_name": "בית עלי"
+   },
+   {
+    "old_title": "סתירות בתנ\"ך",
+    "expected_sort": 126,
+    "id": "d7c37370-2e4e-40b4-9d94-058d8c616195",
+    "live_sort": 126,
+    "live_name": "סתירות בתנ\"ך"
+   },
+   {
+    "old_title": "קיבוץ גלויות",
+    "expected_sort": 127,
+    "id": "8ccd8629-5d2b-4627-bd8d-211525c752fb",
+    "live_sort": 127,
+    "live_name": "קיבוץ גלויות"
+   }
+  ]
+ }
+}

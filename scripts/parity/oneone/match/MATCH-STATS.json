@@ -1,0 +1,139 @@
+{
+  "generated_by": "global_match.py",
+  "tree_stats": {
+    "total_nodes": 1003,
+    "by_source": {
+      "sidebar": 894,
+      "teachers_by_book": 109
+    },
+    "matched": 908,
+    "by_method": {
+      "unmatched": 95,
+      "exact_global_picked": 4,
+      "alias_of_parent": 44,
+      "exact_global_unique": 34,
+      "exact_in_parent": 811,
+      "fuzzy_in_parent": 14,
+      "exact_in_subtree": 1
+    },
+    "by_kind": {
+      "category": 13,
+      "alias": 44,
+      "collection": 897,
+      "empty": 4,
+      "book": 38,
+      "event_series": 7
+    },
+    "unmatched_by_kind": {
+      "category": 3,
+      "empty": 2,
+      "collection": 89,
+      "event_series": 1
+    },
+    "match_rate": 0.9053,
+    "match_rate_core": 0.9069
+  },
+  "source_stats": {
+    "listings": {
+      "pages": 1320,
+      "pages_with_mapped_series": 1273,
+      "items": 17816,
+      "matched": 16942,
+      "rate": 0.9509,
+      "methods": {
+        "title_rabbi": 4381,
+        "title_only": 47,
+        "media_basename": 30,
+        "media_path": 10124,
+        "unmatched": 862,
+        "title_rabbi_dup_after_media_amb": 202,
+        "title_rabbi_oneside": 74,
+        "media_path_dup": 1368,
+        "title_rabbi_dup": 651,
+        "fuzzy_title": 4,
+        "title_rabbi_after_media_amb": 6,
+        "title_only_dup": 30,
+        "ambiguous_media_path": 11,
+        "title_rabbi_oneside_dup": 8,
+        "title_only_dup_after_media_amb": 2,
+        "ambiguous_title_only": 1,
+        "media_basename_dup": 13,
+        "title_rabbi_oneside_after_media_amb": 2
+      },
+      "sub_series_rows": 746,
+      "sub_series_matched": 717,
+      "new_extras_total": 2086,
+      "unresolved_pages_with_items": 41
+    },
+    "rabbi_pages": {
+      "pages": 154,
+      "rabbis_mapped": 154,
+      "items": 719,
+      "matched": 546,
+      "rate": 0.7594,
+      "methods": {
+        "media_path_dup": 133,
+        "media_path": 216,
+        "title_rabbi": 112,
+        "title_rabbi_oneside": 17,
+        "title_rabbi_dup": 35,
+        "title_rabbi_dup_after_media_amb": 27,
+        "unmatched": 172,
+        "fuzzy_title": 2,
+        "media_basename": 2,
+        "fuzzy_title_dup": 1,
+        "ambiguous_media_path": 1,
+        "title_rabbi_oneside_dup": 1
+      },
+      "sub_series_rows": 420,
+      "sub_series_matched": 406
+    },
+    "topic_pages": {
+      "pages": 128,
+      "topics_mapped": 119,
+      "items": 1309,
+      "matched": 1281,
+      "rate": 0.9786,
+      "methods": {
+        "media_path_dup": 335,
+        "media_path": 372,
+        "title_rabbi_dup_after_media_amb": 45,
+        "title_rabbi": 305,
+        "unmatched": 27,
+        "ambiguous_media_path": 1,
+        "title_rabbi_dup": 188,
+        "title_only": 22,
+        "title_rabbi_oneside": 14
+      },
+      "sub_series_rows": 178,
+      "sub_series_matched": 175,
+      "new_extras_total": 274
+    },
+    "teachers": {
+      "pages": 228,
+      "pages_with_mapped_series": 127,
+      "items": 2559,
+      "matched": 2472,
+      "rate": 0.966,
+      "methods": {
+        "media_path_dup": 462,
+        "media_path": 1332,
+        "title_rabbi": 331,
+        "unmatched": 53,
+        "title_rabbi_dup_after_media_amb": 166,
+        "title_rabbi_dup": 142,
+        "title_rabbi_oneside": 2,
+        "ambiguous_title_only": 27,
+        "ambiguous_media_path": 7,
+        "fuzzy_title": 1,
+        "title_only": 36
+      },
+      "sub_series_rows": 313,
+      "sub_series_matched": 302,
+      "new_extras_total": 108
+    }
+  },
+  "grand_total_items": 22403,
+  "grand_total_matched": 21241,
+  "grand_rate": 0.9481
+}

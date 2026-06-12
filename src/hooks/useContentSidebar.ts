@@ -62,7 +62,7 @@ export function useContentSidebar() {
         .filter((b) => b.parent_id === ROOT_IDS.torah)
         .map((b) => b.id);
 
-      // §2.1: band-driven children — only sort_order 1..99 appear in sidebar.
+      // §2.1: band-driven children — only sort_order 1..999 appear in sidebar (תהלים has 150 real children).
       // §0.3: dual-audience filter — exclude teacher-only, keep general+teachers dual-tagged.
       const { data: torahChildren } = await supabase
         .from("series")
@@ -70,7 +70,7 @@ export function useContentSidebar() {
         .in("parent_id", torahBookIds)
         .in("status", ["active", "published"])
         .gte("sort_order", 1)
-        .lte("sort_order", 99)
+        .lte("sort_order", 999)
         .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order")
         .order("title");
@@ -86,13 +86,13 @@ export function useContentSidebar() {
         .in("parent_id", nkBookIds)
         .in("status", ["active", "published"])
         .gte("sort_order", 1)
-        .lte("sort_order", 99)
+        .lte("sort_order", 999)
         .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order")
         .order("title");
 
       // Fetch children of expandable sections (flat sections: direct children are the leaf series)
-      // §2.1: band-driven — sidebar shows only sort_order 1..99 per parent, ordered by sort_order ASC.
+      // §2.1: band-driven — sidebar shows only sort_order 1..999 per parent, ordered by sort_order ASC.
       // §0.3: dual-audience filter — exclude teacher-only rows (but keep dual-tagged general+teachers).
       const flatExpandableIds = [
         ROOT_IDS.generalTopics,
@@ -107,9 +107,9 @@ export function useContentSidebar() {
         .select("id, title, parent_id, sort_order")
         .in("parent_id", flatExpandableIds)
         .in("status", ["active", "published"])
-        // §2.1: only sidebar-band items (sort_order 1-99). 0/NULL = page-only. >=100 = parked.
+        // §2.1: only sidebar-band items (sort_order 1-999). 0/NULL = page-only. >=1000 = parked.
         .gte("sort_order", 1)
-        .lte("sort_order", 99)
+        .lte("sort_order", 999)
         // §0.3: exclude teacher-only series from public tree
         .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order")
@@ -220,7 +220,7 @@ export function useContentSidebar() {
       ];
 
       // Build expandable extra sections.
-      // §2.1: sortByCustomOrder is retired — DB returns sort_order-ordered results (band 1-99).
+      // §2.1: sortByCustomOrder is retired — DB returns sort_order-ordered results (band 1-999).
       // The order from the DB query (sort_order ASC NULLS LAST, title) is the canonical order.
       const getChildren = (parentId: string) =>
         (expandableChildren || []).filter((c) => c.parent_id === parentId);
