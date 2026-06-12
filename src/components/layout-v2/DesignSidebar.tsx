@@ -58,6 +58,9 @@ import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
 // Books whose old-site sidebar had NO "כל השיעורים" alias row at all
 const BOOKS_WITHOUT_ALIAS = new Set(["איוב", "שיר השירים", "אסתר"]);
 
+// Nested section children that DID have a "כל ..." alias row on the old site
+const NESTED_WITH_ALIAS = new Set(["הפטרות המועדים"]);
+
 function bookAliasLabel(catTitle: string, bookTitle: string): string {
   if (catTitle === "תורה") return `כל השיעורים בחומש ${bookTitle}`;
   if (bookTitle === "איכה" || bookTitle === "קהלת") return `כל השיעורים במגילת ${bookTitle}`;
@@ -1045,6 +1048,7 @@ function NestedSectionChild({
       </button>
       {open && (
         <div style={{ paddingInlineStart: "0.7rem" }}>
+          {NESTED_WITH_ALIAS.has(child.title) && (
           <button
             onClick={() => onNavigate(`/series/${child.id}`)}
             style={{
@@ -1064,6 +1068,7 @@ function NestedSectionChild({
           >
             כל {child.title}
           </button>
+          )}
           {(child.children || [])
             .filter((g) => matchesSearch(g.title))
             .map((g) => (

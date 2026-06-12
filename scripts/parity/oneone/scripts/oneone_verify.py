@@ -487,8 +487,15 @@ def sim_sidebar():
     sec_grand = children_of(sec_child_ids) if sec_child_ids else []
 
     def get_children(pid):
-        return [dict(c, children=[g for g in sec_grand if g["parent_id"] == c["id"]])
-                for c in expandable_children if c["parent_id"] == pid]
+        out = []
+        for c in expandable_children:
+            if c["parent_id"] != pid: continue
+            gs = [g for g in sec_grand if g["parent_id"] == c["id"]]
+            # NestedSectionChild renders a "כל <child>" alias row above the grandchildren
+            if gs:
+                gs = [{"id": c["id"], "title": f"כל {c['title']}", "parent_id": c["id"]}] + gs
+            out.append(dict(c, children=gs))
+        return out
 
     extra_sections = [
         {"id": ROOT_IDS["howToLearn"], "title": 'איך לומדים תנ"ך', "children": get_children(ROOT_IDS["howToLearn"])},

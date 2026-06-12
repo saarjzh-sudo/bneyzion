@@ -1,5 +1,5 @@
 # VERIFY — oneone verification report
-*Generated 2026-06-12 11:51 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
+*Generated 2026-06-12 11:53 by oneone_verify.py — read-only anon-REST simulation of the CURRENT working-tree UI hooks against the live DB.*
 
 REST calls: 3040 (cache hits 73, errors 0)
 
@@ -7,7 +7,7 @@ REST calls: 3040 (cache hits 73, errors 0)
 
 | Section | Pass | Total | Pass rate |
 |---|---|---|---|
-| Sidebar (top categories) | 12 | 13 | 92.3% |
+| Sidebar (top categories) | 10 | 13 | 76.9% |
 | Listing pages | 795 | 1273 | 62.5% |
 | Rabbi pages | 128 | 154 | 83.1% |
 | Topics sidebar | PASS | 1 | — |
@@ -40,14 +40,14 @@ REST calls: 3040 (cache hits 73, errors 0)
 - books order ok: True; missing books: []; extra: []
 - book-children failing: 0/11
 
-### ✅ נושאים כלליים בתנ"ך (section)
-- old=16 (incl. alias) order_ok=True missing=[] extra=[]
+### ❌ נושאים כלליים בתנ"ך (section)
+- old=16 (incl. alias) order_ok=True missing=[] extra=['כל ארץ ישראל']
 
-### ✅ מועדים (section)
-- old=16 (incl. alias) order_ok=True missing=[] extra=[]
+### ❌ מועדים (section)
+- old=16 (incl. alias) order_ok=True missing=[] extra=['כל יום הכיפורים', 'כל סוכות']
 
 ### ❌ הפטרות (section)
-- old=7 (incl. alias) order_ok=True missing=['כל הפטרות המועדים'] extra=[]
+- old=7 (incl. alias) order_ok=True missing=[] extra=['כל הפטרות בראשית', 'כל הפטרות שמות', 'כל הפטרות ויקרא', 'כל הפטרות במדבר', 'כל הפטרות דברים']
 
 ### ✅ ימי עיון בתנ"ך (section)
 - old=8 (incl. alias) order_ok=True missing=[] extra=[]
@@ -300,19 +300,19 @@ rabbi_page_items table: available; used for 133 rabbis (rest = fallback owned-se
 
 - Teacher-only items in PUBLIC simulations: listings lessons=0, topic lessons=0, sidebar children=0 (rabbi-page lessons=192 — intentional per code comment, info only)
 - Draft items in public sidebar: 0
-- Popup sample (60 lessons): content-null=26, fully-empty (no content+no media)=1 — known-debt, not FAIL
+- Popup sample (60 lessons): content-null=30, fully-empty (no content+no media)=1 — known-debt, not FAIL
 | Section | Sampled | content NULL | empty popup |
 |---|---|---|---|
-| איך-לומדים-תנך | 6 | 1 | 0 |
+| איך-לומדים-תנך | 6 | 4 | 0 |
 | הפטרות | 6 | 1 | 0 |
 | ימי-עיון-בתנך | 6 | 6 | 0 |
 | כלי-עזר-טבלאות-זמני-המאורעות-ומפות | 6 | 2 | 0 |
-| כתובים | 6 | 2 | 0 |
+| כתובים | 6 | 6 | 0 |
 | ליווי-תתים | 6 | 2 | 0 |
-| מועדים | 6 | 1 | 0 |
-| נביאים | 6 | 6 | 1 |
+| מועדים | 6 | 0 | 0 |
+| נביאים | 6 | 5 | 1 |
 | נושאים-כלליים-בתנך | 6 | 3 | 0 |
-| תורה | 6 | 3 | 0 |
+| תורה | 6 | 2 | 0 |
 
 ## Harness notes / limitations
 
