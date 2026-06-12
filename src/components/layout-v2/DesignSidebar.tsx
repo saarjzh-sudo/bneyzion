@@ -1062,7 +1062,7 @@ function NestedSectionChild({
               marginBottom: "0.1rem",
             }}
           >
-            לעמוד {child.title}
+            כל {child.title}
           </button>
           {(child.children || [])
             .filter((g) => matchesSearch(g.title))

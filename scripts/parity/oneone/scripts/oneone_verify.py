@@ -529,7 +529,8 @@ def render_book_children(cat_title, book):
     """What DesignSidebar actually renders inside an open book accordion."""
     rows = []
     if len(book["children"]) > 1:
-        rows.append({"title": book_alias_label(cat_title, book["title"]), "kind": "alias"})
+        if book["title"] not in ("איוב", "שיר השירים", "אסתר"):
+            rows.append({"title": book_alias_label(cat_title, book["title"]), "kind": "alias"})
     for c in book["children"]:
         rows.append({"title": c["title"], "kind": "child", "id": c.get("id"),
                      "status": c.get("status"), "audience_tags": c.get("audience_tags")})
@@ -639,7 +640,8 @@ def run_sidebar(results):
         else:
             # link-only top rows (ניווט / פרשת השבוע / פרוייקט התנ"ך המוקלט)
             nk = normalize_he(name)
-            found = any(normalize_he(qk).startswith(nk[:12]) or nk.startswith(normalize_he(qk)[:12]) for qk in QUICK_LINKS)
+            _scan = list(QUICK_LINKS) + [x["title"] for x in sim["extraSections"]]
+            found = any(normalize_he(qk).startswith(nk[:12]) or nk.startswith(normalize_he(qk)[:12]) for qk in _scan)
             entry.update({"kind": "static_link", "rendered_as_quick_link": found, "pass": found})
         per_cat.append(entry)
     n_pass = sum(1 for e in per_cat if e.get("pass"))
