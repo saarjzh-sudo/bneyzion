@@ -22,6 +22,9 @@ export function useLessonsBySeries(seriesId: string | undefined) {
           .select("*, rabbis!lessons_rabbi_id_fkey(name)")
           .eq("series_id", seriesId)
           .eq("status", "published")
+          // §0.3 dual-audience: exclude teacher-only lessons from public series pages.
+          // keep: audience_tags contains 'general' OR does NOT contain 'teachers'
+          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
           .order("sort_order", { ascending: true, nullsFirst: false })
           .order("bible_chapter", { ascending: true, nullsFirst: false })
           .order("title", { ascending: true })

@@ -191,10 +191,25 @@ export default function TeacherSidebar({
     textAlign: "right" as const,
   });
 
+  // ─── Alias-label helpers (old-site parity) ───────────────────────────────
+  // Old site used "כל התכנים בחומש X" for Torah, "כל התכנים בספר X" for others.
+  // Special case: מלכים א uses "דפי עבודה ומבחנים - מלכים א".
+  const TORAH_BOOKS = new Set(["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]);
+
+  const allContentLabel = (bookTitle: string): string => {
+    if (TORAH_BOOKS.has(bookTitle)) return `כל התכנים בחומש ${bookTitle}`;
+    return `כל התכנים בספר ${bookTitle}`;
+  };
+
+  const worksheetLabel = (bookTitle: string): string => {
+    if (bookTitle === "מלכים א") return `דפי עבודה ומבחנים - מלכים א`;
+    return `דפי עבודה - ${bookTitle}`;
+  };
+
   // ─── Render books accordion (shared between torah/neviim/ketuvim) ──────────
   // Per Saar: under each book show EXACTLY:
-  //   1. "כל התכנים ב<book>" → /teachers/book/:book
-  //   2. "דפי עבודה - <book>" → /teachers/worksheets/:book
+  //   1. "כל התכנים בחומש/בספר <book>" → /teachers/book/:book
+  //   2. "דפי עבודה - <book>" (or "דפי עבודה ומבחנים - מלכים א") → /teachers/worksheets/:book
   //   3. Parshiot (Torah only, derived from PARSHIOT_BY_BOOK) — each → /teachers/parasha/:book/:parasha
   // NO flat series list in sidebar.
   // Neviim + Ketuvim: only items 1 + 2 (no parshiot).
@@ -264,7 +279,7 @@ export default function TeacherSidebar({
 
                   {isBookOpen && (
                     <div style={{ paddingInlineStart: "0.75rem" }}>
-                      {/* 1 — "כל התכנים ב<book>" → /teachers/book/:book */}
+                      {/* 1 — "כל התכנים בחומש/בספר <book>" → /teachers/book/:book */}
                       <button
                         onClick={() => {
                           onDrawerClose?.();
@@ -288,10 +303,10 @@ export default function TeacherSidebar({
                           textAlign: "right" as const,
                         }}
                       >
-                        כל התכנים ב{book.title}
+                        {allContentLabel(book.title)}
                       </button>
 
-                      {/* 2 — "דפי עבודה - <book>" → /teachers/worksheets/:book */}
+                      {/* 2 — "דפי עבודה - <book>" (or ומבחנים for מלכים א) → /teachers/worksheets/:book */}
                       <button
                         onClick={() => {
                           onDrawerClose?.();
@@ -317,7 +332,7 @@ export default function TeacherSidebar({
                         onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.07)"; }}
                         onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
                       >
-                        דפי עבודה — {book.title}
+                        {worksheetLabel(book.title)}
                       </button>
 
                       {/* 3 — Parshiot (Torah only) */}

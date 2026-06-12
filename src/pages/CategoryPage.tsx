@@ -101,6 +101,7 @@ function useSeriesLessons(seriesId: string) {
       // R-CAT4 fix: add dedup to avoid count mismatch between CategoryPage and SeriesPage.
       // §0.1 order: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC
       // §3: raise limit 200→1000 (כתובים root needs 280+, תהילים needs 151 series)
+      // §0.3 dual-audience: exclude teacher-only lessons from public series pages.
       const { data, error } = await supabase
         .from("lessons")
         .select(
@@ -108,6 +109,7 @@ function useSeriesLessons(seriesId: string) {
         )
         .eq("series_id", seriesId)
         .eq("status", "published")
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("bible_chapter", { ascending: true, nullsFirst: false })
         .order("title", { ascending: true })
@@ -134,6 +136,7 @@ function useDirectLessons(nodeId: string | undefined) {
     queryFn: async () => {
       // §0.1 order: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC
       // §3: lift cap from 50 → 1000 (book nodes receive שו"ת and direct lessons beyond 50)
+      // §0.3 dual-audience: exclude teacher-only lessons from public category pages.
       const { data, error } = await supabase
         .from("lessons")
         .select(
@@ -141,6 +144,7 @@ function useDirectLessons(nodeId: string | undefined) {
         )
         .eq("series_id", nodeId!)
         .eq("status", "published")
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("bible_chapter", { ascending: true, nullsFirst: false })
         .order("title", { ascending: true })

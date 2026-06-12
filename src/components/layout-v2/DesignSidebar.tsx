@@ -46,6 +46,23 @@ import { useTopicsSidebar } from "@/hooks/useTopicsSidebar";
 import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
 
 // ────────────────────────────────────────────────────────────────────────
+// bookAliasLabel — produce the old-site-exact "כל השיעורים ב..." label per book.
+// Rules (scraped from old_sidebar_tree.json):
+//   Torah chumashim → "כל השיעורים בחומש X"
+//   Megillot (איכה, קהלת) → "כל השיעורים במגילת X"
+//   Esther → "כל השיעורים על מגילת X"
+//   Daniel → "כל התכנים בספר X"
+//   Ezra+Nehemia (combined) → "כל עזרא ונחמיה"
+//   Everything else → "כל השיעורים בספר X"
+function bookAliasLabel(catTitle: string, bookTitle: string): string {
+  if (catTitle === "תורה") return `כל השיעורים בחומש ${bookTitle}`;
+  if (bookTitle === "איכה" || bookTitle === "קהלת") return `כל השיעורים במגילת ${bookTitle}`;
+  if (bookTitle === "אסתר") return `כל השיעורים על מגילת ${bookTitle}`;
+  if (bookTitle === "דניאל") return `כל התכנים בספר ${bookTitle}`;
+  if (bookTitle === "עזרא ונחמיה") return `כל עזרא ונחמיה`;
+  return `כל השיעורים בספר ${bookTitle}`;
+}
+
 const STORAGE_KEY = "bnz.sidebar.collapsed";
 const SIDEBAR_W_EXPANDED = 290;
 const SIDEBAR_W_COLLAPSED = 68;
@@ -866,7 +883,7 @@ function ContentTree({
                               paddingBottom: "0.2rem",
                             }}
                           >
-                            {/* "כל השיעורים בספר/בחומש" — shown only when >1 child */}
+                            {/* "כל השיעורים בספר/בחומש/במגילת" — shown only when >1 child */}
                             {book.children.length > 1 && (
                               <button
                                 onClick={() => onNavigate(`/category/${book.id}`)}
@@ -891,7 +908,7 @@ function ContentTree({
                                   (e.currentTarget.style.background = "rgba(196,162,101,0.10)")
                                 }
                               >
-                                כל השיעורים {cat.title === "תורה" ? "בחומש" : "בספר"} {book.title}
+                                {bookAliasLabel(cat.title, book.title)}
                               </button>
                             )}
 

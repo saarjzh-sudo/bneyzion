@@ -9,12 +9,21 @@ old-site ground truth scraped into scripts/parity/oneone/old_*.json.
 
 Sections:
   1. sidebar   — useContentSidebar/useTopicsSidebar simulation vs old_sidebar_tree.json
+                 (r2: band cutoff 1..999, commit 7420b265)
   2. listings  — per old listing page: /series/:id semantics (useSeriesChildren +
-                 useLessonsBySeries) vs old_listings_*.json (~1,300 pages)
+                 useLessonsBySeries) vs old_listings_*.json (~1,300 pages).
+                 r2: category/book nodes simulated via CategoryPage (useSeriesForNode
+                 canonical series + direct + descendant roll-up lessons, commit 4a1c3691)
   3. rabbis    — rabbi_page_items (fallback: useRabbiSeries+useRabbiLessons) vs
                  old_rabbi_pages.json (154 rabbis)
   4. topics    — topics sidebar order + per-topic page (useTopicLessons) vs old 127
-  5. teachers  — content-type pages (22), creators (31), by-book tree
+  5. teachers  — content-type pages (22, teacher_listing_items, NO page fallback),
+                 creators (31, rabbi_page_items + lessons-by-rabbi fallback),
+                 by-book tree (tree-driven useTeacherSidebar)
+
+r2 harness fix: rest_get now merges chained order keys into ONE comma-joined `order`
+param (postgrest-js emission). The old multi-param form silently dropped secondary
+sort keys → false order failures.
   6. guards    — teachers-leak / draft-leak / popup-content sampling (60 lessons)
 
 Usage:
@@ -74,6 +83,43 @@ ROOT_IDS = {
 }
 TORAH_BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"]
 TEACHER_KETUVIM_ORDER = ["תהלים", "משלי", "איוב", "שיר השירים", "רות", "איכה", "קהלת", "אסתר", "דניאל", "עזרא", "נחמיה"]
+
+# Fixed 31-creator list — mirrors CREATOR_IDS_ORDERED in useTeacherSidebar.ts (CODE-SPEC §11 CA5/CA6).
+# name (old sidebar label) → rabbi id. Used by the creators sim to resolve the page id
+# exactly like the app does (fixed list, NOT name matching / lesson_count heuristics).
+TEACHER_CREATOR_IDS = {
+    "אוריה כראדי": "a1b2c3d4-1111-4444-aaaa-111111111111",
+    "הרב אורי שטמלר": "e1111111-1111-1111-1111-111111111105",
+    "הרב אשי בלייכר": "167ed180-6ced-45af-b5d7-e97a916fa93a",
+    "הרב בניה כהן": "e1111111-1111-1111-1111-111111111121",
+    "הרב גדי שר שלום": "80fefb33-e324-4eee-9e47-0502724ae149",
+    "הרב דביר אפלבוים": "e1111111-1111-1111-1111-111111111101",
+    "הרב חסדאי בר אור": "1371e495-c30b-44f5-b3d7-8b3d08f4ca75",
+    "הרב ידידיה שילה": "c3d4e5f6-3333-4444-cccc-333333333333",
+    "הרב יהודה בשושה": "7443c208-f2f2-42f5-bf05-af2554855fbd",
+    "הרב יונתן לוי": "356f3470-86cf-4da4-8c34-ba76370ebe4d",
+    "הרב יורם אליהו": "47569464-d3c7-4e9d-93c5-8ceaebdb031f",
+    "הרב יצחק עמראני": "e97e2b67-5f0f-436f-9fc1-54f706a7a20e",
+    "הרב מאיר גרשונזון": "9f357f02-5557-4dba-a941-fdb1ef681f4a",
+    "הרב מאיר הילביץ'": "71aa933c-5548-4ea7-8be0-dfb659202660",
+    "הרב מנחם אליהו": "21815917-0c20-4ad2-b6ab-3943956c9a55",
+    "הרב נחום אריאל": "e1111111-1111-1111-1111-111111111120",
+    "הרב ניסים כהן": "d6666666-6666-6666-6666-666666666666",
+    "הרב עדי איצקוביץ'": "e1111111-1111-1111-1111-111111111102",
+    "הרב עמוס נתנאל": "e1111111-1111-1111-1111-111111111104",
+    "הרב עמירם אלבה": "3da1df9d-4ed5-48ba-9ffa-e3c5271d40e1",
+    "הרב עמנואל בן ארצי": "744da303-22be-4062-a822-4ba8e8f1b02d",
+    "הרב שלמה כץ": "d4e5f6a7-4444-4444-dddd-444444444444",
+    "הרב שמעון לוי והרב נתן מולאיוף": "0ae09e02-2089-4a99-a1d5-8a6b0a503f81",
+    "הרב שמעון שוהם": "d4e5f6a7-6666-6666-ffff-666666666666",
+    "ושננתם - אוצר התורה": "6f4b2572-b019-4832-9547-de7e8bc6d909",
+    "ישקו העדרים": "7fcd7014-5eef-4e9b-b792-e6460d75e720",
+    "מחבר לא ידוע": "d4e5f6a7-5555-5555-eeee-555555555555",
+    "מכון דעת סופרים": "1be980e3-a688-47aa-9eaf-adfa23b105b6",
+    "נתן מארגל": "e1111111-1111-1111-1111-111111111103",
+    "סידור שים שלום": "b2c3d4e5-2222-4444-bbbb-222222222222",
+    "תלמוד תורה מורשה": "b5555555-5555-5555-5555-555555555555",
+}
 
 # ── biblicalOrder.ts replication ──
 TORAH_PARSHIOT = [
@@ -226,8 +272,24 @@ def q(v, safe="(),.*:"):
 
 
 def rest_get(table, params, range_hdr=None):
-    """params: list of (key, value) — value is encoded; key kept raw."""
-    qs = "&".join(f"{k}={q(v)}" for k, v in params)
+    """params: list of (key, value) — value is encoded; key kept raw.
+
+    r2 FIX: supabase-js (postgrest-js) merges chained .order() calls into ONE
+    comma-joined `order` query param. PostgREST honors only a single `order`
+    param per request — repeated `order` params silently drop all but one, so
+    the harness's old multi-param emission dropped the secondary/tertiary sort
+    keys (bible_chapter, title) and produced FALSE order failures wherever ties
+    existed. We now merge exactly like the app client does. (Repeated FILTER
+    params, e.g. sort_order=gte.1&sort_order=lte.999, are valid ANDs — kept.)"""
+    merged, orders = [], []
+    for k, v in params:
+        if k == "order":
+            orders.append(str(v))
+        else:
+            merged.append((k, v))
+    if orders:
+        merged.append(("order", ",".join(orders)))
+    qs = "&".join(f"{k}={q(v)}" for k, v in merged)
     url = f"{SUPABASE_URL}/rest/v1/{table}?{qs}"
     out = _rest_raw("GET", url, range_hdr=range_hdr)
     if isinstance(out, dict):  # PostgREST error object
@@ -371,8 +433,9 @@ def sim_sidebar():
             ("select", "id,title,parent_id,sort_order,status,audience_tags"),
             ("parent_id", f"in.({','.join(parent_ids)})"),
             ("status", "in.(active,published)"),
+            # §2.1 band: 1..999 (was 1..99; raised in commit 7420b265 — תהלים has 150 children)
             ("sort_order", "gte.1"),
-            ("sort_order", "lte.99"),
+            ("sort_order", "lte.999"),
             ("or", PUBLIC_AUD_OR),
             ("order", "sort_order"),
             ("order", "title"),
@@ -384,40 +447,11 @@ def sim_sidebar():
     torah_children = children_of(torah_book_ids)
     nk_children = children_of(nk_book_ids)
 
-    flat_ids = [ROOT_IDS[k] for k in ("generalTopics", "moadim", "haftarot", "tools", "yemeiIyun", "livuyTatim")]
+    # "איך לומדים" is now a flat section like the others (direct band-1..999 children only).
+    # Previous deep-RPC approach fetched all descendants (20+), breaking parity.
+    # Mirrors the updated useContentSidebar.ts (code-round-3).
+    flat_ids = [ROOT_IDS[k] for k in ("howToLearn", "generalTopics", "moadim", "haftarot", "tools", "yemeiIyun", "livuyTatim")]
     expandable_children = children_of(flat_ids)
-
-    # howToLearn deep section
-    desc = rest_rpc("get_series_descendant_ids", {"root_id": ROOT_IDS["howToLearn"]})
-    desc_ids = [d["series_id"] for d in desc] if not is_err(desc) else []
-    htl_all = []
-    if desc_ids:
-        htl_all = rest_get("series", [
-            ("select", "id,title,parent_id,sort_order,status,lesson_count"),
-            ("id", f"in.({','.join(desc_ids)})"),
-            ("status", "in.(active,published,draft)"),
-            ("order", "lesson_count.desc"),
-            ("order", "title"),
-        ])
-        if is_err(htl_all):
-            htl_all = []
-    canon = {}
-    for s in htl_all:
-        if s["status"] == "draft" and (s.get("lesson_count") or 0) == 0 and s.get("parent_id") == ROOT_IDS["howToLearn"]:
-            continue
-        key = app_norm(s["title"])
-        ex = canon.get(key)
-        if ex is None:
-            canon[key] = s
-        else:
-            ex_score = (2 if ex["status"] != "draft" else 0) + (1 if (ex.get("lesson_count") or 0) > 0 else 0)
-            new_score = (2 if s["status"] != "draft" else 0) + (1 if (s.get("lesson_count") or 0) > 0 else 0)
-            if new_score > ex_score:
-                canon[key] = s
-    htl_children = sorted(canon.values(), key=lambda s: (
-        -((2 if s["status"] != "draft" else 0) + (1 if (s.get("lesson_count") or 0) > 0 else 0)),
-        he_sort_key(s["title"]),
-    ))
 
     children_by_book = defaultdict(list)
     for c in (torah_children + nk_children):
@@ -441,7 +475,7 @@ def sim_sidebar():
         return [c for c in expandable_children if c["parent_id"] == pid]
 
     extra_sections = [
-        {"id": ROOT_IDS["howToLearn"], "title": 'איך לומדים תנ"ך', "children": htl_children},
+        {"id": ROOT_IDS["howToLearn"], "title": 'איך לומדים תנ"ך', "children": get_children(ROOT_IDS["howToLearn"])},
         {"id": ROOT_IDS["generalTopics"], "title": 'נושאים כלליים בתנ"ך', "children": get_children(ROOT_IDS["generalTopics"])},
         {"id": ROOT_IDS["moadim"], "title": "המועדים", "children": get_children(ROOT_IDS["moadim"])},
         {"id": ROOT_IDS["haftarot"], "title": "הפטרות", "children": get_children(ROOT_IDS["haftarot"])},
@@ -459,12 +493,26 @@ def sim_sidebar():
     }
 
 
+def book_alias_label(cat_title, book_title):
+    """Mirrors bookAliasLabel() in DesignSidebar.tsx — per-book exact label."""
+    if cat_title == "תורה":
+        return f"כל השיעורים בחומש {book_title}"
+    if book_title in ("איכה", "קהלת"):
+        return f"כל השיעורים במגילת {book_title}"
+    if book_title == "אסתר":
+        return f"כל השיעורים על מגילת {book_title}"
+    if book_title == "דניאל":
+        return f"כל התכנים בספר {book_title}"
+    if book_title == "עזרא ונחמיה":
+        return "כל עזרא ונחמיה"
+    return f"כל השיעורים בספר {book_title}"
+
+
 def render_book_children(cat_title, book):
     """What DesignSidebar actually renders inside an open book accordion."""
     rows = []
     if len(book["children"]) > 1:
-        word = "בחומש" if cat_title == "תורה" else "בספר"
-        rows.append({"title": f"כל השיעורים {word} {book['title']}", "kind": "alias"})
+        rows.append({"title": book_alias_label(cat_title, book["title"]), "kind": "alias"})
     for c in book["children"]:
         rows.append({"title": c["title"], "kind": "child", "id": c.get("id"),
                      "status": c.get("status"), "audience_tags": c.get("audience_tags")})
@@ -597,10 +645,12 @@ def sim_series_page(series_id):
     rendered_children = [c for c in children if (c.get("lesson_count") or 0) > 0]
 
     def fetch_page(frm, to):
+        # §0.3 dual-audience: useLessonsBySeries now filters teacher-only (code-round-3)
         out = rest_get("lessons", [
             ("select", "id,title,sort_order,bible_chapter,status,audience_tags,attachment_url,audio_url,video_url,rabbi_id," + LESSON_RABBI_EMBED),
             ("series_id", f"eq.{series_id}"),
             ("status", "eq.published"),
+            ("or", PUBLIC_AUD_OR),
             ("order", "sort_order.asc.nullslast"),
             ("order", "bible_chapter.asc.nullslast"),
             ("order", "title.asc"),
@@ -616,6 +666,120 @@ def sim_series_page(series_id):
         seen.add(l["id"])
         lessons.append(l)
     return rendered_children, lessons
+
+
+def rpc_descendant_ids(node_id):
+    desc = rest_rpc("get_series_descendant_ids", {"root_id": node_id})
+    return [d["series_id"] for d in desc] if not is_err(desc) else []
+
+
+def sim_series_for_node(node_id):
+    """Replicates useContentSidebar.useSeriesForNode (CategoryPage series cards):
+    descendants via RPC → series in(ids), status in (active,published,draft),
+    audience OR, order sort_order nullslast + title, limit 1000 → JS canonical
+    dedup (drop direct-child empty drafts; best-score per app_norm title) →
+    JS band sort (1-99 main / >=100 parked / 0,NULL page-only)."""
+    ids = rpc_descendant_ids(node_id)
+    if not ids:
+        return []
+    series = rest_get("series", [
+        ("select", "id,title,lesson_count,rabbi_id,description,status,image_url,parent_id,sort_order"),
+        ("id", f"in.({','.join(ids)})"),
+        ("status", "in.(active,published,draft)"),
+        ("or", PUBLIC_AUD_OR),
+        ("order", "sort_order.asc.nullslast"),
+        ("order", "title.asc"),
+        ("limit", "1000"),
+    ])
+    if is_err(series):
+        return []
+    filtered = [s for s in series
+                if not (s["status"] == "draft" and (s.get("lesson_count") or 0) == 0
+                        and s.get("parent_id") == node_id)]
+    by_title = {}
+    for s in filtered:
+        key = app_norm(s["title"])
+        ex = by_title.get(key)
+        if ex is None:
+            by_title[key] = s
+        else:
+            ex_score = (2 if ex["status"] != "draft" else 0) + (1 if (ex.get("lesson_count") or 0) > 0 else 0)
+            new_score = (2 if s["status"] != "draft" else 0) + (1 if (s.get("lesson_count") or 0) > 0 else 0)
+            if new_score > ex_score:
+                by_title[key] = s
+    canonical = list(by_title.values())
+
+    import functools
+
+    def _cmp(a, b):
+        ao, bo = a.get("sort_order"), b.get("sort_order")
+        band_a = 2 if (ao is None or ao == 0) else (1 if ao >= 100 else 0)
+        band_b = 2 if (bo is None or bo == 0) else (1 if bo >= 100 else 0)
+        if band_a != band_b:
+            return band_a - band_b
+        if band_a == 0 and (ao or 0) != (bo or 0):
+            return (ao or 0) - (bo or 0)
+        a_act = 1 if (a["status"] != "draft" and (a.get("lesson_count") or 0) > 0) else 0
+        b_act = 1 if (b["status"] != "draft" and (b.get("lesson_count") or 0) > 0) else 0
+        if b_act != a_act:
+            return b_act - a_act
+        return (b.get("lesson_count") or 0) - (a.get("lesson_count") or 0)
+
+    canonical.sort(key=functools.cmp_to_key(_cmp))  # python sort stable like JS
+    return canonical
+
+
+# NOTE: audience_tags is NOT in the app's select — added here as harness-only telemetry
+# for the guards section (extra column cannot change the row set or the order).
+CATEGORY_LESSON_SELECT = ("id,title,duration,thumbnail_url,video_url,audio_url,attachment_url,"
+                          "bible_chapter,rabbi_id,series_id,audience_tags,rabbis!lessons_rabbi_id_fkey(name)")
+
+
+def sim_category_page(node_id):
+    """Replicates CategoryPage (/category/:id, post commit 4a1c3691):
+      series cards = useSeriesForNode (canonical dedup)
+      lessons      = useDirectLessons (series_id=eq.node, NO audience filter, limit 1000)
+                     + useRollupLessons (descendants in chunks of 40, audience OR filter,
+                       limit 1000/chunk) — combined direct-first, dedup by id.
+    Order per query: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC."""
+    series = sim_series_for_node(node_id)
+    # §0.3 dual-audience: useDirectLessons now filters teacher-only (code-round-3)
+    direct = rest_get("lessons", [
+        ("select", CATEGORY_LESSON_SELECT),
+        ("series_id", f"eq.{node_id}"),
+        ("status", "eq.published"),
+        ("or", PUBLIC_AUD_OR),
+        ("order", "sort_order.asc.nullslast"),
+        ("order", "bible_chapter.asc.nullslast"),
+        ("order", "title.asc"),
+        ("limit", "1000"),
+    ])
+    if is_err(direct):
+        direct = []
+    rollup = []
+    if series:  # hasChildSeries gate (page enables roll-up only when seriesList non-empty)
+        desc_ids = rpc_descendant_ids(node_id)
+        for i in range(0, len(desc_ids), 40):
+            chunk = desc_ids[i:i + 40]
+            out = rest_get("lessons", [
+                ("select", CATEGORY_LESSON_SELECT),
+                ("series_id", f"in.({','.join(chunk)})"),
+                ("status", "eq.published"),
+                ("or", PUBLIC_AUD_OR),
+                ("order", "sort_order.asc.nullslast"),
+                ("order", "bible_chapter.asc.nullslast"),
+                ("order", "title.asc"),
+                ("limit", "1000"),
+            ])
+            if not is_err(out):
+                rollup.extend(out)
+    seen, lessons = set(), []
+    for l in direct + rollup:
+        if l["id"] in seen:
+            continue
+        seen.add(l["id"])
+        lessons.append(l)
+    return series, lessons
 
 
 def page_section(url):
@@ -710,7 +874,14 @@ def run_listings(results, limit_pages=None, workers=8):
                            for it in items if it.get("type") in ("שיעור", 'שו"ת')]
             old_series = [{"key": normalize_he(it["title_norm"]), "rabbi": norm_rabbi(it.get("author_norm", ""))}
                           for it in items if it.get("type") == "סדרה"]
-        children, lessons = sim_series_page(sid)
+        # r2: category/book nodes are rendered by CategoryPage (descendant roll-up,
+        # commit 4a1c3691) — simulate that; everything else stays /series/:id semantics.
+        node_kind = kind_by_url.get(_norm_url(url)) or "collection"
+        sim_mode = "category_page" if node_kind in ("category", "book") else "series_page"
+        if sim_mode == "category_page":
+            children, lessons = sim_category_page(sid)
+        else:
+            children, lessons = sim_series_page(sid)
         new_lessons = [{"key": normalize_he(l["title"]),
                         "rabbi": norm_rabbi((l.get("rabbis") or {}).get("name", "") if isinstance(l.get("rabbis"), dict) else ""),
                         "id": l["id"], "tags": l.get("audience_tags")} for l in lessons]
@@ -736,7 +907,7 @@ def run_listings(results, limit_pages=None, workers=8):
 
         rec = {
             "url": url, "series_id": sid, "section": page_section(url),
-            "node_kind": kind_by_url.get(_norm_url(url)) or "collection",
+            "node_kind": node_kind, "sim_mode": sim_mode,
             "old_count": cl["old_count"], "new_count": cl["new_count"],
             "matched": cl["matched"], "matched_in_order": cl["matched_in_order"],
             "order_ok": cl["order_ok"],
@@ -790,8 +961,9 @@ def run_listings(results, limit_pages=None, workers=8):
         s["order_fail"] += 0 if r["order_ok"] else 1
         s["rabbi_mm"] += r["rabbi_mismatches"]
     is_agg = lambda r: r.get("node_kind") in ("category", "book")
+    # r2: agg pages are now simulated with their real renderer (CategoryPage) — rank purely by badness.
     worst = sorted(page_results,
-                   key=lambda r: (is_agg(r), -(r["n_missing"] + r["extra_unexplained"] + r["planned_removals"])))[:20]
+                   key=lambda r: -(r["n_missing"] + r["extra_unexplained"] + r["planned_removals"]))[:20]
     n_agg_pages = sum(1 for r in page_results if is_agg(r))
     n_pass = sum(1 for r in page_results if r["pass"])
     results["listings"] = {
@@ -933,7 +1105,10 @@ def run_topics(results, workers=8):
     else:
         pid = parent[0]["id"]
         children = rest_get("topics", [
-            ("select", "id,name,slug"), ("parent_id", f"eq.{pid}"), ("order", "name"),
+            ("select", "id,name,slug,sort_order"),
+            ("parent_id", f"eq.{pid}"),
+            ("order", "sort_order.asc.nullslast"),
+            ("order", "name.asc"),
         ])
         if is_err(children):
             children = []
@@ -949,9 +1124,11 @@ def run_topics(results, workers=8):
             if is_err(counts_rows):
                 counts_rows = []
         cmap = Counter(r["topic_id"] for r in counts_rows)
+        # Sort by sort_order ASC (curated 1..127), then name — mirrors updated useTopicsSidebar
         new_items = sorted(
-            [{"name": c["name"], "slug": c["slug"], "count": cmap.get(c["id"], 0)} for c in children],
-            key=lambda x: -x["count"],
+            [{"name": c["name"], "slug": c["slug"], "count": cmap.get(c["id"], 0),
+              "sort_order": c.get("sort_order")} for c in children],
+            key=lambda x: (x["sort_order"] if x["sort_order"] is not None else 99999, x["name"]),
         )
         cmp1 = compare_seq(
             [{"key": normalize_he(i["title_norm"])} for i in sorted(old_sidebar, key=lambda x: x["order_index"])],
@@ -999,10 +1176,8 @@ def run_topics(results, workers=8):
             ("select", "lesson_id,sort_order,lessons!inner(id,title,rabbi_id,status,audience_tags," + LESSON_RABBI_EMBED + ")"),
             ("topic_id", f"eq.{tid}"),
             ("lessons.status", "eq.published"),
-            # NOTE the APP sends or=(lessons.audience_tags...) at TOP level (TopicPage.tsx:112,
-            # supabase-js .or() without foreignTable) which PostgREST rejects with PGRST100 —
-            # i.e. the production TopicPage query FAILS. Harness uses the working
-            # foreign-table form to verify the underlying data parity.
+            # r2: TopicPage.tsx now sends .or(..., { referencedTable: "lessons" }) →
+            # lessons.or=(...) — identical to this emission (old PGRST100 bug fixed).
             ("lessons.or", "(audience_tags.cs.{general},audience_tags.not.cs.{teachers})"),
             ("limit", "500"),
         ])
@@ -1073,8 +1248,7 @@ def run_teachers(results, workers=8):
     t0 = time.time()
     old = load_json("old_teachers_listings.json")
     old_tree = load_json("old_teachers_tree.json")
-    tree_plan = json.load(open(os.path.join(ONEONE, "plans", "tree_plan.json"), encoding="utf-8"))
-    parsha_slots = tree_plan.get("code_asks_data", {}).get("teachers_parsha_slots", [])
+    # r2: parsha-slot injection retired — useTeacherSidebar is tree-driven (DB rows), no hard-coded slots.
 
     tli_probe = rest_get("teacher_listing_items", [("select", "id"), ("limit", "1")])
     tli_available = not is_err(tli_probe)
@@ -1089,31 +1263,31 @@ def run_teachers(results, workers=8):
     ct_rows, cr_rows = [], []
 
     def work_ct(name):
+        """Replicates TeachersContentTypePage + useTeacherListingItems (commit 4a1c3691):
+        teacher_listing_items WHERE scope=content_type AND key=:type ORDER sort_order;
+        kind='series' renders the embedded series title, kind='lesson' the embedded
+        lesson title. NOTE the page has NO data fallback — empty TLI ⇒ empty page."""
         entry = old["content_types"][name]
         items = sorted(entry.get("items", []), key=lambda x: x.get("order_index", 0))
         old_keys = [{"key": normalize_he(it["title_norm"])} for it in items]
+        rows = []
         if tli_available:
             rows = rest_get("teacher_listing_items", [
-                ("select", "id,kind,series_id,lesson_id,sort_order,series(title),lessons(title)"),
+                ("select", "id,kind,sort_order,series_id,lesson_id,"
+                           "series(id,title,description,image_url,lesson_count),"
+                           "lessons(id,title,description,content,duration,audio_url,video_url,"
+                           "attachment_url,thumbnail_url,rabbi_id,series_id)"),
                 ("scope", "eq.content_type"), ("key", f"eq.{name}"), ("order", "sort_order.asc"),
             ])
             if is_err(rows):
                 rows = []
-        else:
-            rows = []
-        if rows:
-            new_keys = [{"key": normalize_he(((r.get("series") or {}).get("title")) or ((r.get("lessons") or {}).get("title")) or "")} for r in rows]
-            mode = "teacher_listing_items"
-        else:
-            lessons = fetch_paginated("lessons", [
-                ("select", "id,title,rabbi_id,series_id,status,audience_tags"),
-                ("content_type", f"eq.{name}"),
-                ("audience_tags", "cs.{teachers}"),
-                ("status", "eq.published"),
-                ("order", "title"),
-            ])
-            new_keys = [{"key": normalize_he(l["title"])} for l in lessons]
-            mode = "fallback_lessons_by_content_type"
+        new_keys = []
+        for r in rows:
+            if r.get("kind") == "series" and r.get("series"):
+                new_keys.append({"key": normalize_he(r["series"]["title"])})
+            elif r.get("kind") == "lesson" and r.get("lessons"):
+                new_keys.append({"key": normalize_he(r["lessons"]["title"])})
+        mode = "teacher_listing_items" if rows else "tli_empty→page_renders_empty"
         c = compare_seq(old_keys, new_keys)
         rec = {"content_type": name, "mode": mode,
                "old_count": c["old_count"], "new_count": c["new_count"],
@@ -1124,26 +1298,67 @@ def run_teachers(results, workers=8):
             ct_rows.append(rec)
 
     def work_cr(name):
+        """Replicates TeachersCreatorPage + useTeacherCreatorContent (commit 4a1c3691):
+        PRIMARY: rabbi_page_items WHERE rabbi_id ORDER sort_order, kind='series'/'lesson'
+        render embedded titles (kind='qa' rows are DROPPED by the hook — counted here).
+        FALLBACK (no rpi rows): teacher-tagged lessons by rabbi, order=title, paginated."""
         entry = old["creators"][name]
         items = sorted(entry.get("items", []), key=lambda x: x.get("order_index", 0))
         old_keys = [{"key": normalize_he(it["title_norm"])} for it in items]
-        rid = rabbi_by_norm.get(norm_rabbi(name))
+        # id resolution mirrors the app's fixed CREATOR_IDS_ORDERED list (CA5/CA6)
+        rid = TEACHER_CREATOR_IDS.get(name)
+        if not rid:
+            byn = {norm_rabbi(k): v for k, v in TEACHER_CREATOR_IDS.items()}
+            rid = byn.get(norm_rabbi(name)) or rabbi_by_norm.get(norm_rabbi(name))
         if not rid:
             rec = {"creator": name, "status": "rabbi_not_matched", "old_count": len(old_keys), "pass": False}
+            with lock:
+                cr_rows.append(rec)
+            return
+        rpi = rest_get("rabbi_page_items", [
+            ("select", "id,kind,sort_order,series_id,lesson_id,"
+                       "series(id,title,description,image_url,lesson_count),"
+                       "lessons(id,title,description,content,duration,audio_url,video_url,"
+                       "attachment_url,thumbnail_url,series_id,content_type)"),
+            ("rabbi_id", f"eq.{rid}"),
+            ("order", "sort_order.asc"),
+        ])
+        if is_err(rpi):
+            rpi = []
+        n_qa_dropped = 0
+        if rpi:
+            mode = "rabbi_page_items"
+            new_keys = []
+            for r in rpi:
+                if r.get("kind") == "series" and r.get("series"):
+                    new_keys.append({"key": normalize_he(r["series"]["title"])})
+                elif r.get("kind") == "lesson" and r.get("lessons"):
+                    new_keys.append({"key": normalize_he(r["lessons"]["title"])})
+                else:
+                    n_qa_dropped += 1
         else:
+            mode = "fallback_lessons_by_rabbi"
             lessons = fetch_paginated("lessons", [
-                ("select", "id,title,series_id,status,audience_tags"),
+                ("select", "id,title,description,content,duration,audio_url,video_url,"
+                           "attachment_url,thumbnail_url,series_id,content_type"),
                 ("rabbi_id", f"eq.{rid}"),
                 ("audience_tags", "cs.{teachers}"),
                 ("status", "eq.published"),
                 ("order", "title"),
             ])
-            c = compare_seq(old_keys, [{"key": normalize_he(l["title"])} for l in lessons])
-            rec = {"creator": name, "rabbi_id": rid,
-                   "old_count": c["old_count"], "new_count": c["new_count"],
-                   "matched": c["matched"], "n_missing": len(c["missing"]), "missing": c["missing"][:8],
-                   "n_extra": len(c["extra_idx"]), "order_ok": c["order_ok"],
-                   "pass": (not c["missing"]) and (not c["extra_idx"]) and c["order_ok"]}
+            new_keys = [{"key": normalize_he(l["title"])} for l in lessons]
+        c = compare_seq(old_keys, new_keys)
+        rec = {"creator": name, "rabbi_id": rid, "mode": mode,
+               "rpi_rows": len(rpi), "qa_rows_dropped_by_hook": n_qa_dropped,
+               "old_count": c["old_count"], "new_count": c["new_count"],
+               "matched": c["matched"], "n_missing": len(c["missing"]), "missing": c["missing"][:8],
+               "n_extra": len(c["extra_idx"]), "order_ok": c["order_ok"],
+               "pass": (not c["missing"]) and (not c["extra_idx"]) and c["order_ok"]}
+        # teachers CA7 (CODE-SPEC §11): the old בשושה page was empty (old CMS bug); the
+        # fallback intentionally renders his real teacher-tagged content — sanctioned deviation.
+        if not rec["pass"] and mode == "fallback_lessons_by_rabbi" and c["old_count"] == 0:
+            rec["pass"] = True
+            rec["accepted_deviation"] = "teachers-CA7: old page empty (CMS bug) — fallback renders real content by design"
         with lock:
             cr_rows.append(rec)
 
@@ -1151,92 +1366,71 @@ def run_teachers(results, workers=8):
         list(ex.map(work_ct, list(old["content_types"].keys())))
         list(ex.map(work_cr, list(old["creators"].keys())))
 
-    # — by-book tree (useTeacherSidebar replication) —
+    # — by-book tree (useTeacherSidebar + TeacherSidebar.tsx render, commit 4a1c3691) —
+    # Hook (tree-driven): book LIST = direct children of the 3 main roots (no status
+    # filter), ordered sort_order NULLS LAST then title; Torah/Ketuvim re-ordered by the
+    # hard-coded canonical name lists, Neviim = banded rows first then biblical order.
+    # COMPONENT render (TeacherSidebar.renderBookGroup — "Per Saar"): under each book the
+    # sidebar shows EXACTLY (a) 'כל התכנים ב<book>', (b) 'דפי עבודה — <book>', and for
+    # Torah only (c) 'פרשת <p>' per PARSHIOT_BY_BOOK — the hook's children[] is NOT
+    # rendered in the sidebar. The sim mirrors the rendered rows.
     books = rest_get("series", [
-        ("select", "id,title,parent_id"),
+        ("select", "id,title,parent_id,sort_order"),
         ("parent_id", f"in.({ROOT_IDS['torah']},{ROOT_IDS['neviim']},{ROOT_IDS['ketuvim']})"),
-        ("order", "title"),
+        ("order", "sort_order.asc.nullslast"),
+        ("order", "title.asc"),
     ])
     if is_err(books):
         books = []
-    tl = rest_get("lessons", [
-        ("select", "series_id"),
-        ("audience_tags", "cs.{teachers}"),
-        ("status", "eq.published"),
-        ("series_id", "not.is.null"),
-        ("limit", "10000"),
-    ])
-    if is_err(tl):
-        tl = []
-    ts_ids = sorted({l["series_id"] for l in tl if l.get("series_id")})
-    ts_meta = []
-    if ts_ids:
-        sl = ts_ids[:500]
-        for i in range(0, len(sl), 200):
-            chunk = rest_get("series", [
-                ("select", "id,title,parent_id,lesson_count"),
-                ("id", f"in.({','.join(sl[i:i + 200])})"),
-                ("lesson_count", "gt.0"),
-                ("order", "title"),
-            ])
-            if not is_err(chunk):
-                ts_meta.extend(chunk)
-    book_ids = {b["id"] for b in books}
-    book_by_title = {b["title"]: b["id"] for b in books}
-    inter_ids = sorted({s["parent_id"] for s in ts_meta if s.get("parent_id") and s["parent_id"] not in book_ids})[:300]
-    inter_meta = []
-    for i in range(0, len(inter_ids), 200):
-        chunk = rest_get("series", [
-            ("select", "id,title,parent_id"),
-            ("id", f"in.({','.join(inter_ids[i:i + 200])})"),
-        ])
-        if not is_err(chunk):
-            inter_meta.extend(chunk)
-    inter_to_book = {}
-    for im_ in inter_meta:
-        if im_.get("parent_id") in book_ids:
-            inter_to_book[im_["id"]] = im_["parent_id"]
-        elif im_["title"] in book_by_title:
-            inter_to_book[im_["id"]] = book_by_title[im_["title"]]
-    kids_by_book = defaultdict(list)
-    for s in ts_meta:
-        target = None
-        if s.get("parent_id") in book_ids:
-            target = s["parent_id"]
-        elif s.get("parent_id") in inter_to_book:
-            target = inter_to_book[s["parent_id"]]
-        if target:
-            kids_by_book[target].append(s["title"])
-    for k in kids_by_book:
-        kids_by_book[k].sort(key=he_sort_key)
 
-    # slots by parent old_url book path
-    slots_by_book = defaultdict(list)
-    for sl_ in parsha_slots:
-        pu = urllib.parse.unquote(sl_.get("parent_old_url", ""))
-        m = re.search(r"מאגר-עזרי-הלמידה/(תורה|נביאים|כתובים)/([^/]+)/", pu)
-        if m:
-            slots_by_book[m.group(2).replace("-", " ")].append(sl_)
+    # ordered book list exactly like the hook builds it
+    torah_raw = [b for b in books if b["parent_id"] == ROOT_IDS["torah"]]
+    nev_raw = [b for b in books if b["parent_id"] == ROOT_IDS["neviim"]]
+    ket_raw = [b for b in books if b["parent_id"] == ROOT_IDS["ketuvim"]]
+    sim_books = [b for n in TORAH_BOOK_ORDER for b in [next((x for x in torah_raw if x["title"] == n), None)] if b]
+    sim_books += [b for b in nev_raw if (b.get("sort_order") or 0) > 0]
+    sim_books += sort_by_biblical_order([b for b in nev_raw if not ((b.get("sort_order") or 0) > 0)])
+    sim_books += [b for n in TEACHER_KETUVIM_ORDER for b in [next((x for x in ket_raw if x["title"] == n), None)] if b]
+
+    # PARSHIOT_BY_BOOK — mirrors src/hooks/useTeacherParashaContent.ts
+    PARSHIOT_BY_BOOK = {
+        "בראשית": ["בראשית", "נח", "לך לך", "וירא", "חיי שרה", "תולדות", "ויצא", "וישלח", "וישב", "מקץ", "ויגש", "ויחי"],
+        "שמות": ["שמות", "וארא", "בא", "בשלח", "יתרו", "משפטים", "תרומה", "תצוה", "כי תשא", "ויקהל", "פקודי"],
+        "ויקרא": ["ויקרא", "צו", "שמיני", "תזריע", "מצורע", "אחרי מות", "קדושים", "אמור", "בהר", "בחוקותי"],
+        "במדבר": ["במדבר", "נשא", "בהעלותך", "שלח", "קרח", "חוקת", "בלק", "פנחס", "מטות", "מסעי"],
+        "דברים": ["דברים", "ואתחנן", "עקב", "ראה"],
+    }
+
+    TORAH_BOOKS_SET = {"בראשית", "שמות", "ויקרא", "במדבר", "דברים"}
+
+    def all_content_label(book_title):
+        if book_title in TORAH_BOOKS_SET:
+            return f"כל התכנים בחומש {book_title}"
+        return f"כל התכנים בספר {book_title}"
+
+    def worksheet_label(book_title):
+        if book_title == "מלכים א":
+            return "דפי עבודה ומבחנים - מלכים א"
+        return f"דפי עבודה - {book_title}"
+
+    def rendered_teacher_book_rows(title):
+        rows = [all_content_label(title), worksheet_label(title)]
+        rows += [f"פרשת {p}" for p in PARSHIOT_BY_BOOK.get(title, [])]
+        return rows
 
     bb_rows = []
     old_by_book = {}
     for top in old_tree.get("by_book", []):
         for b in top.get("children", []):
             old_by_book[normalize_he(b["title_norm"])] = b
-    for b in books:
+    for b in sim_books:
         ob = old_by_book.get(normalize_he(b["title"]))
         if not ob:
             continue
-        sim_children = list(kids_by_book.get(b["id"], []))
-        # inject hard-coded slot labels at recorded positions (1-based 'order')
-        slots = sorted(slots_by_book.get(b["title"], []), key=lambda s: s.get("order") or 0)
-        merged = list(sim_children)
-        for sl_ in slots:
-            pos = max(0, (sl_.get("order") or 1) - 1)
-            merged.insert(min(pos, len(merged)), sl_["label"])
+        sim_children = rendered_teacher_book_rows(b["title"])
         c = compare_seq(
             [{"key": normalize_he(x["title_norm"])} for x in ob.get("children", [])],
-            [{"key": normalize_he(x)} for x in merged],
+            [{"key": normalize_he(x)} for x in sim_children],
         )
         bb_rows.append({"book": b["title"],
                         "old_count": c["old_count"], "new_count": c["new_count"],
@@ -1412,9 +1606,9 @@ def write_report(results, md_path, label):
                      f"{v['new_items']} | {v['missing']} | {v['extra_unexplained']} | {v['planned_extras']} | "
                      f"{v['planned_removals']} | {v['order_fail']} | {v['rabbi_mm']} |")
         L.append(f"\nNote: {s.get('aggregation_pages', 0)} of the pages are category/book aggregation nodes — "
-                 "the app renders them via CategoryPage (descendant aggregation), not /series/:id; the harness "
-                 "applies the prescribed series-page semantics everywhere, so their diffs overstate gaps. "
-                 "Worst-20 below lists leaf (collection) pages first.\n")
+                 "since r2 the harness simulates them with their REAL renderer (CategoryPage: useSeriesForNode "
+                 "canonical series + direct + descendant roll-up lessons, dedup by id); all other pages use "
+                 "/series/:id semantics (useSeriesChildren + useLessonsBySeries).\n")
         L.append("### Top-20 worst pages\n")
         for r in s["worst20"]:
             L.append(f"- `{urllib.parse.unquote(r['url'])}` *(kind={r.get('node_kind')})*")
@@ -1474,9 +1668,15 @@ def write_report(results, md_path, label):
         L.append(f"- Creators: {s['creators']['pass']}/{s['creators']['total']} PASS")
         for r in s["creators"]["rows"]:
             mark = "✅" if r.get("pass") else "❌"
-            extra = r.get("status", "")
-            L.append(f"  - {mark} {r['creator']} {extra}: old={r.get('old_count')} new={r.get('new_count', '—')} "
-                     f"matched={r.get('matched', '—')} missing={r.get('n_missing', '—')}")
+            extra = r.get("status", "") or r.get("mode", "")
+            L.append(f"  - {mark} {r['creator']} ({extra}): old={r.get('old_count')} new={r.get('new_count', '—')} "
+                     f"matched={r.get('matched', '—')} missing={r.get('n_missing', '—')} "
+                     f"extra={r.get('n_extra', '—')} order_ok={r.get('order_ok', '—')}")
+        L.append("- By-book sim = the RENDERED TeacherSidebar rows (per-book: 'כל התכנים ב<book>', "
+                 "'דפי עבודה — <book>', + hard-coded parshiot for Torah). KNOWN code-ask: the old sidebar "
+                 "labeled the alias 'כל התכנים בחומש/בספר <book>' (with per-book variants like "
+                 "'דפי עבודה ומבחנים מלכים א'), and books with 0 old children now show the 2 synthetic rows — "
+                 "label parity needs a component fix, not data.")
         L.append(f"- By-book tree: {s['by_book']['pass']}/{s['by_book']['total']} PASS")
         for r in s["by_book"]["rows"]:
             mark = "✅" if r["pass"] else "❌"
@@ -1503,9 +1703,15 @@ def write_report(results, md_path, label):
 
     L.append("## Harness notes / limitations\n")
     L.append("- Queries replicate supabase-js REST emission of the CURRENT working-tree hooks "
-             "(useContentSidebar, useSeriesChildren+useLessonsBySeries for /series/:id, useRabbi*, "
-             "useTopicsSidebar/useTopicLessons, useTeacherSidebar/useTeacherBookContent) — including "
-             "implicit 1000-row PostgREST caps where the app sends no limit.")
+             "(useContentSidebar band 1..999, useSeriesChildren+useLessonsBySeries for /series/:id, "
+             "CategoryPage useSeriesForNode+useDirectLessons+useRollupLessons for category/book nodes, "
+             "useRabbi*, useTopicsSidebar/useTopicLessons, useTeacherSidebar [tree-driven] / "
+             "useTeacherListingItems [content-types, no fallback] / useTeacherCreatorContent "
+             "[rabbi_page_items + lessons-by-rabbi fallback]) — including implicit 1000-row PostgREST "
+             "caps where the app sends no limit.")
+    L.append("- r2: chained .order() keys are merged into one comma-joined `order` param exactly like "
+             "postgrest-js; the previous multi-param emission dropped secondary sort keys and produced "
+             "false order failures.")
     L.append("- Hebrew collation approximated by codepoint order (browser localeCompare('he') may differ on geresh/maqaf edge cases).")
     L.append("- torah/ketuvim old listing scrape carries lesson rows only (series cards live in sub_links) → "
              "series-card diff for those pages is not checked (reported as series_new_unchecked).")
@@ -1537,9 +1743,8 @@ def main():
     t0 = time.time()
     probe_embed_ambiguity()
     results["_meta"]["pgrst201_rabbis_embed_bug"] = dict(EMBED_BUG)
-    results["_meta"]["pgrst100_topicpage_or_bug"] = (
-        "TopicPage.tsx:112 sends or=(lessons.audience_tags...) at top level — PostgREST rejects it "
-        "(PGRST100, needs lessons.or=(...)) → production topic pages error out")
+    # r2: the PGRST100 TopicPage finding is RESOLVED — TopicPage.tsx now passes
+    # { referencedTable: "lessons" } so the app emits lessons.or=(...), same as the harness.
     if "sidebar" in secs:
         run_sidebar(results)
     if "listings" in secs:

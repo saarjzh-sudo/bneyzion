@@ -94,7 +94,9 @@ export function useContentSidebar() {
       // Fetch children of expandable sections (flat sections: direct children are the leaf series)
       // §2.1: band-driven — sidebar shows only sort_order 1..999 per parent, ordered by sort_order ASC.
       // §0.3: dual-audience filter — exclude teacher-only rows (but keep dual-tagged general+teachers).
+      // "איך לומדים" is now treated as a flat section (old site showed 5 direct leaf series, not all descendants).
       const flatExpandableIds = [
+        ROOT_IDS.howToLearn,
         ROOT_IDS.generalTopics,
         ROOT_IDS.moadim,
         ROOT_IDS.haftarot,
@@ -115,54 +117,11 @@ export function useContentSidebar() {
         .order("sort_order")
         .order("title");
 
-      // "איך לומדים" is a DEEP section: its direct children are sub-category nodes (status=category),
-      // and the actual leaf series live 2 levels deep. We fetch ALL descendants via RPC and apply
-      // the canonical dedup rule (active/published with lessons preferred; draft-only allowed when no twin).
-      const { data: howToLearnDesc } = await supabase.rpc("get_series_descendant_ids", {
-        root_id: ROOT_IDS.howToLearn,
-      });
-      const howToLearnDescIds = (howToLearnDesc || []).map((d: any) => d.series_id as string);
-      const { data: howToLearnAll } = howToLearnDescIds.length > 0
-        ? await supabase
-            .from("series")
-            .select("id, title, parent_id, sort_order, status, lesson_count")
-            .in("id", howToLearnDescIds)
-            .in("status", ["active", "published", "draft"])
-            .order("lesson_count", { ascending: false })
-            .order("title")
-        : { data: [] };
-
-      // Apply canonical dedup for howToLearn children (same rules as useSeriesForNode):
-      // normalize quotes in the title key + drop direct-child empty draft placeholders.
-      const normHtl = (t: string) => t.trim().replace(/[״"'׳‘’“”`]/g, "").replace(/\s+/g, " ");
-      const howToLearnCanonicalMap = new Map<string, { id: string; title: string; parent_id: string | null; sort_order: number | null; status: string; lesson_count: number }>();
-      for (const s of (howToLearnAll || [])) {
-        if (s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === ROOT_IDS.howToLearn) continue;
-        const key = normHtl(s.title);
-        const existing = howToLearnCanonicalMap.get(key);
-        if (!existing) {
-          howToLearnCanonicalMap.set(key, s as any);
-        } else {
-          const existScore = (existing.status !== "draft" ? 2 : 0) + (existing.lesson_count > 0 ? 1 : 0);
-          const newScore = (s.status !== "draft" ? 2 : 0) + (s.lesson_count > 0 ? 1 : 0);
-          if (newScore > existScore) howToLearnCanonicalMap.set(key, s as any);
-        }
-      }
-      // Sort: active/published with lessons first, drafts last, alphabetical within group
-      const howToLearnChildren = Array.from(howToLearnCanonicalMap.values())
-        .sort((a, b) => {
-          const aScore = (a.status !== "draft" ? 2 : 0) + (a.lesson_count > 0 ? 1 : 0);
-          const bScore = (b.status !== "draft" ? 2 : 0) + (b.lesson_count > 0 ? 1 : 0);
-          if (bScore !== aScore) return bScore - aScore;
-          return a.title.localeCompare(b.title, "he");
-        });
-      // Add fake parent_id field matching howToLearn root for getChildren() to work
-      const howToLearnForSection = howToLearnChildren.map((s) => ({
-        id: s.id,
-        title: s.title,
-        parent_id: ROOT_IDS.howToLearn,
-        sort_order: s.sort_order ?? 0,
-      }));
+      // “איך לומדים” is treated as a flat section like the other expandable sections:
+      // only its direct children with sort_order 1..999 appear in the sidebar (old site showed 5 leaf series).
+      // The deep-RPC approach was fetching all descendants (20+) which broke parity.
+      // §2.1: same band filter (sort_order 1..999) as flatExpandableIds.
+      // §0.3: dual-audience filter (exclude teacher-only series).
 
       // Build children map
       // §2.1: DB already filters 1..99 band and orders sort_order ASC — just build the map.
@@ -229,8 +188,8 @@ export function useContentSidebar() {
         {
           id: ROOT_IDS.howToLearn,
           title: 'איך לומדים תנ"ך',
-          // Use the canonical deep children (all descendant leaf series, deduped)
-          children: howToLearnForSection,
+          // Direct band-1..999 children (same as all other flat sections, parity with old site's 5 entries)
+          children: getChildren(ROOT_IDS.howToLearn),
         },
         {
           id: ROOT_IDS.generalTopics,

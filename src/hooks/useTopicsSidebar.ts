@@ -24,6 +24,7 @@ export interface TopicSidebarItem {
   name: string;
   slug: string;
   lessonCount: number;
+  sortOrder: number | null;
 }
 
 export function useTopicsSidebar() {
@@ -48,8 +49,9 @@ export function useTopicsSidebar() {
       // aggregate counts via the lesson_topics table separately.
       const { data: children, error: childError } = await supabase
         .from("topics")
-        .select("id, name, slug")
+        .select("id, name, slug, sort_order")
         .eq("parent_id", parent.id)
+        .order("sort_order", { ascending: true, nullsFirst: false })
         .order("name");
 
       if (childError) throw childError;
@@ -82,15 +84,22 @@ export function useTopicsSidebar() {
         countMap[tid] = (countMap[tid] || 0) + 1;
       }
 
-      // Merge and sort by count desc
+      // Merge and sort by sort_order ASC (curated 1..127 from old site), then name.
+      // lesson count is kept for badge display but does NOT drive order.
       const result: TopicSidebarItem[] = children.map((c) => ({
         id: c.id,
         name: c.name,
         slug: c.slug,
         lessonCount: countMap[c.id] || 0,
+        sortOrder: (c as any).sort_order ?? null,
       }));
 
-      result.sort((a, b) => b.lessonCount - a.lessonCount);
+      result.sort((a, b) => {
+        const aOrd = a.sortOrder ?? 99999;
+        const bOrd = b.sortOrder ?? 99999;
+        if (aOrd !== bOrd) return aOrd - bOrd;
+        return a.name.localeCompare(b.name, "he");
+      });
       return result;
     },
     staleTime: 1000 * 60 * 10, // 10 min — topics change rarely
