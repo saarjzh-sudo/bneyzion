@@ -92,6 +92,7 @@ export function useRabbiPageItems(rabbiId: string | undefined) {
         .from("rabbi_page_items")
         .select("id, kind, series_id, lesson_id, sort_order, series(id,title,image_url,lesson_count), lessons(id,title,duration,audio_url,video_url,attachment_url)")
         .eq("rabbi_id", rabbiId!)
+        .lt("sort_order", 9000) // 9000+ = parked rows (old-page extras kept for audit, not rendered)
         .order("sort_order", { ascending: true });
       if (error) {
         // Table doesn't exist yet — return empty (triggers fallback)

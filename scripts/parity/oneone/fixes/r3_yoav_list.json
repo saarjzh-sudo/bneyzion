@@ -1,0 +1,406 @@
+[
+ {
+  "what": "demoted to draft: 'קידוש ה' שיהיה בקיבוץ הגלויות' (f2010000-…113)",
+  "why": "real audio (ירמיהו/23655.mp3) but the title appears on no old page — possible mistitled ירמיהו lesson; demoted (reversible), needs a human call on its true identity"
+ },
+ {
+  "what": "demoted to draft: 'עיין חדש בחזון העצמות היבשות' (03011661)",
+  "why": "typo-twin of the ימי-עיון lesson 'עיון חדש בחזון העצמות היבשות'; audio likely duplicates 09ee99f9/164cb9ef — confirm before deleting/merging"
+ },
+ {
+  "what": "demoted to draft: 'אפסות העבודה זרה' copy c7a4171e in שיעורים-על-התנ\"ך-ירמיהו",
+  "why": "audio is the ישעיהו פרק-מד recording (הרב אחיקם גץ) — misfiled under ירמיהו; ישעיהו-פרק-מד already renders its own row; confirm identity before merge/delete"
+ },
+ {
+  "what": "'רוצה להיות מלכה' on /כתובים/אסתר/כל-השיעורים-על-מגילת-אסתר/ — no usable DB row",
+  "why": "never matched; candidates ['496a7521/published', 'd1d1b800/published', 'eb2139d2/published']; old media: https://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99+%D7%A2%D7%99%D7%95%D7%9F+%D7%91%D7%AA%D7%A0%D7%9A+%D7%AA%D7%A9%D7%A2%D7%98/%D7%A0%D7%A9%D7%99%D7%9D+%D7%A9%D7%A0%D7%99+%D7%90%D7%95%D7%9C%D7%9D+3/%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA+%D7%91%D7%AA+%D7%A9%D7%91%D7%A2+%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%95%D7%9F+%D7%A8%D7%95%D7%A6%D7%94+%D7%9C%D7%94%D7%99%D7%95%D7%AA+%D7%9E%D7%9C%D7%9B%D7%94+%D7%A9%D7%A0%D7%99+%D7%A0%D7%A9%D7%99%D7%9D.MP3, /media/144347/הרבנית-בת-שבע-יוסיפון-רוצה-להיות-מלכה-שני-נשים.pdf"
+ },
+ {
+  "what": "'ביאור \"ושננתם\" לספר שופטים פרק י\"ח' on /נביאים/שופטים/פסל-מיכה-פרקים-יז-יח/ — no usable DB row",
+  "why": "never matched; candidates ['9e415e46/published', 'e1195e1e/published']; text lesson — needs scrape"
+ },
+ {
+  "what": "draft-with-no-content in scope: \"ספר דניאל עם ביאור ותרגום 'ושננתם'\" (23125b63)",
+  "why": "old page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/ lists it; publishing an empty row would show a blank popup — needs content (scrape) first"
+ },
+ {
+  "what": "draft-with-no-content in scope: \"ספר דניאל עם ביאור ותרגום 'ושננתם'\" (23125b63)",
+  "why": "old page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/דניאל/ lists it; publishing an empty row would show a blank popup — needs content (scrape) first"
+ },
+ {
+  "what": "draft-with-no-content in scope: 'שאול אינו מקיים את הציווי במלואו ותשובת הקב\"ה' (9de778fd)",
+  "why": "old page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת lists it; publishing an empty row would show a blank popup — needs content (scrape) first"
+ },
+ {
+  "what": "old page lists 'אין מקרא יוצא מדי פשוטו' more than once, DB has one row (ba617633)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'דרכיה דרכי נועם' vs DB 'מחשב מסלול מחדש' (c998edab)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מידות-בפרשה/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'אין מקרא יוצא מדי פשוטו' more than once, DB has one row (ba617633)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/דרכי-הפרשנ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'דרכיה דרכי נועם' vs DB 'מחשב מסלול מחדש' (c998edab)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מידות-בפרשה/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'הגישה לחטאים של גדולי האומה' more than once, DB has one row (f29ba355)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/היחס-הראוי — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'לימודים לדורות מהאשה השונמית' more than once, DB has one row (38e59c6d)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטר — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (228137e2)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטר — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (ed4c33c2)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/מאמר — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (ed4c33c2)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/מאמר — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'בני גד ובני ראובן' vs DB 'הפסח במדבר' (f9d0a5f2)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-בהעלותך-ח-יב/', 'https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/שיעורים-על-התנך-במדבר/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'ושביה בצדקה' more than once, DB has one row (5f13afe1)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/מאמ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שיבת ציון הצלחות ומשברים' more than once, DB has one row (20f29c50)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שיבת ציון הצלחות ומשברים' more than once, DB has one row (20f29c50)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/כל-עזר — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'הצהרת כורש' more than once, DB has one row (6a9abe51)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/עזרא-פ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'קיבוץ הגלויות' more than once, DB has one row (e6060601)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/יום-העצמאות/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'סודו של ראש השנה' more than once, DB has one row (140383ea)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/כל-השיעורים-על-המו — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'השמחה בחג הסוכות' more than once, DB has one row (a94d7551)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'סוכות – החג של ארץ ישראל' more than once, DB has one row (ebe71b4a)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'השמחה בחג הסוכות' more than once, DB has one row (a94d7551)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/כל-השיעורים- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'סוכות – החג של ארץ ישראל' more than once, DB has one row (ebe71b4a)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/כל-השיעורים- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'מגילת אסתר – מגילת הַסֵתֶר' more than once, DB has one row (f5050501)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/פורים/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old \"ספר מלכים א עם ביאור 'ושננתם'\" vs DB 'מפת שלושים ואחד המלכים' (3bfe8dad)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע/', 'https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/מפות-עזר-לספר-יהושע/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "title drift: old 'הסבר פשוט על מבנה ארץ ישראל' vs DB 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (5dae4141)",
+  "why": "the DB title is demanded by other old pages [] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'תמה תקופת המן והחלה תקופת העומר' more than once, DB has one row (b722b172)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/הפסח-המילה-ו — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'בני גד ובני ראובן' vs DB 'הפסח במדבר' (f9d0a5f2)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-בהעלותך-ח-יב/', 'https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/שיעורים-על-התנך-במדבר/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'מלחמת מלכי הדרום' more than once, DB has one row (ece96406)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/מלחמת-מלכי-ה — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'ערי המקלט' more than once, DB has one row (14fcb53a)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/ערי-המקלט-וה — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'חזון העצמות היבשות' more than once, DB has one row (5c7af8ab)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'מלחמת גוג ומגוג' more than once, DB has one row (444289bf)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/יחזקאל-פרק- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'על מה אבדה הארץ?' more than once, DB has one row (a44c49b0)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/ירמיהו-פרק- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old \"ספר מלכים א עם ביאור 'ושננתם'\" vs DB 'מפת שלושים ואחד המלכים' (3bfe8dad)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני-המאורעות-ומפות/מפות-עזר-לספר-יהושע/', 'https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/מפות-עזר-לספר-יהושע/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists '\"רבות מחשבות בלב איש, ועצת ד\\' היא תקום\"' more than once, DB has one row (228137e2)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/אדוניהו-וה — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'כיצד יתכן ששלמה המלך כרת ברית עם חירם מל' more than once, DB has one row (0b07e143)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/הצלחת-שלמה — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'כיצד יתכן ששלמה המלך כרת ברית עם חירם מל' more than once, DB has one row (0b07e143)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/מאמרים-ספר — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'לימודים לדורות מהאשה השונמית' more than once, DB has one row (eee69e75)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/ניסי-אלישע — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'מדוע נהרג יאשיהו המלך הצדיק בגיל צעיר?' more than once, DB has one row (68b4ec10)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/תשובת-יאשי — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שירת דבורה' more than once, DB has one row (14547861)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/דבורה-וברק- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'יהודה יעלה' more than once, DB has one row (199bcb7c)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/מצב-הכיבושי — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק ח' more than once, DB has one row (b7bbd85a)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/בקשת-המלך- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק כג' more than once, DB has one row (440fd911)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-בקעילה — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'דוד וגלית' more than once, DB has one row (56bae857)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-וגלית- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'נדודי דוד' more than once, DB has one row (36f37de7)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-והריגת — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק כ' more than once, DB has one row (7f848873)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/דוד-יונתן- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק ז' more than once, DB has one row (191aca4f)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/הניצחון-על — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק ו' more than once, DB has one row (a8e62cf4)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/חזרת-הארון — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק יג' more than once, DB has one row (7bc37fc5)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/יונתן-והפל — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק יד' more than once, DB has one row (08d0263d)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/יונתן-והפל — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק כט' more than once, DB has one row (f8f95ac6)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-דוד- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק ל' more than once, DB has one row (8c560f77)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-דוד- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק טו' more than once, DB has one row (778fb6f6)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/מלחמת-שאול — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק טז' more than once, DB has one row (ff66828e)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/משיחת-דוד- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'שמואל א פרק ג' more than once, DB has one row (e21e4a13)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/נבואת-שמוא — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'הסבר פשוט על מבנה ארץ ישראל' vs DB 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (5dae4141)",
+  "why": "the DB title is demanded by other old pages [] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'מדינת הלכה על פי התנ\"ך' more than once, DB has one row (3a8136dc)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'הסבר פשוט על מבנה ארץ ישראל' vs DB 'הסבר פשוט על מבנה ארץ ישראל והנחלות' (5dae4141)",
+  "why": "the DB title is demanded by other old pages [] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists '\"המקום אשר יבחר\"' more than once, DB has one row (d386a1bb)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ירושלי — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'מניין כפול?!' more than once, DB has one row (9488e8a3)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מאמרים-על-פרשי — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'בני גד ובני ראובן' more than once, DB has one row (256c7dea)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-מטות-ל-לב — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "title drift: old 'דרכיה דרכי נועם' vs DB 'מחשב מסלול מחדש' (c998edab)",
+  "why": "the DB title is demanded by other old pages ['https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/מידות-בפרשה/'] — renaming would break them; likely needs a copy-with-retitle decision"
+ },
+ {
+  "what": "old page lists 'ראובן - פוחז או בכור?' more than once, DB has one row (5c1b917f)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/ — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'פרשת יהודה ותמר' more than once, DB has one row (242929e1)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-וישב-לז- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists '(מצגת) כיבושי ארבעת המלכים - נדידת עמים ' more than once, DB has one row (17b0d495)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך-לך-יב — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'כעיר שחברה לה יחדו' more than once, DB has one row (820a5576)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-ואתחנן-ד- — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "old page lists 'היום השמיני המפתיע' more than once, DB has one row (03134565)",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שמיני-ט-י — duplicating the row would clone content; decide if the old duplication is intentional"
+ },
+ {
+  "what": "\"'כי מי נח' - סגולה מרוכזת הצומחת באיטיות\" missing on /הפטרות/הפטרות-בראשית/הפטרת-נח/",
+  "why": "published row(s) with this exact title exist elsewhere (['bfa09995@81509bbe', 'c1010001@8152f12a']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'והיה לעת ערב יהיה אור' missing on /הפטרות/הפטרות-המועדים/הפטרות-המועדים-הרב-מנח",
+  "why": "published row(s) with this exact title exist elsewhere (['3fb0a9cb@aab1289b', '62aab708@3b6c298e', '8c388434@e33c840d']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'המחשות של ירושלים בזמן בית ראשון מול ירושלים ' — only bneyzion.co.il media (/media/145720/מפת-ירושלים-להפוך-לתמונות.pdf)",
+  "why": "Rule 13: old-domain media must be rehosted before insert; page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני- row idx=2"
+ },
+ {
+  "what": "'ציר זמן - תקופת המלכים | כמות מידע בינונית' — only bneyzion.co.il media (/media/144703/ציר-זמן-מלכי-ישראל-ויהודה-ללא-אירועים.pdf)",
+  "why": "Rule 13: old-domain media must be rehosted before insert; page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני- row idx=2"
+ },
+ {
+  "what": "'ציר זמן - תקופת המלכים | כל המידע' — only bneyzion.co.il media (/media/144704/ציר-זמן-מלכי-ישראל-ויהודה.pdf)",
+  "why": "Rule 13: old-domain media must be rehosted before insert; page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני- row idx=3"
+ },
+ {
+  "what": "'רוצה להיות מלכה' missing on /כתובים/אסתר/כל-השיעורים-על-מגילת-אסתר/",
+  "why": "published row(s) with this exact title exist elsewhere (['496a7521@f4040001', 'd1d1b800@4915aec2', 'eb2139d2@5cdd770c']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'נעשה ונשמע' missing on /כתובים/משלי/ביאור-ספר-משלי/",
+  "why": "published row(s) with this exact title exist elsewhere (['93442618@cc7825e1', 'bda49d84@dfb8c480']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'רוצה להיות מלכה' missing on /מועדים/פורים/",
+  "why": "published row(s) with this exact title exist elsewhere (['496a7521@f4040001', 'd1d1b800@4915aec2', 'eb2139d2@5cdd770c']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'בבל מול ירושלים - בקעה מול הרים שיעור ראשון' missing on /נביאים/יחזקאל/",
+  "why": "published row(s) with this exact title exist elsewhere (['57bbbd2e@6be34cb5']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'בבל מול ירושלים - בקעה מול הרים שיעור שני' missing on /נביאים/יחזקאל/",
+  "why": "published row(s) with this exact title exist elsewhere (['151a5d32@6be34cb5']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'אלקנה, חנה ופנינה' missing on /נביאים/שמואל-א/חנה-והולדת-שמואל-פרק-א/",
+  "why": "published row(s) with this exact title exist elsewhere (['03368b0c@258d2fb6', '1c5bfb24@d05f0213', '29f071af@a1010001']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'משיח בן יוסף ומשיח בן דוד' (הרב עמנואל בן ארצי) — no media, no DB candidate",
+  "why": "text lesson needing old-page scrape; page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/י row idx=15, href /מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/יהודה-וישראל-אז-והיום/משיח-"
+ },
+ {
+  "what": "'אם משה היה נכנס לארץ - האם התורה היתה ממשיכה ' missing on /תורה/",
+  "why": "published row(s) with this exact title exist elsewhere (['663a5dbe@3af005f9']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'המספרים במקרא - מדויקים או מעוגלים?' missing on /תורה/במדבר/פרשת-במדבר-א-ד/",
+  "why": "published row(s) with this exact title exist elsewhere (['f8166389@2d6d28c1']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "'אם משה היה נכנס לארץ - האם התורה היתה ממשיכה ' missing on /תורה/דברים/",
+  "why": "published row(s) with this exact title exist elsewhere (['663a5dbe@3af005f9']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "\"תולדות קרבת ה' לאדם - ביציאת מצרים ובמתן תורה\" missing on /תורה/שמות/פרשת-יתרו-יח-כ/",
+  "why": "published row(s) with this exact title exist elsewhere (['e9ca1179@d7a37161']) but the matcher never linked them — copy candidate, needs eyeball (different lessons may share titles)"
+ },
+ {
+  "what": "applied ops but no row in scope: 'הבית של חסרי הבית'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-בהעל idx=41 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'סדר וזהות - סוד הדיוק והמשמעת הפנימית במ'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-במדב idx=34 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'מדוע פירטה התורה באיזה גיל הוליד כל אחד '",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-ברא idx=12 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'את מי רצה אברהם אבינו להציל - את סדום או'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-ויר idx=6 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'מדוע התורה לא כתבה על צדקותו של אברהם אב'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך- idx=9 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'על מה נכרתה ברית בין הבתרים ומה משמעותה '",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך- idx=12 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: '\"ותענה שרי\" - היאך יתכן שאשה צדקת כשרה א'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/פרשת-לך- idx=14 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'סוד הקדושה שבלב הקהילה'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אחרי idx=30 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'סודם של מתנות עניים בלב פרשת המועדות'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אמור idx=39 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'המסע אל אומנות השתיקה'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-מצור idx=27 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'סוד הקדושה שבלב הקהילה'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-קדוש idx=31 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'המסע אל אומנות השתיקה'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-תזרי idx=35 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ },
+ {
+  "what": "applied ops but no row in scope: 'אין מוקדם ומאוחר בתורה'",
+  "why": "page https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/שמות/פרשת-תרומה idx=27 ops=[('copy_lesson', 'applied-batch'), ('set_lesson_sort', 'applied')]"
+ }
+]

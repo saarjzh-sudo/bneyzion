@@ -330,6 +330,7 @@ export function useTeacherCreatorContent(rabbiId: string): TeacherCreatorResult 
           "lessons(id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,series_id,content_type)",
         ].join(","))
         .eq("rabbi_id", rabbiId)
+        .lt("sort_order", 9000) // 9000+ = parked rows (old-page extras kept for audit, not rendered)
         .order("sort_order", { ascending: true });
 
       if (!rpiErr && rpiRaw && (rpiRaw as any[]).length > 0) {
