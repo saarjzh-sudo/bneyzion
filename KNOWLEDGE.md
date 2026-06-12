@@ -6915,3 +6915,34 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 - **מורים:** לפי `content_type` (`/teachers/content-type/:type`).
 - **"חוסר-עקביות" = שני קהלים, שני מודלים:** ציבור=מיקום-בתנ״ך, מורה=סוג-חומר. זו הסיבה ש"פה לפי סוג ופה לפי סדרה".
 - **3 נקודות בלגן (ניקוי, לא מבנה):** (1) 18 השורשים מעורבבים — קטגוריות-תנ״ך + סדרות-בודדות שהושלכו לשורש (חמאה ודבש, מידות בפרשה, סימן לבנים); (2) 3,042 lessons בלי series_id; (3) 395 series ריקות.
+
+---
+
+## 🗓️ סשן 12.6.2026 (לילה) — "אחד-לאחד" (oneone): פריטי מלא ישן↔חדש + מנוע יישום ⭐⭐⭐
+
+> מנדט סער (11.6 לילה): "סשן אחד טוב שיפתור — לא למפות שוב. האתר החדש = הישן 1:1: סיידבר, סדרות, שיעורים, סדר, רבנים, נושאים, אגף מורים, פופאפים."
+
+### ארכיטקטורת הסשן (ultracode, ~30 סוכנים)
+1. **חילוץ (8 סוכנים):** `scripts/parity/oneone/` — old_sidebar_tree.json (894 צמתים, 13 קטגוריות, הסדר המדויק), old_rabbis_sidebar (154)+old_rabbi_pages (כל הדפים; מבנה קנוני: רשימה שטוחה = שיעורים+סדרות-ככרטיסים+שו"ת, **אין עימוד באתר הישן בכלל**), old_topics_sidebar+pages (127), old_teachers_tree+listings (**22 סוגי תוכן, לא 10** — ספירות הסיידבר הישן מנופחות פי-3, באג CMS), old_listings_* (1,320 דפים, 18.5K פריטים מסודרים; **categoryTable הוא הרשימה המלאה, ה-swiper קטום**), newdb_* (דאמפ מלא), code_semantics.md (16 סיכוני קוד עם file:line).
+2. **השוואה+תכנון (11 סוכנים):** match/ (מנוע התאמה דטרמיניסטי: 94.8% התאמה, 366 פערי-תוכן אמיתיים) + plans/ (9 תוכניות, 27,252 ops גולמי) + MERGED-REVIEW/APPLY-ORDER/CODE-SPEC. plan-neviim-rishonim נפל פעם אחת (API) ורוגנרר.
+3. **קוד (3 סוכנים, סדרתי):** commits עד `8c93eaaf` — 11 תיקונים ודאיים + CODE-SPEC מלא + **שכתוב RabbiPage 1:1** (פילטרי מדיה, רשימה שטוחה לפי rabbi_page_items, fallback, בלי cap). tsc+build נקי.
+4. **מנוע יישום:** `oneone/scripts/oneone_apply.py` (1,870 שורות) — resolution דטרמיניסטי (403 קונפליקטים, כולם נפתרו) → RESOLVED-OPS.jsonl (26,966 ops, op_id=sha1, new-ids=uuid5 אידמפוטנטי) → 11 שלבים עם journal+resume+verify. **dry-run מלא ירוק: 0 invalid refs.** nav_visible נורמל ל-sort-band (לא נוסף עמודה).
+5. **רתמת אימות:** `oneone_verify.py` — מדמה את שאילתות ה-UI דרך anon-REST ומשווה לכל אמת-הקרקע (baseline לפני-יישום נשמר).
+
+### סכמה שנוספה (אישור סער "מאשר")
+`lessons.sort_order`, `lesson_topics.sort_order`, `rabbi_page_items(rabbi_id,kind,series_id,lesson_id,sort_order)` + RLS public-read. **ממתין ל"מאשר 2":** teacher_listing_items, series_topics, lessons.copied_from.
+
+### קונבנציית sort-band (קריטי להבין!)
+`series.sort_order`: 1..99 = חבר בסיידבר במיקום הזה · 0/NULL = page-only (מופיע בדף, לא בסיידבר) · ≥100 = parked. צמתי "כל השיעורים ב-X" = alias-links בקוד (רשימה ב-tree_plan code_asks_data), לא שורות series.
+
+### מצב בסיום הכתיבה הזו
+- **שלב 3 יושם** (זהות רבנים 31/31 ✅). שלבים 4-10 ממתינים לאישור "מאשר יישום" מסער (קלסיפייר דרש אישור מפורש לכתיבה המונית).
+- גיבויים: `*_bak_oneone_20260612` (5 טבלאות, מאומת). rollback קוד: alias ל-`dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx`.
+- 695 פריטי yoav_review מרוכזים בתוכניות; 3 פערי-plan אמיתיים (sorts לscope שלא יתקיים) — לתיקון ידני.
+- queues: rehost 24 קבצים (Rule 13), scrape 51 שו"ת (טקסט מהמודלים הישנים).
+
+### לקחים
+- האתר הישן: דף-הבית מכיל את כל 3 הסיידברים במלואם — מקור אמת אחד ל-894+127+154.
+- אין שום עימוד באתר הישן; ספירות nav של רבנים = שיעורים בודדים כולל בתוך סדרות; ספירות אגף-מורים = פי-3.
+- דף רב ישן = סדרות-של-הרב + שיעורים עצמאיים; שיעורי הרב בסדרות של אחרים לא מופיעים בדפו.
+- 41 דפי רשימות באתר הישן לא נפתרו ב-matcher הראשון (unresolved) — טופלו ברזולברים.

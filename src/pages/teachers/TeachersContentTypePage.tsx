@@ -42,7 +42,7 @@ import {
   formatDuration,
 } from "@/lib/designTokens";
 import {
-  useTeacherContentTypeContent,
+  useTeacherListingItems,
   type TeacherContentTypeLesson,
 } from "@/hooks/useTeacherBookContent";
 
@@ -213,12 +213,46 @@ function LessonListRow({ lesson, onClick }: { lesson: TeacherContentTypeLesson; 
   );
 }
 
+// ─── SeriesCard (for listing series rows) ─────────────────────────────────────
+function SeriesCard({ series }: { series: { id: string; title: string; description: string | null; imageUrl: string | null; lessonCount: number } }) {
+  const imgSrc = series.imageUrl || getSeriesCoverImage(series.title) || "/images/series-default.png";
+  return (
+    <a href={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <div
+        style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.09)", boxShadow: shadows.cardSoft, overflow: "hidden", display: "flex", gap: "1rem", padding: "0.9rem 1rem", cursor: "pointer", alignItems: "center", transition: "all 0.18s" }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = colors.goldDark; e.currentTarget.style.boxShadow = shadows.cardHover; }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(139,111,71,0.09)"; e.currentTarget.style.boxShadow = shadows.cardSoft; }}
+      >
+        <div style={{ width: 64, height: 64, flexShrink: 0, borderRadius: radii.md, overflow: "hidden" }}>
+          <img src={imgSrc} alt={series.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.45rem", marginBottom: "0.2rem" }}>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.58rem", color: colors.oliveDark, background: "rgba(74,90,46,0.1)", padding: "0.1rem 0.45rem", borderRadius: radii.pill, fontWeight: 700, flexShrink: 0 }}>סדרה</span>
+          </div>
+          <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "0.88rem", color: colors.textDark, lineHeight: 1.3, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{series.title}</div>
+          {series.description && (
+            <div style={{ fontFamily: fonts.body, fontSize: "0.73rem", color: colors.textMuted, marginTop: "0.2rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{series.description}</div>
+          )}
+        </div>
+        <div style={{ flexShrink: 0, textAlign: "left" }}>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.66rem", color: colors.textSubtle }}>{series.lessonCount} שיעורים</div>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.66rem", color: colors.oliveMain, fontWeight: 600, marginTop: "0.1rem" }}>לסדרה ←</div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function TeachersContentTypePage() {
   const { type = "" } = useParams<{ type: string }>();
   const decodedType = decodeURIComponent(type);
 
-  const { lessons, isLoading } = useTeacherContentTypeContent(decodedType);
+  // CODE-SPEC §11 CA3: teacher_listing_items drives the page, ordered by sort_order.
+  // Series rows render as cards linking to /teachers/series/:id.
+  // Lesson rows render as modal-triggering rows.
+  const { items, lessons, isLoading } = useTeacherListingItems(decodedType);
 
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
     try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "grid"; } catch { return "grid"; }
@@ -232,29 +266,21 @@ export default function TeachersContentTypePage() {
     try { localStorage.setItem(VIEW_KEY, v); } catch { /* blocked */ }
   };
 
-  const filteredLessons = useMemo(() => {
-    // Dedup: the migration cross-listed the same worksheet under many teachers, so a
-    // content-type showed hundreds of identical cards (same title + same attached file).
-    // Collapse by attachment file when present, else by normalized title. (Saar 10.6.2026)
-    const seen = new Set<string>();
-    let result = lessons.filter((l: any) => {
-      const key = l.attachmentUrl
-        ? `f:${l.attachmentUrl}`
-        : `t:${(l.title || "").trim().replace(/[״"'׳`|]/g, "").replace(/\s+/g, " ")}::${l.rabbiName || ""}`;
-      if (seen.has(key)) return false;
-      seen.add(key);
+  // Filter items: search applies to series titles + lesson titles; media filter to lessons only
+  const filteredItems = useMemo(() => {
+    const q = search.trim();
+    return items.filter((item) => {
+      if (item.type === "series") {
+        return !q || item.series.title.includes(q) || (item.series.description || "").includes(q);
+      }
+      // lesson
+      if (q && !item.lesson.title.includes(q) && !(item.lesson.description || "").includes(q)) return false;
+      if (mediaFilter !== "all" && getLessonMediaType(item.lesson) !== mediaFilter) return false;
       return true;
     });
-    if (search.trim()) {
-      const q = search.trim();
-      result = result.filter((l) => l.title.includes(q) || (l.description || "").includes(q));
-    }
-    if (mediaFilter !== "all") {
-      result = result.filter((l) => getLessonMediaType(l) === mediaFilter);
-    }
-    return result;
-  }, [lessons, search, mediaFilter]);
+  }, [items, search, mediaFilter]);
 
+  // Filter counts based on lessons subset only
   const counts = useMemo((): Record<MediaFilter, number> => {
     const c: Record<MediaFilter, number> = { all: lessons.length, audio: 0, video: 0, pdf: 0, text: 0 };
     for (const l of lessons) c[getLessonMediaType(l)]++;
@@ -281,7 +307,7 @@ export default function TeachersContentTypePage() {
           </span> as unknown as string
         }
         title={decodedType}
-        subtitle={`${lessons.length} שיעורים באגף המורים`}
+        subtitle={`${items.length} פריטים באגף המורים`}
         icon={<GraduationCap size={24} style={{ color: "#E8D5A0" }} />}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginTop: "0.5rem" }}>
@@ -300,7 +326,7 @@ export default function TeachersContentTypePage() {
           <div style={{ display: "flex", justifyContent: "center", padding: "4rem" }}>
             <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
           </div>
-        ) : lessons.length === 0 ? (
+        ) : items.length === 0 ? (
           <div style={{ textAlign: "center", padding: "4rem 2rem", color: colors.textSubtle, fontFamily: fonts.body }}>
             <Layers size={48} style={{ color: colors.goldDark, marginBottom: "1rem", opacity: 0.4 }} />
             <p>לא נמצא תוכן מסוג "{decodedType}"</p>
@@ -320,7 +346,7 @@ export default function TeachersContentTypePage() {
               counts={counts}
             />
 
-            {filteredLessons.length === 0 ? (
+            {filteredItems.length === 0 ? (
               <div style={{ textAlign: "center", padding: "3rem", color: colors.textSubtle, fontFamily: fonts.body }}>
                 <p>לא נמצאו תוצאות לסינון הנוכחי.</p>
                 <button
@@ -330,17 +356,23 @@ export default function TeachersContentTypePage() {
                   אפס סינון
                 </button>
               </div>
-            ) : viewMode === "grid" ? (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1.1rem" }}>
-                {filteredLessons.map((l) => (
-                  <LessonCard key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />
-                ))}
-              </div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-                {filteredLessons.map((l) => (
-                  <LessonListRow key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />
-                ))}
+              /* teacher_listing_items preserves the old curated sort_order.
+                 Series rows render as compact horizontal cards; lesson rows as list rows.
+                 The grid/list toggle only affects the lesson rows (series always horizontal). */
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                {filteredItems.map((item) => {
+                  if (item.type === "series") {
+                    return <SeriesCard key={`s-${item.series.id}`} series={item.series} />;
+                  }
+                  return (
+                    <LessonListRow
+                      key={`l-${item.lesson.id}`}
+                      lesson={item.lesson}
+                      onClick={() => setModalLessonId(item.lesson.id)}
+                    />
+                  );
+                })}
               </div>
             )}
           </>

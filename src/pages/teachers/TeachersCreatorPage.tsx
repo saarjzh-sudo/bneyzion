@@ -44,6 +44,7 @@ import {
 import {
   useTeacherCreatorContent,
   type TeacherCreatorLesson,
+  type TeacherCreatorSeries,
 } from "@/hooks/useTeacherBookContent";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -205,10 +206,40 @@ function LessonListRow({ lesson, onClick }: { lesson: TeacherCreatorLesson; onCl
   );
 }
 
+// ─── SeriesCard (for RPI series rows) ────────────────────────────────────────
+function SeriesCard({ series }: { series: TeacherCreatorSeries }) {
+  const imgSrc = series.imageUrl || getSeriesCoverImage(series.title) || "/images/series-default.png";
+  return (
+    <a href={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <div
+        style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.09)", boxShadow: shadows.cardSoft, overflow: "hidden", display: "flex", flexDirection: "column", transition: "all 0.2s ease", position: "relative", cursor: "pointer" }}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = shadows.cardHover; e.currentTarget.style.borderColor = colors.goldDark; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = shadows.cardSoft; e.currentTarget.style.borderColor = "rgba(139,111,71,0.09)"; }}
+      >
+        <div style={{ height: 110, overflow: "hidden", flexShrink: 0 }}>
+          <img src={imgSrc} alt={series.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+        </div>
+        <div style={{ position: "absolute", top: 0, right: 0, width: 4, height: "100%", background: gradients.oliveButton }} />
+        <div style={{ padding: "0.8rem", display: "flex", flexDirection: "column", gap: "0.35rem", flex: 1 }}>
+          <span style={{ fontFamily: fonts.body, fontSize: "0.58rem", color: colors.oliveDark, background: "rgba(74,90,46,0.1)", padding: "0.1rem 0.45rem", borderRadius: radii.pill, fontWeight: 700, alignSelf: "flex-start" }}>סדרה</span>
+          <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "0.86rem", color: colors.textDark, margin: 0, lineHeight: 1.4 }}>{series.title}</h3>
+          {series.description && (
+            <p style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted, margin: 0, lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", flex: 1 }}>{series.description}</p>
+          )}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "0.55rem", borderTop: "1px solid rgba(139,111,71,0.07)", marginTop: "auto" }}>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.66rem", color: colors.textSubtle }}>{series.lessonCount} שיעורים</span>
+            <span style={{ fontFamily: fonts.body, fontSize: "0.66rem", color: colors.oliveMain, fontWeight: 600 }}>לסדרה ←</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  );
+}
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function TeachersCreatorPage() {
   const { id = "" } = useParams<{ id: string }>();
-  const { rabbi, lessons, isLoading } = useTeacherCreatorContent(id);
+  const { rabbi, items, isRpiDriven, lessons, isLoading } = useTeacherCreatorContent(id);
 
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
     try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "grid"; } catch { return "grid"; }
@@ -222,6 +253,7 @@ export default function TeachersCreatorPage() {
     try { localStorage.setItem(VIEW_KEY, v); } catch { /* blocked */ }
   };
 
+  // For filter controls we operate on the lesson subset only
   const filteredLessons = useMemo(() => {
     let result = lessons;
     if (search.trim()) {
@@ -231,6 +263,21 @@ export default function TeachersCreatorPage() {
     if (mediaFilter !== "all") result = result.filter((l) => getLessonMediaType(l) === mediaFilter);
     return result;
   }, [lessons, search, mediaFilter]);
+
+  // For RPI-driven view: filtered items (search applies to both series title + lesson title)
+  const filteredItems = useMemo(() => {
+    if (!search.trim() && mediaFilter === "all") return items;
+    const q = search.trim();
+    return items.filter((item) => {
+      if (item.type === "series") {
+        return !q || item.series.title.includes(q) || (item.series.description || "").includes(q);
+      }
+      // lesson
+      if (q && !item.lesson.title.includes(q) && !(item.lesson.description || "").includes(q)) return false;
+      if (mediaFilter !== "all" && getLessonMediaType(item.lesson) !== mediaFilter) return false;
+      return true;
+    });
+  }, [items, search, mediaFilter]);
 
   const counts = useMemo((): Record<MediaFilter, number> => {
     const c: Record<MediaFilter, number> = { all: lessons.length, audio: 0, video: 0, pdf: 0, text: 0 };
@@ -270,7 +317,7 @@ export default function TeachersCreatorPage() {
           </Link>
           {!isLoading && (
             <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.6)" }}>
-              • {lessons.length} שיעורים
+              • {isRpiDriven ? `${items.length} פריטים` : `${lessons.length} שיעורים`}
             </span>
           )}
         </div>
@@ -281,7 +328,7 @@ export default function TeachersCreatorPage() {
           <div style={{ display: "flex", justifyContent: "center", padding: "4rem" }}>
             <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
           </div>
-        ) : lessons.length === 0 ? (
+        ) : items.length === 0 ? (
           <div style={{ textAlign: "center", padding: "4rem 2rem", color: colors.textSubtle, fontFamily: fonts.body }}>
             <Users size={48} style={{ color: colors.goldDark, marginBottom: "1rem", opacity: 0.4 }} />
             <p>לא נמצאו תכנים מורים מאת {creatorName}</p>
@@ -323,21 +370,54 @@ export default function TeachersCreatorPage() {
               counts={counts}
             />
 
-            {filteredLessons.length === 0 ? (
-              <div style={{ textAlign: "center", padding: "3rem", color: colors.textSubtle, fontFamily: fonts.body }}>
-                <p>לא נמצאו תוצאות לסינון הנוכחי.</p>
-                <button onClick={() => { setSearch(""); setMediaFilter("all"); }} style={{ background: "none", border: "none", cursor: "pointer", color: colors.oliveDark, fontFamily: fonts.body, fontSize: "0.85rem", textDecoration: "underline" }}>
-                  אפס סינון
-                </button>
-              </div>
-            ) : viewMode === "grid" ? (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1.1rem" }}>
-                {filteredLessons.map((l) => <LessonCard key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
-              </div>
+            {isRpiDriven ? (
+              /* ── RPI-DRIVEN: flat ordered list of series cards + lesson rows ── */
+              filteredItems.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "3rem", color: colors.textSubtle, fontFamily: fonts.body }}>
+                  <p>לא נמצאו תוצאות לסינון הנוכחי.</p>
+                  <button onClick={() => { setSearch(""); setMediaFilter("all"); }} style={{ background: "none", border: "none", cursor: "pointer", color: colors.oliveDark, fontFamily: fonts.body, fontSize: "0.85rem", textDecoration: "underline" }}>
+                    אפס סינון
+                  </button>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  {filteredItems.map((item) => {
+                    if (item.type === "series") {
+                      return (
+                        <div key={`s-${item.series.id}`}>
+                          <SeriesCard series={item.series} />
+                        </div>
+                      );
+                    }
+                    // lesson — render as lesson row (list style) in this ordered view
+                    return (
+                      <LessonListRow
+                        key={`l-${item.lesson.id}`}
+                        lesson={item.lesson}
+                        onClick={() => setModalLessonId(item.lesson.id)}
+                      />
+                    );
+                  })}
+                </div>
+              )
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
-                {filteredLessons.map((l) => <LessonListRow key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
-              </div>
+              /* ── FALLBACK: flat lesson-only grid/list (only הרב יהודה בשושה) ── */
+              filteredLessons.length === 0 ? (
+                <div style={{ textAlign: "center", padding: "3rem", color: colors.textSubtle, fontFamily: fonts.body }}>
+                  <p>לא נמצאו תוצאות לסינון הנוכחי.</p>
+                  <button onClick={() => { setSearch(""); setMediaFilter("all"); }} style={{ background: "none", border: "none", cursor: "pointer", color: colors.oliveDark, fontFamily: fonts.body, fontSize: "0.85rem", textDecoration: "underline" }}>
+                    אפס סינון
+                  </button>
+                </div>
+              ) : viewMode === "grid" ? (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1.1rem" }}>
+                  {filteredLessons.map((l) => <LessonCard key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                  {filteredLessons.map((l) => <LessonListRow key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
+                </div>
+              )
             )}
           </>
         )}
@@ -347,7 +427,7 @@ export default function TeachersCreatorPage() {
         <TeacherLessonModal
           lesson={{ id: modalLesson.id, title: modalLesson.title, description: modalLesson.description, content: modalLesson.content ?? null, duration: modalLesson.duration, sourceType: null, audioUrl: modalLesson.audioUrl, videoUrl: modalLesson.videoUrl, attachmentUrl: modalLesson.attachmentUrl, thumbnailUrl: modalLesson.thumbnailUrl, rabbiName: rabbi?.name || null }}
           seriesId={modalLesson.seriesId || ""}
-          seriesImageUrl={null}
+          seriesImageUrl={modalLesson.seriesImageUrl || null}
           seriesTitle={modalLesson.seriesTitle || ""}
           onClose={() => setModalLessonId(null)}
         />

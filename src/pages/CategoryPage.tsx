@@ -137,7 +137,7 @@ function useDirectLessons(nodeId: string | undefined) {
       const { data, error } = await supabase
         .from("lessons")
         .select(
-          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)"
+          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, series_id, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)"
         )
         .eq("series_id", nodeId!)
         .eq("status", "published")
@@ -146,7 +146,87 @@ function useDirectLessons(nodeId: string | undefined) {
         .order("title", { ascending: true })
         .limit(1000);
       if (error) throw error;
-      return data ?? [];
+      return (data ?? []) as RollupLesson[];
+    },
+  });
+}
+
+// ─── hook: roll-up — all lessons from descendant series of a category node ───
+//
+// The old site's book pages (e.g. /נביאים/יהושע/) showed ALL lessons across
+// every series under that book (roll-up), not just lessons directly attached
+// to the book node. The new CategoryPage only showed "direct" lessons (series_id
+// = nodeId), producing a count like 14 vs. the old site's 38.
+//
+// Fix: use the existing RPC get_series_descendant_ids to enumerate all
+// descendant series IDs, then fetch their lessons and dedup by id.
+// This is the same RPC used by useContentSidebar.useSeriesForNode.
+//
+// Performance: fetch in chunks of 40 series IDs (PostgREST IN is efficient
+// up to ~100; book nodes typically have 2-20 direct series under them).
+// Cap at 1000 lessons per chunk × N chunks; final dedup by id.
+
+type RollupLesson = {
+  id: string;
+  title: string;
+  duration: number | null;
+  thumbnail_url: string | null;
+  video_url: string | null;
+  audio_url: string | null;
+  attachment_url: string | null;
+  bible_chapter: number | null;
+  rabbi_id: string | null;
+  series_id: string | null;
+  rabbis: { name: string } | null;
+};
+
+function useRollupLessons(nodeId: string | undefined, hasDirectChildren: boolean) {
+  return useQuery({
+    // Only fire when the node has child-series (i.e. it's a book/category container)
+    queryKey: ["category-rollup-lessons", nodeId],
+    enabled: !!nodeId && hasDirectChildren,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      // 1. Get all descendant series ids
+      const { data: descendants, error: rpcError } = await supabase.rpc(
+        "get_series_descendant_ids",
+        { root_id: nodeId! }
+      );
+      if (rpcError) throw rpcError;
+
+      const descendantIds: string[] = (descendants || []).map((d: any) => d.series_id as string);
+      if (descendantIds.length === 0) return [];
+
+      // 2. Exclude teachers-only series descendants (public audience filter §0.3)
+      //    (get_series_descendant_ids returns ALL — we filter lessons by audience below)
+      // 3. Fetch lessons from descendant series in chunks of 40
+      const CHUNK = 40;
+      const allLessons: RollupLesson[] = [];
+      for (let i = 0; i < descendantIds.length; i += CHUNK) {
+        const chunk = descendantIds.slice(i, i + CHUNK);
+        const { data, error } = await supabase
+          .from("lessons")
+          .select(
+            "id, title, duration, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)"
+          )
+          .in("series_id", chunk)
+          .eq("status", "published")
+          // §0.3: exclude teacher-only lessons from public category pages
+          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+          .order("sort_order", { ascending: true, nullsFirst: false })
+          .order("bible_chapter", { ascending: true, nullsFirst: false })
+          .order("title", { ascending: true })
+          .limit(1000);
+        if (!error && data) allLessons.push(...(data as RollupLesson[]));
+      }
+
+      // 4. Dedup by id (§0.2 — physical id dedup)
+      const seen = new Set<string>();
+      return allLessons.filter((l) => {
+        if (seen.has(l.id)) return false;
+        seen.add(l.id);
+        return true;
+      });
     },
   });
 }
@@ -165,12 +245,35 @@ export default function CategoryPage() {
 
   const { data: directLessons = [], isLoading: lessonsLoading } = useDirectLessons(id);
 
+  // Roll-up: fetch all lessons from descendant series when this node has child series.
+  // Enables 1:1 parity with the old site's book pages (e.g. /נביאים/יהושע/ showed 38
+  // lessons = sum of all series under it, not just 14 directly attached lessons).
+  // Only enabled after seriesList loads so we know whether there are child series.
+  const hasChildSeries = !seriesLoading && seriesList.length > 0;
+  const { data: rollupLessons = [], isLoading: rollupLoading } = useRollupLessons(id, hasChildSeries);
+
   const isLoading = nodeLoading || seriesLoading;
 
   const title = node?.title ?? "קטגוריה";
 
   // Cast to canonical type (hook now returns extra fields)
   const canonicalSeries = seriesList as unknown as CanonicalSeries[];
+
+  // Combined lessons: direct lessons on this node + roll-up from all descendant series,
+  // deduped by id (a lesson could appear in both if series_id = nodeId AND also picked
+  // up via descendants).
+  const allLessons = (() => {
+    if (rollupLessons.length === 0) return directLessons;
+    const seen = new Set<string>();
+    const combined: RollupLesson[] = [];
+    for (const l of [...directLessons, ...rollupLessons]) {
+      if (!seen.has(l.id)) {
+        seen.add(l.id);
+        combined.push(l);
+      }
+    }
+    return combined;
+  })();
 
   return (
     <DesignLayout>
@@ -298,28 +401,48 @@ export default function CategoryPage() {
           </p>
         )}
 
-        {/* Series count badge */}
-        {!seriesLoading && canonicalSeries.length > 0 && (
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.4rem",
-              marginTop: "1rem",
-              padding: "0.3rem 0.75rem",
-              borderRadius: radii.pill,
-              background: "rgba(139,111,71,0.08)",
-              border: `1px solid rgba(139,111,71,0.15)`,
-              fontFamily: fonts.body,
-              fontSize: "0.78rem",
-              color: colors.goldDark,
-              fontWeight: 600,
-            }}
-          >
-            <BookOpen size={13} />
-            {canonicalSeries.length} סדרות
-          </div>
-        )}
+        {/* Series + lesson count badges */}
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
+          {!seriesLoading && canonicalSeries.length > 0 && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.3rem 0.75rem",
+                borderRadius: radii.pill,
+                background: "rgba(139,111,71,0.08)",
+                border: `1px solid rgba(139,111,71,0.15)`,
+                fontFamily: fonts.body,
+                fontSize: "0.78rem",
+                color: colors.goldDark,
+                fontWeight: 600,
+              }}
+            >
+              <BookOpen size={13} />
+              {canonicalSeries.length} סדרות
+            </div>
+          )}
+          {!rollupLoading && allLessons.length > 0 && (
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.3rem 0.75rem",
+                borderRadius: radii.pill,
+                background: "rgba(139,111,71,0.06)",
+                border: `1px solid rgba(139,111,71,0.12)`,
+                fontFamily: fonts.body,
+                fontSize: "0.78rem",
+                color: colors.textMuted,
+                fontWeight: 500,
+              }}
+            >
+              {allLessons.length} שיעורים
+            </div>
+          )}
+        </div>
       </div>
 
       {/* ── Body ── */}
@@ -364,8 +487,10 @@ export default function CategoryPage() {
           </section>
         )}
 
-        {/* ── Direct / standalone lessons on this category node ── */}
-        {!lessonsLoading && directLessons.length > 0 && (
+        {/* ── Roll-up lessons: all lessons from descendant series ── */}
+        {/* When rollupLessons exist they already include direct lessons (deduped above).
+            When no child series exist, falls back to directLessons only. */}
+        {!lessonsLoading && !rollupLoading && allLessons.length > 0 && (
           <section style={{ marginTop: "2.5rem" }}>
             <h2
               style={{
@@ -379,10 +504,10 @@ export default function CategoryPage() {
                 borderBottom: `2px solid rgba(196,162,101,0.2)`,
               }}
             >
-              שיעורים בודדים בקטגוריה
+              כל השיעורים ({allLessons.length})
             </h2>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              {directLessons.map((l) => (
+              {allLessons.map((l) => (
                 <LessonRow
                   key={l.id}
                   lesson={l}

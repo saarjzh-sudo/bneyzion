@@ -57,166 +57,139 @@ const ROOT_IDS = {
   maps:         "4d78557b-da8b-4b1f-8d8e-09d74ff3070a",
   howToTeach:   "26e30725-d5d0-4d88-8f73-f7a279801241",
   riddles:      "c852edd8-d959-4c8d-bf7e-17b5881275fa",
-  maagarEzrei:  "6bfb7aaa-cd9e-4562-b087-a37fcc24d295",
-  maagarTorah:  "2e248097-b954-4c28-91dc-b84a19f9fabc",
-  maagarNeviim: "42ac131e-631d-4518-8896-86cd1c49c07a",
-  maagarKetuvim:"cb088913-d868-4203-965a-117e5569e170",
 };
 
 const TORAH_ORDER   = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"];
 const KETUVIM_ORDER = ["תהלים", "משלי", "איוב", "שיר השירים", "רות", "איכה", "קהלת", "אסתר", "דניאל", "עזרא", "נחמיה"];
 
+/**
+ * Fixed 31-creator list (CODE-SPEC §11 CA5).
+ * Order = old sidebar he-alphabetical order. IDs from teachers_plan.json stats.creators.
+ * includes dual-role rabbis + content_creators regardless of entity_type/status (CA6).
+ */
+const CREATOR_IDS_ORDERED = [
+  "a1b2c3d4-1111-4444-aaaa-111111111111", // אוריה כראדי
+  "e1111111-1111-1111-1111-111111111105", // הרב אורי שטמלר
+  "167ed180-6ced-45af-b5d7-e97a916fa93a", // הרב אשי בלייכר
+  "e1111111-1111-1111-1111-111111111121", // הרב בניה כהן
+  "80fefb33-e324-4eee-9e47-0502724ae149", // הרב גדי שר שלום
+  "e1111111-1111-1111-1111-111111111101", // הרב דביר אפלבוים
+  "1371e495-c30b-44f5-b3d7-8b3d08f4ca75", // הרב חסדאי בר אור
+  "c3d4e5f6-3333-4444-cccc-333333333333", // הרב ידידיה שילה
+  "7443c208-f2f2-42f5-bf05-af2554855fbd", // הרב יהודה בשושה
+  "356f3470-86cf-4da4-8c34-ba76370ebe4d", // הרב יונתן לוי
+  "47569464-d3c7-4e9d-93c5-8ceaebdb031f", // הרב יורם אליהו
+  "e97e2b67-5f0f-436f-9fc1-54f706a7a20e", // הרב יצחק עמראני
+  "9f357f02-5557-4dba-a941-fdb1ef681f4a", // הרב מאיר גרשונזון
+  "71aa933c-5548-4ea7-8be0-dfb659202660", // הרב מאיר הילביץ'
+  "21815917-0c20-4ad2-b6ab-3943956c9a55", // הרב מנחם אליהו
+  "e1111111-1111-1111-1111-111111111120", // הרב נחום אריאל
+  "d6666666-6666-6666-6666-666666666666", // הרב ניסים כהן
+  "e1111111-1111-1111-1111-111111111102", // הרב עדי איצקוביץ'
+  "e1111111-1111-1111-1111-111111111104", // הרב עמוס נתנאל
+  "3da1df9d-4ed5-48ba-9ffa-e3c5271d40e1", // הרב עמירם אלבה
+  "744da303-22be-4062-a822-4ba8e8f1b02d", // הרב עמנואל בן ארצי
+  "d4e5f6a7-4444-4444-dddd-444444444444", // הרב שלמה כץ
+  "0ae09e02-2089-4a99-a1d5-8a6b0a503f81", // הרב שמעון לוי והרב נתן מולאיוף
+  "d4e5f6a7-6666-6666-ffff-666666666666", // הרב שמעון שוהם
+  "6f4b2572-b019-4832-9547-de7e8bc6d909", // ושננתם - אוצר התורה
+  "7fcd7014-5eef-4e9b-b792-e6460d75e720", // ישקו העדרים
+  "d4e5f6a7-5555-5555-eeee-555555555555", // מחבר לא ידוע
+  "1be980e3-a688-47aa-9eaf-adfa23b105b6", // מכון דעת סופרים
+  "e1111111-1111-1111-1111-111111111103", // נתן מארגל
+  "b2c3d4e5-2222-4444-bbbb-222222222222", // סידור שים שלום
+  "b5555555-5555-5555-5555-555555555555", // תלמוד תורה מורשה
+] as const;
+
 // ─── Hook ───────────────────────────────────────────────────────────────────
 
 export function useTeacherSidebar(): TeacherSidebarData {
   const q = useQuery({
-    queryKey: ["teacher-sidebar-v1"],
+    queryKey: ["teacher-sidebar-v2"],
     queryFn: async () => {
-      // ── 1. Get all books under Torah / Nevi'im / Ketuvim roots ────────────
+      // ── 1. Tree-driven book lists (CODE-SPEC §11 CA10 / tree CA10) ────────
+      // Fetch direct children of Torah/Neviim/Ketuvim roots, ordered by sort_order then title.
+      // sort_order 1..N = canonical sidebar order set by tree_plan; 0/NULL = page-only extras.
       const mainCatIds = [ROOT_IDS.torah, ROOT_IDS.neviim, ROOT_IDS.ketuvim];
 
       const { data: booksRaw } = await supabase
         .from("series")
-        .select("id, title, parent_id")
+        .select("id, title, parent_id, sort_order")
         .in("parent_id", mainCatIds)
-        .order("title");
+        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("title", { ascending: true });
 
-      const books = booksRaw || [];
+      const books = (booksRaw || []) as { id: string; title: string; parent_id: string; sort_order: number | null }[];
 
-      // ── 2. ד4 fix: find series that have teacher-tagged LESSONS (not series.audience_tags)
-      // Root cause analysis (2026-06-02):
-      //   - DB stores audience_tags on LESSONS, not series nodes.
-      //   - Teacher series are sometimes grandchildren of books (book → sub-folder → teacher-series),
-      //     not direct children. Old direct-child lookup missed them.
-      //   - Example: "בראשית" teacher series (8 items) are under parent "בראשית"(2e248097)
-      //     which is under "תורה"(livuyTatim tree), not under torah root directly.
-      // New approach: 3 steps
-      //   a) Get distinct series_ids from teacher lessons
-      //   b) Get their parent_ids (and grandparent_ids via a second fetch)
-      //   c) Match against bookIds to build childrenByBook
-      const { data: teacherLessonsRaw } = await supabase
-        .from("lessons")
-        .select("series_id")
-        .contains("audience_tags", ["teachers"])
-        .eq("status", "published")
-        .not("series_id", "is", null)
-        .limit(10000);
-
-      const teacherSeriesIds = [
-        ...new Set((teacherLessonsRaw || []).map((l: any) => l.series_id as string).filter(Boolean)),
-      ];
-
-      // Fetch those series to get id/title/parent_id (up to 500)
-      let teacherSeriesMeta: { id: string; title: string; parent_id: string | null }[] = [];
-      if (teacherSeriesIds.length > 0) {
-        const { data } = await supabase
-          .from("series")
-          .select("id, title, parent_id")
-          .in("id", teacherSeriesIds.slice(0, 500))
-          .gt("lesson_count", 0)
-          .order("title");
-        teacherSeriesMeta = (data || []) as { id: string; title: string; parent_id: string | null }[];
-      }
-
+      // For each book, get its direct children (the teacher series under that book),
+      // ordered by sort_order then title. Only include those with lesson_count > 0
+      // or status active/published (series containers may have 0 direct lessons
+      // but group sub-series; skip empty drafts).
       const bookIds = books.map((b) => b.id);
-      // Build a book-title → book-id map for matching by title (handles alternate path)
-      const bookByTitle = new Map(books.map((b) => [b.title, b.id]));
 
-      // Step b: collect unique parentIds of teacher series that are NOT already bookIds
-      const intermediateParentIds = [
-        ...new Set(
-          teacherSeriesMeta
-            .map((s) => s.parent_id)
-            .filter((pid): pid is string => !!pid && !bookIds.includes(pid))
-        ),
-      ];
-
-      // Fetch those intermediate nodes to get their parent_id (grandparent)
-      let intermediateMeta: { id: string; title: string; parent_id: string | null }[] = [];
-      if (intermediateParentIds.length > 0) {
+      let childSeriesRaw: { id: string; title: string; parent_id: string; sort_order: number | null; lesson_count: number }[] = [];
+      if (bookIds.length > 0) {
+        // Fetch in a single query (books are bounded: Torah=5, Neviim=21, Ketuvim=11 = 37 max)
         const { data } = await supabase
           .from("series")
-          .select("id, title, parent_id")
-          .in("id", intermediateParentIds.slice(0, 300));
-        intermediateMeta = (data || []) as { id: string; title: string; parent_id: string | null }[];
+          .select("id, title, parent_id, sort_order, lesson_count")
+          .in("parent_id", bookIds)
+          .in("status", ["active", "published"])
+          .gt("lesson_count", 0)
+          .order("sort_order", { ascending: true, nullsFirst: false })
+          .order("title", { ascending: true });
+        childSeriesRaw = (data || []) as typeof childSeriesRaw;
       }
 
-      // Build: intermediateId → bookId (if intermediate's parent is a book OR intermediate IS a book)
-      const intermediateToBook = new Map<string, string>();
-      for (const im of intermediateMeta) {
-        if (im.parent_id && bookIds.includes(im.parent_id)) {
-          // intermediate's parent is a book — intermediate is a sub-folder under the book
-          intermediateToBook.set(im.id, im.parent_id);
-        } else {
-          // Try matching intermediate by title to a known book
-          const bookIdByTitle = bookByTitle.get(im.title);
-          if (bookIdByTitle) intermediateToBook.set(im.id, bookIdByTitle);
-        }
-      }
-
-      // Step c: build childrenByBook — resolve each teacher series to its book
+      // Group children by book
       const childrenByBook = new Map<string, { id: string; title: string }[]>();
-      for (const ts of teacherSeriesMeta) {
-        let targetBookId: string | null = null;
-        if (ts.parent_id && bookIds.includes(ts.parent_id)) {
-          targetBookId = ts.parent_id;
-        } else if (ts.parent_id && intermediateToBook.has(ts.parent_id)) {
-          targetBookId = intermediateToBook.get(ts.parent_id)!;
-        }
-        if (targetBookId) {
-          const arr = childrenByBook.get(targetBookId) || [];
-          arr.push({ id: ts.id, title: ts.title });
-          childrenByBook.set(targetBookId, arr);
-        }
+      for (const c of childSeriesRaw) {
+        const arr = childrenByBook.get(c.parent_id) || [];
+        arr.push({ id: c.id, title: c.title });
+        childrenByBook.set(c.parent_id, arr);
       }
 
-      // Sort each bucket alphabetically
-      for (const [k, v] of childrenByBook.entries()) {
-        childrenByBook.set(k, v.sort((a, b) => a.title.localeCompare(b.title, "he")));
-      }
+      // ── 2. Build book trees ────────────────────────────────────────────────
+      const torahRaw   = books.filter((b) => b.parent_id === ROOT_IDS.torah);
+      const neviimRaw  = books.filter((b) => b.parent_id === ROOT_IDS.neviim);
+      const ketuvimRaw = books.filter((b) => b.parent_id === ROOT_IDS.ketuvim);
 
-      // ── 3. Build book trees ───────────────────────────────────────────────
-      const torahRaw = books.filter((b) => b.parent_id === ROOT_IDS.torah);
+      // Torah: canonical order from TORAH_ORDER (fallback to sort_order from DB)
       const torahBooks: TeacherSidebarBook[] = TORAH_ORDER
         .map((name) => torahRaw.find((b) => b.title === name))
         .filter(Boolean)
-        .map((b) => ({
-          id:       b!.id,
-          title:    b!.title,
-          children: childrenByBook.get(b!.id) || [],
-        }));
+        .map((b) => ({ id: b!.id, title: b!.title, children: childrenByBook.get(b!.id) || [] }));
 
-      const neviimRaw = books.filter((b) => b.parent_id === ROOT_IDS.neviim);
-      const neviimBooks: TeacherSidebarBook[] = sortByBiblicalOrder(neviimRaw).map((b) => ({
-        id:       b.id,
-        title:    b.title,
-        children: childrenByBook.get(b.id) || [],
-      }));
+      // Neviim: sort_order from tree_plan (already sorted by DB query); fall back to biblical order
+      const neviimSorted = neviimRaw.filter((b) => (b.sort_order ?? 0) > 0);
+      const neviimUnsorted = neviimRaw.filter((b) => !((b.sort_order ?? 0) > 0));
+      const neviimBooks: TeacherSidebarBook[] = [
+        ...neviimSorted,
+        ...sortByBiblicalOrder(neviimUnsorted),
+      ].map((b) => ({ id: b.id, title: b.title, children: childrenByBook.get(b.id) || [] }));
 
-      const ketuvimRaw = books.filter((b) => b.parent_id === ROOT_IDS.ketuvim);
+      // Ketuvim: canonical order from KETUVIM_ORDER
       const ketuvimBooks: TeacherSidebarBook[] = KETUVIM_ORDER
         .map((name) => ketuvimRaw.find((b) => b.title === name))
         .filter(Boolean)
-        .map((b) => ({
-          id:       b!.id,
-          title:    b!.title,
-          children: childrenByBook.get(b!.id) || [],
-        }));
+        .map((b) => ({ id: b!.id, title: b!.title, children: childrenByBook.get(b!.id) || [] }));
 
-      // ── 4. Tools sections ─────────────────────────────────────────────────
+      // ── 3. Tools sections ─────────────────────────────────────────────────
       const toolParentIds = [ROOT_IDS.tools, ROOT_IDS.livuyTatim, ROOT_IDS.maps, ROOT_IDS.howToTeach, ROOT_IDS.riddles];
 
       const { data: toolRootsRaw } = await supabase
         .from("series")
-        .select("id, title, lesson_count")
+        .select("id, title, lesson_count, sort_order")
         .in("id", toolParentIds)
+        .order("sort_order", { ascending: true, nullsFirst: false })
         .order("title");
 
       const { data: toolChildrenRaw } = await supabase
         .from("series")
-        .select("id, title, parent_id")
+        .select("id, title, parent_id, sort_order")
         .in("parent_id", toolParentIds)
         .contains("audience_tags", ["teachers"])
+        .order("sort_order", { ascending: true, nullsFirst: false })
         .order("title");
 
       const toolChildren = toolChildrenRaw || [];
@@ -233,31 +206,23 @@ export function useTeacherSidebar(): TeacherSidebarData {
         children: toolChildrenByParent.get(r.id) || [],
       }));
 
-      // ── 5. Rabbis with teacher content ────────────────────────────────────
-      // Get distinct rabbi_ids from teacher-tagged series
-      const { data: taggedSeries } = await supabase
-        .from("series")
-        .select("rabbi_id")
-        .contains("audience_tags", ["teachers"])
-        .gt("lesson_count", 0)
-        .not("rabbi_id", "is", null);
+      // ── 4. Creators (yotzrim) — fixed 31-list, old sidebar order (CA5/CA6) ─
+      // Fetch names for the fixed ID list regardless of entity_type/status.
+      // Counts = number of rabbi_page_items rows per creator (proxy for page depth).
+      const { data: creatorsRaw } = await supabase
+        .from("rabbis")
+        .select("id, name, lesson_count")
+        .in("id", [...CREATOR_IDS_ORDERED]);
 
-      const rabbiIds = [...new Set((taggedSeries || []).map((s) => s.rabbi_id!))].slice(0, 40);
+      const creatorByRabbiId = new Map(
+        (creatorsRaw || []).map((r) => [r.id, { id: r.id, name: r.name, lessonCount: r.lesson_count }])
+      );
 
-      let yotzrimRabbis: TeacherSidebarRabbi[] = [];
-      if (rabbiIds.length > 0) {
-        const { data: rabbisRaw } = await supabase
-          .from("rabbis")
-          .select("id, name, lesson_count")
-          .in("id", rabbiIds)
-          .order("lesson_count", { ascending: false });
-
-        yotzrimRabbis = (rabbisRaw || []).map((r) => ({
-          id:          r.id,
-          name:        r.name,
-          lessonCount: r.lesson_count,
-        }));
-      }
+      // Preserve the canonical old-sidebar order (CREATOR_IDS_ORDERED order)
+      const yotzrimRabbis: TeacherSidebarRabbi[] = CREATOR_IDS_ORDERED
+        .map((id) => creatorByRabbiId.get(id))
+        .filter((r): r is NonNullable<typeof r> => !!r)
+        .map((r) => ({ id: r.id, name: r.name, lessonCount: r.lessonCount }));
 
       return { torahBooks, neviimBooks, ketuvimBooks, toolsSections, yotzrimRabbis };
     },
