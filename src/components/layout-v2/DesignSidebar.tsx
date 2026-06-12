@@ -55,6 +55,9 @@ import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
 //   Daniel → "כל התכנים בספר X"
 //   Ezra+Nehemia (combined) → "כל עזרא ונחמיה"
 //   Everything else → "כל השיעורים בספר X"
+// Books whose old-site sidebar had NO "כל השיעורים" alias row at all
+const BOOKS_WITHOUT_ALIAS = new Set(["איוב", "שיר השירים", "אסתר"]);
+
 function bookAliasLabel(catTitle: string, bookTitle: string): string {
   if (catTitle === "תורה") return `כל השיעורים בחומש ${bookTitle}`;
   if (bookTitle === "איכה" || bookTitle === "קהלת") return `כל השיעורים במגילת ${bookTitle}`;
@@ -895,8 +898,8 @@ function ContentTree({
                               paddingBottom: "0.2rem",
                             }}
                           >
-                            {/* "כל השיעורים בספר/בחומש/במגילת" — shown only when >1 child */}
-                            {book.children.length > 1 && (
+                            {/* "כל השיעורים בספר/בחומש/במגילת" — only where the old site had it */}
+                            {book.children.length > 1 && !BOOKS_WITHOUT_ALIAS.has(book.title) && (
                               <button
                                 onClick={() => onNavigate(`/category/${book.id}`)}
                                 style={{

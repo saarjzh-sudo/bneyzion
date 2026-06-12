@@ -426,13 +426,15 @@ def sim_sidebar():
         ("select", "id,title,parent_id"),
         ("parent_id", f"in.({','.join(cat_ids)})"),
         ("status", "in.(active,published,category)"),
-        ("order", "title"),
+        ("sort_order", "gte.1"), ("sort_order", "lte.999"),
+        ("order", "sort_order.asc,title.asc"),
     ])
     nev_books = rest_get("series", [
         ("select", "id,title,parent_id"),
         ("parent_id", f"eq.{ROOT_IDS['neviim']}"),
         ("status", "eq.category"),
-        ("order", "title"),
+        ("sort_order", "gte.1"), ("sort_order", "lte.999"),
+        ("order", "sort_order.asc,title.asc"),
     ])
     all_books = (tk_books if not is_err(tk_books) else []) + (nev_books if not is_err(nev_books) else [])
 
@@ -476,21 +478,26 @@ def sim_sidebar():
             torah_books.append({"id": b["id"], "title": b["title"], "children": children_by_book.get(b["id"], [])})
     # §2.5 tree CA8: synthetic 6th Torah entry (useContentSidebar.ts, fixed 12.6.2026)
     torah_books.append({"id": ROOT_IDS["riddles"], "title": 'חידות לילדים פ״ש', "children": []})
-    nev = sort_by_biblical_order([b for b in all_books if b["parent_id"] == ROOT_IDS["neviim"]])
-    ket = sort_by_biblical_order([b for b in all_books if b["parent_id"] == ROOT_IDS["ketuvim"]])
+    nev = [b for b in all_books if b["parent_id"] == ROOT_IDS["neviim"]]
+    ket = [b for b in all_books if b["parent_id"] == ROOT_IDS["ketuvim"]]
     neviim_books = [{"id": b["id"], "title": b["title"], "children": children_by_book.get(b["id"], [])} for b in nev]
     ketuvim_books = [{"id": b["id"], "title": b["title"], "children": children_by_book.get(b["id"], [])} for b in ket]
 
+    sec_child_ids = [c["id"] for c in expandable_children]
+    sec_grand = children_of(sec_child_ids) if sec_child_ids else []
+
     def get_children(pid):
-        return [c for c in expandable_children if c["parent_id"] == pid]
+        return [dict(c, children=[g for g in sec_grand if g["parent_id"] == c["id"]])
+                for c in expandable_children if c["parent_id"] == pid]
 
     extra_sections = [
         {"id": ROOT_IDS["howToLearn"], "title": 'איך לומדים תנ"ך', "children": get_children(ROOT_IDS["howToLearn"])},
         {"id": ROOT_IDS["generalTopics"], "title": 'נושאים כלליים בתנ"ך', "children": get_children(ROOT_IDS["generalTopics"])},
-        {"id": ROOT_IDS["moadim"], "title": "המועדים", "children": get_children(ROOT_IDS["moadim"])},
+        {"id": ROOT_IDS["moadim"], "title": "מועדים", "children": get_children(ROOT_IDS["moadim"])},
         {"id": ROOT_IDS["haftarot"], "title": "הפטרות", "children": get_children(ROOT_IDS["haftarot"])},
-        {"id": ROOT_IDS["tools"], "title": "כלי עזר - טבלאות זמני המאורעות ומפות", "children": get_children(ROOT_IDS["tools"])},
         {"id": ROOT_IDS["yemeiIyun"], "title": 'ימי עיון בתנ"ך', "children": get_children(ROOT_IDS["yemeiIyun"])},
+        {"id": ROOT_IDS["tools"], "title": "כלי עזר - טבלאות זמני המאורעות ומפות", "children": get_children(ROOT_IDS["tools"])},
+        {"id": "041ce810-92ae-59e4-9e07-11fd014255fa", "title": 'פרוייקט התנ"ך המוקלט - מתעדכן', "children": []},
         {"id": ROOT_IDS["livuyTatim"], "title": 'ליווי ת"תים', "children": get_children(ROOT_IDS["livuyTatim"])},
     ]
     return {
@@ -608,15 +615,26 @@ def run_sidebar(results):
                 [{"key": normalize_he(x["title"])} for x in oc],
                 [{"key": normalize_he(x["title"])} for x in rendered],
             )
-            # depth gap: old grandchildren that the new sidebar cannot render (one level only)
-            grand = sum(len(x.get("children", [])) for x in oc)
+            # nested grandchildren compare (sidebar renders depth-3 since commit 31450f7f)
+            old_g, new_g = [], []
+            sim_kids = {normalize_he(c["title"]): c for c in sec["children"]}
+            for x in oc:
+                for g in x.get("children", []):
+                    old_g.append(normalize_he(g["title"]))
+                sk = sim_kids.get(normalize_he(x["title"]))
+                if sk:
+                    for g in sk.get("children", []):
+                        new_g.append(normalize_he(g["title"]))
+            g_missing = [t for t in old_g if t not in set(new_g)]
+            g_extra = [t for t in new_g if t not in set(old_g)]
             entry.update({
                 "kind": "section",
-                "missing": cmp1["missing"][:20],
-                "extra": [normalize_he(rendered[i]["title"]) for i in cmp1["extra_idx"]][:20],
+                "missing": (cmp1["missing"] + g_missing)[:20],
+                "extra": ([normalize_he(rendered[i]["title"]) for i in cmp1["extra_idx"]] + g_extra)[:20],
                 "order_ok": cmp1["order_ok"],
-                "old_grandchildren_not_renderable": grand,
-                "pass": (not cmp1["missing"]) and (not cmp1["extra_idx"]) and cmp1["order_ok"] and grand == 0,
+                "grandchildren_old": len(old_g), "grandchildren_new": len(new_g),
+                "pass": (not cmp1["missing"]) and (not cmp1["extra_idx"]) and cmp1["order_ok"]
+                        and not g_missing and not g_extra,
             })
         else:
             # link-only top rows (ניווט / פרשת השבוע / פרוייקט התנ"ך המוקלט)
