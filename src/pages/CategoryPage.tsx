@@ -109,30 +109,124 @@ function isShut(l: DirectLesson): boolean {
   return st.includes("שו") || st.includes("shut") || ct.includes("שו") || ct.includes("shut");
 }
 
-// ─── hook: direct lessons on the category node ───────────────────────────────
+// ─── parsha-event-series regex (mirrors useContentSidebar) ──────────────────
+// Matches Torah parsha containers: "פרשת נח | ו-יא", "פרשת בראשית | א-ו", etc.
+// Deliberately does NOT match Neviim chapter series ("הושע פרק א").
+const IS_PARSHA_EVENT = /^\s*פרשת\s.*\|\s*[א-ת]/;
 
-function useDirectLessons(nodeId: string | undefined) {
-  return useQuery({
-    queryKey: ["category-direct-lessons", nodeId],
+// ─── normalise title for dedup ───────────────────────────────────────────────
+function normTitle(t: string): string {
+  return t
+    .trim()
+    .replace(/[״"'׳'""`]/g, "")
+    .replace(/\s+/g, " ");
+}
+
+// ─── hook: direct + standalone lessons for category node ─────────────────────
+//
+// Three-pass approach:
+//  Pass 1 — Fetch direct children series of this node (one query).
+//            Parsha event-series (title matches IS_PARSHA_EVENT) are
+//            excluded from cards but their lessons ARE the standalone band.
+//            For Neviim/Ketuvim (no parsha-event children) this gives an
+//            empty parsha-ids list → standalone band = category-direct only.
+//  Pass 2 — Fetch lessons where series_id IN (nodeId ∪ parshaEventIds)
+//            AND copied_from IS NULL (originals only, not rabbi-series copies).
+//  Pass 3 — Client-side: dedup by normalised title, exclude titles that appear
+//            in the canonical series cards (canonicalTitles set, passed in).
+//
+// Safety for Neviim: if parshaEventIds is empty, only the 4-5 lessons directly
+// on the node are returned (correct — chapter series lessons live in the cards).
+
+function useDirectLessons(
+  nodeId: string | undefined,
+  canonicalSeriesCardIds: string[],
+) {
+  // Pass 1: get direct children and identify parsha event-series
+  const childrenQuery = useQuery({
+    queryKey: ["category-children-ids", nodeId],
     enabled: !!nodeId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
+      const { data } = await supabase
+        .from("series")
+        .select("id, title")
+        .eq("parent_id", nodeId!)
+        .in("status", ["active", "published"])
+        .limit(200);
+      return (data ?? []) as { id: string; title: string }[];
+    },
+  });
+
+  const parshaEventIds: string[] = (childrenQuery.data ?? [])
+    .filter((s) => IS_PARSHA_EVENT.test(s.title))
+    .map((s) => s.id);
+
+  const allSourceIds = nodeId ? [nodeId, ...parshaEventIds] : [];
+
+  // Pass 2: lessons from (node + parsha event-series), originals only
+  const lessonsQuery = useQuery({
+    queryKey: ["category-standalone-lessons", nodeId, parshaEventIds.sort().join(",")],
+    enabled: !!nodeId && childrenQuery.isFetched,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      if (allSourceIds.length === 0) return [] as DirectLesson[];
       const { data, error } = await supabase
         .from("lessons")
         .select(
           "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, series_id, rabbi_id, source_type, content_type, rabbis!lessons_rabbi_id_fkey(name)"
         )
-        .eq("series_id", nodeId!)
+        .in("series_id", allSourceIds)
         .eq("status", "published")
+        .is("copied_from", null)
         .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("bible_chapter", { ascending: true, nullsFirst: false })
         .order("title", { ascending: true })
-        .limit(1000);
+        .limit(2000);
       if (error) throw error;
       return (data ?? []) as DirectLesson[];
     },
   });
+
+  // Pass 3: fetch canonical card series lesson titles to exclude duplicates
+  // (lessons whose title is already visible in a displayed series card)
+  const cardLessonTitlesQuery = useQuery({
+    queryKey: ["category-card-lesson-titles", canonicalSeriesCardIds.sort().join(",")],
+    enabled: canonicalSeriesCardIds.length > 0,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      if (canonicalSeriesCardIds.length === 0) return new Set<string>();
+      const { data } = await supabase
+        .from("lessons")
+        .select("title")
+        .in("series_id", canonicalSeriesCardIds)
+        .eq("status", "published")
+        .limit(5000);
+      const titles = new Set<string>();
+      for (const l of data ?? []) titles.add(normTitle(l.title));
+      return titles;
+    },
+  });
+
+  const cardTitles = cardLessonTitlesQuery.data ?? new Set<string>();
+
+  // Client-side dedup by normalised title + exclude card titles
+  const rawLessons = lessonsQuery.data ?? [];
+  const seen = new Map<string, DirectLesson>();
+  for (const l of rawLessons) {
+    const key = normTitle(l.title);
+    if (!seen.has(key) && !cardTitles.has(key)) {
+      seen.set(key, l);
+    }
+  }
+  const deduped = Array.from(seen.values());
+
+  return {
+    data: deduped,
+    isLoading:
+      childrenQuery.isLoading || lessonsQuery.isLoading || cardLessonTitlesQuery.isLoading,
+  };
 }
 
 // ─── hook: batched distinct rabbis for all visible series (C6 / R5) ──────────
@@ -197,23 +291,33 @@ export default function CategoryPage() {
   const { useSeriesForNode } = useContentSidebar();
   const { data: seriesList = [], isLoading: seriesLoading } = useSeriesForNode(id ?? null);
 
-  const { data: directLessons = [], isLoading: lessonsLoading } = useDirectLessons(id);
+  // Cast to canonical type (hook returns extra fields rabbiId + imageUrl + isDraft)
+  // Filter out empty placeholder nodes (lesson_count=0, not a draft-in-progress):
+  //   - nav containers like "סדרות על החומש" (active, 0 lessons) or "דפי עבודה" (published, 0)
+  //   - Only keep 0-lesson entries if isDraft=true (they show a "בהכנה" badge on the card)
+  const canonicalSeries = (seriesList as unknown as CanonicalSeries[]).filter(
+    (s) => (s.lessonCount ?? 0) > 0 || s.isDraft,
+  );
+
+  // Card series IDs — used to exclude their lessons from the standalone band
+  const cardSeriesIds = canonicalSeries.map((s) => s.id);
+
+  const { data: directLessons, isLoading: lessonsLoading } = useDirectLessons(id, cardSeriesIds);
+  const allDirectLessons = directLessons ?? [];
 
   const isLoading = nodeLoading || seriesLoading;
   const title = node?.title ?? "קטגוריה";
 
-  // Cast to canonical type (hook returns extra fields rabbiId + imageUrl + isDraft)
-  const canonicalSeries = seriesList as unknown as CanonicalSeries[];
-
   // Batched multi-rabbi map (C6)
   const rabbisMap = useSeriesRabbisMap(canonicalSeries);
 
-  // Split direct lessons into regular lessons and שו"ת (C4c / R4)
-  const standaloneRegular = directLessons.filter((l) => !isShut(l));
-  const standaloneShut = directLessons.filter((l) => isShut(l));
+  // Split standalone lessons into regular + שו"ת (C4c)
+  const standaloneRegular = allDirectLessons.filter((l) => !isShut(l));
+  const standaloneShut = allDirectLessons.filter((l) => isShut(l));
 
-  // Hero lesson count = standalone lessons only (R7)
-  const lessonBadgeCount = directLessons.length;
+  // Badge counts: N סדרות · M שיעורים (real counts, not inflated lesson_count)
+  const seriesBadgeCount = canonicalSeries.length;
+  const lessonBadgeCount = allDirectLessons.length;
 
   return (
     <DesignLayout>
@@ -341,48 +445,50 @@ export default function CategoryPage() {
           </p>
         )}
 
-        {/* Badges */}
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
-          {!seriesLoading && canonicalSeries.length > 0 && (
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                padding: "0.3rem 0.75rem",
-                borderRadius: radii.pill,
-                background: "rgba(139,111,71,0.08)",
-                border: `1px solid rgba(139,111,71,0.15)`,
-                fontFamily: fonts.body,
-                fontSize: "0.78rem",
-                color: colors.goldDark,
-                fontWeight: 600,
-              }}
-            >
-              <BookOpen size={13} />
-              {canonicalSeries.length} סדרות
-            </div>
-          )}
-          {!lessonsLoading && lessonBadgeCount > 0 && (
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                padding: "0.3rem 0.75rem",
-                borderRadius: radii.pill,
-                background: "rgba(139,111,71,0.06)",
-                border: `1px solid rgba(139,111,71,0.12)`,
-                fontFamily: fonts.body,
-                fontSize: "0.78rem",
-                color: colors.textMuted,
-                fontWeight: 500,
-              }}
-            >
-              {lessonBadgeCount} שיעורים
-            </div>
-          )}
-        </div>
+        {/* Badges — "N סדרות · M שיעורים" */}
+        {(!seriesLoading || !lessonsLoading) && (seriesBadgeCount > 0 || lessonBadgeCount > 0) && (
+          <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
+            {!seriesLoading && seriesBadgeCount > 0 && (
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.3rem 0.75rem",
+                  borderRadius: radii.pill,
+                  background: "rgba(139,111,71,0.08)",
+                  border: `1px solid rgba(139,111,71,0.15)`,
+                  fontFamily: fonts.body,
+                  fontSize: "0.78rem",
+                  color: colors.goldDark,
+                  fontWeight: 600,
+                }}
+              >
+                <BookOpen size={13} />
+                {seriesBadgeCount} סדרות
+              </div>
+            )}
+            {!lessonsLoading && lessonBadgeCount > 0 && (
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.3rem 0.75rem",
+                  borderRadius: radii.pill,
+                  background: "rgba(139,111,71,0.06)",
+                  border: `1px solid rgba(139,111,71,0.12)`,
+                  fontFamily: fonts.body,
+                  fontSize: "0.78rem",
+                  color: colors.textMuted,
+                  fontWeight: 500,
+                }}
+              >
+                {lessonBadgeCount} שיעורים
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* ── Body ── */}
@@ -410,7 +516,7 @@ export default function CategoryPage() {
               ))}
             </div>
           </section>
-        ) : !lessonsLoading && directLessons.length === 0 ? (
+        ) : !lessonsLoading && allDirectLessons.length === 0 ? (
           <EmptyState title={title} />
         ) : null}
 
