@@ -310,11 +310,22 @@ export function useContentSidebar() {
         const normTitle = (t: string) =>
           t.trim().replace(/[״"'׳‘’“”`]/g, "").replace(/\s+/g, " ");
 
+        // Parsha event-series clones (consolidation nodes) live in the sidebar tree only —
+        // they must NOT appear as category-page series rows. Old site shows 0 of them.
+        // Pattern: "פרשת <name> | <chapter-range>"  e.g. "פרשת נח | ו-יא".
+        // SAFETY (R1): pattern-scoped on title only — never book-scoped or sort_order-scoped.
+        // Neviim event-series ("הושע פרק א", "זכריה פרק ב") have no "|" range → not matched.
+        // Regression proof: ^\s*פרשת\b.*\|\s*[א-ת] matches 0 children of any Neviim book.
+        // Non-matched examples (must stay false): "פרשת שבוע-בראשית", "פרשת השבוע עפ"י הרמב"ן", "פרשת שבוע במדבר"
+        const isParshaEventSeries = (t: string) => /^\s*פרשת\b.*\|\s*[א-ת]/.test(t.trim());
+
         // Drop direct-child placeholder sub-categories: a draft node with 0 lessons whose parent IS
         // the requested node is a sub-category shell (old site shows it in the sidebar, not as a
         // center series). Deeper draft-only leaves (e.g. parent = a sub-category) are kept.
         const seriesFiltered = series.filter(
-          (s) => !(s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === nodeId),
+          (s) =>
+            !isParshaEventSeries(s.title) &&
+            !(s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === nodeId),
         );
 
         // Canonical dedup: group by normalized title, pick best version
@@ -357,6 +368,8 @@ export function useContentSidebar() {
           if (bandA === 0) {
             if ((aOrder || 0) !== (bOrder || 0)) return (aOrder || 0) - (bOrder || 0);
           }
+          // Both page-only (sort_order 0/NULL): mirror old site's alphabetical series ordering
+          if (bandA === 2 && bandB === 2) return a.title.localeCompare(b.title, "he");
           // Within same position: active/published with lessons before drafts
           const aActive = a.status !== "draft" && (a.lesson_count ?? 0) > 0 ? 1 : 0;
           const bActive = b.status !== "draft" && (b.lesson_count ?? 0) > 0 ? 1 : 0;
@@ -368,12 +381,13 @@ export function useContentSidebar() {
           id: s.id,
           title: s.title,
           lessonCount: s.lesson_count,
+          rabbiId: s.rabbi_id ?? null,
           rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
           sourceType: null,
           description: s.description,
           imageUrl: (s as any).image_url ?? null,
           isDraft: s.status === "draft",
-        })) as (SeriesRow & { imageUrl: string | null; isDraft: boolean })[];
+        })) as (SeriesRow & { rabbiId: string | null; imageUrl: string | null; isDraft: boolean })[];
       },
       enabled: !!nodeId,
       staleTime: 1000 * 60 * 5,

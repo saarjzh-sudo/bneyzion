@@ -11,12 +11,14 @@
  * Layout: DesignLayout (v2 with sidebar).
  */
 
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { BookOpen, ChevronLeft, Loader2, Play, Volume2, FileText } from "lucide-react";
+import { BookOpen, ChevronLeft, Play, FileText, Hash } from "lucide-react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
-import { useBibleBookSeries, useBookCategoryId } from "@/hooks/useBible";
+import { useBibleBookSeries, useBookCategoryId, useBibleBook, useBibleChapterLessons } from "@/hooks/useBible";
 import { useSEO } from "@/hooks/useSEO";
 import { colors, fonts, radii, shadows, getSeriesCoverImage } from "@/lib/designTokens";
+import { formatRabbis } from "@/pages/CategoryPage";
 import { useNavigate } from "react-router-dom";
 
 // ─── Book metadata ────────────────────────────────────────────────────────────
@@ -51,8 +53,18 @@ const BibleBookPage = () => {
   const decodedBook = book ? decodeURIComponent(book) : "";
   const category = getBookCategory(decodedBook);
 
+  const [selectedChapter, setSelectedChapter] = useState<number | null>(null);
+
   const { data: bookCategoryId, isLoading: idLoading } = useBookCategoryId(decodedBook);
   const { data: seriesList = [], isLoading: seriesLoading } = useBibleBookSeries(bookCategoryId ?? undefined);
+  const { data: chapterData } = useBibleBook(decodedBook);
+  const { data: chapterLessons = [], isLoading: chapterLessonsLoading } = useBibleChapterLessons(
+    selectedChapter ? decodedBook : undefined,
+    selectedChapter ?? undefined
+  );
+
+  const chapters = chapterData?.chapters ?? [];
+  const hasChapters = chapters.length > 0;
 
   const isLoading = idLoading || seriesLoading;
 
@@ -170,11 +182,12 @@ const BibleBookPage = () => {
         </div>
       </div>
 
-      {/* ── Series list ── */}
+      {/* ── Content area ── */}
       <div
         dir="rtl"
         style={{ padding: "1.5rem 2rem", maxWidth: 860 }}
       >
+        {/* ── (1) Primary: series list ── */}
         {isLoading ? (
           /* Skeleton rows */
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
@@ -222,9 +235,13 @@ const BibleBookPage = () => {
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {seriesList.map((series) => {
               const imgSrc = resolveSeriesImage(series);
-              const rabbiName = Array.isArray(series.rabbis)
-                ? series.rabbis[0]?.name
-                : (series.rabbis as { name: string } | null)?.name;
+              // C6: resolve all distinct rabbi names (lead first)
+              const allRabbis = Array.isArray(series.rabbis)
+                ? (series.rabbis as { name: string }[]).map((r) => r.name)
+                : series.rabbis
+                ? [(series.rabbis as { name: string }).name]
+                : [];
+              const rabbiLabel = formatRabbis(allRabbis);
 
               return (
                 <div
@@ -295,9 +312,9 @@ const BibleBookPage = () => {
                     >
                       {series.title}
                     </span>
-                    {rabbiName && (
+                    {rabbiLabel && (
                       <span style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted }}>
-                        {rabbiName}
+                        {rabbiLabel}
                       </span>
                     )}
                     {(series.lesson_count ?? 0) > 0 && (
@@ -332,6 +349,130 @@ const BibleBookPage = () => {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* ── (2) Secondary: chapter grid (C8 / R8) ── */}
+        {/* Only shown when bible_chapter data exists (sparse for Torah, denser for Neviim). */}
+        {hasChapters && (
+          <div style={{ marginTop: "2.5rem" }}>
+            <h2
+              style={{
+                fontFamily: fonts.display,
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: colors.textDark,
+                marginBottom: "0.75rem",
+                marginTop: 0,
+                paddingBottom: "0.4rem",
+                borderBottom: `2px solid rgba(196,162,101,0.18)`,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+              }}
+            >
+              <Hash size={15} style={{ color: colors.goldDark }} />
+              ניווט לפי פרק
+            </h2>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.4rem",
+              }}
+            >
+              {chapters.map(({ chapter, count }) => {
+                const isSelected = selectedChapter === chapter;
+                return (
+                  <button
+                    key={chapter}
+                    onClick={() => setSelectedChapter(isSelected ? null : chapter)}
+                    style={{
+                      padding: "0.3rem 0.65rem",
+                      borderRadius: radii.pill,
+                      border: `1px solid ${isSelected ? colors.goldDark : "rgba(139,111,71,0.25)"}`,
+                      background: isSelected ? colors.goldDark : "white",
+                      color: isSelected ? "white" : colors.textDark,
+                      fontFamily: fonts.body,
+                      fontSize: "0.8rem",
+                      fontWeight: isSelected ? 700 : 500,
+                      cursor: "pointer",
+                      transition: "all 0.15s",
+                    }}
+                    title={`${count} שיעורים`}
+                  >
+                    פרק {chapter}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Inline lesson list for selected chapter */}
+            {selectedChapter !== null && (
+              <div style={{ marginTop: "1.25rem" }}>
+                <h3
+                  style={{
+                    fontFamily: fonts.display,
+                    fontSize: "0.9rem",
+                    fontWeight: 700,
+                    color: colors.textMuted,
+                    margin: "0 0 0.75rem",
+                  }}
+                >
+                  פרק {selectedChapter} — שיעורים
+                </h3>
+                {chapterLessonsLoading ? (
+                  <div style={{ padding: "0.75rem", fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textSubtle }}>
+                    טוען...
+                  </div>
+                ) : chapterLessons.length === 0 ? (
+                  <div style={{ padding: "0.75rem", fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textSubtle }}>
+                    אין שיעורים עם מיקום מפורש בפרק זה
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                    {chapterLessons.map((l: any) => {
+                      const rabbiName = Array.isArray(l.rabbis)
+                        ? l.rabbis[0]?.name
+                        : l.rabbis?.name;
+                      return (
+                        <button
+                          key={l.id}
+                          onClick={() => navigate(`/lessons/${l.id}`)}
+                          style={{
+                            width: "100%",
+                            textAlign: "right",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.6rem",
+                            padding: "0.5rem 0.75rem",
+                            background: "white",
+                            border: `1px solid rgba(139,111,71,0.08)`,
+                            borderRadius: radii.md,
+                            cursor: "pointer",
+                            fontFamily: fonts.body,
+                          }}
+                          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(196,162,101,0.05)")}
+                          onMouseLeave={(e) => (e.currentTarget.style.background = "white")}
+                        >
+                          <Play size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: "0.83rem", fontWeight: 600, color: colors.textDark, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              {l.title}
+                            </div>
+                            {rabbiName && (
+                              <div style={{ fontSize: "0.72rem", color: colors.textMuted, marginTop: "0.1rem" }}>
+                                {rabbiName}
+                              </div>
+                            )}
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
       </div>

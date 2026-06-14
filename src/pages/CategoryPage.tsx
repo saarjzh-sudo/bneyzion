@@ -1,28 +1,27 @@
 /**
  * CategoryPage — /category/:id
  *
- * Shows all canonical series under a node (book / topic category) and
- * optionally any "standalone" lessons whose series_id points directly to that node.
+ * Three-part layout mirroring the old site:
+ *   1. Closed series cards (link to /series/:id) — parsha event-series excluded by useSeriesForNode
+ *   2. Standalone lessons (series_id = this node directly)
+ *   3. שו"ת — split from standalone if source_type/content_type marker exists
  *
- * Canonical series rule (matches the old site, fixes 4→6 for "איך לומדים"):
- *   For each unique series title in the descendant tree:
- *     - If an active/published copy with lesson_count > 0 exists → show it
- *     - If only a draft copy exists (no active twin) → show it (preserves parity)
- *     - Never show a draft that has an active/published twin (hidden duplicate)
- *   Category nodes (status=category) are always excluded — they are containers.
- *
- * Under each series — lessons are expanded inline with thumbnail images.
- * Lesson image priority: thumbnail_url → series.image_url → getSeriesCoverImage → default.
+ * C1: parsha event-series filter lives in useContentSidebar.useSeriesForNode (isParshaEventSeries).
+ * C2: SeriesBlock accordion removed; closed SeriesRowCard replaces it.
+ * C3: lesson count shown from series.lessonCount (scoped to the series, not roll-up).
+ * C4: three-part structure: [series cards] → [standalone lessons] → [שו"ת].
+ * C5: children of nested nav-nodes exposed via useSeriesForNode (no change needed in hook).
+ * C6: batched multi-rabbi query via useSeriesRabbisMap + formatRabbis helper.
+ * C7: Hebrew α-sort within page-only band lives in useContentSidebar sort comparator.
+ * C8: BibleBookPage chapter grid is handled separately.
  *
  * Layout: DesignLayout (v2 with sidebar). Cream+gold, RTL.
  */
 
-import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   ChevronLeft,
-  ChevronDown,
   Loader2,
   BookOpen,
   Play,
@@ -30,7 +29,7 @@ import {
   FileText,
   AlertCircle,
   Construction,
-  ExternalLink,
+  Users,
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -48,16 +47,34 @@ import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
 import { supabase } from "@/integrations/supabase/client";
 
-// ─── type for series with canonical fields ───────────────────────────────────
+// ─── types ───────────────────────────────────────────────────────────────────
 
 type CanonicalSeries = {
   id: string;
   title: string;
   lessonCount: number | null;
+  rabbiId: string | null;
   rabbiName: string | null;
   description?: string | null;
   imageUrl?: string | null;
   isDraft?: boolean;
+};
+
+type DirectLesson = {
+  id: string;
+  title: string;
+  duration: number | null;
+  published_at: string | null;
+  thumbnail_url: string | null;
+  video_url: string | null;
+  audio_url: string | null;
+  attachment_url: string | null;
+  bible_chapter: number | null;
+  series_id: string | null;
+  rabbi_id: string | null;
+  source_type: string | null;
+  content_type: string | null;
+  rabbis: { name: string } | null;
 };
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
@@ -66,16 +83,12 @@ function resolveSeriesImage(s: { imageUrl?: string | null; title: string }): str
   return s.imageUrl || getSeriesCoverImage(s.title) || "/images/series-default.png";
 }
 
-function lessonImage(
-  lesson: { thumbnail_url?: string | null },
-  series: { imageUrl?: string | null; title: string }
-): string {
-  return (
-    lesson.thumbnail_url ||
-    series.imageUrl ||
-    getSeriesCoverImage(series.title) ||
-    "/images/series-default.png"
-  );
+/** Format up to 2 rabbi names; >2 → "X, Y ועוד" */
+export function formatRabbis(names: string[]): string {
+  if (names.length === 0) return "";
+  if (names.length === 1) return names[0];
+  if (names.length === 2) return `${names[0]}, ${names[1]}`;
+  return `${names[0]}, ${names[1]} ועוד`;
 }
 
 function lessonMediaIcon(l: {
@@ -89,44 +102,14 @@ function lessonMediaIcon(l: {
   return <BookOpen size={13} style={{ flexShrink: 0 }} />;
 }
 
-// ─── hook: lessons for one series ────────────────────────────────────────────
-
-function useSeriesLessons(seriesId: string) {
-  return useQuery({
-    queryKey: ["series-lessons-expanded", seriesId],
-    enabled: !!seriesId,
-    staleTime: 1000 * 60 * 5,
-    queryFn: async () => {
-      // R-CAT3 fix: align order with /series/:id (bible_chapter nullsLast, then title).
-      // R-CAT4 fix: add dedup to avoid count mismatch between CategoryPage and SeriesPage.
-      // §0.1 order: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC
-      // §3: raise limit 200→1000 (כתובים root needs 280+, תהילים needs 151 series)
-      // §0.3 dual-audience: exclude teacher-only lessons from public series pages.
-      const { data, error } = await supabase
-        .from("lessons")
-        .select(
-          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)"
-        )
-        .eq("series_id", seriesId)
-        .eq("status", "published")
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
-        .order("sort_order", { ascending: true, nullsFirst: false })
-        .order("bible_chapter", { ascending: true, nullsFirst: false })
-        .order("title", { ascending: true })
-        .limit(1000);
-      if (error) throw error;
-      // §0.2 dedup by physical id only
-      const seen = new Set<string>();
-      return (data ?? []).filter((l: any) => {
-        if (seen.has(l.id)) return false;
-        seen.add(l.id);
-        return true;
-      });
-    },
-  });
+/** Detect שו"ת by source_type or content_type marker */
+function isShut(l: DirectLesson): boolean {
+  const st = (l.source_type ?? "").toLowerCase();
+  const ct = (l.content_type ?? "").toLowerCase();
+  return st.includes("שו") || st.includes("shut") || ct.includes("שו") || ct.includes("shut");
 }
 
-// ─── hook: standalone lessons on the category node itself ────────────────────
+// ─── hook: direct lessons on the category node ───────────────────────────────
 
 function useDirectLessons(nodeId: string | undefined) {
   return useQuery({
@@ -134,13 +117,10 @@ function useDirectLessons(nodeId: string | undefined) {
     enabled: !!nodeId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
-      // §0.1 order: sort_order NULLS LAST, bible_chapter NULLS LAST, title ASC
-      // §3: lift cap from 50 → 1000 (book nodes receive שו"ת and direct lessons beyond 50)
-      // §0.3 dual-audience: exclude teacher-only lessons from public category pages.
       const { data, error } = await supabase
         .from("lessons")
         .select(
-          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, series_id, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)"
+          "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, series_id, rabbi_id, source_type, content_type, rabbis!lessons_rabbi_id_fkey(name)"
         )
         .eq("series_id", nodeId!)
         .eq("status", "published")
@@ -150,94 +130,59 @@ function useDirectLessons(nodeId: string | undefined) {
         .order("title", { ascending: true })
         .limit(1000);
       if (error) throw error;
-      return (data ?? []) as RollupLesson[];
+      return (data ?? []) as DirectLesson[];
     },
   });
 }
 
-// ─── hook: roll-up — all lessons from descendant series of a category node ───
+// ─── hook: batched distinct rabbis for all visible series (C6 / R5) ──────────
 //
-// The old site's book pages (e.g. /נביאים/יהושע/) showed ALL lessons across
-// every series under that book (roll-up), not just lessons directly attached
-// to the book node. The new CategoryPage only showed "direct" lessons (series_id
-// = nodeId), producing a count like 14 vs. the old site's 38.
-//
-// Fix: use the existing RPC get_series_descendant_ids to enumerate all
-// descendant series IDs, then fetch their lessons and dedup by id.
-// This is the same RPC used by useContentSidebar.useSeriesForNode.
-//
-// Performance: fetch in chunks of 40 series IDs (PostgREST IN is efficient
-// up to ~100; book nodes typically have 2-20 direct series under them).
-// Cap at 1000 lessons per chunk × N chunks; final dedup by id.
+// One round-trip: fetch all published lessons for ALL visible series ids,
+// group client-side by series_id, build ordered distinct-name list per series.
+// Lead rabbi (series.rabbi_id) always comes first.
 
-type RollupLesson = {
-  id: string;
-  title: string;
-  duration: number | null;
-  thumbnail_url: string | null;
-  video_url: string | null;
-  audio_url: string | null;
-  attachment_url: string | null;
-  bible_chapter: number | null;
-  rabbi_id: string | null;
-  series_id: string | null;
-  rabbis: { name: string } | null;
-};
+type SeriesRabbisMap = Map<string, string[]>; // series_id → ordered distinct rabbi names
 
-function useRollupLessons(nodeId: string | undefined, hasDirectChildren: boolean) {
-  return useQuery({
-    // Only fire when the node has child-series (i.e. it's a book/category container)
-    queryKey: ["category-rollup-lessons", nodeId],
-    enabled: !!nodeId && hasDirectChildren,
+function useSeriesRabbisMap(
+  series: Array<{ id: string; rabbiId: string | null; rabbiName: string | null }>
+): SeriesRabbisMap {
+  const ids = series.map((s) => s.id);
+  const { data } = useQuery({
+    queryKey: ["series-rabbis-batch", ids.sort().join(",")],
+    enabled: ids.length > 0,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
-      // 1. Get all descendant series ids
-      const { data: descendants, error: rpcError } = await supabase.rpc(
-        "get_series_descendant_ids",
-        { root_id: nodeId! }
-      );
-      if (rpcError) throw rpcError;
-
-      const descendantIds: string[] = (descendants || []).map((d: any) => d.series_id as string);
-      if (descendantIds.length === 0) return [];
-
-      // 2. Exclude teachers-only series descendants (public audience filter §0.3)
-      //    (get_series_descendant_ids returns ALL — we filter lessons by audience below)
-      // 3. Fetch lessons from descendant series in chunks of 40
-      const CHUNK = 40;
-      const PAGE = 1000; // PostgREST hard-caps a response at 1000 rows — page within each chunk
-      const allLessons: RollupLesson[] = [];
-      for (let i = 0; i < descendantIds.length; i += CHUNK) {
-        const chunk = descendantIds.slice(i, i + CHUNK);
-        for (let from = 0; ; from += PAGE) {
-          const { data, error } = await supabase
-            .from("lessons")
-            .select(
-              "id, title, duration, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)"
-            )
-            .in("series_id", chunk)
-            .eq("status", "published")
-            // §0.3: exclude teacher-only lessons from public category pages
-            .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
-            .order("sort_order", { ascending: true, nullsFirst: false })
-            .order("bible_chapter", { ascending: true, nullsFirst: false })
-            .order("title", { ascending: true })
-            .range(from, from + PAGE - 1);
-          if (error || !data) break;
-          allLessons.push(...(data as RollupLesson[]));
-          if (data.length < PAGE) break;
-        }
-      }
-
-      // 4. Dedup by id (§0.2 — physical id dedup)
-      const seen = new Set<string>();
-      return allLessons.filter((l) => {
-        if (seen.has(l.id)) return false;
-        seen.add(l.id);
-        return true;
-      });
+      if (ids.length === 0) return [];
+      // One batched lessons query for all series
+      const { data: rows } = await supabase
+        .from("lessons")
+        .select("series_id, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)")
+        .in("series_id", ids)
+        .eq("status", "published")
+        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+        .not("rabbi_id", "is", null)
+        .limit(5000);
+      return rows ?? [];
     },
   });
+
+  // Build map: series_id → ordered distinct names (lead first)
+  const map = new Map<string, string[]>();
+  for (const s of series) {
+    // Start with lead rabbi from series table (rabbiName already resolved)
+    const lead: string[] = s.rabbiName ? [s.rabbiName] : [];
+    map.set(s.id, lead);
+  }
+  for (const row of data ?? []) {
+    const sid = (row as any).series_id as string;
+    const rabbiRow = (row as any).rabbis as { name: string } | null;
+    const name = rabbiRow?.name;
+    if (!name || !sid) continue;
+    const arr = map.get(sid);
+    if (!arr) continue;
+    if (!arr.includes(name)) arr.push(name);
+  }
+  return map;
 }
 
 // ─── Main component ──────────────────────────────────────────────────────────
@@ -254,35 +199,21 @@ export default function CategoryPage() {
 
   const { data: directLessons = [], isLoading: lessonsLoading } = useDirectLessons(id);
 
-  // Roll-up: fetch all lessons from descendant series when this node has child series.
-  // Enables 1:1 parity with the old site's book pages (e.g. /נביאים/יהושע/ showed 38
-  // lessons = sum of all series under it, not just 14 directly attached lessons).
-  // Only enabled after seriesList loads so we know whether there are child series.
-  const hasChildSeries = !seriesLoading && seriesList.length > 0;
-  const { data: rollupLessons = [], isLoading: rollupLoading } = useRollupLessons(id, hasChildSeries);
-
   const isLoading = nodeLoading || seriesLoading;
-
   const title = node?.title ?? "קטגוריה";
 
-  // Cast to canonical type (hook now returns extra fields)
+  // Cast to canonical type (hook returns extra fields rabbiId + imageUrl + isDraft)
   const canonicalSeries = seriesList as unknown as CanonicalSeries[];
 
-  // Combined lessons: direct lessons on this node + roll-up from all descendant series,
-  // deduped by id (a lesson could appear in both if series_id = nodeId AND also picked
-  // up via descendants).
-  const allLessons = (() => {
-    if (rollupLessons.length === 0) return directLessons;
-    const seen = new Set<string>();
-    const combined: RollupLesson[] = [];
-    for (const l of [...directLessons, ...rollupLessons]) {
-      if (!seen.has(l.id)) {
-        seen.add(l.id);
-        combined.push(l);
-      }
-    }
-    return combined;
-  })();
+  // Batched multi-rabbi map (C6)
+  const rabbisMap = useSeriesRabbisMap(canonicalSeries);
+
+  // Split direct lessons into regular lessons and שו"ת (C4c / R4)
+  const standaloneRegular = directLessons.filter((l) => !isShut(l));
+  const standaloneShut = directLessons.filter((l) => isShut(l));
+
+  // Hero lesson count = standalone lessons only (R7)
+  const lessonBadgeCount = directLessons.length;
 
   return (
     <DesignLayout>
@@ -410,7 +341,7 @@ export default function CategoryPage() {
           </p>
         )}
 
-        {/* Series + lesson count badges */}
+        {/* Badges */}
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "1rem" }}>
           {!seriesLoading && canonicalSeries.length > 0 && (
             <div
@@ -432,7 +363,7 @@ export default function CategoryPage() {
               {canonicalSeries.length} סדרות
             </div>
           )}
-          {!rollupLoading && allLessons.length > 0 && (
+          {!lessonsLoading && lessonBadgeCount > 0 && (
             <div
               style={{
                 display: "inline-flex",
@@ -448,7 +379,7 @@ export default function CategoryPage() {
                 fontWeight: 500,
               }}
             >
-              {allLessons.length} שיעורים
+              {lessonBadgeCount} שיעורים
             </div>
           )}
         </div>
@@ -463,32 +394,35 @@ export default function CategoryPage() {
           padding: "2rem 1.5rem",
         }}
       >
-        {/* ── Series with expanded lessons ── */}
+        {/* ── (a) Series cards — CLOSED, link to /series/:id ── */}
         {isLoading ? (
           <SeriesGridSkeleton />
-        ) : canonicalSeries.length === 0 ? (
-          <EmptyState title={title} />
-        ) : (
+        ) : canonicalSeries.length > 0 ? (
           <section>
-            <h2
-              style={{
-                fontFamily: fonts.display,
-                fontSize: "1.1rem",
-                fontWeight: 700,
-                color: colors.textDark,
-                marginBottom: "1.25rem",
-                marginTop: 0,
-                paddingBottom: "0.5rem",
-                borderBottom: `2px solid rgba(196,162,101,0.2)`,
-              }}
-            >
-              סדרות בנושא
-            </h2>
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+            <SectionHeading>סדרות</SectionHeading>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {canonicalSeries.map((s) => (
-                <SeriesBlock
+                <SeriesRowCard
                   key={s.id}
                   series={s}
+                  rabbiNames={rabbisMap.get(s.id) ?? (s.rabbiName ? [s.rabbiName] : [])}
+                />
+              ))}
+            </div>
+          </section>
+        ) : !lessonsLoading && directLessons.length === 0 ? (
+          <EmptyState title={title} />
+        ) : null}
+
+        {/* ── (b) Standalone lessons (series_id = this node) ── */}
+        {!lessonsLoading && standaloneRegular.length > 0 && (
+          <section style={{ marginTop: canonicalSeries.length > 0 ? "2.5rem" : 0 }}>
+            <SectionHeading>שיעורים</SectionHeading>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+              {standaloneRegular.map((l) => (
+                <LessonRow
+                  key={l.id}
+                  lesson={l}
                   onNavigate={(path) => navigate(path)}
                 />
               ))}
@@ -496,31 +430,15 @@ export default function CategoryPage() {
           </section>
         )}
 
-        {/* ── Roll-up lessons: all lessons from descendant series ── */}
-        {/* When rollupLessons exist they already include direct lessons (deduped above).
-            When no child series exist, falls back to directLessons only. */}
-        {!lessonsLoading && !rollupLoading && allLessons.length > 0 && (
+        {/* ── (c) שו"ת section ── */}
+        {!lessonsLoading && standaloneShut.length > 0 && (
           <section style={{ marginTop: "2.5rem" }}>
-            <h2
-              style={{
-                fontFamily: fonts.display,
-                fontSize: "1.1rem",
-                fontWeight: 700,
-                color: colors.textDark,
-                marginBottom: "1.25rem",
-                marginTop: 0,
-                paddingBottom: "0.5rem",
-                borderBottom: `2px solid rgba(196,162,101,0.2)`,
-              }}
-            >
-              כל השיעורים ({allLessons.length})
-            </h2>
+            <SectionHeading>שאלות ותשובות</SectionHeading>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              {allLessons.map((l) => (
+              {standaloneShut.map((l) => (
                 <LessonRow
                   key={l.id}
                   lesson={l}
-                  fallbackImage={"/images/series-default.png"}
                   onNavigate={(path) => navigate(path)}
                 />
               ))}
@@ -539,241 +457,175 @@ export default function CategoryPage() {
   );
 }
 
-// ─── SeriesBlock ─────────────────────────────────────────────────────────────
-// Renders a series card header + expandable lessons list below it.
+// ─── SectionHeading ───────────────────────────────────────────────────────────
 
-function SeriesBlock({
-  series,
-  onNavigate,
-}: {
-  series: CanonicalSeries;
-  onNavigate: (path: string) => void;
-}) {
-  const [expanded, setExpanded] = useState(true); // default open
-  const { data: lessons = [], isLoading } = useSeriesLessons(series.id);
-  const imgSrc = resolveSeriesImage(series);
-  const hasDraftBadge = series.isDraft && (!series.lessonCount || series.lessonCount === 0);
-
+function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
-    <div
+    <h2
       style={{
-        borderRadius: radii.lg,
-        overflow: "hidden",
-        background: "white",
-        border: `1px solid rgba(139,111,71,0.10)`,
-        boxShadow: "0 2px 8px rgba(45,31,14,0.06)",
+        fontFamily: fonts.display,
+        fontSize: "1.1rem",
+        fontWeight: 700,
+        color: colors.textDark,
+        marginBottom: "1rem",
+        marginTop: 0,
+        paddingBottom: "0.5rem",
+        borderBottom: `2px solid rgba(196,162,101,0.2)`,
       }}
     >
-      {/* ── Series header ── */}
+      {children}
+    </h2>
+  );
+}
+
+// ─── SeriesRowCard (C2) ───────────────────────────────────────────────────────
+// Closed card — entire card is a Link to /series/:id. No accordion, no lesson rows.
+
+function SeriesRowCard({
+  series,
+  rabbiNames,
+}: {
+  series: CanonicalSeries;
+  rabbiNames: string[];
+}) {
+  const imgSrc = resolveSeriesImage(series);
+  const hasDraftBadge = series.isDraft && (!series.lessonCount || series.lessonCount === 0);
+  const rabbiLabel = formatRabbis(rabbiNames);
+
+  return (
+    <Link
+      to={`/series/${series.id}`}
+      style={{ textDecoration: "none", display: "block" }}
+    >
       <div
         style={{
           display: "flex",
           alignItems: "stretch",
-          gap: 0,
+          borderRadius: radii.lg,
+          overflow: "hidden",
+          background: "white",
+          border: `1px solid rgba(139,111,71,0.10)`,
+          boxShadow: "0 2px 8px rgba(45,31,14,0.06)",
+          transition: "box-shadow 0.15s, border-color 0.15s",
+        }}
+        onMouseEnter={(e) => {
+          (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(139,111,71,0.18)";
+          (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,111,71,0.3)";
+        }}
+        onMouseLeave={(e) => {
+          (e.currentTarget as HTMLDivElement).style.boxShadow = "0 2px 8px rgba(45,31,14,0.06)";
+          (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,111,71,0.10)";
         }}
       >
-        {/* Cover image — stays a Link to series page; stopPropagation prevents toggle */}
-        <Link
-          to={`/series/${series.id}`}
+        {/* Cover image */}
+        <div
           style={{
-            display: "block",
-            width: 100,
+            width: 90,
             flexShrink: 0,
             overflow: "hidden",
             background: "#EDE5D6",
           }}
-          tabIndex={-1}
-          onClick={(e) => e.stopPropagation()}
         >
           <img
             src={imgSrc}
             alt={series.title}
             loading="lazy"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              display: "block",
-            }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             onError={(e) => {
               (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
             }}
           />
-        </Link>
+        </div>
 
-        {/* Entire title row is now a toggle button */}
-        <button
-          onClick={() => setExpanded((e) => !e)}
-          aria-expanded={expanded}
-          aria-controls={`series-lessons-${series.id}`}
+        {/* Info */}
+        <div
           style={{
             flex: 1,
+            padding: "0.75rem 1rem",
             display: "flex",
-            alignItems: "center",
-            padding: "0.85rem 1rem",
-            background: "none",
-            border: "none",
-            cursor: "pointer",
-            textAlign: "right",
-            gap: 0,
+            flexDirection: "column",
+            gap: "0.25rem",
+            justifyContent: "center",
           }}
-          onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(250,246,240,0.7)")}
-          onMouseLeave={(e) => (e.currentTarget.style.background = "none")}
         >
-          {/* Content column */}
-          <div
-            style={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.25rem",
-              alignItems: "flex-start",
-            }}
-          >
-            {/* Draft badge */}
-            {hasDraftBadge && (
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.3rem",
-                  padding: "0.15rem 0.5rem",
-                  borderRadius: radii.pill,
-                  background: "rgba(139,111,71,0.08)",
-                  color: colors.textSubtle,
-                  fontFamily: fonts.body,
-                  fontSize: "0.68rem",
-                  fontWeight: 600,
-                  width: "fit-content",
-                  marginBottom: "0.1rem",
-                }}
-              >
-                <Construction size={10} />
-                בהכנה
-              </div>
-            )}
-
-            <span
+          {/* Draft badge */}
+          {hasDraftBadge && (
+            <div
               style={{
-                fontFamily: fonts.display,
-                fontSize: "1rem",
-                fontWeight: 700,
-                color: colors.textDark,
-                lineHeight: 1.3,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.3rem",
+                padding: "0.15rem 0.5rem",
+                borderRadius: radii.pill,
+                background: "rgba(139,111,71,0.08)",
+                color: colors.textSubtle,
+                fontFamily: fonts.body,
+                fontSize: "0.68rem",
+                fontWeight: 600,
+                width: "fit-content",
+                marginBottom: "0.1rem",
               }}
             >
-              {series.title}
-            </span>
-
-            {series.rabbiName && (
-              <span
-                style={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.8rem",
-                  color: colors.textMuted,
-                }}
-              >
-                {series.rabbiName}
-              </span>
-            )}
-
-            {series.lessonCount != null && series.lessonCount > 0 && (
-              <span
-                style={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.75rem",
-                  color: colors.goldDark,
-                  fontWeight: 600,
-                }}
-              >
-                {series.lessonCount} שיעורים
-              </span>
-            )}
-          </div>
-
-          {/* Chevron */}
-          <ChevronDown
-            size={16}
-            style={{
-              flexShrink: 0,
-              transition: "transform 0.18s",
-              transform: expanded ? "rotate(180deg)" : "rotate(0deg)",
-              color: colors.textSubtle,
-              marginInlineStart: "0.75rem",
-            }}
-          />
-        </button>
-      </div>
-
-      {/* ── Expanded lessons ── */}
-      {expanded && (
-        <div
-          id={`series-lessons-${series.id}`}
-          style={{
-            borderTop: `1px solid rgba(139,111,71,0.08)`,
-          }}
-        >
-          {isLoading ? (
-            <div style={{ padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <Loader2 size={14} style={{ animation: "spin 1s linear infinite", color: colors.textSubtle }} />
-              <span style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle }}>
-                טוען שיעורים...
-              </span>
-            </div>
-          ) : lessons.length === 0 ? (
-            hasDraftBadge ? (
-              <div
-                style={{
-                  padding: "0.75rem 1rem",
-                  fontFamily: fonts.body,
-                  fontSize: "0.8rem",
-                  color: colors.textSubtle,
-                  fontStyle: "italic",
-                }}
-              >
-                הסדרה בהכנה — שיעורים יתווספו בקרוב
-              </div>
-            ) : null
-          ) : (
-            <div>
-              {lessons.map((l) => (
-                <LessonRow
-                  key={l.id}
-                  lesson={l}
-                  fallbackImage={resolveSeriesImage(series)}
-                  onNavigate={onNavigate}
-                />
-              ))}
-              {/* Link to full series page */}
-              <div
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderTop: `1px solid rgba(139,111,71,0.05)`,
-                }}
-              >
-                <Link
-                  to={`/series/${series.id}`}
-                  style={{
-                    fontFamily: fonts.body,
-                    fontSize: "0.78rem",
-                    color: colors.goldDark,
-                    textDecoration: "none",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.25rem",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = "underline")}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = "none")}
-                >
-                  לדף הסדרה המלאה
-                  <ExternalLink size={11} />
-                </Link>
-              </div>
+              <Construction size={10} />
+              בהכנה
             </div>
           )}
+
+          <span
+            style={{
+              fontFamily: fonts.display,
+              fontSize: "0.98rem",
+              fontWeight: 700,
+              color: colors.textDark,
+              lineHeight: 1.3,
+            }}
+          >
+            {series.title}
+          </span>
+
+          {rabbiLabel && (
+            <span
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.8rem",
+                color: colors.textMuted,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.25rem",
+              }}
+            >
+              {rabbiNames.length > 1 && <Users size={11} style={{ flexShrink: 0, opacity: 0.6 }} />}
+              {rabbiLabel}
+            </span>
+          )}
+
+          {series.lessonCount != null && series.lessonCount > 0 && (
+            <span
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.75rem",
+                color: colors.goldDark,
+                fontWeight: 600,
+              }}
+            >
+              {series.lessonCount} שיעורים
+            </span>
+          )}
         </div>
-      )}
-    </div>
+
+        {/* Arrow */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            paddingInlineEnd: "1rem",
+            color: colors.textSubtle,
+          }}
+        >
+          <ChevronLeft size={16} style={{ transform: "rotate(180deg)" }} />
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -783,7 +635,6 @@ type LessonRowData = {
   id: string;
   title: string;
   duration?: number | null;
-  published_at?: string | null;
   thumbnail_url?: string | null;
   video_url?: string | null;
   audio_url?: string | null;
@@ -793,18 +644,16 @@ type LessonRowData = {
 
 function LessonRow({
   lesson,
-  fallbackImage,
   onNavigate,
 }: {
   lesson: LessonRowData;
-  fallbackImage: string;
   onNavigate: (path: string) => void;
 }) {
   const rabbiName = Array.isArray(lesson.rabbis)
     ? lesson.rabbis[0]?.name
     : (lesson.rabbis as { name: string } | null)?.name;
 
-  const imgSrc = lesson.thumbnail_url || fallbackImage;
+  const imgSrc = lesson.thumbnail_url || "/images/series-default.png";
 
   return (
     <button
@@ -816,9 +665,9 @@ function LessonRow({
         alignItems: "center",
         gap: "0.75rem",
         padding: "0.55rem 1rem",
-        background: "transparent",
-        border: "none",
-        borderTop: `1px solid rgba(139,111,71,0.06)`,
+        background: "white",
+        border: `1px solid rgba(139,111,71,0.08)`,
+        borderRadius: radii.md,
         cursor: "pointer",
         transition: "background 0.15s",
         fontFamily: fonts.body,
@@ -827,7 +676,7 @@ function LessonRow({
         e.currentTarget.style.background = "rgba(196,162,101,0.05)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = "transparent";
+        e.currentTarget.style.background = "white";
       }}
     >
       {/* Thumbnail */}
@@ -852,7 +701,6 @@ function LessonRow({
             (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
           }}
         />
-        {/* Media type overlay */}
         <div
           style={{
             position: "absolute",
@@ -912,7 +760,7 @@ function LessonRow({
 
 function SeriesGridSkeleton() {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
       {Array.from({ length: 4 }).map((_, i) => (
         <div
           key={i}
@@ -927,7 +775,7 @@ function SeriesGridSkeleton() {
         >
           <div
             style={{
-              width: 100,
+              width: 90,
               background: "rgba(139,111,71,0.08)",
               animation: "pulse 1.5s ease infinite",
               flexShrink: 0,
@@ -986,16 +834,6 @@ function EmptyState({ title }: { title: string }) {
         }}
       >
         אין סדרות ב{title} כרגע
-      </div>
-      <div
-        style={{
-          fontFamily: fonts.body,
-          fontSize: "0.85rem",
-          color: colors.textSubtle,
-          maxWidth: 340,
-        }}
-      >
-        ייתכן שהתוכן עדיין בעריכה או שהנושא נמצא תחת קטגוריה אחרת.
       </div>
     </div>
   );
