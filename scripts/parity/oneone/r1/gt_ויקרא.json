@@ -1,0 +1,4694 @@
+{
+  "url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/",
+  "final_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/",
+  "rows": [
+    {
+      "idx": 0,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "הרב אבינר על פרשיות ויקרא",
+      "title_norm": "הרב אבינר על פרשיות ויקרא",
+      "author": "הרב שלמה אבינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 7
+    },
+    {
+      "idx": 1,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "הרב אבינר שיחות על פרשיות ויקרא",
+      "title_norm": "הרב אבינר שיחות על פרשיות ויקרא",
+      "author": "הרב שלמה אבינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 10
+    },
+    {
+      "idx": 2,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "מאמרים על פרשיות ויקרא - הרב ערן טמיר",
+      "title_norm": "מאמרים על פרשיות ויקרא הרב ערן טמיר",
+      "author": "הרב ערן טמיר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 8
+    },
+    {
+      "idx": 3,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "מאמרים לשולחן השבת - חומש ויקרא",
+      "title_norm": "מאמרים לשולחן השבת חומש ויקרא",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 24
+    },
+    {
+      "idx": 4,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "מאמרים קצרים - חומש ויקרא",
+      "title_norm": "מאמרים קצרים חומש ויקרא",
+      "author": "הרב אלי אדלר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 7
+    },
+    {
+      "idx": 5,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "שיעורים על התנ\"ך - ויקרא",
+      "title_norm": "שיעורים על התנ ך ויקרא",
+      "author": "הרב יצחק בן שחר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 6
+    },
+    {
+      "idx": 6,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "מאמרים - חומש ויקרא",
+      "title_norm": "מאמרים חומש ויקרא",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 41
+    },
+    {
+      "idx": 7,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "שיעורים- חומש ויקרא",
+      "title_norm": "שיעורים חומש ויקרא",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 25
+    },
+    {
+      "idx": 8,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "שיעורים קצרים על ספר ויקרא",
+      "title_norm": "שיעורים קצרים על ספר ויקרא",
+      "author": "הרב איתן קופמן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/",
+      "media": [
+        "video-camera"
+      ],
+      "lesson_count": 6
+    },
+    {
+      "idx": 9,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "פרשיות ויקרא",
+      "title_norm": "פרשיות ויקרא",
+      "author": "הרב נתן רוטמן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשיות-ויקרא/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 4
+    },
+    {
+      "idx": 10,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "פרשת שבוע- ויקרא",
+      "title_norm": "פרשת שבוע ויקרא",
+      "author": "הרב דוד ג'יאמי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 16
+    },
+    {
+      "idx": 11,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "קדושת פשוטו של מקרא - ויקרא",
+      "title_norm": "קדושת פשוטו של מקרא ויקרא",
+      "author": "הרב יהודה קופרמן זצ\"ל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/",
+      "media": [
+        "file-pdf-o"
+      ],
+      "lesson_count": 17
+    },
+    {
+      "idx": 12,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "מאמרים על פרשיות ויקרא",
+      "title_norm": "מאמרים על פרשיות ויקרא",
+      "author": "הרב יהושע שפירא",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 27
+    },
+    {
+      "idx": 13,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "חומש ויקרא - כלל ופרט",
+      "title_norm": "חומש ויקרא כלל ופרט",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-כלל-ופרט/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 3
+    },
+    {
+      "idx": 14,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "ויקרא -  מוקלט | ללא טעמים",
+      "title_norm": "ויקרא מוקלט ללא טעמים",
+      "author": "הרב דן בארי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 27
+    },
+    {
+      "idx": 15,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "פשט בפרשה",
+      "title_norm": "פשט בפרשה",
+      "author": "הרב עמנואל בן ארצי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 16
+    },
+    {
+      "idx": 16,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "לשון הקודש בפרשה",
+      "title_norm": "לשון הקודש בפרשה",
+      "author": "הרב יהונתן מיכאלי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 19
+    },
+    {
+      "idx": 17,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "עולמות חדשים בפרשה",
+      "title_norm": "עולמות חדשים בפרשה",
+      "author": "הרב יוסף שילר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 17
+    },
+    {
+      "idx": 18,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "הארות באונקלוס",
+      "title_norm": "הארות באונקלוס",
+      "author": "הרב יהונתן עידן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 4
+    },
+    {
+      "idx": 19,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "חומש ויקרא - קריאה בטעמים אשכנזי",
+      "title_norm": "חומש ויקרא קריאה בטעמים אשכנזי",
+      "author": "הרב יונדב זר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 10
+    },
+    {
+      "idx": 20,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "חומש ויקרא - קריאה עם ביאור פשוט",
+      "title_norm": "חומש ויקרא קריאה עם ביאור פשוט",
+      "author": "הרב יונדב זר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/",
+      "media": [
+        "volume-up"
+      ],
+      "lesson_count": 10
+    },
+    {
+      "idx": 21,
+      "kind": "series",
+      "kind_raw": "סדרה",
+      "title": "מידות בפרשה",
+      "title_norm": "מידות בפרשה",
+      "author": "הרב חגי ולוסקי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/",
+      "media": [
+        "file-text"
+      ],
+      "lesson_count": 18
+    },
+    {
+      "idx": 22,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "טומאת הלידה ומהותה",
+      "title_norm": "טומאת הלידה ומהותה",
+      "author": "הרב יוסף קלנר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-תזריע-יב-יג/טומאת-הלידה-ומהותה/",
+      "media": [
+        "video-camera"
+      ],
+      "length": "7.45 דק'",
+      "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A1%D7%A3+%D7%A7%D7%9C%D7%A0%D7%A8/%D7%A9%D7%95%D7%AA+%D7%91%D7%A0%D7%95%D7%A9%D7%90%D7%99%D7%9D+%D7%A9%D7%95%D7%A0%D7%99%D7%9D/kalner_shoot02_laida5774.mp3"
+    },
+    {
+      "idx": 23,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "'באר הבהרת' - דיני הצרעת על פי סדר הפסוקים",
+      "title_norm": "באר הבהרת דיני הצרעת על פי סדר הפסוקים",
+      "author": "",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-תזריע-יב-יג/באר-הבהרת-דיני-הצרעת-על-פי-סדר-הפסוקים/",
+      "media": [
+        "file-pdf-o"
+      ],
+      "length": "",
+      "attachment_href": "https://www.bneyzion.co.il/media/143728/baeret.pdf"
+    },
+    {
+      "idx": 24,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "כמעשה ארץ מצרים",
+      "title_norm": "כמעשה ארץ מצרים",
+      "author": "הרב יהושע ון-דייק",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אחרי-מות-טז-יח/כמעשה-ארץ-מצרים/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "כ - 70 דק'",
+      "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99%20%D7%A2%D7%99%D7%95%D7%9F%20%D7%AA%D7%A9%D7%A2%D7%97/%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A9%D7%A2%20%D7%95%D7%90%D7%9F%20%D7%93%D7%99%D7%A7%20-%20%D7%9B%D7%9E%D7%A2%D7%A9%D7%94%20%D7%90%D7%A8%D7%A5%20%D7%9E%D7%A6%D7%A8%D7%99%D7%9D%2000_00_53-.mp3"
+    },
+    {
+      "idx": 25,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "\"אמת מה נהדר\"",
+      "title_norm": "אמת מה נהדר",
+      "author": "רותי שפירא - ד\"ר (לנשים)",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אחרי-מות-טז-יח/אמת-מה-נהדר/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "כ - 70 דק'",
+      "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99%20%D7%A2%D7%99%D7%95%D7%9F%20%D7%AA%D7%A9%D7%A2%D7%97/%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A8%D7%95%D7%AA%D7%99%20%D7%A9%D7%A4%D7%99%D7%A8%D7%90%20-%20%D7%90%D7%9E%D7%AA%20%D7%9E%D7%94%20%D7%A0%D7%94%D7%93%D7%A8%2000_00_32-.mp3"
+    },
+    {
+      "idx": 26,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "סוגיות בפרשת קדושים",
+      "title_norm": "סוגיות בפרשת קדושים",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-קדושים-יט-כ/סוגיות-בפרשת-קדושים/",
+      "media": [
+        "video-camera"
+      ],
+      "length": "כ - 70 דק'",
+      "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99%20%D7%A2%D7%99%D7%95%D7%9F%20%D7%AA%D7%A9%D7%A2%D7%97/%D7%94%D7%A8%D7%91%20%D7%90%D7%95%D7%94%D7%93%20%D7%AA%D7%99%D7%A8%D7%95%D7%A9%20-%20%D7%A1%D7%95%D7%92%D7%99%D7%95%D7%AA%20%D7%91%D7%A4%D7%A8%D7%A9%D7%AA%20%D7%A7%D7%93%D7%95%D7%A9%D7%99%D7%9D%2000_00_47-.mp3"
+    },
+    {
+      "idx": 27,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "השמיטה כפגישה עם התורה כולה",
+      "title_norm": "השמיטה כפגישה עם התורה כולה",
+      "author": "הרב חיים דרוקמן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-בהר-כה-כו/השמיטה-כפגישה-עם-התורה-כולה/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "כ-70 דק'",
+      "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99+%D7%A2%D7%99%D7%95%D7%9F+%D7%91%D7%AA%D7%A0%D7%9A+%D7%AA%D7%A9%D7%A2%D7%98/%D7%A0%D7%A9%D7%99%D7%9D+%D7%99%D7%95%D7%9D+%D7%A9%D7%A0%D7%99+%D7%90%D7%95%D7%9C%D7%9D+1/%D7%94%D7%A8%D7%91++%D7%93%D7%A8%D7%95%D7%A7%D7%9E%D7%9F+%D7%94%D7%A9%D7%9E%D7%99%D7%98%D7%94+%D7%9B%D7%A4%D7%92%D7%99%D7%A9%D7%94+%D7%A2%D7%9D+%D7%94%D7%AA%D7%95%D7%A8%D7%94+%D7%9B%D7%95%D7%9C%D7%94+.MP3"
+    },
+    {
+      "idx": 28,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "(מצגת) קבלת היסורים, ובמיוחד במלכות בית דוד",
+      "title_norm": "מצגת קבלת היסורים ובמיוחד במלכות בית דוד",
+      "author": "הרב מנחם שחור",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-בחוקותי-כו-כז/מצגת-קבלת-היסורים-ובמיוחד-במלכות-בית-דוד/",
+      "media": [
+        "file-pdf-o"
+      ],
+      "length": "",
+      "attachment_href": "https://www.bneyzion.co.il/media/142659/קבלת-הדין.pptx"
+    },
+    {
+      "idx": 29,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "ספר ויקרא עם ביאור 'ושננתם'",
+      "title_norm": "ספר ויקרא עם ביאור ושננתם",
+      "author": "ושננתם",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ספר-ויקרא-עם-ביאור-ושננתם/",
+      "media": [
+        "file-pdf-o"
+      ],
+      "length": "",
+      "attachment_href": "https://www.bneyzion.co.il/media/142934/ושננתם-חומש-ויקרא.pdf"
+    },
+    {
+      "idx": 30,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "שכינה בתוך החיים - ספר ויקרא",
+      "title_norm": "שכינה בתוך החיים ספר ויקרא",
+      "author": "הרב דוד חי הכהן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שכינה-בתוך-החיים-ספר-ויקרא/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "כ - 70 דק'",
+      "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99%20%D7%A2%D7%99%D7%95%D7%9F%20%D7%AA%D7%A9%D7%A2%D7%97/%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%20%D7%97%D7%99%20%D7%94%D7%9B%D7%94%D7%9F%20-%20%D7%A9%D7%9B%D7%99%D7%A0%D7%94%20%D7%91%D7%AA%D7%95%D7%9A%20%D7%94%D7%97%D7%99%D7%99%D7%9D%20%D7%A1%D7%A4%D7%A8%20%D7%95%D7%99%D7%A7%D7%A8%D7%90%2000_01_26-.mp3"
+    },
+    {
+      "idx": 31,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "הדם והחלב",
+      "title_norm": "הדם והחלב",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/הדם-והחלב/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "כ-60 דק'",
+      "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_vikra_5774.mp3"
+    },
+    {
+      "idx": 32,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "קורבנות ללא אכילה- חטאות כלליות ועולה",
+      "title_norm": "קורבנות ללא אכילה חטאות כלליות ועולה",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/קורבנות-ללא-אכילה-חטאות-כלליות-ועולה/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "כ-60 דק'",
+      "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_vaikra_5771.mp3"
+    },
+    {
+      "idx": 33,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "המקרה שאינו מקרי",
+      "title_norm": "המקרה שאינו מקרי",
+      "author": "הרב יהונתן מיכאלי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/המקרה-שאינו-מקרי/",
+      "media": [
+        "file-text"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 34,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "מאוהל מועד לאמר",
+      "title_norm": "מאוהל מועד לאמר",
+      "author": "הרב יוסף שילר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/מאוהל-מועד-לאמר/",
+      "media": [
+        "file-text"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 35,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "וידבר ה' אליו - תרגם אונקלוס: ומליל יי עמיה",
+      "title_norm": "וידבר ה אליו תרגם אונקלוס ומליל יי עמיה",
+      "author": "הרב יהונתן עידן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/וידבר-ה-אליו-תרגם-אונקלוס-ומליל-יי-עמיה/",
+      "media": [
+        "file-text"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 36,
+      "kind": "lesson",
+      "kind_raw": "שיעור",
+      "title": "מעמדם ותפקידם של הכהנים",
+      "title_norm": "מעמדם ותפקידם של הכהנים",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/בית-המקדש-והכהנים/מעמדם-ותפקידם-של-הכהנים/",
+      "media": [
+        "volume-up"
+      ],
+      "length": "",
+      "attachment_href": "http://bneyzion.s3.amazonaws.com/%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%94%D7%91%D7%97%D7%99%D7%A8%D7%94%20%D7%91%D7%9B%D7%94%D7%A0%D7%99%D7%9D%20-%20%D7%9E%D7%A2%D7%9E%D7%93%D7%9D%20%D7%95%D7%AA%D7%A4%D7%A7%D7%99%D7%93%D7%9D.m4a"
+    },
+    {
+      "idx": 37,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "איזה קרבנות היו לפני מתן תורה?",
+      "title_norm": "איזה קרבנות היו לפני מתן תורה",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-ויקרא-א-ה/ויקרא/איזה-קרבנות-היו-לפני-מתן-תורה/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 38,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "בין פרשת ויקרא לפרשת צו",
+      "title_norm": "בין פרשת ויקרא לפרשת צו",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-צו-ו-ח/צו/בין-פרשת-ויקרא-לפרשת-צו/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 39,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "צרעת - קירבה לה'",
+      "title_norm": "צרעת קירבה לה",
+      "author": "הרב נועם וידר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-תזריע-יב-יג/תזריע/צרעת-קירבה-לה/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 40,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "ברכת לולב",
+      "title_norm": "ברכת לולב",
+      "author": "הרב יוסי ברינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אמור-כא-כד/אמור/ברכת-לולב/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 41,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "שמיני עצרת ושמחת תורה בתנ\"ך",
+      "title_norm": "שמיני עצרת ושמחת תורה בתנ ך",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-אמור-כא-כד/אמור/שמיני-עצרת-ושמחת-תורה-בתנך/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 42,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "מיקום פרשיות בהר בחוקותי",
+      "title_norm": "מיקום פרשיות בהר בחוקותי",
+      "author": "הרב יוסי ברינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-בהר-כה-כו/בהר/מיקום-פרשיות-בהר-בחוקותי/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    },
+    {
+      "idx": 43,
+      "kind": "shut",
+      "kind_raw": "שו\"ת",
+      "title": "למי שייכת ארץ ישראל?",
+      "title_norm": "למי שייכת ארץ ישראל",
+      "author": "הרב נועם וידר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-בהר-כה-כו/בהר/למי-שייכת-ארץ-ישראל/",
+      "media": [
+        "question-circle"
+      ],
+      "length": "",
+      "attachment_href": null
+    }
+  ],
+  "series": [
+    {
+      "title": "הרב אבינר על פרשיות ויקרא",
+      "title_norm": "הרב אבינר על פרשיות ויקרא",
+      "author": "הרב שלמה אבינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/",
+      "lesson_count_claimed": 7,
+      "lesson_count_actual": 7,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "לשון הרע",
+          "title_norm": "לשון הרע",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_690130_tasria_metsora.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/לשון-הרע/"
+        },
+        {
+          "idx": 1,
+          "title": "רפואת הצרעת",
+          "title_norm": "רפואת הצרעת",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_710104_metsora.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/רפואת-הצרעת/"
+        },
+        {
+          "idx": 2,
+          "title": "\"וחי בהם\"",
+          "title_norm": "וחי בהם",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_690207_acharemot_kedoshim.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/וחי-בהם/"
+        },
+        {
+          "idx": 3,
+          "title": "מידת הקדושה",
+          "title_norm": "מידת הקדושה",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_700209_acharemot_kedoshim.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/מידת-הקדושה/"
+        },
+        {
+          "idx": 4,
+          "title": "פרשת המקלל",
+          "title_norm": "פרשת המקלל",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_690214_emor.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/פרשת-המקלל/"
+        },
+        {
+          "idx": 5,
+          "title": "איסורי הטומאה של הכהנים",
+          "title_norm": "איסורי הטומאה של הכהנים",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_700216_emor.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/איסורי-הטומאה-של-הכהנים/"
+        },
+        {
+          "idx": 6,
+          "title": "\"ובשביעית יצא לחפשי\"",
+          "title_norm": "ובשביעית יצא לחפשי",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_700223_behar_bechukkotai.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-על-פרשיות-ויקרא/ובשביעית-יצא-לחפשי/"
+        }
+      ]
+    },
+    {
+      "title": "הרב אבינר שיחות על פרשיות ויקרא",
+      "title_norm": "הרב אבינר שיחות על פרשיות ויקרא",
+      "author": "הרב שלמה אבינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/",
+      "lesson_count_claimed": 10,
+      "lesson_count_actual": 10,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "נבואה וענווה",
+          "title_norm": "נבואה וענווה",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144538/הרב-אבינר-ויקרא-תשעט.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/נבואה-וענווה/"
+        },
+        {
+          "idx": 1,
+          "title": "קרבן לד'",
+          "title_norm": "קרבן לד",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144539/הרב-אבינר-צו-תשעט.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/קרבן-לד/"
+        },
+        {
+          "idx": 2,
+          "title": "זביחת הבהמיות שבאדם",
+          "title_norm": "זביחת הבהמיות שבאדם",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144540/הרב-אבינר-צו-התשעח.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/זביחת-הבהמיות-שבאדם/"
+        },
+        {
+          "idx": 3,
+          "title": "חטאם של נדב ואביהוא",
+          "title_norm": "חטאם של נדב ואביהוא",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144581/הרב-אבינר-שמיני-התשעה.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/חטאם-של-נדב-ואביהוא/"
+        },
+        {
+          "idx": 4,
+          "title": "כח הדיבור",
+          "title_norm": "כח הדיבור",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144579/הרב-אבינר-מצורע-התשעח.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/כח-הדיבור/"
+        },
+        {
+          "idx": 5,
+          "title": "כולו הפך לבן טהור הוא",
+          "title_norm": "כולו הפך לבן טהור הוא",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144580/הרב-אבינר-מצורע-התשעה.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/כולו-הפך-לבן-טהור-הוא/"
+        },
+        {
+          "idx": 6,
+          "title": "קידוש החיים בטוהר",
+          "title_norm": "קידוש החיים בטוהר",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144587/הרב-אבינר-אחרי-מות-קדושים-התשעז.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/קידוש-החיים-בטוהר/"
+        },
+        {
+          "idx": 7,
+          "title": "חוזק יצרא דעריות",
+          "title_norm": "חוזק יצרא דעריות",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144588/הרב-אבינר-אחרי-מות-קדושים-התשעז.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/חוזק-יצרא-דעריות/"
+        },
+        {
+          "idx": 8,
+          "title": "קידוש השם",
+          "title_norm": "קידוש השם",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144592/הרב-אבינר-אמור-התשעה.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/קידוש-השם/"
+        },
+        {
+          "idx": 9,
+          "title": "קדושת החיים",
+          "title_norm": "קדושת החיים",
+          "author": "הרב שלמה אבינר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144593/הרב-אבינר-אמור-התשעח.docx",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הרב-אבינר-שיחות-על-פרשיות-ויקרא/קדושת-החיים/"
+        }
+      ]
+    },
+    {
+      "title": "מאמרים על פרשיות ויקרא - הרב ערן טמיר",
+      "title_norm": "מאמרים על פרשיות ויקרא הרב ערן טמיר",
+      "author": "הרב ערן טמיר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/",
+      "lesson_count_claimed": 8,
+      "lesson_count_actual": 8,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "בין הכרח לתענוג (האיסור להקריב שאור ודבש)",
+          "title_norm": "בין הכרח לתענוג האיסור להקריב שאור ודבש",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/בין-הכרח-לתענוג-האיסור-להקריב-שאור-ודבש/"
+        },
+        {
+          "idx": 1,
+          "title": "המצפן",
+          "title_norm": "המצפן",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/המצפן/"
+        },
+        {
+          "idx": 2,
+          "title": "האם לידה היא טומאה?",
+          "title_norm": "האם לידה היא טומאה",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/האם-לידה-היא-טומאה/"
+        },
+        {
+          "idx": 3,
+          "title": "צרעת טוב או רע?",
+          "title_norm": "צרעת טוב או רע",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/צרעת-טוב-או-רע/"
+        },
+        {
+          "idx": 4,
+          "title": "סוד איסור \"כלאיים\"...",
+          "title_norm": "סוד איסור כלאיים",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/סוד-איסור-כלאיים/"
+        },
+        {
+          "idx": 5,
+          "title": "בין יום טוב ל... שבת",
+          "title_norm": "בין יום טוב ל שבת",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/בין-יום-טוב-ל-שבת/"
+        },
+        {
+          "idx": 6,
+          "title": "בין 'שביתה' ל'שמיטה'",
+          "title_norm": "בין שביתה ל שמיטה",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/בין-שביתה-לשמיטה/"
+        },
+        {
+          "idx": 7,
+          "title": "היחס אל החוק",
+          "title_norm": "היחס אל החוק",
+          "author": "הרב ערן טמיר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא-הרב-ערן-טמיר/היחס-אל-החוק/"
+        }
+      ]
+    },
+    {
+      "title": "מאמרים לשולחן השבת - חומש ויקרא",
+      "title_norm": "מאמרים לשולחן השבת חומש ויקרא",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/",
+      "lesson_count_claimed": 24,
+      "lesson_count_actual": 24,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "שתי מגמות מקבילות במשכן",
+          "title_norm": "שתי מגמות מקבילות במשכן",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/שתי-מגמות-מקבילות-במשכן/"
+        },
+        {
+          "idx": 1,
+          "title": "האם ה' חפץ בקרבנות?",
+          "title_norm": "האם ה חפץ בקרבנות",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/האם-ה-חפץ-בקרבנות/"
+        },
+        {
+          "idx": 2,
+          "title": "הזנים השונים של הקרבנות",
+          "title_norm": "הזנים השונים של הקרבנות",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הזנים-השונים-של-הקרבנות/"
+        },
+        {
+          "idx": 3,
+          "title": "שתי דרכים מקבילות אל הקרבנות (ויקרא וצו)",
+          "title_norm": "שתי דרכים מקבילות אל הקרבנות ויקרא וצו",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/שתי-דרכים-מקבילות-אל-הקרבנות-ויקרא-וצו/"
+        },
+        {
+          "idx": 4,
+          "title": "מה בין 'קודש' ל'קודש הקודשים'?",
+          "title_norm": "מה בין קודש ל קודש הקודשים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/מה-בין-קודש-לקודש-הקודשים/"
+        },
+        {
+          "idx": 5,
+          "title": "היום השמיני המפתיע",
+          "title_norm": "היום השמיני המפתיע",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/היום-השמיני-המפתיע/"
+        },
+        {
+          "idx": 6,
+          "title": "הקטורת ביום השמיני למילואים",
+          "title_norm": "הקטורת ביום השמיני למילואים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הקטורת-ביום-השמיני-למילואים/"
+        },
+        {
+          "idx": 7,
+          "title": "החנוכה המדורגת של הכהנים",
+          "title_norm": "החנוכה המדורגת של הכהנים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/החנוכה-המדורגת-של-הכהנים/"
+        },
+        {
+          "idx": 8,
+          "title": "הצרעת - טומאה מסוג חדש",
+          "title_norm": "הצרעת טומאה מסוג חדש",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הצרעת-טומאה-מסוג-חדש/"
+        },
+        {
+          "idx": 9,
+          "title": "\"והזרתם את בני ישראל\"",
+          "title_norm": "והזרתם את בני ישראל",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/והזרתם-את-בני-ישראל/"
+        },
+        {
+          "idx": 10,
+          "title": "קיבוץ שלושת מוקדי הקדושה ביום הכיפורים",
+          "title_norm": "קיבוץ שלושת מוקדי הקדושה ביום הכיפורים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/קיבוץ-שלושת-מוקדי-הקדושה-ביום-הכיפורים/"
+        },
+        {
+          "idx": 11,
+          "title": "הענן חוזר למשכן",
+          "title_norm": "הענן חוזר למשכן",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הענן-חוזר-למשכן/"
+        },
+        {
+          "idx": 12,
+          "title": "הטהרה, הכפרה והכניסה אל קודש הקודשים",
+          "title_norm": "הטהרה הכפרה והכניסה אל קודש הקודשים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הטהרה-הכפרה-והכניסה-אל-קודש-הקודשים/"
+        },
+        {
+          "idx": 13,
+          "title": "ישראל הם 'משהו אחר'",
+          "title_norm": "ישראל הם משהו אחר",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/ישראל-הם-משהו-אחר/"
+        },
+        {
+          "idx": 14,
+          "title": "מצוות של קירבה",
+          "title_norm": "מצוות של קירבה",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/מצוות-של-קירבה/"
+        },
+        {
+          "idx": 15,
+          "title": "הכהנים קדושים בגופם",
+          "title_norm": "הכהנים קדושים בגופם",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הכהנים-קדושים-בגופם/"
+        },
+        {
+          "idx": 16,
+          "title": "סדר בפרשת המועדים",
+          "title_norm": "סדר בפרשת המועדים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/סדר-בפרשת-המועדים/"
+        },
+        {
+          "idx": 17,
+          "title": "העיקרון הראשי של מועדי ה'",
+          "title_norm": "העיקרון הראשי של מועדי ה",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/העיקרון-הראשי-של-מועדי-ה/"
+        },
+        {
+          "idx": 18,
+          "title": "הקדושה השלישית",
+          "title_norm": "הקדושה השלישית",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/הקדושה-השלישית/"
+        },
+        {
+          "idx": 19,
+          "title": "עם של גרים ותושבים",
+          "title_norm": "עם של גרים ותושבים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/עם-של-גרים-ותושבים/"
+        },
+        {
+          "idx": 20,
+          "title": "החזרה אל קדושת המקדש",
+          "title_norm": "החזרה אל קדושת המקדש",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/החזרה-אל-קדושת-המקדש/"
+        },
+        {
+          "idx": 21,
+          "title": "'ואולך אתכם קוממיות'",
+          "title_norm": "ואולך אתכם קוממיות",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/ואולך-אתכם-קוממיות/"
+        },
+        {
+          "idx": 22,
+          "title": "המבט של המקדש על החיים",
+          "title_norm": "המבט של המקדש על החיים",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/המבט-של-המקדש-על-החיים/"
+        },
+        {
+          "idx": 23,
+          "title": "ה'תורות' של חומש ויקרא",
+          "title_norm": "ה תורות של חומש ויקרא",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-לשולחן-השבת-חומש-ויקרא/התורות-של-חומש-ויקרא/"
+        }
+      ]
+    },
+    {
+      "title": "מאמרים קצרים - חומש ויקרא",
+      "title_norm": "מאמרים קצרים חומש ויקרא",
+      "author": "הרב אלי אדלר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/",
+      "lesson_count_claimed": 7,
+      "lesson_count_actual": 7,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "\"ויקרא\"",
+          "title_norm": "ויקרא",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/ויקרא/"
+        },
+        {
+          "idx": 1,
+          "title": "קריאה והתקרבות",
+          "title_norm": "קריאה והתקרבות",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/קריאה-והתקרבות/"
+        },
+        {
+          "idx": 2,
+          "title": "הלידה שבטומאה",
+          "title_norm": "הלידה שבטומאה",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/הלידה-שבטומאה/"
+        },
+        {
+          "idx": 3,
+          "title": "הפרדת הקדושה מן המוות",
+          "title_norm": "הפרדת הקדושה מן המוות",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/הפרדת-הקדושה-מן-המוות/"
+        },
+        {
+          "idx": 4,
+          "title": "נקדש את שמך בעולם",
+          "title_norm": "נקדש את שמך בעולם",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/נקדש-את-שמך-בעולם/"
+        },
+        {
+          "idx": 5,
+          "title": "מה למועדים באוהל מועד?",
+          "title_norm": "מה למועדים באוהל מועד",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/מה-למועדים-באוהל-מועד/"
+        },
+        {
+          "idx": 6,
+          "title": "הר סיני ותלותנו בחוקים",
+          "title_norm": "הר סיני ותלותנו בחוקים",
+          "author": "הרב אלי אדלר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-קצרים-חומש-ויקרא/הר-סיני-ותלותנו-בחוקים/"
+        }
+      ]
+    },
+    {
+      "title": "שיעורים על התנ\"ך - ויקרא",
+      "title_norm": "שיעורים על התנ ך ויקרא",
+      "author": "הרב יצחק בן שחר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/",
+      "lesson_count_claimed": 6,
+      "lesson_count_actual": 6,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "שבעת ימי המילואים",
+          "title_norm": "שבעת ימי המילואים",
+          "author": "הרב יצחק בן שחר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A6%D7%95+%D7%AA%D7%A9%D7%A2+-+%D7%9C%D7%94%D7%A2%D7%9C%D7%90%D7%94.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/שבעת-ימי-המילואים/"
+        },
+        {
+          "idx": 1,
+          "title": "השראת השכינה במשכן",
+          "title_norm": "השראת השכינה במשכן",
+          "author": "הרב יצחק בן שחר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%9E%D7%99%D7%A0%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/השראת-השכינה-במשכן/"
+        },
+        {
+          "idx": 2,
+          "title": "יום כיפור, איסורי עריות",
+          "title_norm": "יום כיפור איסורי עריות",
+          "author": "הרב יצחק בן שחר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/6-7%D7%90%D7%97%D7%A8%D7%99+%D7%9E%D7%95%D7%AA+%D7%A7%D7%93%D7%A9%D7%99%D7%9D.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/יום-כיפור-איסורי-עריות/"
+        },
+        {
+          "idx": 3,
+          "title": "אופי קדושת הכוהנים",
+          "title_norm": "אופי קדושת הכוהנים",
+          "author": "הרב יצחק בן שחר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/8%D7%A4%D7%A8%D7%A9%D7%AA+%D7%90%D7%9E%D7%95%D7%A8.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/אופי-קדושת-הכוהנים/"
+        },
+        {
+          "idx": 4,
+          "title": "שמיטה ויובל",
+          "title_norm": "שמיטה ויובל",
+          "author": "הרב יצחק בן שחר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/9%D7%A4%D7%A8%D7%A9%D7%AA+%D7%91%D7%94%D7%A8.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/שמיטה-ויובל/"
+        },
+        {
+          "idx": 5,
+          "title": "ספר הברית",
+          "title_norm": "ספר הברית",
+          "author": "הרב יצחק בן שחר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%91%D7%94%D7%A8+%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99+%D7%AA%D7%A9%D7%A2+-+%D7%9C%D7%94%D7%A2%D7%9C%D7%90%D7%94.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-על-התנך-ויקרא/ספר-הברית/"
+        }
+      ]
+    },
+    {
+      "title": "מאמרים - חומש ויקרא",
+      "title_norm": "מאמרים חומש ויקרא",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/",
+      "lesson_count_claimed": 41,
+      "lesson_count_actual": 41,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "הקדמת רש\"י לחומש ויקרא",
+          "title_norm": "הקדמת רש י לחומש ויקרא",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/הקדמת-רשי-לחומש-ויקרא/"
+        },
+        {
+          "idx": 1,
+          "title": "מבנה פרשת ויקרא ומדוע היא סודרה כך",
+          "title_norm": "מבנה פרשת ויקרא ומדוע היא סודרה כך",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144537/א-א-מבנה-פרשת-ויקרא-ומדוע-היא-סודרה-כך-בלי-השאלות-על-המבנה.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מבנה-פרשת-ויקרא-ומדוע-היא-סודרה-כך/"
+        },
+        {
+          "idx": 2,
+          "title": "המלח במנחות ובקרבנות",
+          "title_norm": "המלח במנחות ובקרבנות",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144565/א-ב-המלח-במנחות-ובקרבנות.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/המלח-במנחות-ובקרבנות/"
+        },
+        {
+          "idx": 3,
+          "title": "מנחות הנדבה ומנחת העמר",
+          "title_norm": "מנחות הנדבה ומנחת העמר",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מנחות-הנדבה-ומנחת-העמר/"
+        },
+        {
+          "idx": 4,
+          "title": "האם שלמים מכפרים?",
+          "title_norm": "האם שלמים מכפרים",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/האם-שלמים-מכפרים/"
+        },
+        {
+          "idx": 5,
+          "title": "מדוע הוקדם פר כהן משיח לפר העלם דבר של ציבור?",
+          "title_norm": "מדוע הוקדם פר כהן משיח לפר העלם דבר של ציבור",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מדוע-הוקדם-פר-כהן-משיח-לפר-העלם-דבר-של-ציבור/"
+        },
+        {
+          "idx": 6,
+          "title": "על מה מביאים קרבן עולה ויורד?",
+          "title_norm": "על מה מביאים קרבן עולה ויורד",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/על-מה-מביאים-קרבן-עולה-ויורד/"
+        },
+        {
+          "idx": 7,
+          "title": "קרבן עולה ויורד - חטאת ולא אשם!",
+          "title_norm": "קרבן עולה ויורד חטאת ולא אשם",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/קרבן-עולה-ויורד-חטאת-ולא-אשם/"
+        },
+        {
+          "idx": 8,
+          "title": "סדר הקרבנות בפרשות ויקרא ו-צו",
+          "title_norm": "סדר הקרבנות בפרשות ויקרא ו צו",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/סדר-הקרבנות-בפרשות-ויקרא-ו-צו/"
+        },
+        {
+          "idx": 9,
+          "title": "סדר הקרבנות בתורה ובמסכת זבחים",
+          "title_norm": "סדר הקרבנות בתורה ובמסכת זבחים",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/סדר-הקרבנות-בתורה-ובמסכת-זבחים/"
+        },
+        {
+          "idx": 10,
+          "title": "כמה סוגי קרבנות יש?",
+          "title_norm": "כמה סוגי קרבנות יש",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/כמה-סוגי-קרבנות-יש/"
+        },
+        {
+          "idx": 11,
+          "title": "השוואת קרבן עולה ויורד של יולדת ושל מצורע לקרבן עולה ויורד שבפרשת ויקרא",
+          "title_norm": "השוואת קרבן עולה ויורד של יולדת ושל מצורע לקרבן עולה ויורד שבפרשת ויקרא",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144585/ה-השוואת-קרבן-עולה-ויורד-של-יולדת-ושל-מצורע-המעודכן.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/השוואת-קרבן-עולה-ויורד-של-יולדת-ושל-מצורע-לקרבן-עולה-ויורד-שבפרשת-ויקרא/"
+        },
+        {
+          "idx": 12,
+          "title": "מה משמעות הדינים המיוחדים של קרבן תודה?",
+          "title_norm": "מה משמעות הדינים המיוחדים של קרבן תודה",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מה-משמעות-הדינים-המיוחדים-של-קרבן-תודה/"
+        },
+        {
+          "idx": 13,
+          "title": "מי מביא קרבן תודה?",
+          "title_norm": "מי מביא קרבן תודה",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מי-מביא-קרבן-תודה/"
+        },
+        {
+          "idx": 14,
+          "title": "האם טהור שאכל בשר שלמים טמא חיב כרת?",
+          "title_norm": "האם טהור שאכל בשר שלמים טמא חיב כרת",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144589/ב-ז-האם-טהור-שאכל-בשר-שלמים-טמא-חיב-כרת.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/האם-טהור-שאכל-בשר-שלמים-טמא-חיב-כרת/"
+        },
+        {
+          "idx": 15,
+          "title": "מהם האורים והתומים?",
+          "title_norm": "מהם האורים והתומים",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מהם-האורים-והתומים/"
+        },
+        {
+          "idx": 16,
+          "title": "על מה כפרו הקרבנות שהוקרבו ביום השמיני?",
+          "title_norm": "על מה כפרו הקרבנות שהוקרבו ביום השמיני",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/על-מה-כפרו-הקרבנות-שהוקרבו-ביום-השמיני/"
+        },
+        {
+          "idx": 17,
+          "title": "שתים עשרה פעם שירדה האש מן השמים",
+          "title_norm": "שתים עשרה פעם שירדה האש מן השמים",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/שתים-עשרה-פעם-שירדה-האש-מן-השמים/"
+        },
+        {
+          "idx": 18,
+          "title": "הפרטים והכללים בפרשת מאכלות אסורות",
+          "title_norm": "הפרטים והכללים בפרשת מאכלות אסורות",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/הפרטים-והכללים-בפרשת-מאכלות-אסורות/"
+        },
+        {
+          "idx": 19,
+          "title": "קיצור דיני נגעי הצרעת",
+          "title_norm": "קיצור דיני נגעי הצרעת",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/קיצור-דיני-נגעי-הצרעת/"
+        },
+        {
+          "idx": 20,
+          "title": "מדוע ציוותה התורה על היולדת להקריב קרבנות?",
+          "title_norm": "מדוע ציוותה התורה על היולדת להקריב קרבנות",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מדוע-ציוותה-התורה-על-היולדת-להקריב-קרבנות/"
+        },
+        {
+          "idx": 21,
+          "title": "\"כנגע נראה לי בבית\"",
+          "title_norm": "כנגע נראה לי בבית",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/כנגע-נראה-לי-בבית/"
+        },
+        {
+          "idx": 22,
+          "title": "נדה וזבה",
+          "title_norm": "נדה וזבה",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/נדה-וזבה/"
+        },
+        {
+          "idx": 23,
+          "title": "ארבעת בגדי הכהן הגדול ביום הכיפורים",
+          "title_norm": "ארבעת בגדי הכהן הגדול ביום הכיפורים",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/ארבעת-בגדי-הכהן-הגדול-ביום-הכיפורים/"
+        },
+        {
+          "idx": 24,
+          "title": "האם אהרן פושט את בגדיו באהל מועד?!",
+          "title_norm": "האם אהרן פושט את בגדיו באהל מועד",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144583/ו-טז-האם-אהרן-פושט-את-בגדיו-באהל-מועד.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/האם-אהרן-פושט-את-בגדיו-באהל-מועד/"
+        },
+        {
+          "idx": 25,
+          "title": "מדוע הכהן הגדול מפסיק באמצע העבודות ומה עניינה של הקטורת?",
+          "title_norm": "מדוע הכהן הגדול מפסיק באמצע העבודות ומה עניינה של הקטורת",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144584/ו-טז-מדוע-הכהן-הגדול-מפסיק-באמצע-העבודות.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מדוע-הכהן-הגדול-מפסיק-באמצע-העבודות-ומה-עניינה-של-הקטורת/"
+        },
+        {
+          "idx": 26,
+          "title": "\"ולא יזבחו עוד\"",
+          "title_norm": "ולא יזבחו עוד",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/ולא-יזבחו-עוד/"
+        },
+        {
+          "idx": 27,
+          "title": "סודה של ארץ ישראל",
+          "title_norm": "סודה של ארץ ישראל",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/סודה-של-ארץ-ישראל/"
+        },
+        {
+          "idx": 28,
+          "title": "מהי רכילות?",
+          "title_norm": "מהי רכילות",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מהי-רכילות/"
+        },
+        {
+          "idx": 29,
+          "title": "\"ואני אתננה לכם לרשת אותה\"",
+          "title_norm": "ואני אתננה לכם לרשת אותה",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/ואני-אתננה-לכם-לרשת-אותה/"
+        },
+        {
+          "idx": 30,
+          "title": "הקפדת התורה על כבוד אהרן ובניו",
+          "title_norm": "הקפדת התורה על כבוד אהרן ובניו",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/הקפדת-התורה-על-כבוד-אהרן-ובניו/"
+        },
+        {
+          "idx": 31,
+          "title": "\"ונקדשתי בתוך בני ישראל\"",
+          "title_norm": "ונקדשתי בתוך בני ישראל",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/ונקדשתי-בתוך-בני-ישראל/"
+        },
+        {
+          "idx": 32,
+          "title": "מדוע ציותה התורה על ספירת העומר?",
+          "title_norm": "מדוע ציותה התורה על ספירת העומר",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מדוע-ציותה-התורה-על-ספירת-העומר/"
+        },
+        {
+          "idx": 33,
+          "title": "חג השבועות בפרשת אמור",
+          "title_norm": "חג השבועות בפרשת אמור",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/חג-השבועות-בפרשת-אמור/"
+        },
+        {
+          "idx": 34,
+          "title": "מה עניינו של שמיני עצרת?",
+          "title_norm": "מה עניינו של שמיני עצרת",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144590/ח-כג-מה-עניינו-של-שמיני-עצרת-המעודכן.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/מה-עניינו-של-שמיני-עצרת/"
+        },
+        {
+          "idx": 35,
+          "title": "השמן ולחם הפנים",
+          "title_norm": "השמן ולחם הפנים",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/השמן-ולחם-הפנים/"
+        },
+        {
+          "idx": 36,
+          "title": "\"ולא תונו איש את עמיתו\"",
+          "title_norm": "ולא תונו איש את עמיתו",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/ולא-תונו-איש-את-עמיתו/"
+        },
+        {
+          "idx": 37,
+          "title": "\"והשמתי אני את הארץ, ושממו עליה אויביכם\"",
+          "title_norm": "והשמתי אני את הארץ ושממו עליה אויביכם",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/והשמתי-אני-את-הארץ-ושממו-עליה-אויביכם/"
+        },
+        {
+          "idx": 38,
+          "title": "חרם אשר יחרם מן האדם - על פי הרמב\"ן",
+          "title_norm": "חרם אשר יחרם מן האדם על פי הרמב ן",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/חרם-אשר-יחרם-מן-האדם-על-פי-הרמבן/"
+        },
+        {
+          "idx": 39,
+          "title": "\"וזכרתי את בריתי יעקוב... והארץ אזכֹּר\" - מה הפירוש?",
+          "title_norm": "וזכרתי את בריתי יעקוב והארץ אזכר מה הפירוש",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/144768/א-וזכרתי-את-בריתי-יעקוב-והארץ-אזכר.doc",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/וזכרתי-את-בריתי-יעקוב-והארץ-אזכ-ר-מה-הפירוש/"
+        },
+        {
+          "idx": 40,
+          "title": "\"אין מוקדם ומאוחר בתורה\" בפרשת צו",
+          "title_norm": "אין מוקדם ומאוחר בתורה בפרשת צו",
+          "author": "הרב איתן שנדורפי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-חומש-ויקרא/אין-מוקדם-ומאוחר-בתורה-בפרשת-צו/"
+        }
+      ]
+    },
+    {
+      "title": "שיעורים- חומש ויקרא",
+      "title_norm": "שיעורים חומש ויקרא",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/",
+      "lesson_count_claimed": 25,
+      "lesson_count_actual": 25,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "הדם והחלב",
+          "title_norm": "הדם והחלב",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_vikra_5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/הדם-והחלב/"
+        },
+        {
+          "idx": 1,
+          "title": "קורבנות ללא אכילה- חטאות כלליות ועולה",
+          "title_norm": "קורבנות ללא אכילה חטאות כלליות ועולה",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_vaikra_5771.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/קורבנות-ללא-אכילה-חטאות-כלליות-ועולה/"
+        },
+        {
+          "idx": 2,
+          "title": "\"ממצוקותיהם יושיעם\"",
+          "title_norm": "ממצוקותיהם יושיעם",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_tzav_purim_5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/ממצוקותיהם-יושיעם/"
+        },
+        {
+          "idx": 3,
+          "title": "מאכלות אסורות",
+          "title_norm": "מאכלות אסורות",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_shmini_5771.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/מאכלות-אסורות/"
+        },
+        {
+          "idx": 4,
+          "title": "הקורבנות הנותרים לאחר מות בני אהרון",
+          "title_norm": "הקורבנות הנותרים לאחר מות בני אהרון",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_smini5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/הקורבנות-הנותרים-לאחר-מות-בני-אהרון/"
+        },
+        {
+          "idx": 5,
+          "title": "ההזאה בעבודת יום הכיפורים",
+          "title_norm": "ההזאה בעבודת יום הכיפורים",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_achrei_kdoshim_5773.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/ההזאה-בעבודת-יום-הכיפורים/"
+        },
+        {
+          "idx": 6,
+          "title": "נגע הצרעת והחיבור לזב",
+          "title_norm": "נגע הצרעת והחיבור לזב",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_tazria_5771.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/נגע-הצרעת-והחיבור-לזב/"
+        },
+        {
+          "idx": 7,
+          "title": "חיבור העולם העליון אלינו על ידי סעודות השבת",
+          "title_norm": "חיבור העולם העליון אלינו על ידי סעודות השבת",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_tazria5776.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/חיבור-העולם-העליון-אלינו-על-ידי-סעודות-השבת/"
+        },
+        {
+          "idx": 8,
+          "title": "ניהוגי אבלות של מצורע מוחלט",
+          "title_norm": "ניהוגי אבלות של מצורע מוחלט",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_tazria_5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/ניהוגי-אבלות-של-מצורע-מוחלט/"
+        },
+        {
+          "idx": 9,
+          "title": "טבילת הטהרה",
+          "title_norm": "טבילת הטהרה",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_tazria_matzora5773.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/טבילת-הטהרה/"
+        },
+        {
+          "idx": 10,
+          "title": "טומאת הלידה ויחסה למילה",
+          "title_norm": "טומאת הלידה ויחסה למילה",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_tazria-metzora_5770.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/טומאת-הלידה-ויחסה-למילה/"
+        },
+        {
+          "idx": 11,
+          "title": "עניין הקדושה בספר ויקרא",
+          "title_norm": "עניין הקדושה בספר ויקרא",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_aharey-kdoshim_5769.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/עניין-הקדושה-בספר-ויקרא/"
+        },
+        {
+          "idx": 12,
+          "title": "קדושה וחילול",
+          "title_norm": "קדושה וחילול",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_amor_5769.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/קדושה-וחילול/"
+        },
+        {
+          "idx": 13,
+          "title": "מומי הכוהנים - לבוש הנפש בגוף",
+          "title_norm": "מומי הכוהנים לבוש הנפש בגוף",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_amor_5770.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/מומי-הכוהנים-לבוש-הנפש-בגוף/"
+        },
+        {
+          "idx": 14,
+          "title": "סדרי הקדושה - יסודות באכילת קודשים",
+          "title_norm": "סדרי הקדושה יסודות באכילת קודשים",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_amor_5772.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/סדרי-הקדושה-יסודות-באכילת-קודשים/"
+        },
+        {
+          "idx": 15,
+          "title": "מנחת העומר",
+          "title_norm": "מנחת העומר",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_amor_5771.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/מנחת-העומר/"
+        },
+        {
+          "idx": 16,
+          "title": "לחם הפנים- מנחות של ציבור",
+          "title_norm": "לחם הפנים מנחות של ציבור",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_amor_5773.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/לחם-הפנים-מנחות-של-ציבור/"
+        },
+        {
+          "idx": 17,
+          "title": "השביעית ופירותיה ויחוסם לשבת",
+          "title_norm": "השביעית ופירותיה ויחוסם לשבת",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_behar5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/השביעית-ופירותיה-ויחוסם-לשבת/"
+        },
+        {
+          "idx": 18,
+          "title": "ארץ אחוזה",
+          "title_norm": "ארץ אחוזה",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/bhar-harev+ohad.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/ארץ-אחוזה/"
+        },
+        {
+          "idx": 19,
+          "title": "שנת השמיטה",
+          "title_norm": "שנת השמיטה",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_bahar_bechukotai_5773.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/שנת-השמיטה/"
+        },
+        {
+          "idx": 20,
+          "title": "עבד עברי",
+          "title_norm": "עבד עברי",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_behar-behokoty_5769.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/עבד-עברי/"
+        },
+        {
+          "idx": 21,
+          "title": "השמיטה כגלות",
+          "title_norm": "השמיטה כגלות",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_bechokoty_5771.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/השמיטה-כגלות/"
+        },
+        {
+          "idx": 22,
+          "title": "אכילה משולחן גבוה - מעשר שני",
+          "title_norm": "אכילה משולחן גבוה מעשר שני",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_bechokoty_5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/אכילה-משולחן-גבוה-מעשר-שני/"
+        },
+        {
+          "idx": 23,
+          "title": "ערכין, הקדש וחרמים",
+          "title_norm": "ערכין הקדש וחרמים",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/bchokotai-harev+ohed.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/ערכין-הקדש-וחרמים/"
+        },
+        {
+          "idx": 24,
+          "title": "מהות החרם",
+          "title_norm": "מהות החרם",
+          "author": "הרב אוהד תירוש",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%95%D7%99%D7%A7%D7%A8%D7%90/ohad_bechokoty_5772.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-חומש-ויקרא/מהות-החרם/"
+        }
+      ]
+    },
+    {
+      "title": "שיעורים קצרים על ספר ויקרא",
+      "title_norm": "שיעורים קצרים על ספר ויקרא",
+      "author": "הרב איתן קופמן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/",
+      "lesson_count_claimed": 6,
+      "lesson_count_actual": 6,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "התקרבות לה' דרך השאור והדבש ודרך המלח",
+          "title_norm": "התקרבות לה דרך השאור והדבש ודרך המלח",
+          "author": "הרב איתן קופמן",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/eitan_veykra5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/התקרבות-לה-דרך-השאור-והדבש-ודרך-המלח/"
+        },
+        {
+          "idx": 1,
+          "title": "חטא בני אהרון - מעובדי ה' לאובדי ה'",
+          "title_norm": "חטא בני אהרון מעובדי ה לאובדי ה",
+          "author": "הרב איתן קופמן",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/eitan_shmini5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/חטא-בני-אהרון-מעובדי-ה-לאובדי-ה/"
+        },
+        {
+          "idx": 2,
+          "title": "מי מפחד להיות קדוש?",
+          "title_norm": "מי מפחד להיות קדוש",
+          "author": "הרב איתן קופמן",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/eitan_kdosim5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/מי-מפחד-להיות-קדוש/"
+        },
+        {
+          "idx": 3,
+          "title": "תפקיד ימי ספירת העומר",
+          "title_norm": "תפקיד ימי ספירת העומר",
+          "author": "הרב איתן קופמן",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/eitan_amor5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/תפקיד-ימי-ספירת-העומר/"
+        },
+        {
+          "idx": 4,
+          "title": "איסורי ריבית - כיצד צריכה להיות ההתנהגות הכלכלית בישראל",
+          "title_norm": "איסורי ריבית כיצד צריכה להיות ההתנהגות הכלכלית בישראל",
+          "author": "הרב איתן קופמן",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/eitan_behar5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/איסורי-ריבית-כיצד-צריכה-להיות-ההתנהגות-הכלכלית-בישראל/"
+        },
+        {
+          "idx": 5,
+          "title": "מי מפחד מיראת העונש",
+          "title_norm": "מי מפחד מיראת העונש",
+          "author": "הרב איתן קופמן",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/eitan_bechukotai5774.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/שיעורים-קצרים-על-ספר-ויקרא/מי-מפחד-מיראת-העונש/"
+        }
+      ]
+    },
+    {
+      "title": "פרשיות ויקרא",
+      "title_norm": "פרשיות ויקרא",
+      "author": "הרב נתן רוטמן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשיות-ויקרא/",
+      "lesson_count_claimed": 4,
+      "lesson_count_actual": 4,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "ענין הקורבנות",
+          "title_norm": "ענין הקורבנות",
+          "author": "הרב נתן רוטמן",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A0%D7%AA%D7%9F+%D7%A8%D7%95%D7%98%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/0802-20160912-20564247668-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%95%D7%99%D7%A7%D7%A8%D7%90-+001+%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%A7%D7%A8%D7%90+%D7%A8%D7%95%D7%91%D7%A2+%D7%99%D7%94%D7%95%D7%93%D7%99+%D7%A2%D7%A0%D7%99%D7%99%D7%9F+%D7%94%D7%A7%D7%A8%D7%91%D7%A0%D7%95%D7%AA+%D7%97%D7%A1%D7%A8+%D7%A1%D7%95%D7%A3.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשיות-ויקרא/ענין-הקורבנות/"
+        },
+        {
+          "idx": 1,
+          "title": "ענין הנגעים",
+          "title_norm": "ענין הנגעים",
+          "author": "הרב נתן רוטמן",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A0%D7%AA%D7%9F+%D7%A8%D7%95%D7%98%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/0802-20160912-20574247669-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%AA%D7%96%D7%A8%D7%99%D7%A2-+002+%D7%A2%D7%A0%D7%99%D7%99%D7%9F+%D7%94%D7%A0%D7%92%D7%A2%D7%99%D7%9D.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשיות-ויקרא/ענין-הנגעים/"
+        },
+        {
+          "idx": 2,
+          "title": "פרשת העריות",
+          "title_norm": "פרשת העריות",
+          "author": "הרב נתן רוטמן",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A0%D7%AA%D7%9F+%D7%A8%D7%95%D7%98%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/0802-20160912-20584247670-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%A7%D7%93%D7%95%D7%A9%D7%99%D7%9D-+003+%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A2%D7%A8%D7%99%D7%95%D7%AA.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשיות-ויקרא/פרשת-העריות/"
+        },
+        {
+          "idx": 3,
+          "title": "ריבית משכנתאות והכנה לשבועות",
+          "title_norm": "ריבית משכנתאות והכנה לשבועות",
+          "author": "הרב נתן רוטמן",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A0%D7%AA%D7%9F+%D7%A8%D7%95%D7%98%D7%9E%D7%9F/%D7%95%D7%99%D7%A7%D7%A8%D7%90/0802-20160912-20594247671-%D7%A8.%D7%A8%D7%95%D7%98%D7%9E%D7%9F-+%D7%91%D7%94%D7%A8-+006+%D7%A8%D7%99%D7%91%D7%99%D7%AA+%D7%9E%D7%A9%D7%9B%D7%A0%D7%AA%D7%90%D7%95%D7%AA+%D7%95%D7%94%D7%9B%D7%A0%D7%94+%D7%9C%D7%A9%D7%91%D7%95%D7%A2%D7%95%D7%AA+%D7%97%D7%99%D7%91%D7%95%D7%A8+%D7%91%D7%94%D7%A8+%D7%95%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשיות-ויקרא/ריבית-משכנתאות-והכנה-לשבועות/"
+        }
+      ]
+    },
+    {
+      "title": "פרשת שבוע- ויקרא",
+      "title_norm": "פרשת שבוע ויקרא",
+      "author": "הרב דוד ג'יאמי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/",
+      "lesson_count_claimed": 16,
+      "lesson_count_actual": 16,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "ספר ויקרא המשך של בניין המשכן",
+          "title_norm": "ספר ויקרא המשך של בניין המשכן",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/57%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/ספר-ויקרא-המשך-של-בניין-המשכן/"
+        },
+        {
+          "idx": 1,
+          "title": "חטא נדב ואביהוא",
+          "title_norm": "חטא נדב ואביהוא",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/95%D7%A9%D7%9E%D7%99%D7%A0%D7%99+%D7%AA%D7%A9%D7%A2%D7%95.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/חטא-נדב-ואביהוא/"
+        },
+        {
+          "idx": 2,
+          "title": "דיני יולדת",
+          "title_norm": "דיני יולדת",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/54%D7%AA%D7%96%D7%A8%D7%99%D7%A2.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/דיני-יולדת/"
+        },
+        {
+          "idx": 3,
+          "title": "צרעת",
+          "title_norm": "צרעת",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/96%D7%AA%D7%96%D7%A8%D7%99%D7%A2.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/צרעת/"
+        },
+        {
+          "idx": 4,
+          "title": "פרשת המצורע",
+          "title_norm": "פרשת המצורע",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/14%D7%9E%D7%A6%D7%95%D7%A8%D7%A2.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/פרשת-המצורע/"
+        },
+        {
+          "idx": 5,
+          "title": "יום כיפור",
+          "title_norm": "יום כיפור",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/55%D7%90%D7%97%D7%A8%D7%99+%D7%9E%D7%95%D7%AA.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/יום-כיפור/"
+        },
+        {
+          "idx": 6,
+          "title": "יסוד המצוות",
+          "title_norm": "יסוד המצוות",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/98%D7%A7%D7%93%D7%95%D7%A9%D7%99%D7%9D.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/יסוד-המצוות/"
+        },
+        {
+          "idx": 7,
+          "title": "מה זה קדוש?",
+          "title_norm": "מה זה קדוש",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/15%D7%90%D7%9E%D7%95%D7%A8.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/מה-זה-קדוש/"
+        },
+        {
+          "idx": 8,
+          "title": "ספירת העומר ומזמור קז ליום העצמאות",
+          "title_norm": "ספירת העומר ומזמור קז ליום העצמאות",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/99%D7%90%D7%9E%D7%95%D7%A8%2B%D7%9E%D7%96%D7%9E%D7%95%D7%A8+%D7%A7%D7%96+%D7%9C%D7%99%D7%95%D7%9D+%D7%94%D7%A2%D7%A6%D7%9E%D7%90%D7%95%D7%AA(%D7%A1%D7%A4%D7%99%D7%A8%D7%AA+%D7%94%D7%A2%D7%95%D7%9E%D7%A8).MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/ספירת-העומר-ומזמור-קז-ליום-העצמאות/"
+        },
+        {
+          "idx": 9,
+          "title": "הלכות טהרת הכהנים",
+          "title_norm": "הלכות טהרת הכהנים",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/56%D7%90%D7%9E%D7%95%D7%A8.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/הלכות-טהרת-הכהנים/"
+        },
+        {
+          "idx": 10,
+          "title": "שמיטה ומשמעותה",
+          "title_norm": "שמיטה ומשמעותה",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/100%D7%91%D7%94%D7%A8.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/שמיטה-ומשמעותה/"
+        },
+        {
+          "idx": 11,
+          "title": "אני ה' רופאך",
+          "title_norm": "אני ה רופאך",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/16%D7%91%D7%94%D7%A8.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/אני-ה-רופאך/"
+        },
+        {
+          "idx": 12,
+          "title": "אני ה' רופאך המשך",
+          "title_norm": "אני ה רופאך המשך",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/17%D7%94%D7%9E%D7%A9%D7%9A+%D7%91%D7%94%D7%A8.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/אני-ה-רופאך-המשך/"
+        },
+        {
+          "idx": 13,
+          "title": "תורת הסוד והברכות והקללות",
+          "title_norm": "תורת הסוד והברכות והקללות",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/101%D7%9C%D7%92+%D7%91%D7%A2%D7%95%D7%9E%D7%A8+%D7%95%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/תורת-הסוד-והברכות-והקללות/"
+        },
+        {
+          "idx": 14,
+          "title": "הברית- \"אם בחוקותי תלכו\"",
+          "title_norm": "הברית אם בחוקותי תלכו",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/18%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/הברית-אם-בחוקותי-תלכו/"
+        },
+        {
+          "idx": 15,
+          "title": "\"אם בחוקותי תלכו\"",
+          "title_norm": "אם בחוקותי תלכו",
+          "author": "הרב דוד ג'יאמי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92'%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/57%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99.MP3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פרשת-שבוע-ויקרא/אם-בחוקותי-תלכו/"
+        }
+      ]
+    },
+    {
+      "title": "קדושת פשוטו של מקרא - ויקרא",
+      "title_norm": "קדושת פשוטו של מקרא ויקרא",
+      "author": "הרב יהודה קופרמן זצ\"ל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/",
+      "lesson_count_claimed": 17,
+      "lesson_count_actual": 17,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "על מקום כתיבת מצוה בתורה",
+          "title_norm": "על מקום כתיבת מצוה בתורה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143243/קדושת-פשוטו-של-מקרא-ויקרא1-5.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/על-מקום-כתיבת-מצוה-בתורה/"
+        },
+        {
+          "idx": 1,
+          "title": "עבר פשוט כעבר מוקדם",
+          "title_norm": "עבר פשוט כעבר מוקדם",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143246/קדושת-פשוטו-של-מקרא-ויקרא6-9.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/עבר-פשוט-כעבר-מוקדם/"
+        },
+        {
+          "idx": 2,
+          "title": "שלימות התורה (הלכה - מחשבה - פרשנות)",
+          "title_norm": "שלימות התורה הלכה מחשבה פרשנות",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143247/קדושת-פשוטו-של-מקרא-ויקרא10-14.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/שלימות-התורה-הלכה-מחשבה-פרשנות/"
+        },
+        {
+          "idx": 3,
+          "title": "הלכה לשעה דאורייתא",
+          "title_norm": "הלכה לשעה דאורייתא",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143248/קדושת-פשוטו-של-מקרא-צו1-4.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/הלכה-לשעה-דאורייתא/"
+        },
+        {
+          "idx": 4,
+          "title": "עבר פשוט כעבר מוקדם במשנתו של הרמב\"ן",
+          "title_norm": "עבר פשוט כעבר מוקדם במשנתו של הרמב ן",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143251/קדושת-פשוטו-של-מקרא-צו5-8.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/עבר-פשוט-כעבר-מוקדם-במשנתו-של-הרמבן/"
+        },
+        {
+          "idx": 5,
+          "title": "קרבן תודה - המצוה המורכבת",
+          "title_norm": "קרבן תודה המצוה המורכבת",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143252/קדושת-פשוטו-של-מקרא-צו9-10.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/קרבן-תודה-המצוה-המורכבת/"
+        },
+        {
+          "idx": 6,
+          "title": "לפני ואחרי במשנת רבנו עובדיה ספורנו",
+          "title_norm": "לפני ואחרי במשנת רבנו עובדיה ספורנו",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143153/קדושת-פשוטו-של-מקרא-שמיני.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/לפני-ואחרי-במשנת-רבנו-עובדיה-ספורנו/"
+        },
+        {
+          "idx": 7,
+          "title": "דרכיה דרכי נועם",
+          "title_norm": "דרכיה דרכי נועם",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143154/קדושת-פשוטו-של-מקרא-תזריע.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/דרכיה-דרכי-נועם/"
+        },
+        {
+          "idx": 8,
+          "title": "סדר עבודת יום הכיפורים לשעה לדורות ולנצח",
+          "title_norm": "סדר עבודת יום הכיפורים לשעה לדורות ולנצח",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143253/קדושת-פשוטו-של-מקרא-אחרי-מות.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/סדר-עבודת-יום-הכיפורים-לשעה-לדורות-ולנצח/"
+        },
+        {
+          "idx": 9,
+          "title": "לפני ואחרי במשנת רבנו עובדיה ספורנו - איסור עריות",
+          "title_norm": "לפני ואחרי במשנת רבנו עובדיה ספורנו איסור עריות",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143255/קדושת-פשוטו-של-מקרא-אחרי-מות-2.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/לפני-ואחרי-במשנת-רבנו-עובדיה-ספורנו-איסור-עריות/"
+        },
+        {
+          "idx": 10,
+          "title": "כבודו של יעקב וכבודו של עמרם",
+          "title_norm": "כבודו של יעקב וכבודו של עמרם",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143256/קדושת-פשוטו-של-מקרא-קדושים1-6.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/כבודו-של-יעקב-וכבודו-של-עמרם/"
+        },
+        {
+          "idx": 11,
+          "title": "לאו שבכללות ופשוטו של מקרא",
+          "title_norm": "לאו שבכללות ופשוטו של מקרא",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143258/קדושת-פשוטו-של-מקרא-קדושים7-13.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/לאו-שבכללות-ופשוטו-של-מקרא/"
+        },
+        {
+          "idx": 12,
+          "title": "אין מקרא יוצא מדי פשוטו",
+          "title_norm": "אין מקרא יוצא מדי פשוטו",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143259/קדושת-פשוטו-של-מקרא-אמור_1-7.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/אין-מקרא-יוצא-מדי-פשוטו/"
+        },
+        {
+          "idx": 13,
+          "title": "משמעות מילה לפי מקום כתיבתה בתורה",
+          "title_norm": "משמעות מילה לפי מקום כתיבתה בתורה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143261/קדושת-פשוטו-של-מקרא-אמור_8-10.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/משמעות-מילה-לפי-מקום-כתיבתה-בתורה/"
+        },
+        {
+          "idx": 14,
+          "title": "\"ואני לא באתי אלא לפרש פשוטו של מקרא\"",
+          "title_norm": "ואני לא באתי אלא לפרש פשוטו של מקרא",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143262/קדושת-פשוטו-של-מקרא-בהר_1-5.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/ואני-לא-באתי-אלא-לפרש-פשוטו-של-מקרא/"
+        },
+        {
+          "idx": 15,
+          "title": "\"עמך במאכל, עמך במשתה\" - ציווי או סיפור",
+          "title_norm": "עמך במאכל עמך במשתה ציווי או סיפור",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143264/קדושת-פשוטו-של-מקרא-בהר_6-8.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/עמך-במאכל-עמך-במשתה-ציווי-או-סיפור/"
+        },
+        {
+          "idx": 16,
+          "title": "פשט ומדרש מלמדים הלכה יחדיו",
+          "title_norm": "פשט ומדרש מלמדים הלכה יחדיו",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": [
+            "file-pdf-o"
+          ],
+          "attachment_href": "https://www.bneyzion.co.il/media/143265/קדושת-פשוטו-של-מקרא-בחוקתי.pdf",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/קדושת-פשוטו-של-מקרא-ויקרא/פשט-ומדרש-מלמדים-הלכה-יחדיו/"
+        }
+      ]
+    },
+    {
+      "title": "מאמרים על פרשיות ויקרא",
+      "title_norm": "מאמרים על פרשיות ויקרא",
+      "author": "הרב יהושע שפירא",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/",
+      "lesson_count_claimed": 27,
+      "lesson_count_actual": 27,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "אשרי תבחר ותקרב",
+          "title_norm": "אשרי תבחר ותקרב",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/אשרי-תבחר-ותקרב/"
+        },
+        {
+          "idx": 1,
+          "title": "כי אתם המעט",
+          "title_norm": "כי אתם המעט",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/כי-אתם-המעט/"
+        },
+        {
+          "idx": 2,
+          "title": "ואני קרבת אלקים לי טוב",
+          "title_norm": "ואני קרבת אלקים לי טוב",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/ואני-קרבת-אלקים-לי-טוב/"
+        },
+        {
+          "idx": 3,
+          "title": "ותלבש אסתר מלכות",
+          "title_norm": "ותלבש אסתר מלכות",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "video-camera"
+          ],
+          "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99%20%D7%A2%D7%99%D7%95%D7%9F%20%D7%AA%D7%A9%D7%A2%D7%97/%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%93%D7%99%D7%A0%D7%94%20%D7%A8%D7%90%D7%A4%20-%20%D7%95%D7%AA%D7%9C%D7%91%D7%A9%20%D7%90%D7%A1%D7%AA%D7%A8%20%D7%9E%D7%9C%D7%9B%D7%95%D7%AA%2000_02_06-01_18_24.mp4",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/ותלבש-אסתר-מלכות/"
+        },
+        {
+          "idx": 4,
+          "title": "הדור קבלוה בימי אחשורוש",
+          "title_norm": "הדור קבלוה בימי אחשורוש",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/הדור-קבלוה-בימי-אחשורוש/"
+        },
+        {
+          "idx": 5,
+          "title": "פור המן נהפך לפורנו",
+          "title_norm": "פור המן נהפך לפורנו",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/פור-המן-נהפך-לפורנו/"
+        },
+        {
+          "idx": 6,
+          "title": "והיה היום הזה לכם לזכרון",
+          "title_norm": "והיה היום הזה לכם לזכרון",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/והיה-היום-הזה-לכם-לזכרון/"
+        },
+        {
+          "idx": 7,
+          "title": "מה נשתנה?",
+          "title_norm": "מה נשתנה",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/מה-נשתנה/"
+        },
+        {
+          "idx": 8,
+          "title": "רשפיה רשפי אש",
+          "title_norm": "רשפיה רשפי אש",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/רשפיה-רשפי-אש/"
+        },
+        {
+          "idx": 9,
+          "title": "בעטרה שעטרה לו",
+          "title_norm": "בעטרה שעטרה לו",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/בעטרה-שעטרה-לו/"
+        },
+        {
+          "idx": 10,
+          "title": "זאת חקת התורה",
+          "title_norm": "זאת חקת התורה",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/זאת-חקת-התורה/"
+        },
+        {
+          "idx": 11,
+          "title": "ויקריבו לפני ה' אש זרה",
+          "title_norm": "ויקריבו לפני ה אש זרה",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/ויקריבו-לפני-ה-אש-זרה/"
+        },
+        {
+          "idx": 12,
+          "title": "את אשר יאהב ה'",
+          "title_norm": "את אשר יאהב ה",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/את-אשר-יאהב-ה/"
+        },
+        {
+          "idx": 13,
+          "title": "כי אעלה ארכה לך וממכותיך ארפאך",
+          "title_norm": "כי אעלה ארכה לך וממכותיך ארפאך",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/כי-אעלה-ארכה-לך-וממכותיך-ארפאך/"
+        },
+        {
+          "idx": 14,
+          "title": "כשלג ילבינו",
+          "title_norm": "כשלג ילבינו",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/כשלג-ילבינו/"
+        },
+        {
+          "idx": 15,
+          "title": "כי חלה גם ילדה ציון",
+          "title_norm": "כי חלה גם ילדה ציון",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/כי-חלה-גם-ילדה-ציון/"
+        },
+        {
+          "idx": 16,
+          "title": "שהם עתידים להתחדש כמותה",
+          "title_norm": "שהם עתידים להתחדש כמותה",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/שהם-עתידים-להתחדש-כמותה/"
+        },
+        {
+          "idx": 17,
+          "title": "ונתתי נגע צרעת",
+          "title_norm": "ונתתי נגע צרעת",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/ונתתי-נגע-צרעת/"
+        },
+        {
+          "idx": 18,
+          "title": "ואהביו כצאת השמש בגברתו",
+          "title_norm": "ואהביו כצאת השמש בגברתו",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/ואהביו-כצאת-השמש-בגברתו/"
+        },
+        {
+          "idx": 19,
+          "title": "קדשים תהיו",
+          "title_norm": "קדשים תהיו",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/קדשים-תהיו/"
+        },
+        {
+          "idx": 20,
+          "title": "תחלה למקראי קדש",
+          "title_norm": "תחלה למקראי קדש",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/תחלה-למקראי-קדש/"
+        },
+        {
+          "idx": 21,
+          "title": "וספרתם לכם",
+          "title_norm": "וספרתם לכם",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/וספרתם-לכם/"
+        },
+        {
+          "idx": 22,
+          "title": "אלה הם מועדי",
+          "title_norm": "אלה הם מועדי",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/אלה-הם-מועדי/"
+        },
+        {
+          "idx": 23,
+          "title": "ואציעה שאול הנך",
+          "title_norm": "ואציעה שאול הנך",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/ואציעה-שאול-הנך/"
+        },
+        {
+          "idx": 24,
+          "title": "גאולה תתנו לארץ",
+          "title_norm": "גאולה תתנו לארץ",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/גאולה-תתנו-לארץ/"
+        },
+        {
+          "idx": 25,
+          "title": "לילך עם התורה הזאת",
+          "title_norm": "לילך עם התורה הזאת",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/לילך-עם-התורה-הזאת/"
+        },
+        {
+          "idx": 26,
+          "title": "אנחנו יחד נבנה לה'",
+          "title_norm": "אנחנו יחד נבנה לה",
+          "author": "הרב יהושע שפירא",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מאמרים-על-פרשיות-ויקרא/אנחנו-יחד-נבנה-לה/"
+        }
+      ]
+    },
+    {
+      "title": "חומש ויקרא - כלל ופרט",
+      "title_norm": "חומש ויקרא כלל ופרט",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-כלל-ופרט/",
+      "lesson_count_claimed": 3,
+      "lesson_count_actual": 3,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "מבוא לקרבנות",
+          "title_norm": "מבוא לקרבנות",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "http://bneyzion.s3.amazonaws.com/%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%9E%D7%91%D7%95%D7%90%20%D7%9C%D7%A7%D7%A8%D7%91%D7%A0%D7%95%D7%AA.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-כלל-ופרט/מבוא-לקרבנות/"
+        },
+        {
+          "idx": 1,
+          "title": "היום השמיני המפתיע",
+          "title_norm": "היום השמיני המפתיע",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%94%D7%99%D7%95%D7%9D%20%D7%94%D7%A9%D7%9E%D7%99%D7%A0%D7%99%20%D7%94%D7%9E%D7%A4%D7%AA%D7%99%D7%A2%2C%20%D7%94%D7%AA%D7%A4%D7%A7%D7%99%D7%93%20%D7%94%D7%A0%D7%95%D7%A1%D7%A3%20%D7%A9%D7%9C%20%D7%94%D7%9B%D7%94%D7%A0%D7%99%D7%9D.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-כלל-ופרט/היום-השמיני-המפתיע/"
+        },
+        {
+          "idx": 2,
+          "title": "יחודה של הקטורת",
+          "title_norm": "יחודה של הקטורת",
+          "author": "הרב יואב אוריאל",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%99%D7%97%D7%95%D7%93%D7%94%20%D7%A9%D7%9C%20%D7%94%D7%A7%D7%98%D7%95%D7%A8%D7%AA.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-כלל-ופרט/יחודה-של-הקטורת/"
+        }
+      ]
+    },
+    {
+      "title": "ויקרא -  מוקלט | ללא טעמים",
+      "title_norm": "ויקרא מוקלט ללא טעמים",
+      "author": "הרב דן בארי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/",
+      "lesson_count_claimed": 27,
+      "lesson_count_actual": 27,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "ויקרא מוקלט - פרק א | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק א ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_001.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-א-ללא-טעמים/"
+        },
+        {
+          "idx": 1,
+          "title": "ויקרא מוקלט - פרק ב | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_002.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ב-ללא-טעמים/"
+        },
+        {
+          "idx": 2,
+          "title": "ויקרא מוקלט - פרק ג | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_003.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ג-ללא-טעמים/"
+        },
+        {
+          "idx": 3,
+          "title": "ויקרא מוקלט - פרק ד | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_004.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ד-ללא-טעמים/"
+        },
+        {
+          "idx": 4,
+          "title": "ויקרא מוקלט - פרק ה | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ה ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_005.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ה-ללא-טעמים/"
+        },
+        {
+          "idx": 5,
+          "title": "ויקרא מוקלט - פרק ו | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ו ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_006.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ו-ללא-טעמים/"
+        },
+        {
+          "idx": 6,
+          "title": "ויקרא מוקלט - פרק ז | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_007.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ז-ללא-טעמים/"
+        },
+        {
+          "idx": 7,
+          "title": "ויקרא מוקלט - פרק ח | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ח ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_008.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ח-ללא-טעמים/"
+        },
+        {
+          "idx": 8,
+          "title": "ויקרא מוקלט - פרק ט | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק ט ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_009.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-ט-ללא-טעמים/"
+        },
+        {
+          "idx": 9,
+          "title": "ויקרא מוקלט - פרק י | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק י ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_010.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-י-ללא-טעמים/"
+        },
+        {
+          "idx": 10,
+          "title": "ויקרא מוקלט - פרק יא | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יא ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_011.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יא-ללא-טעמים/"
+        },
+        {
+          "idx": 11,
+          "title": "ויקרא מוקלט - פרק יב | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_012.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יב-ללא-טעמים/"
+        },
+        {
+          "idx": 12,
+          "title": "ויקרא מוקלט - פרק יג | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_013.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יג-ללא-טעמים/"
+        },
+        {
+          "idx": 13,
+          "title": "ויקרא מוקלט - פרק יד | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_014.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יד-ללא-טעמים/"
+        },
+        {
+          "idx": 14,
+          "title": "ויקרא מוקלט - פרק טו | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק טו ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_015.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-טו-ללא-טעמים/"
+        },
+        {
+          "idx": 15,
+          "title": "ויקרא מוקלט - פרק טז | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק טז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_016.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-טז-ללא-טעמים/"
+        },
+        {
+          "idx": 16,
+          "title": "ויקרא מוקלט - פרק יז | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_017.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יז-ללא-טעמים/"
+        },
+        {
+          "idx": 17,
+          "title": "ויקרא מוקלט - פרק יח | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יח ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_018.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יח-ללא-טעמים/"
+        },
+        {
+          "idx": 18,
+          "title": "ויקרא מוקלט - פרק יט | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק יט ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_019.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-יט-ללא-טעמים/"
+        },
+        {
+          "idx": 19,
+          "title": "ויקרא מוקלט - פרק כ | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כ ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_020.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כ-ללא-טעמים/"
+        },
+        {
+          "idx": 20,
+          "title": "ויקרא מוקלט - פרק כא | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כא ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_021.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כא-ללא-טעמים/"
+        },
+        {
+          "idx": 21,
+          "title": "ויקרא מוקלט - פרק כב | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_022.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כב-ללא-טעמים/"
+        },
+        {
+          "idx": 22,
+          "title": "ויקרא מוקלט - פרק כג | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_023.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כג-ללא-טעמים/"
+        },
+        {
+          "idx": 23,
+          "title": "ויקרא מוקלט - פרק כד | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_024.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כד-ללא-טעמים/"
+        },
+        {
+          "idx": 24,
+          "title": "ויקרא מוקלט - פרק כה | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כה ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_025.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כה-ללא-טעמים/"
+        },
+        {
+          "idx": 25,
+          "title": "ויקרא מוקלט - פרק כו | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כו ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_026.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כו-ללא-טעמים/"
+        },
+        {
+          "idx": 26,
+          "title": "ויקרא מוקלט - פרק כז | ללא טעמים",
+          "title_norm": "ויקרא מוקלט פרק כז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/03Sc_Vayiqra/03Sc_vayiqra-_027.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/ויקרא-מוקלט-ללא-טעמים/ויקרא-מוקלט-פרק-כז-ללא-טעמים/"
+        }
+      ]
+    },
+    {
+      "title": "פשט בפרשה",
+      "title_norm": "פשט בפרשה",
+      "author": "הרב עמנואל בן ארצי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/",
+      "lesson_count_claimed": 16,
+      "lesson_count_actual": 16,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "ההגיון של קרבן תודה",
+          "title_norm": "ההגיון של קרבן תודה",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/ההגיון-של-קרבן-תודה/"
+        },
+        {
+          "idx": 1,
+          "title": "הקדושה שבאוכל",
+          "title_norm": "הקדושה שבאוכל",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/הקדושה-שבאוכל/"
+        },
+        {
+          "idx": 2,
+          "title": "במה חטאה היולדת?",
+          "title_norm": "במה חטאה היולדת",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/במה-חטאה-היולדת/"
+        },
+        {
+          "idx": 3,
+          "title": "למה מצורע מגלח את שיערו?",
+          "title_norm": "למה מצורע מגלח את שיערו",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/למה-מצורע-מגלח-את-שיערו/"
+        },
+        {
+          "idx": 4,
+          "title": "שעיר לעזאזל",
+          "title_norm": "שעיר לעזאזל",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/שעיר-לעזאזל/"
+        },
+        {
+          "idx": 5,
+          "title": "בסיס המוסר",
+          "title_norm": "בסיס המוסר",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/בסיס-המוסר/"
+        },
+        {
+          "idx": 6,
+          "title": "תפקידה של ספירת העומר",
+          "title_norm": "תפקידה של ספירת העומר",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/תפקידה-של-ספירת-העומר/"
+        },
+        {
+          "idx": 7,
+          "title": "\"כִּי לִי הָאָרֶץ\"",
+          "title_norm": "כי לי הארץ",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/כ-י-ל-י-ה-א-ר-ץ/"
+        },
+        {
+          "idx": 8,
+          "title": "רצון הארץ",
+          "title_norm": "רצון הארץ",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/רצון-הארץ/"
+        },
+        {
+          "idx": 9,
+          "title": "שמרים, דבש, מלח",
+          "title_norm": "שמרים דבש מלח",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/שמרים-דבש-מלח/"
+        },
+        {
+          "idx": 10,
+          "title": "אש תמיד",
+          "title_norm": "אש תמיד",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/אש-תמיד/"
+        },
+        {
+          "idx": 11,
+          "title": "בקרבתם לפני ה'",
+          "title_norm": "בקרבתם לפני ה",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/בקרבתם-לפני-ה/"
+        },
+        {
+          "idx": 12,
+          "title": "על מה באה צרעת?",
+          "title_norm": "על מה באה צרעת",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/על-מה-באה-צרעת/"
+        },
+        {
+          "idx": 13,
+          "title": "נפש בריאה",
+          "title_norm": "נפש בריאה",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/נפש-בריאה/"
+        },
+        {
+          "idx": 14,
+          "title": "קדושה בכפיה",
+          "title_norm": "קדושה בכפיה",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/קדושה-בכפיה/"
+        },
+        {
+          "idx": 15,
+          "title": "הערכה עצמית",
+          "title_norm": "הערכה עצמית",
+          "author": "הרב עמנואל בן ארצי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/פשט-בפרשה/הערכה-עצמית/"
+        }
+      ]
+    },
+    {
+      "title": "לשון הקודש בפרשה",
+      "title_norm": "לשון הקודש בפרשה",
+      "author": "הרב יהונתן מיכאלי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/",
+      "lesson_count_claimed": 19,
+      "lesson_count_actual": 19,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "המקרה שאינו מקרי",
+          "title_norm": "המקרה שאינו מקרי",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/המקרה-שאינו-מקרי/"
+        },
+        {
+          "idx": 1,
+          "title": "מיהו המשיח",
+          "title_norm": "מיהו המשיח",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/מיהו-המשיח/"
+        },
+        {
+          "idx": 2,
+          "title": "הקשר בין פורים, פרשת פרה, פריעה ופרימה",
+          "title_norm": "הקשר בין פורים פרשת פרה פריעה ופרימה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/הקשר-בין-פורים-פרשת-פרה-פריעה-ופרימה/"
+        },
+        {
+          "idx": 3,
+          "title": "הירוק והירקרק - מי יותר חזק?",
+          "title_norm": "הירוק והירקרק מי יותר חזק",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/הירוק-והירקרק-מי-יותר-חזק/"
+        },
+        {
+          "idx": 4,
+          "title": "שני התולעת, תולעת השני ושבת הגדול",
+          "title_norm": "שני התולעת תולעת השני ושבת הגדול",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/שני-התולעת-תולעת-השני-ושבת-הגדול/"
+        },
+        {
+          "idx": 5,
+          "title": "לַאו הַ'לֹא' ולַאו הַ'אַל'",
+          "title_norm": "לאו ה לא ולאו ה אל",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/ל-או-ה-ל-א-ול-או-ה-א-ל/"
+        },
+        {
+          "idx": 6,
+          "title": "עַמָּיו – יחיד או רבים?",
+          "title_norm": "עמיו יחיד או רבים",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/ע-מ-יו-יחיד-או-רבים/"
+        },
+        {
+          "idx": 7,
+          "title": "שנת השמיטה – על שום מה?",
+          "title_norm": "שנת השמיטה על שום מה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/שנת-השמיטה-על-שום-מה/"
+        },
+        {
+          "idx": 8,
+          "title": "חיבורי ו' החיבור",
+          "title_norm": "חיבורי ו החיבור",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/חיבורי-ו-החיבור/"
+        },
+        {
+          "idx": 9,
+          "title": "קרבן ומנחה",
+          "title_norm": "קרבן ומנחה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/קרבן-ומנחה/"
+        },
+        {
+          "idx": 10,
+          "title": "זריזות במצוות",
+          "title_norm": "זריזות במצוות",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/זריזות-במצוות/"
+        },
+        {
+          "idx": 11,
+          "title": "רעך ועמיתך",
+          "title_norm": "רעך ועמיתך",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/רעך-ועמיתך/"
+        },
+        {
+          "idx": 12,
+          "title": "חילול וחול",
+          "title_norm": "חילול וחול",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/חילול-וחול/"
+        },
+        {
+          "idx": 13,
+          "title": "איסורי אונאה",
+          "title_norm": "איסורי אונאה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/איסורי-אונאה/"
+        },
+        {
+          "idx": 14,
+          "title": "אוהל מועד",
+          "title_norm": "אוהל מועד",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/אוהל-מועד/"
+        },
+        {
+          "idx": 15,
+          "title": "להבדיל בין הטמא ובין הטהור",
+          "title_norm": "להבדיל בין הטמא ובין הטהור",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/להבדיל-בין-הטמא-ובין-הטהור/"
+        },
+        {
+          "idx": 16,
+          "title": "נטירה וטהרה",
+          "title_norm": "נטירה וטהרה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/נטירה-וטהרה/"
+        },
+        {
+          "idx": 17,
+          "title": "היובל",
+          "title_norm": "היובל",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/היובל/"
+        },
+        {
+          "idx": 18,
+          "title": "חומש הפקודים",
+          "title_norm": "חומש הפקודים",
+          "author": "הרב יהונתן מיכאלי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/לשון-הקודש-בפרשה/חומש-הפקודים/"
+        }
+      ]
+    },
+    {
+      "title": "עולמות חדשים בפרשה",
+      "title_norm": "עולמות חדשים בפרשה",
+      "author": "הרב יוסף שילר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/",
+      "lesson_count_claimed": 17,
+      "lesson_count_actual": 17,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "מאוהל מועד לאמר",
+          "title_norm": "מאוהל מועד לאמר",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/מאוהל-מועד-לאמר/"
+        },
+        {
+          "idx": 1,
+          "title": "זאת התורה",
+          "title_norm": "זאת התורה",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/זאת-התורה/"
+        },
+        {
+          "idx": 2,
+          "title": "בקרובי אקדש",
+          "title_norm": "בקרובי אקדש",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/בקרובי-אקדש/"
+        },
+        {
+          "idx": 3,
+          "title": "שמירת נגיעה",
+          "title_norm": "שמירת נגיעה",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/שמירת-נגיעה/"
+        },
+        {
+          "idx": 4,
+          "title": "על פני השדה",
+          "title_norm": "על פני השדה",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/על-פני-השדה/"
+        },
+        {
+          "idx": 5,
+          "title": "בית אהרן בבית ה'",
+          "title_norm": "בית אהרן בבית ה",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/בית-אהרן-בבית-ה/"
+        },
+        {
+          "idx": 6,
+          "title": "מאנוכי לאני",
+          "title_norm": "מאנוכי לאני",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/מאנוכי-לאני/"
+        },
+        {
+          "idx": 7,
+          "title": "על גבול מחנה ישראל",
+          "title_norm": "על גבול מחנה ישראל",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/על-גבול-מחנה-ישראל/"
+        },
+        {
+          "idx": 8,
+          "title": "דוד בן דוד",
+          "title_norm": "דוד בן דוד",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/דוד-בן-דוד/"
+        },
+        {
+          "idx": 9,
+          "title": "מבריחי הרבים",
+          "title_norm": "מבריחי הרבים",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/מבריחי-הרבים/"
+        },
+        {
+          "idx": 10,
+          "title": "לרצונו לפני ה'",
+          "title_norm": "לרצונו לפני ה",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/לרצונו-לפני-ה/"
+        },
+        {
+          "idx": 11,
+          "title": "מהיום השישי ליום השמיני",
+          "title_norm": "מהיום השישי ליום השמיני",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/מהיום-השישי-ליום-השמיני/"
+        },
+        {
+          "idx": 12,
+          "title": "דמי טהרה",
+          "title_norm": "דמי טהרה",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/דמי-טהרה/"
+        },
+        {
+          "idx": 13,
+          "title": "גילוי הנסתר",
+          "title_norm": "גילוי הנסתר",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/גילוי-הנסתר/"
+        },
+        {
+          "idx": 14,
+          "title": "בקרבך קדוש",
+          "title_norm": "בקרבך קדוש",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/בקרבך-קדוש/"
+        },
+        {
+          "idx": 15,
+          "title": "חירות המקום והזמן",
+          "title_norm": "חירות המקום והזמן",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/חירות-המקום-והזמן/"
+        },
+        {
+          "idx": 16,
+          "title": "ברית מרצון",
+          "title_norm": "ברית מרצון",
+          "author": "הרב יוסף שילר",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/עולמות-חדשים-בפרשה/ברית-מרצון/"
+        }
+      ]
+    },
+    {
+      "title": "הארות באונקלוס",
+      "title_norm": "הארות באונקלוס",
+      "author": "הרב יהונתן עידן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/",
+      "lesson_count_claimed": 4,
+      "lesson_count_actual": 4,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "וידבר ה' אליו - תרגם אונקלוס: ומליל יי עמיה",
+          "title_norm": "וידבר ה אליו תרגם אונקלוס ומליל יי עמיה",
+          "author": "הרב יהונתן עידן",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/וידבר-ה-אליו-תרגם-אונקלוס-ומליל-יי-עמיה/"
+        },
+        {
+          "idx": 1,
+          "title": "מדו בד",
+          "title_norm": "מדו בד",
+          "author": "הרב יהונתן עידן",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/מדו-בד/"
+        },
+        {
+          "idx": 2,
+          "title": "בן בקר",
+          "title_norm": "בן בקר",
+          "author": "הרב יהונתן עידן",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/בן-בקר/"
+        },
+        {
+          "idx": 3,
+          "title": "אשה כי תזריע",
+          "title_norm": "אשה כי תזריע",
+          "author": "הרב יהונתן עידן",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/הארות-באונקלוס/אשה-כי-תזריע/"
+        }
+      ]
+    },
+    {
+      "title": "חומש ויקרא - קריאה בטעמים אשכנזי",
+      "title_norm": "חומש ויקרא קריאה בטעמים אשכנזי",
+      "author": "הרב יונדב זר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/",
+      "lesson_count_claimed": 10,
+      "lesson_count_actual": 10,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "פרשת שמיני - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת שמיני קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%9E%D7%99%D7%A0%D7%99+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-שמיני-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 1,
+          "title": "פרשת ויקרא - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת ויקרא קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%A7%D7%A8%D7%90+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%98%D7%A2%D7%9E%D7%99%D7%9D.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-ויקרא-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 2,
+          "title": "פרשת צו - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת צו קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A6%D7%95+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%98%D7%A2%D7%9E%D7%99%D7%9D.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-צו-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 3,
+          "title": "פרשת תזריע - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת תזריע קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%9E%D7%99%D7%A0%D7%99+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-תזריע-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 4,
+          "title": "פרשת מצורע - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת מצורע קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9E%D7%A6%D7%95%D7%A8%D7%A2+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-מצורע-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 5,
+          "title": "פרשת אחרי מות - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת אחרי מות קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%90%D7%97%D7%A8%D7%99+%D7%9E%D7%95%D7%AA+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-אחרי-מות-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 6,
+          "title": "פרשת קדושים - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת קדושים קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A7%D7%93%D7%95%D7%A9%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-קדושים-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 7,
+          "title": "פרשת אמור - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת אמור קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%90%D7%9E%D7%95%D7%A8+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-אמור-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 8,
+          "title": "פרשת בהר - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת בהר קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%91%D7%94%D7%A8+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-בהר-קריאה-בטעמים-אשכנזי/"
+        },
+        {
+          "idx": 9,
+          "title": "פרשת בחוקותי - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת בחוקותי קריאה בטעמים אשכנזי",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-בטעמים-אשכנזי/פרשת-בחוקותי-קריאה-בטעמים-אשכנזי/"
+        }
+      ]
+    },
+    {
+      "title": "חומש ויקרא - קריאה עם ביאור פשוט",
+      "title_norm": "חומש ויקרא קריאה עם ביאור פשוט",
+      "author": "הרב יונדב זר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/",
+      "lesson_count_claimed": 10,
+      "lesson_count_actual": 10,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "פרשת ויקרא - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת ויקרא קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%A7%D7%A8%D7%90+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-ויקרא-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 1,
+          "title": "פרשת צו - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת צו קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A6%D7%95+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-צו-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 2,
+          "title": "פרשת שמיני - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת שמיני קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%9E%D7%99%D7%A0%D7%99+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-שמיני-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 3,
+          "title": "פרשת תזריע - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת תזריע קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%AA%D7%96%D7%A8%D7%99%D7%A2+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-תזריע-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 4,
+          "title": "פרשת מצורע - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת מצורע קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9E%D7%A6%D7%95%D7%A8%D7%A2+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-מצורע-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 5,
+          "title": "פרשת אחרי מות - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת אחרי מות קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%90%D7%97%D7%A8%D7%99+%D7%9E%D7%95%D7%AA+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-אחרי-מות-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 6,
+          "title": "פרשת קדושים - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת קדושים קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A7%D7%93%D7%95%D7%A9%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-קדושים-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 7,
+          "title": "פרשת אמור - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת אמור קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%90%D7%9E%D7%95%D7%A8+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-אמור-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 8,
+          "title": "פרשת בהר - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת בהר קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%91%D7%94%D7%A8+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-בהר-קריאה-עם-ביאור-פשוט/"
+        },
+        {
+          "idx": 9,
+          "title": "פרשת בחוקותי - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת בחוקותי קריאה עם ביאור פשוט",
+          "author": "הרב יונדב זר",
+          "media": [
+            "volume-up"
+          ],
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%95%D7%99%D7%A7%D7%A8%D7%90/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%91%D7%97%D7%95%D7%A7%D7%95%D7%AA%D7%99+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/חומש-ויקרא-קריאה-עם-ביאור-פשוט/פרשת-בחוקותי-קריאה-עם-ביאור-פשוט/"
+        }
+      ]
+    },
+    {
+      "title": "מידות בפרשה",
+      "title_norm": "מידות בפרשה",
+      "author": "הרב חגי ולוסקי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/",
+      "lesson_count_claimed": 18,
+      "lesson_count_actual": 18,
+      "lessons": [
+        {
+          "idx": 0,
+          "title": "אחריות אישית",
+          "title_norm": "אחריות אישית",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/אחריות-אישית/"
+        },
+        {
+          "idx": 1,
+          "title": "מהותו של האדם – חיוּת וטהרה",
+          "title_norm": "מהותו של האדם חיות וטהרה",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/מהותו-של-האדם-חיו-ת-וטהרה/"
+        },
+        {
+          "idx": 2,
+          "title": "תוכחה",
+          "title_norm": "תוכחה",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/תוכחה/"
+        },
+        {
+          "idx": 3,
+          "title": "העצלות",
+          "title_norm": "העצלות",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/העצלות/"
+        },
+        {
+          "idx": 4,
+          "title": "מצות השמיטה – חיזוק באמונה",
+          "title_norm": "מצות השמיטה חיזוק באמונה",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/מצות-השמיטה-חיזוק-באמונה/"
+        },
+        {
+          "idx": 5,
+          "title": "אל תגיד 'אוף', אמור פרק ק'",
+          "title_norm": "אל תגיד אוף אמור פרק ק",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/אל-תגיד-אוף-אמור-פרק-ק/"
+        },
+        {
+          "idx": 6,
+          "title": "חג המצות או חג הפסח",
+          "title_norm": "חג המצות או חג הפסח",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/חג-המצות-או-חג-הפסח/"
+        },
+        {
+          "idx": 7,
+          "title": "והגדת לבנך ביום ההוא לאמר",
+          "title_norm": "והגדת לבנך ביום ההוא לאמר",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/והגדת-לבנך-ביום-ההוא-לאמר/"
+        },
+        {
+          "idx": 8,
+          "title": "שתי דרכים",
+          "title_norm": "שתי דרכים",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/שתי-דרכים/"
+        },
+        {
+          "idx": 9,
+          "title": "ואהבת לרעך – כמוך",
+          "title_norm": "ואהבת לרעך כמוך",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/ואהבת-לרעך-כמוך/"
+        },
+        {
+          "idx": 10,
+          "title": "כיצד נוכיח את ילדינו",
+          "title_norm": "כיצד נוכיח את ילדינו",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/כיצד-נוכיח-את-ילדינו/"
+        },
+        {
+          "idx": 11,
+          "title": "יובל",
+          "title_norm": "יובל",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/יובל/"
+        },
+        {
+          "idx": 12,
+          "title": "אחדות",
+          "title_norm": "אחדות",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/אחדות/"
+        },
+        {
+          "idx": 13,
+          "title": "כוחה של מילה",
+          "title_norm": "כוחה של מילה",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/כוחה-של-מילה/"
+        },
+        {
+          "idx": 14,
+          "title": "לחשוב עמוק או להאמין בפשטות",
+          "title_norm": "לחשוב עמוק או להאמין בפשטות",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/לחשוב-עמוק-או-להאמין-בפשטות/"
+        },
+        {
+          "idx": 15,
+          "title": "המסע אל אומנות השתיקה",
+          "title_norm": "המסע אל אומנות השתיקה",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/המסע-אל-אומנות-השתיקה/"
+        },
+        {
+          "idx": 16,
+          "title": "סוד הקדושה שבלב הקהילה",
+          "title_norm": "סוד הקדושה שבלב הקהילה",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/סוד-הקדושה-שבלב-הקהילה/"
+        },
+        {
+          "idx": 17,
+          "title": "סודם של מתנות עניים בלב פרשת המועדות",
+          "title_norm": "סודם של מתנות עניים בלב פרשת המועדות",
+          "author": "הרב חגי ולוסקי",
+          "media": [
+            "file-text"
+          ],
+          "attachment_href": null,
+          "kind_raw": "שיעור",
+          "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/מידות-בפרשה/סודם-של-מתנות-עניים-בלב-פרשת-המועדות/"
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "series": 22,
+    "lessons": 15,
+    "shut": 7,
+    "total_rows": 44
+  },
+  "pipe_parsha_event_series_on_category_page": [],
+  "count_mismatches": []
+}

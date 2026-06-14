@@ -315,9 +315,9 @@ export function useContentSidebar() {
         // Pattern: "פרשת <name> | <chapter-range>"  e.g. "פרשת נח | ו-יא".
         // SAFETY (R1): pattern-scoped on title only — never book-scoped or sort_order-scoped.
         // Neviim event-series ("הושע פרק א", "זכריה פרק ב") have no "|" range → not matched.
-        // Regression proof: ^\s*פרשת\b.*\|\s*[א-ת] matches 0 children of any Neviim book.
+        // Regression proof: ^\s*פרשת\s.*\|\s*[א-ת] matches 0 children of any Neviim book.
         // Non-matched examples (must stay false): "פרשת שבוע-בראשית", "פרשת השבוע עפ"י הרמב"ן", "פרשת שבוע במדבר"
-        const isParshaEventSeries = (t: string) => /^\s*פרשת\b.*\|\s*[א-ת]/.test(t.trim());
+        const isParshaEventSeries = (t: string) => /^\s*פרשת\s.*\|\s*[א-ת]/.test(t.trim());
 
         // Drop direct-child placeholder sub-categories: a draft node with 0 lessons whose parent IS
         // the requested node is a sub-category shell (old site shows it in the sidebar, not as a

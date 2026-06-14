@@ -1,0 +1,305 @@
+{
+  "book": "במדבר",
+  "verified_against": "live DB (sbq.py) + old gt manifest",
+  "old_series_count": 23,
+  "new_nonparsha_children": 24,
+  "diffs": [
+    {
+      "name": "מאמרים על פרשיות במדבר - הרב ערן טמיר",
+      "author": "הרב ערן טמיר",
+      "old_count": 14,
+      "new_count": 14,
+      "matched_series_id": "fe3a4eb9",
+      "gap": 0,
+      "action": "OVER-FILLED by 1 (published 14, +1 non-published \"הוד והדר לבשת\" not on old page). Old 14 matches published count -> OK, extra flagged."
+    },
+    {
+      "name": "הרב שלמה אבינר על פרשיות במדבר",
+      "author": "הרב שלמה אבינר",
+      "old_count": 16,
+      "new_count": 36,
+      "matched_series_id": "6ba0b449",
+      "gap": 0,
+      "action": "OVER-FILLED: merged both אבינר series. After STEP1 split -> 17 (16+1 internal dup). Restored to old#1=16. Internal dup row flagged display-dedup."
+    },
+    {
+      "name": "מאמרים לשולחן השבת - חומש במדבר",
+      "author": "הרב יואב אוריאל",
+      "old_count": 31,
+      "new_count": 31,
+      "matched_series_id": "6aa74fee",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "מאמרים קצרים - חומש במדבר",
+      "author": "הרב אלי אדלר",
+      "old_count": 4,
+      "new_count": 4,
+      "matched_series_id": "1df4d7bc",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "שיעורים על התנ\"ך - במדבר",
+      "author": "הרב יצחק בן שחר",
+      "old_count": 8,
+      "new_count": 8,
+      "matched_series_id": "0b2bc3ba",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "מאמרים - חומש במדבר",
+      "author": "הרב איתן שנדורפי",
+      "old_count": 43,
+      "new_count": 44,
+      "matched_series_id": "82460c3c",
+      "gap": -1,
+      "action": "OVER-FILLED by 1 — flag."
+    },
+    {
+      "name": "שיעורים- חומש במדבר",
+      "author": "הרב אוהד תירוש",
+      "old_count": 38,
+      "new_count": 38,
+      "matched_series_id": "440b584d",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "שיעורים קצרים בספר במדבר",
+      "author": "הרב איתן קופמן",
+      "old_count": 7,
+      "new_count": 7,
+      "matched_series_id": "d68b7524",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "פרשיות במדבר",
+      "author": "הרב נתן רוטמן",
+      "old_count": 14,
+      "new_count": 14,
+      "matched_series_id": "23654630",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "פרשת שבוע- במדבר",
+      "author": "הרב דוד ג'יאמי",
+      "old_count": 25,
+      "new_count": 25,
+      "matched_series_id": "7caea04d",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "קדושת פשוטו של מקרא - במדבר",
+      "author": "הרב יהודה קופרמן זצ\"ל",
+      "old_count": 19,
+      "new_count": 0,
+      "matched_series_id": "48adc2eb",
+      "gap": 19,
+      "action": "UNDER-FILLED (EMPTY 0/19). STEP2 INSERTs 19 clones from in-DB sources (parsha-event + general). -> 19."
+    },
+    {
+      "name": "מאמרים על פרשיות במדבר",
+      "author": "הרב יהושע שפירא",
+      "old_count": 23,
+      "new_count": 23,
+      "matched_series_id": "9727e314",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "ספר במדבר - כלל ופרט",
+      "author": "הרב יואב אוריאל",
+      "old_count": 1,
+      "new_count": 1,
+      "matched_series_id": "73344ba9",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "מאמרים על הפרשה - חומש במדבר",
+      "author": "הרב נועם ונגרובר",
+      "old_count": 5,
+      "new_count": 5,
+      "matched_series_id": "63e7b58a",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "במדבר- מוקלט | ללא טעמים",
+      "author": "הרב דן בארי",
+      "old_count": 33,
+      "new_count": 33,
+      "matched_series_id": "ae7c8c59",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "הרב שלמה אבינר על פרשיות במדבר",
+      "author": "הרב שלמה אבינר",
+      "old_count": 19,
+      "new_count": 6,
+      "matched_series_id": "d860d934",
+      "gap": 13,
+      "action": "UNDER-FILLED: 6 of 19. STEP1 MOVEs the other 13 (19 total) in from 6ba0b449. After: 25 rows (19 + 6 pre-existing copy clones) -> display-dedup to 19."
+    },
+    {
+      "name": "פשט בפרשה",
+      "author": "הרב עמנואל בן ארצי",
+      "old_count": 11,
+      "new_count": 11,
+      "matched_series_id": "fe1147aa",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "לשון הקודש בפרשה",
+      "author": "הרב יהונתן מיכאלי",
+      "old_count": 32,
+      "new_count": 32,
+      "matched_series_id": "9fd0779c",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "עולמות חדשים בפרשה",
+      "author": "הרב יוסף שילר",
+      "old_count": 20,
+      "new_count": 20,
+      "matched_series_id": "0b185ef9",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "חומש במדבר - קריאה בטעמים אשכנזי",
+      "author": "הרב יונדב זר",
+      "old_count": 9,
+      "new_count": 9,
+      "matched_series_id": "d8f35b46",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "חומש במדבר - קריאה עם ביאור פשוט",
+      "author": "הרב יונדב זר",
+      "old_count": 10,
+      "new_count": 10,
+      "matched_series_id": "511412e1",
+      "gap": 0,
+      "action": "OK (exact match)."
+    },
+    {
+      "name": "מידות בפרשה",
+      "author": "הרב חגי ולוסקי",
+      "old_count": 28,
+      "new_count": 27,
+      "matched_series_id": "dfb8c480",
+      "gap": 1,
+      "action": "UNDER-FILLED by 1. 'טלית שכולה אמת' absent from DB -> STEP3 INSERT placeholder (NULL media). YOAV DOUBT: media href unknown."
+    },
+    {
+      "name": "מתקרבים לפרשה - סרטונים קצרים",
+      "author": "הרב יואב אוריאל",
+      "old_count": 5,
+      "new_count": 6,
+      "matched_series_id": "77adb8ce",
+      "gap": -1,
+      "action": "OVER-FILLED by 1: punctuation-variant duplicate of \"איך העיז קורח...\" -> flag display-dedup (no delete)."
+    }
+  ],
+  "standalone": {
+    "old": 25,
+    "in_db": 25,
+    "as_standalone_null": 0,
+    "action": "STEP4 INSERT 25 standalone clones (series_id NULL, book=במדבר) from parsha-event/other copies"
+  },
+  "shut": {
+    "old": 10,
+    "in_db": 10,
+    "as_standalone_null": 0,
+    "action": "STEP5 INSERT 10 שו\"ת clones (series_id NULL)"
+  },
+  "parsha_event_series": [
+    {
+      "id": "158b38e7",
+      "title": "פרשת בהעלותך | ח-יב",
+      "real": 48
+    },
+    {
+      "id": "580c5476",
+      "title": "פרשת בלק | כב-כה",
+      "real": 55
+    },
+    {
+      "id": "bf16434c",
+      "title": "פרשת במדבר | א-ד",
+      "real": 39
+    },
+    {
+      "id": "fe3e6894",
+      "title": "פרשת חוקת | יט-כב",
+      "real": 48
+    },
+    {
+      "id": "68bb7053",
+      "title": "פרשת מטות | ל-לב",
+      "real": 43
+    },
+    {
+      "id": "46d24bbf",
+      "title": "פרשת מסעי | לג-לו",
+      "real": 52
+    },
+    {
+      "id": "9cb69292",
+      "title": "פרשת נשא | ד-ז",
+      "real": 41
+    },
+    {
+      "id": "02e69fcc",
+      "title": "פרשת פנחס | כה-ל",
+      "real": 63
+    },
+    {
+      "id": "aa50e54c",
+      "title": "פרשת קורח | טז-יח",
+      "real": 47
+    },
+    {
+      "id": "6adf155c",
+      "title": "פרשת קורח | טז-יח",
+      "real": 5
+    },
+    {
+      "id": "d2f47e60",
+      "title": "פרשת שלח לך | יג-טו",
+      "real": 58
+    }
+  ],
+  "parsha_note": "10 distinct parshiot; פרשת קורח DUPLICATED (aa50e54c=47 + 6adf155c=5, rabbi הרב יחזקאל כהן). Flag for merge-review (no delete). Old category page rendered ZERO parsha rows (parsha_event_rows_on_category=[]).",
+  "extra_new_series": [
+    {
+      "id": "d7777773",
+      "title": "דפי עבודה - במדבר",
+      "status": "published",
+      "note": "NOT on old category page (teachers/worksheets node) — exclude from category page by code"
+    }
+  ],
+  "totals": {
+    "series_matched": 18,
+    "series_missing": 0,
+    "series_underfilled": 3,
+    "series_overfilled": 2,
+    "lessons_to_insert_koparman": 19,
+    "lessons_to_insert_midot": 1,
+    "standalone_to_insert": 25,
+    "shut_to_insert": 10,
+    "lessons_to_move_abiner": 19,
+    "yoav_doubts": 2
+  }
+}

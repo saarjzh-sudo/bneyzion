@@ -1,0 +1,248 @@
+[
+  {
+    "name": "הרב קשתיאל על פרשיות שמות",
+    "author": "הרב אליעזר קשתיאל",
+    "old_count": 23,
+    "new_count": null,
+    "matched": null,
+    "gap": 23
+  },
+  {
+    "name": "דבר תורה לשולחן השבת - שמות",
+    "author": "הרב יואב אוריאל",
+    "old_count": 41,
+    "new_count": 41,
+    "matched": "d14acd18",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "מבט מגבוה על חומש שמות",
+    "author": "הרב יואב אוריאל",
+    "old_count": 13,
+    "new_count": 13,
+    "matched": "e2756c64",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "הרב אבינר על פרשיות שמות",
+    "author": "הרב שלמה אבינר",
+    "old_count": 19,
+    "new_count": 40,
+    "matched": "1ff919db",
+    "db_status": "active",
+    "gap": -21,
+    "n_db_cands": 2
+  },
+  {
+    "name": "הרב אבינר על פרשיות שמות",
+    "author": "הרב שלמה אבינר",
+    "old_count": 21,
+    "new_count": 40,
+    "matched": "1ff919db",
+    "db_status": "active",
+    "gap": -19,
+    "n_db_cands": 2
+  },
+  {
+    "name": "מאמרים על פרשיות שמות - הרב ערן טמיר",
+    "author": "הרב ערן טמיר",
+    "old_count": 12,
+    "new_count": 12,
+    "matched": "04c91c70",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "מאמרים קצרים - חומש שמות",
+    "author": "הרב אלי אדלר",
+    "old_count": 14,
+    "new_count": 14,
+    "matched": "ceed4f3f",
+    "db_status": "category",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "שיעורים על התנ\"ך - שמות",
+    "author": "הרב יצחק בן שחר",
+    "old_count": 9,
+    "new_count": 10,
+    "matched": "6b22958d",
+    "db_status": "active",
+    "gap": -1,
+    "n_db_cands": 1
+  },
+  {
+    "name": "מאמרים - חומש שמות",
+    "author": "הרב איתן שנדורפי",
+    "old_count": 71,
+    "new_count": 71,
+    "matched": "0ae99e80",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "שיעורים- חומש שמות",
+    "author": "הרב אוהד תירוש",
+    "old_count": 12,
+    "new_count": 12,
+    "matched": "b3cd39c5",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "שיעורים קצרים על ספר שמות",
+    "author": "הרב איתן קופמן",
+    "old_count": 10,
+    "new_count": 10,
+    "matched": "bb1e6d34",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "פרשיות שמות",
+    "author": "הרב נתן רוטמן",
+    "old_count": 7,
+    "new_count": 7,
+    "matched": "c2955d8e",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "פרשת שבוע-שמות",
+    "author": "הרב דוד ג'יאמי",
+    "old_count": 30,
+    "new_count": 30,
+    "matched": "e171c5ca",
+    "db_status": "category",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "קדושת פשוטו של מקרא - שמות",
+    "author": "הרב יהודה קופרמן זצ\"ל",
+    "old_count": 29,
+    "new_count": 29,
+    "matched": "1bac2cf0",
+    "db_status": "category",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "מאמרים על פרשיות שמות",
+    "author": "הרב יהושע שפירא",
+    "old_count": 34,
+    "new_count": 40,
+    "matched": "e33c840d",
+    "db_status": "active",
+    "gap": -6,
+    "n_db_cands": 1
+  },
+  {
+    "name": "שמות- מוקלט | ללא טעמים",
+    "author": "הרב דן בארי",
+    "old_count": 40,
+    "new_count": 40,
+    "matched": "682d20cc",
+    "db_status": "category",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "מאמרים על הפרשה - חומש שמות",
+    "author": "הרב נועם ונגרובר",
+    "old_count": 4,
+    "new_count": 5,
+    "matched": "5b2527d0",
+    "db_status": "active",
+    "gap": -1,
+    "n_db_cands": 1
+  },
+  {
+    "name": "הארות באונקלוס",
+    "author": "הרב יהונתן עידן",
+    "old_count": 9,
+    "new_count": 24,
+    "matched": "adefd7ce",
+    "db_status": "active",
+    "gap": -15,
+    "n_db_cands": 1
+  },
+  {
+    "name": "פשט בפרשה",
+    "author": "הרב עמנואל בן ארצי",
+    "old_count": 21,
+    "new_count": 76,
+    "matched": "3610bdba",
+    "db_status": "active",
+    "gap": -55,
+    "n_db_cands": 1
+  },
+  {
+    "name": "עולמות חדשים בפרשה",
+    "author": "הרב יוסף שילר",
+    "old_count": 21,
+    "new_count": 92,
+    "matched": "e21c697e",
+    "db_status": "active",
+    "gap": -71,
+    "n_db_cands": 1
+  },
+  {
+    "name": "לשון הקודש בפרשה",
+    "author": "הרב יהונתן מיכאלי",
+    "old_count": 37,
+    "new_count": 149,
+    "matched": "cc4b127b",
+    "db_status": "active",
+    "gap": -112,
+    "n_db_cands": 1
+  },
+  {
+    "name": "חומש שמות - קריאה בטעמים אשכנזי",
+    "author": "הרב יונדב זר",
+    "old_count": 11,
+    "new_count": 11,
+    "matched": "39a024b3",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "חומש שמות - קריאה עם ביאור פשוט",
+    "author": "הרב יונדב זר",
+    "old_count": 11,
+    "new_count": 11,
+    "matched": "9cdc99b0",
+    "db_status": "active",
+    "gap": 0,
+    "n_db_cands": 1
+  },
+  {
+    "name": "מידות בפרשה",
+    "author": "הרב חגי ולוסקי",
+    "old_count": 30,
+    "new_count": 117,
+    "matched": "a72009c1",
+    "db_status": "active",
+    "gap": -87,
+    "n_db_cands": 1
+  },
+  {
+    "name": "תולדות קרבת ה' לאדם - מבראשית לאורך חומשי התורה",
+    "author": "הרב יואב אוריאל",
+    "old_count": 4,
+    "new_count": null,
+    "matched": null,
+    "gap": 4
+  }
+]

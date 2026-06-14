@@ -1,0 +1,436 @@
+{
+  "totals": {
+    "old_books": 36,
+    "new_db_books": 39,
+    "old_chapter_links": 673,
+    "old_chapters_covered": 863
+  },
+  "books_missing_in_new_db": [],
+  "per_book": {
+    "בראשית": {
+      "new_book": "בראשית",
+      "old_links": 12,
+      "old_chapters_covered": 50,
+      "new_chapters_covered": 50,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "שמות": {
+      "new_book": "שמות",
+      "old_links": 11,
+      "old_chapters_covered": 40,
+      "new_chapters_covered": 40,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "ויקרא": {
+      "new_book": "ויקרא",
+      "old_links": 10,
+      "old_chapters_covered": 27,
+      "new_chapters_covered": 28,
+      "missing_in_new": [],
+      "extra_in_new": [
+        107
+      ]
+    },
+    "במדבר": {
+      "new_book": "במדבר",
+      "old_links": 10,
+      "old_chapters_covered": 36,
+      "new_chapters_covered": 34,
+      "missing_in_new": [
+        25,
+        26
+      ],
+      "extra_in_new": []
+    },
+    "דברים": {
+      "new_book": "דברים",
+      "old_links": 11,
+      "old_chapters_covered": 34,
+      "new_chapters_covered": 34,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "יהושע": {
+      "new_book": "יהושע",
+      "old_links": 18,
+      "old_chapters_covered": 24,
+      "new_chapters_covered": 24,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "שופטים": {
+      "new_book": "שופטים",
+      "old_links": 10,
+      "old_chapters_covered": 21,
+      "new_chapters_covered": 21,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "שמואל א": {
+      "new_book": "שמואל א",
+      "old_links": 26,
+      "old_chapters_covered": 31,
+      "new_chapters_covered": 31,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "שמואל ב": {
+      "new_book": "שמואל ב",
+      "old_links": 21,
+      "old_chapters_covered": 24,
+      "new_chapters_covered": 30,
+      "missing_in_new": [],
+      "extra_in_new": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ]
+    },
+    "מלכים א": {
+      "new_book": "מלכים א",
+      "old_links": 19,
+      "old_chapters_covered": 22,
+      "new_chapters_covered": 30,
+      "missing_in_new": [],
+      "extra_in_new": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30
+      ]
+    },
+    "מלכים ב": {
+      "new_book": "מלכים ב",
+      "old_links": 20,
+      "old_chapters_covered": 25,
+      "new_chapters_covered": 25,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "ישעיהו": {
+      "new_book": "ישעיהו",
+      "old_links": 66,
+      "old_chapters_covered": 66,
+      "new_chapters_covered": 66,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "ירמיהו": {
+      "new_book": "ירמיהו",
+      "old_links": 51,
+      "old_chapters_covered": 52,
+      "new_chapters_covered": 52,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "יחזקאל": {
+      "new_book": "יחזקאל",
+      "old_links": 48,
+      "old_chapters_covered": 48,
+      "new_chapters_covered": 48,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "הושע": {
+      "new_book": "הושע",
+      "old_links": 14,
+      "old_chapters_covered": 14,
+      "new_chapters_covered": 14,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "יואל": {
+      "new_book": "יואל",
+      "old_links": 4,
+      "old_chapters_covered": 4,
+      "new_chapters_covered": 4,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "עמוס": {
+      "new_book": "עמוס",
+      "old_links": 9,
+      "old_chapters_covered": 9,
+      "new_chapters_covered": 9,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "יונה": {
+      "new_book": "יונה",
+      "old_links": 4,
+      "old_chapters_covered": 4,
+      "new_chapters_covered": 4,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "מיכה": {
+      "new_book": "מיכה",
+      "old_links": 7,
+      "old_chapters_covered": 7,
+      "new_chapters_covered": 7,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "נחום": {
+      "new_book": "נחום",
+      "old_links": 3,
+      "old_chapters_covered": 3,
+      "new_chapters_covered": 3,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "חבקוק": {
+      "new_book": "חבקוק",
+      "old_links": 3,
+      "old_chapters_covered": 3,
+      "new_chapters_covered": 3,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "צפניה": {
+      "new_book": "צפניה",
+      "old_links": 3,
+      "old_chapters_covered": 3,
+      "new_chapters_covered": 3,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "חגי": {
+      "new_book": "חגי",
+      "old_links": 2,
+      "old_chapters_covered": 2,
+      "new_chapters_covered": 2,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "זכריה": {
+      "new_book": "זכריה",
+      "old_links": 14,
+      "old_chapters_covered": 14,
+      "new_chapters_covered": 14,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "מלאכי": {
+      "new_book": "מלאכי",
+      "old_links": 3,
+      "old_chapters_covered": 3,
+      "new_chapters_covered": 3,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "תהלים": {
+      "new_book": "תהלים",
+      "old_links": 150,
+      "old_chapters_covered": 150,
+      "new_chapters_covered": 150,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "משלי": {
+      "new_book": "משלי",
+      "old_links": 31,
+      "old_chapters_covered": 31,
+      "new_chapters_covered": 42,
+      "missing_in_new": [],
+      "extra_in_new": [
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ]
+    },
+    "איוב": {
+      "new_book": "איוב",
+      "old_links": 21,
+      "old_chapters_covered": 42,
+      "new_chapters_covered": 142,
+      "missing_in_new": [],
+      "extra_in_new": [
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149
+      ]
+    },
+    "שיר השירים": {
+      "new_book": "שיר השירים",
+      "old_links": 8,
+      "old_chapters_covered": 8,
+      "new_chapters_covered": 8,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "רות": {
+      "new_book": "רות",
+      "old_links": 1,
+      "old_chapters_covered": 4,
+      "new_chapters_covered": 4,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "איכה": {
+      "new_book": "איכה",
+      "old_links": 5,
+      "old_chapters_covered": 5,
+      "new_chapters_covered": 5,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "קהלת": {
+      "new_book": "קהלת",
+      "old_links": 12,
+      "old_chapters_covered": 12,
+      "new_chapters_covered": 12,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "אסתר": {
+      "new_book": "אסתר",
+      "old_links": 10,
+      "old_chapters_covered": 10,
+      "new_chapters_covered": 10,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "דניאל": {
+      "new_book": "דניאל",
+      "old_links": 12,
+      "old_chapters_covered": 12,
+      "new_chapters_covered": 12,
+      "missing_in_new": [],
+      "extra_in_new": []
+    },
+    "עזרא": {
+      "new_book": "עזרא",
+      "old_links": 10,
+      "old_chapters_covered": 10,
+      "new_chapters_covered": 12,
+      "missing_in_new": [],
+      "extra_in_new": [
+        11,
+        13
+      ]
+    },
+    "נחמיה": {
+      "new_book": "נחמיה",
+      "old_links": 14,
+      "old_chapters_covered": 13,
+      "new_chapters_covered": 13,
+      "missing_in_new": [],
+      "extra_in_new": []
+    }
+  }
+}

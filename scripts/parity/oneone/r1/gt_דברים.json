@@ -1,0 +1,3913 @@
+{
+  "url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/",
+  "book": "דברים",
+  "rows": [
+    {
+      "idx": 0,
+      "kind": "series",
+      "title": "מאמרים-פרשיות דברים",
+      "title_norm": "מאמרים פרשיות דברים",
+      "author": "הרב ערן טמיר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מאמרים-פרשיות-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 6,
+      "lessons": [
+        {
+          "title": "גבורת המלחמה",
+          "title_norm": "גבורת המלחמה",
+          "author": "הרב ערן טמיר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "תוספת או גירעון?",
+          "title_norm": "תוספת או גירעון",
+          "author": "הרב ערן טמיר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "דת ומדינה",
+          "title_norm": "דת ומדינה",
+          "author": "הרב ערן טמיר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מי הם ה'שור' וה'חמור?",
+          "title_norm": "מי הם ה שור וה חמור",
+          "author": "הרב ערן טמיר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אני כהן?!",
+          "title_norm": "אני כהן",
+          "author": "הרב ערן טמיר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"מחוטב עציך עד שואב מימיך\"?!",
+          "title_norm": "מחוטב עציך עד שואב מימיך",
+          "author": "הרב ערן טמיר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 6,
+      "count_match": true
+    },
+    {
+      "idx": 1,
+      "kind": "series",
+      "title": "דבר תורה לשולחן השבת - חומש דברים",
+      "title_norm": "דבר תורה לשולחן השבת חומש דברים",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/דבר-תורה-לשולחן-השבת-חומש-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 27,
+      "lessons": [
+        {
+          "title": "השפה של ספר דברים",
+          "title_norm": "השפה של ספר דברים",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "התחדשות המושג 'תורה' בחומש דברים",
+          "title_norm": "התחדשות המושג תורה בחומש דברים",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הפרידה ממשה בתחילת ספר דברים",
+          "title_norm": "הפרידה ממשה בתחילת ספר דברים",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "החשש הגדול עם מות משה",
+          "title_norm": "החשש הגדול עם מות משה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "קצב ירושת הארץ",
+          "title_norm": "קצב ירושת הארץ",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בין טובה לרעה",
+          "title_norm": "בין טובה לרעה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מבט חדש על שנות המדבר",
+          "title_norm": "מבט חדש על שנות המדבר",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מה התחדש במעמד הברכות והקללות?",
+          "title_norm": "מה התחדש במעמד הברכות והקללות",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "איסור הכנסת דרכי העבודה הזרה למרחב עבודת ה'",
+          "title_norm": "איסור הכנסת דרכי העבודה הזרה למרחב עבודת ה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "המלחמה באלילות",
+          "title_norm": "המלחמה באלילות",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "המעמד החדש של הכהונה בפרשת שופטים",
+          "title_norm": "המעמד החדש של הכהונה בפרשת שופטים",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הנבואה היא של עם ישראל",
+          "title_norm": "הנבואה היא של עם ישראל",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ברית ה' על קיום הנבואה",
+          "title_norm": "ברית ה על קיום הנבואה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שלוש פרשיות המצוות",
+          "title_norm": "שלוש פרשיות המצוות",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מצוות המעגל המשפחתי",
+          "title_norm": "מצוות המעגל המשפחתי",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדוע מורחקים עמון ומואב מישראל",
+          "title_norm": "מדוע מורחקים עמון ומואב מישראל",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הנדרים והזהירות בהם",
+          "title_norm": "הנדרים והזהירות בהם",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ברית הקב\"ה עם ישראל בערבות מואב",
+          "title_norm": "ברית הקב ה עם ישראל בערבות מואב",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "וידוי מעשרות - נוסח התפילה היחיד בתורה",
+          "title_norm": "וידוי מעשרות נוסח התפילה היחיד בתורה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הברכה האחרונה",
+          "title_norm": "הברכה האחרונה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הטוב חזק מן הרע",
+          "title_norm": "הטוב חזק מן הרע",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ההפתעה הגדולה בפרשת וילך",
+          "title_norm": "ההפתעה הגדולה בפרשת וילך",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שירת האזינו: גילוי חדש של שם השם",
+          "title_norm": "שירת האזינו גילוי חדש של שם השם",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שם חדש לעם ישראל בסוף התורה",
+          "title_norm": "שם חדש לעם ישראל בסוף התורה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "קומות חדשות של ברית המצוות",
+          "title_norm": "קומות חדשות של ברית המצוות",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שירת האזינו: מבט חדש אל פרקי הבריאה",
+          "title_norm": "שירת האזינו מבט חדש אל פרקי הבריאה",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כינוי חדש למשה בסוף התורה: 'איש האלוקים'",
+          "title_norm": "כינוי חדש למשה בסוף התורה איש האלוקים",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 27,
+      "count_match": true
+    },
+    {
+      "idx": 2,
+      "kind": "series",
+      "title": "מאמרים קצרים - חומש דברים",
+      "title_norm": "מאמרים קצרים חומש דברים",
+      "author": "הרב אלי אדלר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מאמרים-קצרים-חומש-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 8,
+      "lessons": [
+        {
+          "title": "משה והעם",
+          "title_norm": "משה והעם",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "משה רבינו איתנו!",
+          "title_norm": "משה רבינו איתנו",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "להתרגש כל יום מחדש בארץ ישראל",
+          "title_norm": "להתרגש כל יום מחדש בארץ ישראל",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ג'ונגל או גן עדן?",
+          "title_norm": "ג ונגל או גן עדן",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"כי האדם עץ השדה\"",
+          "title_norm": "כי האדם עץ השדה",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "גבורה פנימית כבסיס לגבורה הלאומית",
+          "title_norm": "גבורה פנימית כבסיס לגבורה הלאומית",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "דרוש וקבל שכר (בן סורר ומורה)",
+          "title_norm": "דרוש וקבל שכר בן סורר ומורה",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כל ישראל ערבים זה לזה",
+          "title_norm": "כל ישראל ערבים זה לזה",
+          "author": "הרב אלי אדלר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 8,
+      "count_match": true
+    },
+    {
+      "idx": 3,
+      "kind": "series",
+      "title": "שיעורים על התנ\"ך - דברים",
+      "title_norm": "שיעורים על התנ ך דברים",
+      "author": "הרב יצחק בן שחר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/שיעורים-על-התנך-דברים/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 10,
+      "lessons": [
+        {
+          "title": "פרשת דברים ושבת חזון",
+          "title_norm": "פרשת דברים ושבת חזון",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/1%D7%93%D7%91%D7%A8%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/1%D7%93%D7%91%D7%A8%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "יחודו של עם ישראל",
+          "title_norm": "יחודו של עם ישראל",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F.mp3"
+          ]
+        },
+        {
+          "title": "בזכות מה נכנסים ישראל לארץ?",
+          "title_norm": "בזכות מה נכנסים ישראל לארץ",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A2%D7%A7%D7%91+%D7%AA%D7%A9%D7%A2+-+%D7%9C%D7%94%D7%A2%D7%9C%D7%90%D7%94.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A2%D7%A7%D7%91+%D7%AA%D7%A9%D7%A2+-+%D7%9C%D7%94%D7%A2%D7%9C%D7%90%D7%94.mp3"
+          ]
+        },
+        {
+          "title": "המקום אשר יבחר ד'",
+          "title_norm": "המקום אשר יבחר ד",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A8%D7%90%D7%94.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A8%D7%90%D7%94.mp3"
+          ]
+        },
+        {
+          "title": "מלכות ישראל",
+          "title_norm": "מלכות ישראל",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%A4%D7%98%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%A4%D7%98%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "ריבוי מצוות",
+          "title_norm": "ריבוי מצוות",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.mp3"
+          ]
+        },
+        {
+          "title": "פרשת הביכורים",
+          "title_norm": "פרשת הביכורים",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+%D7%AA%D7%A9%D7%A2%D7%91.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+%D7%AA%D7%A9%D7%A2%D7%91.mp3"
+          ]
+        },
+        {
+          "title": "הגלות והגאולה",
+          "title_norm": "הגלות והגאולה",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "\"חזק ואמץ\"! - מינוי יהושע",
+          "title_norm": "חזק ואמץ מינוי יהושע",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%95%D7%99%D7%9C%D7%9A.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%95%D7%99%D7%9C%D7%9A.mp3"
+          ]
+        },
+        {
+          "title": "השירה",
+          "title_norm": "השירה",
+          "author": "הרב יצחק בן שחר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%A6%D7%97%D7%A7+%D7%91%D7%9F+%D7%A9%D7%97%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 10,
+      "count_match": true
+    },
+    {
+      "idx": 4,
+      "kind": "series",
+      "title": "הקדמה לספר דברים",
+      "title_norm": "הקדמה לספר דברים",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/הקדמה-לספר-דברים/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 3,
+      "lessons": [
+        {
+          "title": "מתן תורה בספר דברים",
+          "title_norm": "מתן תורה בספר דברים",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99%D7%9D+%D7%9E%D7%99%D7%A8+%D7%90%D7%91+%D7%AA%D7%A9%D7%A2%D7%95.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99%D7%9D+%D7%9E%D7%99%D7%A8+%D7%90%D7%91+%D7%AA%D7%A9%D7%A2%D7%95.mp3"
+          ]
+        },
+        {
+          "title": "מתן תורה בספר דברים - שיעור שני",
+          "title_norm": "מתן תורה בספר דברים שיעור שני",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99%D7%9D+%D7%AA%D7%A9%D7%A2%D7%95+%D7%90%D7%91+2.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99%D7%9D+%D7%AA%D7%A9%D7%A2%D7%95+%D7%90%D7%91+2.mp3"
+          ]
+        },
+        {
+          "title": "מתן תורה בספר דברים - שיעור שלישי",
+          "title_norm": "מתן תורה בספר דברים שיעור שלישי",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99%D7%9D+%D7%AA%D7%A9%D7%A2%D7%95+%D7%90%D7%91+3.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A4%D7%A8+%D7%93%D7%91%D7%A8%D7%99%D7%9D+%D7%AA%D7%A9%D7%A2%D7%95+%D7%90%D7%91+3.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 3,
+      "count_match": true
+    },
+    {
+      "idx": 5,
+      "kind": "series",
+      "title": "הרב אבינר על פרשיות דברים",
+      "title_norm": "הרב אבינר על פרשיות דברים",
+      "author": "הרב שלמה אבינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/הרב-אבינר-על-פרשיות-דברים/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 3,
+      "lessons": [
+        {
+          "title": "מעלת ארץ ישראל",
+          "title_norm": "מעלת ארץ ישראל",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_690503_devarim.mp3",
+          "all_download": [
+            "\thttps://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/ra_sic5e_690503_devarim.mp3"
+          ]
+        },
+        {
+          "title": "מדוע משה רבינו לא זכה להיכנס לארץ?",
+          "title_norm": "מדוע משה רבינו לא זכה להיכנס לארץ",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/%D7%93%D7%91%D7%A8%D7%99%D7%9D+-+%D7%9E%D7%A9%D7%A0%D7%94+%D7%AA%D7%95%D7%A8%D7%94+%D7%A7%D7%93%D7%95%D7%A9%D7%AA+%D7%90%D7%A8%D7%A5+%D7%99%D7%A9%D7%A8%D7%90%D7%9C",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/%D7%93%D7%91%D7%A8%D7%99%D7%9D+-+%D7%9E%D7%A9%D7%A0%D7%94+%D7%AA%D7%95%D7%A8%D7%94+%D7%A7%D7%93%D7%95%D7%A9%D7%AA+%D7%90%D7%A8%D7%A5+%D7%99%D7%A9%D7%A8%D7%90%D7%9C"
+          ]
+        },
+        {
+          "title": "ההשפעות היצריות של המלחמה",
+          "title_norm": "ההשפעות היצריות של המלחמה",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/%D7%9B%D7%99+%D7%AA%D7%A6%D7%90-++%D7%90%D7%A9%D7%AA+%D7%99%D7%A4%D7%AA+%D7%AA%D7%95%D7%90%D7%A8",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%A9%D7%9C%D7%9E%D7%94+%D7%90%D7%91%D7%99%D7%A0%D7%A8/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%A9%D7%91%D7%95%D7%A2/%D7%9B%D7%99+%D7%AA%D7%A6%D7%90-++%D7%90%D7%A9%D7%AA+%D7%99%D7%A4%D7%AA+%D7%AA%D7%95%D7%90%D7%A8"
+          ]
+        }
+      ],
+      "lessons_found": 3,
+      "count_match": true
+    },
+    {
+      "idx": 6,
+      "kind": "series",
+      "title": "שיעורים - חומש דברים",
+      "title_norm": "שיעורים חומש דברים",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/שיעורים-חומש-דברים/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 15,
+      "lessons": [
+        {
+          "title": "השוני בין לשונות הפחד בפרשה",
+          "title_norm": "השוני בין לשונות הפחד בפרשה",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_dvarim_5774.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_dvarim_5774.mp3"
+          ]
+        },
+        {
+          "title": "חצי שבט המנשה",
+          "title_norm": "חצי שבט המנשה",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_dvarim5772.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_dvarim5772.mp4"
+          ]
+        },
+        {
+          "title": "בני עשיו",
+          "title_norm": "בני עשיו",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_dvarim_5769.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_dvarim_5769.mp3"
+          ]
+        },
+        {
+          "title": "עמוני, מואבי ואמורי",
+          "title_norm": "עמוני מואבי ואמורי",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/dvarim+5768-harev+ohad.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/dvarim+5768-harev+ohad.mp3"
+          ]
+        },
+        {
+          "title": "פרשת עגלה ערופה",
+          "title_norm": "פרשת עגלה ערופה",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_softim5772.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_softim5772.mp4"
+          ]
+        },
+        {
+          "title": "מושג היראה בספר דברים",
+          "title_norm": "מושג היראה בספר דברים",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_softim_5773.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_softim_5773.mp4"
+          ]
+        },
+        {
+          "title": "לא ירבה לו סוסים",
+          "title_norm": "לא ירבה לו סוסים",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_shoftim_5771.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_shoftim_5771.mp4"
+          ]
+        },
+        {
+          "title": "\"ובערת הרע מקרבך\"",
+          "title_norm": "ובערת הרע מקרבך",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_kitetza5772.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_kitetza5772.mp4"
+          ]
+        },
+        {
+          "title": "המבנה הלשוני של פרשת כי תצא",
+          "title_norm": "המבנה הלשוני של פרשת כי תצא",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki+tetze_5769.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki+tetze_5769.mp3"
+          ]
+        },
+        {
+          "title": "חובת התליה ואיסור הלנת המת",
+          "title_norm": "חובת התליה ואיסור הלנת המת",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki_tetze_5771.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki_tetze_5771.mp4"
+          ]
+        },
+        {
+          "title": "מעשר של ארץ ישראל",
+          "title_norm": "מעשר של ארץ ישראל",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki_tavo5773.mp4",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki_tavo5773.mp4"
+          ]
+        },
+        {
+          "title": "בין הר גריזים להר עיבל",
+          "title_norm": "בין הר גריזים להר עיבל",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki-tavo_5771.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_ki-tavo_5771.mp3"
+          ]
+        },
+        {
+          "title": "ברית של אהבה",
+          "title_norm": "ברית של אהבה",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_nitzavim5772.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_nitzavim5772.mp3"
+          ]
+        },
+        {
+          "title": "פרשת התשובה",
+          "title_norm": "פרשת התשובה",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_nitzavhm-vayelch_5769.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_nitzavhm-vayelch_5769.mp3"
+          ]
+        },
+        {
+          "title": "התשובה ומקורות החטא",
+          "title_norm": "התשובה ומקורות החטא",
+          "author": "הרב אוהד תירוש",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_haazino_5770.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%95%D7%94%D7%93+%D7%AA%D7%99%D7%A8%D7%95%D7%A9/%D7%93%D7%91%D7%A8%D7%99%D7%9D/ohad_haazino_5770.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 15,
+      "count_match": true
+    },
+    {
+      "idx": 7,
+      "kind": "series",
+      "title": "מאמרים - חומש דברים",
+      "title_norm": "מאמרים חומש דברים",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מאמרים-חומש-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 45,
+      "lessons": [
+        {
+          "title": "גבולות הארץ בתורה",
+          "title_norm": "גבולות הארץ בתורה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "טובה הארץ",
+          "title_norm": "טובה הארץ",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"מקראות שראויין לשרוף\"",
+          "title_norm": "מקראות שראויין לשרוף",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"אל תירא אֹתו\"",
+          "title_norm": "אל תירא אתו",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדוע האריך משה בשבחים של ד' בתחילת תפילתו?",
+          "title_norm": "מדוע האריך משה בשבחים של ד בתחילת תפילתו",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144633/ב-אתה-החלות-להראות-את-עבדך-מדוע-האריך-משה-בשבחים-של-ד.doc",
+          "all_download": [
+            "/media/144633/ב-אתה-החלות-להראות-את-עבדך-מדוע-האריך-משה-בשבחים-של-ד.doc"
+          ]
+        },
+        {
+          "title": "\"בצר לך ומצאוך... ושבת עד ד' אלקיך\"",
+          "title_norm": "בצר לך ומצאוך ושבת עד ד אלקיך",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כיצד נגאלים?",
+          "title_norm": "כיצד נגאלים",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדוע נאמרו עשרת הדברות בסדר זה?",
+          "title_norm": "מדוע נאמרו עשרת הדברות בסדר זה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כיצד נגיע לאהבת ד'?",
+          "title_norm": "כיצד נגיע לאהבת ד",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כיצד נגיע לאהבת ה'?",
+          "title_norm": "כיצד נגיע לאהבת ה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99+%D7%A2%D7%99%D7%95%D7%9F+%D7%AA%D7%A9%D7%A4/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A9%D7%A0%D7%93%D7%95%D7%A8%D7%A4%D7%99+-+%D7%9B%D7%99%D7%A6%D7%93+%D7%A0%D7%92%D7%99%D7%A2+%D7%9C%D7%90%D7%94%D7%91%D7%AA+%D7%94&#39;.mp4",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%99%D7%9E%D7%99+%D7%A2%D7%99%D7%95%D7%9F+%D7%AA%D7%A9%D7%A4/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A9%D7%A0%D7%93%D7%95%D7%A8%D7%A4%D7%99+-+%D7%9B%D7%99%D7%A6%D7%93+%D7%A0%D7%92%D7%99%D7%A2+%D7%9C%D7%90%D7%94%D7%91%D7%AA+%D7%94&#39;.mp4"
+          ]
+        },
+        {
+          "title": "\"ושמר ד' אלקיך לך את הברית ואת החסד\"",
+          "title_norm": "ושמר ד אלקיך לך את הברית ואת החסד",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מצות הענוה",
+          "title_norm": "מצות הענוה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"ולעבדו בכל לבבכם\" - איזו היא עבודה שבלב? הוי אומר זו תפילה",
+          "title_norm": "ולעבדו בכל לבבכם איזו היא עבודה שבלב הוי אומר זו תפילה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144629/ג-יא-ולעבדו-בכל-לבבכם.doc",
+          "all_download": [
+            "/media/144629/ג-יא-ולעבדו-בכל-לבבכם.doc"
+          ]
+        },
+        {
+          "title": "מדוע נקבע יום הכפורים ליום סליחה ומחילה?",
+          "title_norm": "מדוע נקבע יום הכפורים ליום סליחה ומחילה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"ארון הברית\" - אחד או שנים?",
+          "title_norm": "ארון הברית אחד או שנים",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "גבולות הארץ",
+          "title_norm": "גבולות הארץ",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "גבולות הארץ ב",
+          "title_norm": "גבולות הארץ ב",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "השמחה בתורה בכלל ובפרשת ראה בפרט",
+          "title_norm": "השמחה בתורה בכלל ובפרשת ראה בפרט",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144632/ד-השמחה-בתורה-בכלל-ובפרשת-ראה-בפרט-הבינוני.doc",
+          "all_download": [
+            "/media/144632/ד-השמחה-בתורה-בכלל-ובפרשת-ראה-בפרט-הבינוני.doc"
+          ]
+        },
+        {
+          "title": "\"המקום אשר יבחר ד'\"",
+          "title_norm": "המקום אשר יבחר ד",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"לא תעשון כן לד' אלקיכם\"",
+          "title_norm": "לא תעשון כן לד אלקיכם",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדוע הבמות היו אסורות בזמנים מסוימים ומותרות בזמנים אחרים?",
+          "title_norm": "מדוע הבמות היו אסורות בזמנים מסוימים ומותרות בזמנים אחרים",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדוע מופיעה פתיחת הברכה והקללה בפרשת ראה?",
+          "title_norm": "מדוע מופיעה פתיחת הברכה והקללה בפרשת ראה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "פרשת נביא השקר",
+          "title_norm": "פרשת נביא השקר",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"בנים אתם לד' אלקיכם\"",
+          "title_norm": "בנים אתם לד אלקיכם",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "המבנה של פרק טו בספר דברים",
+          "title_norm": "המבנה של פרק טו בספר דברים",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "המבנה של פרק יז בספר דברים",
+          "title_norm": "המבנה של פרק יז בספר דברים",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בחינת הנביא",
+          "title_norm": "בחינת הנביא",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"כי ד' אלקיכם ההֹלך עמכם להלחם לכם\"",
+          "title_norm": "כי ד אלקיכם ההלך עמכם להלחם לכם",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מקומה של פרשת עגלה ערופה",
+          "title_norm": "מקומה של פרשת עגלה ערופה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הרחבת גבולות הארץ והלימוד האמוני העולה מכך",
+          "title_norm": "הרחבת גבולות הארץ והלימוד האמוני העולה מכך",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"השב תשיבם לאחיך\"",
+          "title_norm": "השב תשיבם לאחיך",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"לנכרי תשיך\"",
+          "title_norm": "לנכרי תשיך",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"השמר בנגע הצרעת\"",
+          "title_norm": "השמר בנגע הצרעת",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדוע נצטוינו לזכור את מעשה עמלק?",
+          "title_norm": "מדוע נצטוינו לזכור את מעשה עמלק",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כיצד יתכן שתורתנו הקדושה, שדרכיה דרכי נעם וכל נתיבותיה שלום, ציוותה אותנו למחות את זכר עמלק?",
+          "title_norm": "כיצד יתכן שתורתנו הקדושה שדרכיה דרכי נעם וכל נתיבותיה שלום ציוותה אותנו למחות את זכר עמלק",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144525/כיצד-יתכן-שתורתנו-הקדושה.doc",
+          "all_download": [
+            "/media/144525/כיצד-יתכן-שתורתנו-הקדושה.doc"
+          ]
+        },
+        {
+          "title": "ד' אלקיך",
+          "title_norm": "ד אלקיך",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הברכה והקללה בהר גריזים והר עיבל",
+          "title_norm": "הברכה והקללה בהר גריזים והר עיבל",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שמחה של מצוה",
+          "title_norm": "שמחה של מצוה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"לעברך בברית ד' אלקיך ובאלתו\"",
+          "title_norm": "לעברך בברית ד אלקיך ובאלתו",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"כי המצוה הזאת... לא נפלאת היא ממך\"",
+          "title_norm": "כי המצוה הזאת לא נפלאת היא ממך",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "התורה והתשובה",
+          "title_norm": "התורה והתשובה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "על מי מוטלת המצוה לשאת את ארון הברית?",
+          "title_norm": "על מי מוטלת המצוה לשאת את ארון הברית",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"יַצֵב גבֻלֹת עמים למספר בני ישראל\"",
+          "title_norm": "יצב גבלת עמים למספר בני ישראל",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שנים עשר השבטים בברכת משה",
+          "title_norm": "שנים עשר השבטים בברכת משה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ארץ ישראל בפרשת וזאת הברכה",
+          "title_norm": "ארץ ישראל בפרשת וזאת הברכה",
+          "author": "הרב איתן שנדורפי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 45,
+      "count_match": true
+    },
+    {
+      "idx": 8,
+      "kind": "series",
+      "title": "שיעורים קצרים על ספר דברים",
+      "title_norm": "שיעורים קצרים על ספר דברים",
+      "author": "הרב איתן קופמן",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/שיעורים-קצרים-על-ספר-דברים/",
+      "media": "fa fa-video-camera",
+      "lesson_count": 6,
+      "lessons": [
+        {
+          "title": "תפקידם של לומדי התורה בישראל",
+          "title_norm": "תפקידם של לומדי התורה בישראל",
+          "author": "הרב איתן קופמן",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_dvarim5773.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_dvarim5773.mp3",
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_dvarim5773.mp4"
+          ]
+        },
+        {
+          "title": "ממה בנוי הזיכרון הקולקטיבי שלנו",
+          "title_norm": "ממה בנוי הזיכרון הקולקטיבי שלנו",
+          "author": "הרב איתן קופמן",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_ekev5773.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_ekev5773.mp3",
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_ekev5773.mp4"
+          ]
+        },
+        {
+          "title": "האם הכיבוש משחית ?",
+          "title_norm": "האם הכיבוש משחית",
+          "author": "הרב איתן קופמן",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_shoftim5774.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_shoftim5774.mp3",
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_shoftim5774.mp4"
+          ]
+        },
+        {
+          "title": "אשת יפת תואר - שתי דרכים להתמודד עם יצר הרע",
+          "title_norm": "אשת יפת תואר שתי דרכים להתמודד עם יצר הרע",
+          "author": "הרב איתן קופמן",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_asat_yefat_toar5774.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_asat_yefat_toar5774.mp3",
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_asat_yefat_toar5774.mp4"
+          ]
+        },
+        {
+          "title": "מדוע א''י מכונה ''ארץ זבת חלב ודבש''",
+          "title_norm": "מדוע א י מכונה ארץ זבת חלב ודבש",
+          "author": "הרב איתן קופמן",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_kitavo5774.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_kitavo5774.mp3",
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_kitavo5774.mp4"
+          ]
+        },
+        {
+          "title": "האם אנחנו מאמינים שיש בחירה חופשית ?",
+          "title_norm": "האם אנחנו מאמינים שיש בחירה חופשית",
+          "author": "הרב איתן קופמן",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_nitzavim_vyelach5774.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_nitzavim_vyelach5774.mp3",
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%90%D7%99%D7%AA%D7%9F+%D7%A7%D7%95%D7%A4%D7%9E%D7%9F/%D7%93%D7%91%D7%A8%D7%99%D7%9D/eitan_nitzavim_vyelach5774.mp4"
+          ]
+        }
+      ],
+      "lessons_found": 6,
+      "count_match": true
+    },
+    {
+      "idx": 9,
+      "kind": "series",
+      "title": "פרשת שבוע- דברים",
+      "title_norm": "פרשת שבוע דברים",
+      "author": "הרב דוד ג'יאמי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-שבוע-דברים/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 23,
+      "lessons": [
+        {
+          "title": "דברים- מה ההבדל בין המדבר לארץ ישראל?",
+          "title_norm": "דברים מה ההבדל בין המדבר לארץ ישראל",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/111%D7%93%D7%91%D7%A8%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/111%D7%93%D7%91%D7%A8%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "משנה תורה",
+          "title_norm": "משנה תורה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/28%D7%93%D7%91%D7%A8%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/28%D7%93%D7%91%D7%A8%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "דברי משה לעם",
+          "title_norm": "דברי משה לעם",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/65%D7%93%D7%91%D7%A8%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/65%D7%93%D7%91%D7%A8%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "\"למען תחיו\"",
+          "title_norm": "למען תחיו",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/66%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/66%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F.MP3"
+          ]
+        },
+        {
+          "title": "הברכה והקללה",
+          "title_norm": "הברכה והקללה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/112%D7%A8%D7%90%D7%94.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/112%D7%A8%D7%90%D7%94.MP3"
+          ]
+        },
+        {
+          "title": "המלך בישראל",
+          "title_norm": "המלך בישראל",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/113%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/113%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "שופטים ושוטרים",
+          "title_norm": "שופטים ושוטרים",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/30%D7%90+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+%D7%97%D7%A1%D7%A8.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/30%D7%90+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+%D7%97%D7%A1%D7%A8.MP3"
+          ]
+        },
+        {
+          "title": "שופטים ושוטרים המשך",
+          "title_norm": "שופטים ושוטרים המשך",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/30%D7%91+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+%D7%94%D7%9E%D7%A9%D7%9A.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/30%D7%91+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+%D7%94%D7%9E%D7%A9%D7%9A.MP3"
+          ]
+        },
+        {
+          "title": "דינו של עובד עבודה זרה",
+          "title_norm": "דינו של עובד עבודה זרה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/67%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/67%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "מצוות שילוח הקן",
+          "title_norm": "מצוות שילוח הקן",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/114%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/114%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.MP3"
+          ]
+        },
+        {
+          "title": "אבנים בירדן",
+          "title_norm": "אבנים בירדן",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/132%D7%9B%D7%99+%D7%AA%D7%A6%D7%90(%D7%9B%D7%99+%D7%AA%D7%91%D7%90.)-%D7%94%D7%90%D7%91%D7%A0%D7%99%D7%9D+%D7%91%D7%99%D7%A8%D7%93%D7%9F.WAV",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/132%D7%9B%D7%99+%D7%AA%D7%A6%D7%90(%D7%9B%D7%99+%D7%AA%D7%91%D7%90.)-%D7%94%D7%90%D7%91%D7%A0%D7%99%D7%9D+%D7%91%D7%99%D7%A8%D7%93%D7%9F.WAV"
+          ]
+        },
+        {
+          "title": "קדושת הצבא",
+          "title_norm": "קדושת הצבא",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/131%D7%9B%D7%99+%D7%AA%D7%A6%D7%90-%D7%A7%D7%93%D7%95%D7%A9%D7%AA+%D7%94%D7%A6%D7%91%D7%90.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/131%D7%9B%D7%99+%D7%AA%D7%A6%D7%90-%D7%A7%D7%93%D7%95%D7%A9%D7%AA+%D7%94%D7%A6%D7%91%D7%90.mp3"
+          ]
+        },
+        {
+          "title": "אישה יפת תואר",
+          "title_norm": "אישה יפת תואר",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/31%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/31%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.MP3"
+          ]
+        },
+        {
+          "title": "בן סורר ומורה",
+          "title_norm": "בן סורר ומורה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/68%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90-%D7%91%D7%9F+%D7%A1%D7%95%D7%A8%D7%A8+%D7%95%D7%9E%D7%95%D7%A8%D7%94.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/68%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90-%D7%91%D7%9F+%D7%A1%D7%95%D7%A8%D7%A8+%D7%95%D7%9E%D7%95%D7%A8%D7%94.MP3"
+          ]
+        },
+        {
+          "title": "\"היום הזה\"",
+          "title_norm": "היום הזה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/115%D7%9B%D7%99+%D7%AA%D7%91%D7%90.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/115%D7%9B%D7%99+%D7%AA%D7%91%D7%90.mp3"
+          ]
+        },
+        {
+          "title": "וידוי ביכורים",
+          "title_norm": "וידוי ביכורים",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/32%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/32%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90.MP3"
+          ]
+        },
+        {
+          "title": "תרומות ומעשרות",
+          "title_norm": "תרומות ומעשרות",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/69%D7%9B%D7%99+%D7%AA%D7%91%D7%90.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/69%D7%9B%D7%99+%D7%AA%D7%91%D7%90.MP3"
+          ]
+        },
+        {
+          "title": "הברית",
+          "title_norm": "הברית",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/116%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/116%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "פרשת התשובה",
+          "title_norm": "פרשת התשובה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/70%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D-%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%AA%D7%A9%D7%95%D7%91%D7%94.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/70%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D-%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%AA%D7%A9%D7%95%D7%91%D7%94.MP3"
+          ]
+        },
+        {
+          "title": "\"נצבים היום כולכם\"",
+          "title_norm": "נצבים היום כולכם",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/33%D7%A0%D7%A6%D7%91%D7%99%D7%9D.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/33%D7%A0%D7%A6%D7%91%D7%99%D7%9D.MP3"
+          ]
+        },
+        {
+          "title": "\"ועתה כתבו לכם את השירה הזאת\"",
+          "title_norm": "ועתה כתבו לכם את השירה הזאת",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/71%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/71%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95.MP3"
+          ]
+        },
+        {
+          "title": "מהי הברכה?",
+          "title_norm": "מהי הברכה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/117%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94.MP3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/117%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94.MP3"
+          ]
+        },
+        {
+          "title": "מדוע עם ישראל ראויים לברכה?",
+          "title_norm": "מדוע עם ישראל ראויים לברכה",
+          "author": "הרב דוד ג'יאמי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/133%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%94%D7%A8%D7%91+%D7%93%D7%95%D7%93+%D7%92&#39;%D7%99%D7%90%D7%9E%D7%99/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%91%D7%95%D7%A2/133%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 23,
+      "count_match": true
+    },
+    {
+      "idx": 10,
+      "kind": "series",
+      "title": "קדושת פשוטו של מקרא - דברים",
+      "title_norm": "קדושת פשוטו של מקרא דברים",
+      "author": "הרב יהודה קופרמן זצ\"ל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/קדושת-פשוטו-של-מקרא-דברים/",
+      "media": "fa fa-file-pdf-o",
+      "lesson_count": 18,
+      "lessons": [
+        {
+          "title": "למהותו הייחודית של חומש דברים",
+          "title_norm": "למהותו הייחודית של חומש דברים",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143340/קדושת-פשוטו-של-מקרא-פרשת-דברים1-10.pdf",
+          "all_download": [
+            "/media/143340/קדושת-פשוטו-של-מקרא-פרשת-דברים1-10.pdf"
+          ]
+        },
+        {
+          "title": "\"נתעלמה ממנו הלכה\" במשפט בנות צלפחד",
+          "title_norm": "נתעלמה ממנו הלכה במשפט בנות צלפחד",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143345/קדושת-פשוטו-של-מקרא-פרשת-דברים11-16.pdf",
+          "all_download": [
+            "/media/143345/קדושת-פשוטו-של-מקרא-פרשת-דברים11-16.pdf"
+          ]
+        },
+        {
+          "title": "הקשר בין חטא המרגלים ואי כניסת משה לארץ",
+          "title_norm": "הקשר בין חטא המרגלים ואי כניסת משה לארץ",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143346/קדושת-פשוטו-של-מקרא-פרשת-דברים17-22.pdf",
+          "all_download": [
+            "/media/143346/קדושת-פשוטו-של-מקרא-פרשת-דברים17-22.pdf"
+          ]
+        },
+        {
+          "title": "פשוטו של מקרא אצל רש\"י - מטרה או אמצעי",
+          "title_norm": "פשוטו של מקרא אצל רש י מטרה או אמצעי",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143347/קדושת-פשוטו-של-מקרא-פרשת-דברים23-25.pdf",
+          "all_download": [
+            "/media/143347/קדושת-פשוטו-של-מקרא-פרשת-דברים23-25.pdf"
+          ]
+        },
+        {
+          "title": "לאו ד'בל תוסיף'",
+          "title_norm": "לאו ד בל תוסיף",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143348/קדושת-פשוטו-של-מקרא-פרשת-ואתחנןdf1-7.pdf",
+          "all_download": [
+            "/media/143348/קדושת-פשוטו-של-מקרא-פרשת-ואתחנןdf1-7.pdf"
+          ]
+        },
+        {
+          "title": "עבודה מאהבה ועבודה מיראה",
+          "title_norm": "עבודה מאהבה ועבודה מיראה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143352/קדושת-פשוטו-של-מקרא-פרשת-ואתחנןdf8-10.pdf",
+          "all_download": [
+            "/media/143352/קדושת-פשוטו-של-מקרא-פרשת-ואתחנןdf8-10.pdf"
+          ]
+        },
+        {
+          "title": "הסכמת ה' ל'קל וחומר' של משה",
+          "title_norm": "הסכמת ה ל קל וחומר של משה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143353/קדושת-פשוטו-של-מקרא-פרשת-ואתחנןdf11-15.pdf",
+          "all_download": [
+            "/media/143353/קדושת-פשוטו-של-מקרא-פרשת-ואתחנןdf11-15.pdf"
+          ]
+        },
+        {
+          "title": "מצות תפילה - הציווי והסיפור בתורה",
+          "title_norm": "מצות תפילה הציווי והסיפור בתורה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143354/קדושת-פשוטו-של-מקרא-פרשת-עקבpdf.pdf",
+          "all_download": [
+            "/media/143354/קדושת-פשוטו-של-מקרא-פרשת-עקבpdf.pdf"
+          ]
+        },
+        {
+          "title": "בית המקדש כמקום הקרבת הקרבנות",
+          "title_norm": "בית המקדש כמקום הקרבת הקרבנות",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143356/קדושת-פשוטו-של-מקרא-פרשת-ראה1-8.pdf",
+          "all_download": [
+            "/media/143356/קדושת-פשוטו-של-מקרא-פרשת-ראה1-8.pdf"
+          ]
+        },
+        {
+          "title": "סוגיית בשר וחלב - המצוה המורכבת",
+          "title_norm": "סוגיית בשר וחלב המצוה המורכבת",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143359/קדושת-פשוטו-של-מקרא-פרשת-ראה9-17.pdf",
+          "all_download": [
+            "/media/143359/קדושת-פשוטו-של-מקרא-פרשת-ראה9-17.pdf"
+          ]
+        },
+        {
+          "title": "שמאל שהוא ימין וימין שהוא שמאל",
+          "title_norm": "שמאל שהוא ימין וימין שהוא שמאל",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143360/קדושת-פשוטו-של-מקרא-פרשת-שופטים_1-10.pdf",
+          "all_download": [
+            "/media/143360/קדושת-פשוטו-של-מקרא-פרשת-שופטים_1-10.pdf"
+          ]
+        },
+        {
+          "title": "אליהו בהר הכרמל והוראת שעה",
+          "title_norm": "אליהו בהר הכרמל והוראת שעה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143363/קדושת-פשוטו-של-מקרא-פרשת-שופטים_11-15.pdf",
+          "all_download": [
+            "/media/143363/קדושת-פשוטו-של-מקרא-פרשת-שופטים_11-15.pdf"
+          ]
+        },
+        {
+          "title": "אשת יפת תואר - הבטחה או תנאי",
+          "title_norm": "אשת יפת תואר הבטחה או תנאי",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143364/קדושת-פשוטו-של-מקרא-פרשת-כי-תצא1-4.pdf",
+          "all_download": [
+            "/media/143364/קדושת-פשוטו-של-מקרא-פרשת-כי-תצא1-4.pdf"
+          ]
+        },
+        {
+          "title": "אשת יפת תואר - היתר או מצוה",
+          "title_norm": "אשת יפת תואר היתר או מצוה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143367/קדושת-פשוטו-של-מקרא-פרשת-כי-תצא5-9.pdf",
+          "all_download": [
+            "/media/143367/קדושת-פשוטו-של-מקרא-פרשת-כי-תצא5-9.pdf"
+          ]
+        },
+        {
+          "title": "לימוד הלכה דאוריתא מדיבור ישיר",
+          "title_norm": "לימוד הלכה דאוריתא מדיבור ישיר",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143368/קדושת-פשוטו-של-מקרא-פרשת-כי-תבא.pdf",
+          "all_download": [
+            "/media/143368/קדושת-פשוטו-של-מקרא-פרשת-כי-תבא.pdf"
+          ]
+        },
+        {
+          "title": "שיטת הנצי\"ב: התורה כשירה",
+          "title_norm": "שיטת הנצי ב התורה כשירה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143372/קדושת-פשוטו-של-מקרא-פרשת-וילךpdf.pdf",
+          "all_download": [
+            "/media/143372/קדושת-פשוטו-של-מקרא-פרשת-וילךpdf.pdf"
+          ]
+        },
+        {
+          "title": "כוח הראיה",
+          "title_norm": "כוח הראיה",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143373/קדושת-פשוטו-של-מקרא-פרשת-האזינוdf.pdf",
+          "all_download": [
+            "/media/143373/קדושת-פשוטו-של-מקרא-פרשת-האזינוdf.pdf"
+          ]
+        },
+        {
+          "title": "ה'אפיקומן' של רש\"י",
+          "title_norm": "ה אפיקומן של רש י",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143374/קדושת-פשוטו-של-מקרא-פרשת-וזאת-הברכה.pdf",
+          "all_download": [
+            "/media/143374/קדושת-פשוטו-של-מקרא-פרשת-וזאת-הברכה.pdf"
+          ]
+        }
+      ],
+      "lessons_found": 18,
+      "count_match": true
+    },
+    {
+      "idx": 11,
+      "kind": "series",
+      "title": "מאמרים על פרשיות דברים",
+      "title_norm": "מאמרים על פרשיות דברים",
+      "author": "הרב יהושע שפירא",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מאמרים-על-פרשיות-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 18,
+      "lessons": [
+        {
+          "title": "לסיחון מלך האמרי",
+          "title_norm": "לסיחון מלך האמרי",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הפכת מספדי",
+          "title_norm": "הפכת מספדי",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כעיר שחברה לה יחדו",
+          "title_norm": "כעיר שחברה לה יחדו",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בכל קראנו אליו",
+          "title_norm": "בכל קראנו אליו",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ולמדתם אתם את בניכם",
+          "title_norm": "ולמדתם אתם את בניכם",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "וכל גבולך אבני חפץ",
+          "title_norm": "וכל גבולך אבני חפץ",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ידינו לא שפכו את הדם הזה",
+          "title_norm": "ידינו לא שפכו את הדם הזה",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ה' אורי וישעי ממי אירא",
+          "title_norm": "ה אורי וישעי ממי אירא",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מלפניך משפטי יצא",
+          "title_norm": "מלפניך משפטי יצא",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מה ידידות משכנותיך",
+          "title_norm": "מה ידידות משכנותיך",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "וה' יאספני",
+          "title_norm": "וה יאספני",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "גפן ממצרים תסיע",
+          "title_norm": "גפן ממצרים תסיע",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לפני ה' תטהרו",
+          "title_norm": "לפני ה תטהרו",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לעשות רצונך אלקי חפצתי",
+          "title_norm": "לעשות רצונך אלקי חפצתי",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הנסתרת והנגלת",
+          "title_norm": "הנסתרת והנגלת",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לברית הבט",
+          "title_norm": "לברית הבט",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בלב אחד",
+          "title_norm": "בלב אחד",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מורשה",
+          "title_norm": "מורשה",
+          "author": "הרב יהושע שפירא",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 18,
+      "count_match": true
+    },
+    {
+      "idx": 12,
+      "kind": "series",
+      "title": "מאמרים על סוגיות פרשת שופטים",
+      "title_norm": "מאמרים על סוגיות פרשת שופטים",
+      "author": "הרב יהודה קופרמן זצ\"ל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מאמרים-על-סוגיות-פרשת-שופטים/",
+      "media": "fa fa-file-pdf-o",
+      "lesson_count": 3,
+      "lessons": [
+        {
+          "title": "מצוות מינוי שופטים",
+          "title_norm": "מצוות מינוי שופטים",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143514/מינוי-שופטים.pdf",
+          "all_download": [
+            "/media/143514/מינוי-שופטים.pdf"
+          ]
+        },
+        {
+          "title": "זקן ממרא",
+          "title_norm": "זקן ממרא",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143517/זקן-ממרא.pdf",
+          "all_download": [
+            "/media/143517/זקן-ממרא.pdf"
+          ]
+        },
+        {
+          "title": "המלך",
+          "title_norm": "המלך",
+          "author": "הרב יהודה קופרמן זצ\"ל",
+          "media": "fa fa-file-pdf-o",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/143518/המלך.pdf",
+          "all_download": [
+            "/media/143518/המלך.pdf"
+          ]
+        }
+      ],
+      "lessons_found": 3,
+      "count_match": true
+    },
+    {
+      "idx": 13,
+      "kind": "series",
+      "title": "דברים - מוקלט | ללא טעמים",
+      "title_norm": "דברים מוקלט ללא טעמים",
+      "author": "הרב דן בארי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/דברים-מוקלט-ללא-טעמים/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 34,
+      "lessons": [
+        {
+          "title": "דברים מוקלט - פרק א | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק א ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_001.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_001.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ב | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_002.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_002.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ג | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_003.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_003.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ד | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_004.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_004.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ה | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ה ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_005.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_005.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ו | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ו ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_006.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_006.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ז | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_007.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_007.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ח | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ח ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_008.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_008.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ט | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ט ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_009.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_009.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק י | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק י ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_010.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_010.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יא | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יא ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_011.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_011.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יב | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_012.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_012.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יג | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_013.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_013.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יד | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_014.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_014.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק טו | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק טו ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_015.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_015.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק טז | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק טז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_016.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_016.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יז | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_017.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_017.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יח | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יח ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_018.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_018.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק יט | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק יט ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_019.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_019.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כ | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כ ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_020.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_020.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כא | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כא ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_021.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_021.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כב | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_022.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_022.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כג | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_023.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_023.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כד | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_024.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_024.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כה | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כה ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_025.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_025.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כו | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כו ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_026.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_026.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כז | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כז ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_027.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_027.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כח | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כח ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_028.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_028.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק כט | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק כט ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_029.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_029.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק ל | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק ל ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_030.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_030.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק לא | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק לא ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_031.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_031.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק לב | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק לב ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_032.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_032.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק לג | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק לג ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_033.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_033.mp3"
+          ]
+        },
+        {
+          "title": "דברים מוקלט - פרק לד | ללא טעמים",
+          "title_norm": "דברים מוקלט פרק לד ללא טעמים",
+          "author": "הרב דן בארי",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_034.mp3",
+          "all_download": [
+            "https://s3.us-east-2.amazonaws.com/bneyzion/%D7%A7%D7%A8%D7%99%D7%90%D7%95%D7%AA+/%D7%94%D7%A7%D7%A8%D7%90%D7%94+%D7%91%D7%9C%D7%99+%D7%98%D7%A2%D7%9E%D7%99%D7%9D/05Sc_Devarim/05Sc_devarim-_034.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 34,
+      "count_match": true
+    },
+    {
+      "idx": 14,
+      "kind": "series",
+      "title": "מאמרים על הפרשה - חומש דברים",
+      "title_norm": "מאמרים על הפרשה חומש דברים",
+      "author": "הרב נועם ונגרובר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מאמרים-על-הפרשה-חומש-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 8,
+      "lessons": [
+        {
+          "title": "ולמוכיחים ינעם - תוכחת משה ותופעת התוכחה בתנ\"ך",
+          "title_norm": "ולמוכיחים ינעם תוכחת משה ותופעת התוכחה בתנ ך",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אַחַת דִּבֶּר אֱלֹהִים - שְׁתַּיִם זוּ שָׁמָעְתִּי",
+          "title_norm": "אחת דבר אלהים שתים זו שמעתי",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדברה כעדן",
+          "title_norm": "מדברה כעדן",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אל המנוחה ואל הנחלה",
+          "title_norm": "אל המנוחה ואל הנחלה",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ואמרת אשימה עלי מלך",
+          "title_norm": "ואמרת אשימה עלי מלך",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מילה בסלע",
+          "title_norm": "מילה בסלע",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "משמעותה ההיסטורית של השירה",
+          "title_norm": "משמעותה ההיסטורית של השירה",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "\"אשביתה מאנוש זכרם\" – היעלה על הדעת?",
+          "title_norm": "אשביתה מאנוש זכרם היעלה על הדעת",
+          "author": "הרב נועם ונגרובר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 8,
+      "count_match": true
+    },
+    {
+      "idx": 15,
+      "kind": "series",
+      "title": "חומש דברים - כלל ופרט",
+      "title_norm": "חומש דברים כלל ופרט",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/חומש-דברים-כלל-ופרט/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 1,
+      "lessons": [
+        {
+          "title": "ארבע רשויות ההנהגה בעם ישראל",
+          "title_norm": "ארבע רשויות ההנהגה בעם ישראל",
+          "author": "הרב יואב אוריאל",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A8%D7%A9%D7%95%D7%99%D7%95%D7%AA%20%D7%94%D7%94%D7%A0%D7%94%D7%92%D7%94%20%D7%91%D7%A2%D7%9D%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C.mp3",
+          "all_download": [
+            "http://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A8%D7%A9%D7%95%D7%99%D7%95%D7%AA%20%D7%94%D7%94%D7%A0%D7%94%D7%92%D7%94%20%D7%91%D7%A2%D7%9D%20%D7%99%D7%A9%D7%A8%D7%90%D7%9C.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 1,
+      "count_match": true
+    },
+    {
+      "idx": 16,
+      "kind": "series",
+      "title": "הרב אבינר שיחות על פרשיות דברים",
+      "title_norm": "הרב אבינר שיחות על פרשיות דברים",
+      "author": "הרב שלמה אבינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/הרב-אבינר-שיחות-על-פרשיות-דברים/",
+      "media": "fa fa-file-text",
+      "lesson_count": 4,
+      "lessons": [
+        {
+          "title": "ישוב הארץ",
+          "title_norm": "ישוב הארץ",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144630/הרב-אבינר-ראה-התשעח.docx",
+          "all_download": [
+            "/media/144630/הרב-אבינר-ראה-התשעח.docx"
+          ]
+        },
+        {
+          "title": "ההבדל בין נביא למכשף",
+          "title_norm": "ההבדל בין נביא למכשף",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144631/הרב-אבינר-ראה-התשעה.docx",
+          "all_download": [
+            "/media/144631/הרב-אבינר-ראה-התשעה.docx"
+          ]
+        },
+        {
+          "title": "ארבעת יסודות האומה",
+          "title_norm": "ארבעת יסודות האומה",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144635/הרב-אבינר-שופטים-התשעה.docx",
+          "all_download": [
+            "/media/144635/הרב-אבינר-שופטים-התשעה.docx"
+          ]
+        },
+        {
+          "title": "שמחה על הטוב שקיים",
+          "title_norm": "שמחה על הטוב שקיים",
+          "author": "הרב שלמה אבינר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "/media/144636/הרב-אבינר-כי-תבוא-התשעה.docx",
+          "all_download": [
+            "/media/144636/הרב-אבינר-כי-תבוא-התשעה.docx"
+          ]
+        }
+      ],
+      "lessons_found": 4,
+      "count_match": true
+    },
+    {
+      "idx": 17,
+      "kind": "series",
+      "title": "חומש דברים - קריאה בטעמים אשכנזי",
+      "title_norm": "חומש דברים קריאה בטעמים אשכנזי",
+      "author": "הרב יונדב זר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/חומש-דברים-קריאה-בטעמים-אשכנזי/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 10,
+      "lessons": [
+        {
+          "title": "פרשת דברים - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת דברים קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%93%D7%91%D7%A8%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%93%D7%91%D7%A8%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת ואתחנן - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת ואתחנן קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת ראה - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת ראה קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A8%D7%90%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A8%D7%90%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת שופטים - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת שופטים קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת כי תצא - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת כי תצא קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת כי תבא - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת כי תבא קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת ניצבים - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת ניצבים קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת וילך - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת וילך קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%9C%D7%9A+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%9C%D7%9A+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת האזינו - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת האזינו קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        },
+        {
+          "title": "פרשת וזאת הברכה - קריאה בטעמים אשכנזי",
+          "title_norm": "פרשת וזאת הברכה קריאה בטעמים אשכנזי",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%91%D7%98%D7%A2%D7%9E%D7%99%D7%9D+%D7%90%D7%A9%D7%9B%D7%A0%D7%96%D7%99%D7%99%D7%9D.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 10,
+      "count_match": true
+    },
+    {
+      "idx": 18,
+      "kind": "series",
+      "title": "חומש דברים - קריאה עם ביאור פשוט",
+      "title_norm": "חומש דברים קריאה עם ביאור פשוט",
+      "author": "הרב יונדב זר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/חומש-דברים-קריאה-עם-ביאור-פשוט/",
+      "media": "fa fa-volume-up",
+      "lesson_count": 11,
+      "lessons": [
+        {
+          "title": "פרשת דברים - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת דברים קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%93%D7%91%D7%A8%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%93%D7%91%D7%A8%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת ואתחנן - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת ואתחנן קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%90%D7%AA%D7%97%D7%A0%D7%9F+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת עקב - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת עקב קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A2%D7%A7%D7%91+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A2%D7%A7%D7%91+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת ראה - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת ראה קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A8%D7%90%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A8%D7%90%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת שופטים - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת שופטים קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A9%D7%95%D7%A4%D7%98%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת כי תצא - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת כי תצא קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת כי תבא - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת כי תבא קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת ניצבים - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת ניצבים קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%A0%D7%99%D7%A6%D7%91%D7%99%D7%9D+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת וילך - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת וילך קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%9C%D7%9A+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%99%D7%9C%D7%9A+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת האזינו - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת האזינו קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%94%D7%90%D7%96%D7%99%D7%A0%D7%95-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        },
+        {
+          "title": "פרשת וזאת הברכה - קריאה עם ביאור פשוט",
+          "title_norm": "פרשת וזאת הברכה קריאה עם ביאור פשוט",
+          "author": "יונדב זר",
+          "media": "fa fa-volume-up",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%A0%D7%93%D7%91+%D7%96%D7%A8/%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%A4%D7%A8%D7%A9%D7%AA+%D7%95%D7%96%D7%90%D7%AA+%D7%94%D7%91%D7%A8%D7%9B%D7%94+-+%D7%A7%D7%A8%D7%99%D7%90%D7%94+%D7%A2%D7%9D+%D7%91%D7%99%D7%90%D7%95%D7%A8+%D7%A4%D7%A9%D7%95%D7%98.mp3"
+          ]
+        }
+      ],
+      "lessons_found": 11,
+      "count_match": true
+    },
+    {
+      "idx": 19,
+      "kind": "series",
+      "title": "פשט בפרשה",
+      "title_norm": "פשט בפרשה",
+      "author": "הרב עמנואל בן ארצי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פשט-בפרשה/",
+      "media": "fa fa-file-text",
+      "lesson_count": 11,
+      "lessons": [
+        {
+          "title": "למה משה לא נכנס לארץ?",
+          "title_norm": "למה משה לא נכנס לארץ",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "קרבת אלוקים",
+          "title_norm": "קרבת אלוקים",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ארץ הרים ובקעות",
+          "title_norm": "ארץ הרים ובקעות",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בנים אתם לה' אלוקיכם",
+          "title_norm": "בנים אתם לה אלוקיכם",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מעל או בתוך",
+          "title_norm": "מעל או בתוך",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "עמוני ומואבי",
+          "title_norm": "עמוני ומואבי",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לראש ולא לזנב",
+          "title_norm": "לראש ולא לזנב",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לא בשמים",
+          "title_norm": "לא בשמים",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "גלות הכרחית",
+          "title_norm": "גלות הכרחית",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "עין בעין יראו",
+          "title_norm": "עין בעין יראו",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בין כתפיו שכן",
+          "title_norm": "בין כתפיו שכן",
+          "author": "הרב עמנואל בן ארצי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 11,
+      "count_match": true
+    },
+    {
+      "idx": 20,
+      "kind": "series",
+      "title": "לשון הקודש בפרשה",
+      "title_norm": "לשון הקודש בפרשה",
+      "author": "הרב יהונתן מיכאלי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/לשון-הקודש-בפרשה/",
+      "media": "fa fa-file-text",
+      "lesson_count": 31,
+      "lessons": [
+        {
+          "title": "איכה",
+          "title_norm": "איכה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בכל מאדך",
+          "title_norm": "בכל מאדך",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כי משמש בארבע לשונות",
+          "title_norm": "כי משמש בארבע לשונות",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מה בין ראייה לשמיעה",
+          "title_norm": "מה בין ראייה לשמיעה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לְךָ וּלְךָ",
+          "title_norm": "לך ולך",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "חוסר יכולת",
+          "title_norm": "חוסר יכולת",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מענה לשון",
+          "title_norm": "מענה לשון",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מא' ועד ת' – או מא' ועד ב'?",
+          "title_norm": "מא ועד ת או מא ועד ב",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "פועל יוצא ופועל עומד",
+          "title_norm": "פועל יוצא ופועל עומד",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "וכפר אדמתו עמו",
+          "title_norm": "וכפר אדמתו עמו",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "יְשֻׁרוּן",
+          "title_norm": "ישרון",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ויתעבר ד' בי למענכם",
+          "title_norm": "ויתעבר ד בי למענכם",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "עקב – סוף או התחלה?",
+          "title_norm": "עקב סוף או התחלה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "א'ו'ה' או א'ב'ה' – מה זה משנה?",
+          "title_norm": "א ו ה או א ב ה מה זה משנה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "דם נקי",
+          "title_norm": "דם נקי",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שער העיר",
+          "title_norm": "שער העיר",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "השכלה",
+          "title_norm": "השכלה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "'אף כי'",
+          "title_norm": "אף כי",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "יום תרועה",
+          "title_norm": "יום תרועה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "האוחז ביד מדת משפט",
+          "title_norm": "האוחז ביד מדת משפט",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אך בחמשה עשר יום",
+          "title_norm": "אך בחמשה עשר יום",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מורשה",
+          "title_norm": "מורשה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הואיל",
+          "title_norm": "הואיל",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "סיום פעלים בנון סופית",
+          "title_norm": "סיום פעלים בנון סופית",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מיהו המִסְכֵּן?",
+          "title_norm": "מיהו המסכן",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "דרישה",
+          "title_norm": "דרישה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "משנה תורה",
+          "title_norm": "משנה תורה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מי הגבר",
+          "title_norm": "מי הגבר",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ו' ההיפוך",
+          "title_norm": "ו ההיפוך",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שבות ותשובה",
+          "title_norm": "שבות ותשובה",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "צור חיינו",
+          "title_norm": "צור חיינו",
+          "author": "הרב יהונתן מיכאלי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 31,
+      "count_match": true
+    },
+    {
+      "idx": 21,
+      "kind": "series",
+      "title": "עולמות חדשים בפרשה",
+      "title_norm": "עולמות חדשים בפרשה",
+      "author": "הרב יוסף שילר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/עולמות-חדשים-בפרשה/",
+      "media": "fa fa-file-text",
+      "lesson_count": 16,
+      "lessons": [
+        {
+          "title": "החצי המאחד",
+          "title_norm": "החצי המאחד",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ארץ ישראל של משה",
+          "title_norm": "ארץ ישראל של משה",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מי שיודע להוכיח",
+          "title_norm": "מי שיודע להוכיח",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "לְבִלְתִּי יִדַּח מִמֶּנּוּ נִדָּח",
+          "title_norm": "לבלתי ידח ממנו נדח",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "תורת הנביא",
+          "title_norm": "תורת הנביא",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "עמלק מראשית ועד אחרית",
+          "title_norm": "עמלק מראשית ועד אחרית",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ראשיתו של עמלק",
+          "title_norm": "ראשיתו של עמלק",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כנענים בבית ה'",
+          "title_norm": "כנענים בבית ה",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מדרגתו האחרונה של משה",
+          "title_norm": "מדרגתו האחרונה של משה",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "גוי אחד",
+          "title_norm": "גוי אחד",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ידיד הימין והשמאל",
+          "title_norm": "ידיד הימין והשמאל",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אלה הדברים",
+          "title_norm": "אלה הדברים",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "סדר התיקון של ספר דברים",
+          "title_norm": "סדר התיקון של ספר דברים",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אחרי מותי",
+          "title_norm": "אחרי מותי",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הקשר בין ספר שמואל לראש השנה",
+          "title_norm": "הקשר בין ספר שמואל לראש השנה",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "חג הסוכות מניין?",
+          "title_norm": "חג הסוכות מניין",
+          "author": "הרב יוסף שילר",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 16,
+      "count_match": true
+    },
+    {
+      "idx": 22,
+      "kind": "series",
+      "title": "מידות בפרשה",
+      "title_norm": "מידות בפרשה",
+      "author": "הרב חגי ולוסקי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מידות-בפרשה/",
+      "media": "fa fa-file-text",
+      "lesson_count": 30,
+      "lessons": [
+        {
+          "title": "בכיה של חינם",
+          "title_norm": "בכיה של חינם",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ואתחנן - אחד מעשרה לשונות שנקראת תפילה",
+          "title_norm": "ואתחנן אחד מעשרה לשונות שנקראת תפילה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כיצד להתבונן על הצלחות בחיים",
+          "title_norm": "כיצד להתבונן על הצלחות בחיים",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ברכה מול קללה",
+          "title_norm": "ברכה מול קללה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אמונת חכמים",
+          "title_norm": "אמונת חכמים",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "עולם חסד יבנה",
+          "title_norm": "עולם חסד יבנה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מעלתה של הראשית",
+          "title_norm": "מעלתה של הראשית",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "על כוחו של הדיבור",
+          "title_norm": "על כוחו של הדיבור",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שירת האזינו – לימוד כיצד להוכיח",
+          "title_norm": "שירת האזינו לימוד כיצד להוכיח",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "וְשָׂמַחְתָּ בְּחַגֶּךָ... וְהָיִיתָ אַךְ שָׂמֵחַ",
+          "title_norm": "ושמחת בחגך והיית אך שמח",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שמחה – לשמחת תורה",
+          "title_norm": "שמחה לשמחת תורה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "אין הזדמנות שניה לרושם ראשוני",
+          "title_norm": "אין הזדמנות שניה לרושם ראשוני",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כוחה של פעולה - להפוך רעיונות למציאות",
+          "title_norm": "כוחה של פעולה להפוך רעיונות למציאות",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מיצוי כוחות ויכולות",
+          "title_norm": "מיצוי כוחות ויכולות",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "בזרועות האב, מסע מרגש על חבל האמונה",
+          "title_norm": "בזרועות האב מסע מרגש על חבל האמונה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הון ושלטון",
+          "title_norm": "הון ושלטון",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "יתן הקב\"ה את אויבינו הקמים עלינו ניגפים",
+          "title_norm": "יתן הקב ה את אויבינו הקמים עלינו ניגפים",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כוחה של תפילה",
+          "title_norm": "כוחה של תפילה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "זכרנו לחיים",
+          "title_norm": "זכרנו לחיים",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "וּמַצְדִּיקֵי הָרַבִּים כַּכּוֹכָבִים",
+          "title_norm": "ומצדיקי הרבים ככוכבים",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כוחה של אנחה",
+          "title_norm": "כוחה של אנחה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "חג הסוכות – חג האחדות",
+          "title_norm": "חג הסוכות חג האחדות",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "תוכחה מקורית",
+          "title_norm": "תוכחה מקורית",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "מחסור מביא לחיזוק ואמונה",
+          "title_norm": "מחסור מביא לחיזוק ואמונה",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "כִּי הָרֹג תַּהַרְגֶנּוּ – והרחמים לאן?",
+          "title_norm": "כי הרג תהרגנו והרחמים לאן",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "דרכו של היצר הרע",
+          "title_norm": "דרכו של היצר הרע",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "שיעור מאלף בחינוך",
+          "title_norm": "שיעור מאלף בחינוך",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "תודה אינה רק מילה, היא דרך החיים",
+          "title_norm": "תודה אינה רק מילה היא דרך החיים",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "ערבות הדדית",
+          "title_norm": "ערבות הדדית",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        },
+        {
+          "title": "הלב מבין, סוד החינוך",
+          "title_norm": "הלב מבין סוד החינוך",
+          "author": "הרב חגי ולוסקי",
+          "media": "fa fa-file-text",
+          "kind_txt": "שיעור",
+          "attachment_href": "",
+          "all_download": []
+        }
+      ],
+      "lessons_found": 30,
+      "count_match": true
+    },
+    {
+      "idx": 23,
+      "kind": "series",
+      "title": "מתקרבים לפרשה - סרטונים על פרשיות השבוע",
+      "title_norm": "מתקרבים לפרשה סרטונים על פרשיות השבוע",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מתקרבים-לפרשה-סרטונים-על-פרשיות-השבוע/",
+      "media": "fa fa-video-camera",
+      "lesson_count": 4,
+      "lessons": [
+        {
+          "title": "הדיבור המפתיע של הקב\"ה",
+          "title_norm": "הדיבור המפתיע של הקב ה",
+          "author": "",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+%D7%A2%D7%A7%D7%91-1.mp4",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+%D7%A2%D7%A7%D7%91-1.mp4"
+          ]
+        },
+        {
+          "title": "החיים בארץ ישראל - בין קללה לברכה",
+          "title_norm": "החיים בארץ ישראל בין קללה לברכה",
+          "author": "",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+-+%D7%A8%D7%90%D7%94++%D7%91%D7%99%D7%9F+%D7%A7%D7%9C%D7%9C%D7%94+%D7%9C%D7%91%D7%A8%D7%9B%D7%94.mp4",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+-+%D7%A8%D7%90%D7%94++%D7%91%D7%99%D7%9F+%D7%A7%D7%9C%D7%9C%D7%94+%D7%9C%D7%91%D7%A8%D7%9B%D7%94.mp4"
+          ]
+        },
+        {
+          "title": "מה עומד מאחורי שטף המצוות ב'כי תצא'?",
+          "title_norm": "מה עומד מאחורי שטף המצוות ב כי תצא",
+          "author": "",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.mp4",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+%D7%9B%D7%99+%D7%AA%D7%A6%D7%90.mp4"
+          ]
+        },
+        {
+          "title": "התפילה המיוחדת בסוף נאום המצוות",
+          "title_norm": "התפילה המיוחדת בסוף נאום המצוות",
+          "author": "",
+          "media": "fa fa-video-camera",
+          "kind_txt": "שיעור",
+          "attachment_href": "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90.mp4",
+          "all_download": [
+            "https://bneyzion.s3.us-east-2.amazonaws.com/%D7%94%D7%A8%D7%91+%D7%99%D7%95%D7%90%D7%91+%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94/%D7%A1%D7%A8%D7%98%D7%95%D7%A0%D7%99%D7%9D+%D7%93%D7%91%D7%A8%D7%99%D7%9D/%D7%9E%D7%AA%D7%A7%D7%A8%D7%91%D7%99%D7%9D+%D7%9C%D7%A4%D7%A8%D7%A9%D7%94+%D7%9B%D7%99+%D7%AA%D7%91%D7%95%D7%90.mp4"
+          ]
+        }
+      ],
+      "lessons_found": 4,
+      "count_match": true
+    },
+    {
+      "idx": 24,
+      "kind": "lesson",
+      "title": "(מצגת) מצוות הקריאה לשלום",
+      "title_norm": "מצגת מצוות הקריאה לשלום",
+      "author": "הרב מנחם שחור",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-שופטים-טז-כא/מצגת-מצוות-הקריאה-לשלום/",
+      "media": "fa fa-file-pdf-o",
+      "length_txt": ""
+    },
+    {
+      "idx": 25,
+      "kind": "lesson",
+      "title": "כהן משוח מלחמה",
+      "title_norm": "כהן משוח מלחמה",
+      "author": "הרב יעקב אפשטיין",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-שופטים-טז-כא/כהן-משוח-מלחמה/",
+      "media": "fa fa-file-text",
+      "length_txt": ""
+    },
+    {
+      "idx": 26,
+      "kind": "lesson",
+      "title": "פרשת אשת יפת תואר",
+      "title_norm": "פרשת אשת יפת תואר",
+      "author": "הרב יהושע ון-דייק",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-כי-תצא-כא-כה/פרשת-אשת-יפת-תואר/",
+      "media": "fa fa-volume-up",
+      "length_txt": "כ - 70 דק'"
+    },
+    {
+      "idx": 27,
+      "kind": "lesson",
+      "title": "היחס לגרים ולגרים תושבים",
+      "title_norm": "היחס לגרים ולגרים תושבים",
+      "author": "",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-כי-תצא-כא-כה/היחס-לגרים-ולגרים-תושבים/",
+      "media": "fa fa-volume-up",
+      "length_txt": "כ-70 דק'"
+    },
+    {
+      "idx": 28,
+      "kind": "lesson",
+      "title": "סיכום דברי המפרשים לאורך פסוקי פרשת ניצבים",
+      "title_norm": "סיכום דברי המפרשים לאורך פסוקי פרשת ניצבים",
+      "author": "ושננתם",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-נצבים-כט-ל/סיכום-דברי-המפרשים-לאורך-פסוקי-פרשת-ניצבים/",
+      "media": "fa fa-file-text",
+      "length_txt": ""
+    },
+    {
+      "idx": 29,
+      "kind": "lesson",
+      "title": "מוסר המלחמה בספר דברים",
+      "title_norm": "מוסר המלחמה בספר דברים",
+      "author": "הרב אריה אברמסון",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/מוסר-המלחמה-בספר-דברים/",
+      "media": "fa fa-volume-up",
+      "length_txt": "כ - 70 דק'"
+    },
+    {
+      "idx": 30,
+      "kind": "lesson",
+      "title": "ספר דברים עם ביאור 'ושננתם'",
+      "title_norm": "ספר דברים עם ביאור ושננתם",
+      "author": "ושננתם",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/ספר-דברים-עם-ביאור-ושננתם/",
+      "media": "fa fa-file-pdf-o",
+      "length_txt": ""
+    },
+    {
+      "idx": 31,
+      "kind": "lesson",
+      "title": "כי תבואו אל הארץ",
+      "title_norm": "כי תבואו אל הארץ",
+      "author": "הרב אוהד תירוש",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/כי-תבואו-אל-הארץ/",
+      "media": "fa fa-volume-up",
+      "length_txt": "כ-70 דק'"
+    },
+    {
+      "idx": 32,
+      "kind": "lesson",
+      "title": "'משנה תורה' - שני או שונה?",
+      "title_norm": "משנה תורה שני או שונה",
+      "author": "הרב ערן טמיר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/משנה-תורה-שני-או-שונה/",
+      "media": "fa fa-volume-up",
+      "length_txt": "כ-70 דק'"
+    },
+    {
+      "idx": 33,
+      "kind": "lesson",
+      "title": "תהליכי האמירה והכתיבה של חומש דברים",
+      "title_norm": "תהליכי האמירה והכתיבה של חומש דברים",
+      "author": "הרב יהודה קופרמן זצ\"ל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/דרכי-הפרשנות-והמדרש-בתנך/תהליכי-האמירה-והכתיבה-של-חומש-דברים/",
+      "media": "fa fa-file-pdf-o",
+      "length_txt": ""
+    },
+    {
+      "idx": 34,
+      "kind": "lesson",
+      "title": "טבלת מאורעות שנת הארבעים",
+      "title_norm": "טבלת מאורעות שנת הארבעים",
+      "author": "הרב יאיר הס",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/פרשת-חוקת-יט-כב/טבלת-מאורעות-שנת-הארבעים/",
+      "media": "fa fa-file-pdf-o",
+      "length_txt": ""
+    },
+    {
+      "idx": 35,
+      "kind": "shut",
+      "title": "שתי שאלות בתחילת ספר דברים",
+      "title_norm": "שתי שאלות בתחילת ספר דברים",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-דברים-א-ד/דברים/שתי-שאלות-בתחילת-ספר-דברים/",
+      "media": "fa fa-question-circle",
+      "length_txt": ""
+    },
+    {
+      "idx": 36,
+      "kind": "shut",
+      "title": "רשימת המקומות בתחילת פרשת דברים",
+      "title_norm": "רשימת המקומות בתחילת פרשת דברים",
+      "author": "הרב יואב אוריאל",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-דברים-א-ד/דברים/רשימת-המקומות-בתחילת-פרשת-דברים/",
+      "media": "fa fa-question-circle",
+      "length_txt": ""
+    },
+    {
+      "idx": 37,
+      "kind": "shut",
+      "title": "מלחמת שבעת העמים",
+      "title_norm": "מלחמת שבעת העמים",
+      "author": "הרב יוסי ברינר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-שופטים-טז-כא/שופטים/מלחמת-שבעת-העמים/",
+      "media": "fa fa-question-circle",
+      "length_txt": ""
+    },
+    {
+      "idx": 38,
+      "kind": "shut",
+      "title": "דיברה תורה כנגד יצר הרע",
+      "title_norm": "דיברה תורה כנגד יצר הרע",
+      "author": "הרב נועם וידר",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-כי-תצא-כא-כה/כי-תצא/דיברה-תורה-כנגד-יצר-הרע/",
+      "media": "fa fa-question-circle",
+      "length_txt": ""
+    },
+    {
+      "idx": 39,
+      "kind": "shut",
+      "title": "אם משה היה נכנס לארץ - האם התורה היתה ממשיכה להיכתב גם בארץ ישראל?",
+      "title_norm": "אם משה היה נכנס לארץ האם התורה היתה ממשיכה להיכתב גם בארץ ישראל",
+      "author": "הרב איתן שנדורפי",
+      "href": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/פרשת-וזאת-הברכה-לג-לד/וזאת-הברכה/אם-משה-היה-נכנס-לארץ-האם-התורה-היתה-ממשיכה-להיכתב-גם-בארץ-ישראל/",
+      "media": "fa fa-question-circle",
+      "length_txt": ""
+    }
+  ]
+}

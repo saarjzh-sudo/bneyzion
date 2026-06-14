@@ -1,0 +1,254 @@
+[
+  {
+    "name": "הרב אבינר על פרשיות בראשית",
+    "old_count": 10,
+    "new_count": 25,
+    "matched_series_id": "9de1aa21-ee7a-4f53-a07f-b718688c2ba3",
+    "gap": -15,
+    "class": "OVERFILL",
+    "action": "move 12 docx → b2e0 (FIX1); flag 3 surplus (Y4)"
+  },
+  {
+    "name": "הרב שלמה אבינר על פרשיות בראשית",
+    "old_count": 15,
+    "new_count": 1,
+    "matched_series_id": "b2e079cd-15cf-4172-ab57-60b362f8e74c",
+    "gap": 14,
+    "class": "UNDERFILL",
+    "action": "receive 12 moved + insert 2 (FIX1+FIX2) → 15"
+  },
+  {
+    "name": "מאמרים על פרשיות בראשית - הרב ערן טמיר",
+    "old_count": 9,
+    "new_count": 9,
+    "matched_series_id": "64471337-5614-4e65-9975-58e4ff37159a",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "מאמרים קצרים - חומש בראשית",
+    "old_count": 14,
+    "new_count": 15,
+    "matched_series_id": "ab762d8c-d18b-452a-9263-201ccd019625",
+    "gap": -1,
+    "class": "OVERFILL",
+    "action": "flag overfill (no parsha overlap)"
+  },
+  {
+    "name": "שיעורים על התנ\"ך - בראשית",
+    "old_count": 4,
+    "new_count": 0,
+    "matched_series_id": "75c09aee-ef38-53c1-bbb9-ca1482a58dd7",
+    "gap": 4,
+    "class": "UNDERFILL",
+    "action": "insert 4 — BLOCKED, re-scrape (Y3)"
+  },
+  {
+    "name": "מאמרים - חומש בראשית",
+    "old_count": 70,
+    "new_count": 78,
+    "matched_series_id": "a4a97704-0ee4-41b2-a193-b538fdc7c203",
+    "gap": -8,
+    "class": "OVERFILL",
+    "action": "flag overfill; 5 share parsha media (display-dedup)"
+  },
+  {
+    "name": "שיעורים-חומש בראשית",
+    "old_count": 24,
+    "new_count": 24,
+    "matched_series_id": "cca8bc67-3bf7-4e57-8afb-cd98401b06dd",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "פרשת השבוע עפ\"י הרמב\"ן",
+    "old_count": 10,
+    "new_count": 10,
+    "matched_series_id": "d62cd377-ebb7-4825-8494-26521480fdab",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "דבר תורה לשולחן השבת - בראשית",
+    "old_count": 43,
+    "new_count": 43,
+    "matched_series_id": "dbcae806-435d-4aa1-a227-0c1acb14a914",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "שיעורים קצרים על ספר בראשית",
+    "old_count": 9,
+    "new_count": 9,
+    "matched_series_id": "2ca6e16b-7a86-4fe7-a0f5-ee2fba5a8a57",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "פרשיות בראשית",
+    "old_count": 6,
+    "new_count": 6,
+    "matched_series_id": "c9b7ae19-a612-4e19-a737-4cbd466e97b4",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "מאמרים על פרשיות בראשית",
+    "old_count": 53,
+    "new_count": 58,
+    "matched_series_id": "a5505b1a-0b55-4558-8b98-88e13e88793b",
+    "gap": -5,
+    "class": "OVERFILL",
+    "action": "flag overfill (no parsha overlap, Y5)"
+  },
+  {
+    "name": "פרשת שבוע-בראשית",
+    "old_count": 36,
+    "new_count": 36,
+    "matched_series_id": "feaf8a0b-fafb-49a7-8f6d-4bfa1c8c68dd",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "קדושת פשוטו של מקרא - בראשית",
+    "old_count": 24,
+    "new_count": 28,
+    "matched_series_id": "46bbc3f2-722a-4c00-8996-9db9a0fb441e",
+    "gap": -4,
+    "class": "MISSING_MISPARENTED",
+    "action": "re-parent under בראשית (FIX3a)"
+  },
+  {
+    "name": "בראשית-  מוקלט | ללא טעמים",
+    "old_count": 50,
+    "new_count": 50,
+    "matched_series_id": "3d600a33-c520-414d-a120-32d85789325c",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "מאמרים על הפרשה - חומש בראשית",
+    "old_count": 7,
+    "new_count": 7,
+    "matched_series_id": "3b12317c-a3b7-4bbe-9797-7f27144379dd",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "מבט מגבוה על חומש בראשית",
+    "old_count": 10,
+    "new_count": 11,
+    "matched_series_id": "182cc679-e550-40ac-a219-98a3a3cc367f",
+    "gap": -1,
+    "class": "OVERFILL",
+    "action": "flag overfill (no parsha overlap, Y5)"
+  },
+  {
+    "name": "שיעורים על ספר בראשית - אורות מודיעין",
+    "old_count": 4,
+    "new_count": 8,
+    "matched_series_id": "59f305fb-1367-4303-bda7-4734200b922f",
+    "gap": -4,
+    "class": "OVERFILL",
+    "action": "flag overfill; 4 share parsha media (display-dedup)"
+  },
+  {
+    "name": "רחל, לאה והולדת השבטים (לנשים בלבד)",
+    "old_count": 11,
+    "new_count": 11,
+    "matched_series_id": "48718218-87f5-4844-b8ea-139e9663f0e9",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "חומש בראשית - קריאה עם ביאור פשוט",
+    "old_count": 12,
+    "new_count": 12,
+    "matched_series_id": "a910a10c-b369-467f-91fc-3fb7dad93426",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "חומש בראשית - קריאה בטעמים אשכנזי",
+    "old_count": 12,
+    "new_count": 12,
+    "matched_series_id": "261c2776-e3e7-47ce-9797-30ec2e19bd82",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "הארות באונקלוס",
+    "old_count": 12,
+    "new_count": 12,
+    "matched_series_id": "62cc9e36-ed77-4dd5-b14e-93124b50f08f",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "פשט בפרשה",
+    "old_count": 23,
+    "new_count": 23,
+    "matched_series_id": "ff799d93-9eeb-4290-a987-936ddfb15e23",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "לשון הקודש בפרשה",
+    "old_count": 36,
+    "new_count": 36,
+    "matched_series_id": "d6260ade-6c3d-4f5c-956b-c043504fd055",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "עולמות חדשים בפרשה",
+    "old_count": 19,
+    "new_count": 19,
+    "matched_series_id": "b66e0cdb-3953-4aa9-b8f7-e0fe27935167",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "גילויים בפרשה",
+    "old_count": 10,
+    "new_count": 10,
+    "matched_series_id": "c8586bc6-e880-421e-ad52-4f10ac4a56f6",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "מידות בפרשה",
+    "old_count": 26,
+    "new_count": 26,
+    "matched_series_id": "8755bfbb-ae30-44d5-87e3-af5eaf4ddd25",
+    "gap": 0,
+    "class": "OK",
+    "action": "none (gap 0)"
+  },
+  {
+    "name": "תולדות קרבת ה' לאדם - מבראשית לאורך חומשי התורה",
+    "old_count": 4,
+    "new_count": 4,
+    "matched_series_id": "d7a37161-18f4-49a6-adcc-d88a2d1fbc56",
+    "gap": 0,
+    "class": "MISSING_MISPARENTED",
+    "action": "re-parent? doubt Y1 (commented)"
+  }
+]

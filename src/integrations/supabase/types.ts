@@ -1101,6 +1101,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string
@@ -1219,6 +1220,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1348,6 +1350,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1441,6 +1444,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1534,6 +1538,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1627,6 +1632,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1720,6 +1726,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1813,6 +1820,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1906,6 +1914,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -1999,6 +2008,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -2092,6 +2102,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -2185,6 +2196,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -2278,6 +2290,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -2371,6 +2384,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -2449,6 +2463,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null
@@ -2527,6 +2542,7 @@ export type Database = {
           bible_book: string | null
           bible_chapter: number | null
           bible_verse: number | null
+          cat_standalone: boolean | null
           content: string | null
           content_type: string | null
           created_at: string | null

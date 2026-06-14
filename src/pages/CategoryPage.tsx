@@ -140,47 +140,44 @@ function normTitle(t: string): string {
 
 function useDirectLessons(
   nodeId: string | undefined,
-  canonicalSeriesCardIds: string[],
+  _canonicalSeriesCardIds: string[],
 ) {
-  // Pass 1: get direct children and identify parsha event-series
-  const childrenQuery = useQuery({
-    queryKey: ["category-children-ids", nodeId],
+  // Standalone lessons & שו"ת on the old category page are pre-identified by the
+  // re-scrape of the old site (the exact 39+20 per book) and marked in the DB with
+  // lessons.cat_standalone = true (the canonical copy of each). This is the only
+  // reliable 1:1 source — the old site's "single lesson" rows can't be derived
+  // generically (they sit inside parsha event-series alongside rabbi-series content).
+  // We resolve the book from the node, then fetch its marked standalone lessons.
+  const nodeQuery = useQuery({
+    queryKey: ["category-node-book", nodeId],
     enabled: !!nodeId,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
       const { data } = await supabase
         .from("series")
-        .select("id, title")
-        .eq("parent_id", nodeId!)
-        .in("status", ["active", "published"])
-        .limit(200);
-      return (data ?? []) as { id: string; title: string }[];
+        .select("title, bible_book")
+        .eq("id", nodeId!)
+        .maybeSingle();
+      return (data ?? null) as { title: string; bible_book: string | null } | null;
     },
   });
 
-  const parshaEventIds: string[] = (childrenQuery.data ?? [])
-    .filter((s) => IS_PARSHA_EVENT.test(s.title))
-    .map((s) => s.id);
+  const book = nodeQuery.data?.bible_book || nodeQuery.data?.title || null;
 
-  const allSourceIds = nodeId ? [nodeId, ...parshaEventIds] : [];
-
-  // Pass 2: lessons from (node + parsha event-series), originals only
   const lessonsQuery = useQuery({
-    queryKey: ["category-standalone-lessons", nodeId, parshaEventIds.sort().join(",")],
-    enabled: !!nodeId && childrenQuery.isFetched,
+    queryKey: ["category-standalone-marked", book],
+    enabled: !!book,
     staleTime: 1000 * 60 * 5,
     queryFn: async () => {
-      if (allSourceIds.length === 0) return [] as DirectLesson[];
       const { data, error } = await supabase
         .from("lessons")
         .select(
           "id, title, duration, published_at, thumbnail_url, video_url, audio_url, attachment_url, bible_chapter, series_id, rabbi_id, source_type, content_type, rabbis!lessons_rabbi_id_fkey(name)"
         )
-        .in("series_id", allSourceIds)
+        .eq("bible_book", book!)
+        .eq("cat_standalone", true)
         .eq("status", "published")
-        .is("copied_from", null)
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
-        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("content_type", { ascending: true, nullsFirst: true }) // lessons before שו"ת
         .order("bible_chapter", { ascending: true, nullsFirst: false })
         .order("title", { ascending: true })
         .limit(2000);
@@ -189,43 +186,18 @@ function useDirectLessons(
     },
   });
 
-  // Pass 3: fetch canonical card series lesson titles to exclude duplicates
-  // (lessons whose title is already visible in a displayed series card)
-  const cardLessonTitlesQuery = useQuery({
-    queryKey: ["category-card-lesson-titles", canonicalSeriesCardIds.sort().join(",")],
-    enabled: canonicalSeriesCardIds.length > 0,
-    staleTime: 1000 * 60 * 5,
-    queryFn: async () => {
-      if (canonicalSeriesCardIds.length === 0) return new Set<string>();
-      const { data } = await supabase
-        .from("lessons")
-        .select("title")
-        .in("series_id", canonicalSeriesCardIds)
-        .eq("status", "published")
-        .limit(5000);
-      const titles = new Set<string>();
-      for (const l of data ?? []) titles.add(normTitle(l.title));
-      return titles;
-    },
-  });
-
-  const cardTitles = cardLessonTitlesQuery.data ?? new Set<string>();
-
-  // Client-side dedup by normalised title + exclude card titles
+  // Dedup by normalised title (defensive — marks should already be unique)
   const rawLessons = lessonsQuery.data ?? [];
   const seen = new Map<string, DirectLesson>();
   for (const l of rawLessons) {
     const key = normTitle(l.title);
-    if (!seen.has(key) && !cardTitles.has(key)) {
-      seen.set(key, l);
-    }
+    if (!seen.has(key)) seen.set(key, l);
   }
   const deduped = Array.from(seen.values());
 
   return {
     data: deduped,
-    isLoading:
-      childrenQuery.isLoading || lessonsQuery.isLoading || cardLessonTitlesQuery.isLoading,
+    isLoading: nodeQuery.isLoading || lessonsQuery.isLoading,
   };
 }
 

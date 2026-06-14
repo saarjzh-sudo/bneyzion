@@ -1,0 +1,274 @@
+{
+  "old_series": 28,
+  "old_standalone": 39,
+  "old_shut": 20,
+  "new_children": 41,
+  "new_parsha": 12,
+  "new_nonparsha": 29,
+  "diffs": [
+    {
+      "name": "הרב אבינר על פרשיות בראשית",
+      "old": 10,
+      "new_actual": 25,
+      "new_lc": 25,
+      "id": "9de1aa21-ee7a-4f53-a07f-b718688c2ba3",
+      "gap": -15,
+      "matched": true
+    },
+    {
+      "name": "הרב שלמה אבינר על פרשיות בראשית",
+      "old": 15,
+      "new_actual": 1,
+      "new_lc": 1,
+      "id": "b2e079cd-15cf-4172-ab57-60b362f8e74c",
+      "gap": 14,
+      "matched": true
+    },
+    {
+      "name": "מאמרים על פרשיות בראשית - הרב ערן טמיר",
+      "old": 9,
+      "new_actual": 9,
+      "new_lc": 9,
+      "id": "64471337-5614-4e65-9975-58e4ff37159a",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "מאמרים קצרים - חומש בראשית",
+      "old": 14,
+      "new_actual": 15,
+      "new_lc": 15,
+      "id": "ab762d8c-d18b-452a-9263-201ccd019625",
+      "gap": -1,
+      "matched": true
+    },
+    {
+      "name": "שיעורים על התנ\"ך - בראשית",
+      "old": 4,
+      "new_actual": 0,
+      "new_lc": 0,
+      "id": "75c09aee-ef38-53c1-bbb9-ca1482a58dd7",
+      "gap": 4,
+      "matched": true
+    },
+    {
+      "name": "מאמרים - חומש בראשית",
+      "old": 70,
+      "new_actual": 78,
+      "new_lc": 73,
+      "id": "a4a97704-0ee4-41b2-a193-b538fdc7c203",
+      "gap": -8,
+      "matched": true
+    },
+    {
+      "name": "שיעורים-חומש בראשית",
+      "old": 24,
+      "new_actual": 24,
+      "new_lc": 24,
+      "id": "cca8bc67-3bf7-4e57-8afb-cd98401b06dd",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "פרשת השבוע עפ\"י הרמב\"ן",
+      "old": 10,
+      "new_actual": 10,
+      "new_lc": 10,
+      "id": "d62cd377-ebb7-4825-8494-26521480fdab",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "דבר תורה לשולחן השבת - בראשית",
+      "old": 43,
+      "new_actual": 43,
+      "new_lc": 43,
+      "id": "dbcae806-435d-4aa1-a227-0c1acb14a914",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "שיעורים קצרים על ספר בראשית",
+      "old": 9,
+      "new_actual": 9,
+      "new_lc": 9,
+      "id": "2ca6e16b-7a86-4fe7-a0f5-ee2fba5a8a57",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "פרשיות בראשית",
+      "old": 6,
+      "new_actual": 6,
+      "new_lc": 6,
+      "id": "c9b7ae19-a612-4e19-a737-4cbd466e97b4",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "מאמרים על פרשיות בראשית",
+      "old": 53,
+      "new_actual": 58,
+      "new_lc": 58,
+      "id": "a5505b1a-0b55-4558-8b98-88e13e88793b",
+      "gap": -5,
+      "matched": true
+    },
+    {
+      "name": "פרשת שבוע-בראשית",
+      "old": 36,
+      "new_actual": 36,
+      "new_lc": 36,
+      "id": "feaf8a0b-fafb-49a7-8f6d-4bfa1c8c68dd",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "קדושת פשוטו של מקרא - בראשית",
+      "old": 24,
+      "new_actual": null,
+      "id": null,
+      "gap": null,
+      "matched": false
+    },
+    {
+      "name": "בראשית-  מוקלט | ללא טעמים",
+      "old": 50,
+      "new_actual": 50,
+      "new_lc": 50,
+      "id": "3d600a33-c520-414d-a120-32d85789325c",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "מאמרים על הפרשה - חומש בראשית",
+      "old": 7,
+      "new_actual": 7,
+      "new_lc": 7,
+      "id": "3b12317c-a3b7-4bbe-9797-7f27144379dd",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "מבט מגבוה על חומש בראשית",
+      "old": 10,
+      "new_actual": 11,
+      "new_lc": 11,
+      "id": "182cc679-e550-40ac-a219-98a3a3cc367f",
+      "gap": -1,
+      "matched": true
+    },
+    {
+      "name": "שיעורים על ספר בראשית - אורות מודיעין",
+      "old": 4,
+      "new_actual": 8,
+      "new_lc": 8,
+      "id": "59f305fb-1367-4303-bda7-4734200b922f",
+      "gap": -4,
+      "matched": true
+    },
+    {
+      "name": "רחל, לאה והולדת השבטים (לנשים בלבד)",
+      "old": 11,
+      "new_actual": 11,
+      "new_lc": 11,
+      "id": "48718218-87f5-4844-b8ea-139e9663f0e9",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "חומש בראשית - קריאה עם ביאור פשוט",
+      "old": 12,
+      "new_actual": 12,
+      "new_lc": 12,
+      "id": "a910a10c-b369-467f-91fc-3fb7dad93426",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "חומש בראשית - קריאה בטעמים אשכנזי",
+      "old": 12,
+      "new_actual": 12,
+      "new_lc": 12,
+      "id": "261c2776-e3e7-47ce-9797-30ec2e19bd82",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "הארות באונקלוס",
+      "old": 12,
+      "new_actual": 12,
+      "new_lc": 12,
+      "id": "62cc9e36-ed77-4dd5-b14e-93124b50f08f",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "פשט בפרשה",
+      "old": 23,
+      "new_actual": 23,
+      "new_lc": 23,
+      "id": "ff799d93-9eeb-4290-a987-936ddfb15e23",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "לשון הקודש בפרשה",
+      "old": 36,
+      "new_actual": 36,
+      "new_lc": 36,
+      "id": "d6260ade-6c3d-4f5c-956b-c043504fd055",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "עולמות חדשים בפרשה",
+      "old": 19,
+      "new_actual": 19,
+      "new_lc": 19,
+      "id": "b66e0cdb-3953-4aa9-b8f7-e0fe27935167",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "גילויים בפרשה",
+      "old": 10,
+      "new_actual": 10,
+      "new_lc": 10,
+      "id": "c8586bc6-e880-421e-ad52-4f10ac4a56f6",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "מידות בפרשה",
+      "old": 26,
+      "new_actual": 26,
+      "new_lc": 26,
+      "id": "8755bfbb-ae30-44d5-87e3-af5eaf4ddd25",
+      "gap": 0,
+      "matched": true
+    },
+    {
+      "name": "תולדות קרבת ה' לאדם - מבראשית לאורך חומשי התורה",
+      "old": 4,
+      "new_actual": null,
+      "id": null,
+      "gap": null,
+      "matched": false
+    }
+  ],
+  "parsha_titles": [
+    "פרשת וישב | לז-מ",
+    "פרשת וירא | יח-כב",
+    "פרשת תולדות | כה-כח",
+    "פרשת חיי שרה | כג-כה",
+    "פרשת מקץ | מא-מד",
+    "פרשת נח | ו-יא",
+    "פרשת ויחי | מז-נ",
+    "פרשת לך לך | יב-יז",
+    "פרשת ויצא | כח-לב",
+    "פרשת בראשית | א-ו",
+    "פרשת ויגש | מד-מז",
+    "פרשת וישלח |לב-לו"
+  ]
+}
