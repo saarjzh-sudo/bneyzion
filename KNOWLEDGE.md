@@ -6962,3 +6962,32 @@ URL: `https://bneyzion-f6hmlgq4a-saars-projects-4508d6bb.vercel.app`
 - deploy `dpl_AkncaMQaBGSPySDUwUBSb6M7tCLT` (bundle `main-BtRodNA0.js`) ← alias `bneyzion.vercel.app`. **rollback: alias ל-`dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx`.**
 - NetSpark: base64 config שורד ב-index.html דרך הפרוקסי (1=בטוח) ✓
 - אומת חי: דף בראשית 38 סדרות/1,302 שיעורים (roll-up מעבר ל-1000 עובד) ✓ · דף רב שנדורפי: 102 פריטים, פילטרי מדיה, סדרות-ככרטיסים לפי rabbi_page_items ✓
+
+---
+
+## 🗓️ סבב תיקונים 1 (14.6.2026) — דף קטגוריה 1:1 + ניווט-פרק (fix-rounds dashboard)
+
+סער פתח את **דף סבבי-התיקונים** (bneyzion-fixes.vercel.app) והעלה סבב 1 (5 פריטים, 7 צילומים). תוקן+פרוס+אומת חי.
+
+### בעיית-השורש (3 שכבות)
+1. **CODE (regex עברי שבור):** `isParshaEventSeries = /^\s*פרשת\b.*\|.../` — ה-`\b` ב-JS **לא תופס עברית** (אות עברית אינה word-char), אז סדרות-הפרשה (event-series) **לעולם לא סוננו** מדף הקטגוריה. תוקן `\b→\s`. **כלל: לעולם לא `\b` סביב עברית ב-JS regex.**
+2. **CODE (layout):** CategoryPage הציג event-series-פרשה פתוחות עם roll-up. שוכתב: כרטיסי-סדרה **סגורים** (סדרות-רב, לא פרשות) + סקשן שיעורים-בודדים + שו"ת + רב-מרובה.
+3. **DATA:** אבינר 1→15 (under-fill), split שמות 40/0→21/19, קופרמן ויקרא 0→17, 27 סדרות-רב שנתקעו `status=category`→active, 23 כפילויות-COPY נוקו (FK-safe), 19 דליפות-מורים (דפי-עבודה/חוברת dual-tag)→teachers-only, junk-rabbi "ולו" נוקה.
+
+### ⭐ פתרון השיעורים-הבודדים (cat_standalone)
+דף-הקטגוריה הישן מציג ~39 שיעורים-בודדים+~20 שו"ת לכל ספר. ב-DB הם יושבים **בתוך** event-series-פרשה (לא series_id NULL), משוכפלים 2-3×. **אי-אפשר לזהותם אלגוריתמית** (154 false). הפתרון: re-scrape של דף-הקטגוריה הישן (`oneone/r1/standalone_recon_<book>.json`, 169/170 matched) → סימון ה-canonical ב-`lessons.cat_standalone=true`. `useDirectLessons` קורא WHERE bible_book+cat_standalone. ספירות: בראשית 38+20, שמות 27+11, ויקרא 15+7, דברים 11+5.
+
+### תוצאה (אומת חי Firecrawl)
+- **/category/בראשית: 28 סדרות · 38 שיעורים · 20 שו"ת** (=הישן 28/39/20), אבינר-שלמה **15**, 0 פרשות-event, רב-מרובה.
+- **/category/שמות: 25 · 27 · 11** (1:1; קשתיאל הנסתר נחשף).
+- **/bible/בראשית: 12 פרשות החומש** (event-series כצמתי-ניווט) + 26 סדרות נוספות.
+- **regression נביאים בטוח:** /category/שופטים = 9/10 אירועי-זהב (event-series ARE התוכן בנביאים; ה-regex תופס 0 children של נביאים).
+
+### דיפלוי
+prod alias `bneyzion.vercel.app` → `dpl_4F97Gh19aaXQSvFJMNDTpo3Fcfvz` (bundle main-BgaZcwnI). **rollback: alias ל-`dpl_AkncaMQaBGSPySDUwUBSb6M7tCLT`.** commits: 05cc3616→b5c1140b. גיבוי דאטה: `lessons_bak_r1_20260614`, `series_bak_r1_20260614`.
+
+### residuals (yoav / סבב הבא)
+- 5 over-fill קלים (+1..+8, חלקם תוכן שסער הוסיף) + 1 חוסר שלא נמצא בישן (שיעורים-על-התנך בן-שחר) + 1 ויקרא mis-import (עבד עברי).
+- במדבר/ויקרא/דברים — אומתו ב-DB (22-24 כרטיסים), לא אומתו ויזואלית חי.
+- **66 קבצים ממתינים ל-rehost** (attachment_url NULL + legacy bneyzion.co.il; הפופאפ מציג כותרת+טקסט, לא PDF-inline; דורש service_role).
+- /bible chapter-grid לנביאים מבוסס event-series; bible_chapter דליל בתורה (86/1436 מתויגים) — תיוג-פרקים = data-debt.
