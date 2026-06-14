@@ -204,4 +204,32 @@ SELECT COUNT(*) FROM lessons WHERE attachment_url NOT LIKE '%supabase.co%'
 
 ---
 
-*Agent created 2026-06-09. · עודכן 11.6.2026: מודל series/lessons.*
+## 🔁 דפוס "סבב תיקונים" + לקחי סבב 1 (14.6.2026) — חובה
+
+סער מנהל תיקונים דרך דף **סבבי-תיקונים** (`bneyzion-fixes.vercel.app`, טבלאות `fix_rounds`/`fix_items` ב-Supabase, bucket `fix-screenshots`). כשהוא אומר "סיימתי סבב N":
+
+1. `SELECT * FROM fix_items WHERE round_id=N` → לכל פריט הורד את ה-URLs ב-`images` (`curl --noproxy`) **וקרא עם Read tool** (תומך תמונות) + קרא `note`. סער מצרף לרוב רשימת אמת-קרקע ידנית בטקסט — זה זהב.
+2. **חקור שורש לפני שמתקנים** (שאילתות DB: children/status/audience/parent). אל תנחש.
+3. **אמת-קרקע מהאתר הישן** = רשימת-פריטים-מדויקת דף-דף (כותרת+רב+ספירה+סדר), לא token-overlap.
+4. SQL guarded+idempotent (NOT EXISTS), גיבוי `*_bak_r<N>_<תאריך>` לפני write.
+5. **אמת ב-3 שכבות:** ספירות-DB מול GT · preview מקומי **hard-reload** (React Query cache 5min מסתיר שינויים — `window.location.href`, המתן 8s) · **חי אחרי deploy עם Firecrawl** (התוסף מתנתק).
+6. **regression** כל תיקון-לרוחב (נביאים/אגף-מורים לא נשבר). סמן `fix_items.status='done'` רק אחרי אימות חי. **אל תדווח לסער עד שזה אחד-לאחד פרוס+מאומת.**
+
+### באגים שחזרו (דוגמאות):
+- **`\b` ב-regex JS לא תופס עברית** (אות עברית אינה `\w`) → סדרות-פרשה לא סוננו. השתמש `\s`, ובדוק regex עברי עם `node -e` על מקרי-אמת.
+- **`series.lesson_count` ≠ ספירה אמיתית** — אחרי כל move/insert/dedup: `UPDATE series SET lesson_count=(SELECT count...)`.
+- **dual-tag teacher leak**: `audience=['teachers','general']` עובר פילטר ציבורי → דפי-עבודה/חוברות/מבחנים = `['teachers']` בלבד.
+- **סדרות-רב תקועות `status='category'`** (שריד מיגרציה) → סוננו מכרטיסים. תקן ל-active (rabbi_id+lessons+parent=book-category).
+- **junk-rabbi ("ולו")** צץ ב-multi-rabbi → `rabbi_id=NULL` בשיעוריו.
+
+### ⭐ אי-אפשר לזהות "שיעור בודד" אלגוריתמית
+דף-קטגוריה ישן = ~39 שיעורים-בודדים+~20 שו"ת/ספר, אבל ב-DB הם **בתוך** event-series-פרשה (משוכפלים 2-3×). כל היוריסטיקה נכשלת (154 vs 59). **הפתרון: re-scrape הדף הישן → `lessons.cat_standalone=true` על ה-canonical → הקוד קורא את הסימון.** ground-truth > היוריסטיקה.
+
+### ⭐ תורה ≠ נביאים (לא לאחד!)
+תורה: דף-קטגוריה = סדרות-רב; הפרשות (`פרשת X | פרקים`) = צמתי-/bible בלבד. נביאים/כתובים: דף-קטגוריה = event-series (אירועי-זהב) = **התוכן**. סינון event-series **pattern-scoped על כותרת בלבד** (`/^\s*פרשת\s.*\|/`), לעולם לא book/sort-order-scoped (ימחק את נביאים). regression חובה.
+
+תיעוד מלא: [[bneyzion-migration-lessons-r1]] בזיכרון + KNOWLEDGE.md "סבב תיקונים 1".
+
+---
+
+*Agent created 2026-06-09. · עודכן 11.6.2026: מודל series/lessons. · עודכן 14.6.2026: דפוס סבב-תיקונים + לקחי R1.*
