@@ -1,19 +1,26 @@
 /**
  * BibleBookPage — /bible/:book
  *
- * Shows event-series under a bible-book category node, mirroring the old site's
- * structure. The old chapter-grid approach was removed because bible_chapter is
- * NULL on ~94% of lessons, making the grid empty for most books.
+ * Shows the navigation tree for a bible book, mirroring the old site's structure.
+ *
+ * PRIMARY section — "event-series" navigation grid:
+ *   Torah books   → Parasha series (title matches /פרשת .+ \|/)
+ *   Neviim/Ketuvim → Chapter series (title matches / פרק /)
+ *   Displayed as a prominent grid of nav-cards → /series/:id
+ *
+ * SECONDARY section — other series under the book category (rabbi series, etc.)
+ *   Displayed as a compact list below the nav grid.
  *
  * Architecture: useBookCategoryId(book) → category node ID
- *               useBibleBookSeries(id)   → event-series children (no teachers)
+ *               useBibleBookSeries(id)   → ALL children (no teachers, lesson_count>0)
+ *               Split client-side: event-series (nav) vs. regular series
  * Teacher-leakage guard: useBibleBookSeries already filters audience_tags.
  * Layout: DesignLayout (v2 with sidebar).
  */
 
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { BookOpen, ChevronLeft, Play, FileText, Hash } from "lucide-react";
+import { BookOpen, ChevronLeft, Play, FileText, Hash, BookMarked } from "lucide-react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { useBibleBookSeries, useBookCategoryId, useBibleBook, useBibleChapterLessons } from "@/hooks/useBible";
 import { useSEO } from "@/hooks/useSEO";
@@ -45,6 +52,27 @@ function mediaIcon(s: { lesson_count?: number | null }) {
   return <FileText size={13} style={{ color: colors.textSubtle }} />;
 }
 
+/**
+ * Detect whether a series is a navigation "event-series" (parasha or chapter node).
+ *
+ * Torah:   title matches /פרשת .+ \|/  e.g. "פרשת בראשית | א-ו"
+ * Neviim/Ketuvim: title contains " פרק "  e.g. "הושע פרק א"
+ *
+ * The pipe-guard (פרשת + |) avoids false positives like "בראשית- מוקלט | ללא טעמים".
+ * The " פרק " space-guard avoids matching "דפי עבודה" or "כל השיעורים".
+ */
+function isEventSeries(title: string, isTorahBook: boolean): boolean {
+  if (isTorahBook) {
+    return /פרשת\s+.+\|/.test(title);
+  }
+  return /\sפרק\s/.test(title);
+}
+
+/** Section heading label per book type */
+function navSectionLabel(isTorahBook: boolean): string {
+  return isTorahBook ? "פרשות החומש" : "פרקי הספר";
+}
+
 // ─── Main component ───────────────────────────────────────────────────────────
 
 const BibleBookPage = () => {
@@ -52,6 +80,7 @@ const BibleBookPage = () => {
   const navigate = useNavigate();
   const decodedBook = book ? decodeURIComponent(book) : "";
   const category = getBookCategory(decodedBook);
+  const isTorahBook = TORAH_BOOKS.includes(decodedBook);
 
   const [selectedChapter, setSelectedChapter] = useState<number | null>(null);
 
@@ -67,6 +96,10 @@ const BibleBookPage = () => {
   const hasChapters = chapters.length > 0;
 
   const isLoading = idLoading || seriesLoading;
+
+  // Split series into navigation event-series vs. regular rabbi series
+  const eventSeries = seriesList.filter((s) => isEventSeries(s.title, isTorahBook));
+  const regularSeries = seriesList.filter((s) => !isEventSeries(s.title, isTorahBook));
 
   useSEO({
     title: `${decodedBook} — סדרות ושיעורים`,
@@ -166,7 +199,7 @@ const BibleBookPage = () => {
             >
               {decodedBook}
             </h1>
-            {!isLoading && seriesList.length > 0 && (
+            {!isLoading && eventSeries.length > 0 && (
               <p
                 style={{
                   fontFamily: fonts.body,
@@ -175,7 +208,8 @@ const BibleBookPage = () => {
                   margin: "0.3rem 0 0",
                 }}
               >
-                {seriesList.length} סדרות
+                {eventSeries.length} {isTorahBook ? "פרשות" : "פרקים"}
+                {regularSeries.length > 0 && ` · ${regularSeries.length} סדרות נוספות`}
               </p>
             )}
           </div>
@@ -185,17 +219,17 @@ const BibleBookPage = () => {
       {/* ── Content area ── */}
       <div
         dir="rtl"
-        style={{ padding: "1.5rem 2rem", maxWidth: 860 }}
+        style={{ padding: "1.5rem 2rem", maxWidth: 920 }}
       >
-        {/* ── (1) Primary: series list ── */}
-        {isLoading ? (
-          /* Skeleton rows */
+
+        {/* ── Loading skeletons ── */}
+        {isLoading && (
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
                 style={{
-                  height: 80,
+                  height: 64,
                   borderRadius: radii.lg,
                   background: "rgba(139,111,71,0.06)",
                   animation: "pulse 1.4s ease-in-out infinite",
@@ -203,8 +237,10 @@ const BibleBookPage = () => {
               />
             ))}
           </div>
-        ) : seriesList.length === 0 ? (
-          /* Empty state */
+        )}
+
+        {/* ── Empty state (no event-series AND no regular series) ── */}
+        {!isLoading && seriesList.length === 0 && (
           <div
             style={{
               padding: "3rem 1rem",
@@ -231,131 +267,299 @@ const BibleBookPage = () => {
               חזרה לראשי
             </Link>
           </div>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            {seriesList.map((series) => {
-              const imgSrc = resolveSeriesImage(series);
-              // C6: resolve all distinct rabbi names (lead first)
-              const allRabbis = Array.isArray(series.rabbis)
-                ? (series.rabbis as { name: string }[]).map((r) => r.name)
-                : series.rabbis
-                ? [(series.rabbis as { name: string }).name]
-                : [];
-              const rabbiLabel = formatRabbis(allRabbis);
+        )}
 
-              return (
-                <div
-                  key={series.id}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => navigate(`/series/${series.id}`)}
-                  onKeyDown={(e) => e.key === "Enter" && navigate(`/series/${series.id}`)}
-                  style={{
-                    display: "flex",
-                    alignItems: "stretch",
-                    borderRadius: radii.lg,
-                    overflow: "hidden",
-                    background: "white",
-                    border: `1px solid rgba(139,111,71,0.10)`,
-                    boxShadow: shadows.cardSoft,
-                    cursor: "pointer",
-                    transition: "box-shadow 0.15s, border-color 0.15s",
-                  }}
-                  onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(139,111,71,0.18)";
-                    (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,111,71,0.3)";
-                  }}
-                  onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.cardSoft;
-                    (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,111,71,0.10)";
-                  }}
-                >
-                  {/* Cover image */}
-                  <div
-                    style={{
-                      width: 80,
-                      flexShrink: 0,
-                      overflow: "hidden",
-                      background: "#EDE5D6",
-                    }}
-                  >
-                    <img
-                      src={imgSrc}
-                      alt={series.title}
-                      loading="lazy"
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                      onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
-                      }}
-                    />
-                  </div>
+        {/* ── (1) PRIMARY: Event-series navigation grid ── */}
+        {!isLoading && eventSeries.length > 0 && (
+          <section style={{ marginBottom: regularSeries.length > 0 ? "2.5rem" : 0 }}>
+            {/* Section heading */}
+            <h2
+              style={{
+                fontFamily: fonts.display,
+                fontSize: "1rem",
+                fontWeight: 700,
+                color: colors.textDark,
+                marginTop: 0,
+                marginBottom: "1rem",
+                paddingBottom: "0.45rem",
+                borderBottom: `2px solid rgba(196,162,101,0.22)`,
+                display: "flex",
+                alignItems: "center",
+                gap: "0.4rem",
+              }}
+            >
+              <BookMarked size={15} style={{ color: colors.goldDark }} />
+              {navSectionLabel(isTorahBook)}
+            </h2>
 
-                  {/* Info */}
-                  <div
-                    style={{
-                      flex: 1,
-                      padding: "0.75rem 1rem",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.2rem",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontFamily: fonts.display,
-                        fontSize: "0.95rem",
-                        fontWeight: 700,
-                        color: colors.textDark,
-                        lineHeight: 1.3,
-                      }}
-                    >
-                      {series.title}
-                    </span>
-                    {rabbiLabel && (
-                      <span style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted }}>
-                        {rabbiLabel}
-                      </span>
-                    )}
-                    {(series.lesson_count ?? 0) > 0 && (
-                      <span
-                        style={{
-                          fontFamily: fonts.body,
-                          fontSize: "0.75rem",
-                          color: colors.goldDark,
-                          fontWeight: 600,
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "0.3rem",
-                        }}
-                      >
-                        {mediaIcon(series)}
-                        {series.lesson_count} שיעורים
-                      </span>
-                    )}
-                  </div>
+            {/* Navigation grid — 2 columns on wide, 1 on narrow */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                gap: "0.65rem",
+              }}
+            >
+              {eventSeries.map((series) => {
+                // Extract label and range from title: "פרשת X | טווח" or "ספר פרק N"
+                const pipeIdx = series.title.indexOf("|");
+                const mainLabel = pipeIdx > -1
+                  ? series.title.slice(0, pipeIdx).trim()
+                  : series.title;
+                const rangeLabel = pipeIdx > -1
+                  ? series.title.slice(pipeIdx + 1).trim()
+                  : "";
 
-                  {/* Arrow */}
+                return (
                   <div
+                    key={series.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => navigate(`/series/${series.id}`)}
+                    onKeyDown={(e) => e.key === "Enter" && navigate(`/series/${series.id}`)}
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingInlineEnd: "1rem",
-                      color: colors.textSubtle,
+                      gap: "0.75rem",
+                      padding: "0.75rem 1rem",
+                      borderRadius: radii.lg,
+                      background: "white",
+                      border: `1px solid rgba(139,111,71,0.12)`,
+                      boxShadow: shadows.cardSoft,
+                      cursor: "pointer",
+                      transition: "box-shadow 0.15s, border-color 0.15s, background 0.15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      const el = e.currentTarget as HTMLDivElement;
+                      el.style.boxShadow = "0 4px 16px rgba(139,111,71,0.18)";
+                      el.style.borderColor = "rgba(196,162,101,0.4)";
+                      el.style.background = "#FFFDF8";
+                    }}
+                    onMouseLeave={(e) => {
+                      const el = e.currentTarget as HTMLDivElement;
+                      el.style.boxShadow = shadows.cardSoft;
+                      el.style.borderColor = "rgba(139,111,71,0.12)";
+                      el.style.background = "white";
                     }}
                   >
-                    <ChevronLeft size={16} style={{ transform: "rotate(180deg)" }} />
+                    {/* Gold dot accent */}
+                    <div
+                      style={{
+                        width: 8,
+                        height: 8,
+                        borderRadius: "50%",
+                        background: colors.goldDark,
+                        flexShrink: 0,
+                        opacity: 0.7,
+                      }}
+                    />
+
+                    {/* Labels */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div
+                        style={{
+                          fontFamily: fonts.display,
+                          fontSize: "0.92rem",
+                          fontWeight: 700,
+                          color: colors.textDark,
+                          lineHeight: 1.3,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {mainLabel}
+                      </div>
+                      {rangeLabel && (
+                        <div
+                          style={{
+                            fontFamily: fonts.body,
+                            fontSize: "0.74rem",
+                            color: colors.textSubtle,
+                            marginTop: "0.1rem",
+                          }}
+                        >
+                          {rangeLabel}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Lesson count badge */}
+                    {(series.lesson_count ?? 0) > 0 && (
+                      <span
+                        style={{
+                          flexShrink: 0,
+                          fontFamily: fonts.body,
+                          fontSize: "0.72rem",
+                          fontWeight: 600,
+                          color: colors.goldDark,
+                          background: "rgba(196,162,101,0.1)",
+                          borderRadius: radii.pill,
+                          padding: "0.15rem 0.5rem",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {series.lesson_count}
+                      </span>
+                    )}
+
+                    <ChevronLeft size={14} style={{ color: colors.textSubtle, flexShrink: 0, transform: "rotate(180deg)" }} />
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </section>
         )}
 
-        {/* ── (2) Secondary: chapter grid (C8 / R8) ── */}
-        {/* Only shown when bible_chapter data exists (sparse for Torah, denser for Neviim). */}
-        {hasChapters && (
-          <div style={{ marginTop: "2.5rem" }}>
+        {/* ── (2) SECONDARY: Regular (rabbi/topic) series ── */}
+        {!isLoading && regularSeries.length > 0 && (
+          <section>
+            {/* Only show heading if there were also event-series above */}
+            {eventSeries.length > 0 && (
+              <h2
+                style={{
+                  fontFamily: fonts.display,
+                  fontSize: "1rem",
+                  fontWeight: 700,
+                  color: colors.textDark,
+                  marginTop: 0,
+                  marginBottom: "0.75rem",
+                  paddingBottom: "0.4rem",
+                  borderBottom: `2px solid rgba(196,162,101,0.18)`,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                }}
+              >
+                <Hash size={15} style={{ color: colors.goldDark }} />
+                סדרות נוספות
+              </h2>
+            )}
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              {regularSeries.map((series) => {
+                const imgSrc = resolveSeriesImage(series);
+                const allRabbis = Array.isArray(series.rabbis)
+                  ? (series.rabbis as { name: string }[]).map((r) => r.name)
+                  : series.rabbis
+                  ? [(series.rabbis as { name: string }).name]
+                  : [];
+                const rabbiLabel = formatRabbis(allRabbis);
+
+                return (
+                  <div
+                    key={series.id}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => navigate(`/series/${series.id}`)}
+                    onKeyDown={(e) => e.key === "Enter" && navigate(`/series/${series.id}`)}
+                    style={{
+                      display: "flex",
+                      alignItems: "stretch",
+                      borderRadius: radii.lg,
+                      overflow: "hidden",
+                      background: "white",
+                      border: `1px solid rgba(139,111,71,0.10)`,
+                      boxShadow: shadows.cardSoft,
+                      cursor: "pointer",
+                      transition: "box-shadow 0.15s, border-color 0.15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 4px 16px rgba(139,111,71,0.18)";
+                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,111,71,0.3)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.cardSoft;
+                      (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(139,111,71,0.10)";
+                    }}
+                  >
+                    {/* Cover image */}
+                    <div
+                      style={{
+                        width: 72,
+                        flexShrink: 0,
+                        overflow: "hidden",
+                        background: "#EDE5D6",
+                      }}
+                    >
+                      <img
+                        src={imgSrc}
+                        alt={series.title}
+                        loading="lazy"
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+                        }}
+                      />
+                    </div>
+
+                    {/* Info */}
+                    <div
+                      style={{
+                        flex: 1,
+                        padding: "0.65rem 1rem",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.15rem",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: fonts.display,
+                          fontSize: "0.9rem",
+                          fontWeight: 700,
+                          color: colors.textDark,
+                          lineHeight: 1.3,
+                        }}
+                      >
+                        {series.title}
+                      </span>
+                      {rabbiLabel && (
+                        <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}>
+                          {rabbiLabel}
+                        </span>
+                      )}
+                      {(series.lesson_count ?? 0) > 0 && (
+                        <span
+                          style={{
+                            fontFamily: fonts.body,
+                            fontSize: "0.72rem",
+                            color: colors.goldDark,
+                            fontWeight: 600,
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.3rem",
+                          }}
+                        >
+                          {mediaIcon(series)}
+                          {series.lesson_count} שיעורים
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Arrow */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        paddingInlineEnd: "1rem",
+                        color: colors.textSubtle,
+                      }}
+                    >
+                      <ChevronLeft size={16} style={{ transform: "rotate(180deg)" }} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ── (3) TERTIARY: bible_chapter grid (fallback for books with sparse data) ── */}
+        {/* Only shown when there are chapters but NO event-series found via DB */}
+        {!isLoading && hasChapters && eventSeries.length === 0 && (
+          <div style={{ marginTop: "0.5rem" }}>
             <h2
               style={{
                 fontFamily: fonts.display,
@@ -407,7 +611,6 @@ const BibleBookPage = () => {
               })}
             </div>
 
-            {/* Inline lesson list for selected chapter */}
             {selectedChapter !== null && (
               <div style={{ marginTop: "1.25rem" }}>
                 <h3
