@@ -21,6 +21,19 @@ function getAnonKey(): string {
   );
 }
 
+// ── Ordering / phantom helpers (R4 — match old-site 1:1) ──────────────────────
+// Matched items carry sort_order = old order_index (1..N). Unmatched keep 0 → sink last.
+const ord = (n: number | null | undefined) => (n && n > 0 ? n : 9999);
+// Nav pages the migration imported as standalone lessons ("כל התכנים", "פרשת X",
+// "דפי עבודה X") — they are navigation, never content, so they don't belong in the
+// book listing. Presentation-only filter (no data change, fully reversible).
+const NAV_TITLE_RE = /^(כל התכנים|דפי עבודה|פרשת |חידות לילדים)/;
+// Parsha event-series ("פרשת בראשית | א-ו") belong to the parsha/bible navigation, NOT to the
+// book's "כל התכנים" listing (the old site lists parshiot as separate nav items). \s — not \b —
+// because \b never matches between Hebrew letters (round-1 lesson).
+const PARSHA_EVENT_RE = /^\s*פרשת\s.*\|/;
+const heCmp = (a: string, b: string) => a.localeCompare(b, "he");
+
 export interface TeacherBookSeries {
   id: string;
   title: string;
@@ -28,6 +41,7 @@ export interface TeacherBookSeries {
   image_url: string | null;
   lesson_count: number;
   rabbiName: string | null;
+  sortOrder: number;
 }
 
 export interface TeacherBookLesson {
@@ -42,6 +56,7 @@ export interface TeacherBookLesson {
   contentType: string | null;
   rabbiName: string | null;
   seriesId: string | null;
+  sortOrder: number;
 }
 
 export interface TeacherBookContentResult {
@@ -78,20 +93,25 @@ export function useTeacherBookContent(book: string): TeacherBookContentResult {
       }
       const uniqueSeriesIds = [...new Set(seriesIdRows.map((r) => r.series_id).filter(Boolean))];
 
-      let seriesList: Array<{ id: string; title: string; description: string | null; image_url: string | null; lesson_count: number; rabbi_id: string | null }> = [];
+      let seriesList: Array<{ id: string; title: string; description: string | null; image_url: string | null; lesson_count: number; rabbi_id: string | null; sort_order: number | null }> = [];
       if (uniqueSeriesIds.length > 0) {
         // Chunk into batches of 400 (PostgREST IN limit)
         for (let i = 0; i < uniqueSeriesIds.length; i += 400) {
           const chunk = uniqueSeriesIds.slice(i, i + 400);
           const { data } = await supabase
             .from("series")
-            .select("id, title, description, image_url, lesson_count, rabbi_id")
+            .select("id, title, description, image_url, lesson_count, rabbi_id, sort_order")
             .in("id", chunk)
-            .gt("lesson_count", 0)
-            .order("title");
+            .gt("lesson_count", 0);
           seriesList.push(...(data || []));
         }
       }
+      // Drop the book nav-node ("בראשית") and parsha event-series ("פרשת נח | ו-יא") —
+      // neither appears in the old "כל התכנים" listing.
+      seriesList = seriesList.filter((s) => {
+        const t = (s.title || "").trim();
+        return t !== book.trim() && !PARSHA_EVENT_RE.test(t);
+      });
 
       // Enrich with rabbi names
       const rabbiIds = [...new Set(seriesList.filter((s) => s.rabbi_id).map((s) => s.rabbi_id!))];
@@ -104,17 +124,23 @@ export function useTeacherBookContent(book: string): TeacherBookContentResult {
         seriesRabbiMap = new Map((rabbis || []).map((r) => [r.id, r.name]));
       }
 
-      const series: TeacherBookSeries[] = seriesList.map((s) => ({
-        id: s.id,
-        title: s.title,
-        description: s.description,
-        image_url: s.image_url,
-        lesson_count: s.lesson_count,
-        rabbiName: s.rabbi_id ? seriesRabbiMap.get(s.rabbi_id) || null : null,
-      }));
+      const series: TeacherBookSeries[] = seriesList
+        .map((s) => ({
+          id: s.id,
+          title: s.title,
+          description: s.description,
+          image_url: s.image_url,
+          lesson_count: s.lesson_count,
+          rabbiName: s.rabbi_id ? seriesRabbiMap.get(s.rabbi_id) || null : null,
+          sortOrder: s.sort_order ?? 0,
+        }))
+        // Old-site order first (matched → sort_order 1..N), then alphabetical for the rest
+        .sort((a, b) => ord(a.sortOrder) - ord(b.sortOrder) || heCmp(a.title, b.title));
 
       // ── 2. Standalone lessons (bible_book + teachers tag) — paginated ────
-      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
+      // Standalone teacher lessons only (series_id IS NULL). Series members are shown
+      // inside their series — listing them flat here was the "too many items" flood (R4).
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id,sort_order&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&series_id=is.null`;
       const allLessonsRaw: any[] = [];
       const PAGE = 1000;
       for (let start = 0; ; start += PAGE) {
@@ -140,19 +166,24 @@ export function useTeacherBookContent(book: string): TeacherBookContentResult {
         lessonRabbiMap = new Map((lessonRabbis || []).map((r) => [r.id, r.name]));
       }
 
-      const lessons: TeacherBookLesson[] = allLessonsRaw.map((l) => ({
-        id: l.id,
-        title: l.title,
-        description: l.description,
-        duration: l.duration,
-        audioUrl: l.audio_url,
-        videoUrl: l.video_url,
-        attachmentUrl: l.attachment_url,
-        thumbnailUrl: l.thumbnail_url,
-        contentType: l.content_type,
-        rabbiName: l.rabbi_id ? lessonRabbiMap.get(l.rabbi_id) || null : null,
-        seriesId: l.series_id,
-      }));
+      const lessons: TeacherBookLesson[] = allLessonsRaw
+        .map((l) => ({
+          id: l.id,
+          title: l.title,
+          description: l.description,
+          duration: l.duration,
+          audioUrl: l.audio_url,
+          videoUrl: l.video_url,
+          attachmentUrl: l.attachment_url,
+          thumbnailUrl: l.thumbnail_url,
+          contentType: l.content_type,
+          rabbiName: l.rabbi_id ? lessonRabbiMap.get(l.rabbi_id) || null : null,
+          seriesId: l.series_id,
+          sortOrder: l.sort_order ?? 0,
+        }))
+        // Drop nav-page phantoms; old-site order first (matched), then alphabetical
+        .filter((l) => !NAV_TITLE_RE.test((l.title || "").trim()))
+        .sort((a, b) => ord(a.sortOrder) - ord(b.sortOrder) || heCmp(a.title, b.title));
 
       return { series, lessons };
     },
@@ -164,6 +195,118 @@ export function useTeacherBookContent(book: string): TeacherBookContentResult {
     lessons: q.data?.lessons || [],
     isLoading: q.isLoading,
     total: (q.data?.series.length || 0) + (q.data?.lessons.length || 0),
+  };
+}
+
+// ── useTeacherBookListing (R6 — Saar 16.6.2026: book page 1:1 with old site) ──
+//
+// Reads the explicit, ordered, allow-list listing from teacher_listing_items
+// (scope='book', key=<book>), built by scripts/parity/teachers_book_listing.py from the
+// old-site ground truth. Each row is a series-card or a lesson-row, in the OLD order.
+// Phantom dups / parsha-event leaks / nav pages are simply absent from the listing.
+//
+// When the table has NO rows for a book yet → items=[] and the page falls back to the
+// heuristic useTeacherBookContent (additive, never empty). Fully reversible: delete the
+// scope='book' rows → old behaviour returns.
+
+export interface TeacherBookListingSeriesRow {
+  type: "series";
+  sortOrder: number;
+  series: { id: string; title: string; description: string | null; imageUrl: string | null; lessonCount: number; rabbiName: string | null };
+}
+export interface TeacherBookListingLessonRow {
+  type: "lesson";
+  sortOrder: number;
+  lesson: TeacherBookLesson;
+}
+export type TeacherBookListingItem = TeacherBookListingSeriesRow | TeacherBookListingLessonRow;
+
+export interface TeacherBookListingResult {
+  items: TeacherBookListingItem[];
+  lessons: TeacherBookLesson[]; // flat list of lesson rows (for modal lookup + counts)
+  isLoading: boolean;
+  hasListing: boolean; // true when explicit listing rows drive the page (1:1 mode)
+}
+
+export function useTeacherBookListing(book: string): TeacherBookListingResult {
+  const q = useQuery({
+    queryKey: ["teacher-book-listing-v1", book],
+    enabled: !!book,
+    staleTime: 1000 * 60 * 10,
+    queryFn: async () => {
+      const { data: rows, error } = await (supabase as any)
+        .from("teacher_listing_items")
+        .select([
+          "id", "kind", "sort_order", "series_id", "lesson_id",
+          "series(id,title,description,image_url,lesson_count,rabbi_id)",
+          "lessons(id,title,description,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id)",
+        ].join(","))
+        .eq("scope", "book")
+        .eq("key", book)
+        .order("sort_order", { ascending: true });
+      if (error || !rows || rows.length === 0) return { items: [], lessons: [] };
+
+      const rowArr = rows as any[];
+      // Enrich rabbi names for both series and lessons in one pass
+      const rabbiIds = [
+        ...new Set(
+          rowArr.flatMap((r) =>
+            [r.series?.rabbi_id, r.lessons?.rabbi_id].filter(Boolean) as string[]
+          )
+        ),
+      ];
+      let rabbiMap = new Map<string, string>();
+      if (rabbiIds.length > 0) {
+        const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
+        rabbiMap = new Map((rabbis || []).map((r) => [r.id, r.name]));
+      }
+
+      const items: TeacherBookListingItem[] = [];
+      const lessons: TeacherBookLesson[] = [];
+      for (const r of rowArr) {
+        if (r.kind === "series" && r.series) {
+          const s = r.series;
+          items.push({
+            type: "series",
+            sortOrder: r.sort_order,
+            series: {
+              id: s.id,
+              title: s.title,
+              description: s.description ?? null,
+              imageUrl: s.image_url ?? null,
+              lessonCount: s.lesson_count ?? 0,
+              rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
+            },
+          });
+        } else if (r.kind === "lesson" && r.lessons) {
+          const l = r.lessons;
+          const lesson: TeacherBookLesson = {
+            id: l.id,
+            title: l.title,
+            description: l.description ?? null,
+            duration: l.duration ?? null,
+            audioUrl: l.audio_url ?? null,
+            videoUrl: l.video_url ?? null,
+            attachmentUrl: l.attachment_url ?? null,
+            thumbnailUrl: l.thumbnail_url ?? null,
+            contentType: l.content_type ?? null,
+            rabbiName: l.rabbi_id ? rabbiMap.get(l.rabbi_id) || null : null,
+            seriesId: l.series_id ?? null,
+            sortOrder: r.sort_order,
+          };
+          items.push({ type: "lesson", sortOrder: r.sort_order, lesson });
+          lessons.push(lesson);
+        }
+      }
+      return { items, lessons };
+    },
+  });
+
+  return {
+    items: q.data?.items || [],
+    lessons: q.data?.lessons || [],
+    isLoading: q.isLoading,
+    hasListing: (q.data?.items.length || 0) > 0,
   };
 }
 

@@ -44,8 +44,10 @@ import {
 } from "@/lib/designTokens";
 import {
   useTeacherBookContent,
+  useTeacherBookListing,
   type TeacherBookSeries,
   type TeacherBookLesson,
+  type TeacherBookListingItem,
 } from "@/hooks/useTeacherBookContent";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -233,7 +235,7 @@ function LessonCard({
   const imgSrc =
     lesson.thumbnailUrl ||
     getSeriesCoverImage(lesson.seriesId || "") ||
-    "/images/series-default.png";
+    "/images/series-default.webp";
 
   return (
     <div
@@ -267,7 +269,7 @@ function LessonCard({
           alt={lesson.title}
           loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }}
+          onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }}
         />
       </div>
       <div style={{ position: "absolute", top: 0, right: 0, width: 4, height: "100%", background: gradients.oliveButton }} />
@@ -428,7 +430,7 @@ function LessonListRow({
           </span>
         )}
         <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>
-          פרטים ←
+          לתוכן המלא ←
         </span>
       </div>
     </div>
@@ -674,10 +676,16 @@ export default function TeachersBookPage() {
   const { book = "" } = useParams<{ book: string }>();
   const decodedBook = decodeURIComponent(book);
 
-  const { series, lessons, isLoading } = useTeacherBookContent(decodedBook);
+  // R6 1:1 listing (explicit, ordered, old-site allow-list) — falls back to heuristic below.
+  const listing = useTeacherBookListing(decodedBook);
+  const fallback = useTeacherBookContent(decodedBook);
+  const mode1to1 = listing.hasListing;
+  const isLoading = mode1to1 ? listing.isLoading : fallback.isLoading;
+  const series = fallback.series;
+  const lessons = mode1to1 ? listing.lessons : fallback.lessons;
 
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "grid"; } catch { return "grid"; }
+    try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "list"; } catch { return "list"; }
   });
   const [mediaFilter, setMediaFilter] = useState<MediaFilter>("all");
   const [search, setSearch] = useState("");
@@ -707,6 +715,23 @@ export default function TeachersBookPage() {
     const q = search.trim();
     return series.filter((s) => s.title.includes(q) || (s.description || "").includes(q));
   }, [series, search]);
+
+  // R6: flat ordered listing filtered by search + media filter (series always pass media filter)
+  const filteredListing = useMemo(() => {
+    let result = listing.items;
+    if (search.trim()) {
+      const qx = search.trim();
+      result = result.filter((it) =>
+        it.type === "series"
+          ? it.series.title.includes(qx) || (it.series.description || "").includes(qx)
+          : it.lesson.title.includes(qx) || (it.lesson.description || "").includes(qx),
+      );
+    }
+    if (mediaFilter !== "all") {
+      result = result.filter((it) => it.type === "series" || getLessonMediaType(it.lesson) === mediaFilter);
+    }
+    return result;
+  }, [listing.items, search, mediaFilter]);
 
   const counts: Record<MediaFilter, number> = useMemo(() => {
     const counts: Record<MediaFilter, number> = { all: lessons.length, audio: 0, video: 0, pdf: 0, text: 0 };
@@ -766,8 +791,90 @@ export default function TeachersBookPage() {
           <div style={{ display: "flex", justifyContent: "center", padding: "4rem" }}>
             <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
           </div>
-        ) : series.length === 0 && lessons.length === 0 ? (
+        ) : (mode1to1 ? listing.items.length === 0 : series.length === 0 && lessons.length === 0) ? (
           <EmptyState book={decodedBook} />
+        ) : mode1to1 ? (
+          /* ── R6 1:1 mode — single ordered list mirroring the old teachers page ── */
+          <>
+            <ControlsBar
+              viewMode={viewMode}
+              onViewChange={handleViewChange}
+              mediaFilter={mediaFilter}
+              onMediaFilterChange={setMediaFilter}
+              search={search}
+              onSearch={setSearch}
+              counts={counts}
+            />
+            {filteredListing.length > 0 ? (
+              viewMode === "grid" ? (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                    gap: "1.1rem",
+                  }}
+                >
+                  {filteredListing.map((it) =>
+                    it.type === "series" ? (
+                      <SeriesCard
+                        key={`s-${it.series.id}-${it.sortOrder}`}
+                        series={{
+                          id: it.series.id,
+                          title: it.series.title,
+                          description: it.series.description,
+                          image_url: it.series.imageUrl,
+                          lesson_count: it.series.lessonCount,
+                          rabbiName: it.series.rabbiName,
+                          sortOrder: it.sortOrder,
+                        }}
+                      />
+                    ) : (
+                      <LessonCard
+                        key={`l-${it.lesson.id}-${it.sortOrder}`}
+                        lesson={it.lesson}
+                        onClick={() => setModalLessonId(it.lesson.id)}
+                      />
+                    ),
+                  )}
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                  {filteredListing.map((it) =>
+                    it.type === "series" ? (
+                      <SeriesListRow
+                        key={`s-${it.series.id}-${it.sortOrder}`}
+                        series={{
+                          id: it.series.id,
+                          title: it.series.title,
+                          description: it.series.description,
+                          image_url: it.series.imageUrl,
+                          lesson_count: it.series.lessonCount,
+                          rabbiName: it.series.rabbiName,
+                          sortOrder: it.sortOrder,
+                        }}
+                      />
+                    ) : (
+                      <LessonListRow
+                        key={`l-${it.lesson.id}-${it.sortOrder}`}
+                        lesson={it.lesson}
+                        onClick={() => setModalLessonId(it.lesson.id)}
+                      />
+                    ),
+                  )}
+                </div>
+              )
+            ) : (
+              <div style={{ textAlign: "center", padding: "3rem", color: colors.textSubtle, fontFamily: fonts.body }}>
+                <p>לא נמצאו תוצאות לסינון הנוכחי.</p>
+                <button
+                  onClick={() => { setSearch(""); setMediaFilter("all"); }}
+                  style={{ background: "none", border: "none", cursor: "pointer", color: colors.oliveDark, fontFamily: fonts.body, fontSize: "0.85rem", textDecoration: "underline" }}
+                >
+                  אפס סינון
+                </button>
+              </div>
+            )}
+          </>
         ) : (
           <>
             <ControlsBar
