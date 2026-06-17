@@ -199,6 +199,16 @@ def build_book(bookkey, data):
                      "lesson_id": rid if kind == "lesson" else None,
                      "title": title})
 
+    # author check: old author vs DB rabbi on matched SERIES (report-only — never auto-mutate rabbi_id)
+    author_mismatch = []
+    for it in items:
+        r = matched_by_oi.get(it["order_index"])
+        if r and r["table"] == "series" and it.get("author") and r.get("rabbi"):
+            oa, da = norm(it["author"]), norm(r["rabbi"])
+            # ignore pure abbreviation/substring differences ("ושננתם - אוצר התורה" ≈ "ושננתם")
+            if oa != da and oa not in da and da not in oa:
+                author_mismatch.append({"title": r["title"], "old_author": it["author"], "db_rabbi": r["rabbi"]})
+
     extras_excluded = [{"table": r["table"], "id": r["id"], "title": r["title"],
                         "lesson_count": r.get("lesson_count"),
                         "is_nav": bool(NAV_RE.match(norm(r["title"]))) and r["table"] == "lessons"}
@@ -206,28 +216,89 @@ def build_book(bookkey, data):
     return {"book": book, "bookkey": bookkey, "old_items": len(items),
             "emitted": len(rows), "gaps_resolved": gaps_resolved,
             "gaps_unresolved": gaps_unresolved, "nav_skipped": nav_skipped,
+            "author_mismatch": author_mismatch,
             "extras_excluded": extras_excluded, "rows": rows}
 
 def apply_book(b):
-    """Replace scope='book' key=<book> listing rows transactionally-ish: delete then insert."""
+    """Atomically replace scope='book' key=<book> rows: DELETE + INSERT in ONE transaction
+       (single request → pg implicit transaction) so a mid-run failure never wipes a listing."""
     book = b["book"]
-    q(f"DELETE FROM teacher_listing_items WHERE scope='book' AND key='{esc(book)}';")
+    if not b["rows"]:
+        return 0
     vals = []
     for r in b["rows"]:
         sid = f"'{r['series_id']}'" if r["series_id"] else "NULL"
         lid = f"'{r['lesson_id']}'" if r["lesson_id"] else "NULL"
         vals.append(f"('book','{esc(book)}','{r['kind']}',{sid},{lid},{r['order_index']})")
-    for i in range(0, len(vals), 100):
-        chunk = ",".join(vals[i:i+100])
-        q(f"INSERT INTO teacher_listing_items (scope,key,kind,series_id,lesson_id,sort_order) VALUES {chunk};")
+    sql = ("BEGIN;"
+           f"DELETE FROM teacher_listing_items WHERE scope='book' AND key='{esc(book)}';"
+           "INSERT INTO teacher_listing_items (scope,key,kind,series_id,lesson_id,sort_order) VALUES "
+           + ",".join(vals) + ";COMMIT;")
+    q(sql)
     return len(b["rows"])
+
+def current_db_listing():
+    """Snapshot the live teacher_listing_items scope='book' → {book: [(sort_order,kind,id)]}."""
+    rows = q("SELECT key, kind, sort_order, series_id, lesson_id FROM teacher_listing_items WHERE scope='book' ORDER BY key, sort_order")
+    out = {}
+    for r in rows:
+        rid = r["series_id"] if r["kind"] == "series" else r["lesson_id"]
+        out.setdefault(r["key"], []).append((r["sort_order"], r["kind"], rid))
+    return out
+
+def watch():
+    """Self-heal pass (scheduled): recompute the 1:1 listing from the old-site ground truth,
+       compare to the live DB listing, APPLY on drift (order/membership/missing), and return a
+       drift report (added/removed/reordered per book + unresolved gaps + author mismatches).
+       Order & membership self-heal automatically; absent content & author mismatches are
+       reported for review (never fabricated, rabbi_id never auto-mutated)."""
+    data = load_old()
+    keys = [k for k in data if "/" in k]
+    live = current_db_listing()
+    report = {"healed": [], "added": [], "removed": [], "reordered": [],
+              "unresolved_gaps": [], "author_mismatch": [], "books": 0}
+    for k in keys:
+        b = build_book(k, data)
+        book = b["book"]; report["books"] += 1
+        new = [(r["order_index"], "series" if r["series_id"] else "lesson",
+                r["series_id"] or r["lesson_id"]) for r in b["rows"]]
+        cur = live.get(book, [])
+        new_ids = {(kind, rid) for _, kind, rid in new}
+        cur_ids = {(kind, rid) for _, kind, rid in cur}
+        added = new_ids - cur_ids
+        removed = cur_ids - new_ids
+        reordered = (not added and not removed and [x[2] for x in sorted(new)] != [x[2] for x in sorted(cur)])
+        # order drift: same id-set but different sequence
+        order_drift = ([(s, rid) for s, _, rid in sorted(new)] != [(s, rid) for s, _, rid in sorted(cur)])
+        if added or removed or order_drift or book not in live:
+            apply_book(b)
+            report["healed"].append(book)
+            if added:   report["added"].append({"book": book, "n": len(added)})
+            if removed: report["removed"].append({"book": book, "n": len(removed)})
+            if order_drift and not added and not removed: report["reordered"].append(book)
+        for g in b["gaps_unresolved"]:
+            report["unresolved_gaps"].append({"book": book, "title": g["title"]})
+        for a in b["author_mismatch"]:
+            report["author_mismatch"].append({"book": book, **a})
+    return report
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--book", default=None)
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--watch", action="store_true", help="self-heal + drift report (one line + JSON)")
     ap.add_argument("--out", default=os.path.join(HERE, "teachers-book-listing-plan.json"))
     args = ap.parse_args()
+
+    if args.watch:
+        rep = watch()
+        json.dump(rep, open(os.path.join(HERE, "teachers-book-listing-watch-report.json"), "w", encoding="utf-8"),
+                  ensure_ascii=False, indent=2)
+        print(f"books={rep['books']} healed={len(rep['healed'])} "
+              f"added_books={len(rep['added'])} removed_books={len(rep['removed'])} "
+              f"reordered={len(rep['reordered'])} unresolved={len(rep['unresolved_gaps'])} "
+              f"author_mismatch={len(rep['author_mismatch'])}")
+        return
     data = load_old()
     keys = [args.book] if args.book else [k for k in data if "/" in k]
     plan = {"generated": time.strftime("%Y-%m-%d %H:%M"), "apply": args.apply, "books": []}
