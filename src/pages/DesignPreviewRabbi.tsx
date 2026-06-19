@@ -357,7 +357,7 @@ export default function DesignPreviewRabbi() {
 
 function SeriesCard({ s }: { s: any }) {
   const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
-  const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+  const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
   return (
     <Link to={`/series/${s.id}`} style={{ textDecoration: "none", color: "inherit" }}>
       <div

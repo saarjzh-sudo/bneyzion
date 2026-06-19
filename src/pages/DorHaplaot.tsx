@@ -5,8 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import MemorialFooter from "@/components/dor-haplaot/MemorialFooter";
 import DonationPopup from "@/components/dor-haplaot/DonationPopup";
 import PrintableBookletPopup from "@/components/dor-haplaot/PrintableBookletPopup";
-import heroBg from "@/assets/dor-haplaot-hero.jpg";
-import bookletCover from "@/assets/dor-haplaot-booklet-cover.jpg";
+import heroBg from "@/assets/dor-haplaot-hero.webp";
+import bookletCover from "@/assets/dor-haplaot-booklet-cover.webp";
 import Layout from "@/components/layout/Layout";
 
 interface Chapter {

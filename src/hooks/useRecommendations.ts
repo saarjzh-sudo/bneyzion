@@ -55,6 +55,7 @@ export function useRecommendations(limit = 6) {
           .from("lessons")
           .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, views_count, rabbis!lessons_rabbi_id_fkey(id, name, image_url), series(id, title)")
           .eq("status", "published")
+          .not("audience_tags", "cs", "{teachers}") // R3 14.6.2026 (Saar): no teacher content in public recs
           .order("views_count", { ascending: false })
           .limit(limit);
         return { lessons: data || [], source: "popular" as const };
@@ -70,6 +71,7 @@ export function useRecommendations(limit = 6) {
         .from("lessons")
         .select("id, title, duration, audio_url, video_url, thumbnail_url, source_type, views_count, rabbi_id, series_id, bible_book, rabbis!lessons_rabbi_id_fkey(id, name, image_url), series(id, title)")
         .eq("status", "published")
+        .not("audience_tags", "cs", "{teachers}") // R3 14.6.2026 (Saar): no teacher content in public recs
         .or(filters.join(","))
         .limit(100);
 

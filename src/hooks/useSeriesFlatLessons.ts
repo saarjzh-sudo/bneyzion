@@ -61,6 +61,7 @@ export function useSeriesFlatLessons(seriesId: string | undefined) {
           .select("id, title, duration, video_url, audio_url, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)")
           .in("series_id", chunk)
           .eq("status", "published")
+          .not("audience_tags", "cs", "{teachers}") // R3 14.6.2026 (Saar): no teacher content in public
           .order("published_at", { ascending: true })
           .limit(1000);
 

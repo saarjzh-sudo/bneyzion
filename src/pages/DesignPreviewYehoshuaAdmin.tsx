@@ -33,6 +33,7 @@ const TIER_NAMES: Record<string, string> = {
   "tier-90":   "ספר יהושע — 200 ראשונים",
   "tier-120":  "ספר + הקדשה",
   "tier-220":  "הזוג",
+  "tier-yehoshua-shoftim": "יהושע + שופטים",
   "tier-400":  "הסט המלא",
   "tier-800":  "השותף",
   "tier-1200": "השותף הבכיר",

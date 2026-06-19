@@ -277,13 +277,20 @@ export function getParashaVerse(parasha: string): { text: string; reference: str
 
 // Article series that appear on the parasha page
 // These are standalone series with one lesson per parasha
+// Parsha-page editorial columns. Round-2 (14.6.2026): list rebuilt against the
+// OLD site's dynamic parsha hub + verified DB coverage. Only columns whose lessons
+// are reliably matchable to the parsha (title contains the parasha name) are listed,
+// so every entry actually renders 1:1 with the old site instead of dropping silently.
+//   chumashScoped=true → the series title is per-chumash ("…- חומש <book>") and the
+//   lookup appends the current chumash (e.g. "מאמרים לשולחן השבת - חומש במדבר").
+// KNOWN data-debt (NOT listed, would never match — migration lost their parsha key):
+//   "עולמות חדשים בפרשה" (thematic titles, no bible_book) + "לאור הפרשה" (absent from DB).
 export const PARASHA_ARTICLE_SERIES = [
   { title: "הפרשה במבט רחב", rabbi: "הרב יואב אוריאל", seriesTitle: "הפרשה במבט רחב" },
   { title: "סימן לבנים", rabbi: "הרב אליעזר קשתיאל", seriesTitle: "סימן לבנים" },
   { title: "מבט על ההפטרה", rabbi: "הרב מנחם שחור", seriesTitle: "מבט על ההפטרה" },
   { title: "מידות בפרשה", rabbi: "הרב חגי ולוסקי", seriesTitle: "מידות בפרשה" },
-  { title: "פשט בפרשה", rabbi: "הרב עמנואל בן ארצי", seriesTitle: "פשט בפרשה" },
-  { title: "לשון הקודש בפרשה", rabbi: "הרב יהונתן מיכאלי", seriesTitle: "לשון הקודש בפרשה" },
+  { title: "לב ההפטרה", rabbi: "הרב עמנואל בן ארצי", seriesTitle: "לב ההפטרה" },
   { title: "עולמות חדשים בפרשה", rabbi: "הרב יוסף שילר", seriesTitle: "עולמות חדשים בפרשה" },
-  { title: "דבר תורה לשולחן השבת", rabbi: "הרב יואב אוריאל", seriesTitle: "דבר תורה לשולחן השבת" },
+  { title: "מאמר לשולחן השבת", rabbi: "הרב יואב אוריאל", seriesTitle: "מאמרים לשולחן השבת", chumashScoped: true },
 ];

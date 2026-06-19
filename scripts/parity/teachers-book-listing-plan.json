@@ -1,0 +1,268 @@
+{
+  "generated": "2026-06-17 08:39",
+  "apply": true,
+  "books": [
+    {
+      "book": "שופטים",
+      "bookkey": "נביאים/שופטים",
+      "old_items": 23,
+      "emitted": 21,
+      "gaps_resolved": [
+        {
+          "order_index": 12,
+          "title": "הוראת סוגיית פילגש בגבעה",
+          "via": "book_tag",
+          "table": "lessons",
+          "id": "9ad53521-0f4d-44b0-aec1-4c76e921e318"
+        },
+        {
+          "order_index": 21,
+          "title": "מפת מקומות ונחלות בארץ ישראל",
+          "via": "book_tag",
+          "table": "lessons",
+          "id": "5bd4314d-a1ef-4998-9dc9-14e6aad2d605"
+        },
+        {
+          "order_index": 22,
+          "title": "ציר זמן יהושע שופטים",
+          "via": "book_tag",
+          "table": "lessons",
+          "id": "57503ee6-864b-4b53-bd34-1af737c03110"
+        },
+        {
+          "order_index": 23,
+          "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+          "via": "book_tag",
+          "table": "lessons",
+          "id": "3191e0ff-79a4-43c7-a824-e495989fbfa6"
+        }
+      ],
+      "gaps_unresolved": [],
+      "nav_skipped": [
+        "מעבר לשיעורים קצרים על ספר שופטים",
+        "מעבר לקריאה וביאור בקצרה של ספר שופטים"
+      ],
+      "author_mismatch": [],
+      "extras_excluded": [
+        {
+          "table": "series",
+          "id": "8caa1cbd-4b4d-4604-89b6-16808ea07685",
+          "title": "סיכומים על ספר שופטים",
+          "lesson_count": 1,
+          "is_nav": false
+        },
+        {
+          "table": "series",
+          "id": "d7777776-7777-7777-7777-777777777776",
+          "title": "דפי עבודה - שופטים",
+          "lesson_count": 6,
+          "is_nav": false
+        },
+        {
+          "table": "series",
+          "id": "9aa7afdb-e029-4d82-af65-5584e320ca75",
+          "title": "ספר שופטים עם ביאור \"ושננתם\" מחולק לפי פרקים",
+          "lesson_count": 21,
+          "is_nav": false
+        },
+        {
+          "table": "series",
+          "id": "afbe1a78-1fa6-4747-8e1f-be7dbd488fd0",
+          "title": "שופטים",
+          "lesson_count": 6,
+          "is_nav": false
+        },
+        {
+          "table": "series",
+          "id": "b414cd52-32bf-450e-8bf5-0fa8e2c3b68e",
+          "title": "דפי עבודה - שופטים",
+          "lesson_count": 5,
+          "is_nav": false
+        },
+        {
+          "table": "lessons",
+          "id": "5f3adb93-b09d-43e9-abdb-d60eb5945f59",
+          "title": "סיכומים על ספר שופטים",
+          "lesson_count": null,
+          "is_nav": false
+        },
+        {
+          "table": "lessons",
+          "id": "0cb1bec9-8b41-4d4c-a73e-8d1483d062e5",
+          "title": "כל התכנים בספר שופטים",
+          "lesson_count": null,
+          "is_nav": true
+        },
+        {
+          "table": "lessons",
+          "id": "dbc59fbd-4718-4bfa-bcca-36106089a890",
+          "title": "דפי עבודה שופטים",
+          "lesson_count": null,
+          "is_nav": true
+        },
+        {
+          "table": "lessons",
+          "id": "841556d4-2241-46a0-a9d3-4729550638c0",
+          "title": "כל התכנים בספר שופטים",
+          "lesson_count": null,
+          "is_nav": true
+        }
+      ],
+      "rows": [
+        {
+          "order_index": 1,
+          "kind": "series",
+          "series_id": "b525d0b4-b234-491e-bd32-ed071b5eb2c1",
+          "lesson_id": null,
+          "title": "מדריכים למורה - שופטים"
+        },
+        {
+          "order_index": 2,
+          "kind": "series",
+          "series_id": "a8416cc9-5e2c-4d94-8481-24ad076abd10",
+          "lesson_id": null,
+          "title": "מדריך להוראת ספר שופטים"
+        },
+        {
+          "order_index": 3,
+          "kind": "series",
+          "series_id": "743cfeeb-c82d-458e-83f8-98d40629ea1b",
+          "lesson_id": null,
+          "title": "מפות על ספר שופטים"
+        },
+        {
+          "order_index": 4,
+          "kind": "series",
+          "series_id": "0664a155-f6cd-40b1-8d9f-7443805f7b3b",
+          "lesson_id": null,
+          "title": "סיכומים על ספר שופטים"
+        },
+        {
+          "order_index": 5,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "7c65258b-af1e-4196-94c8-79bc074b8ef5",
+          "title": "דפי עבודה ספר שופטים"
+        },
+        {
+          "order_index": 6,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "873d1719-4ae4-448a-be1c-044a0eb7b238",
+          "title": "שאלות חזרה - ספר שופטים"
+        },
+        {
+          "order_index": 7,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "3972c6d3-4b2f-4793-afd4-2896104f18fb",
+          "title": "שאלות חזרה נוספות - ספר שופטים"
+        },
+        {
+          "order_index": 8,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "1988705e-cf13-41c9-bd8b-a32063ca6d05",
+          "title": "ביאורי מילים ועבודה עצמית - ספר שופטים"
+        },
+        {
+          "order_index": 9,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "ca3a2f39-760f-4799-b232-90fc53300ac4",
+          "title": "שאלות בעיון - ספר שופטים"
+        },
+        {
+          "order_index": 10,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "bd7fe2b1-5719-4b89-8ebb-2b3deca2520f",
+          "title": "שאלות חזרה ועיון בספר שופטים"
+        },
+        {
+          "order_index": 11,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "78055574-6adc-45c0-b631-1504eae84b57",
+          "title": "הקדמה לספר שופטים"
+        },
+        {
+          "order_index": 12,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "9ad53521-0f4d-44b0-aec1-4c76e921e318",
+          "title": "הוראת סוגיית פילגש בגבעה"
+        },
+        {
+          "order_index": 13,
+          "kind": "series",
+          "series_id": "ee16bb53-a2cf-49a7-bba7-62294dfa6e3d",
+          "lesson_id": null,
+          "title": "ספר שופטים עם ביאור 'ושננתם'"
+        },
+        {
+          "order_index": 15,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "63bb201b-fab0-4d2b-a673-4895ee7499db",
+          "title": "ערכים ומידות העולים מפסוקי ספר שופטים"
+        },
+        {
+          "order_index": 16,
+          "kind": "series",
+          "series_id": "485ea748-e55b-4fcd-b633-744acbd4d343",
+          "lesson_id": null,
+          "title": "שאלות וביאורי מילים מנוקד - ספר שופטים"
+        },
+        {
+          "order_index": 18,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "1d182440-3929-47c0-bc94-4151190b3c15",
+          "title": "שאלות ותשובות על כל ספר שופטים"
+        },
+        {
+          "order_index": 19,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "5760a0ac-72d4-483f-874f-c21c32904bb5",
+          "title": "סיכום נושאי הפרקים בספר שופטים"
+        },
+        {
+          "order_index": 20,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "93c8a953-c7b2-47a4-bdb0-072ad45ef12f",
+          "title": "מבחן בקיאות ספר שופטים"
+        },
+        {
+          "order_index": 21,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "5bd4314d-a1ef-4998-9dc9-14e6aad2d605",
+          "title": "מפת מקומות ונחלות בארץ ישראל"
+        },
+        {
+          "order_index": 22,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "57503ee6-864b-4b53-bd34-1af737c03110",
+          "title": "ציר זמן יהושע שופטים"
+        },
+        {
+          "order_index": 23,
+          "kind": "lesson",
+          "series_id": null,
+          "lesson_id": "3191e0ff-79a4-43c7-a824-e495989fbfa6",
+          "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות"
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "gaps_resolved": 4,
+    "gaps_unresolved": 0,
+    "extras_excluded": 9,
+    "emitted": 21
+  }
+}

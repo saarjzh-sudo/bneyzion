@@ -1,5 +1,5 @@
 import { motion, type Easing } from "framer-motion";
-import heroImg from "@/assets/memorial-saadia-hero.jpg";
+import heroImg from "@/assets/memorial-saadia-hero.webp";
 
 const easeOut: Easing = [0.16, 1, 0.3, 1];
 

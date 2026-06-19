@@ -45,6 +45,7 @@ import {
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
+import { usePublicBookListing } from "@/hooks/usePublicBookListing";
 import { supabase } from "@/integrations/supabase/client";
 
 // ─── types ───────────────────────────────────────────────────────────────────
@@ -80,7 +81,7 @@ type DirectLesson = {
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
 function resolveSeriesImage(s: { imageUrl?: string | null; title: string }): string {
-  return s.imageUrl || getSeriesCoverImage(s.title) || "/images/series-default.png";
+  return s.imageUrl || getSeriesCoverImage(s.title) || "/images/series-default.webp";
 }
 
 /** Format up to 2 rabbi names; >2 → "X, Y ועוד" */
@@ -177,6 +178,10 @@ function useDirectLessons(
         .eq("bible_book", book!)
         .eq("cat_standalone", true)
         .eq("status", "published")
+        // R3 14.6.2026 (Saar): standalone band had NO audience filter → teacher lessons
+        // (חידות/דפי עבודה/שאלות + 14 teacher shiurim per chumash) leaked onto every parsha
+        // page. Strict rule: teacher content NEVER public. Matches useParasha/useBible.
+        .not("audience_tags", "cs", "{teachers}")
         .order("content_type", { ascending: true, nullsFirst: true }) // lessons before שו"ת
         .order("bible_chapter", { ascending: true, nullsFirst: false })
         .order("title", { ascending: true })
@@ -225,7 +230,7 @@ function useSeriesRabbisMap(
         .select("series_id, rabbi_id, rabbis!lessons_rabbi_id_fkey(name)")
         .in("series_id", ids)
         .eq("status", "published")
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+        .not("audience_tags", "cs", "{teachers}")
         .not("rabbi_id", "is", null)
         .limit(5000);
       return rows ?? [];
@@ -277,6 +282,26 @@ export default function CategoryPage() {
   const { data: directLessons, isLoading: lessonsLoading } = useDirectLessons(id, cardSeriesIds);
   const allDirectLessons = directLessons ?? [];
 
+  // ── (R6 Yoav) Explicit 1:1 PUBLIC listing — one ordered interleaved table (series +
+  // standalone lessons) mirroring the old book page, with author + length. When this book
+  // has listing rows (scope='public_book') it DRIVES the page; otherwise we fall back to the
+  // heuristic three-section render below. Keyed by the book name = the category node title.
+  const { data: nodeForBook } = useQuery({
+    queryKey: ["category-node-booktitle", id],
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from("series")
+        .select("title, bible_book")
+        .eq("id", id!)
+        .maybeSingle();
+      return (data ?? null) as { title: string; bible_book: string | null } | null;
+    },
+  });
+  const bookKey = nodeForBook?.bible_book || nodeForBook?.title || node?.title || null;
+  const publicListing = usePublicBookListing(bookKey);
+
   const isLoading = nodeLoading || seriesLoading;
   const title = node?.title ?? "קטגוריה";
 
@@ -288,8 +313,8 @@ export default function CategoryPage() {
   const standaloneShut = allDirectLessons.filter((l) => isShut(l));
 
   // Badge counts: N סדרות · M שיעורים (real counts, not inflated lesson_count)
-  const seriesBadgeCount = canonicalSeries.length;
-  const lessonBadgeCount = allDirectLessons.length;
+  const seriesBadgeCount = publicListing.hasListing ? publicListing.seriesCount : canonicalSeries.length;
+  const lessonBadgeCount = publicListing.hasListing ? publicListing.lessonCount : allDirectLessons.length;
 
   return (
     <DesignLayout>
@@ -472,6 +497,32 @@ export default function CategoryPage() {
           padding: "2rem 1.5rem",
         }}
       >
+        {publicListing.hasListing ? (
+          /* ── (R6 Yoav) 1:1 PUBLIC listing — ONE ordered interleaved table (series +
+             standalone lessons), old order_index, author + length. Pollution excluded
+             by construction (allow-list). ── */
+          <section>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {publicListing.items.map((it) =>
+                it.type === "series" ? (
+                  <SeriesRowCard
+                    key={`pls-${it.series.id}-${it.sortOrder}`}
+                    series={it.series}
+                    rabbiNames={it.series.rabbiName ? [it.series.rabbiName] : []}
+                    hrefSuffix={bookKey ? `?book=${encodeURIComponent(bookKey)}` : ""}
+                  />
+                ) : (
+                  <LessonRow
+                    key={`pll-${it.lesson.id}-${it.sortOrder}`}
+                    lesson={it.lesson}
+                    onNavigate={(path) => navigate(path)}
+                  />
+                )
+              )}
+            </div>
+          </section>
+        ) : (
+          <>
         {/* ── (a) Series cards — CLOSED, link to /series/:id ── */}
         {isLoading ? (
           <SeriesGridSkeleton />
@@ -523,6 +574,8 @@ export default function CategoryPage() {
             </div>
           </section>
         )}
+          </>
+        )}
       </div>
 
       <style>{`
@@ -562,9 +615,11 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 function SeriesRowCard({
   series,
   rabbiNames,
+  hrefSuffix,
 }: {
   series: CanonicalSeries;
   rabbiNames: string[];
+  hrefSuffix?: string;
 }) {
   const imgSrc = resolveSeriesImage(series);
   const hasDraftBadge = series.isDraft && (!series.lessonCount || series.lessonCount === 0);
@@ -572,7 +627,7 @@ function SeriesRowCard({
 
   return (
     <Link
-      to={`/series/${series.id}`}
+      to={`/series/${series.id}${hrefSuffix ?? ""}`}
       style={{ textDecoration: "none", display: "block" }}
     >
       <div
@@ -610,7 +665,7 @@ function SeriesRowCard({
             loading="lazy"
             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+              (e.currentTarget as HTMLImageElement).src = "/images/series-default.webp";
             }}
           />
         </div>
@@ -731,7 +786,7 @@ function LessonRow({
     ? lesson.rabbis[0]?.name
     : (lesson.rabbis as { name: string } | null)?.name;
 
-  const imgSrc = lesson.thumbnail_url || "/images/series-default.png";
+  const imgSrc = lesson.thumbnail_url || "/images/series-default.webp";
 
   return (
     <button
@@ -776,7 +831,7 @@ function LessonRow({
           loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+            (e.currentTarget as HTMLImageElement).src = "/images/series-default.webp";
           }}
         />
         <div

@@ -1,0 +1,3546 @@
+[
+ {
+  "type": "topic",
+  "name": "ימי העיון בתנ\"ך",
+  "safe": "topic_ימי_העיון_בתנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ימי העיון בתנ\"ך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ימי-העיון-בתנ-ך",
+  "old_items_hint": 246
+ },
+ {
+  "type": "topic",
+  "name": "דוד המלך",
+  "safe": "topic_דוד_המלך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=דוד המלך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-דוד-המלך",
+  "old_items_hint": 58
+ },
+ {
+  "type": "topic",
+  "name": "האזנה לפסוקים עם ביאור פשוט",
+  "safe": "topic_האזנה_לפסוקים_עם_ביאור_פשוט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=האזנה לפסוקים עם ביאור פשוט",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-האזנה-לפסוקים-עם-ביאור-פשוט",
+  "old_items_hint": 55
+ },
+ {
+  "type": "topic",
+  "name": "גאולה",
+  "safe": "topic_גאולה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=גאולה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-גאולה",
+  "old_items_hint": 53
+ },
+ {
+  "type": "topic",
+  "name": "מלכות",
+  "safe": "topic_מלכות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מלכות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מלכות",
+  "old_items_hint": 43
+ },
+ {
+  "type": "topic",
+  "name": "תנ\"ך מוקלט",
+  "safe": "topic_תנך_מוקלט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=תנ\"ך מוקלט",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-tanakh-muklat",
+  "old_items_hint": 33
+ },
+ {
+  "type": "topic",
+  "name": "נבואה",
+  "safe": "topic_נבואה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נבואה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נבואה",
+  "old_items_hint": 38
+ },
+ {
+  "type": "topic",
+  "name": "בית המקדש",
+  "safe": "topic_בית_המקדש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=בית המקדש",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-בית-המקדש",
+  "old_items_hint": 38
+ },
+ {
+  "type": "topic",
+  "name": "לימוד בקצב של פרק לשיעור",
+  "safe": "topic_לימוד_בקצב_של_פרק_לשיעור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=לימוד בקצב של פרק לשיעור",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-perek-leshiur",
+  "old_items_hint": 38
+ },
+ {
+  "type": "topic",
+  "name": "ארץ ישראל",
+  "safe": "topic_ארץ_ישראל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ארץ ישראל",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ארץ-ישראל",
+  "old_items_hint": 35
+ },
+ {
+  "type": "topic",
+  "name": "בית שני",
+  "safe": "topic_בית_שני",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=בית שני",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-בית-שני",
+  "old_items_hint": 35
+ },
+ {
+  "type": "topic",
+  "name": "כהונה",
+  "safe": "topic_כהונה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=כהונה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-כהונה",
+  "old_items_hint": 33
+ },
+ {
+  "type": "topic",
+  "name": "קריאת הפסוקים עם ביאור פשוט",
+  "safe": "topic_קריאת_הפסוקים_עם_ביאור_פשוט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קריאת הפסוקים עם ביאור פשוט",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קריאת-הפסוקים-עם-ביאור-פשוט",
+  "old_items_hint": 31
+ },
+ {
+  "type": "topic",
+  "name": "ירושלים",
+  "safe": "topic_ירושלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ירושלים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ירושלים",
+  "old_items_hint": 29
+ },
+ {
+  "type": "topic",
+  "name": "קרבנות",
+  "safe": "topic_קרבנות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבנות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבנות",
+  "old_items_hint": 26
+ },
+ {
+  "type": "topic",
+  "name": "מבט רחב על ספרים ונושאים",
+  "safe": "topic_מבט_רחב_על_ספרים_ונושאים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מבט רחב על ספרים ונושאים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מבט-רחב-על-ספרים-ונושאים",
+  "old_items_hint": 26
+ },
+ {
+  "type": "topic",
+  "name": "המשכן וכליו",
+  "safe": "topic_המשכן_וכליו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=המשכן וכליו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-המשכן-וכליו",
+  "old_items_hint": 25
+ },
+ {
+  "type": "topic",
+  "name": "שיעורים לנשים",
+  "safe": "topic_שיעורים_לנשים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שיעורים לנשים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שיעורים-לנשים",
+  "old_items_hint": 25
+ },
+ {
+  "type": "topic",
+  "name": "מפרשי המקרא",
+  "safe": "topic_מפרשי_המקרא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מפרשי המקרא",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מפרשי-המקרא",
+  "old_items_hint": 25
+ },
+ {
+  "type": "topic",
+  "name": "מתן תורה",
+  "safe": "topic_מתן_תורה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מתן תורה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מתן-תורה",
+  "old_items_hint": 21
+ },
+ {
+  "type": "topic",
+  "name": "גלות",
+  "safe": "topic_גלות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=גלות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-גלות",
+  "old_items_hint": 19
+ },
+ {
+  "type": "topic",
+  "name": "חורבן בית המקדש",
+  "safe": "topic_חורבן_בית_המקדש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חורבן בית המקדש",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חורבן-בית-המקדש",
+  "old_items_hint": 19
+ },
+ {
+  "type": "topic",
+  "name": "שבטים",
+  "safe": "topic_שבטים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שבטים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שבטים",
+  "old_items_hint": 18
+ },
+ {
+  "type": "topic",
+  "name": "חנוכה",
+  "safe": "topic_חנוכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חנוכה",
+  "new_url": "https://bneyzion.vercel.app/topic/hanukkah",
+  "old_items_hint": 18
+ },
+ {
+  "type": "topic",
+  "name": "משה רבנו",
+  "safe": "topic_משה_רבנו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=משה רבנו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-משה-רבנו",
+  "old_items_hint": 17
+ },
+ {
+  "type": "topic",
+  "name": "ארון הברית",
+  "safe": "topic_ארון_הברית",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ארון הברית",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ארון-הברית",
+  "old_items_hint": 16
+ },
+ {
+  "type": "topic",
+  "name": "שאול המלך",
+  "safe": "topic_שאול_המלך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שאול המלך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שאול-המלך",
+  "old_items_hint": 16
+ },
+ {
+  "type": "topic",
+  "name": "יוסף",
+  "safe": "topic_יוסף",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יוסף",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יוסף",
+  "old_items_hint": 13
+ },
+ {
+  "type": "topic",
+  "name": "צרעת",
+  "safe": "topic_צרעת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=צרעת",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-צרעת",
+  "old_items_hint": 12
+ },
+ {
+  "type": "topic",
+  "name": "קרבן פסח",
+  "safe": "topic_קרבן_פסח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבן פסח",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבן-פסח",
+  "old_items_hint": 12
+ },
+ {
+  "type": "topic",
+  "name": "כריתת ברית",
+  "safe": "topic_כריתת_ברית",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=כריתת ברית",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-כריתת-ברית",
+  "old_items_hint": 11
+ },
+ {
+  "type": "topic",
+  "name": "קיום ברית",
+  "safe": "topic_קיום_ברית",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קיום ברית",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קיום-ברית",
+  "old_items_hint": 11
+ },
+ {
+  "type": "topic",
+  "name": "המנורה",
+  "safe": "topic_המנורה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=המנורה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-המנורה",
+  "old_items_hint": 11
+ },
+ {
+  "type": "topic",
+  "name": "נזיר",
+  "safe": "topic_נזיר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נזיר",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נזיר",
+  "old_items_hint": 10
+ },
+ {
+  "type": "topic",
+  "name": "גוג ומגוג",
+  "safe": "topic_גוג_ומגוג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=גוג ומגוג",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-גוג-ומגוג",
+  "old_items_hint": 10
+ },
+ {
+  "type": "topic",
+  "name": "מלחמה",
+  "safe": "topic_מלחמה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מלחמה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מלחמה",
+  "old_items_hint": 10
+ },
+ {
+  "type": "topic",
+  "name": "עבדות",
+  "safe": "topic_עבדות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עבדות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עבדות",
+  "old_items_hint": 9
+ },
+ {
+  "type": "topic",
+  "name": "ישראל והעמים",
+  "safe": "topic_ישראל_והעמים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ישראל והעמים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ישראל-והעמים",
+  "old_items_hint": 9
+ },
+ {
+  "type": "topic",
+  "name": "כיבוש הארץ",
+  "safe": "topic_כיבוש_הארץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=כיבוש הארץ",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-כיבוש-הארץ",
+  "old_items_hint": 9
+ },
+ {
+  "type": "topic",
+  "name": "יציאת מצרים",
+  "safe": "topic_יציאת_מצרים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יציאת מצרים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יציאת-מצרים",
+  "old_items_hint": 9
+ },
+ {
+  "type": "topic",
+  "name": "השגחת ה'",
+  "safe": "topic_השגחת_ה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=השגחת ה'",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-השגחת-ה",
+  "old_items_hint": 9
+ },
+ {
+  "type": "topic",
+  "name": "אליהו הנביא",
+  "safe": "topic_אליהו_הנביא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=אליהו הנביא",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-אליהו-הנביא",
+  "old_items_hint": 8
+ },
+ {
+  "type": "topic",
+  "name": "שבת",
+  "safe": "topic_שבת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שבת",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שבת",
+  "old_items_hint": 8
+ },
+ {
+  "type": "topic",
+  "name": "שמות ה'",
+  "safe": "topic_שמות_ה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שמות ה'",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שמות-ה",
+  "old_items_hint": 8
+ },
+ {
+  "type": "topic",
+  "name": "תשובה",
+  "safe": "topic_תשובה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=תשובה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-תשובה",
+  "old_items_hint": 8
+ },
+ {
+  "type": "topic",
+  "name": "חטא המרגלים",
+  "safe": "topic_חטא_המרגלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חטא המרגלים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חטא-המרגלים",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "בית המקדש השלישי",
+  "safe": "topic_בית_המקדש_השלישי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=בית המקדש השלישי",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-בית-המקדש-השלישי",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "נביאי השקר",
+  "safe": "topic_נביאי_השקר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נביאי השקר",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נביאי-השקר",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "משכן שילה",
+  "safe": "topic_משכן_שילה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=משכן שילה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-משכן-שילה",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "שלמה המלך",
+  "safe": "topic_שלמה_המלך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שלמה המלך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שלמה-המלך",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "מצרים",
+  "safe": "topic_מצרים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מצרים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מצרים",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "עמי כנען",
+  "safe": "topic_עמי_כנען",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עמי כנען",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עמי-כנען",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "אהבת ה'",
+  "safe": "topic_אהבת_ה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=אהבת ה'",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-אהבת-ה",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "יהושפט",
+  "safe": "topic_יהושפט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יהושפט",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יהושפט",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "חזקיהו",
+  "safe": "topic_חזקיהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חזקיהו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חזקיהו",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "הבמות",
+  "safe": "topic_הבמות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=הבמות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-הבמות",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "פלשתים",
+  "safe": "topic_פלשתים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=פלשתים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-פלשתים",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "ברית מילה",
+  "safe": "topic_ברית_מילה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ברית מילה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ברית-מילה",
+  "old_items_hint": 7
+ },
+ {
+  "type": "topic",
+  "name": "אלישע הנביא",
+  "safe": "topic_אלישע_הנביא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=אלישע הנביא",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-אלישע-הנביא",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "יהושע בן נון",
+  "safe": "topic_יהושע_בן_נון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יהושע בן נון",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יהושע-בן-נון",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "עמלק",
+  "safe": "topic_עמלק",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עמלק",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עמלק",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "חטא העגל",
+  "safe": "topic_חטא_העגל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חטא העגל",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חטא-העגל",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "הקטורת",
+  "safe": "topic_הקטורת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=הקטורת",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-הקטורת",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "נשים בתנ\"ך",
+  "safe": "topic_נשים_בתנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נשים בתנ\"ך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נשים-בתנ-ך",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "שמחה",
+  "safe": "topic_שמחה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שמחה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שמחה",
+  "old_items_hint": 6
+ },
+ {
+  "type": "topic",
+  "name": "שמיטה",
+  "safe": "topic_שמיטה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שמיטה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שמיטה",
+  "old_items_hint": 5
+ },
+ {
+  "type": "topic",
+  "name": "הכניסה לארץ",
+  "safe": "topic_הכניסה_לארץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=הכניסה לארץ",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-הכניסה-לארץ",
+  "old_items_hint": 5
+ },
+ {
+  "type": "topic",
+  "name": "האבות",
+  "safe": "topic_האבות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=האבות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-האבות",
+  "old_items_hint": 5
+ },
+ {
+  "type": "topic",
+  "name": "התשובה",
+  "safe": "topic_התשובה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=התשובה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-התשובה",
+  "old_items_hint": 5
+ },
+ {
+  "type": "topic",
+  "name": "יבום",
+  "safe": "topic_יבום",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יבום",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יבום",
+  "old_items_hint": 5
+ },
+ {
+  "type": "topic",
+  "name": "תפילה",
+  "safe": "topic_תפילה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=תפילה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-תפילה",
+  "old_items_hint": 5
+ },
+ {
+  "type": "topic",
+  "name": "ישעיהו",
+  "safe": "topic_ישעיהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ישעיהו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ישעיהו",
+  "old_items_hint": 4
+ },
+ {
+  "type": "topic",
+  "name": "מרגלים",
+  "safe": "topic_מרגלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מרגלים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מרגלים",
+  "old_items_hint": 4
+ },
+ {
+  "type": "topic",
+  "name": "הנביא והמלך",
+  "safe": "topic_הנביא_והמלך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=הנביא והמלך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-הנביא-והמלך",
+  "old_items_hint": 4
+ },
+ {
+  "type": "topic",
+  "name": "יום כיפור",
+  "safe": "topic_יום_כיפור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יום כיפור",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יום-כיפור",
+  "old_items_hint": 4
+ },
+ {
+  "type": "topic",
+  "name": "מאמרים קצרים",
+  "safe": "topic_מאמרים_קצרים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מאמרים קצרים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מאמרים-קצרים",
+  "old_items_hint": 4
+ },
+ {
+  "type": "topic",
+  "name": "קרבן שלמים",
+  "safe": "topic_קרבן_שלמים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבן שלמים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבן-שלמים",
+  "old_items_hint": 4
+ },
+ {
+  "type": "topic",
+  "name": "יובל",
+  "safe": "topic_יובל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יובל",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יובל",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "ירמיהו",
+  "safe": "topic_ירמיהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ירמיהו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ירמיהו",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "יג מידות הרחמים",
+  "safe": "topic_יג_מידות_הרחמים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יג מידות הרחמים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יג-מידות-הרחמים",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "נסים",
+  "safe": "topic_נסים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נסים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נסים",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "צומות",
+  "safe": "topic_צומות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=צומות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-צומות",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "יהודה",
+  "safe": "topic_יהודה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יהודה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יהודה",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "דניאל",
+  "safe": "topic_דניאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=דניאל",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-דניאל",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "יתרו והקיני",
+  "safe": "topic_יתרו_והקיני",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יתרו והקיני",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יתרו-והקיני",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "נבואות הקץ",
+  "safe": "topic_נבואות_הקץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נבואות הקץ",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נבואות-הקץ",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "יאשיהו",
+  "safe": "topic_יאשיהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יאשיהו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יאשיהו",
+  "old_items_hint": 3
+ },
+ {
+  "type": "topic",
+  "name": "ניסים",
+  "safe": "topic_ניסים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ניסים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ניסים",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "ערי המקלט",
+  "safe": "topic_ערי_המקלט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ערי המקלט",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ערי-המקלט",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "חלום",
+  "safe": "topic_חלום",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חלום",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חלום",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "שכר ועונש",
+  "safe": "topic_שכר_ועונש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שכר ועונש",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שכר-ועונש",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "קרבן תמיד",
+  "safe": "topic_קרבן_תמיד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבן תמיד",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבן-תמיד",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "ראש השנה",
+  "safe": "topic_ראש_השנה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ראש השנה",
+  "new_url": "https://bneyzion.vercel.app/topic/rosh-hashana",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "ספירת העומר",
+  "safe": "topic_ספירת_העומר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ספירת העומר",
+  "new_url": "https://bneyzion.vercel.app/topic/sefirat-haomer",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "חגים",
+  "safe": "topic_חגים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חגים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חגים",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "ביטחון ב-ד'",
+  "safe": "topic_ביטחון_ב-ד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ביטחון ב-ד'",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ביטחון-ב-ד",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "בכורות",
+  "safe": "topic_בכורות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=בכורות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-בכורות",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "יום העצמאות",
+  "safe": "topic_יום_העצמאות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יום העצמאות",
+  "new_url": "https://bneyzion.vercel.app/topic/yom-haatzmaut",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "שבט לוי",
+  "safe": "topic_שבט_לוי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=שבט לוי",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-שבט-לוי",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "עבודה זרה",
+  "safe": "topic_עבודה_זרה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עבודה זרה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עבודה-זרה",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "מנשה",
+  "safe": "topic_מנשה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מנשה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מנשה",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "בני גד ובני ראובן",
+  "safe": "topic_בני_גד_ובני_ראובן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=בני גד ובני ראובן",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-בני-גד-ובני-ראובן",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "עקדת יצחק",
+  "safe": "topic_עקדת_יצחק",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עקדת יצחק",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עקדת-יצחק",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "משיח",
+  "safe": "topic_משיח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=משיח",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-משיח",
+  "old_items_hint": 2
+ },
+ {
+  "type": "topic",
+  "name": "קרבן עולה",
+  "safe": "topic_קרבן_עולה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבן עולה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבן-עולה",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "עשיו",
+  "safe": "topic_עשיו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עשיו",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עשיו",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "נישואים",
+  "safe": "topic_נישואים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=נישואים",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-נישואים",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "יופי",
+  "safe": "topic_יופי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יופי",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יופי",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "ירבעם",
+  "safe": "topic_ירבעם",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ירבעם",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ירבעם",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "מעמד הר סיני",
+  "safe": "topic_מעמד_הר_סיני",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מעמד הר סיני",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מעמד-הר-סיני",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "רש\"י",
+  "safe": "topic_רשי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=רש\"י",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-רש-י",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "ארבע מלכויות",
+  "safe": "topic_ארבע_מלכויות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=ארבע מלכויות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-ארבע-מלכויות",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "מנייני השנים בתנ\"ך",
+  "safe": "topic_מנייני_השנים_בתנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=מנייני השנים בתנ\"ך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-מנייני-השנים-בתנ-ך",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "עזרא הסופר",
+  "safe": "topic_עזרא_הסופר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=עזרא הסופר",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-עזרא-הסופר",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "חנ",
+  "safe": "topic_חנ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חנ",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חנ",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "גן עדן",
+  "safe": "topic_גן_עדן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=גן עדן",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-גן-עדן",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "קרבן מנחה",
+  "safe": "topic_קרבן_מנחה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבן מנחה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבן-מנחה",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "קרבן חטאת",
+  "safe": "topic_קרבן_חטאת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קרבן חטאת",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קרבן-חטאת",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "חירם",
+  "safe": "topic_חירם",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חירם",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חירם",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "יותם",
+  "safe": "topic_יותם",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=יותם",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-יותם",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "אחז",
+  "safe": "topic_אחז",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=אחז",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-אחז",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "כורש",
+  "safe": "topic_כורש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=כורש",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-כורש",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "חולדה הנביאה",
+  "safe": "topic_חולדה_הנביאה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=חולדה הנביאה",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-חולדה-הנביאה",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "אחאב",
+  "safe": "topic_אחאב",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=אחאב",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-אחאב",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "בית עלי",
+  "safe": "topic_בית_עלי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=בית עלי",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-בית-עלי",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "סתירות בתנ\"ך",
+  "safe": "topic_סתירות_בתנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=סתירות בתנ\"ך",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-סתירות-בתנ-ך",
+  "old_items_hint": 1
+ },
+ {
+  "type": "topic",
+  "name": "קיבוץ גלויות",
+  "safe": "topic_קיבוץ_גלויות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים/?subject=קיבוץ גלויות",
+  "new_url": "https://bneyzion.vercel.app/topic/theme-קיבוץ-גלויות",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אבי סמוטריץ'",
+  "safe": "rabbi_הרב_אבי_סמוטריץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%91%D7%99%20%D7%A1%D7%9E%D7%95%D7%98%D7%A8%D7%99%D7%A5%27",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aby-smvtrytz",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אברהם וסרמן",
+  "safe": "rabbi_הרב_אברהם_וסרמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%91%D7%A8%D7%94%D7%9D%20%D7%95%D7%A1%D7%A8%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/abrhm-vsrmn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אוהד קרקובר",
+  "safe": "rabbi_הרב_אוהד_קרקובר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%95%D7%94%D7%93%20%D7%A7%D7%A8%D7%A7%D7%95%D7%91%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/avhd-krkvbr",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אביעד תפוחי",
+  "safe": "rabbi_הרב_אביעד_תפוחי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%91%D7%99%D7%A2%D7%93%20%D7%AA%D7%A4%D7%95%D7%97%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/abyd-tpvchy",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אהרון קוטלר זצ\"ל",
+  "safe": "rabbi_הרב_אהרון_קוטלר_זצל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%94%D7%A8%D7%95%D7%9F%20%D7%A7%D7%95%D7%98%D7%9C%D7%A8%20%D7%96%D7%A6%22%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ahrvn-kvtlr",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אוהד תירוש",
+  "safe": "rabbi_הרב_אוהד_תירוש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%95%D7%94%D7%93%20%D7%AA%D7%99%D7%A8%D7%95%D7%A9",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ohad-tirosh",
+  "old_items_hint": 16
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אופיר כהן",
+  "safe": "rabbi_הרב_אופיר_כהן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%95%D7%A4%D7%99%D7%A8%20%D7%9B%D7%94%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/avpyr-khn",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אורן טרבלסי",
+  "safe": "rabbi_הרב_אורן_טרבלסי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%95%D7%A8%D7%9F%20%D7%98%D7%A8%D7%91%D7%9C%D7%A1%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/avrn-trblsy",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אילן אלפונטה",
+  "safe": "rabbi_הרב_אילן_אלפונטה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%99%D7%9C%D7%9F%20%D7%90%D7%9C%D7%A4%D7%95%D7%A0%D7%98%D7%94",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ayln-alpvnth",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב איתן קופמן",
+  "safe": "rabbi_הרב_איתן_קופמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%99%D7%AA%D7%9F%20%D7%A7%D7%95%D7%A4%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/etan-kopman",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב איתיאל אמיתי",
+  "safe": "rabbi_הרב_איתיאל_אמיתי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%99%D7%AA%D7%99%D7%90%D7%9C%20%D7%90%D7%9E%D7%99%D7%AA%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aytyal-amyty",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אחיקם גץ",
+  "safe": "rabbi_הרב_אחיקם_גץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%97%D7%99%D7%A7%D7%9D%20%D7%92%D7%A5",
+  "new_url": "https://bneyzion.vercel.app/rabbis/achikam-gatz",
+  "old_items_hint": 15
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אלי אדלר",
+  "safe": "rabbi_הרב_אלי_אדלר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%20%D7%90%D7%93%D7%9C%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/eli-adler",
+  "old_items_hint": 6
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אלחנן בן נון",
+  "safe": "rabbi_הרב_אלחנן_בן_נון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%97%D7%A0%D7%9F%20%D7%91%D7%9F%20%D7%A0%D7%95%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/elchanan-ben-nun",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אלי פרידמן",
+  "safe": "rabbi_הרב_אלי_פרידמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%20%D7%A4%D7%A8%D7%99%D7%93%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aly-prydmn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אליהו דסלר זצ\"ל",
+  "safe": "rabbi_הרב_אליהו_דסלר_זצל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%D7%94%D7%95%20%D7%93%D7%A1%D7%9C%D7%A8%20%D7%96%D7%A6%22%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/alyhv-dslr",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אליהו ידיד",
+  "safe": "rabbi_הרב_אליהו_ידיד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%D7%94%D7%95%20%D7%99%D7%93%D7%99%D7%93",
+  "new_url": "https://bneyzion.vercel.app/rabbis/alyhv-ydyd",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב איתן שנדורפי",
+  "safe": "rabbi_הרב_איתן_שנדורפי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%99%D7%AA%D7%9F%20%D7%A9%D7%A0%D7%93%D7%95%D7%A8%D7%A4%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/etan-shandorfi",
+  "old_items_hint": 103
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אלישע וישליצקי",
+  "safe": "rabbi_הרב_אלישע_וישליצקי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%D7%A9%D7%A2%20%D7%95%D7%99%D7%A9%D7%9C%D7%99%D7%A6%D7%A7%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/alysh-vyshlytzky",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אלישב אביחיל",
+  "safe": "rabbi_הרב_אלישב_אביחיל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%D7%A9%D7%91%20%D7%90%D7%91%D7%99%D7%97%D7%99%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/alyshb-abychyl",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אלעזר נאה",
+  "safe": "rabbi_הרב_אלעזר_נאה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%A2%D7%96%D7%A8%20%D7%A0%D7%90%D7%94",
+  "new_url": "https://bneyzion.vercel.app/rabbis/elazar-nae",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אס\"ף בנדל",
+  "safe": "rabbi_הרב_אסף_בנדל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A1%22%D7%A3%20%D7%91%D7%A0%D7%93%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/asp-bndl",
+  "old_items_hint": 15
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אליעזר קשתיאל",
+  "safe": "rabbi_הרב_אליעזר_קשתיאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%9C%D7%99%D7%A2%D7%96%D7%A8%20%D7%A7%D7%A9%D7%AA%D7%99%D7%90%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/eliezer-kashtiel",
+  "old_items_hint": 33
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אסף שטראוס",
+  "safe": "rabbi_הרב_אסף_שטראוס",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A1%D7%A3%20%D7%A9%D7%98%D7%A8%D7%90%D7%95%D7%A1",
+  "new_url": "https://bneyzion.vercel.app/rabbis/asp-shtravs",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב ארי לנדא",
+  "safe": "rabbi_הרב_ארי_לנדא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%20%D7%9C%D7%A0%D7%93%D7%90",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ary-lnda",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אריאל בראלי",
+  "safe": "rabbi_הרב_אריאל_בראלי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%D7%90%D7%9C%20%D7%91%D7%A8%D7%90%D7%9C%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aryal-braly",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אריאל כהן",
+  "safe": "rabbi_הרב_אריאל_כהן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%D7%90%D7%9C%20%D7%9B%D7%94%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aryal-khn",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אריה אברמסון",
+  "safe": "rabbi_הרב_אריה_אברמסון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%D7%94%20%D7%90%D7%91%D7%A8%D7%9E%D7%A1%D7%95%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aryh-abrmsvn",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אריה אוריאל",
+  "safe": "rabbi_הרב_אריה_אוריאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%D7%94%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aryh-avryal",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אריה מרזר",
+  "safe": "rabbi_הרב_אריה_מרזר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%D7%94%20%D7%9E%D7%A8%D7%96%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/aryh-mrzr",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב אריק אוריאל",
+  "safe": "rabbi_הרב_אריק_אוריאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%90%D7%A8%D7%99%D7%A7%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/arik-uriel",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב בנימין סופר",
+  "safe": "rabbi_הרב_בנימין_סופר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%91%D7%A0%D7%99%D7%9E%D7%99%D7%9F%20%D7%A1%D7%95%D7%A4%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/bnymyn-svpr",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב בנימין רוזנצוויג",
+  "safe": "rabbi_הרב_בנימין_רוזנצוויג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%91%D7%A0%D7%99%D7%9E%D7%99%D7%9F%20%D7%A8%D7%95%D7%96%D7%A0%D7%A6%D7%95%D7%95%D7%99%D7%92",
+  "new_url": "https://bneyzion.vercel.app/rabbis/bnymyn-rvzntzvvyg",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב ברק עוקבי",
+  "safe": "rabbi_הרב_ברק_עוקבי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%91%D7%A8%D7%A7%20%D7%A2%D7%95%D7%A7%D7%91%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/brk-vkby",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב ברוך סליי",
+  "safe": "rabbi_הרב_ברוך_סליי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%91%D7%A8%D7%95%D7%9A%20%D7%A1%D7%9C%D7%99%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/baruch-seley",
+  "old_items_hint": 11
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב גדי הרלינג",
+  "safe": "rabbi_הרב_גדי_הרלינג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%92%D7%93%D7%99%20%D7%94%D7%A8%D7%9C%D7%99%D7%A0%D7%92",
+  "new_url": "https://bneyzion.vercel.app/rabbis/gdy-hrlyng",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב גדי שלוין",
+  "safe": "rabbi_הרב_גדי_שלוין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%92%D7%93%D7%99%20%D7%A9%D7%9C%D7%95%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/gdy-shlvyn",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דוב ביגון",
+  "safe": "rabbi_הרב_דוב_ביגון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%91%20%D7%91%D7%99%D7%92%D7%95%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dvb-bygvn",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דוד אמיתי",
+  "safe": "rabbi_הרב_דוד_אמיתי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%20%D7%90%D7%9E%D7%99%D7%AA%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dvd-amyty",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דוד חי הכהן",
+  "safe": "rabbi_הרב_דוד_חי_הכהן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%20%D7%97%D7%99%20%D7%94%D7%9B%D7%94%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dvd-chy-hkhn",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דוד ג'יאמי",
+  "safe": "rabbi_הרב_דוד_גיאמי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%20%D7%92%27%D7%99%D7%90%D7%9E%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/david-jiami",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דוד טורנר",
+  "safe": "rabbi_הרב_דוד_טורנר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%20%D7%98%D7%95%D7%A8%D7%A0%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dvd-tvrnr",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דודי מתוקי",
+  "safe": "rabbi_הרב_דודי_מתוקי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%D7%99%20%D7%9E%D7%AA%D7%95%D7%A7%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dvdy-mtvky",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דרור אריה",
+  "safe": "rabbi_הרב_דרור_אריה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%A8%D7%95%D7%A8%20%D7%90%D7%A8%D7%99%D7%94",
+  "new_url": "https://bneyzion.vercel.app/rabbis/drvr-aryh",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דני סטיסקין",
+  "safe": "rabbi_הרב_דני_סטיסקין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%A0%D7%99%20%D7%A1%D7%98%D7%99%D7%A1%D7%A7%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/danny-stiskin",
+  "old_items_hint": 12
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דן בארי",
+  "safe": "rabbi_הרב_דן_בארי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%9F%20%D7%91%D7%90%D7%A8%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dan-bari",
+  "old_items_hint": 24
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב דרור טוויל",
+  "safe": "rabbi_הרב_דרור_טוויל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%93%D7%A8%D7%95%D7%A8%20%D7%98%D7%95%D7%95%D7%99%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dror-tvil",
+  "old_items_hint": 20
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חגי ולוסקי",
+  "safe": "rabbi_הרב_חגי_ולוסקי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%92%D7%99%20%D7%95%D7%9C%D7%95%D7%A1%D7%A7%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chagai-velosski",
+  "old_items_hint": 10
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חגי לונדין",
+  "safe": "rabbi_הרב_חגי_לונדין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%92%D7%99%20%D7%9C%D7%95%D7%A0%D7%93%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chgy-lvndyn",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חיים דרוקמן",
+  "safe": "rabbi_הרב_חיים_דרוקמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%99%D7%99%D7%9D%20%D7%93%D7%A8%D7%95%D7%A7%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chyym-drvkmn",
+  "old_items_hint": 6
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חיים סבתו",
+  "safe": "rabbi_הרב_חיים_סבתו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%99%D7%99%D7%9D%20%D7%A1%D7%91%D7%AA%D7%95",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chyym-sbtv",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חן חלמיש",
+  "safe": "rabbi_הרב_חן_חלמיש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%9F%20%D7%97%D7%9C%D7%9E%D7%99%D7%A9",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chn-chlmysh",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חננאל אתרוג",
+  "safe": "rabbi_הרב_חננאל_אתרוג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%A0%D7%A0%D7%90%D7%9C%20%D7%90%D7%AA%D7%A8%D7%95%D7%92",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chananel-etrog",
+  "old_items_hint": 12
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב חנניה מלכה",
+  "safe": "rabbi_הרב_חנניה_מלכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%97%D7%A0%D7%A0%D7%99%D7%94%20%D7%9E%D7%9C%D7%9B%D7%94",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chanania-malka",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב טוביה לפשיץ",
+  "safe": "rabbi_הרב_טוביה_לפשיץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%98%D7%95%D7%91%D7%99%D7%94%20%D7%9C%D7%A4%D7%A9%D7%99%D7%A5",
+  "new_url": "https://bneyzion.vercel.app/rabbis/tovia-lapshitz",
+  "old_items_hint": 8
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יגאל שפרן",
+  "safe": "rabbi_הרב_יגאל_שפרן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%92%D7%90%D7%9C%20%D7%A9%D7%A4%D7%A8%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ygal-shprn",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהודה סדן",
+  "safe": "rabbi_הרב_יהודה_סדן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%93%D7%94%20%D7%A1%D7%93%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yhvdh-sdn",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יאיר הס",
+  "safe": "rabbi_הרב_יאיר_הס",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%90%D7%99%D7%A8%20%D7%94%D7%A1",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yayr-hs",
+  "old_items_hint": 9
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהונתן מיכאלי",
+  "safe": "rabbi_הרב_יהונתן_מיכאלי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A0%D7%AA%D7%9F%20%D7%9E%D7%99%D7%9B%D7%90%D7%9C%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yehonatan-michaeli",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהודה קופרמן זצ\"ל",
+  "safe": "rabbi_הרב_יהודה_קופרמן_זצל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%93%D7%94%20%D7%A7%D7%95%D7%A4%D7%A8%D7%9E%D7%9F%20%D7%96%D7%A6%22%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yehuda-kuperman",
+  "old_items_hint": 27
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהונתן עידן",
+  "safe": "rabbi_הרב_יהונתן_עידן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A0%D7%AA%D7%9F%20%D7%A2%D7%99%D7%93%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yehonatan-idan",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהושע מגנס",
+  "safe": "rabbi_הרב_יהושע_מגנס",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A9%D7%A2%20%D7%9E%D7%92%D7%A0%D7%A1",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yhvsh-mgns",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהונתן פוזן",
+  "safe": "rabbi_הרב_יהונתן_פוזן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A0%D7%AA%D7%9F%20%D7%A4%D7%95%D7%96%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yhvntn-pvzn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהושע ון-דייק",
+  "safe": "rabbi_הרב_יהושע_ון-דייק",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A9%D7%A2%20%D7%95%D7%9F-%D7%93%D7%99%D7%99%D7%A7",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yhvsh-vn-dyyk",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהושע צוקרמן",
+  "safe": "rabbi_הרב_יהושע_צוקרמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A9%D7%A2%20%D7%A6%D7%95%D7%A7%D7%A8%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yhvsh-tzvkrmn",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יהושע שפירא",
+  "safe": "rabbi_הרב_יהושע_שפירא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%94%D7%95%D7%A9%D7%A2%20%D7%A9%D7%A4%D7%99%D7%A8%D7%90",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yehoshua-shapira",
+  "old_items_hint": 19
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יואב אוריאל והרב עמנואל בן ארצי",
+  "safe": "rabbi_הרב_יואב_אוריאל_והרב_עמנואל_בן_ארצי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C%20%D7%95%D7%94%D7%A8%D7%91%20%D7%A2%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%91%D7%9F%20%D7%90%D7%A8%D7%A6%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yoav-uriel-veemanueal-ben-artzi",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יואל מנוביץ'",
+  "safe": "rabbi_הרב_יואל_מנוביץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%9C%20%D7%9E%D7%A0%D7%95%D7%91%D7%99%D7%A5%27",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yoel-manowitz",
+  "old_items_hint": 9
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יוסי ברינר",
+  "safe": "rabbi_הרב_יוסי_ברינר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A1%D7%99%20%D7%91%D7%A8%D7%99%D7%A0%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yvsy-brynr",
+  "old_items_hint": 31
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יונדב זר",
+  "safe": "rabbi_הרב_יונדב_זר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A0%D7%93%D7%91%20%D7%96%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yondav-zer",
+  "old_items_hint": 38
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יוסף אטון",
+  "safe": "rabbi_הרב_יוסף_אטון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A1%D7%A3%20%D7%90%D7%98%D7%95%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yvsp-atvn",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יואב אוריאל",
+  "safe": "rabbi_הרב_יואב_אוריאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%90%D7%91%20%D7%90%D7%95%D7%A8%D7%99%D7%90%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yoav-uriel",
+  "old_items_hint": 144
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יוסף הורוביץ",
+  "safe": "rabbi_הרב_יוסף_הורוביץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A1%D7%A3%20%D7%94%D7%95%D7%A8%D7%95%D7%91%D7%99%D7%A5",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yosef-horovitz",
+  "old_items_hint": 8
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יוסף מילר",
+  "safe": "rabbi_הרב_יוסף_מילר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A1%D7%A3%20%D7%9E%D7%99%D7%9C%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yvsp-mylr",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יוסף שילר",
+  "safe": "rabbi_הרב_יוסף_שילר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A1%D7%A3%20%D7%A9%D7%99%D7%9C%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yosef-shiler",
+  "old_items_hint": 16
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יוסף קלנר",
+  "safe": "rabbi_הרב_יוסף_קלנר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A1%D7%A3%20%D7%A7%D7%9C%D7%A0%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yvsp-klnr",
+  "old_items_hint": 16
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יחזקאל כהן",
+  "safe": "rabbi_הרב_יחזקאל_כהן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C%20%D7%9B%D7%94%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ychzkal-khn",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יחזקאל קופלד",
+  "safe": "rabbi_הרב_יחזקאל_קופלד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%97%D7%96%D7%A7%D7%90%D7%9C%20%D7%A7%D7%95%D7%A4%D7%9C%D7%93",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ychzkal-kvpld",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יעקב אפשטיין",
+  "safe": "rabbi_הרב_יעקב_אפשטיין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%A2%D7%A7%D7%91%20%D7%90%D7%A4%D7%A9%D7%98%D7%99%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ykb-apshtyyn",
+  "old_items_hint": 8
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יעקב אריאל",
+  "safe": "rabbi_הרב_יעקב_אריאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%A2%D7%A7%D7%91%20%D7%90%D7%A8%D7%99%D7%90%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yaakov-ariel",
+  "old_items_hint": 11
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יעקב יצחק הלוי רודרמן זצ\"ל",
+  "safe": "rabbi_הרב_יעקב_יצחק_הלוי_רודרמן_זצל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%A2%D7%A7%D7%91%20%D7%99%D7%A6%D7%97%D7%A7%20%D7%94%D7%9C%D7%95%D7%99%20%D7%A8%D7%95%D7%93%D7%A8%D7%9E%D7%9F%20%D7%96%D7%A6%22%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ykb-ytzchk-hlvy-rvdrmn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יעקב ידיד",
+  "safe": "rabbi_הרב_יעקב_ידיד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%A2%D7%A7%D7%91%20%D7%99%D7%93%D7%99%D7%93",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yaakov-yadid",
+  "old_items_hint": 9
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב יצחק בן שחר",
+  "safe": "rabbi_הרב_יצחק_בן_שחר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%A6%D7%97%D7%A7%20%D7%91%D7%9F%20%D7%A9%D7%97%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yitzhak-ben-shachar",
+  "old_items_hint": 15
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב לוי סודרי",
+  "safe": "rabbi_הרב_לוי_סודרי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9C%D7%95%D7%99%20%D7%A1%D7%95%D7%93%D7%A8%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/levi-sudri",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב לייב מינצברג",
+  "safe": "rabbi_הרב_לייב_מינצברג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9C%D7%99%D7%99%D7%91%20%D7%9E%D7%99%D7%A0%D7%A6%D7%91%D7%A8%D7%92",
+  "new_url": "https://bneyzion.vercel.app/rabbis/lyyb-myntzbrg",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מאיר הילביץ'",
+  "safe": "rabbi_הרב_מאיר_הילביץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%90%D7%99%D7%A8%20%D7%94%D7%99%D7%9C%D7%91%D7%99%D7%A5%27",
+  "new_url": "https://bneyzion.vercel.app/rabbis/meir-hilvitz",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מאיר נאמן",
+  "safe": "rabbi_הרב_מאיר_נאמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%90%D7%99%D7%A8%20%D7%A0%D7%90%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mayr-namn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מיכאל טוביאנו",
+  "safe": "rabbi_הרב_מיכאל_טוביאנו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%99%D7%9B%D7%90%D7%9C%20%D7%98%D7%95%D7%91%D7%99%D7%90%D7%A0%D7%95",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mykal-tvbyanv",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מיכה הלוי",
+  "safe": "rabbi_הרב_מיכה_הלוי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%99%D7%9B%D7%94%20%D7%94%D7%9C%D7%95%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mykh-hlvy",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מישאל רובין",
+  "safe": "rabbi_הרב_מישאל_רובין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%99%D7%A9%D7%90%D7%9C%20%D7%A8%D7%95%D7%91%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/myshal-rvbyn",
+  "old_items_hint": 11
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מנחם אליהו",
+  "safe": "rabbi_הרב_מנחם_אליהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A0%D7%97%D7%9D%20%D7%90%D7%9C%D7%99%D7%94%D7%95",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mnchm-alyhv",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מנחם בורשטין",
+  "safe": "rabbi_הרב_מנחם_בורשטין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A0%D7%97%D7%9D%20%D7%91%D7%95%D7%A8%D7%A9%D7%98%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mnchm-bvrshtyn",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מנחם מן",
+  "safe": "rabbi_הרב_מנחם_מן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A0%D7%97%D7%9D%20%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mnchm-mn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מרדכי קופרמן",
+  "safe": "rabbi_הרב_מרדכי_קופרמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A8%D7%93%D7%9B%D7%99%20%D7%A7%D7%95%D7%A4%D7%A8%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mrdky-kvprmn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב משה הגר",
+  "safe": "rabbi_הרב_משה_הגר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A9%D7%94%20%D7%94%D7%92%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mshh-hgr",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מנחם שחור",
+  "safe": "rabbi_הרב_מנחם_שחור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A0%D7%97%D7%9D%20%D7%A9%D7%97%D7%95%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/menachem-shachor",
+  "old_items_hint": 71
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב מתניה ידיד",
+  "safe": "rabbi_הרב_מתניה_ידיד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%AA%D7%A0%D7%99%D7%94%20%D7%99%D7%93%D7%99%D7%93",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mtnyh-ydyd",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב משה שטרנברג",
+  "safe": "rabbi_הרב_משה_שטרנברג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%9E%D7%A9%D7%94%20%D7%A9%D7%98%D7%A8%D7%A0%D7%91%D7%A8%D7%92",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mshh-shtrnbrg",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב נועם אליצור",
+  "safe": "rabbi_הרב_נועם_אליצור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A0%D7%95%D7%A2%D7%9D%20%D7%90%D7%9C%D7%99%D7%A6%D7%95%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nvm-alytzvr",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב נועם וידר",
+  "safe": "rabbi_הרב_נועם_וידר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A0%D7%95%D7%A2%D7%9D%20%D7%95%D7%99%D7%93%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/noam-vider",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב נועם ונגרובר",
+  "safe": "rabbi_הרב_נועם_ונגרובר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A0%D7%95%D7%A2%D7%9D%20%D7%95%D7%A0%D7%92%D7%A8%D7%95%D7%91%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nvm-vngrvbr",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב נחום נריה",
+  "safe": "rabbi_הרב_נחום_נריה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A0%D7%97%D7%95%D7%9D%20%D7%A0%D7%A8%D7%99%D7%94",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nchvm-nryh",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב עדיאל לוי",
+  "safe": "rabbi_הרב_עדיאל_לוי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%93%D7%99%D7%90%D7%9C%20%D7%9C%D7%95%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/adiel-levi",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב עידו רוזנטל",
+  "safe": "rabbi_הרב_עידו_רוזנטל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%99%D7%93%D7%95%20%D7%A8%D7%95%D7%96%D7%A0%D7%98%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ydv-rvzntl",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב נתן רוטמן",
+  "safe": "rabbi_הרב_נתן_רוטמן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A0%D7%AA%D7%9F%20%D7%A8%D7%95%D7%98%D7%9E%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/natan-rotman",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב עמוס קליגר",
+  "safe": "rabbi_הרב_עמוס_קליגר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%9E%D7%95%D7%A1%20%D7%A7%D7%9C%D7%99%D7%92%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/mvs-klygr",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב עקיבא קשתיאל",
+  "safe": "rabbi_הרב_עקיבא_קשתיאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%A7%D7%99%D7%91%D7%90%20%D7%A7%D7%A9%D7%AA%D7%99%D7%90%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/kyba-kshtyal",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב ערן טמיר",
+  "safe": "rabbi_הרב_ערן_טמיר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%A8%D7%9F%20%D7%98%D7%9E%D7%99%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/eran-tamir",
+  "old_items_hint": 11
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב עמירם אלבה",
+  "safe": "rabbi_הרב_עמירם_אלבה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%9E%D7%99%D7%A8%D7%9D%20%D7%90%D7%9C%D7%91%D7%94",
+  "new_url": "https://bneyzion.vercel.app/rabbis/amiram-alva",
+  "old_items_hint": 19
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב צבי הירש קלישר זצ\"ל",
+  "safe": "rabbi_הרב_צבי_הירש_קלישר_זצל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A6%D7%91%D7%99%20%D7%94%D7%99%D7%A8%D7%A9%20%D7%A7%D7%9C%D7%99%D7%A9%D7%A8%20%D7%96%D7%A6%22%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/tzby-hyrsh-klyshr",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב עמנואל בן ארצי",
+  "safe": "rabbi_הרב_עמנואל_בן_ארצי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A2%D7%9E%D7%A0%D7%95%D7%90%D7%9C%20%D7%91%D7%9F%20%D7%90%D7%A8%D7%A6%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/emanueal-ben-artzi",
+  "old_items_hint": 48
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב צבי לבנברג",
+  "safe": "rabbi_הרב_צבי_לבנברג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A6%D7%91%D7%99%20%D7%9C%D7%91%D7%A0%D7%91%D7%A8%D7%92",
+  "new_url": "https://bneyzion.vercel.app/rabbis/tzby-lbnbrg",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב צבי קוסטינר",
+  "safe": "rabbi_הרב_צבי_קוסטינר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A6%D7%91%D7%99%20%D7%A7%D7%95%D7%A1%D7%98%D7%99%D7%A0%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/tzby-kvstynr",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב צבי שוויגר",
+  "safe": "rabbi_הרב_צבי_שוויגר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A6%D7%91%D7%99%20%D7%A9%D7%95%D7%95%D7%99%D7%92%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/zvi-shvaiger",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב צפניה דרורי",
+  "safe": "rabbi_הרב_צפניה_דרורי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A6%D7%A4%D7%A0%D7%99%D7%94%20%D7%93%D7%A8%D7%95%D7%A8%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/tzpnyh-drvry",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב קובי דביר",
+  "safe": "rabbi_הרב_קובי_דביר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A7%D7%95%D7%91%D7%99%20%D7%93%D7%91%D7%99%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/kvby-dbyr",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב קלמן בר",
+  "safe": "rabbi_הרב_קלמן_בר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A7%D7%9C%D7%9E%D7%9F%20%D7%91%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/klmn-br",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב ראובן ששון",
+  "safe": "rabbi_הרב_ראובן_ששון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A8%D7%90%D7%95%D7%91%D7%9F%20%D7%A9%D7%A9%D7%95%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/reuven-sasson",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב רמי גליקשטיין",
+  "safe": "rabbi_הרב_רמי_גליקשטיין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A8%D7%9E%D7%99%20%D7%92%D7%9C%D7%99%D7%A7%D7%A9%D7%98%D7%99%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/rmy-glykshtyyn",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב רפאל למפרט",
+  "safe": "rabbi_הרב_רפאל_למפרט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A8%D7%A4%D7%90%D7%9C%20%D7%9C%D7%9E%D7%A4%D7%A8%D7%98",
+  "new_url": "https://bneyzion.vercel.app/rabbis/rpal-lmprt",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב רוני אגלטל",
+  "safe": "rabbi_הרב_רוני_אגלטל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A8%D7%95%D7%A0%D7%99%20%D7%90%D7%92%D7%9C%D7%98%D7%9C",
+  "new_url": "https://bneyzion.vercel.app/rabbis/rvny-agltl",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שלמה יוסף ויצן",
+  "safe": "rabbi_הרב_שלמה_יוסף_ויצן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9C%D7%9E%D7%94%20%D7%99%D7%95%D7%A1%D7%A3%20%D7%95%D7%99%D7%A6%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shlmh-yvsp-vytzn",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שלמה אבינר",
+  "safe": "rabbi_הרב_שלמה_אבינר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9C%D7%9E%D7%94%20%D7%90%D7%91%D7%99%D7%A0%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shlomo-aviner",
+  "old_items_hint": 11
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שלמה מונדשיין",
+  "safe": "rabbi_הרב_שלמה_מונדשיין",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9C%D7%9E%D7%94%20%D7%9E%D7%95%D7%A0%D7%93%D7%A9%D7%99%D7%99%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shlmh-mvndshyyn",
+  "old_items_hint": 10
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שמעון כהן",
+  "safe": "rabbi_הרב_שמעון_כהן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9E%D7%A2%D7%95%D7%9F%20%D7%9B%D7%94%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shimon-cohen",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שמואל ישמח",
+  "safe": "rabbi_הרב_שמואל_ישמח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9E%D7%95%D7%90%D7%9C%20%D7%99%D7%A9%D7%9E%D7%97",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shmval-yshmch",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שמואל אליהו",
+  "safe": "rabbi_הרב_שמואל_אליהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9E%D7%95%D7%90%D7%9C%20%D7%90%D7%9C%D7%99%D7%94%D7%95",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shmuel-eliyahu",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרב שמעון לוי",
+  "safe": "rabbi_הרב_שמעון_לוי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%A9%D7%9E%D7%A2%D7%95%D7%9F%20%D7%9C%D7%95%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shmvn-lvy",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית אחינועם ברקו (לנשים)",
+  "safe": "rabbi_הרבנית_אחינועם_ברקו_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%90%D7%97%D7%99%D7%A0%D7%95%D7%A2%D7%9D%20%D7%91%D7%A8%D7%A7%D7%95%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/achynvm-brkv",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית ברוריה בן שחר (לנשים)",
+  "safe": "rabbi_הרבנית_ברוריה_בן_שחר_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%91%D7%A8%D7%95%D7%A8%D7%99%D7%94%20%D7%91%D7%9F%20%D7%A9%D7%97%D7%A8%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/brvryh-bn-shchr",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית בת שבע אליהו (לנשים)",
+  "safe": "rabbi_הרבנית_בת_שבע_אליהו_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%91%D7%AA%20%D7%A9%D7%91%D7%A2%20%D7%90%D7%9C%D7%99%D7%94%D7%95%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/bt-shb-alyhv",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית גילה שרים (לנשים)",
+  "safe": "rabbi_הרבנית_גילה_שרים_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%92%D7%99%D7%9C%D7%94%20%D7%A9%D7%A8%D7%99%D7%9D%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/gylh-shrym",
+  "old_items_hint": 4
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית בת שבע יוסיפון (לנשים)",
+  "safe": "rabbi_הרבנית_בת_שבע_יוסיפון_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%91%D7%AA%20%D7%A9%D7%91%D7%A2%20%D7%99%D7%95%D7%A1%D7%99%D7%A4%D7%95%D7%9F%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/bt-shb-yvsypvn-2",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית דינה ראפ (לנשים)",
+  "safe": "rabbi_הרבנית_דינה_ראפ_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%93%D7%99%D7%A0%D7%94%20%D7%A8%D7%90%D7%A4%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dynh-rap",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית דנה סליי (לנשים)",
+  "safe": "rabbi_הרבנית_דנה_סליי_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%93%D7%A0%D7%94%20%D7%A1%D7%9C%D7%99%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dnh-slyy-2",
+  "old_items_hint": 7
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית דניאלה ון-דייק (לנשים)",
+  "safe": "rabbi_הרבנית_דניאלה_ון-דייק_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%93%D7%A0%D7%99%D7%90%D7%9C%D7%94%20%D7%95%D7%9F-%D7%93%D7%99%D7%99%D7%A7%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dnyalh-vn-dyyk-2",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית ורדית אביחי (לנשים)",
+  "safe": "rabbi_הרבנית_ורדית_אביחי_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%95%D7%A8%D7%93%D7%99%D7%AA%20%D7%90%D7%91%D7%99%D7%97%D7%99",
+  "new_url": "https://bneyzion.vercel.app/rabbis/vrdyt-abychy-2",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית חגית אלרן (לנשים)",
+  "safe": "rabbi_הרבנית_חגית_אלרן_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%97%D7%92%D7%99%D7%AA%20%D7%90%D7%9C%D7%A8%D7%9F%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/chgyt-alrn",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית יפה מגנס (לנשים)",
+  "safe": "rabbi_הרבנית_יפה_מגנס_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%99%D7%A4%D7%94%20%D7%9E%D7%92%D7%A0%D7%A1%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yph-mgns-2",
+  "old_items_hint": 2
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית נורית גאל דור (לנשים)",
+  "safe": "rabbi_הרבנית_נורית_גאל_דור_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A0%D7%95%D7%A8%D7%99%D7%AA%20%D7%92%D7%90%D7%9C%20%D7%93%D7%95%D7%A8%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nvryt-gal-dvr",
+  "old_items_hint": 5
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית נעמה אתרוג (לנשים)",
+  "safe": "rabbi_הרבנית_נעמה_אתרוג_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A0%D7%A2%D7%9E%D7%94%20%D7%90%D7%AA%D7%A8%D7%95%D7%92%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nmh-atrvg",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית נעמה בן פנחס (לנשים)",
+  "safe": "rabbi_הרבנית_נעמה_בן_פנחס_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A0%D7%A2%D7%9E%D7%94%20%D7%91%D7%9F%20%D7%A4%D7%A0%D7%97%D7%A1%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nmh-bn-pnchs",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית נעמי שפירא (לנשים)",
+  "safe": "rabbi_הרבנית_נעמי_שפירא_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A0%D7%A2%D7%9E%D7%99%20%D7%A9%D7%A4%D7%99%D7%A8%D7%90",
+  "new_url": "https://bneyzion.vercel.app/rabbis/nmy-shpyra",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית רחלי מונדשיין (לנשים)",
+  "safe": "rabbi_הרבנית_רחלי_מונדשיין_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A8%D7%97%D7%9C%D7%99%20%D7%9E%D7%95%D7%A0%D7%93%D7%A9%D7%99%D7%99%D7%9F%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/rchly-mvndshyyn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית עידית שילה (לנשים)",
+  "safe": "rabbi_הרבנית_עידית_שילה_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A2%D7%99%D7%93%D7%99%D7%AA%20%D7%A9%D7%99%D7%9C%D7%94%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ydyt-shylh",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית שיפי גולדשטיין (לנשים)",
+  "safe": "rabbi_הרבנית_שיפי_גולדשטיין_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%A9%D7%99%D7%A4%D7%99%20%D7%92%D7%95%D7%9C%D7%93%D7%A9%D7%98%D7%99%D7%99%D7%9F%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/shypy-gvldshtyyn",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "הרבנית תהילה הרץ (לנשים)",
+  "safe": "rabbi_הרבנית_תהילה_הרץ_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%D7%A0%D7%99%D7%AA%20%D7%AA%D7%94%D7%99%D7%9C%D7%94%20%D7%94%D7%A8%D7%A5%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/thylh-hrtz",
+  "old_items_hint": 3
+ },
+ {
+  "type": "rabbi",
+  "name": "הרה\"ג הרב דוד לאו",
+  "safe": "rabbi_הרהג_הרב_דוד_לאו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%94%22%D7%92%20%D7%94%D7%A8%D7%91%20%D7%93%D7%95%D7%93%20%D7%9C%D7%90%D7%95",
+  "new_url": "https://bneyzion.vercel.app/rabbis/dvd-lav-2",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "ולו",
+  "safe": "rabbi_ולו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%95%D7%9C%D7%95",
+  "new_url": "https://bneyzion.vercel.app/rabbis/velo",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "יונדב זר",
+  "safe": "rabbi_יונדב_זר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%94%D7%A8%D7%91%20%D7%99%D7%95%D7%A0%D7%93%D7%91%20%D7%96%D7%A8",
+  "new_url": "https://bneyzion.vercel.app/rabbis/yondav-zer",
+  "old_items_hint": 0
+ },
+ {
+  "type": "rabbi",
+  "name": "מערכת בני ציון",
+  "safe": "rabbi_מערכת_בני_ציון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA%20%D7%91%D7%A0%D7%99%20%D7%A6%D7%99%D7%95%D7%9F",
+  "new_url": "https://bneyzion.vercel.app/rabbis/maarechet-bnei-zion",
+  "old_items_hint": 8
+ },
+ {
+  "type": "rabbi",
+  "name": "פרופ' דבורה רוזנווסר (לנשים)",
+  "safe": "rabbi_פרופ_דבורה_רוזנווסר_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%A4%D7%A8%D7%95%D7%A4%27%20%D7%93%D7%91%D7%95%D7%A8%D7%94%20%D7%A8%D7%95%D7%96%D7%A0%D7%95%D7%95%D7%A1%D7%A8%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/prof-dvora-rozenwaser",
+  "old_items_hint": 1
+ },
+ {
+  "type": "rabbi",
+  "name": "ושננתם",
+  "safe": "rabbi_ושננתם",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%95%D7%A9%D7%A0%D7%A0%D7%AA%D7%9D",
+  "new_url": "https://bneyzion.vercel.app/rabbis/veshinantam",
+  "old_items_hint": 40
+ },
+ {
+  "type": "rabbi",
+  "name": "רותי שפירא - ד\"ר (לנשים)",
+  "safe": "rabbi_רותי_שפירא_-_דר_(לנשים)",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/רבנים?rav=%D7%A8%D7%95%D7%AA%D7%99%20%D7%A9%D7%A4%D7%99%D7%A8%D7%90%20-%20%D7%93%22%D7%A8%20%28%D7%9C%D7%A0%D7%A9%D7%99%D7%9D%29",
+  "new_url": "https://bneyzion.vercel.app/rabbis/ruti-shapira-lanashim",
+  "old_items_hint": 3
+ },
+ {
+  "type": "book",
+  "name": "בראשית",
+  "safe": "book_בראשית",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/",
+  "new_url": "https://bneyzion.vercel.app/category/db78e0a3-3bcf-4009-96b8-49c76df555f9",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "שמות",
+  "safe": "book_שמות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/שמות/",
+  "new_url": "https://bneyzion.vercel.app/category/5149a23b-8181-4c41-81db-1efcd2631f5a",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "ויקרא",
+  "safe": "book_ויקרא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/",
+  "new_url": "https://bneyzion.vercel.app/category/6267feb7-de69-4106-aa02-172411e070cd",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "במדבר",
+  "safe": "book_במדבר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/",
+  "new_url": "https://bneyzion.vercel.app/category/7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "דברים",
+  "safe": "book_דברים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/",
+  "new_url": "https://bneyzion.vercel.app/category/b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "יהושע",
+  "safe": "book_יהושע",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/",
+  "new_url": "https://bneyzion.vercel.app/category/831d1ccb-a1a4-4a1f-b3b1-2608e7b6da16",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "שופטים",
+  "safe": "book_שופטים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/",
+  "new_url": "https://bneyzion.vercel.app/category/ebdb355f-6a9f-44a5-9aa0-2f858434cc17",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "שמואל א",
+  "safe": "book_שמואל_א",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/",
+  "new_url": "https://bneyzion.vercel.app/category/d4dd089a-1ba3-420d-b130-78f0ef90cb69",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "שמואל ב",
+  "safe": "book_שמואל_ב",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/",
+  "new_url": "https://bneyzion.vercel.app/category/02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "מלכים א",
+  "safe": "book_מלכים_א",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/",
+  "new_url": "https://bneyzion.vercel.app/category/ff96641e-68f3-4e4c-92ee-2175b77f6e75",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "מלכים ב",
+  "safe": "book_מלכים_ב",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/",
+  "new_url": "https://bneyzion.vercel.app/category/75b7c62c-50e2-4874-bcf5-2d8ddf646771",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "ישעיהו",
+  "safe": "book_ישעיהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/",
+  "new_url": "https://bneyzion.vercel.app/category/1fb20386-80be-4e03-a205-7ee9ea4a385b",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "ירמיהו",
+  "safe": "book_ירמיהו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/",
+  "new_url": "https://bneyzion.vercel.app/category/69c795d9-a415-43a2-afb1-8694fe2e2a60",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "יחזקאל",
+  "safe": "book_יחזקאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/",
+  "new_url": "https://bneyzion.vercel.app/category/5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "הושע",
+  "safe": "book_הושע",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/הושע/",
+  "new_url": "https://bneyzion.vercel.app/category/5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "יואל",
+  "safe": "book_יואל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יואל/",
+  "new_url": "https://bneyzion.vercel.app/category/a8797de2-98f1-461f-b5f1-6b1143df5597",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "עמוס",
+  "safe": "book_עמוס",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/עמוס/",
+  "new_url": "https://bneyzion.vercel.app/category/9526c5b5-68ec-495f-a3ca-49ec3feb3c4a",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "עובדיה",
+  "safe": "book_עובדיה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/",
+  "new_url": "https://bneyzion.vercel.app/category/2a0387c7-ec11-437c-a19f-f795985ce204",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "יונה",
+  "safe": "book_יונה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יונה/",
+  "new_url": "https://bneyzion.vercel.app/category/0f69e7e1-c6d4-4ede-9c42-006ee99ea995",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "מיכה",
+  "safe": "book_מיכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מיכה/",
+  "new_url": "https://bneyzion.vercel.app/category/895474b3-1a1c-4693-820c-a6e645c4e853",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "נחום",
+  "safe": "book_נחום",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/נחום/",
+  "new_url": "https://bneyzion.vercel.app/category/e8f7ed1c-fa87-4186-ba01-8d2dd4e40b88",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "חבקוק",
+  "safe": "book_חבקוק",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/חבקוק/",
+  "new_url": "https://bneyzion.vercel.app/category/4a17b976-362f-4abe-9c75-965b50a4a1f7",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "צפניה",
+  "safe": "book_צפניה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/צפניה/",
+  "new_url": "https://bneyzion.vercel.app/category/bab915ba-8220-4a76-8d55-690875543b3a",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "חגי",
+  "safe": "book_חגי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/חגי/",
+  "new_url": "https://bneyzion.vercel.app/category/273e3b3c-318d-4335-b026-d03dc4c8a602",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "זכריה",
+  "safe": "book_זכריה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/זכריה/",
+  "new_url": "https://bneyzion.vercel.app/category/c6285a2a-5b5a-4005-bad0-6712206d5ed6",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "מלאכי",
+  "safe": "book_מלאכי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלאכי/",
+  "new_url": "https://bneyzion.vercel.app/category/3684f720-fd9d-400e-bdb4-24343cbd51b6",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "תהלים",
+  "safe": "book_תהלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/תהלים/",
+  "new_url": "https://bneyzion.vercel.app/category/7dc34ac8-e332-47e5-87d5-9400a85fa85d",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "משלי",
+  "safe": "book_משלי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/משלי/",
+  "new_url": "https://bneyzion.vercel.app/category/f71c762a-4d9d-4cc3-af23-adfdd629885c",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "איוב",
+  "safe": "book_איוב",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/איוב/",
+  "new_url": "https://bneyzion.vercel.app/category/ec9ae746-373b-4a2d-b478-d0dcb67c0b3c",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "שיר השירים",
+  "safe": "book_שיר_השירים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/שיר-השירים/",
+  "new_url": "https://bneyzion.vercel.app/category/16b824c5-6cea-4a4f-bda5-6aac870b2689",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "רות",
+  "safe": "book_רות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/רות/",
+  "new_url": "https://bneyzion.vercel.app/category/a14dbc35-1caf-4675-9eba-75b5df118925",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "איכה",
+  "safe": "book_איכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/איכה/",
+  "new_url": "https://bneyzion.vercel.app/category/35781f30-76a7-4fc6-aa06-52a1db4a4054",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "קהלת",
+  "safe": "book_קהלת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/קהלת/",
+  "new_url": "https://bneyzion.vercel.app/category/4472645d-c8bc-4657-bfe1-fba960edd8e3",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "אסתר",
+  "safe": "book_אסתר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/אסתר/",
+  "new_url": "https://bneyzion.vercel.app/category/8600dfad-9e4d-41af-8b85-ccc325ee1298",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "דניאל",
+  "safe": "book_דניאל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/דניאל/",
+  "new_url": "https://bneyzion.vercel.app/category/6cda749b-1b47-463b-9e27-107acbc8aa3e",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "עזרא ונחמיה",
+  "safe": "book_עזרא_ונחמיה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/",
+  "new_url": "https://bneyzion.vercel.app/category/5896c267-01b2-44d0-9fa4-f0d3b357ccc1",
+  "old_items_hint": null
+ },
+ {
+  "type": "book",
+  "name": "דברי הימים",
+  "safe": "book_דברי_הימים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/דברי-הימים/",
+  "new_url": "https://bneyzion.vercel.app/category/2c9c593e-fd97-431b-86b4-ab2b62b6542c",
+  "old_items_hint": null
+ },
+ {
+  "type": "section",
+  "name": "הגישה הראויה ללימוד תנ\"ך",
+  "safe": "section_הגישה_הראויה_ללימוד_תנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/הגישה-הראויה-ללימוד-תנך/",
+  "new_url": "https://bneyzion.vercel.app/series/8f089f22-3ccf-443d-8fc6-7ffe353e379d",
+  "old_items_hint": 27
+ },
+ {
+  "type": "section",
+  "name": "היחס הראוי לאבות ולחטאיהם",
+  "safe": "section_היחס_הראוי_לאבות_ולחטאיהם",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/היחס-הראוי-לאבות-ולחטאיהם/",
+  "new_url": "https://bneyzion.vercel.app/series/224f701b-a542-42ff-a784-533ac7ccc112",
+  "old_items_hint": 18
+ },
+ {
+  "type": "section",
+  "name": "דרכי הפרשנות והמדרש בתנ\"ך",
+  "safe": "section_דרכי_הפרשנות_והמדרש_בתנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/דרכי-הפרשנות-והמדרש-בתנך/",
+  "new_url": "https://bneyzion.vercel.app/series/2015e21e-be07-4800-8d15-eb19387d65d6",
+  "old_items_hint": 55
+ },
+ {
+  "type": "section",
+  "name": "אוסף מקורות על חשיבות לימוד תנ\"ך",
+  "safe": "section_אוסף_מקורות_על_חשיבות_לימוד_תנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/אוסף-מקורות-על-חשיבות-לימוד-תנך/",
+  "new_url": "https://bneyzion.vercel.app/series/68582fdf-9d89-4327-9d50-a87147604103",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "אוסף הדרכות בלימוד תנ\"ך",
+  "safe": "section_אוסף_הדרכות_בלימוד_תנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/איך-לומדים-תנך/אוסף-הדרכות-בלימוד-תנך/",
+  "new_url": "https://bneyzion.vercel.app/series/f8a82688-b198-46cb-a920-48158df61cbc",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "גלות וגאולה",
+  "safe": "section_גלות_וגאולה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/גלות-וגאולה/",
+  "new_url": "https://bneyzion.vercel.app/series/e10a89e2-3ce3-4b7d-b80d-d8380ac35e5b",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "מלחמת גוג ומגוג",
+  "safe": "section_מלחמת_גוג_ומגוג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/מלחמת-גוג-ומגוג/",
+  "new_url": "https://bneyzion.vercel.app/series/c76ac534-76b4-4f2c-ba9a-05ed95e7145c",
+  "old_items_hint": 11
+ },
+ {
+  "type": "section",
+  "name": "מלחמה",
+  "safe": "section_מלחמה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/מלחמה/",
+  "new_url": "https://bneyzion.vercel.app/series/ad05c65f-b2c3-4be0-a3bd-74e1fabb50b6",
+  "old_items_hint": 19
+ },
+ {
+  "type": "section",
+  "name": "יג מידות הרחמים",
+  "safe": "section_יג_מידות_הרחמים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/יג-מידות-הרחמים/",
+  "new_url": "https://bneyzion.vercel.app/series/bafc63d2-e62f-497a-9b4c-c58377b831a1",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "נבואה ונביאים",
+  "safe": "section_נבואה_ונביאים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/נבואה-ונביאים/",
+  "new_url": "https://bneyzion.vercel.app/series/5f298ac3-b98a-4822-9ed6-45b01b2905fe",
+  "old_items_hint": 30
+ },
+ {
+  "type": "section",
+  "name": "ירושלים",
+  "safe": "section_ירושלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ירושלים/",
+  "new_url": "https://bneyzion.vercel.app/series/7717adb7-6f57-43f0-836c-26f3d7abc96a",
+  "old_items_hint": 16
+ },
+ {
+  "type": "section",
+  "name": "סקירות תנ\"כיות על אזורים בארץ ישראל",
+  "safe": "section_סקירות_תנכיות_על_אזורים_בארץ_ישראל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ארץ-ישראל/סקירות-תנכיות-על-אזורים-בארץ-ישראל/",
+  "new_url": "https://bneyzion.vercel.app/series/1383b133-4fe7-426c-ac61-4d14e63a50e1",
+  "old_items_hint": 1
+ },
+ {
+  "type": "section",
+  "name": "בנין המידות על פי התנ\"ך",
+  "safe": "section_בנין_המידות_על_פי_התנך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/בנין-המידות-על-פי-התנך/",
+  "new_url": "https://bneyzion.vercel.app/series/1ca0d5c5-f460-4812-9313-fd58842aa09c",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "תקופת הבית השני",
+  "safe": "section_תקופת_הבית_השני",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/תקופת-הבית-השני/",
+  "new_url": "https://bneyzion.vercel.app/series/ddc98b2e-f6ab-4547-8148-2e841d4db651",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "ארבע המלכויות",
+  "safe": "section_ארבע_המלכויות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/ארבע-המלכויות/",
+  "new_url": "https://bneyzion.vercel.app/series/7702a1eb-73cc-44aa-9d10-00fdd51f3dfa",
+  "old_items_hint": 1
+ },
+ {
+  "type": "section",
+  "name": "בית המקדש והכהנים",
+  "safe": "section_בית_המקדש_והכהנים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/בית-המקדש-והכהנים/",
+  "new_url": "https://bneyzion.vercel.app/series/8dacb470-4ce2-46dd-9d1f-91a8e8c8ac69",
+  "old_items_hint": 8
+ },
+ {
+  "type": "section",
+  "name": "דוד המלך",
+  "safe": "section_דוד_המלך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/דוד-המלך/",
+  "new_url": "https://bneyzion.vercel.app/series/0d332add-7a15-49e4-8618-16112e6ecb6d",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "המלוכה בישראל ובעמים",
+  "safe": "section_המלוכה_בישראל_ובעמים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/המלוכה-בישראל-ובעמים/",
+  "new_url": "https://bneyzion.vercel.app/series/57b832aa-c407-4a44-8b6c-9ce6eb5812b9",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "פודקאסט - הפרק הבא - על הנבואות מהתנ\"ך שעוד מחכות לנו",
+  "safe": "section_פודקאסט_-_הפרק_הבא_-_על_הנבואות_מהתנך_שעוד_מחכות_לנו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נושאים-כלליים-בתנך/פודקאסט-הפרק-הבא-על-הנבואות-מהתנך-שעוד-מחכות-לנו/",
+  "new_url": "https://bneyzion.vercel.app/series/721d2ee3-dc2d-4b11-a023-59d5d5cc90d0",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "חודש אלול וימי התשובה",
+  "safe": "section_חודש_אלול_וימי_התשובה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/חודש-אלול-וימי-התשובה/",
+  "new_url": "https://bneyzion.vercel.app/series/edc74757-ae3e-4b1c-9432-7206d24a2cd1",
+  "old_items_hint": 23
+ },
+ {
+  "type": "section",
+  "name": "ראש השנה",
+  "safe": "section_ראש_השנה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/ראש-השנה/",
+  "new_url": "https://bneyzion.vercel.app/series/342f8c6a-d14e-47dc-992e-38a98967f222",
+  "old_items_hint": 13
+ },
+ {
+  "type": "section",
+  "name": "כל השיעורים ליום הכיפורים",
+  "safe": "section_כל_השיעורים_ליום_הכיפורים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/יום-הכיפורים/כל-השיעורים-ליום-הכיפורים/",
+  "new_url": "https://bneyzion.vercel.app/series/c3030301-0001-4000-8000-000000000001",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "מעבר לשיעורים על ספר יונה",
+  "safe": "section_מעבר_לשיעורים_על_ספר_יונה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/יום-הכיפורים/מעבר-לשיעורים-על-ספר-יונה/",
+  "new_url": "https://bneyzion.vercel.app/series/d4e450e0-206a-54c3-9068-98387b64b61f",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "כל השיעורים על חג הסוכות",
+  "safe": "section_כל_השיעורים_על_חג_הסוכות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/כל-השיעורים-על-חג-הסוכות/",
+  "new_url": "https://bneyzion.vercel.app/series/d4040401-0001-4000-a000-000000000001",
+  "old_items_hint": 13
+ },
+ {
+  "type": "section",
+  "name": "מעבר לשיעורים על גוג ומגוג",
+  "safe": "section_מעבר_לשיעורים_על_גוג_ומגוג",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/סוכות/מעבר-לשיעורים-על-גוג-ומגוג/",
+  "new_url": "https://bneyzion.vercel.app/series/d4040401-0002-4000-a000-000000000002",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "שמיני עצרת",
+  "safe": "section_שמיני_עצרת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/שמיני-עצרת/",
+  "new_url": "https://bneyzion.vercel.app/series/b1a7438a-85cb-4d9c-9737-162db5d21c91",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "חנוכה",
+  "safe": "section_חנוכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/חנוכה/",
+  "new_url": "https://bneyzion.vercel.app/series/c78561fe-e155-4a5e-9fa2-dba62acd251f",
+  "old_items_hint": 19
+ },
+ {
+  "type": "section",
+  "name": "ט\"ו בשבט",
+  "safe": "section_טו_בשבט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/טו-בשבט/",
+  "new_url": "https://bneyzion.vercel.app/series/8638f11a-6c48-4630-b19c-b6fc4b62fb87",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "פורים",
+  "safe": "section_פורים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/פורים/",
+  "new_url": "https://bneyzion.vercel.app/series/381ebb6c-8c16-43d6-bd61-7e96445efa34",
+  "old_items_hint": 34
+ },
+ {
+  "type": "section",
+  "name": "פסח",
+  "safe": "section_פסח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/פסח/",
+  "new_url": "https://bneyzion.vercel.app/series/80942b6c-43b5-452d-b547-85d48b7b6826",
+  "old_items_hint": 102
+ },
+ {
+  "type": "section",
+  "name": "ספירת העומר",
+  "safe": "section_ספירת_העומר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/ספירת-העומר/",
+  "new_url": "https://bneyzion.vercel.app/series/4f76a130-2879-4775-bac9-5b6fdb5600d1",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "יום העצמאות",
+  "safe": "section_יום_העצמאות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/יום-העצמאות/",
+  "new_url": "https://bneyzion.vercel.app/series/20ab9ed8-b26b-4674-a948-0c67c3efe676",
+  "old_items_hint": 37
+ },
+ {
+  "type": "section",
+  "name": "יום ירושלים",
+  "safe": "section_יום_ירושלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/יום-ירושלים/",
+  "new_url": "https://bneyzion.vercel.app/series/7f948c8e-3302-431a-88a9-071822050c97",
+  "old_items_hint": 18
+ },
+ {
+  "type": "section",
+  "name": "שבועות",
+  "safe": "section_שבועות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/שבועות/",
+  "new_url": "https://bneyzion.vercel.app/series/cc7825e1-67a3-49b8-b632-9543f3aa3787",
+  "old_items_hint": 35
+ },
+ {
+  "type": "section",
+  "name": "שלושת השבועות",
+  "safe": "section_שלושת_השבועות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/מועדים/שלושת-השבועות/",
+  "new_url": "https://bneyzion.vercel.app/series/e36ea5d6-38f8-49ca-874e-ff3324bb3795",
+  "old_items_hint": 30
+ },
+ {
+  "type": "section",
+  "name": "חומש בראשית - כל ההפטרות",
+  "safe": "section_חומש_בראשית_-_כל_ההפטרות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/חומש-בראשית-כל-ההפטרות/",
+  "new_url": "https://bneyzion.vercel.app/series/7d969f6d-88d2-518a-be94-17b43b5308c7",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת בראשית",
+  "safe": "section_הפטרת_בראשית",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-בראשית/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0001-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת נח",
+  "safe": "section_הפטרת_נח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-נח/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0002-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת לך לך",
+  "safe": "section_הפטרת_לך_לך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-לך-לך/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0003-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת וירא",
+  "safe": "section_הפטרת_וירא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-וירא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0004-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת חיי שרה",
+  "safe": "section_הפטרת_חיי_שרה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-חיי-שרה/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0005-4000-8000-000000000001",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת תולדות",
+  "safe": "section_הפטרת_תולדות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-תולדות/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0006-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ויצא",
+  "safe": "section_הפטרת_ויצא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-ויצא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0007-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת וישלח",
+  "safe": "section_הפטרת_וישלח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-וישלח/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0008-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת וישב",
+  "safe": "section_הפטרת_וישב",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-וישב/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0009-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת מקץ",
+  "safe": "section_הפטרת_מקץ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-מקץ/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0010-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ויגש",
+  "safe": "section_הפטרת_ויגש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-ויגש/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0011-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ויחי",
+  "safe": "section_הפטרת_ויחי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-בראשית/הפטרת-ויחי/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070701-0012-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "חומש שמות - כל ההפטרות",
+  "safe": "section_חומש_שמות_-_כל_ההפטרות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/חומש-שמות-כל-ההפטרות/",
+  "new_url": "https://bneyzion.vercel.app/series/312abd0d-fedf-5e15-bd43-69ea5215e97e",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שמות",
+  "safe": "section_הפטרת_שמות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-שמות/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0001-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת וארא",
+  "safe": "section_הפטרת_וארא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-וארא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0002-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת בא",
+  "safe": "section_הפטרת_בא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-בא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0003-4000-8000-000000000001",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת בשלח",
+  "safe": "section_הפטרת_בשלח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-בשלח/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0004-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת יתרו",
+  "safe": "section_הפטרת_יתרו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-יתרו/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0005-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת משפטים",
+  "safe": "section_הפטרת_משפטים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-משפטים/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0006-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת תרומה",
+  "safe": "section_הפטרת_תרומה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-תרומה/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0007-4000-8000-000000000001",
+  "old_items_hint": 7
+ },
+ {
+  "type": "section",
+  "name": "הפטרת תצוה",
+  "safe": "section_הפטרת_תצוה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-תצוה/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0008-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת כי תשא",
+  "safe": "section_הפטרת_כי_תשא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-כי-תשא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0009-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ויקהל",
+  "safe": "section_הפטרת_ויקהל",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-ויקהל/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0010-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פקודי",
+  "safe": "section_הפטרת_פקודי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-שמות/הפטרת-פקודי/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070702-0011-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "חומש ויקרא - כל ההפטרות",
+  "safe": "section_חומש_ויקרא_-_כל_ההפטרות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/חומש-ויקרא-כל-ההפטרות/",
+  "new_url": "https://bneyzion.vercel.app/series/6cb15d44-6fe9-5121-8d91-eae3b04d3cde",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ויקרא",
+  "safe": "section_הפטרת_ויקרא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-ויקרא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0001-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת צו",
+  "safe": "section_הפטרת_צו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-צו/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0002-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שמיני",
+  "safe": "section_הפטרת_שמיני",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-שמיני/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0003-4000-8000-000000000001",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת תזריע",
+  "safe": "section_הפטרת_תזריע",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-תזריע/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0004-4000-8000-000000000001",
+  "old_items_hint": 1
+ },
+ {
+  "type": "section",
+  "name": "הפטרת מצורע",
+  "safe": "section_הפטרת_מצורע",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-מצורע/",
+  "new_url": "https://bneyzion.vercel.app/series/52558860-f67b-41e0-a0ec-c41875f6e159",
+  "old_items_hint": 7
+ },
+ {
+  "type": "section",
+  "name": "הפטרת אחרי מות",
+  "safe": "section_הפטרת_אחרי_מות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-אחרי-מות/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0006-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת קדושים",
+  "safe": "section_הפטרת_קדושים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-קדושים/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0007-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת אמור",
+  "safe": "section_הפטרת_אמור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-אמור/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0008-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת בהר",
+  "safe": "section_הפטרת_בהר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-בהר/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0009-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת בחוקותי",
+  "safe": "section_הפטרת_בחוקותי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-ויקרא/הפטרת-בחוקותי/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070703-0010-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "חומש במדבר - כל ההפטרות",
+  "safe": "section_חומש_במדבר_-_כל_ההפטרות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/חומש-במדבר-כל-ההפטרות/",
+  "new_url": "https://bneyzion.vercel.app/series/cb90ec6b-3703-5396-8a00-05564549e091",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת במדבר",
+  "safe": "section_הפטרת_פרשת_במדבר",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-במדבר/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070704-0001-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת נשא",
+  "safe": "section_הפטרת_פרשת_נשא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-נשא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070704-0002-4000-8000-000000000001",
+  "old_items_hint": 7
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת בהעלותך",
+  "safe": "section_הפטרת_פרשת_בהעלותך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-בהעלותך/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070704-0003-4000-8000-000000000001",
+  "old_items_hint": 7
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת שלח",
+  "safe": "section_הפטרת_פרשת_שלח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-שלח/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070704-0004-4000-8000-000000000001",
+  "old_items_hint": 8
+ },
+ {
+  "type": "section",
+  "name": "הפטרות פרשת קורח",
+  "safe": "section_הפטרות_פרשת_קורח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרות-פרשת-קורח/",
+  "new_url": "https://bneyzion.vercel.app/series/f494c453-a220-5fbe-8318-2578bed5cd4d",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרות פרשת חוקת",
+  "safe": "section_הפטרות_פרשת_חוקת",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרות-פרשת-חוקת/",
+  "new_url": "https://bneyzion.vercel.app/series/9d874275-86b0-5461-903f-2189b0766963",
+  "old_items_hint": 8
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת בלק",
+  "safe": "section_הפטרת_פרשת_בלק",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-בלק/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070704-0007-4000-8000-000000000001",
+  "old_items_hint": 8
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת פנחס",
+  "safe": "section_הפטרת_פרשת_פנחס",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-פנחס/",
+  "new_url": "https://bneyzion.vercel.app/series/e585c180-6ff9-5ce4-a367-3c05e9b2640d",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת מטות",
+  "safe": "section_הפטרת_פרשת_מטות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-מטות/",
+  "new_url": "https://bneyzion.vercel.app/series/23a24c43-4bd0-5453-8401-03b6ad73297b",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת פרשת מסעי",
+  "safe": "section_הפטרת_פרשת_מסעי",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרת-פרשת-מסעי/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070704-0009-4000-8000-000000000001",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרות במדבר - הרב מנחם שחור",
+  "safe": "section_הפטרות_במדבר_-_הרב_מנחם_שחור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-במדבר/הפטרות-במדבר-הרב-מנחם-שחור/",
+  "new_url": "https://bneyzion.vercel.app/series/63e86db3-c801-4e1d-89d3-073d576124c3",
+  "old_items_hint": 10
+ },
+ {
+  "type": "section",
+  "name": "חומש דברים - כל ההפטרות",
+  "safe": "section_חומש_דברים_-_כל_ההפטרות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/חומש-דברים-כל-ההפטרות/",
+  "new_url": "https://bneyzion.vercel.app/series/07de66f3-5a21-5b49-8f67-0b0c2e84b4dd",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת דברים",
+  "safe": "section_הפטרת_דברים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-דברים/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0001-4000-8000-000000000001",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ואתחנן",
+  "safe": "section_הפטרת_ואתחנן",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-ואתחנן/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0002-4000-8000-000000000001",
+  "old_items_hint": 7
+ },
+ {
+  "type": "section",
+  "name": "הפטרת עקב",
+  "safe": "section_הפטרת_עקב",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-עקב/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0003-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ראה",
+  "safe": "section_הפטרת_ראה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-ראה/",
+  "new_url": "https://bneyzion.vercel.app/series/b3e547bb-00a8-4c24-baf7-82bd1a59b58c",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שופטים",
+  "safe": "section_הפטרת_שופטים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-שופטים/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0005-4000-8000-000000000001",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת כי תצא",
+  "safe": "section_הפטרת_כי_תצא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-כי-תצא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0006-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת כי תבוא",
+  "safe": "section_הפטרת_כי_תבוא",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-כי-תבוא/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0007-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת נצבים",
+  "safe": "section_הפטרת_נצבים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-נצבים/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0008-4000-8000-000000000001",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת וילך",
+  "safe": "section_הפטרת_וילך",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-וילך/",
+  "new_url": "https://bneyzion.vercel.app/series/08f2d0b1-64e1-5aa3-aa2d-b627f3639ed6",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת האזינו",
+  "safe": "section_הפטרת_האזינו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-האזינו/",
+  "new_url": "https://bneyzion.vercel.app/series/a1ea1f8f-291f-418a-8397-dd567568686c",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת וזאת הברכה",
+  "safe": "section_הפטרת_וזאת_הברכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרת-וזאת-הברכה/",
+  "new_url": "https://bneyzion.vercel.app/series/a7070705-0010-4000-8000-000000000001",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרות דברים - הרב מנחם שחור",
+  "safe": "section_הפטרות_דברים_-_הרב_מנחם_שחור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-דברים/הפטרות-דברים-הרב-מנחם-שחור/",
+  "new_url": "https://bneyzion.vercel.app/series/05888d7c-2363-4eef-bf63-35d2e215b50d",
+  "old_items_hint": 9
+ },
+ {
+  "type": "section",
+  "name": "שבת חזון",
+  "safe": "section_שבת_חזון",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/שבת-חזון/",
+  "new_url": "https://bneyzion.vercel.app/series/01c51d52-1cb1-51bb-89d4-4ec95fd58ce0",
+  "old_items_hint": 10
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת נחמו",
+  "safe": "section_הפטרת_שבת_נחמו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-נחמו/",
+  "new_url": "https://bneyzion.vercel.app/series/c7e2d66d-8d61-5340-b21b-4e156ffd4688",
+  "old_items_hint": 11
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ערב ראש חודש",
+  "safe": "section_הפטרת_ערב_ראש_חודש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-ערב-ראש-חודש/",
+  "new_url": "https://bneyzion.vercel.app/series/3bf9ac06-efd3-5875-bb93-fbb3ddaf6eb2",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ראש חודש",
+  "safe": "section_הפטרת_ראש_חודש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-ראש-חודש/",
+  "new_url": "https://bneyzion.vercel.app/series/f01483d9-0ebe-5e16-bec0-c35c726350d9",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת חנוכה",
+  "safe": "section_הפטרת_שבת_חנוכה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-חנוכה/",
+  "new_url": "https://bneyzion.vercel.app/series/af50e247-cc7d-5fa0-a152-6172ee3508c1",
+  "old_items_hint": 7
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת שקלים",
+  "safe": "section_הפטרת_שבת_שקלים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-שקלים/",
+  "new_url": "https://bneyzion.vercel.app/series/4a273119-82c1-5f44-bae2-611dd89743e5",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת זכור",
+  "safe": "section_הפטרת_שבת_זכור",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-זכור/",
+  "new_url": "https://bneyzion.vercel.app/series/e87bf1ae-0031-5ea8-8e5a-6007afcad887",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת פרה",
+  "safe": "section_הפטרת_שבת_פרה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-פרה/",
+  "new_url": "https://bneyzion.vercel.app/series/5abe4b6a-0661-5cce-ba0b-891d795c2da7",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת החודש",
+  "safe": "section_הפטרת_שבת_החודש",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-החודש/",
+  "new_url": "https://bneyzion.vercel.app/series/0d6b6ba0-e60e-51eb-a99b-1320ad34688e",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת הגדול",
+  "safe": "section_הפטרת_שבת_הגדול",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-הגדול/",
+  "new_url": "https://bneyzion.vercel.app/series/74ca997a-a68e-454c-b6cc-438445800cd5",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "הפטרת ראשון של פסח",
+  "safe": "section_הפטרת_ראשון_של_פסח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-ראשון-של-פסח/",
+  "new_url": "https://bneyzion.vercel.app/series/b041ab4f-df96-50e6-8221-0b6622d42ca5",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שביעי של פסח",
+  "safe": "section_הפטרת_שביעי_של_פסח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שביעי-של-פסח/",
+  "new_url": "https://bneyzion.vercel.app/series/9baf50ed-5da4-55a3-ab34-7679ce73370e",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת יום העצמאות",
+  "safe": "section_הפטרת_יום_העצמאות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-יום-העצמאות/",
+  "new_url": "https://bneyzion.vercel.app/series/0a845085-282c-44d9-bd36-8ae81a2788b2",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "יום א של ראש השנה",
+  "safe": "section_יום_א_של_ראש_השנה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/יום-א-של-ראש-השנה/",
+  "new_url": "https://bneyzion.vercel.app/series/4807925f-3a82-4106-8aa4-d5c6fd8e4397",
+  "old_items_hint": 5
+ },
+ {
+  "type": "section",
+  "name": "יום ב של ראש השנה",
+  "safe": "section_יום_ב_של_ראש_השנה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/יום-ב-של-ראש-השנה/",
+  "new_url": "https://bneyzion.vercel.app/series/dddbeeb2-972d-420b-924b-57ae3bce2b51",
+  "old_items_hint": 4
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת תשובה",
+  "safe": "section_הפטרת_שבת_תשובה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-תשובה/",
+  "new_url": "https://bneyzion.vercel.app/series/fd6e263d-68c1-5eb4-9104-a3e6afb926bc",
+  "old_items_hint": 6
+ },
+ {
+  "type": "section",
+  "name": "הפטרת יום הכיפורים",
+  "safe": "section_הפטרת_יום_הכיפורים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-יום-הכיפורים/",
+  "new_url": "https://bneyzion.vercel.app/series/59181268-8b54-5e36-a84d-1bc458f6c1d1",
+  "old_items_hint": 2
+ },
+ {
+  "type": "section",
+  "name": "הפטרת יום ראשון של סוכות",
+  "safe": "section_הפטרת_יום_ראשון_של_סוכות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-יום-ראשון-של-סוכות/",
+  "new_url": "https://bneyzion.vercel.app/series/3b6c298e-544c-55f0-86e4-a4872b10622a",
+  "old_items_hint": 3
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שמחת תורה",
+  "safe": "section_הפטרת_שמחת_תורה",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שמחת-תורה/",
+  "new_url": "https://bneyzion.vercel.app/series/29e145a6-6bb3-5520-934e-ff54021a18cd",
+  "old_items_hint": 0
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת חול המועד פסח",
+  "safe": "section_הפטרת_שבת_חול_המועד_פסח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-חול-המועד-פסח/",
+  "new_url": "https://bneyzion.vercel.app/series/76cfb122-6dfe-511e-bd11-d114e3ff8066",
+  "old_items_hint": 1
+ },
+ {
+  "type": "section",
+  "name": "הפטרת שבת חול המועד סוכות",
+  "safe": "section_הפטרת_שבת_חול_המועד_סוכות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/הפטרות/הפטרות-המועדים/הפטרת-שבת-חול-המועד-סוכות/",
+  "new_url": "https://bneyzion.vercel.app/series/79c3000b-01b2-535a-9981-1cb062a0f852",
+  "old_items_hint": 1
+ },
+ {
+  "type": "section",
+  "name": "ימי עיון בתנ\"ך - תשע\"ד",
+  "safe": "section_ימי_עיון_בתנך_-_תשעד",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/ימי-עיון-בתנך-תשעד/",
+  "new_url": "https://bneyzion.vercel.app/series/f4040001-0001-4000-8000-000000000001",
+  "old_items_hint": 29
+ },
+ {
+  "type": "section",
+  "name": "ימי עיון בתנ\"ך - תשע\"ו",
+  "safe": "section_ימי_עיון_בתנך_-_תשעו",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/ימי-עיון-בתנך-תשעו/",
+  "new_url": "https://bneyzion.vercel.app/series/f4040001-0001-4000-8000-000000000002",
+  "old_items_hint": 57
+ },
+ {
+  "type": "section",
+  "name": "ימי עיון בתנ\"ך - תשע\"ז",
+  "safe": "section_ימי_עיון_בתנך_-_תשעז",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/ימי-עיון-בתנך-תשעז/",
+  "new_url": "https://bneyzion.vercel.app/series/f4040001-0001-4000-8000-000000000003",
+  "old_items_hint": 51
+ },
+ {
+  "type": "section",
+  "name": "ימי עיון בתנ\"ך - תשע\"ח",
+  "safe": "section_ימי_עיון_בתנך_-_תשעח",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/ימי-עיון-בתנך-תשעח/",
+  "new_url": "https://bneyzion.vercel.app/series/f4040001-0001-4000-8000-000000000004",
+  "old_items_hint": 64
+ },
+ {
+  "type": "section",
+  "name": "ימי עיון בתנ\"ך תשע\"ט",
+  "safe": "section_ימי_עיון_בתנך_תשעט",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/ימי-עיון-בתנך-תשעט/",
+  "new_url": "https://bneyzion.vercel.app/series/f4040001-0001-4000-8000-000000000005",
+  "old_items_hint": 51
+ },
+ {
+  "type": "section",
+  "name": "ימי עיון בתנ\"ך תש\"פ",
+  "safe": "section_ימי_עיון_בתנך_תשפ",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ימי-עיון-בתנך/ימי-עיון-בתנך-תשפ/",
+  "new_url": "https://bneyzion.vercel.app/series/f4040001-0001-4000-8000-000000000006",
+  "old_items_hint": 17
+ },
+ {
+  "type": "section",
+  "name": "כלי עזר - טבלאות זמני המאורעות ומפות",
+  "safe": "section_כלי_עזר_-_טבלאות_זמני_המאורעות_ומפות",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כלי-עזר-טבלאות-זמני-המאורעות-ומפות/",
+  "new_url": "https://bneyzion.vercel.app/series/27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7",
+  "old_items_hint": 15
+ },
+ {
+  "type": "section",
+  "name": "שופטים",
+  "safe": "section_שופטים",
+  "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/ליווי-תתים/שופטים/",
+  "new_url": "https://bneyzion.vercel.app/series/a4248a3e-db30-4292-8455-dde339dbc60d",
+  "old_items_hint": 1
+ }
+]

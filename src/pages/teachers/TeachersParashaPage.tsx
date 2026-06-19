@@ -136,7 +136,7 @@ function ControlsBar({
 
 // ─── LessonCard (grid) ────────────────────────────────────────────────────────
 function LessonCard({ lesson, onClick }: { lesson: TeacherParashaLesson; onClick: () => void }) {
-  const imgSrc = lesson.thumbnailUrl || getSeriesCoverImage(lesson.seriesTitle || "") || "/images/series-default.png";
+  const imgSrc = lesson.thumbnailUrl || getSeriesCoverImage(lesson.seriesTitle || "") || "/images/series-default.webp";
   return (
     <div
       onClick={onClick}
@@ -145,7 +145,7 @@ function LessonCard({ lesson, onClick }: { lesson: TeacherParashaLesson; onClick
       onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = shadows.cardSoft; e.currentTarget.style.borderColor = "rgba(139,111,71,0.09)"; }}
     >
       <div style={{ height: 100, overflow: "hidden", flexShrink: 0 }}>
-        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }} />
       </div>
       <div style={{ position: "absolute", top: 0, right: 0, width: 4, height: "100%", background: gradients.oliveButton }} />
       <div style={{ padding: "0.75rem", display: "flex", flexDirection: "column", gap: "0.3rem", flex: 1 }}>
@@ -202,7 +202,7 @@ function LessonListRow({ lesson, onClick }: { lesson: TeacherParashaLesson; onCl
         {lesson.audioUrl && <Headphones size={13} style={{ color: colors.goldDark }} />}
         {lesson.attachmentUrl && <FileDown size={13} style={{ color: colors.textSubtle }} />}
         {lesson.duration && <span style={{ fontFamily: fonts.body, fontSize: "0.66rem", color: colors.textSubtle }}>{formatDuration(lesson.duration)}</span>}
-        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>פרטים ←</span>
+        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>לתוכן המלא ←</span>
       </div>
     </div>
   );

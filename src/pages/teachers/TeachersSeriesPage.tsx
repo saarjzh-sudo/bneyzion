@@ -14,7 +14,7 @@
  *
  * Iron rules:
  *  - RTL logical CSS only
- *  - Lesson trio image chain: thumbnail_url → series.image_url → getSeriesCoverImage() → /images/series-default.png
+ *  - Lesson trio image chain: thumbnail_url → series.image_url → getSeriesCoverImage() → /images/series-default.webp
  *  - No mock data
  */
 import { useState, useMemo } from "react";
@@ -181,7 +181,7 @@ function LessonCard({
     lesson.thumbnailUrl ||
     seriesImageUrl ||
     getSeriesCoverImage(seriesTitle) ||
-    "/images/series-default.png";
+    "/images/series-default.webp";
 
   return (
     <div
@@ -192,7 +192,7 @@ function LessonCard({
     >
       {/* Image */}
       <div style={{ height: 120, overflow: "hidden", flexShrink: 0 }}>
-        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }} />
       </div>
 
       {/* Olive accent stripe */}

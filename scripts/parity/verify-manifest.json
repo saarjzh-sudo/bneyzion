@@ -1,0 +1,224 @@
+[
+  {
+    "book": "בראשית",
+    "node_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/בראשית/",
+    "new_url": "https://bneyzion.vercel.app/category/db78e0a3-3bcf-4009-96b8-49c76df555f9"
+  },
+  {
+    "book": "שמות",
+    "node_id": "5149a23b-8181-4c41-81db-1efcd2631f5a",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/שמות/",
+    "new_url": "https://bneyzion.vercel.app/category/5149a23b-8181-4c41-81db-1efcd2631f5a"
+  },
+  {
+    "book": "ויקרא",
+    "node_id": "6267feb7-de69-4106-aa02-172411e070cd",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/ויקרא/",
+    "new_url": "https://bneyzion.vercel.app/category/6267feb7-de69-4106-aa02-172411e070cd"
+  },
+  {
+    "book": "במדבר",
+    "node_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/במדבר/",
+    "new_url": "https://bneyzion.vercel.app/category/7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2"
+  },
+  {
+    "book": "דברים",
+    "node_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/דברים/",
+    "new_url": "https://bneyzion.vercel.app/category/b082cb95-cec2-4fb4-9d92-4dceb7ce2706"
+  },
+  {
+    "book": "יהושע",
+    "node_id": "831d1ccb-a1a4-4a1f-b3b1-2608e7b6da16",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יהושע/",
+    "new_url": "https://bneyzion.vercel.app/category/831d1ccb-a1a4-4a1f-b3b1-2608e7b6da16"
+  },
+  {
+    "book": "שופטים",
+    "node_id": "ebdb355f-6a9f-44a5-9aa0-2f858434cc17",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/",
+    "new_url": "https://bneyzion.vercel.app/category/ebdb355f-6a9f-44a5-9aa0-2f858434cc17"
+  },
+  {
+    "book": "שמואל א",
+    "node_id": "d4dd089a-1ba3-420d-b130-78f0ef90cb69",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-א/",
+    "new_url": "https://bneyzion.vercel.app/category/d4dd089a-1ba3-420d-b130-78f0ef90cb69"
+  },
+  {
+    "book": "שמואל ב",
+    "node_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/",
+    "new_url": "https://bneyzion.vercel.app/category/02539385-aaaa-4c7f-9d85-d1af6e1cdd96"
+  },
+  {
+    "book": "מלכים א",
+    "node_id": "ff96641e-68f3-4e4c-92ee-2175b77f6e75",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-א/",
+    "new_url": "https://bneyzion.vercel.app/category/ff96641e-68f3-4e4c-92ee-2175b77f6e75"
+  },
+  {
+    "book": "מלכים ב",
+    "node_id": "75b7c62c-50e2-4874-bcf5-2d8ddf646771",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלכים-ב/",
+    "new_url": "https://bneyzion.vercel.app/category/75b7c62c-50e2-4874-bcf5-2d8ddf646771"
+  },
+  {
+    "book": "ישעיהו",
+    "node_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/",
+    "new_url": "https://bneyzion.vercel.app/category/1fb20386-80be-4e03-a205-7ee9ea4a385b"
+  },
+  {
+    "book": "ירמיהו",
+    "node_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/",
+    "new_url": "https://bneyzion.vercel.app/category/69c795d9-a415-43a2-afb1-8694fe2e2a60"
+  },
+  {
+    "book": "יחזקאל",
+    "node_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יחזקאל/",
+    "new_url": "https://bneyzion.vercel.app/category/5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d"
+  },
+  {
+    "book": "הושע",
+    "node_id": "5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/הושע/",
+    "new_url": "https://bneyzion.vercel.app/category/5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d"
+  },
+  {
+    "book": "יואל",
+    "node_id": "a8797de2-98f1-461f-b5f1-6b1143df5597",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יואל/",
+    "new_url": "https://bneyzion.vercel.app/category/a8797de2-98f1-461f-b5f1-6b1143df5597"
+  },
+  {
+    "book": "עמוס",
+    "node_id": "9526c5b5-68ec-495f-a3ca-49ec3feb3c4a",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/עמוס/",
+    "new_url": "https://bneyzion.vercel.app/category/9526c5b5-68ec-495f-a3ca-49ec3feb3c4a"
+  },
+  {
+    "book": "עובדיה",
+    "node_id": "2a0387c7-ec11-437c-a19f-f795985ce204",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/",
+    "new_url": "https://bneyzion.vercel.app/category/2a0387c7-ec11-437c-a19f-f795985ce204"
+  },
+  {
+    "book": "יונה",
+    "node_id": "0f69e7e1-c6d4-4ede-9c42-006ee99ea995",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/יונה/",
+    "new_url": "https://bneyzion.vercel.app/category/0f69e7e1-c6d4-4ede-9c42-006ee99ea995"
+  },
+  {
+    "book": "מיכה",
+    "node_id": "895474b3-1a1c-4693-820c-a6e645c4e853",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מיכה/",
+    "new_url": "https://bneyzion.vercel.app/category/895474b3-1a1c-4693-820c-a6e645c4e853"
+  },
+  {
+    "book": "נחום",
+    "node_id": "e8f7ed1c-fa87-4186-ba01-8d2dd4e40b88",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/נחום/",
+    "new_url": "https://bneyzion.vercel.app/category/e8f7ed1c-fa87-4186-ba01-8d2dd4e40b88"
+  },
+  {
+    "book": "חבקוק",
+    "node_id": "4a17b976-362f-4abe-9c75-965b50a4a1f7",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/חבקוק/",
+    "new_url": "https://bneyzion.vercel.app/category/4a17b976-362f-4abe-9c75-965b50a4a1f7"
+  },
+  {
+    "book": "צפניה",
+    "node_id": "bab915ba-8220-4a76-8d55-690875543b3a",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/צפניה/",
+    "new_url": "https://bneyzion.vercel.app/category/bab915ba-8220-4a76-8d55-690875543b3a"
+  },
+  {
+    "book": "חגי",
+    "node_id": "273e3b3c-318d-4335-b026-d03dc4c8a602",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/חגי/",
+    "new_url": "https://bneyzion.vercel.app/category/273e3b3c-318d-4335-b026-d03dc4c8a602"
+  },
+  {
+    "book": "זכריה",
+    "node_id": "c6285a2a-5b5a-4005-bad0-6712206d5ed6",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/זכריה/",
+    "new_url": "https://bneyzion.vercel.app/category/c6285a2a-5b5a-4005-bad0-6712206d5ed6"
+  },
+  {
+    "book": "מלאכי",
+    "node_id": "3684f720-fd9d-400e-bdb4-24343cbd51b6",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/מלאכי/",
+    "new_url": "https://bneyzion.vercel.app/category/3684f720-fd9d-400e-bdb4-24343cbd51b6"
+  },
+  {
+    "book": "תהלים",
+    "node_id": "7dc34ac8-e332-47e5-87d5-9400a85fa85d",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/תהלים/",
+    "new_url": "https://bneyzion.vercel.app/category/7dc34ac8-e332-47e5-87d5-9400a85fa85d"
+  },
+  {
+    "book": "משלי",
+    "node_id": "f71c762a-4d9d-4cc3-af23-adfdd629885c",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/משלי/",
+    "new_url": "https://bneyzion.vercel.app/category/f71c762a-4d9d-4cc3-af23-adfdd629885c"
+  },
+  {
+    "book": "איוב",
+    "node_id": "ec9ae746-373b-4a2d-b478-d0dcb67c0b3c",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/איוב/",
+    "new_url": "https://bneyzion.vercel.app/category/ec9ae746-373b-4a2d-b478-d0dcb67c0b3c"
+  },
+  {
+    "book": "שיר השירים",
+    "node_id": "16b824c5-6cea-4a4f-bda5-6aac870b2689",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/שיר-השירים/",
+    "new_url": "https://bneyzion.vercel.app/category/16b824c5-6cea-4a4f-bda5-6aac870b2689"
+  },
+  {
+    "book": "רות",
+    "node_id": "a14dbc35-1caf-4675-9eba-75b5df118925",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/רות/",
+    "new_url": "https://bneyzion.vercel.app/category/a14dbc35-1caf-4675-9eba-75b5df118925"
+  },
+  {
+    "book": "איכה",
+    "node_id": "35781f30-76a7-4fc6-aa06-52a1db4a4054",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/איכה/",
+    "new_url": "https://bneyzion.vercel.app/category/35781f30-76a7-4fc6-aa06-52a1db4a4054"
+  },
+  {
+    "book": "קהלת",
+    "node_id": "4472645d-c8bc-4657-bfe1-fba960edd8e3",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/קהלת/",
+    "new_url": "https://bneyzion.vercel.app/category/4472645d-c8bc-4657-bfe1-fba960edd8e3"
+  },
+  {
+    "book": "אסתר",
+    "node_id": "8600dfad-9e4d-41af-8b85-ccc325ee1298",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/אסתר/",
+    "new_url": "https://bneyzion.vercel.app/category/8600dfad-9e4d-41af-8b85-ccc325ee1298"
+  },
+  {
+    "book": "דניאל",
+    "node_id": "6cda749b-1b47-463b-9e27-107acbc8aa3e",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/דניאל/",
+    "new_url": "https://bneyzion.vercel.app/category/6cda749b-1b47-463b-9e27-107acbc8aa3e"
+  },
+  {
+    "book": "עזרא ונחמיה",
+    "node_id": "5896c267-01b2-44d0-9fa4-f0d3b357ccc1",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/",
+    "new_url": "https://bneyzion.vercel.app/category/5896c267-01b2-44d0-9fa4-f0d3b357ccc1"
+  },
+  {
+    "book": "דברי הימים",
+    "node_id": "2c9c593e-fd97-431b-86b4-ab2b62b6542c",
+    "old_url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/כתובים/דברי-הימים/",
+    "new_url": "https://bneyzion.vercel.app/category/2c9c593e-fd97-431b-86b4-ab2b62b6542c"
+  }
+]

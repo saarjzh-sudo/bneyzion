@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Play, MessageCircle, BookOpen, ChevronDown, ChevronUp, Heart } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useSEO } from "@/hooks/useSEO";
-import kenesHeroBg from "@/assets/hero-kenes-shavuot.jpg";
+import kenesHeroBg from "@/assets/hero-kenes-shavuot.webp";
 
 const KENES_TITLE = "הכנת הלב למתן תורה";
 const KENES_SUBTITLE = "מתוך הפסוקים — ערב לימוד לקראת חג השבועות תשפ״ו";

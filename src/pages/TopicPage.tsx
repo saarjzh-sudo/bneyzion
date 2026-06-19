@@ -63,7 +63,7 @@ function lessonImage(l: TopicLesson): string {
   return (
     l.thumbnail_url ||
     l.series?.image_url ||
-    "/images/series-default.png"
+    "/images/series-default.webp"
   );
 }
 
@@ -87,7 +87,7 @@ function useTopic(slug: string) {
 }
 
 function useTopicLessons(topicId: string | undefined) {
-  return useQuery<TopicLesson[]>({
+  return useQuery<Array<TopicLesson & { _sortOrder: number | null }>>({
     queryKey: ["topic-lessons", topicId],
     enabled: !!topicId,
     staleTime: 1000 * 60 * 5,
@@ -108,9 +108,11 @@ function useTopicLessons(topicId: string | undefined) {
         )
         .eq("topic_id", topicId!)
         .eq("lessons.status", "published")
-        // §0.3: dual-audience filter — exclude teacher-only content
+        // §0.3 + Saar 19.6: "what was exposed on BOTH sides stays on both" — show public (general)
+        // AND dual-audience (teachers+general); teacher-EXCLUSIVE ({teachers} only) stays hidden.
+        // "has general" == "not teacher-exclusive" since 0 published lessons lack audience_tags.
         // referencedTable required for PostgREST .or() on embedded table (fixes PGRST100)
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}", { referencedTable: "lessons" })
+        .or("audience_tags.cs.{general}", { referencedTable: "lessons" })
         .limit(500);
 
       if (error) throw error;
@@ -154,11 +156,66 @@ function useTopicLessons(topicId: string | undefined) {
           if (ao == null) return 1;
           if (bo == null) return -1;
           return ao - bo;
-        })
-        .map(({ _sortOrder: _s, ...rest }: any) => rest) as TopicLesson[];
+        }) as Array<TopicLesson & { _sortOrder: number | null }>;
 
-      // Use orderedLessons if sort_order data is available, otherwise deduped flat
-      return orderedLessons.length > 0 ? orderedLessons : lessons;
+      // L3: KEEP _sortOrder — the component merges series_topics + lesson_topics by this unified
+      // order (old topic pages interleave series cards and lesson cards in one ordered list).
+      return orderedLessons.length > 0
+        ? orderedLessons
+        : lessons.map((l) => ({ ...l, _sortOrder: null }));
+    },
+  });
+}
+
+// L3: series tagged to a topic (series_topics). Old topic pages list SERIES cards too, interleaved
+// with lessons by order — rendered together in the component via the shared sort_order space.
+type TopicSeries = {
+  id: string;
+  title: string;
+  image_url: string | null;
+  lesson_count: number | null;
+  rabbis: { name: string } | null;
+};
+
+function useTopicSeries(topicId: string | undefined) {
+  return useQuery<Array<TopicSeries & { _sortOrder: number | null }>>({
+    queryKey: ["topic-series", topicId],
+    enabled: !!topicId,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      // series_topics isn't in the generated Supabase types yet (table exists in DB) → cast to any.
+      const { data, error } = await (supabase as any)
+        .from("series_topics")
+        .select(
+          `series_id, sort_order,
+           series!inner(
+             id, title, image_url, lesson_count, status,
+             rabbis!series_rabbi_id_fkey(name)
+           )`
+        )
+        .eq("topic_id", topicId!)
+        .in("series.status", ["published", "active"])
+        // Saar 19.6 dual-audience: show public + dual (teachers+general); teacher-exclusive hidden.
+        // status already excludes 'category' (teacher-org containers stay out).
+        .or("audience_tags.cs.{general}", { referencedTable: "series" })
+        .limit(500);
+      if (error) throw error;
+      const seen = new Set<string>();
+      const out: Array<TopicSeries & { _sortOrder: number | null }> = [];
+      for (const row of (data || []) as any[]) {
+        const s = row.series;
+        if (!s || seen.has(s.id)) continue;
+        seen.add(s.id);
+        out.push({
+          id: s.id,
+          title: s.title,
+          image_url: s.image_url,
+          lesson_count: s.lesson_count,
+          rabbis: s.rabbis,
+          _sortOrder: row.sort_order as number | null,
+        });
+      }
+      return out;
     },
   });
 }
@@ -171,16 +228,33 @@ export default function TopicPage() {
 
   const { data: topic, isLoading: topicLoading, error: topicError } = useTopic(slug);
   const { data: lessons = [], isLoading: lessonsLoading } = useTopicLessons(topic?.id);
+  const { data: seriesList = [], isLoading: seriesLoading } = useTopicSeries(topic?.id);
+
+  // L3: unified ordered list — series cards + lesson cards interleaved by the shared sort_order
+  // (mirrors the old topic page, which lists both in one ordered listing).
+  type TopicItem =
+    | ({ kind: "lesson"; _sortOrder: number | null } & TopicLesson)
+    | ({ kind: "series"; _sortOrder: number | null } & TopicSeries);
+  const items: TopicItem[] = [
+    ...lessons.map((l) => ({ kind: "lesson" as const, ...l })),
+    ...seriesList.map((s) => ({ kind: "series" as const, ...s })),
+  ].sort((a, b) => {
+    const ao = a._sortOrder, bo = b._sortOrder;
+    if (ao == null && bo == null) return 0;
+    if (ao == null) return 1;
+    if (bo == null) return -1;
+    return ao - bo;
+  });
 
   const filtered = search.trim()
-    ? lessons.filter(
-        (l) =>
-          l.title.includes(search.trim()) ||
-          (l.rabbis?.name || "").includes(search.trim())
+    ? items.filter(
+        (it) =>
+          it.title.includes(search.trim()) ||
+          (it.rabbis?.name || "").includes(search.trim())
       )
-    : lessons;
+    : items;
 
-  const isLoading = topicLoading || lessonsLoading;
+  const isLoading = topicLoading || lessonsLoading || seriesLoading;
 
   return (
     <DesignLayout>
@@ -278,8 +352,8 @@ export default function TopicPage() {
               </p>
             )}
 
-            {/* Lesson count badge */}
-            {!isLoading && lessons.length > 0 && (
+            {/* Item count badge */}
+            {!isLoading && items.length > 0 && (
               <p
                 style={{
                   fontFamily: fonts.body,
@@ -289,7 +363,7 @@ export default function TopicPage() {
                   marginBottom: 0,
                 }}
               >
-                {lessons.length} שיעורים בנושא זה
+                {items.length} שיעורים בנושא זה
               </p>
             )}
           </div>
@@ -298,7 +372,7 @@ export default function TopicPage() {
         {/* ─── Main content ──────────────────────────────────────────────── */}
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "2rem 1.5rem" }}>
           {/* Search */}
-          {lessons.length > 8 && (
+          {items.length > 8 && (
             <div style={{ marginBottom: "1.5rem" }}>
               <input
                 type="search"
@@ -353,10 +427,16 @@ export default function TopicPage() {
           {/* Lesson list */}
           {!isLoading && filtered.length > 0 && (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {filtered.map((lesson) => (
+              {filtered.map((it) => {
+                const to = it.kind === "series" ? `/series/${it.id}` : `/lessons/${it.id}`;
+                const img =
+                  it.kind === "series"
+                    ? it.image_url || "/images/series-default.webp"
+                    : lessonImage(it);
+                return (
                 <Link
-                  key={lesson.id}
-                  to={`/lessons/${lesson.id}`}
+                  key={`${it.kind}-${it.id}`}
+                  to={to}
                   style={{ textDecoration: "none" }}
                 >
                   <div
@@ -383,7 +463,7 @@ export default function TopicPage() {
                   >
                     {/* Thumbnail */}
                     <img
-                      src={lessonImage(lesson)}
+                      src={img}
                       alt=""
                       style={{
                         width: 62,
@@ -394,7 +474,7 @@ export default function TopicPage() {
                         background: colors.parchmentDark,
                       }}
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+                        (e.currentTarget as HTMLImageElement).src = "/images/series-default.webp";
                       }}
                     />
 
@@ -411,7 +491,7 @@ export default function TopicPage() {
                           textOverflow: "ellipsis",
                         }}
                       >
-                        {lesson.title}
+                        {it.title}
                       </div>
 
                       <div
@@ -426,19 +506,30 @@ export default function TopicPage() {
                           flexWrap: "wrap",
                         }}
                       >
-                        {lesson.rabbis?.name && (
-                          <span>{lesson.rabbis.name}</span>
+                        {it.rabbis?.name && (
+                          <span>{it.rabbis.name}</span>
                         )}
-                        {lesson.series && (
+                        {it.kind === "series" ? (
+                          it.lesson_count != null && it.lesson_count > 0 && (
+                            <>
+                              {it.rabbis?.name && <span style={{ opacity: 0.45 }}>·</span>}
+                              <span style={{ color: colors.goldDark, fontWeight: 600 }}>{it.lesson_count} שיעורים</span>
+                            </>
+                          )
+                        ) : (
                           <>
-                            {lesson.rabbis?.name && <span style={{ opacity: 0.45 }}>·</span>}
-                            <span style={{ color: colors.goldDark, fontWeight: 600 }}>{lesson.series.title}</span>
-                          </>
-                        )}
-                        {lesson.duration != null && lesson.duration > 0 && (
-                          <>
-                            <span style={{ opacity: 0.45 }}>·</span>
-                            <span>{formatDuration(lesson.duration)}</span>
+                            {it.series && (
+                              <>
+                                {it.rabbis?.name && <span style={{ opacity: 0.45 }}>·</span>}
+                                <span style={{ color: colors.goldDark, fontWeight: 600 }}>{it.series.title}</span>
+                              </>
+                            )}
+                            {it.duration != null && it.duration > 0 && (
+                              <>
+                                <span style={{ opacity: 0.45 }}>·</span>
+                                <span>{formatDuration(it.duration)}</span>
+                              </>
+                            )}
                           </>
                         )}
                       </div>
@@ -458,11 +549,12 @@ export default function TopicPage() {
                         flexShrink: 0,
                       }}
                     >
-                      {lessonMediaIcon(lesson)}
+                      {it.kind === "series" ? <BookOpen size={13} style={{ flexShrink: 0 }} /> : lessonMediaIcon(it)}
                     </span>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

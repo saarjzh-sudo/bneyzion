@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { isPublicDualAllowed } from "@/lib/publicAudience";
 
 export function useSeriesBreadcrumb(seriesId: string | undefined) {
   return useQuery({
@@ -30,13 +31,16 @@ export function useSeriesChildren(parentId: string | undefined | null) {
     queryFn: async () => {
       // R-SER1: order by sort_order first (for chapter/event series), then title.
       // R-SER2: filter to content statuses only (no category containers).
-      // R-SER3: exclude teacher-tagged children from the public series page.
-      const { data, error } = await supabase
+      // R-SER3: exclude teacher-tagged children from the public series page —
+      //   EXCEPT the explicitly-allowed כלי עזר roots, whose dual-tagged sub-series
+      //   (e.g. "מפות עזר לתנ"ך") are genuinely public (Saar 15.6.2026). See publicAudience.ts.
+      let q = supabase
         .from("series")
         .select("id, title, description, image_url, lesson_count, status, audience_tags, rabbi_id, rabbis!series_rabbi_id_fkey(name)")
         .eq("parent_id", parentId!)
-        .in("status", ["active", "published", "category"])
-        .not("audience_tags", "cs", '{"teachers"}')
+        .in("status", ["active", "published", "category"]);
+      if (!isPublicDualAllowed(parentId)) q = q.not("audience_tags", "cs", '{"teachers"}');
+      const { data, error } = await q
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("title");
       if (error) throw error;

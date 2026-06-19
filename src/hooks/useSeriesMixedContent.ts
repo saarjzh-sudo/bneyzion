@@ -125,6 +125,8 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
           .select("id, title, description, duration, video_url, audio_url, rabbi_id, source_type, series_id, rabbis!lessons_rabbi_id_fkey(name)")
           .in("series_id", chunk)
           .eq("status", "published")
+          // R3 14.6.2026 (Saar): exclude teacher content from public series pages.
+          .not("audience_tags", "cs", "{teachers}")
           .order("published_at", { ascending: true })
           .limit(1000);
         if (error) throw error;
@@ -166,6 +168,8 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
             .select("lesson_id, lessons!inner(id, title, description, duration, video_url, audio_url, source_type, status, rabbis!lessons_rabbi_id_fkey(name))")
             .eq("topic_id", matchingTopic.id)
             .eq("lessons.status", "published")
+            // R3 14.6.2026 (Saar): topic-tagged inline lessons must also exclude teacher content.
+            .or("audience_tags.not.cs.{teachers}", { referencedTable: "lessons" })
             .limit(500);
 
           for (const tl of taggedLessons ?? []) {

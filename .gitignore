@@ -44,3 +44,15 @@ secrets/
 # Large backup dumps — don't commit to git (too big)
 scripts/backups/lessons-backup.json
 scripts/backups/series-backup.json
+
+# Parity migration — transient/heavy artifacts (regenerable; commit code+engines+docs, not data/reports)
+scripts/parity/reports/
+scripts/parity/*.log
+scripts/parity/**/*.log
+scripts/parity/mtest_data.tar.gz
+scripts/parity/mtest-round*.json
+scripts/parity/oneone/
+scripts/parity/_runplans/
+scripts/parity/_global_public_cache.json
+*.tsbuildinfo
+deno.lock

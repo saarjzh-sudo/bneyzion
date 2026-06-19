@@ -218,16 +218,16 @@ export function getSeriesFamily(title: string, description?: string | null): Ser
 // Returns null if no good match — caller should render a gradient fallback.
 export function getSeriesCoverImage(title: string): string | null {
   const t = title || "";
-  if (/ננצח|תנ.?ך|בכוח|בכח/u.test(t)) return "/images/series-tanach-victory.png";
-  if (/לשון|הקודש|דקדוק/u.test(t)) return "/images/series-lashon-hakodesh.png";
+  if (/ננצח|תנ.?ך|בכוח|בכח/u.test(t)) return "/images/series-tanach-victory.webp";
+  if (/לשון|הקודש|דקדוק/u.test(t)) return "/images/series-lashon-hakodesh.webp";
   // Ketuvim / poetic books — aicha, shir hashirim, iyov, mishlei, tehilim, etc.
   if (/איוב|משלי|כתובים|איכה|שיר השירים|שיר.השירים|קהלת|תהלים|דניאל|עזרא|נחמיה|אסתר/u.test(t))
-    return "/images/series-iyov.png";
-  if (/מידות|מוסר|אופי/u.test(t)) return "/images/series-middot.png";
+    return "/images/series-iyov.webp";
+  if (/מידות|מוסר|אופי/u.test(t)) return "/images/series-middot.webp";
   if (/חומש|בראשית|שמות|ויקרא|במדבר|דברים|פרשה|פרשת|מאמר/u.test(t))
-    return "/images/series-lashon-hakodesh.png";
+    return "/images/series-lashon-hakodesh.webp";
   if (/יהושע|שופטים|שמואל|מלכים|נביא|ישעיהו|ירמיהו|יחזקאל/u.test(t))
-    return "/images/series-tanach-victory.png";
+    return "/images/series-tanach-victory.webp";
   return null;
 }
 

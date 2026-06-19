@@ -251,7 +251,7 @@ export default function DesignPreviewSeriesList() {
             >
               {top5.map((s, i) => {
                 const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
-                const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+                const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
                 const isFirst = i === 0;
                 return (
                   <Link

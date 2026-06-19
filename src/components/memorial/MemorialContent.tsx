@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import saadiaSoldier from "@/assets/saadia-soldier.jpg";
+import saadiaSoldier from "@/assets/saadia-soldier.webp";
 
 type CardVariant = "cream" | "forest" | "gold" | "sage";
 

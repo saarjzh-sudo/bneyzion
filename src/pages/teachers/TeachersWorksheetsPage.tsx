@@ -47,6 +47,7 @@ import {
 import {
   useTeacherWorksheetsContent,
   type TeacherWorksheetLesson,
+  type TeacherWorksheetSeries,
 } from "@/hooks/useTeacherParashaContent";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -123,7 +124,7 @@ function ControlsBar({
 
 // ─── LessonCard (grid) ────────────────────────────────────────────────────────
 function LessonCard({ lesson, onClick }: { lesson: TeacherWorksheetLesson; onClick: () => void }) {
-  const imgSrc = lesson.thumbnailUrl || getSeriesCoverImage(lesson.seriesTitle || "") || "/images/series-default.png";
+  const imgSrc = lesson.thumbnailUrl || getSeriesCoverImage(lesson.seriesTitle || "") || "/images/series-default.webp";
   return (
     <div
       onClick={onClick}
@@ -132,7 +133,7 @@ function LessonCard({ lesson, onClick }: { lesson: TeacherWorksheetLesson; onCli
       onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = shadows.cardSoft; e.currentTarget.style.borderColor = "rgba(139,111,71,0.09)"; }}
     >
       <div style={{ height: 90, overflow: "hidden", flexShrink: 0 }}>
-        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }} />
       </div>
       <div style={{ position: "absolute", top: 0, right: 0, width: 4, height: "100%", background: gradients.oliveButton }} />
       <div style={{ padding: "0.7rem", display: "flex", flexDirection: "column", gap: "0.28rem", flex: 1 }}>
@@ -175,9 +176,51 @@ function LessonListRow({ lesson, onClick }: { lesson: TeacherWorksheetLesson; on
         {lesson.videoUrl && <Video size={13} style={{ color: colors.oliveMain }} />}
         {lesson.audioUrl && <Headphones size={13} style={{ color: colors.goldDark }} />}
         {lesson.attachmentUrl && <FileDown size={13} style={{ color: colors.textSubtle }} />}
-        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>פרטים ←</span>
+        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>לתוכן המלא ←</span>
       </div>
     </div>
+  );
+}
+
+// ─── Series row / card (worksheet series — old /דפי-עבודה-X/ lists series) ──────
+function SeriesListRow({ series }: { series: TeacherWorksheetSeries }) {
+  return (
+    <Link to={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", gap: "1rem", padding: "0.8rem 1rem", borderRadius: radii.lg, background: "white", border: "1px solid rgba(139,111,71,0.08)", cursor: "pointer", transition: "all 0.15s" }}
+        onMouseEnter={(e) => { e.currentTarget.style.borderColor = colors.goldDark; e.currentTarget.style.background = colors.parchmentDark; }}
+        onMouseLeave={(e) => { e.currentTarget.style.borderColor = "rgba(139,111,71,0.08)"; e.currentTarget.style.background = "white"; }}
+      >
+        <FileText size={15} style={{ color: colors.oliveDark, flexShrink: 0 }} />
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "0.86rem", color: colors.textDark, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{series.title}</div>
+          {series.rabbiName && <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.goldDark, marginTop: "0.15rem" }}>{series.rabbiName}</div>}
+        </div>
+        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, background: colors.parchmentDeep, padding: "0.2rem 0.55rem", borderRadius: radii.pill, flexShrink: 0 }}>{series.lesson_count} שיעורים</span>
+        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600, flexShrink: 0 }}>לסדרה ←</span>
+      </div>
+    </Link>
+  );
+}
+
+function SeriesCard({ series }: { series: TeacherWorksheetSeries }) {
+  return (
+    <Link to={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+      <div
+        style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.1)", boxShadow: shadows.cardSoft, padding: "1.1rem", cursor: "pointer", transition: "all 0.22s ease", position: "relative", overflow: "hidden", height: "100%", display: "flex", flexDirection: "column", gap: "0.4rem" }}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = shadows.cardHover; e.currentTarget.style.borderColor = colors.goldDark; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = shadows.cardSoft; e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)"; }}
+      >
+        <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: 4, background: gradients.oliveButton }} />
+        <span style={{ fontFamily: fonts.body, fontSize: "0.58rem", color: colors.oliveDark, background: "rgba(74,90,46,0.1)", padding: "0.1rem 0.45rem", borderRadius: radii.pill, fontWeight: 700, alignSelf: "flex-start" }}>סדרה</span>
+        <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "0.9rem", color: colors.textDark, margin: 0, lineHeight: 1.4 }}>{series.title}</h3>
+        {series.rabbiName && <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.goldDark, fontWeight: 700 }}>{series.rabbiName}</div>}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "0.6rem", borderTop: "1px solid rgba(139,111,71,0.08)", marginTop: "auto" }}>
+          <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle }}>{series.lesson_count} שיעורים</span>
+          <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>לסדרה ←</span>
+        </div>
+      </div>
+    </Link>
   );
 }
 
@@ -186,7 +229,7 @@ export default function TeachersWorksheetsPage() {
   const { book = "" } = useParams<{ book: string }>();
   const decodedBook = decodeURIComponent(book);
 
-  const { lessons, isLoading } = useTeacherWorksheetsContent(decodedBook);
+  const { series, lessons, isLoading } = useTeacherWorksheetsContent(decodedBook);
 
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
     try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "list"; } catch { return "list"; }
@@ -211,6 +254,12 @@ export default function TeachersWorksheetsPage() {
     }
     return result;
   }, [lessons, search, mediaFilter]);
+
+  const filteredSeries = useMemo(() => {
+    if (!search.trim()) return series;
+    const q = search.trim();
+    return series.filter((s) => s.title.includes(q) || (s.description || "").includes(q));
+  }, [series, search]);
 
   const counts: Record<MediaFilter, number> = useMemo(() => {
     const c: Record<MediaFilter, number> = { all: lessons.length, audio: 0, video: 0, pdf: 0, text: 0 };
@@ -259,7 +308,7 @@ export default function TeachersWorksheetsPage() {
           <div style={{ display: "flex", justifyContent: "center", padding: "4rem" }}>
             <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
           </div>
-        ) : lessons.length === 0 ? (
+        ) : series.length === 0 && lessons.length === 0 ? (
           <div style={{ textAlign: "center", padding: "4rem 2rem", color: colors.textSubtle, fontFamily: fonts.body }}>
             <BookOpen size={48} style={{ color: colors.goldDark, marginBottom: "1rem", opacity: 0.4 }} />
             <p style={{ margin: 0 }}>לא נמצאו דפי עבודה עבור {decodedBook}</p>
@@ -279,18 +328,48 @@ export default function TeachersWorksheetsPage() {
               counts={counts}
             />
 
-            {/* Results */}
-            {filteredLessons.length > 0 ? (
-              viewMode === "grid" ? (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: "1rem" }}>
-                  {filteredLessons.map((l) => <LessonCard key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
+            {/* Series section (worksheet series, in old-site order) */}
+            {filteredSeries.length > 0 && (
+              <section style={{ marginBottom: "2.5rem" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem", paddingBottom: "0.6rem", borderBottom: "2px solid rgba(74,90,46,0.15)" }}>
+                  <h2 style={{ fontFamily: fonts.display, fontSize: "1.05rem", color: colors.oliveDark, margin: 0, fontWeight: 800 }}>סדרות דפי עבודה</h2>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle, background: colors.parchmentDeep, padding: "0.15rem 0.55rem", borderRadius: radii.pill }}>{filteredSeries.length}</span>
                 </div>
-              ) : (
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
-                  {filteredLessons.map((l) => <LessonListRow key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
-                </div>
-              )
-            ) : (
+                {viewMode === "grid" ? (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1rem" }}>
+                    {filteredSeries.map((s) => <SeriesCard key={s.id} series={s} />)}
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+                    {filteredSeries.map((s) => <SeriesListRow key={s.id} series={s} />)}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Standalone worksheet lessons */}
+            {filteredLessons.length > 0 && (
+              <section>
+                {filteredSeries.length > 0 && (
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem", paddingBottom: "0.6rem", borderBottom: "2px solid rgba(74,90,46,0.15)" }}>
+                    <h2 style={{ fontFamily: fonts.display, fontSize: "1.05rem", color: colors.oliveDark, margin: 0, fontWeight: 800 }}>שיעורים נוספים</h2>
+                    <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle, background: colors.parchmentDeep, padding: "0.15rem 0.55rem", borderRadius: radii.pill }}>{filteredLessons.length}</span>
+                  </div>
+                )}
+                {viewMode === "grid" ? (
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(190px, 1fr))", gap: "1rem" }}>
+                    {filteredLessons.map((l) => <LessonCard key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+                    {filteredLessons.map((l) => <LessonListRow key={l.id} lesson={l} onClick={() => setModalLessonId(l.id)} />)}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* Nothing after filter */}
+            {filteredSeries.length === 0 && filteredLessons.length === 0 && (
               <div style={{ textAlign: "center", padding: "3rem", color: colors.textSubtle, fontFamily: fonts.body }}>
                 <p>לא נמצאו תוצאות לסינון הנוכחי.</p>
                 <button onClick={() => { setSearch(""); setMediaFilter("all"); }} style={{ background: "none", border: "none", cursor: "pointer", color: colors.oliveDark, fontFamily: fonts.body, fontSize: "0.85rem", textDecoration: "underline" }}>

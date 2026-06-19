@@ -49,8 +49,8 @@ export default function DesignPreviewLessonPopup() {
 
   const lesson = (lessons as any[])[0];
   const cover = topSeries
-    ? topSeries.image_url || getSeriesCoverImage(topSeries.title) || "/images/series-default.png"
-    : "/images/series-default.png";
+    ? topSeries.image_url || getSeriesCoverImage(topSeries.title) || "/images/series-default.webp"
+    : "/images/series-default.webp";
 
   if (!topSeries || !lesson) {
     return (

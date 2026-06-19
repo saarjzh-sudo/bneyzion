@@ -98,10 +98,20 @@ def match(old_items, pool):
         idx[k].sort(key=lambda r: -(r.get("lesson_count") or 0))  # richest first
     matches, old_missing = [], []
     used = set()
+    def _au(s):  # author key: drop הרב/הרבנית prefix so 'הרב דני' == 'דני'
+        return norm(re.sub(r'^(הרב|הרבנית|הג"ר|מורנו)\s+', '', s or ''))
     for it in old_items:
         key = norm(it.get("title_norm") or it["title"])
         cands = [r for r in idx.get(key, []) if r["id"] not in used]
         if cands:
+            # duplicate-title disambiguation: when several same-title series compete, prefer the
+            # one whose rabbi matches the OLD author (else richness). Fixes merged/split same-name
+            # series (e.g. two 'ספר שמואל א' by דני סטיסקין vs טוביה לפשיץ).
+            oa = _au(it.get("author"))
+            if oa and len(cands) > 1:
+                au = [r for r in cands if _au(r.get("rabbi")) == oa]
+                if au:
+                    cands = au
             r = cands[0]; used.add(r["id"]); matches.append((it, r))
         else:
             old_missing.append(it)

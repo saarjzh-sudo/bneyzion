@@ -257,6 +257,19 @@ adds to (not overwrites) institutional memory.
 אבל אם הם נוגעים ב: `webhook.ts` / `create-payment.ts` / env vars / branch main / DB schema payments → **עבור על הרשימה הזו קודם.**
 עבודה ב-sandbox, deploy סדרתי יחיד, אימות ויזואלי — **לפני DONE.**
 
+### 8. ⚠️ פריסה לדף ההתרמה — `bneyzion-yehoshua.vercel.app` (תוקן/אומת 2026-06-18)
+
+> **`bneyzion-yehoshua.vercel.app` הוא דומיין נוסף על אותו project `bneyzion`** (prj_P2KNz, `gitBranch:None`) — **לא** project נפרד. דף ההתרמה מוגש ממנו דרך redirect ב-`vercel.json` (`/design-yehoshua-campaign` על host `bneyzion.vercel.app` → 308 ל-yehoshua). `bneyzion.vercel.app` (האתר הראשי) ו-`bneyzion-yehoshua.vercel.app` יושבים על **deployments נפרדים**.
+
+**לפרוס לדף ההתרמה בלי לגעת באתר הראשי (אומת):**
+1. **לעולם לא `vercel --prod`** — gitBranch=None → עלול לדרוס את `bneyzion.vercel.app`.
+2. `vercel deploy` (preview, target=null) מ-repo. ה-Supabase URL+key **base64 ב-source** (`src/integrations/supabase/client.ts`, עקיפת NetSpark) → preview עובד **בלי env vars**. `ssoProtection: all_except_custom_domains` → ה-preview `*.vercel.app` מחזיר 401, אבל הדומיין המוקצה עוקף.
+3. הקצאה ידנית רק לדומיין ההתרמה: `POST /v2/deployments/{dpl_id}/aliases` body `{"alias":"bneyzion-yehoshua.vercel.app"}` (לא `vercel alias set` — לא מקבל `--yes`).
+4. **אמת שהראשי לא זז דרך `GET /v13/deployments/bneyzion.vercel.app`** — להשוות `id`. **לא** `x-vercel-id` (per-request, משתנה תמיד → false positive!).
+5. **rollback:** alias ל-`bneyzion-3l26l2s7q-saars-projects-4508d6bb.vercel.app`. Token = saars-projects (`vcp_6fYI…`), NetSpark `HTTP_PROXY="" HTTPS_PROXY="" NO_PROXY="*"`.
+
+**מוצר חדש בכרטיסים = frontend בלבד:** הוסף אובייקט ל-`TIERS` ב-`DesignPreviewYehoshuaCampaign.tsx` + שורה ל-`TIER_NAMES` ב-Admin. ה-`tier_id` (כל מחרוזת) זורם כ-metadata דרך הסליקה הקיימת — **אין צורך ברשומת `payment_products`**. ה-view `yehoshua_tier_counts` סופר `GROUP BY tier_id`, `sold=0` אוטומטי (`tierCounts[id] ?? 0`). דוגמה: `tier-yehoshua-shoftim` (₪220, 18.6.2026).
+
 ---
 
 ## 0. פרופיל הרב יואב אוריאל — הלקוח
@@ -774,6 +787,15 @@ No human figures, no faces, no letters, no text.
 ---
 
 ## 7. Major work history (sessions log)
+
+### 2026-06-15 — סבב תיקונים 3.1 (recorded + tools dual-audience + sidebar + parity watchdog) — DEPLOYED+VERIFIED
+- **תנ״ך מוקלט ריק → 37 סדרות בסדר קאנון.** `src/hooks/useContentSidebar.ts` had `children:[]` hardcoded for the recorded-project node (`041ce810`). The 37 recorded series live under their BOOK parents, not the root. Fix: aggregate by `title ILIKE '%מוקלט%' OR '%קריאה בטעמים%'` (the בטעמים variants have no "מוקלט") + twin-dedup + a NEW local `RECORDED_BOOK_CANON` global order. **`getBiblicalSortIndex` is unsuitable for cross-category ordering — its parshiot & books maps both start at 0, so Torah collides with Neviim/Ketuvim.**
+- **כלי עזר missing series + Rav Emanuel.** 6 maps/timelines by הרב עמנואל (`744da303`) + the "מפות עזר" sub-series (`4d78557b`) are `published`+`['teachers','general']` — the R3 strict filter (14.6) over-reached and hid them. They ARE on the old PUBLIC page → legitimate public (per §1719 rule). Fix (Saar: "both wings"): NEW `src/lib/publicAudience.ts` with `PUBLIC_DUAL_ALLOWED_ROOTS`; `useLessonsBySeries` + `useSeriesChildren` skip the strict filter ONLY for those roots. Strict stays on parasha/topic/category/rabbi/search/sidebar-node. Verified live: עמנואל×7, ציר-זמן×6, 18 tables render.
+- **Sidebar cleanup** (`DesignSidebar.tsx`): removed search box, "ראשי" + "לזכר סעדיה" (kept in header), collapse button shares a half-row with תרומות. Verified: `חיפוש...` placeholder = 0 in deployed bundle.
+- **Parity watchdog** (`scripts/parity/parity_watch.py` + `sections-50.json`, 52 sections) — reuses `parity_engine.py`. Deterministic checks: EMPTY (render-faithful; recordedProject special-cased to title-pattern), regression-vs-baseline. LEAK/THIN/HIDDEN advisory only (CategoryPage L183/L232 confirmed the strict filter hides teacher rows → DB-presence under a public tree is NOT a UI leak). First run: 0 foundational gaps.
+- **Dashboard** (`bneyzion-fixes/index.html`): clearer upload-error message (size/quota/network) instead of silent swallow.
+- **Deploy:** `bneyzion.vercel.app` → dpl `7HVRsPk3g9cNAVuY6RSemwTQUbk8` (bundle `main-DT8GQtd6.js` == local build). **rollback = `dpl_AFPNbC82qrkAgciN48f7EEcgkT5f`.**
+- **W4 (שלושת השבועות order) NOT closed:** the old site paginates lessons 5-per-page in JS — curl/Firecrawl/crawl all return only 5, so the full old order is not extractable. New order's head matches; needs a scrolled old-page screenshot from Saar to fix a specific item.
 
 ### 2026-06-10 — gap5: physical dedup same-series (3,519 שורות נמחקו)
 
@@ -6991,3 +7013,724 @@ prod alias `bneyzion.vercel.app` → `dpl_4F97Gh19aaXQSvFJMNDTpo3Fcfvz` (bundle 
 - במדבר/ויקרא/דברים — אומתו ב-DB (22-24 כרטיסים), לא אומתו ויזואלית חי.
 - **66 קבצים ממתינים ל-rehost** (attachment_url NULL + legacy bneyzion.co.il; הפופאפ מציג כותרת+טקסט, לא PDF-inline; דורש service_role).
 - /bible chapter-grid לנביאים מבוסס event-series; bible_chapter דליל בתורה (86/1436 מתויגים) — תיוג-פרקים = data-debt.
+
+---
+
+## סשן 17.6.2026 (לילה) — אבחון באג רינדור עמוד-קטגוריה ציבורי (CategoryPage) — READ-ONLY SPEC
+
+**תלונת יואב (סבב 6, חוזרת 6 פעמים):** לחיצה על קטגוריה בסיידבר → "המון אי-התאמה — לא אותן סדרות, לא בסדר, סדרות במקום הלא-נכון. האתר החדש מציג רק סדרות ולא את השיעורים מתחתיהן." צילומי-מסך (ספר "שמות"): הישן = טבלה אחת ממוינת שמשלבת סדרות + שיעורים-בודדים, עם עמודות מאת (rabbi) + אורך (duration). החדש = רשימת סדרות בלבד, בלי שיעורים, בלי מחבר, בלי אורך, בסדר שונה.
+
+### שורש הבעיה (אומת מול ground-truth + DB, לא הנחה)
+
+`src/pages/CategoryPage.tsx` בונה את העמוד משני מקורות נפרדים שמרונדרים בשני סקשנים נפרדים, לא כטבלה אחת ממוזגת:
+1. **סדרות** ← `useContentSidebar.useSeriesForNode(id)` — מרחיב `get_series_descendant_ids` רקורסיבית, מבצע dedup-לפי-כותרת, **מסנן את סדרות פרשת-האירוע** (`isParshaEventSeries` = `^\s*פרשת\s.*\|\s*[א-ת]`), וממיין לפי band של `sort_order` ואז `localeCompare`.
+2. **שיעורים בודדים** ← `useDirectLessons(id)` — שולף `lessons` עם `cat_standalone=true` + `bible_book=<ספר>`, ממיין לפי `content_type → bible_chapter → title`.
+
+**הוכחות מ-DB (project pzvmwfexeiruelwiujxn) ומ-ground-truth:**
+- ה-ground-truth הציבורי קיים: `scripts/parity/oneone/old_listings_torah_ketuvim.json` + `old_listings_neviim_moadim.json` (570 עמודים). עבור עמוד ספר "שמות" הוא מחזיק טבלה אחת רציפה: `sub_links` (25 רשומות, `kind:"series"`, עם `rabbi` + `n_lessons_text`, `order_index` 0..24) + `items` (38 רשומות שיעור/שו"ת, עם `rabbi` + `duration` + `type`, `order_index` 25..62). **סה"כ 63 שורות ממוזגות לפי order_index 0..62.**
+- DB מכיל בדיוק **38 שיעורים `cat_standalone=true`** ל"שמות" (תואם 1:1 ל-items הישן) — המיגרציה כבר סימנה אותם נכון, עם rabbi + duration.
+- אבל ה-`sort_order` עליהם הוא **זבל** (10,10,10,13,18,20,20...) — לא `order_index` הישן (25..62). מלא ties.
+- ל**סדרות** הציבוריות של "שמות" כל `sort_order=0` — **אין שום order_index רשום**, אז הסדר לא-מוגדר (נופל ל-localeCompare). הישן היה בסדר מוגדר (0..24).
+- `useSeriesForNode` חושף phantoms/rollups שגויים (כפילות "הרב אבינר על פרשיות שמות" 21 ו-19 שיעורים; "דבר תורה...שמות" עם 0 שיעורים) — לא ה-allow-list הישן של 25 סדרות בדיוק.
+
+**למה parity_watch.py דיווח "0 פערים":** הוא נכשל-קשיח רק על EMPTY (0 פריטים) או REGRESSION (ספירה ירדה מול baseline-שלו). LEAK/THIN/HIDDEN = ייעוצי בלבד. בדיקת ה-MEMBERSHIP המתועדת (סדרות-ילד ישנות נוכחות בחדש, בסדר) **לא ממומשת**. הוא מודד PRESENCE, לא CORRESPONDENCE/ORDER.
+
+### תקציר התיקון (mirror של פתרון אגף-המורים שכבר עובד)
+
+אגף-המורים פתר את אותו באג בדיוק עם: טבלת allow-list מסודרת `teacher_listing_items` (scope='book') + מנוע ingest מ-ground-truth (`teachers_book_listing.py`) + hook (`useTeacherBookListing`) + רינדור רשימה-אחת-ממוזגת (`TeachersBookPage` עם `filteredListing.map` שמשלב `SeriesListRow`+`LessonListRow`) + fallback היוריסטי. **הצד הציבורי חסר את כל ה-4.** הספק המלא בפלט המובנה.
+
+---
+
+## real_parity.py — מנוע פאריטי-התאמה אמיתי (17.6.2026, סבב 6 / תלונת יואב)
+
+**הבעיה:** `parity_watch.py` בודק רק non-emptiness + anti-regression על סקלר יחיד (surfaced count) ולכן דיווח "0 פערים" בזמן שכל קטגוריה ציבורית מציגה סדרות שגויות, בסדר שגוי, **בלי שיעורים בודדים**. בדיקת MEMBERSHIP שמוצהרת ב-docstring שלו (L18) **מעולם לא מומשה** — אין שום קוד שטוען את `audit_full_state.json` children או קורא ל-`canonical_match`.
+
+**הפתרון:** `scripts/parity/real_parity.py` — אודיט התאמה node-by-node לכל ניווט בסיידבר.
+- **OLD (מקור ORDER אמיתי):** re-scrape חי של עמוד הקטגוריה הישן ב-DOM order. `div.lessonBlock.lessonSeriesBlock`=סדרה, `div.lessonBlock`=שיעור בודד; כותרת מ-`<h3><a>`, מחבר מ-`<div class="author">`, אורך מ-`<div class="duration">`. fallback ל-cache `children[]` = MEMBERSHIP בלבד (order=sorted-url, **לא** render order → אז לא טוענים orderMismatch).
+- **NEW:** מראה 1:1 את `useSeriesForNode` (כרטיסי סדרות: descendant series, public filter, dedup קנוני, band sort, סינון lessonCount>0/draft) + `CategoryPage.useDirectLessons` (שיעורים בודדים: `lessons.cat_standalone` לפי `bible_book`, NOT teachers).
+- **DIFF:** missingSeries, extraSeries (מפוצל ל-`pollutionExtraSeries` מול `chapterExtraSeries` כדי לא לבלבל סדרות-פרק לגיטימיות עם דליפת דפי-עבודה/חידות), missingStandaloneLessons, orderMismatch, severity.
+
+**ממצא (53 nodes נבדקו):** `nodesWithGaps=37` — **כל 37 ספרי-התנ"ך הציבוריים** נכשלים בהתאמה. high=36, medium=1, low=16.
+- **407 שיעורים בודדים חסרים** סה"כ ב-37 הספרים — זה בדיוק הבאג המצולם ("series-only"). דוגמה שמות: old=52 שורות, new=45, 12 שיעורים בודדים חסרים, orderMismatch=True, 2 דליפות חידות (`חידות על פי א״ב`, `חידות על פירוש רש״י`).
+- 33 סדרות חסרות, 53 דליפות-זיהום אמיתיות, 15 ספרים עם סדר שגוי.
+- ספרי-פרקים (תהלים/ישעיהו/ירמיהו/יחזקאל/דניאל) — ה-extra הגדול שלהם הוא סדרות-פרק לגיטימיות (תהלים 150 פרקים, 0 זיהום) אך עדיין חסרים להם שיעורים בודדים.
+- 8 סקשנים נוספים (איך לומדים/נושאים/מועדים/הפטרות/כלי עזר/ימי עיון/ליווי ת"תים/מוקלט) = `unresolved` (אין מיפוי עמוד-ישן במנוע הזה — צריך מיפוי slug ייעודי).
+- אגף-המורים **לא** נבדק להתאמה כאן (presence-only) — ה-1:1 שלו בבעלות `teachers_book_listing.py`, אסור לסכן רגרסיה.
+
+`real_parity.py` הוא ההחלפה ל-watchdog המזויף. הרצה: `python3 scripts/parity/real_parity.py`. דוח אחרון: `scripts/parity/reports/real-parity-20260617T181743Z.json`.
+
+### אימות אדוורסרי — node "יהושע" (17.6.2026)
+תוצאה: **הפער אמיתי (CONFIRMED), rootCauseClass=data, severity=high.** שוחזר עצמאית: scrape חי של העמוד הישן (39 שורות DOM: 14 סדרות + 25 שיעורים-בודדים עם מאת+אורך) מול Supabase.
+- **השורש המרכזי (השיעורים-הבודדים):** `bible_book='יהושע'` = 834 שיעורים published, **כולם `cat_standalone=false`** → `useDirectLessons` מחזיר 0. כל 25 השיעורים-הבודדים של הישן קיימים ב-DB (0 חסרים פיזית) אך אף אחד לא יוצג כשורת-standalone. זה בדיוק באג ה"סדרות-בלבד" של הצילומים. **תיקון = דאטה:** לסמן את ה-25 (לפי allow-list מהישן) `cat_standalone=true` + `bible_book='יהושע'`.
+- **missingSeries (2):** (1) `ספר יהושע עם ביאור 'ושננתם'` (d241183d) `audience_tags=[general,teachers]` — **dual-audience** שנבלע ע"י הפילטר הגורף `NOT(@>{teachers})`. היה ציבורי בישן → פער ציבורי לגיטימי. (2) `מפות עזר לספר יהושע` (08a87de3, teachers-only + parent שגוי c0c7fc56, לא צאצא של node יהושע) — היה ציבורי בישן.
+- **תיקון-טעות במנוע:** `pollutionExtraSeries` סימן 6, אך 5 מהם סדרות-פרק לגיטימיות (מעבר הירדן פרקים ג-ד=42 שיעורים וכו') שה-`_CHAP` regex פספס כי לא תופס "פרקים" (רבים). הלגיטימי-להסרה היחיד: `שיעורים יהושע` (draft, 0 שיעורים — כרטיס-רפאים; ה-drop של draft-placeholder לא תפס כי parent=bd1c3a22≠node).
+- **order:** המנוע אמר false, אך בפועל הסדר שונה מהותית (חדש פותח בסדרות-פרק לפי sort_order; ישן פתח ב'ספר יהושע'). בדיקת-הסדר של המנוע בודקת רק תת-רצף-מותאם → עיוורת לזה.
+דוח: `scripts/parity/reports/verify-yehoshua-20260617.json`.
+
+---
+
+## Adversarial parity verification — node "שופטים" (book) — 2026-06-17
+
+Verified `real-parity-20260617T181743Z.json` finding for שופטים (old=45, new=27) against independent re-derivation (live OLD scrape + Supabase via sbq.py, public filter mirroring useDirectLessons/useSeriesForNode).
+
+VERDICT: gap is REAL but the engine's per-field breakdown is partly false-positive. rootCauseClass = DATA.
+
+- missingStandaloneLessons=28 → **CONFIRMED REAL, this is the core bug.** OLD שופטים landing page interleaves 17 series + 28 standalone lessons (author+length cols, DOM order). NEW CategoryPage standalone band = `useDirectLessons` filtering `bible_book='שופטים' AND cat_standalone=true AND published AND NOT teachers` → returns **0 rows**. There are 944 public published lessons with bible_book=שופטים but **none** flagged cat_standalone. All 28 OLD standalone lessons EXIST in the new public DB (verified by normalized-title match across all 23,292 lessons) — they are NOT missing content. They live attached to ימי-עיון year-collections / other series / כלי-עזר tables, mostly with bible_book=NULL. So the migration dropped the OLD cross-listing onto the book landing page. FIX = data backfill: set cat_standalone=true + bible_book='שופטים' on the correct 28 lesson rows, using the OLD landing-page href→lesson map as ground truth (avoid dup-title mis-attribution; some titles repeat across iyun years).
+- missingSeries=['ספר שופטים כלל ופרט'] → **FALSE POSITIVE.** That exact series exists as a new card (lc=36, so=12). It was greedily consumed at score 0.53 by OLD 'ספר שופטים' because match_in() is greedy first-old-wins with no global/exact-first assignment. All 17 OLD series are present in NEW.
+- pollutionExtraSeries (6 chapter-series 'דבורה וברק | פרקים ד-ה' etc + 'שיעורים שופטים') → **mostly FALSE POSITIVE.** These are legit active public chapter-grouping series (real lesson_counts, not teacher, not worksheet leak). The _CHAP regex `פרק\s+[א-ת]` misses the `פרקים ד-ה` plural-range form so they fall through to "pollution". They are NEW structure (not on old landing) but correct content.
+- orderMismatch=true → **PARTLY FALSE POSITIVE.** Relative order of the shared OLD series within NEW is strictly increasing (preserved). The bool is driven by the greedy mismatch above. BUT the 10 net-new chapter-series interleave at the TOP (sort_order 1-10), so the visible top-of-page sequence genuinely differs from old (old led with ושננתם+rabbi-series; new leads with שיעורים שופטים / מצב הכיבושים | פרק א / מבוא לתקופת השופטים | פרק ב). This is a UX-order concern, not a data-loss bug.
+
+Count reconciliation: 45 − 28 (standalone hidden) + 10 (net new chapter-series; 'כל השיעורים בספר שופטים' lc=0 dropped by card filter) = 27 ✓.
+
+ENGINE BUGS to fix before trusting other nodes' missingSeries/order/pollution fields: (1) greedy non-exact-first matcher inflates missingSeries + orderMismatch — use exact-match-first global assignment; (2) _CHAP regex must accept `פרקים <range>` and `| פרק/פרקים` forms; (3) missingStandaloneLessons should cross-check the new DB globally (lesson exists but unflagged) vs truly-absent, to label DATA-flag vs CONTENT-missing.
+
+---
+
+## Parity verify — node "שמואל ב" (kind=book) — 2026-06-17 (adversarial, READ-ONLY)
+
+Engine real-parity-20260617T181743Z flagged: oldCount=31, newCount=32, missingStandaloneLessons=21, severity=high. **VERDICT: gap is REAL but engine framing overstates it. rootCauseClass=both.**
+
+Independent re-derivation:
+- OLD (live scrape of `/מאגר-השיעורים-והמאמרים/נביאים/שמואל-ב/`): ONE interleaved table = 10 SERIES (rows 0-9, named rabbis) + 21 standalone LESSONS (rows 10-30, with מאת+אורך). Reproduces engine oldCount=31 exactly.
+- NEW book node id `02539385-aaaa-4c7f-9d85-d1af6e1cdd96` (bible_book='שמואל ב'). Renders a CHAPTER-GRID of 22 chapter-event series (פרק א'..כד), NOT the OLD major-series list. Standalone band `useDirectLessons` = 0 rows.
+
+The 21 "missing" standalone lessons — traced by OLD href + OLD author:
+- **19/21 EXIST publicly in the new DB with the SAME public rabbi** (status active/published, NOT teacher-tagged). They are reachable: they are members of the chapter-series that sit directly under the book node (e.g. `העלאת הארון | פרק ו'` lc=14, `דוד, בת שבע ואוריה | פרק י"א` lc=13, `מרד אבשלום | פרקים ט"ו-י"ח` lc=18). So a user CAN reach them by clicking into a chapter card. They are NOT absent from the site.
+- They do not appear in the book-landing standalone band because (a) `cat_standalone=false` on all → `useDirectLessons WHERE cat_standalone=true` returns 0; and (b) `bible_book=NULL` on most → would miss the book filter even if cat_standalone flipped.
+- 1/21 (`קונטרס דוד ובת שבע`, OLD author blank) = public copy exists but attributed to Rav Yehoshua Shapira (PUBLIC-DIFF-RABBI), still public.
+- 1/21 (`ספר שמואל ב עם ביאור 'ושננתם'`) = only a teacher-wing copy by title; but a public dual-audience series card with that name exists separately.
+
+**FALSE-POSITIVE TRAP (documented for future):** a title-only normalized match collapses these 19 public lessons onto same-TITLED teacher-wing "ושננתם" rows (rabbi='ושננתם - אוצר התורה', content_type='הכוונה והדרכה למורה', aud=teachers). That mis-reads them as "teacher-only" (=legit-hidden). Must match by title+public-rabbi and follow OLD href to avoid wrongly dismissing the gap.
+
+missingSeries (engine flagged 2): `ספר שמואל ב' עם ביאור "ושננתם"` public/dual version (active, lc=12, parent=b2020001...099 ≠ book node) → genuinely not surfaced as a card = real minor gap. `מרות עד דוד` active version has bible_book='רות' (lives under Ruth) → cross-listing the new site dropped = low severity.
+
+Bottom line for fix planning: this is NOT 21 lost lessons. It is (1) DATA: 19+ public lessons need `cat_standalone=true` + `bible_book='שמואל ב'` (or a curated "featured standalone" tagging) to repopulate the book-landing standalone band; (2) CODE/migration: the new book page renders a chapter-grid and never reconstructed the OLD interleaved series+standalone table or the OLD major-series list. Teacher-wing /teachers/* untouched by any of this.
+
+---
+
+## Adversarial parity verification — node "שמואל א" (book) — 2026-06-17
+
+Engine real-parity-20260617T181743Z flagged שמואל א high (old=62/new=44, missingStandaloneLessons=40, missingSeries=5, orderMismatch). Verified READ-ONLY against live old-site re-scrape + cached crawl children-graph + Supabase. VERDICT: gap is REAL. rootCauseClass = **data** (one code precondition).
+
+CONFIRMED (high confidence):
+- OLD שמואל א book page = ONE interleaved table: 22 SERIES + 40 standalone LESSON rows, each with מאת(author)+אורך(length). Live scrape reproduces 62 blocks / 22 lessonSeriesBlock exactly. All 40 "lesson" rows have 0 children in cached crawl → genuine leaf lessons, NOT old aggregation/nav pages (refutes the usual false-positive).
+- NEW site renders 44 SERIES cards and ZERO standalone lessons. CategoryPage.useDirectLessons (src/pages/CategoryPage.tsx L167-191) filters `cat_standalone=true`. DB has **35 public non-teacher lessons attached DIRECTLY to the שמואל א category node (series_id=d4dd089a-1ba3-420d-b130-78f0ef90cb69) all with cat_standalone=FALSE** → standalone band empty. This is Yoav's "series-only, no lessons, no author/length" bug, proven.
+- SYSTEMIC ROOT CAUSE: `cat_standalone=true` exists ONLY for 5 Torah books (בראשית32/במדבר21/שמות20/ויקרא2/דברים2). EVERY Neviim/Ketuvim book = 0 marked. The old-site standalone-marking step ran for Torah, never for Nevi'im/Ketuvim. All 40 lessons exist in DB (8 matched in book table, 32 global hits) — content is present, just unflagged. So the fix is a DATA backfill of cat_standalone for the שמואל-א standalone rows (mirror Torah), not a code change.
+
+REFUTATIONS / engine over-counts (do NOT over-fix):
+- missingSeries=5 is **overcounted to ~3**. `ספר שמואל א בעיון` and `שמואל א' - מוקלט | ספרדי` are EXACT matches present in the new card list — reported missing only because the greedy match_in() consumed their new cards for other old rows (old site has TWO distinct "ספר שמואל א" series, same rabbi הרב טוביה לפשיץ, lc=4 & lc=35).
+- orderMismatch=True but driven by a SINGLE inversion, itself the same greedy-match artifact (old[3] ספר שמואל א → new[17] בעיון). Order signal is weak/noise here, not a real ordering defect.
+- The 3 genuinely-absent cards are cross-listing/audience issues, NOT deleted content: `ספר שמואל א' עם ביאור "ושננתם"` (lc=31 but audience_tags=teachers → public filter drops it; teacher-wing tension, leave alone); `שופטים, שמואל ורות` (active lc=9 public, parent=שופטים node); `מרות עד דוד` (active lc=3 public, parent=רות node). Last two = old-site cross-list under שמואל-א; fixable via series_topics/cross-link, low priority vs the standalone band.
+
+MINIMAL FIX: backfill `cat_standalone=true` on the 35 (≈40 incl. שו"ת) public lessons whose series_id=שמואל-א node and which correspond to the old standalone rows, mirroring the Torah marking; do NOT touch teacher rows; generalize the same backfill to all Nevi'im/Ketuvim books. Engine should switch SERIES matching from greedy to optimal (Hungarian/global) to stop the missingSeries/order over-counts.
+
+## אימות אדוורסרי — node "ויקרא" (book) · 17.6.2026
+מקור: `scripts/parity/reports/real-parity-20260617T181743Z.json` · OLD re-scrape (DOM order, 37 שורות=22 סדרות+15 שיעורים-בודדים, עם מאת+אורך) · NEW דרך RPC `get_series_descendant_ids` + פילטרים מדויקים של `useSeriesForNode`+`useDirectLessons`.
+**VERDICT: הפער אמיתי. rootCause = both (data + code).** 3 ממצאים אומתו עצמאית:
+1. **דליפת 2 סדרות "חידות" (pollution extraSeries):** `חידות על פי א״ב - חומש ויקרא` + `חידות על פירוש רש״י על פי א״ב - ויקרא` (status=published, lc=10) מופיעות ככרטיסים ציבוריים למרות שההורה שלהן `דפי עבודה - ויקרא` הוא `audience_tags={teachers}`. הסיבה: ה-2 בעצמן תויגו `audience_tags={general}`, והפילטר הציבורי בודק תיוג של כל שורה בנפרד — לא יורש מההורה-מורים. **data fix:** להוסיף `teachers` ל-audience_tags של 2 ה-id (`03320372-...`, `7abd354c-...`) או להעביר אותן מחוץ לעץ ויקרא. (אין צורך בשינוי קוד — הפילטר נכון, התיוג שגוי.)
+2. **קריסת רצועת שיעורים-בודדים (15→2, missingStandaloneLessons):** רק 2 שיעורי `cat_standalone=true` ציבוריים לעומת 15 שורות-בודדות בישן. כל 13 ה"חסרים" קיימים ב-DB אך עותק ה-cat_standalone שלהם משויך לסדרת-מורים `ספר ויקרא עם ביאור 'ושננתם'` (steach=true) ולכן מסונן ע"י הפילטר-הקפדני R3 (נכון!). פילוח שמרני מול 24 הכרטיסים שבאמת מוצגים: **5 ניתנים-להגעה** דרך כרטיס ציבורי (הדם והחלב/קורבנות ללא אכילה→`שיעורים- חומש ויקרא`; המקרה שאינו מקרי→`לשון הקודש בפרשה`; מאוהל מועד לאמר→`עולמות חדשים בפרשה`; וידבר ה' אליו→`הארות באונקלוס`) אך כשורות-בתוך-סדרה ולא כשורה-בודדת ראשית (=בדיוק תלונת יואב "מראה סדרות ולא שיעורים"); **8 מוסתרים לחלוטין** מדף הקטגוריה (נגישים רק דרך parsha-event-series שמסוננת, או רק דרך עותק-מורים): `'באר הבהרת'`, `כמעשה ארץ מצרים`, `"אמת מה נהדר"`, `השמיטה כפגישה`, `(מצגת) קבלת היסורים`, `ספר ויקרא עם ביאור 'ושננתם'`, `שכינה בתוך החיים`, `מעמדם ותפקידם של הכהנים`. **data fix:** לסמן עותק `cat_standalone=true` **ציבורי** (audience_tags ללא teachers) ל-8 ה-truly-hidden, מקושר לספר ויקרא — אז `useDirectLessons` יציג אותם כשורות בודדות. אזהרה: אסור לפגוע ברצועת-המורים `שאלות חזרה`/`ושננתם`.
+3. **orderMismatch אמיתי (למרות שהדוח רשם false):** הישן בסדר קיורטד-מותאם (פותח ב"הרב אבינר על פרשיות ויקרא", ממשיך לסדרות מאמרים…); החדש כפוי א-ב עברי כי כל 24 הסדרות `sort_order=0` (band עמוד-בלבד→alpha). בדיקת-הסדר של המנוע (`order_reliable and >=2 matched`) השוותה רק תת-רצף-מותאם וסומנה false; בפועל הסדר שונה לחלוטין. **data fix:** להזין `sort_order` 1..N ל-22 הסדרות הציבוריות לפי סדר-ה-DOM של הישן (engine `teachers_reconcile.py` כבר עושה זאת לאגף-מורים — להחיל אותו תבנית כאן).
+**code-side:** המנוע `real_parity.py` נכון בזיהוי 1+2 אך מדווח orderMismatch=false שגוי (צריך להשוות את כל רצף-הסדרות-המוצגות לישן, לא רק תת-רצף). **לא לגעת ב-src/** — כל התיקונים = data בלבד פרט לסדר-המנוע.
+
+---
+
+## אימות אדוורסרי — node "מלכים א" (book, 17.6.2026) — GAP מאומת כ-REAL
+
+מנוע `real_parity.py` (real-parity-20260617T181743Z.json) דיווח: old=32, new=29, missing-series=4, missing-standalone=19, order!=true, pollution=0. **כל הממצאים אומתו עצמאית — לא false positive.** ניסיון-הפרכה נכשל.
+
+- **OLD (re-scrape חי של `/נביאים/מלכים-א/`, 793KB):** 32 שורות בסדר DOM בתוך `swiper-container categorySwiper` (ה-listing הראשי, **לא** קרוסלת-המלצות) — 13 סדרות נושאיות רצופות ואז 19 שיעורים-בודדים עם מאת+אורך. נדחתה ההשערה ש"הסדרות הן קרוסלה נפרדת": כל ה-32 באותו container.
+- **NEW (Supabase + אימות מול `useSeriesForNode`/`useDirectLessons` ב-src):** 29 כרטיסי-סדרה (8 מ-13 הישנות + 21 סדרות-פרק) + **0 שיעורים-בודדים**. בדיוק תלונת יואב "סדרות בלבד".
+- **שורש 1 — 19 standalone חסרים (code/data):** `bible_book='מלכים א'` = 469 שיעורים published, **כולם `cat_standalone=false`** → band ה-standalone ריק. **כל 19 הישנים קיימים ב-DB כשיעורים ציבוריים (לא-teachers) מקוננים בסדרות** (0 חסרים פיזית, 0 dependent על teachers). סימון `cat_standalone=true` קיים **רק ל-5 חומשי התורה** (בראשית 58, שמות 38, במדבר 35, ויקרא 22, דברים 16) — **לאף ספר נביאים/כתובים אין ולו סימון אחד.** פער-backfill סיסטמי, לא באג-קוד נקודתי.
+- **שורש 2 — 3 מ-4 missingSeries (code, status=category):** `שיעורים על ספר מלכים א` (24 ש'), `מאמרים - ספר מלכים א` (19 ש'), `בין יהושפט לאחאב` (6 ש') — כולם צאצאי-אמת של node מלכים-א דרך `c1010001` ("כל השיעורים בספר מלכים א'"), לא-teachers, **status='category'** → נושרים כי `useSeriesForNode` מסנן ל-active/published/draft בלבד (השורה 349/356 ב-useContentSidebar.ts). תוכן לגיטימי שלא מוצג ככרטיס.
+- **שורש 3 — missingSeries הרביעי (data, mis-parent):** `בין דוד לשלמה` (6304239a, 3 ש') מקונן תחת `b2020001` = "כל השיעורים בספר שמואל ב'" → **שמואל ב**, לא מלכים-א. דליפה הפוכה / שיוך-הורה שגוי.
+- **chapterExtraSeries=21 = לגיטימי, לא pollution:** 20 מהן עמודי-פרק אמיתיים שהיו children של הספר בישן (אדוניהו|פרק א' וכו'). pollution_extra=[] נכון.
+- **order!=true = REAL:** החדש משלב 21 סדרות-פרק בין הנושאיות לפי sort_order; הישן = 13 נושאיות רצופות ואז 19 בודדים. עקרון-סידור שונה מהותית.
+
+**fixActions (data-first):** (1) סמן `cat_standalone=true` ל-19 לפי allow-list מ-re-scrape הישן (מנגנון זהה ל-5 התורה) — סוגר את הבאג המרכזי לכל נביאים/כתובים. (2) שנה status `category→active` (או הוסף 'category' לפילטר הכרטיסים של CategoryPage) ל-3 הסדרות תחת c1010001. (3) re-parent `בין דוד לשלמה` מ-b2020001(שמואל ב')→c1010001(מלכים א). חומרה: high.
+דוח-מקור: `scripts/parity/reports/real-parity-20260617T181743Z.json`.
+
+---
+
+## Adversarial parity verification — node "במדבר" (book) — 2026-06-17
+
+Engine diff (real-parity-20260617T181743Z.json): old=48 new=44, missingSeries=2, extraSeries=2 (חידות), missingStandaloneLessons=10, extraStandaloneLessons=6, orderMismatch=true, severity=high.
+
+VERDICT: **gap is REAL** (engine output confirmed against live old-site scrape + Supabase). rootCauseClass = **both** (data + code). Refutation attempts found ONE false positive inside the bundle (1 of the 2 missingSeries) but the node is genuinely broken — Yoav's "series-only, no lessons, wrong order" complaint reproduces exactly here.
+
+OLD ground truth (live scrape of /מאגר-השיעורים-והמאמרים/תורה/במדבר/, 48 lessonBlock = 23 series + 25 standalone, interleaved table w/ מאת+אורך). NEW = Supabase mirror of CategoryPage (useSeriesForNode + useDirectLessons + the `lessonCount>0||isDraft` card filter at CategoryPage.tsx:274 — engine mirror is FAITHFUL, confirmed by reading the hook).
+
+FINDINGS:
+1. missingSeries "הרב שלמה אבינר על פרשיות במדבר" → **FALSE POSITIVE.** Old renders this title TWICE (2 distinct אבינר series); new has 2 matching active public series (lc=6 + lc=36). Greedy 1:1 matcher consumed one and flagged the twin missing. No real gap.
+2. missingSeries "קדושת פשוטו של מקרא - במדבר" → **REAL (DATA).** Series exists in new (id 48adc2eb…, published, public, correct book parent) but lesson_count=0 AND 0 child series AND 0 child lessons → dropped by card filter, never renders. Old rendered it w/ 19 items. Lessons not linked/migrated.
+3. extraSeries 2× "חידות …" (ids cf9e78b2, 5a41e147) → **REAL (CODE) pollution leak.** Both general-audience (NOT teachers), 10 published lessons each, parent="דפי עבודה - במדבר" whose parent is the book node → leak into public book sidebar via descendant traversal. Old book page has NO worksheet/חידות node. NOTE a correctly teacher-tagged twin pair exists (parent 54fee423, properly excluded) — these general-tagged duplicates are the leak.
+4. missingStandaloneLessons=10 → **REAL (DATA), single clean root cause.** For ALL 10: the only cat_standalone=true copy is teacher-tagged under series "ספר במדבר עם ביאור 'ושננתם'" (6762cff2). n_standalone_public=0 for every one. The public lesson content DOES exist (n_public_nonstandalone_bamidbar≥1 each) but inside parsha series w/ cat_standalone=false. The public band query (NOT teachers) drops the teacher copy → 0 standalone rows render publicly. 7/10 had non-ושננתם old authors (טוביאנו, מנחם מן, וישליצקי, קלנר, אפשטיין, אוהד תירוש×2) so they are NOT legit teacher-wing routing — they are mis-flagged. **This IS the "series-only, no lessons underneath" bug, concretely.** new shows 0 standalone (newStandaloneLessons=21 in report counts cat_standalone rows from OTHER parshiot, not these 10).
+5. extraStandaloneLessons=6 (עין הארץ, קורבנות מוספים…, אויב גלוי…, גבולות הארץ 2 שלבים, מדוע התלוננו…, תולדות הכניסה…) → genuinely new-only on the standalone band (not on old book table). LOW concern (extra public content, inverse of #4). Likely over-marking cat_standalone on lessons old kept only inside parsha series.
+6. orderMismatch=true → **REAL (DATA).** Matched-series new-render indices in old-DOM order = [11,1,8,12,21,7,20,22,17,18,10,15,9,0,19,6,16,2,3,13,14] — wildly non-monotonic. New order is essentially alphabetical-by-Hebrew-title (band-2: sort_order 0/NULL → localeCompare) because the old editorial sort_order was never migrated (אבינר/קדושת/etc. all sort_order=0). Old led with "מאמרים על פרשיות במדבר - הרב ערן טמיר"; new leads with "במדבר מוקלט". Matches Yoav's "not in order".
+
+MINIMAL FIX ACTIONS (data-first, no src edits needed for #2/#4/#6 if done as data):
+- F1 (#4, biggest): create/relabel a public (non-teachers) cat_standalone copy for each of the 10 (or set audience general on the canonical standalone copy where the old author was a public rav, NOT ושננתם). Verify against old author per-lesson.
+- F2 (#3): drop cat/audience-leak — exclude "דפי עבודה" general worksheet series from book-node descendant card listing (either move under teacher wing like its twin, or set sort_order to a parked band + audience teachers).
+- F3 (#2): attach קדושת פשוטו של מקרא - במדבר's lessons (19 per old) so lesson_count>0, else it stays hidden.
+- F4 (#6): migrate old editorial sort_order onto the 23 book series (1..N from old DOM order) so band-0 sort reproduces old order instead of alphabetical.
+- F5 (#1, engine): exact-match-first global assignment for duplicate-title series to stop phantom missingSeries; also have engine cross-check "missing standalone" against global new DB (flagged-elsewhere vs truly-absent) — same engine bugs already noted for שופטים above.
+
+---
+
+## אימות אדוורסרי — צומת "שמות" (book, תורה) — 17.6.2026
+
+**מקור-דוח מנוע:** `scripts/parity/reports/real-parity-20260617T181743Z.json` (`real_parity.py`)
+**גרסת מנוע:** oldCount=52, newCount=45, severity=high.
+
+**שיטה:** re-derive עצמאי משני הצדדים. OLD = re-scrape חי של `https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/תורה/שמות/` (52 שורות = 25 סדרות + 27 שיעורים בודדים, טבלה אחת משולבת בסדר DOM עם מאת+אורך — בדיוק כצילום של יואב). NEW = Supabase (management token + אומת מול anon-REST החי = מה שהדפדפן שולף). קוד-פרונט אומת מול `useSeriesForNode` (useContentSidebar.ts:337) + `useDirectLessons` (CategoryPage.tsx:141).
+
+**VERDICT: הפער אמיתי. rootCauseClass = both (בעיקר data).** צומת-id `5149a23b-8181-4c41-81db-1efcd2631f5a`, bible_book=שמות.
+
+**ממצאים מאומתים:**
+1. **12 שיעורים בודדים חסרים מהבאנד הציבורי (data, מרכזי).** לכל אחד מ-12 קיימות שורות-כפל ב-DB: העותק עם `cat_standalone=true`+`bible_book=שמות` מתויג `audience_tags=['teachers']` → מסונן נכון; כל העותקים הציבוריים (`['general']`) הם `cat_standalone=FALSE` → `useDirectLessons` (שדורש cat_standalone=true) לא מרים אותם. העותקים הציבוריים יושבים בתוך סדרות-פרשה (`פרשת שמות | א-ו` וכו', מסוננות ע"י isParshaEventSeries) או תחת שורש ימי-עיון (`f4040001…`, לא תחת שמות) → לא נגישים מדף שמות לא כשורה-בודדת ולא ככרטיס. הרשימה: הולדת משה / הערב רב / פרשת המן / מסה ומריבה / שירת הים / הכפיה והרצון / מקומה של פרשת משפטים / עין תחת עין / הפרוכת והנשים / בגדי הכהונה / "שובו אלי" / סיכום פרטי המשכן (האחרון: העותק cat_standalone=true מתויג ['general','teachers'] → ה-dual נופל בפילטר teachers). זה בדיוק "חסרים שיעורים מתחת לקטגוריה" של יואב.
+2. **כפילות "הרב אבינר על פרשיות שמות" (data).** תחת צומת שמות יש 2 סדרות active ['general'] באותו שם בדיוק (lc=21 ו-lc=19, שתיהן sort_order=0). dedup-לפי-כותרת-מנורמלת בפרונט (useSeriesForNode) ממזג אותן לכרטיס אחד → סדרת אבינר שלמה (19 שיעורים) נעלמת. בנוסף קיימת `הרב אבינר שיחות על פרשיות שמות` ממוקמת לשורש תורה (`bb14b5a5`) במקום לצומת שמות, **lc=0** = placeholder יתום ריק. (המנוע סימן "missingSeries: הרב אבינר…" — תווית לא-מדויקת: זו התנגשות+כפילות, לא היעדרות מוחלטת.)
+3. **זיהום: 2 סדרות חידות ככרטיסים (both — data+code).** `חידות על פי א״ב - חומש שמות` (lc=11) + `חידות על פירוש רש״י על פי א״ב - שמות` (lc=9), שתיהן `['general']` published, יורדות מ-`דפי עבודה - שמות` (`d7777771…`, אב שמתויג ['teachers'] אך ילדיו ['general']). useSeriesForNode משטח את כל הצאצאים → דולפות ככרטיסים בקטגוריה הציבורית, ואינן בדף הישן כלל. (book_nodes() ב-real_parity מדלג על "חידות" כצומת אך new_series_rows לא — לכן מסומן pollution. צילום-יואב של "סדרות לא נכונות".)
+4. **orderMismatch=true (data).** הסדר הישן מתחיל הרב קשתיאל→דבר תורה→מבט מגבוה→הרב אבינר (עריכה מכוונת); החדש מרנדר אלפביתי טהור (כל הסדרות sort_order=0/NULL → band-sort נופל ל-localeCompare). תת-הרצף של ה-25 המותאמות: [3,0,14,2,12,…] לא-עולה. "לא בסדר" של יואב מילולית נכון.
+
+**הפרכה שנבדקה (refutation):** (a) ה-20 שיעורים בודדים שהמנוע מצא ב-NEW סותרים את "סדרות בלבד" המילולי — לצומת הזה יש באנד-שורות-בודדות, אך 12 מהישן עדיין חסרים. (b) 5 "extraStandalone" החדשים — כולם קיימים בדף הישן (בתוך סדרות), אסימטריית-סיווג בלבד, advisory, לא פגם. (c) נשלל staleness: השוואה current↔current. (d) סדרות-פרשה (`פרשת בא | י-יג`) מסוננות נכון, לא נספרו כזיהום.
+
+**fixActions (data-first, READ-ONLY — הצעה בלבד):**
+1. סמן `cat_standalone=true` על העותק הציבורי (['general'], בלי teachers) של 12 השיעורים הבודדים (allow-list מ-re-scrape הישן; אותו מנגנון כמו 5 התורה). מטפל בבאג המרכזי.
+2. מזג/בטל כפילות אבינר: השאר עותק אחד תחת שמות, re-parent/אכלס את `הרב אבינר שיחות על פרשיות שמות` (כרגע lc=0 בשורש תורה) או מחק את ה-placeholder היתום.
+3. הסר את 2 סדרות החידות הציבוריות מהשטחת-הכרטיסים של שמות — או תייג `['teachers']` (כמו התאומות שלהן תחת `7dd1cfa3`), או הוסף "דפי עבודה/חידות" ל-pollution-filter ב-useSeriesForNode (קוד), כך שלא ידלפו ככרטיס ציבורי.
+4. שחזר sort_order מכוון מ-ground-truth של סדר-ה-DOM הישן ל-25 סדרות שמות (band 1-99), לתיקון ה-order.
+
+**אזהרה:** אל תיגע באגף-מורים — התאומות teachers של חידות תחת `7dd1cfa3` תקינות ומסוננות; כל תיקון לזיהום הציבורי חייב להשאיר אותן.
+
+---
+
+## Parity adversarial verification — node ירמיהו (book, 2026-06-17)
+
+VERDICT: gap is **REAL** (not a false positive). rootCauseClass = **both**.
+
+Verified independently (READ-ONLY):
+- OLD (live re-scrape of /מאגר-השיעורים-והמאמרים/נביאים/ירמיהו/): exactly **23 rows** = 12 series + 11 standalone lessons, interleaved, with מאת (author) + אורך (length). Matches engine oldCount=23.
+- NEW (Supabase, public filter): **65 series cards, 0 standalone lessons**. 52 = "ירמיהו פרק X" chapter cards (rendered FIRST), 13 real series (12 OLD-matches + 1 genuinely-new "ירמיהו - מוקלט | ללא טעמים").
+- `lessons WHERE bible_book='ירמיהו' AND cat_standalone=true` = **0 rows** → the standalone band (useDirectLessons) renders nothing. This is the exact "series-only" bug Yoav screenshotted for שמות, reproduced in ירמיהו.
+
+The 11 OLD standalone lessons:
+- 8 truly absent from public (live only in teacher-wing series ad002f20 "ספר ירמיהו עם ביאור 'ושננתם'", audience=teachers, correctly excluded): ירמיהו ונביאי השקר / ירמיהו הנביא / ירמיהו הנביא ונביאי השקר / ירמיהו הנביא ומגילת איכה / מגלות יהויכין עד חורבן הבית / גלות יהויכין / "ונתתי לכם לב חדש" / טבלת תהליכי החורבן. (NB: "גלות יהויכין" OLD author=הרב יואב אוריאל=public, but only a teacher copy is publicly reachable now.)
+- 3 publicly reachable but NOT as standalone rows (buried in cards): "קנה לך את השדה" (chapter ירמיהו פרק לב), "ספר ירמיהו עם ביאור ושננתם" (דפי עבודה under book node), "תקופת הנביא ירמיהו" (series ספר ירמיהו).
+
+Series correspondence: 12/12 OLD series matched, 0 missing. orderMismatch=TRUE confirmed: real series land at NEW indices 52-64 (after all chapter cards); matched subsequence [59,60,52,56,64,62,63,58,61,54,57,53] not increasing.
+
+extraSeries=52 chapter cards are LEGIT content (existed on OLD as a separate page layer — 53 ירמיהו-פרק-X child URLs in crawl — not pollution); the 1 "pollution" item is genuinely-new recorded content, not a leak. So newCount=65 inflation is misplaced-but-real content, not fabricated.
+
+Fix actions (data + code, NOT applied here):
+1. CODE: CategoryPage must render the OLD interleaved layout = real series + standalone lessons in one ordered table with מאת + אורך columns; chapter-pattern series must NOT lead the list (push below real series or into a dedicated chapter band).
+2. DATA: re-tag the OLD standalone rows that have a public home: set cat_standalone=true (or surface them) for the public copies — at minimum "קנה לך את השדה", "תקופת הנביא ירמיהו", "ספר ירמיהו עם ביאור ושננתם"(דפי עבודה).
+3. DATA: the 5-8 lessons that survive ONLY as teacher copies need public counterparts restored from OLD (they were public on bneyzion.co.il) OR confirmed intentionally teacher-only with Yoav.
+4. ENGINE: real_parity must (a) match OLD standalone lessons against NEW series cards too (3 of 11 are present-as-cards → currently over-counted as "missing standalone"), and (b) implement the documented MEMBERSHIP+ORDER correspondence rather than presence-only.
+
+---
+
+## Parity verification — node "יחזקאל" (book, נביאים) — 2026-06-17 (adversarial re-verify)
+
+**Engine claim:** old=26, new=58, missingStandaloneLessons=16, orderMismatch=true, severity=high. **VERDICT: CONFIRMED REAL.** rootCauseClass = **data** (NOT code).
+
+**Independently re-derived (read-only):**
+- OLD landing page live-scraped + cross-checked vs audit_full_state.json: **10 series + 16 standalone lessons = 26 interleaved rows in DOM order**, series first then standalone (each lesson with מאת/author). Engine parse matches exactly.
+- NEW (Supabase, public filter): **58 series cards, 0 standalone-band lessons**. The 58 = 48 auto "יחזקאל פרק X" chapter-series (sort_order band 0, alphabetical, no author) + the 10 real teacher series (alphabetized).
+
+**Refutation attempts (all failed → gap is real, but it is NOT missing content):**
+- All 10 OLD series are present in NEW (missingSeries=[]). The 48 chapter-extras are legit content behind the old chapter-grid — engine correctly tagged them chapterExtra, pollutionExtra=0. NOT a leak.
+- All 16 "missing standalone lessons" EXIST in NEW as published, non-teacher lessons. None are absent content:
+  - 10 have `bible_book='יחזקאל'` but `cat_standalone=false` → dropped by useDirectLessons (which requires cat_standalone=true). Several sit directly on the book node 5b0c3232 (true standalones) or on real series (ee9b33ad/c564e259/27a38352/f1010001).
+  - 6 ("מגלות יהויכין...", 3× "השינויים במבנה ארץ ישראל בגאולה", "ונתתי לכם לב חדש", 2× "בבל מול ירושלים...") exist published but with `bible_book=NULL` → also dropped by the bible_book='יחזקאל' filter. Old child pages have media (real lessons), not nav stubs.
+- Order mismatch is real: OLD = 10 real series first (curated), then 16 standalone. NEW = 48 chapter-series first, then 10 real series alphabetized — completely different from OLD's curated order.
+
+**rootCauseClass = data.** useDirectLessons / new_series_rows logic is correct given the data; the rows just lack the tags the query needs. Two data defects:
+1. The 16 book-level standalone lessons are not tagged `cat_standalone=true` (10 of them) and/or have `bible_book` unset/NULL (6 of them) → never enter the standalone band.
+2. The 10 real teacher series have no curated sort_order reflecting OLD DOM order, and the 48 chapter-series outrank them, so render order ≠ OLD.
+
+**fixActions (data-only, no src edits):**
+- Set `cat_standalone=true` + `bible_book='יחזקאל'` on the 16 standalone lessons so useDirectLessons surfaces them (the 6 NULL-bible_book + 10 cat_standalone=false). Verify they are the book-node/standalone copies, not the teacher-tagged duplicates (e.g. "מגלות יהויכין" + "ונתתי לכם לב" have teacher-tagged twins under ירמיהו/מלכים ב/עזרא — pick the non-teacher יחזקאל copy).
+- Assign curated `sort_order` to the 10 real יחזקאל series matching OLD DOM order, and ensure chapter-series sort into a band AFTER the curated series (or below standalone), so the category opens like OLD.
+- Re-run real_parity.py --book יחזקאל; expect missingStandaloneLessons→0, orderMismatch→false.
+
+---
+
+## Parity verify — node "יואל" (book, נביאים) — 2026-06-17 (adversarial re-derivation)
+
+VERDICT: gap is **REAL**. rootCauseClass = **data** (NOT code). Severity **medium** (NOT high).
+
+OLD (live re-scrape `/מאגר-השיעורים-והמאמרים/נביאים/יואל/`, 6 DOM rows, verified):
+  4 series: יואל בבקיאות · שיעורים על ספר יואל · שיעורים - ספר יואל · קריאה וביאור בקצרה של ספר יואל
+  2 standalone lessons: "ספר יואל עם ביאור 'ושננתם'" (pdfBG) · "צרת הארבה ותשובת מנשה על פי יואל ונחום" (textBG, href→נחום)
+
+NEW (Supabase, mirror of useSeriesForNode + useDirectLessons): 8 series cards, 0 standalone lessons.
+
+CONFIRMED problems Yoav sees:
+1. **2 standalone lessons missing.** Both rows exist as published/general lessons in DB but NO יואל lesson has cat_standalone=true (0/33 published-public). useDirectLessons filters cat_standalone=true → standalone band renders empty. PURE DATA gap (missing flag), code is correct.
+   - "ספר יואל עם ביאור 'ושננתם'" = lesson 5127fce2 (published, series_id=book node). (draft twin 3688c8f3 also exists.)
+   - "צרת הארבה..." = lessons 599b2a3e/57b0d910/046ee0f4 (inside chapter event-series).
+2. **4 extra chapter cards** (יואל פרק א/ב/ג/ד, ids c2010001-0001-...) appear as category cards but DO NOT exist on the old book landing page (only inside the "קריאה וביאור" series there). They are migration-synthetic consolidation event-series (consolidate-plan-יואל.json: mode=copy). Their lessons are duplicates already present in the 4 real series. They INFLATE the page and break 1:1 ordering.
+
+REFUTED / NOT a problem:
+- All 4 OLD series present in NEW, exact relative DOM order preserved → missingSeries=[], orderMismatch=false CONFIRMED correct.
+- "דפי עבודה - יואל" + "יואל עם ביאור" + "כל השיעורים בספר יואל" correctly hidden (teacher-only / 0-lesson nav shell). No teacher leak.
+
+MINIMAL FIX (data-only, no src edit, no teacher-wing impact):
+  A. Set cat_standalone=true on the published canonical copy of each old standalone row for יואל
+     (5127fce2 "ושננתם"; one canonical copy of "צרת הארבה..."), so useDirectLessons surfaces them.
+  B. Suppress the 4 synthetic chapter event-series (c2010001-0001-0000000000 0{1..4}) from the יואל
+     category cards — they are not old-site cards. Their content is already in the 4 real series.
+     (Mechanism = data: e.g. move under a hidden parent / status, NOT a per-book code branch.)
+  Net target: 4 series cards + 2 standalone lessons = old 1:1.
+
+NOTE on engine: real_parity.py correctly DETECTED both axes (missingStandaloneLessons=2, chapterExtraSeries=4)
+but graded severity "high" because any missing_standalone forces high. The chapter-extra is real pollution,
+but content is reachable elsewhere → user-facing severity is medium, not high. Engine finding is otherwise sound.
+
+
+## Parity verify — node "מלכים ב" (book) — 2026-06-17 (READ-ONLY adversarial)
+
+Engine real-parity-20260617T181743Z flagged מלכים ב: old=25 (6 series + 19 standalone), new=28 (28 series + 0 standalone), missingStandaloneLessons=19, missingSeries=[], orderMismatch=false, severity=high.
+
+**VERDICT: gap is REAL. rootCauseClass = data.**
+
+- OLD live re-scrape parsed exactly 6 lessonSeriesBlock + 19 plain lessonBlock (10 audioBG + 7 pdfBG + 2 textBG), each a real shiur with author (הרב מתניה ידיד, הרב צבי קוסטינר, ...) and ~70-min length. NOT aggregation/nav pages, NOT teacher-gated (anon HTML has no login/מורים markers).
+- NEW: 376 lessons have bible_book=מלכים ב but ZERO have cat_standalone=true, so useDirectLessons returns 0. Engine query correct; the band is genuinely empty.
+- Resolving each of the 19 OLD lessons against the WHOLE lessons table (not just the teacher copies the engine matched): 18/19 have a PUBLIC published copy that exists but is unsurfaced (cat_standalone=False, bible_book mostly NULL or wrong book e.g. דברי הימים/מלכים א). 1/19 (ספר מלכים ב עם ביאור ושננתם) exists only as a teacher-wing doc.
+- NOTE: engine internal canonical_match landed on TEACHER copies (content_type=הכוונה והדרכה למורה) by title-only overlap — its missingStandaloneLessons titles are right but its implied match targets are the wrong rows. The COUNT (19 missing from the public band) is correct.
+- SERIES: all 6 OLD series present (no missingSeries). 22 extra are legit chapter-series; pollution = 1 near-dup (עליית/עלית אליהו לשמים פרק ב) + 1 zero-lesson draft (שיעורים קצרים... ).
+
+**fixActions (data-only, no src edits, never regress /teachers/*):**
+1. For the 18 public-published lessons, set cat_standalone=true + bible_book=מלכים ב (or add to the category standalone band) so useDirectLessons surfaces them. Match by id from reports/verify-melachim-b-standalone-20260617.json — do NOT flip the teacher-tagged copies.
+2. ספר מלכים ב עם ביאור ושננתם: decide if a public PDF copy should be published (was public on old site) or leave teacher-only.
+3. Dedup עליית/עלית אליהו לשמים פרק ב; hide 0-lesson draft שיעורים קצרים... (display-side).
+4. Re-derive interleaved order from OLD DOM for the category render (engine orderMismatch only covers series; standalone-vs-series interleave order is the screenshotted complaint).
+
+Report: scripts/parity/reports/verify-melachim-b-standalone-20260617.json
+
+---
+
+## Parity verify — node עובדיה (book, Neviim) — 2026-06-17 (adversarial, READ-ONLY)
+
+Engine finding (real-parity-20260617T181743Z): old=8 (4 series + 4 standalone lessons), new=4 (4 series, 0 standalone), missingStandaloneLessons=4, orderMismatch=true, severity=high. **VERDICT: CONFIRMED REAL.** Refutation attempts all failed.
+
+- OLD ground truth independently re-scraped (`/מאגר-השיעורים-והמאמרים/נביאים/עובדיה/`, 704KB, HTTP 200): exactly 8 rows in `div.swiper-container.categorySwiper` under H1 "עובדיה" — 4 `lessonSeriesBlock` + 4 `lessonBlock` standalone. NOT a related/recommended carousel (0 קשור/מומלצ/related markers). Each standalone is a real content row (`lessonBlock watermarked audioBG/textBG`, author, promo, MP3 + PDF links, duration).
+- 4 standalone lessons (old): גאולתנו על פי הספרים עובדיה ויונה (הרב צפניה דרורי), אשת עובדיה - אמונה בצל משבר (הרבנית ורדית אביחי), מה שמועה שמעו הגרים? (הרב יוסף אטון), נבואת עובדיה על אדום (הרב יואב אוריאל).
+- NEW: engine query (`bible_book='עובדיה' AND cat_standalone=true AND status='published' AND NOT teachers`) = `[]`. Mirrors frontend `CategoryPage.useDirectLessons` byte-for-byte (src/pages/CategoryPage.tsx L172-187). So new standalone band renders EMPTY = the screenshotted "series-only" bug.
+- ROOT CAUSE = **data** (not code). All 15 `bible_book='עובדיה'` lessons have `cat_standalone=false`. The 4 lessons DO exist in DB (גאולתנו=7e8eb4f1, נבואת עובדיה=4e2f9f9b both bible_book=עובדיה series_id=node; אשת עובדיה=76a12e6c, מה שמועה=1721da3a both series_id=node but bible_book=NULL) — just never flagged cat_standalone, and 2 also miss bible_book.
+- **SYSTEMIC**: `cat_standalone=true` was only ever set for 5 Torah books (בראשית 32, במדבר 21, שמות 20, דברים 2, ויקרא 2). EVERY Neviim+Ketuvim book = 0 standalone (תהלים, ישעיהו, ירמיהו, יחזקאל, אסתר, מלכים, דניאל...). The standalone band is empty site-wide outside Torah → matches the broad round-6 complaint, not an עובדיה-only issue.
+- orderMismatch real too: old DOM order בבקיאות→שיעורים→קריאה וביאור→מוקלט; new band-sort = alpha (all series sort_order=0) → בבקיאות→מוקלט→קריאה וביאור→שיעורים. seq [0,3,2,1] not increasing. No editorial sort_order exists on the 4 series.
+
+---
+
+## Parity verification — node ישעיהו (book) — 17.6.2026 (read-only adversarial verify)
+
+Engine finding (real-parity-20260617T181743Z): old=24 new=78, missingStandaloneLessons=10, orderMismatch=true, severity=high. **VERDICT: CONFIRMED REAL. rootCauseClass=both (data + code).**
+
+Independent re-derivation:
+- OLD (live re-scrape of `/מאגר-השיעורים-והמאמרים/נביאים/ישעיהו/`): exactly 24 `lessonBlock` cards = 14 series + 10 standalone lessons (with מאת + אורך), one curated editorial order. The 66 `ישעיהו פרק X` live as a compact colored chapter-grid `<ul><li>` widget — NOT as top-level cards.
+- NEW (Supabase, mirrors CategoryPage.useDirectLessons + useContentSidebar.useSeriesForNode): 78 series cards (66 chapter pages, sort_order=0, lesson_count>0, parent=ישעיהו-node → all render as cards, interleaved alphabetically with the 12 named series) + 0 standalone lessons.
+
+Three real defects (= Yoav's complaint, verbatim):
+1. **0 standalone lessons (DATA).** NEW `cat_standalone=true` count for `bible_book='ישעיהו'` = 0. All 10 OLD standalone lessons exist in DB but `cat_standalone=false` on every copy → the standalone band (CategoryPage L173-189) is empty. 7/10 have a `bible_book='ישעיהו'` copy (fix: flag cat_standalone on the canonical copy); 3 (`במה זכה ישעיהו...`, `טבלת תהליכי החורבן`, `שבע שאלות על 'שבע דנחמתא'`) have NO ישעיהו copy at all (filed under דברים/ירמיהו/מלכים ב/דברי הימים — need a ישעיהו canonical copy created+flagged).
+2. **Chapter flood + order (CODE).** 66 chapter pages should NOT be top-level cards (OLD = chapter-grid). They bury the 14 named series and break the curated order (NEW alphabetical vs OLD editorial → matched-series subseq [1,10,7,9,6,8,3,4,2,11,0], non-monotonic). Fix = render chapters in a chapter-grid (like old `ישעיהו-מוקלט` style) OR move under a "פרקים" sub-node; and give the 14 named series real sort_order to restore curated order.
+3. **Missing series (partial false-positive split).** `תרבות המערב` (public, 9 lessons) sits under generalTopics not under ישעיהו (placement gap, mild). `לב הפרק - ישעיהו` ×2 exist but `audience_tags={teachers}` → teacher-wing only, public on OLD (author הרב עמנואל בן ארצי). The 2 in engine.missingSeries are these teacher-tagged ones — genuinely absent from the public category.
+
+CRITICAL on the engine itself: `chapterExtraSeries` is reported but NOT counted as pollution and NOT in severity → engine under-reports the visible flood (it treated 66 cards as "legit new content"). The standalone-lesson and orderMismatch dims are accurate and were the real signal here.
+
+---
+
+## Parity adversarial-verify: node עמוס (book / Nevi'im) — 2026-06-17
+
+**VERDICT: gap is REAL. rootCauseClass = DATA (no code change).** Engine diff (real-parity-20260617T181743Z.json) confirmed independently.
+
+- OLD live scrape `/מאגר-השיעורים-והמאמרים/נביאים/עמוס/`: 8 rendered lessonBlock rows = 4 series + 4 standalone lessons (with מאת/אורך). Matches oldCount=8 exactly.
+- NEW Supabase: 13 series cards (4 named series = 1:1 with old + 9 chapter cards `עמוס פרק א..ט`). The 9 chapter cards are legit NEW content (chapterExtraSeries, NOT pollution — old site had chapters as leaf sub-pages, not landing cards). 0 standalone lessons.
+- The 4 old standalone lessons EXIST in new DB but **none flagged `cat_standalone=true`** → `useDirectLessons` (CategoryPage.tsx L167-191: `bible_book=X AND cat_standalone=true AND published AND not teachers`) returns 0 → series-only render = exactly Yoav's complaint.
+  1. עמוס הנביא - מעמדו ומסריו — canonical `89204028...` (series "ימי עיון תשע\"ו"), bible_book=NULL
+  2. ארבעה הנביאים שהתנבאו באותו הפרק — canonical `b0c39979...`/origin in "ימי עיון תשע\"ו", bible_book=NULL (cross-listed; ישעיהו copy exists)
+  3. ארבעה נביאים - הגלוי והסמוי — canonical `b77bba28...`, bible_book=NULL (cross-listed)
+  4. ההבדל בין ישראל לעמים לאורך ספר עמוס — canonical `a252e5df...` (series "עמוס פרק ב"), bible_book='עמוס' ch=2 — only needs cat_standalone flip
+- **SYSTEMIC root cause:** `cat_standalone=true` is populated for the 5 TORAH books ONLY (בראשית58/שמות38/במדבר35/ויקרא22/דברים16). ZERO Nevi'im/Ketuvim books have it. 36 book nodes / 407 standalone lessons affected. The standalone-marking migration never ran for Nevi'im/Ketuvim. CategoryPage code is correct (works for Torah).
+- **Minimal fix (DATA only, READ-ONLY here — not applied):** per missing title, set `cat_standalone=true` (+ `bible_book='עמוס'` where NULL) on ONE canonical copy. Reuse the marking that produced Torah standalones. No src/ edit. Re-run `real_parity.py --book עמוס` to confirm miss-standalone→0.
+- orderMismatch=false (4 named series in same relative order). missingSeries=0, pollutionExtraSeries=0 → no teacher leak, no series-order defect for עמוס. Teacher series `דפי עבודה - עמוס` correctly filtered (audience=teachers).
+
+---
+
+## Parity verification — node "הושע" (Hosea book) — 2026-06-17 (adversarial re-derive, READ-ONLY)
+
+Engine `real_parity.py` flagged הושע severity=high (old=9, new=20, missingStandaloneLessons=3, orderMismatch=false). Independently re-derived OLD (live scrape of /נביאים/הושע/, DOM order) and NEW (Supabase). VERDICT: **gap is REAL**, but the classification needs refining and the engine UNDER-reported order.
+
+OLD landing page (DOM order, 6 series + 3 standalone lessons):
+  series: שיעורים על ספר הושע · ספר הושע - כלל ופרט · הושע בבקיאות · שיעורים - ספר הושע · קריאה וביאור בקצרה של ספר הושע · מאמרים - ספר הושע
+  standalone: ספר הושע עם ביאור 'ושננתם' (PDF ושננתם-הושע.pdf) · ארבעה הנביאים שהתנבאו באותו הפרק · ארבעה נביאים - הגלוי והסמוי
+  NOTE: the 14 "הושע פרק א..יד" rows are NOT cards on the old landing page — they are a separate chapter-grid UX.
+
+NEW CategoryPage (/category/5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d):
+  - 20 series CARDS = 14 chapter-series (הושע פרק א..יד, so=1..14) INTERLEAVED with the 6 author-series (so=1..6) because both bands reuse sort_order 1..N → collision.
+  - 0 standalone lessons (useDirectLessons: bible_book='הושע' AND cat_standalone=true → 0 rows).
+
+Findings:
+  1. STANDALONE BAND EMPTY (real, the screenshotted "series-only" bug). 3 old standalone rows, 0 new.
+     - "ספר הושע עם ביאור 'ושננתם'" — EXISTS new (bible_book=הושע, published) but cat_standalone=false AND NO media (audio/video/attachment all null; old PDF not migrated) + a draft dup. → DATA fix: set cat_standalone=true on the published copy + restore its PDF (media/142953); drop draft twin.
+     - "ארבעה הנביאים שהתנבאו באותו הפרק" + "ארבעה נביאים - הגלוי והסמוי" — these are Isaiah-canonical (bible_book=ישעיהו, parent "ספר ישעיהו"); old Hosea page cross-listed them (multi-prophet shiur). NOT lost — reachable under Isaiah. Lower-severity cross-listing gap.
+  2. CHAPTER/AUTHOR INTERLEAVE (real, engine missed it). Old landing page = 6 author-series only; new page = 14 chapter cards stuffed between the 6 by colliding sort_order. Engine orderMismatch=false is a FALSE NEGATIVE: it only checks order of the 6 *matched* series among themselves (still increasing), ignoring the 14 interleaved chapter cards.
+
+rootCauseClass = both (data: cat_standalone flag + missing PDF on ושננתם; code: chapter-series band collides with author-series band in useSeriesForNode/useContentSidebar sort, and standalone band keys on cat_standalone which was never set for Hosea).
+Refutation tried: are the 14 chapter cards legit "new content behind old chapter-grid"? YES they are legit content, but they CHANGE the page's correspondence (old showed 6 ordered author-series; new shows 20 interleaved). Are the 3 missing lessons false positives? 2 of 3 (ארבעה...) are cross-listed Isaiah content (reachable elsewhere) → partial false positive; 1 of 3 (ושננתם) is a true Hosea-page gap (exists but unrendered + media lost).
+
+---
+
+## Parity verify — node "יונה" (book, נביאים) — 2026-06-17 adversarial audit
+
+VERDICT: gap is REAL (not a false positive). rootCauseClass = **data** (with a secondary code-design weakness).
+
+Independent re-derivation:
+- OLD (live re-scrape of /מאגר-השיעורים-והמאמרים/נביאים/יונה/): exactly 15 rendered rows in DOM order = 10 series + 5 standalone lessons. The DOM has exactly 15 `lessonBlock` nodes — matches.
+- The 5 OLD standalone lessons are REAL shiurim (distinct authors + durations), NOT nav/aggregation pages:
+  1. "אני ואתה בספר יונה" — הרב אליהו ידיד (video+audio)
+  2. "\"קום לך אל נינוה\"" — הרבנית נורית גאל דור (לנשים) (audio)
+  3. "השאלות הקשות של ספר יונה" — הרב יואב אוריאל (audio)
+  4. "ממך אליך אברח" — הרב דוד טורנר (audio)
+  5. "גאולתנו על פי הספרים עובדיה ויונה" — הרב צפניה דרורי (audio+attach)
+- NEW (Supabase, mirrors CategoryPage useDirectLessons + useSeriesForNode): 14 series cards, **0 standalone lessons**.
+
+Why the 5 vanish: all 5 exist in `lessons`, `status=published`, `audience_tags={general}` (public), and a copy of each is parented directly to the יונה book node (series_id=0f69e7e1-c6d4-4ede-9c42-006ee99ea995). BUT every one has `cat_standalone=false`. CategoryPage standalone band is gated on `.eq("cat_standalone", true)` (CategoryPage.tsx L178). `cat_standalone=true` count for bible_book='יונה' = 0 → empty band. Engine is faithful to production; NOT an engine false positive.
+
+Two extra data traps for the fix:
+- "אני ואתה בספר יונה" and "ממך אליך אברח" have `bible_book=NULL` on the יונה-parented copy → standalone band also filters `.eq("bible_book","יונה")`, so flipping cat_standalone alone won't surface them; bible_book must be set to 'יונה' too.
+- "גאולתנו על פי הספרים עובדיה ויונה" has `bible_book='עובדיה'` → appears on OLD יונה page but single bible_book column can't cross-list it under both books.
+
+Extra series `יונה פרק א-ד` (chapterExtraSeries=4) = LEGIT new chapter-grouped content (each active, lesson_count 6-8, parented to book). OLD landing page never rendered these as rows (they lived in a separate chapter grid). Correctly classified as chapter-extra, not pollution.
+
+orderMismatch=true is real but narrow: new-index sequence in old order = [1,2,13,6,7,8,9,10,11,12]; only break is "ספר יונה הרב מאיר הילביץ'" (OLD pos 3 → NEW last). Plus the 4 chapter-series interleaved at top change visible composition.
+
+SYSTEMIC: cat_standalone=true public count = 0 for ALL Trei Asar books (יונה/עמוס/הושע/מיכה/נחום/חבקוק/צפניה/חגי/זכריה/מלאכי/עובדיה/יואל), each with 11-203 published public lessons. The "series-only, no standalone" complaint is book-wide, not just יונה.
+
+Minimal fix (DATA, no src edit): for the OLD standalone rows of each book, set the canonical book-parented copy `cat_standalone=true` AND `bible_book=<book>`; cross-listed lessons (e.g. גאולתנו under both עובדיה+יונה) need a cross-tag/duplicate strategy since bible_book is single-valued. Then re-run real_parity.py for יונה (expect missingStandaloneLessons 5→0). Order-fix (chapter-series placement + הילביץ' bump) is a separate sort_order/code concern, lower priority than the missing-lessons data gap.
+
+---
+
+## Parity verification — node "מיכה" (book, Neviim) — 2026-06-17 (adversarial re-derivation)
+
+**Verdict: gap is REAL. rootCauseClass = data.** Engine finding (`missingStandaloneLessons=3`, severity high) confirmed by independent re-derivation. Report: `scripts/parity/reports/micha-verify-20260617.json`.
+
+OLD מיכה landing page (live re-scrape, 7 DOM rows = engine's oldCount):
+- 4 SERIES: מיכה בבקיאות (הרב דרור טוויל) · שיעורים על ספר מיכה (קשתיאל) · שיעורים - ספר מיכה (אחיקם גץ) · קריאה וביאור בקצרה של ספר מיכה (יונדב זר) — all 4 matched in NEW (missingSeries=[]). ✓
+- 3 standalone LESSON rows (non-series blocks, with מאת/אורך columns): `ספר מיכה עם ביאור 'ושננתם'` · `ארבעה הנביאים שהתנבאו באותו הפרק` · `ארבעה נביאים - הגלוי והסמוי`.
+
+NEW side: standalone band = `bible_book='מיכה' AND cat_standalone=true AND status='published' AND NOT teachers` → **0 rows** (mirrors `src/pages/CategoryPage.tsx` useDirectLessons exactly). All 3 lessons EXIST published+public (`audience_tags=['general']`) but every copy has **`cat_standalone=false`** → never enters the standalone band → category page shows series-only (Yoav's screenshot).
+
+Refutations attempted & failed:
+- Aggregation/nav false-positive? NO — all 3 OLD URLs are leaf pages (children=0, media present), real lessons.
+- Rendered as a series card instead? NO — none of the 3 titles match any of the 11 NEW מיכה cards.
+- cat_standalone copy hiding under another bible_book (e.g. ישעיהו)? NO — 0 cat_standalone=true copies under any book.
+
+**Scope is bigger than one node: ALL 12 Trei-Asar books (מיכה, עמוס, הושע, יואל, עובדיה, יונה, נחום, חבקוק, צפניה, חגי, זכריה, מלאכי) have 0 cat_standalone=true public lessons.** מיכה is a representative symptom — the migration never applied the `cat_standalone` marking to Trei-Asar. Fix = data backfill (set cat_standalone=true on the canonical copy of each old standalone-row lesson, scoped per book), NOT a code change. No `/teachers/*` impact.
+
+Side note (NOT the high-severity bug): NEW shows 7 extra chapter-series cards (מיכה פרק א-ז). These are legit chapter content (engine classifies as chapterExtraSeries, pollutionExtraSeries=[]); OLD landing table did not list per-chapter rows. Lower-priority presentation question, separate from the confirmed standalone gap.
+
+---
+
+## Parity verification — node חגי (book, נביאים) — 2026-06-17 (adversarial, READ-ONLY)
+
+Engine real-parity-20260617T181743Z.json flagged חגי: old=16 new=8, missingSeries=["מאמרים על ימי בית שני"], missingStandaloneLessons=9, severity=high. **VERDICT: gap is REAL (confirmed). rootCauseClass = both (data-dominant).**
+
+Independent re-derivation:
+- OLD (live re-scrape of /מאגר-השיעורים-והמאמרים/נביאים/חגי/, DOM order) = 16 rows: 7 series + 9 standalone lessons. Matches engine exactly. NOT an aggregation/nav page — genuine book leaf rendering one interleaved table with מאת/אורך columns.
+- NEW (Supabase, node id 273e3b3c-318d-4335-b026-d03dc4c8a602) = 8 series cards, **0 standalone lessons**. Confirmed: EVERY lesson with bible_book='חגי' has cat_standalone=false → the standalone band renders empty = Yoav's "series only, no lessons" screenshot, exactly.
+
+Refutation results (all 9 standalone lessons EXIST as published lessons in NEW — none is data-loss; the gap is association/tagging):
+- 5 are genuine חגי content present-but-mistagged (cat_standalone=false): גדול יהיה כבוד..., חזרת ישראל לארצם בבית השני, היחס בין שלושת בתי המקדש, ספר חגי עם ביאור 'ושננתם', לב הפרק - חגי (latter carries bible_book='זכריה').
+- 4 are cross-listed cross-cutting lessons NOT associated with חגי in NEW (bible_book ∈ אסתר/דניאל/עזרא/null): שיבת ציון - אז והיום, שיבת ציון - הישגים ונסיגות, תאריכים בימי שיבת ציון, ציר זמן גלות בבל. OLD surfaced them on חגי via cross-ref; NEW has no חגי copy.
+- missingSeries "מאמרים על ימי בית שני" is NOT lost: exists published (9 lessons) under נושאים כלליים בתנ"ך > תקופת הבית השני (id 0fa2fd90-66ff-5e1f-8c69-ee59a6dd3bbf), just not parented under the חגי book node.
+- extraSeries חגי פרק א/ב = legit chapterExtra (pollutionExtraSeries=[]); not a regression.
+
+**Same root cause as מיכה finding above → systemic Trei-Asar / cross-listing migration gap, not a חגי one-off.** Minimal fix = DATA backfill (set cat_standalone=true on the canonical חגי-book copy of the 5 own-content lessons; create cross-listing rows / book-tag for the 4 cross-cutting lessons + the 1 series so they surface on חגי). NO code change to fix the empty band IF data is tagged. orderMismatch=false (no order issue once items present). Zero /teachers/* impact.
+
+---
+
+## חבקוק node — adversarial parity verification (2026-06-17, session round-6)
+
+**VERDICT: gap CONFIRMED REAL. rootCauseClass = data.** Engine `real_parity.py` finding (`missingStandaloneLessons: 2`) is correct, not a false positive.
+
+Independently re-derived both sides:
+- **OLD** (live scrape of `/מאגר-השיעורים-והמאמרים/נביאים/חבקוק/`, 606KB, DOM order via `parse_old_rows`): 7 rows = 5 SERIES (חבקוק בבקיאות / שיעורים על ספר חבקוק / מאמרים קצרים - ספר חבקוק / שיעורים - חבקוק / קריאה וביאור בקצרה של ספר חבקוק) + **2 STANDALONE LESSONS**:
+  1. `מבוא לחבקוק - אלישע והשונמית` — author הרב חננאל אתרוג, length 70 דק', href under /חבקוק/ → genuine leaf lesson (cache sub=0), NOT an aggregation page.
+  2. `ספרים נחום וחבקוק עם ביאור 'ושננתם'` — author ושננתם, href under /נחום/ → two-book commentary cross-listed on both נחום AND חבקוק old pages.
+- **NEW** (Supabase mgmt API + LIVE anon REST = what the deployed browser fetches): 8 series cards (5 real series matching OLD 1:1 + 3 chapter series פרק א/ב/ג = engine's chapterExtraSeries, legit) and **standalone band = [] (0 lessons)**.
+
+Why the 2 lessons render nowhere on the new חבקוק page: both exist as `published`/`general` copies attached to the book node `4a17b976` (`copied_from` set), but `useDirectLessons` (CategoryPage.tsx L167-191) filters `bible_book = node.bible_book('חבקוק') AND cat_standalone=true AND NOT teachers`. Lesson 1 has `bible_book=NULL, cat_standalone=false`; lesson 2 has `bible_book='נחום', cat_standalone=false`. Both fail → unreachable. No `cat_standalone=true` copy exists for either title (verified live).
+
+Refutations tried & rejected: (1) not old-site nav/aggregation — both are leaf lessons with real author+length; (2) chapter-series cards don't absorb them; (3) ושננתם cross-listing is the milder of the two but still owed under Yoav's strict 1:1; the מבוא lesson is the unambiguous miss.
+
+**Same root cause as מיכה entry above — all 12 Trei-Asar books never got `cat_standalone` markings during migration.** Fix = DATA backfill (set `cat_standalone=true` + correct `bible_book='חבקוק'` on ONE canonical copy of each old standalone-row lesson, per book), NOT code. Zero `/teachers/*` impact (these are `general`). Severity high (missingStandaloneLessons>0).
+
+---
+
+## real_parity node verdict — נחום (book, נביאים) — adversarial verify 2026-06-17
+
+Engine diff: oldCount=6 (5 series + 1 standalone), newCount=8 (8 series, 0 standalone), missingStandaloneLessons=1 ("ספרים נחום וחבקוק עם ביאור 'ושננתם'"), chapterExtraSeries=3 (נחום פרק א/ב/ג), orderMismatch=false, severity=high.
+
+**VERDICT: gap is REAL (confirmed). rootCauseClass = both (data + code).**
+
+Ground truth = OLD page categoryTable (the canonical interleaved table with כל/מאת/אורך). Independently re-derived from cache children-graph AND live re-scrape of /מאגר-השיעורים-והמאמרים/נביאים/נחום/. OLD table = EXACTLY 6 rows:
+  1. סדרה נחום בבקיאות / הרב דרור טוויל / 2
+  2. סדרה שיעורים על ספר נחום / הרב אליעזר קשתיאל / 4
+  3. סדרה שיעורים - ספר נחום / הרב אחיקם גץ / 2
+  4. סדרה מאמרים קצרים - ספר נחום / הרב יוסף הורוביץ / 7
+  5. סדרה קריאה וביאור בקצרה של ספר נחום / הרב יונדב זר / 3
+  6. שיעור ספרים נחום וחבקוק עם ביאור 'ושננתם' / ושננתם
+OLD book listing has ZERO chapter rows. "נחום פרק א/ב/ג" + "כל השיעורים בספר נחום" exist in OLD HTML only as <li><a style=background-color> NAV links, NOT lessonBlock/table cards. (refutes "chapters belong on the book listing" hypothesis.)
+
+FINDING 1 — missing standalone "ספרים נחום וחבקוק עם ביאור 'ושננתם'" = REAL DATA gap. Lesson EXISTS in NEW DB, 2 published rows + 1 draft, bible_book=נחום, is_teacher=false, parented to the נחום book node (e8f7ed1c) — but ALL have cat_standalone=false → useDirectLessons (requires cat_standalone=true) yields 0 → row never renders. (Not dual-audience, not nav/aggregation, not parked → all refutation paths fail.) NOTE both OLD card and NEW rows have NO inline media (attachment/audio/video all null; OLD lessonLinks empty) — it's a link-to-beur-subpage card, but still a visible OLD row absent in NEW.
+
+FINDING 2 — 3 chapter cards (נחום פרק א/ב/ג) are EXTRAS not in OLD listing + cause an ORDER divergence the engine missed. They are legit content (3/4/4 published lessons, status=active, sort_order 1/2/3 directly under ROOT נחום). The 5 legacy series live under sub-container c2060001 with their OWN sort_order 1-5. useSeriesForNode flattens both namespaces and band-sorts by sort_order value alone (alpha tiebreak), so chapters interleave INTO the legacy series. NEW render order: בבקיאות, פרק-א, פרק-ב, שיעורים-על, פרק-ג, שיעורים, מאמרים, קריאה. OLD order: בבקיאות, שיעורים-על, שיעורים, מאמרים, קריאה. engine orderMismatch=false is true ONLY for the matched-series subsequence ([1,4,6,7,8] strictly increasing) — it does NOT account for extra chapter cards wedged between them. This is exactly Yoav's "wrong series in wrong places / not in order" complaint. rootCause = CODE (single-namespace band-sort across two sort_order containers).
+
+MINIMAL FIX (data + code, NO src edit done — READ-ONLY):
+- DATA: set cat_standalone=true on the canonical published נחום-book copy of "ספרים נחום וחבקוק עם ביאור 'ושננתם'" (id f021d234-5c15-5051-a01d-8a2f75374063) so it renders as the standalone row #6. (Dedup the duplicate published row a9f40fc1 belongs to חבקוק — leave it.)
+- CODE/DATA (order): decide intended design for chapter cards on book listing. If chapters should NOT appear on the book landing (1:1 with OLD) → exclude direct-child chapter series from useSeriesForNode card list (or give them parked sort_order ≥100). If they SHOULD appear → renumber so the two sort_order namespaces don't collide (offset chapter sort_order or sort by (container, sort_order)). Either way restores OLD order.
+- Zero /teachers/* impact (the only teacher row under נחום is "דפי עבודה - נחום" draft lc=0, already filtered out; no proposal touches teacher listing).
+
+---
+## real_parity verify — node צפניה (book, נביאים) — 2026-06-17 (adversarial, READ-ONLY)
+
+VERDICT: gap is REAL but LOW severity (engine said medium). rootCauseClass = **data** (cross-listing not modeled). Independently re-derived OLD (live scrape) + NEW (Supabase).
+
+- OLD live scrape (5 series, 0 standalone, DOM order): צפניה בבקיאות (דרור טוויל) / שיעורים על ספר צפניה (קשתיאל) / מאמרים קצרים - ספר צפניה (הורוביץ) / קריאה וביאור בקצרה (יונדב זר) / **יאשיהו המלך הצדיק ומותו (יואב אוריאל)**.
+- NEW renders 7 series: the 4 צפניה-native + 3 promoted chapter cards (צפניה פרק א/ב/ג). 0 standalone.
+- `missingSeries: יאשיהו המלך הצדיק ומותו` is a **cross-listing**: its canonical home is `כתובים/דניאל/דניאל-פרק-ד/` on BOTH old and new. NEW series id `5e047676-73af-4320-88fe-0eb1a0a22b75`, parent=דניאל, 3 lessons (הקינה/סקירה/מות יאשיהו) — **fully rendered + reachable under NEW Daniel page** (verified). The 3 lessons are general King-Josiah content, none צפניה-specific.
+- The genuinely-צפניה Josiah lesson "הקדמה - תשובת יאשיהו על פי צפניה" (bible_book=צפניה) already lives in NEW series "מאמרים קצרים - ספר צפניה" → present under צפניה. So NO content loss.
+- `extraSeries` (צפניה פרק א/ב/ג) = legit chapter promotion (engine pollutionExtra=0); OLD had chapters under "קריאה וביאור בקצרה". Not a defect.
+- orderMismatch=false, missingStandalone=0.
+- Root cause: NEW `series` table has single `parent_id` (strict tree) + `bible_book`, no many-to-many cross-listing table → a series can sit under exactly one book; OLD site surfaced the same series under multiple books via subject tags.
+- Minimal fix (optional, low priority): add a cross-listing/related-series mechanism (e.g. series_books join or a topic link) and surface יאשיהו on the צפניה category. NOT a thin/empty/leak issue. Do NOT escalate to a fix cycle ahead of the high-severity nodes.
+
+
+## תהלים node parity verification (read-only adversarial audit) — 2026-06-17
+
+Verified engine diff `real-parity-20260617T181743Z.json` for node תהלים (kind=book, id=7dc34ac8-e332-47e5-87d5-9400a85fa85d). VERDICT: gap is REAL. rootCauseClass=both.
+
+Ground truth (live re-scrape of OLD /כתובים/תהלים/ = 17 lessonBlock rows): 8 SERIES (top) + 9 STANDALONE LESSONS (below), each with author + length. The 462 מזמור chapter URLs in the cache children graph are URL descendants, NOT landing-page cards (old nested them under sub-series e.g. "קריאה וביאור בקצרה" =156 chapters).
+
+NEW site (Supabase, public filter): 158 series cards (150 "מזמור X" chapter series + the same 8 real series) and 0 standalone lessons.
+
+Findings:
+1. SERIES 8/8 match, same relative order. GOOD.
+2. 9 standalone lessons MISSING. All 9 exist in DB, status=published, audience_tags include general (public) — but cat_standalone=false; 7 of them also have bible_book=NULL. useDirectLessons requires bible_book=book AND cat_standalone=true, so the standalone band is permanently empty (0 of 498 תהלים lessons have cat_standalone=true). DATA tagging gap. Titles: "בקשו פני", "כאייל תערוג", כלו תפילות דוד, תהלים עג - איוב קטן, פליאה דעת ממני, מתן תורה על פי ספר תהלים, עמידה בנסיונות במזמורי התהלים, הלל והללויה בתהלים ובתפילה, תהלים עם פירוש פשט.
+3. 150 מזמור chapter cards render at positions 0-149, pushing the 8 real series to positions 150-157 (bottom). OLD had real series at top. Engine orderMismatch=false UNDERSTATES this: its order check only compares the matched-series subsequence and is blind to the 150 unmatched extras displacing real series. CODE/structure gap — old chapters were nested one level deeper, new promotes them to top-level book cards.
+
+Minimal fix (NOT applied — read-only): (a) set cat_standalone=true (and bible_book=tehilim where NULL) on the 9 standalone lessons so the standalone band renders; (b) demote/segment the 150 chapter cards so the 8 real series + 9 standalone lessons surface first, matching old order. Verify both via Chrome screenshot post-deploy. Do NOT touch /teachers/*.
+
+---
+
+## Parity verify — node "זכריה" (book, neviim) — 2026-06-17 (adversarial, READ-ONLY)
+Engine report: scripts/parity/reports/real-parity-20260617T181743Z.json
+Engine claim: old=17 (7 series + 10 standalone), new=19 (19 series + 0 standalone), missingSeries=[מלחמת גוג ומגוג, מאמרים על ימי בית שני], missingStandaloneLessons=10, orderMismatch=false, severity=high.
+
+VERDICT: **CONFIRMED REAL** (severity high). rootCauseClass = **data** (NOT lost content, NOT a hook bug).
+
+Re-derived independently:
+- OLD = live re-scrape of https://www.bneyzion.co.il/.../נביאים/זכריה/ (631KB, parse_old_rows): exactly 7 series + 10 standalone interleaved, with מאת+אורך columns — matches Yoav's "one ordered table" model.
+- NEW = Supabase (node id c6285a2a-5b5a-4005-bad0-6712206d5ed6, bible_book='זכריה'): 19 series cards (5 real matching OLD + 14 chapter cards "זכריה פרק א..יד") and **0 standalone** (useDirectLessons returns nothing).
+
+Refutation attempts (all failed to clear the gap):
+- "2 missing series are old-site aggregation/nav pages" → PARTLY. Both render as real lessonSeriesBlock cards on OLD זכריה page with hrefs into /נושאים-כלליים-בתנך/... . In NEW DB they EXIST (מלחמת גוג ומגוג lc=11 under generalTopics 2d6d28c1; מאמרים על ימי בית שני lc=9 under תקופת-הבית-השני ddc98b2e) but are NOT children of the זכריה node → not surfaced on the זכריה sidebar. Real cross-reference gap, content not lost. Same single-parent-tree limitation as the צפניה/יאשיהו note above.
+- "10 missing standalone are false positives" → REFUTED. ALL 10 exist in NEW DB. 8 are attached DIRECTLY to series_id=c6285a2a (the זכריה node) but with cat_standalone=FALSE and bible_book=NULL; the other 2 (הפיכת הצומות / מדוע הצומות) sit under bible_book='זכריה' ch=8 with cat_standalone=FALSE. useDirectLessons needs cat_standalone=true AND bible_book='זכריה' → 0 qualify. Pure wrong-flags data defect from migration.
+- orderMismatch=false is CORRECT: the 5 real series map OLD 0,1,2,3,4 → NEW 0,2,5,7,9 (strictly increasing; chapter cards interleave but don't reorder the real series).
+- 14 chapter "extraSeries" = legit migrated chapter content (chapterExtraSeries=14, pollutionExtraSeries=0); NOT flagged as defect.
+
+Minimal fix (data only, src untouched):
+1. Standalone band: for the 10 (8 node-attached + 2 chapter-8) lessons, set cat_standalone=true and bible_book='זכריה' so useDirectLessons surfaces them under the זכריה node in the old order/authors. Verify dedup of the 2 "ספר זכריה ושננתם" (1 published + 1 draft) and "מדוע הצומות" (2 published copies) before flipping flags.
+2. Cross-reference 2 series: surface מלחמת גוג ומגוג + מאמרים על ימי בית שני on the זכריה node (needs a related-series / cross-listing mechanism — same gap as צפניה note; low priority, content reachable elsewhere).
+Engine itself is sound for this node; no code-side false positive.
+
+---
+
+## Parity verify — node "משלי" (2026-06-17, adversarial re-derivation)
+
+VERDICT: **CONFIRMED REAL** · rootCauseClass = **data** · severity **high**.
+
+Engine diff (oldCount=10 series5+std5, newCount=36, missingStandaloneLessons=5) is accurate. Independent re-scrape of the live OLD landing `/מאגר-השיעורים-והמאמרים/כתובים/משלי/` reproduced exactly 5 series + 5 standalone interleaved rows. NEW site renders 36 series cards (31 of them are legit `פרק X` chapter-series = chapterExtra, NOT pollution) and **0 standalone lessons** → the screenshotted "series-only" bug.
+
+The 5 standalone lessons **exist** in the DB, all `published`, all with `audio_url`, attached directly to the משלי book node `series_id=f71c762a-4d9d-4cc3-af23-adfdd629885c`:
+- `4892b4d9-...` "לאדם מערכי לב"  (note: distinct from the `פרק טז | לאדם מערכי לב` chapter SERIES `48b79792` which IS shown)
+- `b34ed9ac-...` החסד והאמת בספר משלי
+- `7223668f-...` חסד ואמת בספר משלי
+- `ac81359b-...` מסע אישי בספר משלי
+- `927ef9b7-...` עצת ה' ועצת היועצים בספר משלי
+
+Why invisible: `useDirectLessons` (CategoryPage.tsx L167-191) filters `bible_book=book AND cat_standalone=true AND published AND NOT teachers`. All 5 have `cat_standalone=false`; 4 of 5 have `bible_book=NULL` (only מסע אישי = 'משלי'). So the standalone band query returns 0. There is NO other render path for node-direct lessons.
+
+Refutations tried & failed: (a) not nav/aggregation pages — each old page has real video+audio; (b) not hidden as series cards — canonical_match vs all 36 cards = NONE for all 5; (c) newCount not inflated by junk — pollutionExtraSeries=0.
+
+Minimal fix (DATA-ONLY, no src/ edit): set `cat_standalone=true` and `bible_book='משלי'` on those 5 lesson ids (backup `lessons` first), then verify the standalone band renders. This is the SAME class as Yoav's שמות screenshot — likely systemic across books where the old standalone band wasn't flagged; recommend a global audit of `cat_standalone` coverage vs old-landing standalone rows before per-node fixes.
+
+---
+## real_parity verify — node איוב (book, Ketuvim) — 2026-06-17
+
+ADVERSARIAL VERIFICATION of engine diff (oldCount=9 new=26, missingStandaloneLessons=4, severity high). VERDICT: gap REAL, rootCause = DATA (with two engine-labeling caveats). READ-ONLY; no src/ edits.
+
+OLD (live re-scrape, DOM order): 5 series [איוב בבקיאות / מוקלט אשכנזי / מוקלט ללא טעמים / פירוש הרב קלישר / קריאה וביאור בקצרה] + 4 standalone lessons ["אלא משל היה" · "אף שכני בתי חמר…" · השטן בספר איוב ובתנ"ך · איוב - יסורים של אהבה].
+
+NEW (Supabase, mirrors useDirectLessons in src/pages/CategoryPage.tsx L172-187): 26 series cards, 0 standalone. The 21 chapter-event series (sort_order 1-21) render on TOP; the 5 genuine OLD series are PARKED at sort_order 10101-10105 (bottom). Standalone band = 0.
+
+ROOT CAUSE = DATA:
+1. cat_standalone never marked for any Ketuvim/Neviim book. `SELECT bible_book,count(*) FROM lessons WHERE cat_standalone=true ... GROUP BY` returns ONLY the 5 Torah books (בראשית32 שמות20 במדבר21 ויקרא2 דברים2). All 4 איוב standalone lessons EXIST under the איוב node (series_id=ec9ae746, status=published, audience general) but cat_standalone=false → product's standalone band query returns 0. Same defect drives missingStandaloneLessons on תהלים(9) משלי(5) שיר השירים(3) קהלת(3) etc. The standalone-marking migration was Torah-only.
+2. Order/composition: genuine series parked at 10101+ below 21 chapter-event series → Yoav sees unfamiliar chapter series first, his real 5 buried, no standalone rows. (engine orderMismatch=false is a MISS: it only checks the matched-series subsequence which stays monotonic.)
+
+ENGINE LABELING CAVEATS (do NOT act on as written):
+- pollutionExtraSeries (10) is a FALSE LABEL. Those 10 (אסונות/מענה/תגובת | פרקים …) are LEGITIMATE איוב chapter-event series, mislabeled because _CHAP regex `פרק\s+[א-ת]` misses plural "פרקים". They were 0-child leaf lessons on the OLD site, now promoted to event-series. NEVER delete them.
+- All 26 cards are non-teacher (teacher_tagged=0) — no teacher-content leak.
+
+MINIMAL FIX (data-only, no code): (a) mark the 4 originals on the איוב node cat_standalone=true (Torah pattern) so the standalone band renders; do this for all Ketuvim/Neviim books, not just איוב. (b) re-rank so the 5 genuine series outrank the 21 chapter-event series to match old-page composition. Product code (CategoryPage useDirectLessons) is correct & deployed — no change. Verify after: re-run `real_parity.py --book איוב`.
+
+---
+
+## Adversarial verification — node "מלאכי" (book, Neviim) — 2026-06-17
+
+Engine diff (real-parity-20260617T181743Z): old=10 (4 series + 6 standalone), new=6 (6 series, 0 standalone), missingSeries=["מאמרים על ימי בית שני"], missingStandaloneLessons=6, orderMismatch=false, severity=high.
+
+VERDICT: GAP IS REAL. rootCauseClass = BOTH (data + code/architecture).
+
+Re-derivation (READ-ONLY):
+- OLD: live re-scrape of /מאגר-השיעורים-והמאמרים/נביאים/מלאכי/ reproduces 10 interleaved rows EXACTLY. 4 lessonSeriesBlock + 6 plain lessonBlock (each with a real lesson href, depth 4-5 — NOT aggregation/nav pages). Matches Yoav's "series + standalone, interleaved" screenshot pattern.
+- NEW: node id 3684f720-fd9d-400e-bdb4-24343cbd51b6, bible_book='מלאכי'. useSeriesForNode → 6 cards (שיעורים/מלאכי בבקיאות/קריאה וביאור nested under container "כל השיעורים בספר מלאכי" c2110001…099 + 3 chapter-series מלאכי פרק א/ב/ג). useDirectLessons standalone band → 0.
+
+REFUTATIONS TRIED & FAILED:
+1. "standalone rows are nav/aggregation pages" — NO: all 6 are plain lessonBlock with lesson hrefs.
+2. "already shown as cards" — NO: 0 canonical_match between the 6 lesson titles and the 6 cards.
+3. "newStandaloneLessons=0 is an engine artifact" — NO: engine mirrors real hook CategoryPage.tsx useDirectLessons L165-187 (.eq bible_book=book .eq cat_standalone=true .eq status=published .not teachers). LIVE anon-REST confirms 0 rows for מלאכי.
+4. "מאמרים על ימי בית שני is deleted" — PARTIAL: it EXISTS (series 0fa2fd90, 9 lessons, published) but under parent ddc98b2e "תקופת הבית השני" → only a missing CROSS-LISTING on the malachi page, not a lost series.
+
+WHY 0 standalone (two stacked causes):
+(a) DATA: every malachi lesson has cat_standalone=false (band hook gates on =true). All 6 originals exist as data, 5 attached directly to the malachi node via series_id (38b9e8df חזרת ישראל, d92f7a21 ספר מלאכי עם ביאור [published], ca6a4050 שיבת ציון, d9b49e2a תאריכים, 0e8352df ציר זמן); עם ישראל ישאר לנצח = a1cdbc6d (bible_book=מלאכי, ch3, series_id=מלאכי פרק ג).
+(b) CODE/ARCHITECTURE: the band is keyed ONLY on bible_book. The cross-listed copies attached to the node have bible_book NULL (חזרת/שיבת/תאריכים) or 'חגי' (ציר זמן). So even flipping cat_standalone=true would surface ONLY the 2 with bible_book='מלאכי' (עם ישראל ישאר לנצח + ספר מלאכי עם ביאור); the other 4 still never appear via the bible_book band. The OLD site surfaced them by explicit per-page cross-listing, which the bible_book-only band cannot reproduce.
+
+MINIMAL FIX:
+- DATA: on the canonical malachi-node copies, set cat_standalone=true AND bible_book='מלאכי' for the 4 NULL/חגי cross-listed lessons (38b9e8df, ca6a4050, d9b49e2a, 0e8352df) + the 2 already-מלאכי copies (a1cdbc6d, d92f7a21). Keep audience_tags non-teacher (already true). Skip the draft dup 6abcf0d0. This renders all 6 in the standalone band, deduped by title.
+- CROSS-LISTING: to restore "מאמרים על ימי בית שני" as a card on malachi, add a node-scoped series cross-link (series_topics / additional-parent mechanism) — NOT a re-parent (would regress תקופת הבית השני). This is a code+schema item, defer unless Yoav insists; the series is not lost.
+- Pattern is book-wide across Neviim/Ketuvim (same as איוב note above): standalone band empty because Neviim/Ketuvim canonical copies were never marked cat_standalone. Fix per-book via real_parity.py --book <X> then a data backfill, NOT product-code change to the hook.
+
+---
+
+## Adversarial verify — node "שיר השירים" (book, Ketuvim) — 2026-06-17
+
+Engine finding (real-parity-20260617T181743Z): old=7, new=12, missingStandaloneLessons=3, chapterExtraSeries=8, orderMismatch=false, severity=high. **VERDICT: CONFIRMED REAL. rootCause = DATA (not code).**
+
+Independent re-derivation:
+- OLD (live scrape `bneyzion.co.il`, DOM order, = engine's source): 7 body rows = 4 series [שיר השירים בבקיאות / שיעורים על שיר השירים / מוקלט ללא טעמים / קריאה וביאור בקצרה] + 3 standalone lessons rows 4-6 [דומה דודי לצבי / שימני כחותם / דבקותם של ישראל]. The 8 `שיר השירים פרק א-ח` pages are NOT body cards — they live only in the OLD left-sidebar `<ul class="nav subSubCats">` (verified in HTML). Each old perek page = real single audio lesson (media.audio=true), 0 children.
+- NEW (Supabase, mirrors useSeriesForNode + useDirectLessons exactly — engine filter verified against CategoryPage.tsx L167-191): 12 series cards = 8 chapter-series (sort 1-8, 3-5 lessons each) promoted into main list + 4 real series (sort 10101-10104). 0 standalone-band lessons.
+
+Refutation attempts (all FAILED to refute):
+- The 8 chapter "extras" are legit content correctly classed chapterExtraSeries (not pollution). Not a defect by itself — composition diff only.
+- All 3 OLD standalone lessons DO exist in NEW DB (published, non-teacher) — but every copy has `cat_standalone=false`, so useDirectLessons (`bible_book=book AND cat_standalone=true`) returns 0. NONE are members of any of the 12 visible cards (checked) → genuinely unreachable from the NEW book page. Copies attached to series_id=book-node(16b824c5) are not rendered (book node isn't a card; no node-direct-lesson query exists). None match the _PARSHA_EVENT suppression pattern. → gap is real on the live site.
+- orderMismatch=false is honest: the 4 matched series keep relative order (new idx 8<9<10<11).
+
+Per-lesson data state (all published, non-teacher):
+- דבקותם של ישראל: 2 copies, cat_standalone=false, bible_book='שיר השירים' (correct). Fix = set cat_standalone=true on the שיר-השירים-book copy (id 4b84e5df…).
+- דומה דודי לצבי: 4 copies, cat_standalone=false, bible_book=NULL on all. Fix = set bible_book='שיר השירים' AND cat_standalone=true on the canonical copy (id cc819094… is the שיר השירים-node copy).
+- שימני כחותם: 4 copies, cat_standalone=false, bible_book=NULL on all. Fix = same (id 914ca689… is the שיר השירים-node copy).
+
+MINIMAL FIX (DATA-only; product code is correct & deployed — do NOT touch src/):
+1. דבקותם: `UPDATE lessons SET cat_standalone=true WHERE id='4b84e5df-e642-4a7f-94e0-09dd5a01da6a'`.
+2. דומה דודי לצבי: `UPDATE lessons SET cat_standalone=true, bible_book='שיר השירים' WHERE id='cc819094-445b-529b-a094-1fbcda4b8db5'`.
+3. שימני כחותם: `UPDATE lessons SET cat_standalone=true, bible_book='שיר השירים' WHERE id='914ca689-e12d-5e21-8b77-58888fc68366'`.
+Then re-run `real_parity.py --book "שיר השירים"`; expect missingStandaloneLessons→0. Same class as the איוב finding above (Ketuvim book pattern: old standalone-lesson body rows lost cat_standalone in migration). Likely systemic across Ketuvim/Neviim — sweep all books.
+
+---
+
+## VERIFIED NODE: קהלת (book, Ketuvim) — real_parity-20260617T181743Z — CONFIRMED REAL (severity HIGH, adversarial verify 2026-06-17)
+
+Engine diff: old=7 (4 series + 3 standalone) vs new=16 (16 series, 0 standalone); missingStandaloneLessons=3, chapterExtraSeries=12, orderMismatch=false. Independently re-derived OLD (live re-scrape of /מאגר-השיעורים-והמאמרים/כתובים/קהלת/ — 7 lessonBlock rows, 4 lessonSeriesBlock + 3 standalone) and NEW (Supabase via documented CategoryPage filters). VERDICT: gap is REAL. rootCauseClass = **data**.
+
+REFUTATION ATTEMPTS (all failed → confirmed):
+- audit_full_state.json lists 20 children for the קהלת node, but 13 of them ("כל השיעורים במגילת קהלת" + "קהלת פרק א".."פרק יב") are `<ul class="nav subCats">` SIDEBAR links, NOT `lessonBlock` content cards. The OLD landing renders exactly 7 cards. Cache over-counts; live render is authoritative. Engine's oldCount=7 is correct.
+- Are the 3 "missing standalone" lessons duplicates already inside the card-series? NO — query confirms none of the 4 real child-series nor the 12 chapter-series contain them.
+- Order of the 4 real series: old render order == new relative order (strictly increasing) → engine orderMismatch=false is correct.
+- Are the 12 chapter-series phantoms? NO — all `active`, 2-3 published non-teacher lessons each. They are legit new content (chapter breakdown that old site exposed only via sidebar nav). Engine correctly classes them as chapterExtraSeries (NOT pollution) and does NOT hard-fail on them.
+
+THE REAL BUG (exactly Yoav's "shows SERIES not the LESSONS underneath"): 3 standalone lessons attached directly to the קהלת book node (series_id=4472645d-c8bc-4657-bfe1-fba960edd8e3, bible_book='קהלת', status=published, real audio) all have **cat_standalone=false**, so useDirectLessons (which requires cat_standalone=true) returns 0 → standalone band never renders. Product code (CategoryPage.tsx / useDirectLessons) is CORRECT — same class as the שיר השירים + איוב Ketuvim findings above.
+
+MINIMAL FIX (DATA-only; do NOT touch src/):
+1. קהלת - מן החול לקודש:        `UPDATE lessons SET cat_standalone=true WHERE id='440b42ed-62ad-4a13-95e2-3b6bbfc72240'`.
+2. בחירה חפשית במגילת קהלת:      `UPDATE lessons SET cat_standalone=true WHERE id='8bfc8514-c200-4afd-a755-b8512d5b6dca'`.
+3. קהלת - בירור שכלי או נבואי?:  `UPDATE lessons SET cat_standalone=true WHERE id='e7920d91-3c73-499a-a854-3c36f5fb0f96'`.
+(All 3 already have correct bible_book='קהלת' + series_id=node, so only the flag is needed.) Then re-run `real_parity.py --book קהלת`; expect missingStandaloneLessons→0, newStandaloneLessons→3.
+SECONDARY (UX, NOT a data/code defect, defer): 12 "קהלת פרק" chapter-cards render BEFORE the 4 real series. Old landing showed chapters only in sidebar nav. If Yoav wants old-site parity on card layout this is a design decision for the chapter-grid (BibleBookPage handles chapter grids separately per CategoryPage C8), not part of this gap.
+SYSTEMIC: 3rd Ketuvim book (after שיר השירים, איוב) with identical cat_standalone-lost-in-migration pattern. Sweep ALL Ketuvim/Neviim books: find published lessons with series_id=book-node-id AND cat_standalone=false that match old standalone rows.
+
+---
+## ADVERSARIAL VERIFY — node "דברי הימים" (book, Ketuvim) — 2026-06-17 — VERDICT: REAL (data)
+Engine diff (real-parity-20260617T181743Z.json): old=19 (3 series + 16 standalone), new=3 (3 series + 0 standalone), missingStandaloneLessons=16, severity=high.
+REFUTATION ATTEMPTS (all failed → gap is real):
+ 1. Aggregation/nav pages? NO. Re-scraped live old page /מאגר-השיעורים-והמאמרים/כתובים/דברי-הימים/ (19 lessonBlock, 3 lessonSeriesBlock) and independently parsed DOM-order rows. All 16 standalone rows have cache subchildren=0 (true leaf lessons). Several legitimately cross-listed from other books (בין כלב לעתניאל←יהושע, כיצד יכל חזקיהו←ישעיהו, תשובת מנשה/צרת הארבה←נחום, הקדמה תשובת יאשיהו←צפניה, 2 שיטת/היחס←איך-לומדים), which is genuine old-site behaviour.
+ 2. Lessons missing from DB entirely? NO. All 16 exist in lessons, canonical_match score 1.00, with bible_book='דברי הימים', status='published', NOT teachers, series_id='2c9c593e-...' (the book node itself). Contiguous ids a1010101-0001-4000-8000-000000000001..0024.
+ 3. Shown nested inside the 3 displayed series? NO. JOIN of the 16 titles to the 3 card-series (יחוסו של דוד / מאמרים דה"א / מאמרים דה"ב) = empty.
+ 4. Front-end alt render path? NO. CategoryPage.tsx useDirectLessons (L167-191) requires .eq("cat_standalone", true); engine new_standalone_lessons mirrors it faithfully.
+ROOT CAUSE = DATA. All 52 published non-teacher דברי הימים rows have cat_standalone=false; 0 have true. Migration lost the cat_standalone flag (identical class to שיר השירים / איוב / קהלת documented above). Front-end CODE is correct.
+MINIMAL FIX: UPDATE lessons SET cat_standalone=true WHERE id IN (
+ a1010101-0001-4000-8000-000000000001,002,003,004,006,008,009,010,011,012,013,014,020,021,023,024); all already have correct bible_book + series_id, only the flag is needed. Re-run real_parity.py --book "דברי הימים"; expect missingStandaloneLessons→0, newStandaloneLessons→16.
+ORDER: orderMismatch=false on series (3/3 present, order ok). After flag-fix, the standalone band sorts by content_type/bible_chapter/title — NOT the exact interleaved old-site DOM order. If Yoav wants exact row order, that is a separate (code/sort) concern, not this gap.
+SYSTEMIC: confirms the cat_standalone-lost-in-migration sweep is needed across ALL Ketuvim/Neviim books (now שיר השירים, איוב, קהלת, דברי הימים all hit).
+
+---
+
+## VERIFY דניאל (book, Ketuvim) — 2026-06-17 adversarial single-node — VERDICT: REAL gap, rootCause=DATA, severity=high
+Engine diff (real-parity-20260617T181743Z): old=23 new=24, missingSeries=[], missingStandaloneLessons=11, extraSeries=12 (all chapter "דניאל פרק א..יב"), orderMismatch=true. Reproduced end-to-end via audit_book_or_section.
+OLD page (live re-scrape, DOM order) = 12 series rows (0-11) then 11 standalone lesson rows (12-22). New site = 24 series cards, 0 standalone (the screenshotted series-only bug).
+REFUTATION attempted, FAILED to refute: all 11 standalone lessons genuinely absent from public new דניאל page. Breakdown —
+  - Group A (4: הילד דניאל בארמון נבוכדנצר / האם דניאל היה נביא? / הארמית...ראשון / הארמית...שני): public+published copies with bible_book='דניאל' attached to book-series 'דניאל' (6cda749b) EXIST; blocked only by cat_standalone=false. Pure data flip.
+  - Group B (6: הקדמה לתופעת ארבע המלכויות / מגילת אסתר וספרי הבית השני 1 / ...2 / ציר זמן גלות בבל / שיבת ציון - אז והיום / תאריכים בימי שיבת ציון): for bible_book='דניאל' only a TEACHERS-tagged copy exists; public copies live under primary book (אסתר/חגי/null), cross-listed under series 'דניאל' on old site. Real gap but fix needs care (cross-book aggregation rows, do NOT un-teacher).
+  - Group C (1: ספר דניאל עם ביאור ותרגום 'ושננתם'): only teacher published + 2 drafts; no public copy anywhere.
+ROOT CAUSE: cat_standalone never backfilled for Neviim+Ketuvim. DB-wide cat_standalone=true = 169 rows, ALL Torah (בראשית/שמות/ויקרא/במדבר/דברים). Neviim+Ketuvim standalone band = 0 across all 21 books. SYSTEMIC, not דניאל-only.
+SCALAR MASK: new=24 vs old=23 = +12 invented chapter-series − 11 dropped standalones = +1, so parity_watch.py (emptiness/regression only) passed clean. This is why Yoav sees errors while parity reports 0 gaps.
+ORDER: orderMismatch real (oldOrder→newIdx [23,13..22,12]): old lists 'יאשיהו המלך הצדיק ומותו' first + 'לב הפרק' last; new flips both endpoints AND prepends 12 chapter-series. After standalone-fix the band sorts content_type/bible_chapter/title, NOT exact old DOM interleave — exact-row-order is a separate code/sort concern.
+FIX: (1) Group A — set cat_standalone=true on the bible_book='דניאל' public copies (4). (2) Group B/C — provision public דניאל copies OR extend useDirectLessons to pull lessons cross-listed under the book-series node (membership), not only bible_book+cat_standalone. (3) systemic: backfill cat_standalone across all Neviim/Ketuvim, then re-run real_parity.py per book. Report: scripts/parity/reports/verify-daniel-20260617.json
+
+### real_parity verification — node "אסתר" (kind=book) · 2026-06-17 (adversarial verify, READ-ONLY)
+VERDICT: gap CONFIRMED REAL. rootCauseClass = DATA (with a teacher-tag overlay; front-end CODE is correct). Severity HIGH.
+Independent re-derivation: live re-scrape of OLD /מאגר-השיעורים-והמאמרים/כתובים/אסתר/ reproduces the engine EXACTLY — 29 rows = 8 series + 21 standalone lessons, one interleaved table with מאת/אורך (Yoav's screenshot). NEW Supabase (node 8600dfad-9e4d-41af-8b85-ccc325ee1298, bible_book=אסתר): 18 series, 0 standalone.
+CORE BUG (same class as שיר השירים/איוב/קהלת/דברי הימים): 164 lessons have bible_book=אסתר, 160 published, but **0 have cat_standalone=true** → useDirectLessons returns 0 → the public Esther CategoryPage shows SERIES ONLY, no standalone-lesson band. All 21/21 old standalone titles WERE migrated (found by title in new DB) — none lost; the cat_standalone flag was dropped in migration.
+TEACHER-TAG OVERLAY (Esther-specific, more serious than the other books): of the 21 old-PUBLIC standalone lessons, **10 are now audience_tags@>{teachers}** → hidden from the public Esther page by the (correct) strict public filter. Old authors were public (incl. women's "לנשים" shiurim by רבנית בת שבע יוסיפון, and 45-דק' shiurim by הרב יעקב ידיד / הרב אלעזר נאה). Partial mitigation: 1-2 reachable via מועדים→פורים (public series 381ebb6c) and נושאים כלליים paths; but the whole series "מגילת אסתר עם ביאור 'ושננתם'" (4915aec2) is series-level teacher-tagged so its members never show publicly under Esther. Needs Yoav's product decision: were these teacher-only or public? If public, un-tag those 10 lesson rows.
+FALSE POSITIVE refuted: missingSeries="מאמרים על ימי בית שני" is NOT native Esther content — it lives under נושאים כלליים בתנ"ך → תקופת הבית השני (series 0fa2fd90, parent ddc98b2e, 9 lessons, public). Old site cross-listed this Second-Temple article collection on the Esther AND Ezra-Nehemiah book pages (aggregation/nav cross-link). It is reachable; do NOT "insert" it under Esther. (Note: prompt's task-framing said missingSeries=["מגילת אסתר"] — INACCURATE; the actual report file says ["מאמרים על ימי בית שני"], and "מגילת אסתר" matched cleanly score 1.0. No greedy-match error in the engine for this node.)
+orderMismatch=false (7/8 real series present + in order). extraSeries=11 = 10 legit chapter-series (פרק א..י, behind old chapter-grid) + 1 "כל השיעורים על מגילת אסתר" (flagged pollution but it is a legit new aggregate series, lc=19) — not a fix target.
+MINIMAL FIX: (1) DATA — set cat_standalone=true on the ~11 still-public old-standalone Esther lessons (those NOT teacher-tagged) so the standalone band renders; they already have bible_book=אסתר. (2) PRODUCT/DATA — confirm with Yoav whether the 10 teacher-tagged were public on old site; if yes, remove {teachers} tag (and un-tag series 4915aec2). (3) Re-run real_parity.py --book אסתר; expect newStandaloneLessons→~11-21, missingStandaloneLessons→drop. Do NOT insert "מאמרים על ימי בית שני" under Esther. NEVER regress /teachers/*.
+
+---
+
+## real_parity verify — node "עזרא ונחמיה" (kind=book, 17.6.2026, adversarial re-derivation)
+VERDICT: gap is REAL but engine counts MISLEAD on data-loss. rootCauseClass = **code** (the missing-standalone-lessons measure), with one small **data** miss (1 cross-listed series). Severity: **medium-high** (Yoav-visible, but zero content lost).
+OLD ground-truth (live re-scrape of /מאגר-השיעורים-והמאמרים/כתובים/עזרא-ונחמיה/, 659KB, 33 lessonBlocks): 16 SERIES + 17 standalone LESSONS interleaved with מאת/אורך. Reproduced exactly (matches engine oldSeries=16/oldStandalone=17). NEW node id=5896c267-01b2-44d0-9fa4-f0d3b357ccc1, bible_book="עזרא", lesson_count=72, parent=ketuvim.
+SERIES: 15/16 old series match new cards 1:1. Only genuine missing series = **"מאמרים על ימי בית שני"** — but it EXISTS (id 0fa2fd90, published, 9 lessons), parented under נושאים כלליים בתנ"ך → תקופת הבית השני (ddc98b2e), NOT under this node. Old site cross-listed it on BOTH עזרא-ונחמיה and אסתר book pages (same finding as the אסתר audit). Reachable via general-topics; this node's recursive descendant query can't see it. Minor data/cross-link gap. (NOTE: prompt's ENGINE-DIFF block said missingSeries=["מבט מגבוה"] — INACCURATE; "מבט מגבוה" does not appear anywhere in the old page HTML. The actual report file real-parity-20260617T181743Z.json says missingSeries=["מאמרים על ימי בית שני"]. Always trust the report file, not the prompt paraphrase.)
+STANDALONE LESSONS — same CORE BUG as שיר השירים/איוב/קהלת/דברי הימים/אסתר: for both bible_book="עזרא" AND "נחמיה", **0 lessons have cat_standalone=true** (עזרא: 193 pub non-teacher all cat_standalone=false; נחמיה: 114 same). So useDirectLessons (CategoryPage.tsx L167-191: bible_book=book AND cat_standalone=true AND published AND not-teacher) returns 0 → standalone band renders EMPTY → "series only" = Yoav's exact complaint, reproduced.
+REFUTATION of "17 lost lessons": NOT lost. 15/16 unique old-standalone titles found directly attached to this node (series_id=5896c267, published, non-teacher) — incl. שיבת ציון אז/הישגים/הצלחות, נחמיה-תקומה-וחומה, כפילות-רשימת, ראש-השנה-על-פי-נחמיה, מגילת-אסתר-וספרי-הבית-השני 1+2, הארמית-בתנ"ך ראשון+שני, (מצגת)-ציר-זמן, ספר-עזרא-עם-תרגום-ושננתם, ונתתי-לכם-לב-חדש, תאריכים-בימי-שיבת-ציון. node has 72 direct lessons (71 pub non-teacher cat_standalone=false + 1 teacher "ציר זמן גלות בבל" [teachers,general] + 1 draft). These 71 are UNREACHABLE in UI: CategoryPage renders only (a) series cards + (b) the cat_standalone band — node-direct lessons (series_id=node, not a child-series) hit neither. So content present, but invisible from the sidebar click.
+ORDER: orderMismatch=true is technically true but mild/misleading — 14/15 matched rabbi-series preserve relative order (new idx 24→36 monotonic); the single inversion is "לב הפרק - עזרא ונחמיה" (sort_order=20 → sorts into chapter band at idx 19 instead of with rabbi-series at 10113). Real visible divergence = 23 chapter-grid pages (עזרא/נחמיה פרק *) render as cards ahead of rabbi-series; old site had no such chapter cards (chapter content was behind a grid). Not a per-series order bug.
+MINIMAL FIX (data-only, no src edits; never regress /teachers/*):
+  1. DATA — set cat_standalone=true on the ~15 still-public old-standalone lessons already attached to node 5896c267 (and stamp bible_book so the band query matches: ones with bible_book=null/אסתר/דניאל won't surface under a bible_book="עזרא" band). Cleanest: give this node a band query that ORs bible_book IN (עזרא,נחמיה,עזרא ונחמיה) OR a direct node-standalone path — but that is CODE; for data-only, set bible_book="עזרא" + cat_standalone=true on the public standalone copies. Leave "ציר זמן גלות בבל" teacher-tagged unless Yoav says public.
+  2. DATA/PRODUCT — re-parent or cross-link "מאמרים על ימי בית שני" (0fa2fd90) so it also appears under this node (e.g. a series_topics/secondary-parent mechanism), OR accept it's reachable via general-topics. Do NOT duplicate-insert.
+  3. Re-run `python3 real_parity.py --book "עזרא ונחמיה"`; expect newStandaloneLessons → ~15, missingStandaloneLessons → ~1-2.
+SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's every ketuvim/late-prophets book. The migration dropped the cat_standalone flag wholesale. A single backfill pass keyed on the old re-scrape's standalone rows fixes all these nodes at once. real_parity.py faithfully measures production (correct engine), but its "missingStandaloneLessons" label should read "standalone lessons not rendered" not "lost".
+
+---
+
+## 2026-06-17 — YOAV-PARITY-MASTER (סינתזה מאוחדת, READ-ONLY)
+**דוח מלא:** `scripts/parity/reports/YOAV-PARITY-MASTER-20260617.md` · **מקור-אמת:** `scripts/parity/real_parity.py` → `reports/real-parity-20260617T181743Z.json` (53 nodes / 37 with gaps).
+
+**מצב אמיתי:** 37/37 public Torah/Neviim/Ketuvim book nodes נכשלים ב-1:1 — לא "0 פערים" של ה-watchdog הישן. parity_watch.py hard-fails רק על EMPTY/REGRESSION; בדיקת ה-MEMBERSHIP המתועדת (#4) מעולם לא מומשה → מדד PRESENCE ולא CORRESPONDENCE/ORDER. זו הסיבה ל"נקי" מול "המון אי-התאמות" של יואב.
+
+**שורש דומיננטי (data):** `cat_standalone=true` סומן רק ל-5 ספרי תורה, מעולם לא רץ ל-21 ספרי נביאים+כתובים. `useDirectLessons` (CategoryPage.tsx L167-191) דורש cat_standalone=true → רצועת standalone ריקה site-wide מחוץ לתורה = "מציג סדרות, לא שיעורים" (הבאג שיואב צילם ב-שמות). אגרגט: **407 standalone חסרים, 33 סדרות חסרות, 53 זיהום אמיתי, 15 ספרים order-mismatch** (sort_order=0 → alpha).
+
+**fix grouped (קודם שורש, אחר כך per-node):**
+- **A. DATA — cat_standalone backfill** (פותר 30+ nodes): re-scrape per book → allow-list **לפי id/href לא title** → `UPDATE lessons SET cat_standalone=true [,bible_book] WHERE id IN (...)`. גיבוי `lessons_bak_catstandalone_20260617`. פיילוט עמוס (4) → batch. לעולם לא teacher-tagged, לעולם לא bulk-by-bible_book.
+- **B. DATA — sort_order עריכותי** (15 nodes): ordinal מ-DOM הישן → band 1-99; פרקים → parked >=100.
+- **C. DATA — זיהום+cross-list** (~10 nodes): תייג teachers/park על חידות/דפי-עבודה general שדולפים; cross-listing many-to-many ('מאמרים על ימי בית שני' וכו') = עדיפות נמוכה, לא re-parent הרסני.
+- **D. CODE — CategoryPage render משולב** (השורש המבני, מיישר כל node): שכפל דפוס אגף-המורים ל-namespace **חדש** `scope='public_book'` (לעולם לא scope='book' של המורים) + `public_book_listing.py` + `usePublicBookListing.ts` + ענף render עם fallback. מחזור קוד נפרד.
+- **E. ENGINE — real_parity.py fixes** (analysis-only): `_CHAP` regex רבים 'פרקים'; greedy→Hungarian; order-check רצף מלא (LCS); draft-drop לכל descendant.
+
+**False-positives (אסור לתקן):** chapterExtra=תוכן לגיטימי; ושננתם teacher-tagged=מסונן נכון §0.3; כפילות-כותרת greedy.
+
+**safeGitPlan (append-only, לא נוגע ב-alias/teacher-wing):** backup `71e6de5a` נאמן (diff ריק פרט ל-KNOWLEDGE.md שהסוכנים הוסיפו). (0) תעד dpl+bundle-hash. (1) רענן backup branch. (2) `git push origin backup/...`. (3) `git push origin feat/navigator-bot` (28 commits, preview). (4) `git switch -c chore/commit-parity-work-2026-06-17` + .gitignore. (5) commit בקבוצות: asset-swap אטומי / public-parity 14.6 / sidebar 15.6 / **teacher-wing 16.6 שלם** / Kenes 17.6 / docs. (6) build→`vercel deploy` PREVIEW→diff bundle-hash מול live (סער מריץ). (7) alias נשאר. (8) **לעולם לא** checkout/stash/reset/clean/push-main. (9) commit ≠ תיקון הבאג.
+
+**fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
+
+**התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.

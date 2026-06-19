@@ -123,7 +123,7 @@ export default function DesignPreviewTeachersWing() {
           ) : (
             <div dir="rtl" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "1rem" }}>
               {(relatedSeries as any[]).map((s) => {
-                const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+                const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
                 return (
                   <Link key={s.id} to={`/design-series-page/${s.id}`} style={{ textDecoration: "none", color: "inherit" }}>
                     <div style={{ background: "white", borderRadius: radii.lg, overflow: "hidden", border: `1px solid rgba(139,111,71,0.1)`, cursor: "pointer", transition: "all 0.28s" }}

@@ -1,0 +1,986 @@
+{
+  "generated_at": "2026-06-16",
+  "purpose": "Ground-truth inventory of teachers wing: old site vs DB",
+  "notes": [
+    "OLD sidebar_count = individual lesson count (NOT series count) across all pages for that facet",
+    "Scraper coverage: ~33% per listing page (page 1 of 3)",
+    "DB counts are exact (full paged queries)",
+    "Creator attribution in DB is via lessons.rabbi_id (series.rabbi_id = all NULL)"
+  ],
+  "old_site": {
+    "url": "https://www.bneyzion.co.il/מאגר-עזרי-הלמידה/",
+    "structure": {
+      "facets": [
+        "by_book",
+        "by_content_type",
+        "by_creator"
+      ],
+      "by_book_sections": [
+        "פרשת השבוע (special template)",
+        "איך מלמדים תנ\"ך",
+        "תורה (5 books × parshiot)",
+        "נביאים (21 books)",
+        "כתובים (9 books)"
+      ]
+    },
+    "content_types": {
+      "סיכום הפרקים והנושאים בקצרה": 475,
+      "הכוונה והדרכה למורה": 426,
+      "ביאור הפסוקים": 358,
+      "חידות חזרה": 354,
+      "שאלות ותשובות על סדר הפרקים": 312,
+      "דגשים והכוונה על סדר הפרקים": 252,
+      "דפי עבודה": 213,
+      "ביאורי מילים": 132,
+      "שאלות ותשובות": 91,
+      "מפות": 36,
+      "ערכים ומידות העולים מן הפסוקים": 33,
+      "מקורות עזר לפרקים": 27,
+      "מי אמר למי": 6,
+      "ספר שופטים": 6,
+      "חידון": 3,
+      "מבחן כללי ספר שופטים": 3,
+      "מבחנים": 3,
+      "חוברת עבודה": 3,
+      "ספר יהושע": 3,
+      "ספר מלכים": 3,
+      "שאלות חזרה": 3,
+      "שאלות עיון": 3
+    },
+    "content_types_total_sidebar": 2745,
+    "creators": {
+      "אוריה כראדי": 3,
+      "הרב אורי שטמלר": 63,
+      "הרב אשי בלייכר": 57,
+      "הרב בניה כהן": 120,
+      "הרב גדי שר שלום": 3,
+      "הרב דביר אפלבוים": 84,
+      "הרב חסדאי בר אור": 6,
+      "הרב ידידיה שילה": 3,
+      "הרב יהודה בשושה": 18,
+      "הרב יונתן לוי": 28,
+      "הרב יורם אליהו": 3,
+      "הרב יצחק עמראני": 63,
+      "הרב מאיר גרשונזון": 9,
+      "הרב מאיר הילביץ'": 3,
+      "הרב מנחם אליהו": 78,
+      "הרב נחום אריאל": 39,
+      "הרב ניסים כהן": 27,
+      "הרב עדי איצקוביץ'": 453,
+      "הרב עמוס נתנאל": 12,
+      "הרב עמירם אלבה": 204,
+      "הרב עמנואל בן ארצי": 18,
+      "הרב שלמה כץ": 84,
+      "הרב שמעון לוי והרב נתן מולאיוף": 480,
+      "הרב שמעון שוהם": 66,
+      "ושננתם - אוצר התורה": 140,
+      "ישקו העדרים": 228,
+      "מחבר לא ידוע": 12,
+      "מכון דעת סופרים": 333,
+      "נתן מארגל": 173,
+      "סידור שים שלום": 3,
+      "תלמוד תורה מורשה": 201
+    },
+    "creators_total_sidebar": 3014,
+    "by_book": {
+      "פרשת השבוע": {
+        "items_scraped": 0,
+        "series_scraped": 0,
+        "lessons_scraped": 0
+      },
+      "איך מלמדים תנ\"ך": {
+        "items_scraped": 15,
+        "series_scraped": 0,
+        "lessons_scraped": 15
+      },
+      "תורה/בראשית": {
+        "items_scraped": 25,
+        "series_scraped": 12,
+        "lessons_scraped": 13
+      },
+      "תורה/שמות": {
+        "items_scraped": 24,
+        "series_scraped": 12,
+        "lessons_scraped": 12
+      },
+      "תורה/ויקרא": {
+        "items_scraped": 16,
+        "series_scraped": 8,
+        "lessons_scraped": 8
+      },
+      "תורה/במדבר": {
+        "items_scraped": 18,
+        "series_scraped": 8,
+        "lessons_scraped": 10
+      },
+      "תורה/דברים": {
+        "items_scraped": 17,
+        "series_scraped": 5,
+        "lessons_scraped": 12
+      },
+      "נביאים/יהושע": {
+        "items_scraped": 21,
+        "series_scraped": 9,
+        "lessons_scraped": 12
+      },
+      "נביאים/שופטים": {
+        "items_scraped": 23,
+        "series_scraped": 4,
+        "lessons_scraped": 19
+      },
+      "נביאים/שמואל א": {
+        "items_scraped": 21,
+        "series_scraped": 2,
+        "lessons_scraped": 19
+      },
+      "נביאים/שמואל ב": {
+        "items_scraped": 16,
+        "series_scraped": 2,
+        "lessons_scraped": 14
+      },
+      "נביאים/מלכים א": {
+        "items_scraped": 26,
+        "series_scraped": 2,
+        "lessons_scraped": 24
+      },
+      "נביאים/מלכים ב": {
+        "items_scraped": 17,
+        "series_scraped": 2,
+        "lessons_scraped": 15
+      },
+      "נביאים/ישעיהו": {
+        "items_scraped": 7,
+        "series_scraped": 1,
+        "lessons_scraped": 6
+      },
+      "נביאים/ירמיהו": {
+        "items_scraped": 5,
+        "series_scraped": 0,
+        "lessons_scraped": 5
+      },
+      "נביאים/יחזקאל": {
+        "items_scraped": 7,
+        "series_scraped": 0,
+        "lessons_scraped": 7
+      },
+      "נביאים/הושע": {
+        "items_scraped": 5,
+        "series_scraped": 0,
+        "lessons_scraped": 5
+      },
+      "נביאים/יואל": {
+        "items_scraped": 2,
+        "series_scraped": 0,
+        "lessons_scraped": 2
+      },
+      "נביאים/עמוס": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/עובדיה": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/יונה": {
+        "items_scraped": 4,
+        "series_scraped": 0,
+        "lessons_scraped": 4
+      },
+      "נביאים/מיכה": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/נחום": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/חבקוק": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/צפניה": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/חגי": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/זכריה": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "נביאים/מלאכי": {
+        "items_scraped": 3,
+        "series_scraped": 0,
+        "lessons_scraped": 3
+      },
+      "כתובים/תהלים": {
+        "items_scraped": 2,
+        "series_scraped": 1,
+        "lessons_scraped": 1
+      },
+      "כתובים/איוב": {
+        "items_scraped": 1,
+        "series_scraped": 1,
+        "lessons_scraped": 0
+      },
+      "כתובים/שיר השירים": {
+        "items_scraped": 1,
+        "series_scraped": 0,
+        "lessons_scraped": 1
+      },
+      "כתובים/רות": {
+        "items_scraped": 5,
+        "series_scraped": 0,
+        "lessons_scraped": 5
+      },
+      "כתובים/איכה": {
+        "items_scraped": 1,
+        "series_scraped": 0,
+        "lessons_scraped": 1
+      },
+      "כתובים/אסתר": {
+        "items_scraped": 4,
+        "series_scraped": 0,
+        "lessons_scraped": 4
+      },
+      "כתובים/דניאל": {
+        "items_scraped": 4,
+        "series_scraped": 0,
+        "lessons_scraped": 4
+      },
+      "כתובים/עזרא": {
+        "items_scraped": 4,
+        "series_scraped": 0,
+        "lessons_scraped": 4
+      },
+      "כתובים/נחמיה": {
+        "items_scraped": 2,
+        "series_scraped": 0,
+        "lessons_scraped": 2
+      }
+    },
+    "summary": {
+      "unique_lesson_urls_across_all_listings": 1005,
+      "unique_series_urls_across_all_listings": 99,
+      "content_type_pages": 22,
+      "creator_pages": 31,
+      "by_book_pages": 37,
+      "sub_series_pages": 138
+    }
+  },
+  "db": {
+    "lessons": {
+      "total": 5296,
+      "published": 5291,
+      "draft": 5,
+      "with_series_id": 2254,
+      "standalone_no_series": 3042,
+      "with_rabbi_id": 5256,
+      "null_rabbi_id": 40,
+      "with_content_type": 5184,
+      "null_content_type": 112,
+      "with_bible_book": 2110,
+      "null_bible_book": 3186,
+      "with_sort_order": 186,
+      "null_sort_order": 5110,
+      "by_bible_book": {
+        "NULL": 3186,
+        "בראשית": 283,
+        "שמות": 230,
+        "מלכים א": 208,
+        "ויקרא": 162,
+        "במדבר": 158,
+        "מלכים ב": 145,
+        "יהושע": 132,
+        "שופטים": 131,
+        "דברים": 121,
+        "שמואל ב": 113,
+        "שמואל א": 88,
+        "ישעיהו": 44,
+        "עזרא": 41,
+        "אסתר": 36,
+        "איוב": 36,
+        "ירמיהו": 33,
+        "דניאל": 30,
+        "שמואל": 23,
+        "תהלים": 18,
+        "איכה": 13,
+        "רות": 9,
+        "יחזקאל": 7,
+        "מלכים": 6,
+        "הושע": 4,
+        "עובדיה": 4,
+        "יונה": 4,
+        "מלאכי": 3,
+        "צפניה": 3,
+        "נחמיה": 3,
+        "יואל": 3,
+        "מיכה": 3,
+        "זכריה": 3,
+        "עמוס": 3,
+        "חבקוק": 3,
+        "חגי": 3,
+        "נחום": 2,
+        "שיר השירים": 2
+      },
+      "by_content_type": {
+        "הכוונה והדרכה למורה": 893,
+        "שאלות ותשובות על סדר הפרקים": 850,
+        "חידות חזרה": 847,
+        "ביאור הפסוקים": 812,
+        "דפי עבודה": 537,
+        "ביאורי מילים": 354,
+        "סיכום הפרקים והנושאים בקצרה": 267,
+        "דגשים והכוונה על סדר הפרקים": 230,
+        "NULL": 112,
+        "שאלות ותשובות": 101,
+        "מפות": 81,
+        "שאלות חזרה": 60,
+        "מקורות עזר לפרקים": 36,
+        "שו\"ת": 31,
+        "ערכים ומידות העולים מן הפסוקים": 27,
+        "מי אמר למי": 16,
+        "חוברת עבודה": 13,
+        "מבחן": 9,
+        "מפות וציר זמן": 4,
+        "ספר שופטים": 4,
+        "ספר יהושע": 3,
+        "ספר מלכים": 2,
+        "מבחן כללי ספר שופטים": 2,
+        "מבחנים": 2,
+        "מדריכי הוראה": 2,
+        "שאלות עיון": 1
+      },
+      "by_creator": {
+        "ושננתם - אוצר התורה": 1120,
+        "הרב בניה כהן": 407,
+        "הרב עמירם אלבה": 348,
+        "הרב דביר אפלבוים": 315,
+        "הרב מנחם אליהו": 278,
+        "הרב שלמה כץ": 259,
+        "הרב אורי שטמלר": 221,
+        "מכון דעת סופרים": 209,
+        "הרב שמעון לוי": 190,
+        "הרב ניסים כהן": 181,
+        "הרב נחום אריאל": 164,
+        "ישקו העדרים": 163,
+        "הרב שמעון לוי והרב נתן מולאיוף": 163,
+        "הרב שמעון שוהם": 158,
+        "הרב יונתן לוי": 155,
+        "נתן מארגל": 154,
+        "תלמוד תורה מורשה": 153,
+        "הרב יצחק עמראני": 146,
+        "הרב עדי איצקוביץ'": 137,
+        "הרב חסדאי בר אור": 78,
+        "הרב אשי בלייכר": 67,
+        "הרב יורם אליהו": 50,
+        "הרב גדי שר שלום": 46,
+        "NULL": 40,
+        "מחבר לא ידוע": 25,
+        "הרב עמנואל בן ארצי": 24,
+        "הרב יאיר הס": 14,
+        "הרב יהודה בשושה": 7,
+        "ושננתם": 3,
+        "הרב עמוס נתנאל": 3,
+        "הרב שמואל ישמח": 3,
+        "הרב יואב אוריאל": 3,
+        "הרב מאיר גרשונזון": 2,
+        "הרב ידידיה שילה": 2,
+        "אוריה כראדי": 2,
+        "הרב יואב אוריאל והרב עמנואל בן ארצי": 2,
+        "הרב שמעון כהן": 1,
+        "סידור שים שלום": 1,
+        "הרב איתן שנדורפי": 1,
+        "הרב מאיר הילביץ'": 1
+      }
+    },
+    "series": {
+      "total": 325,
+      "by_status": {
+        "published": 298,
+        "active": 14,
+        "draft": 12,
+        "category": 1
+      },
+      "null_bible_book": 26,
+      "null_rabbi_id": 325,
+      "empty_lesson_count": 27,
+      "draft_series": [
+        {
+          "title": "דפי עבודה - מלאכי",
+          "bible_book": "מלאכי",
+          "lesson_count": 1
+        },
+        {
+          "title": "דפי עבודה - יואל",
+          "bible_book": "יואל",
+          "lesson_count": 1
+        },
+        {
+          "title": "חוברת עבודה לתלמיד - חומש בראשית",
+          "bible_book": "בראשית",
+          "lesson_count": 1
+        },
+        {
+          "title": "הקדמה לספר שופטים",
+          "bible_book": "שופטים",
+          "lesson_count": 0
+        },
+        {
+          "title": "לב הפרק  - ישעיהו",
+          "bible_book": "ישעיהו",
+          "lesson_count": 0
+        },
+        {
+          "title": "דפי עבודה - עמוס",
+          "bible_book": "עמוס",
+          "lesson_count": 1
+        },
+        {
+          "title": "דפי עבודה - חגי",
+          "bible_book": "חגי",
+          "lesson_count": 1
+        },
+        {
+          "title": "דפי עבודה - זכריה",
+          "bible_book": "זכריה",
+          "lesson_count": 1
+        },
+        {
+          "title": "דפי עבודה - מיכה",
+          "bible_book": "מיכה",
+          "lesson_count": 1
+        },
+        {
+          "title": "דפי עבודה - נחום",
+          "bible_book": "נחום",
+          "lesson_count": 0
+        },
+        {
+          "title": "דפי עבודה - חבקוק",
+          "bible_book": "חבקוק",
+          "lesson_count": 1
+        },
+        {
+          "title": "דפי עבודה - צפניה",
+          "bible_book": "צפניה",
+          "lesson_count": 1
+        }
+      ],
+      "empty_series": [
+        {
+          "title": "מקומות בספר מלכים א (לפי א-ב)",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "'דניאל הרב מאיר הילביץ",
+          "bible_book": "דניאל",
+          "status": "published"
+        },
+        {
+          "title": "דגשים לפרשות חומש בראשית",
+          "bible_book": "בראשית",
+          "status": "published"
+        },
+        {
+          "title": "הרב עדי איצקוביץ'",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "הקדמה לספר שופטים",
+          "bible_book": "שופטים",
+          "status": "draft"
+        },
+        {
+          "title": "יהודה וישראל - אז והיום",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "מאגר עזרי הלמידה",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "הרב עמנואל בן ארצי",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "מבנה ירושלים בסוף תקופת בית ראשון ותחילת תקופת בית שני",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "לב הפרק  - ישעיהו",
+          "bible_book": "ישעיהו",
+          "status": "draft"
+        },
+        {
+          "title": "תלמוד תורה מורשה",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "חוברת סיכום פרשיות ויקרא",
+          "bible_book": "ויקרא",
+          "status": "published"
+        },
+        {
+          "title": "ציר זמן - תקופת המלכים",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "נביאים",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "רות",
+          "bible_book": "רות",
+          "status": "published"
+        },
+        {
+          "title": "סיכומים על ספר יהושע",
+          "bible_book": "יהושע",
+          "status": "published"
+        },
+        {
+          "title": "נחמיה",
+          "bible_book": "נחמיה",
+          "status": "published"
+        },
+        {
+          "title": "אסתר",
+          "bible_book": "אסתר",
+          "status": "published"
+        },
+        {
+          "title": "ליווי ת\"תים",
+          "bible_book": null,
+          "status": "category"
+        },
+        {
+          "title": "דפי עבודה - נחום",
+          "bible_book": "נחום",
+          "status": "draft"
+        },
+        {
+          "title": "תורה",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "כתובים",
+          "bible_book": null,
+          "status": "published"
+        },
+        {
+          "title": "דפי עבודה - בראשית",
+          "bible_book": "בראשית",
+          "status": "published"
+        },
+        {
+          "title": "תהלים",
+          "bible_book": "תהלים",
+          "status": "published"
+        },
+        {
+          "title": "איכה",
+          "bible_book": "איכה",
+          "status": "published"
+        },
+        {
+          "title": "דפי עבודה - בראשית",
+          "bible_book": "בראשית",
+          "status": "published"
+        },
+        {
+          "title": "איוב",
+          "bible_book": "איוב",
+          "status": "published"
+        }
+      ],
+      "by_bible_book": {
+        "NULL": 26,
+        "בראשית": 25,
+        "מלכים א": 24,
+        "שמות": 24,
+        "שופטים": 22,
+        "יהושע": 21,
+        "במדבר": 20,
+        "שמואל א": 19,
+        "ויקרא": 18,
+        "דברים": 17,
+        "שמואל ב": 15,
+        "מלכים ב": 15,
+        "ישעיהו": 7,
+        "ירמיהו": 5,
+        "דניאל": 4,
+        "יחזקאל": 4,
+        "מלאכי": 3,
+        "יואל": 3,
+        "שמואל": 3,
+        "תהלים": 3,
+        "זכריה": 3,
+        "חבקוק": 3,
+        "עזרא": 3,
+        "עמוס": 3,
+        "אסתר": 3,
+        "עובדיה": 3,
+        "הושע": 3,
+        "צפניה": 3,
+        "יונה": 3,
+        "מיכה": 3,
+        "חגי": 3,
+        "נחום": 3,
+        "איוב": 3,
+        "שיר השירים": 2,
+        "נחמיה": 2,
+        "רות": 2,
+        "איכה": 2
+      }
+    }
+  },
+  "gaps": {
+    "critical": [
+      {
+        "id": "bible_book_null",
+        "description": "3,186 teacher lessons (60%) have NULL bible_book — prevents per-book filtering/display",
+        "count": 3186,
+        "fix": "Inherit from series.bible_book where series has it; use content_type patterns for standalones"
+      },
+      {
+        "id": "draft_series_hidden",
+        "description": "12 teacher series are status='draft' and invisible to users",
+        "count": 12,
+        "fix": "Promote to 'published' after verifying content is complete",
+        "series": [
+          "דפי עבודה - מלאכי",
+          "דפי עבודה - יואל",
+          "חוברת עבודה לתלמיד - חומש בראשית",
+          "הקדמה לספר שופטים",
+          "לב הפרק  - ישעיהו",
+          "דפי עבודה - עמוס",
+          "דפי עבודה - חגי",
+          "דפי עבודה - זכריה",
+          "דפי עבודה - מיכה",
+          "דפי עבודה - נחום",
+          "דפי עבודה - חבקוק",
+          "דפי עבודה - צפניה"
+        ]
+      },
+      {
+        "id": "creator_adi_missing_lessons",
+        "description": "הרב עדי איצקוביץ': OLD=453, DB=184 (all tags). ~269 lessons from 'ביאורי מילים ושאלות חזרה' series (all 5 Torah books) were NOT migrated.",
+        "old_count": 453,
+        "db_count_teachers_only": 137,
+        "db_count_all_tags": 184,
+        "real_gap": 269
+      },
+      {
+        "id": "creator_levi_molayof_missing",
+        "description": "הרב שמעון לוי והרב נתן מולאיוף: OLD=480, DB=163. Combined with הרב שמעון לוי (190) = 353, still 127 short.",
+        "old_count": 480,
+        "db_count_combined_name": 163,
+        "db_count_levi_alone": 190,
+        "real_gap_if_combined": 127
+      },
+      {
+        "id": "creator_daat_soferim_missing",
+        "description": "מכון דעת סופרים: OLD=333, DB=209 (teachers only). 124 lessons missing.",
+        "old_count": 333,
+        "db_count": 209,
+        "real_gap": 124
+      },
+      {
+        "id": "creator_yishko_missing",
+        "description": "ישקו העדרים: OLD=228, DB=163 (teachers). 65 lessons missing.",
+        "old_count": 228,
+        "db_count": 163,
+        "real_gap": 65
+      },
+      {
+        "id": "creator_talmud_torah_moreshet_missing",
+        "description": "תלמוד תורה מורשה: OLD=201, DB=153. 48 lessons missing.",
+        "old_count": 201,
+        "db_count": 153,
+        "real_gap": 48
+      },
+      {
+        "id": "series_rabbi_id_null",
+        "description": "ALL 325 teacher series have rabbi_id=NULL — creator not assigned at series level",
+        "count": 325,
+        "fix": "Infer from lessons.rabbi_id inside each series (majority vote)"
+      },
+      {
+        "id": "sort_order_null",
+        "description": "5,110/5,296 teacher lessons (96%) have sort_order=NULL — ordering by creator convention unknown",
+        "count": 5110,
+        "fix": "Need to scrape old site lesson ordering per series"
+      }
+    ],
+    "dual_audience_series": {
+      "description": "16 series shown in teachers wing on old site are tagged ['general'] in DB, not ['teachers']",
+      "titles": [
+        "ביאור ספר משלי (107 lessons)",
+        "לב ההפטרה (20)",
+        "לב הפרק (11)",
+        "לב הפרק - חגי זכריה ומלאכי (12)",
+        "לב הפרק - מועדים (1)",
+        "לב הפרק - עזרא ונחמיה (7)",
+        "לב הפרק - שופטים (2)",
+        "נחמיה הרב מאיר הילביץ (17)",
+        "ספר יונה הרב מאיר הילביץ' (5)",
+        "עזרא הרב מאיר הילביץ (19)",
+        "פירוש על תהילים לפי גדולי ישראל (24)",
+        "פשט בפרשה (multiple series)",
+        "קורס דיגיטלי - מלכים (3)",
+        "תנ\"ך בעיון - ישעיהו (1)",
+        "תרגום לעברית של ספר דניאל (7)",
+        "תרגום לעברית של ספר עזרא (4)"
+      ],
+      "note": "These were visible to teachers on old site but tagged 'general' in DB — should add 'teachers' tag (dual-audience)"
+    }
+  },
+  "old_site_by_book_with_known_lesson_counts": {
+    "comment": "From old_teachers_listings scraped data (33% sample per listing page)",
+    "books": {
+      "פרשת השבוע": {
+        "items_scraped": 0,
+        "actual_lessons_in_scraped_items": 0,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 0
+      },
+      "איך מלמדים תנ\"ך": {
+        "items_scraped": 15,
+        "actual_lessons_in_scraped_items": 15,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 15
+      },
+      "תורה/בראשית": {
+        "items_scraped": 25,
+        "actual_lessons_in_scraped_items": 141,
+        "series_in_scrape": 12,
+        "standalone_in_scrape": 13
+      },
+      "תורה/שמות": {
+        "items_scraped": 24,
+        "actual_lessons_in_scraped_items": 121,
+        "series_in_scrape": 12,
+        "standalone_in_scrape": 12
+      },
+      "תורה/ויקרא": {
+        "items_scraped": 16,
+        "actual_lessons_in_scraped_items": 80,
+        "series_in_scrape": 8,
+        "standalone_in_scrape": 8
+      },
+      "תורה/במדבר": {
+        "items_scraped": 18,
+        "actual_lessons_in_scraped_items": 85,
+        "series_in_scrape": 8,
+        "standalone_in_scrape": 10
+      },
+      "תורה/דברים": {
+        "items_scraped": 17,
+        "actual_lessons_in_scraped_items": 55,
+        "series_in_scrape": 5,
+        "standalone_in_scrape": 12
+      },
+      "נביאים/יהושע": {
+        "items_scraped": 21,
+        "actual_lessons_in_scraped_items": 94,
+        "series_in_scrape": 9,
+        "standalone_in_scrape": 12
+      },
+      "נביאים/שופטים": {
+        "items_scraped": 23,
+        "actual_lessons_in_scraped_items": 70,
+        "series_in_scrape": 4,
+        "standalone_in_scrape": 19
+      },
+      "נביאים/שמואל א": {
+        "items_scraped": 21,
+        "actual_lessons_in_scraped_items": 51,
+        "series_in_scrape": 2,
+        "standalone_in_scrape": 19
+      },
+      "נביאים/שמואל ב": {
+        "items_scraped": 16,
+        "actual_lessons_in_scraped_items": 52,
+        "series_in_scrape": 2,
+        "standalone_in_scrape": 14
+      },
+      "נביאים/מלכים א": {
+        "items_scraped": 26,
+        "actual_lessons_in_scraped_items": 60,
+        "series_in_scrape": 2,
+        "standalone_in_scrape": 24
+      },
+      "נביאים/מלכים ב": {
+        "items_scraped": 17,
+        "actual_lessons_in_scraped_items": 61,
+        "series_in_scrape": 2,
+        "standalone_in_scrape": 15
+      },
+      "נביאים/ישעיהו": {
+        "items_scraped": 7,
+        "actual_lessons_in_scraped_items": 34,
+        "series_in_scrape": 1,
+        "standalone_in_scrape": 6
+      },
+      "נביאים/ירמיהו": {
+        "items_scraped": 5,
+        "actual_lessons_in_scraped_items": 5,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 5
+      },
+      "נביאים/יחזקאל": {
+        "items_scraped": 7,
+        "actual_lessons_in_scraped_items": 7,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 7
+      },
+      "נביאים/הושע": {
+        "items_scraped": 5,
+        "actual_lessons_in_scraped_items": 5,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 5
+      },
+      "נביאים/יואל": {
+        "items_scraped": 2,
+        "actual_lessons_in_scraped_items": 2,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 2
+      },
+      "נביאים/עמוס": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/עובדיה": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/יונה": {
+        "items_scraped": 4,
+        "actual_lessons_in_scraped_items": 4,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 4
+      },
+      "נביאים/מיכה": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/נחום": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/חבקוק": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/צפניה": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/חגי": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/זכריה": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "נביאים/מלאכי": {
+        "items_scraped": 3,
+        "actual_lessons_in_scraped_items": 3,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 3
+      },
+      "כתובים/תהלים": {
+        "items_scraped": 2,
+        "actual_lessons_in_scraped_items": 16,
+        "series_in_scrape": 1,
+        "standalone_in_scrape": 1
+      },
+      "כתובים/איוב": {
+        "items_scraped": 1,
+        "actual_lessons_in_scraped_items": 28,
+        "series_in_scrape": 1,
+        "standalone_in_scrape": 0
+      },
+      "כתובים/שיר השירים": {
+        "items_scraped": 1,
+        "actual_lessons_in_scraped_items": 1,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 1
+      },
+      "כתובים/רות": {
+        "items_scraped": 5,
+        "actual_lessons_in_scraped_items": 5,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 5
+      },
+      "כתובים/איכה": {
+        "items_scraped": 1,
+        "actual_lessons_in_scraped_items": 1,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 1
+      },
+      "כתובים/אסתר": {
+        "items_scraped": 4,
+        "actual_lessons_in_scraped_items": 4,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 4
+      },
+      "כתובים/דניאל": {
+        "items_scraped": 4,
+        "actual_lessons_in_scraped_items": 4,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 4
+      },
+      "כתובים/עזרא": {
+        "items_scraped": 4,
+        "actual_lessons_in_scraped_items": 4,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 4
+      },
+      "כתובים/נחמיה": {
+        "items_scraped": 2,
+        "actual_lessons_in_scraped_items": 2,
+        "series_in_scrape": 0,
+        "standalone_in_scrape": 2
+      }
+    }
+  }
+}

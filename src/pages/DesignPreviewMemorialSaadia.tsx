@@ -18,12 +18,12 @@ import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 
-import saadiaPortrait from "@/assets/saadia-soldier.jpg";
-import saadiaTefillin from "@/assets/saadia-tefillin.png";
-import saadiaYoungBooks from "@/assets/saadia-young-books.jpg";
-import saadiaSuit from "@/assets/saadia-suit.jpg";
-import saadiaRally from "@/assets/saadia-rally.jpg";
-import saadiaCombat from "@/assets/saadia-combat.jpg";
+import saadiaPortrait from "@/assets/saadia-soldier.webp";
+import saadiaTefillin from "@/assets/saadia-tefillin.webp";
+import saadiaYoungBooks from "@/assets/saadia-young-books.webp";
+import saadiaSuit from "@/assets/saadia-suit.webp";
+import saadiaRally from "@/assets/saadia-rally.webp";
+import saadiaCombat from "@/assets/saadia-combat.webp";
 
 // ────────────────────────────────────────────────────────────────────────
 const MEMORIAL = {

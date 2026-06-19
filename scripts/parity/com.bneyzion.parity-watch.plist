@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  bneyzion parity watchdog — runs 3×/day (08:00 / 14:00 / 20:00 Israel time).
+  Detect-only: checks ~50 sidebar sections for EMPTY / content-regression, DMs Saar on
+  WhatsApp. NEVER deploys or writes. Install:
+    cp scripts/parity/com.bneyzion.parity-watch.plist ~/Library/LaunchAgents/
+    launchctl unload ~/Library/LaunchAgents/com.bneyzion.parity-watch.plist 2>/dev/null
+    launchctl load   ~/Library/LaunchAgents/com.bneyzion.parity-watch.plist
+  Secrets are read from the workspace files at runtime (not stored here).
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.bneyzion.parity-watch</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/python3</string>
+    <string>/Users/srhlq/Downloads/saar-workspace/bneyzion/scripts/parity/parity_watch.py</string>
+  </array>
+  <key>WorkingDirectory</key>
+  <string>/Users/srhlq/Downloads/saar-workspace/bneyzion/scripts/parity</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HTTP_PROXY</key><string></string>
+    <key>HTTPS_PROXY</key><string></string>
+    <key>NO_PROXY</key><string>*</string>
+  </dict>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Hour</key><integer>8</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>14</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>20</integer><key>Minute</key><integer>0</integer></dict>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/srhlq/Downloads/saar-workspace/bneyzion/scripts/parity/reports/watch-launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/srhlq/Downloads/saar-workspace/bneyzion/scripts/parity/reports/watch-launchd.err</string>
+</dict>
+</plist>

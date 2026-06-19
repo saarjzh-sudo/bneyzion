@@ -96,7 +96,7 @@ function SeriesCard({ item, onClick }: { item: FlatItem; onClick?: () => void })
       >
         {/* Thumbnail */}
         <img
-          src={item.image_url || "/images/series-default.png"}
+          src={item.image_url || "/images/series-default.webp"}
           alt=""
           style={{
             width: 62,
@@ -107,7 +107,7 @@ function SeriesCard({ item, onClick }: { item: FlatItem; onClick?: () => void })
             background: colors.parchmentDark,
           }}
           onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+            (e.currentTarget as HTMLImageElement).src = "/images/series-default.webp";
           }}
         />
 

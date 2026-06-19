@@ -292,10 +292,10 @@ function LessonsGrid({
   totalCount: number;
 }) {
   const LESSON_PLACEHOLDER: Record<string, string> = {
-    video: "/images/lesson-video.png",
-    audio: "/images/lesson-audio.png",
-    text: "/images/lesson-text.png",
-    pdf: "/images/lesson-text.png",
+    video: "/images/lesson-video.webp",
+    audio: "/images/lesson-audio.webp",
+    text: "/images/lesson-text.webp",
+    pdf: "/images/lesson-text.webp",
   };
 
   return (
@@ -367,7 +367,7 @@ function LessonsGrid({
           >
             {lessons.slice(0, 12).map((lesson) => {
               const thumbUrl =
-                lesson.thumbnail_url || LESSON_PLACEHOLDER[lesson.source_type] || "/images/series-default.png";
+                lesson.thumbnail_url || LESSON_PLACEHOLDER[lesson.source_type] || "/images/series-default.webp";
               return (
                 <div
                   key={lesson.id}
@@ -573,7 +573,7 @@ function RelatedSeries({ allSeries, currentSeries }: { allSeries: any[]; current
         >
           {related.map((s) => {
             const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
-            const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+            const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
             return (
               <div
                 key={s.id}
@@ -813,7 +813,7 @@ export default function DesignPreviewSeriesPage() {
   const totalLessons = (lessons as any[]).length || series.lesson_count || 0;
   const totalDurationSec = (lessons as any[]).reduce((sum, l) => sum + (l.duration || 0), 0);
   const totalDuration = formatDuration(totalDurationSec);
-  const imageUrl = series.image_url || getSeriesCoverImage(series.title) || "/images/series-default.png";
+  const imageUrl = series.image_url || getSeriesCoverImage(series.title) || "/images/series-default.webp";
 
   return (
     <DesignLayout transparentHeader overlapHero>

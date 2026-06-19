@@ -230,7 +230,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               }}
             >
               {[
-                { to: "/", label: "ראשי", icon: Home },
+                // R3 15.6.2026 (Saar): "ראשי" removed from sidebar — it lives in the header.
                 // §2.2 tree CA1: "ניווט באתר לפי ספר ופרק" → /bible index page
                 { to: "/bible", label: "ניווט באתר לפי ספר ופרק", icon: BookOpen },
                 { to: "/parasha", label: "פרשת השבוע", icon: BookOpen },
@@ -269,55 +269,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
-        {/* Search */}
-        {(!collapsed || isDrawer) && (
-          <div style={{ padding: "0.3rem 0.85rem 0.4rem" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                padding: "0.35rem 0.55rem",
-                background: "rgba(139,111,71,0.06)",
-                borderRadius: radii.sm,
-                border: `1px solid rgba(139,111,71,0.12)`,
-              }}
-            >
-              <Search size={12} style={{ color: colors.textSubtle, flexShrink: 0 }} />
-              <input
-                type="text"
-                placeholder="חיפוש..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{
-                  flex: 1,
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
-                  fontFamily: fonts.body,
-                  fontSize: "0.78rem",
-                  color: colors.textMid,
-                  direction: "rtl",
-                }}
-              />
-              {search && (
-                <button
-                  onClick={() => setSearch("")}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    color: colors.textSubtle,
-                    padding: 0,
-                    lineHeight: 1,
-                  }}
-                >
-                  <X size={11} />
-                </button>
-              )}
-            </div>
-          </div>
-        )}
+        {/* Search removed from sidebar — R3 15.6.2026 (Saar). The `search` state stays
+            inert (always ""), so matchesSearch is a no-op and the tree shows everything. */}
 
         {/* Tabs */}
         {(!collapsed || isDrawer) && (
@@ -521,83 +474,75 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             {(!collapsed || isDrawer) && <span>תכנית הפרק השבועי</span>}
           </Link>
 
-          {/* תרומות */}
-          <Link
-            to="/donate"
-            onClick={onDrawerClose}
+          {/* תרומות + צמצם — share one row when expanded so the footer is more compact.
+              R3 15.6.2026 (Saar): "לזכר סעדיה" removed (it lives in the header);
+              the collapse button sits beside תרומות on half a row. */}
+          <div
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: "0.55rem",
-              padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
-              borderRadius: radii.md,
-              fontFamily: fonts.body,
-              fontSize: "0.8rem",
-              color: "white",
-              fontWeight: 600,
-              textDecoration: "none",
-              justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
-              background: gradients.goldButton,
-              boxShadow: shadows.goldGlowSoft,
-              transition: "opacity 0.15s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            <Heart size={13} style={{ flexShrink: 0 }} />
-            {(!collapsed || isDrawer) && <span>תרומות</span>}
-          </Link>
-
-          {/* לזכר סעדיה */}
-          <Link
-            to="/memorial/saadia"
-            onClick={onDrawerClose}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.6rem",
-              padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
-              borderRadius: radii.md,
-              fontFamily: fonts.body,
-              fontSize: "0.78rem",
-              color: colors.goldDark,
-              fontWeight: 600,
-              textDecoration: "none",
-              justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
+              gap: "0.3rem",
+              alignItems: "stretch",
+              flexDirection: collapsed && !isDrawer ? "column" : "row",
             }}
           >
-            <Flame size={14} style={{ flexShrink: 0 }} />
-            {(!collapsed || isDrawer) && <span>לזכר סעדיה הי״ד</span>}
-          </Link>
-
-          {!isDrawer && (
-            <button
-              onClick={() => setCollapsed((c) => !c)}
-              aria-label={collapsed ? "הרחב" : "צמצם"}
+            <Link
+              to="/donate"
+              onClick={onDrawerClose}
               style={{
+                flex: collapsed && !isDrawer ? undefined : 1,
                 display: "flex",
                 alignItems: "center",
-                justifyContent: collapsed ? "center" : "space-between",
-                padding: collapsed ? "0.5rem" : "0.5rem 0.7rem",
+                gap: "0.55rem",
+                padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
                 borderRadius: radii.md,
-                background: "transparent",
-                border: `1px solid rgba(139,111,71,0.18)`,
-                color: colors.textMuted,
                 fontFamily: fonts.body,
-                fontSize: "0.74rem",
-                cursor: "pointer",
+                fontSize: "0.8rem",
+                color: "white",
+                fontWeight: 600,
+                textDecoration: "none",
+                justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
+                background: gradients.goldButton,
+                boxShadow: shadows.goldGlowSoft,
+                transition: "opacity 0.15s",
               }}
+              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
             >
-              {collapsed ? (
-                <ChevronRight size={14} />
-              ) : (
-                <>
-                  <span>צמצם</span>
+              <Heart size={13} style={{ flexShrink: 0 }} />
+              {(!collapsed || isDrawer) && <span>תרומות</span>}
+            </Link>
+
+            {!isDrawer && (
+              <button
+                onClick={() => setCollapsed((c) => !c)}
+                aria-label={collapsed ? "הרחב" : "צמצם"}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.3rem",
+                  justifyContent: "center",
+                  padding: collapsed ? "0.5rem" : "0.5rem 0.7rem",
+                  borderRadius: radii.md,
+                  background: "transparent",
+                  border: `1px solid rgba(139,111,71,0.18)`,
+                  color: colors.textMuted,
+                  fontFamily: fonts.body,
+                  fontSize: "0.74rem",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {collapsed ? (
                   <ChevronRight size={14} />
-                </>
-              )}
-            </button>
-          )}
+                ) : (
+                  <>
+                    <span>צמצם</span>
+                    <ChevronRight size={14} />
+                  </>
+                )}
+              </button>
+            )}
+          </div>
         </div>
       </aside>
 
@@ -734,11 +679,10 @@ function ContentTree({
                 color: catOpen ? colors.goldDark : colors.textMid,
               }}
             >
+              {/* תורה / נביאים / כתובים are ROOTS — the old site has no root landing page;
+                  the title toggles the books accordion only (no navigation to an empty /category). */}
               <button
-                onClick={() => {
-                  if (!catOpen) onToggle(cat.id);
-                  onNavigate(`/category/${cat.id}`);
-                }}
+                onClick={() => onToggle(cat.id)}
                 style={{
                   flex: 1,
                   background: "none",
@@ -1146,7 +1090,12 @@ function ExtraSectionBlock({
         <button
           onClick={() => {
             if (!isExpanded) onToggle();
-            onNavigate(`/category/${section.id}`);
+            // R3 14.6.2026 (Saar): "כלי עזר" (tools root) holds 10 PUBLIC lessons (tables/timelines)
+            // directly on the node — not series children. /category/ shows series-children (empty for
+            // public after the strict teacher filter), so route it to /series/ which shows the direct
+            // public lessons. Teacher maps stay hidden (filtered) in the teacher wing.
+            const TOOLS_ROOT = "27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7";
+            onNavigate(section.id === TOOLS_ROOT ? `/series/${section.id}` : `/category/${section.id}`);
           }}
           style={{
             flex: 1,

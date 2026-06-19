@@ -178,7 +178,7 @@ const LessonPage = () => {
     lesson.thumbnail_url ||
     seriesDetail?.image_url ||
     (series ? getSeriesCoverImage(series.title) : null) ||
-    "/images/series-default.png";
+    "/images/series-default.webp";
 
   return (
     <Layout>
@@ -209,7 +209,7 @@ const LessonPage = () => {
               opacity: 0.7,
               filter: "brightness(0.85) saturate(0.9)",
             }}
-            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }}
+            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }}
           />
           {/* Bottom gradient for text readability */}
           <div
@@ -538,7 +538,7 @@ const LessonPage = () => {
                     (l as any).thumbnail_url ||
                     seriesDetail?.image_url ||
                     (series ? getSeriesCoverImage(series.title) : null) ||
-                    "/images/series-default.png";
+                    "/images/series-default.webp";
                   return (
                     <Link key={l.id} to={`/lessons/${l.id}`}>
                       <Card className="hover:shadow-md transition-shadow group overflow-hidden">
@@ -548,7 +548,7 @@ const LessonPage = () => {
                             src={lImg}
                             alt={l.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }}
+                            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }}
                           />
                         </div>
                         <CardContent className="p-4">

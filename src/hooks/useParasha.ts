@@ -1,4 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentParasha, getParashaSeriesTitle, getParashaChumash, PARASHA_ARTICLE_SERIES } from "@/lib/parashaCalendar";
 
@@ -72,7 +73,38 @@ function titleMatchesParasha(title: string, terms: string[]): boolean {
 }
 
 export function useParasha() {
-  const parasha = getCurrentParasha();
+  const queryClient = useQueryClient();
+
+  // The current parasha is date-derived. Keep it in state and re-evaluate on a timer
+  // + on tab focus, so the page rolls over to the new week LIVE — no manual refresh.
+  const [parasha, setParasha] = useState<string>(() => getCurrentParasha());
+  useEffect(() => {
+    const recheck = () => {
+      const p = getCurrentParasha();
+      setParasha((prev) => (p && p !== prev ? p : prev));
+    };
+    const id = setInterval(recheck, 60_000);
+    const onVisible = () => { if (document.visibilityState === "visible") recheck(); };
+    document.addEventListener("visibilitychange", onVisible);
+    return () => { clearInterval(id); document.removeEventListener("visibilitychange", onVisible); };
+  }, []);
+
+  // Supabase Realtime — same push mechanism as the live donation counter
+  // (see useTierCounts): when lessons/series change in the DB, invalidate the
+  // parsha queries so new/edited content appears live without a reload.
+  useEffect(() => {
+    const invalidate = () =>
+      queryClient.invalidateQueries({
+        predicate: (q) => typeof q.queryKey[0] === "string" && (q.queryKey[0] as string).startsWith("parasha-"),
+      });
+    const channel = supabase
+      .channel("parasha-live")
+      .on("postgres_changes", { event: "*", schema: "public", table: "lessons" }, invalidate)
+      .on("postgres_changes", { event: "*", schema: "public", table: "series" }, invalidate)
+      .subscribe();
+    return () => { supabase.removeChannel(channel); };
+  }, [queryClient]);
+
   const seriesTitle = getParashaSeriesTitle(parasha);
   const chumash = getParashaChumash(parasha);
   const parashaSearchTerms = getParashaSearchTerms(parasha);
@@ -84,6 +116,10 @@ export function useParasha() {
   // 11.6.2026: Added short-form fallback — "שלח לך" lessons are titled "פרשת שלח" in DB.
   const parashaLessonsQuery = useQuery({
     queryKey: ["parasha-lessons-all", parasha],
+    // Live updates — same approach the donation counter actually relies on:
+    // poll every 30s + refetch on tab focus (realtime push above is an instant bonus).
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       if (!parasha) return [];
 
@@ -136,6 +172,8 @@ export function useParasha() {
   // Get audio lessons (Torah reading)
   const audioLessonsQuery = useQuery({
     queryKey: ["parasha-audio", parasha, chumash],
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       if (!chumash) return [];
 
@@ -187,52 +225,64 @@ export function useParasha() {
   // Get article series and find matching lessons
   const articleSeriesQuery = useQuery({
     queryKey: ["parasha-article-series", parasha],
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       const results: ParashaArticleSeries[] = [];
       
       for (const articleSeries of PARASHA_ARTICLE_SERIES) {
-        // Find the series by exact title — §9 R-PAR3: accept active OR published
-        // §9 R14: use .limit(2) + pick instead of .maybeSingle() to avoid silent error on dupe titles
+        // Round-2 fix: the migration produced DUPLICATE series with the same title
+        // (e.g. "מידות בפרשה" exists 6×). The old .limit(2)+pick logic often landed on an
+        // empty duplicate and dropped the whole section. Collect ALL same-titled series and
+        // search the parasha lesson across every one of them.
+        // chumashScoped columns live under a per-chumash title (e.g.
+        // "מאמרים לשולחן השבת - חומש במדבר"). Everything else uses the exact title.
+        const lookupTitle = (articleSeries as any).chumashScoped && chumash
+          ? `${articleSeries.seriesTitle} - חומש ${chumash}`
+          : articleSeries.seriesTitle;
         const { data: seriesMatches } = await supabase
           .from("series")
-          .select("id, status")
-          .eq("title", articleSeries.seriesTitle)
-          .in("status", ["active", "published"])
-          .limit(2);
-        const series = seriesMatches && seriesMatches.length > 0
-          ? (seriesMatches.find((s) => s.status === "active") ?? seriesMatches[0])
-          : null;
+          .select("id")
+          .eq("title", lookupTitle)
+          .in("status", ["active", "published"]);
+        const seriesIds = (seriesMatches || []).map((s) => s.id);
 
+        let seriesId: string | null = seriesIds[0] || null;
         let lessonId: string | null = null;
         let lessonTitle: string | null = null;
         let lessonContent: string | null = null;
 
-        if (series) {
+        if (seriesIds.length > 0) {
           // Try each search term in order — most specific first (e.g. "שלח לך"),
           // then short form (e.g. "שלח") so "פרשת שלח" articles are found.
-          let lesson: { id: string; title: string; content: string | null } | null = null;
+          let lesson: { id: string; title: string; content: string | null; series_id: string } | null = null;
           for (const term of parashaSearchTerms) {
             const { data: lessons } = await supabase
               .from("lessons")
-              .select("id, title, content")
-              .eq("series_id", series.id)
+              .select("id, title, content, series_id")
+              .in("series_id", seriesIds)
               .eq("status", "published")
               .ilike("title", `%${term}%`)
-              .limit(1);
-            if (lessons?.[0]) { lesson = lessons[0]; break; }
+              .limit(10);
+            // R-PAR1 word-boundary guard: '%חוקת%' also matches 'בחוקתי' etc. Pick the
+            // candidate whose title contains the parasha as a whole word; prefer one with content.
+            const valid = (lessons || []).filter((l) => titleMatchesParasha(l.title, parashaSearchTerms));
+            const pick = valid.find((l) => l.content) || valid[0];
+            if (pick) { lesson = pick as any; break; }
           }
-          
+
           if (lesson) {
             lessonId = lesson.id;
             lessonTitle = lesson.title;
             lessonContent = lesson.content;
+            seriesId = lesson.series_id; // point the CTA at the series that actually has the lesson
           }
         }
 
         results.push({
           title: articleSeries.title,
           rabbi: articleSeries.rabbi,
-          seriesId: series?.id || null,
+          seriesId,
           lessonId,
           lessonTitle,
           lessonContent,
@@ -246,6 +296,8 @@ export function useParasha() {
   // Get riddle for current parasha
   const riddleQuery = useQuery({
     queryKey: ["parasha-riddle", parasha],
+    refetchInterval: 30_000,
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       const { data: lessons } = await supabase
         .from("lessons")

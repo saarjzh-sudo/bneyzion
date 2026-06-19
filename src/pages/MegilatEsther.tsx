@@ -5,10 +5,10 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
 // 27.5.2026 — esther-hero-desktop/mobile.png were broken 1245-byte stubs.
 // Replaced with esther-sunrise.jpg (Jerusalem skyline + golden sunrise).
-import heroDesktop from "@/assets/esther-sunrise.jpg";
-import heroMobile from "@/assets/esther-sunrise.jpg";
-import estherBook from "@/assets/esther-book.png";
-import bookSet from "@/assets/book-set.png";
+import heroDesktop from "@/assets/esther-sunrise.webp";
+import heroMobile from "@/assets/esther-sunrise.webp";
+import estherBook from "@/assets/esther-book.webp";
+import bookSet from "@/assets/book-set.webp";
 import { Crown, ScrollText, Eye, Sparkles, Shield, Users, Star, ChevronLeft, Gift, Library, Download, BookOpen, Target } from "lucide-react";
 
 const SAMPLE_PDF = "/files/megillat-esther-sample.pdf";

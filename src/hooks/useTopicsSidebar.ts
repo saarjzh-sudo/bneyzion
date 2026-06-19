@@ -69,17 +69,35 @@ export function useTopicsSidebar() {
           .select("topic_id, lessons!inner(status, audience_tags)")
           .in("topic_id", childIds)
           .eq("lessons.status", "published")
-          // §0.3 dual-audience: referencedTable targets the embedded lessons join (avoids PGRST100)
-          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}", { referencedTable: "lessons" })
+          // Saar 19.6 dual-audience: count public + dual (teachers+general) lessons; teacher-exclusive
+          // hidden. Keeps the sidebar topic-counts consistent with the dual-inclusive TopicPage.
+          .or("audience_tags.cs.{general}", { referencedTable: "lessons" })
           .range(start, start + PAGE - 1);
         if (pageErr || !page || page.length === 0) break;
         for (const r of page as any[]) countRows.push({ topic_id: r.topic_id });
         if (page.length < PAGE) break;
       }
 
-      // Build a count map
+      // Step 3b (Saar 19.6): ALSO count series_topics — a topic page renders SERIES cards too
+      // (e.g. "האזנה לפסוקים" = 0 lessons + 55 series). Counting only lessons under-counted those
+      // topics to 0/near-0. Badge must equal the page item count = lessons + series.
+      const seriesCountRows: { topic_id: string }[] = [];
+      for (let start = 0; ; start += PAGE) {
+        const { data: page, error: pageErr } = await (supabase as any)
+          .from("series_topics")
+          .select("topic_id, series!inner(status, audience_tags)")
+          .in("topic_id", childIds)
+          .in("series.status", ["published", "active"])
+          .or("audience_tags.cs.{general}", { referencedTable: "series" })
+          .range(start, start + PAGE - 1);
+        if (pageErr || !page || page.length === 0) break;
+        for (const r of page as any[]) seriesCountRows.push({ topic_id: r.topic_id });
+        if (page.length < PAGE) break;
+      }
+
+      // Build a count map (lessons + series)
       const countMap: Record<string, number> = {};
-      for (const row of countRows) {
+      for (const row of [...countRows, ...seriesCountRows]) {
         const tid: string = row.topic_id;
         countMap[tid] = (countMap[tid] || 0) + 1;
       }

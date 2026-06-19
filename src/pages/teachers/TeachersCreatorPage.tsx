@@ -138,7 +138,7 @@ function ControlsBar({
 
 // ─── LessonCard ────────────────────────────────────────────────────────────────
 function LessonCard({ lesson, onClick }: { lesson: TeacherCreatorLesson; onClick: () => void }) {
-  const imgSrc = lesson.thumbnailUrl || getSeriesCoverImage(lesson.seriesTitle || "") || "/images/series-default.png";
+  const imgSrc = lesson.thumbnailUrl || getSeriesCoverImage(lesson.seriesTitle || "") || "/images/series-default.webp";
   return (
     <div
       onClick={onClick}
@@ -147,7 +147,7 @@ function LessonCard({ lesson, onClick }: { lesson: TeacherCreatorLesson; onClick
       onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = shadows.cardSoft; e.currentTarget.style.borderColor = "rgba(139,111,71,0.09)"; }}
     >
       <div style={{ height: 110, overflow: "hidden", flexShrink: 0 }}>
-        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+        <img src={imgSrc} alt={lesson.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }} />
       </div>
       <div style={{ position: "absolute", top: 0, right: 0, width: 4, height: "100%", background: gradients.oliveButton }} />
       <div style={{ padding: "0.8rem", display: "flex", flexDirection: "column", gap: "0.35rem", flex: 1 }}>
@@ -200,7 +200,7 @@ function LessonListRow({ lesson, onClick }: { lesson: TeacherCreatorLesson; onCl
         {lesson.audioUrl && <Headphones size={13} style={{ color: colors.goldDark }} />}
         {lesson.attachmentUrl && <FileDown size={13} style={{ color: colors.textSubtle }} />}
         {lesson.duration && <span style={{ fontFamily: fonts.body, fontSize: "0.66rem", color: colors.textSubtle }}>{formatDuration(lesson.duration)}</span>}
-        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>פרטים ←</span>
+        <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.oliveMain, fontWeight: 600 }}>לתוכן המלא ←</span>
       </div>
     </div>
   );
@@ -208,7 +208,7 @@ function LessonListRow({ lesson, onClick }: { lesson: TeacherCreatorLesson; onCl
 
 // ─── SeriesCard (for RPI series rows) ────────────────────────────────────────
 function SeriesCard({ series }: { series: TeacherCreatorSeries }) {
-  const imgSrc = series.imageUrl || getSeriesCoverImage(series.title) || "/images/series-default.png";
+  const imgSrc = series.imageUrl || getSeriesCoverImage(series.title) || "/images/series-default.webp";
   return (
     <a href={`/teachers/series/${series.id}`} style={{ textDecoration: "none", color: "inherit" }}>
       <div
@@ -217,7 +217,7 @@ function SeriesCard({ series }: { series: TeacherCreatorSeries }) {
         onMouseLeave={(e) => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = shadows.cardSoft; e.currentTarget.style.borderColor = "rgba(139,111,71,0.09)"; }}
       >
         <div style={{ height: 110, overflow: "hidden", flexShrink: 0 }}>
-          <img src={imgSrc} alt={series.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }} />
+          <img src={imgSrc} alt={series.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }} />
         </div>
         <div style={{ position: "absolute", top: 0, right: 0, width: 4, height: "100%", background: gradients.oliveButton }} />
         <div style={{ padding: "0.8rem", display: "flex", flexDirection: "column", gap: "0.35rem", flex: 1 }}>
@@ -242,7 +242,7 @@ export default function TeachersCreatorPage() {
   const { rabbi, items, isRpiDriven, lessons, isLoading } = useTeacherCreatorContent(id);
 
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
-    try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "grid"; } catch { return "grid"; }
+    try { return (localStorage.getItem(VIEW_KEY) as ViewMode) || "list"; } catch { return "list"; }
   });
   const [mediaFilter, setMediaFilter] = useState<MediaFilter>("all");
   const [search, setSearch] = useState("");

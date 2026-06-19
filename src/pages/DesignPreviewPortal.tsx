@@ -195,7 +195,7 @@ export default function DesignPreviewPortal() {
                   src={
                     continueWatchingSeries.image_url ||
                     getSeriesCoverImage(continueWatchingSeries.title) ||
-                    "/images/series-default.png"
+                    "/images/series-default.webp"
                   }
                   alt={continueWatchingSeries.title}
                   style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.7 }}
@@ -364,7 +364,7 @@ export default function DesignPreviewPortal() {
             >
               {enrolledSeries.map((s, i) => {
                 const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
-                const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+                const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
                 const progress = [62, 45, 18][i] || 30;
                 return (
                   <Link
@@ -495,7 +495,7 @@ export default function DesignPreviewPortal() {
           >
             {recommendedSeries.map((s) => {
               const fam = seriesFamilies[getSeriesFamily(s.title, s.description)];
-              const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+              const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
               return (
                 <Link
                   key={s.id}

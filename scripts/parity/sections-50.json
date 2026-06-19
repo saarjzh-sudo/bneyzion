@@ -1,0 +1,366 @@
+[
+  {
+    "key": "book:תהלים",
+    "label": "תהלים",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "7dc34ac8-e332-47e5-87d5-9400a85fa85d"
+  },
+  {
+    "key": "book:משלי",
+    "label": "משלי",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "f71c762a-4d9d-4cc3-af23-adfdd629885c"
+  },
+  {
+    "key": "book:איוב",
+    "label": "איוב",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "ec9ae746-373b-4a2d-b478-d0dcb67c0b3c"
+  },
+  {
+    "key": "book:שיר השירים",
+    "label": "שיר השירים",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "16b824c5-6cea-4a4f-bda5-6aac870b2689"
+  },
+  {
+    "key": "book:רות",
+    "label": "רות",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "a14dbc35-1caf-4675-9eba-75b5df118925"
+  },
+  {
+    "key": "book:איכה",
+    "label": "איכה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "35781f30-76a7-4fc6-aa06-52a1db4a4054"
+  },
+  {
+    "key": "book:קהלת",
+    "label": "קהלת",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "4472645d-c8bc-4657-bfe1-fba960edd8e3"
+  },
+  {
+    "key": "book:אסתר",
+    "label": "אסתר",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "8600dfad-9e4d-41af-8b85-ccc325ee1298"
+  },
+  {
+    "key": "book:דניאל",
+    "label": "דניאל",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "6cda749b-1b47-463b-9e27-107acbc8aa3e"
+  },
+  {
+    "key": "book:עזרא ונחמיה",
+    "label": "עזרא ונחמיה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "5896c267-01b2-44d0-9fa4-f0d3b357ccc1"
+  },
+  {
+    "key": "book:דברי הימים",
+    "label": "דברי הימים",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "2c9c593e-fd97-431b-86b4-ab2b62b6542c"
+  },
+  {
+    "key": "book:יהושע",
+    "label": "יהושע",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "831d1ccb-a1a4-4a1f-b3b1-2608e7b6da16"
+  },
+  {
+    "key": "book:שופטים",
+    "label": "שופטים",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "ebdb355f-6a9f-44a5-9aa0-2f858434cc17"
+  },
+  {
+    "key": "book:שמואל א",
+    "label": "שמואל א",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "d4dd089a-1ba3-420d-b130-78f0ef90cb69"
+  },
+  {
+    "key": "book:שמואל ב",
+    "label": "שמואל ב",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "02539385-aaaa-4c7f-9d85-d1af6e1cdd96"
+  },
+  {
+    "key": "book:מלכים א",
+    "label": "מלכים א",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "ff96641e-68f3-4e4c-92ee-2175b77f6e75"
+  },
+  {
+    "key": "book:מלכים ב",
+    "label": "מלכים ב",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "75b7c62c-50e2-4874-bcf5-2d8ddf646771"
+  },
+  {
+    "key": "book:ישעיהו",
+    "label": "ישעיהו",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "1fb20386-80be-4e03-a205-7ee9ea4a385b"
+  },
+  {
+    "key": "book:ירמיהו",
+    "label": "ירמיהו",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "69c795d9-a415-43a2-afb1-8694fe2e2a60"
+  },
+  {
+    "key": "book:יחזקאל",
+    "label": "יחזקאל",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "5b0c3232-2ba9-4b6b-8b1e-4e8b1a82245d"
+  },
+  {
+    "key": "book:הושע",
+    "label": "הושע",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "5f7b7d9c-ce6b-4bb9-9f43-b097da92a72d"
+  },
+  {
+    "key": "book:יואל",
+    "label": "יואל",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "a8797de2-98f1-461f-b5f1-6b1143df5597"
+  },
+  {
+    "key": "book:עמוס",
+    "label": "עמוס",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "9526c5b5-68ec-495f-a3ca-49ec3feb3c4a"
+  },
+  {
+    "key": "book:עובדיה",
+    "label": "עובדיה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "2a0387c7-ec11-437c-a19f-f795985ce204"
+  },
+  {
+    "key": "book:יונה",
+    "label": "יונה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "0f69e7e1-c6d4-4ede-9c42-006ee99ea995"
+  },
+  {
+    "key": "book:מיכה",
+    "label": "מיכה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "895474b3-1a1c-4693-820c-a6e645c4e853"
+  },
+  {
+    "key": "book:נחום",
+    "label": "נחום",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "e8f7ed1c-fa87-4186-ba01-8d2dd4e40b88"
+  },
+  {
+    "key": "book:חבקוק",
+    "label": "חבקוק",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "4a17b976-362f-4abe-9c75-965b50a4a1f7"
+  },
+  {
+    "key": "book:צפניה",
+    "label": "צפניה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "bab915ba-8220-4a76-8d55-690875543b3a"
+  },
+  {
+    "key": "book:חגי",
+    "label": "חגי",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "273e3b3c-318d-4335-b026-d03dc4c8a602"
+  },
+  {
+    "key": "book:זכריה",
+    "label": "זכריה",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "c6285a2a-5b5a-4005-bad0-6712206d5ed6"
+  },
+  {
+    "key": "book:מלאכי",
+    "label": "מלאכי",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "3684f720-fd9d-400e-bdb4-24343cbd51b6"
+  },
+  {
+    "key": "book:בראשית",
+    "label": "בראשית",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "db78e0a3-3bcf-4009-96b8-49c76df555f9"
+  },
+  {
+    "key": "book:שמות",
+    "label": "שמות",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "5149a23b-8181-4c41-81db-1efcd2631f5a"
+  },
+  {
+    "key": "book:ויקרא",
+    "label": "ויקרא",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "6267feb7-de69-4106-aa02-172411e070cd"
+  },
+  {
+    "key": "book:במדבר",
+    "label": "במדבר",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "7f5a8fc9-741f-44ba-90b8-9068e2c8c1e2"
+  },
+  {
+    "key": "book:דברים",
+    "label": "דברים",
+    "sidebar": "public",
+    "kind": "book",
+    "series_id": "b082cb95-cec2-4fb4-9d92-4dceb7ce2706"
+  },
+  {
+    "key": "section:recordedProject",
+    "label": "פרוייקט התנ\"ך המוקלט",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "041ce810-92ae-59e4-9e07-11fd014255fa"
+  },
+  {
+    "key": "section:howToLearn",
+    "label": "איך לומדים",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "62590949-6187-4e17-b84d-65a518467521"
+  },
+  {
+    "key": "section:generalTopics",
+    "label": "נושאים כלליים",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "2d6d28c1-3c5c-4d61-9283-410bc56cd351"
+  },
+  {
+    "key": "section:moadim",
+    "label": "מועדים",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "92130154-e96a-4f98-b032-5a20ac385f63"
+  },
+  {
+    "key": "section:haftarot",
+    "label": "הפטרות",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "3327c721-7bc9-471c-878f-0b3aef98b090"
+  },
+  {
+    "key": "section:tools",
+    "label": "כלי עזר",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "27ca7dec-f7d0-4ede-b561-8ffb3a4c74e7"
+  },
+  {
+    "key": "section:livuyTatim",
+    "label": "ליווי ת\"תים",
+    "sidebar": "public",
+    "kind": "section",
+    "series_id": "7cbd261e-03b0-43da-a708-e8ae4402105f"
+  },
+  {
+    "key": "teacher:הכוונה והדרכה למורה",
+    "label": "הכוונה והדרכה למורה",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "הכוונה והדרכה למורה"
+  },
+  {
+    "key": "teacher:שאלות ותשובות על סדר הפרקים",
+    "label": "שאלות ותשובות על סדר הפרקים",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "שאלות ותשובות על סדר הפרקים"
+  },
+  {
+    "key": "teacher:חידות חזרה",
+    "label": "חידות חזרה",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "חידות חזרה"
+  },
+  {
+    "key": "teacher:ביאור הפסוקים",
+    "label": "ביאור הפסוקים",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "ביאור הפסוקים"
+  },
+  {
+    "key": "teacher:דפי עבודה",
+    "label": "דפי עבודה",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "דפי עבודה"
+  },
+  {
+    "key": "teacher:ביאורי מילים",
+    "label": "ביאורי מילים",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "ביאורי מילים"
+  },
+  {
+    "key": "teacher:סיכום הפרקים והנושאים בקצרה",
+    "label": "סיכום הפרקים והנושאים בקצרה",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "סיכום הפרקים והנושאים בקצרה"
+  },
+  {
+    "key": "teacher:דגשים והכוונה על סדר הפרקים",
+    "label": "דגשים והכוונה על סדר הפרקים",
+    "sidebar": "teachers",
+    "kind": "content_type",
+    "content_type": "דגשים והכוונה על סדר הפרקים"
+  }
+]

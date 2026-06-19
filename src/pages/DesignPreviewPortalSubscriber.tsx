@@ -1258,7 +1258,7 @@ export default function DesignPreviewPortalSubscriber() {
                   }}
                 >
                   {suggestions.map((s: any) => {
-                    const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+                    const cover = s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
                     return (
                       <Link
                         key={s.id}

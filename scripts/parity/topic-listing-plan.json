@@ -1,0 +1,7496 @@
+{
+ "apply": true,
+ "plans": [
+  {
+   "name": "ימי העיון בתנ\"ך",
+   "topic_id": "f2e01ca3-5f8b-4b05-b857-cd39142da1b9",
+   "old_n": 246,
+   "emitted": 246,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "023b9bc0-99a7-456f-bf72-624547859e4c",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "673a62ba-4d61-5b62-a0cb-6144a7718db8",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "ce850a85-cfda-41c8-a1ea-19df29cf272a",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "73148889-3812-5afb-9244-6f44edc7d266",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "ab149b2c-3428-50b1-b1ee-99f3c24d4898",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "510e309a-d4d8-5df7-9527-503c0f157529",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "7bda565a-cc3f-4cda-964c-c2f1e2d97381",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "1b807ca6-2db2-4f0f-bca7-aa8194523b25",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "06f01c74-9bf9-5a91-96c3-b53ef65cec61",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "4f02b664-03e9-5a19-8d07-15d15d76fd51",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "59ca1273-84b1-5f64-aa2e-afe48f04573c",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "1ae18ebb-08cd-44b4-a453-2d93d6033004",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "48542d2d-8e9c-50bc-a083-8586c20eab57",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "3d9afe7a-b074-4294-a171-8bd6f76d62a2",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "3b931f47-f581-4c89-8615-5f25d0b38370",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "67c45616-4f56-5bf0-9a2c-b0f02eedc3d9",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "1a044d1d-d6e5-4103-aceb-a0812e946910",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "113ffb41-608c-420b-9ae6-92abfab17278",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "95688ed5-b652-49ae-973c-9d5e3fc27369",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "21dfe6f7-e21f-4fad-be54-6031c3b5d645",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "6bc74966-e2be-56eb-b5e0-31cbf9729c77",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "6ca149aa-8f9e-427a-bca8-52a83ee0a80f",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "88b5a5de-4ced-5a01-aa7c-97f8c550dc24",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "76da4b89-049d-4c72-93dd-e5afde4deca3",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "52e8d477-dc8d-5bbd-ba17-adf4e497845a",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "3170c32a-5b8e-44db-8b77-af6651398a82",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "44e5539a-7766-5a73-bd64-4d8f8500b718",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "101099fc-4b75-5463-9457-70769ba0e9bb",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "669ec2f3-decb-5ca4-b547-4ef4b3789f32",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "68b87306-fc56-5423-9930-5ba37dd81d48",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "28f4cdbb-7c0b-56a5-a46f-ee03ae7a86f6",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "304c49de-57db-519c-b734-9f1e1fbd0247",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "25ad6cb8-62bf-4e15-9873-78280ba707c9",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "062f0aac-0ffc-572f-ad24-ca5806149265",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "5c4ddb3f-452f-5d9b-bf88-c5a66bfc2f30",
+     "sort_order": 35
+    },
+    {
+     "lesson_id": "14114f64-a5c7-5c0f-98a0-39ea28dc9d10",
+     "sort_order": 36
+    },
+    {
+     "lesson_id": "00336e79-6703-5fa1-a649-f7f90c005d67",
+     "sort_order": 37
+    },
+    {
+     "lesson_id": "094e0dc5-6858-5beb-9dd4-55eb3325c6f4",
+     "sort_order": 38
+    },
+    {
+     "lesson_id": "0f9c17df-b384-490f-964a-b749c88eb644",
+     "sort_order": 39
+    },
+    {
+     "lesson_id": "643637b0-8614-56f6-ae17-0dee145f21dc",
+     "sort_order": 40
+    },
+    {
+     "lesson_id": "0acda764-a03b-46d1-a231-e1ead695b5ed",
+     "sort_order": 41
+    },
+    {
+     "lesson_id": "2064bcea-64a9-4b5d-a2fc-52816c35496c",
+     "sort_order": 42
+    },
+    {
+     "lesson_id": "27e252a0-cd15-5ca8-aea2-93e9274e4c8d",
+     "sort_order": 43
+    },
+    {
+     "lesson_id": "436be2b2-0f19-4b12-bc6d-be059f122cbf",
+     "sort_order": 44
+    },
+    {
+     "lesson_id": "0925aa8c-97b5-53da-bc61-bdc62e5dd5fd",
+     "sort_order": 45
+    },
+    {
+     "lesson_id": "0c09e8af-1e21-462f-940d-7416cc718d0a",
+     "sort_order": 46
+    },
+    {
+     "lesson_id": "02fe7790-a51b-41e6-bbdf-be4ee10a9268",
+     "sort_order": 47
+    },
+    {
+     "lesson_id": "03d10e69-de32-5e3c-b0e9-d223ce27dcf4",
+     "sort_order": 48
+    },
+    {
+     "lesson_id": "08d37455-3a6f-5cbf-8f22-ece2885830b0",
+     "sort_order": 49
+    },
+    {
+     "lesson_id": "2db56fe9-cb4f-531e-8e2e-d93cdf2c9a9e",
+     "sort_order": 50
+    },
+    {
+     "lesson_id": "1f0cc267-f56b-5ef7-9bca-bda9be2a7ce5",
+     "sort_order": 51
+    },
+    {
+     "lesson_id": "11fae10f-7d05-59b0-9377-33b238260b30",
+     "sort_order": 52
+    },
+    {
+     "lesson_id": "5f5d86a2-2197-5770-8696-2099ba42bdc9",
+     "sort_order": 53
+    },
+    {
+     "lesson_id": "2bc32b2f-4d4c-5f84-99d2-32f0c5981af3",
+     "sort_order": 54
+    },
+    {
+     "lesson_id": "b20d0af2-e0d8-5ea8-999a-c1a139f0a9fd",
+     "sort_order": 55
+    },
+    {
+     "lesson_id": "0aeb09a2-fc26-518d-aa3b-689976f0e3c9",
+     "sort_order": 56
+    },
+    {
+     "lesson_id": "32db1f47-4332-5122-abf7-e2bcc357d18e",
+     "sort_order": 57
+    },
+    {
+     "lesson_id": "1eeedab3-ce50-4766-b137-cfa46f4b31cf",
+     "sort_order": 58
+    },
+    {
+     "lesson_id": "029926cf-a48f-59f6-9f15-8609abc092bf",
+     "sort_order": 59
+    },
+    {
+     "lesson_id": "bb654040-2d2a-5869-acd6-c07b66e91313",
+     "sort_order": 60
+    },
+    {
+     "lesson_id": "18d9f78f-a6da-48e4-a6b1-49f244dd68ca",
+     "sort_order": 61
+    },
+    {
+     "lesson_id": "4295979a-b692-48cb-930f-45765e76c1f5",
+     "sort_order": 62
+    },
+    {
+     "lesson_id": "5ad1feab-c4ec-474e-b8e7-3bd1948aa5f1",
+     "sort_order": 63
+    },
+    {
+     "lesson_id": "4c0f993e-fd94-54d9-9de7-d98d4286b6f7",
+     "sort_order": 64
+    },
+    {
+     "lesson_id": "0c483a03-caa3-5d93-a0d7-cd694f127158",
+     "sort_order": 65
+    },
+    {
+     "lesson_id": "73e18d35-30d5-5f38-bf3c-4feca253146a",
+     "sort_order": 66
+    },
+    {
+     "lesson_id": "b4c54259-f6ae-5b3a-9338-07d770a73cca",
+     "sort_order": 67
+    },
+    {
+     "lesson_id": "807212f5-b797-5946-ae18-3aecb60d4177",
+     "sort_order": 68
+    },
+    {
+     "lesson_id": "4110a174-141e-44cb-a5bd-99bde8190b59",
+     "sort_order": 69
+    },
+    {
+     "lesson_id": "38b9e8df-c39f-5d13-a467-2ec7e304dad6",
+     "sort_order": 70
+    },
+    {
+     "lesson_id": "22f3ca97-3c0b-5913-971d-011c6b5f9b94",
+     "sort_order": 71
+    },
+    {
+     "lesson_id": "4aad57e3-de1d-51f9-8000-b0e2bdf1152f",
+     "sort_order": 72
+    },
+    {
+     "lesson_id": "121db01c-120c-57a9-b4f8-64c2d6415364",
+     "sort_order": 73
+    },
+    {
+     "lesson_id": "5d7b6d15-0b6f-590f-a268-d3e16141b946",
+     "sort_order": 74
+    },
+    {
+     "lesson_id": "7297dbcf-aa58-5245-aee2-cbb6d1d04480",
+     "sort_order": 75
+    },
+    {
+     "lesson_id": "456533d6-f974-4dcb-b4b3-e033b9ab0222",
+     "sort_order": 76
+    },
+    {
+     "lesson_id": "57ef4817-ddb6-5806-a9a7-274f9b854a81",
+     "sort_order": 77
+    },
+    {
+     "lesson_id": "83372d50-9dec-4beb-bb29-0c923c65598a",
+     "sort_order": 78
+    },
+    {
+     "lesson_id": "1ffb64a9-0080-5626-a7bf-db6eb83c79a5",
+     "sort_order": 79
+    },
+    {
+     "lesson_id": "728a33b0-6523-49c3-86ad-55554e0222b2",
+     "sort_order": 80
+    },
+    {
+     "lesson_id": "b0ebfe44-14cc-44b4-a411-f6815ef3b12e",
+     "sort_order": 81
+    },
+    {
+     "lesson_id": "21f03e1f-6f04-55c2-b8e8-05df7b4b6e66",
+     "sort_order": 82
+    },
+    {
+     "lesson_id": "75a98051-cf61-532b-a0ae-a8d596940f5e",
+     "sort_order": 83
+    },
+    {
+     "lesson_id": "0320b554-8595-574f-95f2-2ec7dc2ab834",
+     "sort_order": 84
+    },
+    {
+     "lesson_id": "57b1d7a5-f46c-4533-921d-a0790c40e04b",
+     "sort_order": 85
+    },
+    {
+     "lesson_id": "30861dcf-0cbd-5f57-825c-3a5058234211",
+     "sort_order": 86
+    },
+    {
+     "lesson_id": "08208e2d-1f71-5712-b4e4-c9c198edf0a9",
+     "sort_order": 87
+    },
+    {
+     "lesson_id": "761989a8-9400-5e05-afb6-33e91f574b19",
+     "sort_order": 88
+    },
+    {
+     "lesson_id": "440b42ed-62ad-4a13-95e2-3b6bbfc72240",
+     "sort_order": 89
+    },
+    {
+     "lesson_id": "7237a50c-605a-54a8-9d59-4d07eba40187",
+     "sort_order": 90
+    },
+    {
+     "lesson_id": "51a00c03-e9df-5156-9735-1c570ef1ee8e",
+     "sort_order": 91
+    },
+    {
+     "lesson_id": "243d777b-343e-5e7b-ac62-017ce02c8e72",
+     "sort_order": 92
+    },
+    {
+     "lesson_id": "2858ddd9-113a-42e9-b071-df1c6913e48e",
+     "sort_order": 93
+    },
+    {
+     "lesson_id": "62ee609f-809e-53fb-897d-4b92d09f77c6",
+     "sort_order": 94
+    },
+    {
+     "lesson_id": "496a7521-0b1e-419a-972d-fa3b97b85f96",
+     "sort_order": 95
+    },
+    {
+     "lesson_id": "04da393a-0e29-5565-9a91-4643653b529f",
+     "sort_order": 96
+    },
+    {
+     "lesson_id": "020fce38-a945-5bcb-a401-8fba44491ba7",
+     "sort_order": 97
+    },
+    {
+     "lesson_id": "3781df04-bdf4-57df-a711-b219652e440b",
+     "sort_order": 98
+    },
+    {
+     "lesson_id": "6919405d-a1af-5dc5-b724-3287c833dde9",
+     "sort_order": 99
+    },
+    {
+     "lesson_id": "20f29c50-3758-4ac6-972c-5268fac1ede4",
+     "sort_order": 100
+    },
+    {
+     "lesson_id": "1a95e6ac-b740-4cb9-a7f1-0b414b0bc500",
+     "sort_order": 101
+    },
+    {
+     "lesson_id": "37866b8c-25f4-5eb2-b09b-0fef48751def",
+     "sort_order": 102
+    },
+    {
+     "lesson_id": "0c5e65b2-7007-52a3-88b5-98fefe3558c5",
+     "sort_order": 103
+    },
+    {
+     "lesson_id": "06fa03d0-dd23-5bf1-aca6-5107af8095fd",
+     "sort_order": 104
+    },
+    {
+     "lesson_id": "6ab4bc97-41d1-455f-aa82-1b396dcc7a77",
+     "sort_order": 105
+    },
+    {
+     "lesson_id": "48004d26-d2e0-53b3-9e53-c6a1751f7164",
+     "sort_order": 106
+    },
+    {
+     "lesson_id": "36ee3f2c-299a-5f75-a0c8-ad6ed4fccd2c",
+     "sort_order": 107
+    },
+    {
+     "lesson_id": "11487951-eb5c-5632-bb4a-c2df7a429838",
+     "sort_order": 108
+    },
+    {
+     "lesson_id": "211db5b2-a8f9-5d5c-b508-656881ba25f1",
+     "sort_order": 109
+    },
+    {
+     "lesson_id": "1f251556-8a5a-5182-8d49-966ad371ce50",
+     "sort_order": 110
+    },
+    {
+     "lesson_id": "17ea5214-f700-511f-be58-9180373b6821",
+     "sort_order": 111
+    },
+    {
+     "lesson_id": "8028f102-5bde-4118-a695-b4f6192a9666",
+     "sort_order": 112
+    },
+    {
+     "lesson_id": "2f733d6b-3f56-58d0-8055-110f67047566",
+     "sort_order": 113
+    },
+    {
+     "lesson_id": "130f2fd0-0dbc-5287-88d4-911c5566599f",
+     "sort_order": 114
+    },
+    {
+     "lesson_id": "06528d3d-88b0-57dc-bf52-346c3428bf9b",
+     "sort_order": 115
+    },
+    {
+     "lesson_id": "883679cb-6a95-5fb0-b72f-b204a1ae4542",
+     "sort_order": 116
+    },
+    {
+     "lesson_id": "0ad110d5-c84d-4d5c-a03d-c829a2bb97a9",
+     "sort_order": 117
+    },
+    {
+     "lesson_id": "b20346a8-cb32-42bf-b164-0b9eb6e36bd1",
+     "sort_order": 118
+    },
+    {
+     "lesson_id": "21134951-558e-5999-bc02-2ab1e43fc15f",
+     "sort_order": 119
+    },
+    {
+     "lesson_id": "2edcd35b-707a-4102-bdee-e5cb82b9115a",
+     "sort_order": 120
+    },
+    {
+     "lesson_id": "6e1dd559-57bf-5625-b761-473373937602",
+     "sort_order": 121
+    },
+    {
+     "lesson_id": "0160ee0e-454e-5ed5-a90e-d52bffee6d3f",
+     "sort_order": 122
+    },
+    {
+     "lesson_id": "05370d91-cd4c-447d-80c0-8a0d404b6721",
+     "sort_order": 123
+    },
+    {
+     "lesson_id": "cf4a0c71-daf5-59a6-a2d8-f98e83cb3517",
+     "sort_order": 124
+    },
+    {
+     "lesson_id": "0a9ba66b-6648-43c7-bc23-a5da1ac13db2",
+     "sort_order": 125
+    },
+    {
+     "lesson_id": "372bbbe7-47a7-4247-a5e0-26c76f4360ae",
+     "sort_order": 126
+    },
+    {
+     "lesson_id": "2f6795b2-0ee4-5e76-a493-403a2276973f",
+     "sort_order": 127
+    },
+    {
+     "lesson_id": "574811c2-a4b7-40ae-bf05-a638e002e5f5",
+     "sort_order": 128
+    },
+    {
+     "lesson_id": "4e5c797e-676b-44f9-960f-57ead4fe21ca",
+     "sort_order": 129
+    },
+    {
+     "lesson_id": "71129dc4-2fd1-503d-a576-ea65fc391293",
+     "sort_order": 130
+    },
+    {
+     "lesson_id": "9d1b4bd4-3974-4799-b90a-87e2724e7051",
+     "sort_order": 131
+    },
+    {
+     "lesson_id": "28062c4b-b950-58ca-a9c3-b6a41595aca1",
+     "sort_order": 132
+    },
+    {
+     "lesson_id": "666dcff0-ab34-4fe9-bae0-6c8cc8502db2",
+     "sort_order": 133
+    },
+    {
+     "lesson_id": "75b4a7ae-97cd-5536-8205-b94efc1420d8",
+     "sort_order": 134
+    },
+    {
+     "lesson_id": "7086f4c2-44b6-4969-89f4-170d818fe244",
+     "sort_order": 135
+    },
+    {
+     "lesson_id": "15957202-8e9c-5a1f-b6e8-9dc06264479b",
+     "sort_order": 136
+    },
+    {
+     "lesson_id": "622f1e98-c598-4ccd-bd09-cc46c001362b",
+     "sort_order": 137
+    },
+    {
+     "lesson_id": "61683e9f-a71d-44a9-b7de-eb704e81c51f",
+     "sort_order": 138
+    },
+    {
+     "lesson_id": "38816400-7369-5b71-ba07-7eecc840c5a3",
+     "sort_order": 139
+    },
+    {
+     "lesson_id": "24fa7dd1-f618-41eb-80a1-0e302ca9264d",
+     "sort_order": 140
+    },
+    {
+     "lesson_id": "145a4d1b-b39f-5c3a-9550-bbca3743f63e",
+     "sort_order": 141
+    },
+    {
+     "lesson_id": "533ceb1c-f8e3-4eb0-a50e-8ce9777d76b1",
+     "sort_order": 142
+    },
+    {
+     "lesson_id": "8bd04655-c2d5-4101-bd27-c70159ce51b6",
+     "sort_order": 143
+    },
+    {
+     "lesson_id": "bc518053-5397-4f76-a2d3-9a1f44afd4fb",
+     "sort_order": 144
+    },
+    {
+     "lesson_id": "a7d0f52a-2273-42fb-830e-a4083118966e",
+     "sort_order": 145
+    },
+    {
+     "lesson_id": "0891d19b-c795-422e-8ae5-a527adcb70e4",
+     "sort_order": 146
+    },
+    {
+     "lesson_id": "0c2bcc00-3b79-50a1-95f9-7ec1c2ddf931",
+     "sort_order": 147
+    },
+    {
+     "lesson_id": "208bb0f4-22fc-4b66-9a0f-8d548d057d74",
+     "sort_order": 148
+    },
+    {
+     "lesson_id": "05ac2dc4-8d08-5c0b-a0bf-9b2c7db58e16",
+     "sort_order": 149
+    },
+    {
+     "lesson_id": "42f192ff-0427-5f28-9df4-eb60c41b3dc4",
+     "sort_order": 150
+    },
+    {
+     "lesson_id": "0009c76a-1a38-5463-9cf3-fd19d192f702",
+     "sort_order": 151
+    },
+    {
+     "lesson_id": "15e41d90-3b7a-504d-b03d-52b6d7984305",
+     "sort_order": 152
+    },
+    {
+     "lesson_id": "34a96460-c73f-5e96-9809-d701407a9520",
+     "sort_order": 153
+    },
+    {
+     "lesson_id": "5bea9c1f-6bfe-504a-9889-80c36b7f2b35",
+     "sort_order": 154
+    },
+    {
+     "lesson_id": "67f44fd7-2992-492f-92c7-67b8fb8dc9ca",
+     "sort_order": 155
+    },
+    {
+     "lesson_id": "7c9025ab-d02f-58a1-8be1-9c3005942d23",
+     "sort_order": 156
+    },
+    {
+     "lesson_id": "39943c76-b284-5bb6-a377-f1edfc778ceb",
+     "sort_order": 157
+    },
+    {
+     "lesson_id": "1d91a484-c74c-4247-8159-a8c532e9aa5a",
+     "sort_order": 158
+    },
+    {
+     "lesson_id": "92449337-015a-4177-92eb-f805478c937e",
+     "sort_order": 159
+    },
+    {
+     "lesson_id": "2693d078-82c7-4b19-ad4a-2536fd14fe99",
+     "sort_order": 160
+    },
+    {
+     "lesson_id": "1263dc0f-614f-4b92-bd82-8c43f520a0fc",
+     "sort_order": 161
+    },
+    {
+     "lesson_id": "0ca60230-aac0-5e7e-a359-2775ecb7a567",
+     "sort_order": 162
+    },
+    {
+     "lesson_id": "989b66a2-bd92-46d0-b966-56d1a27234fa",
+     "sort_order": 163
+    },
+    {
+     "lesson_id": "328eabeb-0f1b-45d1-b202-41c7db3a3a30",
+     "sort_order": 164
+    },
+    {
+     "lesson_id": "2c62e14d-7ba5-5d12-90d1-a867d2204d72",
+     "sort_order": 165
+    },
+    {
+     "lesson_id": "4d1905df-2db9-477b-8682-4ace7d7b54ff",
+     "sort_order": 166
+    },
+    {
+     "lesson_id": "1c9221c2-f01e-5b30-9865-2c5408334469",
+     "sort_order": 167
+    },
+    {
+     "lesson_id": "71e49f8b-8639-4cf0-b644-298bef56fefe",
+     "sort_order": 168
+    },
+    {
+     "lesson_id": "14fcb53a-d5b0-41f7-a155-cc1b1ca0d8d4",
+     "sort_order": 169
+    },
+    {
+     "lesson_id": "0274a810-1059-48fa-b425-738614f91beb",
+     "sort_order": 170
+    },
+    {
+     "lesson_id": "74137ffb-cbb4-4478-b0e2-a269cf82dc99",
+     "sort_order": 171
+    },
+    {
+     "lesson_id": "2bac0121-7d5d-43bd-99f0-782917706926",
+     "sort_order": 172
+    },
+    {
+     "lesson_id": "48d36451-9f7e-449a-a8f2-ad4d09b1c229",
+     "sort_order": 173
+    },
+    {
+     "lesson_id": "0aeb4ef4-f104-57d1-9a02-48dc06a486f7",
+     "sort_order": 174
+    },
+    {
+     "lesson_id": "20e84413-35c5-5811-8482-e8b5496945e2",
+     "sort_order": 175
+    },
+    {
+     "lesson_id": "4f10e978-baa0-5e12-8a1f-32e1d6c89e4f",
+     "sort_order": 176
+    },
+    {
+     "lesson_id": "56be7dc7-4137-47d6-a2d9-544ee86419dd",
+     "sort_order": 177
+    },
+    {
+     "lesson_id": "5a79698c-fd91-49f7-b3c0-4d4fc0413467",
+     "sort_order": 178
+    },
+    {
+     "lesson_id": "4851798c-8130-56f1-a8b5-f8784acac226",
+     "sort_order": 179
+    },
+    {
+     "lesson_id": "482f3987-d129-5a6b-b5e0-0dcde3a55f77",
+     "sort_order": 180
+    },
+    {
+     "lesson_id": "9c546d08-014f-4b89-b10a-ca067ef50d88",
+     "sort_order": 181
+    },
+    {
+     "lesson_id": "232db71f-e2a6-4d9b-9ae0-75210a829c4f",
+     "sort_order": 182
+    },
+    {
+     "lesson_id": "0ab3cbae-076a-4f30-8e83-0443a1b55468",
+     "sort_order": 183
+    },
+    {
+     "lesson_id": "14b42df7-1ba7-4a06-8c5a-2e587fee286e",
+     "sort_order": 184
+    },
+    {
+     "lesson_id": "116ac2fc-47c5-55c1-a8a1-001e0e58d2a9",
+     "sort_order": 185
+    },
+    {
+     "lesson_id": "7446b9c8-5d6d-4099-a944-660910366fb5",
+     "sort_order": 186
+    },
+    {
+     "lesson_id": "6004342d-cd34-4761-8810-c08bf1626605",
+     "sort_order": 187
+    },
+    {
+     "lesson_id": "0dacf8a0-0088-4204-b73d-481ba88273fa",
+     "sort_order": 188
+    },
+    {
+     "lesson_id": "3576964f-e6a9-533d-9f20-c37f5154c195",
+     "sort_order": 189
+    },
+    {
+     "lesson_id": "13005c00-0ff5-5f58-875b-17aec48f23c6",
+     "sort_order": 190
+    },
+    {
+     "lesson_id": "0c851c3b-42ed-4d13-a103-b3dd807774f8",
+     "sort_order": 191
+    },
+    {
+     "lesson_id": "5096bac1-2234-4fdc-807f-725bed77cd3d",
+     "sort_order": 192
+    },
+    {
+     "lesson_id": "1b2ecdee-f5f0-5cde-bf93-d16cf1e7831d",
+     "sort_order": 193
+    },
+    {
+     "lesson_id": "2d1b798e-26f6-4196-9b70-e44184ca8be8",
+     "sort_order": 194
+    },
+    {
+     "lesson_id": "03368b0c-d412-427a-bd10-4565e7eb61d0",
+     "sort_order": 195
+    },
+    {
+     "lesson_id": "7be6a13e-a9a2-447b-875e-286d4149d3ab",
+     "sort_order": 196
+    },
+    {
+     "lesson_id": "350842b1-1ba7-46e3-b8e9-13c852eed0e6",
+     "sort_order": 197
+    },
+    {
+     "lesson_id": "7e4f5db5-0002-4513-a348-665c84d3adce",
+     "sort_order": 198
+    },
+    {
+     "lesson_id": "2c4260a7-e03f-48bb-bf81-38d3ac8bcc02",
+     "sort_order": 199
+    },
+    {
+     "lesson_id": "9565f6a0-353e-41d0-807a-a62d9e05d72b",
+     "sort_order": 200
+    },
+    {
+     "lesson_id": "29d03ed9-7d36-408d-b212-4b39872fce76",
+     "sort_order": 201
+    },
+    {
+     "lesson_id": "226004f9-5340-4a11-bb39-db6a6f214d48",
+     "sort_order": 202
+    },
+    {
+     "lesson_id": "5527bb02-0cd0-4aa1-a06e-84f1e08ed512",
+     "sort_order": 203
+    },
+    {
+     "lesson_id": "13bbe2e8-28c9-59cb-934b-c82f43bd8264",
+     "sort_order": 204
+    },
+    {
+     "lesson_id": "ba04091a-0309-4781-bc70-ec573d1020d9",
+     "sort_order": 205
+    },
+    {
+     "lesson_id": "6b5d91d8-996a-51f5-a9bc-e34b4a662b87",
+     "sort_order": 206
+    },
+    {
+     "lesson_id": "3cca61af-e98d-4503-973b-daad8128b824",
+     "sort_order": 207
+    },
+    {
+     "lesson_id": "19a7c59a-20b2-5b2e-82a4-94e3d34a7cb7",
+     "sort_order": 208
+    },
+    {
+     "lesson_id": "6bc53686-a05b-5473-8373-014fb25879fe",
+     "sort_order": 209
+    },
+    {
+     "lesson_id": "383da13a-dd8a-4206-905f-334e5f4e74ae",
+     "sort_order": 210
+    },
+    {
+     "lesson_id": "0a82391f-9dee-46e2-8664-809d9345ef68",
+     "sort_order": 211
+    },
+    {
+     "lesson_id": "042bf69b-055c-4b87-aa1b-6b961324420e",
+     "sort_order": 212
+    },
+    {
+     "lesson_id": "2a0647eb-155a-46e0-befe-faa799883678",
+     "sort_order": 213
+    },
+    {
+     "lesson_id": "0aa9556f-48db-42d0-a36e-274908257a5d",
+     "sort_order": 214
+    },
+    {
+     "lesson_id": "4bf4113a-d071-5bf1-9604-e7a5a96b0889",
+     "sort_order": 215
+    },
+    {
+     "lesson_id": "878080df-599f-4eb7-9d51-c2a6f6d1947d",
+     "sort_order": 216
+    },
+    {
+     "lesson_id": "0cb47939-ce6a-59a8-8faa-86c9ef283bca",
+     "sort_order": 217
+    },
+    {
+     "lesson_id": "25e35cc9-4f46-5a95-a0a2-82824b55b677",
+     "sort_order": 218
+    },
+    {
+     "lesson_id": "02f7f742-a449-4152-b96d-29644e67478a",
+     "sort_order": 219
+    },
+    {
+     "lesson_id": "257f1fb1-dd65-495b-8f80-8fe12e26422f",
+     "sort_order": 220
+    },
+    {
+     "lesson_id": "70b52efb-62d8-47b1-be58-485398bf76a3",
+     "sort_order": 221
+    },
+    {
+     "lesson_id": "663ceb34-d5c8-429b-944d-c92e98378f6d",
+     "sort_order": 222
+    },
+    {
+     "lesson_id": "345065ce-1df4-42df-be2d-10da1225822b",
+     "sort_order": 223
+    },
+    {
+     "lesson_id": "5fac971c-f039-4e4d-855e-7c8a957bb68c",
+     "sort_order": 224
+    },
+    {
+     "lesson_id": "571765c4-728b-530f-9a27-cb70d805f559",
+     "sort_order": 225
+    },
+    {
+     "lesson_id": "4ddc35c9-2b15-46d0-b76b-56e3caeca7b6",
+     "sort_order": 226
+    },
+    {
+     "lesson_id": "13b4efc6-2c4a-572c-b12f-d5e332c03844",
+     "sort_order": 227
+    },
+    {
+     "lesson_id": "4d07c944-2d95-58e1-ac2d-924cdf3e4a28",
+     "sort_order": 228
+    },
+    {
+     "lesson_id": "76a12e6c-dbcb-5c56-b85d-fec84016c097",
+     "sort_order": 229
+    },
+    {
+     "lesson_id": "2f8b8ed0-fc52-42e6-87b1-0da97c9fac5e",
+     "sort_order": 230
+    },
+    {
+     "lesson_id": "134c364c-2752-5cd7-8aed-3683c56d5fa5",
+     "sort_order": 231
+    },
+    {
+     "lesson_id": "0108f656-8998-413e-95d9-5baf59f1bcaa",
+     "sort_order": 232
+    },
+    {
+     "lesson_id": "67e581c1-65f7-4089-814b-09bf5021fbae",
+     "sort_order": 233
+    },
+    {
+     "lesson_id": "a02c722d-7fb2-4038-909d-ff5cc92cbc3e",
+     "sort_order": 234
+    },
+    {
+     "lesson_id": "8fdb6231-f45a-527c-8ce7-995d1647dc7a",
+     "sort_order": 235
+    },
+    {
+     "lesson_id": "7ddd3e96-b0b5-4c43-bae7-fa2c2de1e1e6",
+     "sort_order": 236
+    },
+    {
+     "lesson_id": "4dfa2318-f723-58b5-be33-bc7412323eac",
+     "sort_order": 237
+    },
+    {
+     "lesson_id": "283c7ce5-cfa1-4307-bec5-df0c3192f04f",
+     "sort_order": 238
+    },
+    {
+     "lesson_id": "09ee99f9-abbc-5b6b-ad67-0586f578513f",
+     "sort_order": 239
+    },
+    {
+     "lesson_id": "331a1848-3756-4577-b7ff-3fd30a5fe388",
+     "sort_order": 240
+    },
+    {
+     "lesson_id": "2fb0a53d-5505-5447-993e-dc7eff84f8ef",
+     "sort_order": 241
+    },
+    {
+     "lesson_id": "7617f77e-009d-4382-8424-a6f8df55adb0",
+     "sort_order": 242
+    },
+    {
+     "lesson_id": "111a62a8-2f6c-5998-9ddf-4fde4f343cbc",
+     "sort_order": 243
+    },
+    {
+     "lesson_id": "737dc57a-af8e-48a5-a6ce-cb3d9e95bdd8",
+     "sort_order": 244
+    },
+    {
+     "lesson_id": "11540004-c1ea-5138-8f6c-c305c599deb4",
+     "sort_order": 245
+    },
+    {
+     "lesson_id": "73d285f9-0e43-4ec8-8688-d4001468326b",
+     "sort_order": 246
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ימי-העיון-בתנ-ך"
+  },
+  {
+   "name": "דוד המלך",
+   "topic_id": "ce599885-4cdf-4e8a-9bb6-180262c04d6e",
+   "old_n": 58,
+   "emitted": 58,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "6862a150-9343-4f61-bd2c-1b8a815783fe",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "0c09e8af-1e21-462f-940d-7416cc718d0a",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "02fe7790-a51b-41e6-bbdf-be4ee10a9268",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "08d37455-3a6f-5cbf-8f22-ece2885830b0",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "6e1dd559-57bf-5625-b761-473373937602",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "0c861e4c-d1e4-525f-aae2-2140184c3ddd",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "0974195d-1d79-541b-8e1e-c37ff2861f7f",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "4e5c797e-676b-44f9-960f-57ead4fe21ca",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "d176781f-8551-5874-8a16-6038ea0a69a7",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "19a7c59a-20b2-5b2e-82a4-94e3d34a7cb7",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "27c0bf73-89a3-45ae-8fab-dedfd7519149",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "d6c67c28-8e81-4313-964b-1e4bd0ffdc31",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "5aab59af-8a95-477f-a1f1-1a7930368bdc",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "22766b1c-e98c-5677-b082-ad58ba18dedf",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "5806af64-8de4-48c7-bdd6-ce3f4aecc547",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "3e7344bc-777f-50f1-b8a9-d098589a2fd4",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "96bbb69c-5052-496b-9ffb-ab9bc8196fc5",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "7ca3d786-bbe5-44a3-b3b6-9ea68f57e802",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "34beb14e-a861-4a8e-8188-d342278aba25",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "ffeeb2e6-e76e-4d0a-ad1c-7323b51a89b6",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "25463f53-99ef-4295-9557-51113dcd72d5",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "43c62987-8532-473d-b097-9af0d5ac1d91",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "0fe5ff6b-39c3-4306-92ea-540ae8126fc4",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "a38e800a-423a-51c9-a1e8-22a11da8aac8",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "0c1f6286-deab-4e96-a263-82438c6f12f8",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "08bac92b-8ba3-4f06-80a2-0c8b2fc55588",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "46ebed02-de76-4c5c-834c-d3c2cd5fee5f",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "15b00704-b8cb-5f90-b82c-0539a6d783aa",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "e81d343e-49ac-420f-81f6-5925d4ca703e",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "33693697-bbaf-4dbf-bfe1-b06047ba108d",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "7d7a4dbb-0fca-4a51-8841-74333d1fe046",
+     "sort_order": 35
+    },
+    {
+     "lesson_id": "4115dd17-7397-42b2-a083-04658fa800fd",
+     "sort_order": 36
+    },
+    {
+     "lesson_id": "2f015371-5f4d-48ba-bddb-f4a8afec4fbd",
+     "sort_order": 37
+    },
+    {
+     "lesson_id": "114109aa-e6c2-42f8-9455-5b13a90e96b0",
+     "sort_order": 38
+    },
+    {
+     "lesson_id": "90915320-d651-4681-9546-126dd8e3e612",
+     "sort_order": 39
+    },
+    {
+     "lesson_id": "b2812e84-fa45-4233-8658-bbd948e30c8d",
+     "sort_order": 40
+    },
+    {
+     "lesson_id": "f9c7da7a-0d56-4315-9643-9f1498eff3b8",
+     "sort_order": 41
+    },
+    {
+     "lesson_id": "46ca1cc6-fa4d-41d1-9468-fe1013e597bb",
+     "sort_order": 42
+    },
+    {
+     "lesson_id": "f72084f8-a991-4c83-8da0-6155fd4e9308",
+     "sort_order": 43
+    },
+    {
+     "lesson_id": "082f8b3b-79d7-42e7-b27c-dfc11eb436f3",
+     "sort_order": 44
+    },
+    {
+     "lesson_id": "a402076c-cf56-4137-8306-20d905878b2a",
+     "sort_order": 45
+    },
+    {
+     "lesson_id": "ddee6794-16b0-4a59-9581-adef9e9c454b",
+     "sort_order": 46
+    },
+    {
+     "lesson_id": "7a8ca0e7-dd82-4b40-97e3-827fc51fa862",
+     "sort_order": 47
+    },
+    {
+     "lesson_id": "da822559-6670-4334-8358-c4d23b0e11e6",
+     "sort_order": 48
+    },
+    {
+     "lesson_id": "fb7244a9-b43e-440a-a414-93aa00bc4503",
+     "sort_order": 49
+    },
+    {
+     "lesson_id": "4627e3b6-9ffd-4a8f-9d97-a7b697773162",
+     "sort_order": 50
+    },
+    {
+     "lesson_id": "f56e4b06-3559-43ff-8721-88f5d371c61f",
+     "sort_order": 51
+    },
+    {
+     "lesson_id": "7ea79395-1753-4d0a-83be-d00ae15cc9f8",
+     "sort_order": 52
+    },
+    {
+     "lesson_id": "611952cf-435b-4f0a-87f4-8b53df9d7ac0",
+     "sort_order": 53
+    },
+    {
+     "lesson_id": "065c10d2-a9b9-415a-bec0-e5daad66ad87",
+     "sort_order": 54
+    },
+    {
+     "lesson_id": "437a230c-2270-4ef4-b859-8fc3aad7eba2",
+     "sort_order": 55
+    },
+    {
+     "lesson_id": "4b702552-d72b-59df-839b-0257674010c4",
+     "sort_order": 56
+    },
+    {
+     "lesson_id": "32e4f1d4-e7fe-5dfa-aa88-89f9952b74fe",
+     "sort_order": 57
+    },
+    {
+     "lesson_id": "514c51cb-5b60-555a-80ce-385b7adfd132",
+     "sort_order": 58
+    }
+   ],
+   "series": [
+    {
+     "series_id": "0094d88d-e066-412f-b090-d84b3d9e2de7",
+     "sort_order": 1
+    },
+    {
+     "series_id": "6304239a-cca5-4ee7-a5a1-4447f03482e5",
+     "sort_order": 2
+    },
+    {
+     "series_id": "3163bac3-08d0-42d3-aa34-a71345aedd87",
+     "sort_order": 3
+    },
+    {
+     "series_id": "1ac239be-5c5c-4a84-8920-6867918e5a8a",
+     "sort_order": 4
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-דוד-המלך"
+  },
+  {
+   "name": "האזנה לפסוקים עם ביאור פשוט",
+   "topic_id": "e7d60a4c-a1e6-4f76-9c25-217b7c4f9ca0",
+   "old_n": 55,
+   "emitted": 55,
+   "res_rate": 1.0,
+   "lessons": [],
+   "series": [
+    {
+     "series_id": "a910a10c-b369-467f-91fc-3fb7dad93426",
+     "sort_order": 1
+    },
+    {
+     "series_id": "99fba257-868d-4e10-8dcb-7c60d04be5cd",
+     "sort_order": 2
+    },
+    {
+     "series_id": "f653f565-ce9e-4793-9053-d05d4c3fd4ee",
+     "sort_order": 3
+    },
+    {
+     "series_id": "590c0b91-3e9e-4d70-818e-538a45f08d81",
+     "sort_order": 4
+    },
+    {
+     "series_id": "c64c45fe-da4a-4b7b-8c2c-3deffd31b5ad",
+     "sort_order": 5
+    },
+    {
+     "series_id": "4a1eacc7-cbfd-4952-8c89-4650f9a8a420",
+     "sort_order": 6
+    },
+    {
+     "series_id": "e3d22762-6c2b-4e95-8685-c255b06bd84a",
+     "sort_order": 7
+    },
+    {
+     "series_id": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+     "sort_order": 8
+    },
+    {
+     "series_id": "43d5a7fd-07a9-48cd-980a-f47cd78c577d",
+     "sort_order": 9
+    },
+    {
+     "series_id": "11d6b546-fec3-45b9-ba2d-4e24c7990d57",
+     "sort_order": 10
+    },
+    {
+     "series_id": "5578c087-d6cf-4319-b3c5-10cd555c9a3a",
+     "sort_order": 11
+    },
+    {
+     "series_id": "93a4207f-5935-4cf4-bd07-12a7604cd964",
+     "sort_order": 12
+    },
+    {
+     "series_id": "eaef9e1f-0ebf-4312-8d4c-f7d9e4588813",
+     "sort_order": 13
+    },
+    {
+     "series_id": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+     "sort_order": 14
+    },
+    {
+     "series_id": "e1dae55d-b3d4-4de7-8845-7f60c68fd25b",
+     "sort_order": 15
+    },
+    {
+     "series_id": "42c91cf7-bcb5-48e9-ac0c-868b8ed6cbc1",
+     "sort_order": 16
+    },
+    {
+     "series_id": "ce9ede7a-1ed4-4dfe-83e4-909b46600968",
+     "sort_order": 17
+    },
+    {
+     "series_id": "721544df-114c-4f68-a180-81e0179647d3",
+     "sort_order": 18
+    },
+    {
+     "series_id": "77445804-625c-4811-a0f3-e269bdd599ed",
+     "sort_order": 19
+    },
+    {
+     "series_id": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+     "sort_order": 20
+    },
+    {
+     "series_id": "c58d34b6-574a-4dbf-aea4-901960e2dbb7",
+     "sort_order": 21
+    },
+    {
+     "series_id": "50986914-9a57-4404-8a63-bca33b2ba336",
+     "sort_order": 22
+    },
+    {
+     "series_id": "a03ebb63-c2e4-4bd7-80ff-54641b5eb542",
+     "sort_order": 23
+    },
+    {
+     "series_id": "7816f311-bbed-4fe8-95da-ddc47eb1203d",
+     "sort_order": 24
+    },
+    {
+     "series_id": "91aee664-1a7c-43ef-bde0-8bdcb4ec25c6",
+     "sort_order": 25
+    },
+    {
+     "series_id": "10d1a9a5-d47b-4800-bcb4-12f4f13b7bab",
+     "sort_order": 26
+    },
+    {
+     "series_id": "607c5b71-1b37-45d0-a5ff-86c6d63ce0bd",
+     "sort_order": 27
+    },
+    {
+     "series_id": "73c9cec7-1923-4fa8-b017-56a636d7aaa0",
+     "sort_order": 28
+    },
+    {
+     "series_id": "a9712c8e-aec1-42dc-9147-3db273d93886",
+     "sort_order": 29
+    },
+    {
+     "series_id": "7aea1579-2d2e-460c-8c01-77e44f61eb25",
+     "sort_order": 30
+    },
+    {
+     "series_id": "c4deeada-4d82-444f-a2ce-6fb53d3745cc",
+     "sort_order": 31
+    },
+    {
+     "series_id": "40f79cde-13b6-4692-8af4-2606107a2a2e",
+     "sort_order": 32
+    },
+    {
+     "series_id": "d94f1238-b61a-4133-a6aa-a386a082d42f",
+     "sort_order": 33
+    },
+    {
+     "series_id": "7786fa07-a1ff-47a2-9ff2-2e133f56f7c0",
+     "sort_order": 34
+    },
+    {
+     "series_id": "c3f0ca7b-8ff2-40b0-81c6-0d0e140ae60f",
+     "sort_order": 35
+    },
+    {
+     "series_id": "1962f75e-9211-49c5-aaeb-0456b0a1c8b2",
+     "sort_order": 36
+    },
+    {
+     "series_id": "85b7d983-0af3-44b9-b8c3-18b464e0f77e",
+     "sort_order": 37
+    },
+    {
+     "series_id": "775d97af-54b1-4b2e-8d74-a090ac31c67f",
+     "sort_order": 38
+    },
+    {
+     "series_id": "b0d6868f-5869-4ec2-aeff-a5dd4d5ad4ef",
+     "sort_order": 39
+    },
+    {
+     "series_id": "a23f7ee5-c7f8-498e-bc60-6e5b84c998c2",
+     "sort_order": 40
+    },
+    {
+     "series_id": "3e0b4fdc-37dd-4df3-bfaa-bd062a7bc3e4",
+     "sort_order": 41
+    },
+    {
+     "series_id": "6e5c2b52-4812-4fb6-8ab4-7c7c3f4efec8",
+     "sort_order": 42
+    },
+    {
+     "series_id": "a4d65d8b-d0d7-4541-bf36-0c4b73ba1a9f",
+     "sort_order": 43
+    },
+    {
+     "series_id": "42b5f86b-56e9-411f-aa4e-6c3c590b0278",
+     "sort_order": 44
+    },
+    {
+     "series_id": "b6da5a68-8d26-4e9d-96db-ed69fa784e91",
+     "sort_order": 45
+    },
+    {
+     "series_id": "7f64155d-2cc3-4a36-8c99-22b5563841b1",
+     "sort_order": 46
+    },
+    {
+     "series_id": "90cc47cd-1cf4-4dc5-bac4-2ccba4e2d61a",
+     "sort_order": 47
+    },
+    {
+     "series_id": "a6874e51-86f0-4e11-9739-902233b06eb4",
+     "sort_order": 48
+    },
+    {
+     "series_id": "276b09fe-fca0-4dcf-968b-39da5f40d90a",
+     "sort_order": 49
+    },
+    {
+     "series_id": "a0f4dabc-1886-4352-b7a0-9c4b13b204f0",
+     "sort_order": 50
+    },
+    {
+     "series_id": "ccec3c89-11ed-4dfa-b7c2-0474126601b3",
+     "sort_order": 51
+    },
+    {
+     "series_id": "6c8aacca-e9dd-4469-b305-defbd779d4d1",
+     "sort_order": 52
+    },
+    {
+     "series_id": "809fb685-16aa-4b93-bba3-c0f5c5a26878",
+     "sort_order": 53
+    },
+    {
+     "series_id": "3264c0fe-a63b-4460-82f8-705365436572",
+     "sort_order": 54
+    },
+    {
+     "series_id": "598be38e-e342-4910-8833-e050cf6054af",
+     "sort_order": 55
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-האזנה-לפסוקים-עם-ביאור-פשוט"
+  },
+  {
+   "name": "גאולה",
+   "topic_id": "8118697c-ccdf-4607-b48e-8afe6097f15e",
+   "old_n": 53,
+   "emitted": 53,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1b807ca6-2db2-4f0f-bca7-aa8194523b25",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "020fce38-a945-5bcb-a401-8fba44491ba7",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "20f29c50-3758-4ac6-972c-5268fac1ede4",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "78e3e7bc-d62a-5af8-b4a9-71f6981e56ea",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "2c9dbaee-a335-4161-98a1-b3cff37277fb",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "6ab4bc97-41d1-455f-aa82-1b396dcc7a77",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "9e125468-a885-52a3-b203-f0c8f410cc2c",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "4bce6a6e-2fec-4eec-904d-a28e51efee0a",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "018328d6-5b79-45bc-8744-2c79b3efad45",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "2e9355c2-c5f7-4766-a0e2-3c2b707c767c",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "ce7c1c81-7cb3-5781-b255-7b002ad252f9",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "5fb8dde3-0171-4a27-ac46-0a341603c288",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "06cefd82-3e42-543c-95fd-f8de69c48a0f",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "93aa4e66-4fe0-514f-9aa6-20817dbe121d",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "01d59cd4-24ff-42f4-951f-b055b127d953",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "03408868-0dc9-46c9-907c-d59064a6e650",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "6ed248c2-4da5-51b7-81b3-63c8ecee897d",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "4ddce1a5-7cb0-49db-8a43-be54677d4182",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "4604b069-d8ea-47ab-9bd7-e495de9538c1",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "50a95529-7c6b-4c6b-a514-82e95eadcf6f",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "27d5fa88-c388-5164-86cf-6755df7221a3",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "6268ce39-daf7-495c-873a-bfd9529b42cd",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "5841aba5-c6b4-45e0-99ed-c258c795705e",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "7725854e-746d-47f6-ace3-6c27994af924",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "21c9e5c2-65a9-4cca-ad05-42f73e77f4c5",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "0dfcc90e-e479-4826-ae93-7de71b93d9d5",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "0c57875d-0dd4-553d-9366-3b5d1e8bf786",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "48a5e957-58fd-4987-8a53-bb45a17501a3",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "0ba88de6-1885-46d5-bd06-3a05d1a04dd7",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "6760f76e-3f72-5f92-8a73-19ace00b2a6e",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "18f1796b-5668-47c0-924a-e0dbdc99a579",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "feea4514-dff8-59b9-8fe4-1f6dffa9bc51",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "994bdb2b-571c-4706-adf5-79ffb7367ab2",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "331a1848-3756-4577-b7ff-3fd30a5fe388",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "385fb426-87d0-5a9f-9f30-60731b5c32ea",
+     "sort_order": 35
+    },
+    {
+     "lesson_id": "7a1414c0-42c1-5383-bde9-a7a2f3fefe69",
+     "sort_order": 36
+    },
+    {
+     "lesson_id": "61f54f14-2aeb-497c-819f-2ebe3d0c52c8",
+     "sort_order": 37
+    },
+    {
+     "lesson_id": "64078d44-c8fc-4573-b17e-64290173c02c",
+     "sort_order": 38
+    },
+    {
+     "lesson_id": "81d0c766-4d83-40eb-8863-e33d179ee50a",
+     "sort_order": 39
+    },
+    {
+     "lesson_id": "0d9a5b46-11fe-5870-99e0-defa797ecfdf",
+     "sort_order": 40
+    },
+    {
+     "lesson_id": "250849fe-f564-561d-b35c-c7e50c39496a",
+     "sort_order": 41
+    },
+    {
+     "lesson_id": "7bdce197-58ad-4259-ab45-87fdf8da812f",
+     "sort_order": 42
+    },
+    {
+     "lesson_id": "07572a58-7c60-4b41-8e6f-444edd609127",
+     "sort_order": 43
+    },
+    {
+     "lesson_id": "fdf7f0be-c3ba-4d21-bfad-9cb1c4ee44d3",
+     "sort_order": 44
+    },
+    {
+     "lesson_id": "c52ddf1e-72d6-4b68-84cd-3d8f0c45b7f4",
+     "sort_order": 45
+    },
+    {
+     "lesson_id": "7c140821-7983-4083-8254-4292bb432a84",
+     "sort_order": 46
+    },
+    {
+     "lesson_id": "79432aa9-e91b-4699-8c4c-026d7b647d0a",
+     "sort_order": 47
+    },
+    {
+     "lesson_id": "33e283b1-d3c4-598d-928d-8f60d0b210f2",
+     "sort_order": 48
+    },
+    {
+     "lesson_id": "2eb31d72-edb8-4058-bfe5-4b6988dfb228",
+     "sort_order": 49
+    },
+    {
+     "lesson_id": "89faf3c9-7fe2-46dd-b74b-944a69723c35",
+     "sort_order": 50
+    },
+    {
+     "lesson_id": "bddc6bcd-8a05-4540-bf64-311a43242785",
+     "sort_order": 51
+    },
+    {
+     "lesson_id": "75a76132-a803-4abb-a4b5-735c87d3f3ef",
+     "sort_order": 52
+    },
+    {
+     "lesson_id": "9f74cf8c-4f40-5140-b90d-7c5fbf318562",
+     "sort_order": 53
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-גאולה"
+  },
+  {
+   "name": "מלכות",
+   "topic_id": "af0762d4-3f18-4391-81b0-bf97dee16931",
+   "old_n": 43,
+   "emitted": 43,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "0f9c17df-b384-490f-964a-b749c88eb644",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "02fe7790-a51b-41e6-bbdf-be4ee10a9268",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "1f0cc267-f56b-5ef7-9bca-bda9be2a7ce5",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "b0fb5622-b324-5440-b8a3-744aefb18b4d",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "62ee609f-809e-53fb-897d-4b92d09f77c6",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "1a95e6ac-b740-4cb9-a7f1-0b414b0bc500",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "0c861e4c-d1e4-525f-aae2-2140184c3ddd",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "0160ee0e-454e-5ed5-a90e-d52bffee6d3f",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "05370d91-cd4c-447d-80c0-8a0d404b6721",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "204c59cc-81e0-5da3-865d-99858b6501cd",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "1a9da638-3de6-4733-b634-57d40b085a5f",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "01ff94bc-e381-5432-9306-f54926a99468",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "2968df4e-3862-41fb-bafd-91ae374205a1",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "8f6f232b-942c-4e68-9168-d07cce68ec12",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "c9ee0da9-f058-451c-8f86-e8e0fe0f66db",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "21fedeff-a922-4799-a420-ac9ba514c78b",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "a17e49fb-232f-495f-9cd3-cb4f5c28d863",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "4ebbabb0-9b1c-494d-9092-c5799c5c3270",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "5ac2938c-2021-4011-8c9c-9049675475d8",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "44b006a6-6687-485b-98e5-5a7a22e91ce2",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "38288e72-f980-4746-860a-47ea8d890b26",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "350842b1-1ba7-46e3-b8e9-13c852eed0e6",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "29d03ed9-7d36-408d-b212-4b39872fce76",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "ba04091a-0309-4781-bc70-ec573d1020d9",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "19a7c59a-20b2-5b2e-82a4-94e3d34a7cb7",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "383da13a-dd8a-4206-905f-334e5f4e74ae",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "87cf348f-f9a8-5ea8-b3b8-fe72f8090aae",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "1561c768-6841-4fcf-8a2a-461d6be95570",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "4d31685d-a9b0-4be7-bd17-eb135ba05bf2",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "1a467af0-d4e2-44f2-afce-cdb9dd113249",
+     "sort_order": 35
+    },
+    {
+     "lesson_id": "08d4f787-d1ef-4615-a72f-53515b727331",
+     "sort_order": 36
+    },
+    {
+     "lesson_id": "b2cf8977-bd48-4e0b-a0ea-c7e66f177110",
+     "sort_order": 37
+    },
+    {
+     "lesson_id": "5806af64-8de4-48c7-bdd6-ce3f4aecc547",
+     "sort_order": 38
+    },
+    {
+     "lesson_id": "4bf4113a-d071-5bf1-9604-e7a5a96b0889",
+     "sort_order": 39
+    },
+    {
+     "lesson_id": "2c2f4667-ed5c-419b-9192-0eca14c8920c",
+     "sort_order": 40
+    },
+    {
+     "lesson_id": "02f7f742-a449-4152-b96d-29644e67478a",
+     "sort_order": 41
+    },
+    {
+     "lesson_id": "c1afd5fa-c1ac-47e6-b8eb-0c31534b159f",
+     "sort_order": 42
+    },
+    {
+     "lesson_id": "514c51cb-5b60-555a-80ce-385b7adfd132",
+     "sort_order": 43
+    }
+   ],
+   "series": [
+    {
+     "series_id": "36bee514-ab3f-4ea4-aba6-8dc5ca049f17",
+     "sort_order": 1
+    },
+    {
+     "series_id": "0094d88d-e066-412f-b090-d84b3d9e2de7",
+     "sort_order": 2
+    },
+    {
+     "series_id": "61fa6d00-a974-4d54-969c-749c1a3b731b",
+     "sort_order": 3
+    },
+    {
+     "series_id": "8602cf4f-0afa-4726-a0f3-d5ac09f64d7d",
+     "sort_order": 4
+    },
+    {
+     "series_id": "ae7b8812-d6bc-5322-8a78-3784d8379333",
+     "sort_order": 5
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-מלכות"
+  },
+  {
+   "name": "תנ\"ך מוקלט",
+   "topic_id": "06bfa535-2d97-5191-a9d3-f5c5ec4bb444",
+   "old_n": 33,
+   "emitted": 33,
+   "res_rate": 1.0,
+   "lessons": [],
+   "series": [
+    {
+     "series_id": "3d600a33-c520-414d-a120-32d85789325c",
+     "sort_order": 1
+    },
+    {
+     "series_id": "682d20cc-0180-4e42-9be7-59a2e1e07dea",
+     "sort_order": 2
+    },
+    {
+     "series_id": "39a024b3-1b45-4cf8-a51b-176dbd563754",
+     "sort_order": 3
+    },
+    {
+     "series_id": "c83632c8-a8ed-42cf-b694-e195cd5dc278",
+     "sort_order": 4
+    },
+    {
+     "series_id": "ae7c8c59-c013-4fb1-9b97-cae4f1038530",
+     "sort_order": 5
+    },
+    {
+     "series_id": "ab6c4402-6fd4-4b50-b66a-bb57ba0ff5cd",
+     "sort_order": 6
+    },
+    {
+     "series_id": "c9309667-f69c-4f8e-96a3-bfd78f8542e5",
+     "sort_order": 7
+    },
+    {
+     "series_id": "ad5afda5-d5fd-4782-a04e-644fb8cf8e59",
+     "sort_order": 8
+    },
+    {
+     "series_id": "5e6437fc-7448-409c-b0a5-88dec1bf6e22",
+     "sort_order": 9
+    },
+    {
+     "series_id": "7296b10f-93b5-41a7-bc4a-082180e03671",
+     "sort_order": 10
+    },
+    {
+     "series_id": "6783e4a0-4cf7-49f2-be82-b3c2221545b3",
+     "sort_order": 11
+    },
+    {
+     "series_id": "676fd5e1-3e2c-4e47-8962-cef81f9faa01",
+     "sort_order": 12
+    },
+    {
+     "series_id": "2a47b65c-e2ab-439f-a36b-91a60db917ed",
+     "sort_order": 13
+    },
+    {
+     "series_id": "c93952da-3f39-4ba8-b8e5-4ec07ba52481",
+     "sort_order": 14
+    },
+    {
+     "series_id": "59b80f30-a1dd-40ca-8979-cd486cabbacf",
+     "sort_order": 15
+    },
+    {
+     "series_id": "2879e27a-05fa-415d-914c-2834e0a77d9d",
+     "sort_order": 16
+    },
+    {
+     "series_id": "cfb7da1a-86a6-4efd-8171-80ec863e61a8",
+     "sort_order": 17
+    },
+    {
+     "series_id": "a6735e4d-4f83-4204-9d45-e6756f1e7314",
+     "sort_order": 18
+    },
+    {
+     "series_id": "63aac39b-db4c-449b-b979-31b48d9aa4aa",
+     "sort_order": 19
+    },
+    {
+     "series_id": "84fb3fc1-3587-4a1c-a51e-60e3057f5a9f",
+     "sort_order": 20
+    },
+    {
+     "series_id": "58a30a8e-d5d8-43ad-9665-98d33d6009c2",
+     "sort_order": 21
+    },
+    {
+     "series_id": "da8f6bf7-2427-4638-86e1-7abc584f4fc2",
+     "sort_order": 22
+    },
+    {
+     "series_id": "45c0cd22-0744-41c3-94ff-efdf3f63f1f7",
+     "sort_order": 23
+    },
+    {
+     "series_id": "51b5079b-4871-4e0d-a4c1-b33ea1b6142e",
+     "sort_order": 24
+    },
+    {
+     "series_id": "2533ee0c-b38e-4a37-a43f-de218727b9aa",
+     "sort_order": 25
+    },
+    {
+     "series_id": "da1d9584-4b60-4db0-a424-cce0efeae52c",
+     "sort_order": 26
+    },
+    {
+     "series_id": "cb46af57-145c-41b3-bf32-3b2064a8c567",
+     "sort_order": 27
+    },
+    {
+     "series_id": "d963ee27-7551-48dd-9204-4de495922e98",
+     "sort_order": 28
+    },
+    {
+     "series_id": "1db2f2b9-7027-4d18-b3d7-06efcc9ba78f",
+     "sort_order": 29
+    },
+    {
+     "series_id": "a47aebb4-9228-4451-816e-f6ddd2936c6b",
+     "sort_order": 30
+    },
+    {
+     "series_id": "be07f252-2dca-4b88-a608-91c05f6eea0d",
+     "sort_order": 31
+    },
+    {
+     "series_id": "a9d0bc15-048c-4880-ab95-420a1332c217",
+     "sort_order": 32
+    },
+    {
+     "series_id": "de529005-f31d-4d62-b2d6-42582a6a0894",
+     "sort_order": 33
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-tanakh-muklat"
+  },
+  {
+   "name": "נבואה",
+   "topic_id": "64362bbf-afdf-4b78-a3c0-551de9671480",
+   "old_n": 38,
+   "emitted": 38,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "3170c32a-5b8e-44db-8b77-af6651398a82",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "ab5c5ec7-e57d-484e-8796-4b2ea617ae8b",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "07c310d9-62ab-4003-9e53-997ba1025ca5",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "9e125468-a885-52a3-b203-f0c8f410cc2c",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "a7cdce5c-8ff4-54bf-844c-9159211145f0",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "3bbf9083-6745-4499-890c-990ed77463d8",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "14691716-dd7c-576c-b101-25a2ecf4e672",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "a9d88fbe-d237-5f14-921a-29506acc4b68",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "38f402ae-368a-5dc3-b8d5-af58c46b2720",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "9ad6b010-14f7-5fb5-915e-3cf07ad71460",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "8028f102-5bde-4118-a695-b4f6192a9666",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "2f733d6b-3f56-58d0-8055-110f67047566",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "c1c64681-1d71-4417-ba00-4650b5c9d0f0",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "93c0756f-5be3-5a7c-b729-79ac559903fa",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "070a2b59-0f44-59d9-8581-588a6b476b85",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "72386baf-c041-5669-b2a1-46ce7a9fb996",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "b0313665-e545-42ae-b991-c4da9c513d0f",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "a4893f20-26d5-5381-8b59-26666331d375",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "1a9da638-3de6-4733-b634-57d40b085a5f",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "318c4998-93e1-5253-b97d-d2ae26436415",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "01ff94bc-e381-5432-9306-f54926a99468",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "9e6bd133-2d13-4ae3-8574-a17961e48596",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "18b16b8d-f8dc-43aa-8de8-82e8f25d760b",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "6376e9f0-66a8-41af-8ac6-d320fdf79b59",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "86cf82a4-5c47-5228-8fe3-3cb3287de656",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "30788f1a-a1ae-468a-8aa1-16894a7ccd04",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "8c8ebcd4-6db5-5a82-ba1e-6e2ee0e676c6",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "48b866a0-5931-4a7d-907c-2f40c5978b08",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "5c14c576-d3ea-4380-b6f3-89e0cc98cf8a",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "33f32311-98b4-437f-99a0-e4481bc65a8a",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "5d271370-a63a-4e65-a735-2cec7d447474",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "44d553d2-c488-4c75-a0a2-de7180bdbeab",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "06ed9f5c-58f1-5a0c-9607-2557dee76823",
+     "sort_order": 35
+    },
+    {
+     "lesson_id": "daedbc3e-5df6-46e5-8f78-522f7b6ed09e",
+     "sort_order": 36
+    },
+    {
+     "lesson_id": "0de6ffc1-bc60-59f7-ade3-eef42211f22e",
+     "sort_order": 37
+    },
+    {
+     "lesson_id": "5e67d0a0-818f-456a-9c18-a908eb2e6814",
+     "sort_order": 38
+    }
+   ],
+   "series": [
+    {
+     "series_id": "8602cf4f-0afa-4726-a0f3-d5ac09f64d7d",
+     "sort_order": 1
+    },
+    {
+     "series_id": "3958b461-17d0-4865-9df3-711ddadbcde1",
+     "sort_order": 2
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-נבואה"
+  },
+  {
+   "name": "בית המקדש",
+   "topic_id": "1a134c5f-d007-4005-a2f9-62e030bec12b",
+   "old_n": 38,
+   "emitted": 38,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "f6ee5590-474d-482b-8233-d82222429273",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "130f2fd0-0dbc-5287-88d4-911c5566599f",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "a9b05fc6-5822-5c24-970e-9bc590501697",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "ba84d404-de05-486c-85f8-390a41484e83",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "046e7d8a-7859-531f-a8fd-ce5a06af28b7",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "03c0e1e2-1dfc-5161-b3a7-bce5386f3493",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "da83a255-3f79-4d51-9d00-b1070e2d56e9",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "ad2c73db-fa95-55a3-ace9-1fdec6813b56",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "cf9a1697-9f19-461e-8af7-6ae60099c084",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "07b37ab0-4c4d-5b5d-9ea7-9f8b65d9edfe",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "85d2de13-1e86-5b0e-ad48-9e7cab0dd3ee",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "631746dc-8357-44a7-bf14-6bb678be4a0e",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "7b8d0f11-de82-5b44-bb69-3cb726ad3775",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "2dc0e02e-7376-4f16-b284-30b36eb54aa2",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "54a9d929-be33-4b40-9f87-f07f213abb5e",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "ba04091a-0309-4781-bc70-ec573d1020d9",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "08d4f787-d1ef-4615-a72f-53515b727331",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "2a59fac5-8074-4382-9c2f-96628591e791",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "850305f7-1a48-4be5-b46c-8df1434e8fa3",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "5893017d-b0d8-4488-848f-8373f4f5584e",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "4567992b-4913-4d48-bc3c-fd745b91dca1",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "34beb14e-a861-4a8e-8188-d342278aba25",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "4ce58458-f84f-4c20-aeea-e5cd6d539d39",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "7d23d5d7-11ac-4f94-aa2e-2eb2093ea076",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "0c1f6286-deab-4e96-a263-82438c6f12f8",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "15b00704-b8cb-5f90-b82c-0539a6d783aa",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "e81d343e-49ac-420f-81f6-5925d4ca703e",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "81369c1d-172b-4214-8037-0c71b4179b0e",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "888497c5-357a-4e21-a093-fb9323748a41",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "17f6d892-c546-4e05-9426-224e4242e257",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "c27da5d5-bb57-46dc-9108-f5085743e893",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "94a095cd-7eb3-41cf-bc13-8c8b68ad44af",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "876eaa87-85ce-4a0c-a624-484eda13a3fe",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "08c64d25-93b2-4afd-97b0-8ffd713943e0",
+     "sort_order": 35
+    },
+    {
+     "lesson_id": "12989123-cbad-4119-bdae-149efec6cac8",
+     "sort_order": 36
+    },
+    {
+     "lesson_id": "1cecb9d8-5c1a-5c59-9dd4-b12ab80c51f1",
+     "sort_order": 37
+    },
+    {
+     "lesson_id": "0f37e24c-ed5a-414f-9619-4e808cb75f32",
+     "sort_order": 38
+    }
+   ],
+   "series": [
+    {
+     "series_id": "029d7341-3f5b-4624-83de-ee9435cdd9c9",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-בית-המקדש"
+  },
+  {
+   "name": "לימוד בקצב של פרק לשיעור",
+   "topic_id": "0aa783fb-8a12-5226-8b55-f5ca6ece466d",
+   "old_n": 38,
+   "emitted": 38,
+   "res_rate": 1.0,
+   "lessons": [],
+   "series": [
+    {
+     "series_id": "07fcb66c-d5f4-40fe-867c-c52d0fd43f7e",
+     "sort_order": 1
+    },
+    {
+     "series_id": "2525e746-8f22-4cab-9666-64e7718f805a",
+     "sort_order": 2
+    },
+    {
+     "series_id": "78f040d7-89a6-435e-9aef-50de86b3929a",
+     "sort_order": 3
+    },
+    {
+     "series_id": "d05f0213-5ee5-4df4-a77f-1c168335bf85",
+     "sort_order": 4
+    },
+    {
+     "series_id": "4123d9a0-2c02-4abb-a702-f26315b1f89b",
+     "sort_order": 5
+    },
+    {
+     "series_id": "9279a2b1-7f98-40b9-9941-b58992363514",
+     "sort_order": 6
+    },
+    {
+     "series_id": "7613f0cc-0a89-4ee9-940f-3fa168834737",
+     "sort_order": 7
+    },
+    {
+     "series_id": "8eb62118-1959-42a4-ba6c-5cd681cf73e5",
+     "sort_order": 8
+    },
+    {
+     "series_id": "76c7c4b9-8cfb-4db1-9bb5-8bccdb038107",
+     "sort_order": 9
+    },
+    {
+     "series_id": "b7b24b9b-133f-495c-b88c-690a60154cea",
+     "sort_order": 10
+    },
+    {
+     "series_id": "1718a555-23cd-4ff7-a117-747bb6976425",
+     "sort_order": 11
+    },
+    {
+     "series_id": "6cfddd29-51a4-4063-a51a-ec6999d50de4",
+     "sort_order": 12
+    },
+    {
+     "series_id": "3b0e5c87-6461-4123-bf31-56b234ceff7a",
+     "sort_order": 13
+    },
+    {
+     "series_id": "5c5ad7ed-2b70-4656-a110-9eb76927f810",
+     "sort_order": 14
+    },
+    {
+     "series_id": "0fa56026-8486-4e6a-8a3d-1c68164954dc",
+     "sort_order": 15
+    },
+    {
+     "series_id": "5a962002-7876-41f3-9b90-45344d96157d",
+     "sort_order": 16
+    },
+    {
+     "series_id": "98f2d8bd-ec37-430f-a883-f9657ce95773",
+     "sort_order": 17
+    },
+    {
+     "series_id": "c00e3463-8625-4eb1-93dd-1a7d0cc8b2a8",
+     "sort_order": 18
+    },
+    {
+     "series_id": "f3534b0f-ab99-4eca-a813-e751a32a3ecd",
+     "sort_order": 19
+    },
+    {
+     "series_id": "925968a2-3841-426d-b257-739e70af6b3a",
+     "sort_order": 20
+    },
+    {
+     "series_id": "8b25320d-f779-467f-9bae-05b3a306e17c",
+     "sort_order": 21
+    },
+    {
+     "series_id": "36d0a892-714d-4cdd-8dc5-9a32154e3228",
+     "sort_order": 22
+    },
+    {
+     "series_id": "ea50c399-ad83-42bc-bbd6-55237181fc00",
+     "sort_order": 23
+    },
+    {
+     "series_id": "c18f848a-2a11-4730-b17a-6a38f97616e5",
+     "sort_order": 24
+    },
+    {
+     "series_id": "7e9d3cc4-23cb-4a1d-90aa-f11027d67ce3",
+     "sort_order": 25
+    },
+    {
+     "series_id": "d128cba0-d5b7-467b-b748-2a2cd90cb06b",
+     "sort_order": 26
+    },
+    {
+     "series_id": "954c7c87-5486-4776-9670-b6ac224455fb",
+     "sort_order": 27
+    },
+    {
+     "series_id": "d118798c-524c-43dd-933c-4c0475d8ac5a",
+     "sort_order": 28
+    },
+    {
+     "series_id": "8673c784-c963-4499-98ce-96c4b673ed62",
+     "sort_order": 29
+    },
+    {
+     "series_id": "cf4a888d-0eca-4c52-8db3-23839d4ecc08",
+     "sort_order": 30
+    },
+    {
+     "series_id": "593c9eb1-05f0-4276-88db-ae34ee52a206",
+     "sort_order": 31
+    },
+    {
+     "series_id": "1d5ed4f8-931e-4b2f-82af-66cd3b72e579",
+     "sort_order": 32
+    },
+    {
+     "series_id": "977bae86-2dad-406f-a5c6-44bdc45b7ce9",
+     "sort_order": 33
+    },
+    {
+     "series_id": "6a964f3b-515d-4508-8743-7aeae334c3e3",
+     "sort_order": 34
+    },
+    {
+     "series_id": "39a4430c-fb7e-4c9d-ba81-d67f387bfeb2",
+     "sort_order": 35
+    },
+    {
+     "series_id": "08ed6654-6a71-4daa-b3ee-db6222917c77",
+     "sort_order": 36
+    },
+    {
+     "series_id": "390068f0-b407-41b7-907c-d471088981ca",
+     "sort_order": 37
+    },
+    {
+     "series_id": "08a92707-9411-4171-99fd-60a5c87ae692",
+     "sort_order": 38
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-perek-leshiur"
+  },
+  {
+   "name": "ארץ ישראל",
+   "topic_id": "3c03af46-8e01-400b-a46a-24d2b812893c",
+   "old_n": 35,
+   "emitted": 35,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "062f0aac-0ffc-572f-ad24-ca5806149265",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "14114f64-a5c7-5c0f-98a0-39ea28dc9d10",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "5dae4141-3671-4afa-92cf-3ffd59bc1a17",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "e293739d-2448-54fd-96db-2c0eeb39df61",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "d4811f7c-fe1b-5eae-a686-277687e7dabe",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "ca598992-fe5c-544d-a22c-95ea7bb0a963",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "658d6f14-b149-57b3-a8b6-8ada56ed53b5",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "c1fe27d9-a069-4ed0-b445-69ee328a4dd3",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "1642aeaf-c0ea-4e6c-8f90-8b0903010f5e",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "2d626d01-97a9-5f24-bda0-0563bde4866b",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "91ec5f8e-bfa7-5d3a-a76e-0b73f1fa97bd",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "0015fef2-541c-5da5-a55d-39b3978e969b",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "0ca60230-aac0-5e7e-a359-2775ecb7a567",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "cf9bb51b-b0e9-4fd4-b198-a4f8f17ac032",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "82f9b99a-3571-41cc-b668-d1983a5bd815",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "0b6c9639-e4c7-4922-a988-9d4169e39d43",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "3e491702-0c29-42ab-b9b4-57302bd5c069",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "60660dcc-a6e2-4105-9384-ee00ad4bccc3",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "35c2c073-e04a-4f3b-aeab-9a05692241f9",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "1eef710f-33f9-46d7-bcae-c05a9c78a450",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "90b4364d-ec89-41cb-9086-502b244da9ba",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "73cd32be-e182-4cd6-89a5-f772eb488380",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "1b6d5495-6195-46a2-ba59-d16941707258",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "0e81600f-84a5-5df5-b016-ccb77336acc5",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "0a7fbafe-146e-5dec-af19-c5c516c6c2bd",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "43362d34-19a7-4f70-ac3b-a8e0202e0a75",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "615e196b-f8fb-5010-bb03-10878a340071",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "a11197ce-7dfd-4942-a6fe-d1478496c077",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "b2e6f3eb-40dd-4e18-8884-15d65ca29fcc",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "39f707f0-411a-59dc-9196-242ddf5a5262",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "dc45f404-69d6-4abd-a2d3-dc813467bb69",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "343bec53-ed81-4ff7-a6e1-8afa8346c5ef",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "43606252-ab21-596a-bfcb-49e1a1953f1e",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "0cb60278-484d-5a8e-ab9d-d10a575b6bd7",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "5111a8c2-67d2-43a3-81d4-0b8025449fc9",
+     "sort_order": 35
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ארץ-ישראל"
+  },
+  {
+   "name": "בית שני",
+   "topic_id": "f4690adf-a787-42e6-8f55-7b7017d9ffc8",
+   "old_n": 35,
+   "emitted": 35,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "f6ee5590-474d-482b-8233-d82222429273",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "020fce38-a945-5bcb-a401-8fba44491ba7",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "20f29c50-3758-4ac6-972c-5268fac1ede4",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "78e3e7bc-d62a-5af8-b4a9-71f6981e56ea",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "0ad110d5-c84d-4d5c-a03d-c829a2bb97a9",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "b20346a8-cb32-42bf-b164-0b9eb6e36bd1",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "21134951-558e-5999-bc02-2ab1e43fc15f",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "20757bce-6e4f-545f-83b7-e0dfe49fa195",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "93c0756f-5be3-5a7c-b729-79ac559903fa",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "064adb76-f204-4477-87d4-7798906190b6",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "0c4a936e-16d6-597d-8ce9-105c780b29dd",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "2813bd8b-9051-4880-b853-0f89b778ec3f",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "18b8dee3-b1f3-495e-bc38-6a9f8a82dedc",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "68b25297-c2bb-4cc4-91aa-ade47dddcb3c",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "2d9db2a4-c0be-46de-b711-298f815bc4f2",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "0d28ee4a-2b25-4158-bdfe-3338a299f4b8",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "8e621a43-9a3c-4ec9-8f81-48fb97a88210",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "37437e3e-6d66-5668-986f-bb9a372ec335",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "553973f7-66d8-4497-a29f-97044c3dfc1c",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "e682c81c-5159-4da9-824f-1b70c81d1927",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "8f083f58-f1ee-4122-9722-a38c99cd7315",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "03d59200-5c70-4f32-8fcd-22ec0e0724ce",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "06daccbd-d48c-4f61-ad7e-d070d45af61a",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "0e0c5ef8-a62f-4b82-825e-3b719acc479d",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "da739be5-7d4f-4f20-8b1d-6c4e97f6b804",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "c1f62106-7036-453d-b3a9-c522ed47efa1",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "f4620397-4706-49c7-b49b-34ade5efb456",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "f573c6e2-9c67-4119-9ea9-330a9da11d7a",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "01c2bac7-6cb0-420f-8591-91c6657c6f10",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "a021982f-aaec-4728-84fd-740d6c9cf7b2",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "876eaa87-85ce-4a0c-a624-484eda13a3fe",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "69ac61c3-67e1-45aa-8975-1fdaa1a7afd9",
+     "sort_order": 33
+    },
+    {
+     "lesson_id": "6c36d6f2-3b16-5a51-a763-97d6f039b897",
+     "sort_order": 34
+    },
+    {
+     "lesson_id": "57a495da-ff5b-5519-b6ea-6097d0824527",
+     "sort_order": 35
+    }
+   ],
+   "series": [
+    {
+     "series_id": "0fa2fd90-66ff-5e1f-8c69-ee59a6dd3bbf",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-בית-שני"
+  },
+  {
+   "name": "כהונה",
+   "topic_id": "a42f9db6-6e3b-4df6-9f22-609df0bfb943",
+   "old_n": 33,
+   "emitted": 33,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "2db8f8d7-806d-5a74-b010-2981b8e1955e",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "1a95e6ac-b740-4cb9-a7f1-0b414b0bc500",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "8e4404fe-07be-5a89-9ab9-87e22290fc27",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "587f2b9c-eaf1-5e69-b7af-85e486f39ae8",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "0f9b2b05-7790-431b-8b1a-67d36a03d9ea",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "a78df120-294f-5a24-88c6-af815ccd3412",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "33845224-a684-450a-97d0-e7b9a40bcce5",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "2fc1b860-2487-588b-bbef-5396771173aa",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "14eee580-74fe-5a28-a1a2-2ca8d94e420c",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "4d20ce60-84dd-5dcc-b1ba-398e05832330",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "30798f8e-e1a2-4476-81f4-8282ee3cd026",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "7b8d0f11-de82-5b44-bb69-3cb726ad3775",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "f751693a-201f-5078-9f07-b5914a119cac",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "1a9da638-3de6-4733-b634-57d40b085a5f",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "01ff94bc-e381-5432-9306-f54926a99468",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "3030bc7a-e22c-50e2-9523-9141e7398eaa",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "b36be8c8-b8b5-463f-9963-3544ede0d3a2",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "01ff6ad6-ad09-43cc-8be3-8595d323c516",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "775db777-a984-4928-a68b-d4f66f3eb2b3",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "c5e873f7-f5ae-5fb1-a42e-d6e89fb2622f",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "5c67e561-f962-4bb3-9422-b22b29506953",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "306e8820-a979-56d2-ae1b-75f7d8edfa92",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "c2e5e420-d4ba-418a-83a3-2be63a9971c5",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "13ebd45e-b519-4642-abfc-351cd022e6d0",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "8397ffda-039d-4432-88d8-d94c0fc8f54e",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "05da0959-ed5f-443d-b678-a9a778c5a480",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "52ad0fb8-1cfe-4c76-95df-04fc086c29e8",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "35d06bbe-c352-49c5-8cb3-8ea87668ba4f",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "6b9083f0-1c13-4c88-bd7d-f5e1903ade21",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "1e4d2fae-e97f-4250-bea3-26e45ff7736c",
+     "sort_order": 31
+    },
+    {
+     "lesson_id": "6455b8ad-7c9f-43ae-906f-c35f0c8064d5",
+     "sort_order": 32
+    },
+    {
+     "lesson_id": "127f5e4a-b71c-4cf2-93b0-78ecec883a2c",
+     "sort_order": 33
+    }
+   ],
+   "series": [
+    {
+     "series_id": "aea7f41e-1062-4bd9-a63a-70649d9e5873",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-כהונה"
+  },
+  {
+   "name": "קריאת הפסוקים עם ביאור פשוט",
+   "topic_id": "aac96137-a9e3-4cf4-9016-831b293668b3",
+   "old_n": 31,
+   "emitted": 30,
+   "res_rate": 0.968,
+   "lessons": [
+    {
+     "lesson_id": "bc833c16-6dbc-5640-afed-38794b7e8b1c",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "46f2c3c4-5ba5-596b-9571-3d0599db2f69",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "d91da7aa-7c33-5975-b496-adca5b00fda1",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "d72e0625-a27b-5d69-b494-662bc86bc810",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "d6207e41-07c2-4c16-9cb3-6d0f95f3c801",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "e1e8b701-98b8-559f-93f3-1edf96a60732",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "e001f03e-8539-5533-8035-f8cf2035518b",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "ef806ab9-2e57-4847-915c-3a83e22c2b3a",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "42c0ce16-8d24-42b3-af43-7fd9db5ef5b7",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "679fe9ba-ade9-5439-9c54-d8bb9d986511",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "5127fce2-4a81-5f76-ad0a-5e04b6eea415",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "aa1aea3e-8959-51a7-959f-8e38861a798e",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "a9f40fc1-020a-5ab1-8d88-64f5d466c970",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "3ece525c-230e-5de5-ad2b-76272d91cb12",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "39eb3012-76b9-549e-bd94-e81719c51429",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "d92f7a21-4d3d-525c-9af0-d9bd08d7b219",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "3466170d-2110-5ca7-865f-cc120dc3284a",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "272b2bc6-8a54-515e-ba57-4e3accc3279b",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "3f06d3af-c4c6-59a0-8150-a494adfcecd2",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "68ddb117-51ea-52c1-96ed-91ba28b42e6c",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "245cf4d1-152a-527c-9a7b-f7fb2dcd03b2",
+     "sort_order": 29
+    },
+    {
+     "lesson_id": "71d5170c-d3f8-5639-80e8-005a99f59e21",
+     "sort_order": 30
+    },
+    {
+     "lesson_id": "53beb033-c21a-54ee-a5f9-ce4ef7a21489",
+     "sort_order": 31
+    }
+   ],
+   "series": [
+    {
+     "series_id": "9cdc99b0-4a5b-4f4f-95c9-4c421ef0d80f",
+     "sort_order": 1
+    },
+    {
+     "series_id": "ba9e41b4-36f2-440e-a215-4d504bb74912",
+     "sort_order": 2
+    },
+    {
+     "series_id": "d241183d-c1f0-4752-a758-0546f3459c13",
+     "sort_order": 3
+    },
+    {
+     "series_id": "9aa7afdb-e029-4d82-af65-5584e320ca75",
+     "sort_order": 4
+    },
+    {
+     "series_id": "5bd63b0e-f19d-48cd-90b3-0754131d7f04",
+     "sort_order": 5
+    },
+    {
+     "series_id": "527f4aca-db7b-4e1d-b80b-5df9653871fe",
+     "sort_order": 6
+    },
+    {
+     "series_id": "c866f217-16fe-4dc1-8a98-583faad5c4d5",
+     "sort_order": 7
+    }
+   ],
+   "unresolved": [
+    {
+     "title": "ספר דניאל עם ביאור ותרגום 'ושננתם'",
+     "type": "lesson",
+     "reason": "absent_lesson"
+    }
+   ],
+   "slug": "theme-קריאת-הפסוקים-עם-ביאור-פשוט"
+  },
+  {
+   "name": "ירושלים",
+   "topic_id": "69c74afa-cdc4-4c55-b964-aaeab59918bf",
+   "old_n": 29,
+   "emitted": 29,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "04da393a-0e29-5565-9a91-4643653b529f",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "15245c4a-db26-4c97-b279-50948455b6a9",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "14613847-7f3b-578a-8ebd-e41cf6488f0e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "7c910112-3763-4efe-a71a-721413e6c963",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "4f10e978-baa0-5e12-8a1f-32e1d6c89e4f",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "1741c488-4d71-5f82-813c-e3bc6f10de0e",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "a951471b-694e-4934-824b-ea91c2e1dc9f",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "4e752399-9a3d-51f1-8cad-8255dd5dfa08",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "96bbb69c-5052-496b-9ffb-ab9bc8196fc5",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "15b00704-b8cb-5f90-b82c-0539a6d783aa",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "4a16d237-3d27-44eb-b2e6-db355ae65e1d",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "4908fe35-5e82-4d28-9b9c-49269a675727",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "1b637768-1a1a-5ab5-aa20-a9b2d0fda2d0",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "02fb8e36-338d-4280-97c7-77878761ec3a",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "576d6e43-637d-4312-8e5e-8d8c1edfec9b",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "61513a2b-032f-431d-98f1-4429fc579798",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "30f5ae98-d851-4f84-8afe-0b0e57b5a43a",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "823b3bc0-0e92-4e57-948c-5858f6d46eb2",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "23544de5-1d00-4079-825a-1a61158f8547",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "81cb5f6a-2fd6-4980-a37a-20ba3b7faee4",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "4e827a9a-0e4b-5314-aecd-18eb909ad0db",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "4da4e1eb-f927-411b-be92-4838b901ded7",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "03a72bb1-5eaa-573a-b394-f2cf99a3f93a",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "48f1ba93-6277-5c93-89a6-acb4b7708dd2",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "0c1f6286-deab-4e96-a263-82438c6f12f8",
+     "sort_order": 26
+    },
+    {
+     "lesson_id": "67a4b584-0e69-5e76-8377-b0f19d135e3e",
+     "sort_order": 27
+    },
+    {
+     "lesson_id": "e81d343e-49ac-420f-81f6-5925d4ca703e",
+     "sort_order": 28
+    },
+    {
+     "lesson_id": "888497c5-357a-4e21-a093-fb9323748a41",
+     "sort_order": 29
+    }
+   ],
+   "series": [
+    {
+     "series_id": "029d7341-3f5b-4624-83de-ee9435cdd9c9",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-ירושלים"
+  },
+  {
+   "name": "קרבנות",
+   "topic_id": "22938735-84bc-411d-9be2-2b399450fa73",
+   "old_n": 26,
+   "emitted": 26,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "673a62ba-4d61-5b62-a0cb-6144a7718db8",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "73148889-3812-5afb-9244-6f44edc7d266",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "304c49de-57db-519c-b734-9f1e1fbd0247",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "d41657bd-dbb3-4ea8-af54-e8b8e4543230",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "795335b4-9ee6-5208-b8d0-8d8a1ca33b02",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "ae5b633d-170b-5695-ae1b-c7cce0405a8f",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "434c4b5c-e807-45a1-ae3e-b40a00afebfb",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "38f3616a-a515-498b-8ccb-8574237fc36b",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "baf87acf-ca7d-5b42-84c1-6f9e96c2b67e",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "3d213a4a-886f-4c92-bda8-fd0dbd84834a",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "1f6d6807-09db-5d1a-97f6-ad107d5b47ec",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "46a961fc-3bb8-5961-8b93-31b4ac97d304",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "44db9213-a685-4590-8465-5f7dcf0e7f0b",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "034cfa84-f7d0-4da0-833d-4e164e7e615f",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "6dc12392-14c8-4d7c-849e-22295c088815",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "18f243ed-b2ea-519b-9415-b601146204ad",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "a8d742e6-513f-5b36-97c7-037efac8a8b7",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "20bb55b9-917c-4afb-a0fc-4ac15fd44d72",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "03134565-6453-404c-9e2b-23c7624f8770",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "36d089bc-0bf4-594c-a65d-ae85cff38b4e",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "276bae3c-5aca-4c4a-95ae-f409f5142a5a",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "63c4b4af-62bf-5f3d-88ba-86a719168294",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "903d350f-6ef5-4716-990e-18790968a877",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "c1010001-0001-4000-8000-000000000063",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "45e417a3-0399-50db-8542-28260ce0a971",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "1571a3b5-0421-4074-9e45-6985b5129a72",
+     "sort_order": 26
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבנות"
+  },
+  {
+   "name": "מבט רחב על ספרים ונושאים",
+   "topic_id": "b20c5891-f7ee-4be7-b75a-ecf056806e7f",
+   "old_n": 26,
+   "emitted": 26,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7bda565a-cc3f-4cda-964c-c2f1e2d97381",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "0ad110d5-c84d-4d5c-a03d-c829a2bb97a9",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "6301bcd4-a09d-51e7-94e8-9cccd511d986",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "6e1dd559-57bf-5625-b761-473373937602",
+     "sort_order": 25
+    },
+    {
+     "lesson_id": "0c861e4c-d1e4-525f-aae2-2140184c3ddd",
+     "sort_order": 26
+    }
+   ],
+   "series": [
+    {
+     "series_id": "dbcae806-435d-4aa1-a227-0c1acb14a914",
+     "sort_order": 1
+    },
+    {
+     "series_id": "182cc679-e550-40ac-a219-98a3a3cc367f",
+     "sort_order": 2
+    },
+    {
+     "series_id": "e2756c64-8b2d-4886-b1af-d9d4e0c676a1",
+     "sort_order": 3
+    },
+    {
+     "series_id": "8630d661-9867-448c-bcb9-f1540d59103a",
+     "sort_order": 4
+    },
+    {
+     "series_id": "73344ba9-624a-4553-97e8-ded3a204a33c",
+     "sort_order": 5
+    },
+    {
+     "series_id": "15914f38-5215-4fbb-ae80-59b52b13d1b0",
+     "sort_order": 6
+    },
+    {
+     "series_id": "85bdb534-f50e-4902-9582-a1033dc10956",
+     "sort_order": 7
+    },
+    {
+     "series_id": "883daf92-4fce-4b54-8d78-8eefc3465777",
+     "sort_order": 8
+    },
+    {
+     "series_id": "e00c6149-9597-4b96-b8b5-785505ef1b8a",
+     "sort_order": 9
+    },
+    {
+     "series_id": "cf09a483-033b-489b-b5f8-e7d2614b055b",
+     "sort_order": 10
+    },
+    {
+     "series_id": "840fae06-6e0c-4077-a400-bfae40c9c40b",
+     "sort_order": 11
+    },
+    {
+     "series_id": "c564e259-6009-4102-8ed7-5e1ab4e434e7",
+     "sort_order": 12
+    },
+    {
+     "series_id": "e9a21cee-7c44-4972-a1cc-2fc28c38933d",
+     "sort_order": 13
+    },
+    {
+     "series_id": "209d594e-8246-4ba5-9ed7-99569295116c",
+     "sort_order": 14
+    },
+    {
+     "series_id": "9179f0c1-fa95-420e-a3fe-b3ddb3b705dc",
+     "sort_order": 15
+    },
+    {
+     "series_id": "a116ee46-4d89-4b9a-98c3-7214152c48f9",
+     "sort_order": 16
+    },
+    {
+     "series_id": "9e3c6bb9-b51f-4a68-98a6-cbf5a2964c54",
+     "sort_order": 17
+    },
+    {
+     "series_id": "1ac239be-5c5c-4a84-8920-6867918e5a8a",
+     "sort_order": 18
+    },
+    {
+     "series_id": "bafc63d2-e62f-497a-9b4c-c58377b831a1",
+     "sort_order": 19
+    },
+    {
+     "series_id": "8602cf4f-0afa-4726-a0f3-d5ac09f64d7d",
+     "sort_order": 20
+    },
+    {
+     "series_id": "029d7341-3f5b-4624-83de-ee9435cdd9c9",
+     "sort_order": 21
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-מבט-רחב-על-ספרים-ונושאים"
+  },
+  {
+   "name": "המשכן וכליו",
+   "topic_id": "66776121-fea5-47a5-a884-ed8b92d415df",
+   "old_n": 25,
+   "emitted": 25,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "130f2fd0-0dbc-5287-88d4-911c5566599f",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "a2b30b0e-cf0c-5a7d-958b-a0bfd5d4ec29",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "07eea260-2b70-51b6-8582-f3121a4eb60f",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "26040b69-5534-4626-8a7a-b47ff2afb157",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "b6b12059-bccd-5e9e-9584-713771ce5f55",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "6665564f-b68d-4965-89fe-f057d4c3b0fa",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "af508171-3632-4855-b26d-5d30d9b29d64",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "67e16dd5-6618-47ea-814d-4a1cffa29041",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "149f607e-80f8-57b2-8079-1eed7a06e30d",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "4a0ccb15-d7ec-571b-8995-7c5e1f6fcfc4",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "09aae77f-0e86-4c43-8d01-4c8580098c24",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "0f9b2b05-7790-431b-8b1a-67d36a03d9ea",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "a78df120-294f-5a24-88c6-af815ccd3412",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "7d333e40-28c3-596e-b3e5-a56db6edf294",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "13beefdd-82b2-5e93-95d9-18445f390dfd",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "11899b43-4173-55f0-bb22-9e2a26108365",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "66e4212f-20c0-4e61-aa26-f68c76756168",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "0a1ca10b-b348-5824-9239-f7a7a6b13400",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "0bf1549e-b57b-4f0c-854e-0889b8a10bd8",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "07b37ab0-4c4d-5b5d-9ea7-9f8b65d9edfe",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "b65c7c2a-a88d-42e5-ba62-d24a342b23bf",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "50ce75ba-3b81-5344-94f7-f33d048d3510",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "795335b4-9ee6-5208-b8d0-8d8a1ca33b02",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "4cb48a62-5ef7-5029-b148-b14da8227b14",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "03134565-6453-404c-9e2b-23c7624f8770",
+     "sort_order": 25
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-המשכן-וכליו"
+  },
+  {
+   "name": "שיעורים לנשים",
+   "topic_id": "e708018f-22a8-4b84-9302-87df5dac5656",
+   "old_n": 25,
+   "emitted": 25,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "ab149b2c-3428-50b1-b1ee-99f3c24d4898",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "59ca1273-84b1-5f64-aa2e-afe48f04573c",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0acda764-a03b-46d1-a231-e1ead695b5ed",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "b20d0af2-e0d8-5ea8-999a-c1a139f0a9fd",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "4295979a-b692-48cb-930f-45765e76c1f5",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "b4c54259-f6ae-5b3a-9338-07d770a73cca",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "7297dbcf-aa58-5245-aee2-cbb6d1d04480",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "0320b554-8595-574f-95f2-2ec7dc2ab834",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "2edcd35b-707a-4102-bdee-e5cb82b9115a",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "372bbbe7-47a7-4247-a5e0-26c76f4360ae",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "71129dc4-2fd1-503d-a576-ea65fc391293",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "15957202-8e9c-5a1f-b6e8-9dc06264479b",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "145a4d1b-b39f-5c3a-9550-bbca3743f63e",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "05ac2dc4-8d08-5c0b-a0bf-9b2c7db58e16",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "0009c76a-1a38-5463-9cf3-fd19d192f702",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "67fd1613-c780-436d-a02f-7691530d3ab2",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "34a96460-c73f-5e96-9809-d701407a9520",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "2693d078-82c7-4b19-ad4a-2536fd14fe99",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "13bbe2e8-28c9-59cb-934b-c82f43bd8264",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "6bc53686-a05b-5473-8373-014fb25879fe",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "4bf4113a-d071-5bf1-9604-e7a5a96b0889",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "4d07c944-2d95-58e1-ac2d-924cdf3e4a28",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "76a12e6c-dbcb-5c56-b85d-fec84016c097",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "2fb0a53d-5505-5447-993e-dc7eff84f8ef",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "111a62a8-2f6c-5998-9ddf-4fde4f343cbc",
+     "sort_order": 25
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שיעורים-לנשים"
+  },
+  {
+   "name": "מפרשי המקרא",
+   "topic_id": "fba8198a-7daf-42b7-85f9-50e88762950a",
+   "old_n": 25,
+   "emitted": 24,
+   "res_rate": 0.96,
+   "lessons": [
+    {
+     "lesson_id": "489ee842-e1f1-5a83-9729-5ea1637feda5",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "a57ca7cc-77c9-492a-a660-6a4dbab9aeb7",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "dfa3fc91-cfbd-4a49-a0bc-4f5b9ceaa9b9",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "89039b5f-a60a-445a-acb5-0e8cf35a881d",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "dfad9a7c-ddc4-45cd-98ee-13f6dd71b1f9",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "e8e8efe0-c6a2-4a98-b1f4-d902f218d8d3",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "b60f7b3c-075b-4567-b8b3-82807e652772",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "da0a9ad4-35f0-419f-b4d9-4ffe80a45b0e",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "bdd92b54-27cb-4d42-9b47-ff23d8328405",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "6951d363-a732-46a1-aabc-69e7a701a9db",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "d75c4cde-ad9d-459e-beb0-bbec648bbddc",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "41351814-1f8d-48ce-b00b-8b47d0fc0215",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "3c0aea4e-9951-4ef6-934d-3228232cac44",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "437df343-6d73-4a4d-8460-ca71a3096c9f",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "8a749e0a-55b9-4919-ac10-9516c304494e",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "074483a2-ed33-4c7c-aad8-0324ac3ab2b4",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "baa25fcd-5c18-400e-ad99-452d6b897a06",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "8cd1689a-1585-4fe5-981d-9c16afad9dbe",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "0e5a0982-5db8-4f4b-9758-9336a77196ea",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "d974c1d3-600c-445c-88b9-d05f98706537",
+     "sort_order": 21
+    },
+    {
+     "lesson_id": "d1d1836c-91a2-4762-851a-87fbb418092d",
+     "sort_order": 22
+    },
+    {
+     "lesson_id": "03259d4c-2cc7-41f4-a13b-06eb893c7e56",
+     "sort_order": 23
+    },
+    {
+     "lesson_id": "4fd15e57-dbda-4e8e-8e19-a477e98a5dc3",
+     "sort_order": 24
+    },
+    {
+     "lesson_id": "97c4d12c-7b54-4153-88f7-3d72286b932c",
+     "sort_order": 25
+    }
+   ],
+   "series": [],
+   "unresolved": [
+    {
+     "title": "לפני ואחרי במשנת הספורנו",
+     "type": "series",
+     "reason": "absent_series"
+    }
+   ],
+   "slug": "theme-מפרשי-המקרא"
+  },
+  {
+   "name": "מתן תורה",
+   "topic_id": "d1d08e3d-657a-4492-85e7-2f5b96b5a858",
+   "old_n": 21,
+   "emitted": 21,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "4aad57e3-de1d-51f9-8000-b0e2bdf1152f",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "be3ab5ea-1492-441b-860e-9bcbcb6232b2",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "b679739d-9a95-58c3-b07e-7c499e48c4e7",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "2204b1ca-664d-4d66-b646-09966719c2ce",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "0891d19b-c795-422e-8ae5-a527adcb70e4",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "0c2bcc00-3b79-50a1-95f9-7ec1c2ddf931",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "208bb0f4-22fc-4b66-9a0f-8d548d057d74",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "1785e042-bd39-4cc8-a02a-01546cea98ea",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "91341d3e-ef53-4280-9494-87ee720ebcb0",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "3f50e1cf-a60d-556d-9c80-762b7a79923a",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "1b0746ae-a841-43e2-aebf-1adad1fbfc15",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "81283fb4-24cb-516c-a3d2-87ae94bc6a93",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "7436b2c5-2a13-43fb-9abc-0e1523c50bbe",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "0cacdb06-bf5f-5bc6-aba9-e9effdd67bbe",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "00a1c488-f52c-5427-acf7-c88ce520d9c9",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "79e454ed-4bfa-50c5-be59-01d06e1213db",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "2276328c-35d0-55c4-bad3-c779c9a21fa2",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "c491a8f2-e6e6-5e0d-bc18-41e30e702851",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "2dc3315a-25b4-5c77-81fa-c424f466317b",
+     "sort_order": 19
+    },
+    {
+     "lesson_id": "206b34f9-dd68-4224-b846-417596784376",
+     "sort_order": 20
+    },
+    {
+     "lesson_id": "43606252-ab21-596a-bfcb-49e1a1953f1e",
+     "sort_order": 21
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מתן-תורה"
+  },
+  {
+   "name": "גלות",
+   "topic_id": "dee7dca0-baeb-44f5-b7eb-dd16f9c883c4",
+   "old_n": 19,
+   "emitted": 19,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7ae63e80-8b59-4257-9d6a-0e3f32e5b2a8",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "31732c40-1528-4de3-a007-421ec7f664fc",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "12fef33e-638a-59e7-b520-95d9039d3af2",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "23b15dfd-dfe4-5285-a26e-379617cf37a3",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "86d16f36-d239-42cc-842b-bfbe70e99ff4",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "50a95529-7c6b-4c6b-a514-82e95eadcf6f",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "40abdd3f-8237-5e5d-85bd-ba4cbb9b31ad",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "e4bf1c96-63b2-4a75-97bd-25010a6acf8c",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "82c8b84f-b439-5ac4-a9e6-a613589688fc",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "089de382-149b-46ec-8653-96d82eb4509f",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "0c57875d-0dd4-553d-9366-3b5d1e8bf786",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "3e3a44e0-b5f2-47c7-bb11-84fde545387d",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "1f1ed7b5-21d1-46c8-9a5f-7ff23d7a074d",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "154412e7-fcee-4820-a19e-5aa732e543c8",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "84eabb7f-1d69-58a4-9b77-2bdd662b501d",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "002cbb8c-d41f-4c3f-a329-abf3f2e399df",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "2eb31d72-edb8-4058-bfe5-4b6988dfb228",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "89faf3c9-7fe2-46dd-b74b-944a69723c35",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "bddc6bcd-8a05-4540-bf64-311a43242785",
+     "sort_order": 19
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-גלות"
+  },
+  {
+   "name": "חורבן בית המקדש",
+   "topic_id": "bcfa9e3f-63a8-41ea-8199-065b88b5f24f",
+   "old_n": 19,
+   "emitted": 19,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1b807ca6-2db2-4f0f-bca7-aa8194523b25",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "0aeb09a2-fc26-518d-aa3b-689976f0e3c9",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "029926cf-a48f-59f6-9f15-8609abc092bf",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "5e0656d1-8484-556a-aa3b-c3824153652e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "cc4aed9b-394a-47ef-b652-73e73ac1312b",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "8810c703-1f18-4806-990a-d7c9a25b426d",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "1b637768-1a1a-5ab5-aa20-a9b2d0fda2d0",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "35f7650f-fa5f-5ddf-a60f-67430a3b9037",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "2a027168-03be-4932-893e-203d65b65442",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "2ebd3479-96da-433a-b678-deefae800ac5",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "21e8229d-70b3-5b82-84e6-416e09d070d1",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "23c09ff6-1d59-579e-b5cc-15d56c51dfb8",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "09c6ba5a-ef4e-4007-8513-595f8170bf6c",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "42aa31e0-6927-420e-b2e3-96cb8c5f786b",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "8deac660-7052-4ee7-852f-1e1f002eade4",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "331a1848-3756-4577-b7ff-3fd30a5fe388",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "f5813d38-a877-4414-ac4e-58b814377596",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "012f16fe-bdc6-48ca-ae5a-d5477f3a5fc7",
+     "sort_order": 18
+    },
+    {
+     "lesson_id": "bc6df06e-8db2-497d-83a5-7f2a8e7b0341",
+     "sort_order": 19
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חורבן-בית-המקדש"
+  },
+  {
+   "name": "שבטים",
+   "topic_id": "d0f08877-0c59-414f-b5c3-29510499f6c4",
+   "old_n": 18,
+   "emitted": 18,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "59ca1273-84b1-5f64-aa2e-afe48f04573c",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "14114f64-a5c7-5c0f-98a0-39ea28dc9d10",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "15957202-8e9c-5a1f-b6e8-9dc06264479b",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "3695f31d-14f0-4236-86d9-e07dd6ab0553",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "eacfeee6-7ed7-50be-bec7-7cb303a408e0",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "2ed8d6cb-8e5c-404a-9893-6e3dc50f01ad",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "7eb128e2-03fc-5e1b-852d-3ab949b8899e",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "7a625255-dfb0-5b98-96c1-2068aa009970",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "4c09e286-1727-444b-9e54-0313030b67a3",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "409d70f1-339e-4826-8636-1ed1594d75e2",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "748affb7-bd69-4b89-a8f9-1625848ede8e",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "dfff7eb1-59c5-42cd-919d-8a1b1a642fe1",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "037e9f89-9c5f-4a47-9e36-34eda334d498",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "8edb229b-2659-4e7e-9985-41d96faf067d",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "d0ae7c2b-0ea8-4817-9d7e-bb9940f38176",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "86d498e7-c288-5fe4-8e07-660d8db9f71e",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "4b6b0353-e225-5da0-abfe-40d3f4e9cad0",
+     "sort_order": 18
+    }
+   ],
+   "series": [
+    {
+     "series_id": "a6ee60b8-bc51-4aa4-96e6-0d74486719d4",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-שבטים"
+  },
+  {
+   "name": "חנוכה",
+   "topic_id": "f5050501-0002-4000-a000-000000000001",
+   "old_n": 18,
+   "emitted": 18,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "ba84d404-de05-486c-85f8-390a41484e83",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "a9450122-4312-4733-a781-8c6ebee54e91",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "7d9c0584-51cf-43fb-8bf2-f9fef382c9d3",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "158a0dcf-623e-4d0f-924a-b685bc85ad0b",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "63de3bfc-275a-4ead-965f-f986f3904543",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "04480b2b-7312-5e37-ba34-aa192b250852",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "cc809f2d-7241-57bd-88f2-d928012d2121",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "c65906f5-e289-45ba-ad3c-f3c072917a4e",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "9b3062e3-2808-52d6-8852-0492de4b4f85",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "4a0ccb15-d7ec-571b-8995-7c5e1f6fcfc4",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "09aae77f-0e86-4c43-8d01-4c8580098c24",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "05efc1e2-b383-4a7a-9452-8fcf5e21a798",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "00451c0f-16c3-4d47-8f56-985a0d9e18c6",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "35e43925-834e-408d-9d4a-6d84c19cd15c",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "7e202375-a259-4502-9df6-ebdea3306300",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "6c36d6f2-3b16-5a51-a763-97d6f039b897",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "1d622b25-a471-571f-96fd-b8e1e4ed877b",
+     "sort_order": 17
+    },
+    {
+     "lesson_id": "196bd37f-3818-42a3-b484-5a7796c47ea9",
+     "sort_order": 18
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "hanukkah"
+  },
+  {
+   "name": "משה רבנו",
+   "topic_id": "555e8133-268f-421d-b899-1a6c180fa16c",
+   "old_n": 17,
+   "emitted": 17,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "145a4d1b-b39f-5c3a-9550-bbca3743f63e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "956f3fc6-a9d3-5548-a9ac-3468fc2246db",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "83a5ccd8-4575-5359-bc1c-0bdd62d6d6d2",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "7a816573-f4c8-4b45-83ee-c580c792ea61",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "1a30ddf8-36af-5df4-939c-1c7de1019571",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "211a19b8-e40e-5c38-bca0-42a563f6a69d",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "65245c0a-da90-4376-bcff-0709868a7dd0",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "91a813c7-8a1b-443e-93d6-d7477fae0f6e",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "204c59cc-81e0-5da3-865d-99858b6501cd",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "02036f54-fa70-44cd-bf16-86fd27b1138a",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "04d00799-3605-40ad-9458-fbe5c92777df",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "b0313665-e545-42ae-b991-c4da9c513d0f",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "6f3ad7e7-58ce-5c11-ab6d-08b6ddc18c47",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "5fc13bf6-f24f-5d95-83fe-7df328488b2d",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "346e3701-92c7-462c-8aca-62b123f3159d",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "cdfccaa5-1109-536f-af32-3b5109fe84ef",
+     "sort_order": 16
+    },
+    {
+     "lesson_id": "dd868153-3510-472d-9d5c-ed034e988630",
+     "sort_order": 17
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-משה-רבנו"
+  },
+  {
+   "name": "ארון הברית",
+   "topic_id": "726d9512-5baf-4e8c-90b2-ec45d1d2a3eb",
+   "old_n": 16,
+   "emitted": 16,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "149f607e-80f8-57b2-8079-1eed7a06e30d",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "37a82566-47ff-44e5-a5aa-15d9f6d645e4",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "9cd066e8-e048-4951-abc5-1f3a4687f723",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "95456cbb-2fcc-44ec-b20c-a8c84bb05198",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "27144805-6743-4bc3-9df9-94adab0b66f8",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "61576ae4-b507-41c7-9254-1adc65a4b73b",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "7e4f5db5-0002-4513-a348-665c84d3adce",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "050406db-4c1d-4341-ae6f-392501394e9e",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "23d1ae22-0e29-4241-a317-6262bf0bcce7",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "96bbb69c-5052-496b-9ffb-ab9bc8196fc5",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "4908fe35-5e82-4d28-9b9c-49269a675727",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "6bb4f30f-6be9-565f-94d6-f7fb135f843e",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "ebd7df5f-1eaf-46eb-87ce-7da9bce7a6fa",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "a38e800a-423a-51c9-a1e8-22a11da8aac8",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "81369c1d-172b-4214-8037-0c71b4179b0e",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "17f6d892-c546-4e05-9426-224e4242e257",
+     "sort_order": 16
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ארון-הברית"
+  },
+  {
+   "name": "שאול המלך",
+   "topic_id": "1b015f32-2581-412f-a955-eb71bb4bbffd",
+   "old_n": 16,
+   "emitted": 16,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "0c09e8af-1e21-462f-940d-7416cc718d0a",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "02fe7790-a51b-41e6-bbdf-be4ee10a9268",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "08d37455-3a6f-5cbf-8f22-ece2885830b0",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "0c861e4c-d1e4-525f-aae2-2140184c3ddd",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "383da13a-dd8a-4206-905f-334e5f4e74ae",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "93b76b8e-2b99-4531-97fa-2e317bf82c21",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "250bc333-d83b-45d2-93e2-5495b2adf4da",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "003bddf4-8b44-4aea-b0b4-213ce5c9c00d",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "02cf1f29-3d16-4c1c-b0d1-ecdf0f5c37e9",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "8ca26f76-4882-42c6-892a-ae5fbdfd8995",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "360d1524-fb2f-45df-8410-76f17f2d40b6",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "6a6a6658-5e0a-4321-8167-aac4c53ded00",
+     "sort_order": 13
+    },
+    {
+     "lesson_id": "2f522afd-ce04-4d3e-b0f9-4829267e7f7b",
+     "sort_order": 14
+    },
+    {
+     "lesson_id": "0fe5ff6b-39c3-4306-92ea-540ae8126fc4",
+     "sort_order": 15
+    },
+    {
+     "lesson_id": "514c51cb-5b60-555a-80ce-385b7adfd132",
+     "sort_order": 16
+    }
+   ],
+   "series": [
+    {
+     "series_id": "0094d88d-e066-412f-b090-d84b3d9e2de7",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-שאול-המלך"
+  },
+  {
+   "name": "יוסף",
+   "topic_id": "4b66b000-2cfe-4d7c-80ac-480da0c17032",
+   "old_n": 13,
+   "emitted": 13,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "5775eb4a-a3c6-58de-b8f1-e3c5d5b8d6ec",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "c1c46f99-3b10-4bd8-b8fd-1fc82ef42723",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "523ab0fc-7515-4d6a-a5b6-f75bfd3b3b72",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "1f05ccdc-0a85-4a51-9afc-820fc53a2d9b",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "0e908f2e-f891-5d9b-96c0-8ea4b92b7595",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "3ea01894-9607-43e5-80e9-d354749596fb",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "195ddecc-cbfb-5384-8a09-0fac0c6059d9",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "6e372d79-7ae3-4bc9-8b6a-70a1a02300aa",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "11536a7f-577a-4d9b-bd56-ce8672092ae6",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "02ff64c6-ffe2-4f3b-a9a9-151ae3170aec",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "1665dd62-3b8d-4390-902f-fe1ed102546e",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "9c54abc8-204f-4061-86ec-42a63d8c9121",
+     "sort_order": 12
+    },
+    {
+     "lesson_id": "0ca60230-aac0-5e7e-a359-2775ecb7a567",
+     "sort_order": 13
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יוסף"
+  },
+  {
+   "name": "צרעת",
+   "topic_id": "421406a6-e3f7-4eae-ae5f-4cf2076df571",
+   "old_n": 12,
+   "emitted": 12,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "51890018-a30a-59fe-b9af-1b3f189b9540",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "3c28560b-f511-53d4-8b31-f3f3f64bc288",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "77d89a42-2b45-5d00-9548-2381bbc4bc33",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "07aa0dd0-d202-5922-92f2-aabd355eda12",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "1a7ad0bb-753b-498f-bb83-2773148f55f0",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "c2c09fe9-2d94-4148-880f-16902e8edbc1",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "3919998d-cb65-47a5-bb96-5ac3a676ffa0",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "30a56fff-239c-58a0-879c-0bd9fc1bcbdb",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "5d2fcc09-a98c-44f8-9e06-d1f808618e00",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "a1957c3b-17e3-589c-a869-1f001fe2b58d",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "49cc3992-77e1-593a-b6e1-51f3e3f73d17",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "025a8712-72b7-5934-8525-b44d78e0a732",
+     "sort_order": 12
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-צרעת"
+  },
+  {
+   "name": "קרבן פסח",
+   "topic_id": "6d364030-5bf1-42db-b387-3749d9c4feda",
+   "old_n": 12,
+   "emitted": 12,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "d41657bd-dbb3-4ea8-af54-e8b8e4543230",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "4cff728d-74f2-5071-9dbe-b4af968e5138",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "26f303c9-a011-5099-afb8-5ec7803289e2",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "15ec765e-2cd2-5305-b44d-f5b00d1e1e28",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "90867a1d-653d-47f0-addc-fb1d6173d49c",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "358604ac-85fd-5475-b11d-5a98b246ee7d",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "301e9915-56dc-4ba8-b089-cc5417f69962",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "73b74008-219b-44c6-9fc4-14e17fac560c",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "4f515eec-2fdf-43aa-97c3-e4b7721c2338",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "3dc2a645-0315-5b7e-acc5-9c689f97f6f0",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "fb07be8c-24ea-4e6f-a73f-28afef62d91e",
+     "sort_order": 11
+    },
+    {
+     "lesson_id": "f738c3a3-106c-4baa-b428-eda1eb61c4c3",
+     "sort_order": 12
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבן-פסח"
+  },
+  {
+   "name": "כריתת ברית",
+   "topic_id": "f2404dfa-29b5-46b9-a5e0-6775f34073ee",
+   "old_n": 11,
+   "emitted": 11,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "506dc08a-dacf-42ba-bf75-c87d7916b344",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "d4811f7c-fe1b-5eae-a686-277687e7dabe",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "ca598992-fe5c-544d-a22c-95ea7bb0a963",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "079584cc-2a67-58dc-ada5-eafe203a99e3",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "2dc3315a-25b4-5c77-81fa-c424f466317b",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "b7b54dc1-2c22-591b-99cb-6dc8f2cbd45e",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "1f85344f-f8e7-4b88-987a-fcb7cb65060a",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "3d23e918-a5e3-57bc-a101-a73b4d728851",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "caad20d9-cf25-4c77-aa7a-c12bcbe5bbd0",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "33612df1-600f-482c-b252-b88f9dbdb162",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "533f9f98-4372-4dee-ae0c-2c27937d08ca",
+     "sort_order": 11
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-כריתת-ברית"
+  },
+  {
+   "name": "קיום ברית",
+   "topic_id": "3ab4ead6-8d55-4958-901b-f7c08231aa28",
+   "old_n": 11,
+   "emitted": 11,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "d4811f7c-fe1b-5eae-a686-277687e7dabe",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "ca598992-fe5c-544d-a22c-95ea7bb0a963",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "079584cc-2a67-58dc-ada5-eafe203a99e3",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "2dc3315a-25b4-5c77-81fa-c424f466317b",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "b7b54dc1-2c22-591b-99cb-6dc8f2cbd45e",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "1f85344f-f8e7-4b88-987a-fcb7cb65060a",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "533f9f98-4372-4dee-ae0c-2c27937d08ca",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "4876f08e-7cb0-4f82-a455-2310ea650daa",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "637e7c40-bfda-470d-8ea9-2b3c800b4f70",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "4c94454e-4153-4ad0-951d-3ba9fd56a6fa",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "3d595ba0-feee-4538-b650-531d569f2209",
+     "sort_order": 11
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קיום-ברית"
+  },
+  {
+   "name": "המנורה",
+   "topic_id": "d582bc8f-bf46-4449-b9ce-e83ab2941d1a",
+   "old_n": 11,
+   "emitted": 11,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "ba84d404-de05-486c-85f8-390a41484e83",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "04480b2b-7312-5e37-ba34-aa192b250852",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "cc809f2d-7241-57bd-88f2-d928012d2121",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "4a0ccb15-d7ec-571b-8995-7c5e1f6fcfc4",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "09aae77f-0e86-4c43-8d01-4c8580098c24",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "05efc1e2-b383-4a7a-9452-8fcf5e21a798",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "00451c0f-16c3-4d47-8f56-985a0d9e18c6",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "35e43925-834e-408d-9d4a-6d84c19cd15c",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "6c36d6f2-3b16-5a51-a763-97d6f039b897",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "1d622b25-a471-571f-96fd-b8e1e4ed877b",
+     "sort_order": 10
+    },
+    {
+     "lesson_id": "196bd37f-3818-42a3-b484-5a7796c47ea9",
+     "sort_order": 11
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-המנורה"
+  },
+  {
+   "name": "נזיר",
+   "topic_id": "f0e1801e-e9c3-41b3-8d94-0786733643c2",
+   "old_n": 10,
+   "emitted": 10,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "56605362-2e4c-455c-b6a2-a1bb19d9e8f9",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "3c772303-b824-5c4a-95f6-7c4378c8d472",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "1eeb81bd-92f3-4e1e-9091-a2c8d290f6a9",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "acc963e3-fc2f-48f3-9931-613e6c443353",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "0653c8f6-7aad-4403-9cb0-5a69231e042e",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "0abdb99c-fae7-59ef-9727-26d8756f9fb5",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "b8c31e99-08a2-4c3f-822d-e133fe08ba9b",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "888b1f26-92dc-4626-b460-1f181dd229ad",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "26fc463c-1162-42ec-b328-42f2c6cec136",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "237782d7-7af5-4d0d-9e11-e37efe074262",
+     "sort_order": 10
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-נזיר"
+  },
+  {
+   "name": "גוג ומגוג",
+   "topic_id": "4b3a7f6d-e404-4577-8874-bd3d2ba895fc",
+   "old_n": 10,
+   "emitted": 10,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "374681eb-8173-4140-8592-d7ef92b94680",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "36ee3f2c-299a-5f75-a0c8-ad6ed4fccd2c",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "3109921d-7c2d-4778-ac72-d623c5af9610",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "4604b069-d8ea-47ab-9bd7-e495de9538c1",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "13e98ce9-bfcc-4777-a7b9-411444d43deb",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "4828dac6-4a34-43e2-af0b-60d5319ca11a",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "d34b843a-7a32-5706-aa57-58ccaca31da3",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "5f4b69be-a9b7-451e-821f-dcd3ec168041",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "02dea258-340d-48e4-b37f-37b636ede7cd",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "994bdb2b-571c-4706-adf5-79ffb7367ab2",
+     "sort_order": 10
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-גוג-ומגוג"
+  },
+  {
+   "name": "מלחמה",
+   "topic_id": "a56d182a-e73d-4f01-b75f-64653f4862be",
+   "old_n": 10,
+   "emitted": 10,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "25ad6cb8-62bf-4e15-9873-78280ba707c9",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "2d64be5d-cca0-4974-82de-a5364daaac12",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "b44ca930-a743-431c-a247-4cd5a0ed21e8",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "77e90199-d314-4da9-9221-6fd7b0c6658e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "3a384164-7a3d-4d14-8dfc-5aa9c08ff27b",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "1f0346b5-d819-4780-9e8c-e96dc17a5cec",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "1561c768-6841-4fcf-8a2a-461d6be95570",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "3080d849-468a-4f7b-96af-00cbcedfa4b1",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "8e790306-3783-4b9b-a90c-253b5b111a1f",
+     "sort_order": 9
+    },
+    {
+     "lesson_id": "2c2f4667-ed5c-419b-9192-0eca14c8920c",
+     "sort_order": 10
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מלחמה"
+  },
+  {
+   "name": "עבדות",
+   "topic_id": "09545fd1-7bfd-4aed-b8ae-11e666dc86e1",
+   "old_n": 9,
+   "emitted": 9,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "03f0ca74-f9d9-4b3e-97c3-c89095452b98",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "45e39e03-edfc-523a-b5f5-6073f6238e84",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "02f117d1-ef00-51db-b132-c36ec76dd068",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "00c84eed-c467-5eeb-9b40-61b73312a325",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "207c56a7-ed98-5b10-a3c3-e3b02e081c7e",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "3bf25e1c-6f74-4690-9642-d7ddcd12deb5",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "d6384c51-fe41-4768-be7c-0a307dda001c",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "96ecb546-8ccd-5a92-9dd5-1eb1830127e4",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "1b30c6fc-9b8b-4ab5-8c27-0defda14bebf",
+     "sort_order": 9
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עבדות"
+  },
+  {
+   "name": "ישראל והעמים",
+   "topic_id": "47948720-87de-4edd-b949-7a33cfeafe84",
+   "old_n": 9,
+   "emitted": 9,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "348b4a29-a5b5-573f-bbee-f22a71d604df",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "283abf73-9171-53f5-ad59-28ce52028a4b",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "3c13dd94-02c7-4b53-9656-b55d899478d3",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "07572a58-7c60-4b41-8e6f-444edd609127",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "fdf7f0be-c3ba-4d21-bfad-9cb1c4ee44d3",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "c52ddf1e-72d6-4b68-84cd-3d8f0c45b7f4",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "7c140821-7983-4083-8254-4292bb432a84",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "79432aa9-e91b-4699-8c4c-026d7b647d0a",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "a252e5df-1224-4b50-84d7-9aab27c4876e",
+     "sort_order": 9
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ישראל-והעמים"
+  },
+  {
+   "name": "כיבוש הארץ",
+   "topic_id": "01fa31aa-de58-44e0-b248-2866aea02157",
+   "old_n": 9,
+   "emitted": 9,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1642aeaf-c0ea-4e6c-8f90-8b0903010f5e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "07823d36-53fe-40a0-b9a4-23e537bc38a4",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0e3f1d6e-b40c-49c4-8203-840b84843389",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "865ba42f-6387-4374-ba73-e383dc13acf7",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "660e030e-2ce9-471d-98cc-649caba7cab7",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "35d5d035-800b-53f8-ac38-d0cbedb35918",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "63d2d25d-9e51-4c01-a69a-4befcaa48bd3",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "51d07338-5368-56aa-b979-fec4d44797f9",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "173ccbce-50c7-420b-a2d5-f279e6ffc5b8",
+     "sort_order": 9
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-כיבוש-הארץ"
+  },
+  {
+   "name": "יציאת מצרים",
+   "topic_id": "b1221c0b-bafa-41c9-b32b-fa167d3ad48c",
+   "old_n": 9,
+   "emitted": 9,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "24fa7dd1-f618-41eb-80a1-0e302ca9264d",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "8bd04655-c2d5-4101-bd27-c70159ce51b6",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "26f303c9-a011-5099-afb8-5ec7803289e2",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "0c4d0903-ef5e-57b1-9e63-990d7029c8c2",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "1785e042-bd39-4cc8-a02a-01546cea98ea",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "4bce6a6e-2fec-4eec-904d-a28e51efee0a",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "961fd956-13af-5fdb-8e3a-676e2806530f",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "1a63f243-915d-53b0-85f8-cd506418cf76",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "33e283b1-d3c4-598d-928d-8f60d0b210f2",
+     "sort_order": 9
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יציאת-מצרים"
+  },
+  {
+   "name": "השגחת ה'",
+   "topic_id": "b0fc200a-4adf-4432-8f31-f6212e3e5d7a",
+   "old_n": 9,
+   "emitted": 9,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "51630c54-bb20-5640-a76a-320928c611e3",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "2f3570dc-17a1-56a7-90ce-4f4910ebecea",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "1665dd62-3b8d-4390-902f-fe1ed102546e",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "005eec8c-e958-5f2a-81d5-bc74f61f3dfc",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "0be61224-7125-5599-a907-98d973f06080",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "7358394f-f3e9-5dcc-9dee-5c1c4980de1b",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "1b0746ae-a841-43e2-aebf-1adad1fbfc15",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "81283fb4-24cb-516c-a3d2-87ae94bc6a93",
+     "sort_order": 8
+    },
+    {
+     "lesson_id": "079df86b-df4c-4ad2-ab70-d14e6ac25f7d",
+     "sort_order": 9
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-השגחת-ה"
+  },
+  {
+   "name": "אליהו הנביא",
+   "topic_id": "4975bd6b-6ed5-4b77-a2d0-ebcd464432fa",
+   "old_n": 8,
+   "emitted": 8,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "3562c353-aa7a-4df5-b0cf-5576107c9b82",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "38d80f68-b1c2-4bf8-9ce8-a7b2f7ad67f9",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "345065ce-1df4-42df-be2d-10da1225822b",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "3b62f495-2951-494b-84db-7a649304c3ba",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "162e17c5-fa07-44c9-9a31-4b0e014e139a",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "49d32500-61e8-444f-9a1a-a00ee3b075bf",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "c6e0a772-8dc0-40ea-aff2-b66c7ee52d66",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "ef21b89e-2349-465d-b793-e46591a5fac6",
+     "sort_order": 8
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-אליהו-הנביא"
+  },
+  {
+   "name": "שבת",
+   "topic_id": "63387da1-d867-4ea4-a8e9-4ad74efb5597",
+   "old_n": 8,
+   "emitted": 8,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "b6b12059-bccd-5e9e-9584-713771ce5f55",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "722a86d9-1e64-5b26-813d-0de1bb1e53ad",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "3518df00-a241-52c9-9375-dbfbba079ab5",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "167a5119-8a1c-4b4c-8626-c942fad6ba9d",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "533f9f98-4372-4dee-ae0c-2c27937d08ca",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "293d2ca0-f7cc-4990-88db-097d440284b2",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "06ba6e04-a567-4443-afa5-3c9c58c972b5",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "652bd2af-a50c-47d4-ab43-463918f1e847",
+     "sort_order": 8
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שבת"
+  },
+  {
+   "name": "שמות ה'",
+   "topic_id": "25a5a8a2-2187-4518-8100-1ee025402e3b",
+   "old_n": 8,
+   "emitted": 8,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "21f03e1f-6f04-55c2-b8e8-05df7b4b6e66",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "108d502d-f194-4beb-a28b-58a08c360dca",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "730fada8-decc-4504-8a61-badf98fed51b",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "748d4603-472f-5226-8e91-56a78c03b54e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "32a54c08-ad14-5ec6-8f0a-4bc5b1840b38",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "2826c241-59cc-56d3-91da-61ec51f7588e",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "6d107d65-6cf9-45d1-a131-e011ea0b907f",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "10666d06-c3d0-4bd0-bb79-d147494dbb23",
+     "sort_order": 8
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שמות-ה"
+  },
+  {
+   "name": "תשובה",
+   "topic_id": "1c4b4a22-adff-437e-84e0-472e76bbf0b8",
+   "old_n": 8,
+   "emitted": 8,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "436be2b2-0f19-4b12-bc6d-be059f122cbf",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "372bbbe7-47a7-4247-a5e0-26c76f4360ae",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "468f9d91-1316-5dca-b851-28c703342bb8",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "28bd2c3b-f660-40f0-a4ac-7877532af2c5",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "b2020201-0001-4000-8000-000000000008",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "a34c3a9a-aa76-4297-9297-ec76d15158cb",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "84ad7056-e164-563d-9fed-84f24ffbf6fb",
+     "sort_order": 7
+    },
+    {
+     "lesson_id": "172eb7c2-e2ca-41a3-aa74-8317ace2753f",
+     "sort_order": 8
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-תשובה"
+  },
+  {
+   "name": "חטא המרגלים",
+   "topic_id": "d4d9bae8-5371-4352-aa7e-96c4adf2b7ba",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "636e6495-6b64-47a3-8cd6-d3a6a635229e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "cf9bb51b-b0e9-4fd4-b198-a4f8f17ac032",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "82f9b99a-3571-41cc-b668-d1983a5bd815",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "5399aceb-e9dc-4ea0-86a8-008d59f2a8e9",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "28689af6-7e82-4659-a9ca-011e0f94919a",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "4b1fd2ea-efb9-4c15-ba1e-b682b8a57acf",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "0cb60278-484d-5a8e-ab9d-d10a575b6bd7",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חטא-המרגלים"
+  },
+  {
+   "name": "בית המקדש השלישי",
+   "topic_id": "ad056506-c07d-48ee-beb9-0b8f3bbcf34a",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "da83a255-3f79-4d51-9d00-b1070e2d56e9",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "0801bc46-e040-4f68-ab8b-436b230b5c88",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "547087f3-31ec-4ed2-9075-14efc6345d8a",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "3c2a84d6-a490-5263-8cf8-17f5a8086ac0",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "b01653e6-ac76-4fbd-8b1b-77acb77fefed",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "12735f04-a1bd-4fe6-86db-8239c294cc56",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "56051c01-ca62-48f7-965e-9fb4b713af53",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-בית-המקדש-השלישי"
+  },
+  {
+   "name": "נביאי השקר",
+   "topic_id": "35c4b4ea-66a2-4d1b-aabb-70566f80c269",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1eeedab3-ce50-4766-b137-cfa46f4b31cf",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "bb654040-2d2a-5869-acd6-c07b66e91313",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "d46e9099-1e66-5afb-bdbf-a1c5df9e65c4",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "dfa52b6e-b8e9-4c10-aca3-242194b46a19",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "30788f1a-a1ae-468a-8aa1-16894a7ccd04",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "64f142e0-40f1-4393-869a-0d3ce5190987",
+     "sort_order": 7
+    }
+   ],
+   "series": [
+    {
+     "series_id": "3958b461-17d0-4865-9df3-711ddadbcde1",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-נביאי-השקר"
+  },
+  {
+   "name": "משכן שילה",
+   "topic_id": "81822c01-2b56-4d02-af28-203d6e18ada1",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "019b977f-231b-435b-8548-d031cb8423e4",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "082c0a37-c481-4b35-ae3c-0f9b859fd3cb",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "627e7965-2180-47c7-971b-90bbbb84d2a5",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "1276971e-0327-4529-8695-0c2ee623e938",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "3af6ec09-868b-4fd1-a4b7-3033aa9d53cf",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "0da54261-6ba4-408e-bad6-9ffcb33da153",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "b7105f0c-1149-4b60-860c-5be09a128a3e",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-משכן-שילה"
+  },
+  {
+   "name": "שלמה המלך",
+   "topic_id": "cffdf87b-9502-4475-91ec-75a3cf1a6437",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "510e309a-d4d8-5df7-9527-503c0f157529",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0acf839b-e84d-443b-a1e6-ed5ff2be2ff2",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "5b0484a6-ed68-4368-842c-467da5ed9a31",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "82f8093a-280b-4fa4-b09a-1fb2e367f3ec",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "00bae5bf-f4bb-47d2-9ed8-8a96bc113930",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "12989123-cbad-4119-bdae-149efec6cac8",
+     "sort_order": 7
+    }
+   ],
+   "series": [
+    {
+     "series_id": "6304239a-cca5-4ee7-a5a1-4447f03482e5",
+     "sort_order": 1
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-שלמה-המלך"
+  },
+  {
+   "name": "מצרים",
+   "topic_id": "04894baf-a54c-4d25-b1ad-558967a5abac",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "3dcd4825-0994-426b-a961-bd06ee6d2d7c",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "26f303c9-a011-5099-afb8-5ec7803289e2",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "4bce6a6e-2fec-4eec-904d-a28e51efee0a",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "33eb630f-eb08-4f03-ae43-362af695583a",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "e1010001-0001-4000-8000-000000000274",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "719b898f-4165-49dc-8018-71afad798248",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "0de9b7f0-77ab-442b-8dbd-ad7b23932eaa",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מצרים"
+  },
+  {
+   "name": "עמי כנען",
+   "topic_id": "29a532e0-b5b2-4c7e-9d42-79127a322380",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "05c93ef5-a7bc-5e93-9a7f-25cb176e50ee",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "638df674-7223-4795-9eee-18dbff395fb0",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "9c546d08-014f-4b89-b10a-ca067ef50d88",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "5d74a883-a261-49fa-953a-c0e9ae88dbd3",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "49d3f679-a8b6-5679-8955-c74639ab293c",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "5c8556fe-7787-5924-9be5-032ac88a86cf",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "757fdd69-ebe4-5c00-823c-cde117947ab0",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עמי-כנען"
+  },
+  {
+   "name": "אהבת ה'",
+   "topic_id": "c8fe56f6-ba1d-4875-9152-003ffa86d569",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7ef98398-6b4d-45dc-a36b-b2a7e87ab2e6",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "2b194abf-2750-56db-8cab-517ea1345c41",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "39fd84b1-edf8-4f01-ba86-9605d9840105",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "378e4331-4e30-498f-ae76-d7b1e3b6c2d4",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "123e52bd-cc88-4c4f-bd1b-c92721a8345a",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "5c785aee-fe76-5947-b7a4-247e48381890",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "036ee436-0a90-487a-ab9e-24b46b18e02a",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-אהבת-ה"
+  },
+  {
+   "name": "יהושפט",
+   "topic_id": "061a4c9f-e7d0-4f21-8218-b1b44fdf05d5",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "957576a6-d471-47bf-85af-ca8ccc3f3c9c",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "69b4e1fa-1632-421a-8b08-9b513b4ba466",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0de6d70e-9baa-4c6f-9bfb-0ee721917533",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "9388d8d8-373f-48b0-af99-d9e2106f869f",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "ec3a6aaf-b310-4fce-9123-9f0dab6763ad",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "c35a3ff6-1c61-4b95-86e3-4481462d63d1",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "d2e93f11-50ec-4717-91fc-f5d4fb043fe0",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יהושפט"
+  },
+  {
+   "name": "חזקיהו",
+   "topic_id": "df3a90b5-ec72-4205-b637-e490eb20e0fc",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7ca3d786-bbe5-44a3-b3b6-9ea68f57e802",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "7ddd3e96-b0b5-4c43-bae7-fa2c2de1e1e6",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "903d350f-6ef5-4716-990e-18790968a877",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "fb07be8c-24ea-4e6f-a73f-28afef62d91e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "79206fb5-1925-43e5-8e7d-cff04746fe7b",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "d10426e7-6265-4cb1-a8db-eeb2aebb2832",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "778e0dab-3e8d-406f-8259-44bb46779f76",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חזקיהו"
+  },
+  {
+   "name": "הבמות",
+   "topic_id": "2a231853-8deb-418e-a442-5b3f65f7b6e8",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "a9b05fc6-5822-5c24-970e-9bc590501697",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "061b1832-6f64-48a4-a72e-f533dcb188ee",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "2dc0e02e-7376-4f16-b284-30b36eb54aa2",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "54a9d929-be33-4b40-9f87-f07f213abb5e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "8e852863-61b2-5e98-a387-093c714074e1",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "1f5ee68e-fb7c-4ccc-8e2b-a5e84b125864",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "79206fb5-1925-43e5-8e7d-cff04746fe7b",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-הבמות"
+  },
+  {
+   "name": "פלשתים",
+   "topic_id": "ba5f05b6-c4f8-4234-97bd-f7bac2146354",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "0c5d097c-4e65-5a25-9fa7-8e9e5339f5e3",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "46ac1948-9130-5b1e-b178-73e0241ee548",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "cf2a48f3-81bb-5cb1-b834-c599410e76a3",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "171ac4a5-63fd-4f90-a157-ba607bda6c1a",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "b4a994c6-6341-4cdd-bb52-8f7a284ddc07",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "5d447721-ed1d-4d6f-b80d-d8afaaec6bdf",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "90eff77c-b959-4436-891f-319e23b580b9",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-פלשתים"
+  },
+  {
+   "name": "ברית מילה",
+   "topic_id": "08514444-a7e9-441e-8126-f6926c3dd356",
+   "old_n": 7,
+   "emitted": 7,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "ca598992-fe5c-544d-a22c-95ea7bb0a963",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "27f8f79e-9918-46f7-940e-69c65467157b",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "7c0ae70c-e31c-415a-be4f-2b9aa1211a14",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "72f206bb-403f-56c5-a926-7283f55ed98d",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "37406f6d-3d79-5030-aac5-9fc47ca13bba",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "90867a1d-653d-47f0-addc-fb1d6173d49c",
+     "sort_order": 6
+    },
+    {
+     "lesson_id": "0a5b9190-046d-4cd9-8a40-5411ebc5da36",
+     "sort_order": 7
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ברית-מילה"
+  },
+  {
+   "name": "אלישע הנביא",
+   "topic_id": "ec22c3c0-d774-4784-becc-ebe9c3cca386",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "2f8b8ed0-fc52-42e6-87b1-0da97c9fac5e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "134c364c-2752-5cd7-8aed-3683c56d5fa5",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0108f656-8998-413e-95d9-5baf59f1bcaa",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "67e581c1-65f7-4089-814b-09bf5021fbae",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "3a0bb81d-8d7d-4075-944a-3c1f7deca048",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "198b0457-9914-40ce-ac72-53eb26d8616f",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-אלישע-הנביא"
+  },
+  {
+   "name": "יהושע בן נון",
+   "topic_id": "5362493f-f3c8-492d-883e-826c9a9ac1a1",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "56e3a9ac-a2f8-4f0b-b103-3b88f882e4e9",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "3d23e918-a5e3-57bc-a101-a73b4d728851",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "434645a3-f2ea-4890-a8ab-ff02ec4d83c0",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "037e9f89-9c5f-4a47-9e36-34eda334d498",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "c0e99cb8-b68a-4999-bd6e-d03f9cb0b741",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "caad20d9-cf25-4c77-aa7a-c12bcbe5bbd0",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יהושע-בן-נון"
+  },
+  {
+   "name": "עמלק",
+   "topic_id": "10ff930e-a151-4f5a-a967-f35425151d18",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "a7d0f52a-2273-42fb-830e-a4083118966e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "6e5da81b-eb28-4f90-8cd5-d816f134df2f",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "579272a7-dfe9-41c4-9728-81fef5b5a6ac",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "60079270-c876-4378-ae1d-6374d5ed989c",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "1a43e553-9ca3-5d94-a80f-1a253a8fe217",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "02cf1f29-3d16-4c1c-b0d1-ecdf0f5c37e9",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עמלק"
+  },
+  {
+   "name": "חטא העגל",
+   "topic_id": "7f689042-6d4b-42e8-abfc-46f92c319508",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "5bea9c1f-6bfe-504a-9889-80c36b7f2b35",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "67f44fd7-2992-492f-92c7-67b8fb8dc9ca",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "1a30ddf8-36af-5df4-939c-1c7de1019571",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "af56c916-dfc0-4e5a-931d-9fc4c2afef00",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "1723e100-e632-40cc-a091-19bd5cfddae7",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "351c36da-7965-4223-8254-bd542bdf4f6a",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חטא-העגל"
+  },
+  {
+   "name": "הקטורת",
+   "topic_id": "f0fd36be-d5f5-4b28-8491-74b56bec6a0b",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "13beefdd-82b2-5e93-95d9-18445f390dfd",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "55f481d2-d60a-58d2-88f4-7269b0b34549",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "4cb48a62-5ef7-5029-b148-b14da8227b14",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "36d089bc-0bf4-594c-a65d-ae85cff38b4e",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "04b39334-e05e-48cd-ae38-9408d43636da",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "99a83cff-252b-4465-ad45-9edcd06e7a1d",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-הקטורת"
+  },
+  {
+   "name": "נשים בתנ\"ך",
+   "topic_id": "8c836bf6-29fd-4e3c-995c-5cd5549dbc9c",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "11fae10f-7d05-59b0-9377-33b238260b30",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "666dcff0-ab34-4fe9-bae0-6c8cc8502db2",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "61683e9f-a71d-44a9-b7de-eb704e81c51f",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "879dd394-255a-4da7-ae72-4e9d19e45645",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "3695f31d-14f0-4236-86d9-e07dd6ab0553",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "2ed8d6cb-8e5c-404a-9893-6e3dc50f01ad",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-נשים-בתנ-ך"
+  },
+  {
+   "name": "שמחה",
+   "topic_id": "167f01f5-534a-45a7-b448-6dffc0d59fcb",
+   "old_n": 6,
+   "emitted": 6,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7de44b3b-e8bb-5cc1-8c3c-dc58d9181804",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "566a2f38-ba66-5199-b5f6-e35be111550c",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "556e9bb5-91a6-5254-8724-bb0c835c474e",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "dd026d96-e50a-4d9d-a317-44e1a8bfe30d",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "4601948d-ab14-4928-8f2f-aaa0a9b09cf6",
+     "sort_order": 5
+    },
+    {
+     "lesson_id": "fb07be8c-24ea-4e6f-a73f-28afef62d91e",
+     "sort_order": 6
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שמחה"
+  },
+  {
+   "name": "שמיטה",
+   "topic_id": "0542027a-c542-401b-93de-24af019ed981",
+   "old_n": 5,
+   "emitted": 5,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "06528d3d-88b0-57dc-bf52-346c3428bf9b",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "92449337-015a-4177-92eb-f805478c937e",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "23b15dfd-dfe4-5285-a26e-379617cf37a3",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "29ced2f8-a82e-5694-9542-806d3bbe30b8",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "dd868153-3510-472d-9d5c-ed034e988630",
+     "sort_order": 5
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שמיטה"
+  },
+  {
+   "name": "הכניסה לארץ",
+   "topic_id": "17e5f023-d5aa-4b14-864a-02ed2974073e",
+   "old_n": 5,
+   "emitted": 5,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1695aa3a-1793-4b76-9be9-5b21f467e8f4",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "3e109661-9a4f-4c79-95c5-323684c39be7",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0125ac64-160d-4d51-8f2a-6fe7c94e7e15",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "b2a3c437-97df-4f8f-bbcb-721857c84788",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "49d3f679-a8b6-5679-8955-c74639ab293c",
+     "sort_order": 5
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-הכניסה-לארץ"
+  },
+  {
+   "name": "האבות",
+   "topic_id": "66085fa8-4355-4bd2-94b4-db1899d365a0",
+   "old_n": 5,
+   "emitted": 5,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "88b5a5de-4ced-5a01-aa7c-97f8c550dc24",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "57b31c04-1614-4a48-973f-ffc4c6ad3c15",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "185c7374-4e6e-5429-9bac-d58a1cb71c3e",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "1bbdb38e-289d-5196-83a4-d19377014bb7",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "375c4596-608d-529e-8a34-39531366f43b",
+     "sort_order": 5
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-האבות"
+  },
+  {
+   "name": "התשובה",
+   "topic_id": "b65c04fe-8b7d-4701-9e1f-f0b8d04ab64b",
+   "old_n": 5,
+   "emitted": 5,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "468f9d91-1316-5dca-b851-28c703342bb8",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "28bd2c3b-f660-40f0-a4ac-7877532af2c5",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "b2020201-0001-4000-8000-000000000008",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "207ec927-a443-4c6a-9240-f18052c004a4",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "274b374f-60b3-4013-8db0-c1e884d77dd2",
+     "sort_order": 5
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-התשובה"
+  },
+  {
+   "name": "יבום",
+   "topic_id": "4967bf41-d734-44ea-8651-e65d1618c4c8",
+   "old_n": 5,
+   "emitted": 5,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "51630c54-bb20-5640-a76a-320928c611e3",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "2f3570dc-17a1-56a7-90ce-4f4910ebecea",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "005eec8c-e958-5f2a-81d5-bc74f61f3dfc",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "0be61224-7125-5599-a907-98d973f06080",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "7358394f-f3e9-5dcc-9dee-5c1c4980de1b",
+     "sort_order": 5
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יבום"
+  },
+  {
+   "name": "תפילה",
+   "topic_id": "8cd49e77-112f-423c-b625-65e26b7bcacc",
+   "old_n": 5,
+   "emitted": 5,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "348b4a29-a5b5-573f-bbee-f22a71d604df",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "ac16daef-2741-47a5-918a-8cafbafe463d",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "67a09d1c-ede8-4a15-95ef-3e09d2305298",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "57c11550-7af2-430c-a73a-6aa27fd7e3f2",
+     "sort_order": 4
+    },
+    {
+     "lesson_id": "dd026d96-e50a-4d9d-a317-44e1a8bfe30d",
+     "sort_order": 5
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-תפילה"
+  },
+  {
+   "name": "ישעיהו",
+   "topic_id": "e06e2901-c18e-4476-a448-faaedb92bc30",
+   "old_n": 4,
+   "emitted": 4,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "35f7650f-fa5f-5ddf-a60f-67430a3b9037",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "2a027168-03be-4932-893e-203d65b65442",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "68321384-53a1-5c5e-837b-58d26272e21c",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "4e60c124-6e23-5fa1-adad-dd59d2860ab8",
+     "sort_order": 4
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ישעיהו"
+  },
+  {
+   "name": "מרגלים",
+   "topic_id": "ce2b2831-c566-4077-be2b-8bb411b9b0d0",
+   "old_n": 4,
+   "emitted": 4,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "2693d078-82c7-4b19-ad4a-2536fd14fe99",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "0ca60230-aac0-5e7e-a359-2775ecb7a567",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "e31118db-5f5f-4dce-a5f2-7f96dc0e4d63",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "1695aa3a-1793-4b76-9be9-5b21f467e8f4",
+     "sort_order": 4
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מרגלים"
+  },
+  {
+   "name": "הנביא והמלך",
+   "topic_id": "f94c8d45-62c1-4728-8bd4-66d074ee026c",
+   "old_n": 4,
+   "emitted": 4,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "84ed45fd-ff76-4cb0-9aa8-c6e276b8c21c",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "096d3c50-8f60-413c-ae5a-5971d83d1534",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "cf1bd860-6bca-494c-916a-6200a41d7091",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "2687f255-435a-46ea-8b48-486267cb9409",
+     "sort_order": 4
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-הנביא-והמלך"
+  },
+  {
+   "name": "יום כיפור",
+   "topic_id": "b13e3bf6-7592-4e93-b346-014598c27d50",
+   "old_n": 4,
+   "emitted": 4,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "39aeb712-e2a1-54fe-8a40-7d138525c933",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "1312fc4a-4b58-4b2b-bdbc-3b946c1e4492",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "4d5c6eb9-69f6-5a30-84a4-29d6e2b4b532",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "1aba1356-90a7-4707-8e74-b2b9852e84ed",
+     "sort_order": 4
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יום-כיפור"
+  },
+  {
+   "name": "מאמרים קצרים",
+   "topic_id": "37d3754a-a3df-42d0-8235-7ebfd3ca521f",
+   "old_n": 4,
+   "emitted": 4,
+   "res_rate": 1.0,
+   "lessons": [],
+   "series": [
+    {
+     "series_id": "7efc5863-476b-4719-a7b1-39ca33baa10b",
+     "sort_order": 1
+    },
+    {
+     "series_id": "ad879685-aa01-4eaf-bd64-1916eaa21881",
+     "sort_order": 2
+    },
+    {
+     "series_id": "a6b5adf5-07da-4bfd-bff7-8c6f5a7b5e01",
+     "sort_order": 3
+    },
+    {
+     "series_id": "b279649f-023e-4aab-8ab3-9d6892407ecb",
+     "sort_order": 4
+    }
+   ],
+   "unresolved": [],
+   "slug": "theme-מאמרים-קצרים"
+  },
+  {
+   "name": "קרבן שלמים",
+   "topic_id": "a4c15894-c6a1-4d2b-b7e0-e583b4c4dd12",
+   "old_n": 4,
+   "emitted": 4,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "434c4b5c-e807-45a1-ae3e-b40a00afebfb",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "6dc12392-14c8-4d7c-849e-22295c088815",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "18f243ed-b2ea-519b-9415-b601146204ad",
+     "sort_order": 3
+    },
+    {
+     "lesson_id": "5f254ecd-c68e-53ce-ada2-a8f5836674d9",
+     "sort_order": 4
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבן-שלמים"
+  },
+  {
+   "name": "יובל",
+   "topic_id": "80ee605a-c019-4503-a825-d66e8842810e",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "06528d3d-88b0-57dc-bf52-346c3428bf9b",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "753fb6dc-db4a-5760-9a0c-d22c59dda288",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "515ff4dc-372b-455f-af6a-a7d26eb64b66",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יובל"
+  },
+  {
+   "name": "ירמיהו",
+   "topic_id": "9f52fca3-a7c2-40b1-b576-47328cec54cc",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "029926cf-a48f-59f6-9f15-8609abc092bf",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "bb654040-2d2a-5869-acd6-c07b66e91313",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "0dafd30a-b524-4ee2-83fa-ea611e6a3362",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ירמיהו"
+  },
+  {
+   "name": "יג מידות הרחמים",
+   "topic_id": "de8b321f-e354-4b4a-b4af-c15ef68865b7",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "d30e36ed-9c20-4057-bce3-3086106ad77b",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "cb8dfb8a-a744-4a00-9274-333627bebd6e",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "8a68b111-1629-4efc-96a5-1e06e2c77294",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יג-מידות-הרחמים"
+  },
+  {
+   "name": "נסים",
+   "topic_id": "a9bde238-d93d-4119-957b-36164eeeacb2",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "018328d6-5b79-45bc-8744-2c79b3efad45",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "19e255dc-fe6f-48bf-bcd9-e5d6546ac1e3",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "95456cbb-2fcc-44ec-b20c-a8c84bb05198",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-נסים"
+  },
+  {
+   "name": "צומות",
+   "topic_id": "e85dd1a5-f899-4be5-bdfd-b1c4d65d1c33",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "331a1848-3756-4577-b7ff-3fd30a5fe388",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "8049deaf-3ec5-4ddf-8f36-4d1f267ffabc",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "2d9db2a4-c0be-46de-b711-298f815bc4f2",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-צומות"
+  },
+  {
+   "name": "יהודה",
+   "topic_id": "6425f994-b58b-4c8a-96fe-3baba83fc4f2",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "242929e1-cf61-433a-8b67-d33838de257b",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "640f9376-7359-46dd-bc2f-ce3add520ab8",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "1665dd62-3b8d-4390-902f-fe1ed102546e",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יהודה"
+  },
+  {
+   "name": "דניאל",
+   "topic_id": "138d2cbd-e772-4639-ac96-4e656d21dc93",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "6301bcd4-a09d-51e7-94e8-9cccd511d986",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "73d285f9-0e43-4ec8-8688-d4001468326b",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "06ed9f5c-58f1-5a0c-9607-2557dee76823",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-דניאל"
+  },
+  {
+   "name": "יתרו והקיני",
+   "topic_id": "db17c8bc-3801-4223-843c-fec88e26ca74",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "6e5da81b-eb28-4f90-8cd5-d816f134df2f",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "1814d1af-e432-50ce-9045-718c4b7379dd",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "4e57dc0d-e7f8-43ed-bc70-a9945070d5ec",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יתרו-והקיני"
+  },
+  {
+   "name": "נבואות הקץ",
+   "topic_id": "b22f843b-18ee-44c7-b6e6-d7528f1d535a",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "9e125468-a885-52a3-b203-f0c8f410cc2c",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "a9d88fbe-d237-5f14-921a-29506acc4b68",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "869cd378-5396-5fa6-8ec4-cd3ca93757fc",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-נבואות-הקץ"
+  },
+  {
+   "name": "יאשיהו",
+   "topic_id": "353e8877-e1bd-4b56-9c46-86019fc78cda",
+   "old_n": 3,
+   "emitted": 3,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7ca3d786-bbe5-44a3-b3b6-9ea68f57e802",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "172eb7c2-e2ca-41a3-aa74-8317ace2753f",
+     "sort_order": 2
+    },
+    {
+     "lesson_id": "f738c3a3-106c-4baa-b428-eda1eb61c4c3",
+     "sort_order": 3
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יאשיהו"
+  },
+  {
+   "name": "ניסים",
+   "topic_id": "b5ddc44d-b351-4ddb-b445-e235ba5c097c",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "296fee88-783e-5509-ae42-68e8adfa086c",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "2f8b8ed0-fc52-42e6-87b1-0da97c9fac5e",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ניסים"
+  },
+  {
+   "name": "ערי המקלט",
+   "topic_id": "f9a7e705-13ef-4216-b3dc-616e3f179424",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "392f1326-9438-4db4-9de1-f2c74f3d9307",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "40218f27-943a-47eb-a78b-86717b2d1544",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ערי-המקלט"
+  },
+  {
+   "name": "חלום",
+   "topic_id": "c7d895a3-32e7-4e35-8173-92dbd27e5219",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "2e388af8-ea4f-510e-8433-913ce08f30bd",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "8a9c987d-360c-402f-9a32-1dc2b72f5148",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חלום"
+  },
+  {
+   "name": "שכר ועונש",
+   "topic_id": "d139dbe5-edd7-4139-9960-064360da7b9d",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "906842e7-70f4-449d-b1d7-a6c5770f6e46",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "4d4d9a64-e03d-42b0-9523-34c692edf5fa",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שכר-ועונש"
+  },
+  {
+   "name": "קרבן תמיד",
+   "topic_id": "db342ef9-d31b-473d-8f01-90e96d9d10c7",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "71e49f8b-8639-4cf0-b644-298bef56fefe",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "cc4aed9b-394a-47ef-b652-73e73ac1312b",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבן-תמיד"
+  },
+  {
+   "name": "ראש השנה",
+   "topic_id": "e3030301-0002-4000-8000-000000000001",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "545ae8cd-a3ea-564a-844b-674dac96503e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "fdb98ac9-c3c6-47ad-bde4-7643e4d6470a",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "rosh-hashana"
+  },
+  {
+   "name": "ספירת העומר",
+   "topic_id": "e6060601-0002-4000-8000-000000000001",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "40661619-a18b-53e7-a46c-6c8ca96a05ce",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "02e43839-116d-553e-8de4-f2b9c9aa36be",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "sefirat-haomer"
+  },
+  {
+   "name": "חגים",
+   "topic_id": "b129b4bc-ff76-4821-90b5-7d926e5a2130",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "4287d988-6c84-488c-af70-e42659c9eba0",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "ab9c304e-3793-4f1a-95bd-e2bea6c8c2e2",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חגים"
+  },
+  {
+   "name": "ביטחון ב-ד'",
+   "topic_id": "655ed7dd-dd71-415d-af5b-d7a5139f4024",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "553029e6-61e7-4764-a5e0-c698d5d1ee6e",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "079df86b-df4c-4ad2-ab70-d14e6ac25f7d",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ביטחון-ב-ד"
+  },
+  {
+   "name": "בכורות",
+   "topic_id": "8d2a70eb-cde7-4b52-835e-7add407c5291",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1074f6cb-a56f-546c-aa4b-509860215b95",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "7b8d0f11-de82-5b44-bb69-3cb726ad3775",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-בכורות"
+  },
+  {
+   "name": "יום העצמאות",
+   "topic_id": "e6060601-0003-4000-8000-000000000001",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "03187363-a17a-5bb2-b96c-66741973d065",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "3dedca54-cc02-49f0-8c5f-ca31cf37e4a4",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "yom-haatzmaut"
+  },
+  {
+   "name": "שבט לוי",
+   "topic_id": "17013688-0311-41f3-8ea6-90e0c626e696",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "3695f31d-14f0-4236-86d9-e07dd6ab0553",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "631746dc-8357-44a7-bf14-6bb678be4a0e",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-שבט-לוי"
+  },
+  {
+   "name": "עבודה זרה",
+   "topic_id": "2e106448-741b-4e7e-aac8-05b160d9c64b",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "cee42880-3df7-4761-bb42-4d214da82ce8",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "a0407cdd-5894-47c9-8f55-45296367c41b",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עבודה-זרה"
+  },
+  {
+   "name": "מנשה",
+   "topic_id": "dd95f6d0-074b-4c03-bf8b-f9880cec71ab",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "a0407cdd-5894-47c9-8f55-45296367c41b",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "84ad7056-e164-563d-9fed-84f24ffbf6fb",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מנשה"
+  },
+  {
+   "name": "בני גד ובני ראובן",
+   "topic_id": "11682377-ce55-4ce3-8813-b6e125edf8f9",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "8c7cc021-6967-45d7-935b-87594fdb37e7",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "0fb6ef19-73fb-4d47-847d-5922c7def748",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-בני-גד-ובני-ראובן"
+  },
+  {
+   "name": "עקדת יצחק",
+   "topic_id": "33d7c5d4-a823-404a-a813-71438c6a1a39",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "71a6c3b0-95cc-5689-bf1a-1027374d8c85",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "18c5fe43-9f2a-4fc3-80ae-af4e9e96c546",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עקדת-יצחק"
+  },
+  {
+   "name": "משיח",
+   "topic_id": "eb752356-f9f6-4205-bde1-4a1eb34efaaf",
+   "old_n": 2,
+   "emitted": 2,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "6ab4bc97-41d1-455f-aa82-1b396dcc7a77",
+     "sort_order": 1
+    },
+    {
+     "lesson_id": "4e5c797e-676b-44f9-960f-57ead4fe21ca",
+     "sort_order": 2
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-משיח"
+  },
+  {
+   "name": "קרבן עולה",
+   "topic_id": "f4ec8c43-46bb-4b50-b555-0dd595db4058",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "133cebc1-bb13-596c-b7d7-aefa456608a7",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבן-עולה"
+  },
+  {
+   "name": "עשיו",
+   "topic_id": "579e1c00-9f80-487f-a581-0976a6b5de4d",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "1b9bb01b-8b5c-5b25-9a32-854481a2feba",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עשיו"
+  },
+  {
+   "name": "נישואים",
+   "topic_id": "54431b57-1b16-4458-ad2c-b857e6b9d1a3",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "44c8c817-ff3a-5772-ac8f-f2ba7a900ca2",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-נישואים"
+  },
+  {
+   "name": "יופי",
+   "topic_id": "7d43a544-a837-47ef-a308-4be3f7dc7859",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "76f201cb-ac64-5235-bf21-cb692ca5356c",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יופי"
+  },
+  {
+   "name": "ירבעם",
+   "topic_id": "68ab01b0-ce1c-4f83-9ca0-210e44493a73",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "02f7f742-a449-4152-b96d-29644e67478a",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ירבעם"
+  },
+  {
+   "name": "מעמד הר סיני",
+   "topic_id": "79cf7ecb-f935-421c-8594-b5c00a9f9cde",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7ad4c53d-d2ec-4035-a9e4-57e4f6d8259b",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מעמד-הר-סיני"
+  },
+  {
+   "name": "רש\"י",
+   "topic_id": "ad014991-7616-48d2-85cf-a787974ed667",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "25e828ae-91d3-536f-bb0c-7b40e52289af",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-רש-י"
+  },
+  {
+   "name": "ארבע מלכויות",
+   "topic_id": "d68fefb7-7711-4eb5-ad7e-d0bc59c62a5a",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "6301bcd4-a09d-51e7-94e8-9cccd511d986",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-ארבע-מלכויות"
+  },
+  {
+   "name": "מנייני השנים בתנ\"ך",
+   "topic_id": "c21ee321-de0d-4d87-92e2-67fa091985a8",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "489ee842-e1f1-5a83-9729-5ea1637feda5",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-מנייני-השנים-בתנ-ך"
+  },
+  {
+   "name": "עזרא הסופר",
+   "topic_id": "b37f3f93-a8aa-47df-aa04-119daf581fc0",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "82d1a1ca-355b-4212-b032-33a498227eee",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-עזרא-הסופר"
+  },
+  {
+   "name": "חנ",
+   "topic_id": "592a69e0-bda4-44d2-a59e-c3632b6f3e0f",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "63c4b4af-62bf-5f3d-88ba-86a719168294",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חנ"
+  },
+  {
+   "name": "גן עדן",
+   "topic_id": "5040f749-cd5e-4dbd-9736-b60775586f22",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "961fd956-13af-5fdb-8e3a-676e2806530f",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-גן-עדן"
+  },
+  {
+   "name": "קרבן מנחה",
+   "topic_id": "0dd1f3d1-da60-4f6b-ba59-53706ffc8f8d",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "ae5b633d-170b-5695-ae1b-c7cce0405a8f",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבן-מנחה"
+  },
+  {
+   "name": "קרבן חטאת",
+   "topic_id": "2281fe05-3c36-4b3d-a87c-9ce3b0597091",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "3d213a4a-886f-4c92-bda8-fd0dbd84834a",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קרבן-חטאת"
+  },
+  {
+   "name": "חירם",
+   "topic_id": "f8ba70e2-ae2a-4000-ad3d-177114649bf7",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "82f8093a-280b-4fa4-b09a-1fb2e367f3ec",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חירם"
+  },
+  {
+   "name": "יותם",
+   "topic_id": "08c3b030-0c69-40be-b47e-318f4d57842d",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "59601a83-93c1-41b3-8634-3a4c1cd2b47f",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-יותם"
+  },
+  {
+   "name": "אחז",
+   "topic_id": "487418c9-e243-445b-bd5e-8e406d54f90d",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "7c4a0368-0c02-5aa5-bffa-f02bbeb34782",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-אחז"
+  },
+  {
+   "name": "כורש",
+   "topic_id": "f970e21e-14b4-4211-af96-27210a8843fa",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "8f083f58-f1ee-4122-9722-a38c99cd7315",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-כורש"
+  },
+  {
+   "name": "חולדה הנביאה",
+   "topic_id": "1bf5239a-de26-4610-9700-fb5bc8930921",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "2339bc6b-7695-4dc3-8888-93c819fd73e6",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-חולדה-הנביאה"
+  },
+  {
+   "name": "אחאב",
+   "topic_id": "87a5cdfc-a033-4ff4-bc28-c5401b2cc748",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "4ddc35c9-2b15-46d0-b76b-56e3caeca7b6",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-אחאב"
+  },
+  {
+   "name": "בית עלי",
+   "topic_id": "21bc0ef2-1fcc-479a-b707-42905410c7fa",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "64318a82-96f1-4a01-b8a1-1ff9d4308760",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-בית-עלי"
+  },
+  {
+   "name": "סתירות בתנ\"ך",
+   "topic_id": "d7c37370-2e4e-40b4-9d94-058d8c616195",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "13e30507-27cf-4863-926f-9d554cfb1c3b",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-סתירות-בתנ-ך"
+  },
+  {
+   "name": "קיבוץ גלויות",
+   "topic_id": "8ccd8629-5d2b-4627-bd8d-211525c752fb",
+   "old_n": 1,
+   "emitted": 1,
+   "res_rate": 1.0,
+   "lessons": [
+    {
+     "lesson_id": "9e125468-a885-52a3-b203-f0c8f410cc2c",
+     "sort_order": 1
+    }
+   ],
+   "series": [],
+   "unresolved": [],
+   "slug": "theme-קיבוץ-גלויות"
+  }
+ ],
+ "unmapped": [],
+ "skipped": []
+}

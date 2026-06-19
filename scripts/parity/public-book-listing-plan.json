@@ -1,0 +1,5472 @@
+{
+  "book": "שופטים",
+  "url": "https://www.bneyzion.co.il/מאגר-השיעורים-והמאמרים/נביאים/שופטים/",
+  "old_items": 58,
+  "emitted": 58,
+  "gaps_resolved": [
+    {
+      "order_index": 17,
+      "title": "עתניאל ועכסה - מנהיגות משלימה",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "781a2399-119a-48a4-ac0c-080e60530cf0"
+    },
+    {
+      "order_index": 18,
+      "title": "עיון בדמותו של עתניאל בן קנז",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "84533e10-aaa5-4e0c-ad9a-5c4cdcde5344"
+    },
+    {
+      "order_index": 19,
+      "title": "דבורה הנביאה - הנהגה אידאלית",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "8a449380-a249-441e-b690-2c00e79d4852"
+    },
+    {
+      "order_index": 20,
+      "title": "נצחון ישראל על הכנעניות",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "c551df50-5d36-4259-bd27-ddd8b9ca3518"
+    },
+    {
+      "order_index": 21,
+      "title": "דמותו של גדעון",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "4bea587c-b4fe-4de4-99ea-a7a5ae5ed2bc"
+    },
+    {
+      "order_index": 22,
+      "title": "ה' עמך גיבור החיל",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "0ab3cbae-076a-4f30-8e83-0443a1b55468"
+    },
+    {
+      "order_index": 27,
+      "title": "מבניכם לנביאים ומבחוריכם לנזירים",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "6004342d-cd34-4761-8810-c08bf1626605"
+    },
+    {
+      "order_index": 28,
+      "title": "לדמותו של שמשון",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "0dacf8a0-0088-4204-b73d-481ba88273fa"
+    },
+    {
+      "order_index": 29,
+      "title": "שמשון משיח ה'",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "3576964f-e6a9-533d-9f20-c37f5154c195"
+    },
+    {
+      "order_index": 30,
+      "title": "דמותו המופלאה של שמשון",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "13005c00-0ff5-5f58-875b-17aec48f23c6"
+    },
+    {
+      "order_index": 31,
+      "title": "דמותו הפלאית של שמשון",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "598a186e-1531-4bd2-9748-0933a70de9ab"
+    },
+    {
+      "order_index": 34,
+      "title": "פילגש בגבעה - לידה חדשה",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "2d1b798e-26f6-4196-9b70-e44184ca8be8"
+    },
+    {
+      "order_index": 35,
+      "title": "מבט מעמיק על ספר שופטים",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "9c9a64d8-984e-49dd-acef-0eb8ff2b2c49"
+    },
+    {
+      "order_index": 37,
+      "title": "\"בימים ההם אין מלך בישראל\"",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "2064bcea-64a9-4b5d-a2fc-52816c35496c"
+    },
+    {
+      "order_index": 38,
+      "title": "שלבי המעבר בספר שופטים",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "94a1efec-23b8-45ea-ac47-33d5d8b317dd"
+    },
+    {
+      "order_index": 40,
+      "title": "התשובה בספר שופטים",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "436be2b2-0f19-4b12-bc6d-be059f122cbf"
+    },
+    {
+      "order_index": 42,
+      "title": "טבלת 850 השנים מן הכניסה לארץ ועד החורבן",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "2adc5e70-ba74-5e74-914d-b8334fcb0689"
+    },
+    {
+      "order_index": 43,
+      "title": "לוח השנים בתנ\"ך - מיציאת מצרים ועד סוף ספר מלכים",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "28cd2016-c015-5732-9a8e-cd56f5a2e7d9"
+    },
+    {
+      "order_index": 44,
+      "title": "ציר זמן יהושע שופטים",
+      "via": "lesson_any",
+      "table": "lessons",
+      "id": "d031ec89-8406-4bbc-8970-e750d9e5845f"
+    }
+  ],
+  "gaps_unresolved": [],
+  "nav_skipped": [],
+  "extras_excluded": [
+    {
+      "table": "series",
+      "id": "ebdb355f-6a9f-44a5-9aa0-2f858434cc17",
+      "title": "שופטים"
+    },
+    {
+      "table": "series",
+      "id": "0664a155-f6cd-40b1-8d9f-7443805f7b3b",
+      "title": "סיכומים על ספר שופטים"
+    },
+    {
+      "table": "series",
+      "id": "b5bb7009-c1b1-4403-93f9-a9cf84a1dabb",
+      "title": "גדעון | פרקים ו-ח"
+    },
+    {
+      "table": "series",
+      "id": "f5050001-0001-4000-8000-000000000001",
+      "title": "כל השיעורים בספר שופטים"
+    },
+    {
+      "table": "series",
+      "id": "f5050001-0001-4000-8000-000000000003",
+      "title": "פסל מיכה | פרקים יז-יח"
+    },
+    {
+      "table": "series",
+      "id": "a79fb2bb-8e25-4a7c-b36c-fe05d3a2cd0a",
+      "title": "דבורה וברק | פרקים ד-ה"
+    },
+    {
+      "table": "series",
+      "id": "8331a82c-383e-4769-b658-f3147764f30e",
+      "title": "פילגש בגבעה | פרקים יט-כא"
+    },
+    {
+      "table": "series",
+      "id": "e40e27e9-1f4a-4f83-9add-6fa78ae36a8c",
+      "title": "עתניאל, אהוד ושמגר | פרק ג"
+    },
+    {
+      "table": "series",
+      "id": "1939af90-ccbf-4c40-b309-026ae762e7fb",
+      "title": "שמשון | פרקים יג-טז"
+    },
+    {
+      "table": "series",
+      "id": "ef010001-0002-4000-8000-000000000002",
+      "title": "מבוא לתקופת השופטים | פרק ב"
+    },
+    {
+      "table": "series",
+      "id": "ef010001-0002-4000-8000-000000000001",
+      "title": "מצב הכיבושים | פרק א"
+    },
+    {
+      "table": "series",
+      "id": "f5050001-0001-4000-8000-000000000002",
+      "title": "אבימלך | פרק ט"
+    },
+    {
+      "table": "series",
+      "id": "61790a60-af77-43d3-a78b-5f156a4e3ff8",
+      "title": "שופטים, שמואל ורות - מהעדר מלכות לבניינה"
+    },
+    {
+      "table": "series",
+      "id": "0edf7610-6eb0-4051-8bf1-7f7607c7d684",
+      "title": "השופטים השקטים ויפתח | פרקים י-יב"
+    },
+    {
+      "table": "series",
+      "id": "54552a4a-2777-4c35-b40c-e0a125b43526",
+      "title": "לב הפרק - שופטים"
+    },
+    {
+      "table": "series",
+      "id": "10a111d5-5003-4067-adab-67a0bf109573",
+      "title": "שיעורים - שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "c7da68dc-1bce-4a6b-b2cc-30bdac1fc924",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ב"
+    },
+    {
+      "table": "lessons",
+      "id": "7f675b34-bfc1-457f-a437-820e0b66331a",
+      "title": "מפת עזר שופטים פרק יח | מסע שבט דן"
+    },
+    {
+      "table": "lessons",
+      "id": "027db81d-3095-42da-ab39-e52c6985f0eb",
+      "title": "שופטים מוקלט - פרק ה | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "064bf168-cb73-4427-b14e-0b7e197586ae",
+      "title": "שופטים מוקלט - פרק ט | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "06aec578-cbd4-4bf8-b04d-78989901b0ae",
+      "title": "שופטים מוקלט - פרק טז | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "07c7476d-eb5a-4cbb-8ec3-3677d4274266",
+      "title": "ספר שופטים מוקלט - פרק א"
+    },
+    {
+      "table": "lessons",
+      "id": "1382888f-5fcb-45f0-8dfc-74b4180186dd",
+      "title": "ספר שופטים מוקלט - פרק יא"
+    },
+    {
+      "table": "lessons",
+      "id": "15a3f7a8-42ca-4a74-ab8c-8805f6e19203",
+      "title": "שופטים פרק ד"
+    },
+    {
+      "table": "lessons",
+      "id": "1c0e07b3-77b3-44ba-920c-008bb21b22ee",
+      "title": "ספר שופטים מוקלט - פרק ח"
+    },
+    {
+      "table": "lessons",
+      "id": "9f828920-9aa0-4cb0-b2c0-650c8e1756d8",
+      "title": "מבוא לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "47277c85-7f83-4d37-8e0c-679045c8a894",
+      "title": "ספר שופטים מוקלט - פרק ד"
+    },
+    {
+      "table": "lessons",
+      "id": "4bb587b7-d74f-40b0-9151-515e69934dcf",
+      "title": "שופטים פרק כא"
+    },
+    {
+      "table": "lessons",
+      "id": "56437826-3505-427c-8ce5-16e4cfe31657",
+      "title": "שופטים פרק ג"
+    },
+    {
+      "table": "lessons",
+      "id": "5895d4a5-53dd-4e13-8907-fa2ae4e2a3b1",
+      "title": "שופטים מוקלט - פרק יז | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "db3fd73c-288f-44b5-918d-258d3380cc4e",
+      "title": "מפת עזר שופטים פרק יא | יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "923f7e42-c84f-46af-91a9-cb50719fd95d",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "f4de4cab-36c0-48a4-9e69-9f69a9777beb",
+      "title": "מפת עזר שופטים פרק כ | גבולות השבטים"
+    },
+    {
+      "table": "lessons",
+      "id": "c919ce59-2801-4d27-9931-99efdaa976b9",
+      "title": "שבט דן - עבודה זרה עמהם ומנצחים במלחמה?!"
+    },
+    {
+      "table": "lessons",
+      "id": "941d2835-2797-4748-a5f3-b108125b6da5",
+      "title": "הסכנה בנפילה לרוחניות קלה ושטחית"
+    },
+    {
+      "table": "lessons",
+      "id": "a0826a91-896e-40b4-a84c-eb817aa1060d",
+      "title": "פסל מיכה,תחילת תמצות ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "1723e100-e632-40cc-a091-19bd5cfddae7",
+      "title": "הקדמה לפסל מיכה - פסל לשם שמים"
+    },
+    {
+      "table": "lessons",
+      "id": "44d76172-0eba-4170-b391-a57ccc0159df",
+      "title": "מי הוא יהונתן בן גרשום בן משה?"
+    },
+    {
+      "table": "lessons",
+      "id": "e86b73b0-e8ba-42b6-9338-8a39d44729f3",
+      "title": "מינוי הלוי לכהן לפסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "6e768a01-cc5b-45e9-95c4-f38db1eaa429",
+      "title": "בני דן מבקרים את מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "645e72c8-c921-4b9f-9777-3950b20cdbf9",
+      "title": "כיבוש ליש וגניבת הפסל"
+    },
+    {
+      "table": "lessons",
+      "id": "95716b86-1d13-4b36-aa8b-657307012ed4",
+      "title": "שופטים פרק יח"
+    },
+    {
+      "table": "lessons",
+      "id": "b0e77318-083d-4352-9834-4a59acee6f85",
+      "title": "ספר שופטים מוקלט - פרק יח"
+    },
+    {
+      "table": "lessons",
+      "id": "189c46b7-ea5a-4ac6-b037-3e6107498890",
+      "title": "שופטים מוקלט - פרק יח | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "cef8699c-4d06-482f-bf1b-ddffae8743ff",
+      "title": "מלחמת אפרים ביפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "c1baf865-bec4-4905-be50-5f2fe515280d",
+      "title": "שופטים מוקלט - פרק ז | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "caa656a8-c6df-45b1-b0bb-4a6a585aaa1b",
+      "title": "שופטים מוקלט - פרק יא | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "0c0263d8-986d-46ef-9e7c-048bfe8640f4",
+      "title": "שבט דן - עבודה זרה עמהם ומנצחים במלחמה?!"
+    },
+    {
+      "table": "lessons",
+      "id": "e55c0865-6877-459d-a64a-f59c987a6cdd",
+      "title": "שופטים מוקלט - פרק א | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "edfea930-644a-4150-a401-6bbc0f333169",
+      "title": "ספר שופטים מוקלט - פרק כ"
+    },
+    {
+      "table": "lessons",
+      "id": "0f004185-7622-46d7-bc6e-8b345e92482f",
+      "title": "ספר שופטים מוקלט - פרק ה"
+    },
+    {
+      "table": "lessons",
+      "id": "2bb2aa77-d339-492a-bf1f-7b9d3820ad9f",
+      "title": "דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "204ce1a0-df5a-471b-bac6-8816807f3854",
+      "title": "שאלות בעיון - ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "ef010001-0004-4000-8000-000000000003",
+      "title": "יהודה יעלה"
+    },
+    {
+      "table": "lessons",
+      "id": "cf8f21e4-d939-576a-9249-3ba676bb7306",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "d1d7fcad-6839-40b4-85b5-7e2385c161c1",
+      "title": "נזירות שמשון ולחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "276b6413-2acb-44c2-9b1f-f6bf9c5316a3",
+      "title": "דברי יהושע האחרונים – הנאום השני"
+    },
+    {
+      "table": "lessons",
+      "id": "121bbd7f-27bf-4abc-9b4c-67a73547c1f6",
+      "title": "מפת עזר שופטים פרק י | גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "bbbbd8ef-9f41-413d-8dec-aff461b11aeb",
+      "title": "מפת עזר שופטים פרק ט | גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "dcbc0aef-01f2-4eb8-ae1c-8595cf7afc4e",
+      "title": "אשת לפידות"
+    },
+    {
+      "table": "lessons",
+      "id": "2aee3f54-7526-4150-af81-3cd18a50f78a",
+      "title": "לידת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "801c214b-fc4b-4bdd-9716-cc7776d82faf",
+      "title": "גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "3442dcd9-eb76-4310-9c9c-5d1933b60558",
+      "title": "נחלת שמעון בתוך נחלת יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "f624a7c4-f4fb-4044-b3c4-88a6ff5bc05f",
+      "title": "שופטים קטנים ויפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "6d7aa0e8-167b-4338-b6a8-a2cd24476892",
+      "title": "יפתח לאחר המלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "36dd1573-736f-4154-b90b-0e61d8d00a83",
+      "title": "פסל מיכה,תחילת תמצות ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "3a3589e6-dfd3-45e7-a963-2cf84ed73598",
+      "title": "דבורה ברק ומלחמת ישראל בכנען ובסיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "9c6fd5e7-180a-4389-a409-5c7491e13c25",
+      "title": "המשך גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "ef010001-0004-4000-8000-000000000002",
+      "title": "יהודה יעלה"
+    },
+    {
+      "table": "lessons",
+      "id": "deef3c86-26c2-4f2e-93dc-2a31688fca55",
+      "title": "שמשון ותמצית חייו דרך החידה"
+    },
+    {
+      "table": "lessons",
+      "id": "3726c44d-07b9-4bed-8159-9a20d875b3af",
+      "title": "שמשון ותחילת הישועה"
+    },
+    {
+      "table": "lessons",
+      "id": "28397afc-fa13-5812-a047-4520f73c393a",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "56f432f2-dd3e-4a16-ac25-a023ee8aff00",
+      "title": "שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "772d8c5a-1dfe-45e7-b4ae-919fbac54c5e",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "d698c8ec-5345-58a4-a624-ead49337287b",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "dba2fb2a-d48c-428f-8102-da65e654d182",
+      "title": "גדעון בן יואש"
+    },
+    {
+      "table": "lessons",
+      "id": "0629471c-be20-4ba7-a193-fab91d3a9600",
+      "title": "בת יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "66b8cd2e-2ae9-4ecf-9f26-1f9faa30c1ad",
+      "title": "שופטים מוקלט - פרק יד | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "f1332193-d96e-473a-8a3c-51fd2e7de483",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"א"
+    },
+    {
+      "table": "lessons",
+      "id": "1be65a79-83c6-4391-9a98-ed1d90af0b05",
+      "title": "אבצן אלון ועבדון"
+    },
+    {
+      "table": "lessons",
+      "id": "ceb3f957-63fb-4cb8-934b-90d2fcd8c67d",
+      "title": "חשבון הנפש לאחר המלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "ef010001-0004-4000-8000-000000000005",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "58c2a066-eb54-4cd4-be27-d639b6d9f916",
+      "title": "מהו שופט?"
+    },
+    {
+      "table": "lessons",
+      "id": "dd20535f-bd61-460e-adb3-336626c23997",
+      "title": "התהליך המאפיין את ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "632d035b-c381-45fd-a510-9e9cd37410b6",
+      "title": "מיון הלוחמים וחלום לוחם מדין"
+    },
+    {
+      "table": "lessons",
+      "id": "892dbabb-500e-4c20-9d79-783e39bcac58",
+      "title": "מדוע התאספו כל ישראל להילחם בבנימין?"
+    },
+    {
+      "table": "lessons",
+      "id": "c65390a0-7883-4a74-915f-d16c2e7b875c",
+      "title": "המשך כיבוש הארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "4ed2f132-79ef-47e6-910d-a92f4da44cf6",
+      "title": "כיבוש ירושלים וקרית ספר"
+    },
+    {
+      "table": "lessons",
+      "id": "d2b9dc6c-ca48-474c-9853-45f3f1722f69",
+      "title": "אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "f29f481c-c4e4-4d6e-81ec-8e4dfe24161d",
+      "title": "ברק בן אבינעם - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "3a6bfa4f-3d5c-424e-8c6a-8e1ebd6cf448",
+      "title": "פתיחה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "a328c60c-a956-43f8-a740-c4ff7cf11b81",
+      "title": "שליחותו של שמשון - שליטה בחומר מתוך חיבור למקור האלוקי"
+    },
+    {
+      "table": "lessons",
+      "id": "c831c183-c5c0-4a70-b3c0-8ae872e06e18",
+      "title": "הדרך אל המלכות בספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "4990c248-7a79-4c5c-aa6e-6c647daf19b8",
+      "title": "שתי התקופות בתוך תקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "1841a675-c0eb-4e20-b32c-7d5c22521a79",
+      "title": "ריבוי שכינה לקראת הכניסה לארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "fe6b55c0-59c8-4f78-93af-c21245d22970",
+      "title": "בין קריעת ים סוף למעבר הירדן"
+    },
+    {
+      "table": "lessons",
+      "id": "5db9816f-b752-4028-abce-e73ebeaf8c20",
+      "title": "פסח ומילה בשערי הכניסה לארץ ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "b91d013f-fbc3-4694-8eb3-59d46098c992",
+      "title": "לקראת כיבוש יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "3eb4f263-b05f-48ae-9eda-a654746e25ea",
+      "title": "ארור האיש אשר יקום ויבנה את העיר יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "2f90677c-6880-4400-bace-e1a0bdbf61e8",
+      "title": "במעבר הירדן נפתח פרק חדש בתולדות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "db293e18-8024-4f2d-a325-a23cf7899e0e",
+      "title": "חיבור משיח בן יוסף ומשיח בן דוד בכיבוש יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "e6bb8770-d39e-48b7-8a08-4dd4011e5d7f",
+      "title": "שתים עשרה האבנים"
+    },
+    {
+      "table": "lessons",
+      "id": "66cfdbfb-a7f6-41d2-abe2-426a52758a9c",
+      "title": "ההכנות למלחמה על שבט בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "ec105eef-3e27-4e3d-a51f-0fedf7fe0647",
+      "title": "מהות תקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "62d08a0a-0f70-4101-b091-1da949d12327",
+      "title": "כיצד היה מותר להרוג את אנשי יבש גלעד ואת טפם?"
+    },
+    {
+      "table": "lessons",
+      "id": "e1c205dd-7bae-41d8-a843-2dd09c417a0f",
+      "title": "עתניאל אהוד ושמגר"
+    },
+    {
+      "table": "lessons",
+      "id": "6ab8da5c-98f6-418b-a5a6-67a86ee1fcd2",
+      "title": "שמשון - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "badf844c-de17-4de9-9567-fdc50d5c9ee2",
+      "title": "מי היה עכן?"
+    },
+    {
+      "table": "lessons",
+      "id": "1e02b771-99f6-41cd-97ad-7247ed363c98",
+      "title": "'ויוסיפו בני ישראל'"
+    },
+    {
+      "table": "lessons",
+      "id": "19b05049-63f4-46fc-9079-e96e19f951b5",
+      "title": "מלחמת אבימלך בשכם"
+    },
+    {
+      "table": "lessons",
+      "id": "5f94ab5d-a3de-4b16-b034-1ffadce64091",
+      "title": "מושיע או מושל"
+    },
+    {
+      "table": "lessons",
+      "id": "a6e0110a-020c-48cd-837e-c1c3edbab7b0",
+      "title": "איטר יד ימינם"
+    },
+    {
+      "table": "lessons",
+      "id": "b8114d64-69fb-41a2-8e4c-de5c2d0511ef",
+      "title": "חטאי ישראל בתקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "433d677a-61e6-4fa4-9d37-81d735a391c9",
+      "title": "אבצן: התחלת תקופת המלכות"
+    },
+    {
+      "table": "lessons",
+      "id": "c9ee0da9-f058-451c-8f86-e8e0fe0f66db",
+      "title": "בקשת המלך משמואל הנביא"
+    },
+    {
+      "table": "lessons",
+      "id": "7463112c-0c25-456c-b263-a87d65925886",
+      "title": "הכנות גדעון למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "a6a785dd-9283-4a78-bad9-a26948482a7e",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "5f2e50bd-874e-4bf3-9422-be68a2e44aa9",
+      "title": "מה הסוד מאחורי פרשת מנוח ואשתו?"
+    },
+    {
+      "table": "lessons",
+      "id": "fb1c42b4-8219-4dde-990c-51a85b0087e1",
+      "title": "תפקידו של שמשון משבט דן"
+    },
+    {
+      "table": "lessons",
+      "id": "5da6cc0d-f92f-4746-a369-75c5255414bf",
+      "title": "מגדעון אל מלכות אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "bf39ca43-212c-4f99-9310-bc395e508e61",
+      "title": "שופטים פרק יד"
+    },
+    {
+      "table": "lessons",
+      "id": "0af8f6f8-dbc7-47ec-93a0-3fd3cb5e323b",
+      "title": "ספר שופטים מוקלט - פרק יג"
+    },
+    {
+      "table": "lessons",
+      "id": "7e8fabed-cc7d-4e57-991e-a018747431d2",
+      "title": "גדעון-סיכום"
+    },
+    {
+      "table": "lessons",
+      "id": "7dc615c7-dc24-47df-876a-b7480556f033",
+      "title": "אופי התקופה"
+    },
+    {
+      "table": "lessons",
+      "id": "2e48fb8a-795c-430b-84ce-66245ef2a738",
+      "title": "חלום צליל השעורים"
+    },
+    {
+      "table": "lessons",
+      "id": "fd3c37aa-7b06-4e2f-8acf-7578b652e503",
+      "title": "בני דן מבקרים את מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "d50df3a4-dcec-475a-b721-89d3fb3a6fdd",
+      "title": "מלחמת העי הראשונה - המעל בחרם"
+    },
+    {
+      "table": "lessons",
+      "id": "f765fa95-8392-4aa1-80d2-4870584e0159",
+      "title": "מלחמת דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "55aa7dab-f072-4388-a51d-88bd5ed69b24",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ט\"ז"
+    },
+    {
+      "table": "lessons",
+      "id": "63f115af-688d-4182-acaf-bf5cbd011a4b",
+      "title": "סיכום כיבושי משה והמלכים שהכה יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "6be714a4-bbfb-4e77-b5b1-183d0ef08843",
+      "title": "נחלת בני יהודה בראש"
+    },
+    {
+      "table": "lessons",
+      "id": "7ed7d21b-cfbf-4cba-85c3-edc828a858eb",
+      "title": "מדוע ציוה ד' ששמשון יהיה נזיר?"
+    },
+    {
+      "table": "lessons",
+      "id": "3d0a9dd7-5c37-4d1f-82bb-274b288cae69",
+      "title": "סימן הכידון ומעמד הברית"
+    },
+    {
+      "table": "lessons",
+      "id": "e2c516fb-15fc-4118-bc71-4a0c8fe051eb",
+      "title": "יהושע הביא את עכן לחיי עולם הבא"
+    },
+    {
+      "table": "lessons",
+      "id": "b3ead70c-9d8c-4e77-8f8e-4f3dcf463993",
+      "title": "דינם של מלכי האמורי וכיבוש ממלכות הדרום"
+    },
+    {
+      "table": "lessons",
+      "id": "fff84b77-a373-4f57-af2c-a98fcf210063",
+      "title": "מי יעלה לנו בתחילה?"
+    },
+    {
+      "table": "lessons",
+      "id": "839c4b7d-2a89-4b3f-98a0-9e16af667999",
+      "title": "הארץ הנשארת"
+    },
+    {
+      "table": "lessons",
+      "id": "b0457353-51b9-467f-b9b9-cbe61c7c7a8b",
+      "title": "ערי המקלט וערי הלויים"
+    },
+    {
+      "table": "lessons",
+      "id": "59c87344-48aa-43f9-98b7-93b5e08982f9",
+      "title": "המזבח בגלילות הירדן"
+    },
+    {
+      "table": "lessons",
+      "id": "56202384-c822-4666-8bff-9d67bd9c484d",
+      "title": "בני דן באים לליש"
+    },
+    {
+      "table": "lessons",
+      "id": "6f28d7ad-7205-4323-8dec-3ce6546da9b0",
+      "title": "המשך שירת דבורה (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "170fbccb-c8db-4aad-92b5-e4b45b3a4a44",
+      "title": "כיבוש קרית ספר ופרשיית בני קיני"
+    },
+    {
+      "table": "lessons",
+      "id": "9b70428d-c54b-4f27-8645-f5ad4b60f71e",
+      "title": "הצעיר באלפי מנשה"
+    },
+    {
+      "table": "lessons",
+      "id": "fc088722-7250-49e2-9877-8636cf10eee0",
+      "title": "שאלות חזרה ועיון בספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "9b483c2a-18f9-4f70-ab98-ad2d4e0eb849",
+      "title": "מפת ארץ ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "64e1eb08-a82e-43b9-9de3-c9e7ca08f30d",
+      "title": "התקבצות המלכים ועורמת הגבעונים"
+    },
+    {
+      "table": "lessons",
+      "id": "478236f0-aeee-43d7-ba48-f2b53ac299ac",
+      "title": "מפת עזר שופטים פרק ח | גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "15d1ee09-2e2b-4af6-91d9-ffe52e530e14",
+      "title": "יהושע התעכב במלחמה ונתקצרו שנותיו"
+    },
+    {
+      "table": "lessons",
+      "id": "d24e68db-7507-4ea4-989b-652d40bdcf41",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י'"
+    },
+    {
+      "table": "lessons",
+      "id": "315b86dd-9664-4cbb-bd6c-4814812eac19",
+      "title": "שאלות חזרה - ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "9228a903-9b18-4d55-8fac-b7cc8a6d688a",
+      "title": "סוד השערות"
+    },
+    {
+      "table": "lessons",
+      "id": "80e8a3b1-49f9-461c-a5d7-cab7562d18df",
+      "title": "שופטים מוקלט - פרק ח | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "c983f214-e595-426d-a97d-e0c6b995fef7",
+      "title": "שקיעת ישראל בעידן הפרטיות השבטית"
+    },
+    {
+      "table": "lessons",
+      "id": "854fee2c-558c-4435-be31-91da628d3c62",
+      "title": "ספר שופטים מוקלט - פרק ב"
+    },
+    {
+      "table": "lessons",
+      "id": "0b08364f-760e-4a9c-ad40-bd4191a59c1a",
+      "title": "שופטים פרק א"
+    },
+    {
+      "table": "lessons",
+      "id": "26055347-cfcf-4faa-b2cb-7bb7816e6e02",
+      "title": "ספר שופטים מוקלט - פרק יב"
+    },
+    {
+      "table": "lessons",
+      "id": "f710d6ae-a2d0-4323-b3de-2ca9a4cc7a2e",
+      "title": "ספר שופטים מוקלט - פרק י"
+    },
+    {
+      "table": "lessons",
+      "id": "85a6ce69-327f-4cad-8a47-e5cee21fc971",
+      "title": "הקורא אשר בלחי"
+    },
+    {
+      "table": "lessons",
+      "id": "27f716bd-4d09-402d-871f-d5bb9bd99011",
+      "title": "ספר שופטים מוקלט - פרק יט"
+    },
+    {
+      "table": "lessons",
+      "id": "5f5b7a2b-7781-4828-9773-1f1c0c73ff86",
+      "title": "שופטים מוקלט - פרק טו | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "0efc6bf3-ca50-4879-95d4-cdd7447664ab",
+      "title": "שופטים פרק יז"
+    },
+    {
+      "table": "lessons",
+      "id": "d7a64ff8-a589-435a-be5a-0663c5d49d97",
+      "title": "מלחמת מלכי הדרום"
+    },
+    {
+      "table": "lessons",
+      "id": "5f122fa3-7e40-48aa-afc2-9a9e99d0b762",
+      "title": "שבטי עבר הירדן עמדו בהבטחתם"
+    },
+    {
+      "table": "lessons",
+      "id": "5c8062c0-74b7-4f5c-89f4-1d436bd93bd9",
+      "title": "הקדמה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "559f891a-b0cf-4b9a-b6b3-41910b10aea5",
+      "title": "תוכחת המלאך על השארת יושבי הארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "397bae60-d7cd-41be-96ad-690fa3e15388",
+      "title": "חרב לה' ולגדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "1af192f9-9f7f-4eaf-9d7b-b5fd008b1515",
+      "title": "משל יותם"
+    },
+    {
+      "table": "lessons",
+      "id": "990cfd40-6048-49cf-b8f4-53aba992d188",
+      "title": "המחוללות בכרמים"
+    },
+    {
+      "table": "lessons",
+      "id": "5542d01b-fdbd-4d85-8d1f-1215182d027c",
+      "title": "\"ותהי עליו רוח ד'\""
+    },
+    {
+      "table": "lessons",
+      "id": "bd284387-8632-40ea-857e-c4b8983c43b2",
+      "title": "הנהגת הכהונה על ידי פנחס בתקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "7e46e189-8821-4859-a1bd-a9fdb9e40fa1",
+      "title": "בני דן גונבים את פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "e6eaab79-0d1c-469b-a7b4-2015e78be742",
+      "title": "גדעון מבקש אותות מאת ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "c322a0e6-853a-40ae-971c-191f8eb6ae5b",
+      "title": "פילגש בגבעה - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "f41a3af5-05e7-4ff1-85e6-513349f7ed36",
+      "title": "ספר שופטים מוקלט - פרק יח"
+    },
+    {
+      "table": "lessons",
+      "id": "3f3aaea7-c699-4291-b823-a9bba33877f9",
+      "title": "קהל עם האלקים?!"
+    },
+    {
+      "table": "lessons",
+      "id": "5976ad96-9d59-417f-894e-17084c4e9650",
+      "title": "מפת עזר שופטים פרק טו | שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "60a6d9f1-c5f2-420c-bd32-475b792f5601",
+      "title": "מפת עזר שופטים פרק כ | נחלת בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "fce2a410-d5f5-44ad-8eba-e7ed8f090eb1",
+      "title": "שיעבוד ישראל בידי בני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "30203340-c342-4c72-9082-6b146b5472c8",
+      "title": "מפגש בני דן עם הנער הלוי"
+    },
+    {
+      "table": "lessons",
+      "id": "85c672a2-292d-48d0-bedb-0884c31870da",
+      "title": "המתנדבים בעם"
+    },
+    {
+      "table": "lessons",
+      "id": "4530fbd5-aa15-494d-9173-7b4662a92a22",
+      "title": "עתניאל ואהוד"
+    },
+    {
+      "table": "lessons",
+      "id": "9c879e79-0670-4b1b-96bb-204477cba23e",
+      "title": "גנבת הכסף"
+    },
+    {
+      "table": "lessons",
+      "id": "9d184f7a-4621-4155-a0ac-efccb44fb25f",
+      "title": "ראש וקצין"
+    },
+    {
+      "table": "lessons",
+      "id": "a826e543-8345-4208-a941-665003bdd4b3",
+      "title": "שירת דבורה (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "c7db5466-f8f1-403e-8715-8d1d2db1882f",
+      "title": "כרם בית ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "2ae605e2-c9c5-4171-b8ae-2e2aa179dbc6",
+      "title": "איבצן ואילון הזבולוני"
+    },
+    {
+      "table": "lessons",
+      "id": "30b44fc3-0391-4f37-9014-d9752576f80b",
+      "title": "סיבות החטא בדור השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "6d22f7bb-aca0-4d9b-9652-2a0860a54583",
+      "title": "מהו מקור הכח הגדול של הפלשתים מול ישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "0f36ddcd-0c5c-4e18-9b38-482ae45fccca",
+      "title": "ישראל מבקשים להמשיל עליהם את גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "ded6faf6-21a8-4b0d-97b3-6e5d60c2a5e7",
+      "title": "שופטים פרק כ"
+    },
+    {
+      "table": "lessons",
+      "id": "4bb3bd15-e905-458a-bcbd-51386ad51502",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "ea181ea6-614e-49a7-a6e2-7a6b9186fa22",
+      "title": "מלכותו של אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "c3a12f5f-0d6b-4fa7-8efd-cb60a1733e87",
+      "title": "נאום יפתח למלך עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "77e90199-d314-4da9-9221-6fd7b0c6658e",
+      "title": "הצד האלוקי של המלחמה עם סיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "faa2ce35-b0f3-43ba-b9f8-4cb384b7fbc6",
+      "title": "שופטים פרק ה"
+    },
+    {
+      "table": "lessons",
+      "id": "6b82eb4e-0451-41fb-9e8d-751c3e8baf35",
+      "title": "שופטים פרק י"
+    },
+    {
+      "table": "lessons",
+      "id": "6cd99867-22b8-40fe-80c3-d49a90bddeeb",
+      "title": "סיכום"
+    },
+    {
+      "table": "lessons",
+      "id": "3445c475-1e33-4989-a797-dcfb448398a2",
+      "title": "כיבוש קריית ספר על ידי עתניאל"
+    },
+    {
+      "table": "lessons",
+      "id": "c47ea7cf-f9e1-4c14-87e9-b8b86ba9ec12",
+      "title": "ברק בן אבינעם ודבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "bf0821c1-d6fa-43b4-919d-9f3da144193c",
+      "title": "הבוכים"
+    },
+    {
+      "table": "lessons",
+      "id": "b31fb7e1-5bfc-48ea-9541-1355eded04a7",
+      "title": "מדוע התעכב עם ישראל בכיבוש הארץ?"
+    },
+    {
+      "table": "lessons",
+      "id": "16945705-bc09-4f53-b976-93ad6264f849",
+      "title": "המלאך בבוכים ומעגל הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "4eb0fc4e-07f9-4480-b07d-1a11ce8fb03e",
+      "title": "הנהגה טבעית לאומית ללא הדרכה של תורה"
+    },
+    {
+      "table": "lessons",
+      "id": "f2e44730-6e13-40b2-ac99-deb8c4ffda93",
+      "title": "נסיון ההתמודדות עם העדר מנהיגותו של יהושע-הקדמה לספר"
+    },
+    {
+      "table": "lessons",
+      "id": "314b7a6e-40a9-45a2-8a12-54b3ccbc971d",
+      "title": "מפת עזר שופטים פרק ד | דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "7f2de727-ab8c-4cbe-ac08-bb5d5fa00d78",
+      "title": "ספר שופטים מוקלט - פרק ג"
+    },
+    {
+      "table": "lessons",
+      "id": "b5f1b139-0081-4c66-9b62-4e48168baa1e",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "98da40f3-168b-48f1-b906-18a0e6fec6a0",
+      "title": "המעבר מדור יהושע אל תקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "4bbe4fae-cb1e-4c18-9806-9049e2f0d38c",
+      "title": "גדולתה של בת יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "fe6c1fed-9b04-4078-9c3c-b9350d667ad5",
+      "title": "ספר שופטים מוקלט - פרק כא"
+    },
+    {
+      "table": "lessons",
+      "id": "30c491fd-6567-4574-8ee4-fd83c9e180f9",
+      "title": "\"אלוהים\" גנובים"
+    },
+    {
+      "table": "lessons",
+      "id": "a31a0ba2-b689-4f54-af0c-cf4cfdc3fa9b",
+      "title": "נבלה בישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "75cb9a6b-1fb0-4c06-96ba-dbd4d6830031",
+      "title": "וישאלו בני ישראל ב-ד'"
+    },
+    {
+      "table": "lessons",
+      "id": "7e68efc8-0c93-44d4-8a36-eb6087be84b8",
+      "title": "מפלת האריה"
+    },
+    {
+      "table": "lessons",
+      "id": "77e393be-0525-41cf-8f33-096b24ae5052",
+      "title": "כיבוש העי במערכה השניה"
+    },
+    {
+      "table": "lessons",
+      "id": "3402d684-91b0-4b4d-8a09-8d7d29b09af2",
+      "title": "הסבר על שבט שמעון"
+    },
+    {
+      "table": "lessons",
+      "id": "ac924160-8059-4599-b829-e74a951becfb",
+      "title": "שופטים פרק ט"
+    },
+    {
+      "table": "lessons",
+      "id": "c702c5ae-05f7-4ca7-9291-c2eb88eb4756",
+      "title": "מלכות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "07c55c45-fd56-4604-a38c-979b7438263e",
+      "title": "קרבת ה' לישראל בימי השופט"
+    },
+    {
+      "table": "lessons",
+      "id": "aab5b5a9-a3d6-41ef-a143-e86e48b272a0",
+      "title": "פועלו של יפתח: אחדות וכלליות"
+    },
+    {
+      "table": "lessons",
+      "id": "0653f680-08d5-4954-97da-8513fb302abb",
+      "title": "חטא ישראל ועונש השיעבוד לפני ימי יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "17507de8-951f-4fdf-88bf-ca421a9ff6cf",
+      "title": "ההתאספות למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "16d1d18e-6531-4614-aa2a-8fd94f2761f5",
+      "title": "כיבוש ליש וגניבת הפסל"
+    },
+    {
+      "table": "lessons",
+      "id": "5c9f956d-9adb-40e8-bb11-085ca1a5cd33",
+      "title": "שופטים פרק יח"
+    },
+    {
+      "table": "lessons",
+      "id": "eb558d23-223d-44d3-bc01-5903071b7819",
+      "title": "שופטים פרק ז"
+    },
+    {
+      "table": "lessons",
+      "id": "1c04f235-3720-4869-af09-efa4291fc99e",
+      "title": "שופטים פרק טז"
+    },
+    {
+      "table": "lessons",
+      "id": "ef013d5b-2fb2-4222-a464-ef5ff66d1096",
+      "title": "ארון ברית ה' ונושאיו"
+    },
+    {
+      "table": "lessons",
+      "id": "16cf5006-e051-401d-a20c-00d14d9ae36d",
+      "title": "מינוי גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "cd2aff3e-304c-4fa0-9111-f33d4b33d656",
+      "title": "יהודה יעלה"
+    },
+    {
+      "table": "lessons",
+      "id": "ece783cc-7482-4cc3-bea5-a5466f775584",
+      "title": "שופטים מוקלט - פרק ד | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "bac2c13e-c8ee-4bb4-a376-4bcb45b41d62",
+      "title": "שופטים מוקלט - פרק ב | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "af7ae9f5-1be1-4ff9-a55e-2d67ae3e5344",
+      "title": "הקדמה לפסל מיכה - פסל לשם שמים"
+    },
+    {
+      "table": "lessons",
+      "id": "946dda2f-2f8d-4fe7-8487-15e8043b70df",
+      "title": "סוד דמותה של רחב"
+    },
+    {
+      "table": "lessons",
+      "id": "b471d63d-d295-4dec-8bbb-879982723367",
+      "title": "אנשי הדממה והענוה מן השיטים"
+    },
+    {
+      "table": "lessons",
+      "id": "d621a4b3-44a2-4af9-b444-adade5cb29d7",
+      "title": "בשורת המלאך לאם שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "35d0cb8a-0a04-4ec7-8ad8-f40215c79b9c",
+      "title": "ההתמודדות עם מדין כנציגי בני קטורה"
+    },
+    {
+      "table": "lessons",
+      "id": "66322ac7-c792-43bc-9f3a-cfa153bcb90d",
+      "title": "שופטים פרק (9)"
+    },
+    {
+      "table": "lessons",
+      "id": "0acda764-a03b-46d1-a231-e1ead695b5ed",
+      "title": "\"ויהי בימי שפוט השופטים\""
+    },
+    {
+      "table": "lessons",
+      "id": "7d23d612-22be-4ac0-a244-4a0e14bc8e84",
+      "title": "תפיסת זבח וצלמונע"
+    },
+    {
+      "table": "lessons",
+      "id": "936d5471-e1de-436d-a8c1-ef210c636159",
+      "title": "פעולת שמשון בתמנה"
+    },
+    {
+      "table": "lessons",
+      "id": "8edb229b-2659-4e7e-9985-41d96faf067d",
+      "title": "נסיונם של יהודה ויוסף להוביל את העם ותחילת של הירידה הרוחנית"
+    },
+    {
+      "table": "lessons",
+      "id": "eb4d17b9-a11f-47c0-b9f1-f75a5fe04eba",
+      "title": "שופטים מוקלט - פרק ט | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "698ebe03-fa0c-42f0-8f59-72edfb6cf521",
+      "title": "מלחמת אבימלך בשכם"
+    },
+    {
+      "table": "lessons",
+      "id": "f9e26783-6c7a-4b1e-a946-9d4c64b82e83",
+      "title": "אבימלך בן ירובעל"
+    },
+    {
+      "table": "lessons",
+      "id": "509437a8-23d6-4545-9fa3-a926fa2974a8",
+      "title": "אבימלך ואנשי שכם"
+    },
+    {
+      "table": "lessons",
+      "id": "d1b364a2-bf74-415b-95bd-e3c236cae6d3",
+      "title": "מגדעון אל מלכות אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "55d5bbf6-167a-41c9-a1e6-e93f3c6e3984",
+      "title": "ערך המלכות"
+    },
+    {
+      "table": "lessons",
+      "id": "b9228629-944c-4c74-a557-01a042d727da",
+      "title": "שופטים פרק ט"
+    },
+    {
+      "table": "lessons",
+      "id": "62d981ac-8d30-4beb-a3b2-3fb3504542f1",
+      "title": "מלכות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "3ef35c24-3c7b-4677-ba2a-2cf11ac8be41",
+      "title": "אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "7b1dfea7-c0a2-4a1c-a901-886934962225",
+      "title": "ישראל מבקשים להמשיל עליהם את גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "ff7b8814-1066-4144-9449-add3bee28c06",
+      "title": "מינוי גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "1e12ff45-cbac-4a30-a934-6e09c8f7172d",
+      "title": "גדעון - פותח עידן המלוכה"
+    },
+    {
+      "table": "lessons",
+      "id": "b16e23e0-cdde-4d70-827e-9b9f08fb3e67",
+      "title": "פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "c968e178-0c8a-4473-a606-756a02644ea1",
+      "title": "חלום צליל השעורים"
+    },
+    {
+      "table": "lessons",
+      "id": "53e922b3-f25a-4824-b56c-27c6858eb1b0",
+      "title": "ספר שופטים מוקלט - פרק ח"
+    },
+    {
+      "table": "lessons",
+      "id": "8718b39e-924e-4658-b273-9d3638cc6e5a",
+      "title": "דבורה וברק - המשך של מלחמות יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "9b8b7c3e-7957-4d39-942e-9eacd1f78d93",
+      "title": "העמקה בנס לחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "f770d1a1-f02e-4476-ba57-6d85f82d4662",
+      "title": "העמקה בתוכחת המלאך לבני ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "ecb33b92-9a4b-4f91-bf06-d044c6de54dc",
+      "title": "אחרית ימיו ומשפחתו של גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "e7953426-c322-49f3-9a05-7d8f59df2278",
+      "title": "ספר שופטים מוקלט - פרק יד"
+    },
+    {
+      "table": "lessons",
+      "id": "c5f2e750-029e-438a-819c-efa8e99653c4",
+      "title": "נסיונות גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "c77143bc-1a7b-453d-ba9e-05cd5724d7ab",
+      "title": "חרב לה' ולגדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "36bc9e4c-7ab7-448f-8fac-d3dbdfcdd2d8",
+      "title": "העמדת זהות ישראלית שורשית וגאה"
+    },
+    {
+      "table": "lessons",
+      "id": "aeec4bf4-c9dd-4e2e-9878-85096c41a81b",
+      "title": "המתקפה על מדין"
+    },
+    {
+      "table": "lessons",
+      "id": "49ca2866-426b-40f9-a095-18b7cb4ab7ab",
+      "title": "ספר שופטים מוקלט - פרק ו"
+    },
+    {
+      "table": "lessons",
+      "id": "ab8a9dd3-5402-4c91-88bf-4e89e848310f",
+      "title": "מרדף גדעון אחרי זבח וצלמונע"
+    },
+    {
+      "table": "lessons",
+      "id": "50902a0e-462c-4adb-9e65-26cfda2c7a93",
+      "title": "אהוד בן גרא שאלות על הסוגייה"
+    },
+    {
+      "table": "lessons",
+      "id": "4a1d9fe8-5d2b-4efc-bd5e-6d8b02134924",
+      "title": "דברי המלאך לגדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "beca76cb-024e-4e78-94af-84d83a08ace7",
+      "title": "מינוי גדעון (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "ad707fb7-8c9b-43dc-b833-899474455d6d",
+      "title": "מושיע או מושל"
+    },
+    {
+      "table": "lessons",
+      "id": "868ff49a-f5fa-4021-9e9d-371e237150eb",
+      "title": "שופטים פרק ו"
+    },
+    {
+      "table": "lessons",
+      "id": "e10a91ef-2d57-4b44-9e2f-c95d09b72c3f",
+      "title": "מיון הלוחמים וחלום לוחם מדין"
+    },
+    {
+      "table": "lessons",
+      "id": "87206280-d91c-40a6-b1c8-9fa17c3814a0",
+      "title": "שופטים מוקלט - פרק יב | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "89cbe1cb-b0ad-4bd6-bfb5-a3985eaaa3d5",
+      "title": "ניצחון גדעון על מדין"
+    },
+    {
+      "table": "lessons",
+      "id": "6a1f6903-e390-401a-97ca-a8b83a3f5693",
+      "title": "פסל מיכה - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "27c64c75-5003-42a6-bab7-4e718742b204",
+      "title": "תפקידם ומהותם של שבטי עבר הירדן המזרחי"
+    },
+    {
+      "table": "lessons",
+      "id": "f9839833-aee3-4018-ba7b-8b2f8e46cc0e",
+      "title": "סיכום"
+    },
+    {
+      "table": "lessons",
+      "id": "ab8514a0-0031-4289-9af7-ec0addc4f31f",
+      "title": "שופטים מוקלט - פרק ו | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "d310fbdb-0e18-4cb7-90f3-8027bfb41065",
+      "title": "גדעון בן יואש - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "b52e9442-5a7a-4f01-b075-c4de6a65f41c",
+      "title": "שלוש מאות  המלקקים"
+    },
+    {
+      "table": "lessons",
+      "id": "28a657fa-8200-4dc3-941b-ad718b1a92ae",
+      "title": "הכנות גדעון למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "55e0d9f1-96c9-4a9b-8a6c-eaa113ee1bb5",
+      "title": "גדעון בן יואש - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "9dc153d7-66e0-449c-95b2-5ca27f999652",
+      "title": "תפיסת זבח וצלמונע"
+    },
+    {
+      "table": "lessons",
+      "id": "fb835bdd-aa49-45bd-83fb-018a60e75b0d",
+      "title": "גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "b53f43b7-8fb1-44fb-8ad3-5b37d39c325a",
+      "title": "שופטים מוקלט - פרק ח | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "a21af907-a4f3-4041-8125-bf087511eade",
+      "title": "תכלית ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "eb9f83f2-c599-4038-a29d-a84a1c525003",
+      "title": "המשך גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "24bef8a9-52b0-4936-88f5-6e787bef2ed7",
+      "title": "המשך הקדמה"
+    },
+    {
+      "table": "lessons",
+      "id": "6fca6cf4-b15b-4301-9061-2fb2292dccf8",
+      "title": "נפילתו של שמשון - צעד אחד יותר מידי"
+    },
+    {
+      "table": "lessons",
+      "id": "da256014-f5e7-4c55-8b14-21c9fa4b414c",
+      "title": "האם גדעון עשה אפוד לעבודה זרה?!"
+    },
+    {
+      "table": "lessons",
+      "id": "6ee8d6f3-039f-4d22-b449-b2b6dba42726",
+      "title": "דבורה הנביאה"
+    },
+    {
+      "table": "lessons",
+      "id": "8fe9381e-d653-4517-90dd-e6ac0128e429",
+      "title": "דמותו של שמשון- היכולת להנהיג את החיים ולהיות בתודעת שליחות"
+    },
+    {
+      "table": "lessons",
+      "id": "c7b75eae-b70c-4f3b-a76a-4d8e0411fbef",
+      "title": "הנהגת הכהונה על ידי פנחס בתקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "7c91a0d9-9f94-4fc6-982d-038290d88430",
+      "title": "שופטים פרק ח"
+    },
+    {
+      "table": "lessons",
+      "id": "437746a9-0595-4e15-b4ec-ef0329b2ad0c",
+      "title": "שופטים מוקלט - פרק ז | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "fd2691c7-a8c1-4499-abe4-64b6518645d7",
+      "title": "טל האמונה"
+    },
+    {
+      "table": "lessons",
+      "id": "d183b202-fc81-45a8-967b-47571020096f",
+      "title": "תהליך התשובה של ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "ae578ec5-c23e-43c4-b314-46bb983eb907",
+      "title": "גדעון בן יואש"
+    },
+    {
+      "table": "lessons",
+      "id": "98af3cc1-2d82-4584-916b-389ad08e8c77",
+      "title": "' ויפן אליו ד' '"
+    },
+    {
+      "table": "lessons",
+      "id": "aac20b58-435d-4306-84f8-aae430bfe93e",
+      "title": "גדעון מבקש אותות מאת ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "d26faafc-edf1-432e-8468-df8a49e8058d",
+      "title": "האישה העזתית"
+    },
+    {
+      "table": "lessons",
+      "id": "0cd30e29-7591-429d-91ed-8ca8535ab8eb",
+      "title": "שופטים פרק ז"
+    },
+    {
+      "table": "lessons",
+      "id": "fb674b00-a3ed-48d0-add1-6fad6fabe2e9",
+      "title": "עתניאל"
+    },
+    {
+      "table": "lessons",
+      "id": "24d448fc-640b-499d-999e-ec5e45c9c87c",
+      "title": "בני דן כובשים את ליש"
+    },
+    {
+      "table": "lessons",
+      "id": "932c19dd-c0fb-4f64-930f-62ad27822dc9",
+      "title": "איבצן - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "7a9a0153-d7df-40bf-aca5-bff8a48c3386",
+      "title": "שופטים מוקלט - פרק ה | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "45df9cf8-7cb1-4aff-b46e-7564cd664409",
+      "title": "ספר שופטים מוקלט - פרק ו"
+    },
+    {
+      "table": "lessons",
+      "id": "bc955c7a-5cae-4569-9950-16df2a2597d3",
+      "title": "נפילת סיסרא ביד יעל"
+    },
+    {
+      "table": "lessons",
+      "id": "8badca11-ea47-4a66-a600-d3a3dc6114be",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "4401fb50-7f81-4f1a-a71b-addf90783f62",
+      "title": "שופטים פרק ב"
+    },
+    {
+      "table": "lessons",
+      "id": "d322a0c5-fde9-4a70-92ec-cceeb63cb553",
+      "title": "ספר שופטים מוקלט - פרק ז"
+    },
+    {
+      "table": "lessons",
+      "id": "1b488a95-0f8d-4a48-8a17-7e3fc9783a6b",
+      "title": "גדעון - פותח עידן המלוכה"
+    },
+    {
+      "table": "lessons",
+      "id": "528ad4a8-eb89-4b54-ae40-7b42334da22d",
+      "title": "ספר שופטים מוקלט - פרק טז"
+    },
+    {
+      "table": "lessons",
+      "id": "42562d87-659e-4dec-9faa-c6ab4e113a14",
+      "title": "שופטים מוקלט - פרק כא | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "a9ba92ff-f366-40b4-9759-0dba61bedeb1",
+      "title": "שופטים פרק ד"
+    },
+    {
+      "table": "lessons",
+      "id": "263f91ed-2811-4225-aebe-f05d84e9e047",
+      "title": "התגלות המלאך"
+    },
+    {
+      "table": "lessons",
+      "id": "017bb02a-de49-4add-ae69-39080e0d2daf",
+      "title": "גדעון וצבאו"
+    },
+    {
+      "table": "lessons",
+      "id": "3d22668a-3892-41f5-8026-bed678dc83d9",
+      "title": "ספר שופטים מוקלט - פרק ט"
+    },
+    {
+      "table": "lessons",
+      "id": "2488d293-0ca3-4e5b-9f47-f89e04105962",
+      "title": "לכידת קרית ספר"
+    },
+    {
+      "table": "lessons",
+      "id": "49bd989c-2a17-4122-8b0c-a9b638a1bc90",
+      "title": "'ויוסיפו בני ישראל'"
+    },
+    {
+      "table": "lessons",
+      "id": "2eacafce-1ea5-4970-8fca-82f27c2c15f8",
+      "title": "ספר שופטים מוקלט - פרק טו"
+    },
+    {
+      "table": "lessons",
+      "id": "ba37656c-df71-46bb-8b5f-750c73983e74",
+      "title": "ספר שופטים מוקלט - פרק יז"
+    },
+    {
+      "table": "lessons",
+      "id": "d22ada30-a86f-4a07-be5b-297e9faa3c89",
+      "title": "דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "38b104f2-0b41-42c3-ac86-977d03ed879f",
+      "title": "שופטים מוקלט - פרק יט | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "928d1905-e33b-411c-aa56-389531b35859",
+      "title": "ספר שופטים מוקלט - פרק ד"
+    },
+    {
+      "table": "lessons",
+      "id": "67fa4ff5-7ab4-449f-8001-6929e0f919ce",
+      "title": "תפקידם ומהותם של שבטי עבר הירדן המזרחי"
+    },
+    {
+      "table": "lessons",
+      "id": "f5db8c1a-5c29-44a8-b7cb-766b3c2ad366",
+      "title": "אילון הזבולוני ושמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "6c58a460-8506-4520-8053-c66b3972d1b6",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "853856e0-6608-4ca2-9703-d5349f47825c",
+      "title": "דבורה הנביאה"
+    },
+    {
+      "table": "lessons",
+      "id": "428213d0-f6e5-4e14-8646-fd53fdda379d",
+      "title": "המשך שירת דבורה (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "7f6148e7-dd0b-4d1b-a2c5-5e47ef13ef58",
+      "title": "ישראל נתנו ביד פלשתים"
+    },
+    {
+      "table": "lessons",
+      "id": "d39f34a1-3f82-4db1-a032-9137f3924f09",
+      "title": "המתנדבים בעם"
+    },
+    {
+      "table": "lessons",
+      "id": "f0f1abb5-23de-453a-a533-ee518157e04f",
+      "title": "דבורה וברק - המשך של מלחמות יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "f011d505-9245-4064-ba47-020f9b8c6c7e",
+      "title": "ברק בן אבינועם - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "6d5aa8e7-de55-46e8-9251-d2e7431b9d50",
+      "title": "שופטים מוקלט - פרק ו | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "a136acb2-e6ee-4540-86cd-848324e38b20",
+      "title": "מלחמת ברק  בסיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "97a14df4-667d-4a46-8de2-fb19559ae77a",
+      "title": "שופטים מוקלט - פרק יג | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "14547861-1bfe-4b93-ad1f-c39bec0337e1",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "9115e70c-c7d8-4d38-ac9a-f5b72b2d9585",
+      "title": "שופטים מוקלט - פרק י | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "61da7b1c-1c8b-4bf7-8386-38a24bbcb36e",
+      "title": "מדוע התרחש הניצחון על סיסרא בידי אישה?"
+    },
+    {
+      "table": "lessons",
+      "id": "d70c6616-7c59-4480-8bea-c8503c4011b5",
+      "title": "ברק בן אבינעם ודבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "5d74a883-a261-49fa-953a-c0e9ae88dbd3",
+      "title": "המפגש בין אהוד ועגלון - יכולת דיבור ועדינות מול גסות ופראיות כנענית"
+    },
+    {
+      "table": "lessons",
+      "id": "caaf38c9-0e5b-44c6-8673-5093f98662ad",
+      "title": "שמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "d1a62325-7221-4434-ae7f-c5f275752318",
+      "title": "שופטים פרק טו"
+    },
+    {
+      "table": "lessons",
+      "id": "f069f098-7fa6-40f5-9f81-f47474301f8b",
+      "title": "שופטים פרק יג"
+    },
+    {
+      "table": "lessons",
+      "id": "01b6f715-d4db-4d01-9f3f-a2b67301f068",
+      "title": "השירה"
+    },
+    {
+      "table": "lessons",
+      "id": "67406246-fce3-48f4-93c9-5e826b68e661",
+      "title": "אשת לפידות"
+    },
+    {
+      "table": "lessons",
+      "id": "89f8c8e6-78e2-4a30-a113-1d6ef4845278",
+      "title": "מעשה הנבלה בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "fd95e7f0-adea-4007-985e-70f220a04781",
+      "title": "שאלות חזרה נוספות - ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "0125a502-c442-4b78-b326-86f71d3cb27f",
+      "title": "שמגר בן ענת ותחילת דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "5f741431-2d53-4c21-ae7a-87681e7eab9f",
+      "title": "שופטים פרק ו"
+    },
+    {
+      "table": "lessons",
+      "id": "1e65d155-7d67-457d-adef-c2a67a4379ce",
+      "title": "שופטים פרק יא"
+    },
+    {
+      "table": "lessons",
+      "id": "8fd5a15f-08ec-48c4-b332-25a4166a8e4b",
+      "title": "שופטים מוקלט - פרק ד | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "72e44f76-2d00-4968-8896-2a13a89c8cfc",
+      "title": "גדעון בן יואש - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "bfe119aa-3c58-4ffd-a7a3-d91db4806596",
+      "title": "שופטים מוקלט - פרק כ | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "4e9936bb-8ba8-46ee-a716-06b705545b3a",
+      "title": "שלטון המואבים"
+    },
+    {
+      "table": "lessons",
+      "id": "3cc9fd9b-328b-46e4-b377-e0d37d361377",
+      "title": "הסבר סוגיית הפתיחה של הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "3209cd94-a4b9-408b-8d6c-52610b90f75a",
+      "title": "קרבת יפתח לה'"
+    },
+    {
+      "table": "lessons",
+      "id": "c8ff6002-c274-4d3a-8426-1cd104003197",
+      "title": "האשה מתמנה"
+    },
+    {
+      "table": "lessons",
+      "id": "d59d3888-afba-47ea-80f5-f45e5c3a6972",
+      "title": "ברק בן אבינעם - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "94b2a618-674c-42f3-bc55-f6bf5c7adb42",
+      "title": "אהוד בן גרא על רקע פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "1a944261-32ad-4a9d-ae17-09b8822421fb",
+      "title": "התחלת התרקמות המלוכה בסוף תקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "6e001f7a-2f43-4a89-af81-7a91fe711fae",
+      "title": "הניצחון על סיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "9ee15294-bd86-45cd-96bd-a85a5906e06d",
+      "title": "שופטים פרק ה"
+    },
+    {
+      "table": "lessons",
+      "id": "383a23c4-bed5-43c2-a67f-3817f00f9fdf",
+      "title": "בת יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "a7ac0ce4-dbc1-4059-8cbb-6d6a0df5391d",
+      "title": "הקפת העיר יריחו וכיבושה בשבת"
+    },
+    {
+      "table": "lessons",
+      "id": "2b326d0b-a754-406e-8756-f345f99b2c92",
+      "title": "נחלת בני יוסף"
+    },
+    {
+      "table": "lessons",
+      "id": "bdf5aeb2-99f7-4232-9734-4fb49e92ec14",
+      "title": "חטא ישראל ועונש השיעבוד לפני ימי יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "90eff77c-b959-4436-891f-319e23b580b9",
+      "title": "ממפלת שמשון אל פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "b1d2d1f6-c22b-42f6-96d0-91a415aabfe5",
+      "title": "מפלת ישראל לפני בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "b49927e3-63eb-4df5-93de-272a4763cbe7",
+      "title": "מי הוא יהונתן בן גרשום בן משה?"
+    },
+    {
+      "table": "lessons",
+      "id": "eb0e1ac6-1526-4584-82f4-1bfb15c01890",
+      "title": "מלחמת אחים"
+    },
+    {
+      "table": "lessons",
+      "id": "8b9cb1b0-3f69-4fb8-9162-d6602231f2f1",
+      "title": "ההתעללות בפילגש"
+    },
+    {
+      "table": "lessons",
+      "id": "99cbfcfa-bbe7-41e2-868a-909c839d23b5",
+      "title": "ספר שופטים מוקלט - פרק יא"
+    },
+    {
+      "table": "lessons",
+      "id": "5bd7f4b0-7fa5-405f-853d-b2337c807d4c",
+      "title": "שופטים פרק יב"
+    },
+    {
+      "table": "lessons",
+      "id": "3c52d2b8-9b0e-43e6-88f9-99736d508114",
+      "title": "שופטים פרק יט"
+    },
+    {
+      "table": "lessons",
+      "id": "dbf6a9b4-7689-4e7b-acaf-adb33497e314",
+      "title": "סיכום ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "5860e3c2-839f-4d9a-8fe8-eb461c3e08a7",
+      "title": "ישראל זועקים מלחץ בני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "c9f3a144-8fb9-441e-bfbe-24123b9e7ce6",
+      "title": "לב הפרק שופטים פרק ב"
+    },
+    {
+      "table": "lessons",
+      "id": "0f0f703e-0d32-40be-854e-30ab1b3bbfd2",
+      "title": "אבצן אלון ועבדון"
+    },
+    {
+      "table": "lessons",
+      "id": "531b1f0b-182a-463e-aa9c-0315e2b0be4d",
+      "title": "שופטים פרק יא"
+    },
+    {
+      "table": "lessons",
+      "id": "9f938300-1987-4b51-a41a-b52abcf96ed1",
+      "title": "ספר שופטים מוקלט - פרק יב"
+    },
+    {
+      "table": "lessons",
+      "id": "98ed1b3b-bf90-586c-93c1-fc0b7453d4b4",
+      "title": "התקבצות המלכים ועורמת הגבעונים"
+    },
+    {
+      "table": "lessons",
+      "id": "c7a39cc9-ff55-4c2a-af67-380bbe552fd7",
+      "title": "איבצן ואילון הזבולוני"
+    },
+    {
+      "table": "lessons",
+      "id": "0157124f-298f-5af0-953b-4d2f31540934",
+      "title": "ערמת הגבעונים כתיקון לערמת הנחש"
+    },
+    {
+      "table": "lessons",
+      "id": "3cc91f8c-a3a7-5902-ad94-8e52982c695e",
+      "title": "מלחמת העי הראשונה - המעל בחרם"
+    },
+    {
+      "table": "lessons",
+      "id": "ebc2d84f-83cd-4bf0-8ad2-ea01985d4422",
+      "title": "סיכום אבימלך, יאיר הגלעדי ותופעת 'חוות יאיר'"
+    },
+    {
+      "table": "lessons",
+      "id": "151e2fba-2b40-4251-b29b-52d78eb3061e",
+      "title": "קרבת יפתח לה'"
+    },
+    {
+      "table": "lessons",
+      "id": "d46df799-c1f1-4968-93af-b9daeb9a9034",
+      "title": "מלחמת ישראל ובני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "efc31b10-6251-4123-b457-63ebc60575a4",
+      "title": "יפתח הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "2039838d-6816-4982-a46a-65f32c32bf44",
+      "title": "גדולתה של בת יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "a0887afc-226c-4788-aa6e-5a7266ac68f7",
+      "title": "שמשון נוקם בפלשתים"
+    },
+    {
+      "table": "lessons",
+      "id": "060d4e4e-4d16-4900-8437-48c14f7c774b",
+      "title": "הנהגה טבעית לאומית ללא הדרכה של תורה"
+    },
+    {
+      "table": "lessons",
+      "id": "58a6da88-1c81-582d-9ff4-310f02d6ff59",
+      "title": "פסח ומילה בשערי הכניסה לארץ ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "8ef59265-5c45-501b-bf12-4fa93dbf1711",
+      "title": "תמה תקופת המן והחלה תקופת העומר"
+    },
+    {
+      "table": "lessons",
+      "id": "23268259-91d1-52d9-8bdc-0d8fcc1f0690",
+      "title": "לקראת כיבוש יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "660c231e-6e61-479e-82da-10dbde1b70df",
+      "title": "יפתח - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "c365c81a-1e8e-5e6f-84c0-4f814a50bb30",
+      "title": "כיבוש העי במערכה השניה"
+    },
+    {
+      "table": "lessons",
+      "id": "a1e11f83-f027-426e-8f5c-167dca9903c2",
+      "title": "נדר יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "9f148b96-5331-4cbd-8756-0dd2e90db228",
+      "title": "שופטים פרק יב"
+    },
+    {
+      "table": "lessons",
+      "id": "ca1620f7-ce95-5173-a2a6-23d4b8786186",
+      "title": "מעמד הברכה והקללה"
+    },
+    {
+      "table": "lessons",
+      "id": "0f668ea2-17ed-4654-b881-2345ff3652b4",
+      "title": "קיום נדר יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "b5a1fe80-075f-4209-9fe9-9fc5421658ef",
+      "title": "יפתח לאחר המלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "cc6ec9b3-9f5f-42f2-a418-7c28f56b785a",
+      "title": "שופטים פרק י"
+    },
+    {
+      "table": "lessons",
+      "id": "b838ee40-51e4-438a-80a2-8cfc1f09941c",
+      "title": "כבוש נחלת יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "4ecbba6a-ee90-5e6b-a3ad-a0c7875003c0",
+      "title": "ארור האיש אשר יקום ויבנה את העיר יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "8e28aebe-4c68-478b-911d-f23464990232",
+      "title": "שטחים תמורת שלום?"
+    },
+    {
+      "table": "lessons",
+      "id": "f753c0fd-648f-4139-83a3-8b53f9745277",
+      "title": "נצנוצי מלכות"
+    },
+    {
+      "table": "lessons",
+      "id": "96452b9c-a5f6-4047-ad73-b16b904fc520",
+      "title": "שופטים מוקלט - פרק יב | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "aa313042-1ced-5115-b09a-e2806537fbae",
+      "title": "דינם של מלכי האמורי וכיבוש ממלכות הדרום"
+    },
+    {
+      "table": "lessons",
+      "id": "0d055d4a-ebf2-4b82-a574-173258521687",
+      "title": "דמותו של שמשון- היכולת להנהיג את החיים ולהיות בתודעת שליחות"
+    },
+    {
+      "table": "lessons",
+      "id": "50278f06-e45f-482f-9efd-520f4d5b45d6",
+      "title": "שופטים מוקלט - פרק י | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "92dbe8eb-ad65-4e0c-a1fa-8d854c4a12c9",
+      "title": "איבצן - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "c1e16d37-ab63-45bc-b591-a7cac957aa8f",
+      "title": "נדר אומלל"
+    },
+    {
+      "table": "lessons",
+      "id": "83c97dc8-1cfa-5d1d-95b6-090022cd8316",
+      "title": "בארץ ישראל – הכל על פי ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "3ed62a8a-6a2e-4913-b380-9ebdbf0fbebb",
+      "title": "ראש וקצין"
+    },
+    {
+      "table": "lessons",
+      "id": "70c7b870-ed20-4768-b6de-cc083295dd5a",
+      "title": "שלוש מאות  המלקקים"
+    },
+    {
+      "table": "lessons",
+      "id": "8ae8eb68-bee9-477d-9b8e-0e6cacbf98d4",
+      "title": "תולע בן פואה ויאיר הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "ef3f4577-384a-40c4-a923-fbfc8b3e6d86",
+      "title": "בני ישראל נקהלים על בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "c1686970-2b2d-4a06-b37c-55b79f3dd9ad",
+      "title": "שופטים פרק ח"
+    },
+    {
+      "table": "lessons",
+      "id": "b4b2a51a-d8ce-42eb-9fbb-b486464ce20a",
+      "title": "שמשון בעזה ובנחל שורק"
+    },
+    {
+      "table": "lessons",
+      "id": "e528ad8a-265c-444f-b3eb-8c7aceb2815c",
+      "title": "' ויפן אליו ד' '"
+    },
+    {
+      "table": "lessons",
+      "id": "0ced1d92-a27a-5eb7-be77-99ba44771516",
+      "title": "במעבר הירדן נפתח פרק חדש בתולדות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "cce48889-dad0-49c9-855f-3a146ddfef53",
+      "title": "פועלו של יפתח: אחדות וכלליות"
+    },
+    {
+      "table": "lessons",
+      "id": "e373af6e-de43-4c7b-af0b-4ee294f526b4",
+      "title": "התגלות מלאך ד'"
+    },
+    {
+      "table": "lessons",
+      "id": "296d3aa6-0206-4819-905b-b22e1b2f356b",
+      "title": "הפלשתים"
+    },
+    {
+      "table": "lessons",
+      "id": "597ee77e-ae26-4784-bcfd-ab2a79d6c4b7",
+      "title": "דברי המלאך לגדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "c8f7142c-c642-4315-bd72-ca8d6801acc3",
+      "title": "יפתח - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "11c2e941-07e0-4ac1-90b3-ba309086575d",
+      "title": "מלחמת אחים"
+    },
+    {
+      "table": "lessons",
+      "id": "0cc391a1-89e3-4513-8f3d-bd8fd94e9817",
+      "title": "הנער הלוי"
+    },
+    {
+      "table": "lessons",
+      "id": "6e5be43e-d440-5ca8-aefd-e85d49d30b8b",
+      "title": "שתים עשרה האבנים"
+    },
+    {
+      "table": "lessons",
+      "id": "5a6d3c24-e8d4-57db-a977-30ff7cccd2f2",
+      "title": "במעבר הירדן נפתח פרק חדש בתולדות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "41fb309a-6d0e-46ca-a485-c9afc67c4117",
+      "title": "יפתח וזקני גלעד"
+    },
+    {
+      "table": "lessons",
+      "id": "4df3dd6c-ecce-48fc-91b3-a59973abb617",
+      "title": "ההחלטה לצאת למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "cf5c8500-3a35-5be9-8eb5-04b91a8ef0ca",
+      "title": "פסח ומילה בשערי הכניסה לארץ ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "2c5448e4-be79-459d-8eda-2783bdd304f0",
+      "title": "תולע, יאיר והשיעבוד לבני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "d0ae7c2b-0ea8-4817-9d7e-bb9940f38176",
+      "title": "השלמה: סמכות השופטים, סקירת עומק על שבט בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "23266a9d-a6c4-47db-b517-5ee3d4ce7e41",
+      "title": "כיבוש בזק"
+    },
+    {
+      "table": "lessons",
+      "id": "0472eac6-8f51-53c2-b7e1-d597e5167665",
+      "title": "יהושע הביא את עכן לחיי עולם הבא"
+    },
+    {
+      "table": "lessons",
+      "id": "409efb59-a132-5a97-8b0e-36678a33d810",
+      "title": "סימן הכידון ומעמד הברית"
+    },
+    {
+      "table": "lessons",
+      "id": "b722b172-ff75-43bc-8a75-261e18e1ac0b",
+      "title": "תמה תקופת המן והחלה תקופת העומר"
+    },
+    {
+      "table": "lessons",
+      "id": "901f43f6-042b-52cc-97a1-a9eb779dea66",
+      "title": "התקבצות המלכים ועורמת הגבעונים"
+    },
+    {
+      "table": "lessons",
+      "id": "4bdaa37a-9cc6-5d91-8d69-b2ea7f492dd3",
+      "title": "מלחמת מלכי הדרום"
+    },
+    {
+      "table": "lessons",
+      "id": "1676bf4c-f8ee-5489-beb4-d79df6ef688f",
+      "title": "אבני האלגביש והשמש בגבעון"
+    },
+    {
+      "table": "lessons",
+      "id": "cade7b23-30f4-4396-be35-fdded9605bfb",
+      "title": "נאום יפתח למלך עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "db10955d-d1ae-4b8b-9edc-b571b0b7151d",
+      "title": "יפתח ובני אפרים"
+    },
+    {
+      "table": "lessons",
+      "id": "0b97b5eb-df67-51f4-95cf-374836616dbf",
+      "title": "דינם של מלכי האמורי וכיבוש ממלכות הדרום"
+    },
+    {
+      "table": "lessons",
+      "id": "ccecb4d2-16dc-579a-b092-1dd4279f6967",
+      "title": "מלחמת מלכי הצפון"
+    },
+    {
+      "table": "lessons",
+      "id": "b013f9a9-31af-5dd9-acf2-6d9ccf551b61",
+      "title": "בארץ ישראל – הכל על פי ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "f514ba73-0746-5318-bef6-75aa98ba3956",
+      "title": "סיכום כיבושי משה והמלכים שהכה יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "669cb0a8-185c-537d-8618-5907eb4760ad",
+      "title": "כלב פועל להופעת מלכות יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "152832e0-4350-52a0-9e74-c75ce2e6f062",
+      "title": "נחלת בני יוסף"
+    },
+    {
+      "table": "lessons",
+      "id": "90f19172-62ba-4334-a939-b2cec8193a77",
+      "title": "שופטים מוקלט - פרק יא | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "d2922fed-d584-5704-bc7d-dedbc194d31f",
+      "title": "יהודה ויוסף – שני משיחים"
+    },
+    {
+      "table": "lessons",
+      "id": "023f06d8-37ed-537b-ad81-66c3ac0b5fca",
+      "title": "נחלת שמעון בתוך נחלת יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "da254c71-d801-4f78-a544-27efd80f4e4e",
+      "title": "מלחמת אפרים ביפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "5658ad31-99cf-57f1-a6d3-d84c6131b2d2",
+      "title": "המזבח בגלילות הירדן"
+    },
+    {
+      "table": "lessons",
+      "id": "a3d25dd3-7e55-5d5a-ad88-ec9b93651d2a",
+      "title": "דברי יהושע האחרונים – הנאום הראשון"
+    },
+    {
+      "table": "lessons",
+      "id": "df836ae5-453b-511d-bbe9-c375857be4bc",
+      "title": "דברי יהושע האחרונים – הנאום השני"
+    },
+    {
+      "table": "lessons",
+      "id": "46e3be35-44ef-5273-a39d-99bb77ee2b32",
+      "title": "דברי יהושע האחרונים – הנאום הראשון"
+    },
+    {
+      "table": "lessons",
+      "id": "5a0b1e37-f17c-41df-9bb6-d8b0a500718e",
+      "title": "נדר יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "a5beb9f6-373d-50c0-af50-7305b7a47bf8",
+      "title": "כיבוש קרית ספר ופרשת עכסה"
+    },
+    {
+      "table": "lessons",
+      "id": "26f94331-4e76-46c1-b29a-6d796abb59e4",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י'"
+    },
+    {
+      "table": "lessons",
+      "id": "5e9bd025-5415-5724-805a-a95c0d6aac46",
+      "title": "כלב פועל להופעת מלכות יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "e31a77eb-b133-4039-8c10-4bebe766284e",
+      "title": "יפתח ומלך בני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "99d8fbd9-7d94-47fd-bee9-0f30c705345c",
+      "title": "האם יפתח העלה את בתו לעולה?"
+    },
+    {
+      "table": "lessons",
+      "id": "f6f4ab95-6d45-50a9-a5e9-86e2f28e342b",
+      "title": "הארץ הנשארת"
+    },
+    {
+      "table": "lessons",
+      "id": "fe8618e3-1fb7-4ce3-b3d3-5d780f86c89d",
+      "title": "שופטים קטנים ויפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "fbba1866-70bd-459a-b53d-589dd0bbc1a5",
+      "title": "אילון הזבולוני ושמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "78f36398-5a77-472a-80c5-02eab2beb487",
+      "title": "ספר שופטים מוקלט - פרק י"
+    },
+    {
+      "table": "lessons",
+      "id": "188fe268-1e6e-4a61-8d8e-00d3a5204eb5",
+      "title": "שיעבוד ישראל בידי בני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "c906131e-4ab0-410d-989e-412ebdd44a79",
+      "title": "תולע בן פואה ויאיר הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "e4d9cfa1-7da8-4110-a7d4-9e8eb11e86e6",
+      "title": "קרבת ה' לישראל בימי השופט"
+    },
+    {
+      "table": "lessons",
+      "id": "8d5fd817-bc8b-445e-a3af-0b5980ead45c",
+      "title": "תפקיד השופטים בעם ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "982cfcd1-e44f-44a4-a867-d418068e4547",
+      "title": "המלאך בבוכים ומעגל הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "66f28a1a-6e69-4e88-89a4-455e7f3bf89e",
+      "title": "כיצד יתכן שלא הספידו את יהושע כראוי?"
+    },
+    {
+      "table": "lessons",
+      "id": "8d244751-3598-480e-92e0-ba17bd4e0f35",
+      "title": "ערמת הגבעונים כתיקון לערמת הנחש"
+    },
+    {
+      "table": "lessons",
+      "id": "4ff43be9-430c-488d-a489-2d306c74f02a",
+      "title": "שופטים פרק ב"
+    },
+    {
+      "table": "lessons",
+      "id": "2208a50c-efd5-41c1-a127-293315a9188f",
+      "title": "תוכחת המלאך על השארת יושבי הארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "b459e137-f349-4d98-9db0-47b90f5eb867",
+      "title": "ספר שופטים מוקלט - פרק ב"
+    },
+    {
+      "table": "lessons",
+      "id": "0ef5d9ff-55d5-42bc-92b5-78f2a083d9f5",
+      "title": "תכלית ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "6db0245c-ea62-4091-a87b-e7cb52a17afa",
+      "title": "תחילתה של נפילה לאחר מות יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "98d9d2af-6763-4f51-ada4-da7d1812c07c",
+      "title": "סיום הקדמה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "3b3c481b-62cf-4984-a1b3-26010d3c4889",
+      "title": "הבוכים"
+    },
+    {
+      "table": "lessons",
+      "id": "6f646846-8af9-4b21-9c15-1496b60fc9f9",
+      "title": "חטאי ישראל בתקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "d7193d9f-0898-5fcf-a878-fdd4f231d0c7",
+      "title": "נחלת יהושע ומצוות הפרשת ערי מקלט"
+    },
+    {
+      "table": "lessons",
+      "id": "cd37fb8b-205f-48eb-b6b1-bf0421dece3f",
+      "title": "התהליך המאפיין את ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "950554b8-9aad-425d-a5a8-7c2e9b34aafb",
+      "title": "התגלות מלאך ד'"
+    },
+    {
+      "table": "lessons",
+      "id": "3ad82d8a-76b2-4919-831e-93fda2f2d0e1",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "ab9152e7-a13e-42d3-86b5-106ca2b59933",
+      "title": "העמקה בתוכחת המלאך לבני ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "090d3531-e204-4e65-933d-d3960ddd1800",
+      "title": "שופטים פרק א"
+    },
+    {
+      "table": "lessons",
+      "id": "3d9ee723-6038-41ca-b841-5cb59d113517",
+      "title": "ספר שופטים מוקלט - פרק א"
+    },
+    {
+      "table": "lessons",
+      "id": "dad13c17-91f8-43f3-b1db-fb9f9a3686a3",
+      "title": "כיבוש קרית ספר ופרשיית בני קיני"
+    },
+    {
+      "table": "lessons",
+      "id": "bc440b18-f8c8-4e2e-a30a-153031dd05ba",
+      "title": "התקהלות העם לקראת הורשת הארץ הנותרת"
+    },
+    {
+      "table": "lessons",
+      "id": "66aa7128-3ff2-48bb-b89b-545e043a621b",
+      "title": "כיבוש בזק"
+    },
+    {
+      "table": "lessons",
+      "id": "93586ceb-fa88-4167-8ecb-bb34225ab11a",
+      "title": "לכידת קרית ספר"
+    },
+    {
+      "table": "lessons",
+      "id": "d8621b9f-fe1d-4691-9551-1fb6b84937ba",
+      "title": "המשך הקדמה"
+    },
+    {
+      "table": "lessons",
+      "id": "b95b0634-393e-47c3-94b1-fc7a74276408",
+      "title": "המשך הכיבוש לאחר הסתלקותו של יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "a4a3c84a-6c93-4e06-acfd-abd75cd3fba4",
+      "title": "נחלת יהושע ומצוות הפרשת ערי מקלט"
+    },
+    {
+      "table": "lessons",
+      "id": "f1da2710-b6a7-4d87-a010-1d4a14e77fef",
+      "title": "פתיחה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "c283eb3a-6955-4a83-bffa-2aaa345510d6",
+      "title": "כיבוש קריית ספר על ידי עתניאל"
+    },
+    {
+      "table": "lessons",
+      "id": "e331e654-a161-4ee7-bb24-c902c4786433",
+      "title": "בארץ ישראל – הכל על פי ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "2017713d-6202-40e6-a97d-a1d46dd5a293",
+      "title": "הסבר סוגיית הפתיחה של הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "6b3bed0f-8e91-4a2e-89d2-924ac9b2e878",
+      "title": "מהו שופט?"
+    },
+    {
+      "table": "lessons",
+      "id": "821263d0-dfa1-42df-8bcf-026e89daeee6",
+      "title": "מדוע שרפו בני יהודה את ירושלים?"
+    },
+    {
+      "table": "lessons",
+      "id": "140a4228-aae3-4eb6-9fda-1ab60f330dc4",
+      "title": "וישאלו בני ישראל ב-ד'"
+    },
+    {
+      "table": "lessons",
+      "id": "9a381a37-54f2-4d54-b1bf-98d06bad162d",
+      "title": "מי ומתי הכה את הענקים שהיו בחברון?"
+    },
+    {
+      "table": "lessons",
+      "id": "4e57dc0d-e7f8-43ed-bc70-a9945070d5ec",
+      "title": "\"ובני קיני חֹתן משה עלו מעיר התמרים\" - מה בא הפסוק ללמדנו?"
+    },
+    {
+      "table": "lessons",
+      "id": "4ecdecc7-eb57-4787-9925-7595c6e62966",
+      "title": "אופי התקופה"
+    },
+    {
+      "table": "lessons",
+      "id": "339f1ab2-fd24-440c-89dc-3bb7d3c4094a",
+      "title": "מלכות מתוך אחריות"
+    },
+    {
+      "table": "lessons",
+      "id": "005427d0-671c-4b04-a62f-3716acd8a686",
+      "title": "כיבוש דביר"
+    },
+    {
+      "table": "lessons",
+      "id": "ac5d2294-2646-469f-880c-707bd876168f",
+      "title": "נסיונם של יהודה ויוסף להוביל את העם ותחילת של הירידה הרוחנית"
+    },
+    {
+      "table": "lessons",
+      "id": "0e27f780-ff6a-4387-b205-f934d39eea09",
+      "title": "מי ומתי הכה את הענקים שהיו בחברון?"
+    },
+    {
+      "table": "lessons",
+      "id": "981a0e70-4f22-4af3-a857-d60ad6e1875d",
+      "title": "כיבוש ירושלים בתחילת ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "f4b5fe2a-3c77-49d3-8761-a631a6d18418",
+      "title": "פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "7ba6b3de-7c37-42ef-a1b1-32ae107d430f",
+      "title": "מדוע התעכב עם ישראל בכיבוש הארץ?"
+    },
+    {
+      "table": "lessons",
+      "id": "5c38a6fb-7ef9-4f23-b026-24e26a829a22",
+      "title": "כבוש נחלת יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "93c3b4b6-6c34-4c2d-a63a-44daed9a9cde",
+      "title": "נדר אומלל"
+    },
+    {
+      "table": "lessons",
+      "id": "93a914ed-cc36-4ed0-bd55-90e960b9964c",
+      "title": "המשך הכיבוש לאחר הסתלקותו של יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "09f906d6-52e3-4375-90c9-e583e6357b4c",
+      "title": "נזיר מבטן"
+    },
+    {
+      "table": "lessons",
+      "id": "d2069ebb-b8c4-4620-a7fc-a15cbf47878d",
+      "title": "סיכום נושאי הפרקים בספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "21718db0-6ce2-4b6a-b77e-b1fa2a777ee6",
+      "title": "המשך כיבוש הארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "0efc9130-34db-4876-8102-a69c55075956",
+      "title": "כיבוש קרית ספר ופרשת עכסה"
+    },
+    {
+      "table": "lessons",
+      "id": "5f68715b-59fc-4edf-a2c5-2dc13d9c0800",
+      "title": "הקמת המלכות הרצויה בעיני ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "c24ac63f-dffe-4c95-bc90-3a4575296605",
+      "title": "דמותו של אדני-בזק ועניין פתיחת הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "9353bdd8-636d-429a-a150-7fe42b20c6ef",
+      "title": "שופטים מוקלט - פרק א | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "815ca4c5-8c61-4424-b6ef-868b1c89898d",
+      "title": "\"ובני קיני חֹתן משה עלו מעיר התמרים\" - מה בא הפסוק ללמדנו?"
+    },
+    {
+      "table": "lessons",
+      "id": "1333096f-2357-4807-9043-145c580cbe97",
+      "title": "מדוע נכתבה פרשת פסל מיכה בסוף ספר שופטים?"
+    },
+    {
+      "table": "lessons",
+      "id": "f5146e40-f75d-42c9-ae4b-097fc281fc41",
+      "title": "\"מי יעלה לנו אל הכנעני בתחלה להלחם בו?\""
+    },
+    {
+      "table": "lessons",
+      "id": "ab356f07-b4a7-48b9-9002-1113f0e21f62",
+      "title": "האם גדעון עשה אפוד לעבודה זרה?!"
+    },
+    {
+      "table": "lessons",
+      "id": "199bcb7c-8e47-47d2-b745-61865e6a8bde",
+      "title": "יהודה יעלה"
+    },
+    {
+      "table": "lessons",
+      "id": "63d2d25d-9e51-4c01-a69a-4befcaa48bd3",
+      "title": "\"מי יעלה לנו אל הכנעני בתחלה להלחם בו?\""
+    },
+    {
+      "table": "lessons",
+      "id": "d07adcff-1a05-4057-9bd5-25fc18ff6299",
+      "title": "מי יעלה לנו בתחילה?"
+    },
+    {
+      "table": "lessons",
+      "id": "50d73367-434d-4d3c-9178-5839e732d1ca",
+      "title": "הפלשתים"
+    },
+    {
+      "table": "lessons",
+      "id": "903e7f3e-e0a6-5be7-b651-0d371ddc7627",
+      "title": "שמגר בן ענת ותחילת דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "9c5307d2-58e7-5eb2-9ed7-eacd43f36f32",
+      "title": "המשך הקדמה"
+    },
+    {
+      "table": "lessons",
+      "id": "2f9bfb0e-97ea-5384-8426-b2039509d887",
+      "title": "אילון הזבולוני ושמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "a6582239-3db4-5e56-a860-19638793c754",
+      "title": "שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "d7aa5983-9abf-51aa-ba83-aa3ea59d8cbf",
+      "title": "דמותו של שמשון- היכולת להנהיג את החיים ולהיות בתודעת שליחות"
+    },
+    {
+      "table": "lessons",
+      "id": "a9451492-c558-40f6-ab1c-9270c385ab3f",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "9289981a-38d1-47c7-8fda-2f135f0aeb6c",
+      "title": "שמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "6f80b6f2-ee19-444d-997f-4f7316621ff9",
+      "title": "עתניאל ואהוד"
+    },
+    {
+      "table": "lessons",
+      "id": "b688bffa-f77d-4329-bc59-35c25af13336",
+      "title": "אהוד בן גרא שאלות על הסוגייה"
+    },
+    {
+      "table": "lessons",
+      "id": "ef71c574-1690-4657-a346-5fc301ced85f",
+      "title": "שלטון המואבים"
+    },
+    {
+      "table": "lessons",
+      "id": "3d2a43ee-a4dd-4792-9915-2ab24b5a7989",
+      "title": "\"ותהי עליו רוח ד'\""
+    },
+    {
+      "table": "lessons",
+      "id": "f020deaf-f439-4107-aaab-0fff60abae9b",
+      "title": "אבני האלגביש והשמש בגבעון"
+    },
+    {
+      "table": "lessons",
+      "id": "b5d16f43-0e3c-49fc-9987-46348151fe5b",
+      "title": "שופטים פרק ג"
+    },
+    {
+      "table": "lessons",
+      "id": "db1c0f99-a664-4da0-bee7-dfebba93a09d",
+      "title": "השירה"
+    },
+    {
+      "table": "lessons",
+      "id": "a703ac6d-d69f-4eec-9b2a-3051d2908218",
+      "title": "המפגש בין אהוד ועגלון - יכולת דיבור ועדינות מול גסות ופראיות כנענית"
+    },
+    {
+      "table": "lessons",
+      "id": "b90bf602-83e6-467f-b2ff-b54e760d1a57",
+      "title": "עתניאל מול קואליציית העמים מצפון"
+    },
+    {
+      "table": "lessons",
+      "id": "ad11b914-3e40-4cf4-a08a-69ce6f4d95ba",
+      "title": "כלב פועל להופעת מלכות יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "9cac907f-f72e-4ae8-ae5b-3de7b04a1621",
+      "title": "מהו מקור הכח הגדול של הפלשתים מול ישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "1aaa850f-8378-4f79-b43d-43c1f0ece173",
+      "title": "ספר שופטים מוקלט - פרק ג"
+    },
+    {
+      "table": "lessons",
+      "id": "c4044357-a517-4ffd-9874-61cec4763f85",
+      "title": "שופטים מוקלט - פרק ג | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "b91bc474-480f-4a44-9ce9-749ca2877800",
+      "title": "איטר יד ימינם"
+    },
+    {
+      "table": "lessons",
+      "id": "da7cecba-ac6e-4a1b-9934-a7ee6cd6b3dc",
+      "title": "אהוד בן גרא על רקע פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "f9712745-abb5-429e-800a-54f63e5cf6ee",
+      "title": "אהוד בן גרא איש ימיני ושמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "99bb99ea-ec3f-4744-bb15-ad384d992154",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "72f1e315-2a5b-450e-8ad6-c52b0372a49e",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "0e324e72-55c6-47a3-a1ef-9e4c2e2a31b8",
+      "title": "עתניאל אהוד ושמגר"
+    },
+    {
+      "table": "lessons",
+      "id": "012be892-2a5b-47bc-b568-e90998147739",
+      "title": "מלחמת מצווה"
+    },
+    {
+      "table": "lessons",
+      "id": "06f8f717-96d7-4d8d-99a8-df4bfeb91acd",
+      "title": "המלחמה השלישית מול בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "23bc56cb-d410-42a6-8851-7a5db2b0d3b1",
+      "title": "ההתאספות למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "434e10f5-d251-4765-a491-b4f60400cb25",
+      "title": "ספר שופטים מוקלט - פרק יט"
+    },
+    {
+      "table": "lessons",
+      "id": "8630fb31-0a04-454b-88d6-7a702f9e3a0a",
+      "title": "שופטים מוקלט - פרק יט | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "501bcab5-b58f-4551-8bb0-ce2086cf5823",
+      "title": "ההחלטה לצאת למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "94d77d2f-898f-4737-a374-7a4a091121fa",
+      "title": "מלחמת מלכי הצפון"
+    },
+    {
+      "table": "lessons",
+      "id": "9d5d33cf-1c4c-4eec-b0ac-cd0b026d079e",
+      "title": "כיצד היה מותר להרוג את אנשי יבש גלעד ואת טפם?"
+    },
+    {
+      "table": "lessons",
+      "id": "541e0c23-5766-4f75-8f7e-1dd3b8061669",
+      "title": "ההכנות למלחמה על שבט בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "ba148fd2-f368-4aae-80c3-8578d0d78bce",
+      "title": "תולע בן פואה"
+    },
+    {
+      "table": "lessons",
+      "id": "f8f5e18f-3102-4f44-9228-b3fe8e521748",
+      "title": "מעמד הברכה והקללה"
+    },
+    {
+      "table": "lessons",
+      "id": "aa95b5ac-f20c-41d5-8008-1afd567b01d5",
+      "title": "השבת הפילגש מבית אביה"
+    },
+    {
+      "table": "lessons",
+      "id": "11152f8b-894b-4e7a-9bc1-de27c46b7be1",
+      "title": "פילגש בגבעה - אישיותו של האיש הלוי"
+    },
+    {
+      "table": "lessons",
+      "id": "691bce89-99bf-4280-893d-fe777fc604a0",
+      "title": "מעשה הנבלה בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "ec0285cf-cde5-4dd7-a083-3ed612b50c8b",
+      "title": "פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "63722ad9-9aa5-4ad5-8e5e-062343d22711",
+      "title": "המחוללות בכרמים"
+    },
+    {
+      "table": "lessons",
+      "id": "7d3f525a-b09b-40a3-879d-8cd1fa395c0a",
+      "title": "נבלה בישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "f420e93f-1f7c-4f3b-a368-1fe23920c488",
+      "title": "מפלת ישראל לפני בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "c463f5a6-990a-49be-b52a-6a31be36a874",
+      "title": "שופטים מוקלט - פרק כ | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "68ba66ff-05a5-4b4d-bff2-21f193e28a54",
+      "title": "פילגש בגבעה - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "220c420b-bc3b-4e7e-a709-17cde879dfca",
+      "title": "פילגש בגבעה - תפקיד האב בישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "1513741a-4511-4c91-90e4-b44cb57ffbb0",
+      "title": "שופטים פרק כ"
+    },
+    {
+      "table": "lessons",
+      "id": "5bbaf1d0-0a50-4c44-a0ff-a8c8881ecdf2",
+      "title": "בני ישראל נקהלים על בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "f6893846-fd3b-4d8b-badf-4521358a5904",
+      "title": "פילגש בגבעה - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "8d33d748-cde5-471f-a60a-8995402108ac",
+      "title": "ההפסד הכפול של ישראל לבנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "18005548-7313-4336-b930-b2c568f940c5",
+      "title": "צמיחת בנימין מפרשת פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "fe7dd530-04d1-4dda-8d46-5b2fe247842c",
+      "title": "הנער הלוי"
+    },
+    {
+      "table": "lessons",
+      "id": "9544910e-0f9c-4492-b74b-a3fbbfe03579",
+      "title": "מדוע נכתבה פרשת פסל מיכה בסוף ספר שופטים?"
+    },
+    {
+      "table": "lessons",
+      "id": "8d5950b5-dc0f-4a4a-a82a-2049fedb6091",
+      "title": "שופטים פרק יז"
+    },
+    {
+      "table": "lessons",
+      "id": "7db38f24-9e74-4221-afce-a0feefc693ed",
+      "title": "\"אלוהים\" גנובים"
+    },
+    {
+      "table": "lessons",
+      "id": "f56426ec-adbf-4bc0-8ec7-86c2f1e0e635",
+      "title": "מפגש בני דן עם הנער הלוי"
+    },
+    {
+      "table": "lessons",
+      "id": "28b0b6f8-2e6a-4372-aff8-9de3f1fb6dc6",
+      "title": "בני דן כובשים את ליש"
+    },
+    {
+      "table": "lessons",
+      "id": "662e3580-8db8-43e8-9c60-51b0c7936921",
+      "title": "שופטים מוקלט - פרק יז | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "27e899a9-1ed5-4b20-88a0-0d9211797b31",
+      "title": "בני דן באים לליש"
+    },
+    {
+      "table": "lessons",
+      "id": "beb6072d-23b9-40a2-a2ca-b2414515d2fd",
+      "title": "יהודה ויוסף – שני משיחים"
+    },
+    {
+      "table": "lessons",
+      "id": "1b867a90-f6b0-4180-a81a-06d6ce5eaa30",
+      "title": "דברי יהושע האחרונים – הנאום הראשון"
+    },
+    {
+      "table": "lessons",
+      "id": "3f920e27-4a76-4aef-82ab-92b04e65ae92",
+      "title": "פסל מיכה - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "5593d207-c3eb-44df-9003-02c8c3eb0669",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "4b1a45ec-b098-4ca2-b355-db84ac8ed36c",
+      "title": "פסל מיכה - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "351c36da-7965-4223-8254-bd542bdf4f6a",
+      "title": "הסוד של פסל מיכה, חטא העגל ועגלי ירבעם"
+    },
+    {
+      "table": "lessons",
+      "id": "1fc0eb40-3c79-4520-b96d-0e84c8294694",
+      "title": "גנבת הכסף"
+    },
+    {
+      "table": "lessons",
+      "id": "7966061d-f1c5-43d4-8457-0b2ab1035537",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "242d5bfa-8356-484e-bae5-ee0a49b31d9d",
+      "title": "ההתפתחויות בכיבוש הארץ בפסל מיכה ופילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "559248db-fe20-4766-96e0-7a774f296308",
+      "title": "ספר שופטים מוקלט - פרק יז"
+    },
+    {
+      "table": "lessons",
+      "id": "dd3564f1-23a6-4490-9a6c-14c407e36de1",
+      "title": "התגלות המלאך"
+    },
+    {
+      "table": "lessons",
+      "id": "d9df9520-7c10-4bc3-96bc-33252d7c2a7b",
+      "title": "לידת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "7f40a334-e743-45b0-ba9f-bacc461d54a4",
+      "title": "היעוד הנשגב של שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "253b630f-6363-4ed9-a87e-d0870cff2f6b",
+      "title": "העמקה בנקמת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "4952984e-30fb-435d-a06d-9c2cee1176eb",
+      "title": "סיום תקופת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "6feffe4c-11c0-435f-a4d0-04e9dfd2d379",
+      "title": "ספר שופטים מוקלט - פרק טז"
+    },
+    {
+      "table": "lessons",
+      "id": "e1d955b6-5246-4a03-a475-9193c60e3a56",
+      "title": "שמשון - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "b69959fb-68f6-4b69-ae12-6dd9abb08d15",
+      "title": "התגלותו השנייה של המלאך"
+    },
+    {
+      "table": "lessons",
+      "id": "aefedf34-79da-4e21-844d-50f8f3540d29",
+      "title": "לחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "7d5fd457-c6df-4196-8c8f-1cf03b6ea520",
+      "title": "מפלת האריה"
+    },
+    {
+      "table": "lessons",
+      "id": "e554e957-2429-4f0f-8ee1-ba8675a01153",
+      "title": "הקורא אשר בלחי"
+    },
+    {
+      "table": "lessons",
+      "id": "fccb77a9-7eeb-4dac-ba77-7c4db968375b",
+      "title": "סוד השערות"
+    },
+    {
+      "table": "lessons",
+      "id": "a7c02ab5-e510-468f-9467-62d7e8a3e490",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ד"
+    },
+    {
+      "table": "lessons",
+      "id": "fb257064-0176-41f6-9d6e-13e2470b6455",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ט\"ו"
+    },
+    {
+      "table": "lessons",
+      "id": "ec27f047-148b-4251-8e3c-dd9dacf1b4a2",
+      "title": "פעולת שמשון בתמנה"
+    },
+    {
+      "table": "lessons",
+      "id": "28e52be4-aa04-47d3-b421-1e0390c64e6a",
+      "title": "שמשון נוקם בפלשתים"
+    },
+    {
+      "table": "lessons",
+      "id": "237133fb-8dca-45f9-94fc-1e89b07e8738",
+      "title": "העמקה בנס לחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "448397b4-7813-412e-ba2f-a0c85288fcf7",
+      "title": "שמשון בעזה ובנחל שורק"
+    },
+    {
+      "table": "lessons",
+      "id": "35e89679-416d-40c0-9334-33897bbcc3b0",
+      "title": "שמשון ותמצית חייו דרך החידה"
+    },
+    {
+      "table": "lessons",
+      "id": "049bc3e8-f03b-4357-b396-dae5686c649c",
+      "title": "שופטים פרק יד"
+    },
+    {
+      "table": "lessons",
+      "id": "2fe58a75-1711-4e60-8879-0d87da067c52",
+      "title": "שופטים פרק יג"
+    },
+    {
+      "table": "lessons",
+      "id": "ef918f98-d14d-4a11-ab19-5115e5f7adff",
+      "title": "האם יפתח העלה את בתו לעולה?"
+    },
+    {
+      "table": "lessons",
+      "id": "4bf997e4-b0db-52dc-883a-9d4c3170f6d0",
+      "title": "שטחים תמורת שלום?"
+    },
+    {
+      "table": "lessons",
+      "id": "90948142-6c50-5156-9d70-6a9b31317472",
+      "title": "האם יפתח העלה את בתו לעולה?"
+    },
+    {
+      "table": "lessons",
+      "id": "0abdb99c-fae7-59ef-9727-26d8756f9fb5",
+      "title": "מדוע ציוה ד' ששמשון יהיה נזיר?"
+    },
+    {
+      "table": "lessons",
+      "id": "29543ca2-c89e-5f00-914b-0584c83aa0e5",
+      "title": "מה הסוד מאחורי פרשת מנוח ואשתו?"
+    },
+    {
+      "table": "lessons",
+      "id": "8532ce8a-cdfa-4986-ba40-5dffe5206935",
+      "title": "דפי עבודה ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "1cf9983f-4fc1-5ef8-b4f0-31cea3f5a4f4",
+      "title": "אחרית ימיו ומשפחתו של גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "fbba3564-eb45-5944-8df1-1296ad50a5f1",
+      "title": "מלחמת מצווה"
+    },
+    {
+      "table": "lessons",
+      "id": "ede9bed0-b3d8-53aa-934f-520839f001b0",
+      "title": "שבט דן - עבודה זרה עמהם ומנצחים במלחמה?!"
+    },
+    {
+      "table": "lessons",
+      "id": "d04665da-d317-4092-bac5-7515eb1213ce",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ט'"
+    },
+    {
+      "table": "lessons",
+      "id": "391d477b-e985-47fc-9017-f83bcb2cfc29",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ו'"
+    },
+    {
+      "table": "lessons",
+      "id": "9c5983f1-fa86-432e-9dc2-9352e1e04b27",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ז'"
+    },
+    {
+      "table": "lessons",
+      "id": "bd7fed69-2830-40d7-9ab2-7388ed12e385",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ח'"
+    },
+    {
+      "table": "lessons",
+      "id": "3fc14a99-c9e9-499c-abe4-55a9bedbf2fb",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק א'"
+    },
+    {
+      "table": "lessons",
+      "id": "70a06ba9-44bf-4747-8124-1aefad9bf44c",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק א'"
+    },
+    {
+      "table": "lessons",
+      "id": "4310f163-ac5e-47e6-bf01-8e50d6777671",
+      "title": "אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "ba614b60-eebe-4519-bb13-ede8444fdb15",
+      "title": "מינוי גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "70dadf77-3fa2-47b6-add4-29051d85d7cb",
+      "title": "הכנות גדעון למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "6cd950f1-946a-4137-b8a5-ee58d310f9ed",
+      "title": "יפתח הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "4fe13b0e-af11-42fc-b315-b6384ef37a26",
+      "title": "בת יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "7fa51620-5a50-4de9-9d2a-04c10afbb52a",
+      "title": "סיכום הקדמה- יהודה יעלה"
+    },
+    {
+      "table": "lessons",
+      "id": "8facf78f-8af0-40e4-abbb-b237340d865f",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "52713158-ad9e-4816-bbd7-26f73c240202",
+      "title": "ביאורי מילים ועבודה עצמית - ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "8c42e84f-dac9-5d06-9c76-35e45e8d7e41",
+      "title": "שופטים פרק ו - הצעיר באלפי מנשה"
+    },
+    {
+      "table": "lessons",
+      "id": "0582a479-e308-5133-912d-7e9458e963f1",
+      "title": "פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "cf2a48f3-81bb-5cb1-b834-c599410e76a3",
+      "title": "היעוד הנשגב של שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "2fe58a29-23e3-579d-9fcc-d68f575b89ba",
+      "title": "מלכות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "e3d1229d-0d6d-58b1-82f0-4d1b7eb235e0",
+      "title": "מלכות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "d732446e-ecd8-403e-9ce1-9bba9aaab1d7",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "d890d4ea-0060-4c8a-96e2-68364a8f4958",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "637029c4-90f9-441b-b49a-e0baf5ef4d6d",
+      "title": "נדר יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "6c9ab759-04c5-4fe9-a051-691e95c98a50",
+      "title": "שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "9db5b5b4-dc8f-43d4-b834-8e313e8e5615",
+      "title": "פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "f6c6ab61-9173-4143-ba3a-011bb2580ec3",
+      "title": "המשך הקדמה"
+    },
+    {
+      "table": "lessons",
+      "id": "32e0bbf0-c8af-4b23-8767-c240525aafb3",
+      "title": "סיכום הקדמה- יהודה יעלה"
+    },
+    {
+      "table": "lessons",
+      "id": "4eb2f6ea-9fd1-4249-9d82-d920c7c36b6c",
+      "title": "הקדמה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "212a89b2-b125-4010-95bb-10469ef5e5d9",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "393864a6-e6a2-47b7-8d8a-7754d158982f",
+      "title": "שמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "968af4f1-a67f-44f8-bc0a-bc38fdf6b41a",
+      "title": "גדעון בן יואש"
+    },
+    {
+      "table": "lessons",
+      "id": "a65dae80-589c-484e-823c-2f0182b032d1",
+      "title": "תולע בן פואה ויאיר הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "b1ced112-cfb3-4841-86d9-8c7c62bb88e9",
+      "title": "יפתח הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "ca12e0d4-1521-4672-83ce-2d9f96a94f63",
+      "title": "חידת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "a1b11cf7-906f-40d2-b076-b9095e68052e",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "887f5db9-2688-44cf-86f5-7b897958e996",
+      "title": "פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "7ada8332-3856-40f3-9065-d9d56fef223f",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "042d7209-834b-4cbf-a348-4009fcc1a26f",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "6d6440ab-fa3f-4be5-8b51-50cb2bec45cf",
+      "title": "שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "3709c10b-d17a-4251-b85e-94ad12127dc5",
+      "title": "פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "ff012e3c-bb32-4740-aa9e-1d98f762e1e3",
+      "title": "פילגש בגבעה - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "63a7c318-1ba0-4fb0-b5af-e13126ed60b3",
+      "title": "שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "e2da4845-a3df-42af-967a-3e6b486bb164",
+      "title": "מינוי גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "adb33ccb-2e6a-4957-802f-ade52a5c09b5",
+      "title": "אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "b0d1b773-2597-4b05-a17c-a47d9c96a16d",
+      "title": "בת יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "62236dfa-3c3f-5401-a6d8-0c0050603fa2",
+      "title": "מלכות ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "f418af9d-fab5-54c8-b4c7-467bd9203d35",
+      "title": "מי היה עכן?"
+    },
+    {
+      "table": "lessons",
+      "id": "b3ba8c97-ba3f-5c37-8a18-93235591229a",
+      "title": "יהושע הביא את עכן לחיי עולם הבא"
+    },
+    {
+      "table": "lessons",
+      "id": "bab7682f-258f-54d9-828a-c36759d75f6d",
+      "title": "שבטי עבר הירדן עמדו בהבטחתם"
+    },
+    {
+      "table": "lessons",
+      "id": "0b90cf13-26b0-5697-9a46-ff8ab8d35c17",
+      "title": "המזבח בגלילות הירדן"
+    },
+    {
+      "table": "lessons",
+      "id": "fbbbc8eb-9d75-5d85-b435-9c114739a1f8",
+      "title": "אנשי הדממה והענוה מן השיטים"
+    },
+    {
+      "table": "lessons",
+      "id": "6d973c18-9ed0-5921-b7d5-31b7599c75e2",
+      "title": "סוד דמותה של רחב"
+    },
+    {
+      "table": "lessons",
+      "id": "f783e989-7f7c-5510-89f2-c48100aee4de",
+      "title": "סימן הכידון ומעמד הברית"
+    },
+    {
+      "table": "lessons",
+      "id": "e0e109d4-4bd7-5779-bcd8-b8aead9c75fa",
+      "title": "הקפת העיר יריחו וכיבושה בשבת"
+    },
+    {
+      "table": "lessons",
+      "id": "f8426dae-2b4f-5a39-a06a-858a128436b3",
+      "title": "חיבור משיח בן יוסף ומשיח בן דוד בכיבוש יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "20b8c8a3-b837-5cae-b6c8-a8d95a4f969e",
+      "title": "כיבוש קרית ספר ופרשת עכסה"
+    },
+    {
+      "table": "lessons",
+      "id": "ec1ea94e-47e5-58c2-9f8c-9fcf9dade7f5",
+      "title": "אבני האלגביש והשמש בגבעון"
+    },
+    {
+      "table": "lessons",
+      "id": "275fbde0-6a0c-5257-9740-a7ba49e3bcc9",
+      "title": "יהושע התעכב במלחמה ונתקצרו שנותיו"
+    },
+    {
+      "table": "lessons",
+      "id": "a12b9628-35ef-5b0b-94ac-467097a7c101",
+      "title": "ארון ברית ה' ונושאיו"
+    },
+    {
+      "table": "lessons",
+      "id": "8ccfbc58-1411-55dc-a60a-977909e63102",
+      "title": "ריבוי שכינה לקראת הכניסה לארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "0f700423-1bff-538f-a63b-7c07d1a4374f",
+      "title": "בין קריעת ים סוף למעבר הירדן"
+    },
+    {
+      "table": "lessons",
+      "id": "e6cb3705-9fd0-57ed-91e1-6afbd5629edb",
+      "title": "שתים עשרה האבנים"
+    },
+    {
+      "table": "lessons",
+      "id": "59f357e3-94bd-5b62-8f86-4514edbee03e",
+      "title": "אנשי הדממה והענוה מן השיטים"
+    },
+    {
+      "table": "lessons",
+      "id": "9a413311-0562-56b8-abf4-d80a9a9d1164",
+      "title": "סוד דמותה של רחב"
+    },
+    {
+      "table": "lessons",
+      "id": "202cf4cb-bf06-5584-bb58-2a778e3577e6",
+      "title": "ארון ברית ה' ונושאיו"
+    },
+    {
+      "table": "lessons",
+      "id": "5d59b797-fb1b-5044-9295-3573e193892b",
+      "title": "ריבוי שכינה לקראת הכניסה לארץ"
+    },
+    {
+      "table": "lessons",
+      "id": "be24d35b-005d-5387-992f-7be07b87e703",
+      "title": "בין קריעת ים סוף למעבר הירדן"
+    },
+    {
+      "table": "lessons",
+      "id": "23976d6a-fcff-54f9-a54d-f94a7bc3a260",
+      "title": "תמה תקופת המן והחלה תקופת העומר"
+    },
+    {
+      "table": "lessons",
+      "id": "ad249dbd-a0f5-5aea-a6b3-c925f12a3fc6",
+      "title": "לקראת כיבוש יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "9abf03f5-2c8c-5c9f-a198-a5dc89e7821e",
+      "title": "הקפת העיר יריחו וכיבושה בשבת"
+    },
+    {
+      "table": "lessons",
+      "id": "64418e86-ae4f-591a-839f-eceb3612b072",
+      "title": "חיבור משיח בן יוסף ומשיח בן דוד בכיבוש יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "e93d816a-eb03-5f47-82b9-72910e2107a9",
+      "title": "ארור האיש אשר יקום ויבנה את העיר יריחו"
+    },
+    {
+      "table": "lessons",
+      "id": "ee4ace40-4c55-5420-ac0a-fa85f1113784",
+      "title": "מלחמת העי הראשונה - המעל בחרם"
+    },
+    {
+      "table": "lessons",
+      "id": "d629cac3-ebad-5fd2-8b28-57f75554e619",
+      "title": "מי היה עכן?"
+    },
+    {
+      "table": "lessons",
+      "id": "103e9f61-f742-57ab-97c6-552a98274c6f",
+      "title": "כיבוש העי במערכה השניה"
+    },
+    {
+      "table": "lessons",
+      "id": "f6da6059-901e-5b3e-9d53-1b7c80acffee",
+      "title": "מעמד הברכה והקללה"
+    },
+    {
+      "table": "lessons",
+      "id": "13046029-8961-5b15-99f0-426fb36cb697",
+      "title": "ערמת הגבעונים כתיקון לערמת הנחש"
+    },
+    {
+      "table": "lessons",
+      "id": "a8eb82be-da9f-5d65-bcb8-a398e2145006",
+      "title": "יהושע התעכב במלחמה ונתקצרו שנותיו"
+    },
+    {
+      "table": "lessons",
+      "id": "85e49af7-caef-57f5-89a7-e899994eec7f",
+      "title": "הארץ הנשארת"
+    },
+    {
+      "table": "lessons",
+      "id": "db013ec3-4a1a-5578-bf68-df6f73f3c56f",
+      "title": "נחלת בני יהודה בראש"
+    },
+    {
+      "table": "lessons",
+      "id": "d0b01a17-0d3d-5561-9b13-e09870b92c7f",
+      "title": "התקהלות העם לקראת הורשת הארץ הנותרת"
+    },
+    {
+      "table": "lessons",
+      "id": "0e275daf-c838-5a06-ac37-eabe6452931a",
+      "title": "נחלת יהושע ומצוות הפרשת ערי מקלט"
+    },
+    {
+      "table": "lessons",
+      "id": "2b7a9c92-6f7c-5fa8-b6a1-afa68dbb66d8",
+      "title": "ערי המקלט וערי הלויים"
+    },
+    {
+      "table": "lessons",
+      "id": "e01881b4-86f9-5414-bcc5-06dd5c7f6a1f",
+      "title": "שבטי עבר הירדן עמדו בהבטחתם"
+    },
+    {
+      "table": "lessons",
+      "id": "049dd201-6291-56c3-9990-2e9b434a9726",
+      "title": "דברי יהושע האחרונים – הנאום השני"
+    },
+    {
+      "table": "lessons",
+      "id": "491d5b99-d910-5584-8295-85166f170b57",
+      "title": "נחלת בני יוסף"
+    },
+    {
+      "table": "lessons",
+      "id": "cc786050-a9dd-5acf-b662-2b1a2c44f16f",
+      "title": "יהודה ויוסף – שני משיחים"
+    },
+    {
+      "table": "lessons",
+      "id": "e5b52ea8-0dfe-593c-9f27-3bbc3d4142c1",
+      "title": "נחלת בני יהודה בראש"
+    },
+    {
+      "table": "lessons",
+      "id": "605510b5-87a6-58dd-9472-c1d89a1c646b",
+      "title": "התקהלות העם לקראת הורשת הארץ הנותרת"
+    },
+    {
+      "table": "lessons",
+      "id": "c970ac15-487b-5cf8-8f9c-0287a3d0c1fd",
+      "title": "נחלת שמעון בתוך נחלת יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "46efcc40-389d-52c7-ba7f-e9da1f01784f",
+      "title": "סיכום כיבושי משה והמלכים שהכה יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "12d82513-d695-58ab-b06e-241bedd131c6",
+      "title": "נחלת יהושע ומצוות הפרשת ערי מקלט"
+    },
+    {
+      "table": "lessons",
+      "id": "ac594fb2-dc14-5fa4-bf14-07086c62037a",
+      "title": "ערי המקלט וערי הלויים"
+    },
+    {
+      "table": "lessons",
+      "id": "052d036d-be34-4e8e-ad7a-41a57c807744",
+      "title": "מלכותו של אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "d244c491-e326-4da2-ad6c-f1dcff3f3a37",
+      "title": "משל יותם"
+    },
+    {
+      "table": "lessons",
+      "id": "44b006a6-6687-485b-98e5-5a7a22e91ce2",
+      "title": "יסודות מלכות אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "afc0174e-0cfd-4064-8f65-c2e8a204a976",
+      "title": "ספר שופטים מוקלט - פרק ט"
+    },
+    {
+      "table": "lessons",
+      "id": "0f2a96cf-6483-4954-b74a-2a5d31fec355",
+      "title": "סיום פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "0543aced-e1ac-50bb-8393-a6389d1f4d3e",
+      "title": "ערך המלכות"
+    },
+    {
+      "table": "lessons",
+      "id": "ef72ae4b-8399-5215-a00c-8b072282fac1",
+      "title": "הכנות גדעון למלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "f225fba0-eff8-59e6-b52a-f2835bbed2bb",
+      "title": "גדעון בן יואש"
+    },
+    {
+      "table": "lessons",
+      "id": "a4a94033-be3b-4348-aa9e-5bbf8f38bb7e",
+      "title": "גדעון - חידוש הקשר בין האב לבנים"
+    },
+    {
+      "table": "lessons",
+      "id": "8e956be1-5c8d-4a44-ba0e-e18ceb987533",
+      "title": "גדעון-סיכום"
+    },
+    {
+      "table": "lessons",
+      "id": "94fd8684-5c86-50fa-b16a-a59071a78fc0",
+      "title": "מגדעון אל מלכות אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "0dec6d83-3b64-4576-bd7e-cecd24750c93",
+      "title": "ההתמודדות עם מדין כנציגי בני קטורה"
+    },
+    {
+      "table": "lessons",
+      "id": "97b6e2b0-6a0b-4abd-b7a5-8e2475a43050",
+      "title": "אופי מנהיגותו של גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "05c2c152-3497-4171-a6a1-620bafc4acb1",
+      "title": "גדעון וצבאו"
+    },
+    {
+      "table": "lessons",
+      "id": "3baa5f76-a6e3-4ce8-bb7c-cc7c095f3c9d",
+      "title": "ספר שופטים מוקלט - פרק ז"
+    },
+    {
+      "table": "lessons",
+      "id": "8667e12c-ce5f-43bc-9049-62aab006cc54",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ד'"
+    },
+    {
+      "table": "lessons",
+      "id": "8a018b87-4b51-4c00-aaaf-3c897f36f4a2",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "8463b6f2-8cff-5cc5-8ecc-1156b8c17f3c",
+      "title": "שירת דבורה (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "891f7c34-af37-4005-bec4-2dc52ac89d41",
+      "title": "הצד האלוקי של המלחמה עם סיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "e82b5b14-d53c-4840-85e7-1c5eb35b0b2b",
+      "title": "דבורה ברק ומלחמת ישראל בכנען ובסיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "f479451a-c416-4311-be2c-98aa399e8a72",
+      "title": "מלחמת דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "9e842286-57ea-422f-b6e8-b2dbe5de525a",
+      "title": "המשך שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "f8376eb9-50b5-44ac-8f9b-53f740c50b52",
+      "title": "ספר שופטים מוקלט - פרק ה"
+    },
+    {
+      "table": "lessons",
+      "id": "fb3022af-fc12-49f4-b163-e3f70d85cd86",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"א"
+    },
+    {
+      "table": "lessons",
+      "id": "7e9b98eb-85e3-49fc-a298-26e17bb58cca",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ב"
+    },
+    {
+      "table": "lessons",
+      "id": "a7c49aca-9591-5e10-af7f-08963c197257",
+      "title": "תולע בן פואה"
+    },
+    {
+      "table": "lessons",
+      "id": "82f9a079-7988-5bf6-945c-5ddeed162aa9",
+      "title": "יפתח הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "d8aa9551-f713-483a-9600-5588c408d352",
+      "title": "העמדת זהות ישראלית שורשית וגאה"
+    },
+    {
+      "table": "lessons",
+      "id": "cd3a00a0-3b6f-4b10-b2c9-958ad9d5f031",
+      "title": "כיבוש קרית ספר ופרשת עכסה"
+    },
+    {
+      "table": "lessons",
+      "id": "5cf3b072-749a-4c90-8825-7e86407832a5",
+      "title": "מדוע שרפו בני יהודה את ירושלים?"
+    },
+    {
+      "table": "lessons",
+      "id": "9dd076fc-d16e-448c-aae9-de75744f68a7",
+      "title": "כיבוש ירושלים בתחילת ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "2bf9e045-2011-470f-88ea-220062d3199e",
+      "title": "כיצד יתכן שלא הספידו את יהושע כראוי?"
+    },
+    {
+      "table": "lessons",
+      "id": "82cf32cd-a882-4a8b-b4d3-568037f4e80e",
+      "title": "שטחים תמורת שלום?"
+    },
+    {
+      "table": "lessons",
+      "id": "d20f2fc6-b48c-4dff-88dd-77e882ed3aeb",
+      "title": "חטא פילגש בגבעה מול חטא סדום"
+    },
+    {
+      "table": "lessons",
+      "id": "c857b774-8970-44bd-baff-34777fc0be3e",
+      "title": "טל האמונה"
+    },
+    {
+      "table": "lessons",
+      "id": "8f6f232b-942c-4e68-9168-d07cce68ec12",
+      "title": "נצנוצי מלכות"
+    },
+    {
+      "table": "lessons",
+      "id": "02977392-5c38-4d77-a80b-d364546a5933",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ב'"
+    },
+    {
+      "table": "lessons",
+      "id": "4502972c-b6c6-414d-bfbe-8722b2af9fa8",
+      "title": "שופטים מוקלט - פרק ב | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "8c1a33db-066b-4dd6-a2b5-cb414d6b247b",
+      "title": "מלכות מתוך אחריות"
+    },
+    {
+      "table": "lessons",
+      "id": "a2a79759-e551-4b72-8b59-59917660db84",
+      "title": "תחילתה של נפילה לאחר מות יהושע"
+    },
+    {
+      "table": "lessons",
+      "id": "f3b37073-ce3c-50e6-90a5-856c8d70e5aa",
+      "title": "סיום הקדמה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "b60fc967-80bb-46d5-8b91-5288fd513eeb",
+      "title": "המעבר מדור יהושע אל תקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "8e7f07e8-7725-473a-ba29-96f961d22a71",
+      "title": "כיבוש ירושלים וקרית ספר"
+    },
+    {
+      "table": "lessons",
+      "id": "96bc6b6c-18a8-41cb-a3b5-006086d62706",
+      "title": "כיבושי שבט יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "67d8cdf6-5f5b-4c08-bf52-6dbcb39fd059",
+      "title": "עתניאל מול קואליציית העמים מצפון"
+    },
+    {
+      "table": "lessons",
+      "id": "ea893f3f-6c6e-45a2-9521-6eff897e24f5",
+      "title": "שמגר בן ענת ותחילת דבורה וברק"
+    },
+    {
+      "table": "lessons",
+      "id": "b3f6a9ab-c573-4cc6-8eea-c3e33831fd44",
+      "title": "מדוע התרחש הניצחון על סיסרא בידי אישה?"
+    },
+    {
+      "table": "lessons",
+      "id": "768973b9-0e73-4320-be2b-5d506ce677ab",
+      "title": "אופי מנהיגותו של גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "375afafa-9200-45d4-9576-185fb607f942",
+      "title": "אחרית ימיו ומשפחתו של גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "bce61d03-536b-41e8-8c06-bc24d5330598",
+      "title": "יסודות מלכות אבימלך"
+    },
+    {
+      "table": "lessons",
+      "id": "38288e72-f980-4746-860a-47ea8d890b26",
+      "title": "אבימלך ואנשי שכם"
+    },
+    {
+      "table": "lessons",
+      "id": "32035cc9-b950-46dc-8ac2-645b2387d3a0",
+      "title": "סיכום אבימלך, יאיר הגלעדי ותופעת 'חוות יאיר'"
+    },
+    {
+      "table": "lessons",
+      "id": "fc4c7591-86cb-4c6c-9f89-2730f4cddb75",
+      "title": "נזירותו וקדושתו של שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "5d447721-ed1d-4d6f-b80d-d8afaaec6bdf",
+      "title": "סוד כח שמשון והגורם הראשי לנפילתו"
+    },
+    {
+      "table": "lessons",
+      "id": "850fa7ba-ef34-4f13-aba8-157de26fad7a",
+      "title": "הסוד של פסל מיכה, חטא העגל ועגלי ירבעם"
+    },
+    {
+      "table": "lessons",
+      "id": "de3c4150-dab2-4133-bfc0-b0e06926eb5a",
+      "title": "ההתפתחויות בכיבוש הארץ בפסל מיכה ופילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "01ddda99-f110-4f30-87cc-60da0d154b0d",
+      "title": "צמיחת בנימין מפרשת פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "eae709a6-ea2a-41db-9cdf-9dcdcd6ee48c",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ב'"
+    },
+    {
+      "table": "lessons",
+      "id": "1fbd4449-c7fc-4eee-9612-44e19d34cfbb",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ג'"
+    },
+    {
+      "table": "lessons",
+      "id": "c2933d25-035c-4840-ad01-48fed1d296b7",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ד'"
+    },
+    {
+      "table": "lessons",
+      "id": "4814e8d7-a0be-44ce-ba03-d38968a75ec6",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ה'"
+    },
+    {
+      "table": "lessons",
+      "id": "6daaaaf8-4037-45b9-877d-2b5fcf86e5ed",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ו'"
+    },
+    {
+      "table": "lessons",
+      "id": "c54ce838-bfb5-455f-9f00-a979914865a2",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ז'"
+    },
+    {
+      "table": "lessons",
+      "id": "88f68bb1-d1d6-45fb-b232-998b1af3ebcc",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ח'"
+    },
+    {
+      "table": "lessons",
+      "id": "07cc5444-5117-40fa-8b75-31e49e92aa8f",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ט'"
+    },
+    {
+      "table": "lessons",
+      "id": "030bc6ed-604a-4836-90b2-aefe0324baa1",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ג"
+    },
+    {
+      "table": "lessons",
+      "id": "aa019451-cf10-4590-8fb5-1455547b7241",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ד"
+    },
+    {
+      "table": "lessons",
+      "id": "971d14fc-e849-42a2-9ce2-ecd417e880fe",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ט\"ו"
+    },
+    {
+      "table": "lessons",
+      "id": "a018647e-1b68-4e36-8b3c-01c115dfd266",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ז"
+    },
+    {
+      "table": "lessons",
+      "id": "e1195e1e-df11-4da0-b3fb-c2fa95677487",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ח"
+    },
+    {
+      "table": "lessons",
+      "id": "2e8fa0e7-31d1-4847-a08d-155d98891b16",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ט"
+    },
+    {
+      "table": "lessons",
+      "id": "8af5ca6a-d913-49c3-889c-00fe7795f9d7",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק כ'"
+    },
+    {
+      "table": "lessons",
+      "id": "5f5f760e-d7a5-4950-b230-d0b087733d92",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק כ\"א"
+    },
+    {
+      "table": "lessons",
+      "id": "62fff492-0851-42c6-b7ac-7095ccc42fc8",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ג'"
+    },
+    {
+      "table": "lessons",
+      "id": "17cf734b-7071-4fbf-bd38-5f23c133b656",
+      "title": "כושן רשעתיים"
+    },
+    {
+      "table": "lessons",
+      "id": "2c50e5aa-52eb-4dee-a3a7-6a98f80903c7",
+      "title": "עתניאל"
+    },
+    {
+      "table": "lessons",
+      "id": "e996cb05-6893-4bff-8a53-0b282655075c",
+      "title": "הסבר על שבט שמעון"
+    },
+    {
+      "table": "lessons",
+      "id": "edfcb113-af03-576c-a52b-0b925c51b48c",
+      "title": "שמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "0297a625-2efd-53e3-81d3-ef329dd73621",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "80476c02-f32e-4151-9ec6-6b2f453b3b39",
+      "title": "התשועה ביד אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "d5e71237-da01-44ca-9a13-89171f2e9582",
+      "title": "עתניאל בן קנז"
+    },
+    {
+      "table": "lessons",
+      "id": "234522bd-bf15-5fd6-831b-d7b90eb599d4",
+      "title": "אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "53ec615c-b6dc-4656-ad2f-3571f7ae69e0",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ט"
+    },
+    {
+      "table": "lessons",
+      "id": "ccd994ee-9c07-407a-91ff-0d5a673c68f7",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק כ'"
+    },
+    {
+      "table": "lessons",
+      "id": "9f4e542d-6784-4d03-9310-40659003c145",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק כ\"א"
+    },
+    {
+      "table": "lessons",
+      "id": "8fbfd54f-a556-5599-a9d8-697006a13a02",
+      "title": "פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "a5806e14-eb23-4c1c-9db0-0e5436b1beac",
+      "title": "מלחמת אחים (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "9662636c-e0d6-4e04-84b5-76cb0da03d20",
+      "title": "נשות שבט בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "b3f59f31-6238-513b-9ae3-5fa03a9af408",
+      "title": "פילגש בגבעה - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "e903251b-8ed5-4b22-a714-f006838114a7",
+      "title": "קהל עם האלקים?!"
+    },
+    {
+      "table": "lessons",
+      "id": "b85c86b4-d308-4353-969d-8d89c544830e",
+      "title": "חטא פילגש בגבעה מול חטא סדום"
+    },
+    {
+      "table": "lessons",
+      "id": "8028bf7a-883a-4bc6-8be8-c54d1386f373",
+      "title": "מדוע התאספו כל ישראל להילחם בבנימין?"
+    },
+    {
+      "table": "lessons",
+      "id": "4ebbabb0-9b1c-494d-9092-c5799c5c3270",
+      "title": "מה קורה כשאין מלכות בישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "61a1618b-b3ee-492e-8f82-0635126be560",
+      "title": "אחדות אמיתית ואחדות מזויפת של עם ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "28a22849-a4ee-4339-a36a-b6fb46a859ae",
+      "title": "ראשית צמיחת האחדות בישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "d8297ad2-92c3-442d-8bc0-d1caad5bbf29",
+      "title": "פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "8d14f376-dc76-43a0-865e-6b4d3a56fd4d",
+      "title": "סיום פילגש בגבעה"
+    },
+    {
+      "table": "lessons",
+      "id": "5a1e76d8-5acf-4ac3-af2b-2f5b7c773dc1",
+      "title": "ההתעללות בפילגש"
+    },
+    {
+      "table": "lessons",
+      "id": "4b10a4f7-2b2d-421f-8711-c2567b9630b6",
+      "title": "חשבון הנפש לאחר המלחמה"
+    },
+    {
+      "table": "lessons",
+      "id": "1ccda409-27dd-4f71-b791-e6364d73cec1",
+      "title": "חטיפת המחוללות"
+    },
+    {
+      "table": "lessons",
+      "id": "cdc6e3da-7086-4efb-9e8a-ad245e6d10a9",
+      "title": "שופטים פרק יט"
+    },
+    {
+      "table": "lessons",
+      "id": "e3e4a4fc-d080-431d-9588-098fc51fd1c4",
+      "title": "שופטים פרק כא"
+    },
+    {
+      "table": "lessons",
+      "id": "3a8783bf-71fb-4287-a025-cdb6538560b1",
+      "title": "ספר שופטים מוקלט - פרק כ"
+    },
+    {
+      "table": "lessons",
+      "id": "d0a1d359-5413-4012-b63e-cf94325a3e64",
+      "title": "ספר שופטים מוקלט - פרק כא"
+    },
+    {
+      "table": "lessons",
+      "id": "097126fe-6412-4de5-b817-5d842e23cbf2",
+      "title": "שופטים מוקלט - פרק כא | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "6b124e1e-3e9b-46ad-9f59-9d7f62ccf75b",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ז"
+    },
+    {
+      "table": "lessons",
+      "id": "9e415e46-83fb-48d7-a116-5f8d9f7172c0",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ח"
+    },
+    {
+      "table": "lessons",
+      "id": "244d752d-54a2-45f8-8ab3-d160ccac89c7",
+      "title": "בני דן גונבים את פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "ff3d2253-7533-42e3-b319-0d57901ee75e",
+      "title": "כל ספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "7a1f1b02-bbaf-4243-958a-96504311d82f",
+      "title": "שופטים מוקלט - פרק ג | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "d84ba949-845a-474c-aff2-cc44019194e1",
+      "title": "שופטים מוקלט - פרק יח | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "21fedeff-a922-4799-a420-ac9ba514c78b",
+      "title": "מלכות דוד מתוך תקופת השופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "a17e49fb-232f-495f-9cd3-cb4f5c28d863",
+      "title": "מסקנות המבט ביחס למגילת רות"
+    },
+    {
+      "table": "lessons",
+      "id": "e17f49ef-3626-40ad-a390-b244726f02ad",
+      "title": "דמותו של אדני-בזק ועניין פתיחת הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "977ae02d-ab0f-47ed-969c-33d8801a0f66",
+      "title": "כיבוש דביר"
+    },
+    {
+      "table": "lessons",
+      "id": "b30e5efc-6870-4590-933b-d25e6595a9c6",
+      "title": "סיום הקדמה לספר שופטים"
+    },
+    {
+      "table": "lessons",
+      "id": "0e17fda0-3826-4439-b6ee-9fda97b73fda",
+      "title": "תפקיד השופטים בעם ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "e46e6594-e752-482c-8dab-8489c956697e",
+      "title": "כושן רשעתיים"
+    },
+    {
+      "table": "lessons",
+      "id": "b7ab7e7c-5a06-4d9e-8e74-c2f8d4449593",
+      "title": "אהוד בן גרא איש ימיני ושמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "d09ae8f7-6975-4264-a18d-8ad79818edda",
+      "title": "שמגר בן ענת"
+    },
+    {
+      "table": "lessons",
+      "id": "905b42ad-fb8f-4139-a74b-9a7346c19556",
+      "title": "ברק בן אבינועם - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "15106ef0-6a3b-4ef0-aff0-f793207eb19b",
+      "title": "נפילת סיסרא ביד יעל"
+    },
+    {
+      "table": "lessons",
+      "id": "7c9025cc-eacc-42a6-80a1-b864c583b321",
+      "title": "גדעון בן יואש - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "ad1c5b0c-bcdc-4baf-8d08-091c140453ae",
+      "title": "ערך המלכות"
+    },
+    {
+      "table": "lessons",
+      "id": "fd95db45-3e29-4bb5-ab0c-9d1c2b432cec",
+      "title": "תולע בן פואה ויאיר הגלעדי"
+    },
+    {
+      "table": "lessons",
+      "id": "57a60cd0-c61e-404c-aa54-180ecac0d9c3",
+      "title": "יפתח - פתיחה"
+    },
+    {
+      "table": "lessons",
+      "id": "b3c90cf0-4aac-4f55-af83-7260fc1de3c4",
+      "title": "יפתח - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "85585cb7-0226-47a0-b8e7-1459e0f5f0d7",
+      "title": "שמשון - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "785dbbc9-2af6-49d6-99d7-e3247df6a51e",
+      "title": "פסל מיכה - סיום"
+    },
+    {
+      "table": "lessons",
+      "id": "daa14a72-b2cb-4a5d-b7fb-2fa81608155d",
+      "title": "פילגש בגבעה - תפקיד האב בישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "762796d6-a06a-4b43-ad9f-69d4146e6071",
+      "title": "פילגש בגבעה - אישיותו של האיש הלוי"
+    },
+    {
+      "table": "lessons",
+      "id": "f892eae8-86bc-4326-a43d-8d5d36ce6885",
+      "title": "פילגש בגבעה - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "8b4d8402-a338-4832-8b88-e91f0d601f9d",
+      "title": "הקדמה ללימוד תנ\"ך"
+    },
+    {
+      "table": "lessons",
+      "id": "e4865d61-46ce-4df9-a418-cbe092f8f800",
+      "title": "מלחמת מצווה"
+    },
+    {
+      "table": "lessons",
+      "id": "fd3fb6d7-e9bd-4e3c-a2ab-6449a8c5d2d4",
+      "title": "התשועה ביד אהוד בן גרא"
+    },
+    {
+      "table": "lessons",
+      "id": "ffe90e44-ca07-49a4-b046-adf1bbb30a40",
+      "title": "הניצחון על סיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "55a0e7de-e06e-55d8-a2e1-ab7b97d33f81",
+      "title": "המשך שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "c8d9dfaf-82d0-4bfb-bd43-4f4a3fc76b70",
+      "title": "תהליך התשובה של ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "3d623f6b-8785-4eaf-8224-52fbdefb932b",
+      "title": "נסיונות גדעון"
+    },
+    {
+      "table": "lessons",
+      "id": "442726e3-b41a-4ceb-930d-e6d1b7775d79",
+      "title": "המתקפה על מדין"
+    },
+    {
+      "table": "lessons",
+      "id": "473a9037-e07a-4b87-9042-52398d5244cc",
+      "title": "אבימלך בן ירובעל"
+    },
+    {
+      "table": "lessons",
+      "id": "18b279e7-2c9c-4360-96a3-dc65d5089e2d",
+      "title": "ישראל זועקים מלחץ בני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "d90f0f84-e165-4c55-b226-358b4903209d",
+      "title": "נדר יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "3c298c26-6db9-484e-babc-d51129b0f546",
+      "title": "מלחמת ישראל ובני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "6959a68a-ca27-416c-a7fc-469649fbe529",
+      "title": "קיום נדר יפתח"
+    },
+    {
+      "table": "lessons",
+      "id": "c478fc55-19a0-44fe-aa3e-40fb3e6e7c68",
+      "title": "מנוח ואשתו"
+    },
+    {
+      "table": "lessons",
+      "id": "646168e9-457b-4775-b8cb-5303a0244400",
+      "title": "התגלותו השנייה של המלאך"
+    },
+    {
+      "table": "lessons",
+      "id": "798c971d-2067-4610-b351-aa702190908d",
+      "title": "לחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "49c366c5-2cc4-49cc-9f9c-635d3e1a2341",
+      "title": "העמקה בנקמת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "486b9153-4732-4561-a212-52eb6c19a9c9",
+      "title": "סיום תקופת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "4a44cfa1-6de3-47d9-a241-b2266229dc3e",
+      "title": "מלחמת אחים (1)"
+    },
+    {
+      "table": "lessons",
+      "id": "53ae4630-a1d7-4c7d-ae10-6b163f55b32d",
+      "title": "נשות שבט בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "9219f901-a3f7-4379-93c2-6a91c2580fb2",
+      "title": "מלחמת ברק  בסיסרא"
+    },
+    {
+      "table": "lessons",
+      "id": "6663b453-293f-4b7f-ad51-f642bc067476",
+      "title": "ניצחון גדעון על מדין"
+    },
+    {
+      "table": "lessons",
+      "id": "a9439247-0b11-4d23-a74e-42ffde02cfd9",
+      "title": "גדעון - חידוש הקשר בין האב לבנים"
+    },
+    {
+      "table": "lessons",
+      "id": "5db2f6b6-9844-42b1-84ae-86a1a944f2b0",
+      "title": "הסכנה בנפילה לרוחניות קלה ושטחית"
+    },
+    {
+      "table": "lessons",
+      "id": "b9971823-6a1d-415a-b633-0ff44e5900ca",
+      "title": "מה קורה כשאין מלכות בישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "a6036ba4-e438-4fdb-a0e6-863a87200f7a",
+      "title": "אחדות אמיתית ואחדות מזויפת של עם ישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "d345eb4f-d28d-4314-a822-dfa30ae05844",
+      "title": "ראשית צמיחת האחדות בישראל"
+    },
+    {
+      "table": "lessons",
+      "id": "5ac2938c-2021-4011-8c9c-9049675475d8",
+      "title": "ספר שופטים כהכנה למלכות ישראל- סיכום הספר"
+    },
+    {
+      "table": "lessons",
+      "id": "3dc7f7b8-deae-40e2-827a-7d8c35849487",
+      "title": "כיבושי שבט יהודה"
+    },
+    {
+      "table": "lessons",
+      "id": "2f09e082-24d4-414d-973d-ccdd449c1917",
+      "title": "המשך שירת דבורה"
+    },
+    {
+      "table": "lessons",
+      "id": "4f484805-a4d4-45b6-ac44-4b43060076b0",
+      "title": "מרדף גדעון אחרי זבח וצלמונע"
+    },
+    {
+      "table": "lessons",
+      "id": "bcb4eb64-78b1-402f-8f19-6744fbdd4742",
+      "title": "תולע, יאיר והשיעבוד לבני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "b739b7db-1662-4752-9de9-a082136d54a1",
+      "title": "יפתח וזקני גלעד"
+    },
+    {
+      "table": "lessons",
+      "id": "e98610e4-2c70-4bdc-a48e-5823ef94adf9",
+      "title": "יפתח ומלך בני עמון"
+    },
+    {
+      "table": "lessons",
+      "id": "c5b34c9a-4b40-4e01-a472-5d3f997f5b20",
+      "title": "יפתח ובני אפרים"
+    },
+    {
+      "table": "lessons",
+      "id": "804b44cc-7150-454f-9051-ab4333eec7ce",
+      "title": "בשורת המלאך למנוח"
+    },
+    {
+      "table": "lessons",
+      "id": "2be6a07c-3269-4ef5-b1e0-a0baa9259cd7",
+      "title": "הירידה לתמנה"
+    },
+    {
+      "table": "lessons",
+      "id": "621cd7b7-810d-56b2-ac5c-799b7c9b8817",
+      "title": "חידת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "0193c96c-f110-4277-8b91-4f25a52431fb",
+      "title": "השריפה באמצעות השועלים"
+    },
+    {
+      "table": "lessons",
+      "id": "7a072e66-682f-4307-9a4d-c52e0d07d804",
+      "title": "הלחימה בלחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "e9753f13-078d-4a0b-937b-754d92ad44c9",
+      "title": "שמשון ודלילה"
+    },
+    {
+      "table": "lessons",
+      "id": "02a3df77-d7c7-4f51-a2d1-876a0acd3851",
+      "title": "מינוי הלוי לכהן לפסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "72508e24-434c-4dd5-9e11-f573f7658efa",
+      "title": "השבת הפילגש מבית אביה"
+    },
+    {
+      "table": "lessons",
+      "id": "f8d18dc1-9c72-418b-8ee8-2fd891257c4b",
+      "title": "ההפסד הכפול של ישראל לבנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "15e60d3f-7388-4f19-aa35-f35eceb98628",
+      "title": "המלחמה השלישית מול בנימין"
+    },
+    {
+      "table": "lessons",
+      "id": "9548823a-10a5-410b-9d71-3799748490d5",
+      "title": "חטיפת המחוללות"
+    },
+    {
+      "table": "lessons",
+      "id": "de475174-f24f-47f1-81c4-84560296d204",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק י\"ג"
+    },
+    {
+      "table": "lessons",
+      "id": "e3eab8db-e6ce-449e-9255-bff02680183b",
+      "title": "ביאור \"ושננתם\" לספר שופטים פרק ט\"ז"
+    },
+    {
+      "table": "lessons",
+      "id": "459346b5-3f1a-494e-9727-f2f255e56e83",
+      "title": "שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "d11db05c-0aca-4ec8-b485-0e236cfd359a",
+      "title": "שמשון - המשך"
+    },
+    {
+      "table": "lessons",
+      "id": "acc963e3-fc2f-48f3-9931-613e6c443353",
+      "title": "נזירות שמשון ולחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "9b8015dc-d291-4354-862b-8cc3ba9f5c58",
+      "title": "ישראל נתנו ביד פלשתים"
+    },
+    {
+      "table": "lessons",
+      "id": "b285e407-c0b7-4146-acc3-1b9a26ea180b",
+      "title": "מנוח ואשתו"
+    },
+    {
+      "table": "lessons",
+      "id": "77dfd527-79e7-4870-aa1f-8a7602e077d8",
+      "title": "חידת שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "0653c8f6-7aad-4403-9cb0-5a69231e042e",
+      "title": "נזיר מבטן"
+    },
+    {
+      "table": "lessons",
+      "id": "1f9e01c0-be3e-4e6a-8de9-784f399f752c",
+      "title": "מדוע ציוה ד' ששמשון יהיה נזיר?"
+    },
+    {
+      "table": "lessons",
+      "id": "8459f3e9-65c5-488e-9595-2c9249460664",
+      "title": "מה הסוד מאחורי פרשת מנוח ואשתו?"
+    },
+    {
+      "table": "lessons",
+      "id": "fa4dcc37-3eb2-443d-8654-1d0ad8c881d2",
+      "title": "שליחותו של שמשון - שליטה בחומר מתוך חיבור למקור האלוקי"
+    },
+    {
+      "table": "lessons",
+      "id": "0dad3e3d-0b77-4b68-8c8b-0fde1bf9cb61",
+      "title": "נפילתו של שמשון - צעד אחד יותר מידי"
+    },
+    {
+      "table": "lessons",
+      "id": "0aa43588-c946-4ea2-ba6a-91b8b269fdf6",
+      "title": "שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "266c3d5e-0a2c-4fec-81c1-67c6425140df",
+      "title": "שמשון ותחילת הישועה"
+    },
+    {
+      "table": "lessons",
+      "id": "e8dd5281-1f02-5422-adfb-b447cb5f65d3",
+      "title": "מהו מקור הכח הגדול של הפלשתים מול ישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "171ac4a5-63fd-4f90-a157-ba607bda6c1a",
+      "title": "תפקידו של שמשון משבט דן"
+    },
+    {
+      "table": "lessons",
+      "id": "b4a994c6-6341-4cdd-bb52-8f7a284ddc07",
+      "title": "נזירותו וקדושתו של שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "b4bccbbe-3319-4081-beeb-63b54db18d17",
+      "title": "סוד כח שמשון והגורם הראשי לנפילתו"
+    },
+    {
+      "table": "lessons",
+      "id": "91027665-0f1e-49d6-a9ff-ea6c5cdb28cc",
+      "title": "ממפלת שמשון אל פסל מיכה"
+    },
+    {
+      "table": "lessons",
+      "id": "d7abd592-b239-4667-b139-9e4961d186ef",
+      "title": "בשורת המלאך לאם שמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "ac5222e7-6b65-45df-88d1-43968059fd48",
+      "title": "בשורת המלאך למנוח"
+    },
+    {
+      "table": "lessons",
+      "id": "2a323762-d5c9-4f3d-91d2-263b333e5351",
+      "title": "השריפה באמצעות השועלים"
+    },
+    {
+      "table": "lessons",
+      "id": "b3c91c45-46f9-46ae-9332-fe7a9bad100c",
+      "title": "הלחימה בלחי החמור"
+    },
+    {
+      "table": "lessons",
+      "id": "604091f8-41cc-4c01-9a54-0fecd2220b3c",
+      "title": "האישה העזתית"
+    },
+    {
+      "table": "lessons",
+      "id": "df2f0a3e-9b86-4665-aeec-41d54ff20d16",
+      "title": "שמשון ודלילה"
+    },
+    {
+      "table": "lessons",
+      "id": "bb5471bb-0a35-4cdf-8339-1e9c024ab547",
+      "title": "שופטים פרק טו"
+    },
+    {
+      "table": "lessons",
+      "id": "6acd13b9-6fa3-4936-b389-fd973312a7aa",
+      "title": "שופטים פרק טז"
+    },
+    {
+      "table": "lessons",
+      "id": "84cb37d8-1f44-4bd3-894f-3050803b83e4",
+      "title": "ספר שופטים מוקלט - פרק יג"
+    },
+    {
+      "table": "lessons",
+      "id": "cc8f9771-3fcf-4d88-a2a2-5b997db7522b",
+      "title": "ספר שופטים מוקלט - פרק יד"
+    },
+    {
+      "table": "lessons",
+      "id": "5a03e978-1926-477b-a562-e561d625cb18",
+      "title": "ספר שופטים מוקלט - פרק טו"
+    },
+    {
+      "table": "lessons",
+      "id": "212cd8e4-cca3-4a2f-b111-a0743f02805d",
+      "title": "שופטים מוקלט - פרק יג | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "35101a84-f477-483f-a856-636a46d9a1d8",
+      "title": "שופטים מוקלט - פרק יד | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "96fa8bb2-ba9c-482f-9957-ab801e85d26e",
+      "title": "שופטים מוקלט - פרק טו | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "64f4f2fb-f01e-4383-825d-1b1482a29078",
+      "title": "שופטים מוקלט - פרק טז | ללא טעמים"
+    },
+    {
+      "table": "lessons",
+      "id": "46ac1948-9130-5b1e-b178-73e0241ee548",
+      "title": "מהו מקור הכח הגדול של הפלשתים מול ישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "66decc88-8519-5bfb-9aed-bcbe42b4da09",
+      "title": "\"ויהי בימי שפוט השופטים\""
+    },
+    {
+      "table": "lessons",
+      "id": "ad1081fa-5e96-51fc-9cf1-88959cf460b2",
+      "title": "\"ויהי בימי שפוט השופטים\""
+    },
+    {
+      "table": "lessons",
+      "id": "350dea05-c0a5-45f6-ab53-7fc8109ee02d",
+      "title": "לב הפרק - שופטים הקדמה לשמשון"
+    },
+    {
+      "table": "lessons",
+      "id": "4e752399-9a3d-51f1-8cad-8255dd5dfa08",
+      "title": "כיבוש ירושלים וקרית ספר"
+    },
+    {
+      "table": "lessons",
+      "id": "12237a81-d4b1-5f84-b281-b7692c167587",
+      "title": "תמה תקופת המן והחלה תקופת העומר"
+    },
+    {
+      "table": "lessons",
+      "id": "c401bc01-6bec-5d09-bc5f-03263e06a35c",
+      "title": "תפקידם ומהותם של שבטי עבר הירדן המזרחי"
+    },
+    {
+      "table": "lessons",
+      "id": "54ed6492-35c9-5e41-8667-1d08c6e8efea",
+      "title": "מהו מקור הכח הגדול של הפלשתים מול ישראל?"
+    },
+    {
+      "table": "lessons",
+      "id": "fe02f804-0ea1-5a4a-bc41-6496147cbb3d",
+      "title": "כיבוש ירושלים וקרית ספר"
+    }
+  ],
+  "rows": [
+    {
+      "order_index": 0,
+      "kind": "series",
+      "series_id": "9aa7afdb-e029-4d82-af65-5584e320ca75",
+      "lesson_id": null,
+      "title": "ספר שופטים עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "old_title": "ספר שופטים עם ביאור \"ושננתם\" מחולק לפי פרקים",
+      "author": "ושננתם",
+      "length": "21 שיעורים"
+    },
+    {
+      "order_index": 1,
+      "kind": "series",
+      "series_id": "48e874cb-c4e9-4b9c-b529-aa0b7e4658a1",
+      "lesson_id": null,
+      "title": "שיעורים בספר שופטים",
+      "old_title": "שיעורים בספר שופטים",
+      "author": "הרב חננאל אתרוג",
+      "length": "44 שיעורים"
+    },
+    {
+      "order_index": 2,
+      "kind": "series",
+      "series_id": "a577d115-3158-4fb4-955e-8e032475afc5",
+      "lesson_id": null,
+      "title": "שיעורים בספר שופטים על פי ה'לב אהרון'",
+      "old_title": "שיעורים בספר שופטים על פי ה'לב אהרון'",
+      "author": "הרב אריק אוריאל",
+      "length": "72 שיעורים"
+    },
+    {
+      "order_index": 3,
+      "kind": "series",
+      "series_id": "2525e746-8f22-4cab-9666-64e7718f805a",
+      "lesson_id": null,
+      "title": "ספר שופטים",
+      "old_title": "ספר שופטים",
+      "author": "הרב טוביה לפשיץ",
+      "length": "11 שיעורים"
+    },
+    {
+      "order_index": 4,
+      "kind": "series",
+      "series_id": "78f040d7-89a6-435e-9aef-50de86b3929a",
+      "lesson_id": null,
+      "title": "שיעורים על התנ\"ך - שופטים",
+      "old_title": "שיעורים על התנ\"ך - שופטים",
+      "author": "הרב יצחק בן שחר",
+      "length": "16 שיעורים"
+    },
+    {
+      "order_index": 5,
+      "kind": "series",
+      "series_id": "22d73e7d-b7a6-4b11-9785-03d58998e044",
+      "lesson_id": null,
+      "title": "מאמרים על ספר שופטים",
+      "old_title": "מאמרים על ספר שופטים",
+      "author": "הרב אלחנן בן נון",
+      "length": "22 שיעורים"
+    },
+    {
+      "order_index": 6,
+      "kind": "series",
+      "series_id": "36bee514-ab3f-4ea4-aba6-8dc5ca049f17",
+      "lesson_id": null,
+      "title": "שופטים, שמואל ורות - מהעדר מלכות לבניינה",
+      "old_title": "שופטים, שמואל ורות - מהעדר מלכות לבניינה",
+      "author": "הרב יואב אוריאל",
+      "length": "9 שיעורים"
+    },
+    {
+      "order_index": 7,
+      "kind": "series",
+      "series_id": "558300b3-fa42-4517-8b09-e44ec300cb95",
+      "lesson_id": null,
+      "title": "מאמרים - ספר שופטים",
+      "old_title": "מאמרים - ספר שופטים",
+      "author": "הרב איתן שנדורפי",
+      "length": "19 שיעורים"
+    },
+    {
+      "order_index": 8,
+      "kind": "series",
+      "series_id": "067b6a22-dd6a-40bc-a7a0-a298e8e89656",
+      "lesson_id": null,
+      "title": "שיעורים שופטים",
+      "old_title": "שיעורים - שופטים",
+      "author": "הרב נתן רוטמן",
+      "length": "3 שיעורים"
+    },
+    {
+      "order_index": 9,
+      "kind": "series",
+      "series_id": "ff7891da-1720-441d-bccd-d4685b066463",
+      "lesson_id": null,
+      "title": "שיעורים על ספר שופטים",
+      "old_title": "שיעורים על ספר שופטים",
+      "author": "הרב אליעזר קשתיאל",
+      "length": "15 שיעורים"
+    },
+    {
+      "order_index": 10,
+      "kind": "series",
+      "series_id": "3eb9290f-92ff-4ebe-ac18-cf7a22a035f5",
+      "lesson_id": null,
+      "title": "בימי שפוט השופטים",
+      "old_title": "בימי שפוט השופטים",
+      "author": "הרב דני סטיסקין",
+      "length": "18 שיעורים"
+    },
+    {
+      "order_index": 11,
+      "kind": "series",
+      "series_id": "e00c6149-9597-4b96-b8b5-785505ef1b8a",
+      "lesson_id": null,
+      "title": "ספר שופטים כלל ופרט",
+      "old_title": "ספר שופטים כלל ופרט",
+      "author": "הרב יואב אוריאל",
+      "length": "36 שיעורים"
+    },
+    {
+      "order_index": 12,
+      "kind": "series",
+      "series_id": "f653f565-ce9e-4793-9053-d05d4c3fd4ee",
+      "lesson_id": null,
+      "title": "שיעורים קצרים - קריאה וביאור ספר שופטים",
+      "old_title": "שיעורים קצרים - קריאה וביאור ספר שופטים",
+      "author": "הרב חנניה מלכה",
+      "length": "38 שיעורים"
+    },
+    {
+      "order_index": 13,
+      "kind": "series",
+      "series_id": "590c0b91-3e9e-4d70-818e-538a45f08d81",
+      "lesson_id": null,
+      "title": "קריאה וביאור בקצרה של ספר שופטים",
+      "old_title": "קריאה וביאור בקצרה של ספר שופטים",
+      "author": "הרב יונדב זר",
+      "length": "23 שיעורים"
+    },
+    {
+      "order_index": 14,
+      "kind": "series",
+      "series_id": "5e6437fc-7448-409c-b0a5-88dec1bf6e22",
+      "lesson_id": null,
+      "title": "שופטים - מוקלט | אשכנזי",
+      "old_title": "שופטים - מוקלט | אשכנזי",
+      "author": "מערכת בני ציון",
+      "length": "21 שיעורים"
+    },
+    {
+      "order_index": 15,
+      "kind": "series",
+      "series_id": "7296b10f-93b5-41a7-bc4a-082180e03671",
+      "lesson_id": null,
+      "title": "שופטים - מוקלט | ללא טעמים",
+      "old_title": "שופטים - מוקלט | ללא טעמים",
+      "author": "הרב דן בארי",
+      "length": "21 שיעורים"
+    },
+    {
+      "order_index": 16,
+      "kind": "series",
+      "series_id": "522091c6-eb4e-46c8-94de-192f91e653a8",
+      "lesson_id": null,
+      "title": "מפי כהן - על ספר שופטים",
+      "old_title": "מפי כהן - על ספר שופטים",
+      "author": "הרב שמעון כהן",
+      "length": "6 שיעורים"
+    },
+    {
+      "order_index": 17,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "781a2399-119a-48a4-ac0c-080e60530cf0",
+      "title": "עתניאל ועכסה - מנהיגות משלימה",
+      "old_title": "עתניאל ועכסה - מנהיגות משלימה",
+      "author": "הרב אלישב אביחיל",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 18,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "84533e10-aaa5-4e0c-ad9a-5c4cdcde5344",
+      "title": "עיון בדמותו של עתניאל בן קנז",
+      "old_title": "עיון בדמותו של עתניאל בן קנז",
+      "author": "הרב יעקב ידיד",
+      "length": ""
+    },
+    {
+      "order_index": 19,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "8a449380-a249-441e-b690-2c00e79d4852",
+      "title": "דבורה הנביאה - הנהגה אידאלית",
+      "old_title": "דבורה הנביאה - הנהגה אידאלית",
+      "author": "הרב אלישב אביחיל",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 20,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "c551df50-5d36-4259-bd27-ddd8b9ca3518",
+      "title": "נצחון ישראל על הכנעניות",
+      "old_title": "נצחון ישראל על הכנעניות",
+      "author": "הרב חגי לונדין",
+      "length": "כ-70 דק'"
+    },
+    {
+      "order_index": 21,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "4bea587c-b4fe-4de4-99ea-a7a5ae5ed2bc",
+      "title": "דמותו של גדעון",
+      "old_title": "דמותו של גדעון",
+      "author": "הרב אליעזר קשתיאל",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 22,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "0ab3cbae-076a-4f30-8e83-0443a1b55468",
+      "title": "ה' עמך גיבור החיל",
+      "old_title": "ה' עמך גיבור החיל",
+      "author": "הרב אלישע וישליצקי",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 23,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "3eb76f2e-0b45-44f2-8479-06151b836281",
+      "title": "יפתח הגלעדי",
+      "old_title": "יפתח הגלעדי",
+      "author": "הרב אילן אלפונטה",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 24,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "c238229e-4086-4f57-9be3-7b6fc4859a2d",
+      "title": "בת יפתח והמלוכה בישראל",
+      "old_title": "בת יפתח והמלוכה בישראל",
+      "author": "הרב חננאל אתרוג",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 25,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "d24eb5ae-764b-47d7-9b05-662245ac37d7",
+      "title": "תולע בן פואה",
+      "old_title": "תולע בן פואה",
+      "author": "הרב חננאל אתרוג",
+      "length": "כ-70 דק'"
+    },
+    {
+      "order_index": 26,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "c8513446-e0bb-4325-9ee4-73b076b574c9",
+      "title": "כה אמר יפתח",
+      "old_title": "כה אמר יפתח",
+      "author": "הרב רמי גליקשטיין",
+      "length": "ב-46 דק'"
+    },
+    {
+      "order_index": 27,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "6004342d-cd34-4761-8810-c08bf1626605",
+      "title": "מבניכם לנביאים ומבחוריכם לנזירים",
+      "old_title": "מבניכם לנביאים ומבחוריכם לנזירים",
+      "author": "הרב יוסף אטון",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 28,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "0dacf8a0-0088-4204-b73d-481ba88273fa",
+      "title": "לדמותו של שמשון",
+      "old_title": "לדמותו של שמשון",
+      "author": "הרב קלמן בר",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 29,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "3576964f-e6a9-533d-9f20-c37f5154c195",
+      "title": "שמשון משיח ה'",
+      "old_title": "שמשון משיח ה'",
+      "author": "הרב חגי לונדין",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 30,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "13005c00-0ff5-5f58-875b-17aec48f23c6",
+      "title": "דמותו המופלאה של שמשון",
+      "old_title": "דמותו המופלאה של שמשון",
+      "author": "הרב חגי לונדין",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 31,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "598a186e-1531-4bd2-9748-0933a70de9ab",
+      "title": "דמותו הפלאית של שמשון",
+      "old_title": "דמותו הפלאית של שמשון",
+      "author": "הרב אילן אלפונטה",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 32,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "5096bac1-2234-4fdc-807f-725bed77cd3d",
+      "title": "היעוד הנשגב של שמשון",
+      "old_title": "היעוד הנשגב של שמשון",
+      "author": "הרב יואב אוריאל",
+      "length": "כ-70 דק'"
+    },
+    {
+      "order_index": 33,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "96634915-d9de-4547-bd1b-d00dd8eb28c5",
+      "title": "פילגש בגבעה",
+      "old_title": "פילגש בגבעה",
+      "author": "הרב יעקב אריאל",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 34,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "2d1b798e-26f6-4196-9b70-e44184ca8be8",
+      "title": "פילגש בגבעה - לידה חדשה",
+      "old_title": "פילגש בגבעה - לידה חדשה",
+      "author": "הרב יואב אוריאל",
+      "length": "כ-70 דק'"
+    },
+    {
+      "order_index": 35,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "9c9a64d8-984e-49dd-acef-0eb8ff2b2c49",
+      "title": "מבט מעמיק על ספר שופטים",
+      "old_title": "מבט מעמיק על ספר שופטים",
+      "author": "הרב מיכאל טוביאנו",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 36,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "9aafa645-8b26-529c-b8bd-fa6b27a32f17",
+      "title": "\"ויהי בימי שפוט השופטים\"",
+      "old_title": "\"ויהי בימי שפוט השופטים\"",
+      "author": "הרבנית דנה סליי (לנשים)",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 37,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "2064bcea-64a9-4b5d-a2fc-52816c35496c",
+      "title": "\"בימים ההם אין מלך בישראל\"",
+      "old_title": "\"בימים ההם אין מלך בישראל\"",
+      "author": "הרב יעקב אריאל",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 38,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "94a1efec-23b8-45ea-ac47-33d5d8b317dd",
+      "title": "שלבי המעבר בספר שופטים",
+      "old_title": "שלבי המעבר בספר שופטים",
+      "author": "הרב יחזקאל כהן",
+      "length": "כ - 70 דק'"
+    },
+    {
+      "order_index": 39,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "fa06f6dc-dce3-4302-9ec7-9b902f403f6c",
+      "title": "זיהוי שבטו של כל אחד מן השופטים",
+      "old_title": "זיהוי שבטו של כל אחד מן השופטים",
+      "author": "הרב שמואל ישמח",
+      "length": ""
+    },
+    {
+      "order_index": 40,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "436be2b2-0f19-4b12-bc6d-be059f122cbf",
+      "title": "התשובה בספר שופטים",
+      "old_title": "התשובה בספר שופטים",
+      "author": "הרב דני סטיסקין",
+      "length": "כ-70 דק'"
+    },
+    {
+      "order_index": 41,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "3e624ca3-b1f8-5c18-b12f-c78d445c178f",
+      "title": "השופטים בדורותם - מבוא לספר שופטים",
+      "old_title": "השופטים בדורותם - מבוא לספר שופטים",
+      "author": "הרב יוסף מילר",
+      "length": ""
+    },
+    {
+      "order_index": 42,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "2adc5e70-ba74-5e74-914d-b8334fcb0689",
+      "title": "טבלת 850 השנים מן הכניסה לארץ ועד החורבן",
+      "old_title": "טבלת 850 השנים מן הכניסה לארץ ועד החורבן",
+      "author": "הרב יאיר הס",
+      "length": ""
+    },
+    {
+      "order_index": 43,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "28cd2016-c015-5732-9a8e-cd56f5a2e7d9",
+      "title": "לוח השנים בתנ\"ך - מיציאת מצרים ועד סוף ספר מלכים",
+      "old_title": "לוח השנים בתנ\"ך - מיציאת מצרים ועד סוף ספר מלכים",
+      "author": "הרב יאיר הס",
+      "length": ""
+    },
+    {
+      "order_index": 44,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "d031ec89-8406-4bbc-8970-e750d9e5845f",
+      "title": "ציר זמן יהושע שופטים",
+      "old_title": "ציר זמן יהושע שופטים",
+      "author": "הרב עמנואל בן ארצי",
+      "length": ""
+    },
+    {
+      "order_index": 45,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "f1be1936-10b7-5a8a-8447-c26cd15e27d1",
+      "title": "האם בתקופת השופטים חלה התקדמות?",
+      "old_title": "האם בתקופת השופטים חלה התקדמות?",
+      "author": "הרב מנחם שחור",
+      "length": ""
+    },
+    {
+      "order_index": 46,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "54bc1050-37c1-5ce6-ab3b-d944940d39fd",
+      "title": "השופטים ה\"קטנים\"",
+      "old_title": "השופטים ה\"קטנים\"",
+      "author": "הרב נועם וידר",
+      "length": ""
+    },
+    {
+      "order_index": 47,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "5ace8c87-14a0-5c67-87b7-6d4a6e9e33b7",
+      "title": "יאיר בן מנשה מחומש במדבר ויאיר הגלעדי מספר שופטים",
+      "old_title": "יאיר בן מנשה מחומש במדבר ויאיר הגלעדי מספר שופטים",
+      "author": "הרב נועם וידר",
+      "length": ""
+    },
+    {
+      "order_index": 48,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "e1cf2f3e-6084-599c-8bc0-3b2142d25966",
+      "title": "בני רחל בספר שופטים",
+      "old_title": "בני רחל בספר שופטים",
+      "author": "הרב מנחם שחור",
+      "length": ""
+    },
+    {
+      "order_index": 49,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "e342a842-ffbb-5498-b288-b5e2e70686b2",
+      "title": "חזרת מעשה עתניאל ועכסה ביהושע ובשופטים",
+      "old_title": "חזרת מעשה עתניאל ועכסה ביהושע ובשופטים",
+      "author": "הרב יואב אוריאל",
+      "length": ""
+    },
+    {
+      "order_index": 50,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "f0754a52-be23-5600-afd1-c2e83edbcf3d",
+      "title": "איך הגיעו ישראל לשפל של פילגש בגבעה?",
+      "old_title": "איך הגיעו ישראל לשפל של פילגש בגבעה?",
+      "author": "הרב יואב אוריאל",
+      "length": ""
+    },
+    {
+      "order_index": 51,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "05995fc8-9987-5b70-9811-61e92c84689e",
+      "title": "מעגל הקסמים בספר שופטים",
+      "old_title": "מעגל הקסמים בספר שופטים",
+      "author": "הרב יוסי ברינר",
+      "length": ""
+    },
+    {
+      "order_index": 52,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "138e863b-6236-5089-a084-2b7707902ce5",
+      "title": "כיבושי בני ישראל לאחר מות יהושע",
+      "old_title": "כיבושי בני ישראל לאחר מות יהושע",
+      "author": "הרב נועם וידר",
+      "length": ""
+    },
+    {
+      "order_index": 53,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "7ec3232c-13cc-54fc-a9ab-80fbd539e3dc",
+      "title": "כיבוש העיר לוז",
+      "old_title": "כיבוש העיר לוז",
+      "author": "הרב מנחם שחור",
+      "length": ""
+    },
+    {
+      "order_index": 54,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "4a39efa4-a99f-5b74-acb5-e2c3fd3cfd94",
+      "title": "מדוע שרו ישראל בשירת דבורה",
+      "old_title": "מדוע שרו ישראל בשירת דבורה",
+      "author": "הרב איתן שנדורפי",
+      "length": ""
+    },
+    {
+      "order_index": 55,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "d255ed2d-d502-51c6-970d-8706155275fe",
+      "title": "מלחמת בני אפרים ביפתח",
+      "old_title": "מלחמת בני אפרים ביפתח",
+      "author": "הרב יוסי ברינר",
+      "length": ""
+    },
+    {
+      "order_index": 56,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "b8e36d4e-712a-52f0-9ada-d008822fc9da",
+      "title": "בקשת גדעון לאותות",
+      "old_title": "בקשת גדעון לאותות",
+      "author": "הרב יוסף שילר",
+      "length": ""
+    },
+    {
+      "order_index": 57,
+      "kind": "lesson",
+      "series_id": null,
+      "lesson_id": "f995dea4-a614-5655-88b5-348cf0cc511b",
+      "title": "זיהוי בימינו של המקומות בתנ\"ך",
+      "old_title": "זיהוי בימינו של המקומות בתנ\"ך",
+      "author": "הרב עמנואל בן ארצי",
+      "length": ""
+    }
+  ]
+}

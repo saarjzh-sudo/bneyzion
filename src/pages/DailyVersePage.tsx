@@ -212,7 +212,7 @@ export default function DailyVersePage() {
       }}>
         {/* Background image */}
         <img
-          src="/images/series-tanach-victory.png"
+          src="/images/series-tanach-victory.webp"
           alt=""
           aria-hidden
           style={{

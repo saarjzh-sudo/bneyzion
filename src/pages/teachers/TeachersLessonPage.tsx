@@ -17,7 +17,7 @@
  *
  * Iron rules:
  *  - RTL logical CSS only
- *  - Lesson trio image chain: thumbnail_url → series.image_url → getSeriesCoverImage() → /images/series-default.png
+ *  - Lesson trio image chain: thumbnail_url → series.image_url → getSeriesCoverImage() → /images/series-default.webp
  *  - No mock data
  */
 import { useParams, Link } from "react-router-dom";
@@ -37,6 +37,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSEO } from "@/hooks/useSEO";
 
 import TeachersLayout from "@/components/teachers/TeachersLayout";
+import RecommendedTeacherLessons from "@/components/teachers/RecommendedTeacherLessons";
 import { colors, fonts, gradients, radii, shadows, getSeriesCoverImage, formatDuration } from "@/lib/designTokens";
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
@@ -48,7 +49,7 @@ function useLessonFull(id: string) {
       // No audience filter needed on the teachers lesson page (it's inside the teachers wing)
       const { data: lesson } = await supabase
         .from("lessons")
-        .select("id, title, description, content, duration, source_type, audio_url, video_url, attachment_url, additional_attachments, thumbnail_url, rabbi_id, series_id, bible_book, bible_chapter, audience_tags")
+        .select("id, title, description, content, content_type, duration, source_type, audio_url, video_url, attachment_url, additional_attachments, thumbnail_url, rabbi_id, series_id, bible_book, bible_chapter, audience_tags")
         .eq("id", id)
         .eq("status", "published")
         .maybeSingle();
@@ -89,8 +90,8 @@ export default function TeachersLessonPage() {
     ? (lesson.thumbnail_url ||
         lesson.series?.image_url ||
         (lesson.series ? getSeriesCoverImage(lesson.series.title) : null) ||
-        "/images/series-default.png")
-    : "/images/series-default.png";
+        "/images/series-default.webp")
+    : "/images/series-default.webp";
 
   // useSEO MUST be called before any early return (rules-of-hooks)
   useSEO({
@@ -322,6 +323,16 @@ export default function TeachersLessonPage() {
               dangerouslySetInnerHTML={{ __html: lesson.content }}
             />
           )}
+
+          {/* שיעורים מומלצים באותו נושא */}
+          <RecommendedTeacherLessons
+            lessonId={lesson.id}
+            seriesId={lesson.series_id || null}
+            bibleBook={lesson.bible_book || null}
+            contentType={(lesson as any).content_type ?? null}
+            rabbiId={lesson.rabbi_id || null}
+            variant="page"
+          />
         </div>
 
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>

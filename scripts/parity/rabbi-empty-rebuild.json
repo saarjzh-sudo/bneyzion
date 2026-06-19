@@ -1,0 +1,420 @@
+[
+ {
+  "name": "הרב אבי סמוטריץ'",
+  "rabbi_id": "a5c3d9ec-a8fb-49e4-bc54-f266156ec6f4",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אוהד קרקובר",
+  "rabbi_id": "e19e7faf-ddab-4dff-9b1d-e249e05c8b84",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אביעד תפוחי",
+  "rabbi_id": "3a54e4e3-4b11-4cb8-bda5-21902ea81b40",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אורן טרבלסי",
+  "rabbi_id": "177c7a79-ece0-467f-9360-103b25ece1f2",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אסף שטראוס",
+  "rabbi_id": "d67b0194-efcd-45a1-a04b-3cf1b8ceb9bc",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אריאל בראלי",
+  "rabbi_id": "da074c0f-eda5-42f5-85b0-4202a5a8449b",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אריאל כהן",
+  "rabbi_id": "c61c9582-5f5f-4b63-ac8d-8bb18aafb9c5",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב אריה מרזר",
+  "rabbi_id": "8866dfed-392d-4912-bcda-a8d6754c6887",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב ברק עוקבי",
+  "rabbi_id": "4d3e31bc-420c-4d24-8a20-bbc181e55a9c",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב גדי שלוין",
+  "rabbi_id": "75614e8d-32d5-43c8-bbe5-444702e961df",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב דוב ביגון",
+  "rabbi_id": "6806733c-9606-466e-b48e-68946fdaa671",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב יהודה סדן",
+  "rabbi_id": "200cc932-cb41-4be8-bf7a-d7f0ed96ede6",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב יואב אוריאל והרב עמנואל בן ארצי",
+  "rabbi_id": "f8cd6298-a593-4b80-9fa6-6d7cd43203fe",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב משה הגר",
+  "rabbi_id": "38f96d08-5a07-4669-96fe-d806627cc1bd",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב משה שטרנברג",
+  "rabbi_id": "c0999db2-4cb5-4ebf-bbca-b75427839a5f",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב עקיבא קשתיאל",
+  "rabbi_id": "97d20921-c6b2-47f4-96a7-97e6dcaddfbf",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב רפאל למפרט",
+  "rabbi_id": "48460b4e-a597-43ad-b8fb-fce8bcd7e858",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב שלמה יוסף ויצן",
+  "rabbi_id": "cdb6545e-ce50-4e10-a544-2fa57d57ddff",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "הרב שמעון לוי",
+  "rabbi_id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "ולו",
+  "rabbi_id": "f6ce1953-241f-42b7-964f-fa103c6e1958",
+  "scraped": 0,
+  "emitted": 0,
+  "series": 0,
+  "unresolved": [],
+  "rows": []
+ },
+ {
+  "name": "יונדב זר",
+  "rabbi_id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+  "scraped": 38,
+  "emitted": 38,
+  "series": 38,
+  "unresolved": [],
+  "rows": [
+   {
+    "kind": "series",
+    "series_id": "a910a10c-b369-467f-91fc-3fb7dad93426",
+    "lesson_id": null,
+    "sort_order": 1
+   },
+   {
+    "kind": "series",
+    "series_id": "261c2776-e3e7-47ce-9797-30ec2e19bd82",
+    "lesson_id": null,
+    "sort_order": 2
+   },
+   {
+    "kind": "series",
+    "series_id": "39a024b3-1b45-4cf8-a51b-176dbd563754",
+    "lesson_id": null,
+    "sort_order": 3
+   },
+   {
+    "kind": "series",
+    "series_id": "9cdc99b0-4a5b-4f4f-95c9-4c421ef0d80f",
+    "lesson_id": null,
+    "sort_order": 4
+   },
+   {
+    "kind": "series",
+    "series_id": "3cfa0506-d592-4bf5-a9e3-4379938a1754",
+    "lesson_id": null,
+    "sort_order": 5
+   },
+   {
+    "kind": "series",
+    "series_id": "52933f76-133c-4634-bab0-92f0f02b5557",
+    "lesson_id": null,
+    "sort_order": 6
+   },
+   {
+    "kind": "series",
+    "series_id": "d8f35b46-b369-4eb1-8633-cd841015708d",
+    "lesson_id": null,
+    "sort_order": 7
+   },
+   {
+    "kind": "series",
+    "series_id": "511412e1-e627-4bad-b992-2f1ff93ff314",
+    "lesson_id": null,
+    "sort_order": 8
+   },
+   {
+    "kind": "series",
+    "series_id": "d659085c-4d33-4a44-a80d-830c6d064336",
+    "lesson_id": null,
+    "sort_order": 9
+   },
+   {
+    "kind": "series",
+    "series_id": "ba9e41b4-36f2-440e-a215-4d504bb74912",
+    "lesson_id": null,
+    "sort_order": 10
+   },
+   {
+    "kind": "series",
+    "series_id": "99fba257-868d-4e10-8dcb-7c60d04be5cd",
+    "lesson_id": null,
+    "sort_order": 11
+   },
+   {
+    "kind": "series",
+    "series_id": "590c0b91-3e9e-4d70-818e-538a45f08d81",
+    "lesson_id": null,
+    "sort_order": 12
+   },
+   {
+    "kind": "series",
+    "series_id": "4a1eacc7-cbfd-4952-8c89-4650f9a8a420",
+    "lesson_id": null,
+    "sort_order": 13
+   },
+   {
+    "kind": "series",
+    "series_id": "0d91c5ba-26ae-46f4-8271-2ef9927cfec9",
+    "lesson_id": null,
+    "sort_order": 14
+   },
+   {
+    "kind": "series",
+    "series_id": "11d6b546-fec3-45b9-ba2d-4e24c7990d57",
+    "lesson_id": null,
+    "sort_order": 15
+   },
+   {
+    "kind": "series",
+    "series_id": "93a4207f-5935-4cf4-bd07-12a7604cd964",
+    "lesson_id": null,
+    "sort_order": 16
+   },
+   {
+    "kind": "series",
+    "series_id": "c5fc3469-b2a3-40a3-b6e1-ffc67ba4f033",
+    "lesson_id": null,
+    "sort_order": 17
+   },
+   {
+    "kind": "series",
+    "series_id": "42c91cf7-bcb5-48e9-ac0c-868b8ed6cbc1",
+    "lesson_id": null,
+    "sort_order": 18
+   },
+   {
+    "kind": "series",
+    "series_id": "721544df-114c-4f68-a180-81e0179647d3",
+    "lesson_id": null,
+    "sort_order": 19
+   },
+   {
+    "kind": "series",
+    "series_id": "0d884fb6-e25d-48b8-9fb3-c525eec9afa7",
+    "lesson_id": null,
+    "sort_order": 20
+   },
+   {
+    "kind": "series",
+    "series_id": "50986914-9a57-4404-8a63-bca33b2ba336",
+    "lesson_id": null,
+    "sort_order": 21
+   },
+   {
+    "kind": "series",
+    "series_id": "7816f311-bbed-4fe8-95da-ddc47eb1203d",
+    "lesson_id": null,
+    "sort_order": 22
+   },
+   {
+    "kind": "series",
+    "series_id": "10d1a9a5-d47b-4800-bcb4-12f4f13b7bab",
+    "lesson_id": null,
+    "sort_order": 23
+   },
+   {
+    "kind": "series",
+    "series_id": "a9712c8e-aec1-42dc-9147-3db273d93886",
+    "lesson_id": null,
+    "sort_order": 24
+   },
+   {
+    "kind": "series",
+    "series_id": "c4deeada-4d82-444f-a2ce-6fb53d3745cc",
+    "lesson_id": null,
+    "sort_order": 25
+   },
+   {
+    "kind": "series",
+    "series_id": "d94f1238-b61a-4133-a6aa-a386a082d42f",
+    "lesson_id": null,
+    "sort_order": 26
+   },
+   {
+    "kind": "series",
+    "series_id": "c3f0ca7b-8ff2-40b0-81c6-0d0e140ae60f",
+    "lesson_id": null,
+    "sort_order": 27
+   },
+   {
+    "kind": "series",
+    "series_id": "85b7d983-0af3-44b9-b8c3-18b464e0f77e",
+    "lesson_id": null,
+    "sort_order": 28
+   },
+   {
+    "kind": "series",
+    "series_id": "775d97af-54b1-4b2e-8d74-a090ac31c67f",
+    "lesson_id": null,
+    "sort_order": 29
+   },
+   {
+    "kind": "series",
+    "series_id": "a23f7ee5-c7f8-498e-bc60-6e5b84c998c2",
+    "lesson_id": null,
+    "sort_order": 30
+   },
+   {
+    "kind": "series",
+    "series_id": "6e5c2b52-4812-4fb6-8ab4-7c7c3f4efec8",
+    "lesson_id": null,
+    "sort_order": 31
+   },
+   {
+    "kind": "series",
+    "series_id": "42b5f86b-56e9-411f-aa4e-6c3c590b0278",
+    "lesson_id": null,
+    "sort_order": 32
+   },
+   {
+    "kind": "series",
+    "series_id": "b6da5a68-8d26-4e9d-96db-ed69fa784e91",
+    "lesson_id": null,
+    "sort_order": 33
+   },
+   {
+    "kind": "series",
+    "series_id": "90cc47cd-1cf4-4dc5-bac4-2ccba4e2d61a",
+    "lesson_id": null,
+    "sort_order": 34
+   },
+   {
+    "kind": "series",
+    "series_id": "c866f217-16fe-4dc1-8a98-583faad5c4d5",
+    "lesson_id": null,
+    "sort_order": 35
+   },
+   {
+    "kind": "series",
+    "series_id": "6c8aacca-e9dd-4469-b305-defbd779d4d1",
+    "lesson_id": null,
+    "sort_order": 36
+   },
+   {
+    "kind": "series",
+    "series_id": "3264c0fe-a63b-4460-82f8-705365436572",
+    "lesson_id": null,
+    "sort_order": 37
+   },
+   {
+    "kind": "series",
+    "series_id": "598be38e-e342-4910-8833-e050cf6054af",
+    "lesson_id": null,
+    "sort_order": 38
+   }
+  ]
+ }
+]

@@ -44,7 +44,7 @@ function getBookCategory(book: string): string {
 }
 
 function resolveSeriesImage(s: { image_url?: string | null; title: string }): string {
-  return s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png";
+  return s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp";
 }
 
 function mediaIcon(s: { lesson_count?: number | null }) {
@@ -488,7 +488,7 @@ const BibleBookPage = () => {
                         loading="lazy"
                         style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                         onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = "/images/series-default.png";
+                          (e.currentTarget as HTMLImageElement).src = "/images/series-default.webp";
                         }}
                       />
                     </div>

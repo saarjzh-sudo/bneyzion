@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ChevronDown, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroBg from "@/assets/hero-bg-bney-zion.jpg";
+import heroBg from "@/assets/hero-bg-bney-zion.webp";
 
 const HeroSection = () => {
   const contentRef = useRef<HTMLDivElement>(null);

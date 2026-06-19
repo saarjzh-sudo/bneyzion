@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import sunriseVideo from "@/assets/sunrise-hero.mp4";
 import journeyVideo from "@/assets/journey-path.mp4";
-import heroPoster from "@/assets/hero-poster.png";
+import heroPoster from "@/assets/hero-poster.webp";
 
 const Proposal = () => {
   const [isLoading, setIsLoading] = useState(true);

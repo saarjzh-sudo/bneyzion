@@ -173,7 +173,7 @@ export default function DailyVideoPage() {
         overflow: "hidden",
       }}>
         <img
-          src="/images/series-middot.png"
+          src="/images/series-middot.webp"
           alt=""
           aria-hidden
           style={{

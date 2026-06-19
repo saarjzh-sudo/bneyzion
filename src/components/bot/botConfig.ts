@@ -24,7 +24,7 @@ export const BOT_CONFIG = {
   // Branding
   botName: "בנצי",
   botTagline: "הסוכן המנווט שלך באתר בני ציון",
-  botAvatar: "/images/bot-avatar.png", // optional — gold sealing-wax style
+  botAvatar: "/images/bot-avatar.webp", // optional — gold sealing-wax style
 
   // Welcome message (shown above opening buttons)
   welcomeMessage:

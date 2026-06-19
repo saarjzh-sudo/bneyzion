@@ -1,6 +1,6 @@
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { useState } from "react";
-import estherSunrise from "@/assets/esther-sunrise.jpg";
+import estherSunrise from "@/assets/esther-sunrise.webp";
 import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const keyTopics = [

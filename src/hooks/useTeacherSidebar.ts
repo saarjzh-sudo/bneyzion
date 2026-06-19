@@ -141,12 +141,23 @@ export function useTeacherSidebar(): TeacherSidebarData {
         childSeriesRaw = (data || []) as typeof childSeriesRaw;
       }
 
-      // Group children by book
-      const childrenByBook = new Map<string, { id: string; title: string }[]>();
+      // Group children by book.
+      // R4 sidebar parity: a book's canonical sidebar items are its sort_order>0 children
+      // (the parshiot / chapter-events — matches the old site). sort_order 0/NULL children are
+      // page-only extras + PUBLIC content (recorded readings, מאמרים, פשט בפרשה) that must NOT
+      // leak into the teacher sidebar. Prefer canonical; fall back to all only if a book has
+      // none with sort_order (e.g. עובדיה) so a sidebar list never empties.
+      const childrenByBookAll = new Map<string, { id: string; title: string; sort_order: number | null }[]>();
       for (const c of childSeriesRaw) {
-        const arr = childrenByBook.get(c.parent_id) || [];
-        arr.push({ id: c.id, title: c.title });
-        childrenByBook.set(c.parent_id, arr);
+        const arr = childrenByBookAll.get(c.parent_id) || [];
+        arr.push({ id: c.id, title: c.title, sort_order: c.sort_order });
+        childrenByBookAll.set(c.parent_id, arr);
+      }
+      const childrenByBook = new Map<string, { id: string; title: string }[]>();
+      for (const [bid, arr] of childrenByBookAll) {
+        const canonical = arr.filter((c) => (c.sort_order ?? 0) > 0);
+        const use = canonical.length > 0 ? canonical : arr;
+        childrenByBook.set(bid, use.map((c) => ({ id: c.id, title: c.title })));
       }
 
       // ── 2. Build book trees ────────────────────────────────────────────────

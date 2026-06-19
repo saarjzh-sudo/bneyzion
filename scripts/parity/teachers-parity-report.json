@@ -1,0 +1,978 @@
+{
+  "generated": "2026-06-19 16:00",
+  "books": [
+    {
+      "book": "בראשית",
+      "matched": 19,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "פשט הפסוקים",
+            "where": "0793070d-f2b9-463a-b84e-8dd681ab378f"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה",
+            "where": "06420bb5-6460-47f7-8182-d7d7dbc805b9"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "חידות על פי א\"ב פרשת בראשית",
+            "where": "3339b26f-cd14-4995-84c2-0db697edec55"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "חידות רש\"י על פי א\"ב פרשת בראשית",
+            "where": "5e1ca8d8-5bbc-4691-b19e-14b55dcb16b3"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "5418a7b4-68c4-424f-bb7f-797f871c37ac"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "1731a348-446b-45aa-96b1-ce459d71c05a"
+          }
+        ]
+      }
+    },
+    {
+      "book": "שמות",
+      "matched": 20,
+      "depth_gaps": [
+        {
+          "series": "דגשים לפרשות חומש שמות",
+          "id": "dfcdf595-27bb-47b7-b2d6-25ebc436be89",
+          "old": 7,
+          "db": 4,
+          "missing": 3
+        }
+      ],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "פשט הפסוקים",
+            "where": "ba5cae13-9117-4783-b28e-0d22d28083a9"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה",
+            "where": "91bfcc0e-6926-4a82-962f-45820b0518b1"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "סיכום פרטי המשכן, כליו ובגדי הכהונה",
+            "where": "2c28dc2d-016c-4771-98c5-149f540e4b78"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "90dfc6bd-8693-4cf9-993e-48857575025c"
+          }
+        ]
+      }
+    },
+    {
+      "book": "ויקרא",
+      "matched": 15,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה",
+            "where": "3ae36267-6cff-4c52-ad02-7b1aca70f531"
+          }
+        ]
+      }
+    },
+    {
+      "book": "במדבר",
+      "matched": 16,
+      "depth_gaps": [
+        {
+          "series": "דגשים לפרשות חומש במדבר",
+          "id": "0db00798-0e61-4401-a6fa-0eefb50bad3b",
+          "old": 14,
+          "db": 2,
+          "missing": 12
+        }
+      ],
+      "item_gaps": {
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה",
+            "where": "faaf06ea-0b08-4634-b1fb-d489249e7ed0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad",
+            "kind": "lesson",
+            "db_book": "עובדיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "דברים",
+      "matched": 13,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה",
+            "where": "8c3a2b39-4a81-41ec-b649-6208af63bbb0"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "דגשים והכוונה - ספר שמות",
+            "where": "857d39a4-1ecd-4933-ad5d-357992ad1b3e"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "72963070-bbef-45d8-82bb-aa4a5f681fe9"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "6f6574c4-2203-4a21-ac60-2ce030799394"
+          }
+        ]
+      }
+    },
+    {
+      "book": "יהושע",
+      "matched": 17,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר יהושע",
+            "where": "573e4785-514f-4371-ae69-71ae310d2412"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "7eab2e7b-74af-4044-b0f1-94734dab1b95"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן יהושע שופטים",
+            "where": "1cc6f703-d15b-4621-b7bb-9a61d5fa0c06"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "004e3ceb-1028-4344-af94-e3e2e1e9554c"
+          }
+        ]
+      }
+    },
+    {
+      "book": "שופטים",
+      "matched": 17,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הוראת סוגיית פילגש בגבעה",
+            "where": "1f79ddf9-6231-4a95-bca1-c34864ed1694"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לשיעורים קצרים על ספר שופטים",
+            "where": "8d44328a-d5b8-4613-9dbc-b98ba42d8adc"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר שופטים",
+            "where": "87087d04-8d8d-45b6-9fa1-7154bc1f0347"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "5bd4314d-a1ef-4998-9dc9-14e6aad2d605"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן יהושע שופטים",
+            "where": "4c250783-cbf4-4bee-b909-109af17c275f"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "3191e0ff-79a4-43c7-a824-e495989fbfa6"
+          }
+        ]
+      }
+    },
+    {
+      "book": "שמואל א",
+      "matched": 15,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לשיעורים קצרים על ספר שמואל א",
+            "where": "df1f181a-c1bc-4813-b1b1-50d6c9169c51"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר שמואל א",
+            "where": "572d17b9-dc4b-4113-94f9-602e5b5b57c5"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מדריך למורה - כל ספר שמואל א",
+            "where": "ed6173e3-d6fb-415d-836f-eefcb9cbf083"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "b8cd390e-7fd3-4c2c-a9b6-23299f6c503f"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "613d915b-9827-45fc-a2c0-167de8d39570"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "64817622-e112-4164-a9e9-01d25d989c7a"
+          }
+        ]
+      }
+    },
+    {
+      "book": "שמואל ב",
+      "matched": 11,
+      "depth_gaps": [],
+      "item_gaps": {
+        "RECOVERABLE_TAG": [
+          {
+            "verdict": "RECOVERABLE_TAG",
+            "title": "מעבר לשיעורים קצרים על ספר שמואל ב",
+            "where": "dfb73868-30e2-447c-9e5c-1d293dfc49dc",
+            "kind": "lesson",
+            "db_book": "שמואל ב",
+            "aud": [
+              "general"
+            ],
+            "note": "exists but tagged general-only → invisible to teacher wing"
+          },
+          {
+            "verdict": "RECOVERABLE_TAG",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר שמואל ב",
+            "where": "9512ce5b-671e-4806-8474-ccceecab6c7d",
+            "kind": "lesson",
+            "db_book": "שמואל ב",
+            "aud": [
+              "general"
+            ],
+            "note": "exists but tagged general-only → invisible to teacher wing"
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad",
+            "kind": "lesson",
+            "db_book": "עובדיה",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "004e3ceb-1028-4344-af94-e3e2e1e9554c",
+            "kind": "lesson",
+            "db_book": "יהושע",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "מלכים א",
+      "matched": 20,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לשיעורים קצרים על ספר מלכים א",
+            "where": "cc8d22aa-cb13-4618-a32b-e1b3bc12ee5d"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מקומות בספר מלכים א (לפי א-ב)",
+            "where": "1a1221ae-53a9-4252-91b7-78a5b3d77fc5"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר מלכים א",
+            "where": "84816a34-44c9-427a-8844-eae2bf96ecde"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "ae9b8548-477d-4f26-ae84-764a6ddc2f96"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "13dfd05c-bebd-4065-bdc8-6cbdfa9517c2"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "d39ee0d9-ac57-4090-90af-b0f444a38f53"
+          }
+        ]
+      }
+    },
+    {
+      "book": "מלכים ב",
+      "matched": 11,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לשיעורים קצרים על ספר מלכים ב",
+            "where": "40f0d93c-aade-42e3-86e2-908785304f7a"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מקומות בספר מלכים א (לפי א-ב)",
+            "where": "54850472-9905-4748-adda-d8db0b5eec09"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר מלכים ב",
+            "where": "248f3b2f-da80-4fc1-88f7-ce8e797179b1"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "10321815-0eda-453c-813f-4072489e0e92"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "04c4e50c-5af3-4b1a-afa3-684498f65e8e"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "1f19e7aa-e8b3-4d29-b68d-f458ba7af4c4"
+          }
+        ]
+      }
+    },
+    {
+      "book": "ישעיהו",
+      "matched": 3,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לשיעורים קצרים על ספר יונה",
+            "where": "cbb1c811-c95d-43f7-b3f2-1a3b36f12db1"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר ישעיהו",
+            "where": "09e9bddf-9422-464d-9744-bdde5bde0e13"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "60d1a282-ca1d-4c36-8b07-9c09c9b1c5c5"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "4f000074-4739-4d11-bba9-640fb81bcc2e"
+          }
+        ]
+      }
+    },
+    {
+      "book": "ירמיהו",
+      "matched": 3,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר ירמיהו",
+            "where": "add4905f-22b3-4522-b73e-717399eab1c2"
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "יחזקאל",
+      "matched": 2,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר יחזקאל",
+            "author": "",
+            "where": null
+          },
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "שרטוט בית המקדש ביחזקאל על פי שיטות המלבי\"ם רש\"י ומצודות",
+            "author": "הרב עמנואל בן ארצי",
+            "where": null
+          }
+        ],
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "808a6b89-6761-4f27-a21e-f3e7b81459de"
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e",
+            "kind": "lesson",
+            "db_book": "נחמיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "הושע",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר הושע",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad",
+            "kind": "lesson",
+            "db_book": "עובדיה",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ],
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "7f8497ba-a9d0-4453-b23e-3718a6e2794d"
+          }
+        ]
+      }
+    },
+    {
+      "book": "יואל",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר יואל",
+            "where": "ff6ec1b1-3e95-4bd4-bfdd-4407a3d8fd56",
+            "kind": "lesson",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "עמוס",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר עמוס",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "עובדיה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר עובדיה",
+            "author": "",
+            "where": null
+          }
+        ],
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad"
+          }
+        ]
+      }
+    },
+    {
+      "book": "יונה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר יונה",
+            "author": "",
+            "where": null
+          }
+        ],
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "3f2f8c8d-d70e-4e2c-935e-192d438e9de1"
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "מיכה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר מיכה",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "נחום",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר נחום",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "חבקוק",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר חבקוק",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "צפניה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר צפניה",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן תקופת המלכים",
+            "where": "c44103d9-7f10-4633-ad8f-ab924afdc6b0",
+            "kind": "series",
+            "db_book": null,
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "חגי",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר חגי",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e",
+            "kind": "lesson",
+            "db_book": "נחמיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "זכריה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר זכריה",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e",
+            "kind": "lesson",
+            "db_book": "נחמיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "מלאכי",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר מלאכי",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e",
+            "kind": "lesson",
+            "db_book": "נחמיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "תהלים",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "RECOVERABLE_TAG": [
+          {
+            "verdict": "RECOVERABLE_TAG",
+            "title": "מעבר לקריאה וביאור בקצרה של ספר תהילים",
+            "where": "34dd7016-0ded-40df-96ef-4ff41edbd1de",
+            "kind": "lesson",
+            "db_book": "תהלים",
+            "aud": [
+              "general"
+            ],
+            "note": "exists but tagged general-only → invisible to teacher wing"
+          }
+        ]
+      }
+    },
+    {
+      "book": "איוב",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {}
+    },
+    {
+      "book": "שיר השירים",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {}
+    },
+    {
+      "book": "רות",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "REAL_ABSENT": [
+          {
+            "verdict": "REAL_ABSENT",
+            "title": "מעבר לשיעורים קצרים על מגילת רות",
+            "author": "",
+            "where": null
+          }
+        ],
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad",
+            "kind": "lesson",
+            "db_book": "עובדיה",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן יהושע שופטים",
+            "where": "1cc6f703-d15b-4621-b7bb-9a61d5fa0c06",
+            "kind": "lesson",
+            "db_book": "יהושע",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "הסבר פשוט על מבנה ארץ ישראל והנחלות",
+            "where": "004e3ceb-1028-4344-af94-e3e2e1e9554c",
+            "kind": "lesson",
+            "db_book": "יהושע",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "איכה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {}
+    },
+    {
+      "book": "אסתר",
+      "matched": 2,
+      "depth_gaps": [],
+      "item_gaps": {
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad",
+            "kind": "lesson",
+            "db_book": "עובדיה",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e",
+            "kind": "lesson",
+            "db_book": "נחמיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "דניאל",
+      "matched": 2,
+      "depth_gaps": [],
+      "item_gaps": {
+        "RECOVERABLE_LINK": [
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "מפת מקומות ונחלות בארץ ישראל",
+            "where": "01e6df79-faa0-4c49-8f12-45f5449837ad",
+            "kind": "lesson",
+            "db_book": "עובדיה",
+            "note": "teacher-tagged but wrong bible_book"
+          },
+          {
+            "verdict": "RECOVERABLE_LINK",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e",
+            "kind": "lesson",
+            "db_book": "נחמיה",
+            "note": "teacher-tagged but wrong bible_book"
+          }
+        ]
+      }
+    },
+    {
+      "book": "עזרא",
+      "matched": 2,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "שאלות  ותשובות ספר עזרא",
+            "where": "028ef4ce-ea14-48af-910e-50ca48844460"
+          },
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "b12ca2df-29e4-4b5f-9b41-12f9887d1f86"
+          }
+        ]
+      }
+    },
+    {
+      "book": "נחמיה",
+      "matched": 1,
+      "depth_gaps": [],
+      "item_gaps": {
+        "FALSE_POSITIVE": [
+          {
+            "verdict": "FALSE_POSITIVE",
+            "title": "ציר זמן גלות בבל ותחילת בית שני",
+            "where": "a39f902d-0380-4157-a53d-451a5f91352e"
+          }
+        ]
+      }
+    }
+  ],
+  "totals": {
+    "depth_gaps": 2,
+    "real_absent": 14,
+    "recoverable_tag": 3,
+    "recoverable_link": 27,
+    "false_positive": 55
+  }
+}

@@ -1,0 +1,1388 @@
+[
+ {
+  "name": "הרב אבי סמוטריץ'",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "a5c3d9ec-a8fb-49e4-bc54-f266156ec6f4",
+  "slug": "aby-smvtrytz",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אברהם וסרמן",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "1acd517c-1e18-4bdc-a18e-0ecf5924e50f",
+  "slug": "abrhm-vsrmn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב אוהד קרקובר",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "e19e7faf-ddab-4dff-9b1d-e249e05c8b84",
+  "slug": "avhd-krkvbr",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אביעד תפוחי",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "3a54e4e3-4b11-4cb8-bda5-21902ea81b40",
+  "slug": "abyd-tpvchy",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אהרון קוטלר זצ\"ל",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "8fba6175-4dd7-4be4-9446-c7f375728949",
+  "slug": "ahrvn-kvtlr",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב אוהד תירוש",
+  "old_items": 16,
+  "eff": 164,
+  "rabbi_id": "a2059c69-f0e1-442d-a38c-8ec5d4b91ee0",
+  "slug": "ohad-tirosh",
+  "cur_rpi": 16,
+  "gap": 0
+ },
+ {
+  "name": "הרב אופיר כהן",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "12bf37dd-1e71-43bf-a369-14ac93384bfa",
+  "slug": "avpyr-khn",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב אורן טרבלסי",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "177c7a79-ece0-467f-9360-103b25ece1f2",
+  "slug": "avrn-trblsy",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אילן אלפונטה",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "6bcd10bd-b127-4ff0-8f2c-b2f2b98efbea",
+  "slug": "ayln-alpvnth",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב איתן קופמן",
+  "old_items": 5,
+  "eff": 38,
+  "rabbi_id": "fbf45d02-d83a-4d47-a48a-f7035fb15b0c",
+  "slug": "etan-kopman",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב איתיאל אמיתי",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "6001d928-dc8c-4e0f-bc24-0f05fcc6203a",
+  "slug": "aytyal-amyty",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב אחיקם גץ",
+  "old_items": 15,
+  "eff": 218,
+  "rabbi_id": "e6e04daf-0aa6-4a07-911e-2a7cacd9b5fe",
+  "slug": "achikam-gatz",
+  "cur_rpi": 15,
+  "gap": 0
+ },
+ {
+  "name": "הרב אלי אדלר",
+  "old_items": 6,
+  "eff": 48,
+  "rabbi_id": "62db3ad6-731b-4463-85d3-eb2424cbde57",
+  "slug": "eli-adler",
+  "cur_rpi": 6,
+  "gap": 0
+ },
+ {
+  "name": "הרב אלחנן בן נון",
+  "old_items": 4,
+  "eff": 25,
+  "rabbi_id": "06a6954f-b65b-4fa4-ae1d-5ea643faff10",
+  "slug": "elchanan-ben-nun",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרב אלי פרידמן",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "886d3045-8262-4e47-ba07-9d3f4d25893b",
+  "slug": "aly-prydmn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב אליהו דסלר זצ\"ל",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "73fd07b7-4fbe-49b7-87b1-0da37ae5dfee",
+  "slug": "alyhv-dslr",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב אליהו ידיד",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "fa715fa1-23fb-4977-b761-6df1dcfdd798",
+  "slug": "alyhv-ydyd",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב איתן שנדורפי",
+  "old_items": 103,
+  "eff": 659,
+  "rabbi_id": "be153d0e-b68e-4704-a108-56f5af7d0ca9",
+  "slug": "etan-shandorfi",
+  "cur_rpi": 124,
+  "gap": -21
+ },
+ {
+  "name": "הרב אלישע וישליצקי",
+  "old_items": 4,
+  "eff": 4,
+  "rabbi_id": "5f7c6551-76fc-410f-b838-7c0d57ce7972",
+  "slug": "alysh-vyshlytzky",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרב אלישב אביחיל",
+  "old_items": 4,
+  "eff": 4,
+  "rabbi_id": "d34528da-ee89-433e-a059-874a653fea78",
+  "slug": "alyshb-abychyl",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרב אלעזר נאה",
+  "old_items": 4,
+  "eff": 37,
+  "rabbi_id": "52b071b1-8ab5-4ca3-a8ce-900eceec590c",
+  "slug": "elazar-nae",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרב אס\"ף בנדל",
+  "old_items": 15,
+  "eff": 15,
+  "rabbi_id": "723c69b7-a119-42f5-9684-c4a05388475a",
+  "slug": "asp-bndl",
+  "cur_rpi": 21,
+  "gap": -6
+ },
+ {
+  "name": "הרב אליעזר קשתיאל",
+  "old_items": 33,
+  "eff": 340,
+  "rabbi_id": "33865aa7-c9a6-4166-ae07-47466ec92e9f",
+  "slug": "eliezer-kashtiel",
+  "cur_rpi": 33,
+  "gap": 0
+ },
+ {
+  "name": "הרב אסף שטראוס",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "d67b0194-efcd-45a1-a04b-3cf1b8ceb9bc",
+  "slug": "asp-shtravs",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב ארי לנדא",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "2ca95063-4e0b-4756-a8e1-1a83fb0118e9",
+  "slug": "ary-lnda",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב אריאל בראלי",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "da074c0f-eda5-42f5-85b0-4202a5a8449b",
+  "slug": "aryal-braly",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אריאל כהן",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "c61c9582-5f5f-4b63-ac8d-8bb18aafb9c5",
+  "slug": "aryal-khn",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אריה אברמסון",
+  "old_items": 5,
+  "eff": 5,
+  "rabbi_id": "f3cb36a5-ce6f-453d-939b-37a987b2fd9d",
+  "slug": "aryh-abrmsvn",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב אריה אוריאל",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "c0da1cd2-63ea-4c4b-ae14-004168209bbb",
+  "slug": "aryh-avryal",
+  "cur_rpi": 0,
+  "gap": 2
+ },
+ {
+  "name": "הרב אריה מרזר",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "8866dfed-392d-4912-bcda-a8d6754c6887",
+  "slug": "aryh-mrzr",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב אריק אוריאל",
+  "old_items": 3,
+  "eff": 138,
+  "rabbi_id": "34ef8dae-5352-4dfe-9887-ab7c3b8bcdd8",
+  "slug": "arik-uriel",
+  "cur_rpi": 5,
+  "gap": -2
+ },
+ {
+  "name": "הרב בנימין סופר",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "efcae8b9-5fa5-4b74-933e-8e681653dfdb",
+  "slug": "bnymyn-svpr",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב בנימין רוזנצוויג",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "e3c3449c-1e81-41f7-b416-87c2b4abb568",
+  "slug": "bnymyn-rvzntzvvyg",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב ברק עוקבי",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "4d3e31bc-420c-4d24-8a20-bbc181e55a9c",
+  "slug": "brk-vkby",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב ברוך סליי",
+  "old_items": 11,
+  "eff": 62,
+  "rabbi_id": "205bdd49-2c88-4fbb-8df0-bd961861e298",
+  "slug": "baruch-seley",
+  "cur_rpi": 11,
+  "gap": 0
+ },
+ {
+  "name": "הרב גדי הרלינג",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "13905f4d-590d-4ca8-bb48-372ac15186e9",
+  "slug": "gdy-hrlyng",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב גדי שלוין",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "75614e8d-32d5-43c8-bbe5-444702e961df",
+  "slug": "gdy-shlvyn",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב דוב ביגון",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "6806733c-9606-466e-b48e-68946fdaa671",
+  "slug": "dvb-bygvn",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב דוד אמיתי",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "58096c73-c03b-4bc9-91e1-11259bfe7792",
+  "slug": "dvd-amyty",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב דוד חי הכהן",
+  "old_items": 4,
+  "eff": 4,
+  "rabbi_id": "cc169a16-6fac-4da9-915c-b484c7b24b11",
+  "slug": "dvd-chy-hkhn",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרב דוד ג'יאמי",
+  "old_items": 5,
+  "eff": 130,
+  "rabbi_id": "98af6a27-12db-4e4a-867e-c03e92e8445c",
+  "slug": "david-jiami",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב דוד טורנר",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "330639b2-b447-41d8-a3e5-e9f14d677a38",
+  "slug": "dvd-tvrnr",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב דודי מתוקי",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "648b46f4-8578-46bb-a601-c551c718dc3e",
+  "slug": "dvdy-mtvky",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב דרור אריה",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "6e2327b3-735a-45d6-abec-b1c4f1ec3209",
+  "slug": "drvr-aryh",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב דני סטיסקין",
+  "old_items": 12,
+  "eff": 71,
+  "rabbi_id": "e5d69c5f-1c5c-4401-83c6-f95809952696",
+  "slug": "danny-stiskin",
+  "cur_rpi": 12,
+  "gap": 0
+ },
+ {
+  "name": "הרב דן בארי",
+  "old_items": 24,
+  "eff": 496,
+  "rabbi_id": "8a709507-b4ac-4d45-9051-9e4e6bdeb856",
+  "slug": "dan-bari",
+  "cur_rpi": 24,
+  "gap": 0
+ },
+ {
+  "name": "הרב דרור טוויל",
+  "old_items": 20,
+  "eff": 175,
+  "rabbi_id": "7658e8ac-a4c5-4c1d-80dd-3f8070f2a742",
+  "slug": "dror-tvil",
+  "cur_rpi": 20,
+  "gap": 0
+ },
+ {
+  "name": "הרב חגי ולוסקי",
+  "old_items": 10,
+  "eff": 136,
+  "rabbi_id": "b28770d5-1504-46ad-8613-3c3ca37a641c",
+  "slug": "chagai-velosski",
+  "cur_rpi": 10,
+  "gap": 0
+ },
+ {
+  "name": "הרב חגי לונדין",
+  "old_items": 7,
+  "eff": 7,
+  "rabbi_id": "8c386317-623c-46fa-a28b-f436c6ab2c71",
+  "slug": "chgy-lvndyn",
+  "cur_rpi": 7,
+  "gap": 0
+ },
+ {
+  "name": "הרב חיים דרוקמן",
+  "old_items": 6,
+  "eff": 6,
+  "rabbi_id": "6e709b09-2a24-445d-94ad-6aa7f593b6df",
+  "slug": "chyym-drvkmn",
+  "cur_rpi": 6,
+  "gap": 0
+ },
+ {
+  "name": "הרב חיים סבתו",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "7a570390-7995-4bac-98a6-15efa87f9c7a",
+  "slug": "chyym-sbtv",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב חן חלמיש",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "75254424-9675-47ec-a934-ff086c6f7f47",
+  "slug": "chn-chlmysh",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב חננאל אתרוג",
+  "old_items": 12,
+  "eff": 111,
+  "rabbi_id": "776ac9f7-577c-489a-8522-3a41d3c94e04",
+  "slug": "chananel-etrog",
+  "cur_rpi": 12,
+  "gap": 0
+ },
+ {
+  "name": "הרב חנניה מלכה",
+  "old_items": 7,
+  "eff": 188,
+  "rabbi_id": "06cafb42-023b-4491-926e-74ae5dee8b88",
+  "slug": "chanania-malka",
+  "cur_rpi": 7,
+  "gap": 0
+ },
+ {
+  "name": "הרב טוביה לפשיץ",
+  "old_items": 8,
+  "eff": 150,
+  "rabbi_id": "04b3f54f-a91a-4054-a8b0-887f8faaec07",
+  "slug": "tovia-lapshitz",
+  "cur_rpi": 8,
+  "gap": 0
+ },
+ {
+  "name": "הרב יגאל שפרן",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "e1f5b75e-3080-4e7d-a316-9484757adb49",
+  "slug": "ygal-shprn",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהודה סדן",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "200cc932-cb41-4be8-bf7a-d7f0ed96ede6",
+  "slug": "yhvdh-sdn",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב יאיר הס",
+  "old_items": 9,
+  "eff": 9,
+  "rabbi_id": "7a9524c6-fa70-42af-8e15-d39750fd34d6",
+  "slug": "yayr-hs",
+  "cur_rpi": 9,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהונתן מיכאלי",
+  "old_items": 5,
+  "eff": 155,
+  "rabbi_id": "3a3eac56-4546-4803-9d38-1fceb0c1452d",
+  "slug": "yehonatan-michaeli",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהודה קופרמן זצ\"ל",
+  "old_items": 27,
+  "eff": 131,
+  "rabbi_id": "9135d874-b42b-4952-b7c6-97f0fb7fbfe6",
+  "slug": "yehuda-kuperman",
+  "cur_rpi": 27,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהונתן עידן",
+  "old_items": 3,
+  "eff": 25,
+  "rabbi_id": "b545bcbd-97a8-482e-a69f-6b7e1ed3c939",
+  "slug": "yehonatan-idan",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהושע מגנס",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "81e9d9d2-7e99-4b4c-aab0-e4300f3d4fde",
+  "slug": "yhvsh-mgns",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהונתן פוזן",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "99ed0fc4-7174-42ce-8411-58e861149f44",
+  "slug": "yhvntn-pvzn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהושע ון-דייק",
+  "old_items": 5,
+  "eff": 5,
+  "rabbi_id": "bf5948a7-d84a-4dff-b488-2646b378d4f3",
+  "slug": "yhvsh-vn-dyyk",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהושע צוקרמן",
+  "old_items": 5,
+  "eff": 5,
+  "rabbi_id": "5af49987-719c-4c36-a4fb-e88dcde11161",
+  "slug": "yhvsh-tzvkrmn",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב יהושע שפירא",
+  "old_items": 19,
+  "eff": 169,
+  "rabbi_id": "0aa03897-79ce-4016-aaf8-72c090b0ea60",
+  "slug": "yehoshua-shapira",
+  "cur_rpi": 19,
+  "gap": 0
+ },
+ {
+  "name": "הרב יואב אוריאל והרב עמנואל בן ארצי",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "f8cd6298-a593-4b80-9fa6-6d7cd43203fe",
+  "slug": "yoav-uriel-veemanueal-ben-artzi",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב יואל מנוביץ'",
+  "old_items": 9,
+  "eff": 34,
+  "rabbi_id": "d149c8bb-2c74-42ca-b28d-a6aeba4e41bf",
+  "slug": "yoel-manowitz",
+  "cur_rpi": 9,
+  "gap": 0
+ },
+ {
+  "name": "הרב יוסי ברינר",
+  "old_items": 31,
+  "eff": 31,
+  "rabbi_id": "d68b38ad-fd70-47d3-b667-20f68af6d8c4",
+  "slug": "yvsy-brynr",
+  "cur_rpi": 47,
+  "gap": -16
+ },
+ {
+  "name": "הרב יונדב זר",
+  "old_items": 38,
+  "eff": 770,
+  "rabbi_id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+  "slug": "yondav-zer",
+  "cur_rpi": 38,
+  "gap": 0
+ },
+ {
+  "name": "הרב יוסף אטון",
+  "old_items": 5,
+  "eff": 5,
+  "rabbi_id": "9244511d-a2b2-4d0c-a097-b52595990c69",
+  "slug": "yvsp-atvn",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב יואב אוריאל",
+  "old_items": 144,
+  "eff": 659,
+  "rabbi_id": "acd34d0f-1288-47b8-9e8e-38e69599c294",
+  "slug": "yoav-uriel",
+  "cur_rpi": 165,
+  "gap": -21
+ },
+ {
+  "name": "הרב יוסף הורוביץ",
+  "old_items": 8,
+  "eff": 107,
+  "rabbi_id": "1b8d2627-f1ce-49a0-bdca-bef3cc0f13b8",
+  "slug": "yosef-horovitz",
+  "cur_rpi": 8,
+  "gap": 0
+ },
+ {
+  "name": "הרב יוסף מילר",
+  "old_items": 2,
+  "eff": 20,
+  "rabbi_id": "52c215fe-b60e-42b6-a5ce-feb1703f65cd",
+  "slug": "yvsp-mylr",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב יוסף שילר",
+  "old_items": 16,
+  "eff": 104,
+  "rabbi_id": "2754844c-8149-4c50-922a-331664b4124e",
+  "slug": "yosef-shiler",
+  "cur_rpi": 30,
+  "gap": -14
+ },
+ {
+  "name": "הרב יוסף קלנר",
+  "old_items": 16,
+  "eff": 26,
+  "rabbi_id": "44dcb2cc-b408-457f-92e6-08f6340e33ad",
+  "slug": "yvsp-klnr",
+  "cur_rpi": 16,
+  "gap": 0
+ },
+ {
+  "name": "הרב יחזקאל כהן",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "8269f8b6-08ca-4510-840b-f3689216c257",
+  "slug": "ychzkal-khn",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב יחזקאל קופלד",
+  "old_items": 1,
+  "eff": 33,
+  "rabbi_id": "4a12bee1-429c-4db5-a0d8-1c933eb96696",
+  "slug": "ychzkal-kvpld",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב יעקב אפשטיין",
+  "old_items": 8,
+  "eff": 8,
+  "rabbi_id": "bf93edb7-8845-4a95-b13c-d2bc237ddb8a",
+  "slug": "ykb-apshtyyn",
+  "cur_rpi": 8,
+  "gap": 0
+ },
+ {
+  "name": "הרב יעקב אריאל",
+  "old_items": 11,
+  "eff": 18,
+  "rabbi_id": "d81a67ab-3da1-478d-8fff-8a7c190ac0d1",
+  "slug": "yaakov-ariel",
+  "cur_rpi": 11,
+  "gap": 0
+ },
+ {
+  "name": "הרב יעקב יצחק הלוי רודרמן זצ\"ל",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "479caee9-502f-4e5a-a2c9-08364968aab9",
+  "slug": "ykb-ytzchk-hlvy-rvdrmn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב יעקב ידיד",
+  "old_items": 9,
+  "eff": 79,
+  "rabbi_id": "dd10db16-faaf-457a-82cb-49590864e29a",
+  "slug": "yaakov-yadid",
+  "cur_rpi": 9,
+  "gap": 0
+ },
+ {
+  "name": "הרב יצחק בן שחר",
+  "old_items": 15,
+  "eff": 204,
+  "rabbi_id": "afb0d3c5-4447-40c5-ac3e-2fc41716360c",
+  "slug": "yitzhak-ben-shachar",
+  "cur_rpi": 15,
+  "gap": 0
+ },
+ {
+  "name": "הרב לוי סודרי",
+  "old_items": 3,
+  "eff": 97,
+  "rabbi_id": "9bb528c0-94c9-4f6c-aa59-4990af66cb4e",
+  "slug": "levi-sudri",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב לייב מינצברג",
+  "old_items": 1,
+  "eff": 17,
+  "rabbi_id": "6948b005-8390-45f0-b14b-7ede0f05c671",
+  "slug": "lyyb-myntzbrg",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב מאיר הילביץ'",
+  "old_items": 5,
+  "eff": 51,
+  "rabbi_id": "71aa933c-5548-4ea7-8be0-dfb659202660",
+  "slug": "meir-hilvitz",
+  "cur_rpi": 6,
+  "gap": -1
+ },
+ {
+  "name": "הרב מאיר נאמן",
+  "old_items": 1,
+  "eff": 4,
+  "rabbi_id": "1f51f188-3d0b-45b4-9c93-55d32e67ca3e",
+  "slug": "mayr-namn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב מיכאל טוביאנו",
+  "old_items": 7,
+  "eff": 9,
+  "rabbi_id": "27e770f5-cf5f-4dd5-8a72-a59d45c546c6",
+  "slug": "mykal-tvbyanv",
+  "cur_rpi": 7,
+  "gap": 0
+ },
+ {
+  "name": "הרב מיכה הלוי",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "e772bb3b-34cb-4616-9dcd-b8ca92e006a0",
+  "slug": "mykh-hlvy",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב מישאל רובין",
+  "old_items": 11,
+  "eff": 11,
+  "rabbi_id": "ad1e342e-30a8-43b7-9c91-e5660402e3a5",
+  "slug": "myshal-rvbyn",
+  "cur_rpi": 11,
+  "gap": 0
+ },
+ {
+  "name": "הרב מנחם אליהו",
+  "old_items": 2,
+  "eff": 24,
+  "rabbi_id": "21815917-0c20-4ad2-b6ab-3943956c9a55",
+  "slug": "mnchm-alyhv",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב מנחם בורשטין",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "8301fc29-5cb9-4476-93ab-af9fa8aea58c",
+  "slug": "mnchm-bvrshtyn",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב מנחם מן",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "1f1815e8-c20c-4b49-997f-f62927ae7a07",
+  "slug": "mnchm-mn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב מרדכי קופרמן",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "acede66e-8b83-4abd-b737-ac9c79e1b119",
+  "slug": "mrdky-kvprmn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב משה הגר",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "38f96d08-5a07-4669-96fe-d806627cc1bd",
+  "slug": "mshh-hgr",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב מנחם שחור",
+  "old_items": 71,
+  "eff": 106,
+  "rabbi_id": "4822f2bb-9d1c-4adc-9554-d2a2db7bdbc8",
+  "slug": "menachem-shachor",
+  "cur_rpi": 88,
+  "gap": -17
+ },
+ {
+  "name": "הרב מתניה ידיד",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "38d9893b-6250-40fa-9d97-8066391f0ca6",
+  "slug": "mtnyh-ydyd",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב משה שטרנברג",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "c0999db2-4cb5-4ebf-bbca-b75427839a5f",
+  "slug": "mshh-shtrnbrg",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב נועם אליצור",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "46366d84-b0c2-4917-8362-d3acf1d30b76",
+  "slug": "nvm-alytzvr",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב נועם וידר",
+  "old_items": 1,
+  "eff": 25,
+  "rabbi_id": "ff233638-a99c-4049-9613-41d44a12f90a",
+  "slug": "noam-vider",
+  "cur_rpi": 15,
+  "gap": -14
+ },
+ {
+  "name": "הרב נועם ונגרובר",
+  "old_items": 5,
+  "eff": 25,
+  "rabbi_id": "e13dda79-e8b5-4c69-8c36-86507f3beac3",
+  "slug": "nvm-vngrvbr",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב נחום נריה",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "f6d239d6-6c9d-4a65-8167-b2b3ab01de51",
+  "slug": "nchvm-nryh",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב עדיאל לוי",
+  "old_items": 3,
+  "eff": 26,
+  "rabbi_id": "9fb9a5b1-8318-4a18-af93-268c4fa3698c",
+  "slug": "adiel-levi",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב עידו רוזנטל",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "99f94412-7f26-4699-af2f-eb97f75b2105",
+  "slug": "ydv-rvzntl",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב נתן רוטמן",
+  "old_items": 7,
+  "eff": 40,
+  "rabbi_id": "4dc6c4a3-ebe3-43e5-b8d7-6d565be405eb",
+  "slug": "natan-rotman",
+  "cur_rpi": 7,
+  "gap": 0
+ },
+ {
+  "name": "הרב עמוס קליגר",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "b5f822f8-22e3-49fb-bad9-b262bab3bd75",
+  "slug": "mvs-klygr",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב עקיבא קשתיאל",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "97d20921-c6b2-47f4-96a7-97e6dcaddfbf",
+  "slug": "kyba-kshtyal",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב ערן טמיר",
+  "old_items": 11,
+  "eff": 55,
+  "rabbi_id": "ed629999-adaf-48f9-af75-60a516596021",
+  "slug": "eran-tamir",
+  "cur_rpi": 11,
+  "gap": 0
+ },
+ {
+  "name": "הרב עמירם אלבה",
+  "old_items": 19,
+  "eff": 63,
+  "rabbi_id": "3da1df9d-4ed5-48ba-9ffa-e3c5271d40e1",
+  "slug": "amiram-alva",
+  "cur_rpi": 20,
+  "gap": -1
+ },
+ {
+  "name": "הרב צבי הירש קלישר זצ\"ל",
+  "old_items": 1,
+  "eff": 42,
+  "rabbi_id": "3b77b33d-65e4-43a1-92bd-534f45ff9392",
+  "slug": "tzby-hyrsh-klyshr",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב עמנואל בן ארצי",
+  "old_items": 48,
+  "eff": 342,
+  "rabbi_id": "744da303-22be-4062-a822-4ba8e8f1b02d",
+  "slug": "emanueal-ben-artzi",
+  "cur_rpi": 54,
+  "gap": -6
+ },
+ {
+  "name": "הרב צבי לבנברג",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "c1f5a0d9-6727-48a3-9ab7-86cc493ffdb9",
+  "slug": "tzby-lbnbrg",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב צבי קוסטינר",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "3ca3c8b7-c061-4997-82dc-50f81e738e2a",
+  "slug": "tzby-kvstynr",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב צבי שוויגר",
+  "old_items": 4,
+  "eff": 53,
+  "rabbi_id": "678c4f71-1e70-4444-9046-3b79182294e2",
+  "slug": "zvi-shvaiger",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרב צפניה דרורי",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "0104ccd7-2814-47fc-a397-682b2254ba7d",
+  "slug": "tzpnyh-drvry",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב קובי דביר",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "92f3c15f-750a-438c-9413-7edeb50e754b",
+  "slug": "kvby-dbyr",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב קלמן בר",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "a90410a1-89e7-4e0e-b93d-0e132768bbbf",
+  "slug": "klmn-br",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב ראובן ששון",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "905cca79-9bcf-42ba-829a-ec3b9e907167",
+  "slug": "reuven-sasson",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרב רמי גליקשטיין",
+  "old_items": 5,
+  "eff": 5,
+  "rabbi_id": "a2bbca4b-30ba-4362-995c-50d727589545",
+  "slug": "rmy-glykshtyyn",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרב רפאל למפרט",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "48460b4e-a597-43ad-b8fb-fce8bcd7e858",
+  "slug": "rpal-lmprt",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב רוני אגלטל",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "f16ac6fa-ba12-4792-815e-2457548df247",
+  "slug": "rvny-agltl",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרב שלמה יוסף ויצן",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "cdb6545e-ce50-4e10-a544-2fa57d57ddff",
+  "slug": "shlmh-yvsp-vytzn",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרב שלמה אבינר",
+  "old_items": 11,
+  "eff": 136,
+  "rabbi_id": "277e3084-aaff-44e6-a83a-5facf893607e",
+  "slug": "shlomo-aviner",
+  "cur_rpi": 11,
+  "gap": 0
+ },
+ {
+  "name": "הרב שלמה מונדשיין",
+  "old_items": 10,
+  "eff": 19,
+  "rabbi_id": "a1a6925b-64c4-4cfe-a6a7-9daaddbfe7d8",
+  "slug": "shlmh-mvndshyyn",
+  "cur_rpi": 10,
+  "gap": 0
+ },
+ {
+  "name": "הרב שמעון כהן",
+  "old_items": 3,
+  "eff": 53,
+  "rabbi_id": "103442a2-5724-44cf-94f3-9ba75a342aec",
+  "slug": "shimon-cohen",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרב שמואל ישמח",
+  "old_items": 7,
+  "eff": 10,
+  "rabbi_id": "1e46fe39-8488-4c69-a7de-63e8cd295729",
+  "slug": "shmval-yshmch",
+  "cur_rpi": 7,
+  "gap": 0
+ },
+ {
+  "name": "הרב שמואל אליהו",
+  "old_items": 7,
+  "eff": 7,
+  "rabbi_id": "86dd0d3d-1c51-4728-8c86-3ca5461553db",
+  "slug": "shmuel-eliyahu",
+  "cur_rpi": 7,
+  "gap": 0
+ },
+ {
+  "name": "הרב שמעון לוי",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "9f9362d5-5de7-42d8-8e7f-cac609e23216",
+  "slug": "shmvn-lvy",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית אחינועם ברקו (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "90ec036a-c87b-4cbe-9fbf-9df0d2aded6c",
+  "slug": "achynvm-brkv",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית ברוריה בן שחר (לנשים)",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "e9af5074-fc56-44f8-91d7-2fc934887852",
+  "slug": "brvryh-bn-shchr",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית בת שבע אליהו (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "9f93561f-45d9-4055-96de-5bba915ea1b4",
+  "slug": "bt-shb-alyhv",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית גילה שרים (לנשים)",
+  "old_items": 4,
+  "eff": 4,
+  "rabbi_id": "a43e5133-5987-4065-86f2-cf22ff4c6f90",
+  "slug": "gylh-shrym",
+  "cur_rpi": 4,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית בת שבע יוסיפון (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "bc6e5c0b-2465-4ed1-9de6-1fc28250c387",
+  "slug": "bt-shb-yvsypvn-2",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית דינה ראפ (לנשים)",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "f437e7a9-2cf0-43df-a20b-4dcb34851212",
+  "slug": "dynh-rap",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית דנה סליי (לנשים)",
+  "old_items": 7,
+  "eff": 7,
+  "rabbi_id": "d80ccef5-c33b-4bd0-8367-0c3ebbb123a7",
+  "slug": "dnh-slyy-2",
+  "cur_rpi": 0,
+  "gap": 7
+ },
+ {
+  "name": "הרבנית דניאלה ון-דייק (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "be9d2c21-7e47-4dcb-9c1d-daf85877d63f",
+  "slug": "dnyalh-vn-dyyk-2",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית ורדית אביחי (לנשים)",
+  "old_items": 5,
+  "eff": 5,
+  "rabbi_id": "b1010001-0001-4000-8000-000000000001",
+  "slug": "vrdyt-abychy-2",
+  "cur_rpi": 0,
+  "gap": 5
+ },
+ {
+  "name": "הרבנית חגית אלרן (לנשים)",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "1f347997-d999-4250-987e-a7ae619b15a2",
+  "slug": "chgyt-alrn",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית יפה מגנס (לנשים)",
+  "old_items": 2,
+  "eff": 2,
+  "rabbi_id": "9985d06a-0dd2-4314-85f2-6610993ceb32",
+  "slug": "yph-mgns-2",
+  "cur_rpi": 2,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית נורית גאל דור (לנשים)",
+  "old_items": 5,
+  "eff": 15,
+  "rabbi_id": "53089efa-5913-40ed-a530-f6e47a5c10c2",
+  "slug": "nvryt-gal-dvr",
+  "cur_rpi": 5,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית נעמה אתרוג (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "a1a4fa3e-b4e4-4774-aa55-0f248e627d5b",
+  "slug": "nmh-atrvg",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית נעמה בן פנחס (לנשים)",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "feff2daf-983f-4c9d-b66a-1dc2c7cfc2e2",
+  "slug": "nmh-bn-pnchs",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית נעמי שפירא (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "b1010001-0001-4000-8000-000000000008",
+  "slug": "nmy-shpyra",
+  "cur_rpi": 0,
+  "gap": 1
+ },
+ {
+  "name": "הרבנית רחלי מונדשיין (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "03dea711-7cb7-4720-be1e-042d83577bee",
+  "slug": "rchly-mvndshyyn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית עידית שילה (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "a5480276-3dcc-4423-84f7-4ef305c63d15",
+  "slug": "ydyt-shylh",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית שיפי גולדשטיין (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "c25c124d-752a-42f7-ba5f-39fc391f2e44",
+  "slug": "shypy-gvldshtyyn",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "הרבנית תהילה הרץ (לנשים)",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "e8d6a202-0e6a-45ae-82ca-49e638b2f57e",
+  "slug": "thylh-hrtz",
+  "cur_rpi": 3,
+  "gap": 0
+ },
+ {
+  "name": "הרה\"ג הרב דוד לאו",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "c77f633b-162e-4128-b7a6-d1fdf30d4748",
+  "slug": "dvd-lav-2",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "ולו",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "f6ce1953-241f-42b7-964f-fa103c6e1958",
+  "slug": "velo",
+  "cur_rpi": 0,
+  "gap": 0
+ },
+ {
+  "name": "יונדב זר",
+  "old_items": 0,
+  "eff": 0,
+  "rabbi_id": "d79a4a34-9086-46cb-95b5-d7863179bc0e",
+  "slug": "yondav-zer",
+  "cur_rpi": 38,
+  "gap": -38
+ },
+ {
+  "name": "מערכת בני ציון",
+  "old_items": 8,
+  "eff": 185,
+  "rabbi_id": "274f4480-cc34-4331-842e-138c2e1f6175",
+  "slug": "maarechet-bnei-zion",
+  "cur_rpi": 6,
+  "gap": 2
+ },
+ {
+  "name": "פרופ' דבורה רוזנווסר (לנשים)",
+  "old_items": 1,
+  "eff": 1,
+  "rabbi_id": "6b6e048d-cee2-4214-af04-f50528658fd1",
+  "slug": "prof-dvora-rozenwaser",
+  "cur_rpi": 1,
+  "gap": 0
+ },
+ {
+  "name": "ושננתם",
+  "old_items": 40,
+  "eff": 135,
+  "rabbi_id": "e6c81665-5737-4c82-b96e-7527cc0e6ee6",
+  "slug": "veshinantam",
+  "cur_rpi": 40,
+  "gap": 0
+ },
+ {
+  "name": "רותי שפירא - ד\"ר (לנשים)",
+  "old_items": 3,
+  "eff": 3,
+  "rabbi_id": "fec85b7a-af58-4008-a867-733472a0c7aa",
+  "slug": "ruti-shapira-lanashim",
+  "cur_rpi": 3,
+  "gap": 0
+ }
+]

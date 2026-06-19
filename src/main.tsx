@@ -34,4 +34,25 @@ window.addEventListener("unhandledrejection", (e) => {
   }
 });
 
+// ── Live code updates without a manual refresh ────────────────────────────────
+// The SW (vite-plugin-pwa, autoUpdate + skipWaiting + clientsClaim) installs new
+// code in the background, but an already-open tab only picked it up on the *next*
+// navigation — which is why a hard-refresh was needed to see a fresh deploy.
+// Here we (1) poll for SW updates every 60s so an open tab notices a deploy, and
+// (2) reload ONCE when the new SW takes control. Guarded so it never reloads on
+// the first-ever install (no prior controller) and never loops.
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.ready
+    .then((reg) => { setInterval(() => { reg.update().catch(() => {}); }, 60_000); })
+    .catch(() => {});
+  if (navigator.serviceWorker.controller) {
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      if (refreshing) return;
+      refreshing = true;
+      window.location.reload();
+    });
+  }
+}
+
 createRoot(document.getElementById("root")!).render(<App />);

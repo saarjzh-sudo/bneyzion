@@ -86,7 +86,7 @@ export function useContentSidebar() {
         .in("status", ["active", "published"])
         .gte("sort_order", 1)
         .lte("sort_order", 999)
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+        .not("audience_tags", "cs", "{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -102,7 +102,7 @@ export function useContentSidebar() {
         .in("status", ["active", "published"])
         .gte("sort_order", 1)
         .lte("sort_order", 999)
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+        .not("audience_tags", "cs", "{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -128,7 +128,7 @@ export function useContentSidebar() {
         .gte("sort_order", 1)
         .lte("sort_order", 999)
         // §0.3: exclude teacher-only series from public tree
-        .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+        .not("audience_tags", "cs", "{teachers}")
         .order("sort_order")
         .order("title");
 
@@ -144,10 +144,68 @@ export function useContentSidebar() {
             .in("status", ["active", "published"])
             .gte("sort_order", 1)
             .lte("sort_order", 999)
-            .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+            .not("audience_tags", "cs", "{teachers}")
             .order("sort_order")
             .order("title")
         : { data: [] as any[] };
+
+      // פרוייקט התנ"ך המוקלט — the recorded series live under their BOOK parents (not under
+      // this section root, which has 0 direct children). R3 15.6.2026 (Saar): the old public page
+      // (/פרוייקט-התנך-המוקלט-מתעדכן) lists ~33 recorded series in biblical-canon order. We
+      // aggregate them here by title pattern WITHOUT re-parenting (they stay under their books).
+      // Pattern covers both "...מוקלט..." and the "...קריאה בטעמים..." variants (title-alone is
+      // insufficient — the בטעמים rows have no "מוקלט", per migration-rules §2).
+      const { data: recordedSeriesRaw } = await supabase
+        .from("series")
+        .select("id, title, parent_id")
+        .or("title.ilike.%מוקלט%,title.ilike.%קריאה בטעמים%")
+        .in("status", ["active", "published"])
+        .not("audience_tags", "cs", "{teachers}")
+        .order("title");
+      // Dedup migration twins (e.g. "בראשית מוקלט | ללא טעמים" vs "בראשית- מוקלט | ללא טעמים")
+      // by a strong key that strips quotes/pipes/dashes/spaces. Distinct variants
+      // ("...| אשכנזי" vs "...| נוסח אשכנזי") keep separate keys → both retained.
+      const recNorm = (t: string) => t.replace(/[״"'׳`|\-–—]/g, "").replace(/\s+/g, "").trim();
+      // GLOBAL biblical-canon order (Torah → Neviim → Ketuvim) for the recorded list.
+      // NOTE: biblicalOrder.getBiblicalSortIndex can't be reused here — its parshiot vs
+      // books maps each start at 0, so cross-category order collides. This is a single
+      // ordered book list (multi-word books before their bare form for longest-prefix match).
+      const RECORDED_BOOK_CANON = [
+        "בראשית", "שמות", "ויקרא", "במדבר", "דברים",
+        "יהושע", "שופטים", "שמואל א", "שמואל ב", "שמואל",
+        "מלכים א", "מלכים ב", "מלכים",
+        "ישעיהו", "ישעיה", "ירמיהו", "ירמיה", "יחזקאל",
+        "הושע", "יואל", "עמוס", "עובדיה", "יונה", "מיכה", "נחום",
+        "חבקוק", "צפניה", "חגי", "זכריה", "מלאכי",
+        "תהילים", "תהלים", "משלי", "איוב", "שיר השירים", "רות",
+        "איכה", "קהלת", "אסתר", "דניאל", "עזרא", "נחמיה", "דברי הימים",
+      ];
+      const stripGershayim = (t: string) => t.replace(/['׳״"]/g, "");
+      const recCanonIndex = (title: string) => {
+        // Strip "חומש " prefix, gershayim, turn dashes/pipes into spaces → clean leading book.
+        const t = stripGershayim(title.replace(/^חומש\s+/, "")).replace(/[\-–—|]/g, " ").replace(/\s+/g, " ").trim();
+        let best = 9999, bestLen = -1;
+        for (let i = 0; i < RECORDED_BOOK_CANON.length; i++) {
+          const b = stripGershayim(RECORDED_BOOK_CANON[i]);
+          if ((t === b || t.startsWith(b + " ")) && b.length > bestLen) { best = i; bestLen = b.length; }
+        }
+        return best;
+      };
+      const recordedSeen = new Set<string>();
+      const recordedChildren: ExtraSectionChild[] = (recordedSeriesRaw || [])
+        .filter((s) => {
+          const k = recNorm(s.title);
+          if (recordedSeen.has(k)) return false;
+          recordedSeen.add(k);
+          return true;
+        })
+        .map((s) => ({ id: s.id, title: s.title }))
+        .sort((a, b) => {
+          const ia = recCanonIndex(a.title);
+          const ib = recCanonIndex(b.title);
+          if (ia !== ib) return ia - ib; // biblical canon (Torah → Neviim → Ketuvim)
+          return a.title.localeCompare(b.title, "he"); // variants within a book
+        });
 
       // “איך לומדים” is treated as a flat section like the other expandable sections:
       // only its direct children with sort_order 1..999 appear in the sidebar (old site showed 5 leaf series).
@@ -171,9 +229,10 @@ export function useContentSidebar() {
       }
 
       // Filter out non-chumash items from Torah books (like "דפי פרשת שבוע").
-      // §2.5 tree CA8: append חידות לילדים פ״ש as the 6th entry (after דברים) — synthetic book
-      // entry so the verifier and sidebar both see it in the correct position under תורה.
-      // Its id = riddles series id; DesignSidebar detects this and routes to /series/:id.
+      // R3 14.6.2026 (Saar): REMOVED the synthetic "חידות לילדים פ״ש" 6th Torah entry (was §2.5 CA8).
+      // חידות = teacher content; the old site's תורה sidebar shows only the 5 chumashim, and under
+      // the strict R3 filter that entry would route to an empty /series page. The weekly-riddle
+      // widget on the home page (riddleQuery) remains the public/family touchpoint for riddles.
       const torahChumashBooks = TORAH_BOOK_ORDER
         .map((name) => allBooks.find((b) => b.title === name && b.parent_id === ROOT_IDS.torah))
         .filter(Boolean)
@@ -182,10 +241,7 @@ export function useContentSidebar() {
           title: b!.title,
           children: childrenByBook.get(b!.id) || [],
         }));
-      const torahBooks = [
-        ...torahChumashBooks,
-        { id: ROOT_IDS.riddles, title: 'חידות לילדים פ״ש', children: [] },
-      ];
+      const torahBooks = torahChumashBooks;
 
       // Build Torah/Neviim/Ketuvim categories
       const categories: SidebarCategory[] = [
@@ -257,7 +313,8 @@ export function useContentSidebar() {
         {
           id: ROOT_IDS.recordedProject,
           title: 'פרוייקט התנ"ך המוקלט - מתעדכן',
-          children: [], // standalone link on the old site (no sub-entries)
+          // R3 15.6.2026: the ~33 recorded series, aggregated from their book parents in canon order.
+          children: recordedChildren,
         },
         {
           id: ROOT_IDS.livuyTatim,
@@ -298,7 +355,7 @@ export function useContentSidebar() {
           .in("id", allIds)
           .in("status", ["active", "published", "draft"])
           // §0.3: exclude teacher-only series from public category page
-          .or("audience_tags.cs.{general},audience_tags.not.cs.{teachers}")
+          .not("audience_tags", "cs", "{teachers}")
           // §0.1 sort: sort_order band first, then title (canonical series order)
           .order("sort_order", { ascending: true, nullsFirst: false })
           .order("title", { ascending: true })
@@ -414,6 +471,8 @@ export function useContentSidebar() {
             .select("id, title, description, source_type, duration, rabbi_id, content, audio_url, video_url, attachment_url, series_id")
             .in("series_id", chunk)
             .eq("status", "published")
+            // R3 14.6.2026 (Saar): node-lesson list must exclude teacher content too.
+            .not("audience_tags", "cs", "{teachers}")
             .order("published_at", { ascending: true })
             .limit(1000);
           if (lessons) allLessons = allLessons.concat(lessons);

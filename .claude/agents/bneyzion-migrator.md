@@ -230,6 +230,14 @@ SELECT COUNT(*) FROM lessons WHERE attachment_url NOT LIKE '%supabase.co%'
 
 תיעוד מלא: [[bneyzion-migration-lessons-r1]] בזיכרון + KNOWLEDGE.md "סבב תיקונים 1".
 
+### ⭐ לקחי סבב 2 (14.6.2026) — מלא ב-`scripts/parity/SKILL.md` §"סבב 2"
+- **סדרות "כפולות" לא תמיד דליפה** — בדוק 2 slugs בישן (אבינר-בראשית: אודיו + שיחות, שניהם לגיטימיים).
+- **"כותרת=שם הרב"+content=NULL** = docx שלא חולץ. תקן מ-slug + backfill.
+- **זיהום חוצה-סדרות** — העבר series_id (אל תמחק, ארכב draft).
+- **סדרת-רפאים 1-שיעור** — "N שיעורים בסדרה" בפופאפ הישן = פריטי-קטגוריה לא שיעורי-סדרה. פריט יחיד = lesson לא series.
+- **עמודות-פרשה תמטיות** (עולמות חדשים/פשט/לשון) איבדו מיפוי → scrape `meta keywords` "פרשת X" מהישן + suffix `" - פרשת {X}"` לכותרת. נרמל כתיב לקלנדר.
+- **אימות:** PWA SW מגיש קוד ישן → לבטל SW+caches לפני אימות. anon-REST=דאטה, bundle-hash=קוד. גיבוי `*_bak_r<N>` (כולל teacher_listing_items). ← [[bneyzion-pwa-sw-stale-verification]]
+
 ---
 
-*Agent created 2026-06-09. · עודכן 11.6.2026: מודל series/lessons. · עודכן 14.6.2026: דפוס סבב-תיקונים + לקחי R1.*
+*Agent created 2026-06-09. · עודכן 11.6.2026: מודל series/lessons. · עודכן 14.6.2026: דפוס סבב-תיקונים + לקחי R1+R2 (פרטים ב-SKILL.md).*

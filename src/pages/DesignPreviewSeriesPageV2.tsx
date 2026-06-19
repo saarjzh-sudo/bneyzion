@@ -81,6 +81,7 @@ import {
 } from "@/lib/designTokens";
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
+import { usePublicBookListing } from "@/hooks/usePublicBookListing";
 import { useLesson } from "@/hooks/useLesson";
 import { useSeriesChildren, useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 // TeacherContentBadge import removed — badge no longer shown on regular series page (2026-06-09 fix)
@@ -99,7 +100,7 @@ function lessonImage(lesson: any, seriesImageUrl: string | null, seriesTitle: st
     lesson.thumbnail_url ||
     seriesImageUrl ||
     getSeriesCoverImage(seriesTitle) ||
-    "/images/series-default.png"
+    "/images/series-default.webp"
   );
 }
 
@@ -522,7 +523,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                   const cover =
                     child.image_url ||
                     getSeriesCoverImage(child.title) ||
-                    "/images/series-default.png";
+                    "/images/series-default.webp";
                   return (
                     <Link
                       key={child.id}
@@ -630,7 +631,7 @@ function SubSeriesGroup({ children: childSeries }: { children: any[] }) {
                   const cover =
                     child.image_url ||
                     getSeriesCoverImage(child.title) ||
-                    "/images/series-default.png";
+                    "/images/series-default.webp";
                   return (
                     <Link
                       key={child.id}
@@ -2120,7 +2121,9 @@ export default function DesignPreviewSeriesPageV2() {
   const targetId = id || SUB_SERIES_DEMO_ID;
 
   const { data: series, isLoading: seriesLoading } = useSeriesDetail(targetId);
-  const { data: lessons = [], isLoading: lessonsLoading } = useLessonsBySeries(series?.id);
+  // book-scoped view for shared whole-Torah series (e.g. ?book=שמות → that book's subset)
+  const bookParam = searchParams.get("book");
+  const { data: lessons = [], isLoading: lessonsLoading } = useLessonsBySeries(series?.id, bookParam);
 
   useSEO({
     title: series?.title ? `${series.title} — בני ציון` : "סדרת לימוד — בני ציון",
@@ -2130,6 +2133,10 @@ export default function DesignPreviewSeriesPageV2() {
     url: `https://bneyzion.co.il/series/${targetId}`,
   });
   const { data: childSeries = [] } = useSeriesChildren(series?.id);
+  // Section/sub-section nodes carry a 1:1 public_book listing (series cards + standalone lessons
+  // in the old order). That listing renders correctly only on CategoryPage — the sidebar routes
+  // section children to /series/:id, so we redirect them to /category/:id below (after guards).
+  const sectionListing = usePublicBookListing(series?.title ?? null);
 
   // Open/close lesson modal, sync URL
   const handleOpenLesson = useCallback(
@@ -2228,6 +2235,14 @@ export default function DesignPreviewSeriesPageV2() {
     return <Navigate to={`/teachers/series/${series.id}`} replace />;
   }
 
+  // Section nodes (have a 1:1 public_book listing) render via CategoryPage's interleaved
+  // series+lessons table in old order. The sidebar routes them here (/series/:id); redirect to
+  // /category/:id so the correct listing shows instead of the heuristic series view.
+  if (id && sectionListing.hasListing) {
+    const qs = bookParam ? `?book=${encodeURIComponent(bookParam)}` : "";
+    return <Navigate to={`/category/${id}${qs}`} replace />;
+  }
+
   const totalLessons = (lessons as any[]).length || series.lesson_count || 0;
   const totalDurationSec = (lessons as any[]).reduce(
     (sum: number, l: any) => sum + (l.duration || 0),
@@ -2236,7 +2251,7 @@ export default function DesignPreviewSeriesPageV2() {
   const totalDuration = formatDuration(totalDurationSec);
   const seriesImageUrl =
     series.image_url || getSeriesCoverImage(series.title) || null;
-  const heroImageUrl = seriesImageUrl || "/images/series-default.png";
+  const heroImageUrl = seriesImageUrl || "/images/series-default.webp";
 
   return (
     <>

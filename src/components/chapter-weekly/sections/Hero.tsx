@@ -1,5 +1,5 @@
 import { ArrowLeft } from "lucide-react";
-import jerusalemWalls from "@/assets/jerusalem-walls.jpg";
+import jerusalemWalls from "@/assets/jerusalem-walls.webp";
 import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const Hero = () => (

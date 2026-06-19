@@ -1,0 +1,1272 @@
+[
+ {
+  "title": "ימי העיון בתנ\"ך",
+  "old_items": 246,
+  "topic_id": "f2e01ca3-5f8b-4b05-b857-cd39142da1b9",
+  "slug": "theme-ימי-העיון-בתנ-ך",
+  "cur_lessons": 247,
+  "cur_series": 0,
+  "cur_total": 247,
+  "gap": -1
+ },
+ {
+  "title": "דוד המלך",
+  "old_items": 58,
+  "topic_id": "ce599885-4cdf-4e8a-9bb6-180262c04d6e",
+  "slug": "theme-דוד-המלך",
+  "cur_lessons": 55,
+  "cur_series": 4,
+  "cur_total": 59,
+  "gap": -1
+ },
+ {
+  "title": "האזנה לפסוקים עם ביאור פשוט",
+  "old_items": 55,
+  "topic_id": "e7d60a4c-a1e6-4f76-9c25-217b7c4f9ca0",
+  "slug": "theme-האזנה-לפסוקים-עם-ביאור-פשוט",
+  "cur_lessons": 2,
+  "cur_series": 55,
+  "cur_total": 57,
+  "gap": -2
+ },
+ {
+  "title": "גאולה",
+  "old_items": 53,
+  "topic_id": "8118697c-ccdf-4607-b48e-8afe6097f15e",
+  "slug": "theme-גאולה",
+  "cur_lessons": 53,
+  "cur_series": 0,
+  "cur_total": 53,
+  "gap": 0
+ },
+ {
+  "title": "מלכות",
+  "old_items": 43,
+  "topic_id": "af0762d4-3f18-4391-81b0-bf97dee16931",
+  "slug": "theme-מלכות",
+  "cur_lessons": 40,
+  "cur_series": 5,
+  "cur_total": 45,
+  "gap": -2
+ },
+ {
+  "title": "תנ\"ך מוקלט",
+  "old_items": 33,
+  "topic_id": "06bfa535-2d97-5191-a9d3-f5c5ec4bb444",
+  "slug": "theme-tanakh-muklat",
+  "cur_lessons": 0,
+  "cur_series": 33,
+  "cur_total": 33,
+  "gap": 0
+ },
+ {
+  "title": "נבואה",
+  "old_items": 38,
+  "topic_id": "64362bbf-afdf-4b78-a3c0-551de9671480",
+  "slug": "theme-נבואה",
+  "cur_lessons": 36,
+  "cur_series": 2,
+  "cur_total": 38,
+  "gap": 0
+ },
+ {
+  "title": "בית המקדש",
+  "old_items": 38,
+  "topic_id": "1a134c5f-d007-4005-a2f9-62e030bec12b",
+  "slug": "theme-בית-המקדש",
+  "cur_lessons": 38,
+  "cur_series": 1,
+  "cur_total": 39,
+  "gap": -1
+ },
+ {
+  "title": "לימוד בקצב של פרק לשיעור",
+  "old_items": 38,
+  "topic_id": "0aa783fb-8a12-5226-8b55-f5ca6ece466d",
+  "slug": "theme-perek-leshiur",
+  "cur_lessons": 0,
+  "cur_series": 38,
+  "cur_total": 38,
+  "gap": 0
+ },
+ {
+  "title": "ארץ ישראל",
+  "old_items": 35,
+  "topic_id": "3c03af46-8e01-400b-a46a-24d2b812893c",
+  "slug": "theme-ארץ-ישראל",
+  "cur_lessons": 34,
+  "cur_series": 0,
+  "cur_total": 34,
+  "gap": 1
+ },
+ {
+  "title": "בית שני",
+  "old_items": 35,
+  "topic_id": "f4690adf-a787-42e6-8f55-7b7017d9ffc8",
+  "slug": "theme-בית-שני",
+  "cur_lessons": 35,
+  "cur_series": 1,
+  "cur_total": 36,
+  "gap": -1
+ },
+ {
+  "title": "כהונה",
+  "old_items": 33,
+  "topic_id": "a42f9db6-6e3b-4df6-9f22-609df0bfb943",
+  "slug": "theme-כהונה",
+  "cur_lessons": 32,
+  "cur_series": 1,
+  "cur_total": 33,
+  "gap": 0
+ },
+ {
+  "title": "קריאת הפסוקים עם ביאור פשוט",
+  "old_items": 31,
+  "topic_id": "aac96137-a9e3-4cf4-9016-831b293668b3",
+  "slug": "theme-קריאת-הפסוקים-עם-ביאור-פשוט",
+  "cur_lessons": 23,
+  "cur_series": 7,
+  "cur_total": 30,
+  "gap": 1
+ },
+ {
+  "title": "ירושלים",
+  "old_items": 29,
+  "topic_id": "69c74afa-cdc4-4c55-b964-aaeab59918bf",
+  "slug": "theme-ירושלים",
+  "cur_lessons": 28,
+  "cur_series": 1,
+  "cur_total": 29,
+  "gap": 0
+ },
+ {
+  "title": "קרבנות",
+  "old_items": 26,
+  "topic_id": "22938735-84bc-411d-9be2-2b399450fa73",
+  "slug": "theme-קרבנות",
+  "cur_lessons": 26,
+  "cur_series": 0,
+  "cur_total": 26,
+  "gap": 0
+ },
+ {
+  "title": "מבט רחב על ספרים ונושאים",
+  "old_items": 26,
+  "topic_id": "b20c5891-f7ee-4be7-b75a-ecf056806e7f",
+  "slug": "theme-מבט-רחב-על-ספרים-ונושאים",
+  "cur_lessons": 7,
+  "cur_series": 21,
+  "cur_total": 28,
+  "gap": -2
+ },
+ {
+  "title": "המשכן וכליו",
+  "old_items": 25,
+  "topic_id": "66776121-fea5-47a5-a884-ed8b92d415df",
+  "slug": "theme-המשכן-וכליו",
+  "cur_lessons": 25,
+  "cur_series": 0,
+  "cur_total": 25,
+  "gap": 0
+ },
+ {
+  "title": "שיעורים לנשים",
+  "old_items": 25,
+  "topic_id": "e708018f-22a8-4b84-9302-87df5dac5656",
+  "slug": "theme-שיעורים-לנשים",
+  "cur_lessons": 25,
+  "cur_series": 0,
+  "cur_total": 25,
+  "gap": 0
+ },
+ {
+  "title": "מפרשי המקרא",
+  "old_items": 25,
+  "topic_id": "fba8198a-7daf-42b7-85f9-50e88762950a",
+  "slug": "theme-מפרשי-המקרא",
+  "cur_lessons": 25,
+  "cur_series": 1,
+  "cur_total": 26,
+  "gap": -1
+ },
+ {
+  "title": "מתן תורה",
+  "old_items": 21,
+  "topic_id": "d1d08e3d-657a-4492-85e7-2f5b96b5a858",
+  "slug": "theme-מתן-תורה",
+  "cur_lessons": 21,
+  "cur_series": 0,
+  "cur_total": 21,
+  "gap": 0
+ },
+ {
+  "title": "גלות",
+  "old_items": 19,
+  "topic_id": "dee7dca0-baeb-44f5-b7eb-dd16f9c883c4",
+  "slug": "theme-גלות",
+  "cur_lessons": 19,
+  "cur_series": 0,
+  "cur_total": 19,
+  "gap": 0
+ },
+ {
+  "title": "חורבן בית המקדש",
+  "old_items": 19,
+  "topic_id": "bcfa9e3f-63a8-41ea-8199-065b88b5f24f",
+  "slug": "theme-חורבן-בית-המקדש",
+  "cur_lessons": 19,
+  "cur_series": 0,
+  "cur_total": 19,
+  "gap": 0
+ },
+ {
+  "title": "שבטים",
+  "old_items": 18,
+  "topic_id": "d0f08877-0c59-414f-b5c3-29510499f6c4",
+  "slug": "theme-שבטים",
+  "cur_lessons": 17,
+  "cur_series": 1,
+  "cur_total": 18,
+  "gap": 0
+ },
+ {
+  "title": "חנוכה",
+  "old_items": 18,
+  "topic_id": "f5050501-0002-4000-a000-000000000001",
+  "slug": "hanukkah",
+  "cur_lessons": 17,
+  "cur_series": 0,
+  "cur_total": 17,
+  "gap": 1
+ },
+ {
+  "title": "משה רבנו",
+  "old_items": 17,
+  "topic_id": "555e8133-268f-421d-b899-1a6c180fa16c",
+  "slug": "theme-משה-רבנו",
+  "cur_lessons": 17,
+  "cur_series": 0,
+  "cur_total": 17,
+  "gap": 0
+ },
+ {
+  "title": "ארון הברית",
+  "old_items": 16,
+  "topic_id": "726d9512-5baf-4e8c-90b2-ec45d1d2a3eb",
+  "slug": "theme-ארון-הברית",
+  "cur_lessons": 15,
+  "cur_series": 0,
+  "cur_total": 15,
+  "gap": 1
+ },
+ {
+  "title": "שאול המלך",
+  "old_items": 16,
+  "topic_id": "1b015f32-2581-412f-a955-eb71bb4bbffd",
+  "slug": "theme-שאול-המלך",
+  "cur_lessons": 16,
+  "cur_series": 1,
+  "cur_total": 17,
+  "gap": -1
+ },
+ {
+  "title": "יוסף",
+  "old_items": 13,
+  "topic_id": "4b66b000-2cfe-4d7c-80ac-480da0c17032",
+  "slug": "theme-יוסף",
+  "cur_lessons": 13,
+  "cur_series": 0,
+  "cur_total": 13,
+  "gap": 0
+ },
+ {
+  "title": "צרעת",
+  "old_items": 12,
+  "topic_id": "421406a6-e3f7-4eae-ae5f-4cf2076df571",
+  "slug": "theme-צרעת",
+  "cur_lessons": 11,
+  "cur_series": 0,
+  "cur_total": 11,
+  "gap": 1
+ },
+ {
+  "title": "קרבן פסח",
+  "old_items": 12,
+  "topic_id": "6d364030-5bf1-42db-b387-3749d9c4feda",
+  "slug": "theme-קרבן-פסח",
+  "cur_lessons": 12,
+  "cur_series": 0,
+  "cur_total": 12,
+  "gap": 0
+ },
+ {
+  "title": "כריתת ברית",
+  "old_items": 11,
+  "topic_id": "f2404dfa-29b5-46b9-a5e0-6775f34073ee",
+  "slug": "theme-כריתת-ברית",
+  "cur_lessons": 10,
+  "cur_series": 0,
+  "cur_total": 10,
+  "gap": 1
+ },
+ {
+  "title": "קיום ברית",
+  "old_items": 11,
+  "topic_id": "3ab4ead6-8d55-4958-901b-f7c08231aa28",
+  "slug": "theme-קיום-ברית",
+  "cur_lessons": 10,
+  "cur_series": 0,
+  "cur_total": 10,
+  "gap": 1
+ },
+ {
+  "title": "המנורה",
+  "old_items": 11,
+  "topic_id": "d582bc8f-bf46-4449-b9ce-e83ab2941d1a",
+  "slug": "theme-המנורה",
+  "cur_lessons": 12,
+  "cur_series": 0,
+  "cur_total": 12,
+  "gap": -1
+ },
+ {
+  "title": "נזיר",
+  "old_items": 10,
+  "topic_id": "f0e1801e-e9c3-41b3-8d94-0786733643c2",
+  "slug": "theme-נזיר",
+  "cur_lessons": 10,
+  "cur_series": 0,
+  "cur_total": 10,
+  "gap": 0
+ },
+ {
+  "title": "גוג ומגוג",
+  "old_items": 10,
+  "topic_id": "4b3a7f6d-e404-4577-8874-bd3d2ba895fc",
+  "slug": "theme-גוג-ומגוג",
+  "cur_lessons": 10,
+  "cur_series": 0,
+  "cur_total": 10,
+  "gap": 0
+ },
+ {
+  "title": "מלחמה",
+  "old_items": 10,
+  "topic_id": "a56d182a-e73d-4f01-b75f-64653f4862be",
+  "slug": "theme-מלחמה",
+  "cur_lessons": 10,
+  "cur_series": 0,
+  "cur_total": 10,
+  "gap": 0
+ },
+ {
+  "title": "עבדות",
+  "old_items": 9,
+  "topic_id": "09545fd1-7bfd-4aed-b8ae-11e666dc86e1",
+  "slug": "theme-עבדות",
+  "cur_lessons": 9,
+  "cur_series": 0,
+  "cur_total": 9,
+  "gap": 0
+ },
+ {
+  "title": "ישראל והעמים",
+  "old_items": 9,
+  "topic_id": "47948720-87de-4edd-b949-7a33cfeafe84",
+  "slug": "theme-ישראל-והעמים",
+  "cur_lessons": 9,
+  "cur_series": 0,
+  "cur_total": 9,
+  "gap": 0
+ },
+ {
+  "title": "כיבוש הארץ",
+  "old_items": 9,
+  "topic_id": "01fa31aa-de58-44e0-b248-2866aea02157",
+  "slug": "theme-כיבוש-הארץ",
+  "cur_lessons": 9,
+  "cur_series": 0,
+  "cur_total": 9,
+  "gap": 0
+ },
+ {
+  "title": "יציאת מצרים",
+  "old_items": 9,
+  "topic_id": "b1221c0b-bafa-41c9-b32b-fa167d3ad48c",
+  "slug": "theme-יציאת-מצרים",
+  "cur_lessons": 9,
+  "cur_series": 0,
+  "cur_total": 9,
+  "gap": 0
+ },
+ {
+  "title": "השגחת ה'",
+  "old_items": 9,
+  "topic_id": "b0fc200a-4adf-4432-8f31-f6212e3e5d7a",
+  "slug": "theme-השגחת-ה",
+  "cur_lessons": 9,
+  "cur_series": 0,
+  "cur_total": 9,
+  "gap": 0
+ },
+ {
+  "title": "אליהו הנביא",
+  "old_items": 8,
+  "topic_id": "4975bd6b-6ed5-4b77-a2d0-ebcd464432fa",
+  "slug": "theme-אליהו-הנביא",
+  "cur_lessons": 8,
+  "cur_series": 0,
+  "cur_total": 8,
+  "gap": 0
+ },
+ {
+  "title": "שבת",
+  "old_items": 8,
+  "topic_id": "63387da1-d867-4ea4-a8e9-4ad74efb5597",
+  "slug": "theme-שבת",
+  "cur_lessons": 8,
+  "cur_series": 0,
+  "cur_total": 8,
+  "gap": 0
+ },
+ {
+  "title": "שמות ה'",
+  "old_items": 8,
+  "topic_id": "25a5a8a2-2187-4518-8100-1ee025402e3b",
+  "slug": "theme-שמות-ה",
+  "cur_lessons": 8,
+  "cur_series": 0,
+  "cur_total": 8,
+  "gap": 0
+ },
+ {
+  "title": "תשובה",
+  "old_items": 8,
+  "topic_id": "1c4b4a22-adff-437e-84e0-472e76bbf0b8",
+  "slug": "theme-תשובה",
+  "cur_lessons": 8,
+  "cur_series": 0,
+  "cur_total": 8,
+  "gap": 0
+ },
+ {
+  "title": "חטא המרגלים",
+  "old_items": 7,
+  "topic_id": "d4d9bae8-5371-4352-aa7e-96c4adf2b7ba",
+  "slug": "theme-חטא-המרגלים",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "בית המקדש השלישי",
+  "old_items": 7,
+  "topic_id": "ad056506-c07d-48ee-beb9-0b8f3bbcf34a",
+  "slug": "theme-בית-המקדש-השלישי",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "נביאי השקר",
+  "old_items": 7,
+  "topic_id": "35c4b4ea-66a2-4d1b-aabb-70566f80c269",
+  "slug": "theme-נביאי-השקר",
+  "cur_lessons": 6,
+  "cur_series": 1,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "משכן שילה",
+  "old_items": 7,
+  "topic_id": "81822c01-2b56-4d02-af28-203d6e18ada1",
+  "slug": "theme-משכן-שילה",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "שלמה המלך",
+  "old_items": 7,
+  "topic_id": "cffdf87b-9502-4475-91ec-75a3cf1a6437",
+  "slug": "theme-שלמה-המלך",
+  "cur_lessons": 7,
+  "cur_series": 1,
+  "cur_total": 8,
+  "gap": -1
+ },
+ {
+  "title": "מצרים",
+  "old_items": 7,
+  "topic_id": "04894baf-a54c-4d25-b1ad-558967a5abac",
+  "slug": "theme-מצרים",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "עמי כנען",
+  "old_items": 7,
+  "topic_id": "29a532e0-b5b2-4c7e-9d42-79127a322380",
+  "slug": "theme-עמי-כנען",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "אהבת ה'",
+  "old_items": 7,
+  "topic_id": "c8fe56f6-ba1d-4875-9152-003ffa86d569",
+  "slug": "theme-אהבת-ה",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "יהושפט",
+  "old_items": 7,
+  "topic_id": "061a4c9f-e7d0-4f21-8218-b1b44fdf05d5",
+  "slug": "theme-יהושפט",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "חזקיהו",
+  "old_items": 7,
+  "topic_id": "df3a90b5-ec72-4205-b637-e490eb20e0fc",
+  "slug": "theme-חזקיהו",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "הבמות",
+  "old_items": 7,
+  "topic_id": "2a231853-8deb-418e-a442-5b3f65f7b6e8",
+  "slug": "theme-הבמות",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "פלשתים",
+  "old_items": 7,
+  "topic_id": "ba5f05b6-c4f8-4234-97bd-f7bac2146354",
+  "slug": "theme-פלשתים",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "ברית מילה",
+  "old_items": 7,
+  "topic_id": "08514444-a7e9-441e-8126-f6926c3dd356",
+  "slug": "theme-ברית-מילה",
+  "cur_lessons": 7,
+  "cur_series": 0,
+  "cur_total": 7,
+  "gap": 0
+ },
+ {
+  "title": "אלישע הנביא",
+  "old_items": 6,
+  "topic_id": "ec22c3c0-d774-4784-becc-ebe9c3cca386",
+  "slug": "theme-אלישע-הנביא",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "יהושע בן נון",
+  "old_items": 6,
+  "topic_id": "5362493f-f3c8-492d-883e-826c9a9ac1a1",
+  "slug": "theme-יהושע-בן-נון",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "עמלק",
+  "old_items": 6,
+  "topic_id": "10ff930e-a151-4f5a-a967-f35425151d18",
+  "slug": "theme-עמלק",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "חטא העגל",
+  "old_items": 6,
+  "topic_id": "7f689042-6d4b-42e8-abfc-46f92c319508",
+  "slug": "theme-חטא-העגל",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "הקטורת",
+  "old_items": 6,
+  "topic_id": "f0fd36be-d5f5-4b28-8491-74b56bec6a0b",
+  "slug": "theme-הקטורת",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "נשים בתנ\"ך",
+  "old_items": 6,
+  "topic_id": "8c836bf6-29fd-4e3c-995c-5cd5549dbc9c",
+  "slug": "theme-נשים-בתנ-ך",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "שמחה",
+  "old_items": 6,
+  "topic_id": "167f01f5-534a-45a7-b448-6dffc0d59fcb",
+  "slug": "theme-שמחה",
+  "cur_lessons": 6,
+  "cur_series": 0,
+  "cur_total": 6,
+  "gap": 0
+ },
+ {
+  "title": "שמיטה",
+  "old_items": 5,
+  "topic_id": "0542027a-c542-401b-93de-24af019ed981",
+  "slug": "theme-שמיטה",
+  "cur_lessons": 5,
+  "cur_series": 0,
+  "cur_total": 5,
+  "gap": 0
+ },
+ {
+  "title": "הכניסה לארץ",
+  "old_items": 5,
+  "topic_id": "17e5f023-d5aa-4b14-864a-02ed2974073e",
+  "slug": "theme-הכניסה-לארץ",
+  "cur_lessons": 5,
+  "cur_series": 0,
+  "cur_total": 5,
+  "gap": 0
+ },
+ {
+  "title": "האבות",
+  "old_items": 5,
+  "topic_id": "66085fa8-4355-4bd2-94b4-db1899d365a0",
+  "slug": "theme-האבות",
+  "cur_lessons": 5,
+  "cur_series": 0,
+  "cur_total": 5,
+  "gap": 0
+ },
+ {
+  "title": "התשובה",
+  "old_items": 5,
+  "topic_id": "b65c04fe-8b7d-4701-9e1f-f0b8d04ab64b",
+  "slug": "theme-התשובה",
+  "cur_lessons": 5,
+  "cur_series": 0,
+  "cur_total": 5,
+  "gap": 0
+ },
+ {
+  "title": "יבום",
+  "old_items": 5,
+  "topic_id": "4967bf41-d734-44ea-8651-e65d1618c4c8",
+  "slug": "theme-יבום",
+  "cur_lessons": 5,
+  "cur_series": 0,
+  "cur_total": 5,
+  "gap": 0
+ },
+ {
+  "title": "תפילה",
+  "old_items": 5,
+  "topic_id": "8cd49e77-112f-423c-b625-65e26b7bcacc",
+  "slug": "theme-תפילה",
+  "cur_lessons": 5,
+  "cur_series": 0,
+  "cur_total": 5,
+  "gap": 0
+ },
+ {
+  "title": "ישעיהו",
+  "old_items": 4,
+  "topic_id": "e06e2901-c18e-4476-a448-faaedb92bc30",
+  "slug": "theme-ישעיהו",
+  "cur_lessons": 4,
+  "cur_series": 0,
+  "cur_total": 4,
+  "gap": 0
+ },
+ {
+  "title": "מרגלים",
+  "old_items": 4,
+  "topic_id": "ce2b2831-c566-4077-be2b-8bb411b9b0d0",
+  "slug": "theme-מרגלים",
+  "cur_lessons": 4,
+  "cur_series": 0,
+  "cur_total": 4,
+  "gap": 0
+ },
+ {
+  "title": "הנביא והמלך",
+  "old_items": 4,
+  "topic_id": "f94c8d45-62c1-4728-8bd4-66d074ee026c",
+  "slug": "theme-הנביא-והמלך",
+  "cur_lessons": 4,
+  "cur_series": 0,
+  "cur_total": 4,
+  "gap": 0
+ },
+ {
+  "title": "יום כיפור",
+  "old_items": 4,
+  "topic_id": "b13e3bf6-7592-4e93-b346-014598c27d50",
+  "slug": "theme-יום-כיפור",
+  "cur_lessons": 4,
+  "cur_series": 0,
+  "cur_total": 4,
+  "gap": 0
+ },
+ {
+  "title": "מאמרים קצרים",
+  "old_items": 4,
+  "topic_id": "37d3754a-a3df-42d0-8235-7ebfd3ca521f",
+  "slug": "theme-מאמרים-קצרים",
+  "cur_lessons": 0,
+  "cur_series": 4,
+  "cur_total": 4,
+  "gap": 0
+ },
+ {
+  "title": "קרבן שלמים",
+  "old_items": 4,
+  "topic_id": "a4c15894-c6a1-4d2b-b7e0-e583b4c4dd12",
+  "slug": "theme-קרבן-שלמים",
+  "cur_lessons": 4,
+  "cur_series": 0,
+  "cur_total": 4,
+  "gap": 0
+ },
+ {
+  "title": "יובל",
+  "old_items": 3,
+  "topic_id": "80ee605a-c019-4503-a825-d66e8842810e",
+  "slug": "theme-יובל",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "ירמיהו",
+  "old_items": 3,
+  "topic_id": "9f52fca3-a7c2-40b1-b576-47328cec54cc",
+  "slug": "theme-ירמיהו",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "יג מידות הרחמים",
+  "old_items": 3,
+  "topic_id": "de8b321f-e354-4b4a-b4af-c15ef68865b7",
+  "slug": "theme-יג-מידות-הרחמים",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "נסים",
+  "old_items": 3,
+  "topic_id": "a9bde238-d93d-4119-957b-36164eeeacb2",
+  "slug": "theme-נסים",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "צומות",
+  "old_items": 3,
+  "topic_id": "e85dd1a5-f899-4be5-bdfd-b1c4d65d1c33",
+  "slug": "theme-צומות",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "יהודה",
+  "old_items": 3,
+  "topic_id": "6425f994-b58b-4c8a-96fe-3baba83fc4f2",
+  "slug": "theme-יהודה",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "דניאל",
+  "old_items": 3,
+  "topic_id": "138d2cbd-e772-4639-ac96-4e656d21dc93",
+  "slug": "theme-דניאל",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "יתרו והקיני",
+  "old_items": 3,
+  "topic_id": "db17c8bc-3801-4223-843c-fec88e26ca74",
+  "slug": "theme-יתרו-והקיני",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "נבואות הקץ",
+  "old_items": 3,
+  "topic_id": "b22f843b-18ee-44c7-b6e6-d7528f1d535a",
+  "slug": "theme-נבואות-הקץ",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "יאשיהו",
+  "old_items": 3,
+  "topic_id": "353e8877-e1bd-4b56-9c46-86019fc78cda",
+  "slug": "theme-יאשיהו",
+  "cur_lessons": 3,
+  "cur_series": 0,
+  "cur_total": 3,
+  "gap": 0
+ },
+ {
+  "title": "ניסים",
+  "old_items": 2,
+  "topic_id": "b5ddc44d-b351-4ddb-b445-e235ba5c097c",
+  "slug": "theme-ניסים",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "ערי המקלט",
+  "old_items": 2,
+  "topic_id": "f9a7e705-13ef-4216-b3dc-616e3f179424",
+  "slug": "theme-ערי-המקלט",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "חלום",
+  "old_items": 2,
+  "topic_id": "c7d895a3-32e7-4e35-8173-92dbd27e5219",
+  "slug": "theme-חלום",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "שכר ועונש",
+  "old_items": 2,
+  "topic_id": "d139dbe5-edd7-4139-9960-064360da7b9d",
+  "slug": "theme-שכר-ועונש",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "קרבן תמיד",
+  "old_items": 2,
+  "topic_id": "db342ef9-d31b-473d-8f01-90e96d9d10c7",
+  "slug": "theme-קרבן-תמיד",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "ראש השנה",
+  "old_items": 2,
+  "topic_id": "e3030301-0002-4000-8000-000000000001",
+  "slug": "rosh-hashana",
+  "cur_lessons": 10,
+  "cur_series": 0,
+  "cur_total": 10,
+  "gap": -8
+ },
+ {
+  "title": "ספירת העומר",
+  "old_items": 2,
+  "topic_id": "e6060601-0002-4000-8000-000000000001",
+  "slug": "sefirat-haomer",
+  "cur_lessons": 0,
+  "cur_series": 0,
+  "cur_total": 0,
+  "gap": 2
+ },
+ {
+  "title": "חגים",
+  "old_items": 2,
+  "topic_id": "b129b4bc-ff76-4821-90b5-7d926e5a2130",
+  "slug": "theme-חגים",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "ביטחון ב-ד'",
+  "old_items": 2,
+  "topic_id": "655ed7dd-dd71-415d-af5b-d7a5139f4024",
+  "slug": "theme-ביטחון-ב-ד",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "בכורות",
+  "old_items": 2,
+  "topic_id": "8d2a70eb-cde7-4b52-835e-7add407c5291",
+  "slug": "theme-בכורות",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "יום העצמאות",
+  "old_items": 2,
+  "topic_id": "e6060601-0003-4000-8000-000000000001",
+  "slug": "yom-haatzmaut",
+  "cur_lessons": 0,
+  "cur_series": 0,
+  "cur_total": 0,
+  "gap": 2
+ },
+ {
+  "title": "שבט לוי",
+  "old_items": 2,
+  "topic_id": "17013688-0311-41f3-8ea6-90e0c626e696",
+  "slug": "theme-שבט-לוי",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "עבודה זרה",
+  "old_items": 2,
+  "topic_id": "2e106448-741b-4e7e-aac8-05b160d9c64b",
+  "slug": "theme-עבודה-זרה",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "מנשה",
+  "old_items": 2,
+  "topic_id": "dd95f6d0-074b-4c03-bf8b-f9880cec71ab",
+  "slug": "theme-מנשה",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "בני גד ובני ראובן",
+  "old_items": 2,
+  "topic_id": "11682377-ce55-4ce3-8813-b6e125edf8f9",
+  "slug": "theme-בני-גד-ובני-ראובן",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "עקדת יצחק",
+  "old_items": 2,
+  "topic_id": "33d7c5d4-a823-404a-a813-71438c6a1a39",
+  "slug": "theme-עקדת-יצחק",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "משיח",
+  "old_items": 2,
+  "topic_id": "eb752356-f9f6-4205-bde1-4a1eb34efaaf",
+  "slug": "theme-משיח",
+  "cur_lessons": 2,
+  "cur_series": 0,
+  "cur_total": 2,
+  "gap": 0
+ },
+ {
+  "title": "קרבן עולה",
+  "old_items": 1,
+  "topic_id": "f4ec8c43-46bb-4b50-b555-0dd595db4058",
+  "slug": "theme-קרבן-עולה",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "עשיו",
+  "old_items": 1,
+  "topic_id": "579e1c00-9f80-487f-a581-0976a6b5de4d",
+  "slug": "theme-עשיו",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "נישואים",
+  "old_items": 1,
+  "topic_id": "54431b57-1b16-4458-ad2c-b857e6b9d1a3",
+  "slug": "theme-נישואים",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "יופי",
+  "old_items": 1,
+  "topic_id": "7d43a544-a837-47ef-a308-4be3f7dc7859",
+  "slug": "theme-יופי",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "ירבעם",
+  "old_items": 1,
+  "topic_id": "68ab01b0-ce1c-4f83-9ca0-210e44493a73",
+  "slug": "theme-ירבעם",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "מעמד הר סיני",
+  "old_items": 1,
+  "topic_id": "79cf7ecb-f935-421c-8594-b5c00a9f9cde",
+  "slug": "theme-מעמד-הר-סיני",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "רש\"י",
+  "old_items": 1,
+  "topic_id": "ad014991-7616-48d2-85cf-a787974ed667",
+  "slug": "theme-רש-י",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "ארבע מלכויות",
+  "old_items": 1,
+  "topic_id": "d68fefb7-7711-4eb5-ad7e-d0bc59c62a5a",
+  "slug": "theme-ארבע-מלכויות",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "מנייני השנים בתנ\"ך",
+  "old_items": 1,
+  "topic_id": "c21ee321-de0d-4d87-92e2-67fa091985a8",
+  "slug": "theme-מנייני-השנים-בתנ-ך",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "עזרא הסופר",
+  "old_items": 1,
+  "topic_id": "b37f3f93-a8aa-47df-aa04-119daf581fc0",
+  "slug": "theme-עזרא-הסופר",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "חנ",
+  "old_items": 1,
+  "topic_id": "592a69e0-bda4-44d2-a59e-c3632b6f3e0f",
+  "slug": "theme-חנ",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "גן עדן",
+  "old_items": 1,
+  "topic_id": "5040f749-cd5e-4dbd-9736-b60775586f22",
+  "slug": "theme-גן-עדן",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "קרבן מנחה",
+  "old_items": 1,
+  "topic_id": "0dd1f3d1-da60-4f6b-ba59-53706ffc8f8d",
+  "slug": "theme-קרבן-מנחה",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "קרבן חטאת",
+  "old_items": 1,
+  "topic_id": "2281fe05-3c36-4b3d-a87c-9ce3b0597091",
+  "slug": "theme-קרבן-חטאת",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "חירם",
+  "old_items": 1,
+  "topic_id": "f8ba70e2-ae2a-4000-ad3d-177114649bf7",
+  "slug": "theme-חירם",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "יותם",
+  "old_items": 1,
+  "topic_id": "08c3b030-0c69-40be-b47e-318f4d57842d",
+  "slug": "theme-יותם",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "אחז",
+  "old_items": 1,
+  "topic_id": "487418c9-e243-445b-bd5e-8e406d54f90d",
+  "slug": "theme-אחז",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "כורש",
+  "old_items": 1,
+  "topic_id": "f970e21e-14b4-4211-af96-27210a8843fa",
+  "slug": "theme-כורש",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "חולדה הנביאה",
+  "old_items": 1,
+  "topic_id": "1bf5239a-de26-4610-9700-fb5bc8930921",
+  "slug": "theme-חולדה-הנביאה",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "אחאב",
+  "old_items": 1,
+  "topic_id": "87a5cdfc-a033-4ff4-bc28-c5401b2cc748",
+  "slug": "theme-אחאב",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "בית עלי",
+  "old_items": 1,
+  "topic_id": "21bc0ef2-1fcc-479a-b707-42905410c7fa",
+  "slug": "theme-בית-עלי",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "סתירות בתנ\"ך",
+  "old_items": 1,
+  "topic_id": "d7c37370-2e4e-40b4-9d94-058d8c616195",
+  "slug": "theme-סתירות-בתנ-ך",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ },
+ {
+  "title": "קיבוץ גלויות",
+  "old_items": 1,
+  "topic_id": "8ccd8629-5d2b-4627-bd8d-211525c752fb",
+  "slug": "theme-קיבוץ-גלויות",
+  "cur_lessons": 1,
+  "cur_series": 0,
+  "cur_total": 1,
+  "gap": 0
+ }
+]

@@ -56,7 +56,7 @@ const BOOK_SECTIONS = [
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function resolveSeriesImage(s: { image_url?: string | null; title: string }): string {
-  return (s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.png");
+  return (s.image_url || getSeriesCoverImage(s.title) || "/images/series-default.webp");
 }
 
 // ─── SeriesCard ───────────────────────────────────────────────────────────────
@@ -101,7 +101,7 @@ function SeriesCard({ series }: { series: { id: string; title: string; image_url
           alt={series.title}
           loading="lazy"
           style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-          onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/series-default.png"; }}
+          onError={(e) => { (e.currentTarget as HTMLImageElement).src = "/images/series-default.webp"; }}
         />
       </div>
       {/* Body */}

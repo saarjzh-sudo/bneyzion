@@ -10,7 +10,7 @@
  *
  * Iron rules:
  *  - RTL logical CSS only
- *  - Lesson trio image chain: thumbnailUrl → seriesImageUrl → getSeriesCoverImage() → /images/series-default.png
+ *  - Lesson trio image chain: thumbnailUrl → seriesImageUrl → getSeriesCoverImage() → /images/series-default.webp
  *  - ESC/X/backdrop all close
  */
 import { useEffect } from "react";
@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { X, Headphones, Video, FileDown, ExternalLink, GraduationCap } from "lucide-react";
 import { colors, fonts, radii, shadows, getSeriesCoverImage, formatDuration } from "@/lib/designTokens";
 import { sanitizeHtml } from "@/lib/sanitize";
+import RecommendedTeacherLessons from "@/components/teachers/RecommendedTeacherLessons";
 
 interface LessonItem {
   id: string;
@@ -41,6 +42,10 @@ interface TeacherLessonModalProps {
   /** Series author — authoritative for teacher content. Prefer over lesson.rabbiName,
    *  which the migration sometimes set to the wrong rabbi (e.g. שמואל אליהו on a מנחם אליהו series). */
   seriesRabbiName?: string | null;
+  /** Optional context to improve "שיעורים מומלצים" relevance (self-derived from the lesson if omitted). */
+  bibleBook?: string | null;
+  contentType?: string | null;
+  rabbiId?: string | null;
   onClose: () => void;
 }
 
@@ -50,6 +55,9 @@ export default function TeacherLessonModal({
   seriesImageUrl,
   seriesTitle,
   seriesRabbiName,
+  bibleBook,
+  contentType,
+  rabbiId,
   onClose,
 }: TeacherLessonModalProps) {
   const displayRabbi = seriesRabbiName || lesson.rabbiName;
@@ -58,7 +66,16 @@ export default function TeacherLessonModal({
     lesson.thumbnailUrl ||
     seriesImageUrl ||
     getSeriesCoverImage(seriesTitle) ||
-    "/images/series-default.png";
+    "/images/series-default.webp";
+
+  // Round-2 migration fix: some teacher video lessons store the .mp4 in attachment_url
+  // (video_url is null). Without this, the file fell between the video player (needs
+  // video_url) and the PDF/Word viewer (.pdf/.docx only) → the popup showed nothing.
+  const isVideoFile = (u: string | null | undefined) =>
+    !!u && /\.(mp4|m4v|mov|webm|ogv)(\?|#|$)/i.test(u);
+  const videoSrc = lesson.videoUrl || (isVideoFile(lesson.attachmentUrl) ? lesson.attachmentUrl : null);
+  // attachment routed to the PDF/Word inline viewer (i.e. anything that is NOT a video)
+  const docAttachmentUrl = lesson.attachmentUrl && !isVideoFile(lesson.attachmentUrl) ? lesson.attachmentUrl : null;
 
   // Close on ESC
   useEffect(() => {
@@ -115,7 +132,7 @@ export default function TeacherLessonModal({
             src={imgSrc}
             alt={lesson.title}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.png"; }}
+            onError={(e) => { (e.target as HTMLImageElement).src = "/images/series-default.webp"; }}
           />
           {/* Dark overlay */}
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(45,31,14,0.75) 0%, rgba(45,31,14,0.1) 60%)" }} />
@@ -159,19 +176,19 @@ export default function TeacherLessonModal({
                 {formatDuration(lesson.duration)}
               </span>
             )}
-            {lesson.videoUrl && (
+            {videoSrc && (
               <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", fontFamily: fonts.body, fontSize: "0.72rem", color: colors.oliveMain }}>
                 <Video size={12} /> וידאו
               </span>
             )}
-            {lesson.audioUrl && !lesson.videoUrl && (
+            {lesson.audioUrl && !videoSrc && (
               <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", fontFamily: fonts.body, fontSize: "0.72rem", color: colors.goldDark }}>
                 <Headphones size={12} /> שמע
               </span>
             )}
-            {lesson.attachmentUrl && (
+            {docAttachmentUrl && (
               <span style={{ display: "flex", alignItems: "center", gap: "0.25rem", fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textMuted }}>
-                <FileDown size={12} /> {String(lesson.attachmentUrl).toLowerCase().includes('.pdf') ? 'PDF' : String(lesson.attachmentUrl).toLowerCase().includes('.doc') ? 'Word' : 'קובץ'}
+                <FileDown size={12} /> {docAttachmentUrl.toLowerCase().includes('.pdf') ? 'PDF' : docAttachmentUrl.toLowerCase().includes('.doc') ? 'Word' : 'קובץ'}
               </span>
             )}
           </div>
@@ -196,23 +213,23 @@ export default function TeacherLessonModal({
           ) : null}
 
           {/* Media player / embed (video first, then audio) */}
-          {lesson.videoUrl && (
+          {videoSrc && (
             <div style={{ marginBottom: "1rem", borderRadius: radii.lg, overflow: "hidden", background: "#000" }}>
               <video
                 controls
-                src={lesson.videoUrl}
-                style={{ width: "100%", maxHeight: 200, display: "block" }}
+                src={videoSrc}
+                style={{ width: "100%", maxHeight: 320, display: "block" }}
               />
             </div>
           )}
-          {lesson.audioUrl && !lesson.videoUrl && (
+          {lesson.audioUrl && !videoSrc && (
             <div style={{ marginBottom: "1rem" }}>
               <audio controls src={lesson.audioUrl} style={{ width: "100%" }} />
             </div>
           )}
 
           {/* Fallback: no content at all */}
-          {!lesson.content && !lesson.description && !lesson.videoUrl && !lesson.audioUrl && !lesson.attachmentUrl && (
+          {!lesson.content && !lesson.description && !videoSrc && !lesson.audioUrl && !lesson.attachmentUrl && (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1rem", gap: "0.6rem", color: colors.textSubtle, fontFamily: fonts.body, textAlign: "center" }}>
               <FileDown size={32} style={{ color: colors.goldDark, opacity: 0.4 }} />
               <p style={{ margin: 0, fontSize: "0.85rem" }}>
@@ -224,9 +241,9 @@ export default function TeacherLessonModal({
             </div>
           )}
 
-          {/* PDF / Word inline viewer */}
-          {lesson.attachmentUrl && !lesson.videoUrl && (() => {
-            const url = lesson.attachmentUrl!;
+          {/* PDF / Word inline viewer (videos are handled by the <video> player above) */}
+          {docAttachmentUrl && (() => {
+            const url = docAttachmentUrl;
             const lower = url.toLowerCase();
             const isPdf  = lower.includes(".pdf");
             const isDocx = lower.includes(".docx") || lower.includes(".doc");
@@ -276,6 +293,17 @@ export default function TeacherLessonModal({
 
             return null;
           })()}
+
+          {/* שיעורים מומלצים באותו נושא */}
+          <RecommendedTeacherLessons
+            lessonId={lesson.id}
+            seriesId={seriesId || null}
+            bibleBook={bibleBook ?? null}
+            contentType={contentType ?? null}
+            rabbiId={rabbiId ?? null}
+            variant="modal"
+            onNavigate={onClose}
+          />
         </div>
 
         {/* Footer CTAs */}
@@ -317,7 +345,7 @@ export default function TeacherLessonModal({
           {/* Secondary CTA — attachment download */}
           {lesson.attachmentUrl && (() => {
             const lower = String(lesson.attachmentUrl).toLowerCase();
-            const label = lower.includes('.pdf') ? 'הורד PDF' : lower.includes('.doc') ? 'הורד Word' : 'הורד קובץ';
+            const label = lower.includes('.pdf') ? 'הורד PDF' : lower.includes('.doc') ? 'הורד Word' : isVideoFile(lower) ? 'הורד וידאו' : 'הורד קובץ';
             return (
               <a
                 href={lesson.attachmentUrl}

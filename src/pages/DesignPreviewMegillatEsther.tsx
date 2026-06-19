@@ -178,7 +178,7 @@ export default function DesignPreviewMegillatEsther() {
           style={{
             position: "absolute",
             inset: 0,
-            backgroundImage: "url(/images/series-tanach-victory.png)",
+            backgroundImage: "url(/images/series-tanach-victory.webp)",
             backgroundSize: "cover",
             backgroundPosition: "center 30%",
             opacity: 0.28,

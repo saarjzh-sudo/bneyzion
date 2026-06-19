@@ -5,9 +5,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import Layout from "@/components/layout/Layout";
 import { useSEO } from "@/hooks/useSEO";
 // 27.5.2026 — hero-bg-bney-zion.jpg showed European/Scottish mountains. Replaced with Israeli Jerusalem walls.
-import kenesHeroBg from "@/assets/jerusalem-walls.jpg";
-import watercolorBook from "@/assets/watercolor-book.png";
-import kriatKivunBanner from "@/assets/kriat-kivun-banner.png";
+import kenesHeroBg from "@/assets/jerusalem-walls.webp";
+import watercolorBook from "@/assets/watercolor-book.webp";
+import kriatKivunBanner from "@/assets/kriat-kivun-banner.webp";
 
 interface Recording {
   name: string;

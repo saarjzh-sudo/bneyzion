@@ -77,7 +77,7 @@ export default function DesignPreviewLessonPage() {
   }
 
   const fam = seriesFamilies[getSeriesFamily(series.title, series.description)];
-  const heroImage = lesson.thumbnail_url || series.image_url || getSeriesCoverImage(series.title) || "/images/series-default.png";
+  const heroImage = lesson.thumbnail_url || series.image_url || getSeriesCoverImage(series.title) || "/images/series-default.webp";
   const isAudio = lesson.source_type === "audio";
   const rabbiName = (lesson.rabbis?.name || series.rabbis?.name || "").trim();
   const rabbiInitial = rabbiName ? (rabbiName.replace(/^הרב /, "")[0] || "ר") : "ר";

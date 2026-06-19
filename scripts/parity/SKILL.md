@@ -303,3 +303,30 @@ env -u HTTPS_PROXY -u HTTP_PROXY NO_PROXY='*' \
 **לקח מפתח:** כל מספר-חוסרים גולמי מנופח ע"י דפי קטגוריה/סדרה + כפילויות URL + וריאנטי-ניסוח (מקף/"פרשת"/audience). חובה לנפות לפני שמדווחים — אחרת false-alarm (בראשית: 26 "חוסרים" = 0 אמיתיים).
 
 **פרומפט סגירת פערים:** `GOLDEN-PROMPT-v2-gap-closing.md`.
+
+---
+
+## סבב תיקונים 2 + עדכון-חי (14.6.2026) — חובה לקרוא לפני סבב הבא
+
+### לקחי שורש (מיגרציה) — לבדוק בכל סבב
+1. **סדרות "כפולות" אינן תמיד דליפה.** בדוק את הישן: אבינר-בראשית = 2 דפים נפרדים לגיטימיים (אודיו `הרב-אבינר-על-פרשיות-בראשית` + שיחות `הרב-אבינר-שיחות`). שם-סדרה "שגוי" עשוי להיות נכון. ground-truth = slugs של דפי-הילד בישן (`audit_full_state.json` → `pages`).
+2. **"כותרת = שם הרב" + content=NULL** = המיגרציה לא חילצה כותרת מ-docx. `WHERE btrim(l.title)=btrim(r.name)`. תקן מ-slug הישן + backfill.
+3. **זיהום חוצה-סדרות** — שיעור בסדרה לא-נכונה. השווה רשימת-שיעורים-בסדרה מול slugs הישן; **העבר (series_id), אל תמחק** (ארכב status='draft').
+4. **סדרת-רפאים 1-שיעור** — wrapper סביב פריט יחיד. "N שיעורים בסדרה" בפופאפ הישן = ספירת **פריטי-קטגוריה**, לא שיעורי-סדרה! פריט יחיד צריך להיות lesson לא series. ב-content-type: שורת `teacher_listing_items` kind='series' עם 1 שיעור → המר ל-kind='lesson' או הפנה לסדרה-רבת-שיעורים אמיתית באותו content_type.
+5. **mp4 ב-`attachment_url`** (video_url ריק) — הפופאפ לא ניגן (טיפל רק ב-pdf/docx). תוקן ב-`TeacherLessonModal` (זיהוי סיומת וידאו → `<video>`).
+6. **מיון הקדמות:** `sort_order NULLS LAST→bible_chapter NULLS LAST` דוחף הקדמה (chapter=NULL) לסוף → `sort_order=-10` להקדמות (`title ~ 'הקדמה ל|מבוא לספר'`).
+7. **עמודות-פרשה תמטיות** (עולמות חדשים/פשט/לשון הקודש) — איבדו מיפוי-פרשה (כותרות בלי שם-פרשה, bible_book=NULL). שחזור: scrape `/מאגר-השיעורים-והמאמרים/תורה/{chumash}/{column}/{slug}/` — הפרשה ב-`<meta keywords>` "פרשת X" (16KB head מספיק). הוסף suffix `" - פרשת {X}"` לכותרת ב-DB → title-matchable כמו העמודות העובדות. נרמל כתיב לקלנדר: קרח→קורח, נוח→נח, ניצבים→נצבים, בחוקותי→בחוקתי.
+
+### אימות (חובה — אחרת מאמתים קוד ישן!)
+- **PWA service-worker מגיש קוד ישן אחרי deploy.** לפני אימות-חי בדפדפן: `(await navigator.serviceWorker.getRegistrations()).forEach(r=>r.unregister()); (await caches.keys()).forEach(k=>caches.delete(k));` → reload. ודא `performance.getEntriesByType('resource')` main-hash = build מקומי (`dist/assets/main-*.js`).
+- **anon-REST** (מפתח anon base64 ב-`src/integrations/supabase/client.ts`) = מה שהדפדפן שולף (RLS-aware) — אימות דאטה. **bundle-hash per-chunk** — אימות קוד. **word-boundary** (`titleMatchesParasha`) — `%חוקת%` תופס גם "בחוקתי".
+- **edge cache ל-index.html:** `curl "https://bneyzion.vercel.app/?_cb=$RANDOM"`.
+
+### עדכון-חי (Supabase Realtime) — "כמו מד-התרומות ביהושע"
+- דפוס: `useTierCounts.ts` / `useParasha.ts` — `supabase.channel().on('postgres_changes',{schema:'public',table},cb).subscribe()` → `invalidateQueries`.
+- **חובה ל-push:** `ALTER PUBLICATION supabase_realtime ADD TABLE public.<t>` + **`ALTER TABLE public.<t> REPLICA IDENTITY FULL`** (בלי זה אין אירועי UPDATE ל-anon). lessons+series כבר מופעלים. (הפובליקציה הייתה ריקה → מד-התרומות עבד דרך polling בלבד.)
+- fallback: `refetchInterval:30_000` (מושהה בטאב מוסתר!) + `refetchOnWindowFocus` + watcher-תאריך.
+- **auto-reload קוד** (`main.tsx`): `serviceWorker.ready→setInterval(reg.update,60s)` + reload על `controllerchange` (guarded ל-controller קיים).
+
+### דיפלוי + גיבוי
+prod = alias ידני. `npx vercel deploy --yes` → `npx vercel alias set <preview> bneyzion.vercel.app`. rollback = alias ל-dpl קודם. **גיבוי לפני כל write:** `*_bak_r<N>_<date>` (lessons+series+teacher_listing_items). זיכרון: `bneyzion-pwa-sw-stale-verification` + `bneyzion-fix-rounds-dashboard`.

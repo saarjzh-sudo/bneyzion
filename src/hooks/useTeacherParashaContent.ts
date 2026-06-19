@@ -298,10 +298,27 @@ export interface TeacherWorksheetLesson {
   seriesTitle: string | null;
 }
 
+export interface TeacherWorksheetSeries {
+  id: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  lesson_count: number;
+  rabbiName: string | null;
+  sortOrder: number;
+}
+
 export interface TeacherWorksheetsResult {
-  lessons: TeacherWorksheetLesson[];
+  series: TeacherWorksheetSeries[];
+  lessons: TeacherWorksheetLesson[]; // standalone worksheet lessons only
   isLoading: boolean;
 }
+
+// R4 ordering/phantom helpers (same convention as useTeacherBookContent)
+const WS_ord = (n: number | null | undefined) => (n && n > 0 ? n : 9999);
+const WS_NAV_RE = /^(כל התכנים|דפי עבודה|פרשת |חידות לילדים)/;
+const WS_PARSHA_EVENT_RE = /^\s*פרשת\s.*\|/;
+const WS_heCmp = (a: string, b: string) => a.localeCompare(b, "he");
 
 // Worksheet content_type values (from old site + DB audit)
 const WORKSHEET_CONTENT_TYPES = [
@@ -325,73 +342,102 @@ export function isWorksheetContentType(ct: string | null): boolean {
 
 export function useTeacherWorksheetsContent(book: string): TeacherWorksheetsResult {
   const q = useQuery({
-    queryKey: ["teacher-worksheets-content-v1", book],
+    queryKey: ["teacher-worksheets-content-v2", book],
     enabled: !!book,
     queryFn: async () => {
       const anonKey = getAnonKey();
       const headers = { apikey: anonKey, Authorization: `Bearer ${anonKey}` };
 
-      // Strategy: fetch all teacher lessons for the book, filter by worksheet content_type
-      // This is more reliable than querying by content_type (too many variants)
-      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published&order=title`;
+      // Fetch all teacher lessons for the book (incl. sort_order), keep worksheet-type ones.
+      const base = `${SUPABASE_URL_RUNTIME}/rest/v1/lessons?select=id,title,description,content,duration,audio_url,video_url,attachment_url,thumbnail_url,content_type,rabbi_id,series_id,sort_order&bible_book=eq.${encodeURIComponent(book)}&audience_tags=cs.%7Bteachers%7D&status=eq.published`;
       const allRaw: any[] = [];
       const PAGE = 1000;
       for (let start = 0; ; start += PAGE) {
-        const resp = await fetch(base, {
-          headers: { ...headers, Range: `${start}-${start + PAGE - 1}` },
-        });
+        const resp = await fetch(base, { headers: { ...headers, Range: `${start}-${start + PAGE - 1}` } });
         if (!resp.ok) break;
         const rows = await resp.json();
         allRaw.push(...rows);
         if (rows.length < PAGE) break;
       }
 
-      // Filter by worksheet content types
       const worksheetRows = allRaw.filter((l) => isWorksheetContentType(l.content_type));
+      if (worksheetRows.length === 0) return { series: [], lessons: [] as TeacherWorksheetLesson[] };
 
-      if (worksheetRows.length === 0) return [];
+      // ── Worksheet SERIES (old /דפי-עבודה-X/ lists series, not loose lessons) ──
+      const wsSeriesIds = [...new Set(worksheetRows.filter((l) => l.series_id).map((l) => l.series_id as string))];
+      let seriesRaw: Array<{ id: string; title: string; description: string | null; image_url: string | null; lesson_count: number; rabbi_id: string | null; sort_order: number | null }> = [];
+      for (let i = 0; i < wsSeriesIds.length; i += 400) {
+        const { data } = await supabase
+          .from("series")
+          .select("id, title, description, image_url, lesson_count, rabbi_id, sort_order")
+          .in("id", wsSeriesIds.slice(i, i + 400))
+          .gt("lesson_count", 0);
+        seriesRaw.push(...(data || []));
+      }
+      // Drop the book nav-node + parsha event-series (same rule as the book page)
+      seriesRaw = seriesRaw.filter((s) => {
+        const t = (s.title || "").trim();
+        return t !== book.trim() && !WS_PARSHA_EVENT_RE.test(t);
+      });
 
-      // Enrich with rabbi names + series titles
-      const rabbiIds = [...new Set(worksheetRows.filter((l) => l.rabbi_id).map((l) => l.rabbi_id as string))];
-      const seriesIds = [...new Set(worksheetRows.filter((l) => l.series_id).map((l) => l.series_id as string))];
+      // ── standalone worksheet lessons (no series, not nav pages) ──
+      const standaloneRows = worksheetRows.filter(
+        (l) => !l.series_id && !WS_NAV_RE.test((l.title || "").trim())
+      );
 
+      // Enrich rabbi names (series + lessons)
+      const rabbiIds = [
+        ...new Set([
+          ...seriesRaw.filter((s) => s.rabbi_id).map((s) => s.rabbi_id as string),
+          ...standaloneRows.filter((l) => l.rabbi_id).map((l) => l.rabbi_id as string),
+        ]),
+      ];
       let rabbiMap = new Map<string, string>();
-      let seriesMap = new Map<string, string>();
-
       if (rabbiIds.length > 0) {
         const { data: rabbis } = await supabase.from("rabbis").select("id, name").in("id", rabbiIds);
         rabbiMap = new Map((rabbis || []).map((r) => [r.id, r.name]));
       }
-      if (seriesIds.length > 0) {
-        const chunks: string[][] = [];
-        for (let i = 0; i < seriesIds.length; i += 400) chunks.push(seriesIds.slice(i, i + 400));
-        for (const chunk of chunks) {
-          const { data: ss } = await supabase.from("series").select("id, title").in("id", chunk);
-          for (const s of ss || []) seriesMap.set(s.id, s.title);
-        }
-      }
 
-      return worksheetRows.map((l) => ({
-        id: l.id,
-        title: l.title,
-        description: l.description,
-        content: l.content ?? null,
-        duration: l.duration,
-        audioUrl: l.audio_url,
-        videoUrl: l.video_url,
-        attachmentUrl: l.attachment_url,
-        thumbnailUrl: l.thumbnail_url,
-        contentType: l.content_type,
-        rabbiName: l.rabbi_id ? rabbiMap.get(l.rabbi_id) || null : null,
-        seriesId: l.series_id,
-        seriesTitle: l.series_id ? seriesMap.get(l.series_id) || null : null,
-      }));
+      const series: TeacherWorksheetSeries[] = seriesRaw
+        .map((s) => ({
+          id: s.id,
+          title: s.title,
+          description: s.description,
+          image_url: s.image_url,
+          lesson_count: s.lesson_count,
+          rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
+          sortOrder: s.sort_order ?? 0,
+        }))
+        .sort((a, b) => WS_ord(a.sortOrder) - WS_ord(b.sortOrder) || WS_heCmp(a.title, b.title));
+
+      const lessons: TeacherWorksheetLesson[] = standaloneRows
+        .map((l) => ({
+          id: l.id,
+          title: l.title,
+          description: l.description,
+          content: l.content ?? null,
+          duration: l.duration,
+          audioUrl: l.audio_url,
+          videoUrl: l.video_url,
+          attachmentUrl: l.attachment_url,
+          thumbnailUrl: l.thumbnail_url,
+          contentType: l.content_type,
+          rabbiName: l.rabbi_id ? rabbiMap.get(l.rabbi_id) || null : null,
+          seriesId: null,
+          seriesTitle: null,
+          _sortOrder: (l.sort_order ?? 0) as number,
+        }))
+        .sort((a: any, b: any) => WS_ord(a._sortOrder) - WS_ord(b._sortOrder) || WS_heCmp(a.title, b.title))
+        .map(({ _sortOrder, ...l }: any) => l);
+
+      return { series, lessons };
     },
     staleTime: 1000 * 60 * 10,
   });
 
   return {
-    lessons: q.data || [],
+    series: q.data?.series || [],
+    lessons: q.data?.lessons || [],
     isLoading: q.isLoading,
   };
 }
