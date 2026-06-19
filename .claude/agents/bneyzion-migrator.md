@@ -20,6 +20,8 @@
 7. **כל בעיה שסער מציף = תיקון לרוחב** (סרוק את כל המופעים בכל האתר), לא רק הדוגמה.
 8. **לא הורסים, מגבים.** `consolidate.py` מאחד ע"י MOVE עותקים-רופפים + COPY מסדרות-אמיתיות (נשמרות). גיבוי `*_bak_YYYYMMDD` לפני כל write. ספק תוכן/שם-רב → רשימה ליואב, לא להמציא.
 9. **דיפלוי בני ציון:** פרודקשן = alias ידני `bneyzion.vercel.app` (gitBranch=None). `git push` בונה PREVIEW בלבד (מאחורי SSO) → לקדם דרך `POST /v2/deployments/{id}/aliases`. ודא ש-HEAD מקומי ⊇ commit הפרודקשן לפני (אחרת דורס את ההדר). rollback = alias חזרה ל-deployment הקודם.
+10. **section-child → `/category`, לא `/series`** (נלמד בכאב 19.6 — סער: "התדרדרנו מאד"). דפי-סקשן (הגישה-הראויה/איך-לומדים/כל-ההפטרות) מרנדרים רשימת-1:1 (סדרות+שיעורים בסדר הישן) **רק ב-`CategoryPage`** דרך `usePublicBookListing`. ה-sidebar מנתב section-children ל-`/series` → לכן `DesignPreviewSeriesPageV2` **מפנה אוטומטית ל-`/category`** כשיש `usePublicBookListing(title).hasListing` (סדרות-אמת בלי listing לא מושפעות). שורש (תורה/נביאים/כתובים) = `onToggle` בלבד, **לא דף**. **בסיס חי: commit `b4631c76` · deploy `dpl_7Zav`. אל תיסוג.** פירוט: `scripts/parity/SESSION-20260619-ROUTING-BASELINE.md`.
+11. **מבחן-מיגרציה חייב לבדוק סדר + פס-שיעורים-מלא + זיהום-פנים-סדרתי + content-length — לא רק ספירות-כותרות.** המבחן הישן (`mtest_*`) פספס את כל אלה (לכן "הסוכנים לא זיהו את הפערים"). extractor חייב לתפוס `LessonRow`=onClick-div (`cursor:pointer`), לא רק `a[href]`. זיהום-סדרה = השוואת שיעורי-סדרה DB-מול-ישן (096fc3cd: 35 מ-7 רבנים בחדש, 12 אבינר בישן → allow-list 12).
 
 ground-truth: עמודי-האירוע הישנים (`lessonBlock` → `h3>a` כותרת + `.author` רב). תיעוד מלא: `scripts/parity/NIGHT-LOG-20260610.md` + `[[bneyzion-migration-rules-saar]]` בזיכרון.
 

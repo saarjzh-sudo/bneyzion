@@ -1,0 +1,32 @@
+# 🧭 בני ציון — בסיס 19.6.2026: תיקון ניתוב-סקשנים + מבחן (קרא ראשון, אל תיסוג)
+
+> **זהו הבסיס החי. כל שינוי מכאן והלאה מתחיל מ-commit `b4631c76` ו-deploy `dpl_7Zav...`. אסור לסגת אחורה מהמצב הזה.**
+
+## מה קרה (השורש)
+סער דיווח "התדרדרנו" — דפי-סקשן (הגישה הראויה, איך-לומדים, כל-ההפטרות) הציגו סדרות שגויות/לא-לפי-הסדר; שורש-נביאים פתח דף ריק. **חקירה הוכיחה: הדאטה תקינה (allow-list 1:1 מלא), הבאג היה ב-ניתוב/רינדור:**
+
+- `usePublicBookListing` (uncommitted ב-working-tree, מעולם לא נפרס) מרנדר ב-`CategoryPage` רשימה 1:1 מ-`teacher_listing_items scope='public_book'` (סדרות+שיעורים interleaved בסדר הישן). **זה הקוד הנכון.**
+- אבל ה-sidebar מנתב **section-children ל-`/series/:id`** (`DesignSidebarV2`), ו-`/series` (DesignPreviewSeriesPageV2) מרנדר דרך `useLessonsBySeries` — לוגיקה אחרת → סדרות שגויות, לא-לפי-הסדר.
+- **`main` = טרום-מיגרציה (27.5), אין בו CategoryPage/Sidebar בכלל.** כל ה-UI של המיגרציה היה uncommitted ב-working-tree. `deploy-benzi.sh` נוגע רק ב-edge-function (לא ב-Vercel) — אז "פריסת בנצי" לא שינתה את הפרונט; פשוט הקוד הנכון מעולם לא נפרס/קומיט.
+
+## התיקון (חי + מאומת)
+1. **`DesignPreviewSeriesPageV2`**: צומת עם `usePublicBookListing(title).hasListing` → `<Navigate to=/category/:id replace>`. סקשן-ילד מופנה אוטומטית ל-`/category` (רשימה 1:1). סדרות-אמת (פרשה/פרק, בלי listing) לא מושפעות.
+2. **`DesignSidebarV2`**: כותרת-שורש (תורה/נביאים/כתובים) = `onToggle` בלבד (אין `onNavigate` → אין דף-שורש ריק).
+3. **commit `b4631c76`** = כל ה-UI של המיגרציה (היה uncommitted) + 2 התיקונים. **deploy `dpl_7Zav` ל-prod.**
+
+**אומת חי על bneyzion.vercel.app:** הגישה-הראויה /series→/category 62 שורות (קלנר/אבינר/יעקב+שיעורים בסדר) · כל-ההפטרות→קטגוריה · סדרת-אמת לא מופנית · שורש=כפתור.
+
+## תיקוני-דאטה (snapshot+הפיך)
+- **#3 `איך לומדים תנ"ך` (096fc3cd)**: היו 35 שיעורים מ-7 רבנים (זיהום); הישן=12 אבינר. נבנה `series_lessons` allow-list 12 → /series מציג 12 נקי. הפיך: מחק `scope='series_lessons' key='096fc3cd...'`.
+- **מבנה-ירושלים + המחשות-ירושלים**: שוחזרו (PDF מאומת בגרידה מהישן). snapshot `lessons_bak_jerusalem_restore_20260619`. המחשות id=`500fdb43`.
+
+## ⬜ פתוח — פער-תוכן (#1)
+**183 שיעורים published ריקים לגמרי** (אין content/audio/video/attachment). 124 הותאמו ל-URL ישן, **אבל דפי-הישן לא מניבים טקסט-מאמר בקלות** (textLen=0 גם ל-2ee0a9e3) → צריך **מאמץ ייעודי** של חילוץ-תוכן (לא batch מהיר). קוד: `SELECT ... length(content)<80 AND audio/video/attachment IS NULL`. ← לא לסמן "1:1 מלא" עד שזה נסגר.
+
+## 🧪 מבחן-המיגרציה — מה הוא פספס (חובה לתקן בכל מבחן עתידי)
+המבחן הישן (`mtest_*`, `migration-test-v2-wf.js`) השווה **רשימות-כותרות וספירות ברמת-דף** — פספס: (1) **סדר** הרשימה, (2) **שלמות פס-השיעורים** (extractor ספר רק a[href], פספס LessonRow=onClick-div), (3) **זיהום פנים-סדרתי** (#3), (4) **אורך-תוכן** (#1). **מבחן עתידי חייב: סדר + פס-שיעורים מלא (cursor:pointer rows) + השוואת-תוכן-פנים-סדרתי DB-מול-ישן + content-length.**
+
+## חוקי-ברזל (אל תיסוג)
+- section-child → `/category` (לא /series). אל תחזיר את ה-/series-ל-section.
+- שורש = כפתור-פתיחה, לא דף.
+- כל שינוי-DB: snapshot. כל שינוי-קוד: commit. כל מבחן: לבדוק סדר+תוכן, לא רק ספירות.
