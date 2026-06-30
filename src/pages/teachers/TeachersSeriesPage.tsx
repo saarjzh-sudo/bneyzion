@@ -29,11 +29,12 @@ import {
   FileDown,
   Loader2,
 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useSEO } from "@/hooks/useSEO";
 
 import TeachersLayout from "@/components/teachers/TeachersLayout";
+import CoverGenerator from "@/components/teachers/CoverGenerator";
 import DesignPageHero from "@/components/layout-v2/DesignPageHero";
 import TeacherLessonModal from "./TeacherLessonModal";
 import { colors, fonts, gradients, radii, shadows, getSeriesCoverImage, formatDuration } from "@/lib/designTokens";
@@ -233,6 +234,7 @@ function LessonCard({
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function TeachersSeriesPage() {
   const { id = "" } = useParams<{ id: string }>();
+  const queryClient = useQueryClient();
 
   const metaQ  = useSeriesMeta(id);
   const lessonsQ = useSeriesLessons(id);
@@ -306,6 +308,17 @@ export default function TeachersSeriesPage() {
             </div>
           ) : (
             <>
+              {/* Admin/creator-only: generate an AI cover for this series */}
+              <CoverGenerator
+                seriesId={id}
+                title={series.title}
+                currentImageUrl={series.image_url}
+                onGenerated={() => {
+                  queryClient.invalidateQueries({ queryKey: ["teacher-series-meta-prod", id] });
+                  queryClient.invalidateQueries({ queryKey: ["teacher-series-lessons-prod", id] });
+                }}
+              />
+
               <SimpleSearchBar
                 search={search}
                 onSearch={setSearch}

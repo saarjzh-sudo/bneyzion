@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 
 import TeachersLayout from "@/components/teachers/TeachersLayout";
+import AITeacherTools from "@/components/teachers/AITeacherTools";
 import DesignPageHero from "@/components/layout-v2/DesignPageHero";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 
@@ -218,6 +219,49 @@ export default function TeachersWingPage() {
           "כל התכנים ב..." יציג את כל הסדרות והשיעורים של אותו ספר. לחיצה על שם הסדרה
           תוביל ישירות לדף הסדרה.
         </div>
+
+        {/* AI tools for teachers */}
+        <section
+          aria-labelledby="teacher-ai-tools-heading"
+          style={{
+            marginTop: "3rem",
+            padding: "2rem 1.5rem",
+            background: "white",
+            borderRadius: radii.xl,
+            border: "1px solid rgba(139,111,71,0.1)",
+            boxShadow: shadows.cardSoft,
+          }}
+        >
+          <div style={{ marginBottom: "1.5rem" }}>
+            <h2
+              id="teacher-ai-tools-heading"
+              style={{
+                fontFamily: fonts.display,
+                fontSize: "1.35rem",
+                fontWeight: 800,
+                color: colors.textDark,
+                margin: 0,
+                lineHeight: 1.3,
+              }}
+            >
+              כלי AI להכנת שיעור
+            </h2>
+            <p
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.85rem",
+                color: colors.textMuted,
+                margin: "0.4rem 0 0",
+                lineHeight: 1.65,
+                maxWidth: 560,
+              }}
+            >
+              מערך שיעור, מבחן או תפזורת — מותאמים לנושא ולרמת הגיל, מוכנים להדפסה בלחיצה.
+            </p>
+          </div>
+
+          <AITeacherTools />
+        </section>
       </div>
 
       <style>{`

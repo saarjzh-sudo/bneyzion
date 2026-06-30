@@ -7734,3 +7734,13 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## 2026-06-30 — T07 אגף-המורים: עיצוב + כריכות-AI (worktree finish/07-teachers-wing)
+**אזור-בעלות:** `src/components/teachers/**` + `src/pages/teachers/**` בלבד. בסיס `b4631c76`. build `tsc -b && vite build` נקי.
+
+- **ממצא עיצוב:** כל 9 עמודי-המורים כבר עקביים — hero variant="olive" אחיד, warm-cream, gold/olive tokens, RTL מלא, אין navy/mahogany "כהה". אין עמוד "קודר" בתוך האגף (ה"כהה מדי" הכללי = T10). לכן ההשקעה עברה לשני פערים אמיתיים.
+- **ממצא: `AITeacherTools.tsx` היה יתום** — קומפוננטה מלאה (מערך-שיעור/מבחן/תפזורת, streaming מ-`ai-teacher-tools`, demo+CTA למי שלא מחובר) שלא הורכבה באף עמוד. הורכבה כעת כסקשן מודגש ב-`TeachersWingPage` (`<section aria-labelledby="teacher-ai-tools-heading">`). זה הופך את עמוד-הנחיתה מדק לשימושי.
+- **כריכות-AI — לא היה UI:** edge-function `generate-cover` (Imagen-4-fast→Gemini fallback, bucket `bnei-zion-thumbnails`, prompt NO TEXT/NO PEOPLE) קיים אך לא נקרא מהקליינט. נבנתה `CoverGenerator.tsx` (admin/creator-gated דרך `useAuth().isCreator`) → `supabase.functions.invoke("generate-cover")` (NetSpark-safe, JWT אוטומטי) → ואז persist ל-`series.image_url`. הורכבה ב-`TeachersSeriesPage` עם `queryClient.invalidateQueries` כדי שכרטיסי-השיעורים יקלטו את הכריכה מיד (טריו: thumbnail_url → series.image_url → getSeriesCoverImage → default).
+- **תלות פתוחה:** ה-edge-function רק מעלה ומחזיר URL — לא מעדכן טבלה. ה-persist נעשה מהקליינט (`UPDATE series.image_url`). דורש ש-RLS על `series` יתיר UPDATE ל-admin/creator; אם חסום → המשתמש רואה "הכריכה נוצרה אך השמירה נכשלה". batch-מלא לא הורץ (אין JWT-אדמין חי + אסור spend בלי אישור) — ה-UI מאפשר יצירה ידנית לכל סדרה (rate-limit 5/שעה).
