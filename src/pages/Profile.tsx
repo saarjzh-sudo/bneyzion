@@ -19,6 +19,7 @@ import LoyaltyDashboard from "@/components/community/LoyaltyDashboard";
 import StreakDisplay from "@/components/gamification/StreakDisplay";
 import WeeklyChallenges from "@/components/gamification/WeeklyChallenges";
 import Leaderboard from "@/components/gamification/Leaderboard";
+import WeeklyChapterInvite from "@/components/auth/WeeklyChapterInvite";
 
 const Profile = () => {
   const { user, isLoading: authLoading } = useAuth();
@@ -168,15 +169,16 @@ const Profile = () => {
   return (
     <Layout>
       {/* Profile Header */}
-      <section className="relative overflow-hidden py-10 md:py-14">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2D1F0E] via-[#3D2A12] to-[#2D1F0E]" />
+      <section className="relative overflow-hidden py-10 md:py-14 border-b border-border/60">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF6F0] via-[#F5F0E8] to-[#FAF6F0]" />
+        <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3" aria-hidden="true" />
         <div className="container relative z-10 flex items-center gap-6">
           {/* Avatar with upload */}
           <div className="relative group">
             {avatarUrl ? (
-              <img src={avatarUrl} alt={displayName} className="h-20 w-20 rounded-2xl object-cover border-2 border-white/20" referrerPolicy="no-referrer" />
+              <img src={avatarUrl} alt={displayName} className="h-20 w-20 rounded-2xl object-cover border-2 border-primary/20" referrerPolicy="no-referrer" />
             ) : (
-              <div className="h-20 w-20 rounded-2xl bg-white/20 flex items-center justify-center text-3xl font-heading text-white">
+              <div className="h-20 w-20 rounded-2xl bg-primary/10 flex items-center justify-center text-3xl font-heading text-primary">
                 {displayName?.charAt(0)}
               </div>
             )}
@@ -203,16 +205,16 @@ const Profile = () => {
                   <Input
                     value={newName}
                     onChange={e => setNewName(e.target.value)}
-                    className="h-9 w-48 bg-white/10 border-white/20 text-white"
+                    className="h-9 w-48 bg-background border-border text-foreground"
                     autoFocus
                   />
-                  <button onClick={() => updateProfile.mutate(newName)} className="text-white/80 hover:text-white"><Check className="h-5 w-5" /></button>
-                  <button onClick={() => setEditingName(false)} className="text-white/60 hover:text-white"><X className="h-5 w-5" /></button>
+                  <button onClick={() => updateProfile.mutate(newName)} aria-label="שמירת שם" className="text-primary hover:text-primary/80"><Check className="h-5 w-5" /></button>
+                  <button onClick={() => setEditingName(false)} aria-label="ביטול" className="text-muted-foreground hover:text-foreground"><X className="h-5 w-5" /></button>
                 </div>
               ) : (
                 <>
-                  <h1 className="text-2xl md:text-3xl font-heading text-white">{displayName}</h1>
-                  <button onClick={() => { setNewName(displayName ?? ""); setEditingName(true); }} className="text-white/50 hover:text-white">
+                  <h1 className="text-2xl md:text-3xl font-heading text-foreground">{displayName}</h1>
+                  <button onClick={() => { setNewName(displayName ?? ""); setEditingName(true); }} aria-label="עריכת שם" className="text-muted-foreground hover:text-primary">
                     <Pencil className="h-4 w-4" />
                   </button>
                 </>
@@ -226,12 +228,12 @@ const Profile = () => {
                 />
               )}
             </div>
-            <p className="text-white/60 text-sm">{user.email}</p>
+            <p className="text-muted-foreground text-sm">{user.email}</p>
             {!isMember && (
               <Button
                 variant="outline"
                 size="sm"
-                className="mt-2 gap-1.5 bg-white/10 border-white/20 text-white hover:bg-white/20 hover:text-white"
+                className="mt-2 gap-1.5 border-primary/30 text-primary hover:bg-primary/10 hover:text-primary"
                 onClick={() => setJoinDialogOpen(true)}
               >
                 <Users className="h-3.5 w-3.5" />
@@ -245,6 +247,7 @@ const Profile = () => {
       {/* Streak & Gamification */}
       <section className="py-6">
         <div className="container space-y-4">
+          <WeeklyChapterInvite variant="card" />
           <StreakDisplay />
           <LearningStatsCard />
           <WeeklyChallenges />

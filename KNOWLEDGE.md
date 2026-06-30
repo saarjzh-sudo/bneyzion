@@ -1,5 +1,15 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## T06 finish/06-auth-user — 2026-06-30 — מודאל-התחברות גלובלי + כפתור גוגל מעוצב + CTA לפרק-השבועי (worktree, base b4631c76)
+> מסלול-סיום 6 מתוך 15. אזור-בעלות: `src/components/auth/**`, `Auth.tsx`, `Profile.tsx`, `PortalLogin.tsx`, `Favorites.tsx`, `HistoryPage.tsx`, `UserMenu.tsx`.
+> - **מודאל-התחברות גלובלי (משימה 1):** קבצים חדשים `src/components/auth/authModalStore.ts` (store זעיר + self-mount ל-`<body>` ב-root נפרד) + `AuthModalHost.tsx` (ה-UI). פותחים מכל מקום עם `openAuthModal({ next?, variant? })`. **למה self-mount ולא Provider:** `App.tsx` שייך ל-T14 — אסור לערוך. ה-store מרכיב את עצמו בקריאה הראשונה, אפס תלות צולבת. נגישות מלאה: `role=dialog`, `aria-modal`, מלכודת-פוקוס על Tab, Esc/רקע סוגרים, החזרת-פוקוס, נעילת-גלילה. שמירת-יעד-חזרה דרך `next` → `startGoogleSignIn` (משקף את `AuthContext.signInWithGoogle`).
+> - **כפתור גוגל מעוצב (משימה 2):** רכיב חדש `GoogleIcon.tsx` (לוגו G רב-צבעוני רשמי) מחליף את ה-SVG המונוכרום (currentColor) ב-`Auth.tsx`, `UserMenu.tsx`, `SmartAuthCTA.tsx`, ובמודאל. כולם עם `focus-visible:ring`.
+> - **חיווט החלפת זרימה:** `UserMenu` ו-`SmartAuthCTA` כבר לא קוראים `signInWithGoogle` ישירות — הם פותחים את המודאל הגלובלי (`openAuthModal`) עם `currentReturnTarget()`. `PortalLogin.tsx`/`Auth.tsx` נשארים דפי-כניסה מלאים (כניסה ישירה).
+> - **CTA לפרק-השבועי (משימה 4):** רכיב חדש `WeeklyChapterInvite.tsx` — מוצג רק למשתמש מחובר שאינו לומד הפרק-השבועי. **מקור-אמת = `useUserAccess("program:weekly-chapter")`** (אותו תג של T03 portal). variant `menu` (תפריט-משתמש) + `card` (Profile + מצבים-ריקים של Favorites/History). לינק ל-`/chapter-weekly`.
+> - **light-mode (משימה 3 + חוק-ברזל):** הכותרת הכהה ב-`Profile.tsx` (`from-[#2D1F0E]...` + טקסט-לבן) הוסבה ל-warm-cream + טקסט-foreground + אקצנט-זהב. `PortalLogin` h1 הוסב מ-Ploni ל-Kedem.
+> - **⚠️ ממצא מהותי:** `/profile` עושה `<Navigate to="/portal" replace />` ב-App.tsx → **Profile.tsx הוא קוד-מת בפרודקשן**. אזור-המשתמש החי הוא `/portal` = `DesignPreviewPortalSubscriber` (**אזור T03, לא ניגעתי**). שיפצתי את Profile.tsx ל-light-mode למקרה ביטול-ה-redirect, אבל הערך האמיתי של משימה-3 דורש שה-CTA והעיצוב יוטמעו ב-`/portal` ע"י T03. רשום כתלות.
+> - build: `tsc -b && vite build` נקי. smoke: Vite dev מקמפל את כל המודולים החדשים (200, אפס transform-errors). אזהרת chunk>500kB קיימת-מראש (T11). שגיאת `@hebcal/noaa` top-level-await היא dev-only קיימת-מראש.
+
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
 > - **Feature 3 — Multi-rabbi + inline creator add:**
