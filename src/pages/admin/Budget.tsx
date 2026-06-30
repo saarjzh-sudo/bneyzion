@@ -1,17 +1,24 @@
 /**
- * Admin Budget — /admin/budget
+ * Admin · מנויים — Monday — /admin/budget
  *
- * מעקב תקציבי מלוח Monday של בני ציון.
- * כשאין חיבור (אין token/board) — מציג מסך-הקמה ידידותי עם מה שצריך מסער.
- * כשמחובר — KPI + טבלת סעיפים חיה.
+ * דשבורד מנויי הפרק-השבועי מתוך לוח ה-Monday של בני ציון.
+ * הגרפים שהרב יואב מציג לצוות: צמיחת מנויים, חדשים מול עזבו, MRR, אחוז נטישה.
+ * נתונים חיים דרך edge `monday-insights` (טוקן server-side). אין mock.
  *
- * ⚠️ דורש רישום route ב-App.tsx (אזור T14) — ראה _DONE.md.
+ * ⚠️ דורש: (1) route ב-App.tsx (אזור T14), (2) deploy של edge `monday-insights`
+ * + secret MONDAY_API_TOKEN. עד אז מוצג מסך-הקמה. ראה _DONE.md.
  */
 
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Wallet, TrendingUp, TrendingDown, PlugZap, Loader2, AlertCircle } from "lucide-react";
-import { useMondayBudget } from "@/hooks/useMondayBudget";
+import {
+  Users, Banknote, UserPlus, UserMinus, PlugZap, Loader2, TrendingUp,
+} from "lucide-react";
+import {
+  AreaChart, Area, BarChart, Bar, LineChart, Line,
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+} from "recharts";
+import { useMondayInsights, type MonthPoint } from "@/hooks/useMondayInsights";
 
 const C = {
   navy: "#1A2744",
@@ -24,58 +31,30 @@ const C = {
   textSubtle: "#A69882",
   green: "#059669",
   red: "#b91c1c",
+  teal: "#2D7D7D",
 };
 
 const shekel = (n: number) => `₪${(n ?? 0).toLocaleString()}`;
+/** "2026-06" → "יוני 26" */
+const HE_MONTHS = ["ינ׳","פבר׳","מרץ","אפר׳","מאי","יוני","יולי","אוג׳","ספט׳","אוק׳","נוב׳","דצמ׳"];
+const heMonth = (iso: string) => {
+  const [y, m] = iso.split("-");
+  return `${HE_MONTHS[Number(m) - 1] ?? m} ${y.slice(2)}`;
+};
 
-function SetupScreen() {
-  return (
-    <div
-      className="rounded-3xl border p-8 max-w-2xl"
-      style={{ background: C.parchment, borderColor: C.goldShimmer }}
-      dir="rtl"
-    >
-      <div className="flex items-center gap-3 mb-4">
-        <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: C.gold + "18" }}>
-          <PlugZap className="w-6 h-6" style={{ color: C.gold }} aria-hidden />
-        </div>
-        <h2 className="text-2xl font-kedem font-bold" style={{ color: C.navy }}>
-          חיבור מעקב התקציב
-        </h2>
-      </div>
-      <p className="font-ploni leading-relaxed mb-4" style={{ color: C.textMuted }}>
-        כאן יוצג מעקב התקציב מלוח ה-Monday של בני ציון — סעיפים, מתוקצב מול נוצל, ויתרה.
-        כדי להפעיל את החיבור, צריך שני פרטים:
-      </p>
-      <ul className="space-y-2.5 mb-5">
-        {[
-          "Monday API token (אישי, ממשתמש עם הרשאת צפייה בלוח התקציב)",
-          "מזהה הלוח (Board ID) של התקציב",
-        ].map((t) => (
-          <li key={t} className="flex items-start gap-2 font-ploni" style={{ color: C.text }}>
-            <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ background: C.goldLight }} />
-            {t}
-          </li>
-        ))}
-      </ul>
-      <div
-        className="rounded-xl p-4 font-ploni text-sm leading-relaxed"
-        style={{ background: "#fff", border: `1px solid ${C.goldShimmer}`, color: C.textMuted }}
-      >
-        מטעמי אבטחה ה-token לא נשמר בצד-הלקוח אלא ב-edge-function ייעודי
-        (<code style={{ background: C.parchment, padding: "1px 6px", borderRadius: 4 }}>monday-budget</code>).
-        ברגע שהפרטים יוגדרו, המסך הזה יתחלף בנתונים החיים — אין צורך לשנות קוד.
-      </div>
-    </div>
-  );
-}
+const tooltipStyle = {
+  borderRadius: 12, border: `1px solid ${C.goldShimmer}`,
+  background: C.parchment, color: C.navy, direction: "rtl" as const, fontFamily: "Ploni",
+};
 
-function Kpi({ label, value, icon: Icon, accent }: { label: string; value: string; icon: React.ElementType; accent: string }) {
+function Kpi({ label, value, icon: Icon, accent, bg = C.parchment }: {
+  label: string; value: string; icon: React.ElementType; accent: string; bg?: string;
+}) {
   return (
     <div
       className="rounded-2xl border p-5 flex flex-col gap-2"
       style={{
-        background: C.parchment, borderColor: C.goldShimmer,
+        background: bg, borderColor: C.goldShimmer,
         borderInlineStartWidth: "4px", borderInlineStartColor: accent, borderInlineStartStyle: "solid",
       }}
     >
@@ -90,75 +69,142 @@ function Kpi({ label, value, icon: Icon, accent }: { label: string; value: strin
   );
 }
 
+function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>{title}</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="h-64">
+          <ResponsiveContainer width="100%" height="100%">{children as any}</ResponsiveContainer>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+function SetupScreen() {
+  return (
+    <div className="rounded-3xl border p-8 max-w-2xl" style={{ background: C.parchment, borderColor: C.goldShimmer }} dir="rtl">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: C.gold + "18" }}>
+          <PlugZap className="w-6 h-6" style={{ color: C.gold }} aria-hidden />
+        </div>
+        <h2 className="text-2xl font-kedem font-bold" style={{ color: C.navy }}>חיבור Monday עדיין לא פעיל</h2>
+      </div>
+      <p className="font-ploni leading-relaxed mb-4" style={{ color: C.textMuted }}>
+        הטוקן כבר נשמר. כדי שהנתונים החיים יופיעו כאן צריך לפרוס את ה-edge-function ולהגדיר את הסוד (פעם אחת):
+      </p>
+      <div className="rounded-xl p-4 font-mono text-xs leading-relaxed mb-4" style={{ background: "#fff", border: `1px solid ${C.goldShimmer}`, color: C.text, direction: "ltr" }}>
+        supabase secrets set MONDAY_API_TOKEN=&lt;token&gt;<br />
+        supabase functions deploy monday-insights
+      </div>
+      <p className="font-ploni text-sm" style={{ color: C.textSubtle }}>
+        מקור הנתונים: לוח "היסטוריית מנויים חודשית" (5094769002). ברגע שה-edge יעלה — המסך יתחלף בגרפים החיים, ללא שינוי קוד.
+      </p>
+    </div>
+  );
+}
+
 export default function Budget() {
-  const { configured, data, isLoading, error } = useMondayBudget();
+  const { data, isLoading, error } = useMondayInsights();
+  const months: MonthPoint[] = data?.months ?? [];
+  const cur = data?.current;
+
+  const chartData = months.map((m) => ({ ...m, label: heMonth(m.month) }));
 
   return (
     <AdminLayout>
       <div className="space-y-8 pb-12" dir="rtl">
         <div>
-          <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>מעקב תקציב</h1>
+          <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>מנויי הפרק השבועי — Monday</h1>
           <p className="font-ploni mt-1" style={{ color: C.textMuted }}>
-            תקציב בני ציון מתוך לוח ה-Monday
+            צמיחה, הכנסה חוזרת ונטישה — חי מלוח ה-Monday של בני ציון
           </p>
         </div>
 
-        {!configured ? (
-          <SetupScreen />
-        ) : isLoading ? (
+        {isLoading ? (
           <div className="flex items-center gap-3 py-16 justify-center" style={{ color: C.textMuted }}>
             <Loader2 className="w-5 h-5 animate-spin" aria-hidden />
-            <span className="font-ploni">טוען נתוני תקציב…</span>
+            <span className="font-ploni">טוען נתונים מ-Monday…</span>
           </div>
-        ) : error ? (
-          <div className="flex items-center gap-2 rounded-xl p-4 font-ploni" style={{ background: "#fee2e2", color: C.red }}>
-            <AlertCircle className="w-5 h-5" aria-hidden />
-            שגיאה בטעינת התקציב: {(error as Error).message}
-          </div>
+        ) : error || !cur ? (
+          <SetupScreen />
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <Kpi label="תקציב מאושר" value={shekel(data!.totalBudgeted)} icon={Wallet} accent={C.navy} />
-              <Kpi label="נוצל" value={shekel(data!.totalSpent)} icon={TrendingDown} accent={C.gold} />
-              <Kpi
-                label="יתרה"
-                value={shekel(data!.totalBudgeted - data!.totalSpent)}
-                icon={TrendingUp}
-                accent={data!.totalBudgeted - data!.totalSpent >= 0 ? C.green : C.red}
-              />
+            {/* KPIs — current month */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Kpi label="מנויים פעילים" value={cur.active.toLocaleString()} icon={Users} accent={C.green} bg="#f0fdf4" />
+              <Kpi label="הכנסה חודשית (MRR)" value={shekel(cur.mrr)} icon={Banknote} accent={C.gold} />
+              <Kpi label="חדשים החודש" value={cur.newSubs.toLocaleString()} icon={UserPlus} accent={C.teal} />
+              <Kpi label="אחוז נטישה" value={`${cur.churn}%`} icon={UserMinus} accent={cur.churn >= 12 ? C.red : C.goldLight} />
             </div>
 
-            <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>סעיפי תקציב</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm" dir="rtl">
-                    <thead>
-                      <tr style={{ color: C.textMuted, borderBottom: `1px solid ${C.goldShimmer}` }}>
-                        <th className="text-right py-2 px-3 font-ploni font-bold">סעיף</th>
-                        <th className="text-right py-2 px-3 font-ploni font-bold">מתוקצב</th>
-                        <th className="text-right py-2 px-3 font-ploni font-bold">נוצל</th>
-                        <th className="text-right py-2 px-3 font-ploni font-bold">יתרה</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data!.lines.map((l) => (
-                        <tr key={l.id} style={{ borderBottom: `1px solid ${C.goldShimmer}66` }}>
-                          <td className="py-2.5 px-3 font-ploni font-medium" style={{ color: C.text }}>{l.name}</td>
-                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.textMuted }}>{shekel(l.budgeted)}</td>
-                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.textMuted }}>{shekel(l.spent)}</td>
-                          <td className="py-2.5 px-3 font-ploni font-bold" style={{ color: l.budgeted - l.spent >= 0 ? C.green : C.red }}>
-                            {shekel(l.budgeted - l.spent)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
+            {/* Growth + MRR */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              <ChartCard title="צמיחת מנויים פעילים">
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="gActive" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={C.green} stopOpacity={0.35} />
+                      <stop offset="95%" stopColor={C.green} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={C.goldShimmer} opacity={0.5} />
+                  <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                  <Tooltip contentStyle={tooltipStyle} />
+                  <Area type="monotone" dataKey="active" name="סהכ פעיל" stroke={C.green} strokeWidth={2.5} fill="url(#gActive)" />
+                </AreaChart>
+              </ChartCard>
+
+              <ChartCard title="הכנסה חודשית חוזרת (MRR ₪)">
+                <AreaChart data={chartData}>
+                  <defs>
+                    <linearGradient id="gMrr" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor={C.gold} stopOpacity={0.35} />
+                      <stop offset="95%" stopColor={C.gold} stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={C.goldShimmer} opacity={0.5} />
+                  <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} tickFormatter={(v) => `₪${(v / 1000).toFixed(0)}k`} />
+                  <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => shekel(v)} />
+                  <Area type="monotone" dataKey="mrr" name="MRR" stroke={C.gold} strokeWidth={2.5} fill="url(#gMrr)" />
+                </AreaChart>
+              </ChartCard>
+            </div>
+
+            {/* New vs Left + Churn */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              <ChartCard title="מצטרפים מול עוזבים">
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={C.goldShimmer} opacity={0.5} />
+                  <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                  <Tooltip contentStyle={tooltipStyle} />
+                  <Legend wrapperStyle={{ fontFamily: "Ploni", fontSize: 12 }} />
+                  <Bar dataKey="newSubs" name="הצטרפו" fill={C.teal} radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="left" name="עזבו" fill={C.red} radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ChartCard>
+
+              <ChartCard title="אחוז נטישה חודשי">
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={C.goldShimmer} opacity={0.5} />
+                  <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} tickFormatter={(v) => `${v}%`} />
+                  <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => `${v}%`} />
+                  <Line type="monotone" dataKey="churn" name="נטישה" stroke={C.navy} strokeWidth={2.5} dot={{ r: 3, fill: C.navy }} />
+                </LineChart>
+              </ChartCard>
+            </div>
+
+            <p className="text-xs font-ploni text-center flex items-center justify-center gap-1.5" style={{ color: C.textSubtle }}>
+              <TrendingUp className="w-3.5 h-3.5" aria-hidden />
+              מקור: Monday · לוח "היסטוריית מנויים חודשית" · {months.length} חודשים
+            </p>
           </>
         )}
       </div>

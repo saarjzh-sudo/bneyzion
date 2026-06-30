@@ -56,7 +56,7 @@ const MANAGEMENT_ITEMS: NavItem[] = [
   { title: "הזמנות",   url: "/admin/orders",         icon: ClipboardList,   roles: ["admin"] },
   { title: "סליקות",   url: "/admin/payments",       icon: CreditCard,      roles: ["admin"] },
   { title: "קופונים",  url: "/admin/coupons",        icon: Ticket,          roles: ["admin"] },
-  { title: "תקציב",    url: "/admin/budget",         icon: Wallet,          roles: ["admin"] },
+  { title: "מנויים · Monday", url: "/admin/budget",   icon: Wallet,          roles: ["admin"] },
   { title: "אנליטיקס", url: "/admin/analytics",      icon: BarChart3,       roles: ["admin"] },
   { title: "הודעות",   url: "/admin/messages",       icon: Mail,            roles: ["admin"] },
   { title: "התראות",   url: "/admin/notifications",  icon: Bell,            roles: ["admin"] },
