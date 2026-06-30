@@ -7734,3 +7734,17 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## T03 — פורטל הפרק-השבועי (finish/03-portal · 30.6.2026)
+
+**מצב DB אמיתי (נשאל ב-30.6):** `community_courses`=10 שורות, מתוכן **6 ספרים** עם `in_weekly_program=true` ו-`program_slug`. `community_course_lessons`=358 שיעורים (כולם `status=published`). `community_members`=0 (ריק). הגמיפיקציה: `user_history`=12, `user_daily_activity`=5, `user_points`=2, `user_favorites`=0, `user_enrollments`=0. אין טבלת `user_badges`.
+
+**מיפוי 6 הספרים (parity):** עזרא(book-ezra, 84 שיעורים, פרקים 1-10 שלם), נחמיה(book-nehemiah, 77, פרקים 1,2,3,8,9,10,11,13 — **חסר 4,5,6,7,12**), דניאל(book-daniel, 75, 1-12 שלם), אסתר(book-esther, 58, פרקים אי-זוגיים בלבד 1,3,5,7,9 — מוצג כזוגות), איכה(book-lamentations, 40, 1-5 שלם), חגי-זכריה-מלאכי(book-haggai-zechariah-malachi, 24, פרקים 1-3, **is_current=true**, בלימוד פעיל). הפערים = צד-מקור (Drive/יואב), לא באג ייבוא. עמודת `total_lessons` = מס׳ פרקים נוכחי (לא מס׳ שיעורים).
+
+**`/portal` = `DesignPreviewPortalSubscriber`** (לא `Portal.tsx` הישן, שהוגלה ל-`/portal-old`). היה **mock arrays מלא** (SUBSCRIBER_STATS/PROGRAM_TIMELINE/BADGES/RECENT/FAVORITES). חיווט מחדש לדאטה אמיתי: `useWeeklyBooks` (timeline+ספר נוכחי), `useHistory`/`useFavorites` (אחרונים+מועדפים, עם empty-states), `useLearningDashboard` (streak בימים+דקות→שעות), `usePoints` (נקודות→רמה). תגי-הישג מחושבים מסיגנלים אמיתיים (streak/favorites/booksDone/points), לא מ-DB. הוסר "פרק נוכחי" מזויף, "מתוך 64", ולינקים קשיחים `#chapter-zechariah-7` → `currentLessonHref` דינמי.
+
+**`WeeklyBookDetail.tsx` כבר שלם** — ניווט-פרקים (sidebar GlobalWeeklyNav + חצים + BookSwitcher), gating per-tab (בסיס פתוח / הרחבה+שבועי נעולים ללא `hasAccess`), מקרי-קצה אסתר(זוגות)/HZM(תת-ספרים)/דניאל(resources). לא נגעתי בו.
+
+**T08 dependency:** נוסף `useCurrentWeeklyBook()` ב-`useCommunity.ts` — מחזיר את הספר `is_current=true`. קהל-יעד להתראות = מנויי `program:weekly-chapter` שלומדים את הספר הזה.

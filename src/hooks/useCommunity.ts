@@ -48,6 +48,28 @@ export function useWeeklyBooks() {
   });
 }
 
+// useCurrentWeeklyBook — the single book currently being taught (is_current=true).
+// Used by the portal hero/banner AND by T08 (app-push) to identify the audience
+// for "new content this week" notifications: subscribers with the
+// 'program:weekly-chapter' access tag who are studying THIS book.
+// Returns null if no book is flagged current.
+export function useCurrentWeeklyBook() {
+  return useQuery({
+    queryKey: ["current-weekly-book"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_courses")
+        .select("*")
+        .eq("in_weekly_program", true)
+        .eq("is_current", true)
+        .maybeSingle();
+      if (error) throw error;
+      return data as WeeklyCourse | null;
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
 // useWeeklyBookBySlug — single book by program_slug (e.g. 'book-ezra')
 export function useWeeklyBookBySlug(slug: string | undefined) {
   return useQuery({

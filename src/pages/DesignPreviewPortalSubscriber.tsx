@@ -50,73 +50,60 @@ import {
 } from "@/lib/designTokens";
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useUserAccess } from "@/hooks/useUserAccess";
+import { useWeeklyBooks } from "@/hooks/useCommunity";
+import { useHistory } from "@/hooks/useHistory";
+import { useFavorites } from "@/hooks/useFavorites";
+import { useLearningDashboard } from "@/hooks/useLearningDashboard";
+import { usePoints } from "@/hooks/usePoints";
 
-// ── Mock data ──────────────────────────────────────────────────────────────
-const SUBSCRIBER_STATS = {
-  chaptersCompleted: 18,
-  weeksActive: 12,
-  hoursLearned: 24.5,
-  streakWeeks: 7,
-  streakRecord: 12,
-  points: 1247,
-  level: 4,
-  levelLabel: "לומד מתקדם",
-  nextLevelAt: 1500,
-  overallProgressPct: 43,
-  currentBook: "זכריה",
-  currentChapter: "פרק ז",
+// ── Real-data types (replaces former mock arrays) ───────────────────────────
+// Iron rule: NO mock data — everything below is computed from Supabase hooks.
+
+/** One book in the program-progress timeline (derived from useWeeklyBooks). */
+type TimelineBook = {
+  name: string;
+  slug: string | null;
+  status: "done" | "current" | "upcoming";
 };
 
-// 8-book master timeline
-const PROGRAM_TIMELINE = [
-  { name: "דניאל", emoji: "✅", status: "done" as const },
-  { name: "איכה", emoji: "✅", status: "done" as const },
-  { name: "עזרא-נחמיה", emoji: "✅", status: "done" as const },
-  { name: "אסתר", emoji: "✅", status: "done" as const },
-  { name: "חגי", emoji: "🔄", status: "in_progress" as const },
-  { name: "זכריה", emoji: "▶️", status: "current" as const, chapter: "פרק ז" },
-  { name: "מלאכי", emoji: "⏰", status: "upcoming" as const },
-  { name: "יהושע", emoji: "⏰", status: "upcoming" as const },
-];
+/** A row in the recent/favorites mini-lists. */
+type MiniLesson = { title: string; series: string; duration: string };
 
-const BADGES = [
-  { id: "esther", label: "סיים ספר אסתר", icon: <Star size={18} />, earned: true, color: colors.goldDark },
-  { id: "streak7", label: "7 שבועות ברצף", icon: <Flame size={18} />, earned: true, color: "#e25822" },
-  { id: "fav5", label: "הוסיף 5 מועדפים", icon: <Bookmark size={18} />, earned: true, color: colors.tealMain },
-  { id: "streak10", label: "10 שבועות ברצף", icon: <Flame size={18} />, earned: false, color: colors.textSubtle },
-  { id: "books3", label: "סיים 3 ספרים", icon: <BookOpen size={18} />, earned: false, color: colors.textSubtle },
-  { id: "question", label: "ענה על שאלה", icon: <Target size={18} />, earned: false, color: colors.textSubtle },
-];
+// Level thresholds — every 500 points is a level (matches POINT_VALUES economy).
+const POINTS_PER_LEVEL = 500;
+const LEVEL_LABELS = ["לומד מתחיל", "לומד מתמיד", "לומד מתקדם", "לומד ותיק", "תלמיד חכם"];
+function levelLabelFor(level: number) {
+  return LEVEL_LABELS[Math.min(level - 1, LEVEL_LABELS.length - 1)] ?? "לומד";
+}
 
-const RECENT_LESSONS = [
-  { title: "זכריה פרק ו — החזון האחרון", series: "הפרק השבועי", duration: "52 דק'" },
-  { title: "זכריה פרק ה — המגילה העפה", series: "הפרק השבועי", duration: "44 דק'" },
-  { title: "ביטחון בה׳ בעת צרה", series: "שיעורי יסוד", duration: "38 דק'" },
-];
+// Format a lesson duration (DB stores seconds) into "NN דק'".
+function formatDuration(seconds: number | null | undefined): string {
+  if (!seconds || seconds <= 0) return "";
+  const mins = Math.round(seconds / 60);
+  return `${mins} דק'`;
+}
 
-// Recent lessons for a plain member (not subscriber) — free series they started
-const MEMBER_RECENT_LESSONS = [
-  { title: "מבוא לקריאת תנ״ך — שיעור 1", series: "איך ללמוד תנ״ך", duration: "42 דק'" },
-  { title: "הר סיני — מה באמת קרה שם?", series: "שיעורי יסוד", duration: "35 דק'" },
-  { title: "שיר השירים — קריאה ראשונה", series: "כתובים", duration: "51 דק'" },
-];
-
-const FAVORITES = [
-  { title: "מגילת אסתר — פרק ד׳", series: "הפרק השבועי", duration: "48 דק'" },
-  { title: "חגי פרק ב׳ — ורוח אביה", series: "הפרק השבועי", duration: "41 דק'" },
-  { title: "התפילה כמרחב בינאישי", series: "אמונה ותפילה", duration: "55 דק'" },
-];
-
-// Member favorites (free content only)
-const MEMBER_FAVORITES = [
-  { title: "תהילים פרק כב׳ — ״אלי אלי״", series: "תהילים", duration: "48 דק'" },
-  { title: "בראשית — בריאה ומשמעות", series: "חמישה חומשי תורה", duration: "44 דק'" },
-];
+// Map a history/favorite DB row to a MiniLesson (graceful fallbacks).
+function toMiniLesson(row: any): MiniLesson {
+  const lesson = row?.lesson ?? row?.lessons ?? {};
+  return {
+    title: lesson.title ?? "שיעור",
+    series: lesson.rabbis?.name ?? lesson.series?.title ?? "בני ציון",
+    duration: formatDuration(lesson.duration),
+  };
+}
 
 // ── Main component ──────────────────────────────────────────────────────────
 export default function DesignPreviewPortalSubscriber() {
   const { data: topSeries = [], isLoading: seriesLoading } = useTopSeries(8);
   const { hasAccess: realAccess, isLoading: accessLoading, isAuthenticated, user } = useUserAccess("program:weekly-chapter");
+
+  // ── Real data hooks (replaces former mock arrays) ───────────────────────
+  const { data: books = [], isLoading: booksLoading } = useWeeklyBooks();
+  const { data: historyRows = [] } = useHistory();
+  const { data: favRows = [] } = useFavorites();
+  const { streak = 0, activityDays = [] } = useLearningDashboard();
+  const { points: pointsRow } = usePoints();
 
   // Real access state — portal is always behind RequireAuth so isAuthenticated is always true here
   const isAuth = isAuthenticated;
@@ -125,7 +112,61 @@ export default function DesignPreviewPortalSubscriber() {
   // Suggestion series (from real data)
   const suggestions = (topSeries as any[]).slice(0, 4);
 
-  const isLoading = accessLoading || seriesLoading;
+  const isLoading = accessLoading || seriesLoading || booksLoading;
+
+  // ── Derived program timeline (real books, ordered by sort_order) ────────
+  const currentIdx = books.findIndex((b: any) => b.is_current === true);
+  const booksDone = currentIdx >= 0 ? currentIdx : 0;
+  const PROGRAM_TIMELINE: TimelineBook[] = books.map((b: any, i: number) => ({
+    name: b.title,
+    slug: b.program_slug,
+    status:
+      currentIdx === -1
+        ? "upcoming"
+        : i < currentIdx
+        ? "done"
+        : i === currentIdx
+        ? "current"
+        : "upcoming",
+  }));
+  const currentBook = currentIdx >= 0 ? (books[currentIdx] as any) : (books[0] as any) ?? null;
+  const currentBookSlug = currentBook?.program_slug ?? "weekly-chapter";
+  const currentLessonHref = `/course/${currentBookSlug}`;
+  const overallProgressPct = books.length ? Math.round((booksDone / books.length) * 100) : 0;
+
+  // ── Derived gamification (real points + streak; no mock numbers) ────────
+  const totalPoints = (pointsRow as any)?.total_points ?? 0;
+  const level = Math.floor(totalPoints / POINTS_PER_LEVEL) + 1;
+  const minutesLearned = (activityDays as any[]).reduce((sum, d) => sum + (d.minutes_learned || 0), 0);
+  const favCount = (favRows as any[]).length;
+
+  const SUBSCRIBER_STATS = {
+    chaptersCompleted: booksDone,
+    hoursLearned: Math.round((minutesLearned / 60) * 10) / 10,
+    streakDays: streak,
+    points: totalPoints,
+    level,
+    levelLabel: levelLabelFor(level),
+    nextLevelAt: level * POINTS_PER_LEVEL,
+    overallProgressPct,
+    currentBook: currentBook?.title ?? "—",
+    totalBooks: books.length,
+  };
+
+  // ── Derived achievement badges (computed from real signals) ─────────────
+  const BADGES = [
+    { id: "first-fav", label: "שיעור ראשון במועדפים", icon: <Bookmark size={18} />, earned: favCount >= 1, color: colors.tealMain },
+    { id: "streak7", label: "7 ימים ברצף", icon: <Flame size={18} />, earned: streak >= 7, color: "#e25822" },
+    { id: "book1", label: "ספר ראשון הושלם", icon: <Star size={18} />, earned: booksDone >= 1, color: colors.goldDark },
+    { id: "points500", label: "500 נקודות", icon: <Award size={18} />, earned: totalPoints >= 500, color: colors.goldDark },
+    { id: "books3", label: "3 ספרים הושלמו", icon: <BookOpen size={18} />, earned: booksDone >= 3, color: colors.oliveMain },
+    { id: "streak30", label: "30 ימים ברצף", icon: <Target size={18} />, earned: streak >= 30, color: colors.textSubtle },
+  ];
+  const earnedBadgeCount = BADGES.filter((b) => b.earned).length;
+
+  // ── Derived recent + favorites (real per-user data) ─────────────────────
+  const recentLessons: MiniLesson[] = (historyRows as any[]).slice(0, 3).map(toMiniLesson);
+  const favoriteLessons: MiniLesson[] = (favRows as any[]).slice(0, 3).map(toMiniLesson);
 
   if (isLoading) {
     return (
@@ -288,7 +329,7 @@ export default function DesignPreviewPortalSubscriber() {
                   }}
                 >
                   {hasSubscription
-                    ? `עכשיו: ${SUBSCRIBER_STATS.currentBook} ${SUBSCRIBER_STATS.currentChapter} · ${SUBSCRIBER_STATS.overallProgressPct}% מהתכנית הושלמו`
+                    ? `עכשיו: ${SUBSCRIBER_STATS.currentBook} · ${SUBSCRIBER_STATS.overallProgressPct}% מהתכנית הושלמו`
                     : "ברוך הבא לאזור האישי שלך"}
                 </p>
 
@@ -309,7 +350,7 @@ export default function DesignPreviewPortalSubscriber() {
                   >
                     <Bell size={13} style={{ color: colors.goldShimmer }} />
                     <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(255,255,255,0.75)" }}>
-                      יש תוכן חדש השבוע — {SUBSCRIBER_STATS.currentBook} {SUBSCRIBER_STATS.currentChapter}
+                      יש תוכן חדש השבוע — {SUBSCRIBER_STATS.currentBook}
                     </span>
                     <div
                       style={{
@@ -375,7 +416,7 @@ export default function DesignPreviewPortalSubscriber() {
                 {hasSubscription ? (
                   /* Subscriber: enter weekly lesson */
                   <Link
-                    to="/course/weekly-chapter#chapter-zechariah-7"
+                    to={currentLessonHref}
                     style={{ textDecoration: "none" }}
                   >
                     <div
@@ -422,7 +463,7 @@ export default function DesignPreviewPortalSubscriber() {
                           כנס ללימוד הפרק השבועי — לחיות תנ״ך
                         </div>
                         <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(255,255,255,0.8)" }}>
-                          {SUBSCRIBER_STATS.currentBook} {SUBSCRIBER_STATS.currentChapter}
+                          {SUBSCRIBER_STATS.currentBook}
                         </div>
                       </div>
                     </div>
@@ -488,7 +529,7 @@ export default function DesignPreviewPortalSubscriber() {
                 <QuickTile
                   icon={<Bookmark size={20} />}
                   label="שיעורים שמורים"
-                  sub="3 שמורים"
+                  sub={`${favCount} שמורים`}
                   to="/series"
                   color={colors.tealMain}
                   bg="rgba(45,125,125,0.08)"
@@ -504,7 +545,7 @@ export default function DesignPreviewPortalSubscriber() {
                 <QuickTile
                   icon={<Trophy size={20} />}
                   label="ההישגים שלי"
-                  sub="3 תגים"
+                  sub={`${earnedBadgeCount} תגים`}
                   to="#achievements"
                   color={colors.goldDark}
                   bg="rgba(139,111,71,0.08)"
@@ -537,21 +578,21 @@ export default function DesignPreviewPortalSubscriber() {
             >
               <StatCard
                 icon={<BookOpen size={20} />}
-                value={hasSubscription ? `${SUBSCRIBER_STATS.chaptersCompleted}` : "3"}
-                label={hasSubscription ? "פרקים הושלמו" : "שיעורים נצפו"}
-                sub={hasSubscription ? "מתוך 64" : "השבוע"}
+                value={hasSubscription ? `${SUBSCRIBER_STATS.chaptersCompleted}` : `${historyRows.length}`}
+                label={hasSubscription ? "ספרים הושלמו" : "שיעורים נצפו"}
+                sub={hasSubscription ? `מתוך ${SUBSCRIBER_STATS.totalBooks}` : "מצטבר"}
                 color={colors.goldDark}
               />
               <StatCard
                 icon={<Clock size={20} />}
-                value={hasSubscription ? `${SUBSCRIBER_STATS.hoursLearned}` : "4.5"}
+                value={`${SUBSCRIBER_STATS.hoursLearned}`}
                 label="שעות לימוד"
                 sub="מצטבר"
                 color={colors.tealMain}
               />
               <StatCard
                 icon={<Heart size={20} />}
-                value={hasSubscription ? "3" : "2"}
+                value={`${favCount}`}
                 label="מועדפים שמורים"
                 sub="שיעורים"
                 color={colors.oliveMain}
@@ -559,11 +600,11 @@ export default function DesignPreviewPortalSubscriber() {
               {hasSubscription && (
                 <StatCard
                   icon={<Flame size={20} />}
-                  value={`${SUBSCRIBER_STATS.streakWeeks}`}
-                  label="שבועות ברצף"
-                  sub={`שיא: ${SUBSCRIBER_STATS.streakRecord}`}
+                  value={`${SUBSCRIBER_STATS.streakDays}`}
+                  label="ימים ברצף"
+                  sub="פעילות יומית"
                   color="#e25822"
-                  gold={SUBSCRIBER_STATS.streakWeeks >= 7}
+                  gold={SUBSCRIBER_STATS.streakDays >= 7}
                 />
               )}
             </div>
@@ -744,7 +785,7 @@ export default function DesignPreviewPortalSubscriber() {
                           marginBottom: "0.15rem",
                         }}
                       >
-                        {SUBSCRIBER_STATS.currentBook} {SUBSCRIBER_STATS.currentChapter}
+                        {SUBSCRIBER_STATS.currentBook}
                       </div>
                       <div style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(255,255,255,0.55)" }}>
                         שישי · 20:00 · עוד 3 ימים
@@ -772,7 +813,7 @@ export default function DesignPreviewPortalSubscriber() {
                       מהדורות קודמות
                     </button>
                     <Link
-                      to="/course/weekly-chapter#chapter-zechariah-7"
+                      to={currentLessonHref}
                       style={{
                         padding: "0.65rem 1.4rem",
                         borderRadius: radii.md,
@@ -871,7 +912,7 @@ export default function DesignPreviewPortalSubscriber() {
                           color: "rgba(255,255,255,0.6)",
                         }}
                       >
-                        {SUBSCRIBER_STATS.overallProgressPct}% מהתכנית הושלמו · עכשיו: {SUBSCRIBER_STATS.currentBook} {SUBSCRIBER_STATS.currentChapter}
+                        {SUBSCRIBER_STATS.overallProgressPct}% מהתכנית הושלמו · עכשיו לומדים: {SUBSCRIBER_STATS.currentBook}
                       </div>
                     </div>
 
@@ -930,10 +971,10 @@ export default function DesignPreviewPortalSubscriber() {
                   }}
                 >
                   <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted }}>
-                    {SUBSCRIBER_STATS.chaptersCompleted} פרקים הושלמו מתוך 64
+                    {SUBSCRIBER_STATS.chaptersCompleted} ספרים הושלמו מתוך {SUBSCRIBER_STATS.totalBooks}
                   </div>
                   <Link
-                    to="/course/weekly-chapter"
+                    to={currentLessonHref}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
@@ -1007,35 +1048,35 @@ export default function DesignPreviewPortalSubscriber() {
                             fontFamily: fonts.display,
                             fontWeight: 900,
                             fontSize: "1.6rem",
-                            color: SUBSCRIBER_STATS.streakWeeks >= 7 ? "#e25822" : colors.textDark,
+                            color: SUBSCRIBER_STATS.streakDays >= 7 ? "#e25822" : colors.textDark,
                             lineHeight: 1,
                           }}
                         >
-                          {SUBSCRIBER_STATS.streakWeeks} שבועות
+                          {SUBSCRIBER_STATS.streakDays} ימים
                         </div>
                         <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.textMuted }}>
-                          ברצף · שיא אישי: {SUBSCRIBER_STATS.streakRecord}
+                          רצף לימוד יומי נוכחי
                         </div>
                       </div>
                     </div>
-                    {/* Mini weekly calendar */}
+                    {/* Mini daily calendar — last 14 days */}
                     <div style={{ display: "flex", gap: "0.3rem" }}>
-                      {Array.from({ length: 12 }, (_, i) => (
+                      {Array.from({ length: 14 }, (_, i) => (
                         <div
                           key={i}
                           style={{
                             flex: 1,
                             height: 8,
                             borderRadius: 2,
-                            background: i < SUBSCRIBER_STATS.streakWeeks
-                              ? i >= 9 ? "#e25822" : "rgba(226,88,34,0.5)"
+                            background: i < SUBSCRIBER_STATS.streakDays
+                              ? i >= 11 ? "#e25822" : "rgba(226,88,34,0.5)"
                               : "rgba(139,111,71,0.08)",
                           }}
                         />
                       ))}
                     </div>
                     <div style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: colors.textSubtle, marginTop: "0.3rem" }}>
-                      12 השבועות האחרונים
+                      14 הימים האחרונים
                     </div>
                   </div>
 
@@ -1143,7 +1184,7 @@ export default function DesignPreviewPortalSubscriber() {
                         fontWeight: 400,
                       }}
                     >
-                      3 מתוך 6
+                      {earnedBadgeCount} מתוך 6
                     </span>
                   </div>
                   <div
@@ -1222,9 +1263,13 @@ export default function DesignPreviewPortalSubscriber() {
                 <div>
                   <SectionLabel icon={<Clock size={16} />} eyebrow="היסטוריה" title="המשך מאיפה שהפסקת" color={colors.tealMain} />
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                    {(hasSubscription ? RECENT_LESSONS : MEMBER_RECENT_LESSONS).map((lesson, i) => (
-                      <MiniLessonRow key={i} lesson={lesson} />
-                    ))}
+                    {recentLessons.length > 0 ? (
+                      recentLessons.map((lesson, i) => (
+                        <MiniLessonRow key={i} lesson={lesson} />
+                      ))
+                    ) : (
+                      <EmptyMiniList text="עדיין לא צפית בשיעורים — ההיסטוריה שלך תופיע כאן." />
+                    )}
                   </div>
                 </div>
 
@@ -1232,9 +1277,13 @@ export default function DesignPreviewPortalSubscriber() {
                 <div>
                   <SectionLabel icon={<Bookmark size={16} />} eyebrow="מועדפים" title="שיעורים שאהבת" color={colors.oliveMain} />
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
-                    {(hasSubscription ? FAVORITES : MEMBER_FAVORITES).map((lesson, i) => (
-                      <MiniLessonRow key={i} lesson={lesson} accent={colors.oliveMain} />
-                    ))}
+                    {favoriteLessons.length > 0 ? (
+                      favoriteLessons.map((lesson, i) => (
+                        <MiniLessonRow key={i} lesson={lesson} accent={colors.oliveMain} />
+                      ))
+                    ) : (
+                      <EmptyMiniList text="עדיין אין מועדפים — סמן שיעורים שאהבת והם יופיעו כאן." />
+                    )}
                   </div>
                 </div>
               </div>
@@ -1800,27 +1849,22 @@ function TimelineStep({
   book,
   isLast,
 }: {
-  book: (typeof PROGRAM_TIMELINE)[0];
+  book: TimelineBook;
   isLast: boolean;
 }) {
   const isDone = book.status === "done";
   const isCurrent = book.status === "current";
-  const isInProgress = book.status === "in_progress";
 
   const bgColor = isDone
     ? "rgba(91,110,58,0.1)"
     : isCurrent
     ? gradients.goldButton
-    : isInProgress
-    ? "rgba(139,111,71,0.12)"
     : "rgba(139,111,71,0.04)";
 
   const borderColor = isDone
     ? "rgba(91,110,58,0.25)"
     : isCurrent
     ? colors.goldDark
-    : isInProgress
-    ? "rgba(139,111,71,0.2)"
     : "rgba(139,111,71,0.1)";
 
   return (
@@ -1852,8 +1896,6 @@ function TimelineStep({
             <CheckCircle2 size={18} style={{ color: colors.oliveMain }} />
           ) : isCurrent ? (
             <Play size={16} fill="white" style={{ color: "white" }} />
-          ) : isInProgress ? (
-            <span style={{ fontSize: "0.9rem" }}>🔄</span>
           ) : (
             <Clock size={14} style={{ color: colors.textSubtle }} />
           )}
@@ -1881,9 +1923,9 @@ function TimelineStep({
           }}
         >
           {book.name}
-          {isCurrent && book.chapter && (
+          {isCurrent && (
             <div style={{ fontSize: "0.6rem", color: colors.goldDark }}>
-              {book.chapter}
+              כעת בלימוד
             </div>
           )}
         </div>
@@ -1991,9 +2033,31 @@ function MiniLessonRow({
           {lesson.title}
         </div>
         <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textMuted }}>
-          {lesson.series} · {lesson.duration}
+          {lesson.duration ? `${lesson.series} · ${lesson.duration}` : lesson.series}
         </div>
       </div>
+    </div>
+  );
+}
+
+// Empty-state row for the recent / favorites mini-lists (real data, none yet).
+function EmptyMiniList({ text }: { text: string }) {
+  return (
+    <div
+      dir="rtl"
+      style={{
+        background: "white",
+        borderRadius: radii.lg,
+        padding: "1.25rem 1.1rem",
+        border: "1px dashed rgba(139,111,71,0.18)",
+        fontFamily: fonts.body,
+        fontSize: "0.78rem",
+        color: colors.textMuted,
+        textAlign: "center",
+        lineHeight: 1.6,
+      }}
+    >
+      {text}
     </div>
   );
 }
