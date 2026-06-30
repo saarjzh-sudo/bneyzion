@@ -2,16 +2,21 @@
  * navigation-bot — Bnei Zion knowledge assistant (בנצי)
  *
  * v4 (2026-06-19) — reliability + precision rebuild:
- *   1. thinkingConfig.thinkingBudget = 0 — gemini-2.5-flash no longer burns the
- *      output budget on hidden "thinking", which truncated JSON → "משהו השתבש".
- *      (Root cause of the crashes: live fn had maxOutputTokens:600 + thinking on.)
- *   2. Timeout + retry (429/503/5xx/network) with backoff — survives load spikes.
- *   3. Module-cached knowledge (10 min TTL) — no per-request DB hammering.
- *   4. Live content index (rabbis/series/topics, 15 min TTL) — the bot redirects
+ *   1. Timeout + retry (429/503/5xx/network) with backoff — survives load spikes.
+ *   2. Module-cached knowledge (10 min TTL) — no per-request DB hammering.
+ *   3. Live content index (rabbis/series/topics, 15 min TTL) — the bot redirects
  *      to REAL pages (validated slugs/ids), never hallucinated routes.
- *   5. Public-only index: status=active, audience has 'general' & NOT 'teachers'
+ *   4. Public-only index: status=active, audience has 'general' & NOT 'teachers'
  *      (mirrors the strict public filter — no teacher-content leak).
- *   6. Always returns 200 with a graceful body — never throws to the client.
+ *   5. Always returns 200 with a graceful body — never throws to the client.
+ *
+ * v5 (2026-06-30, T02) — quality + cost guard:
+ *   • thinkingBudget 0 → 768 (bounded) with maxOutputTokens 1024 → 2048. The old
+ *     "0" disabled reasoning (the Miki mistake); the old crash was the *600*-token
+ *     ceiling colliding with thinking, not thinking itself. Now thinking is capped
+ *     and the JSON has ample room after it, so it reasons AND never truncates.
+ *   • Per-session in-memory rate-limit (best-effort, per warm instance) — a single
+ *     abusive session can't hammer Gemini. Returns a calm 200 body, never a 429.
  *
  * Pure logic lives in ./shared.ts (unit-tested in ./test.ts).
  */
@@ -80,8 +85,49 @@ async function fetchWithRetry(
 const KNOWLEDGE_TTL_MS = 10 * 60 * 1000;
 const INDEX_TTL_MS = 15 * 60 * 1000;
 
+// Gemini generation tuning. thinkingBudget > 0 (vs the Miki :0 mistake) lets the
+// model reason about intent + routing; maxOutputTokens is kept well above
+// thinkingBudget so the JSON answer always completes after thinking.
+const GEMINI_THINKING_BUDGET = 768;
+const GEMINI_MAX_OUTPUT_TOKENS = 2048;
+
 let knowledgeCache: { text: string; ts: number } | null = null;
 let indexCache: { index: ContentIndex; ts: number } | null = null;
+
+// ── per-session rate-limit (best-effort, in-memory; resets on cold start) ─────
+// Defends a single warm instance from one abusive session hammering Gemini.
+// Not a hard quota across instances — the client also rate-limits — but a cheap
+// guard that returns a calm 200 body instead of a 429.
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 20;
+const rateBuckets = new Map<string, number[]>();
+
+function rateLimited(sessionId: string): boolean {
+  if (!sessionId) return false;
+  const now = Date.now();
+  const recent = (rateBuckets.get(sessionId) ?? []).filter((t) => now - t < RATE_WINDOW_MS);
+  if (recent.length >= RATE_MAX) {
+    rateBuckets.set(sessionId, recent);
+    return true;
+  }
+  recent.push(now);
+  rateBuckets.set(sessionId, recent);
+  if (rateBuckets.size > 5000) {
+    for (const [k, v] of rateBuckets) {
+      if (v.every((t) => now - t >= RATE_WINDOW_MS)) rateBuckets.delete(k);
+    }
+  }
+  return false;
+}
+
+const RATE_LIMIT_RESPONSE = {
+  reply_text: "רגע, יש פה הרבה הודעות בזמן קצר. תן לי כמה שניות ונמשיך.",
+  cta_buttons: [{ label: "דף הבית", route: "/", icon: "compass" }],
+  intent_detected: "other",
+  persona_guess: null,
+  route_suggestion: "/",
+  refused_content: false,
+};
 
 async function sbSelect(
   url: string, key: string, path: string, timeoutMs = 8000,
@@ -165,9 +211,14 @@ async function callGemini(apiKey: string, systemPrompt: string, history: unknown
     contents: [...historyMessages, { role: "user", parts: [{ text: message }] }],
     generationConfig: {
       temperature: 0.4,
-      maxOutputTokens: 1024,
+      // Bounded thinking + generous output ceiling. thinkingBudget:0 (the Miki
+      // mistake) makes 2.5-flash answer without reasoning — fine for a pure
+      // router, weak for Tanach Q&A + correct routing. Here thinking is capped at
+      // GEMINI_THINKING_BUDGET so it can reason about intent, and maxOutputTokens
+      // leaves ample room for the JSON AFTER thinking, so nothing truncates.
+      maxOutputTokens: GEMINI_MAX_OUTPUT_TOKENS,
       responseMimeType: "application/json",
-      thinkingConfig: { thinkingBudget: 0 }, // ← the fix: no hidden-token truncation
+      thinkingConfig: { thinkingBudget: GEMINI_THINKING_BUDGET },
     },
   };
 
@@ -195,6 +246,7 @@ serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const {
       message,
+      session_id = "",
       persona = null,
       history = [],
       current_route = null,
@@ -203,6 +255,11 @@ serve(async (req) => {
 
     if (!message || typeof message !== "string") {
       return json({ error: "message is required" }, 400);
+    }
+
+    if (rateLimited(String(session_id))) {
+      console.warn("[navigation-bot] rate-limited session:", String(session_id).slice(0, 8));
+      return json(RATE_LIMIT_RESPONSE);
     }
 
     const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");

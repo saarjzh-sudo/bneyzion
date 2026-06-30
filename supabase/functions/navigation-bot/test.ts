@@ -104,7 +104,7 @@ if (GEMINI && SB_URL && SB_KEY) {
   const payload = {
     system_instruction: { parts: [{ text: sys }] },
     contents: [{ role: "user", parts: [{ text: hardQ }] }],
-    generationConfig: { temperature: 0.4, maxOutputTokens: 1024, responseMimeType: "application/json", thinkingConfig: { thinkingBudget: 0 } },
+    generationConfig: { temperature: 0.4, maxOutputTokens: 2048, responseMimeType: "application/json", thinkingConfig: { thinkingBudget: 768 } },
   };
   const t0 = Date.now();
   const gr = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI}`,

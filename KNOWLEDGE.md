@@ -1,5 +1,14 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## T02 בנצי הבוט — 2026-06-30 — יציבות חיבור + נגישות + thinkingBudget (branch finish/02-benzi-bot, base b4631c76)
+> מסלול T02 מתוך תזמור-הסיום (15 worktrees). שדרוג בנצי על 4 צירים. **כל השינויים באזור-הבעלות בלבד:** `src/components/bot/**`, `supabase/functions/navigation-bot/**`. עבר build נקי (tsc+vite) + 19/19 unit-tests של ה-edge (Part A).
+> - **יציבות חיבור (צד-לקוח) — שורש ה"מתנתק":** `botApi.ts` v1 שלח `fetch` **בלי timeout ובלי retry** — כל בליפ-רשת או הזמנה-איטית השאיר את הבקשה תלויה. נכתב מחדש: `AbortController` (20s), retry-with-backoff על timeout/network/429/5xx, מחלקת-שגיאה ממוינת `BotError{kind}`, ואימות body (תשובה לא-תקינה = כשל, לא בועה שבורה). תיקון נוסף: ה-history נשלח **בלי** הודעת-המשתמש הנוכחית (v1 שלח אותה גם ב-history וגם ב-message → כפילות לשאלה במודל).
+> - **useBotSession.ts:** זיהוי online/offline (אירועי `online`/`offline`), `retryLast()` ששולח שוב בלי לשכפל את בועת-המשתמש (שומר snapshot של `prior` היסטוריה), הודעות-שגיאה לפי kind, ו-rate-limit רך (פער מינ' 1200ms בין שיגורים) מעבר ל-in-flight guard.
+> - **נגישות (BotPanel/Button/Onboarding):** `role="log" aria-live="polite"` על אזור-ההודעות (קורא-מסך מכריז תשובות), פוקוס לאינפוט בפתיחה + החזרת-פוקוס לכפתור בסגירה (`BotButton` → `forwardRef` + `aria-haspopup="dialog"`/`aria-expanded`), כפתור "נסה שוב" במצב-שגיאה, באנר-offline, `focus-visible:ring` בכל הפקדים.
+> - **edge `navigation-bot` v5 (דורש deploy ידני!):** `thinkingBudget: 0` → **768** (באג מיקי — 0 מבטל חשיבה), `maxOutputTokens: 1024` → **2048** (תקרה גבוהה דיה שה-JSON לא ייחתך אחרי החשיבה). הוסף rate-limit per-session in-memory (20/דקה, best-effort לכל warm instance, מחזיר 200 רגוע). חיזוק system-prompt ב-`shared.ts`: בלוק "סגנון וכובד-ראש" (חם, קצר, בלי המצאות, עברית נקייה, התאמה לפרסונה). `test.ts` עודכן לאותו config.
+> - **⚠️ ה-edge function מתפרסת בנפרד מגיט** (`supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn`). שינויי v5 **לא בתוקף** עד deploy + אישור-סער. לפני deploy: להריץ `deno run --allow-net --allow-env supabase/functions/navigation-bot/test.ts` עם creds (Part B מאמת finishReason=STOP, בלי truncation).
+> - **בדיקת-עשן בדפדפן של ה-worktree נחסמה:** כלי ה-preview משרת את ספריית-העבודה הראשית (build BPX8qhx2 של בני-ציון ב-OMS-root), לא את ה-worktree. אומת חלופית: dev-server של ה-worktree עולה (200) ומשרת את כל המודולים המעודכנים; build נקי; unit-tests עוברים.
+
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
 > - **Feature 3 — Multi-rabbi + inline creator add:**
