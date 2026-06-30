@@ -7734,3 +7734,21 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## T08 — אפליקציה + התראות פוש (finish/08-app-push · 30.6.2026)
+
+**החלטת-פלטפורמה:** PWA משופר (לא Capacitor). `vite-plugin-pwa` כבר היה מוגדר (`registerType:autoUpdate`, manifest+SW אוטומטיים). Capacitor היה דורש toolchain native + חשבונות חנות לאתר-תוכן שערכו בהפצה-web. לכן חיזקתי את ה-PWA הקיים.
+
+**מה נוסף:**
+- `public/push-sw.js` — מאזיני `push` + `notificationclick` (RTL, אייקון לוגו, ניווט ל-`link`). נמשך ל-SW הראשי דרך `vite.config workbox.importScripts:["/push-sw.js"]` (generateSW לבדו לא מאחסן listeners מותאמים).
+- מניפסט הובא למותג: `theme_color:#d4a85a` (זהב), `background_color:#faf8f3` (קרם), `dir:rtl`.
+- `src/components/pwa/usePushNotifications.ts` — מחזור-חיים של מנוי Web Push (permission→subscribe→upsert ל-`push_subscriptions`). מתדרדר בחן: בלי `VITE_VAPID_PUBLIC_KEY` נשמרת רק הרשאה, פוש-OS ממתין לקרדנציאל.
+- `NotificationBell.tsx` — שורת הצטרפות "קבלת התראות למכשיר" בראש הפופאובר (מוצגת רק כש-supported+VAPID מוגדר). מצבי subscribed/denied, focus-states, aria.
+- `supabase/migrations/20260630_push_subscriptions.sql` — טבלת מנויים + RLS (משתמש מנהל רק את שלו; service-role עוקף לפאן-אאוט).
+- `broadcast-notification` edge: target חדש `weekly-learners` — מקור-אמת מתואם עם **T03**: `community_courses(is_current=true,in_weekly_program=true)→program_slug` → `weekly_program_progress.user_id`. נוסף פאן-אאוט Web Push (npm:web-push) מאחורי בדיקת `VAPID_*` env; בלי מפתחות מדלג (in-app בלבד) ומנקה endpoints 404/410.
+
+**זרימת-התראה (in-app) פעילה כבר עכשיו ללא קרדנציאל:** broadcast-notification→user_notifications→NotificationBell realtime. אומת: build נקי, sw.js מכיל `importScripts("/push-sw.js")`, אפליקציה עולה בלי שגיאות-קונסול.
+
+**חסר ממני (סער):** VAPID key-pair (`VITE_VAPID_PUBLIC_KEY` ל-build + `VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY`/`VAPID_SUBJECT` ל-edge) להפעלת פוש-OS. ממשק-שליחה מהאדמין = **T01**.

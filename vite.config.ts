@@ -21,6 +21,10 @@ export default defineConfig(() => ({
         navigateFallbackDenylist: [/^\/~oauth/],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2,otf}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        // T08: pull Web Push handlers (push + notificationclick) into the
+        // generated SW. generateSW alone can't host custom event listeners,
+        // so the handlers live in public/push-sw.js and are imported here.
+        importScripts: ["/push-sw.js"],
         // skipWaiting + clientsClaim: new SW activates immediately on all tabs
         // without waiting for user to close tabs. Critical for production deploys.
         skipWaiting: true,
@@ -39,8 +43,8 @@ export default defineConfig(() => ({
         name: "בני ציון",
         short_name: "בני ציון",
         description: "פורטל מרכזי ללימוד תנ״ך – שיעורים, סדרות, רבנים ועוד",
-        theme_color: "#2563eb",
-        background_color: "#ffffff",
+        theme_color: "#d4a85a",
+        background_color: "#faf8f3",
         display: "standalone",
         dir: "rtl",
         lang: "he",

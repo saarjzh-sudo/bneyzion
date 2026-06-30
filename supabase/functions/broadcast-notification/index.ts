@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import webpush from "npm:web-push@3.6.7";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -83,6 +84,34 @@ serve(async (req) => {
         .not("user_id", "is", null);
       if (membersError) throw membersError;
       userIds = members?.map((m) => m.user_id!).filter(Boolean) ?? [];
+    } else if (target === "weekly-learners" || target === "weekly") {
+      // Learners of the CURRENT weekly chapter only.
+      // Source of truth (coordinated with T03 portal):
+      //   community_courses.is_current = true & in_weekly_program = true  → program_slug(s)
+      //   weekly_program_progress.program_slug IN (...)                   → user_id(s)
+      const { data: currentBooks, error: booksError } = await supabase
+        .from("community_courses")
+        .select("program_slug")
+        .eq("in_weekly_program", true)
+        .eq("is_current", true)
+        .not("program_slug", "is", null);
+      if (booksError) throw booksError;
+
+      const slugs = [...new Set((currentBooks ?? []).map((b) => b.program_slug).filter(Boolean))];
+      if (slugs.length === 0) {
+        return new Response(
+          JSON.stringify({ error: "No current weekly chapter is set", sent: 0 }),
+          { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
+      const { data: learners, error: learnersError } = await supabase
+        .from("weekly_program_progress")
+        .select("user_id")
+        .in("program_slug", slugs as string[]);
+      if (learnersError) throw learnersError;
+
+      userIds = [...new Set((learners ?? []).map((l) => l.user_id).filter(Boolean))] as string[];
     } else if (Array.isArray(target)) {
       userIds = target;
     }
@@ -114,9 +143,61 @@ serve(async (req) => {
       totalInserted += batch.length;
     }
 
-    return new Response(JSON.stringify({ success: true, sent: totalInserted }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    // ── Web Push fan-out (OS-level notifications even when the app is closed) ──
+    // Requires a VAPID key pair in the function env. When it's missing we simply
+    // skip this step — the in-app bell above already delivered the notification.
+    let pushSent = 0;
+    let pushStatus: "sent" | "skipped_no_vapid" | "no_subscriptions" = "skipped_no_vapid";
+
+    const vapidPublic = Deno.env.get("VAPID_PUBLIC_KEY");
+    const vapidPrivate = Deno.env.get("VAPID_PRIVATE_KEY");
+    const vapidSubject = Deno.env.get("VAPID_SUBJECT") ?? "mailto:office@bneyzion.co.il";
+
+    if (vapidPublic && vapidPrivate) {
+      webpush.setVapidDetails(vapidSubject, vapidPublic, vapidPrivate);
+
+      const { data: subs } = await supabase
+        .from("push_subscriptions")
+        .select("endpoint, p256dh, auth")
+        .in("user_id", userIds);
+
+      if (!subs || subs.length === 0) {
+        pushStatus = "no_subscriptions";
+      } else {
+        const payload = JSON.stringify({
+          title: title.trim(),
+          body: body?.trim() || "",
+          link: link?.trim() || "/",
+        });
+        const goneEndpoints: string[] = [];
+
+        await Promise.all(
+          subs.map(async (s) => {
+            try {
+              await webpush.sendNotification(
+                { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
+                payload
+              );
+              pushSent++;
+            } catch (e) {
+              // 404/410 = subscription expired/unsubscribed → prune it.
+              const code = (e as { statusCode?: number }).statusCode;
+              if (code === 404 || code === 410) goneEndpoints.push(s.endpoint);
+            }
+          })
+        );
+
+        if (goneEndpoints.length > 0) {
+          await supabase.from("push_subscriptions").delete().in("endpoint", goneEndpoints);
+        }
+        pushStatus = "sent";
+      }
+    }
+
+    return new Response(
+      JSON.stringify({ success: true, sent: totalInserted, pushSent, pushStatus }),
+      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   } catch (err) {
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
