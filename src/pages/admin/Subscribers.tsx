@@ -522,6 +522,9 @@ export default function Subscribers() {
   const kpiLinked  = rows.filter(isLinked).length;
   const kpiPending = rows.filter(isPending).length;
   const kpiExpired = rows.filter(isExpired).length;
+  const kpiNewMonth = rows.filter(
+    (r) => new Date(r.created_at).getTime() >= Date.now() - 30 * 86400000,
+  ).length;
 
   /* Filtered table */
   const filtered = useMemo(() => {
@@ -663,6 +666,13 @@ export default function Subscribers() {
             value={isLoading ? "..." : kpiActive}
             sub="valid_until ריק או עתידי"
             accent={C.gold}
+          />
+          <KpiCard
+            icon={Plus}
+            label="חדשים החודש"
+            value={isLoading ? "..." : kpiNewMonth}
+            sub="נוספו ב-30 הימים האחרונים"
+            accent={C.blue}
           />
           <KpiCard
             icon={CheckCircle2}

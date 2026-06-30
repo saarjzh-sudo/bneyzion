@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Search, Pencil, Trash2 } from "lucide-react";
 import { useTopics, useCreateTopic, useUpdateTopic, useDeleteTopic } from "@/hooks/useTopics";
 import { useToast } from "@/hooks/use-toast";
+import { InlineEditField } from "@/components/admin/InlineEditField";
 
 export default function Topics() {
   const { data: topics, isLoading } = useTopics();
@@ -102,7 +103,13 @@ export default function Topics() {
                 <TableBody>
                   {filtered?.map((t) => (
                     <TableRow key={t.id}>
-                      <TableCell className="font-medium">{t.name}</TableCell>
+                      <TableCell className="font-medium">
+                        <InlineEditField
+                          value={t.name}
+                          ariaLabel="שם הנושא"
+                          onSave={(v) => updateTopic.mutateAsync({ id: t.id, name: v })}
+                        />
+                      </TableCell>
                       <TableCell dir="ltr" className="text-left">{t.slug}</TableCell>
                       <TableCell>{getParentName(t.parent_id)}</TableCell>
                       <TableCell>

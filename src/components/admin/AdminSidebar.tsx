@@ -2,7 +2,7 @@ import {
   LayoutDashboard, BookOpen, Users2, FolderOpen, Tag, ArrowLeftRight,
   Shield, Home, Settings, ShoppingBag, Mail, GitCompare, GraduationCap,
   BarChart3, Bell, PanelTop, ClipboardList, Ticket, HeartPulse, CreditCard,
-  UserCheck, Upload, Download,
+  UserCheck, Upload, Download, Wallet,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -56,6 +56,7 @@ const MANAGEMENT_ITEMS: NavItem[] = [
   { title: "הזמנות",   url: "/admin/orders",         icon: ClipboardList,   roles: ["admin"] },
   { title: "סליקות",   url: "/admin/payments",       icon: CreditCard,      roles: ["admin"] },
   { title: "קופונים",  url: "/admin/coupons",        icon: Ticket,          roles: ["admin"] },
+  { title: "תקציב",    url: "/admin/budget",         icon: Wallet,          roles: ["admin"] },
   { title: "אנליטיקס", url: "/admin/analytics",      icon: BarChart3,       roles: ["admin"] },
   { title: "הודעות",   url: "/admin/messages",       icon: Mail,            roles: ["admin"] },
   { title: "התראות",   url: "/admin/notifications",  icon: Bell,            roles: ["admin"] },

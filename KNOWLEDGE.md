@@ -1,5 +1,16 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## T01 finish-track — 2026-06-30 — Admin dashboard polish (branch `finish/01-admin`, base b4631c76)
+> מסלול-סיום מבודד, אזור-בעלות `src/pages/admin/**` + `src/components/admin/**` + admin hooks.
+> - **ContentUpload `FileDropZone` → drag&drop אמיתי:** היה קליק-בלבד. נוסף `onDrop/onDragOver/onDragLeave` + state `dragging`, ולידציית-`accept` (`fileMatchesAccept`) + `maxBytes` (200MB שמע / 2GB וידאו) עם הודעות `role="alert"`, ניהול `object-URL` תקין ב-`useEffect` (היה memory-leak: `URL.createObjectURL` בכל render), נגישות: `sr-only` במקום `hidden` (input נשאר נגיש-מקלדת) + `focus-within` ring.
+> - **Analytics.tsx שוכתב מלא:** הוסר `framer-motion`+`gradient-teal`+`hsl(--token)`, עבר לשפת-האתר (gold/parchment/navy, Kedem/Ploni, CSS-only). נוספו מדדים עסקיים חיים מ-Supabase: מנויים-פעילים, חדשים-החודש, נטישה-החודש (valid_until ב-30 יום אחרונים), הכנסות-החודש (`orders`). חישוב מנויים ב-JS על `user_access_tags` (tag=program:weekly-chapter) — אמין למאות שורות, נמנע מ-`.or()` typed-as-never.
+> - **Subscribers.tsx:** נוסף KPI "חדשים החודש" (`created_at` ב-30 יום).
+> - **InlineEditField חדש** (`src/components/admin/InlineEditField.tsx`): רכיב עריכה-במקום גנרי+נגיש (Enter שומר/Esc מבטל, callback אסינכרוני). מחווט לדוגמה ב-Topics.tsx (תא שם → `updateTopic.mutateAsync({id,name})`). מוכן לשכפול לכותרות/תיאורים בכל עמוד אדמין.
+> - **Budget חדש** (`src/pages/admin/Budget.tsx` + `src/hooks/useMondayBudget.ts`): UI מלא למעקב-תקציב Monday. **stub חסום** — בלי env (`VITE_MONDAY_BUDGET_BOARD_ID`+`VITE_MONDAY_PROXY_READY`) מציג מסך-הקמה. ההוק קורא edge `monday-budget` (server-side, לא חושף token). פריט "תקציב" נוסף ל-AdminSidebar.
+> - **תלויות חוצות-מסלול (לא נגעתי):** route ל-`/admin/budget` ב-`App.tsx` = T14 (אחרת 404); edge `monday-budget`+`send-smoove-email` = מחוץ ל-zone; טבלת `events` לכנסים = schema (אין כיום טבלה → CRUD-כנסים חסום). הכל ב-`_DONE.md`.
+> - **מייל ב"צ (מחקר):** Smoove כבר מחווט דרך edge `import-smoove` עם `SMOOVE_API_KEY` ב-secrets — **אין צורך ב-credential חדש**. חסר רק edge *לשליחה* (`send-smoove-email`).
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
+
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
 > - **Feature 3 — Multi-rabbi + inline creator add:**
