@@ -1,7 +1,7 @@
 import {
-  LayoutDashboard, BookOpen, Users2, FolderOpen, Tag, ArrowLeftRight,
-  Shield, Home, Settings, ShoppingBag, Mail, GitCompare, GraduationCap,
-  BarChart3, Bell, PanelTop, ClipboardList, Ticket, HeartPulse, CreditCard,
+  LayoutDashboard, BookOpen, Users2, FolderOpen, Tag,
+  Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
+  BarChart3, Bell, PanelTop, Ticket, HeartPulse, CreditCard,
   UserCheck, Upload, Download, Wallet,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
@@ -27,48 +27,73 @@ interface NavItem {
   title: string;
   url: string;
   icon: React.ElementType;
-  /**
-   * Which roles can see this item.
-   * ["admin"] → admin only.
-   * ["admin", "creator"] → admin + creator.
-   */
   roles: AppRole[];
+  /** התאמה מדויקת של הנתיב (לדשבורד /admin) */
+  end?: boolean;
 }
 
-// ─── Content items — admin + creator ───────────────────────────
-const CONTENT_ITEMS: NavItem[] = [
-  { title: "העלאת תוכן",    url: "/admin/upload",            icon: Upload,        roles: ["admin", "creator"] },
-  { title: "שיעורים",        url: "/admin/lessons",           icon: BookOpen,      roles: ["admin", "creator"] },
-  { title: "רבנים",          url: "/admin/rabbis",            icon: Users2,        roles: ["admin", "creator"] },
-  { title: "סדרות",          url: "/admin/series",            icon: FolderOpen,    roles: ["admin", "creator"] },
-  { title: "נושאים",         url: "/admin/topics",            icon: Tag,           roles: ["admin", "creator"] },
-  { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap, roles: ["admin", "creator"] },
-  { title: "בריאות תוכן",   url: "/admin/content-health",    icon: HeartPulse,    roles: ["admin", "creator"] },
-  { title: "ייבוא תוכן",    url: "/admin/import-content",    icon: Download,      roles: ["admin"] },
+interface NavSection {
+  label: string;
+  items: NavItem[];
+}
+
+const ADMIN: AppRole[] = ["admin"];
+const CREATOR: AppRole[] = ["admin", "creator"];
+
+/**
+ * סיידבר אדמין — 5 קבוצות נקיות (תמצות 30.6.2026).
+ * "הזמנות" הוסר מהניווט — כלול בעמוד "סליקות" (Orders ⊂ Payments).
+ * "מיגרציה" + "השוואת תוכן" נשארים route-only לדיבאג (לא בניווט).
+ */
+const SECTIONS: NavSection[] = [
+  {
+    label: "ראשי",
+    items: [
+      { title: "דשבורד", url: "/admin", icon: LayoutDashboard, roles: ADMIN, end: true },
+    ],
+  },
+  {
+    label: "תוכן",
+    items: [
+      { title: "העלאת תוכן",     url: "/admin/upload",            icon: Upload,        roles: CREATOR },
+      { title: "שיעורים",        url: "/admin/lessons",           icon: BookOpen,      roles: CREATOR },
+      { title: "סדרות",          url: "/admin/series",            icon: FolderOpen,    roles: CREATOR },
+      { title: "רבנים",          url: "/admin/rabbis",            icon: Users2,        roles: CREATOR },
+      { title: "נושאים",         url: "/admin/topics",            icon: Tag,           roles: CREATOR },
+      { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap, roles: CREATOR },
+      { title: "בריאות תוכן",   url: "/admin/content-health",    icon: HeartPulse,    roles: CREATOR },
+      { title: "ייבוא תוכן",    url: "/admin/import-content",    icon: Download,      roles: ADMIN },
+    ],
+  },
+  {
+    label: "משתמשים ומכירות",
+    items: [
+      { title: "משתמשים",  url: "/admin/users",        icon: Shield,      roles: ADMIN },
+      { title: "מנויים",   url: "/admin/subscribers",  icon: UserCheck,   roles: ADMIN },
+      { title: "סליקות",   url: "/admin/payments",     icon: CreditCard,  roles: ADMIN },
+      { title: "מוצרים",   url: "/admin/products",     icon: ShoppingBag, roles: ADMIN },
+      { title: "קופונים",  url: "/admin/coupons",      icon: Ticket,      roles: ADMIN },
+    ],
+  },
+  {
+    label: "נתונים ותקשורת",
+    items: [
+      { title: "אנליטיקס",       url: "/admin/analytics",     icon: BarChart3, roles: ADMIN },
+      { title: "מנויים · Monday", url: "/admin/budget",        icon: Wallet,    roles: ADMIN },
+      { title: "הודעות",         url: "/admin/messages",      icon: Mail,      roles: ADMIN },
+      { title: "התראות",         url: "/admin/notifications", icon: Bell,      roles: ADMIN },
+    ],
+  },
+  {
+    label: "אתר",
+    items: [
+      { title: "דף הבית", url: "/admin/homepage", icon: PanelTop,  roles: ADMIN },
+      { title: "הגדרות",  url: "/admin/settings", icon: Settings,  roles: ADMIN },
+    ],
+  },
 ];
 
-// ─── Management items — admin only ─────────────────────────────
-const MANAGEMENT_ITEMS: NavItem[] = [
-  { title: "דשבורד",   url: "/admin",               icon: LayoutDashboard, roles: ["admin"] },
-  { title: "מנויים",   url: "/admin/subscribers",   icon: UserCheck,       roles: ["admin"] },
-  { title: "משתמשים",  url: "/admin/users",          icon: Shield,          roles: ["admin"] },
-  { title: "מוצרים",   url: "/admin/products",       icon: ShoppingBag,     roles: ["admin"] },
-  { title: "הזמנות",   url: "/admin/orders",         icon: ClipboardList,   roles: ["admin"] },
-  { title: "סליקות",   url: "/admin/payments",       icon: CreditCard,      roles: ["admin"] },
-  { title: "קופונים",  url: "/admin/coupons",        icon: Ticket,          roles: ["admin"] },
-  { title: "מנויים · Monday", url: "/admin/budget",   icon: Wallet,          roles: ["admin"] },
-  { title: "אנליטיקס", url: "/admin/analytics",      icon: BarChart3,       roles: ["admin"] },
-  { title: "הודעות",   url: "/admin/messages",       icon: Mail,            roles: ["admin"] },
-  { title: "התראות",   url: "/admin/notifications",  icon: Bell,            roles: ["admin"] },
-  { title: "דף הבית",  url: "/admin/homepage",       icon: PanelTop,        roles: ["admin"] },
-  { title: "הגדרות",   url: "/admin/settings",       icon: Settings,        roles: ["admin"] },
-];
-
-// NOTE: "מיגרציה" (/admin/migration) and "השוואת תוכן" (/admin/content-compare)
-// intentionally removed from nav (wave-2 cleanup). Routes remain in App.tsx for
-// direct-URL debug access.
-
-function canSeeItem(item: NavItem, isAdmin: boolean, userRole: AppRole | null): boolean {
+function canSee(item: NavItem, isAdmin: boolean, userRole: AppRole | null): boolean {
   if (isAdmin) return true;
   if (!userRole) return false;
   return item.roles.includes(userRole);
@@ -77,8 +102,9 @@ function canSeeItem(item: NavItem, isAdmin: boolean, userRole: AppRole | null): 
 export function AdminSidebar() {
   const { user, signOut, isAdmin, userRole } = useAuth();
 
-  const visibleContent    = CONTENT_ITEMS.filter((i) => canSeeItem(i, isAdmin, userRole));
-  const visibleManagement = MANAGEMENT_ITEMS.filter((i) => canSeeItem(i, isAdmin, userRole));
+  const visibleSections = SECTIONS
+    .map((s) => ({ ...s, items: s.items.filter((i) => canSee(i, isAdmin, userRole)) }))
+    .filter((s) => s.items.length > 0);
 
   return (
     <Sidebar side="right" className="border-r border-sidebar-border">
@@ -87,18 +113,17 @@ export function AdminSidebar() {
       </div>
 
       <SidebarContent>
-        {/* Content section — admin + creator */}
-        {visibleContent.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="font-display text-xs">תוכן</SidebarGroupLabel>
+        {visibleSections.map((section) => (
+          <SidebarGroup key={section.label}>
+            <SidebarGroupLabel className="font-display text-xs">{section.label}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {visibleContent.map((item) => (
+                {section.items.map((item) => (
                   <SidebarMenuItem key={item.url}>
                     <SidebarMenuButton asChild>
                       <NavLink
                         to={item.url}
-                        end={false}
+                        end={item.end ?? false}
                         className="hover:bg-sidebar-accent/50 transition-colors"
                         activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
                       >
@@ -111,33 +136,7 @@ export function AdminSidebar() {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
-
-        {/* Management section — admin only */}
-        {visibleManagement.length > 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel className="font-display text-xs">ניהול</SidebarGroupLabel>
-            <SidebarGroupContent>
-              <SidebarMenu>
-                {visibleManagement.map((item) => (
-                  <SidebarMenuItem key={item.url}>
-                    <SidebarMenuButton asChild>
-                      <NavLink
-                        to={item.url}
-                        end={item.url === "/admin"}
-                        className="hover:bg-sidebar-accent/50 transition-colors"
-                        activeClassName="bg-sidebar-accent text-sidebar-primary font-medium"
-                      >
-                        <item.icon className="h-4 w-4 ml-2" />
-                        <span className="font-display text-sm">{item.title}</span>
-                      </NavLink>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        )}
+        ))}
 
         <SidebarGroup>
           <SidebarGroupContent>

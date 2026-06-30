@@ -10,6 +10,14 @@
 > - **תלויות חוצות-מסלול (לא נגעתי):** route ל-`/admin/budget` ב-`App.tsx` = T14 (אחרת 404); edge `monday-budget`+`send-smoove-email` = מחוץ ל-zone; טבלת `events` לכנסים = schema (אין כיום טבלה → CRUD-כנסים חסום). הכל ב-`_DONE.md`.
 > - **מייל ב"צ (מחקר):** Smoove כבר מחווט דרך edge `import-smoove` עם `SMOOVE_API_KEY` ב-secrets — **אין צורך ב-credential חדש**. חסר רק edge *לשליחה* (`send-smoove-email`).
 > - ✅ tsc נקי · ✅ `npm run build` נקי.
+>
+> ## T01 finish-track (המשך) — 2026-06-30 — Monday חי + תמצות + הרשאות + תיקון-דיוק
+> - **Monday מחובר באמת:** edge `supabase/functions/monday-insights/index.ts` מושך board `5094769002` ("היסטוריית מנויים חודשית") server-side (secret `MONDAY_API_TOKEN`). Hook `useMondayInsights`. עמוד `Budget.tsx` הפך לדשבורד "מנויים · Monday": KPI + 4 גרפים חיים (צמיחה/MRR/חדשים-מול-עזבו/נטישה). הטוקן נשמר ב-`api-keys.md` חיצוני (gitignored) + פרופיל. **Deploy מרכזי:** `supabase secrets set MONDAY_API_TOKEN=…` + `functions deploy monday-insights`.
+> - **תמצות סיידבר:** `AdminSidebar.tsx` שוכתב מ-2 קבוצות ל-**5 קבוצות** (ראשי·תוכן·משתמשים-ומכירות·נתונים-ותקשורת·אתר). **"הזמנות" הוסר מהניווט** (Orders ⊂ Payments — כפילות). Migration/ContentCompare נשארים route-only לדיבאג.
+> - **ניהול הרשאות ב-`Users.tsx`:** נוסף תפקיד **creator (מורה/יוצר)** לדרופדאון; עמודת **"גישות תוכן"** עם badges-פעילים הניתנים-לשלילה; דיאלוג **"תן גישה"** (מנוי/קורס + תוקף). הוקים חדשים ב-`useUsers.ts`: `useAccessTags`/`useGrantAccessTag`/`useRevokeAccessTag` (על `user_access_tags`, source='admin'). ⚠️ **enum `app_role` ב-DB חסר 'creator'** → `ALTER TYPE public.app_role ADD VALUE 'creator'` נדרש לפני שהענקת-creator תעבוד (אחרת INSERT נכשל).
+> - **🐞 תיקון-דיוק קריטי (Dashboard.tsx):** KPI "מנויי פרק שבועי" סינן `.gt("valid_until")` בלבד → **פספס 99 מנויי-לכל-החיים (valid_until=null)** והציג 1 במקום 100. תוקן ל-`.or(valid_until.is.null,valid_until.gt.now)`. אומת מול ה-DB (REST count): null=99, future=1, **active=100**, expired=171, total=271, pending_user_link=268, linked=3.
+> - **פער-סנכרון מתועד (לא באג בקוד):** Monday=281 פעילים (ידני, יואב) · DB=100 פעילים (171 פגי-תוקף מ-Smoove sync soft-delete) · Smoove list=288. רק 3 מנויים מקושרים לחשבון-אתר אמיתי (268 pending — מיובאי-Smoove שלא נרשמו). source-of-truth עסקי = Monday/Smoove; DB משקף את ה-gating.
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
 
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
