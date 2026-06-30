@@ -56,10 +56,13 @@ const CommunityCoursePage = () => {
   if (!isMember) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center" dir="rtl">
-        <Card className="max-w-md border-2 border-primary/30">
+        <Card className="max-w-md border-2 border-gold/30 shadow-lg">
           <CardContent className="p-8 text-center space-y-4">
-            <Lock className="w-12 h-12 mx-auto text-primary/50" />
-            <h2 className="text-xl font-bold text-primary">אזור סגור לחברי הקהילה</h2>
+            <div className="h-16 w-16 rounded-2xl bg-gold/15 flex items-center justify-center mx-auto">
+              <Lock className="w-8 h-8 text-gold" />
+            </div>
+            <h2 className="text-xl font-heading text-primary">אזור סגור לחברי הקהילה</h2>
+            <p className="text-sm text-muted-foreground">התכנים פתוחים למנויי תכנית הפרק השבועי</p>
             <Button asChild><Link to="/chapter-weekly">הצטרפו לתכנית</Link></Button>
           </CardContent>
         </Card>
@@ -94,8 +97,12 @@ const CommunityCoursePage = () => {
             transition={{ delay: i * 0.03 }}
           >
             <Card
-              className="hover:shadow-md transition-all cursor-pointer border hover:border-primary/30 group"
+              className="hover:shadow-md transition-all cursor-pointer border hover:border-gold/40 group"
               onClick={() => setSelectedLesson(lesson)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedLesson(lesson); } }}
+              aria-label={`פתיחת שיעור: ${lesson.title}`}
             >
               <CardContent className="p-4 flex items-center gap-4">
                 <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-primary font-bold text-sm group-hover:bg-primary group-hover:text-primary-foreground transition-colors">

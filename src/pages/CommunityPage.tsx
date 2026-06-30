@@ -36,29 +36,31 @@ const CommunityPage = () => {
 
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative overflow-hidden py-16 md:py-24">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2D1F0E] via-[#3D2A12] to-[#1A1208]" />
+      {/* Hero — premium warm-cream / gold (light mode) */}
+      <section className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-cream-warm via-cream to-background">
+        {/* soft gold glow accents */}
+        <div className="pointer-events-none absolute -top-24 right-1/4 h-72 w-72 rounded-full bg-gold/15 blur-3xl" aria-hidden="true" />
+        <div className="pointer-events-none absolute -bottom-32 left-1/4 h-72 w-72 rounded-full bg-primary/5 blur-3xl" aria-hidden="true" />
         <div className="container relative z-10 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.1, type: "spring" }}
-              className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm px-4 py-1.5 rounded-full mb-5"
+              className="inline-flex items-center gap-2 bg-card/70 border border-gold/30 backdrop-blur-sm px-4 py-1.5 rounded-full mb-5 shadow-sm"
             >
-              <GraduationCap className="h-4 w-4 text-primary" />
+              <GraduationCap className="h-4 w-4 text-gold" />
               <span className="text-sm font-semibold text-primary">קהילת לומדים</span>
             </motion.div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-kedem-hollow-aaa mb-4 leading-tight drop-shadow-md text-white">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading text-primary mb-4 leading-tight">
               קהילת הלומדים של בני ציון
             </h1>
-            <p className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 font-antidot">
               קורסים שבועיים עם רבנים מובילים, מפגשי זום חיים, שיעורים מוקלטים ותעודות
             </p>
 
             {isMember ? (
-              <Badge className="bg-gradient-to-r from-amber-500 to-primary text-primary-foreground border-0 text-sm px-4 py-1.5">
+              <Badge className="bg-gold/20 text-primary border border-gold/40 text-sm px-4 py-1.5 shadow-sm">
                 <Crown className="h-3.5 w-3.5 ml-1" /> חבר קהילה
               </Badge>
             ) : (
@@ -69,20 +71,20 @@ const CommunityPage = () => {
                 className="flex flex-col sm:flex-row items-center justify-center gap-3"
               >
                 {user ? (
-                  <Button size="lg" className="gap-2 text-base px-8 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20" onClick={() => document.getElementById("courses-tabs")?.scrollIntoView({ behavior: "smooth" })}>
+                  <Button size="lg" className="gap-2 text-base px-8 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20" onClick={() => document.getElementById("courses-tabs")?.scrollIntoView({ behavior: "smooth" })}>
                     <Sparkles className="h-4 w-4" /> הצטרף לקהילה
                   </Button>
                 ) : (
                   <Link to="/auth?redirect=/community">
-                    <Button size="lg" className="gap-2 text-base px-8 bg-primary hover:bg-primary/90 shadow-xl shadow-primary/20">
+                    <Button size="lg" className="gap-2 text-base px-8 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20">
                       <Sparkles className="h-4 w-4" /> הצטרף לקהילה
                     </Button>
                   </Link>
                 )}
-                <div className="flex items-center gap-4 text-white/60 text-sm">
-                  <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5" /> קורסים שבועיים</span>
-                  <span className="flex items-center gap-1"><Video className="h-3.5 w-3.5" /> מפגשי זום</span>
-                  <span className="flex items-center gap-1"><Crown className="h-3.5 w-3.5" /> תעודות</span>
+                <div className="flex items-center gap-4 text-muted-foreground text-sm">
+                  <span className="flex items-center gap-1"><Users className="h-3.5 w-3.5 text-gold" /> קורסים שבועיים</span>
+                  <span className="flex items-center gap-1"><Video className="h-3.5 w-3.5 text-gold" /> מפגשי זום</span>
+                  <span className="flex items-center gap-1"><Crown className="h-3.5 w-3.5 text-gold" /> תעודות</span>
                 </div>
               </motion.div>
             )}
@@ -128,11 +130,15 @@ const CommunityPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {enrollments.map((e: any, i: number) => (
                 <motion.div key={e.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link to={e.community_courses?.program_slug === "weekly-chapter" ? "/course/weekly-chapter" : `/community/${e.course_id}`}>
-                    <Card className="hover:shadow-lg hover:border-primary/30 transition-all group overflow-hidden">
-                      {e.community_courses?.image_url && (
+                  <Link to={e.community_courses?.program_slug === "weekly-chapter" ? "/course/weekly-chapter" : `/community/${e.course_id}`} aria-label={`המשך בקורס ${e.community_courses?.title ?? ""}`}>
+                    <Card className="hover:shadow-lg hover:border-gold/40 transition-all group overflow-hidden border-border/70">
+                      {e.community_courses?.image_url ? (
                         <div className="h-32 overflow-hidden">
                           <img src={e.community_courses.image_url} alt={e.community_courses?.title || "תמונת קורס"} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+                        </div>
+                      ) : (
+                        <div className="h-32 flex items-center justify-center bg-gradient-to-br from-cream-warm to-cream">
+                          <BookOpen className="h-10 w-10 text-gold/40" aria-hidden="true" />
                         </div>
                       )}
                       <CardContent className="p-4">
@@ -143,10 +149,16 @@ const CommunityPage = () => {
                           <span>{e.community_courses?.course_type === "weekly" ? "שבועי זום" : "מוקלט"}</span>
                         </div>
                         <div className="flex items-center justify-between mt-3">
-                          <Badge variant="secondary" className="text-[10px]">
-                            {e.completed ? "הושלם ✓" : "בלמידה"}
-                          </Badge>
-                          <ArrowLeft className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors" />
+                          {e.completed ? (
+                            <Badge className="bg-gold/20 text-primary border border-gold/40 text-[10px] gap-1">
+                              <CheckCircle2 className="h-2.5 w-2.5" /> הושלם
+                            </Badge>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary">
+                              <Sparkles className="h-3 w-3 text-gold" /> המשך ללמוד
+                            </span>
+                          )}
+                          <ArrowLeft className="h-3.5 w-3.5 text-muted-foreground group-hover:text-primary transition-colors" aria-hidden="true" />
                         </div>
                       </CardContent>
                     </Card>
@@ -237,8 +249,8 @@ const CourseCard = ({ course, enrolled, isMember, index }: { course: any; enroll
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.06 }}
     >
-      <Link to={`/community/${course.id}`}>
-        <Card className="group hover:shadow-xl hover:border-primary/30 transition-all duration-300 overflow-hidden h-full relative">
+      <Link to={`/community/${course.id}`} aria-label={`פרטים והרשמה — ${course.title}`}>
+        <Card className="group hover:shadow-xl hover:border-gold/40 transition-all duration-300 overflow-hidden h-full relative border-border/70">
           {/* Image */}
           <div className="relative h-40 overflow-hidden bg-muted">
             {course.image_url ? (
@@ -262,12 +274,12 @@ const CourseCard = ({ course, enrolled, isMember, index }: { course: any; enroll
             {/* Price */}
             {course.price > 0 && (
               <div className="absolute bottom-3 left-3">
-                <Badge className="bg-card/90 text-foreground border-0 backdrop-blur-sm font-bold">₪{course.price}</Badge>
+                <Badge className="bg-card/95 text-primary border border-gold/40 backdrop-blur-sm font-bold shadow-sm">₪{course.price}</Badge>
               </div>
             )}
             {course.price === 0 && (
               <div className="absolute bottom-3 left-3">
-                <Badge className="bg-primary/90 text-primary-foreground border-0 backdrop-blur-sm font-bold">חינם</Badge>
+                <Badge className="bg-gold/90 text-primary border-0 backdrop-blur-sm font-bold shadow-sm">חינם</Badge>
               </div>
             )}
             {/* Lock overlay for non-members */}
