@@ -7734,3 +7734,25 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## 2026-06-30 · T05 — דף תרומות ברף דף-יהושוע (worktree finish/05-donate)
+
+**מה:** שדרוג `/design-donate` (סנדבוקס) לרמת `DesignPreviewYehoshuaCampaign` — דף תרומות נרטיבי, מבוסס שכנוע, עם סליקת Grow אמיתית. ה-production `/donate` (`Donate.tsx`) **לא נגעתי** — ממתין ל"ROLLOUT" מסער (כלל Sandbox-first).
+
+**קבצים חדשים (אזור-בעלות T05):**
+- `src/components/donate/useScrollReveal.ts` — IntersectionObserver one-shot, מכבד prefers-reduced-motion.
+- `src/components/donate/useDonationStats.ts` — אגרגט אמיתי מטבלת `donations` (donorCount+totalRaised, completed). `ready=false` ⇒ fallback סטטי, בלי "0 תורמים" שבור.
+- `src/components/donate/donateData.ts` — 6 מדרגות-השפעה (50–1,000₪), פירוק שקיפות (45/25/20/10), 5 שאלות נפוצות. קופי עברי בקול ב"צ.
+- `src/components/donate/DonateForm.tsx` — כרטיס סליקה מחווט ל-`useGrowPayment` (donation/directDebit), ולידציה מלאה, נגישות (label/aria-pressed/focus-visible/fieldset), amount מבוקר מבחוץ.
+
+**שוכתב:** `src/pages/DesignPreviewDonate.tsx` — sticky-CTA, hero+ציטוט-עוגן, proof-strip (דאטה חי), מדרגות click-to-fund, story/why/memorial/transparency/recent-donors (חי), FAQ אקורדיון, final-CTA כהה. scroll-reveal, RTL מלא, a11y.
+
+**דאטה אמיתי בלבד:** `useDonationStats`+`useRecentDonations` (Supabase). אסור mock.
+
+**סליקה:** merchant נפתר server-side מ-`GROW_PAGECODE_DONATIONS`+`GROW_USER_ID_DONATIONS` (env פרודקשן). אין חיוב-בדיקה. החיווט מוכח כבר ב-`Donate.tsx`.
+
+**בדיקה:** `npm run build` (tsc -b + vite) נקי. `vite preview` → `/design-donate` 200 + chunk 200. preview-MCP מבודד מנתיב ה-worktree ⇒ אין screenshot מרונדר מכאן; לאמת ויזואלית על preview של `finish/integration`.
+
+**עברית:** ✓ נקי (סקיל עברית; בלי הינו/ניתן ל/על מנת/מדובר ב).
