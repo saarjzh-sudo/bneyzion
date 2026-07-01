@@ -7748,3 +7748,15 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **`WeeklyBookDetail.tsx` כבר שלם** — ניווט-פרקים (sidebar GlobalWeeklyNav + חצים + BookSwitcher), gating per-tab (בסיס פתוח / הרחבה+שבועי נעולים ללא `hasAccess`), מקרי-קצה אסתר(זוגות)/HZM(תת-ספרים)/דניאל(resources). לא נגעתי בו.
 
 **T08 dependency:** נוסף `useCurrentWeeklyBook()` ב-`useCommunity.ts` — מחזיר את הספר `is_current=true`. קהל-יעד להתראות = מנויי `program:weekly-chapter` שלומדים את הספר הזה.
+
+## T03 — חוויית לומד הפרק-השבועי (סבב 2, 1.7.2026)
+
+**מקור-אמת: קבוצות הוואטסאפ.** נלמד הקצב מקבוצת הלומדים `120363419927136535@g.us` + קבוצת התוכן `120363403660227707@g.us` (Green API getChatHistory). דפוס שבועי: **שישי** תכני-בסיס (דף הכוונה+שטיינזלץ+הקלטת פרק הרב יונדב זר) → **א׳-ב׳** הרחבה (מאמר הרב יוסף שילר + "הפרק במבט רחב" הרב עמנואל) → **רביעי 21:00** שיעור זום חי (קישור קבוע) → **אחרי** הקלטת שיעור+סיכום+תרשים. ממופה 1:1 ל-layers `base/enrichment/weekly` ב-DB. זום קבוע: `us02web.zoom.us/j/89674496888`.
+
+**רכיבים חדשים (my zone):** `src/components/weekly/ZoomCtaCard.tsx` (כפתור "כניסה לשיעור החי", קורא `community_courses.zoom_link` עם fallback לקישור-התכנית הקבוע — **אין** zoom_link ב-DB עדיין). `src/components/weekly/WeeklyScheduleCard.tsx` (לו״ז — מטמיע `schedule_image_url` [עמודה עוד לא קיימת] כשקיים, אחרת רשימת-פרקים אוטומטית).
+
+**סטטוס-פרק אמיתי:** פרק שיש לו layer `weekly` = כבר נלמד בשיעור החי → לו״ז מציג 'נלמד/השבוע/בקרוב' (`itemTaught` ב-WeeklyBookDetail). לא mock.
+
+**שולב ב-WeeklyBookDetail intro** (זום+לו״ז לספר ה-`is_current`) וב-banner בפורטל (זום חי אמיתי). תוויות טאבים → שפת-הלומד ("תכני הבסיס / הרחבה / השיעור והסיכום").
+
+**נדרש מסער:** (1) תמונת לו״ז מהדרייב לכל ספר (בחר "להטמיע את תמונת הדרייב") → צריך URL/קובץ + עמודה `schedule_image_url`. (2) אישור לכתוב `zoom_link` לפרודקשן (בינתיים fallback בקוד). (3) "קורסים רגילים בסגנון אבולעפיה" = קבצי T04/T10 (עמודי Series/Course) — לא נגעתי (מודל-מקבילי), לתאם מיזוג.

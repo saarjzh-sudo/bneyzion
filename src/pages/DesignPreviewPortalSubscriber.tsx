@@ -132,6 +132,9 @@ export default function DesignPreviewPortalSubscriber() {
   const currentBook = currentIdx >= 0 ? (books[currentIdx] as any) : (books[0] as any) ?? null;
   const currentBookSlug = currentBook?.program_slug ?? "weekly-chapter";
   const currentLessonHref = `/course/${currentBookSlug}`;
+  // Live Zoom link — from the current book, else the program-wide recurring link.
+  const PROGRAM_ZOOM_FALLBACK = "https://us02web.zoom.us/j/89674496888?pwd=NjQgO336yAwHATbkkwsimd92kWrXlp.1";
+  const zoomHref = (currentBook as any)?.zoom_link?.trim() || PROGRAM_ZOOM_FALLBACK;
   const overallProgressPct = books.length ? Math.round((booksDone / books.length) * 100) : 0;
 
   // ── Derived gamification (real points + streak; no mock numbers) ────────
@@ -788,7 +791,7 @@ export default function DesignPreviewPortalSubscriber() {
                         {SUBSCRIBER_STATS.currentBook}
                       </div>
                       <div style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(255,255,255,0.55)" }}>
-                        שישי · 20:00 · עוד 3 ימים
+                        יום רביעי · 21:00 · שיעור זום חי
                       </div>
                     </div>
                   </div>
@@ -812,8 +815,10 @@ export default function DesignPreviewPortalSubscriber() {
                       <Play size={13} />
                       מהדורות קודמות
                     </button>
-                    <Link
-                      to={currentLessonHref}
+                    <a
+                      href={zoomHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       style={{
                         padding: "0.65rem 1.4rem",
                         borderRadius: radii.md,
@@ -831,8 +836,8 @@ export default function DesignPreviewPortalSubscriber() {
                       }}
                     >
                       <Zap size={13} />
-                      כנס לתכנית
-                    </Link>
+                      כניסה לשיעור החי
+                    </a>
                   </div>
                 </div>
               </div>
