@@ -47,12 +47,12 @@ const Messages = () => {
     if (!selectedMessage?.email || !replyText.trim()) return;
     setSending(true);
     try {
-      const { data, error } = await supabase.functions.invoke("send-smoove-email", {
+      const { data, error } = await supabase.functions.invoke("send-admin-email", {
         body: {
           to: selectedMessage.email,
           subject: `Re: ${selectedMessage.subject || "פנייתך לבני ציון"}`,
           html: `<div dir="rtl" style="font-family:Arial,sans-serif;font-size:15px;line-height:1.7">${replyText.replace(/\n/g, "<br>")}</div>`,
-          fromName: "בני ציון",
+          replyTo: selectedMessage.email,
         },
       });
       if (error) throw error;
