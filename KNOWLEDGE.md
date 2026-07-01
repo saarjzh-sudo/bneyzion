@@ -7785,3 +7785,15 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - **Ambient** — קומפוננטה חדשה: 3 בועות aurora רדיאליות שנעות לאט (`auroraDrift1/2/3`) + grain עדין (SVG feTurbulence, soft-light). מוזרק בהירו, impact, testimonials, ו-CTA סופי → "רקע שזז" עדין.
 - **גוונים עדינים** — מסגרות/צללים רכים יותר, גרדיאנטים בין סקשנים, Ken-Burns hover על תמונת הרב יואב.
 - כל האנימציות מכובות תחת `prefers-reduced-motion`. build נקי, 0 console errors.
+
+## 2026-07-01 · T05 v7 — רה-דיזיין אדיטוריאלי (פידבק "חובבני")
+
+פס עיצוב שיטתי לפי top-design skill. הבעיה הייתה שיטתית: גרדיאנטי-זהב בכל מקום, אנימציות גימיקיות (זהב נוצץ/נקודות פועמות), אייקוני לב, הכל ממורכז, סקייל טיפוגרפי אחיד, טופס "SaaS".
+
+**מערכת חדשה (`src/components/donate/theme.ts`):** ink חם יחיד + cream + **אקצנט זהב אחד מט** (#A9843F), hairlines, custom easing `cubic-bezier(0.16,1,0.3,1)`. הוסרו: כל הגרדיאנטים, aurora/grain, shimmer, pulse-dots, אייקוני-לב, teal.
+
+**עקרונות:** (1) טיפוגרפיה מונומנטלית — hero display clamp עד 6.4rem, ניגוד-סקייל דרמטי. (2) קומפוזיציה אסימטרית — hero מיושר-ימין (RTL start), כותרות offset. (3) restraint — צבע אחד, מרווחים נדיבים. (4) craft — ::selection זהב, focus-visible, underline-inputs בטופס, כרטיס 180 inverted (ink) במקום גרדיאנט.
+
+**קבצים:** `theme.ts` (חדש), `DonateForm.tsx` (רה-רייט אדיטוריאלי — underline inputs, inverted chips, ink CTA), `DesignPreviewDonate.tsx` (רה-רייט מלא — primitives: Kicker/Reveal/PrimaryBtn/TextLink/H2). ריל כבר הוסר ב-v6.
+
+**self-score ~8/10** (מ-~4-5). לדחיפה ל-9-10: Lenis smooth-scroll + רגע-סקרול חתימה. build נקי, 0 console errors.

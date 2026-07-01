@@ -1,26 +1,17 @@
 /**
- * DonateForm — the live, Grow-wired donation card.
+ * DonateForm — the live, Grow-wired donation card (editorial redesign).
  *
- * Self-contained sticky form used by both the production /donate page and the
- * /design-donate sandbox preview. Amount is *controlled* from the parent so the
- * impact-tier cards above can set it (click-to-fund), while donor details,
- * recurring mode and dedication stay internal.
- *
- * Payment: reuses the shared useGrowPayment hook.
- *   - one-time   → type="donation"   → GROW_*_DONATIONS merchant
- *   - recurring  → type="directDebit" → same merchant, horaat-keva flow
- * No real charge happens until the donor completes Grow's own secure window.
- *
- * Accessibility: every control has a label, toggle groups expose aria-pressed,
- * and a scoped :focus-visible style gives keyboard users a clear gold ring.
+ * Underline inputs, inverted-selection amount chips, one refined CTA — no
+ * boxed-gray "SaaS" inputs, no gradients, no icons-as-decoration. Amount is
+ * controlled from the parent (impact tiers set it). Payment reuses
+ * useGrowPayment: one-time → "donation", recurring → "directDebit".
  */
 import { useCallback, useState } from "react";
-import { Heart, Flame, Loader2, ShieldCheck } from "lucide-react";
 
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
-import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
+import { C, EASE, fonts } from "@/components/donate/theme";
 
 const PRESETS = [50, 100, 180, 360, 540, 1000];
 
@@ -34,9 +25,9 @@ const DEDICATION_LABELS: { value: DonationType; label: string }[] = [
 ];
 
 const DEDICATION_PLACEHOLDER: Record<Exclude<DonationType, "regular">, string> = {
-  iluy_neshama: "שם הנפטר/ת...",
-  refua: "שם החולה...",
-  simcha: "לכבוד מי?...",
+  iluy_neshama: "שם הנפטר/ת",
+  refua: "שם החולה",
+  simcha: "לכבוד מי",
 };
 
 const DEDICATION_PREFIX: Record<Exclude<DonationType, "regular">, string> = {
@@ -46,15 +37,9 @@ const DEDICATION_PREFIX: Record<Exclude<DonationType, "regular">, string> = {
 };
 
 interface DonateFormProps {
-  /** Controlled amount (so impact tiers can set it). */
   amount: number;
   onAmount: (n: number) => void;
-  /** id used as the scroll anchor target. */
   id?: string;
-  /** Pre-fill a dedication (e.g. memorial campaign). */
-  initialDedication?: string;
-  initialDonationType?: DonationType;
-  /** Campaign routing — forwarded to create-payment for stats views. */
   source?: string | null;
   tier?: string | null;
 }
@@ -63,14 +48,12 @@ export default function DonateForm({
   amount,
   onAmount,
   id = "donate-form",
-  initialDedication = "",
-  initialDonationType = "regular",
   source = null,
   tier = null,
 }: DonateFormProps) {
   const [recurring, setRecurring] = useState(false);
-  const [dedication, setDedication] = useState(initialDedication);
-  const [donationType, setDonationType] = useState<DonationType>(initialDonationType);
+  const [dedication, setDedication] = useState("");
+  const [donationType, setDonationType] = useState<DonationType>("regular");
   const [donorName, setDonorName] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
@@ -133,10 +116,7 @@ export default function DonateForm({
         } as any,
       });
 
-      toast({
-        title: "חלון התשלום נפתח",
-        description: "השלימו את התשלום בחלון המאובטח. תודה רבה!",
-      });
+      toast({ title: "חלון התשלום נפתח", description: "השלימו את התשלום בחלון המאובטח. תודה רבה!" });
     } catch (err: any) {
       toast({ title: "שגיאה", description: err?.message, variant: "destructive" });
     }
@@ -148,118 +128,43 @@ export default function DonateForm({
   const ctaDisabled = !amount || paymentLoading || !paymentReady || !tosAccepted;
 
   return (
-    <div
-      id={id}
-      style={{
-        background: "white",
-        borderRadius: radii.xl,
-        padding: "2.25rem 2rem",
-        border: `1px solid rgba(139,111,71,0.14)`,
-        boxShadow: "0 20px 60px rgba(45,31,14,0.10), 0 4px 16px rgba(45,31,14,0.06)",
-        display: "flex",
-        flexDirection: "column",
-        gap: "1.4rem",
-      }}
-      dir="rtl"
-      className="donate-form-card"
-    >
-      {/* Focus-visible ring for keyboard users (inline styles can't do :focus). */}
-      <style>{`
-        .donate-form-card button:focus-visible,
-        .donate-form-card input:focus-visible,
-        .donate-form-card a:focus-visible {
-          outline: 3px solid ${colors.goldLight};
-          outline-offset: 2px;
-        }
-        .donate-form-card input { transition: border-color 0.15s; }
-        .donate-form-card input:focus { border-color: ${colors.goldDark} !important; }
-      `}</style>
+    <div id={id} className="df" dir="rtl">
+      <FormStyles />
 
-      {/* Header */}
-      <div style={{ textAlign: "center" }}>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.4rem",
-            padding: "0.3rem 0.9rem",
-            borderRadius: radii.pill,
-            background: `rgba(196,162,101,0.12)`,
-            color: colors.goldDark,
-            fontFamily: fonts.body,
-            fontSize: "0.72rem",
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            marginBottom: "0.7rem",
-          }}
-        >
-          <Flame size={11} aria-hidden="true" /> תרומה לאתר בני ציון
-        </div>
-        <h2
-          style={{
-            fontFamily: fonts.display,
-            fontWeight: 900,
-            fontSize: "1.5rem",
-            color: colors.textDark,
-            margin: 0,
-          }}
-        >
+      <div style={{ marginBottom: "1.75rem" }}>
+        <Kicker>תרומה לאתר בני ציון</Kicker>
+        <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.6rem", color: C.ink, margin: 0, letterSpacing: "-0.01em" }}>
           בחרו את גובה השותפות
-        </h2>
+        </h3>
       </div>
 
-      {/* Recurring toggle */}
-      <div
-        style={{ display: "flex", justifyContent: "center" }}
-        role="group"
-        aria-label="סוג התרומה"
-      >
-        <div
-          style={{
-            display: "inline-flex",
-            padding: 4,
-            background: colors.parchmentDark,
-            borderRadius: radii.md,
-          }}
-        >
-          {[
-            { label: "חד פעמי", val: false },
-            { label: "הוראת קבע", val: true },
-          ].map(({ label, val }) => {
-            const active = recurring === val;
-            return (
-              <button
-                key={label}
-                type="button"
-                onClick={() => setRecurring(val)}
-                aria-pressed={active}
-                style={{
-                  padding: "0.55rem 1.25rem",
-                  borderRadius: radii.sm,
-                  border: "none",
-                  background: active ? "white" : "transparent",
-                  color: active ? colors.textDark : colors.textMuted,
-                  fontFamily: fonts.body,
-                  fontSize: "0.85rem",
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  boxShadow: active ? shadows.cardSoft : "none",
-                  transition: "all 0.15s",
-                }}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
+      {/* Frequency — underlined text tabs */}
+      <div style={{ display: "flex", gap: "1.5rem", marginBottom: "1.75rem" }} role="group" aria-label="תדירות התרומה">
+        {[
+          { label: "חד־פעמי", val: false },
+          { label: "הוראת קבע", val: true },
+        ].map(({ label, val }) => {
+          const active = recurring === val;
+          return (
+            <button
+              key={label}
+              type="button"
+              onClick={() => setRecurring(val)}
+              aria-pressed={active}
+              className="df-tab"
+              style={{
+                color: active ? C.ink : C.ink42,
+                borderBottom: `2px solid ${active ? C.gold : "transparent"}`,
+              }}
+            >
+              {label}
+            </button>
+          );
+        })}
       </div>
 
-      {/* Preset grid */}
-      <div
-        style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.6rem" }}
-        role="group"
-        aria-label="סכומים מומלצים"
-      >
+      {/* Amount chips — inverted selection */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0.5rem", marginBottom: "1.5rem" }} role="group" aria-label="סכומים">
         {PRESETS.map((p) => {
           const active = amount === p;
           return (
@@ -268,58 +173,23 @@ export default function DonateForm({
               type="button"
               onClick={() => onAmount(p)}
               aria-pressed={active}
+              className="df-chip"
               style={{
-                padding: "0.9rem 0.5rem",
-                borderRadius: radii.lg,
-                border: active
-                  ? `2px solid ${colors.goldDark}`
-                  : `1.5px solid rgba(139,111,71,0.2)`,
-                background: active ? `rgba(196,162,101,0.09)` : "white",
-                color: active ? colors.goldDark : colors.textDark,
-                fontFamily: fonts.display,
-                fontWeight: 800,
-                fontSize: "1.2rem",
-                cursor: "pointer",
-                transition: "all 0.15s",
+                background: active ? C.ink : "transparent",
+                color: active ? C.cream : C.ink,
+                borderColor: active ? C.ink : C.line,
               }}
             >
-              {p.toLocaleString("he-IL")}₪
+              {p.toLocaleString("he-IL")} ₪
             </button>
           );
         })}
       </div>
 
-      {/* Custom amount */}
-      <div>
-        <label
-          htmlFor="donate-amount"
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.82rem",
-            color: colors.textMuted,
-            fontWeight: 600,
-            display: "block",
-            marginBottom: "0.4rem",
-          }}
-        >
-          או הקלידו סכום אחר
-        </label>
-        <div style={{ position: "relative" }}>
-          <span
-            style={{
-              position: "absolute",
-              insetInlineEnd: 14,
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontFamily: fonts.display,
-              fontSize: "1.1rem",
-              color: colors.textMuted,
-              pointerEvents: "none",
-            }}
-            aria-hidden="true"
-          >
-            ₪
-          </span>
+      {/* Custom amount — underline */}
+      <div style={{ marginBottom: "1.75rem" }}>
+        <label htmlFor="donate-amount" className="df-label">סכום אחר</label>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "0.4rem" }}>
           <input
             id="donate-amount"
             type="number"
@@ -327,39 +197,17 @@ export default function DonateForm({
             value={amount}
             onChange={(e) => onAmount(Number(e.target.value) || 0)}
             aria-label="סכום תרומה בשקלים"
-            style={{
-              width: "100%",
-              padding: "0.85rem 1rem 0.85rem 2.5rem",
-              borderRadius: radii.md,
-              border: `1.5px solid ${colors.parchmentDeep}`,
-              background: "white",
-              fontFamily: fonts.display,
-              fontWeight: 700,
-              fontSize: "1.1rem",
-              color: colors.textDark,
-              outline: "none",
-              direction: "rtl",
-              boxSizing: "border-box",
-            }}
+            className="df-input"
+            style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.5rem" }}
           />
+          <span style={{ fontFamily: fonts.display, fontSize: "1.25rem", color: C.ink42 }} aria-hidden="true">₪</span>
         </div>
       </div>
 
       {/* Dedication */}
-      <fieldset style={{ border: "none", margin: 0, padding: 0 }}>
-        <legend
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.82rem",
-            color: colors.textMuted,
-            fontWeight: 600,
-            marginBottom: "0.5rem",
-            padding: 0,
-          }}
-        >
-          הקדשה (לא חובה)
-        </legend>
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.65rem" }}>
+      <fieldset style={{ border: "none", margin: "0 0 1.75rem", padding: 0 }}>
+        <legend className="df-label" style={{ marginBottom: "0.75rem" }}>הקדשה (לא חובה)</legend>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: donationType !== "regular" ? "1rem" : 0 }}>
           {DEDICATION_LABELS.map((t) => {
             const active = donationType === t.value;
             return (
@@ -368,19 +216,11 @@ export default function DonateForm({
                 type="button"
                 onClick={() => setDonationType(t.value)}
                 aria-pressed={active}
+                className="df-pill"
                 style={{
-                  flex: 1,
-                  padding: "0.45rem 0.4rem",
-                  borderRadius: radii.sm,
-                  border: active
-                    ? `1.5px solid ${colors.goldDark}`
-                    : `1px solid ${colors.parchmentDeep}`,
-                  background: active ? `rgba(196,162,101,0.09)` : "white",
-                  color: active ? colors.goldDark : colors.textMuted,
-                  fontFamily: fonts.body,
-                  fontSize: "0.72rem",
-                  fontWeight: 700,
-                  cursor: "pointer",
+                  background: active ? C.goldTint : "transparent",
+                  color: active ? C.goldDeep : C.ink62,
+                  borderColor: active ? C.gold : C.line,
                 }}
               >
                 {t.label}
@@ -394,202 +234,93 @@ export default function DonateForm({
             onChange={(e) => setDedication(e.target.value)}
             placeholder={DEDICATION_PLACEHOLDER[donationType]}
             aria-label={`${DEDICATION_PREFIX[donationType]} — שם`}
-            style={{
-              width: "100%",
-              padding: "0.75rem 1rem",
-              borderRadius: radii.md,
-              border: `1.5px solid ${colors.parchmentDeep}`,
-              background: "white",
-              fontFamily: fonts.body,
-              fontSize: "0.9rem",
-              color: colors.textDark,
-              outline: "none",
-              direction: "rtl",
-              boxSizing: "border-box",
-            }}
+            className="df-input"
           />
         )}
       </fieldset>
 
-      {/* Donor details */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+      {/* Donor details — underline inputs */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "1.4rem", marginBottom: "1.75rem" }}>
         <div>
-          <label
-            htmlFor="donor-name"
-            style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, display: "block", marginBottom: "0.3rem" }}
-          >
-            שם מלא *
-          </label>
-          <input
-            id="donor-name"
-            value={donorName}
-            onChange={(e) => setDonorName(e.target.value)}
-            placeholder="שם פרטי ומשפחה..."
-            dir="rtl"
-            autoComplete="name"
-            style={inputStyle}
-          />
+          <label htmlFor="donor-name" className="df-label">שם מלא</label>
+          <input id="donor-name" value={donorName} onChange={(e) => setDonorName(e.target.value)} placeholder="שם פרטי ומשפחה" dir="rtl" autoComplete="name" className="df-input" />
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.65rem" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.2rem" }}>
           <div>
-            <label
-              htmlFor="donor-phone"
-              style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, display: "block", marginBottom: "0.3rem" }}
-            >
-              טלפון *
-            </label>
-            <input
-              id="donor-phone"
-              value={donorPhone}
-              onChange={(e) => setDonorPhone(e.target.value)}
-              placeholder="05XXXXXXXX"
-              type="tel"
-              dir="ltr"
-              autoComplete="tel"
-              style={inputStyle}
-            />
+            <label htmlFor="donor-phone" className="df-label">טלפון</label>
+            <input id="donor-phone" value={donorPhone} onChange={(e) => setDonorPhone(e.target.value)} placeholder="05XXXXXXXX" type="tel" dir="ltr" autoComplete="tel" className="df-input" style={{ textAlign: "right" }} />
           </div>
           <div>
-            <label
-              htmlFor="donor-email"
-              style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, display: "block", marginBottom: "0.3rem" }}
-            >
-              אימייל
-            </label>
-            <input
-              id="donor-email"
-              type="email"
-              value={donorEmail}
-              onChange={(e) => setDonorEmail(e.target.value)}
-              placeholder="email@..."
-              dir="ltr"
-              autoComplete="email"
-              style={inputStyle}
-            />
+            <label htmlFor="donor-email" className="df-label">אימייל (לקבלה)</label>
+            <input id="donor-email" type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="email@example.com" dir="ltr" autoComplete="email" className="df-input" style={{ textAlign: "right" }} />
           </div>
         </div>
       </div>
 
       {/* TOS */}
-      <label
-        htmlFor="donate-tos"
-        style={{
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "0.5rem",
-          fontFamily: fonts.body,
-          fontSize: "0.8rem",
-          lineHeight: 1.6,
-          color: colors.textMuted,
-          cursor: "pointer",
-        }}
-      >
-        <input
-          id="donate-tos"
-          type="checkbox"
-          checked={tosAccepted}
-          onChange={(e) => setTosAccepted(e.target.checked)}
-          style={{ marginTop: 3, width: 16, height: 16, accentColor: colors.goldDark, flexShrink: 0 }}
-        />
+      <label htmlFor="donate-tos" className="df-tos">
+        <input id="donate-tos" type="checkbox" checked={tosAccepted} onChange={(e) => setTosAccepted(e.target.checked)} />
         <span>
           אני מאשר/ת את{" "}
-          <a
-            href="/terms"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ color: colors.goldDark, textDecoration: "underline" }}
-          >
-            תקנון האתר
-          </a>{" "}
+          <a href="/terms" target="_blank" rel="noopener noreferrer">תקנון האתר</a>{" "}
           ומדיניות הפרטיות, ואני מעל גיל 18.
         </span>
       </label>
 
-      {/* Error */}
       {paymentError && (
-        <div
-          role="alert"
-          style={{
-            padding: "0.75rem 1rem",
-            borderRadius: radii.md,
-            background: "rgba(220,38,38,0.07)",
-            border: "1px solid rgba(220,38,38,0.2)",
-            fontFamily: fonts.body,
-            fontSize: "0.85rem",
-            color: "#b91c1c",
-            textAlign: "center",
-          }}
-        >
-          {paymentError}
-        </div>
+        <div role="alert" className="df-error">{paymentError}</div>
       )}
 
-      {/* CTA */}
-      <button
-        type="button"
-        onClick={handleDonate}
-        disabled={ctaDisabled}
-        style={{
-          width: "100%",
-          padding: "1.1rem",
-          borderRadius: radii.lg,
-          border: "none",
-          background: ctaDisabled ? "rgba(139,111,71,0.3)" : gradients.goldButton,
-          color: "white",
-          fontFamily: fonts.accent,
-          fontWeight: 800,
-          fontSize: "1.1rem",
-          cursor: ctaDisabled ? "not-allowed" : "pointer",
-          boxShadow: ctaDisabled ? "none" : shadows.goldGlow,
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.5rem",
-          letterSpacing: "0.01em",
-          transition: "all 0.15s",
-        }}
-      >
-        {paymentLoading ? (
-          <><Loader2 size={18} className="animate-spin" aria-hidden="true" />מעבד תשלום...</>
-        ) : !paymentReady ? (
-          <><Loader2 size={18} className="animate-spin" aria-hidden="true" />טוען מערכת תשלום...</>
-        ) : (
-          <><Heart size={18} fill="currentColor" aria-hidden="true" />
-            תרומה מאובטחת — {amount.toLocaleString("he-IL")}₪{recurring ? " לחודש" : ""}
-          </>
-        )}
+      <button type="button" onClick={handleDonate} disabled={ctaDisabled} className="df-cta">
+        {paymentLoading ? "מעבד תשלום…"
+          : !paymentReady ? "טוען מערכת תשלום…"
+          : `לתרומה מאובטחת · ${amount.toLocaleString("he-IL")} ₪${recurring ? " לחודש" : ""}`}
       </button>
 
-      <p
-        style={{
-          textAlign: "center",
-          fontFamily: fonts.body,
-          fontSize: "0.72rem",
-          color: colors.textSubtle,
-          margin: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.4rem",
-          flexWrap: "wrap",
-        }}
-      >
-        <ShieldCheck size={12} aria-hidden="true" />
-        סליקה מאובטחת · קבלה מיידית למייל · מוכר לזיכוי מס לפי סעיף 46 · עמותת מכלל יופי (ע"ר)
+      <p className="df-trust">
+        סליקה מאובטחת · קבלה מיידית למייל · מוכר לזיכוי מס לפי סעיף 46 · עמותת מכלל יופי (ע״ר)
       </p>
     </div>
   );
 }
 
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  padding: "0.7rem 0.9rem",
-  borderRadius: radii.md,
-  border: `1.5px solid ${colors.parchmentDeep}`,
-  background: "white",
-  fontFamily: fonts.body,
-  fontSize: "0.92rem",
-  color: colors.textDark,
-  outline: "none",
-  boxSizing: "border-box",
-};
+function Kicker({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.85rem" }}>
+      <span aria-hidden="true" style={{ width: 26, height: 1, background: C.gold, opacity: 0.7 }} />
+      <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.2em", color: C.goldDeep }}>
+        {children}
+      </span>
+    </div>
+  );
+}
+
+function FormStyles() {
+  return (
+    <style>{`
+      .df {
+        background: ${C.paper};
+        border: 1px solid ${C.line};
+        border-radius: 4px;
+        padding: 2.5rem 2.25rem;
+      }
+      .df-label { display: block; font-family: ${fonts.body}; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; color: ${C.ink42}; margin-bottom: 0.5rem; }
+      .df-tab { background: none; border: none; padding: 0 0 0.45rem; font-family: ${fonts.body}; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: color 0.3s ${EASE}, border-color 0.3s ${EASE}; }
+      .df-chip { padding: 0.85rem 0.5rem; border: 1px solid; border-radius: 3px; font-family: ${fonts.display}; font-weight: 700; font-size: 1.15rem; cursor: pointer; transition: background 0.25s ${EASE}, color 0.25s ${EASE}, border-color 0.25s ${EASE}; }
+      .df-chip:hover { border-color: ${C.ink}; }
+      .df-pill { padding: 0.4rem 0.9rem; border: 1px solid; border-radius: 999px; font-family: ${fonts.body}; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.25s ${EASE}; }
+      .df-input { width: 100%; box-sizing: border-box; border: none; border-bottom: 1px solid ${C.line}; background: transparent; padding: 0.5rem 0; font-family: ${fonts.body}; font-size: 1rem; color: ${C.ink}; outline: none; transition: border-color 0.3s ${EASE}; }
+      .df-input::placeholder { color: ${C.ink42}; }
+      .df-input:focus { border-bottom-color: ${C.gold}; }
+      .df-tos { display: flex; align-items: flex-start; gap: 0.6rem; font-family: ${fonts.body}; font-size: 0.82rem; line-height: 1.6; color: ${C.ink62}; cursor: pointer; margin-bottom: 1.5rem; }
+      .df-tos input { margin-top: 3px; width: 15px; height: 15px; accent-color: ${C.gold}; flex-shrink: 0; }
+      .df-tos a { color: ${C.goldDeep}; text-underline-offset: 3px; }
+      .df-error { padding: 0.75rem 1rem; border: 1px solid rgba(176,58,46,0.3); border-radius: 3px; background: rgba(176,58,46,0.06); font-family: ${fonts.body}; font-size: 0.85rem; color: #9c2c22; text-align: center; margin-bottom: 1.25rem; }
+      .df-cta { width: 100%; padding: 1.15rem; border: none; border-radius: 3px; background: ${C.gold}; color: ${C.cream}; font-family: ${fonts.body}; font-weight: 700; font-size: 1.02rem; letter-spacing: 0.02em; cursor: pointer; transition: background 0.3s ${EASE}, transform 0.3s ${EASE}; }
+      .df-cta:hover:not(:disabled) { background: ${C.ink}; }
+      .df-cta:disabled { background: ${C.creamDeep}; color: ${C.ink42}; cursor: not-allowed; }
+      .df-trust { text-align: center; font-family: ${fonts.body}; font-size: 0.7rem; line-height: 1.6; color: ${C.ink42}; margin: 1rem 0 0; }
+      .df :focus-visible { outline: 2px solid ${C.gold}; outline-offset: 3px; }
+    `}</style>
+  );
+}

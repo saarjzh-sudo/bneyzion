@@ -1,31 +1,21 @@
 /**
- * /design-donate — Donation page, redesign v5 (warm bet-midrash edition).
+ * /design-donate — Donation page, editorial redesign (v7).
  *
- * A real request from a house of Torah study — not a sales page. Illuminated,
- * inviting, human: a video-lit hero, real photos of Rav Yoav, real learner
- * testimonials from the weekly-chapter program, and the Saadia memorial.
+ * A disciplined, award-level pass: typography as architecture (monumental
+ * Hebrew display over cinematic scenery), one restrained gold accent, hairline
+ * craft, asymmetric composition, custom-eased reveals. No gradient-spam, no
+ * gimmick motion, no decorative icons. Voice + copy by Saar.
  *
- * Structure:
- *   sticky join-bar → video hero → proof strip → impact tiers (click-to-fund)
- *   → story + Rav Yoav photo / sticky live form → Rav Yoav reel → why (3) →
- *   testimonials → Saadia memorial → transparency → FAQ → warm final CTA.
- *
- * Everything real: DonateForm wires to Grow; proof strip + recent donors read
- * live Supabase. Copy voice + memorial by Saar. RTL, keyboard/SR friendly,
- * prefers-reduced-motion respected.
+ * Real throughout: DonateForm → Grow; proof strip + recent donors → Supabase.
  */
 import { useEffect, useState } from "react";
-import {
-  Heart, Flame, BookOpen, Users, Mic, ShieldCheck, Award, CheckCircle2,
-  ArrowLeft, Plus, ChevronDown, Quote, DoorOpen,
-} from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
-import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useRecentDonations } from "@/hooks/useDonations";
 import DonateForm from "@/components/donate/DonateForm";
 import { useScrollReveal } from "@/components/donate/useScrollReveal";
 import { useDonationStats } from "@/components/donate/useDonationStats";
+import { C, EASE, fonts } from "@/components/donate/theme";
 import {
   IMPACT_TIERS, ALLOCATION, DONATE_FAQS, WHY_CARDS, TESTIMONIALS, IMAGES,
 } from "@/components/donate/donateData";
@@ -35,32 +25,66 @@ import type { ImpactTier } from "@/components/donate/donateData";
 // Helpers
 // ───────────────────────────────────────────────────────────
 
-function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" });
-}
+const scrollTo = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "center" });
 const scrollToForm = () => scrollTo("donate-form");
 
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
-  const hours = Math.floor(diff / 3600000);
-  if (hours < 1) return "לפני דקות";
-  if (hours < 24) {
-    if (hours === 1) return "לפני שעה";
-    if (hours === 2) return "לפני שעתיים";
-    return `לפני ${hours} שעות`;
-  }
-  const days = Math.floor(hours / 24);
-  if (days === 1) return "לפני יום";
-  if (days === 2) return "לפני יומיים";
-  return `לפני ${days} ימים`;
+  const h = Math.floor(diff / 3600000);
+  if (h < 1) return "לפני דקות";
+  if (h < 24) return h === 1 ? "לפני שעה" : h === 2 ? "לפני שעתיים" : `לפני ${h} שעות`;
+  const d = Math.floor(h / 24);
+  return d === 1 ? "לפני יום" : d === 2 ? "לפני יומיים" : `לפני ${d} ימים`;
 }
 
-const typeLabels: Record<string, string> = {
-  iluy_neshama: "לעילוי נשמת",
-  refua: "לרפואת",
-  simcha: "לכבוד",
-  regular: "",
-};
+const typeLabels: Record<string, string> = { iluy_neshama: "לעילוי נשמת", refua: "לרפואת", simcha: "לכבוד", regular: "" };
+
+// ───────────────────────────────────────────────────────────
+// Primitives
+// ───────────────────────────────────────────────────────────
+
+function Kicker({ children, on = "light", center = false }: { children: React.ReactNode; on?: "light" | "dark"; center?: boolean }) {
+  const color = on === "dark" ? C.gold : C.goldDeep;
+  return (
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.7rem", marginBottom: "1.4rem", justifyContent: center ? "center" : "flex-start" }}>
+      <span aria-hidden="true" style={{ width: 30, height: 1, background: color, opacity: 0.7 }} />
+      <span style={{ fontFamily: fonts.body, fontSize: "0.74rem", fontWeight: 700, letterSpacing: "0.24em", color }}>{children}</span>
+    </div>
+  );
+}
+
+function Reveal({ children, delay = 0, className = "", style }: { children: React.ReactNode; delay?: number; className?: string; style?: React.CSSProperties }) {
+  const { ref, visible } = useScrollReveal();
+  return (
+    <div ref={ref as any} className={`rv ${visible ? "in" : ""} ${className}`} style={{ ...style, transitionDelay: `${delay}ms` }}>
+      {children}
+    </div>
+  );
+}
+
+function PrimaryBtn({ children, onClick, dark = false }: { children: React.ReactNode; onClick: () => void; dark?: boolean }) {
+  return (
+    <button type="button" onClick={onClick} className={`btn-primary ${dark ? "on-dark" : ""}`}>
+      {children}
+    </button>
+  );
+}
+
+function TextLink({ children, onClick, on = "light" }: { children: React.ReactNode; onClick: () => void; on?: "light" | "dark" }) {
+  return (
+    <button type="button" onClick={onClick} className={`text-link ${on === "dark" ? "on-dark" : ""}`}>
+      {children}
+    </button>
+  );
+}
+
+function H2({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
+  return (
+    <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(2rem, 4vw, 3.1rem)", lineHeight: 1.08, letterSpacing: "-0.02em", color: C.ink, margin: 0, textAlign: center ? "center" : "start", textWrap: "balance" as any }}>
+      {children}
+    </h2>
+  );
+}
 
 // ───────────────────────────────────────────────────────────
 // Main
@@ -69,219 +93,85 @@ const typeLabels: Record<string, string> = {
 export default function DesignPreviewDonate() {
   const [amount, setAmount] = useState<number>(180);
   const [showBar, setShowBar] = useState(false);
-
   const stats = useDonationStats();
   const { data: recentDonations } = useRecentDonations();
 
   useEffect(() => {
-    const onScroll = () => setShowBar(window.scrollY > 620);
+    const onScroll = () => setShowBar(window.scrollY > 680);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const pickTier = (tier: ImpactTier) => {
-    setAmount(tier.amount);
-    scrollToForm();
-  };
+  const pickTier = (t: ImpactTier) => { setAmount(t.amount); scrollToForm(); };
 
   return (
     <DesignLayout sidebar={false}>
       <PageStyles />
 
-      {/* ── Sticky join bar ──────────────────────────── */}
-      <div
-        className="donate-sticky-bar"
-        dir="rtl"
-        style={{
-          position: "fixed", insetInlineStart: 0, insetInlineEnd: 0, bottom: 0, zIndex: 60,
-          transform: showBar ? "translateY(0)" : "translateY(130%)",
-          transition: "transform 0.35s ease",
-          background: "rgba(26,39,68,0.97)", backdropFilter: "blur(8px)",
-          borderTop: `1px solid rgba(196,162,101,0.35)`,
-          padding: "0.7rem 1.25rem",
-          display: "flex", alignItems: "center", justifyContent: "center", gap: "1rem", flexWrap: "wrap",
-        }}
-      >
-        <div style={{ textAlign: "center" }}>
-          <div style={{ fontFamily: fonts.body, fontSize: "0.92rem", color: "rgba(255,255,255,0.9)", fontWeight: 600 }}>
-            התנ"ך פתוח לכולם — בזכות השותפים שלנו
-          </div>
-          <div style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: "rgba(255,255,255,0.55)" }}>
-            סליקה מאובטחת · מוכר לזיכוי מס סעיף 46
-          </div>
+      {/* Sticky bar */}
+      <div className="sticky-bar" dir="rtl" style={{ transform: showBar ? "translateY(0)" : "translateY(130%)" }}>
+        <div>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: C.onDark, fontWeight: 600 }}>התנ״ך פתוח לכולם — בזכות השותפים שלנו</div>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: C.onDark45 }}>סליקה מאובטחת · מוכר לזיכוי מס סעיף 46</div>
         </div>
-        <button
-          type="button"
-          onClick={scrollToForm}
-          style={{
-            padding: "0.6rem 1.6rem", borderRadius: radii.pill, border: "none",
-            background: gradients.goldButton, color: "white",
-            fontFamily: fonts.accent, fontWeight: 800, fontSize: "0.98rem", cursor: "pointer",
-            display: "inline-flex", alignItems: "center", gap: "0.4rem", whiteSpace: "nowrap",
-          }}
-        >
-          <Heart size={15} fill="currentColor" aria-hidden="true" /> אני מצטרף
-        </button>
+        <button type="button" onClick={scrollToForm} className="btn-primary">לתרומה</button>
       </div>
 
-      {/* ── Video hero ───────────────────────────────── */}
-      <VideoHero />
-
-      {/* ── Proof strip ──────────────────────────────── */}
+      <Hero />
       <ProofStrip stats={stats} />
-
-      {/* ── Impact tiers ─────────────────────────────── */}
       <ImpactSection amount={amount} onPick={pickTier} />
 
-      {/* ── Story + form ─────────────────────────────── */}
-      <section style={{ background: colors.parchment, padding: "4.5rem 2rem 5rem" }} dir="rtl">
-        <div
-          className="donate-grid"
-          style={{
-            maxWidth: 1120, margin: "0 auto", display: "grid",
-            gridTemplateColumns: "1fr minmax(360px, 420px)", gap: "3.5rem", alignItems: "start",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: "2.75rem" }}>
-            <StoryWithImage />
-            <WhySection />
-          </div>
-
+      {/* Story + sticky form */}
+      <section style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
+        <div className="donate-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr minmax(370px, 430px)", gap: "clamp(2.5rem, 5vw, 5rem)", alignItems: "start" }}>
+          <Story />
           <div className="donate-form-col" style={{ position: "sticky", top: "5.5rem" }}>
             <DonateForm amount={amount} onAmount={setAmount} source="donate-page" />
           </div>
         </div>
       </section>
 
-      {/* ── Testimonials ─────────────────────────────── */}
-      <TestimonialsSection />
-
-      {/* ── Saadia memorial ──────────────────────────── */}
-      <MemorialSaadia />
-
-      {/* ── Transparency ─────────────────────────────── */}
-      <TransparencySection />
-
-      {/* ── Recent donors (real) ─────────────────────── */}
-      <RecentDonorsSection donations={recentDonations} />
-
-      {/* ── FAQ ──────────────────────────────────────── */}
-      <FaqSection />
-
-      {/* ── Final CTA ────────────────────────────────── */}
+      <WhySection />
+      <Testimonials />
+      <Memorial />
+      <Transparency />
+      <RecentDonors donations={recentDonations} />
+      <Faq />
       <FinalCta />
     </DesignLayout>
   );
 }
 
 // ───────────────────────────────────────────────────────────
-// Video hero
+// Hero — monumental type over moving scenery (signature)
 // ───────────────────────────────────────────────────────────
 
-function VideoHero() {
+function Hero() {
   return (
-    <section
-      style={{ position: "relative", overflow: "hidden", minHeight: "82vh", display: "flex", flexDirection: "column", justifyContent: "center" }}
-      dir="rtl"
-    >
-      {/* Illuminated moving scenery */}
-      <video
-        autoPlay muted loop playsInline aria-hidden="true"
-        className="hero-video"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", background: colors.navyDeep }}
-      >
+    <section className="hero" dir="rtl">
+      <video autoPlay muted loop playsInline aria-hidden="true" className="hero-video">
         <source src={IMAGES.heroVideo} type="video/mp4" />
       </video>
-      {/* Lighter overlay — let the scenery breathe — + radial focus behind the text */}
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(20,16,10,0.34) 0%, rgba(26,30,44,0.24) 42%, rgba(20,16,10,0.5) 100%)" }} />
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 55% at 50% 52%, rgba(15,12,8,0.42), transparent 75%)" }} />
-      {/* Drifting gold aurora */}
-      <Ambient variant="dark" />
-      {/* Soft fade into the cream page below */}
-      <div aria-hidden="true" style={{ position: "absolute", insetInline: 0, bottom: 0, height: 180, background: `linear-gradient(to top, ${colors.parchment}, transparent)`, zIndex: 1 }} />
+      {/* Directional scrim — darker toward the reading side (right) + base darken */}
+      <div aria-hidden="true" className="hero-scrim-1" />
+      <div aria-hidden="true" className="hero-scrim-2" />
+      <div aria-hidden="true" className="hero-fade-bottom" />
 
-      <div style={{ position: "relative", zIndex: 2, maxWidth: 880, margin: "0 auto", padding: "6rem 2rem 5.5rem", textAlign: "center", color: "white" }}>
-        <span
-          className="hero-fade hero-fade-1"
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "0.45rem",
-            padding: "0.3rem 1rem", borderRadius: radii.pill,
-            border: `1px solid rgba(232,213,160,0.5)`, color: colors.goldShimmer,
-            fontFamily: fonts.body, fontSize: "0.75rem", fontWeight: 700,
-            letterSpacing: "0.14em", marginBottom: "1.5rem",
-            background: "rgba(20,16,10,0.25)", backdropFilter: "blur(4px)",
-          }}
-        >
-          <span className="pulse-dot" aria-hidden="true" /> שותפים לבית התנ"ך
-        </span>
-
-        <h1
-          className="hero-fade hero-fade-2"
-          style={{
-            fontFamily: fonts.display, fontWeight: 900,
-            fontSize: "clamp(2.4rem, 5.4vw, 4rem)", lineHeight: 1.12,
-            letterSpacing: "-0.01em",
-            margin: "0 0 1.4rem", color: "white",
-            textShadow: "0 4px 34px rgba(0,0,0,0.45)",
-          }}
-        >
-          פותחים את התנ"ך
-          <br />
-          <span className="hero-gold-shimmer">לכל בית בישראל</span>
-        </h1>
-
-        <p
-          className="hero-fade hero-fade-3"
-          style={{
-            fontFamily: fonts.display, fontStyle: "italic", fontWeight: 700,
-            fontSize: "clamp(1.15rem, 2.4vw, 1.55rem)", lineHeight: 1.55,
-            color: colors.goldShimmer, margin: "0 auto 1.5rem", maxWidth: 620,
-            textShadow: "0 2px 18px rgba(0,0,0,0.4)",
-          }}
-        >
-          התורה לא צריכה להיעצר בשער.
-          <br />
-          היא צריכה להיות פתוחה לכל מי שמבקש ללמוד.
-        </p>
-
-        <p
-          className="hero-fade hero-fade-4"
-          style={{
-            fontFamily: fonts.body, fontSize: "clamp(1rem, 1.8vw, 1.12rem)",
-            lineHeight: 1.85, color: "rgba(255,255,255,0.82)",
-            margin: "0 auto 2.25rem", maxWidth: 580, textShadow: "0 1px 12px rgba(0,0,0,0.5)",
-          }}
-        >
-          מאחורי כל שיעור באתר יש אנשים שעובדים: רבנים, עורכים, מקליטים, מתמללים,
-          מאיירים ומפתחים. התרומה שלכם עוזרת לעוד שיעור לעלות לאוויר — ולהישאר
-          פתוח לכל עם ישראל.
-        </p>
-
-        <div className="hero-fade hero-fade-5" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-          <button
-            type="button"
-            onClick={scrollToForm}
-            className="cta-glow"
-            style={{
-              padding: "1rem 2.6rem", borderRadius: radii.pill, border: "none",
-              background: gradients.goldButton, color: "white",
-              fontFamily: fonts.accent, fontWeight: 800, fontSize: "1.15rem",
-              cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.5rem",
-            }}
-          >
-            <Heart size={18} fill="currentColor" aria-hidden="true" /> אני רוצה להיות שותף
-          </button>
-          <button
-            type="button"
-            onClick={() => scrollTo("impact")}
-            style={{
-              background: "none", border: "none", cursor: "pointer",
-              fontFamily: fonts.body, fontSize: "0.9rem", color: "rgba(255,255,255,0.8)",
-              display: "inline-flex", alignItems: "center", gap: "0.35rem",
-            }}
-          >
-            מה התרומה שלי בונה? <ChevronDown size={15} aria-hidden="true" />
-          </button>
+      <div className="hero-inner">
+        <div className="hero-copy">
+          <div className="hero-fade-up d1"><Kicker on="dark">שותפים לבית התנ״ך</Kicker></div>
+          <h1 className="hero-title hero-fade-up d2">
+            פותחים את התנ״ך
+            <span className="hero-title-gold">לכל בית בישראל</span>
+          </h1>
+          <p className="hero-lead hero-fade-up d3">
+            מאחורי כל שיעור באתר יש אנשים שעובדים — רבנים, עורכים, מקליטים ומאיירים.
+            התרומה שלכם עוזרת לעוד שיעור לעלות לאוויר, ולהישאר פתוח לכל עם ישראל.
+          </p>
+          <div className="hero-actions hero-fade-up d4">
+            <PrimaryBtn onClick={scrollToForm} dark>להיות שותף</PrimaryBtn>
+            <TextLink onClick={() => scrollTo("impact")} on="dark">מה התרומה בונה ↓</TextLink>
+          </div>
         </div>
       </div>
     </section>
@@ -289,118 +179,69 @@ function VideoHero() {
 }
 
 // ───────────────────────────────────────────────────────────
-// Proof strip
+// Proof strip — editorial stat row
 // ───────────────────────────────────────────────────────────
 
 function ProofStrip({ stats }: { stats: ReturnType<typeof useDonationStats> }) {
-  const { ref, visible } = useScrollReveal();
+  const items = [
+    { v: "11,000+", l: "שיעורים ותכנים" },
+    { v: "200+", l: "רבנים ומרצים" },
+    { v: "1,300+", l: "סדרות לימוד" },
+    stats.ready && stats.donorCount > 0
+      ? { v: `${stats.donorCount.toLocaleString("he-IL")}+`, l: "שותפים שהצטרפו" }
+      : { v: "פתוח", l: "בלי מנוי ובלי חומת תשלום" },
+  ];
   return (
-    <div
-      ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""}`}
-      style={{ background: "white", borderBottom: `1px solid ${colors.parchmentDeep}`, padding: "1.85rem 2rem" }}
-      dir="rtl"
-    >
-      <div
-        style={{
-          maxWidth: 1000, margin: "0 auto", display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1.5rem", textAlign: "center",
-        }}
-      >
-        <Stat icon={<BookOpen size={20} />} value="+11,000" label="שיעורים ותכנים פתוחים" />
-        <Stat icon={<Users size={20} />} value="+200" label="רבנים ומרצים" />
-        <Stat icon={<Mic size={20} />} value="+1,300" label="סדרות לימוד" />
-        {stats.ready && stats.donorCount > 0 ? (
-          <Stat icon={<Heart size={20} />} value={`+${stats.donorCount.toLocaleString("he-IL")}`} label="שותפים שכבר הצטרפו" />
-        ) : (
-          <Stat icon={<DoorOpen size={20} />} value="פתוח לכולם" label="בלי מנוי ובלי חומת תשלום" />
-        )}
-      </div>
-    </div>
+    <section style={{ background: C.paper, borderBottom: `1px solid ${C.line}` }} dir="rtl">
+      <Reveal className="proof-row">
+        {items.map((it, i) => (
+          <div key={i} className="proof-item">
+            <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.7rem, 3.2vw, 2.6rem)", color: C.ink, lineHeight: 1, letterSpacing: "-0.02em" }}>{it.v}</div>
+            <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: C.ink62, marginTop: "0.5rem" }}>{it.l}</div>
+          </div>
+        ))}
+      </Reveal>
+    </section>
   );
 }
 
 // ───────────────────────────────────────────────────────────
-// Impact tiers
+// Impact tiers — refined cards, one inverted
 // ───────────────────────────────────────────────────────────
 
 function ImpactSection({ amount, onPick }: { amount: number; onPick: (t: ImpactTier) => void }) {
-  const { ref, visible } = useScrollReveal();
   return (
-    <section id="impact" style={{ position: "relative", overflow: "hidden", background: `linear-gradient(180deg, ${colors.parchment}, ${colors.parchmentDark})`, padding: "4.5rem 2rem" }} dir="rtl">
-      <Ambient variant="light" />
-      <div ref={ref} className={`reveal ${visible ? "is-visible" : ""}`} style={{ position: "relative", zIndex: 1, maxWidth: 1120, margin: "0 auto" }}>
-        <SectionHead eyebrow="מה התרומה בונה" title="כל סכום פותח עוד שער ללימוד" />
-        <p style={{ fontFamily: fonts.body, fontSize: "1.05rem", lineHeight: 1.8, color: colors.textMid, textAlign: "center", maxWidth: 640, margin: "0 auto 2.75rem" }}>
-          בחרו את הסכום שמתאים לכם. כל תרומה הופכת לעוד שיעור, עוד סדרה, עוד אדם
-          שמתחבר לתנ"ך.
-        </p>
+    <section id="impact" style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
+      <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+        <Reveal style={{ maxWidth: 640, marginBottom: "3.5rem" }}>
+          <Kicker>מה התרומה בונה</Kicker>
+          <H2>כל סכום פותח עוד שער ללימוד</H2>
+          <p style={{ ...pStyle, marginTop: "1.25rem", marginBottom: 0 }}>
+            בחרו את הסכום שמתאים לכם — כל תרומה הופכת לעוד שיעור, עוד סדרה, עוד אדם שמתחבר לתנ״ך.
+          </p>
+        </Reveal>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(255px, 1fr))", gap: "1.25rem" }}>
-          {IMPACT_TIERS.map((tier) => {
-            const active = amount === tier.amount;
+        <div className="impact-grid">
+          {IMPACT_TIERS.map((t, i) => {
+            const active = amount === t.amount;
+            const inverted = !!t.highlight;
             return (
-              <button
-                key={tier.amount}
-                type="button"
-                onClick={() => onPick(tier)}
-                aria-pressed={active}
-                className="impact-card"
-                style={{
-                  textAlign: "right",
-                  background: tier.highlight
-                    ? "linear-gradient(160deg, #FFFDF8, rgba(196,162,101,0.12))"
-                    : "white",
-                  color: colors.textDark,
-                  borderRadius: radii.xl,
-                  padding: "1.75rem 1.5rem",
-                  border: active
-                    ? `2px solid ${colors.goldDark}`
-                    : tier.highlight
-                    ? `2px solid ${colors.goldLight}`
-                    : `1.5px solid rgba(139,111,71,0.16)`,
-                  boxShadow: tier.highlight ? shadows.goldGlowSoft : shadows.cardSoft,
-                  cursor: "pointer", position: "relative",
-                  display: "flex", flexDirection: "column", gap: "0.55rem",
-                }}
-              >
-                {tier.highlight && tier.tag && (
-                  <span
-                    style={{
-                      position: "absolute", top: -13, insetInlineEnd: 18,
-                      padding: "0.25rem 0.85rem", borderRadius: radii.pill,
-                      background: gradients.goldButton, color: "white",
-                      fontFamily: fonts.body, fontSize: "0.66rem", fontWeight: 800,
-                      letterSpacing: "0.06em", whiteSpace: "nowrap",
-                    }}
-                  >
-                    {tier.tag}
-                  </span>
-                )}
-
-                <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                  <span style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "1.9rem", color: colors.goldDark }}>
-                    {tier.amount.toLocaleString("he-IL")}₪
-                  </span>
-                  <span style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem" }}>
-                    {tier.name}
-                  </span>
-                </div>
-
-                <div style={{ fontFamily: fonts.body, fontSize: "0.9rem", lineHeight: 1.65, color: colors.textMuted }}>
-                  {tier.impact}
-                </div>
-
-                <span
-                  aria-hidden="true"
-                  style={{
-                    marginTop: "0.4rem", display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                    fontFamily: fonts.body, fontSize: "0.85rem", fontWeight: 700, color: colors.goldDark,
-                  }}
+              <Reveal key={t.amount} delay={(i % 3) * 80}>
+                <button
+                  type="button"
+                  onClick={() => onPick(t)}
+                  aria-pressed={active}
+                  className={`tier ${inverted ? "tier-hi" : ""} ${active ? "tier-active" : ""}`}
                 >
-                  {active ? "נבחר ✓" : `בחרו ${tier.amount.toLocaleString("he-IL")}₪`} <ArrowLeft size={14} />
-                </span>
-              </button>
+                  {inverted && t.tag && <span className="tier-tag">{t.tag}</span>}
+                  <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "2.6rem", lineHeight: 1, letterSpacing: "-0.02em", color: inverted ? C.gold : C.goldDeep }}>
+                    {t.amount.toLocaleString("he-IL")}<span style={{ fontSize: "1.4rem" }}> ₪</span>
+                  </div>
+                  <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.2rem", margin: "1rem 0 0.5rem", color: inverted ? C.cream : C.ink }}>{t.name}</div>
+                  <div style={{ fontFamily: fonts.body, fontSize: "0.92rem", lineHeight: 1.65, color: inverted ? C.onDark72 : C.ink62, flex: 1 }}>{t.impact}</div>
+                  <span className="tier-cta" style={{ color: inverted ? C.gold : C.goldDeep }}>{active ? "נבחר —" : "בחרו"} <span aria-hidden="true">←</span></span>
+                </button>
+              </Reveal>
             );
           })}
         </div>
@@ -410,152 +251,82 @@ function ImpactSection({ amount, onPick }: { amount: number; onPick: (t: ImpactT
 }
 
 // ───────────────────────────────────────────────────────────
-// Story + Rav Yoav image
+// Story + Rav Yoav photo (asymmetric)
 // ───────────────────────────────────────────────────────────
 
-function StoryWithImage() {
-  const { ref, visible } = useScrollReveal();
+function Story() {
   return (
-    <div ref={ref} className={`reveal ${visible ? "is-visible" : ""}`}>
-      <SectionHead eyebrow="הסיפור שלנו" title="למה אנחנו מבקשים את השותפות שלכם?" align="right" />
+    <Reveal>
+      <Kicker>הסיפור שלנו</Kicker>
+      <H2>למה אנחנו מבקשים<br />את השותפות שלכם?</H2>
 
-      {/* Rav Yoav photo */}
-      <figure style={{ margin: "0 0 1.75rem", borderRadius: 20, overflow: "hidden", border: `1px solid rgba(196,162,101,0.4)`, boxShadow: "0 18px 50px rgba(139,111,71,0.2)", position: "relative" }}>
-        <img
-          className="yoav-photo"
-          src={IMAGES.yoavTeaching}
-          alt="הרב יואב אוריאל אוחז בסט ספרי בני ציון — מאחורי כל שיעור עומדים אנשים"
-          loading="lazy"
-          style={{ width: "100%", display: "block" }}
-        />
-        <figcaption
-          style={{
-            position: "absolute", insetBlockEnd: 0, insetInline: 0,
-            background: "linear-gradient(to top, rgba(26,39,68,0.9), transparent)",
-            padding: "1.5rem 1.25rem 1rem", color: "white",
-          }}
-        >
-          <div style={{ fontFamily: fonts.body, fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", color: colors.goldShimmer, marginBottom: 3 }}>
-            מאחורי הקלעים
-          </div>
-          <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.05rem" }}>
-            יש פה אנשים אמיתיים שבונים תורה
-          </div>
-        </figcaption>
+      <figure className="yoav-figure">
+        <div className="yoav-frame">
+          <img className="yoav-photo" src={IMAGES.yoavTeaching} alt="הרב יואב אוריאל אוחז בסט ספרי בני ציון" loading="lazy" />
+        </div>
+        <figcaption>מאחורי כל שיעור עומדים אנשים אמיתיים שבונים תורה</figcaption>
       </figure>
 
-      <p style={pStyle}>
-        בני ציון נולדה מתוך אמונה פשוטה: התנ"ך הוא לא רק ספר של פעם. הוא הלב של
-        עם ישראל. הוא מספר לנו מי אנחנו, מאיפה באנו, לאן אנחנו הולכים — ואיך חיים
-        חיים של אמונה, אחריות ושליחות.
-      </p>
-      <p style={pStyle}>
-        בשנים האחרונות נבנה כאן בית גדול ללימוד תנ"ך: שיעורים, סדרות, ספרי מכלל
-        יופי, קורסים, תשובות לשאלות, וכלים למורים, הורים ולומדים. אבל כדי שכל זה
-        יישאר פתוח באמת — צריך להחזיק אותו.
-      </p>
-      <p style={pStyle}>
-        כל שיעור שעולה לאתר עובר דרך ארוכה: הכנה, צילום או הקלטה, עריכה, תמלול,
-        סידור, עיצוב, העלאה ותחזוקה. מבחוץ זה נראה פשוט. בפנים זו עבודה גדולה.
-      </p>
+      <p style={pStyle}>בני ציון נולדה מתוך אמונה פשוטה: התנ״ך הוא לא רק ספר של פעם. הוא הלב של עם ישראל — הוא מספר לנו מי אנחנו, מאיפה באנו ולאן אנחנו הולכים.</p>
+      <p style={pStyle}>בשנים האחרונות נבנה כאן בית גדול ללימוד תנ״ך: שיעורים, סדרות, ספרי מכלל יופי, קורסים, תשובות וכלים למורים, הורים ולומדים. אבל כדי שכל זה יישאר פתוח באמת — צריך להחזיק אותו.</p>
+      <p style={pStyle}>כל שיעור עובר דרך ארוכה: הכנה, הקלטה, עריכה, תמלול, עיצוב והעלאה. מבחוץ זה נראה פשוט. בפנים זו עבודה גדולה.</p>
+      <p style={{ ...pStyle, color: C.ink, fontWeight: 600 }}>יכולנו לסגור את התוכן מאחורי תשלום. לעשות מנוי. אבל בחרנו אחרת.</p>
+      <p style={pStyle}>התנ״ך שייך לעם ישראל — ולכן אנחנו רוצים שהוא יישאר פתוח לכל יהודי. ילד, מורה, חייל, הורה, וכל מי שמחפש שער להיכנס דרכו.</p>
 
-      <p style={{ ...pStyle, marginBottom: "0.4rem", fontWeight: 700, color: colors.textDark }}>
-        יכולנו לסגור את התוכן מאחורי תשלום. לעשות מנוי. לתת גישה רק למי שמשלם.
-      </p>
-      <p style={{ ...pStyle, fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.goldDark }}>
-        אבל בחרנו אחרת.
-      </p>
-
-      <p style={pStyle}>
-        התנ"ך שייך לעם ישראל. ולכן אנחנו רוצים שהוא יישאר פתוח לכל יהודי — ילד,
-        מורה, חייל, הורה, תלמיד ישיבה, אישה שלומדת בבית, וכל מי שמחפש שער להיכנס
-        דרכו.
-      </p>
-
-      <div style={{ borderInlineStart: `3px solid ${colors.goldDark}`, paddingInlineStart: "1.1rem", margin: "1.5rem 0 0" }}>
-        <p style={{ ...pStyle, margin: 0, fontFamily: fonts.display, fontStyle: "italic", fontWeight: 700, color: colors.textDark, fontSize: "1.1rem" }}>
-          התרומה שלכם היא לא "תרומה לאתר". היא עוד שיעור שילד יפגוש. עוד סדרה
-          שמורה ילמד ממנה. עוד אדם שיפתח תנ"ך וירגיש שהוא נכנס הביתה.
-        </p>
-      </div>
-    </div>
+      <blockquote className="pull-quote">
+        התרומה שלכם היא לא ״תרומה לאתר״. היא עוד שיעור שילד יפגוש. עוד אדם שיפתח תנ״ך וירגיש שהוא נכנס הביתה.
+      </blockquote>
+    </Reveal>
   );
 }
+
+// ───────────────────────────────────────────────────────────
+// Why — three refined numbered columns
+// ───────────────────────────────────────────────────────────
 
 function WhySection() {
-  const { ref, visible } = useScrollReveal();
   return (
-    <div ref={ref} className={`reveal ${visible ? "is-visible" : ""}`} style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: "1rem" }}>
-      {WHY_CARDS.map((c) => (
-        <div key={c.n} style={{ background: "white", borderRadius: radii.lg, padding: "1.5rem 1.25rem", border: `1px solid rgba(139,111,71,0.12)`, boxShadow: shadows.cardSoft }}>
-          <div
-            style={{
-              width: 40, height: 40, borderRadius: radii.md, marginBottom: "0.85rem",
-              background: gradients.goldButton, color: "white",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontFamily: fonts.display, fontWeight: 900, fontSize: "1rem",
-            }}
-            aria-hidden="true"
-          >
-            {c.n}
-          </div>
-          <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: colors.textDark, margin: "0 0 0.4rem" }}>
-            {c.title}
-          </h3>
-          <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", lineHeight: 1.65, color: colors.textMuted, margin: 0 }}>
-            {c.desc}
-          </p>
-        </div>
-      ))}
-    </div>
+    <section style={{ background: C.paper, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "clamp(4rem, 7vw, 6rem) 2rem" }} dir="rtl">
+      <div className="why-grid" style={{ maxWidth: 1180, margin: "0 auto" }}>
+        {WHY_CARDS.map((c, i) => (
+          <Reveal key={c.n} delay={i * 90}>
+            <div className="why-col">
+              <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1rem", color: C.gold, letterSpacing: "0.1em" }}>{c.n}</div>
+              <div className="why-rule" />
+              <h3 style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.35rem", color: C.ink, margin: "0 0 0.75rem" }}>{c.title}</h3>
+              <p style={{ ...pStyle, margin: 0, fontSize: "0.95rem" }}>{c.desc}</p>
+            </div>
+          </Reveal>
+        ))}
+      </div>
+    </section>
   );
 }
 
 // ───────────────────────────────────────────────────────────
-// Testimonials (real, from weekly-chapter program)
+// Testimonials (real)
 // ───────────────────────────────────────────────────────────
 
-function TestimonialsSection() {
-  const { ref, visible } = useScrollReveal();
+function Testimonials() {
   return (
-    <section style={{ position: "relative", overflow: "hidden", background: `linear-gradient(180deg, ${colors.parchmentDark}, ${colors.parchment})`, padding: "4.5rem 2rem" }} dir="rtl">
-      <Ambient variant="light" />
-      <div ref={ref} className={`reveal ${visible ? "is-visible" : ""}`} style={{ position: "relative", zIndex: 1, maxWidth: 1080, margin: "0 auto" }}>
-        <SectionHead eyebrow="מה אומרים הלומדים" title="חוויות אמיתיות מהשטח" />
-        <div
-          style={{ marginTop: "2.5rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.25rem" }}
-        >
+    <section style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
+      <div style={{ maxWidth: 1180, margin: "0 auto" }}>
+        <Reveal style={{ textAlign: "center", marginBottom: "3.5rem" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}><Kicker center>מה אומרים הלומדים</Kicker></div>
+          <H2 center>חוויות אמיתיות מהשטח</H2>
+        </Reveal>
+        <div className="testi-grid">
           {TESTIMONIALS.map((t, i) => (
-            <figure
-              key={i}
-              style={{
-                margin: 0, position: "relative", background: "white", borderRadius: radii.xl,
-                padding: "2rem 1.75rem 1.5rem", border: `1px solid rgba(139,111,71,0.14)`,
-                boxShadow: shadows.cardSoft, display: "flex", flexDirection: "column", gap: "1.1rem",
-              }}
-            >
-              <Quote size={26} aria-hidden="true" style={{ color: "rgba(196,162,101,0.4)" }} />
-              <blockquote style={{ margin: 0, fontFamily: fonts.body, fontSize: "0.95rem", lineHeight: 1.8, color: colors.textMid, flex: 1 }}>
-                {t.text}
-              </blockquote>
-              <figcaption style={{ display: "flex", alignItems: "center", gap: "0.7rem" }}>
-                <span
-                  aria-hidden="true"
-                  style={{
-                    width: 42, height: 42, borderRadius: "50%", flexShrink: 0,
-                    background: gradients.goldButton, color: "white",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: fonts.display, fontWeight: 800, fontSize: "1.1rem",
-                  }}
-                >
-                  {t.name.charAt(0)}
-                </span>
-                <div>
-                  <div style={{ fontFamily: fonts.display, fontWeight: 700, color: colors.textDark }}>{t.name}</div>
-                  {t.role && <div style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: colors.goldDark }}>{t.role}</div>}
-                </div>
-              </figcaption>
-            </figure>
+            <Reveal key={i} delay={(i % 3) * 80}>
+              <figure className="testi">
+                <span aria-hidden="true" className="testi-mark">״</span>
+                <blockquote>{t.text}</blockquote>
+                <figcaption>
+                  <span className="testi-name">{t.name}</span>
+                  {t.role && <span className="testi-role">{t.role}</span>}
+                </figcaption>
+              </figure>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -564,77 +335,62 @@ function TestimonialsSection() {
 }
 
 // ───────────────────────────────────────────────────────────
-// Saadia memorial — light, quiet, dignified
+// Saadia memorial — quiet, dignified
 // ───────────────────────────────────────────────────────────
 
-function MemorialSaadia() {
-  const { ref, visible } = useScrollReveal();
+function Memorial() {
   return (
-    <section style={{ background: colors.parchment, padding: "4.5rem 2rem" }} dir="rtl">
-      <div
-        ref={ref}
-        className={`reveal ${visible ? "is-visible" : ""}`}
-        style={{
-          maxWidth: 720, margin: "0 auto", textAlign: "center",
-          background: "#FFFDF8", borderRadius: radii.xl, padding: "3.5rem 2.5rem",
-          border: `1px solid rgba(196,162,101,0.3)`, boxShadow: shadows.cardSoft,
-        }}
-      >
-        <Flame size={30} aria-hidden="true" style={{ color: colors.goldDark, marginBottom: "1.25rem" }} />
-        <span style={{ display: "block", fontFamily: fonts.body, fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.12em", color: colors.goldDark, marginBottom: "0.85rem" }}>
-          לזכרו
-        </span>
-        <h2 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.5rem, 2.8vw, 2rem)", color: colors.textDark, margin: "0 0 1.5rem" }}>
+    <section style={{ background: C.paper, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "clamp(4.5rem, 9vw, 8rem) 2rem" }} dir="rtl">
+      <Reveal style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
+        <span aria-hidden="true" className="mem-flame" />
+        <div style={{ display: "flex", justifyContent: "center" }}><Kicker center>לזכרו</Kicker></div>
+        <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.9rem, 3.6vw, 2.7rem)", color: C.ink, margin: "0 0 1.75rem", letterSpacing: "-0.02em" }}>
           ממשיכים את האור של סעדיה
         </h2>
-        <p style={{ fontFamily: fonts.body, fontSize: "1.02rem", lineHeight: 1.9, color: colors.textMid, margin: "0 auto 1.1rem", maxWidth: 560 }}>
-          האתר נבנה לזכרו של רס"ל במיל׳ סעדיה יעקב דרעי הי"ד, שנפל בהגנה על עם
-          ישראל.
+        <p style={{ ...pStyle, margin: "0 auto 1.2rem", maxWidth: 540, fontSize: "1.05rem" }}>
+          האתר נבנה לזכרו של רס״ל במיל׳ סעדיה יעקב דרעי הי״ד, שנפל בהגנה על עם ישראל.
         </p>
-        <p style={{ fontFamily: fonts.body, fontSize: "1.02rem", lineHeight: 1.9, color: colors.textMid, margin: "0 auto 1.1rem", maxWidth: 560 }}>
-          המשפחה ביקשה להמשיך את האור שלו בדרך חיה — לא רק בזיכרון, אלא בלימוד.
-          בבית של תורה. במקום שבו עוד ועוד יהודים פותחים תנ"ך, לומדים, שואלים,
-          מעמיקים וממשיכים את שרשרת החיים של עם ישראל.
+        <p style={{ ...pStyle, margin: "0 auto 1.75rem", maxWidth: 540, fontSize: "1.05rem" }}>
+          המשפחה ביקשה להמשיך את האור שלו בדרך חיה — לא רק בזיכרון, אלא בלימוד. במקום שבו עוד ועוד יהודים פותחים תנ״ך, לומדים וממשיכים את שרשרת החיים של עם ישראל.
         </p>
-        <p style={{ fontFamily: fonts.display, fontStyle: "italic", fontWeight: 700, fontSize: "1.1rem", lineHeight: 1.7, color: colors.textDark, margin: "0 auto", maxWidth: 520 }}>
+        <p style={{ fontFamily: fonts.display, fontStyle: "italic", fontWeight: 600, fontSize: "1.2rem", lineHeight: 1.6, color: C.ink, margin: "0 auto", maxWidth: 500 }}>
           כל שיעור שעולה לאתר בזכות התרומה שלכם הוא עוד אור קטן שממשיך להאיר.
         </p>
-      </div>
+      </Reveal>
     </section>
   );
 }
 
 // ───────────────────────────────────────────────────────────
-// Transparency (verbal)
+// Transparency — editorial ledger
 // ───────────────────────────────────────────────────────────
 
-function TransparencySection() {
-  const { ref, visible } = useScrollReveal();
+function Transparency() {
   return (
-    <section style={{ background: "white", padding: "4.5rem 2rem", borderTop: `1px solid ${colors.parchmentDeep}` }} dir="rtl">
-      <div ref={ref} className={`reveal ${visible ? "is-visible" : ""}`} style={{ maxWidth: 1000, margin: "0 auto" }}>
-        <SectionHead eyebrow="שקיפות" title="לאן הולכת התרומה?" />
-        <p style={{ fontFamily: fonts.body, fontSize: "1.05rem", lineHeight: 1.8, color: colors.textMid, textAlign: "center", maxWidth: 600, margin: "0 auto 2.75rem" }}>
-          התרומה שלכם הולכת ישירות לבניית התורה באתר:
-        </p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "1.25rem", marginBottom: "2.5rem" }}>
-          {ALLOCATION.map((item) => (
-            <div key={item.title} style={{ background: colors.parchment, borderRadius: radii.lg, padding: "1.5rem 1.35rem", border: `1px solid rgba(139,111,71,0.12)` }}>
-              <CheckCircle2 size={20} aria-hidden="true" style={{ color: colors.goldDark, marginBottom: "0.7rem" }} />
-              <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: colors.textDark, margin: "0 0 0.4rem" }}>
-                {item.title}
-              </h3>
-              <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", lineHeight: 1.6, color: colors.textMuted, margin: 0 }}>
-                {item.detail}
-              </p>
-            </div>
+    <section style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        <Reveal style={{ marginBottom: "3rem" }}>
+          <Kicker>שקיפות</Kicker>
+          <H2>לאן הולכת התרומה?</H2>
+        </Reveal>
+        <div>
+          {ALLOCATION.map((item, i) => (
+            <Reveal key={item.title} delay={i * 70}>
+              <div className="ledger-row">
+                <div className="ledger-idx">{String(i + 1).padStart(2, "0")}</div>
+                <div>
+                  <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.25rem", color: C.ink, marginBottom: "0.3rem" }}>{item.title}</div>
+                  <div style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: C.ink62, lineHeight: 1.6 }}>{item.detail}</div>
+                </div>
+              </div>
+            </Reveal>
           ))}
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: "1rem", maxWidth: 760, margin: "0 auto" }}>
-          <TrustCard icon={<ShieldCheck size={20} />} label="סליקה מאובטחת" sub="SSL / PCI" />
-          <TrustCard icon={<Award size={20} />} label="קבלה מיידית" sub="למייל שלכם" />
-          <TrustCard icon={<CheckCircle2 size={20} />} label="זיכוי מס סעיף 46" sub={'עמותת מכלל יופי (ע"ר)'} />
-        </div>
+        <Reveal style={{ marginTop: "2.5rem" }}>
+          <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: C.ink42, letterSpacing: "0.04em", textAlign: "center", margin: 0 }}>
+            תשלום מאובטח SSL · קבלה מיידית למייל · מוכר לזיכוי מס לפי סעיף 46 · עמותת מכלל יופי (ע״ר)
+          </p>
+        </Reveal>
       </div>
     </section>
   );
@@ -644,29 +400,22 @@ function TransparencySection() {
 // Recent donors (real)
 // ───────────────────────────────────────────────────────────
 
-function RecentDonorsSection({ donations }: { donations: ReturnType<typeof useRecentDonations>["data"] }) {
+function RecentDonors({ donations }: { donations: ReturnType<typeof useRecentDonations>["data"] }) {
   if (!donations || donations.length === 0) return null;
   return (
-    <section style={{ background: colors.parchment, padding: "0 2rem 4.5rem" }} dir="rtl">
-      <div style={{ maxWidth: 720, margin: "0 auto", background: "white", borderRadius: radii.xl, padding: "2rem", border: `1px solid rgba(139,111,71,0.1)`, boxShadow: shadows.cardSoft }}>
-        <h3 style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 1.25rem", textAlign: "center" }}>
-          שותפים שהצטרפו לאחרונה
-        </h3>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "0.75rem 1.5rem" }}>
+    <section style={{ background: C.paper, borderTop: `1px solid ${C.line}`, padding: "clamp(3.5rem, 6vw, 5rem) 2rem" }} dir="rtl">
+      <div style={{ maxWidth: 820, margin: "0 auto" }}>
+        <Reveal style={{ textAlign: "center", marginBottom: "2rem" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}><Kicker center>תודה</Kicker></div>
+          <h3 style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.5rem", color: C.ink, margin: 0 }}>שותפים שהצטרפו לאחרונה</h3>
+        </Reveal>
+        <div className="donors-grid">
           {donations.slice(0, 6).map((d) => (
-            <div key={d.id} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", fontSize: "0.88rem" }}>
-              <Heart size={14} style={{ color: colors.goldDark, marginTop: 2, flexShrink: 0 }} aria-hidden="true" />
-              <div style={{ flex: 1 }}>
-                <span style={{ fontFamily: fonts.display, fontWeight: 700, color: colors.textDark }}>{d.donor_name || "אנונימי"}</span>
-                <span style={{ color: colors.textMuted }}> תרמ/ה </span>
-                <span style={{ fontFamily: fonts.display, fontWeight: 800, color: colors.goldDark }}>₪{Number(d.amount).toLocaleString()}</span>
-                {d.dedication_name && (
-                  <span style={{ color: colors.textSubtle, fontSize: "0.78rem", display: "block" }}>
-                    {typeLabels[d.dedication_type]} {d.dedication_name}
-                  </span>
-                )}
-              </div>
-              <span style={{ fontSize: "0.72rem", color: colors.textSubtle, flexShrink: 0 }}>{timeAgo(d.created_at)}</span>
+            <div key={d.id} className="donor-row">
+              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.ink }}>{d.donor_name || "אנונימי"}</span>
+              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.goldDeep }}>{Number(d.amount).toLocaleString()} ₪</span>
+              {d.dedication_name && <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: C.ink42, gridColumn: "1 / -1" }}>{typeLabels[d.dedication_type]} {d.dedication_name}</span>}
+              <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: C.ink42, gridColumn: "1 / -1" }}>{timeAgo(d.created_at)}</span>
             </div>
           ))}
         </div>
@@ -676,237 +425,195 @@ function RecentDonorsSection({ donations }: { donations: ReturnType<typeof useRe
 }
 
 // ───────────────────────────────────────────────────────────
-// FAQ
+// FAQ — hairline accordion
 // ───────────────────────────────────────────────────────────
 
-function FaqSection() {
-  const { ref, visible } = useScrollReveal();
+function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section style={{ background: "white", padding: "4.5rem 2rem", borderTop: `1px solid ${colors.parchmentDeep}` }} dir="rtl">
-      <div ref={ref} className={`reveal ${visible ? "is-visible" : ""}`} style={{ maxWidth: 720, margin: "0 auto" }}>
-        <SectionHead eyebrow="שאלות נפוצות" title="כל מה שרציתם לדעת" />
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem", marginTop: "2rem" }}>
+    <section style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
+      <div style={{ maxWidth: 760, margin: "0 auto" }}>
+        <Reveal style={{ marginBottom: "2.5rem" }}>
+          <Kicker>שאלות נפוצות</Kicker>
+          <H2>כל מה שרציתם לדעת</H2>
+        </Reveal>
+        <Reveal>
           {DONATE_FAQS.map((faq, i) => {
             const isOpen = open === i;
             return (
-              <div key={i} style={{ background: colors.parchment, borderRadius: radii.lg, border: `1px solid rgba(139,111,71,0.14)`, overflow: "hidden" }}>
-                <button
-                  type="button"
-                  onClick={() => setOpen(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  aria-controls={`faq-panel-${i}`}
-                  id={`faq-q-${i}`}
-                  style={{
-                    width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between",
-                    gap: "1rem", padding: "1.15rem 1.4rem", background: "transparent", border: "none",
-                    cursor: "pointer", textAlign: "right",
-                    fontFamily: fonts.display, fontWeight: 700, fontSize: "1.05rem", color: colors.textDark,
-                  }}
-                >
-                  {faq.q}
-                  <Plus size={18} aria-hidden="true" style={{ flexShrink: 0, color: colors.goldDark, transform: isOpen ? "rotate(45deg)" : "rotate(0deg)", transition: "transform 0.2s" }} />
+              <div key={i} className="faq-item">
+                <button type="button" onClick={() => setOpen(isOpen ? null : i)} aria-expanded={isOpen} aria-controls={`faq-p-${i}`} id={`faq-q-${i}`} className="faq-q">
+                  <span>{faq.q}</span>
+                  <span aria-hidden="true" className="faq-sign" style={{ transform: isOpen ? "rotate(90deg)" : "none" }}>+</span>
                 </button>
-                <div id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-q-${i}`} hidden={!isOpen} style={{ padding: isOpen ? "0 1.4rem 1.3rem" : "0 1.4rem" }}>
-                  <p style={{ fontFamily: fonts.body, fontSize: "0.95rem", lineHeight: 1.8, color: colors.textMid, margin: 0 }}>{faq.a}</p>
+                <div id={`faq-p-${i}`} role="region" aria-labelledby={`faq-q-${i}`} hidden={!isOpen} className="faq-a">
+                  <p style={{ ...pStyle, margin: 0, fontSize: "0.98rem" }}>{faq.a}</p>
                 </div>
               </div>
             );
           })}
-        </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
 // ───────────────────────────────────────────────────────────
-// Final CTA — warm
+// Final CTA — scenery bookend
 // ───────────────────────────────────────────────────────────
 
 function FinalCta() {
-  const { ref, visible } = useScrollReveal();
   return (
-    <section
-      ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""}`}
-      style={{ position: "relative", overflow: "hidden", padding: "6rem 2rem", textAlign: "center", color: "white" }}
-      dir="rtl"
-    >
-      {/* Moving scenery bookend */}
-      <video
-        autoPlay muted loop playsInline aria-hidden="true"
-        className="hero-video"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", background: colors.navyDeep }}
-      >
+    <section className="final" dir="rtl">
+      <video autoPlay muted loop playsInline aria-hidden="true" className="hero-video">
         <source src={IMAGES.heroVideo} type="video/mp4" />
       </video>
-      {/* Elegant twilight overlay — soft, luminous, not muddy */}
-      <div aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(20,26,44,0.82) 0%, rgba(28,34,52,0.72) 55%, rgba(18,22,36,0.86) 100%)" }} />
-      <div aria-hidden="true" style={{ position: "absolute", insetInline: 0, top: 0, height: 160, background: `linear-gradient(to bottom, ${colors.parchment}, transparent)`, zIndex: 1 }} />
-      <Ambient variant="dark" />
-      <div style={{ maxWidth: 680, margin: "0 auto", position: "relative", zIndex: 2 }}>
-        <span style={{ display: "inline-block", padding: "0.3rem 1rem", borderRadius: radii.pill, border: `1px solid rgba(232,213,160,0.45)`, color: colors.goldShimmer, fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.12em", marginBottom: "1.5rem" }}>
-          הדלת פתוחה בזכותכם
-        </span>
-        <h2 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(2rem, 4.7vw, 3.15rem)", lineHeight: 1.22, letterSpacing: "-0.01em", margin: "0 0 1.5rem", textShadow: "0 3px 24px rgba(0,0,0,0.4)" }}>
-          תורה פתוחה לכולם —
-          <br />
-          מתחילה בשותפות שלכם
+      <div aria-hidden="true" className="final-scrim" />
+      <div aria-hidden="true" className="final-fade-top" />
+      <Reveal style={{ position: "relative", zIndex: 2, maxWidth: 720, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}><Kicker on="dark" center>הדלת פתוחה בזכותכם</Kicker></div>
+        <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(2.1rem, 5vw, 3.6rem)", lineHeight: 1.08, letterSpacing: "-0.02em", color: C.onDark, margin: "0 0 1.5rem", textWrap: "balance" as any }}>
+          תורה פתוחה לכולם —<br />מתחילה בשותפות שלכם
         </h2>
-        <p style={{ fontFamily: fonts.body, fontSize: "1.1rem", lineHeight: 1.85, color: "rgba(255,255,255,0.82)", margin: "0 auto 2.25rem", maxWidth: 500 }}>
-          תרומה אחת יכולה לבנות שיעור. הוראת קבע יכולה לבנות סדרה. שותפות קבועה
-          יכולה להחזיק בית שלם של תורה לדורות.
+        <p style={{ fontFamily: fonts.body, fontSize: "1.1rem", lineHeight: 1.8, color: C.onDark72, margin: "0 auto 2.5rem", maxWidth: 520 }}>
+          תרומה אחת יכולה לבנות שיעור. הוראת קבע יכולה לבנות סדרה. שותפות קבועה יכולה להחזיק בית שלם של תורה לדורות.
         </p>
-        <button
-          type="button"
-          onClick={scrollToForm}
-          className="cta-glow"
-          style={{
-            padding: "1rem 2.6rem", borderRadius: radii.pill, border: "none",
-            background: gradients.goldButton, color: "white",
-            fontFamily: fonts.accent, fontWeight: 800, fontSize: "1.15rem", cursor: "pointer",
-            display: "inline-flex", alignItems: "center", gap: "0.5rem",
-          }}
-        >
-          <Heart size={18} fill="currentColor" aria-hidden="true" /> אני מצטרף עכשיו
-        </button>
-      </div>
+        <PrimaryBtn onClick={scrollToForm} dark>אני מצטרף</PrimaryBtn>
+      </Reveal>
     </section>
   );
 }
 
 // ───────────────────────────────────────────────────────────
-// Shared bits
+// Shared
 // ───────────────────────────────────────────────────────────
 
-function SectionHead({ eyebrow, title, align = "center" }: { eyebrow: string; title: string; align?: "center" | "right" }) {
-  return (
-    <div style={{ textAlign: align, marginBottom: align === "center" ? "0.5rem" : "1.1rem" }}>
-      <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: fonts.body, fontSize: "0.75rem", fontWeight: 800, letterSpacing: "0.12em", color: colors.goldDark, marginBottom: "0.6rem" }}>
-        <span className="pulse-dot pulse-dot-gold" aria-hidden="true" /> {eyebrow}
-      </span>
-      <h2 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.5rem, 2.8vw, 2.05rem)", color: colors.textDark, margin: 0, lineHeight: 1.25 }}>
-        {title}
-      </h2>
-    </div>
-  );
-}
-
-function Stat({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.35rem" }}>
-      <span style={{ color: colors.goldDark }} aria-hidden="true">{icon}</span>
-      <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.55rem", color: colors.textDark, lineHeight: 1 }}>{value}</div>
-      <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, textAlign: "center" }}>{label}</div>
-    </div>
-  );
-}
-
-function TrustCard({ icon, label, sub }: { icon: React.ReactNode; label: string; sub: string }) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.35rem", padding: "1rem 0.75rem", background: colors.parchmentDark, borderRadius: radii.lg, textAlign: "center" }}>
-      <span style={{ color: colors.goldDark }} aria-hidden="true">{icon}</span>
-      <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", fontWeight: 700, color: colors.textDark }}>{label}</div>
-      <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle }}>{sub}</div>
-    </div>
-  );
-}
-
 const pStyle: React.CSSProperties = {
-  fontFamily: fonts.body, fontSize: "1rem", lineHeight: 1.85, color: colors.textMid, margin: "0 0 1.1rem",
+  fontFamily: fonts.body, fontSize: "1.0625rem", lineHeight: 1.75, color: C.ink62, margin: "0 0 1.15rem",
 };
 
 // ───────────────────────────────────────────────────────────
-// Ambient — slow-drifting aurora glows + fine grain (premium feel)
-// ───────────────────────────────────────────────────────────
-
-const GRAIN_URI =
-  "data:image/svg+xml;utf8," +
-  encodeURIComponent(
-    `<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.5'/></svg>`.replace(/%23/g, "#")
-  );
-
-/** variant "light" → soft gold/cream on cream; "dark" → warm gold glows on dark scenery. */
-function Ambient({ variant = "light" }: { variant?: "light" | "dark" }) {
-  const glows =
-    variant === "dark"
-      ? ["rgba(232,213,160,0.22)", "rgba(45,125,125,0.14)", "rgba(196,162,101,0.18)"]
-      : ["rgba(196,162,101,0.14)", "rgba(45,125,125,0.08)", "rgba(232,213,160,0.16)"];
-  return (
-    <div aria-hidden="true" style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      <span className="aurora aurora-1" style={{ background: `radial-gradient(circle, ${glows[0]}, transparent 70%)` }} />
-      <span className="aurora aurora-2" style={{ background: `radial-gradient(circle, ${glows[1]}, transparent 70%)` }} />
-      <span className="aurora aurora-3" style={{ background: `radial-gradient(circle, ${glows[2]}, transparent 70%)` }} />
-      <span className="grain" style={{ backgroundImage: `url("${GRAIN_URI}")`, opacity: variant === "dark" ? 0.09 : 0.05 }} />
-    </div>
-  );
-}
-
-// ───────────────────────────────────────────────────────────
-// Page styles
+// Styles
 // ───────────────────────────────────────────────────────────
 
 function PageStyles() {
   return (
     <style>{`
-      @keyframes donateFadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-      @keyframes donatePulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } }
-      @keyframes donateGlow { 0%,100% { box-shadow: 0 4px 24px rgba(196,162,101,0.35); } 50% { box-shadow: 0 6px 34px rgba(196,162,101,0.6); } }
-      @keyframes heroZoom { 0% { transform: scale(1.02); } 100% { transform: scale(1.14); } }
-      @keyframes auroraDrift1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(6%, 8%) scale(1.18); } }
-      @keyframes auroraDrift2 { 0%,100% { transform: translate(0,0) scale(1.1); } 50% { transform: translate(-8%, -6%) scale(1); } }
-      @keyframes auroraDrift3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(5%, -7%) scale(1.2); } }
-      @keyframes goldShimmer { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+      ::selection { background: ${C.gold}; color: ${C.cream}; }
 
-      .hero-fade { opacity: 0; animation: donateFadeUp 0.7s ease-out both; }
-      .hero-fade-1 { animation-delay: 0.1s; }
-      .hero-fade-2 { animation-delay: 0.22s; }
-      .hero-fade-3 { animation-delay: 0.34s; }
-      .hero-fade-4 { animation-delay: 0.46s; }
-      .hero-fade-5 { animation-delay: 0.58s; }
+      @keyframes heroZoom { from { transform: scale(1.03); } to { transform: scale(1.13); } }
+      @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
-      .hero-video { animation: heroZoom 26s ease-in-out infinite alternate; will-change: transform; }
+      .rv { opacity: 0; transform: translateY(32px); transition: opacity 0.9s ${EASE}, transform 0.9s ${EASE}; }
+      .rv.in { opacity: 1; transform: none; }
 
-      .hero-gold-shimmer {
-        background: linear-gradient(100deg, ${colors.goldShimmer}, #fff6df, ${colors.goldLight}, ${colors.goldShimmer});
-        background-size: 220% 100%;
-        -webkit-background-clip: text; background-clip: text;
-        -webkit-text-fill-color: transparent; color: transparent;
-        animation: goldShimmer 6s ease-in-out infinite;
+      /* Buttons */
+      .btn-primary { display: inline-block; padding: 0.95rem 2.1rem; border: none; border-radius: 3px; background: ${C.gold}; color: ${C.cream}; font-family: ${fonts.body}; font-weight: 700; font-size: 0.98rem; letter-spacing: 0.02em; cursor: pointer; transition: background 0.4s ${EASE}, transform 0.4s ${EASE}; }
+      .btn-primary:hover { background: ${C.ink}; transform: translateY(-2px); }
+      .btn-primary.on-dark:hover { background: ${C.cream}; color: ${C.ink}; }
+      .text-link { background: none; border: none; cursor: pointer; font-family: ${fonts.body}; font-size: 0.95rem; font-weight: 600; color: ${C.goldDeep}; padding: 0.5rem 0; position: relative; transition: color 0.3s ${EASE}; }
+      .text-link.on-dark { color: ${C.onDark}; }
+      .text-link:hover { color: ${C.gold}; }
+
+      /* Hero */
+      .hero { position: relative; overflow: hidden; min-height: 92vh; display: flex; align-items: flex-end; }
+      .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: ${C.ink}; animation: heroZoom 30s ${EASE} infinite alternate; will-change: transform; }
+      .hero-scrim-1 { position: absolute; inset: 0; background: linear-gradient(to left, rgba(20,15,8,0.78) 0%, rgba(20,15,8,0.38) 46%, rgba(20,15,8,0.08) 100%); }
+      .hero-scrim-2 { position: absolute; inset: 0; background: linear-gradient(to top, rgba(20,15,8,0.7) 0%, rgba(20,15,8,0.1) 40%, transparent 70%); }
+      .hero-fade-bottom { position: absolute; inset-inline: 0; bottom: 0; height: 120px; background: linear-gradient(to top, ${C.cream}, transparent); z-index: 1; }
+      .hero-inner { position: relative; z-index: 2; width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 2rem clamp(4rem, 9vh, 8rem); display: flex; justify-content: flex-start; }
+      .hero-copy { max-width: 720px; text-align: start; }
+      .hero-title { font-family: ${fonts.display}; font-weight: 800; font-size: clamp(2.9rem, 8.5vw, 6.4rem); line-height: 0.98; letter-spacing: -0.03em; color: ${C.onDark}; margin: 0 0 1.6rem; }
+      .hero-title-gold { display: block; color: ${C.gold}; }
+      .hero-lead { font-family: ${fonts.body}; font-size: clamp(1.05rem, 1.7vw, 1.22rem); line-height: 1.7; color: ${C.onDark72}; max-width: 540px; margin: 0 0 2.25rem; }
+      .hero-actions { display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+      .hero-fade-up { opacity: 0; animation: fadeUp 0.9s ${EASE} both; }
+      .hero-fade-up.d1 { animation-delay: 0.15s; }
+      .hero-fade-up.d2 { animation-delay: 0.3s; }
+      .hero-fade-up.d3 { animation-delay: 0.5s; }
+      .hero-fade-up.d4 { animation-delay: 0.7s; }
+
+      /* Proof */
+      .proof-row { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+      .proof-item { padding: 2.4rem 1.5rem; text-align: center; border-inline-start: 1px solid ${C.line}; }
+      .proof-item:first-child { border-inline-start: none; }
+
+      /* Impact */
+      .impact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+      .tier { position: relative; display: flex; flex-direction: column; text-align: start; background: ${C.paper}; border: 1px solid ${C.line}; border-radius: 4px; padding: 2rem 1.75rem; cursor: pointer; min-height: 230px; transition: transform 0.4s ${EASE}, border-color 0.4s ${EASE}; }
+      .tier:hover { transform: translateY(-4px); border-color: ${C.ink42}; }
+      .tier-active { border-color: ${C.gold}; box-shadow: 0 0 0 1px ${C.gold}; }
+      .tier-hi { background: ${C.ink}; border-color: ${C.ink}; }
+      .tier-hi.tier-active { box-shadow: 0 0 0 1px ${C.gold}; }
+      .tier-tag { position: absolute; top: -11px; inset-inline-start: 1.75rem; background: ${C.gold}; color: ${C.cream}; font-family: ${fonts.body}; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.25rem 0.8rem; border-radius: 2px; }
+      .tier-cta { margin-top: 1.25rem; font-family: ${fonts.body}; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em; display: inline-flex; gap: 0.4rem; }
+
+      /* Story */
+      .yoav-figure { margin: 2rem 0 2.5rem; }
+      .yoav-frame { border-radius: 4px; overflow: hidden; border: 1px solid ${C.line}; }
+      .yoav-photo { width: 100%; display: block; transition: transform 6s ${EASE}; will-change: transform; }
+      .yoav-frame:hover .yoav-photo { transform: scale(1.05); }
+      .yoav-figure figcaption { font-family: ${fonts.body}; font-size: 0.8rem; color: ${C.ink42}; margin-top: 0.85rem; letter-spacing: 0.02em; }
+      .pull-quote { margin: 2rem 0 0; padding-inline-start: 1.4rem; border-inline-start: 2px solid ${C.gold}; font-family: ${fonts.display}; font-style: italic; font-weight: 600; font-size: 1.35rem; line-height: 1.55; color: ${C.ink}; }
+
+      /* Why */
+      .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 4vw, 4rem); }
+      .why-rule { width: 100%; height: 1px; background: ${C.line}; margin: 1rem 0 1.4rem; }
+
+      /* Testimonials */
+      .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+      .testi { margin: 0; background: ${C.paper}; border: 1px solid ${C.line}; border-radius: 4px; padding: 2.25rem 1.9rem; display: flex; flex-direction: column; height: 100%; }
+      .testi-mark { font-family: ${fonts.display}; font-size: 3rem; line-height: 0.6; color: ${C.gold}; opacity: 0.5; }
+      .testi blockquote { margin: 1.25rem 0 1.5rem; font-family: ${fonts.body}; font-size: 0.98rem; line-height: 1.75; color: ${C.ink80}; flex: 1; }
+      .testi figcaption { display: flex; align-items: baseline; gap: 0.6rem; border-top: 1px solid ${C.line}; padding-top: 1.1rem; }
+      .testi-name { font-family: ${fonts.display}; font-weight: 700; color: ${C.ink}; }
+      .testi-role { font-family: ${fonts.body}; font-size: 0.76rem; color: ${C.goldDeep}; }
+
+      /* Memorial */
+      .mem-flame { display: block; width: 3px; height: 26px; margin: 0 auto 1.5rem; border-radius: 2px; background: linear-gradient(to top, ${C.goldDeep}, ${C.gold}); box-shadow: 0 0 16px rgba(169,132,63,0.6); }
+
+      /* Transparency */
+      .ledger-row { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: baseline; padding: 1.75rem 0; border-top: 1px solid ${C.line}; }
+      .ledger-row:last-child { border-bottom: 1px solid ${C.line}; }
+      .ledger-idx { font-family: ${fonts.display}; font-weight: 700; font-size: 1.1rem; color: ${C.gold}; letter-spacing: 0.05em; }
+
+      /* Donors */
+      .donors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem 3rem; }
+      .donor-row { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 0.75rem; align-items: baseline; padding-bottom: 0.9rem; border-bottom: 1px solid ${C.lineSoft}; }
+
+      /* FAQ */
+      .faq-item { border-bottom: 1px solid ${C.line}; }
+      .faq-item:first-child { border-top: 1px solid ${C.line}; }
+      .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.4rem 0.25rem; background: none; border: none; cursor: pointer; text-align: start; font-family: ${fonts.display}; font-weight: 700; font-size: 1.15rem; color: ${C.ink}; }
+      .faq-sign { flex-shrink: 0; font-family: ${fonts.body}; font-size: 1.4rem; font-weight: 400; color: ${C.gold}; transition: transform 0.35s ${EASE}; }
+      .faq-a { padding: 0 0.25rem 1.5rem; max-width: 92%; }
+
+      /* Final */
+      .final { position: relative; overflow: hidden; padding: clamp(5rem, 11vw, 9rem) 2rem; display: flex; align-items: center; }
+      .final-scrim { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(20,15,8,0.86) 0%, rgba(24,20,12,0.76) 55%, rgba(18,14,8,0.9) 100%); }
+      .final-fade-top { position: absolute; inset-inline: 0; top: 0; height: 120px; background: linear-gradient(to bottom, ${C.cream}, transparent); z-index: 1; }
+
+      /* Sticky bar */
+      .sticky-bar { position: fixed; inset-inline: 0; bottom: 0; z-index: 60; background: rgba(26,21,14,0.97); backdrop-filter: blur(8px); border-top: 1px solid ${C.gold}; padding: 0.85rem 1.5rem; display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; transition: transform 0.5s ${EASE}; }
+
+      /* Focus */
+      :focus-visible { outline: 2px solid ${C.gold}; outline-offset: 3px; }
+
+      @media (max-width: 900px) {
+        .impact-grid, .testi-grid, .why-grid { grid-template-columns: 1fr; }
+        .proof-row { grid-template-columns: repeat(2, 1fr); }
+        .proof-item:nth-child(-n+2) { border-block-end: 1px solid ${C.line}; }
+        .proof-item:nth-child(odd) { border-inline-start: none; }
+        .donors-grid { grid-template-columns: 1fr; }
       }
-
-      .aurora { position: absolute; border-radius: 50%; filter: blur(30px); will-change: transform; }
-      .aurora-1 { width: 46vw; height: 46vw; top: -14%; inset-inline-end: -8%; animation: auroraDrift1 24s ease-in-out infinite; }
-      .aurora-2 { width: 40vw; height: 40vw; bottom: -16%; inset-inline-start: -10%; animation: auroraDrift2 30s ease-in-out infinite; }
-      .aurora-3 { width: 34vw; height: 34vw; top: 30%; inset-inline-start: 34%; animation: auroraDrift3 27s ease-in-out infinite; }
-      .grain { position: absolute; inset: 0; background-repeat: repeat; mix-blend-mode: soft-light; }
-
-      .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: ${colors.goldShimmer}; display: inline-block; animation: donatePulse 2s ease-in-out infinite; }
-      .pulse-dot-gold { background: ${colors.goldDark}; }
-
-      .cta-glow { animation: donateGlow 2.8s ease-in-out infinite; }
-      .cta-glow:hover { animation: none; }
-
-      .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-      .reveal.is-visible { opacity: 1; transform: translateY(0); }
-
-      .impact-card { transition: transform 0.18s ease, box-shadow 0.18s ease; }
-      .impact-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(45,31,14,0.12); }
-
-      .yoav-photo { transition: transform 6s ease-out; will-change: transform; }
-      .yoav-photo:hover { transform: scale(1.05); }
-
       @media (max-width: 768px) {
         .donate-grid { grid-template-columns: 1fr !important; }
-        .donate-grid > .donate-form-col { order: -1; }
-        .donate-grid > .donate-form-col > div { position: static !important; }
+        .donate-grid > .donate-form-col { order: -1; position: static !important; }
+        .donate-grid > .donate-form-col { position: static !important; }
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .hero-fade, .pulse-dot, .cta-glow, .reveal, .impact-card, .hero-video, .aurora, .hero-gold-shimmer, .yoav-photo {
-          animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important;
-        }
-        .hero-gold-shimmer { -webkit-text-fill-color: ${colors.goldShimmer}; color: ${colors.goldShimmer}; }
+        .rv, .hero-fade-up, .hero-video, .yoav-photo { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
       }
     `}</style>
   );
