@@ -8,6 +8,7 @@ import PrintableBookletPopup from "@/components/dor-haplaot/PrintableBookletPopu
 import heroBg from "@/assets/dor-haplaot-hero.webp";
 import bookletCover from "@/assets/dor-haplaot-booklet-cover.webp";
 import Layout from "@/components/layout/Layout";
+import { Seo } from "@/components/seo/Seo";
 
 interface Chapter {
   number: number;
@@ -311,6 +312,12 @@ export default function DorHaplaot() {
 
   return (
     <Layout>
+      <Seo
+        title="דור הפלאות — ניסי מלחמת התקומה"
+        description="כל יום נס אחד ממלחמת התקומה, עם חיבור מיוחד לתנ״ך. אוסף ניסי דור הפלאות באתר בני ציון."
+        url="https://bneyzion.co.il/dor-haplaot"
+        type="article"
+      />
       <div dir="rtl" className="min-h-screen bg-[#FAF6F0]">
 
         {/* ===== HERO ===== */}

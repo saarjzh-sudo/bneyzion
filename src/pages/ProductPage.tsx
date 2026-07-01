@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { StoreCheckoutDialog } from "@/components/payment/StoreCheckoutDialog";
+import { Seo, productJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
 
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -53,8 +54,36 @@ const ProductPage = () => {
     );
   }
 
+  const productPath = `/store/${product.slug}`;
+  const productDesc =
+    product.description ||
+    `${product.title} — לרכישה בחנות בני ציון. ספרים וחומרי לימוד תנ״ך.`;
+
   return (
     <Layout>
+      <Seo
+        title={product.title}
+        description={productDesc}
+        image={product.image_url ?? undefined}
+        imageAlt={product.title}
+        url={`https://bneyzion.co.il${productPath}`}
+        type="product"
+        jsonLd={[
+          productJsonLd({
+            name: product.title,
+            description: product.description,
+            path: productPath,
+            image: product.image_url,
+            price: product.price,
+            inStock: product.status === "active" || product.status === "published",
+          }),
+          breadcrumbJsonLd([
+            { name: "בית", path: "/" },
+            { name: "החנות", path: "/store" },
+            { name: product.title, path: productPath },
+          ]),
+        ]}
+      />
       {/* Breadcrumb */}
       <div className="container pt-6 pb-2">
         <nav className="flex items-center gap-2 text-sm text-muted-foreground">

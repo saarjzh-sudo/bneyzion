@@ -7734,3 +7734,25 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## 2026-07-01 — T13 SEO + OG + מטא (מסלול-סיום רוחבי, branch `finish/13-seo-og`)
+**מטרה:** כל דף מוכן ל-Google ולשיתוף — title ייחודי, meta-description, Open-Graph, structured-data, sitemap+robots.
+
+**מצב-פתיחה:** התשתית כבר קיימת — hook `src/hooks/useSEO.ts` בשימוש ב-38 עמודים + `api/sitemap.js` דינמי. אז המסלול = **השלמה והקשחה**, לא בנייה מאפס.
+
+**מה נעשה (הכל additive — head-effects בלבד, אפס שינוי-לוגיקה/עיצוב):**
+- **מנגנון מרכזי:** קומפוננטת `<Seo>` הצהרתית ב-`src/components/seo/Seo.tsx` (עוטפת את `useSEO`, `return null`) + `src/components/seo/structured-data.ts` (בּוֹנים טהורים: `breadcrumbJsonLd`, `collectionJsonLd`, `courseJsonLd`, `productJsonLd`, `abs()`). מנגנון יחיד — לא כפלנו את react-helmet.
+- **שדרוג `useSEO`:** תמיכת `noindex` (robots meta), `imageAlt`, ריבוי JSON-LD (מערך graph), ניקוי JSON-LD ישן במעבר-route, absolute-URL ל-og:image, canonical ללא query+hash, ברירת-מחדל OG = `/og-image.png`.
+- **תמונת-OG ברנד:** `public/og-image.png` (1200×630, warm-cream+זהב-טורקיז, לוגו, כותרת Kedem Black). נבנתה ב-PIL+raqm (`scratchpad/make_og.py`). עודכן `index.html` (og:image absolute + width/height/alt).
+- **מילוי 7 עמודים ציבוריים שחסרו SEO:** CategoryPage (`/category/:id` — CollectionPage+Breadcrumb), TopicPage (`/topic/:slug`), ProductPage (`/store/:slug` — Product JSON-LD price/ILS/availability), WeeklyProgramLibrary (`/program/weekly-chapter`), WeeklyBookDetail (`/course/:slug` — Course JSON-LD), MemorialSaadia, DorHaplaot. כל אחד עם title/description/canonical/OG ייחודיים ודאטה אמיתי מ-hooks.
+- **robots.txt:** נוסף Disallow לכל הפרטי/utility (/portal*, /profile, /favorites, /history, /checkout, /thank-you, /proposal, /roadmap, /admin, /design-, /dev-pages) + `Allow: /api/sitemap` (longest-match). Sitemap נשאר `/api/sitemap`.
+- **api/sitemap.js:** נוספו static-routes חסרים (/bible, /store, /community, /chapter-weekly, /program/weekly-chapter, /megilat-esther, /daily-verse, /daily-video, /kenes-archive, /terms) + מוצרים (`products` status=active → /store/:slug) + נושאים (`topics` → /topic/:slug). error-tolerant כמו הקוד הקיים.
+
+**אימות:** `npm run build` נקי · `tsc --noEmit` נקי · dist מכיל og:image absolute + og-image.png + robots (15 Disallow) · JSON-LD shapes תקינים · `node --check api/sitemap.js` OK.
+
+**תלות/חפיפות מנוהלות (ל-merge, מסלול רוחבי גל-ב׳ ממוזג רביעי אחרי T14→T10→T09):**
+- קבצי-עמוד ששייכים למסלולים אחרים (CategoryPage/TopicPage→T10, ProductPage→T04, WeeklyBookDetail/Library→T04) — נגעתי בהם **רק בתוספת שורת `<Seo>` + import** (head-only). לעשות `git rebase finish/integration` לפני merge; ההוספות additive וממוזגות נקי מעל T10/T04.
+- `api/sitemap.js` לא בבעלות מפורשת של אף מסלול — נכלל תחת SEO. שינוי additive בלבד.
+- canonical/sitemap משקפים routes של `b4631c76`. אם T14 שינה routes — לרענן את STATIC_ROUTES + canonical hosts.

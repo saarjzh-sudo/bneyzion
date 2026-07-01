@@ -25,6 +25,7 @@ import {
   AlertCircle, Film, Volume2, X, BookMarked, Layers,
 } from "lucide-react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
+import { Seo, courseJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useUserAccess } from "@/hooks/useUserAccess";
 import { useAuth } from "@/contexts/AuthContext";
@@ -308,8 +309,29 @@ export default function WeeklyBookDetail() {
   const introItems    = courseData?.intro ?? [];
   const resourceItems = courseData?.resources ?? [];
 
+  const coursePath = `/course/${course?.program_slug ?? slug}`;
+  const courseDesc =
+    course?.description ||
+    (course ? `לימוד ${course.title} בתוכנית השבועית של בני ציון — פרק בכל שבוע, עם שיעורים וחומרי לימוד.` : undefined);
+
   return (
     <DesignLayout sidebar={false}>
+      {course && (
+        <Seo
+          title={course.title}
+          description={courseDesc}
+          image={course.image_url ?? undefined}
+          url={`https://bneyzion.co.il${coursePath}`}
+          jsonLd={[
+            courseJsonLd({ name: course.title, description: courseDesc, path: coursePath, image: course.image_url }),
+            breadcrumbJsonLd([
+              { name: "בית", path: "/" },
+              { name: "התוכנית השבועית", path: "/program/weekly-chapter" },
+              { name: course.title, path: coursePath },
+            ]),
+          ]}
+        />
+      )}
 
       {/* ── Top bar ────────────────────────────────────────────────── */}
       <div

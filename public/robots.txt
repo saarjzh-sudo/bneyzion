@@ -1,10 +1,24 @@
 User-agent: *
 Allow: /
+
+# The sitemap endpoint itself must stay crawlable (longest-match wins over /api/).
 Allow: /api/sitemap
-Disallow: /admin/
+
+# Private / utility routes — no SEO value, keep them out of the index.
+Disallow: /admin
 Disallow: /api/
 Disallow: /auth
+Disallow: /portal
+Disallow: /portal-login
+Disallow: /portal-old
+Disallow: /profile
+Disallow: /favorites
+Disallow: /history
+Disallow: /checkout
+Disallow: /thank-you
+Disallow: /proposal
+Disallow: /roadmap
 Disallow: /dev-pages
-Disallow: /design-lesson
+Disallow: /design-
 
 Sitemap: https://bneyzion.co.il/api/sitemap
