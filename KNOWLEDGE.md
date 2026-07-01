@@ -7734,3 +7734,16 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## 2026-07-01 — T14 routing (finish/14-routing): ניתוב ישן→חדש + 404 + cutover-prep
+
+**מסלול T14 (בעל-על routing).** אזור: `src/App.tsx`, `vercel.json`, `src/pages/NotFound.tsx`, `public/_redirects`, `CUTOVER-CHECKLIST.md`.
+
+- **מיפוי ישן→חדש כבר קיים ומקיף ב-`vercel.json`** (299 301-קבועים): 203 `/rabbis/<UUID>`→slug, וכל כתובות ה-Umbraco בעברית (`/פרשת-השבוע`→`/parasha`, `/אגף-המורים`+`/מאגר-עזרי-הלמידה`→`/teachers`, `/חנות-הספרים`→`/store`, `/תרומות`→`/donate`, ספרי-התנ״ך והנושאים→`/series`, `/רבנים`→`/rabbis`, `/כנס`→`/kenes` ועוד). אימות: **כל היעדים קיימים כ-routes ב-App.tsx**, אפס לולאות, אפס chains, אפס כפילויות.
+- **הוספתי 9 redirects ל-WooCommerce** (`club.bneyzion.co.il`, תת-דומיין נפרד): `/`, `/shop`, `/shop/*`, `/product/*`, `/product-category/*`, `/cart`, `/checkout`, `/my-account`, `/my-account/*` → `https://bneyzion.co.il/store`. כולם **מוגנים ב-`has: host=club.bneyzion.co.il`** → inert עד שסער יפנה את תת-הדומיין לאתר. (סה״כ 308 redirects.)
+- **`NotFound.tsx` שודרג:** (1) כפתור-חיפוש שפותח את `GlobalSearch` הקיים (דאטה אמיתי — רבנים/סדרות/שיעורים/ספרים, ⌘K). (2) **רשת-ביטחון בקוד** — מפת `LEGACY_PATHS` + `resolveLegacyPath()`: כתובת-Umbraco ידועה שהגיעה ל-catch-all של ה-SPA מנותבת עם `<Navigate replace>` במקום 404. (3) focus-states + aria-hidden לאייקונים. עיצוב קיים נשמר (warm-cream, font-heading/serif, RTL, אנימציית ספר).
+- **`CUTOVER-CHECKLIST.md` (חדש):** תנאים מקדימים, טבלת-מיפוי מלאה (Umbraco + WooCommerce), שלב-DNS ב-Vercel, smoke-test (תשתית/301/תוכן/SEO), עדכוני OAuth+Supabase+Grow תלויי-דומיין, תוכנית-נסיגה, ניקוי 60-יום (כולל מחיקת `/portal-old`). **המהלך ידני ובאישור סער בלבד.**
+- **`App.tsx` — לא נגעתי** (ראה `_DONE.md` תלות): T01 צריך routes `/admin/budget`+`/admin/kenes` שהקומפוננטות שלהם ב-branch של T01, לא בשלי → הוספה במיזוג (אחרי T01) כדי לא לשבור build. המלצת-T01 להסיר routes של Orders/Migration/ContentCompare — החלטת-סער במיזוג.
+- build נקי (`✓ built in 4.23s`), typecheck נקי, dev-transform של NotFound נקי, route-404 מחזיר 200.
