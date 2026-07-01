@@ -7750,3 +7750,9 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - **נמחקו** `AITeacherTools.tsx` (כלי מערך-שיעור/מבחן/תפזורת) ו-`CoverGenerator.tsx` (כפתור יצירת-שער), והוסרו ההרכבות מ-`TeachersWingPage`/`TeachersSeriesPage`. אין יותר UI של AI באגף-המורים.
 - **הכריכות עוברות ל-batch מנוהל** (לא כפתור): 309 סדרות-מורים published, **57 בלי image_url**. batch דרך service-role + Imagen ימלא רק את ה-57 הריקים (additive, לא דורס קיימים).
 - **חסם:** מפתח Gemini/Imagen מחזיר 429 `RESOURCE_EXHAUSTED` "prepayment credits depleted" (אומת 30.6). סער בוחר לטעון billing ב-ai.studio/projects ואז אריץ את ה-batch בצינור המקורי (Imagen watercolor, NO TEXT/NO PEOPLE).
+
+### תיקון סגנון + השלמת השערים (30.6) — הסגנון של בני ציון
+- **הסגנון הראשון (נוף/נהר) נפסל ע"י סער** — לא הסגנון של ב"צ. הסגנון הנכון = **אקוורל מופשט על נייר קרם, פסטלים עמומים (sage/teal/blue-gray/wheat/gold/lavender/rose), מרכז פתוח, בלי טקסט, בלי דמויות** — מקור-אמת: `scripts/image-batch-phase3.py` (STYLE נעול + `series_prompt` + שער-Vision `lib/vision_gate.py`). הזיהוי נעשה גם מהשערים הקיימים באתר.
+- **צינור:** Vertex לא זמין ב-worktree (חסר SA `secrets/gcp-imagen-batch.json`) → generation דרך generativelanguage endpoint (`imagen-4.0-generate-001`, GEMINI_API_KEY, `personGeneration=dont_allow`) עם אותו STYLE + prompt + שער-Vision. סקריפט: scratchpad `generate_teacher_covers.py` (אידמפוטנטי, מסנן `image_url IS NULL`, scope=teachers בלבד).
+- **תוצאה: כל 57 סדרות-המורים קיבלו שער** (image_url IS NULL → 0). 14 השערים בסגנון-הנוף הוחזרו ל-null ונוצרו מחדש נכון. כשל-Vision אחד "fail-open" (ה-API של הבדיקה לא ענה, התמונה עברה) — סיכון נמוך בגלל אילוצי-הפרומפט. **לא נגעתי ב-252 השערים הקיימים.** עלות ~$2.3 (57×$0.04).
+- **מפתח Gemini:** היה 429 "prepayment credits depleted" → סער טען billing; חי שוב. `negativePrompt` הוסר מ-Imagen API (400) — האילוצים בפרומפט עצמו.
