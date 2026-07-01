@@ -7758,3 +7758,5 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - סודות VAPID edge נקבעו (`POST /v1/projects/{ref}/secrets`, 201). Vercel `VITE_VAPID_PUBLIC_KEY` ✓.
 - **תיקון target `weekly-learners`:** המנויים ב-`user_access_tags` תחת `program:weekly-chapter` (271), לא ב-`weekly_program_progress` (ריק). ה-target עודכן ל-union: `program:weekly-chapter` + תג-הספר הנוכחי (`course:haggai-zechariah-malachi`) + progress. **מגיע ל-3 חשבונות** (268 email-only → Smoove). פוש/in-app = רק account-linked.
 - נשאר-מרכזי: **deploy `broadcast-notification`** (דורש `supabase login`/CLI) + build+deploy frontend.
+
+**T08 — edge נפרס (1.7.2026):** `broadcast-notification` **v9 ACTIVE** נפרס דרך Management API (`POST /v1/projects/{ref}/functions/deploy`, multipart metadata+file, 201) — **בלי `supabase login`**, רק PAT `sbp_bddd`. smoke: unauth→401. שרת מלא חי: table+RLS+VAPID secrets+function. נשאר רק frontend build+deploy (מרכזי) + כפתור admin (T01).
