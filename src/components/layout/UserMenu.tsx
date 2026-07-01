@@ -1,4 +1,4 @@
-import { User, LogOut, Heart, History, Shield, UserCircle, Upload, BookOpen } from "lucide-react";
+import { User, LogOut, Heart, History, UserCircle, BookOpen, ShieldQuestion } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -12,13 +12,14 @@ import GoogleIcon from "@/components/auth/GoogleIcon";
 import { openAuthModal } from "@/components/auth/authModalStore";
 import { currentReturnTarget } from "@/components/auth/googleSignIn";
 import WeeklyChapterInvite from "@/components/auth/WeeklyChapterInvite";
+import { roleMeta, adminLinksFor } from "@/components/auth/roleMeta";
 
 interface UserMenuProps {
   isTransparent?: boolean;
 }
 
 const UserMenu = ({ isTransparent }: UserMenuProps) => {
-  const { user, isAdmin, isLoading, signOut } = useAuth();
+  const { user, isAdmin, userRole, isLoading, signOut } = useAuth();
 
   // פותח את מודאל-ההתחברות הגלובלי במקום לנווט החוצה, ושומר את יעד-החזרה.
   const handleSignIn = () => openAuthModal({ next: currentReturnTarget() });
@@ -52,6 +53,11 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
   const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture;
   const displayName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0];
 
+  // תפקיד לתצוגה: admin גובר; אחרת ה-role מה-DB (ברירת-מחדל "משתמש רשום").
+  const effectiveRole = isAdmin ? "admin" : userRole ?? "user";
+  const role = roleMeta[effectiveRole];
+  const adminLinks = adminLinksFor(isAdmin, userRole);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -81,7 +87,13 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
       <DropdownMenuContent align="start" className="w-56">
         <div className="px-3 py-2.5 border-b border-border">
           <p className="text-sm font-display text-foreground">{displayName}</p>
-          <p className="text-xs text-muted-foreground">{user.email}</p>
+          <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+          <span
+            className={`inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-md text-[11px] font-display ${role.badgeClass}`}
+          >
+            <role.Icon className="h-3 w-3" aria-hidden="true" />
+            {role.label}
+          </span>
         </div>
         <WeeklyChapterInvite variant="menu" />
         <DropdownMenuItem asChild className="cursor-pointer">
@@ -108,19 +120,28 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
             היסטוריית צפייה
           </Link>
         </DropdownMenuItem>
-        {isAdmin && (
+        {adminLinks.length > 0 && (
+          <>
+            <DropdownMenuSeparator />
+            <p className="px-3 pt-1 pb-0.5 text-[11px] text-muted-foreground font-display">אזור הצוות</p>
+            {adminLinks.map((link) => (
+              <DropdownMenuItem key={link.to} asChild className="cursor-pointer">
+                <Link to={link.to} className={`flex items-center gap-2 ${link.primary ? "text-primary font-semibold" : ""}`}>
+                  <link.Icon className="h-4 w-4" />
+                  {link.label}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </>
+        )}
+        {/* משתמש רגיל בלי גישת-ניהול — נתיב מסודר לבקש גישה */}
+        {!isAdmin && adminLinks.length === 0 && (
           <>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="cursor-pointer">
-              <Link to="/admin/upload" className="flex items-center gap-2">
-                <Upload className="h-4 w-4" />
-                העלאת תוכן
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link to="/admin" className="flex items-center gap-2 text-primary">
-                <Shield className="h-4 w-4" />
-                ניהול האתר
+              <Link to="/contact?subject=access" className="flex items-center gap-2 text-muted-foreground">
+                <ShieldQuestion className="h-4 w-4" />
+                בקשת גישת ניהול
               </Link>
             </DropdownMenuItem>
           </>
