@@ -55,6 +55,8 @@ export interface BotResponse {
   persona_guess: BotPersona | null;
   route_suggestion: string;
   refused_content: boolean;
+  // 2–4 short follow-up prompts the user might tap next (quick-reply chips).
+  suggestions?: string[];
 }
 
 export interface BotMessage {

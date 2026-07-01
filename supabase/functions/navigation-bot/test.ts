@@ -17,6 +17,7 @@ import {
   isValidRoute,
   normalizeHe,
   parseModelJson,
+  sanitizeSuggestions,
   searchIndex,
   tokenize,
 } from "./shared.ts";
@@ -67,6 +68,12 @@ const sanitized = buildSafeResponse({
 }, demo);
 ok(sanitized.cta_buttons.length === 1, "safeResponse drops hallucinated CTAs (keeps only real)");
 ok(sanitized.route_suggestion === "/", "safeResponse neutralizes hallucinated route_suggestion");
+
+// suggestions: trims, dedupes, drops junk, caps at 4
+ok(sanitizeSuggestions(["כמה עולה?", "  כמה עולה?  ", "יש שיעור לפרשה?"]).length === 2, "suggestions dedupe (case/space-insensitive)");
+ok(sanitizeSuggestions(["a", "", 5, null, "שאלה תקינה"]).join("|") === "שאלה תקינה", "suggestions drop too-short/non-string");
+ok(sanitizeSuggestions(["ש1רה","ש2רה","ש3רה","ש4רה","ש5רה","ש6רה"]).length === 4, "suggestions capped at 4");
+ok(sanitizeSuggestions("not an array") .length === 0, "suggestions non-array → empty");
 
 // ── Part B — live ────────────────────────────────────────────────────────────
 const GEMINI = Deno.env.get("GEMINI_API_KEY");

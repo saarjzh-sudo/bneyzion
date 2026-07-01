@@ -127,6 +127,7 @@ const RATE_LIMIT_RESPONSE = {
   persona_guess: null,
   route_suggestion: "/",
   refused_content: false,
+  suggestions: [] as string[],
 };
 
 async function sbSelect(

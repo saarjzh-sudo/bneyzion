@@ -8,6 +8,11 @@
 > - **edge `navigation-bot` v5 (דורש deploy ידני!):** `thinkingBudget: 0` → **768** (באג מיקי — 0 מבטל חשיבה), `maxOutputTokens: 1024` → **2048** (תקרה גבוהה דיה שה-JSON לא ייחתך אחרי החשיבה). הוסף rate-limit per-session in-memory (20/דקה, best-effort לכל warm instance, מחזיר 200 רגוע). חיזוק system-prompt ב-`shared.ts`: בלוק "סגנון וכובד-ראש" (חם, קצר, בלי המצאות, עברית נקייה, התאמה לפרסונה). `test.ts` עודכן לאותו config.
 > - **⚠️ ה-edge function מתפרסת בנפרד מגיט** (`supabase functions deploy navigation-bot --project-ref pzvmwfexeiruelwiujxn`). שינויי v5 **לא בתוקף** עד deploy + אישור-סער. לפני deploy: להריץ `deno run --allow-net --allow-env supabase/functions/navigation-bot/test.ts` עם creds (Part B מאמת finishReason=STOP, בלי truncation).
 > - **בדיקת-עשן בדפדפן של ה-worktree נחסמה:** כלי ה-preview משרת את ספריית-העבודה הראשית (build BPX8qhx2 של בני-ציון ב-OMS-root), לא את ה-worktree. אומת חלופית: dev-server של ה-worktree עולה (200) ומשרת את כל המודולים המעודכנים; build נקי; unit-tests עוברים.
+>
+> ### T02 המשך (2026-06-30) — הצעות-המשך + מוח-מכירות + מבצע ₪5
+> - **צ'יפים של הצעות-המשך:** `BotResponse.suggestions?: string[]`. ה-edge מחזיר 2-4 שאלות-המשך קצרות בגוף-ראשון של המשתמש; `sanitizeSuggestions` (trim/dedupe/≤48 תווים/max 4) ב-`shared.ts`; `BotPanel` מרנדר צ'יפים עגולים מתחת לתשובה האחרונה בלבד (מוסתר בזמן thinking/error), לחיצה = `sendMessage`. 4 unit-tests נוספו (23/23).
+> - **מוח-מכירות (edge — דורש deploy):** ב-`shared.ts` נוסף `WEEKLY_PROGRAM` (מקור-אמת: 110₪/חודש, ללא התחייבות, ערך, route `/chapter-weekly`) + `weeklyProgramBrief()`, מוזרק ל-`FALLBACK_KNOWLEDGE` וגם לסקשן "מכירות" ב-system-prompt: מתי לפתוח שיחת-מכירה, טיפול בהתלבטויות ("יקר לי"/"אין זמן"/"לא בטוח"), CTA ל-`/chapter-weekly`. אסור להמציא מחיר/קוד/מבצע מעבר למוגדר.
+> - **מבצע חודש-ראשון ₪5:** `WEEKLY_PROGRAM.promo = { enabled:true, code:"PARASHA5", firstMonthPrice:5 }`. בנצי מציע את הקוד בפועל. **⚠️⚠️ תלות חיצונית קריטית:** הקופון `PARASHA5` חייב להיווצר ב-Grow (אזור T04/סליקה, מחוץ ל-worktree) — עד אז בנצי מבטיח ₪5 שהצ'קאאוט לא יכבד. לכבות זמנית: `promo.enabled=false` ב-`shared.ts` (דורש deploy).
 
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):

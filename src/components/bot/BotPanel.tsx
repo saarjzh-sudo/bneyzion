@@ -9,7 +9,7 @@ import { MessageBubble } from "./MessageBubble";
 import { OpeningButtons } from "./OpeningButtons";
 import { useBotSession } from "./useBotSession";
 import { BOT_CONFIG } from "./botConfig";
-import type { BotCta, BotPersona } from "./types";
+import type { BotCta, BotPersona, BotResponse } from "./types";
 
 const BOT_FONT = '"Ploni", "Ploni DL 1.1", "Paamon", system-ui, sans-serif';
 
@@ -67,7 +67,18 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
     // For now, the <Link> navigation handles routing.
   };
 
+  const handleSuggestionClick = (text: string) => {
+    sendMessage(text, currentParasha);
+  };
+
   const showOpeningButtons = history.length === 0;
+
+  // Follow-up chips — only for the latest bot reply, and only when idle.
+  const lastMsg = history[history.length - 1];
+  const suggestions =
+    lastMsg && lastMsg.role === "model" && !isThinking && !error
+      ? ((lastMsg.content as BotResponse).suggestions ?? [])
+      : [];
 
   return (
     <div
@@ -152,6 +163,25 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
                 onCtaClick={handleCtaClick}
               />
             ))}
+            {suggestions.length > 0 && (
+              <div
+                className="mb-2 flex flex-wrap justify-end gap-1.5"
+                dir="rtl"
+                aria-label="הצעות להמשך"
+              >
+                {suggestions.map((s, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => handleSuggestionClick(s)}
+                    className="rounded-full border border-[#C4A265]/50 bg-white/70 px-2.5 py-1 text-[11.5px] text-[#1A2744] transition hover:border-[#C4A265] hover:bg-[#C4A265]/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]/40"
+                    style={{ fontFamily: BOT_FONT }}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
             {isThinking && (
               <div className="flex justify-end mb-2">
                 <div
