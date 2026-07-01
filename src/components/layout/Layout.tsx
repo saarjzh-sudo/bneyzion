@@ -12,6 +12,7 @@ import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
+import { PromoProvider } from "@/components/promo";
 import { colors } from "@/lib/designTokens";
 
 interface LayoutProps {
@@ -33,6 +34,9 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
         background: colors.parchment,
       }}
     >
+      {/* T09 — single global promo injection point (banner / conference strip
+          above the header; popup renders fixed, suppressed on product+learning). */}
+      <PromoProvider />
       <DesignHeader
         transparentOnTop={false}
         onSidebarToggle={sidebar ? () => setDrawerOpen((v) => !v) : undefined}

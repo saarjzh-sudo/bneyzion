@@ -7734,3 +7734,25 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## T09 — מערכת באנרים/פופאפים/כנסים גלובלית (1.7.2026)
+
+**מטרה:** מערכת promo אחת לכל האתר עם ניהול מ-DB, **כבויה-כברירת-מחדל בדפי-מוצר ובדפי-למידה** (שלא יקפוץ פופאפ באמצע קנייה/שיעור).
+
+**ארכיטקטורה — קומפוננטה חדשה `src/components/promo/**` + הזרקה אחת ב-`Layout.tsx`:**
+- `types.ts` — טיפוס `Promo` (מראה 1:1 לטבלת `promos`).
+- `promoRoutes.ts` — רשימות-מסלולים: PRODUCT (`/store /product /course /courses /checkout /community /design-my-courses`), LEARNING (`/lessons /portal /program /chapter-weekly /teachers/lesson`), BLOCKED (`/admin /auth /portal-login /design- /dev-pages` — שם אין promo כלל).
+- `promoDismissal.ts` — מונע-הופעה-חוזרת ב-localStorage/sessionStorage לפי `frequency` (always/session/once/daily), עטוף try/catch (מצב-פרטי לא מפיל).
+- `usePromos.ts` — hook react-query, **דאטה אמיתי מ-Supabase**, fail-soft: טבלה חסרה/שגיאה → `[]` (retry:false). כולל `isWithinSchedule` + `matchesAudience`.
+- `promoTheme.ts` — מיפוי theme (gold/olive/navy) ל-designTokens, בלי hex אד-הוק.
+- `PromoBanner.tsx` — רצועה עליונה שקטה (מותרת בכל דף). `PromoConferenceStrip.tsx` — רצועת-כנס. `PromoPopup.tsx` — מודל עם focus-trap+ESC+scroll-lock+backdrop-close.
+- `PromoProvider.tsx` — המתזמר: קורא route, מסנן (schedule/audience/frequency), בוחר promo אחד לכל surface, **מכבה פופאפ** אם `onProduct && suppress_on_product` או `onLearning && suppress_on_learning`. פופאפ מופיע אחרי 1500ms (לא קופץ ב-first paint).
+- הזרקה: `<PromoProvider />` כילד ראשון ב-`Layout.tsx` (מעל DesignHeader). טביעה מינימלית — קובץ אחד חופף (T12).
+
+**מיגרציה:** `supabase/migrations/20260701_promos.sql` — טבלת `promos` + RLS (ציבורי קורא `is_active`, אדמין CRUD דרך `has_role`). **READY אך לא-מופעלת** — סער מריץ. עד אז המערכת שקטה (fail-soft).
+
+**אימות:** `npm run build` נקי (tsc+vite). 27/27 בדיקות-לוגיקה (suppression לכל מחלקות-המסלול + frequency-caps). אימות חי (vite preview מ-ה-worktree על פורט נקי — MCP preview מוצמד ל-repo הראשי `bneyzion` לא ל-worktree, ו-PWA SW משרת bundle ישן → חובה פורט-מקור נקי): /rabbis=באנר+פופאפ+focus-trap+ESC-close ✓ · /store=באנר בלבד, פופאפ מדוכא ✓.
+
+**תלות ל-T01:** האדמין רק מציג/מנהל את `promos` (שמות-שדות ב-`_DONE.md`).
