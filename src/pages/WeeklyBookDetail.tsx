@@ -78,6 +78,18 @@ const BOOK_ACCENTS: Record<string, string> = {
   "book-lamentations":            "#7A5A3A",
 };
 
+// ── Designed schedule images (לו״ז) — exported from the lessons Drive, ─────
+// self-hosted under public/schedules/<slug>.jpg for reliability.
+// Note: esther uses "מבנה הלימוד" (closest available); no dedicated לו״ז yet.
+const SCHEDULE_IMAGES: Record<string, string> = {
+  "book-ezra":                     "/schedules/book-ezra.jpg",
+  "book-nehemiah":                 "/schedules/book-nehemiah.jpg",
+  "book-daniel":                   "/schedules/book-daniel.jpg",
+  "book-esther":                   "/schedules/book-esther.jpg",
+  "book-lamentations":             "/schedules/book-lamentations.jpg",
+  "book-haggai-zechariah-malachi": "/schedules/book-haggai-zechariah-malachi.jpg",
+};
+
 // ── NavItem type: intro | chapter-number | sub-book string ────────────────
 type NavItem = "intro" | number | string;
 type TabKey  = "base" | "enrichment" | "weekly";
@@ -454,7 +466,7 @@ export default function WeeklyBookDetail() {
               {scheduleItems.length > 0 && (
                 <WeeklyScheduleCard
                   bookTitle={bookTitle}
-                  scheduleImageUrl={(course as any)?.schedule_image_url}
+                  scheduleImageUrl={(course as any)?.schedule_image_url ?? SCHEDULE_IMAGES[slug] ?? null}
                   items={scheduleItems}
                   accent={accent}
                 />
