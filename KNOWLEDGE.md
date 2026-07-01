@@ -7752,3 +7752,9 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **זרימת-התראה (in-app) פעילה כבר עכשיו ללא קרדנציאל:** broadcast-notification→user_notifications→NotificationBell realtime. אומת: build נקי, sw.js מכיל `importScripts("/push-sw.js")`, אפליקציה עולה בלי שגיאות-קונסול.
 
 **חסר ממני (סער):** VAPID key-pair (`VITE_VAPID_PUBLIC_KEY` ל-build + `VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY`/`VAPID_SUBJECT` ל-edge) להפעלת פוש-OS. ממשק-שליחה מהאדמין = **T01**.
+
+**T08 עדכון (1.7.2026) — קהל weekly-learners אומת + מיגרציה הורצה:**
+- מיגרציית `push_subscriptions` הורצה על בני ציון דרך Management API (`sbp_bddd`), טבלה+RLS קיימים ✓.
+- סודות VAPID edge נקבעו (`POST /v1/projects/{ref}/secrets`, 201). Vercel `VITE_VAPID_PUBLIC_KEY` ✓.
+- **תיקון target `weekly-learners`:** המנויים ב-`user_access_tags` תחת `program:weekly-chapter` (271), לא ב-`weekly_program_progress` (ריק). ה-target עודכן ל-union: `program:weekly-chapter` + תג-הספר הנוכחי (`course:haggai-zechariah-malachi`) + progress. **מגיע ל-3 חשבונות** (268 email-only → Smoove). פוש/in-app = רק account-linked.
+- נשאר-מרכזי: **deploy `broadcast-notification`** (דורש `supabase login`/CLI) + build+deploy frontend.

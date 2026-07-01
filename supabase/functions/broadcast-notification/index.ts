@@ -86,15 +86,21 @@ serve(async (req) => {
       userIds = members?.map((m) => m.user_id!).filter(Boolean) ?? [];
     } else if (target === "weekly-learners" || target === "weekly") {
       // Learners of the CURRENT weekly chapter only.
-      // Source of truth (coordinated with T03 portal):
-      //   community_courses.is_current = true & in_weekly_program = true  → program_slug(s)
-      //   weekly_program_progress.program_slug IN (...)                   → user_id(s)
+      // The current book is community_courses where is_current & in_weekly_program.
+      // Who "learns" it, in order of reliability (only account-linked user_ids can
+      // receive an in-app/push notification; email-only subscribers go via Smoove):
+      //   1. program subscribers — user_access_tags.tag = 'program:weekly-chapter'
+      //      (the ongoing weekly subscription; grants access to every current book)
+      //   2. per-book buyers    — user_access_tags.tag = the book's access_tag (course:*)
+      //   3. active learners    — weekly_program_progress.program_slug = current slug
+      // Union of the three, valid tags only, distinct, account-linked.
+      const WEEKLY_PROGRAM_TAG = "program:weekly-chapter";
+
       const { data: currentBooks, error: booksError } = await supabase
         .from("community_courses")
-        .select("program_slug")
+        .select("program_slug, access_tag")
         .eq("in_weekly_program", true)
-        .eq("is_current", true)
-        .not("program_slug", "is", null);
+        .eq("is_current", true);
       if (booksError) throw booksError;
 
       const slugs = [...new Set((currentBooks ?? []).map((b) => b.program_slug).filter(Boolean))];
@@ -105,13 +111,36 @@ serve(async (req) => {
         );
       }
 
+      const tags = [
+        ...new Set([
+          WEEKLY_PROGRAM_TAG,
+          ...(currentBooks ?? []).map((b) => b.access_tag).filter(Boolean),
+        ]),
+      ];
+
+      // 1+2: subscribers / buyers via access tags (linked to an account, not expired)
+      const nowIso = new Date().toISOString();
+      const { data: tagged, error: tagError } = await supabase
+        .from("user_access_tags")
+        .select("user_id, valid_until")
+        .in("tag", tags as string[])
+        .not("user_id", "is", null)
+        .or(`valid_until.is.null,valid_until.gt.${nowIso}`);
+      if (tagError) throw tagError;
+
+      // 3: active learners via progress
       const { data: learners, error: learnersError } = await supabase
         .from("weekly_program_progress")
         .select("user_id")
         .in("program_slug", slugs as string[]);
       if (learnersError) throw learnersError;
 
-      userIds = [...new Set((learners ?? []).map((l) => l.user_id).filter(Boolean))] as string[];
+      userIds = [
+        ...new Set([
+          ...(tagged ?? []).map((t) => t.user_id),
+          ...(learners ?? []).map((l) => l.user_id),
+        ].filter(Boolean)),
+      ] as string[];
     } else if (Array.isArray(target)) {
       userIds = target;
     }
