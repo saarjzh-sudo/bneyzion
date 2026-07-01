@@ -24,13 +24,26 @@ import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 
 const PRESETS = [50, 100, 180, 360, 540, 1000];
 
-type DonationType = "regular" | "iluy_neshama" | "refua";
+type DonationType = "regular" | "iluy_neshama" | "refua" | "simcha";
 
 const DEDICATION_LABELS: { value: DonationType; label: string }[] = [
   { value: "regular", label: "ללא הקדשה" },
   { value: "iluy_neshama", label: "לעילוי נשמת" },
-  { value: "refua", label: "לרפואת" },
+  { value: "refua", label: "לרפואה" },
+  { value: "simcha", label: "לכבוד שמחה" },
 ];
+
+const DEDICATION_PLACEHOLDER: Record<Exclude<DonationType, "regular">, string> = {
+  iluy_neshama: "שם הנפטר/ת...",
+  refua: "שם החולה...",
+  simcha: "לכבוד מי?...",
+};
+
+const DEDICATION_PREFIX: Record<Exclude<DonationType, "regular">, string> = {
+  iluy_neshama: "לעילוי נשמת",
+  refua: "לרפואת",
+  simcha: "לכבוד",
+};
 
 interface DonateFormProps {
   /** Controlled amount (so impact tiers can set it). */
@@ -93,7 +106,7 @@ export default function DonateForm({
     try {
       const dedicationText =
         donationType !== "regular" && dedication
-          ? ` - ${donationType === "iluy_neshama" ? "לעילוי נשמת" : "לרפואת"} ${dedication}`
+          ? ` - ${DEDICATION_PREFIX[donationType]} ${dedication}`
           : "";
 
       await startPayment({
@@ -180,7 +193,7 @@ export default function DonateForm({
             marginBottom: "0.7rem",
           }}
         >
-          <Flame size={11} aria-hidden="true" /> תרומה לאתר
+          <Flame size={11} aria-hidden="true" /> תרומה לאתר בני ציון
         </div>
         <h2
           style={{
@@ -191,7 +204,7 @@ export default function DonateForm({
             margin: 0,
           }}
         >
-          בחרו את גובה התרומה
+          בחרו את גובה השותפות
         </h2>
       </div>
 
@@ -379,8 +392,8 @@ export default function DonateForm({
           <input
             value={dedication}
             onChange={(e) => setDedication(e.target.value)}
-            placeholder={donationType === "iluy_neshama" ? "שם הנפטר/ת..." : "שם החולה..."}
-            aria-label={donationType === "iluy_neshama" ? "שם הנפטר לעילוי נשמתו" : "שם החולה לרפואתו"}
+            placeholder={DEDICATION_PLACEHOLDER[donationType]}
+            aria-label={`${DEDICATION_PREFIX[donationType]} — שם`}
             style={{
               width: "100%",
               padding: "0.75rem 1rem",
@@ -542,7 +555,7 @@ export default function DonateForm({
           <><Loader2 size={18} className="animate-spin" aria-hidden="true" />טוען מערכת תשלום...</>
         ) : (
           <><Heart size={18} fill="currentColor" aria-hidden="true" />
-            תרמו {amount.toLocaleString("he-IL")}₪{recurring ? " לחודש" : ""}
+            תרומה מאובטחת — {amount.toLocaleString("he-IL")}₪{recurring ? " לחודש" : ""}
           </>
         )}
       </button>
@@ -562,7 +575,7 @@ export default function DonateForm({
         }}
       >
         <ShieldCheck size={12} aria-hidden="true" />
-        סליקה מאובטחת ב-Grow — אשראי, ביט, Apple Pay, Google Pay
+        סליקה מאובטחת · קבלה מיידית למייל · מוכר לזיכוי מס לפי סעיף 46 · עמותת מכלל יופי (ע"ר)
       </p>
     </div>
   );

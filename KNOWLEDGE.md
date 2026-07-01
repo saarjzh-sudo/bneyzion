@@ -7756,3 +7756,23 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **בדיקה:** `npm run build` (tsc -b + vite) נקי. `vite preview` → `/design-donate` 200 + chunk 200. preview-MCP מבודד מנתיב ה-worktree ⇒ אין screenshot מרונדר מכאן; לאמת ויזואלית על preview של `finish/integration`.
 
 **עברית:** ✓ נקי (סקיל עברית; בלי הינו/ניתן ל/על מנת/מדובר ב).
+
+## 2026-07-01 · T05 v5 — אוברול "בקשה של בית מדרש" (מואר + אנושי)
+
+**מה:** אוברול מלא ל-`/design-donate` לפי הכוונה של סער — טון של בית מדרש, לא עמוד מכירה. הוחלף הקופי, נוספו נכסים אמיתיים, שופר העיצוב.
+
+**נכסים אמיתיים (מהריפו, לא הומצא):**
+- וידאו הירו: `/video/hero-bg.mp4` (נוף מדבר יהודה/מצדה מואר, autoplay muted loop) + overlay חם.
+- תמונת הרב יואב בסיפור: `/images/yoav-campaign/yoav-with-full-set.jpg` (מהקמפיין).
+- ריל הרב יואב: `/video/yehoshua-reel.mp4` + poster (סקשן "הרב יואב מספר").
+- המלצות אמיתיות (6): מ-`chapter-weekly/sections/Testimonials.tsx` verbatim (נתנאל ידגרי, חנה יצחקי, ישורון צוקרמן, מעין ליב, ברכיה גרוסברג, שלומית דביר). **לא הומצא.**
+
+**קופי חדש (סער):** הירו "פותחים את התנ״ך לכל בית בישראל" + "התורה לא צריכה להיעצר בשער". מדרגות בפעלים (פותחים שיעור/מנגישים לימוד/מחזיקים שיעור שלם=180 מומלץ "השותפות המרכזית שלנו"/בונים...). סיפור ארוך ואנושי. הנצחה "ממשיכים את האור של סעדיה" — **רס"ל במיל׳ סעדיה יעקב דרעי הי"ד** (light card, שקט ומכובד). שקיפות מילולית (4 כרטיסים, לא אחוזים). טופס: "בחרו את גובה השותפות", הקדשה +"לכבוד שמחה", CTA "תרומה מאובטחת — X₪", שורת-אמון סעיף 46 + מכלל יופי ע"ר.
+
+**עיצוב:** הירו-וידאו מואר במקום גראדיאנט שטוח; final CTA חם (mahogany→gold, לא navy); sticky bottom bar "אני מצטרף" + שורת-אמון; scroll-reveal; RTL; a11y.
+
+**נגזרות קבצים:** `donateData.ts` (tiers/allocation/why/testimonials/faqs/IMAGES), `DonateForm.tsx` (simcha + labels + CTA + trust), `DesignPreviewDonate.tsx` (רה-רייט מלא).
+
+**בדיקה:** build נקי (tsc+vite). Playwright fullpage+mobile+per-section screenshots, **0 console errors**. (וידאו הירו/ריל רצים; preview-MCP חסום ע"י פרוקסי — צילום דרך Chrome headless direct://.)
+
+**פתוח לאישור סער:** (1) שם ההנצחה המדויק. (2) "סעיף 46 / מכלל יופי ע"ר" — הבטחה משפטית, לאמת. (3) האם הריל של יהושע (השקת ספר) מתאים לדף התרומות הכללי או להחליף בריל כללי.
