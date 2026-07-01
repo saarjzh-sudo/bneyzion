@@ -7734,3 +7734,26 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+## T10 — עיצוב הירו מאוחד + הבחנה קטגוריה↔סדרה (1.7.2026, branch `finish/10-hero-design`)
+
+**הבעיה שאובחנה:** שני מנגנוני-הירו מקבילים באתר, ואי-עקביות בוטה.
+- `src/components/layout/PageHero.tsx` — גרדיאנט **חום-כהה** `#2D1F0E→#3D2A12` ("קודר"). צרכנים: SeriesList, RabbisList, About, Terms, HistoryPage, Favorites, ThankYou.
+- CategoryPage / TopicPage / SeriesLibrary / RabbiPage — הירו **inline warm-cream** `linear-gradient(160deg,#FBF6EC,#F5EFE0,#EDE5D0)` (טוב).
+- SeriesPagePublic (`/series/:id`) — **בלי הירו כלל**, רק breadcrumb + `<h1>` שטוח. פער.
+
+**מה נעשה:**
+1. **`PageHero.tsx` נכתב מחדש** — warm-cream, light-mode, prop `variant: "default"|"page"|"category"|"series"`, + `eyebrow`/`meta`/`icon`/`subtitle`/`children`. תואם-לאחור: `title` אופציונלי; בלי title = passthrough של children (שומר על ThankYou שמשתמש ב-PageHero כ-wrapper). זה מסיר את ה"קודר" מכל הצרכנים במכה אחת.
+2. **הבחנה קטגוריה↔סדרה** — שפה עיצובית מובחנת:
+   - **category** (`/category/:id`) = אוסף: יישור-לימין (start), רחב (maxW 1000), קשת-זהב דקורטיבית, eyebrow "אוסף", meta=badges "N סדרות · M שיעורים".
+   - **series** (`/series/:id`) = מסלול-לימוד: **שדרת-זהב** (spine 4px inset-inline-start), ממוקד וצר (maxW 760), eyebrow "סדרת לימוד", meta=צ׳יפ-רב + "N פריטים".
+3. **SeriesPagePublic** — הוזרק `<PageHero variant="series">` עם title/description/rabbi/count מדאטה אמיתי (useSeriesDetail). הוסרה כותרת-flat הכפולה + Separator.
+4. **CategoryPage** — נוסף eyebrow "אוסף" + הכותרת עברה מ-`gradients.goldText` (נכשל ניגודיות על קרם) ל-`colors.textDark` מוצק (AA+). זהב נשמר ב-eyebrow/badges/arc.
+
+**נגישות:** כותרות = textDark מוצק על קרם (ניגודיות AA+), זהב רק ל-eyebrow/divider/icon/spine. אלמנטים דקורטיביים `aria-hidden`. RTL מלא, `inset-inline-*` לוגי.
+
+**קבצים:** `src/components/layout/PageHero.tsx` (כתיבה-מחדש), `src/pages/SeriesPagePublic.tsx`, `src/pages/CategoryPage.tsx`.
+**לא נגעתי:** לוגיקת-דאטה/hooks, HeroSection של דף-הבית (T11), אגף-מורים (T07), TopicPage (כבר warm+Tag icon, לא קודר).
+**Build:** `npm run build` (tsc -b + vite) — נקי. dev-server: כל המודולים transform 200. (אזהרת chunk>500kB = קדם-קיימת, שייכת ל-T11.)

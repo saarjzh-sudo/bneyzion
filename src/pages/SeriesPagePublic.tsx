@@ -8,7 +8,7 @@ import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { useSeriesMixedContent, MixedContentRow } from "@/hooks/useSeriesMixedContent";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Separator } from "@/components/ui/separator";
+import PageHero from "@/components/layout/PageHero";
 import LessonDialog from "@/components/lesson/LessonDialog";
 import { useSEO } from "@/hooks/useSEO";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
@@ -98,7 +98,7 @@ const SeriesPagePublic = () => {
         dir="rtl"
       >
         {/* Breadcrumbs */}
-        <div className="container pt-6 pb-2">
+        <div className="container pt-5 pb-3">
           <nav className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
             <Link to="/" className="hover:text-primary transition-colors">ראשי</Link>
             <ChevronLeft className="h-3 w-3" />
@@ -116,11 +116,13 @@ const SeriesPagePublic = () => {
           </nav>
         </div>
 
-        {/* Header */}
-        <section className="container py-8">
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <h1 className="text-3xl md:text-4xl font-heading text-primary">{series.title}</h1>
-            <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
+        {/* Series hero — focused "learning path" identity (T10) */}
+        <PageHero
+          variant="series"
+          title={series.title}
+          subtitle={series.description || undefined}
+          meta={
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
               {rabbi && (
                 <Link to={`/rabbis/${rabbi.id}`} className="flex items-center gap-2 group">
                   <Avatar className="h-8 w-8">
@@ -135,13 +137,8 @@ const SeriesPagePublic = () => {
                 <span>{totalItems} פריטים</span>
               </div>
             </div>
-          </div>
-          {series.description && (
-            <p className="text-muted-foreground leading-relaxed whitespace-pre-line mt-4">{series.description}</p>
-          )}
-        </section>
-
-        <Separator className="container" />
+          }
+        />
 
         {/* Mixed Content Table */}
         <section className="container py-8">
