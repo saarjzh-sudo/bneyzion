@@ -297,10 +297,17 @@ export const WEEKLY_PROGRAM = {
     "קהילת לומדים והכוונה אישית",
   ],
   promo: {
-    enabled: true,
+    // ⚠️ OFF until the checkout actually applies coupons. Audit (2026-06-30) found
+    // the `coupons` table + /admin/coupons exist, but NOTHING in the payment flow
+    // applies them: api/grow/create-payment.ts has no coupon logic, the weekly
+    // checkout (QuickBuyDialog) charges a single fixed recurring `sum`, and there
+    // is no "first payment different" param. Wiring coupon→first-payment lives in
+    // the T04 (courses-payment) track. Flip to true ONLY after that ships + a real
+    // ₪5 mechanism exists — otherwise בנצי promises ₪5 the checkout won't honor.
+    enabled: false,
     code: "PARASHA5",
     firstMonthPrice: 5,
-    // Human line reused across prompt + knowledge fallback.
+    // Human line reused across prompt + knowledge fallback (only shown when enabled).
     line: "חודש ראשון ב-5 ₪ בלבד עם הקוד PARASHA5 — התנסות מלאה, בלי סיכון.",
   },
 } as const;
