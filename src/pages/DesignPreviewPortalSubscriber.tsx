@@ -55,6 +55,7 @@ import { useHistory } from "@/hooks/useHistory";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useLearningDashboard } from "@/hooks/useLearningDashboard";
 import { usePoints } from "@/hooks/usePoints";
+import { WeeklyUpdatesFeed } from "@/components/weekly/WeeklyUpdatesFeed";
 
 // ── Real-data types (replaces former mock arrays) ───────────────────────────
 // Iron rule: NO mock data — everything below is computed from Supabase hooks.
@@ -840,6 +841,20 @@ export default function DesignPreviewPortalSubscriber() {
                     </a>
                   </div>
                 </div>
+              </div>
+            </section>
+          )}
+
+          {/* ─── This week's updates (weekly-program learners) ────────── */}
+          {currentBook && (
+            <section style={{ background: colors.parchment, padding: "0 1.5rem 3rem" }}>
+              <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
+                <WeeklyUpdatesFeed
+                  courseId={currentBook.id}
+                  bookSlug={currentBook.program_slug}
+                  bookTitle={currentBook.title}
+                  hasAccess={hasSubscription}
+                />
               </div>
             </section>
           )}
