@@ -7734,3 +7734,13 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **fiveMinWatch:** `com.bneyzion.real-parity-watch.plist` StartInterval=300 → `real_parity.py --watch --json` (baseline snapshot `real-parity-baseline.json`, DM סער **רק** על מעבר OK→GAP/החמרה, ratchet שמרני) דרך shigor-pro fallback ל-`972526018772@c.us`. gate: `real_parity.py --gate` נכשל על severity high ציבורי. teacher-wing נשאר presence-only, לעולם לא מוצע לשינוי. אימות חי: בטל PWA SW+caches + Chrome screenshot side-by-side (curl 200 ≠ תקין).
 
 **התחל מ-A → B → D.** READ-ONLY: לא נגעתי ב-src, לא פרסתי, לא שיניתי git tree.
+
+---
+
+### 2026-07-01 — T15 RLS hardening (מחקר בלבד · finish/15-rls-prep · לא הופעל)
+- **תגלית:** RLS כבר מופעל על כל 130+ הטבלאות (כולל lessons/series ו-60+ גיבויים). השאילתות הציבוריות רצות דרך `anon_read qual=true`. "הפעלת RLS" אינה הסיכון — האינדקסים קיימים, EXPLAIN: series 1.7ms (seq, תקין ל-1749), lessons-by-series 33ms (Bitmap על idx_lessons_series_id), lesson-by-id 1.3ms (PK).
+- **גיבויים + PII מוגנים:** `lessons_bak_*`/`series_bak_*` = deny-all לאנונימי (אין policy); donations/orders/profiles = `[]` ל-anon. אומת ב-anon key חי.
+- **4 דליפות policy נמצאו + הוכחו (anon key בלבד):** (1) `order_items.user_own` SELECT qual=true → מחירי־רכישה של כולם [P1]. (2) `user_roles.admin_only` SELECT qual=true → user_id של כל האדמינים [P1]. (3) `fix_items`/`fix_rounds` `anon all` → אנונימי קורא+כותב [P2]. (4) `ohp_*` `allow_all` → אנונימי קורא+כותב [P2].
+- **edge-functions audit:** כל 23 + api/ ניגשים ב-service_role; anonClient רק ל-getUser (אימות JWT). סליקה (create-payment+webhook) = service_role בלבד → RLS לא שובר תשלום.
+- **תוכן־מורים (הפער המקורי):** אי־אפשר לסגור ב-RLS — אגף־המורים (T07) מגיש דרך anon ללא auth (החלטת סער), + כלי־עזר דו־תיוגיים ציבוריים. הגבול נשאר frontend (`publicAudience.ts`). הפרדה אמיתית = פרויקט: עמודת visibility + auth לאגף־מורים. ראה RLS-PLAN §5.
+- **תוצרת (לא־מופעלת):** `supabase/migrations/DO_NOT_APPLY__20260701_rls_hardening.sql` (מגודר: `SET rls_hardening.approved='yes'` נדרש; +rollback), `scripts/rls-audit/{rls-audit.sql,run-audit.sh,anon-probe.sh,README.md}`, `RLS-PLAN.md`. **לא נכנס ל-integration/deploy עד אישור סער.**
