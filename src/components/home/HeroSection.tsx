@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronDown, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroBg from "@/assets/hero-bg-bney-zion.webp";
+import LazyHeroVideo from "@/components/performance/LazyHeroVideo";
 
 const HeroSection = () => {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -10,17 +11,8 @@ const HeroSection = () => {
   return (
     <>
       <section className="relative min-h-[85vh] flex flex-col items-center justify-start overflow-hidden -mt-24">
-        {/* Video Background with image fallback */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover"
-          poster={heroBg}
-        >
-          <source src="/video/hero-bg.mp4" type="video/mp4" />
-        </video>
+        {/* Poster-first, lazily-loaded background video (T11 perf). */}
+        <LazyHeroVideo videoSrc="/video/hero-bg.mp4" poster={heroBg} posterAlt="נוף ארץ ישראל" />
 
         <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/25 to-black/50" />
         <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/60 to-transparent" />

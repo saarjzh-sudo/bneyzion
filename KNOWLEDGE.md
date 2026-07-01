@@ -1,5 +1,14 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## Session T11 perf — 2026-07-01 — הקלת כובד סקלטון ההירו (branch `finish/11-perf`)
+> משימת-ביצועים: דף-הבית לא רץ חלק במחשב כי ההירו טוען וידאו-רקע כבד eager.
+> - **מדידה:** `public/video/hero-bg.mp4` = 9.4MB (1280×720, 30fps, 25.9s, ~2.85Mbps + פס-אודיו 189kbps מיותר כי muted). נטען מיידית ב-`<video autoPlay>` של ההירו החי (`DesignHero` ב-`src/pages/DesignPreviewHome.tsx:193`, שהוא `/`). בלי poster → מסך שחור עד שהוידאו מגיע.
+> - **הקלה 1 — אופטימיזציית מדיה (הזוכה הגדול, בתוך אזור-הבעלות של מדיית-הירו):** מיקוד-מחדש עם ffmpeg → `-an` (הסרת אודיו) + `scale=1280:-2,fps=25` + `libx264 -crf 32 -preset slow -movflags +faststart`. תוצאה: **9.4MB → 1.74MB (‎-82%)**. אומת ב-`vite preview`: `/` מחזיר 200, הוידאו נשלח 1,742,464B `video/mp4`.
+> - **הקלה 2 — poster אמיתי:** `public/video/hero-poster.jpg` (היה placeholder שבור של 9 בייט) → פריים אמיתי מ-@1.2s (צילום-אוויר של מצדה), 1280w, 91KB. מוצג מיידית במקום מסך שחור.
+> - **הקלה 3 — רכיב-ביצועים ל-lazy-load:** רכיב חדש `src/components/performance/LazyHeroVideo.tsx` — poster-first, טוען את ה-`<video>` (`preload="none"`) רק אחרי `requestIdleCallback` + `IntersectionObserver` (rootMargin 200px), fade-in ב-`canplay`. מדלג לגמרי על הוידאו ב-`prefers-reduced-motion` וב-Save-Data/2g (נגישות + חיסכון-דאטה). `fetchPriority="high"` על ה-poster.
+> - **חיווט:** `src/components/home/HeroSection.tsx` (אזור-הבעלות) עבר להשתמש ב-`LazyHeroVideo` במקום `<video>` ישיר. הערה: HeroSection.tsx כרגע קוד-מת (לא מיובא) — ההירו החי הוא `DesignHero`. ה-swap הזהה ל-`DesignHero` מוכן-להחלה ורשום ב-`_DONE.md` תחת "תלות" (הקובץ מחוץ לאזור-הבעלות).
+> - **build:** `npm run build` נקי (tsc -b + vite, 4.6s). SW precache אינו כולל mp4 (globPatterns בלי mp4) → הוידאו נטען on-demand, לכן ‎-7.7MB ישירות בטעינה-הראשונה של דף-הבית.
+
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
 > - **Feature 3 — Multi-rabbi + inline creator add:**
