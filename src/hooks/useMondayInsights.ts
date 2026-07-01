@@ -19,9 +19,23 @@ export interface MonthPoint {
   churn: number;     // אחוז נטישה
 }
 
+export interface DonationCampaign {
+  key: string;
+  label: string;
+  count: number;
+  total: number;
+}
+
+export interface DonationSummary {
+  campaigns: DonationCampaign[];
+  total: number;
+  count: number;
+}
+
 export interface MondayInsights {
   months: MonthPoint[];
   current: MonthPoint | null;
+  donations: DonationSummary | null;
 }
 
 export function useMondayInsights() {
@@ -36,6 +50,7 @@ export function useMondayInsights() {
       return {
         months: (data?.months ?? []) as MonthPoint[],
         current: (data?.current ?? null) as MonthPoint | null,
+        donations: (data?.donations ?? null) as DonationSummary | null,
       };
     },
   });

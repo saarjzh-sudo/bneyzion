@@ -18,6 +18,12 @@
 > - **🐞 תיקון-דיוק קריטי (Dashboard.tsx):** KPI "מנויי פרק שבועי" סינן `.gt("valid_until")` בלבד → **פספס 99 מנויי-לכל-החיים (valid_until=null)** והציג 1 במקום 100. תוקן ל-`.or(valid_until.is.null,valid_until.gt.now)`. אומת מול ה-DB (REST count): null=99, future=1, **active=100**, expired=171, total=271, pending_user_link=268, linked=3.
 > - **פער-סנכרון מתועד (לא באג בקוד):** Monday=281 פעילים (ידני, יואב) · DB=100 פעילים (171 פגי-תוקף מ-Smoove sync soft-delete) · Smoove list=288. רק 3 מנויים מקושרים לחשבון-אתר אמיתי (268 pending — מיובאי-Smoove שלא נרשמו). source-of-truth עסקי = Monday/Smoove; DB משקף את ה-gating.
 > - ✅ tsc נקי · ✅ `npm run build` נקי.
+>
+> ## T01 finish-track (המשך 3) — 2026-06-30 — תרומות Monday + דיוק מעלה-התוכן
+> - **תרומות ב-edge `monday-insights`:** נוסף fetch שני ל-board `5099487161` ("תרומות-קמפיינים Grow live") עם pagination (cursor). מסווג לפי `text_mm4tkcbp` (תיאור עסקה): 'יהושע'→yehoshua, 'סעדיה'→saadia. עמוד "נתוני Monday" מציג כרטיסי-קמפיין + סך. **ממצא:** יהושע ₪18,021/Monday ≈ ₪19,768/DB (מסונכרן), **סעדיה ₪41,785 (352) ב-Grow+Monday אך 0 בטבלת `donations`** — מוצר-סליקת סעדיה לא מחווט ל-webhook האתר. באנר-אזהרה בעמוד.
+> - **דיוק מעלה-התוכן (ContentUpload) — נגד אובדן-תוכן:** (1) `validateStep(2)` מחייב `locationValue` (בלי מיקום → חסום); סדרה-חדשה מחייבת שם. (2) `createSeries` status = `isAdmin ? "active" : "draft"` (היה תמיד draft → הסתיר סדרות-אדמין+שיעוריהן מהסיידבר הציבורי). (3) הסבר-תיוג בשלב-2 + אזהרות-אדום בשלב-4 ל-standalone (נעלם מהעץ) ול-teachers-only (מוסתר מהציבור). מקור: מיפוי הסיידברים — ציבורי מסנן `status in(active,published)` + `not audience_tags cs {teachers}`; מורים לא מסנן status.
+> - **נלמד לסוכן+זיכרון:** `~/.claude/agents/bneyzion-designer.md` (סקציית T01) + memory `project_bneyzion_t01_admin_finish_state` + MEMORY 0c4.
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
 
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):

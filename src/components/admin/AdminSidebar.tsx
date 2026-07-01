@@ -79,7 +79,7 @@ const SECTIONS: NavSection[] = [
     label: "נתונים ותקשורת",
     items: [
       { title: "אנליטיקס",       url: "/admin/analytics",     icon: BarChart3, roles: ADMIN },
-      { title: "מנויים · Monday", url: "/admin/budget",        icon: Wallet,    roles: ADMIN },
+      { title: "נתוני Monday",    url: "/admin/budget",        icon: Wallet,    roles: ADMIN },
       { title: "הודעות",         url: "/admin/messages",      icon: Mail,      roles: ADMIN },
       { title: "התראות",         url: "/admin/notifications", icon: Bell,      roles: ADMIN },
     ],

@@ -202,7 +202,9 @@ const ContentUpload = () => {
         .from("series")
         .insert({
           title,
-          status: "draft",
+          // אדמין יוצר סדרה פעילה (מופיעה מיד בעץ); יוצר → draft עד אישור.
+          // status="draft" הסתיר סדרות-אדמין חדשות + כל שיעוריהן מהסיידבר.
+          status: isAdmin ? "active" : "draft",
           audience_tags: form.audienceTags,
           // Fix: attach parent_id from the picker node — previously always missing (orphan bug)
           parent_id: parentId || null,
@@ -324,6 +326,24 @@ const ContentUpload = () => {
     if (s === 1 && !form.title.trim()) {
       setStepErrors(e => ({ ...e, 1: "נא להזין כותרת" }));
       return false;
+    }
+    if (s === 2) {
+      // חובה לבחור מיקום בעץ — אחרת התוכן "נעלם" (לא מופיע בסיידבר)
+      if (!locationValue) {
+        setStepErrors(e => ({ ...e, 2: "נא לבחור מיקום לתוכן בעץ הניווט (או בחר במפורש 'שיעור עצמאי')" }));
+        return false;
+      }
+      if (
+        locationValue.mode === "new_series_in_node" &&
+        !(locationValue.seriesTitle?.trim() || form.newSeriesTitle.trim())
+      ) {
+        setStepErrors(e => ({ ...e, 2: "הזן שם לסדרה החדשה" }));
+        return false;
+      }
+      // תיוג teachers בלי general = יוסתר מהעץ הציבורי — דורש אישור מודע
+      if (form.audienceTags.includes("teachers") && !form.audienceTags.includes("general")) {
+        // מותר, אבל נזהיר בשלב הסקירה (לא חוסם)
+      }
     }
     setStepErrors(e => { const n = { ...e }; delete n[s]; return n; });
     return true;
@@ -762,6 +782,16 @@ const ContentUpload = () => {
                     );
                   })}
                 </div>
+                <div
+                  className="flex items-start gap-2 mt-2.5 p-2.5 rounded-lg text-xs"
+                  style={{ background: "#F0FDF4", color: "#166534" }}
+                >
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  <span>
+                    <strong>כללי</strong> = מופיע בעץ הניווט הציבורי. <strong>מורים</strong> = מופיע באגף המורים.
+                    תיוג <strong>מורים בלבד</strong> (בלי כללי) יסתיר את התוכן מהאתר הציבורי.
+                  </span>
+                </div>
               </div>
             </div>
           )}
@@ -953,15 +983,30 @@ const ContentUpload = () => {
                 )}
               </div>
 
-              {/* standalone warning */}
-              {locationValue?.mode === "standalone" && (
+              {/* standalone warning — red: content will be invisible in the site tree */}
+              {(locationValue?.mode === "standalone" || !locationValue) && (
                 <div
                   className="flex items-start gap-3 p-4 rounded-xl"
-                  style={{ background: "#FFFBEB", border: "1px solid #FDE68A" }}
+                  style={{ background: "#FEE2E2", border: "1px solid #FCA5A5" }}
+                >
+                  <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "#DC2626" }} />
+                  <p className="text-sm" style={{ color: "#991B1B" }}>
+                    <strong>שיעור ללא סדרה לא יופיע בעץ הניווט של האתר</strong> — גם מנויים לא ימצאו אותו.
+                    מומלץ לחזור לשלב "שיוך" ולבחור סדרה. אפשר גם לשייך מאוחר יותר.
+                  </p>
+                </div>
+              )}
+
+              {/* teachers-only warning — hidden from the public tree */}
+              {form.audienceTags.includes("teachers") && !form.audienceTags.includes("general") && (
+                <div
+                  className="flex items-start gap-3 p-4 rounded-xl"
+                  style={{ background: "#FEF3C7", border: "1px solid #FDE68A" }}
                 >
                   <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "#D97706" }} />
                   <p className="text-sm" style={{ color: "#92400E" }}>
-                    שיעור ללא סדרה לא יופיע בעץ הניווט של האתר. ניתן להוסיף לסדרה מאוחר יותר.
+                    התוכן מתויג <strong>מורים בלבד</strong> — יופיע רק באגף המורים ולא בעץ הציבורי.
+                    להצגה גם לציבור, הוסף גם את התיוג "כללי".
                   </p>
                 </div>
               )}

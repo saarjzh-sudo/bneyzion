@@ -13,6 +13,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Users, Banknote, UserPlus, UserMinus, PlugZap, Loader2, TrendingUp,
+  HeartHandshake, Gift, AlertTriangle,
 } from "lucide-react";
 import {
   AreaChart, Area, BarChart, Bar, LineChart, Line,
@@ -111,16 +112,18 @@ export default function Budget() {
   const { data, isLoading, error } = useMondayInsights();
   const months: MonthPoint[] = data?.months ?? [];
   const cur = data?.current;
+  const donations = data?.donations;
 
   const chartData = months.map((m) => ({ ...m, label: heMonth(m.month) }));
+  const campaignColor: Record<string, string> = { yehoshua: C.navy, saadia: C.teal, other: C.textSubtle };
 
   return (
     <AdminLayout>
       <div className="space-y-8 pb-12" dir="rtl">
         <div>
-          <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>מנויי הפרק השבועי — Monday</h1>
+          <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>נתוני Monday — מנויים ותרומות</h1>
           <p className="font-ploni mt-1" style={{ color: C.textMuted }}>
-            צמיחה, הכנסה חוזרת ונטישה — חי מלוח ה-Monday של בני ציון
+            צמיחת מנויים, הכנסה חוזרת, נטישה וסיכום תרומות — חי מלוחות ה-Monday של בני ציון
           </p>
         </div>
 
@@ -201,9 +204,64 @@ export default function Budget() {
               </ChartCard>
             </div>
 
+            {/* ── Donations by campaign ── */}
+            {donations && donations.count > 0 && (
+              <div className="pt-4">
+                <h2 className="text-2xl font-kedem font-bold flex items-center gap-2 mb-1" style={{ color: C.navy }}>
+                  <HeartHandshake className="w-6 h-6" style={{ color: C.gold }} aria-hidden />
+                  תרומות לפי קמפיין
+                </h2>
+                <p className="font-ploni mb-4" style={{ color: C.textMuted }}>
+                  סך {donations.count.toLocaleString()} תרומות · ₪{donations.total.toLocaleString()} — מלוח ה-Grow ב-Monday
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                  {donations.campaigns
+                    .filter((c) => c.count > 0)
+                    .map((c) => (
+                      <div
+                        key={c.key}
+                        className="rounded-2xl border p-5 flex flex-col gap-2"
+                        style={{
+                          background: C.parchment, borderColor: C.goldShimmer,
+                          borderInlineStartWidth: "4px",
+                          borderInlineStartColor: campaignColor[c.key] ?? C.gold,
+                          borderInlineStartStyle: "solid",
+                        }}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-sm font-ploni" style={{ color: C.textMuted }}>{c.label}</span>
+                          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: (campaignColor[c.key] ?? C.gold) + "18" }}>
+                            <Gift className="w-4.5 h-4.5" style={{ color: campaignColor[c.key] ?? C.gold }} aria-hidden />
+                          </div>
+                        </div>
+                        <span className="text-3xl font-kedem font-bold" style={{ color: C.text }}>{shekel(c.total)}</span>
+                        <span className="text-xs font-ploni" style={{ color: C.textSubtle }}>{c.count.toLocaleString()} תרומות</span>
+                      </div>
+                    ))}
+                </div>
+
+                {/* Sync-gap flag: Saadia lives in Grow+Monday but not in the site DB */}
+                {donations.campaigns.some((c) => c.key === "saadia" && c.total > 0) && (
+                  <div
+                    className="flex items-start gap-3 rounded-xl p-4"
+                    style={{ background: "#FEF3C7", border: `1px solid ${C.goldShimmer}` }}
+                    dir="rtl"
+                  >
+                    <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" style={{ color: C.gold }} aria-hidden />
+                    <p className="text-sm font-ploni leading-relaxed" style={{ color: "#92400E" }}>
+                      <strong>שים לב לפער-סנכרון:</strong> תרומות קמפיין סעדיה נכנסות ל-Grow ומופיעות כאן (מ-Monday),
+                      אך <strong>אינן נשמרות בטבלת ה-donations של האתר</strong> (שם רק קמפיין יהושע). כדי לאחד — צריך לחווט
+                      את מוצר-הסליקה של סעדיה ל-webhook של האתר (<code>payment_products</code>).
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
+
             <p className="text-xs font-ploni text-center flex items-center justify-center gap-1.5" style={{ color: C.textSubtle }}>
               <TrendingUp className="w-3.5 h-3.5" aria-hidden />
-              מקור: Monday · לוח "היסטוריית מנויים חודשית" · {months.length} חודשים
+              מקור: Monday · מנויים ({months.length} חודשים) + תרומות (Grow live)
             </p>
           </>
         )}
