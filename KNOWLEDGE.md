@@ -7776,3 +7776,12 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **בדיקה:** build נקי (tsc+vite). Playwright fullpage+mobile+per-section screenshots, **0 console errors**. (וידאו הירו/ריל רצים; preview-MCP חסום ע"י פרוקסי — צילום דרך Chrome headless direct://.)
 
 **פתוח לאישור סער:** (1) שם ההנצחה המדויק. (2) "סעיף 46 / מכלל יופי ע"ר" — הבטחה משפטית, לאמת. (3) האם הריל של יהושע (השקת ספר) מתאים לדף התרומות הכללי או להחליף בריל כללי.
+
+## 2026-07-01 · T05 v6 — הסרת ריל + שדרוג עיצוב (נוף נע, אאורה, גוונים עדינים)
+
+- **הוסר** סקשן הריל של יהושע (ספציפי מדי לספר, לבקשת סער).
+- **הירו** — overlay מרוכך (הנוף "נושם"), slow Ken-Burns zoom על הווידאו (`heroZoom` 26s), radial vignette מאחורי הטקסט, כותרת גדולה יותר + `hero-gold-shimmer` (גרדיאנט זהב נע).
+- **CTA סופי** — bookend של נוף נע (אותו `hero-bg.mp4`) עם overlay twilight אלגנטי (navy רך, לא חום עכור).
+- **Ambient** — קומפוננטה חדשה: 3 בועות aurora רדיאליות שנעות לאט (`auroraDrift1/2/3`) + grain עדין (SVG feTurbulence, soft-light). מוזרק בהירו, impact, testimonials, ו-CTA סופי → "רקע שזז" עדין.
+- **גוונים עדינים** — מסגרות/צללים רכים יותר, גרדיאנטים בין סקשנים, Ken-Burns hover על תמונת הרב יואב.
+- כל האנימציות מכובות תחת `prefers-reduced-motion`. build נקי, 0 console errors.
