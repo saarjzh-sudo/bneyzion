@@ -8,6 +8,7 @@
 > - **הקלה 3 — רכיב-ביצועים ל-lazy-load:** רכיב חדש `src/components/performance/LazyHeroVideo.tsx` — poster-first, טוען את ה-`<video>` (`preload="none"`) רק אחרי `requestIdleCallback` + `IntersectionObserver` (rootMargin 200px), fade-in ב-`canplay`. מדלג לגמרי על הוידאו ב-`prefers-reduced-motion` וב-Save-Data/2g (נגישות + חיסכון-דאטה). `fetchPriority="high"` על ה-poster.
 > - **חיווט:** `src/components/home/HeroSection.tsx` (אזור-הבעלות) עבר להשתמש ב-`LazyHeroVideo` במקום `<video>` ישיר. הערה: HeroSection.tsx כרגע קוד-מת (לא מיובא) — ההירו החי הוא `DesignHero`. ה-swap הזהה ל-`DesignHero` מוכן-להחלה ורשום ב-`_DONE.md` תחת "תלות" (הקובץ מחוץ לאזור-הבעלות).
 > - **build:** `npm run build` נקי (tsc -b + vite, 4.6s). SW precache אינו כולל mp4 (globPatterns בלי mp4) → הוידאו נטען on-demand, לכן ‎-7.7MB ישירות בטעינה-הראשונה של דף-הבית.
+> - **הוחל להירו החי (באישור סער):** `src/pages/DesignPreviewHome.tsx` (`DesignHero`, שורה ~193) עבר מ-`<video>` inline ל-`<LazyHeroVideo>` עם poster `/video/hero-poster.jpg`. אומת: `requestIdleCallback`+`hero-poster.jpg` נמצאים ב-chunk הראשי (`main-*.js`) → הרכיב נשלח בפועל לדף-הבית (לא tree-shaken). build נקי, `/`→200.
 
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
