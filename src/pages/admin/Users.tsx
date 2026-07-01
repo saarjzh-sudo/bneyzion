@@ -13,7 +13,7 @@ import { Shield, Users as UsersIcon, Crown, UserCheck, UserX, CreditCard, Ban, C
 import {
   useProfiles, useUserRoles, useAddRole, useRemoveRole, useCommunityMembers,
   useUpdateMemberTier, useUpdateMemberStatus, useAccessTags, useGrantAccessTag, useRevokeAccessTag,
-  type Profile, type AccessTag,
+  useCourseEnrollments, type Profile, type AccessTag,
 } from "@/hooks/useUsers";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
@@ -123,6 +123,7 @@ export default function Users() {
   const { data: roles } = useUserRoles();
   const { data: members, isLoading: membersLoading } = useCommunityMembers();
   const { data: accessTags } = useAccessTags();
+  const { data: enrollments } = useCourseEnrollments();
   const addRole = useAddRole();
   const removeRole = useRemoveRole();
   const updateTier = useUpdateMemberTier();
@@ -140,6 +141,8 @@ export default function Users() {
     (accessTags ?? []).filter(
       (t) => (t.user_id === userId || (email && t.email === email)) && isTagActive(t),
     );
+  const getUserCourses = (userId: string) =>
+    (enrollments ?? []).filter((e) => e.user_id === userId && e.status !== "dropped").length;
 
   const handleRevokeAccess = async (id: string) => {
     try {
@@ -332,6 +335,12 @@ export default function Users() {
                                     {tagLabel(t.tag)} ✕
                                   </Badge>
                                 ))}
+                                {getUserCourses(p.id) > 0 && (
+                                  <Badge variant="secondary" className="text-[11px] gap-1">
+                                    <GraduationCap className="h-3 w-3" />
+                                    {getUserCourses(p.id)} קורסים
+                                  </Badge>
+                                )}
                                 <Button
                                   variant="ghost"
                                   size="sm"

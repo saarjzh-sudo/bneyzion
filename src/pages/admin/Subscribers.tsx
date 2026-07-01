@@ -60,6 +60,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+import { useMondayInsights } from "@/hooks/useMondayInsights";
+import { RefreshCw, AlertTriangle } from "lucide-react";
 
 /* ─── Color tokens — same as Payments.tsx ─────────────────────── */
 const C = {
@@ -526,6 +528,20 @@ export default function Subscribers() {
     (r) => new Date(r.created_at).getTime() >= Date.now() - 30 * 86400000,
   ).length;
 
+  /* ── Source reconciliation: Monday vs DB vs Smoove ── */
+  const qc = useQueryClient();
+  const { data: monday } = useMondayInsights();
+  const mondayActive = monday?.current?.active ?? null;
+  const smooveOrigin = rows.filter((r) => (r.source ?? "").startsWith("smoove") && isActive(r)).length;
+  const growOrigin   = rows.filter((r) => (r.source ?? "").startsWith("grow") && isActive(r)).length;
+  const adminOrigin  = rows.filter((r) => (r.source ?? "") === "admin" && isActive(r)).length;
+  const mondayGap = mondayActive != null ? mondayActive - kpiActive : null;
+  const refreshAll = () => {
+    qc.invalidateQueries({ queryKey: ["admin-subscribers"] });
+    qc.invalidateQueries({ queryKey: ["monday-insights"] });
+    toast.success("הנתונים רועננו מ-DB ו-Monday");
+  };
+
   /* Filtered table */
   const filtered = useMemo(() => {
     return rows.filter((r) => {
@@ -695,6 +711,58 @@ export default function Subscribers() {
             sub="valid_until עבר"
             accent={C.red}
           />
+        </div>
+
+        {/* ── Source reconciliation: Monday vs DB vs Smoove ── */}
+        <div
+          style={{
+            background: "white", border: `1.5px solid ${C.border}`, borderRadius: 16,
+            padding: "18px 20px", display: "flex", flexDirection: "column", gap: 14,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, flexWrap: "wrap" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ fontSize: 16, fontWeight: 800, color: C.navy, fontFamily: "var(--font-display, serif)" }}>פיוס מקורות — מנויים פעילים</span>
+            </div>
+            <button
+              onClick={refreshAll}
+              style={{ display: "flex", alignItems: "center", gap: 6, background: C.parchment, border: `1.5px solid ${C.border}`, borderRadius: 10, padding: "6px 14px", fontSize: 13, fontWeight: 700, color: C.gold, cursor: "pointer" }}
+            >
+              <RefreshCw size={14} /> רענן
+            </button>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
+            {[
+              { label: "Monday (רשמי)", value: mondayActive ?? "—", note: monday ? "לוח יואב" : "edge לא פרוס", accent: C.navy },
+              { label: "DB (אתר)", value: isLoading ? "…" : kpiActive, note: "user_access_tags", accent: C.gold },
+              { label: "מקור Smoove", value: isLoading ? "…" : smooveOrigin, note: "ייבוא/סנכרון", accent: C.green },
+              { label: "מקור Grow", value: isLoading ? "…" : growOrigin, note: "תשלום ישיר", accent: C.blue },
+              { label: "מקור אדמין", value: isLoading ? "…" : adminOrigin, note: "הוזן ידנית", accent: C.amber },
+            ].map((s) => (
+              <div key={s.label} style={{ background: C.parchment, borderRadius: 12, padding: "12px 14px", borderInlineStart: `3px solid ${s.accent}` }}>
+                <div style={{ fontSize: 12, color: C.textMuted, marginBottom: 4 }}>{s.label}</div>
+                <div style={{ fontSize: 26, fontWeight: 900, color: C.navy, lineHeight: 1 }}>{s.value}</div>
+                <div style={{ fontSize: 11, color: C.textSubtle, marginTop: 3 }}>{s.note}</div>
+              </div>
+            ))}
+          </div>
+
+          {mondayGap != null && Math.abs(mondayGap) >= 5 && (
+            <div style={{ display: "flex", alignItems: "flex-start", gap: 10, background: C.amberBg, border: `1px solid ${C.goldShimmer}`, borderRadius: 10, padding: "10px 14px" }}>
+              <AlertTriangle size={18} color={C.amber} style={{ flexShrink: 0, marginTop: 1 }} />
+              <span style={{ fontSize: 13, color: C.amber, lineHeight: 1.5 }}>
+                פער של <strong>{Math.abs(mondayGap)}</strong> בין Monday ({mondayActive}) ל-DB ({kpiActive}).
+                Monday מתוחזק ידנית ע"י יואב; ה-DB משקף את סנכרון-Smoove (מנויים שפג-תוקפם סומנו soft-delete).
+                החלט מי המספר הרשמי — או השווה מול רשימת Smoove (288) ליישוב.
+              </span>
+            </div>
+          )}
+          {monday == null && (
+            <div style={{ fontSize: 12, color: C.textSubtle }}>
+              נתוני Monday יופיעו כאן לאחר פריסת edge <code>monday-insights</code>. הסנכרון מ-Smoove רץ אוטומטית מדי שעה (cron).
+            </div>
+          )}
         </div>
 
         {/* Toolbar */}

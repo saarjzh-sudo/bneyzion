@@ -24,6 +24,14 @@
 > - **דיוק מעלה-התוכן (ContentUpload) — נגד אובדן-תוכן:** (1) `validateStep(2)` מחייב `locationValue` (בלי מיקום → חסום); סדרה-חדשה מחייבת שם. (2) `createSeries` status = `isAdmin ? "active" : "draft"` (היה תמיד draft → הסתיר סדרות-אדמין+שיעוריהן מהסיידבר הציבורי). (3) הסבר-תיוג בשלב-2 + אזהרות-אדום בשלב-4 ל-standalone (נעלם מהעץ) ול-teachers-only (מוסתר מהציבור). מקור: מיפוי הסיידברים — ציבורי מסנן `status in(active,published)` + `not audience_tags cs {teachers}`; מורים לא מסנן status.
 > - **נלמד לסוכן+זיכרון:** `~/.claude/agents/bneyzion-designer.md` (סקציית T01) + memory `project_bneyzion_t01_admin_finish_state` + MEMORY 0c4.
 > - ✅ tsc נקי · ✅ `npm run build` נקי.
+>
+> ## T01 finish-track (המשך 4) — 2026-07-01 — כנסים + סנכרון + מייל + פוליש
+> - **טבלת `events` נוצרה בפרודקשן** (Management PAT, אומת): slug/title/subtitle/event_date/location/hero_url/body/is_active/registrations_count/views_count/sort_order. RLS: ציבור קורא `is_active`, admin הכל (`has_role`). `enum app_role` **כבר כלל `creator`** — לא נדרש ALTER.
+> - **כנסים CRUD:** `src/hooks/useEvents.ts` + `src/pages/admin/Kenes.tsx` (list/create/edit/toggle/delete) + פריט "כנסים" בסיידבר (קבוצת "אתר"). route `/admin/kenes` = צריך App.tsx (T14).
+> - **דשבורד-סנכרון מאוחד ב-Subscribers:** כרטיס "פיוס מקורות" — Monday(רשמי, מ-`useMondayInsights`) מול DB(active) מול פירוק-מקור (smoove/grow/admin) + התראת-פער כשההפרש≥5 + כפתור "רענן" (invalidate). מסביר שהפער נובע מ-Monday-ידני מול Smoove-soft-delete.
+> - **מייל מהאדמין:** edge `send-smoove-email` (משתמש ב-`SMOOVE_API_KEY` הקיים; ⚠️ נתיב `/v1/Emails/Transactional` צריך אימות מול Smoove, אחרת Resend/SES). Messages קיבל שדה-מענה + כפתור "שלח דרך המערכת" (mailto "השב במייל" כבר היה).
+> - **פוליש:** Users מציג "N קורסים" (`course_enrollments`) בעמודת-גישות · Rabbis שם+תואר inline-edit (`InlineEditField`).
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
 
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):

@@ -13,6 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Plus, Search, Pencil, Trash2 } from "lucide-react";
 import { useRabbis, useCreateRabbi, useUpdateRabbi, useDeleteRabbi } from "@/hooks/useRabbis";
 import { useToast } from "@/hooks/use-toast";
+import { InlineEditField } from "@/components/admin/InlineEditField";
 
 export default function Rabbis() {
   const { data: rabbis, isLoading } = useRabbis();
@@ -106,10 +107,22 @@ export default function Rabbis() {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <Avatar className="h-8 w-8"><AvatarImage src={r.image_url || ""} /><AvatarFallback className="text-xs">{r.name[0]}</AvatarFallback></Avatar>
-                          <span className="font-medium">{r.name}</span>
+                          <InlineEditField
+                            value={r.name}
+                            ariaLabel="שם הרב"
+                            onSave={(v) => updateRabbi.mutateAsync({ id: r.id, name: v })}
+                          />
                         </div>
                       </TableCell>
-                      <TableCell>{r.title || "—"}</TableCell>
+                      <TableCell>
+                        <InlineEditField
+                          value={r.title || ""}
+                          ariaLabel="תואר הרב"
+                          allowEmpty
+                          placeholder="—"
+                          onSave={(v) => updateRabbi.mutateAsync({ id: r.id, title: v })}
+                        />
+                      </TableCell>
                       <TableCell>{r.specialty || "—"}</TableCell>
                       <TableCell><Badge variant={r.status === "active" ? "default" : "secondary"}>{r.status === "active" ? "פעיל" : "לא פעיל"}</Badge></TableCell>
                       <TableCell>{r.lesson_count}</TableCell>

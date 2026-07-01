@@ -120,6 +120,28 @@ export function useRevokeAccessTag() {
   });
 }
 
+export interface Enrollment {
+  id: string;
+  user_id: string;
+  course_id: string;
+  status: string | null;
+  completed: boolean | null;
+}
+
+/** כל ההרשמות לקורסים — לזיהוי "קוני קורסים" לכל משתמש */
+export function useCourseEnrollments() {
+  return useQuery({
+    queryKey: ["admin-course-enrollments"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("course_enrollments")
+        .select("id, user_id, course_id, status, completed");
+      if (error) throw error;
+      return (data ?? []) as unknown as Enrollment[];
+    },
+  });
+}
+
 export function useCommunityMembers() {
   return useQuery({
     queryKey: ["admin-community-members"],
