@@ -62,7 +62,7 @@ function Kicker({ children, on = "light", center = false }: { children: React.Re
 function Reveal({ children, delay = 0, className = "", style }: { children: React.ReactNode; delay?: number; className?: string; style?: React.CSSProperties }) {
   const { ref, visible } = useScrollReveal();
   return (
-    <div ref={ref as any} className={`bz-donate-reveal ${visible ? "bz-revealed" : ""} ${className}`} style={{ ...style, transitionDelay: `${delay}ms` }}>
+    <div ref={ref as any} className={`rv ${visible ? "in" : ""} ${className}`} style={{ ...style, transitionDelay: `${delay}ms` }}>
       {children}
     </div>
   );
@@ -113,10 +113,7 @@ export default function DesignPreviewDonate() {
         <button type="button" onClick={scrollToForm} className="btn-primary">לתרומה</button>
       </div>
 
-      {/* Cinematic opening — landscape video, fades into the story (restored 2.7.2026) */}
-      <Hero />
-
-      {/* Story + sticky form */}
+      {/* Opening — story + sticky form (the page starts here) */}
       <section style={{ background: C.cream, padding: "clamp(2.25rem, 5vw, 3.75rem) 2rem clamp(4rem, 8vw, 6.5rem)" }} dir="rtl">
         <div className="donate-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr minmax(370px, 440px)", gap: "clamp(2.5rem, 5vw, 5rem)", alignItems: "start" }}>
           <Story />
@@ -138,59 +135,14 @@ export default function DesignPreviewDonate() {
 }
 
 // ───────────────────────────────────────────────────────────
-// Hero — cinematic opening over the Judean-desert footage
-// ───────────────────────────────────────────────────────────
-
-function Hero() {
-  return (
-    <section className="hero" dir="rtl" aria-label="פתיח — הצטרפות לשותפות">
-      <video
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster="/video/hero-poster.jpg"
-        aria-hidden="true"
-        className="hero-video"
-      >
-        <source src={IMAGES.heroVideo} type="video/mp4" />
-      </video>
-      <div aria-hidden="true" className="hero-scrim-1" />
-      <div aria-hidden="true" className="hero-scrim-2" />
-      <div aria-hidden="true" className="hero-fade-bottom" />
-      <div className="hero-inner">
-        <div className="hero-copy">
-          <div className="hero-fade-up d1"><Kicker on="dark">שותפים לבית התנ״ך</Kicker></div>
-          <h1 className="hero-title hero-fade-up d2">
-            היו שותפים
-            <span className="hero-title-gold">להפצת אור התנ״ך</span>
-          </h1>
-          <p className="hero-lead hero-fade-up d3">
-            אלפי שיעורים, מאות רבנים, בית שלם של תורה — פתוח בחינם לכל יהודי.
-            זה קורה בזכות אנשים שבוחרים להחזיק אותו.
-          </p>
-          <div className="hero-actions hero-fade-up d4">
-            <PrimaryBtn onClick={scrollToForm} dark>אני מצטרף</PrimaryBtn>
-            <button type="button" className="text-link on-dark" onClick={() => scrollTo("donate-why")}>
-              איך התרומה פועלת?
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ───────────────────────────────────────────────────────────
-// Story + Rav Yoav photo (asymmetric)
+// Story + Rav Yoav photo (asymmetric) — the page opener
 // ───────────────────────────────────────────────────────────
 
 function Story() {
   return (
     <Reveal>
-      <Kicker>הסיפור שלנו</Kicker>
-      <H2>בית של תנ״ך,<br />פתוח לכל יהודי</H2>
+      <Kicker>שותפים לבית התנ״ך</Kicker>
+      <H2 big>היו שותפים איתנו<br />להפצת אור התנ״ך!</H2>
 
       <figure className="yoav-figure">
         <div className="yoav-frame">
@@ -218,7 +170,7 @@ function Story() {
 
 function WhySection() {
   return (
-    <section id="donate-why" style={{ background: C.paper, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "clamp(4rem, 7vw, 6rem) 2rem" }} dir="rtl">
+    <section style={{ background: C.paper, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "clamp(4rem, 7vw, 6rem) 2rem" }} dir="rtl">
       <div className="why-grid" style={{ maxWidth: 1180, margin: "0 auto" }}>
         {WHY_CARDS.map((c, i) => (
           <Reveal key={c.n} delay={i * 90}>
@@ -445,9 +397,8 @@ function PageStyles() {
       @keyframes heroZoom { from { transform: scale(1.03); } to { transform: scale(1.13); } }
       @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
 
-      /* שמות ייחודיים בכוונה — SDK של Grow/משולם מזריק CSS גלובלי ושמות קצרים מתנגשים */
-      .bz-donate-reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.9s ${EASE}, transform 0.9s ${EASE}; }
-      .bz-donate-reveal.bz-revealed { opacity: 1; transform: none; }
+      .rv { opacity: 0; transform: translateY(32px); transition: opacity 0.9s ${EASE}, transform 0.9s ${EASE}; }
+      .rv.in { opacity: 1; transform: none; }
 
       /* Buttons */
       .btn-primary { display: inline-block; padding: 0.95rem 2.1rem; border: none; border-radius: 3px; background: ${C.gold}; color: ${C.cream}; font-family: ${fonts.body}; font-weight: 700; font-size: 0.98rem; letter-spacing: 0.02em; cursor: pointer; transition: background 0.4s ${EASE}, transform 0.4s ${EASE}; }
@@ -558,7 +509,7 @@ function PageStyles() {
       }
 
       @media (prefers-reduced-motion: reduce) {
-        .bz-donate-reveal, .hero-fade-up, .hero-video, .yoav-photo { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
+        .rv, .hero-fade-up, .hero-video, .yoav-photo { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; }
       }
     `}</style>
   );
