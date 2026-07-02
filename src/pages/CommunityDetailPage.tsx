@@ -2,7 +2,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Calendar, Video, Play, Lock, Users, BookOpen, ArrowRight, CheckCircle2, ChevronLeft, Headphones, FileText, ShieldAlert } from "lucide-react";
+import { Calendar, Video, Play, Lock, Users, BookOpen, ArrowRight, CheckCircle2, ChevronLeft, Headphones, FileText, ShieldAlert, Crown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCourseDetail, useCourseSessions, useCourseEnrollment, useEnrollInCourse } from "@/hooks/useCourseEnrollment";
 import { useCourseLessons, useMemberAccess } from "@/hooks/useCommunity";
@@ -68,11 +68,22 @@ const CommunityDetailPage = () => {
   const upcomingSessions = sessions.filter((s: any) => s.status === "upcoming" && new Date(s.session_date) >= new Date());
   const pastSessions = sessions.filter((s: any) => s.is_recorded || s.status === "completed");
 
+  const isPaidCourse = !!course?.price && course.price > 0;
+
   const handleEnroll = () => {
     if (!user) return;
+    // Guard: free enrollment must never grant access to a paid course.
+    // Paid standalone community courses are not wired to a payment_product yet —
+    // their access runs through the weekly-chapter subscription. Until a product
+    // is configured per course, route paid courses to the subscription page
+    // instead of silently inserting a free enrollment row.
+    if (isPaidCourse) {
+      toast.info("הקורס הזה פתוח למנויי התכנית — אפשר להצטרף כאן");
+      return;
+    }
     enrollMutation.mutate(id!, {
       onSuccess: () => toast.success("נרשמת בהצלחה לקורס!"),
-      onError: () => toast.error("שגיאה בהרשמה"),
+      onError: () => toast.error("ההרשמה לא הושלמה, אפשר לנסות שוב"),
     });
   };
 
@@ -98,10 +109,10 @@ const CommunityDetailPage = () => {
     return (
       <Layout>
         <div className="min-h-[70vh] flex items-center justify-center px-4" dir="rtl">
-          <Card className="w-full max-w-md border-2 border-primary/20 shadow-lg">
+          <Card className="w-full max-w-md border-2 border-gold/30 shadow-lg">
             <CardContent className="p-8 text-center space-y-5">
-              <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
-                <Lock className="h-8 w-8 text-primary" />
+              <div className="h-16 w-16 rounded-2xl bg-gold/15 flex items-center justify-center mx-auto">
+                <Lock className="h-8 w-8 text-gold" />
               </div>
               <div className="space-y-2">
                 <h2 className="text-2xl font-heading text-foreground">{course.title}</h2>
@@ -143,11 +154,18 @@ const CommunityDetailPage = () => {
       <section className="relative overflow-hidden py-14 md:py-20">
         <div className="absolute inset-0">
           {course.image_url ? (
-            <img src={course.image_url} alt="" className="w-full h-full object-cover" loading="lazy" />
+            <>
+              <img src={course.image_url} alt="" className="w-full h-full object-cover" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+            </>
           ) : (
-            <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5" />
+            // No cover image (current default for all courses) — premium deep-warm
+            // gradient so the white hero text keeps strong contrast and looks intentional.
+            <>
+              <div className="w-full h-full bg-gradient-to-br from-primary via-mahogany to-primary/85" />
+              <div className="pointer-events-none absolute -top-16 right-1/4 h-64 w-64 rounded-full bg-gold/20 blur-3xl" aria-hidden="true" />
+            </>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
         </div>
         <div className="container relative z-10">
           <Link to="/community" className="inline-flex items-center gap-1.5 text-white/70 hover:text-white text-sm mb-6 transition-colors">
@@ -193,10 +211,19 @@ const CommunityDetailPage = () => {
 
             {/* Enroll CTA */}
             {!isEnrolled && user && (
-              <Button size="lg" onClick={handleEnroll} disabled={enrollMutation.isPending} className="gap-2 text-base px-8">
-                <Users className="h-4 w-4" />
-                {course.price && course.price > 0 ? `הירשם — ₪${course.price}` : "הירשם חינם"}
-              </Button>
+              isPaidCourse ? (
+                <Button asChild size="lg" className="gap-2 text-base px-8 bg-gold text-primary hover:bg-gold/90">
+                  <Link to="/chapter-weekly">
+                    <Crown className="h-4 w-4" />
+                    הצטרפות לתכנית — ₪{course.price}
+                  </Link>
+                </Button>
+              ) : (
+                <Button size="lg" onClick={handleEnroll} disabled={enrollMutation.isPending} className="gap-2 text-base px-8">
+                  <Users className="h-4 w-4" />
+                  הירשם חינם
+                </Button>
+              )
             )}
             {!user && (
               <SmartAuthCTA variant="enroll" compact />
