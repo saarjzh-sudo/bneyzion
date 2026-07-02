@@ -7980,3 +7980,22 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **Build:** `npm run build` (tsc -b + vite) — נקי. dev-server: כל המודולים transform 200. (אזהרת chunk>500kB = קדם-קיימת, שייכת ל-T11.)
 
 - **T10 addendum (2.7.2026, החלטת-סער):** `/series/:id` מנותב ל-`DesignPreviewSeriesPageV2` (לא SeriesPagePublic — שם מיובא-אך-לא-מנותב). הוסף eyebrow "סדרת לימוד" (gold-shimmer, קריא על ההירו-תמונה הכהה) → הבחנה מפורשת מול "אוסף" של הקטגוריה. נגיעה בשכבת-הירו בלבד. `/series`→SeriesLibrary, `/category/:id`→CategoryPage.
+## T09 — מערכת באנרים/פופאפים/כנסים גלובלית (1.7.2026)
+
+**מטרה:** מערכת promo אחת לכל האתר עם ניהול מ-DB, **כבויה-כברירת-מחדל בדפי-מוצר ובדפי-למידה** (שלא יקפוץ פופאפ באמצע קנייה/שיעור).
+
+**ארכיטקטורה — קומפוננטה חדשה `src/components/promo/**` + הזרקה אחת ב-`Layout.tsx`:**
+- `types.ts` — טיפוס `Promo` (מראה 1:1 לטבלת `promos`).
+- `promoRoutes.ts` — רשימות-מסלולים: PRODUCT (`/store /product /course /courses /checkout /community /design-my-courses`), LEARNING (`/lessons /portal /program /chapter-weekly /teachers/lesson`), BLOCKED (`/admin /auth /portal-login /design- /dev-pages` — שם אין promo כלל).
+- `promoDismissal.ts` — מונע-הופעה-חוזרת ב-localStorage/sessionStorage לפי `frequency` (always/session/once/daily), עטוף try/catch (מצב-פרטי לא מפיל).
+- `usePromos.ts` — hook react-query, **דאטה אמיתי מ-Supabase**, fail-soft: טבלה חסרה/שגיאה → `[]` (retry:false). כולל `isWithinSchedule` + `matchesAudience`.
+- `promoTheme.ts` — מיפוי theme (gold/olive/navy) ל-designTokens, בלי hex אד-הוק.
+- `PromoBanner.tsx` — רצועה עליונה שקטה (מותרת בכל דף). `PromoConferenceStrip.tsx` — רצועת-כנס. `PromoPopup.tsx` — מודל עם focus-trap+ESC+scroll-lock+backdrop-close.
+- `PromoProvider.tsx` — המתזמר: קורא route, מסנן (schedule/audience/frequency), בוחר promo אחד לכל surface, **מכבה פופאפ** אם `onProduct && suppress_on_product` או `onLearning && suppress_on_learning`. פופאפ מופיע אחרי 1500ms (לא קופץ ב-first paint).
+- הזרקה: `<PromoProvider />` כילד ראשון ב-`Layout.tsx` (מעל DesignHeader). טביעה מינימלית — קובץ אחד חופף (T12).
+
+**מיגרציה:** `supabase/migrations/20260701_promos.sql` — טבלת `promos` + RLS (ציבורי קורא `is_active`, אדמין CRUD דרך `has_role`). **READY אך לא-מופעלת** — סער מריץ. עד אז המערכת שקטה (fail-soft).
+
+**אימות:** `npm run build` נקי (tsc+vite). 27/27 בדיקות-לוגיקה (suppression לכל מחלקות-המסלול + frequency-caps). אימות חי (vite preview מ-ה-worktree על פורט נקי — MCP preview מוצמד ל-repo הראשי `bneyzion` לא ל-worktree, ו-PWA SW משרת bundle ישן → חובה פורט-מקור נקי): /rabbis=באנר+פופאפ+focus-trap+ESC-close ✓ · /store=באנר בלבד, פופאפ מדוכא ✓.
+
+**תלות ל-T01:** האדמין רק מציג/מנהל את `promos` (שמות-שדות ב-`_DONE.md`).
