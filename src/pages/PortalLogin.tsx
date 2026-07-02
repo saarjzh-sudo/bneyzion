@@ -92,7 +92,7 @@ export default function PortalLogin() {
         <div style={{ maxWidth: 560, width: "100%", textAlign: "center", marginBottom: 32 }}>
           <h1
             style={{
-              fontFamily: "'Ploni', 'Frank Ruhl Libre', serif",
+              fontFamily: "Kedem, 'Frank Ruhl Libre', serif",
               fontSize: "clamp(28px, 4vw, 40px)",
               fontWeight: 700,
               color: colors.navyDeep,

@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import type { AppRole } from "@/contexts/AuthContext";
+import AccessDenied from "./AccessDenied";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -41,19 +42,7 @@ export const ProtectedRoute = ({
   const hasAccess = userRole != null && allowedRoles.includes(userRole);
 
   if (!hasAccess) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background" dir="rtl">
-        <div className="text-center space-y-4 max-w-md p-8">
-          <h1 className="text-2xl font-heading gradient-teal">אין הרשאה</h1>
-          <p className="text-muted-foreground">
-            אין לך הרשאות גישה לדף זה.
-            {userRole === "creator"
-              ? " ניתן לגשת לניהול תוכן בלבד."
-              : " פנה למנהל המערכת."}
-          </p>
-        </div>
-      </div>
-    );
+    return <AccessDenied />;
   }
 
   return <>{children}</>;

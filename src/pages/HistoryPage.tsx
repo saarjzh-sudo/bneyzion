@@ -10,6 +10,7 @@ import LessonDialog from "@/components/lesson/LessonDialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
+import WeeklyChapterInvite from "@/components/auth/WeeklyChapterInvite";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -132,6 +133,7 @@ const HistoryPage = () => {
               <Link to="/" className="text-primary text-sm hover:underline mt-4 inline-block">
                 חזרה לדף הראשי
               </Link>
+              <WeeklyChapterInvite variant="card" className="max-w-md mx-auto mt-10 text-right" />
             </div>
           )}
         </div>
