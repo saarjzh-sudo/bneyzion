@@ -222,6 +222,34 @@ function CompactSeriesHero({
           margin: "0 auto",
         }}
       >
+        {/* Eyebrow — marks this as a single LEARNING PATH (mirrors "אוסף" on category pages, T10) */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.45rem",
+            fontFamily: fonts.body,
+            fontSize: "0.72rem",
+            letterSpacing: "0.16em",
+            fontWeight: 700,
+            color: colors.goldShimmer,
+            textShadow: "0 1px 8px rgba(0,0,0,0.5)",
+            marginBottom: "0.6rem",
+          }}
+        >
+          <span
+            aria-hidden
+            style={{
+              width: 6,
+              height: 6,
+              background: colors.goldShimmer,
+              transform: "rotate(45deg)",
+              display: "inline-block",
+            }}
+          />
+          סדרת לימוד
+        </div>
+
         {/* Title row + inline action icons */}
         <div
           style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}

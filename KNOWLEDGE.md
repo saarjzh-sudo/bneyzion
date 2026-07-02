@@ -7757,3 +7757,5 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **קבצים:** `src/components/layout/PageHero.tsx` (כתיבה-מחדש), `src/pages/SeriesPagePublic.tsx`, `src/pages/CategoryPage.tsx`.
 **לא נגעתי:** לוגיקת-דאטה/hooks, HeroSection של דף-הבית (T11), אגף-מורים (T07), TopicPage (כבר warm+Tag icon, לא קודר).
 **Build:** `npm run build` (tsc -b + vite) — נקי. dev-server: כל המודולים transform 200. (אזהרת chunk>500kB = קדם-קיימת, שייכת ל-T11.)
+
+- **T10 addendum (2.7.2026, החלטת-סער):** `/series/:id` מנותב ל-`DesignPreviewSeriesPageV2` (לא SeriesPagePublic — שם מיובא-אך-לא-מנותב). הוסף eyebrow "סדרת לימוד" (gold-shimmer, קריא על ההירו-תמונה הכהה) → הבחנה מפורשת מול "אוסף" של הקטגוריה. נגיעה בשכבת-הירו בלבד. `/series`→SeriesLibrary, `/category/:id`→CategoryPage.
