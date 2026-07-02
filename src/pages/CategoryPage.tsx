@@ -415,10 +415,6 @@ export default function CategoryPage() {
               color: colors.textDark,
               margin: 0,
               lineHeight: 1.2,
-              background: gradients.goldText,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
             }}
           >
             {title}

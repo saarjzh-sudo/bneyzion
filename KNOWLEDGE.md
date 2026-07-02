@@ -7958,3 +7958,25 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - build נקי (`✓ built in 4.23s`), typecheck נקי, dev-transform של NotFound נקי, route-404 מחזיר 200.
 
 **תיקון קריטי (אותו סשן) — 9,566 עמודי השיעורים לא קיבלו 301 שרתי:** בדיקה מול `scripts/umbraco-index.json` (9,566 עמודים) גילתה שכולם תחת `/מאגר-השיעורים-והמאמרים/...` (נביאים 4042, תורה 2621, כתובים 1857, עומק 4-5), ולסגמנט הזה היו רק 3 ילדים ספציפיים ממופים — **בלי `:path*`**. כלומר 9,563 עמודי-שיעור מאונדקסים נשענו רק על רשת-הביטחון client-side (200+JS redirect), לא 301 — פגיעה ב-SEO. **תיקון:** הוספת `/מאגר-השיעורים-והמאמרים/:path*` → `/series` (301). כעת **9,566/9,566 = 100% מקבלים 301 שרתי אמיתי.** אין דף-יעד עברי per-book (routes חדשים = UUID), לכן היעד הנכון לכולם `/series` — עקבי עם שאר הקטגוריות. סה״כ 309 redirects.
+## T10 — עיצוב הירו מאוחד + הבחנה קטגוריה↔סדרה (1.7.2026, branch `finish/10-hero-design`)
+
+**הבעיה שאובחנה:** שני מנגנוני-הירו מקבילים באתר, ואי-עקביות בוטה.
+- `src/components/layout/PageHero.tsx` — גרדיאנט **חום-כהה** `#2D1F0E→#3D2A12` ("קודר"). צרכנים: SeriesList, RabbisList, About, Terms, HistoryPage, Favorites, ThankYou.
+- CategoryPage / TopicPage / SeriesLibrary / RabbiPage — הירו **inline warm-cream** `linear-gradient(160deg,#FBF6EC,#F5EFE0,#EDE5D0)` (טוב).
+- SeriesPagePublic (`/series/:id`) — **בלי הירו כלל**, רק breadcrumb + `<h1>` שטוח. פער.
+
+**מה נעשה:**
+1. **`PageHero.tsx` נכתב מחדש** — warm-cream, light-mode, prop `variant: "default"|"page"|"category"|"series"`, + `eyebrow`/`meta`/`icon`/`subtitle`/`children`. תואם-לאחור: `title` אופציונלי; בלי title = passthrough של children (שומר על ThankYou שמשתמש ב-PageHero כ-wrapper). זה מסיר את ה"קודר" מכל הצרכנים במכה אחת.
+2. **הבחנה קטגוריה↔סדרה** — שפה עיצובית מובחנת:
+   - **category** (`/category/:id`) = אוסף: יישור-לימין (start), רחב (maxW 1000), קשת-זהב דקורטיבית, eyebrow "אוסף", meta=badges "N סדרות · M שיעורים".
+   - **series** (`/series/:id`) = מסלול-לימוד: **שדרת-זהב** (spine 4px inset-inline-start), ממוקד וצר (maxW 760), eyebrow "סדרת לימוד", meta=צ׳יפ-רב + "N פריטים".
+3. **SeriesPagePublic** — הוזרק `<PageHero variant="series">` עם title/description/rabbi/count מדאטה אמיתי (useSeriesDetail). הוסרה כותרת-flat הכפולה + Separator.
+4. **CategoryPage** — נוסף eyebrow "אוסף" + הכותרת עברה מ-`gradients.goldText` (נכשל ניגודיות על קרם) ל-`colors.textDark` מוצק (AA+). זהב נשמר ב-eyebrow/badges/arc.
+
+**נגישות:** כותרות = textDark מוצק על קרם (ניגודיות AA+), זהב רק ל-eyebrow/divider/icon/spine. אלמנטים דקורטיביים `aria-hidden`. RTL מלא, `inset-inline-*` לוגי.
+
+**קבצים:** `src/components/layout/PageHero.tsx` (כתיבה-מחדש), `src/pages/SeriesPagePublic.tsx`, `src/pages/CategoryPage.tsx`.
+**לא נגעתי:** לוגיקת-דאטה/hooks, HeroSection של דף-הבית (T11), אגף-מורים (T07), TopicPage (כבר warm+Tag icon, לא קודר).
+**Build:** `npm run build` (tsc -b + vite) — נקי. dev-server: כל המודולים transform 200. (אזהרת chunk>500kB = קדם-קיימת, שייכת ל-T11.)
+
+- **T10 addendum (2.7.2026, החלטת-סער):** `/series/:id` מנותב ל-`DesignPreviewSeriesPageV2` (לא SeriesPagePublic — שם מיובא-אך-לא-מנותב). הוסף eyebrow "סדרת לימוד" (gold-shimmer, קריא על ההירו-תמונה הכהה) → הבחנה מפורשת מול "אוסף" של הקטגוריה. נגיעה בשכבת-הירו בלבד. `/series`→SeriesLibrary, `/category/:id`→CategoryPage.
