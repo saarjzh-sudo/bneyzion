@@ -7823,3 +7823,72 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **עדכוני-שבוע (סבב 2b):** `src/components/weekly/WeeklyUpdatesFeed.tsx` — פיד "העדכונים שלך השבוע" בפורטל. שולף `useCourseDataWithResources(currentBook.id)`, מזהה את הפרק הנוכחי (הגבוה ביותר עם layer `weekly`), ומציג 3 כרטיסי-שלב (בסיס/הרחבה/שיעור+סיכום) עם הקבצים האמיתיים + מד-התקדמות (נלמדו X מ-Y פרקים). הרחבה+שיעור gated ללא-מנוי. שולב בפורטל לפני master-card.
 
 **לו״ז מוטמע (סבב 3, 1.7.2026):** סער נתן את הדרייב של השיעורים (`18dwrByuqPi8Gde7Y71NA8bKF0dXi8yg5`). ירדו 6 תמונות-לו״ז מעוצבות ל-`public/schedules/<slug>.jpg` (self-hosted, יציב). מפה `SCHEDULE_IMAGES` ב-WeeklyBookDetail → `WeeklyScheduleCard` מציג את התמונה. אימות: הלו״ז של זכריה=טבלת שבוע/תאריך/פרק/נושא, ימי רביעי, פלטת-האתר. **אסתר** = "מבנה הלימוד" (אין לו״ז ייעודי). **דניאל** = גרסת גברים (קיימת גם נשים `1LW1Ynr...`).
+## 2026-06-30 · T05 — דף תרומות ברף דף-יהושוע (worktree finish/05-donate)
+
+**מה:** שדרוג `/design-donate` (סנדבוקס) לרמת `DesignPreviewYehoshuaCampaign` — דף תרומות נרטיבי, מבוסס שכנוע, עם סליקת Grow אמיתית. ה-production `/donate` (`Donate.tsx`) **לא נגעתי** — ממתין ל"ROLLOUT" מסער (כלל Sandbox-first).
+
+**קבצים חדשים (אזור-בעלות T05):**
+- `src/components/donate/useScrollReveal.ts` — IntersectionObserver one-shot, מכבד prefers-reduced-motion.
+- `src/components/donate/useDonationStats.ts` — אגרגט אמיתי מטבלת `donations` (donorCount+totalRaised, completed). `ready=false` ⇒ fallback סטטי, בלי "0 תורמים" שבור.
+- `src/components/donate/donateData.ts` — 6 מדרגות-השפעה (50–1,000₪), פירוק שקיפות (45/25/20/10), 5 שאלות נפוצות. קופי עברי בקול ב"צ.
+- `src/components/donate/DonateForm.tsx` — כרטיס סליקה מחווט ל-`useGrowPayment` (donation/directDebit), ולידציה מלאה, נגישות (label/aria-pressed/focus-visible/fieldset), amount מבוקר מבחוץ.
+
+**שוכתב:** `src/pages/DesignPreviewDonate.tsx` — sticky-CTA, hero+ציטוט-עוגן, proof-strip (דאטה חי), מדרגות click-to-fund, story/why/memorial/transparency/recent-donors (חי), FAQ אקורדיון, final-CTA כהה. scroll-reveal, RTL מלא, a11y.
+
+**דאטה אמיתי בלבד:** `useDonationStats`+`useRecentDonations` (Supabase). אסור mock.
+
+**סליקה:** merchant נפתר server-side מ-`GROW_PAGECODE_DONATIONS`+`GROW_USER_ID_DONATIONS` (env פרודקשן). אין חיוב-בדיקה. החיווט מוכח כבר ב-`Donate.tsx`.
+
+**בדיקה:** `npm run build` (tsc -b + vite) נקי. `vite preview` → `/design-donate` 200 + chunk 200. preview-MCP מבודד מנתיב ה-worktree ⇒ אין screenshot מרונדר מכאן; לאמת ויזואלית על preview של `finish/integration`.
+
+**עברית:** ✓ נקי (סקיל עברית; בלי הינו/ניתן ל/על מנת/מדובר ב).
+
+## 2026-07-01 · T05 v5 — אוברול "בקשה של בית מדרש" (מואר + אנושי)
+
+**מה:** אוברול מלא ל-`/design-donate` לפי הכוונה של סער — טון של בית מדרש, לא עמוד מכירה. הוחלף הקופי, נוספו נכסים אמיתיים, שופר העיצוב.
+
+**נכסים אמיתיים (מהריפו, לא הומצא):**
+- וידאו הירו: `/video/hero-bg.mp4` (נוף מדבר יהודה/מצדה מואר, autoplay muted loop) + overlay חם.
+- תמונת הרב יואב בסיפור: `/images/yoav-campaign/yoav-with-full-set.jpg` (מהקמפיין).
+- ריל הרב יואב: `/video/yehoshua-reel.mp4` + poster (סקשן "הרב יואב מספר").
+- המלצות אמיתיות (6): מ-`chapter-weekly/sections/Testimonials.tsx` verbatim (נתנאל ידגרי, חנה יצחקי, ישורון צוקרמן, מעין ליב, ברכיה גרוסברג, שלומית דביר). **לא הומצא.**
+
+**קופי חדש (סער):** הירו "פותחים את התנ״ך לכל בית בישראל" + "התורה לא צריכה להיעצר בשער". מדרגות בפעלים (פותחים שיעור/מנגישים לימוד/מחזיקים שיעור שלם=180 מומלץ "השותפות המרכזית שלנו"/בונים...). סיפור ארוך ואנושי. הנצחה "ממשיכים את האור של סעדיה" — **רס"ל במיל׳ סעדיה יעקב דרעי הי"ד** (light card, שקט ומכובד). שקיפות מילולית (4 כרטיסים, לא אחוזים). טופס: "בחרו את גובה השותפות", הקדשה +"לכבוד שמחה", CTA "תרומה מאובטחת — X₪", שורת-אמון סעיף 46 + מכלל יופי ע"ר.
+
+**עיצוב:** הירו-וידאו מואר במקום גראדיאנט שטוח; final CTA חם (mahogany→gold, לא navy); sticky bottom bar "אני מצטרף" + שורת-אמון; scroll-reveal; RTL; a11y.
+
+**נגזרות קבצים:** `donateData.ts` (tiers/allocation/why/testimonials/faqs/IMAGES), `DonateForm.tsx` (simcha + labels + CTA + trust), `DesignPreviewDonate.tsx` (רה-רייט מלא).
+
+**בדיקה:** build נקי (tsc+vite). Playwright fullpage+mobile+per-section screenshots, **0 console errors**. (וידאו הירו/ריל רצים; preview-MCP חסום ע"י פרוקסי — צילום דרך Chrome headless direct://.)
+
+**פתוח לאישור סער:** (1) שם ההנצחה המדויק. (2) "סעיף 46 / מכלל יופי ע"ר" — הבטחה משפטית, לאמת. (3) האם הריל של יהושע (השקת ספר) מתאים לדף התרומות הכללי או להחליף בריל כללי.
+
+## 2026-07-01 · T05 v6 — הסרת ריל + שדרוג עיצוב (נוף נע, אאורה, גוונים עדינים)
+
+- **הוסר** סקשן הריל של יהושע (ספציפי מדי לספר, לבקשת סער).
+- **הירו** — overlay מרוכך (הנוף "נושם"), slow Ken-Burns zoom על הווידאו (`heroZoom` 26s), radial vignette מאחורי הטקסט, כותרת גדולה יותר + `hero-gold-shimmer` (גרדיאנט זהב נע).
+- **CTA סופי** — bookend של נוף נע (אותו `hero-bg.mp4`) עם overlay twilight אלגנטי (navy רך, לא חום עכור).
+- **Ambient** — קומפוננטה חדשה: 3 בועות aurora רדיאליות שנעות לאט (`auroraDrift1/2/3`) + grain עדין (SVG feTurbulence, soft-light). מוזרק בהירו, impact, testimonials, ו-CTA סופי → "רקע שזז" עדין.
+- **גוונים עדינים** — מסגרות/צללים רכים יותר, גרדיאנטים בין סקשנים, Ken-Burns hover על תמונת הרב יואב.
+- כל האנימציות מכובות תחת `prefers-reduced-motion`. build נקי, 0 console errors.
+
+## 2026-07-01 · T05 v7 — רה-דיזיין אדיטוריאלי (פידבק "חובבני")
+
+פס עיצוב שיטתי לפי top-design skill. הבעיה הייתה שיטתית: גרדיאנטי-זהב בכל מקום, אנימציות גימיקיות (זהב נוצץ/נקודות פועמות), אייקוני לב, הכל ממורכז, סקייל טיפוגרפי אחיד, טופס "SaaS".
+
+**מערכת חדשה (`src/components/donate/theme.ts`):** ink חם יחיד + cream + **אקצנט זהב אחד מט** (#A9843F), hairlines, custom easing `cubic-bezier(0.16,1,0.3,1)`. הוסרו: כל הגרדיאנטים, aurora/grain, shimmer, pulse-dots, אייקוני-לב, teal.
+
+**עקרונות:** (1) טיפוגרפיה מונומנטלית — hero display clamp עד 6.4rem, ניגוד-סקייל דרמטי. (2) קומפוזיציה אסימטרית — hero מיושר-ימין (RTL start), כותרות offset. (3) restraint — צבע אחד, מרווחים נדיבים. (4) craft — ::selection זהב, focus-visible, underline-inputs בטופס, כרטיס 180 inverted (ink) במקום גרדיאנט.
+
+**קבצים:** `theme.ts` (חדש), `DonateForm.tsx` (רה-רייט אדיטוריאלי — underline inputs, inverted chips, ink CTA), `DesignPreviewDonate.tsx` (רה-רייט מלא — primitives: Kicker/Reveal/PrimaryBtn/TextLink/H2). ריל כבר הוסר ב-v6.
+
+**self-score ~8/10** (מ-~4-5). לדחיפה ל-9-10: Lenis smooth-scroll + רגע-סקרול חתימה. build נקי, 0 console errors.
+
+## 2026-07-01 · T05 v8 — לפי פידבק סער (פתיחה חדשה)
+
+- **פתיחת העמוד** = סקשן הסיפור+טופס (הוסרו: הירו-וידאו, פס-מדדים, סקשן מדרגות שמעליו).
+- **כותרת פותחת:** "היו שותפים איתנו להפצת אור התנ״ך!" (H2 big).
+- **שמות → אות+שם משפחה** (`shortName`): "נתנאל ידגרי"→"נ. ידגרי". בהמלצות ובתורמים אחרונים (פרטיות).
+- **הוסר חלק סעדיה** (Memorial).
+- **PartnershipBand חדש** — סקשן כהה חם (espresso→ink + זוהר זהב) עם 3 מדדים + כפתור "היו שותפים" שגולל לטופס. מוסיף גיוון-צבע ושובר את המונוטוניות הקרם.
+- שיפורי פרופורציות: כותרת-פותחת גדולה יותר, testimonials על creamDeep, ריתמוס רקעים. וידאו-נוף נשאר רק ב-Final CTA (bookend). build נקי, 0 console errors.
