@@ -56,6 +56,7 @@ import { useFavorites } from "@/hooks/useFavorites";
 import { useLearningDashboard } from "@/hooks/useLearningDashboard";
 import { usePoints } from "@/hooks/usePoints";
 import { WeeklyUpdatesFeed } from "@/components/weekly/WeeklyUpdatesFeed";
+import WeeklyChapterInvite from "@/components/auth/WeeklyChapterInvite";
 
 // ── Real-data types (replaces former mock arrays) ───────────────────────────
 // Iron rule: NO mock data — everything below is computed from Supabase hooks.
@@ -841,6 +842,15 @@ export default function DesignPreviewPortalSubscriber() {
                     </a>
                   </div>
                 </div>
+              </div>
+            </section>
+          )}
+
+          {/* ─── Invite non-subscribers to the weekly program (T06↔T03) ── */}
+          {!hasSubscription && (
+            <section style={{ background: colors.parchment, padding: "0 1.5rem 3rem" }}>
+              <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
+                <WeeklyChapterInvite variant="card" />
               </div>
             </section>
           )}

@@ -15,7 +15,7 @@ import { RequireAuth } from "@/components/auth/RequireAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { PageSkeleton } from "@/components/ui/page-skeleton";
 // Eager-loaded: frequently visited pages
-import Index from "./pages/DesignPreviewHome";
+const Index = lazy(() => import("./pages/DesignPreviewHome"));
 import LessonPage from "./pages/LessonPage";
 import RabbiPage from "./pages/RabbiPage";
 // 27.5.2026 — SeriesList route removed per Saar. Import preserved for potential rollback.
@@ -128,6 +128,8 @@ const AdminPayments = lazy(() => import("./pages/admin/Payments"));
 const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
 const ImportContent = lazy(() => import("./pages/admin/ImportContent"));
 const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
+const AdminBudget = lazy(() => import("./pages/admin/Budget"));
+const AdminKenes = lazy(() => import("./pages/admin/Kenes"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesMilhamotHatanach = lazy(() => import("./pages/KenesMilhamotHatanach"));
@@ -302,7 +304,7 @@ const App = () => (
           <ChunkErrorBoundary>
           <ErrorBoundary>
           <Routes>
-            <Route path="/" element={<Index />} />
+            <Route path="/" element={<Suspense fallback={<LazyFallback />}><Index /></Suspense>} />
             {/* ── Teachers Wing v2 — production routes (rollout 2026-05-11) ── */}
             <Route path="/teachers" element={<Suspense fallback={<LazyFallback />}><TeachersWingPage /></Suspense>} />
             <Route path="/teachers/series/:id" element={<Suspense fallback={<LazyFallback />}><TeachersSeriesPage /></Suspense>} />
@@ -398,6 +400,8 @@ const App = () => (
             <Route path="/admin/content-health" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
             <Route path="/admin/import-content" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ImportContent /></Suspense></ProtectedRoute>} />
             <Route path="/admin/benzi" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><BenziKnowledge /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/budget" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBudget /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/kenes" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminKenes /></Suspense></ProtectedRoute>} />
             {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
                 Available in dev AND production (so Vercel previews work for review). */}
             <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
