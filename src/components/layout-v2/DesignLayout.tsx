@@ -68,8 +68,13 @@ export default function DesignLayout({
           style={{
             flex: 1,
             minWidth: 0, // prevents grid blowout
-            marginTop: overlapHero ? -96 : 0,
-            paddingBottom: "calc(env(safe-area-inset-bottom, 0px))",
+            // הגנה מה-SDK של Grow/משולם: gs.min.js מזריק stylesheet גלובלי
+            // (main{max-width:560px;margin:40px auto;padding:0 20px}) בעת אתחול
+            // תשלום. inline style גובר עליו — לכן כל המידות מוגדרות כאן במפורש.
+            width: "100%",
+            maxWidth: "none",
+            margin: overlapHero ? "-96px 0 0" : 0,
+            padding: "0 0 calc(env(safe-area-inset-bottom, 0px))",
           }}
           className="design-layout-main"
         >

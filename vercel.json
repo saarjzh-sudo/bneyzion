@@ -8,67 +8,122 @@
   "redirects": [
     {
       "source": "/",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/shop",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/shop/:path*",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/product/:path*",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/product-category/:path*",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/cart",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/checkout",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/my-account",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/my-account/:path*",
-      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
       "destination": "https://bneyzion.co.il/store",
       "permanent": true
     },
     {
       "source": "/design-yehoshua-campaign",
-      "has": [{ "type": "host", "value": "bneyzion.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "bneyzion.vercel.app"
+        }
+      ],
       "destination": "https://bneyzion-yehoshua.vercel.app/design-yehoshua-campaign",
       "permanent": true
     },
     {
       "source": "/design-yehoshua-admin",
-      "has": [{ "type": "host", "value": "bneyzion.vercel.app" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "bneyzion.vercel.app"
+        }
+      ],
       "destination": "https://bneyzion-yehoshua.vercel.app/design-yehoshua-admin",
       "permanent": true
     },
@@ -1579,10 +1634,6 @@
     {
       "source": "/privacy-policy",
       "destination": "/terms.html"
-    },
-    {
-      "source": "/donate",
-      "destination": "/donate.html"
     },
     {
       "source": "/megilat-esther",
