@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
+import { Seo, collectionJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
 import {
   colors,
   fonts,
@@ -256,8 +257,29 @@ export default function TopicPage() {
 
   const isLoading = topicLoading || lessonsLoading || seriesLoading;
 
+  // ── SEO (T13) — additive head tags for the topic collection page.
+  const topicPath = `/topic/${slug}`;
+  const topicDesc =
+    topic?.description ||
+    (topic ? `שיעורים וסדרות בנושא ${topic.name} באתר בני ציון – לימוד התנ״ך של ישראל.` : undefined);
+
   return (
     <DesignLayout>
+      {topic && (
+        <Seo
+          title={topic.name}
+          description={topicDesc}
+          url={`https://bneyzion.co.il${topicPath}`}
+          jsonLd={[
+            collectionJsonLd({ name: topic.name, description: topicDesc, path: topicPath }),
+            breadcrumbJsonLd([
+              { name: "בית", path: "/" },
+              { name: "מאגר השיעורים", path: "/series" },
+              { name: topic.name, path: topicPath },
+            ]),
+          ]}
+        />
+      )}
       <div dir="rtl" style={{ minHeight: "100vh", background: colors.parchment }}>
         {/* ─── Hero / header ─────────────────────────────────────────────── */}
         <section

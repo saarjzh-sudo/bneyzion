@@ -44,6 +44,7 @@ import {
 } from "@/lib/designTokens";
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
+import { Seo, collectionJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
 import { usePublicBookListing } from "@/hooks/usePublicBookListing";
 import { supabase } from "@/integrations/supabase/client";
@@ -316,8 +317,36 @@ export default function CategoryPage() {
   const seriesBadgeCount = publicListing.hasListing ? publicListing.seriesCount : canonicalSeries.length;
   const lessonBadgeCount = publicListing.hasListing ? publicListing.lessonCount : allDirectLessons.length;
 
+  // ── SEO (T13) — additive head tags: unique title, description, breadcrumb + collection JSON-LD.
+  const catPath = `/category/${id}`;
+  const catTitle = node?.title ?? title;
+  const seoDesc = node?.title
+    ? `${node.title} — שיעורי תנ״ך, סדרות ומורים באתר בני ציון.`
+    : undefined;
+  const seoCrumbs = [
+    { name: "בית", path: "/" },
+    { name: "מאגר השיעורים", path: "/series" },
+    ...(breadcrumbs.length
+      ? breadcrumbs.map((b) => ({ name: b.title, path: `/category/${b.id}` }))
+      : node
+        ? [{ name: node.title, path: catPath }]
+        : []),
+  ];
+
   return (
     <DesignLayout>
+      {node && (
+        <Seo
+          title={catTitle}
+          description={seoDesc}
+          image={node.image_url ?? undefined}
+          url={`https://bneyzion.co.il${catPath}`}
+          jsonLd={[
+            collectionJsonLd({ name: catTitle, description: seoDesc, path: catPath }),
+            breadcrumbJsonLd(seoCrumbs),
+          ]}
+        />
+      )}
       {/* ── Hero ── */}
       <div
         dir="rtl"

@@ -26,16 +26,26 @@ const BIBLE_BOOKS = [
 const STATIC_ROUTES = [
   { loc: '/', changefreq: 'daily', priority: '1.0' },
   { loc: '/series', changefreq: 'daily', priority: '0.9' },
+  { loc: '/bible', changefreq: 'weekly', priority: '0.8' },
   { loc: '/rabbis', changefreq: 'weekly', priority: '0.8' },
   { loc: '/parasha', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/chapter-weekly', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/program/weekly-chapter', changefreq: 'weekly', priority: '0.8' },
+  { loc: '/store', changefreq: 'weekly', priority: '0.7' },
+  { loc: '/community', changefreq: 'weekly', priority: '0.7' },
   { loc: '/teachers', changefreq: 'monthly', priority: '0.7' },
   { loc: '/kenes', changefreq: 'monthly', priority: '0.7' },
+  { loc: '/kenes-archive', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/megilat-esther', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/daily-verse', changefreq: 'daily', priority: '0.6' },
+  { loc: '/daily-video', changefreq: 'daily', priority: '0.6' },
   { loc: '/memorial', changefreq: 'monthly', priority: '0.6' },
   { loc: '/memorial/saadia', changefreq: 'monthly', priority: '0.6' },
   { loc: '/dor-haplaot', changefreq: 'monthly', priority: '0.6' },
   { loc: '/about', changefreq: 'monthly', priority: '0.6' },
   { loc: '/donate', changefreq: 'monthly', priority: '0.6' },
   { loc: '/contact', changefreq: 'monthly', priority: '0.5' },
+  { loc: '/terms', changefreq: 'yearly', priority: '0.3' },
 ];
 
 const xmlEscape = (s) =>
@@ -66,7 +76,7 @@ export default async function handler(req, res) {
   const supabase = createClient(supabaseUrl, supabaseKey);
 
   // series and rabbis don't have updated_at — only created_at. lessons has both.
-  const [lessonsRes, seriesRes, rabbisRes] = await Promise.all([
+  const [lessonsRes, seriesRes, rabbisRes, productsRes, topicsRes] = await Promise.all([
     supabase
       .from('lessons')
       .select('id, updated_at')
@@ -84,11 +94,24 @@ export default async function handler(req, res) {
       .from('rabbis')
       .select('id, slug, created_at')
       .limit(500),
+    // Products — public store items (status 'active', matches useProducts).
+    supabase
+      .from('products')
+      .select('slug, updated_at')
+      .eq('status', 'active')
+      .limit(2000),
+    // Topics — /topic/:slug collection pages.
+    supabase
+      .from('topics')
+      .select('slug')
+      .limit(1000),
   ]);
 
   if (lessonsRes.error) console.error('[sitemap] lessons error:', lessonsRes.error);
   if (seriesRes.error) console.error('[sitemap] series error:', seriesRes.error);
   if (rabbisRes.error) console.error('[sitemap] rabbis error:', rabbisRes.error);
+  if (productsRes.error) console.error('[sitemap] products error:', productsRes.error);
+  if (topicsRes.error) console.error('[sitemap] topics error:', topicsRes.error);
 
   const entries = [];
 
@@ -119,6 +142,25 @@ export default async function handler(req, res) {
       lastmod: r.created_at ? new Date(r.created_at).toISOString() : undefined,
       changefreq: 'weekly',
       priority: '0.6',
+    }));
+  }
+
+  for (const p of productsRes.data ?? []) {
+    if (!p.slug) continue;
+    entries.push(urlEntry({
+      loc: `/store/${encodeURIComponent(p.slug)}`,
+      lastmod: p.updated_at ? new Date(p.updated_at).toISOString() : undefined,
+      changefreq: 'monthly',
+      priority: '0.5',
+    }));
+  }
+
+  for (const t of topicsRes.data ?? []) {
+    if (!t.slug) continue;
+    entries.push(urlEntry({
+      loc: `/topic/${encodeURIComponent(t.slug)}`,
+      changefreq: 'weekly',
+      priority: '0.5',
     }));
   }
 

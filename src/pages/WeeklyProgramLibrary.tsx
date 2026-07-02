@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
+import { Seo, collectionJsonLd } from "@/components/seo/Seo";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useWeeklyBooks, type WeeklyCourse } from "@/hooks/useCommunity";
 import { useUserAccess } from "@/hooks/useUserAccess";
@@ -191,6 +192,16 @@ export default function WeeklyProgramLibrary() {
 
   return (
     <DesignLayout sidebar={false}>
+      <Seo
+        title="התוכנית השבועית ללימוד הפרק"
+        description="לימוד פרק תנ״ך מדי שבוע — ספרי התוכנית השבועית של בני ציון, עם שיעורים, הרחבות וחומרי לימוד להורדה."
+        url="https://bneyzion.co.il/program/weekly-chapter"
+        jsonLd={collectionJsonLd({
+          name: "התוכנית השבועית ללימוד הפרק",
+          description: "ספרי התוכנית השבועית ללימוד פרק תנ״ך מדי שבוע.",
+          path: "/program/weekly-chapter",
+        })}
+      />
       {/* ── Hero ── */}
       <div
         dir="rtl"
