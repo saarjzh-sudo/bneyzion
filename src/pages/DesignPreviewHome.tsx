@@ -16,6 +16,7 @@ import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
+import LazyHeroVideo from "@/components/performance/LazyHeroVideo";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK    = "#8B6F47";
@@ -189,11 +190,14 @@ function DesignHero() {
   return (
     <div style={{ height: "56vh", minHeight: 420, maxHeight: 520, overflow: "hidden",
                   position: "relative", marginTop: -96 }}>
-      {/* Video */}
-      <video autoPlay muted loop playsInline src="/video/hero-bg.mp4"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%",
-                 objectFit: "cover", objectPosition: "center 40%",
-                 filter: "brightness(0.72) contrast(1.08) saturate(1.1)", transform: "scale(1.04)" }} />
+      {/* Video — poster-first, lazily loaded (T11 perf) */}
+      <LazyHeroVideo
+        videoSrc="/video/hero-bg.mp4"
+        poster="/video/hero-poster.jpg"
+        posterAlt="נוף מצדה"
+        mediaStyle={{ objectPosition: "center 40%",
+                      filter: "brightness(0.72) contrast(1.08) saturate(1.1)", transform: "scale(1.04)" }}
+      />
 
       {/* Overlays */}
       <div style={{ position: "absolute", inset: 0,
