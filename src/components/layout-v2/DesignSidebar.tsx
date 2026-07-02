@@ -45,6 +45,7 @@ import type { SidebarCategory, ExtraSection } from "@/hooks/useContentSidebar";
 import { usePublicRabbis } from "@/hooks/useRabbis";
 import { useTopicsSidebar } from "@/hooks/useTopicsSidebar";
 import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
+import RolePanel from "@/components/auth/RolePanel";
 
 // ────────────────────────────────────────────────────────────────────────
 // bookAliasLabel — produce the old-site-exact "כל השיעורים ב..." label per book.
@@ -449,6 +450,9 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             gap: "0.3rem",
           }}
         >
+          {/* תפקיד + קיצורי-ניהול — לבעלי-תפקיד בלבד (T06, שיבוץ 2.7.2026) */}
+          {(!collapsed || isDrawer) && <RolePanel staffOnly className="mb-1" />}
+
           {/* תכנית הפרק השבועי */}
           <Link
             to="/chapter-weekly"

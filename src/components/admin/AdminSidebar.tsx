@@ -2,7 +2,7 @@ import {
   LayoutDashboard, BookOpen, Users2, FolderOpen, Tag,
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
   BarChart3, Bell, PanelTop, Ticket, HeartPulse, CreditCard,
-  UserCheck, Upload, Download, Wallet, CalendarDays,
+  UserCheck, Upload, Download, Wallet, CalendarDays, Megaphone,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -88,6 +88,7 @@ const SECTIONS: NavSection[] = [
     label: "אתר",
     items: [
       { title: "כנסים",   url: "/admin/kenes",    icon: CalendarDays, roles: ADMIN },
+      { title: "באנרים ופופאפים", url: "/admin/promos", icon: Megaphone, roles: ADMIN },
       { title: "דף הבית", url: "/admin/homepage", icon: PanelTop,     roles: ADMIN },
       { title: "הגדרות",  url: "/admin/settings", icon: Settings,     roles: ADMIN },
     ],

@@ -83,7 +83,12 @@ export default function Notifications() {
     },
   });
 
-  const targetLabel = target === "all" ? `כל המשתמשים (${userCount ?? 0})` : `חברי קהילה (${communityCount ?? 0})`;
+  const targetLabel =
+    target === "all"
+      ? `כל המשתמשים (${userCount ?? 0})`
+      : target === "weekly-learners"
+        ? "לומדי הפרק השבועי (מנויים עם חשבון מקושר)"
+        : `חברי קהילה (${communityCount ?? 0})`;
 
   return (
     <AdminLayout>
@@ -136,6 +141,7 @@ export default function Notifications() {
                 <SelectContent>
                   <SelectItem value="all">כל המשתמשים ({userCount ?? 0})</SelectItem>
                   <SelectItem value="community">חברי קהילה בלבד ({communityCount ?? 0})</SelectItem>
+                  <SelectItem value="weekly-learners">לומדי הפרק השבועי בלבד</SelectItem>
                 </SelectContent>
               </Select>
             </div>

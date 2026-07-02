@@ -14,9 +14,12 @@ import { roleMeta, adminLinksFor } from "./roleMeta";
 
 interface RolePanelProps {
   className?: string;
+  /** true = מוצג רק לבעלי-תפקיד (יש קישורי-ניהול). מיועד לסיידבר הציבורי,
+   *  כדי שלא להציג "בקשת גישת ניהול" לכל גולש מחובר. */
+  staffOnly?: boolean;
 }
 
-const RolePanel = ({ className = "" }: RolePanelProps) => {
+const RolePanel = ({ className = "", staffOnly = false }: RolePanelProps) => {
   const { user, isAdmin, userRole, isLoading } = useAuth();
 
   if (isLoading || !user) return null;
@@ -24,6 +27,8 @@ const RolePanel = ({ className = "" }: RolePanelProps) => {
   const effectiveRole = isAdmin ? "admin" : userRole ?? "user";
   const role = roleMeta[effectiveRole];
   const adminLinks = adminLinksFor(isAdmin, userRole);
+
+  if (staffOnly && adminLinks.length === 0) return null;
 
   return (
     <div className={`rounded-xl border border-border/60 bg-secondary/40 p-3 ${className}`} dir="rtl">

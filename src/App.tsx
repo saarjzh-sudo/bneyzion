@@ -130,6 +130,7 @@ const ImportContent = lazy(() => import("./pages/admin/ImportContent"));
 const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
 const AdminBudget = lazy(() => import("./pages/admin/Budget"));
 const AdminKenes = lazy(() => import("./pages/admin/Kenes"));
+const AdminPromos = lazy(() => import("./pages/admin/Promos"));
 const Terms = lazy(() => import("./pages/Terms"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesMilhamotHatanach = lazy(() => import("./pages/KenesMilhamotHatanach"));
@@ -346,7 +347,8 @@ const App = () => (
             <Route path="/memorial" element={<Suspense fallback={<LazyFallback />}><Memorial /></Suspense>} />
             <Route path="/memorial/saadia" element={<Suspense fallback={<LazyFallback />}><MemorialSaadia /></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<LazyFallback />}><Contact /></Suspense>} />
-            <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><Donate /></Suspense>} />
+            {/* ROLLOUT T05 (2.7.2026): דף התרומות החדש חי ב-/donate. הישן נשמר ב-Donate.tsx — החזרה = החלפת הקומפוננטה. */}
+            <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/kenes-2026-05" element={<Suspense fallback={<LazyFallback />}><KenesShavuot2026 /></Suspense>} />
@@ -402,6 +404,7 @@ const App = () => (
             <Route path="/admin/benzi" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><BenziKnowledge /></Suspense></ProtectedRoute>} />
             <Route path="/admin/budget" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBudget /></Suspense></ProtectedRoute>} />
             <Route path="/admin/kenes" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminKenes /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/promos" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPromos /></Suspense></ProtectedRoute>} />
             {/* Design sandbox routes — accessible via direct URL only, not linked from main nav.
                 Available in dev AND production (so Vercel previews work for review). */}
             <Route path="/design-lesson" element={<Suspense fallback={<LazyFallback />}><DesignPreviewLesson /></Suspense>} />
