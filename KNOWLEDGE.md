@@ -7904,3 +7904,22 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - **הוסר חלק סעדיה** (Memorial).
 - **PartnershipBand חדש** — סקשן כהה חם (espresso→ink + זוהר זהב) עם 3 מדדים + כפתור "היו שותפים" שגולל לטופס. מוסיף גיוון-צבע ושובר את המונוטוניות הקרם.
 - שיפורי פרופורציות: כותרת-פותחת גדולה יותר, testimonials על creamDeep, ריתמוס רקעים. וידאו-נוף נשאר רק ב-Final CTA (bookend). build נקי, 0 console errors.
+## 2026-06-30 — T07 אגף-המורים: עיצוב + כריכות-AI (worktree finish/07-teachers-wing)
+**אזור-בעלות:** `src/components/teachers/**` + `src/pages/teachers/**` בלבד. בסיס `b4631c76`. build `tsc -b && vite build` נקי.
+
+- **ממצא עיצוב:** כל 9 עמודי-המורים כבר עקביים — hero variant="olive" אחיד, warm-cream, gold/olive tokens, RTL מלא, אין navy/mahogany "כהה". אין עמוד "קודר" בתוך האגף (ה"כהה מדי" הכללי = T10). לכן ההשקעה עברה לשני פערים אמיתיים.
+- **ממצא: `AITeacherTools.tsx` היה יתום** — קומפוננטה מלאה (מערך-שיעור/מבחן/תפזורת, streaming מ-`ai-teacher-tools`, demo+CTA למי שלא מחובר) שלא הורכבה באף עמוד. הורכבה כעת כסקשן מודגש ב-`TeachersWingPage` (`<section aria-labelledby="teacher-ai-tools-heading">`). זה הופך את עמוד-הנחיתה מדק לשימושי.
+- **כריכות-AI — לא היה UI:** edge-function `generate-cover` (Imagen-4-fast→Gemini fallback, bucket `bnei-zion-thumbnails`, prompt NO TEXT/NO PEOPLE) קיים אך לא נקרא מהקליינט. נבנתה `CoverGenerator.tsx` (admin/creator-gated דרך `useAuth().isCreator`) → `supabase.functions.invoke("generate-cover")` (NetSpark-safe, JWT אוטומטי) → ואז persist ל-`series.image_url`. הורכבה ב-`TeachersSeriesPage` עם `queryClient.invalidateQueries` כדי שכרטיסי-השיעורים יקלטו את הכריכה מיד (טריו: thumbnail_url → series.image_url → getSeriesCoverImage → default).
+- **תלות פתוחה:** ה-edge-function רק מעלה ומחזיר URL — לא מעדכן טבלה. ה-persist נעשה מהקליינט (`UPDATE series.image_url`). דורש ש-RLS על `series` יתיר UPDATE ל-admin/creator; אם חסום → המשתמש רואה "הכריכה נוצרה אך השמירה נכשלה". batch-מלא לא הורץ (אין JWT-אדמין חי + אסור spend בלי אישור) — ה-UI מאפשר יצירה ידנית לכל סדרה (rate-limit 5/שעה).
+
+### עדכון סער (30.6) — הסרת כל ה-AI של המורים
+סער: "לא רוצה את כל ה-AI של המורים — תוריד אותם. תיצור את התמונות ותשמור אותן." לכן:
+- **נמחקו** `AITeacherTools.tsx` (כלי מערך-שיעור/מבחן/תפזורת) ו-`CoverGenerator.tsx` (כפתור יצירת-שער), והוסרו ההרכבות מ-`TeachersWingPage`/`TeachersSeriesPage`. אין יותר UI של AI באגף-המורים.
+- **הכריכות עוברות ל-batch מנוהל** (לא כפתור): 309 סדרות-מורים published, **57 בלי image_url**. batch דרך service-role + Imagen ימלא רק את ה-57 הריקים (additive, לא דורס קיימים).
+- **חסם:** מפתח Gemini/Imagen מחזיר 429 `RESOURCE_EXHAUSTED` "prepayment credits depleted" (אומת 30.6). סער בוחר לטעון billing ב-ai.studio/projects ואז אריץ את ה-batch בצינור המקורי (Imagen watercolor, NO TEXT/NO PEOPLE).
+
+### תיקון סגנון + השלמת השערים (30.6) — הסגנון של בני ציון
+- **הסגנון הראשון (נוף/נהר) נפסל ע"י סער** — לא הסגנון של ב"צ. הסגנון הנכון = **אקוורל מופשט על נייר קרם, פסטלים עמומים (sage/teal/blue-gray/wheat/gold/lavender/rose), מרכז פתוח, בלי טקסט, בלי דמויות** — מקור-אמת: `scripts/image-batch-phase3.py` (STYLE נעול + `series_prompt` + שער-Vision `lib/vision_gate.py`). הזיהוי נעשה גם מהשערים הקיימים באתר.
+- **צינור:** Vertex לא זמין ב-worktree (חסר SA `secrets/gcp-imagen-batch.json`) → generation דרך generativelanguage endpoint (`imagen-4.0-generate-001`, GEMINI_API_KEY, `personGeneration=dont_allow`) עם אותו STYLE + prompt + שער-Vision. סקריפט: scratchpad `generate_teacher_covers.py` (אידמפוטנטי, מסנן `image_url IS NULL`, scope=teachers בלבד).
+- **תוצאה: כל 57 סדרות-המורים קיבלו שער** (image_url IS NULL → 0). 14 השערים בסגנון-הנוף הוחזרו ל-null ונוצרו מחדש נכון. כשל-Vision אחד "fail-open" (ה-API של הבדיקה לא ענה, התמונה עברה) — סיכון נמוך בגלל אילוצי-הפרומפט. **לא נגעתי ב-252 השערים הקיימים.** עלות ~$2.3 (57×$0.04).
+- **מפתח Gemini:** היה 429 "prepayment credits depleted" → סער טען billing; חי שוב. `negativePrompt` הוסר מ-Imagen API (400) — האילוצים בפרומפט עצמו.
