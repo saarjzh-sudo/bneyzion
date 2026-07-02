@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Bell } from "lucide-react";
+import { Bell, BellRing, BellOff } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
+import { usePushNotifications } from "@/components/pwa/usePushNotifications";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -50,6 +51,7 @@ export default function NotificationBell({ isTransparent }: NotificationBellProp
   const { data: notifications } = useNotifications();
   const markRead = useMarkRead();
   const qc = useQueryClient();
+  const push = usePushNotifications();
 
   const unreadCount = notifications?.filter((n) => !n.read).length ?? 0;
 
@@ -91,6 +93,42 @@ export default function NotificationBell({ isTransparent }: NotificationBellProp
         <div className="p-3 border-b border-border">
           <h3 className="font-heading text-sm font-semibold">התראות</h3>
         </div>
+
+        {/* Device push opt-in — only shown where Web Push can actually be delivered */}
+        {push.isSupported && push.vapidConfigured && (
+          <div className="px-3 py-2 border-b border-border/60 bg-secondary/30">
+            {push.permission === "denied" ? (
+              <p className="flex items-center gap-2 text-xs text-muted-foreground">
+                <BellOff className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                ההתראות חסומות בהגדרות הדפדפן
+              </p>
+            ) : push.isSubscribed ? (
+              <div className="flex items-center justify-between gap-2">
+                <span className="flex items-center gap-2 text-xs text-primary">
+                  <BellRing className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                  ההתראות פעילות במכשיר
+                </span>
+                <button
+                  onClick={() => push.disable()}
+                  disabled={push.isWorking}
+                  className="text-xs text-muted-foreground hover:text-foreground underline-offset-2 hover:underline rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
+                >
+                  כיבוי
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => push.enable()}
+                disabled={push.isWorking}
+                className="flex w-full items-center gap-2 text-xs font-medium text-primary hover:text-primary/80 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-50"
+              >
+                <BellRing className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                קבלת התראות למכשיר — גם כשהאתר סגור
+              </button>
+            )}
+          </div>
+        )}
+
         <ScrollArea className="max-h-80">
           {!notifications?.length ? (
             <p className="p-4 text-center text-sm text-muted-foreground">אין התראות חדשות</p>

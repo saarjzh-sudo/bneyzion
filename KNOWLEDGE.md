@@ -7923,3 +7923,26 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - **צינור:** Vertex לא זמין ב-worktree (חסר SA `secrets/gcp-imagen-batch.json`) → generation דרך generativelanguage endpoint (`imagen-4.0-generate-001`, GEMINI_API_KEY, `personGeneration=dont_allow`) עם אותו STYLE + prompt + שער-Vision. סקריפט: scratchpad `generate_teacher_covers.py` (אידמפוטנטי, מסנן `image_url IS NULL`, scope=teachers בלבד).
 - **תוצאה: כל 57 סדרות-המורים קיבלו שער** (image_url IS NULL → 0). 14 השערים בסגנון-הנוף הוחזרו ל-null ונוצרו מחדש נכון. כשל-Vision אחד "fail-open" (ה-API של הבדיקה לא ענה, התמונה עברה) — סיכון נמוך בגלל אילוצי-הפרומפט. **לא נגעתי ב-252 השערים הקיימים.** עלות ~$2.3 (57×$0.04).
 - **מפתח Gemini:** היה 429 "prepayment credits depleted" → סער טען billing; חי שוב. `negativePrompt` הוסר מ-Imagen API (400) — האילוצים בפרומפט עצמו.
+## T08 — אפליקציה + התראות פוש (finish/08-app-push · 30.6.2026)
+
+**החלטת-פלטפורמה:** PWA משופר (לא Capacitor). `vite-plugin-pwa` כבר היה מוגדר (`registerType:autoUpdate`, manifest+SW אוטומטיים). Capacitor היה דורש toolchain native + חשבונות חנות לאתר-תוכן שערכו בהפצה-web. לכן חיזקתי את ה-PWA הקיים.
+
+**מה נוסף:**
+- `public/push-sw.js` — מאזיני `push` + `notificationclick` (RTL, אייקון לוגו, ניווט ל-`link`). נמשך ל-SW הראשי דרך `vite.config workbox.importScripts:["/push-sw.js"]` (generateSW לבדו לא מאחסן listeners מותאמים).
+- מניפסט הובא למותג: `theme_color:#d4a85a` (זהב), `background_color:#faf8f3` (קרם), `dir:rtl`.
+- `src/components/pwa/usePushNotifications.ts` — מחזור-חיים של מנוי Web Push (permission→subscribe→upsert ל-`push_subscriptions`). מתדרדר בחן: בלי `VITE_VAPID_PUBLIC_KEY` נשמרת רק הרשאה, פוש-OS ממתין לקרדנציאל.
+- `NotificationBell.tsx` — שורת הצטרפות "קבלת התראות למכשיר" בראש הפופאובר (מוצגת רק כש-supported+VAPID מוגדר). מצבי subscribed/denied, focus-states, aria.
+- `supabase/migrations/20260630_push_subscriptions.sql` — טבלת מנויים + RLS (משתמש מנהל רק את שלו; service-role עוקף לפאן-אאוט).
+- `broadcast-notification` edge: target חדש `weekly-learners` — מקור-אמת מתואם עם **T03**: `community_courses(is_current=true,in_weekly_program=true)→program_slug` → `weekly_program_progress.user_id`. נוסף פאן-אאוט Web Push (npm:web-push) מאחורי בדיקת `VAPID_*` env; בלי מפתחות מדלג (in-app בלבד) ומנקה endpoints 404/410.
+
+**זרימת-התראה (in-app) פעילה כבר עכשיו ללא קרדנציאל:** broadcast-notification→user_notifications→NotificationBell realtime. אומת: build נקי, sw.js מכיל `importScripts("/push-sw.js")`, אפליקציה עולה בלי שגיאות-קונסול.
+
+**חסר ממני (סער):** VAPID key-pair (`VITE_VAPID_PUBLIC_KEY` ל-build + `VAPID_PUBLIC_KEY`/`VAPID_PRIVATE_KEY`/`VAPID_SUBJECT` ל-edge) להפעלת פוש-OS. ממשק-שליחה מהאדמין = **T01**.
+
+**T08 עדכון (1.7.2026) — קהל weekly-learners אומת + מיגרציה הורצה:**
+- מיגרציית `push_subscriptions` הורצה על בני ציון דרך Management API (`sbp_bddd`), טבלה+RLS קיימים ✓.
+- סודות VAPID edge נקבעו (`POST /v1/projects/{ref}/secrets`, 201). Vercel `VITE_VAPID_PUBLIC_KEY` ✓.
+- **תיקון target `weekly-learners`:** המנויים ב-`user_access_tags` תחת `program:weekly-chapter` (271), לא ב-`weekly_program_progress` (ריק). ה-target עודכן ל-union: `program:weekly-chapter` + תג-הספר הנוכחי (`course:haggai-zechariah-malachi`) + progress. **מגיע ל-3 חשבונות** (268 email-only → Smoove). פוש/in-app = רק account-linked.
+- נשאר-מרכזי: **deploy `broadcast-notification`** (דורש `supabase login`/CLI) + build+deploy frontend.
+
+**T08 — edge נפרס (1.7.2026):** `broadcast-notification` **v9 ACTIVE** נפרס דרך Management API (`POST /v1/projects/{ref}/functions/deploy`, multipart metadata+file, 201) — **בלי `supabase login`**, רק PAT `sbp_bddd`. smoke: unauth→401. שרת מלא חי: table+RLS+VAPID secrets+function. נשאר רק frontend build+deploy (מרכזי) + כפתור admin (T01).
