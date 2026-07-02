@@ -5,6 +5,7 @@ import { AdminLayout } from "@/components/admin/AdminLayout";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -39,6 +40,32 @@ const Messages = () => {
   const queryClient = useQueryClient();
   const { toast } = useToast();
   const [selectedMessage, setSelectedMessage] = useState<any>(null);
+  const [replyText, setReplyText] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const sendViaSystem = async () => {
+    if (!selectedMessage?.email || !replyText.trim()) return;
+    setSending(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("send-admin-email", {
+        body: {
+          to: selectedMessage.email,
+          subject: `Re: ${selectedMessage.subject || "פנייתך לבני ציון"}`,
+          html: `<div dir="rtl" style="font-family:Arial,sans-serif;font-size:15px;line-height:1.7">${replyText.replace(/\n/g, "<br>")}</div>`,
+          replyTo: selectedMessage.email,
+        },
+      });
+      if (error) throw error;
+      if (data && data.ok === false) throw new Error(data.error || "השליחה נכשלה");
+      toast({ title: "המענה נשלח דרך המערכת" });
+      setReplyText("");
+      setSelectedMessage(null);
+    } catch (e: any) {
+      toast({ title: "שליחה דרך המערכת נכשלה", description: `${e.message}. אפשר להשתמש ב"השב במייל".`, variant: "destructive" });
+    } finally {
+      setSending(false);
+    }
+  };
 
   const markAsRead = useMutation({
     mutationFn: async (id: string) => {
@@ -200,6 +227,28 @@ const Messages = () => {
                   <div className="bg-secondary/30 rounded-lg p-4">
                     <p className="text-sm leading-relaxed whitespace-pre-wrap">{selectedMessage.message}</p>
                   </div>
+
+                  {selectedMessage.email && (
+                    <div className="space-y-2">
+                      <label className="text-sm text-muted-foreground">מענה (יישלח ממערכת בני ציון):</label>
+                      <Textarea
+                        value={replyText}
+                        onChange={(e) => setReplyText(e.target.value)}
+                        rows={3}
+                        placeholder="כתוב כאן את המענה…"
+                        dir="rtl"
+                      />
+                      <Button
+                        size="sm"
+                        onClick={sendViaSystem}
+                        disabled={!replyText.trim() || sending}
+                      >
+                        <Mail className="h-4 w-4 ml-1" />
+                        {sending ? "שולח…" : "שלח דרך המערכת"}
+                      </Button>
+                    </div>
+                  )}
+
                   <div className="flex items-center gap-2 pt-2">
                     <Button
                       variant="destructive"

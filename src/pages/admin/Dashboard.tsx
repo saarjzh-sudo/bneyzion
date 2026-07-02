@@ -109,7 +109,9 @@ export default function Dashboard() {
             .from("user_access_tags" as never)
             .select("*", { count: "exact", head: true })
             .eq("tag" as never, "program:weekly-chapter")
-            .gt("valid_until" as never, new Date().toISOString()),
+            // פעיל = ללא תוקף (לכל החיים) או תוקף עתידי. הסינון הקודם
+            // .gt("valid_until") פספס את מנויי-לכל-החיים (valid_until=null).
+            .or(`valid_until.is.null,valid_until.gt.${new Date().toISOString()}` as never),
           supabase
             .from("orders")
             .select("total, created_at")

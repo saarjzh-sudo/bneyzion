@@ -1,5 +1,38 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## T01 finish-track — 2026-06-30 — Admin dashboard polish (branch `finish/01-admin`, base b4631c76)
+> מסלול-סיום מבודד, אזור-בעלות `src/pages/admin/**` + `src/components/admin/**` + admin hooks.
+> - **ContentUpload `FileDropZone` → drag&drop אמיתי:** היה קליק-בלבד. נוסף `onDrop/onDragOver/onDragLeave` + state `dragging`, ולידציית-`accept` (`fileMatchesAccept`) + `maxBytes` (200MB שמע / 2GB וידאו) עם הודעות `role="alert"`, ניהול `object-URL` תקין ב-`useEffect` (היה memory-leak: `URL.createObjectURL` בכל render), נגישות: `sr-only` במקום `hidden` (input נשאר נגיש-מקלדת) + `focus-within` ring.
+> - **Analytics.tsx שוכתב מלא:** הוסר `framer-motion`+`gradient-teal`+`hsl(--token)`, עבר לשפת-האתר (gold/parchment/navy, Kedem/Ploni, CSS-only). נוספו מדדים עסקיים חיים מ-Supabase: מנויים-פעילים, חדשים-החודש, נטישה-החודש (valid_until ב-30 יום אחרונים), הכנסות-החודש (`orders`). חישוב מנויים ב-JS על `user_access_tags` (tag=program:weekly-chapter) — אמין למאות שורות, נמנע מ-`.or()` typed-as-never.
+> - **Subscribers.tsx:** נוסף KPI "חדשים החודש" (`created_at` ב-30 יום).
+> - **InlineEditField חדש** (`src/components/admin/InlineEditField.tsx`): רכיב עריכה-במקום גנרי+נגיש (Enter שומר/Esc מבטל, callback אסינכרוני). מחווט לדוגמה ב-Topics.tsx (תא שם → `updateTopic.mutateAsync({id,name})`). מוכן לשכפול לכותרות/תיאורים בכל עמוד אדמין.
+> - **Budget חדש** (`src/pages/admin/Budget.tsx` + `src/hooks/useMondayBudget.ts`): UI מלא למעקב-תקציב Monday. **stub חסום** — בלי env (`VITE_MONDAY_BUDGET_BOARD_ID`+`VITE_MONDAY_PROXY_READY`) מציג מסך-הקמה. ההוק קורא edge `monday-budget` (server-side, לא חושף token). פריט "תקציב" נוסף ל-AdminSidebar.
+> - **תלויות חוצות-מסלול (לא נגעתי):** route ל-`/admin/budget` ב-`App.tsx` = T14 (אחרת 404); edge `monday-budget`+`send-smoove-email` = מחוץ ל-zone; טבלת `events` לכנסים = schema (אין כיום טבלה → CRUD-כנסים חסום). הכל ב-`_DONE.md`.
+> - **מייל ב"צ (מחקר):** Smoove כבר מחווט דרך edge `import-smoove` עם `SMOOVE_API_KEY` ב-secrets — **אין צורך ב-credential חדש**. חסר רק edge *לשליחה* (`send-smoove-email`).
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
+>
+> ## T01 finish-track (המשך) — 2026-06-30 — Monday חי + תמצות + הרשאות + תיקון-דיוק
+> - **Monday מחובר באמת:** edge `supabase/functions/monday-insights/index.ts` מושך board `5094769002` ("היסטוריית מנויים חודשית") server-side (secret `MONDAY_API_TOKEN`). Hook `useMondayInsights`. עמוד `Budget.tsx` הפך לדשבורד "מנויים · Monday": KPI + 4 גרפים חיים (צמיחה/MRR/חדשים-מול-עזבו/נטישה). הטוקן נשמר ב-`api-keys.md` חיצוני (gitignored) + פרופיל. **Deploy מרכזי:** `supabase secrets set MONDAY_API_TOKEN=…` + `functions deploy monday-insights`.
+> - **תמצות סיידבר:** `AdminSidebar.tsx` שוכתב מ-2 קבוצות ל-**5 קבוצות** (ראשי·תוכן·משתמשים-ומכירות·נתונים-ותקשורת·אתר). **"הזמנות" הוסר מהניווט** (Orders ⊂ Payments — כפילות). Migration/ContentCompare נשארים route-only לדיבאג.
+> - **ניהול הרשאות ב-`Users.tsx`:** נוסף תפקיד **creator (מורה/יוצר)** לדרופדאון; עמודת **"גישות תוכן"** עם badges-פעילים הניתנים-לשלילה; דיאלוג **"תן גישה"** (מנוי/קורס + תוקף). הוקים חדשים ב-`useUsers.ts`: `useAccessTags`/`useGrantAccessTag`/`useRevokeAccessTag` (על `user_access_tags`, source='admin'). ⚠️ **enum `app_role` ב-DB חסר 'creator'** → `ALTER TYPE public.app_role ADD VALUE 'creator'` נדרש לפני שהענקת-creator תעבוד (אחרת INSERT נכשל).
+> - **🐞 תיקון-דיוק קריטי (Dashboard.tsx):** KPI "מנויי פרק שבועי" סינן `.gt("valid_until")` בלבד → **פספס 99 מנויי-לכל-החיים (valid_until=null)** והציג 1 במקום 100. תוקן ל-`.or(valid_until.is.null,valid_until.gt.now)`. אומת מול ה-DB (REST count): null=99, future=1, **active=100**, expired=171, total=271, pending_user_link=268, linked=3.
+> - **פער-סנכרון מתועד (לא באג בקוד):** Monday=281 פעילים (ידני, יואב) · DB=100 פעילים (171 פגי-תוקף מ-Smoove sync soft-delete) · Smoove list=288. רק 3 מנויים מקושרים לחשבון-אתר אמיתי (268 pending — מיובאי-Smoove שלא נרשמו). source-of-truth עסקי = Monday/Smoove; DB משקף את ה-gating.
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
+>
+> ## T01 finish-track (המשך 3) — 2026-06-30 — תרומות Monday + דיוק מעלה-התוכן
+> - **תרומות ב-edge `monday-insights`:** נוסף fetch שני ל-board `5099487161` ("תרומות-קמפיינים Grow live") עם pagination (cursor). מסווג לפי `text_mm4tkcbp` (תיאור עסקה): 'יהושע'→yehoshua, 'סעדיה'→saadia. עמוד "נתוני Monday" מציג כרטיסי-קמפיין + סך. **ממצא:** יהושע ₪18,021/Monday ≈ ₪19,768/DB (מסונכרן), **סעדיה ₪41,785 (352) ב-Grow+Monday אך 0 בטבלת `donations`** — מוצר-סליקת סעדיה לא מחווט ל-webhook האתר. באנר-אזהרה בעמוד.
+> - **דיוק מעלה-התוכן (ContentUpload) — נגד אובדן-תוכן:** (1) `validateStep(2)` מחייב `locationValue` (בלי מיקום → חסום); סדרה-חדשה מחייבת שם. (2) `createSeries` status = `isAdmin ? "active" : "draft"` (היה תמיד draft → הסתיר סדרות-אדמין+שיעוריהן מהסיידבר הציבורי). (3) הסבר-תיוג בשלב-2 + אזהרות-אדום בשלב-4 ל-standalone (נעלם מהעץ) ול-teachers-only (מוסתר מהציבור). מקור: מיפוי הסיידברים — ציבורי מסנן `status in(active,published)` + `not audience_tags cs {teachers}`; מורים לא מסנן status.
+> - **נלמד לסוכן+זיכרון:** `~/.claude/agents/bneyzion-designer.md` (סקציית T01) + memory `project_bneyzion_t01_admin_finish_state` + MEMORY 0c4.
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
+>
+> ## T01 finish-track (המשך 4) — 2026-07-01 — כנסים + סנכרון + מייל + פוליש
+> - **טבלת `events` נוצרה בפרודקשן** (Management PAT, אומת): slug/title/subtitle/event_date/location/hero_url/body/is_active/registrations_count/views_count/sort_order. RLS: ציבור קורא `is_active`, admin הכל (`has_role`). `enum app_role` **כבר כלל `creator`** — לא נדרש ALTER.
+> - **כנסים CRUD:** `src/hooks/useEvents.ts` + `src/pages/admin/Kenes.tsx` (list/create/edit/toggle/delete) + פריט "כנסים" בסיידבר (קבוצת "אתר"). route `/admin/kenes` = צריך App.tsx (T14).
+> - **דשבורד-סנכרון מאוחד ב-Subscribers:** כרטיס "פיוס מקורות" — Monday(רשמי, מ-`useMondayInsights`) מול DB(active) מול פירוק-מקור (smoove/grow/admin) + התראת-פער כשההפרש≥5 + כפתור "רענן" (invalidate). מסביר שהפער נובע מ-Monday-ידני מול Smoove-soft-delete.
+> - **מייל מהאדמין:** edge `send-smoove-email` (משתמש ב-`SMOOVE_API_KEY` הקיים; ⚠️ נתיב `/v1/Emails/Transactional` צריך אימות מול Smoove, אחרת Resend/SES). Messages קיבל שדה-מענה + כפתור "שלח דרך המערכת" (mailto "השב במייל" כבר היה).
+> - **פוליש:** Users מציג "N קורסים" (`course_enrollments`) בעמודת-גישות · Rabbis שם+תואר inline-edit (`InlineEditField`).
+> - ✅ tsc נקי · ✅ `npm run build` נקי.
+
 > ## Session י"א Batch B — 2026-06-11 — Upload Wizard Features 3+5+6: multi-rabbi, AI cover gen, series approval flow (PREVIEW dpl_GAk2YZhj6wsE2EYUBPAkgSuNQ5qx)
 > Upload wizard continued — Features 3, 5, 6 deployed as preview (NOT yet aliased to prod):
 > - **Feature 3 — Multi-rabbi + inline creator add:**

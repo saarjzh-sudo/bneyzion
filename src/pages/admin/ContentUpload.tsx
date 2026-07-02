@@ -202,7 +202,9 @@ const ContentUpload = () => {
         .from("series")
         .insert({
           title,
-          status: "draft",
+          // אדמין יוצר סדרה פעילה (מופיעה מיד בעץ); יוצר → draft עד אישור.
+          // status="draft" הסתיר סדרות-אדמין חדשות + כל שיעוריהן מהסיידבר.
+          status: isAdmin ? "active" : "draft",
           audience_tags: form.audienceTags,
           // Fix: attach parent_id from the picker node — previously always missing (orphan bug)
           parent_id: parentId || null,
@@ -324,6 +326,24 @@ const ContentUpload = () => {
     if (s === 1 && !form.title.trim()) {
       setStepErrors(e => ({ ...e, 1: "נא להזין כותרת" }));
       return false;
+    }
+    if (s === 2) {
+      // חובה לבחור מיקום בעץ — אחרת התוכן "נעלם" (לא מופיע בסיידבר)
+      if (!locationValue) {
+        setStepErrors(e => ({ ...e, 2: "נא לבחור מיקום לתוכן בעץ הניווט (או בחר במפורש 'שיעור עצמאי')" }));
+        return false;
+      }
+      if (
+        locationValue.mode === "new_series_in_node" &&
+        !(locationValue.seriesTitle?.trim() || form.newSeriesTitle.trim())
+      ) {
+        setStepErrors(e => ({ ...e, 2: "הזן שם לסדרה החדשה" }));
+        return false;
+      }
+      // תיוג teachers בלי general = יוסתר מהעץ הציבורי — דורש אישור מודע
+      if (form.audienceTags.includes("teachers") && !form.audienceTags.includes("general")) {
+        // מותר, אבל נזהיר בשלב הסקירה (לא חוסם)
+      }
     }
     setStepErrors(e => { const n = { ...e }; delete n[s]; return n; });
     return true;
@@ -762,6 +782,16 @@ const ContentUpload = () => {
                     );
                   })}
                 </div>
+                <div
+                  className="flex items-start gap-2 mt-2.5 p-2.5 rounded-lg text-xs"
+                  style={{ background: "#F0FDF4", color: "#166534" }}
+                >
+                  <AlertCircle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                  <span>
+                    <strong>כללי</strong> = מופיע בעץ הניווט הציבורי. <strong>מורים</strong> = מופיע באגף המורים.
+                    תיוג <strong>מורים בלבד</strong> (בלי כללי) יסתיר את התוכן מהאתר הציבורי.
+                  </span>
+                </div>
               </div>
             </div>
           )}
@@ -782,6 +812,7 @@ const ContentUpload = () => {
                   file={form.audioFile}
                   onChange={f => set("audioFile", f)}
                   icon={Headphones}
+                  maxBytes={200 * 1024 * 1024}
                 />
               )}
 
@@ -795,6 +826,7 @@ const ContentUpload = () => {
                     file={form.videoFile}
                     onChange={f => set("videoFile", f)}
                     icon={Video}
+                    maxBytes={2 * 1024 * 1024 * 1024}
                   />
                   <div className="flex items-center gap-2 text-xs" style={{ color: TXT_M }}>
                     <div className="flex-1 h-px" style={{ background: GOLD_S }} />
@@ -951,15 +983,30 @@ const ContentUpload = () => {
                 )}
               </div>
 
-              {/* standalone warning */}
-              {locationValue?.mode === "standalone" && (
+              {/* standalone warning — red: content will be invisible in the site tree */}
+              {(locationValue?.mode === "standalone" || !locationValue) && (
                 <div
                   className="flex items-start gap-3 p-4 rounded-xl"
-                  style={{ background: "#FFFBEB", border: "1px solid #FDE68A" }}
+                  style={{ background: "#FEE2E2", border: "1px solid #FCA5A5" }}
+                >
+                  <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "#DC2626" }} />
+                  <p className="text-sm" style={{ color: "#991B1B" }}>
+                    <strong>שיעור ללא סדרה לא יופיע בעץ הניווט של האתר</strong> — גם מנויים לא ימצאו אותו.
+                    מומלץ לחזור לשלב "שיוך" ולבחור סדרה. אפשר גם לשייך מאוחר יותר.
+                  </p>
+                </div>
+              )}
+
+              {/* teachers-only warning — hidden from the public tree */}
+              {form.audienceTags.includes("teachers") && !form.audienceTags.includes("general") && (
+                <div
+                  className="flex items-start gap-3 p-4 rounded-xl"
+                  style={{ background: "#FEF3C7", border: "1px solid #FDE68A" }}
                 >
                   <AlertCircle className="h-5 w-5 shrink-0 mt-0.5" style={{ color: "#D97706" }} />
                   <p className="text-sm" style={{ color: "#92400E" }}>
-                    שיעור ללא סדרה לא יופיע בעץ הניווט של האתר. ניתן להוסיף לסדרה מאוחר יותר.
+                    התוכן מתויג <strong>מורים בלבד</strong> — יופיע רק באגף המורים ולא בעץ הציבורי.
+                    להצגה גם לציבור, הוסף גם את התיוג "כללי".
                   </p>
                 </div>
               )}
@@ -1111,51 +1158,118 @@ interface FileDropZoneProps {
   onChange: (f: File | null) => void;
   icon: React.ElementType;
   preview?: boolean;
+  /** מגבלת גודל בבייטים — אם הקובץ גדול מדי, ולידציה ידידותית עוצרת לפני העלאה */
+  maxBytes?: number;
 }
-const FileDropZone = ({ id, accept, label, hint, file, onChange, icon: Icon, preview }: FileDropZoneProps) => (
-  <div>
-    <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>{label}</label>
-    <div
-      className="rounded-xl transition-colors"
-      style={{
-        border: `2px dashed ${file ? GOLD : GOLD_S}`,
-        background: file ? `${GOLD}08` : "#fff",
-      }}
-    >
-      <input
-        type="file"
-        accept={accept}
-        onChange={e => onChange(e.target.files?.[0] ?? null)}
-        className="hidden"
-        id={id}
-      />
-      <label htmlFor={id} className="flex flex-col items-center py-6 cursor-pointer gap-2">
-        {preview && file ? (
-          <img
-            src={URL.createObjectURL(file)}
-            alt="preview"
-            className="h-24 rounded-lg object-cover mb-1"
-          />
-        ) : (
-          <Icon className="h-7 w-7" style={{ color: file ? GOLD : TXT_M }} />
-        )}
-        <p className="text-sm font-display" style={{ color: file ? GOLD : TXT_M }}>
-          {file ? file.name : "לחץ לבחירת קובץ"}
+
+/** האם הקובץ תואם למחרוזת accept (mime כללי "audio/*" או סיומות ".pdf,.doc") */
+function fileMatchesAccept(file: File, accept: string): boolean {
+  if (!accept || accept === "*") return true;
+  const name = file.name.toLowerCase();
+  const type = file.type.toLowerCase();
+  return accept.split(",").map(s => s.trim().toLowerCase()).some(token => {
+    if (!token) return false;
+    if (token.startsWith(".")) return name.endsWith(token);
+    if (token.endsWith("/*")) return type.startsWith(token.slice(0, -1));
+    return type === token;
+  });
+}
+
+function humanSize(bytes: number): string {
+  if (bytes >= 1e9) return `${(bytes / 1e9).toFixed(1)}GB`;
+  if (bytes >= 1e6) return `${Math.round(bytes / 1e6)}MB`;
+  return `${Math.round(bytes / 1e3)}KB`;
+}
+
+const FileDropZone = ({ id, accept, label, hint, file, onChange, icon: Icon, preview, maxBytes }: FileDropZoneProps) => {
+  const [dragging, setDragging] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  // object-URL לתצוגה מקדימה — נוצר ומשוחרר בהתאם לקובץ (מונע דליפת זיכרון)
+  useEffect(() => {
+    if (preview && file && file.type.startsWith("image/")) {
+      const url = URL.createObjectURL(file);
+      setPreviewUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    setPreviewUrl(null);
+  }, [file, preview]);
+
+  const accept_ = (f: File) => {
+    if (!fileMatchesAccept(f, accept)) {
+      setErr("סוג הקובץ לא נתמך כאן. בדקו את הפורמטים המותרים מתחת.");
+      return;
+    }
+    if (maxBytes && f.size > maxBytes) {
+      setErr(`הקובץ גדול מדי (${humanSize(f.size)}). המקסימום הוא ${humanSize(maxBytes)}.`);
+      return;
+    }
+    setErr(null);
+    onChange(f);
+  };
+
+  return (
+    <div>
+      {label && <label htmlFor={id} className="block text-sm font-display mb-1.5" style={{ color: TXT }}>{label}</label>}
+      <div
+        className="rounded-xl transition-colors focus-within:ring-2 focus-within:ring-offset-1"
+        onDragOver={e => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={e => { e.preventDefault(); setDragging(false); }}
+        onDrop={e => {
+          e.preventDefault();
+          setDragging(false);
+          const f = e.dataTransfer.files?.[0];
+          if (f) accept_(f);
+        }}
+        style={{
+          border: `2px dashed ${err ? "#DC2626" : dragging || file ? GOLD : GOLD_S}`,
+          background: dragging ? `${GOLD}14` : file ? `${GOLD}08` : "#fff",
+          // @ts-expect-error CSS custom prop for tailwind ring color
+          "--tw-ring-color": GOLD,
+        }}
+      >
+        <input
+          type="file"
+          accept={accept}
+          onChange={e => { const f = e.target.files?.[0]; if (f) accept_(f); else { setErr(null); onChange(null); } }}
+          className="sr-only"
+          id={id}
+        />
+        <label htmlFor={id} className="flex flex-col items-center py-6 cursor-pointer gap-2 text-center px-3">
+          {preview && previewUrl ? (
+            <img
+              src={previewUrl}
+              alt={`תצוגה מקדימה: ${file?.name ?? ""}`}
+              className="h-24 rounded-lg object-cover mb-1"
+            />
+          ) : (
+            <Icon className="h-7 w-7" style={{ color: file ? GOLD : dragging ? GOLD : TXT_M }} aria-hidden />
+          )}
+          <p className="text-sm font-display" style={{ color: file ? GOLD : TXT_M }}>
+            {file ? file.name : dragging ? "שחררו כאן את הקובץ" : "גררו קובץ לכאן או לחצו לבחירה"}
+          </p>
+          <p className="text-xs" style={{ color: TXT_M }}>{hint}</p>
+          {file && (
+            <button
+              type="button"
+              onClick={e => { e.preventDefault(); setErr(null); onChange(null); }}
+              className="text-xs px-3 py-1 rounded-lg"
+              style={{ background: "#FEE2E2", color: "#DC2626" }}
+            >
+              הסר
+            </button>
+          )}
+        </label>
+      </div>
+      {err && (
+        <p role="alert" className="text-xs mt-1.5 flex items-center gap-1" style={{ color: "#DC2626" }}>
+          <AlertCircle className="h-3.5 w-3.5" aria-hidden />
+          {err}
         </p>
-        <p className="text-xs" style={{ color: TXT_M }}>{hint}</p>
-        {file && (
-          <button
-            type="button"
-            onClick={e => { e.preventDefault(); onChange(null); }}
-            className="text-xs px-3 py-1 rounded-lg"
-            style={{ background: "#FEE2E2", color: "#DC2626" }}
-          >
-            הסר
-          </button>
-        )}
-      </label>
+      )}
     </div>
-  </div>
-);
+  );
+};
 
 export default ContentUpload;

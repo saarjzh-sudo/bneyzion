@@ -6,13 +6,115 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Users as UsersIcon, Crown, UserCheck, UserX, CreditCard, Ban, CheckCircle2, Download } from "lucide-react";
-import { useProfiles, useUserRoles, useAddRole, useRemoveRole, useCommunityMembers, useUpdateMemberTier, useUpdateMemberStatus } from "@/hooks/useUsers";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Shield, Users as UsersIcon, Crown, UserCheck, UserX, CreditCard, Ban, CheckCircle2, Download, GraduationCap, KeyRound, Plus } from "lucide-react";
+import {
+  useProfiles, useUserRoles, useAddRole, useRemoveRole, useCommunityMembers,
+  useUpdateMemberTier, useUpdateMemberStatus, useAccessTags, useGrantAccessTag, useRevokeAccessTag,
+  useCourseEnrollments, type Profile, type AccessTag,
+} from "@/hooks/useUsers";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
-const roleLabels: Record<string, string> = { admin: "מנהל", moderator: "מנהל תוכן", user: "משתמש" };
-const roleColors: Record<string, string> = { admin: "bg-primary/10 text-primary", moderator: "bg-accent/10 text-accent", user: "bg-muted text-muted-foreground" };
+const roleLabels: Record<string, string> = { admin: "מנהל", creator: "מורה / יוצר", moderator: "מנהל תוכן", user: "משתמש" };
+const roleColors: Record<string, string> = { admin: "bg-primary/10 text-primary", creator: "bg-olive-100 text-green-800", moderator: "bg-accent/10 text-accent", user: "bg-muted text-muted-foreground" };
+
+/** תווית ידידותית ל-tag של גישה */
+function tagLabel(tag: string): string {
+  if (tag === "program:weekly-chapter") return "מנוי הפרק השבועי";
+  if (tag.startsWith("course:")) return "קורס: " + tag.slice(7);
+  if (tag.startsWith("program:")) return "תכנית: " + tag.slice(8);
+  return tag;
+}
+const isTagActive = (t: AccessTag) => !t.valid_until || new Date(t.valid_until).getTime() > Date.now();
+
+/* ─── דיאלוג הענקת גישת-תוכן ───────────────────────────────────── */
+const ACCESS_PRESETS = [
+  { value: "program:weekly-chapter", label: "מנוי הפרק השבועי" },
+  { value: "custom", label: "קורס אחר / מותאם…" },
+];
+
+function GrantAccessDialog({
+  user, onClose, onGrant, pending,
+}: {
+  user: Profile | null;
+  onClose: () => void;
+  onGrant: (tag: string, validUntil: string) => void;
+  pending: boolean;
+}) {
+  const [preset, setPreset] = useState("program:weekly-chapter");
+  const [customTag, setCustomTag] = useState("");
+  const [validUntil, setValidUntil] = useState("");
+
+  const tag = preset === "custom" ? customTag.trim() : preset;
+
+  return (
+    <Dialog open={!!user} onOpenChange={(v) => !v && onClose()}>
+      <DialogContent className="max-w-md" dir="rtl">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <KeyRound className="h-4 w-4" /> הענקת גישת תוכן
+          </DialogTitle>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          <p className="text-sm text-muted-foreground">
+            ל-<strong>{user?.full_name || user?.email}</strong>
+          </p>
+          <div>
+            <Label>סוג גישה</Label>
+            <Select value={preset} onValueChange={setPreset}>
+              <SelectTrigger className="mt-1"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {ACCESS_PRESETS.map((p) => (
+                  <SelectItem key={p.value} value={p.value}>{p.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          {preset === "custom" && (
+            <div>
+              <Label>מזהה גישה (tag)</Label>
+              <Input
+                value={customTag}
+                onChange={(e) => setCustomTag(e.target.value)}
+                placeholder="course:my-course-slug"
+                dir="ltr"
+                className="mt-1"
+              />
+              <p className="text-[11px] text-muted-foreground mt-1">
+                פורמט: <code>course:&lt;מזהה&gt;</code> או <code>program:&lt;מזהה&gt;</code>
+              </p>
+            </div>
+          )}
+          <div>
+            <Label>תוקף עד (ריק = ללא הגבלה)</Label>
+            <Input
+              type="date"
+              value={validUntil}
+              onChange={(e) => setValidUntil(e.target.value)}
+              dir="ltr"
+              className="mt-1"
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant="outline" size="sm">ביטול</Button>
+          </DialogClose>
+          <Button
+            size="sm"
+            disabled={!tag || pending}
+            onClick={() => onGrant(tag, validUntil)}
+          >
+            {pending ? "מעניק…" : "הענק גישה"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
 const tierLabels: Record<string, string> = { standard: "רגיל", premium: "פרימיום", vip: "VIP" };
 const statusLabels: Record<string, string> = { active: "פעיל", inactive: "לא פעיל", suspended: "מושעה" };
 
@@ -20,16 +122,36 @@ export default function Users() {
   const { data: profiles, isLoading } = useProfiles();
   const { data: roles } = useUserRoles();
   const { data: members, isLoading: membersLoading } = useCommunityMembers();
+  const { data: accessTags } = useAccessTags();
+  const { data: enrollments } = useCourseEnrollments();
   const addRole = useAddRole();
   const removeRole = useRemoveRole();
   const updateTier = useUpdateMemberTier();
   const updateStatus = useUpdateMemberStatus();
+  const grantAccess = useGrantAccessTag();
+  const revokeAccess = useRevokeAccessTag();
   const { toast } = useToast();
   const [addingFor, setAddingFor] = useState<string | null>(null);
   const [changingTierFor, setChangingTierFor] = useState<string | null>(null);
+  const [grantFor, setGrantFor] = useState<Profile | null>(null);
 
   const getUserRoles = (userId: string) => roles?.filter((r) => r.user_id === userId) || [];
   const getMember = (email: string | null) => members?.find((m) => m.email === email);
+  const getUserTags = (userId: string, email: string | null) =>
+    (accessTags ?? []).filter(
+      (t) => (t.user_id === userId || (email && t.email === email)) && isTagActive(t),
+    );
+  const getUserCourses = (userId: string) =>
+    (enrollments ?? []).filter((e) => e.user_id === userId && e.status !== "dropped").length;
+
+  const handleRevokeAccess = async (id: string) => {
+    try {
+      await revokeAccess.mutateAsync(id);
+      toast({ title: "הגישה הוסרה" });
+    } catch (e: any) {
+      toast({ title: "שגיאה", description: e.message, variant: "destructive" });
+    }
+  };
 
   // Stats
   const totalUsers = profiles?.length ?? 0;
@@ -172,6 +294,7 @@ export default function Users() {
                         <TableHead className="text-right">משתמש</TableHead>
                         <TableHead className="text-right">אימייל</TableHead>
                         <TableHead className="text-right">הרשאות</TableHead>
+                        <TableHead className="text-right">גישות תוכן</TableHead>
                         <TableHead className="text-right">דרגת חברות</TableHead>
                         <TableHead className="text-right">נרשם</TableHead>
                         <TableHead className="text-right">פעולות</TableHead>
@@ -198,6 +321,34 @@ export default function Users() {
                                   </Badge>
                                 ))}
                                 {userRoles.length === 0 && <span className="text-muted-foreground text-sm">ללא</span>}
+                              </div>
+                            </TableCell>
+                            <TableCell>
+                              <div className="flex gap-1 flex-wrap items-center">
+                                {getUserTags(p.id, p.email).map((t) => (
+                                  <Badge
+                                    key={t.id}
+                                    variant="outline"
+                                    className="text-[11px] cursor-pointer hover:bg-destructive/10"
+                                    onClick={() => { if (confirm("להסיר גישה?")) handleRevokeAccess(t.id); }}
+                                  >
+                                    {tagLabel(t.tag)} ✕
+                                  </Badge>
+                                ))}
+                                {getUserCourses(p.id) > 0 && (
+                                  <Badge variant="secondary" className="text-[11px] gap-1">
+                                    <GraduationCap className="h-3 w-3" />
+                                    {getUserCourses(p.id)} קורסים
+                                  </Badge>
+                                )}
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-6 px-2 text-[10px] gap-1"
+                                  onClick={() => setGrantFor(p)}
+                                >
+                                  <Plus className="h-3 w-3" /> תן גישה
+                                </Button>
                               </div>
                             </TableCell>
                             <TableCell>
@@ -233,6 +384,7 @@ export default function Users() {
                                   <SelectTrigger className="w-32"><SelectValue placeholder="בחר הרשאה" /></SelectTrigger>
                                   <SelectContent>
                                     <SelectItem value="admin">מנהל</SelectItem>
+                                    <SelectItem value="creator">מורה / יוצר תוכן</SelectItem>
                                     <SelectItem value="moderator">מנהל תוכן</SelectItem>
                                     <SelectItem value="user">משתמש</SelectItem>
                                   </SelectContent>
@@ -246,7 +398,7 @@ export default function Users() {
                           </TableRow>
                         );
                       })}
-                      {profiles?.length === 0 && <TableRow><TableCell colSpan={6} className="text-center text-muted-foreground py-8">אין משתמשים רשומים</TableCell></TableRow>}
+                      {profiles?.length === 0 && <TableRow><TableCell colSpan={7} className="text-center text-muted-foreground py-8">אין משתמשים רשומים</TableCell></TableRow>}
                     </TableBody>
                   </Table>
                 )}
@@ -339,6 +491,27 @@ export default function Users() {
           </TabsContent>
         </Tabs>
       </div>
+
+      <GrantAccessDialog
+        user={grantFor}
+        pending={grantAccess.isPending}
+        onClose={() => setGrantFor(null)}
+        onGrant={async (tag, validUntil) => {
+          if (!grantFor) return;
+          try {
+            await grantAccess.mutateAsync({
+              user_id: grantFor.id,
+              email: grantFor.email,
+              tag,
+              valid_until: validUntil || null,
+            });
+            toast({ title: `הגישה הוענקה: ${tagLabel(tag)}` });
+            setGrantFor(null);
+          } catch (e: any) {
+            toast({ title: "שגיאה", description: e.message, variant: "destructive" });
+          }
+        }}
+      />
     </AdminLayout>
   );
 }
