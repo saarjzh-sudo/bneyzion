@@ -7797,3 +7797,12 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 **קבצים:** `theme.ts` (חדש), `DonateForm.tsx` (רה-רייט אדיטוריאלי — underline inputs, inverted chips, ink CTA), `DesignPreviewDonate.tsx` (רה-רייט מלא — primitives: Kicker/Reveal/PrimaryBtn/TextLink/H2). ריל כבר הוסר ב-v6.
 
 **self-score ~8/10** (מ-~4-5). לדחיפה ל-9-10: Lenis smooth-scroll + רגע-סקרול חתימה. build נקי, 0 console errors.
+
+## 2026-07-01 · T05 v8 — לפי פידבק סער (פתיחה חדשה)
+
+- **פתיחת העמוד** = סקשן הסיפור+טופס (הוסרו: הירו-וידאו, פס-מדדים, סקשן מדרגות שמעליו).
+- **כותרת פותחת:** "היו שותפים איתנו להפצת אור התנ״ך!" (H2 big).
+- **שמות → אות+שם משפחה** (`shortName`): "נתנאל ידגרי"→"נ. ידגרי". בהמלצות ובתורמים אחרונים (פרטיות).
+- **הוסר חלק סעדיה** (Memorial).
+- **PartnershipBand חדש** — סקשן כהה חם (espresso→ink + זוהר זהב) עם 3 מדדים + כפתור "היו שותפים" שגולל לטופס. מוסיף גיוון-צבע ושובר את המונוטוניות הקרם.
+- שיפורי פרופורציות: כותרת-פותחת גדולה יותר, testimonials על creamDeep, ריתמוס רקעים. וידאו-נוף נשאר רק ב-Final CTA (bookend). build נקי, 0 console errors.

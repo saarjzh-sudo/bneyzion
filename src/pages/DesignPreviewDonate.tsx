@@ -17,9 +17,8 @@ import { useScrollReveal } from "@/components/donate/useScrollReveal";
 import { useDonationStats } from "@/components/donate/useDonationStats";
 import { C, EASE, fonts } from "@/components/donate/theme";
 import {
-  IMPACT_TIERS, ALLOCATION, DONATE_FAQS, WHY_CARDS, TESTIMONIALS, IMAGES,
+  ALLOCATION, DONATE_FAQS, WHY_CARDS, TESTIMONIALS, IMAGES,
 } from "@/components/donate/donateData";
-import type { ImpactTier } from "@/components/donate/donateData";
 
 // ───────────────────────────────────────────────────────────
 // Helpers
@@ -38,6 +37,13 @@ function timeAgo(dateStr: string) {
 }
 
 const typeLabels: Record<string, string> = { iluy_neshama: "לעילוי נשמת", refua: "לרפואת", simcha: "לכבוד", regular: "" };
+
+// Privacy: show first-name initial + surname → "נתנאל ידגרי" → "נ. ידגרי".
+function shortName(name?: string | null): string {
+  const parts = (name || "").trim().split(/\s+/).filter(Boolean);
+  if (parts.length < 2) return name || "";
+  return `${parts[0][0]}. ${parts.slice(1).join(" ")}`;
+}
 
 // ───────────────────────────────────────────────────────────
 // Primitives
@@ -70,17 +76,9 @@ function PrimaryBtn({ children, onClick, dark = false }: { children: React.React
   );
 }
 
-function TextLink({ children, onClick, on = "light" }: { children: React.ReactNode; onClick: () => void; on?: "light" | "dark" }) {
+function H2({ children, center = false, big = false }: { children: React.ReactNode; center?: boolean; big?: boolean }) {
   return (
-    <button type="button" onClick={onClick} className={`text-link ${on === "dark" ? "on-dark" : ""}`}>
-      {children}
-    </button>
-  );
-}
-
-function H2({ children, center = false }: { children: React.ReactNode; center?: boolean }) {
-  return (
-    <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(2rem, 4vw, 3.1rem)", lineHeight: 1.08, letterSpacing: "-0.02em", color: C.ink, margin: 0, textAlign: center ? "center" : "start", textWrap: "balance" as any }}>
+    <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: big ? "clamp(2.3rem, 5vw, 3.8rem)" : "clamp(2rem, 4vw, 3.1rem)", lineHeight: 1.06, letterSpacing: "-0.02em", color: C.ink, margin: 0, textAlign: center ? "center" : "start", textWrap: "balance" as any }}>
       {children}
     </h2>
   );
@@ -97,12 +95,10 @@ export default function DesignPreviewDonate() {
   const { data: recentDonations } = useRecentDonations();
 
   useEffect(() => {
-    const onScroll = () => setShowBar(window.scrollY > 680);
+    const onScroll = () => setShowBar(window.scrollY > 620);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const pickTier = (t: ImpactTier) => { setAmount(t.amount); scrollToForm(); };
 
   return (
     <DesignLayout sidebar={false}>
@@ -117,13 +113,9 @@ export default function DesignPreviewDonate() {
         <button type="button" onClick={scrollToForm} className="btn-primary">לתרומה</button>
       </div>
 
-      <Hero />
-      <ProofStrip stats={stats} />
-      <ImpactSection amount={amount} onPick={pickTier} />
-
-      {/* Story + sticky form */}
-      <section style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
-        <div className="donate-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr minmax(370px, 430px)", gap: "clamp(2.5rem, 5vw, 5rem)", alignItems: "start" }}>
+      {/* Opening — story + sticky form (the page starts here) */}
+      <section style={{ background: C.cream, padding: "clamp(2.25rem, 5vw, 3.75rem) 2rem clamp(4rem, 8vw, 6.5rem)" }} dir="rtl">
+        <div className="donate-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr minmax(370px, 440px)", gap: "clamp(2.5rem, 5vw, 5rem)", alignItems: "start" }}>
           <Story />
           <div className="donate-form-col" style={{ position: "sticky", top: "5.5rem" }}>
             <DonateForm amount={amount} onAmount={setAmount} source="donate-page" />
@@ -133,7 +125,7 @@ export default function DesignPreviewDonate() {
 
       <WhySection />
       <Testimonials />
-      <Memorial />
+      <PartnershipBand stats={stats} />
       <Transparency />
       <RecentDonors donations={recentDonations} />
       <Faq />
@@ -143,122 +135,14 @@ export default function DesignPreviewDonate() {
 }
 
 // ───────────────────────────────────────────────────────────
-// Hero — monumental type over moving scenery (signature)
-// ───────────────────────────────────────────────────────────
-
-function Hero() {
-  return (
-    <section className="hero" dir="rtl">
-      <video autoPlay muted loop playsInline aria-hidden="true" className="hero-video">
-        <source src={IMAGES.heroVideo} type="video/mp4" />
-      </video>
-      {/* Directional scrim — darker toward the reading side (right) + base darken */}
-      <div aria-hidden="true" className="hero-scrim-1" />
-      <div aria-hidden="true" className="hero-scrim-2" />
-      <div aria-hidden="true" className="hero-fade-bottom" />
-
-      <div className="hero-inner">
-        <div className="hero-copy">
-          <div className="hero-fade-up d1"><Kicker on="dark">שותפים לבית התנ״ך</Kicker></div>
-          <h1 className="hero-title hero-fade-up d2">
-            פותחים את התנ״ך
-            <span className="hero-title-gold">לכל בית בישראל</span>
-          </h1>
-          <p className="hero-lead hero-fade-up d3">
-            מאחורי כל שיעור באתר יש אנשים שעובדים — רבנים, עורכים, מקליטים ומאיירים.
-            התרומה שלכם עוזרת לעוד שיעור לעלות לאוויר, ולהישאר פתוח לכל עם ישראל.
-          </p>
-          <div className="hero-actions hero-fade-up d4">
-            <PrimaryBtn onClick={scrollToForm} dark>להיות שותף</PrimaryBtn>
-            <TextLink onClick={() => scrollTo("impact")} on="dark">מה התרומה בונה ↓</TextLink>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ───────────────────────────────────────────────────────────
-// Proof strip — editorial stat row
-// ───────────────────────────────────────────────────────────
-
-function ProofStrip({ stats }: { stats: ReturnType<typeof useDonationStats> }) {
-  const items = [
-    { v: "11,000+", l: "שיעורים ותכנים" },
-    { v: "200+", l: "רבנים ומרצים" },
-    { v: "1,300+", l: "סדרות לימוד" },
-    stats.ready && stats.donorCount > 0
-      ? { v: `${stats.donorCount.toLocaleString("he-IL")}+`, l: "שותפים שהצטרפו" }
-      : { v: "פתוח", l: "בלי מנוי ובלי חומת תשלום" },
-  ];
-  return (
-    <section style={{ background: C.paper, borderBottom: `1px solid ${C.line}` }} dir="rtl">
-      <Reveal className="proof-row">
-        {items.map((it, i) => (
-          <div key={i} className="proof-item">
-            <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.7rem, 3.2vw, 2.6rem)", color: C.ink, lineHeight: 1, letterSpacing: "-0.02em" }}>{it.v}</div>
-            <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: C.ink62, marginTop: "0.5rem" }}>{it.l}</div>
-          </div>
-        ))}
-      </Reveal>
-    </section>
-  );
-}
-
-// ───────────────────────────────────────────────────────────
-// Impact tiers — refined cards, one inverted
-// ───────────────────────────────────────────────────────────
-
-function ImpactSection({ amount, onPick }: { amount: number; onPick: (t: ImpactTier) => void }) {
-  return (
-    <section id="impact" style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
-      <div style={{ maxWidth: 1180, margin: "0 auto" }}>
-        <Reveal style={{ maxWidth: 640, marginBottom: "3.5rem" }}>
-          <Kicker>מה התרומה בונה</Kicker>
-          <H2>כל סכום פותח עוד שער ללימוד</H2>
-          <p style={{ ...pStyle, marginTop: "1.25rem", marginBottom: 0 }}>
-            בחרו את הסכום שמתאים לכם — כל תרומה הופכת לעוד שיעור, עוד סדרה, עוד אדם שמתחבר לתנ״ך.
-          </p>
-        </Reveal>
-
-        <div className="impact-grid">
-          {IMPACT_TIERS.map((t, i) => {
-            const active = amount === t.amount;
-            const inverted = !!t.highlight;
-            return (
-              <Reveal key={t.amount} delay={(i % 3) * 80}>
-                <button
-                  type="button"
-                  onClick={() => onPick(t)}
-                  aria-pressed={active}
-                  className={`tier ${inverted ? "tier-hi" : ""} ${active ? "tier-active" : ""}`}
-                >
-                  {inverted && t.tag && <span className="tier-tag">{t.tag}</span>}
-                  <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "2.6rem", lineHeight: 1, letterSpacing: "-0.02em", color: inverted ? C.gold : C.goldDeep }}>
-                    {t.amount.toLocaleString("he-IL")}<span style={{ fontSize: "1.4rem" }}> ₪</span>
-                  </div>
-                  <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1.2rem", margin: "1rem 0 0.5rem", color: inverted ? C.cream : C.ink }}>{t.name}</div>
-                  <div style={{ fontFamily: fonts.body, fontSize: "0.92rem", lineHeight: 1.65, color: inverted ? C.onDark72 : C.ink62, flex: 1 }}>{t.impact}</div>
-                  <span className="tier-cta" style={{ color: inverted ? C.gold : C.goldDeep }}>{active ? "נבחר —" : "בחרו"} <span aria-hidden="true">←</span></span>
-                </button>
-              </Reveal>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ───────────────────────────────────────────────────────────
-// Story + Rav Yoav photo (asymmetric)
+// Story + Rav Yoav photo (asymmetric) — the page opener
 // ───────────────────────────────────────────────────────────
 
 function Story() {
   return (
     <Reveal>
-      <Kicker>הסיפור שלנו</Kicker>
-      <H2>למה אנחנו מבקשים<br />את השותפות שלכם?</H2>
+      <Kicker>שותפים לבית התנ״ך</Kicker>
+      <H2 big>היו שותפים איתנו<br />להפצת אור התנ״ך!</H2>
 
       <figure className="yoav-figure">
         <div className="yoav-frame">
@@ -309,7 +193,7 @@ function WhySection() {
 
 function Testimonials() {
   return (
-    <section style={{ background: C.cream, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
+    <section style={{ background: C.creamDeep, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
       <div style={{ maxWidth: 1180, margin: "0 auto" }}>
         <Reveal style={{ textAlign: "center", marginBottom: "3.5rem" }}>
           <div style={{ display: "flex", justifyContent: "center" }}><Kicker center>מה אומרים הלומדים</Kicker></div>
@@ -322,7 +206,7 @@ function Testimonials() {
                 <span aria-hidden="true" className="testi-mark">״</span>
                 <blockquote>{t.text}</blockquote>
                 <figcaption>
-                  <span className="testi-name">{t.name}</span>
+                  <span className="testi-name">{shortName(t.name)}</span>
                   {t.role && <span className="testi-role">{t.role}</span>}
                 </figcaption>
               </figure>
@@ -335,27 +219,36 @@ function Testimonials() {
 }
 
 // ───────────────────────────────────────────────────────────
-// Saadia memorial — quiet, dignified
+// Partnership band — dark break + stats + CTA to the form
 // ───────────────────────────────────────────────────────────
 
-function Memorial() {
+function PartnershipBand({ stats }: { stats: ReturnType<typeof useDonationStats> }) {
+  const items = [
+    { v: "11,000+", l: "שיעורים ותכנים" },
+    { v: "200+", l: "רבנים ומרצים" },
+    stats.ready && stats.donorCount > 0
+      ? { v: `${stats.donorCount.toLocaleString("he-IL")}+`, l: "שותפים שהצטרפו" }
+      : { v: "1,300+", l: "סדרות לימוד" },
+  ];
   return (
-    <section style={{ background: C.paper, borderTop: `1px solid ${C.line}`, borderBottom: `1px solid ${C.line}`, padding: "clamp(4.5rem, 9vw, 8rem) 2rem" }} dir="rtl">
-      <Reveal style={{ maxWidth: 640, margin: "0 auto", textAlign: "center" }}>
-        <span aria-hidden="true" className="mem-flame" />
-        <div style={{ display: "flex", justifyContent: "center" }}><Kicker center>לזכרו</Kicker></div>
-        <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.9rem, 3.6vw, 2.7rem)", color: C.ink, margin: "0 0 1.75rem", letterSpacing: "-0.02em" }}>
-          ממשיכים את האור של סעדיה
+    <section className="band" dir="rtl">
+      <Reveal style={{ position: "relative", zIndex: 1, maxWidth: 1080, margin: "0 auto", textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}><Kicker on="dark" center>הצטרפו אלינו</Kicker></div>
+        <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.9rem, 3.8vw, 2.9rem)", lineHeight: 1.1, letterSpacing: "-0.02em", color: C.onDark, margin: "0 0 1rem" }}>
+          כל שותפות פותחת עוד שער ללימוד
         </h2>
-        <p style={{ ...pStyle, margin: "0 auto 1.2rem", maxWidth: 540, fontSize: "1.05rem" }}>
-          האתר נבנה לזכרו של רס״ל במיל׳ סעדיה יעקב דרעי הי״ד, שנפל בהגנה על עם ישראל.
+        <p style={{ fontFamily: fonts.body, fontSize: "1.08rem", lineHeight: 1.75, color: C.onDark72, margin: "0 auto 2.5rem", maxWidth: 500 }}>
+          בזכות השותפים שלנו לימוד התנ״ך נשאר פתוח, חינם, לכל בית בישראל.
         </p>
-        <p style={{ ...pStyle, margin: "0 auto 1.75rem", maxWidth: 540, fontSize: "1.05rem" }}>
-          המשפחה ביקשה להמשיך את האור שלו בדרך חיה — לא רק בזיכרון, אלא בלימוד. במקום שבו עוד ועוד יהודים פותחים תנ״ך, לומדים וממשיכים את שרשרת החיים של עם ישראל.
-        </p>
-        <p style={{ fontFamily: fonts.display, fontStyle: "italic", fontWeight: 600, fontSize: "1.2rem", lineHeight: 1.6, color: C.ink, margin: "0 auto", maxWidth: 500 }}>
-          כל שיעור שעולה לאתר בזכות התרומה שלכם הוא עוד אור קטן שממשיך להאיר.
-        </p>
+        <div className="band-stats">
+          {items.map((it, i) => (
+            <div key={i}>
+              <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.8rem, 3.4vw, 2.6rem)", color: C.gold, lineHeight: 1, letterSpacing: "-0.02em" }}>{it.v}</div>
+              <div style={{ fontFamily: fonts.body, fontSize: "0.84rem", color: C.onDark72, marginTop: "0.5rem" }}>{it.l}</div>
+            </div>
+          ))}
+        </div>
+        <PrimaryBtn onClick={scrollToForm} dark>היו שותפים</PrimaryBtn>
       </Reveal>
     </section>
   );
@@ -412,7 +305,7 @@ function RecentDonors({ donations }: { donations: ReturnType<typeof useRecentDon
         <div className="donors-grid">
           {donations.slice(0, 6).map((d) => (
             <div key={d.id} className="donor-row">
-              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.ink }}>{d.donor_name || "אנונימי"}</span>
+              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.ink }}>{d.donor_name ? shortName(d.donor_name) : "אנונימי"}</span>
               <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.goldDeep }}>{Number(d.amount).toLocaleString()} ₪</span>
               {d.dedication_name && <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: C.ink42, gridColumn: "1 / -1" }}>{typeLabels[d.dedication_type]} {d.dedication_name}</span>}
               <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: C.ink42, gridColumn: "1 / -1" }}>{timeAgo(d.created_at)}</span>
@@ -577,6 +470,11 @@ function PageStyles() {
       .ledger-row:last-child { border-bottom: 1px solid ${C.line}; }
       .ledger-idx { font-family: ${fonts.display}; font-weight: 700; font-size: 1.1rem; color: ${C.gold}; letter-spacing: 0.05em; }
 
+      /* Partnership band — warm dark break for rhythm + colour */
+      .band { position: relative; overflow: hidden; padding: clamp(4rem, 8vw, 6.5rem) 2rem; background: linear-gradient(155deg, #241C12 0%, ${C.ink} 55%, #14100A 100%); }
+      .band::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 55% at 78% 18%, rgba(169,132,63,0.22), transparent 70%); pointer-events: none; }
+      .band-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 620px; margin: 0 auto 2.75rem; }
+
       /* Donors */
       .donors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem 3rem; }
       .donor-row { display: grid; grid-template-columns: 1fr auto; gap: 0.2rem 0.75rem; align-items: baseline; padding-bottom: 0.9rem; border-bottom: 1px solid ${C.lineSoft}; }
@@ -600,11 +498,9 @@ function PageStyles() {
       :focus-visible { outline: 2px solid ${C.gold}; outline-offset: 3px; }
 
       @media (max-width: 900px) {
-        .impact-grid, .testi-grid, .why-grid { grid-template-columns: 1fr; }
-        .proof-row { grid-template-columns: repeat(2, 1fr); }
-        .proof-item:nth-child(-n+2) { border-block-end: 1px solid ${C.line}; }
-        .proof-item:nth-child(odd) { border-inline-start: none; }
+        .testi-grid, .why-grid { grid-template-columns: 1fr; }
         .donors-grid { grid-template-columns: 1fr; }
+        .band-stats { gap: 1.25rem; }
       }
       @media (max-width: 768px) {
         .donate-grid { grid-template-columns: 1fr !important; }
