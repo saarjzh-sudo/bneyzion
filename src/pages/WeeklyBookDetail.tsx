@@ -159,13 +159,16 @@ export default function WeeklyBookDetail() {
   const bookTagSource = `course:${slug.replace("book-", "")}`;
   const { hasAccess: bookAccess, isLoading: bookAccessLoading } = useUserAccess(bookTagSource);
   const { hasAccess: programAccess, isLoading: programAccessLoading } = useUserAccess("program:weekly-chapter");
-  const accessLoading = bookAccessLoading || programAccessLoading;
+  // תכנית איכה בימי שני (2.7.2026) — תכנית מקבילה לפרק השבועי; מנוייה מקבלים
+  // גישה לספר איכה בלבד, עד המיזוג לתכנית הראשית (retag ב-user_access_tags).
+  const { hasAccess: eichaAccess, isLoading: eichaLoading } = useUserAccess("program:eicha-monday");
+  const accessLoading = bookAccessLoading || programAccessLoading || eichaLoading;
 
   const { isAdmin } = useAuth();
   const [previewMode, setPreviewMode] = useState<"subscriber" | "locked">("subscriber");
 
   // Combine: admin can toggle; real user: either tag grants access
-  const realAccess = bookAccess || programAccess;
+  const realAccess = bookAccess || programAccess || (eichaAccess && slug === "book-lamentations");
   const hasAccess = isAdmin ? (previewMode === "subscriber" || realAccess) : realAccess;
 
   // Data

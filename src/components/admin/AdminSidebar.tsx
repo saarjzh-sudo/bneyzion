@@ -3,6 +3,7 @@ import {
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
   BarChart3, Bell, PanelTop, Ticket, HeartPulse, CreditCard,
   UserCheck, Upload, Download, Wallet, CalendarDays, Megaphone,
+  Sparkles, BookMarked,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -41,19 +42,28 @@ const ADMIN: AppRole[] = ["admin"];
 const CREATOR: AppRole[] = ["admin", "creator"];
 
 /**
- * סיידבר אדמין — 5 קבוצות נקיות (תמצות 30.6.2026).
+ * סיידבר אדמין — 2 קבוצות (החלטת סער 2.7.2026):
+ * "נתונים" ראשון (כולל מכירות), אחריו "תוכן אתר".
  * "הזמנות" הוסר מהניווט — כלול בעמוד "סליקות" (Orders ⊂ Payments).
  * "מיגרציה" + "השוואת תוכן" נשארים route-only לדיבאג (לא בניווט).
  */
 const SECTIONS: NavSection[] = [
   {
-    label: "ראשי",
+    label: "נתונים",
     items: [
-      { title: "דשבורד", url: "/admin", icon: LayoutDashboard, roles: ADMIN, end: true },
+      { title: "דשבורד",        url: "/admin",               icon: LayoutDashboard, roles: ADMIN, end: true },
+      { title: "נתוני Monday",   url: "/admin/budget",        icon: Wallet,      roles: ADMIN },
+      { title: "מנויים",        url: "/admin/subscribers",   icon: UserCheck,   roles: ADMIN },
+      { title: "סליקות",        url: "/admin/payments",      icon: CreditCard,  roles: ADMIN },
+      { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
+      { title: "משתמשים",       url: "/admin/users",         icon: Shield,      roles: ADMIN },
+      { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
+      { title: "הודעות",        url: "/admin/messages",      icon: Mail,        roles: ADMIN },
+      { title: "התראות",        url: "/admin/notifications", icon: Bell,        roles: ADMIN },
     ],
   },
   {
-    label: "תוכן",
+    label: "תוכן אתר",
     items: [
       { title: "העלאת תוכן",     url: "/admin/upload",            icon: Upload,        roles: CREATOR },
       { title: "שיעורים",        url: "/admin/lessons",           icon: BookOpen,      roles: CREATOR },
@@ -61,36 +71,15 @@ const SECTIONS: NavSection[] = [
       { title: "רבנים",          url: "/admin/rabbis",            icon: Users2,        roles: CREATOR },
       { title: "נושאים",         url: "/admin/topics",            icon: Tag,           roles: CREATOR },
       { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap, roles: CREATOR },
+      { title: "מוצרים",         url: "/admin/products",          icon: ShoppingBag,   roles: ADMIN },
+      { title: "כנסים",          url: "/admin/kenes",             icon: CalendarDays,  roles: ADMIN },
+      { title: "באנרים ופופאפים", url: "/admin/promos",           icon: Megaphone,     roles: ADMIN },
+      { title: "דור הפלאות",     url: "/admin/dor-haplaot",       icon: Sparkles,      roles: CREATOR },
+      { title: "תוכן יומי",      url: "/admin/daily",             icon: BookMarked,    roles: CREATOR },
+      { title: "דף הבית",        url: "/admin/homepage",          icon: PanelTop,      roles: ADMIN },
       { title: "בריאות תוכן",   url: "/admin/content-health",    icon: HeartPulse,    roles: CREATOR },
       { title: "ייבוא תוכן",    url: "/admin/import-content",    icon: Download,      roles: ADMIN },
-    ],
-  },
-  {
-    label: "משתמשים ומכירות",
-    items: [
-      { title: "משתמשים",  url: "/admin/users",        icon: Shield,      roles: ADMIN },
-      { title: "מנויים",   url: "/admin/subscribers",  icon: UserCheck,   roles: ADMIN },
-      { title: "סליקות",   url: "/admin/payments",     icon: CreditCard,  roles: ADMIN },
-      { title: "מוצרים",   url: "/admin/products",     icon: ShoppingBag, roles: ADMIN },
-      { title: "קופונים",  url: "/admin/coupons",      icon: Ticket,      roles: ADMIN },
-    ],
-  },
-  {
-    label: "נתונים ותקשורת",
-    items: [
-      { title: "אנליטיקס",       url: "/admin/analytics",     icon: BarChart3, roles: ADMIN },
-      { title: "נתוני Monday",    url: "/admin/budget",        icon: Wallet,    roles: ADMIN },
-      { title: "הודעות",         url: "/admin/messages",      icon: Mail,      roles: ADMIN },
-      { title: "התראות",         url: "/admin/notifications", icon: Bell,      roles: ADMIN },
-    ],
-  },
-  {
-    label: "אתר",
-    items: [
-      { title: "כנסים",   url: "/admin/kenes",    icon: CalendarDays, roles: ADMIN },
-      { title: "באנרים ופופאפים", url: "/admin/promos", icon: Megaphone, roles: ADMIN },
-      { title: "דף הבית", url: "/admin/homepage", icon: PanelTop,     roles: ADMIN },
-      { title: "הגדרות",  url: "/admin/settings", icon: Settings,     roles: ADMIN },
+      { title: "הגדרות",        url: "/admin/settings",          icon: Settings,      roles: ADMIN },
     ],
   },
 ];

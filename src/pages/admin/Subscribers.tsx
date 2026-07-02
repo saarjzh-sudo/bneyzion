@@ -90,7 +90,8 @@ const C = {
 interface SubscriberRow {
   id: string;
   user_id: string | null;
-  email: string;
+  email: string | null;
+  display_name: string | null;
   tag: string;
   valid_until: string | null;
   source: string | null;
@@ -300,7 +301,7 @@ function downloadCSV(headers: string[], rows: unknown[][], filename: string) {
 function exportSubscribers(rows: SubscriberRow[]) {
   const headers = ["אימייל", "סטטוס", "קישור user_id", "תוקף עד", "מקור", "grow_order_id", "תאריך הוספה"];
   const data = rows.map((r) => [
-    r.email,
+    r.email || r.display_name || "",
     isExpired(r) ? "פג תוקף" : isPending(r) ? "ממתין" : isLinked(r) ? "מקושר" : "לא מקושר",
     r.user_id ?? "",
     r.valid_until ? fmtDate(r.valid_until) : "ללא הגבלה",
@@ -314,14 +315,23 @@ function exportSubscribers(rows: SubscriberRow[]) {
 /* ─── Supabase query ─────────────────────────────────────────── */
 const WEEKLY_TAG = "program:weekly-chapter";
 
+// תכניות מנויים מקבילות (2.7.2026). הפרק השבועי = הראשית; איכה-שני = מקבילה
+// שתתמזג בעתיד. שתיהן מנוהלות באותו מסך.
+const PROGRAMS = [
+  { tag: WEEKLY_TAG, label: "הפרק השבועי" },
+  { tag: "program:eicha-monday", label: "איכה — ימי שני" },
+] as const;
+const PROGRAM_TAGS = PROGRAMS.map((p) => p.tag);
+const programLabel = (tag: string) => PROGRAMS.find((p) => p.tag === tag)?.label ?? tag;
+
 function useSubscribers() {
   return useQuery<SubscriberRow[]>({
     queryKey: ["admin-subscribers"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("user_access_tags" as never)
-        .select("id, user_id, email, tag, valid_until, source, grow_order_id, pending_user_link, created_at")
-        .eq("tag" as never, WEEKLY_TAG)
+        .select("id, user_id, email, display_name, tag, valid_until, source, grow_order_id, pending_user_link, created_at")
+        .in("tag" as never, PROGRAM_TAGS as never)
         .order("created_at" as never, { ascending: false });
       if (error) throw error;
       return (data ?? []) as SubscriberRow[];
@@ -340,12 +350,13 @@ function AddSubscriberDialog({
   const qc = useQueryClient();
   const [email, setEmail] = useState("");
   const [validUntil, setValidUntil] = useState("");
+  const [program, setProgram] = useState<string>(WEEKLY_TAG);
 
   const add = useMutation({
     mutationFn: async () => {
       const payload: Record<string, unknown> = {
         email: email.trim().toLowerCase(),
-        tag: WEEKLY_TAG,
+        tag: program,
         source: "admin",
         pending_user_link: false,
       };
@@ -378,6 +389,19 @@ function AddSubscriberDialog({
         </DialogHeader>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+          <div>
+            <Label>תכנית</Label>
+            <Select value={program} onValueChange={setProgram}>
+              <SelectTrigger style={{ marginTop: 4 }}>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {PROGRAMS.map((p) => (
+                  <SelectItem key={p.tag} value={p.tag}>{p.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <div>
             <Label>אימייל *</Label>
             <Input
@@ -513,11 +537,13 @@ export default function Subscribers() {
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  const [programFilter, setProgramFilter] = useState<string>("all");
   const [addOpen, setAddOpen] = useState(false);
   const [smooveOpen, setSmooveOpen] = useState(false);
   const [endConfirm, setEndConfirm] = useState<string | null>(null);
 
-  const rows = data ?? [];
+  const allRows = data ?? [];
+  const rows = programFilter === "all" ? allRows : allRows.filter((r) => r.tag === programFilter);
 
   /* KPIs */
   const kpiActive  = rows.filter(isActive).length;
@@ -552,7 +578,8 @@ export default function Subscribers() {
       if (search) {
         const q = search.toLowerCase();
         return (
-          r.email.toLowerCase().includes(q) ||
+          r.email?.toLowerCase().includes(q) ||
+          r.display_name?.toLowerCase().includes(q) ||
           r.source?.toLowerCase().includes(q) ||
           r.grow_order_id?.toLowerCase().includes(q) || false
         );
@@ -786,6 +813,18 @@ export default function Subscribers() {
             />
           </div>
 
+          <Select value={programFilter} onValueChange={setProgramFilter}>
+            <SelectTrigger style={{ width: 180 }}>
+              <SelectValue placeholder="תכנית" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">כל התכניות</SelectItem>
+              {PROGRAMS.map((p) => (
+                <SelectItem key={p.tag} value={p.tag}>{p.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
           <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as StatusFilter)}>
             <SelectTrigger style={{ width: 170 }}>
               <SelectValue placeholder="סטטוס" />
@@ -848,12 +887,26 @@ export default function Subscribers() {
                       style={{ opacity: isExpired(row) ? 0.6 : 1 }}
                     >
                       <TableCell>
-                        <span dir="ltr" style={{ fontSize: 13, fontWeight: 600, color: C.text }}>
-                          {row.email}
-                        </span>
+                        {row.email ? (
+                          <span dir="ltr" style={{ fontSize: 13, fontWeight: 600, color: C.text }}>
+                            {row.email}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: 13, fontWeight: 600, color: C.text }}>
+                            {row.display_name || "(ללא זיהוי)"}
+                            <span style={{ fontSize: 10, color: C.textSubtle, display: "block" }}>
+                              מ-Monday, בלי מייל — להשלים ידנית
+                            </span>
+                          </span>
+                        )}
                         {row.grow_order_id && (
                           <div style={{ fontSize: 10, color: C.textSubtle, fontFamily: "monospace", marginTop: 2 }}>
                             Grow: {row.grow_order_id}
+                          </div>
+                        )}
+                        {row.tag !== WEEKLY_TAG && (
+                          <div style={{ fontSize: 10, color: C.gold, marginTop: 2 }}>
+                            {programLabel(row.tag)}
                           </div>
                         )}
                       </TableCell>

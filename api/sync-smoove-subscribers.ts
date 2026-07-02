@@ -15,8 +15,11 @@
  *      and source like 'smoove%' (only manage our own rows — never touch
  *      rows created by Grow webhook which have source='grow_webhook').
  *   3. INSERT missing emails (upsert by email+tag, conflict do nothing).
- *   4. DELETE rows whose email is no longer in the Smoove list.
- *      (Uses soft-delete pattern: sets source='smoove_removed', valid_until=now)
+ *   4. FLAG rows whose email is no longer in the Smoove list (notes only).
+ *      ⚠️ 2.7.2026 (החלטת סער): הסנכרון לעולם לא מסיים מנוי. חברוּת ברשימת
+ *      Smoove היא רשימת-מייל — לא סטטוס תשלום. מקור-האמת למנויים פעילים הוא
+ *      Monday (לוח 5094750546). ב-2.6.2026 הגרסה הישנה סימנה 165 מנויים
+ *      משלמים כפגי-תוקף כי ירדו מרשימת המייל — שוחזרו ב-monday_reconcile.
  *   5. Returns JSON report: { added, removed, unchanged, total_smoove, total_db }
  *
  * Security:
@@ -198,29 +201,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    // ── Step 4: Soft-remove unsubscribed members ──────────────────────────────
-    // Any email that was active in DB but is NOT in Smoove list = unsubscribed.
-    const toRemove: string[] = [];
+    // ── Step 4: Flag (only!) members who left the Smoove list ────────────────
+    // ⚠️ אסור לסיים מנוי מכאן: רשימת Smoove = רשימת מייל, לא סטטוס תשלום.
+    // מקור-האמת לפעילים הוא Monday. כאן רק מסמנים בהערה, בלי לגעת
+    // ב-valid_until וב-source.
+    const toFlag: string[] = [];
     for (const [email, id] of activeDbEmails.entries()) {
       if (!smooveEmails.has(email)) {
-        toRemove.push(id);
+        toFlag.push(id);
       }
     }
 
-    let removedCount = 0;
-    if (toRemove.length > 0) {
-      const { error: removeErr } = await supabase
+    let removedCount = 0; // נשאר בשם הזה בדוח לתאימות; סופר "סומנו", לא הוסרו
+    if (toFlag.length > 0) {
+      const { error: flagErr } = await supabase
         .from("user_access_tags")
         .update({
-          source: "smoove_removed",
-          valid_until: now,
-          notes: `Removed — not in Smoove list ${SMOOVE_LIST_ID} as of ${now.slice(0, 10)}`,
+          notes: `שים לב: ירד מרשימת Smoove ${SMOOVE_LIST_ID} ב-${now.slice(0, 10)} (מנוי לא הוסר — לאמת מול Monday)`,
         })
-        .in("id", toRemove);
-      if (removeErr) {
-        console.error("Remove error:", removeErr.message);
+        .in("id", toFlag);
+      if (flagErr) {
+        console.error("Flag error:", flagErr.message);
       } else {
-        removedCount = toRemove.length;
+        removedCount = toFlag.length;
       }
     }
 
