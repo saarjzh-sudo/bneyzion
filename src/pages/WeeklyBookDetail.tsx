@@ -19,6 +19,8 @@
 import { useState } from "react";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalWeeklyNav } from "@/components/weekly/GlobalWeeklyNav";
+import { ZoomCtaCard } from "@/components/weekly/ZoomCtaCard";
+import { WeeklyScheduleCard, type ScheduleItem } from "@/components/weekly/WeeklyScheduleCard";
 import {
   BookOpen, Lock, Play, Headphones, FileText,
   ChevronLeft, ChevronDown, Heart, Clock, Loader2,
@@ -74,6 +76,18 @@ const BOOK_ACCENTS: Record<string, string> = {
   "book-esther":                  "#A52A2A",
   "book-haggai-zechariah-malachi":"#3A7A85",
   "book-lamentations":            "#7A5A3A",
+};
+
+// ── Designed schedule images (לו״ז) — exported from the lessons Drive, ─────
+// self-hosted under public/schedules/<slug>.jpg for reliability.
+// Note: esther uses "מבנה הלימוד" (closest available); no dedicated לו״ז yet.
+const SCHEDULE_IMAGES: Record<string, string> = {
+  "book-ezra":                     "/schedules/book-ezra.jpg",
+  "book-nehemiah":                 "/schedules/book-nehemiah.jpg",
+  "book-daniel":                   "/schedules/book-daniel.jpg",
+  "book-esther":                   "/schedules/book-esther.jpg",
+  "book-lamentations":             "/schedules/book-lamentations.jpg",
+  "book-haggai-zechariah-malachi": "/schedules/book-haggai-zechariah-malachi.jpg",
 };
 
 // ── NavItem type: intro | chapter-number | sub-book string ────────────────
@@ -275,6 +289,43 @@ export default function WeeklyBookDetail() {
   const navList = buildNavList();
   const navIdx = navList.indexOf(activeNav);
 
+  // ── Weekly schedule (לו״ז) — real per-chapter status ─────────────────────
+  // A chapter that already has a 'weekly' layer (the live-lesson recording /
+  // "הפרק במבט רחב") has been taught. That's a genuine progress signal.
+  function itemTaught(nav: NavItem): boolean {
+    if (nav === "intro" || !courseData) return false;
+    if (isHZM(slug)) {
+      return courseData.rawLessons.some(
+        (l) => l.bible_book === (nav as string) && l.layer_type?.toLowerCase() === "weekly"
+      );
+    }
+    if (isEsther(slug)) {
+      const odd = nav as number;
+      const a = courseData.chapters.get(odd);
+      const b = courseData.chapters.get(odd + 1);
+      return (a?.weekly.length ?? 0) > 0 || (b?.weekly.length ?? 0) > 0;
+    }
+    return (courseData.chapters.get(nav as number)?.weekly.length ?? 0) > 0;
+  }
+  function itemLabel(nav: NavItem): string {
+    if (isHZM(slug)) return `ספר ${subBookLabel(nav as string)}`;
+    if (isEsther(slug)) return estherPairLabel(nav as number);
+    return chapterLabel(nav as number);
+  }
+
+  const chapterNavItems = navList.filter((n) => n !== "intro");
+  const taughtFlags = chapterNavItems.map(itemTaught);
+  const lastTaughtIdx = taughtFlags.lastIndexOf(true);
+  const scheduleItems: ScheduleItem[] = chapterNavItems.map((nav, i) => {
+    let status: ScheduleItem["status"];
+    if (!taughtFlags[i]) status = "upcoming";
+    else if (course?.is_current && i === lastTaughtIdx) status = "current";
+    else status = "done";
+    return { label: itemLabel(nav), status, onOpen: () => selectNav(nav) };
+  });
+  const currentChapterLabel =
+    lastTaughtIdx >= 0 ? itemLabel(chapterNavItems[lastTaughtIdx]) : undefined;
+
   // ── Loading ──────────────────────────────────────────────────────────────
   if (isLoading) {
     return (
@@ -401,7 +452,26 @@ export default function WeeklyBookDetail() {
 
           {/* ── Intro ─────────────────────────────────────────── */}
           {activeNav === "intro" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+              {/* Live Zoom session — prominent for the current book */}
+              {course?.is_current && (
+                <ZoomCtaCard
+                  zoomLink={(course as any)?.zoom_link}
+                  chapterLabel={currentChapterLabel}
+                  hasAccess={hasAccess}
+                />
+              )}
+
+              {/* Chapter schedule (לו״ז) — Drive image when set, else live list */}
+              {scheduleItems.length > 0 && (
+                <WeeklyScheduleCard
+                  bookTitle={bookTitle}
+                  scheduleImageUrl={(course as any)?.schedule_image_url ?? SCHEDULE_IMAGES[slug] ?? null}
+                  items={scheduleItems}
+                  accent={accent}
+                />
+              )}
+
               {introItems.length === 0 ? null : (
                 <>
                   <div style={{ padding: "0.9rem 1.1rem", background: "rgba(139,111,71,0.05)", borderRadius: radii.lg, fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMid, lineHeight: 1.7, borderInlineStart: `3px solid ${accent}` }}>
@@ -434,9 +504,9 @@ export default function WeeklyBookDetail() {
               <div style={{ marginBottom: "1.75rem" }}>
                 <div style={{ display: "flex", gap: "0.2rem", borderBottom: `2px solid rgba(139,111,71,0.1)` }}>
                   {([
-                    { key: "base"       as const, label: "בסיס",          locked: false },
-                    { key: "enrichment" as const, label: "הרחבה",         locked: !hasAccess },
-                    { key: "weekly"     as const, label: "שיעור שבועי",   locked: !hasAccess },
+                    { key: "base"       as const, label: "תכני הבסיס",     locked: false },
+                    { key: "enrichment" as const, label: "הרחבה",          locked: !hasAccess },
+                    { key: "weekly"     as const, label: "השיעור והסיכום", locked: !hasAccess },
                   ]).map((tab) => (
                     <button
                       key={tab.key}
