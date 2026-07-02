@@ -86,6 +86,23 @@ Deno.serve(async (req) => {
     const statusCode = String(deepFind(raw, ["statusCode"]) ?? "");
     const target = classify(desc);
 
+    // שדות מועשרים (מיפוי לפי טבלאות Grow של סער, 2.7.2026)
+    const cardBrand = deepFind(raw, ["cardBrand"]) ?? null;
+    const invoiceName = deepFind(raw, ["invoiceName"]) ?? null;
+    const paymentType = String(deepFind(raw, ["paymentType"]) ?? "");     // רגיל / הו"ק / תשלומים
+    const paymentSource = deepFind(raw, ["paymentSource"]) ?? null;       // עמוד קבוע / מערכת חיצונית
+    const paymentsNum = Number(deepFind(raw, ["paymentsNum"]) ?? 0) || 0;
+    const allPaymentNum = Number(deepFind(raw, ["allPaymentNum"]) ?? 0) || 0;
+    const paymentLabel = paymentsNum > 0 ? `תשלום ${paymentsNum}${allPaymentNum > 1 ? ` מתוך ${allPaymentNum}` : ""}` : paymentType || null;
+    // paymentDate מגיע כ-DD/M/YY — ממירים ל-ISO date
+    const rawDate = String(deepFind(raw, ["paymentDate"]) ?? "").trim();
+    let chargeDate: string | null = null;
+    const dm = rawDate.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+    if (dm) {
+      const [, d, m, y] = dm;
+      chargeDate = `${y.length === 2 ? "20" + y : y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    }
+
     // עסקה שנוצרה דרך האתר נושאת cField1 (orderId) — ה-webhook של האתר
     // (api/grow/webhook.ts) מעדכן אותה בעצמו. לא מוסיפים שורה שנייה.
     const siteOrderId = deepFind(raw, ["cField1"]);
@@ -98,10 +115,13 @@ Deno.serve(async (req) => {
       // כשל-הו״ק / עסקה שנכשלה / payload לא-מוכר → תיעוד בלוג בלבד.
       action = statusCode ? `non-success:${statusCode}` : "no-statuscode-logged";
     } else if (asmachta && sum > 0) {
-      // idempotent: skip if this asmachta already recorded in either table
+      // ⚠️ דדופ לפי אסמכתא + תאריך-חיוב (2.7.2026): חיובי הו"ק חודשיים חוזרים
+      // על אותה אסמכתא! דדופ לפי אסמכתא בלבד בלע את חיובי ההמשך —
+      // בדיוק הפער שנמצא בדוחות של סער (37 שורות אבדו). charge_date מבדיל.
+      const today = chargeDate ?? new Date().toISOString().slice(0, 10);
       const [{ data: inDon }, { data: inOrd }] = await Promise.all([
-        supabase.from("donations").select("id").eq("asmachta", asmachta).maybeSingle(),
-        supabase.from("orders").select("id").eq("asmachta", asmachta).maybeSingle(),
+        supabase.from("donations").select("id").eq("asmachta", asmachta).eq("charge_date", today).maybeSingle(),
+        supabase.from("orders").select("id").eq("asmachta", asmachta).eq("charge_date", today).maybeSingle(),
       ]);
       if (!inDon && !inOrd) {
         if (target === "donations") {
@@ -111,14 +131,21 @@ Deno.serve(async (req) => {
             phone: phone ? String(phone) : null, card_suffix: cardSuffix ? String(cardSuffix) : null,
             source: "grow-webhook", payment_method: "credit",
             product: /יהושע/.test(desc) ? "yehoshua-campaign" : /סעדיה/.test(desc) ? "saadia-campaign" : "general-donation",
+            grow_status: "חוייב", payment_label: paymentLabel, card_brand: cardBrand,
+            page_name: paymentSource ? String(paymentSource) : null,
+            invoice_name: invoiceName ? String(invoiceName) : null, charge_date: today,
+            is_monthly: paymentType === 'הו"ק',
           });
         } else {
           await supabase.from("orders").insert({
-            order_number: "GROW-" + asmachta, status: "confirmed", payment_status: "completed",
+            order_number: "GROW-" + asmachta + "-" + today, status: "confirmed", payment_status: "completed",
             payment_method: "credit", customer_name: name, customer_email: email ? String(email).toLowerCase() : null,
             customer_phone: phone ? String(phone) : null, subtotal: sum, discount: 0, total: sum,
-            currency: "ILS", installments: 1, invoice_type: "receipt", asmachta,
+            currency: "ILS", installments: allPaymentNum || 1, invoice_type: "receipt", asmachta,
             card_suffix: cardSuffix ? String(cardSuffix) : null, description: desc || null, notes: "grow-webhook",
+            grow_status: "חוייב", payment_label: paymentLabel, card_brand: cardBrand,
+            page_name: paymentSource ? String(paymentSource) : null,
+            invoice_name: invoiceName ? String(invoiceName) : null, charge_date: today,
           });
         }
         action = "inserted:" + target;
