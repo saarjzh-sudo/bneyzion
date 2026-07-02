@@ -3,13 +3,13 @@
 // Path in repo: src/components/bot/BotPanel.tsx
 
 import { useEffect, useRef, useState } from "react";
-import { Send, X, RotateCcw } from "lucide-react";
+import { Send, X, RotateCcw, WifiOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MessageBubble } from "./MessageBubble";
 import { OpeningButtons } from "./OpeningButtons";
 import { useBotSession } from "./useBotSession";
 import { BOT_CONFIG } from "./botConfig";
-import type { BotCta, BotPersona } from "./types";
+import type { BotCta, BotPersona, BotResponse } from "./types";
 
 const BOT_FONT = '"Ploni", "Ploni DL 1.1", "Paamon", system-ui, sans-serif';
 
@@ -24,19 +24,31 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
     history,
     isThinking,
     error,
+    isOffline,
+    canRetry,
     sendMessage,
+    retryLast,
     resetSession,
     setPersona,
   } = useBotSession();
 
   const [inputValue, setInputValue] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [history, isThinking]);
+
+  // Accessibility — move focus to the input when the panel opens, so keyboard
+  // and screen-reader users land in the right place.
+  useEffect(() => {
+    if (!isOpen) return;
+    const t = setTimeout(() => inputRef.current?.focus(), 80);
+    return () => clearTimeout(t);
+  }, [isOpen]);
 
   const handleSend = () => {
     const text = inputValue.trim();
@@ -55,7 +67,18 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
     // For now, the <Link> navigation handles routing.
   };
 
+  const handleSuggestionClick = (text: string) => {
+    sendMessage(text, currentParasha);
+  };
+
   const showOpeningButtons = history.length === 0;
+
+  // Follow-up chips — only for the latest bot reply, and only when idle.
+  const lastMsg = history[history.length - 1];
+  const suggestions =
+    lastMsg && lastMsg.role === "model" && !isThinking && !error
+      ? ((lastMsg.content as BotResponse).suggestions ?? [])
+      : [];
 
   return (
     <div
@@ -124,6 +147,10 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
         ref={scrollRef}
         className="flex-1 overflow-y-auto px-2.5 py-2.5"
         style={{ direction: "rtl", fontFamily: BOT_FONT }}
+        role="log"
+        aria-live="polite"
+        aria-relevant="additions"
+        aria-label="שיחה עם בנצי"
       >
         {showOpeningButtons ? (
           <OpeningButtons onSelect={handleOpeningSelect} />
@@ -136,9 +163,32 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
                 onCtaClick={handleCtaClick}
               />
             ))}
+            {suggestions.length > 0 && (
+              <div
+                className="mb-2 flex flex-wrap justify-end gap-1.5"
+                dir="rtl"
+                aria-label="הצעות להמשך"
+              >
+                {suggestions.map((s, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => handleSuggestionClick(s)}
+                    className="rounded-full border border-[#C4A265]/50 bg-white/70 px-2.5 py-1 text-[11.5px] text-[#1A2744] transition hover:border-[#C4A265] hover:bg-[#C4A265]/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]/40"
+                    style={{ fontFamily: BOT_FONT }}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
             {isThinking && (
               <div className="flex justify-end mb-2">
-                <div className="bg-[#FAF6F0] border border-[#C4A265]/30 rounded-2xl rounded-br-none px-3 py-2 shadow-sm">
+                <div
+                  className="bg-[#FAF6F0] border border-[#C4A265]/30 rounded-2xl rounded-br-none px-3 py-2 shadow-sm"
+                  role="status"
+                  aria-label="בנצי מקליד"
+                >
                   <div className="flex gap-1">
                     <span className="h-1.5 w-1.5 rounded-full bg-[#8B6F47] animate-bounce [animation-delay:-0.3s]" />
                     <span className="h-1.5 w-1.5 rounded-full bg-[#8B6F47] animate-bounce [animation-delay:-0.15s]" />
@@ -148,7 +198,19 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
               </div>
             )}
             {error && (
-              <p className="text-center text-xs text-red-700 my-2">{error}</p>
+              <div className="my-2 flex flex-col items-center gap-1.5" role="alert">
+                <p className="text-center text-xs text-red-700">{error}</p>
+                {canRetry && (
+                  <button
+                    type="button"
+                    onClick={retryLast}
+                    className="inline-flex items-center gap-1 rounded-lg border border-[#C4A265]/50 bg-white px-2.5 py-1 text-[12px] font-medium text-[#1A2744] transition hover:bg-[#C4A265]/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]"
+                  >
+                    <RotateCcw className="h-3 w-3" />
+                    נסה שוב
+                  </button>
+                )}
+              </div>
             )}
           </>
         )}
@@ -156,8 +218,18 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
 
       {/* Input */}
       <div className="border-t border-[#C4A265]/30 bg-white px-2.5 py-2 rounded-b-2xl">
+        {isOffline && (
+          <div
+            className="mb-1.5 flex items-center gap-1.5 rounded-lg bg-[#FAF6F0] border border-[#C4A265]/30 px-2 py-1 text-[11px] text-[#8B6F47]"
+            role="status"
+          >
+            <WifiOff className="h-3 w-3 shrink-0" />
+            אין כרגע חיבור לאינטרנט.
+          </div>
+        )}
         <div className="flex items-center gap-1.5">
           <input
+            ref={inputRef}
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -169,16 +241,17 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
             }}
             placeholder="כתוב הודעה..."
             disabled={isThinking}
-            className="flex-1 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-2.5 py-1.5 text-[13px] text-[#1A2744] outline-none placeholder:text-[#8B6F47]/60 focus:border-[#C4A265]"
+            className="flex-1 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-2.5 py-1.5 text-[13px] text-[#1A2744] outline-none placeholder:text-[#8B6F47]/60 focus:border-[#C4A265] focus-visible:ring-2 focus-visible:ring-[#C4A265]/40"
             style={{ fontFamily: BOT_FONT }}
             dir="rtl"
             autoComplete="off"
+            aria-label="כתוב הודעה לבנצי"
           />
           <button
             type="button"
             onClick={handleSend}
-            disabled={!inputValue.trim() || isThinking}
-            className="rounded-lg bg-[#C4A265] p-1.5 text-[#1A2744] transition hover:bg-[#8B6F47] hover:text-[#FAF6F0] disabled:opacity-40"
+            disabled={!inputValue.trim() || isThinking || isOffline}
+            className="rounded-lg bg-[#C4A265] p-1.5 text-[#1A2744] transition hover:bg-[#8B6F47] hover:text-[#FAF6F0] disabled:opacity-40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]/40"
             aria-label="שלח"
           >
             <Send className="h-4 w-4 rotate-180" />

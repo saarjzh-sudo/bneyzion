@@ -4,7 +4,7 @@
 // Updated 2026-06-03: self-computes currentParasha via parashaCalendar so the bot
 //   always receives the real parasha without requiring a prop from App.tsx.
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getCurrentParasha } from "@/lib/parashaCalendar";
 import { BotButton } from "./BotButton";
@@ -71,8 +71,18 @@ export function OnboardingBot({
   );
   const [isOpen, setIsOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const wasOpenRef = useRef(false);
 
   const isDisabled = disabledOnRoutes.some((r) => location.pathname.startsWith(r));
+
+  // Accessibility — return focus to the launcher button when the panel closes.
+  useEffect(() => {
+    if (wasOpenRef.current && !isOpen) {
+      buttonRef.current?.focus();
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen]);
 
   // Inject Ploni @font-face once
   useEffect(() => {
@@ -136,7 +146,7 @@ export function OnboardingBot({
 
   return (
     <>
-      <BotButton isOpen={isOpen} onClick={toggleOpen} hasUnread={hasUnread} />
+      <BotButton ref={buttonRef} isOpen={isOpen} onClick={toggleOpen} hasUnread={hasUnread} />
       <BotPanel
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

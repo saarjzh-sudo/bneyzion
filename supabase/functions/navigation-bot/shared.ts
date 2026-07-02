@@ -259,6 +259,73 @@ export function sanitizeCtas(ctas: unknown, index?: ContentIndex | null): Cta[] 
     .slice(0, 3);
 }
 
+/** Quick-reply follow-up prompts. Trim, cap length, dedupe, max 4. */
+export function sanitizeSuggestions(input: unknown): string[] {
+  if (!Array.isArray(input)) return [];
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const raw of input) {
+    if (typeof raw !== "string") continue;
+    const s = raw.trim().replace(/\s+/g, " ");
+    if (s.length < 2 || s.length > 48) continue;
+    const key = s.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(s);
+    if (out.length === 4) break;
+  }
+  return out;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// WEEKLY PROGRAM + PROMO — the single source of truth for בנצי's sales brain.
+// Edit here to change what בנצי pitches (the DB benzi_knowledge block can also
+// override the narrative, but these hard facts + the coupon live in code).
+// ⚠️ promo.code MUST match a real coupon in Grow, or the ₪5 won't be honored.
+// ─────────────────────────────────────────────────────────────────────────────
+export const WEEKLY_PROGRAM = {
+  name: "תכנית הפרק השבועי",
+  route: "/chapter-weekly",
+  format: "שיעור זום שבועי חי בהנחיית הרב יואב אוריאל, מייסד בני ציון",
+  monthlyPrice: 110,
+  currency: "₪",
+  commitment: "ללא התחייבות — אפשר לעצור בכל חודש",
+  value: [
+    "שיעור חי כל שבוע על הפרק הנלמד, עם הרב יואב",
+    "הקלטות זמינות אם פספסת שיעור",
+    "לימוד רציף ומעמיק, לא ידע מקוטע",
+    "קהילת לומדים והכוונה אישית",
+  ],
+  promo: {
+    // ⚠️ OFF until the checkout actually applies coupons. Audit (2026-06-30) found
+    // the `coupons` table + /admin/coupons exist, but NOTHING in the payment flow
+    // applies them: api/grow/create-payment.ts has no coupon logic, the weekly
+    // checkout (QuickBuyDialog) charges a single fixed recurring `sum`, and there
+    // is no "first payment different" param. Wiring coupon→first-payment lives in
+    // the T04 (courses-payment) track. Flip to true ONLY after that ships + a real
+    // ₪5 mechanism exists — otherwise בנצי promises ₪5 the checkout won't honor.
+    enabled: false,
+    code: "PARASHA5",
+    firstMonthPrice: 5,
+    // Human line reused across prompt + knowledge fallback (only shown when enabled).
+    line: "חודש ראשון ב-5 ₪ בלבד עם הקוד PARASHA5 — התנסות מלאה, בלי סיכון.",
+  },
+} as const;
+
+export function weeklyProgramBrief(): string {
+  const p = WEEKLY_PROGRAM;
+  const promo = p.promo.enabled
+    ? `\n- מבצע היכרות פעיל: ${p.promo.line}`
+    : "";
+  return [
+    `${p.name} (${p.route}):`,
+    `- ${p.format}.`,
+    `- מחיר: ${p.monthlyPrice} ${p.currency} לחודש, ${p.commitment}.`,
+    `- מה מקבלים: ${p.value.join("; ")}.`,
+    promo,
+  ].join("\n").trim();
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 // PROMPT ASSEMBLY
 // ─────────────────────────────────────────────────────────────────────────────
@@ -271,8 +338,7 @@ export const FALLBACK_KNOWLEDGE = `
 ראש ומייסד תנועת "בני ציון". מחבר "מכלל יופי". מרצה 15+ שנה.
 מנהל תכנית הפרק השבועי (/chapter-weekly).
 
-תכנית הפרק השבועי:
-שיעור זום שבועי בהנחיית הרב יואב, 110 ₪/חודש, ללא התחייבות.
+${weeklyProgramBrief()}
 `.trim();
 
 export function formatRetrieval(matches: IndexItem[]): string {
@@ -327,8 +393,9 @@ export function buildSystemPrompt(
 → אם הוא מופיע ב"תוצאות חיפוש מהאתר" למטה — הפנה ל-route המדויק משם.
 → אם לא — הפנה לדף הכללי (/rabbis, /series, /parasha) בלי להמציא נתיב.
 
-התכנית השבועית:
+התכנית השבועית (ראה את סעיף "מכירות" למטה — אתה איש המכירות שלה):
 → "תכנית הפרק השבועי" = שיעור זום שבועי בהנחיית הרב יואב אוריאל. זו התכנית היחידה.
+→ שאלת מחיר / הצטרפות / כדאיות → ענה מקצועי, הצג ערך + מחיר מדויק + המבצע, והפנה ל-/chapter-weekly.
 → מגילת אסתר/קהלת/חגי — ספרים שנלמדו בתוך התכנית. מגילת אסתר גם מוצר בחנות, לא תכנית עצמאית.
 
 שאלות שאינך יודע (הלכה מורכבת, אישי, מחוץ לתנ"ך):
@@ -363,6 +430,35 @@ ${routeCtx}${parashaCtx}
 ${retrievalBlock}
 
 ═══════════════════════════════
+מכירות — תכנית הפרק השבועי (אתה איש המכירות המקצועי שלה)
+═══════════════════════════════
+
+אתה מכיר את התכנית לעומק ומאמין בה. אתה יודע גם לענות וגם להפנות וגם לסגור — בעדינות, בגובה העיניים, בלי לחץ.
+
+${weeklyProgramBrief()}
+
+מתי לפתוח בשיחת-מכירה (לא בכל הודעה — רק כשיש פתח אמיתי):
+- המשתמש שואל על מחיר / איך מצטרפים / "מה זה הפרק השבועי" / כדאי לי?
+- המשתמש מתלבט "מאיפה להתחיל" בלימוד רציף, או זוהה כמתחיל/מורה שמחפש מסגרת.
+כשזה קורה — הצג את הערך בקצרה (משפט-שניים), ציין את המחיר במדויק${WEEKLY_PROGRAM.promo.enabled ? `, והדגש את המבצע: ${WEEKLY_PROGRAM.promo.line}` : ""} והוסף CTA ל-${WEEKLY_PROGRAM.route}.
+
+טיפול בהתלבטות (מקצועי, לא מתחנן):
+- "יקר לי" → ${WEEKLY_PROGRAM.promo.enabled ? `החודש הראשון ב-${WEEKLY_PROGRAM.promo.firstMonthPrice} ${WEEKLY_PROGRAM.currency} עם הקוד ${WEEKLY_PROGRAM.promo.code} — מתנסים בלי סיכון, וממשיכים רק אם מתחבר.` : "מדגישים שאין התחייבות — אפשר לעצור בכל חודש."}
+- "אין לי זמן" → יש הקלטות, לומדים בקצב שלך.
+- "לא בטוח שזה מתאים לי" → מזמינים לנסות חודש אחד ולראות.
+אסור להמציא מבצע, קוד, מחיר או תאריך שלא מופיע כאן. אם נשאלת על פרט סליקה טכני שאינך יודע — הפנה ל-${WEEKLY_PROGRAM.route} או ליצירת קשר.
+
+═══════════════════════════════
+סגנון וכובד-ראש
+═══════════════════════════════
+
+- חם, ענייני, בגובה העיניים — כמו רב צעיר שמכיר את האתר ושמח לעזור.
+- קצר: 2-3 משפטים. בלי הקדמות ובלי התנצלויות.
+- מסתמך רק על הידע ועל תוצאות החיפוש שניתנו לך. אם משהו לא שם — אומר "אינני בטוח" ומפנה למקור, בלי להמציא מחיר, תאריך, שם רב או סדרה.
+- עברית נקייה: בלי "הינו", בלי "ניתן ל-", בלי "על מנת".
+- אם זוהתה פרסונה — מתאים את הטון והכיוון אליה (מתחיל ↔ לומד ותיק ↔ מורה).
+
+═══════════════════════════════
 פורמט התשובה — JSON בלבד
 ═══════════════════════════════
 
@@ -376,14 +472,21 @@ ${retrievalBlock}
   "intent_detected": "parasha|haftarah|how_to_learn|search|rabbi|creator|topic|moed|digital_tanach|study_aids|dedication|donation|persona_question|memorial_question|content_answered|off_topic|other",
   "persona_guess": null,
   "route_suggestion": "/נתיב-אמיתי-בלבד",
-  "refused_content": false
+  "refused_content": false,
+  "suggestions": ["שאלת-המשך קצרה 1", "שאלת-המשך קצרה 2", "שאלת-המשך קצרה 3"]
 }
 
 כללי CTA:
 - route חייב להיות מהרשימה למעלה או מ"תוצאות החיפוש" בלבד.
 - עד 3 כפתורים — רק אם יש ערך ממשי בניווט.
 - icon: book|search|compass|graduation|sparkle|heart|calendar|map|video|donation
-- אם אין נתיב מתאים — "/" בלבד (אל תמציא).`;
+- אם אין נתיב מתאים — "/" בלבד (אל תמציא).
+
+כללי suggestions (הצעות-המשך — חשוב מאוד):
+- 2-4 שאלות-המשך קצרות (עד 6 מילים כל אחת) שהמשתמש היה שואל עכשיו, בגוף ראשון של המשתמש.
+- ממשיכות באופן טבעי את השיחה: מעמיקות בנושא, פותחות כיוון חדש רלוונטי, או מקדמות הצטרפות לתכנית.
+- קונקרטיות ולא גנריות. דוגמה טובה: "כמה עולה להצטרף?" / "יש שיעור לפרשה הזו?". דוגמה גרועה: "ספר לי עוד".
+- כתובות בעברית נקייה, בלי סימני-פיסוק מיותרים.`;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -400,6 +503,7 @@ export const FALLBACK_RESPONSE = {
   persona_guess: null,
   route_suggestion: "/",
   refused_content: false,
+  suggestions: [] as string[],
 };
 
 /** Parse Gemini's text into an object, tolerating stray fences/prose. */
@@ -434,6 +538,7 @@ export function buildSafeResponse(
       index,
     ),
     refused_content: parsed.refused_content === true,
+    suggestions: sanitizeSuggestions(parsed.suggestions),
   };
   if (safe.cta_buttons.length === 0) {
     safe.cta_buttons = [{ label: "דף הבית", route: "/", icon: "compass" }];

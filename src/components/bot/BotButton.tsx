@@ -1,6 +1,7 @@
 // Floating bot button — gold circle, bottom-LEFT (per Saar 28.5.2026)
 // Path in repo: src/components/bot/BotButton.tsx
 
+import { forwardRef } from "react";
 import { MessageCircle, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -10,11 +11,17 @@ interface Props {
   hasUnread?: boolean;
 }
 
-export function BotButton({ isOpen, onClick, hasUnread = false }: Props) {
+export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton(
+  { isOpen, onClick, hasUnread = false },
+  ref
+) {
   return (
     <button
+      ref={ref}
       type="button"
       onClick={onClick}
+      aria-haspopup="dialog"
+      aria-expanded={isOpen}
       aria-label={isOpen ? "סגור צ׳אט" : "פתח צ׳אט"}
       className={cn(
         "fixed bottom-6 left-6 z-[100]",
@@ -38,4 +45,4 @@ export function BotButton({ isOpen, onClick, hasUnread = false }: Props) {
       )}
     </button>
   );
-}
+});
