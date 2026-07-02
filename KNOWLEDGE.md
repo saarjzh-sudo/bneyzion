@@ -7946,3 +7946,15 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - נשאר-מרכזי: **deploy `broadcast-notification`** (דורש `supabase login`/CLI) + build+deploy frontend.
 
 **T08 — edge נפרס (1.7.2026):** `broadcast-notification` **v9 ACTIVE** נפרס דרך Management API (`POST /v1/projects/{ref}/functions/deploy`, multipart metadata+file, 201) — **בלי `supabase login`**, רק PAT `sbp_bddd`. smoke: unauth→401. שרת מלא חי: table+RLS+VAPID secrets+function. נשאר רק frontend build+deploy (מרכזי) + כפתור admin (T01).
+## 2026-07-01 — T14 routing (finish/14-routing): ניתוב ישן→חדש + 404 + cutover-prep
+
+**מסלול T14 (בעל-על routing).** אזור: `src/App.tsx`, `vercel.json`, `src/pages/NotFound.tsx`, `public/_redirects`, `CUTOVER-CHECKLIST.md`.
+
+- **מיפוי ישן→חדש כבר קיים ומקיף ב-`vercel.json`** (299 301-קבועים): 203 `/rabbis/<UUID>`→slug, וכל כתובות ה-Umbraco בעברית (`/פרשת-השבוע`→`/parasha`, `/אגף-המורים`+`/מאגר-עזרי-הלמידה`→`/teachers`, `/חנות-הספרים`→`/store`, `/תרומות`→`/donate`, ספרי-התנ״ך והנושאים→`/series`, `/רבנים`→`/rabbis`, `/כנס`→`/kenes` ועוד). אימות: **כל היעדים קיימים כ-routes ב-App.tsx**, אפס לולאות, אפס chains, אפס כפילויות.
+- **הוספתי 9 redirects ל-WooCommerce** (`club.bneyzion.co.il`, תת-דומיין נפרד): `/`, `/shop`, `/shop/*`, `/product/*`, `/product-category/*`, `/cart`, `/checkout`, `/my-account`, `/my-account/*` → `https://bneyzion.co.il/store`. כולם **מוגנים ב-`has: host=club.bneyzion.co.il`** → inert עד שסער יפנה את תת-הדומיין לאתר. (סה״כ 308 redirects.)
+- **`NotFound.tsx` שודרג:** (1) כפתור-חיפוש שפותח את `GlobalSearch` הקיים (דאטה אמיתי — רבנים/סדרות/שיעורים/ספרים, ⌘K). (2) **רשת-ביטחון בקוד** — מפת `LEGACY_PATHS` + `resolveLegacyPath()`: כתובת-Umbraco ידועה שהגיעה ל-catch-all של ה-SPA מנותבת עם `<Navigate replace>` במקום 404. (3) focus-states + aria-hidden לאייקונים. עיצוב קיים נשמר (warm-cream, font-heading/serif, RTL, אנימציית ספר).
+- **`CUTOVER-CHECKLIST.md` (חדש):** תנאים מקדימים, טבלת-מיפוי מלאה (Umbraco + WooCommerce), שלב-DNS ב-Vercel, smoke-test (תשתית/301/תוכן/SEO), עדכוני OAuth+Supabase+Grow תלויי-דומיין, תוכנית-נסיגה, ניקוי 60-יום (כולל מחיקת `/portal-old`). **המהלך ידני ובאישור סער בלבד.**
+- **`App.tsx` — לא נגעתי** (ראה `_DONE.md` תלות): T01 צריך routes `/admin/budget`+`/admin/kenes` שהקומפוננטות שלהם ב-branch של T01, לא בשלי → הוספה במיזוג (אחרי T01) כדי לא לשבור build. המלצת-T01 להסיר routes של Orders/Migration/ContentCompare — החלטת-סער במיזוג.
+- build נקי (`✓ built in 4.23s`), typecheck נקי, dev-transform של NotFound נקי, route-404 מחזיר 200.
+
+**תיקון קריטי (אותו סשן) — 9,566 עמודי השיעורים לא קיבלו 301 שרתי:** בדיקה מול `scripts/umbraco-index.json` (9,566 עמודים) גילתה שכולם תחת `/מאגר-השיעורים-והמאמרים/...` (נביאים 4042, תורה 2621, כתובים 1857, עומק 4-5), ולסגמנט הזה היו רק 3 ילדים ספציפיים ממופים — **בלי `:path*`**. כלומר 9,563 עמודי-שיעור מאונדקסים נשענו רק על רשת-הביטחון client-side (200+JS redirect), לא 301 — פגיעה ב-SEO. **תיקון:** הוספת `/מאגר-השיעורים-והמאמרים/:path*` → `/series` (301). כעת **9,566/9,566 = 100% מקבלים 301 שרתי אמיתי.** אין דף-יעד עברי per-book (routes חדשים = UUID), לכן היעד הנכון לכולם `/series` — עקבי עם שאר הקטגוריות. סה״כ 309 redirects.

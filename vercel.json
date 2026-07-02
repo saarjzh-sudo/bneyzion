@@ -7,6 +7,60 @@
   ],
   "redirects": [
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/shop",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/shop/:path*",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/product/:path*",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/product-category/:path*",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/cart",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/checkout",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/my-account",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/my-account/:path*",
+      "has": [{ "type": "host", "value": "club.bneyzion.co.il" }],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
       "source": "/design-yehoshua-campaign",
       "has": [{ "type": "host", "value": "bneyzion.vercel.app" }],
       "destination": "https://bneyzion-yehoshua.vercel.app/design-yehoshua-campaign",
@@ -1205,6 +1259,11 @@
     },
     {
       "source": "/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/",
+      "destination": "/series",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%9E%D7%90%D7%92%D7%A8-%D7%94%D7%A9%D7%99%D7%A2%D7%95%D7%A8%D7%99%D7%9D-%D7%95%D7%94%D7%9E%D7%90%D7%9E%D7%A8%D7%99%D7%9D/:path*",
       "destination": "/series",
       "permanent": true
     },

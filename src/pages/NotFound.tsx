@@ -1,8 +1,61 @@
-import { useLocation, Link } from "react-router-dom";
-import { useEffect } from "react";
+import { useLocation, Link, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Home, Search, Library } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import GlobalSearch from "@/components/search/GlobalSearch";
+
+/**
+ * Client-side safety net for old Umbraco (www.bneyzion.co.il) URLs.
+ * The authoritative 301s live in vercel.json and fire server-side before React
+ * loads. This map is the belt-and-suspenders fallback for any legacy path that
+ * reaches the SPA catch-all (dev, cached client nav, or a missed edge case) —
+ * so a visitor never lands on a dead 404 for a URL we already know how to route.
+ * Keep in sync with the Hebrew redirects in vercel.json.
+ */
+const LEGACY_PATHS: Record<string, string> = {
+  "אודותינו": "/about",
+  "צור-קשר": "/contact",
+  "תרומות": "/donate",
+  "חנות-הספרים": "/store",
+  "אגף-המורים": "/teachers",
+  "מאגר-עזרי-הלמידה": "/teachers",
+  "בן-ציון-חיים-הנמן-היד": "/memorial",
+  "פרשת-השבוע": "/parasha",
+  "מאגר-השיעורים-והמאמרים": "/series",
+  "דרך-לימוד-התנך": "/series",
+  "מקורות-על-חשיבות-לימוד-תנך": "/series",
+  "תורה": "/series",
+  "נביאים": "/series",
+  "כתובים": "/series",
+  "משנה": "/series",
+  "גמרא": "/series",
+  "הלכה": "/series",
+  "מחשבה": "/series",
+  "אמונה-ומוסר": "/series",
+  "מועדים": "/series",
+  "חגים": "/series",
+  "מגילות": "/series",
+  "מדרשים": "/series",
+  "שיעורים": "/series",
+  "מאמרים": "/series",
+  "רבנים": "/rabbis",
+  "כנס": "/kenes",
+};
+
+/** Returns the new path for a known legacy URL, or null if none matches. */
+function resolveLegacyPath(pathname: string): string | null {
+  let decoded: string;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch {
+    decoded = pathname;
+  }
+  // Match on the first segment only (Umbraco pages were top-level Hebrew slugs);
+  // deep children (/חנות-הספרים/xxx) fold back to their section landing page.
+  const firstSegment = decoded.replace(/^\/+/, "").split("/")[0];
+  return LEGACY_PATHS[firstSegment] ?? null;
+}
 
 const bookPages = [
   { text: "בְּרֵאשִׁית בָּרָא אֱלֹהִים", opacity: 0.15, y: -20 },
@@ -13,13 +66,26 @@ const bookPages = [
 
 const NotFound = () => {
   const location = useLocation();
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Client-side safety net: if a known legacy URL slips past the server-side
+  // 301s in vercel.json (dev, cached SPA nav, or a missed edge case), catch it
+  // here and send the visitor to the right place instead of showing 404.
+  const legacyTarget = resolveLegacyPath(location.pathname);
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+    if (!legacyTarget) {
+      console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+    }
+  }, [location.pathname, legacyTarget]);
+
+  if (legacyTarget) {
+    return <Navigate to={legacyTarget} replace />;
+  }
 
   return (
     <Layout>
+      <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
       <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden section-gradient-warm" dir="rtl">
         <div className="absolute inset-0 noise-overlay opacity-5 pointer-events-none" />
 
@@ -77,30 +143,46 @@ const NotFound = () => {
             <p className="text-muted-foreground font-serif mb-2 text-base md:text-lg">
               אולי הדף הזה עדיין לא נכתב...
             </p>
-            <p className="text-muted-foreground font-serif mb-8 text-sm">
+            <p className="text-muted-foreground font-serif mb-6 text-sm">
               אבל בתנ״ך יש הרבה תוכן שכן!
             </p>
+
+            {/* Search — real global search over rabbis, series, lessons, books */}
+            <button
+              type="button"
+              onClick={() => setSearchOpen(true)}
+              className="group mx-auto mb-8 flex w-full max-w-sm items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 text-right transition-colors hover:border-primary/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              aria-label="חיפוש באתר"
+            >
+              <Search className="h-5 w-5 text-primary shrink-0" aria-hidden="true" />
+              <span className="flex-1 font-display text-sm text-muted-foreground group-hover:text-foreground">
+                חפשו רב, סדרה, שיעור או ספר...
+              </span>
+              <kbd className="hidden sm:inline-flex items-center rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                ⌘K
+              </kbd>
+            </button>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to="/"
-                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-display text-sm hover:bg-primary/90 transition-colors shadow-md shadow-primary/20"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-display text-sm hover:bg-primary/90 transition-colors shadow-md shadow-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               >
-                <Home className="h-4 w-4" />
+                <Home className="h-4 w-4" aria-hidden="true" />
                 לדף הבית
               </Link>
               <Link
                 to="/parasha"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground rounded-xl font-display text-sm hover:border-primary/30 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground rounded-xl font-display text-sm hover:border-primary/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               >
-                <Search className="h-4 w-4" />
+                <BookOpen className="h-4 w-4" aria-hidden="true" />
                 פרשת השבוע
               </Link>
               <Link
                 to="/rabbis"
-                className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground rounded-xl font-display text-sm hover:border-primary/30 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-border bg-card text-foreground rounded-xl font-display text-sm hover:border-primary/30 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
               >
-                <Library className="h-4 w-4" />
+                <Library className="h-4 w-4" aria-hidden="true" />
                 שיעורים לפי רב
               </Link>
             </div>
