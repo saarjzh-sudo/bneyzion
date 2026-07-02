@@ -83,11 +83,21 @@ Deno.serve(async (req) => {
     const phone = deepFind(raw, ["payerPhone", "phone", "cellphone", "customerPhone"]) ?? null;
     const desc = String(deepFind(raw, ["paymentDesc", "description", "pageTitle", "transactionDesc"]) ?? "");
     const cardSuffix = deepFind(raw, ["cardSuffix", "card_suffix", "last4"]) ?? null;
-    const statusCode = String(deepFind(raw, ["statusCode", "status"]) ?? "");
+    const statusCode = String(deepFind(raw, ["statusCode"]) ?? "");
     const target = classify(desc);
 
+    // עסקה שנוצרה דרך האתר נושאת cField1 (orderId) — ה-webhook של האתר
+    // (api/grow/webhook.ts) מעדכן אותה בעצמו. לא מוסיפים שורה שנייה.
+    const siteOrderId = deepFind(raw, ["cField1"]);
+
     let action = "logged-only";
-    if (asmachta && sum > 0) {
+    if (siteOrderId) {
+      action = "site-flow-skip";
+    } else if (statusCode !== "2") {
+      // רק statusCode==="2" = חיוב מוצלח (כמו ב-webhook של האתר).
+      // כשל-הו״ק / עסקה שנכשלה / payload לא-מוכר → תיעוד בלוג בלבד.
+      action = statusCode ? `non-success:${statusCode}` : "no-statuscode-logged";
+    } else if (asmachta && sum > 0) {
       // idempotent: skip if this asmachta already recorded in either table
       const [{ data: inDon }, { data: inOrd }] = await Promise.all([
         supabase.from("donations").select("id").eq("asmachta", asmachta).maybeSingle(),
