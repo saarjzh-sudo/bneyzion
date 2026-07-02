@@ -395,33 +395,6 @@ export default function CategoryPage() {
           </nav>
         )}
 
-        {/* Eyebrow — marks this as a COLLECTION page (distinct from a single series) */}
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "0.45rem",
-            fontFamily: fonts.body,
-            fontSize: "0.72rem",
-            letterSpacing: "0.16em",
-            fontWeight: 700,
-            color: colors.goldDark,
-            marginBottom: "0.55rem",
-          }}
-        >
-          <span
-            aria-hidden
-            style={{
-              width: 6,
-              height: 6,
-              background: colors.goldLight,
-              transform: "rotate(45deg)",
-              display: "inline-block",
-            }}
-          />
-          אוסף
-        </div>
-
         {/* Title */}
         {nodeLoading ? (
           <div

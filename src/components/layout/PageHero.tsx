@@ -67,7 +67,7 @@ export default function PageHero({
   const isCategory = variant === "category";
   const isSeries = variant === "series";
   const align: "center" | "start" = isCategory || isSeries ? "start" : "center";
-  const defaultEyebrow = isCategory ? "אוסף" : isSeries ? "סדרת לימוד" : undefined;
+  const defaultEyebrow = isSeries ? "סדרת לימוד" : undefined;
   const shownEyebrow = eyebrow ?? defaultEyebrow;
 
   return (
