@@ -101,7 +101,10 @@ export default function DonateForm({
         type: recurring ? "directDebit" : "donation",
         thankYouType: "donation",
         meta: {
-          ...(source && { product: source }),
+          // ⚠️ אסור לשלוח כאן product: source — השרת מפרש meta.product כמזהה
+          // ב-payment_products ונופל על "Missing or unknown product".
+          // התרומות רצות במסלול ה-legacy (type=donation/directDebit → merchant
+          // התרומות). ה-source נשמר ב-donationMeta.source לאנליטיקס.
           tos_accepted: true,
           tos_accepted_at: new Date().toISOString(),
         },

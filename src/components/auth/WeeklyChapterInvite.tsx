@@ -43,18 +43,23 @@ const WeeklyChapterInvite = ({ variant = "card", className = "" }: WeeklyChapter
 
   return (
     <div
-      className={`relative overflow-hidden rounded-2xl border border-primary/15 bg-gradient-to-l from-primary/8 via-secondary/40 to-transparent p-6 ${className}`}
+      className={`relative overflow-hidden rounded-2xl border border-primary/25 bg-gradient-to-l from-primary/10 via-secondary/50 to-transparent p-6 shadow-[0_10px_30px_-18px_rgba(139,111,71,0.55)] ${className}`}
     >
+      {/* פס-זהב עדין בצד — עוגן ויזואלי */}
+      <div aria-hidden="true" className="absolute inset-y-0 end-0 w-1 bg-gradient-to-b from-primary/70 via-primary/30 to-transparent" />
       <div className="flex items-start gap-4">
-        <div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-xl bg-primary/12 text-primary">
+        <div className="shrink-0 flex items-center justify-center w-11 h-11 rounded-xl bg-primary/15 text-primary ring-1 ring-primary/25">
           <BookOpen className="h-5 w-5" aria-hidden="true" />
         </div>
         <div className="flex-1 min-w-0">
+          <div className="text-[11px] font-semibold tracking-widest text-primary/80 mb-0.5">
+            תכנית המנויים
+          </div>
           <h3 className="font-display text-lg text-foreground leading-snug">
             מצטרפים ללימוד הפרק השבועי?
           </h3>
           <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
-            כל שבוע פרק חדש בתנ"ך, עם הרבנים של בני ציון. מתחילים מתי שבא לכם.
+            כל שבוע פרק חדש בתנ"ך, עם הרב יואב אוריאל. מתחילים מתי שבא לכם.
           </p>
           <Link
             to="/chapter-weekly"

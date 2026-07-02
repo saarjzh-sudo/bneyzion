@@ -97,7 +97,8 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
         </div>
         <WeeklyChapterInvite variant="menu" />
         <DropdownMenuItem asChild className="cursor-pointer">
-          <Link to="/portal" className="flex items-center gap-2 font-semibold text-primary">
+          {/* דף הקורסים — לא הפורטל. מי שאין לו גישה רואה את הקורסים ויכול לרכוש. */}
+          <Link to="/design-my-courses" className="flex items-center gap-2 font-semibold text-primary">
             <BookOpen className="h-4 w-4" />
             הקורסים שלי
           </Link>

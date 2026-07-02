@@ -17,12 +17,28 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 const CommunityCoursePage = () => {
   const { id } = useParams<{ id: string }>();
   const { user, isLoading: authLoading } = useAuth();
-  const { data: member, isLoading: memberLoading } = useMemberAccess(user?.email ?? undefined);
   const { data: course, isLoading: courseLoading } = useQuery({
     queryKey: ["community-course", id],
     enabled: !!id,
     queryFn: async () => {
       const { data, error } = await supabase.from("community_courses").select("*").eq("id", id!).single();
+      if (error) throw error;
+      return data;
+    },
+  });
+  // גישה לפי הקורס עצמו (2.7.2026, החלטת סער): קורס פתוח — לכל משתמש מחובר;
+  // קורס סגור — לפי הרשמה (course_enrollments) של הקורס הזה. לא לפי חברות
+  // בפרק השבועי — הקורסים והתכנית נפרדים, לכל קורס דף ומכירה משלו.
+  const { data: enrollment, isLoading: enrollLoading } = useQuery({
+    queryKey: ["course-enrollment", id, user?.id],
+    enabled: !!id && !!user?.id,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("course_enrollments")
+        .select("id")
+        .eq("course_id", id!)
+        .eq("user_id", user!.id)
+        .maybeSingle();
       if (error) throw error;
       return data;
     },
@@ -38,8 +54,9 @@ const CommunityCoursePage = () => {
 
   if (!authLoading && !user) return <Navigate to="/auth?redirect=/portal" replace />;
 
-  const isMember = !!member && member.status === "active";
-  const isLoading = authLoading || memberLoading || courseLoading || lessonsLoading;
+  const courseIsOpen = !course?.access_type || course.access_type === "open";
+  const isMember = courseIsOpen || !!enrollment;
+  const isLoading = authLoading || courseLoading || lessonsLoading || (!courseIsOpen && enrollLoading);
 
   if (isLoading) {
     return (
@@ -61,9 +78,9 @@ const CommunityCoursePage = () => {
             <div className="h-16 w-16 rounded-2xl bg-gold/15 flex items-center justify-center mx-auto">
               <Lock className="w-8 h-8 text-gold" />
             </div>
-            <h2 className="text-xl font-heading text-primary">אזור סגור לחברי הקהילה</h2>
-            <p className="text-sm text-muted-foreground">התכנים פתוחים למנויי תכנית הפרק השבועי</p>
-            <Button asChild><Link to="/chapter-weekly">הצטרפו לתכנית</Link></Button>
+            <h2 className="text-xl font-heading text-primary">הקורס עוד לא פתוח לך</h2>
+            <p className="text-sm text-muted-foreground">אפשר להכיר את הקורס ולהצטרף אליו בדף הקורס</p>
+            <Button asChild><Link to={`/community/${id}`}>לדף הקורס</Link></Button>
           </CardContent>
         </Card>
       </div>

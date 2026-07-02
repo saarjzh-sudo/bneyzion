@@ -55,8 +55,7 @@ import { useHistory } from "@/hooks/useHistory";
 import { useFavorites } from "@/hooks/useFavorites";
 import { useLearningDashboard } from "@/hooks/useLearningDashboard";
 import { usePoints } from "@/hooks/usePoints";
-import { WeeklyUpdatesFeed } from "@/components/weekly/WeeklyUpdatesFeed";
-import WeeklyChapterInvite from "@/components/auth/WeeklyChapterInvite";
+import jerusalemWalls from "@/assets/jerusalem-walls.webp";
 
 // ── Real-data types (replaces former mock arrays) ───────────────────────────
 // Iron rule: NO mock data — everything below is computed from Supabase hooks.
@@ -625,19 +624,21 @@ export default function DesignPreviewPortalSubscriber() {
               <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
                 <div
                   style={{
-                    background: `linear-gradient(135deg, ${colors.oliveDark} 0%, ${colors.oliveMain} 60%, #7a9048 100%)`,
+                    backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.92) 0%, rgba(30,25,14,0.78) 45%, rgba(24,19,11,0.45) 100%), url(${jerusalemWalls})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center 35%",
                     borderRadius: radii.xl,
                     padding: "2.25rem 2.5rem",
                     position: "relative",
                     overflow: "hidden",
-                    border: "1px solid rgba(196,162,101,0.2)",
-                    boxShadow: "0 16px 48px rgba(74,90,46,0.3)",
+                    border: "1px solid rgba(196,162,101,0.35)",
+                    boxShadow: "0 16px 48px rgba(24,19,11,0.35)",
                   }}
                 >
                   {/* Ambient shimmer */}
                   <div style={{
                     position: "absolute", inset: 0,
-                    background: "radial-gradient(circle at 90% 10%, rgba(232,213,160,0.12) 0%, transparent 55%)",
+                    background: "radial-gradient(circle at 90% 10%, rgba(232,213,160,0.14) 0%, transparent 55%)",
                     pointerEvents: "none",
                   }} />
                   <div
@@ -711,7 +712,7 @@ export default function DesignPreviewPortalSubscriber() {
                     </div>
                     {/* CTA button */}
                     <Link
-                      to="/megilat-esther"
+                      to="/chapter-weekly"
                       style={{
                         display: "inline-flex", alignItems: "center", gap: "0.55rem",
                         padding: "1rem 2.25rem", borderRadius: radii.lg,
@@ -846,28 +847,8 @@ export default function DesignPreviewPortalSubscriber() {
             </section>
           )}
 
-          {/* ─── Invite non-subscribers to the weekly program (T06↔T03) ── */}
-          {!hasSubscription && (
-            <section style={{ background: colors.parchment, padding: "0 1.5rem 3rem" }}>
-              <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
-                <WeeklyChapterInvite variant="card" />
-              </div>
-            </section>
-          )}
-
-          {/* ─── This week's updates (weekly-program learners) ────────── */}
-          {currentBook && (
-            <section style={{ background: colors.parchment, padding: "0 1.5rem 3rem" }}>
-              <div dir="rtl" style={{ maxWidth: 1200, margin: "0 auto" }}>
-                <WeeklyUpdatesFeed
-                  courseId={currentBook.id}
-                  bookSlug={currentBook.program_slug}
-                  bookTitle={currentBook.title}
-                  hasAccess={hasSubscription}
-                />
-              </div>
-            </section>
-          )}
+          {/* בלוק "העדכונים שלך השבוע" הוסר מהאזור האישי (בקשת סער 2.7.2026) —
+              תוכן השבוע חי בעמוד הספר (/course/:slug) ובתכנית עצמה, לא כאן. */}
 
           {/* ─── Master course card — הפרק השבועי (subscribers only) ── */}
           {hasSubscription && <section style={{ background: colors.parchmentDark, padding: "3.5rem 1.5rem" }}>

@@ -30,6 +30,7 @@ import {
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
+import jerusalemWalls from "@/assets/jerusalem-walls.webp";
 import { useMyEnrollments, useCommunityCoursesPublic } from "@/hooks/useCourseEnrollment";
 import { useUserAccess } from "@/hooks/useUserAccess";
 import { useAuth } from "@/contexts/AuthContext";
@@ -225,7 +226,22 @@ function CourseCard({ course }: { course: CourseCardData }) {
           <span>{course.lessonCount} שיעורים</span>
         </div>
 
-        {course.hasAccess ? (
+        {course.hasAccess && course.lessonCount === 0 && !course.isSubscription ? (
+          /* קורס בלי שיעורים עדיין — אין לאן להיכנס, אומרים את זה בכנות */
+          <span
+            style={{
+              background: colors.parchmentDeep,
+              color: colors.textMuted,
+              fontFamily: fonts.display,
+              fontWeight: 700,
+              fontSize: "0.85rem",
+              padding: "0.4rem 1rem",
+              borderRadius: radii.md,
+            }}
+          >
+            לא נפתח עדיין
+          </span>
+        ) : course.hasAccess ? (
           <Link
             to={course.ctaTo}
             style={{
@@ -479,6 +495,65 @@ export default function DesignPreviewMyCourses() {
             </div>
           ) : (
             <>
+              {/* ─── באנר תכנית הפרק השבועי — "הקורס" המרכזי (למי שעוד לא מנוי) ─── */}
+              {!hasWeeklyChapter && !accessLoading && (
+                <section
+                  style={{
+                    marginBottom: "3rem",
+                    backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.92) 0%, rgba(30,25,14,0.78) 48%, rgba(24,19,11,0.5) 100%), url(${jerusalemWalls})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center 35%",
+                    borderRadius: radii.xl,
+                    border: "1px solid rgba(196,162,101,0.35)",
+                    boxShadow: "0 16px 48px rgba(24,19,11,0.3)",
+                    padding: "2.5rem 2.75rem",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "2rem",
+                    flexWrap: "wrap",
+                  }}
+                >
+                  <div style={{ flex: 1, minWidth: 260 }}>
+                    <div style={{
+                      display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                      padding: "0.22rem 0.75rem", borderRadius: radii.pill,
+                      background: "rgba(232,213,160,0.15)", border: "1px solid rgba(232,213,160,0.3)",
+                      color: colors.goldShimmer, fontFamily: fonts.body,
+                      fontSize: "0.68rem", fontWeight: 700, marginBottom: "0.8rem",
+                    }}>
+                      תכנית המנויים
+                    </div>
+                    <h2 style={{
+                      fontFamily: fonts.display, fontWeight: 900,
+                      fontSize: "clamp(1.4rem, 2.6vw, 2rem)",
+                      color: "white", margin: "0 0 0.5rem", lineHeight: 1.2,
+                    }}>
+                      הפרק השבועי בתנ״ך — הקורס המרכזי שלנו
+                    </h2>
+                    <p style={{
+                      fontFamily: fonts.body, fontSize: "0.92rem",
+                      color: "rgba(255,255,255,0.78)", margin: 0, lineHeight: 1.7, maxWidth: 560,
+                    }}>
+                      פרק חדש כל שבוע עם הרב יואב אוריאל: שיעור חי, סיכומים מעוצבים וגישה לכל הארכיון.
+                    </p>
+                  </div>
+                  <Link
+                    to="/chapter-weekly"
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: "0.55rem",
+                      padding: "1rem 2.25rem", borderRadius: radii.lg,
+                      background: gradients.goldButton, color: "white",
+                      fontFamily: fonts.display, fontWeight: 700, fontSize: "1rem",
+                      textDecoration: "none", boxShadow: shadows.goldGlow,
+                      flexShrink: 0, whiteSpace: "nowrap",
+                    }}
+                  >
+                    להצטרפות לתכנית
+                  </Link>
+                </section>
+              )}
+
               {/* ─── הקורסים שלי ─── */}
               {myCourses.length > 0 ? (
                 <section style={{ marginBottom: "3rem" }}>

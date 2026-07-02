@@ -3,7 +3,7 @@ import {
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
   BarChart3, Bell, PanelTop, Ticket, HeartPulse, CreditCard,
   UserCheck, Upload, Download, Wallet, CalendarDays, Megaphone,
-  Sparkles, BookMarked,
+  Sparkles, BookMarked, MessageCircle,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -60,6 +60,7 @@ const SECTIONS: NavSection[] = [
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
       { title: "הודעות",        url: "/admin/messages",      icon: Mail,        roles: ADMIN },
       { title: "התראות",        url: "/admin/notifications", icon: Bell,        roles: ADMIN },
+      { title: "שיחות בנצי",    url: "/admin/benzi-conversations", icon: MessageCircle, roles: ADMIN },
     ],
   },
   {

@@ -303,7 +303,36 @@ serve(async (req) => {
       return json(FALLBACK_RESPONSE);
     }
 
-    return json(buildSafeResponse(parsed, index));
+    const safeResponse = buildSafeResponse(parsed, index);
+
+    // תיעוד השיחה ל-bot_sessions (fire-and-forget, fail-soft) — הדשבורד באדמין
+    // קורא מכאן. upsert לפי session_id; history = כל חילופי-הדברים עד עכשיו.
+    if (SUPABASE_URL && SERVICE_KEY && session_id) {
+      const fullHistory = [
+        ...(Array.isArray(history) ? history : []),
+        { role: "user", text: String(message) },
+        { role: "bot", text: (safeResponse as Record<string, unknown>).reply_text ?? "" },
+      ];
+      fetch(`${SUPABASE_URL}/rest/v1/bot_sessions?on_conflict=session_id`, {
+        method: "POST",
+        headers: {
+          apikey: SERVICE_KEY,
+          Authorization: `Bearer ${SERVICE_KEY}`,
+          "Content-Type": "application/json",
+          Prefer: "resolution=merge-duplicates",
+        },
+        body: JSON.stringify({
+          session_id: String(session_id),
+          persona: persona ? String(persona) : null,
+          history: fullHistory,
+          last_route: current_route ? String(current_route) : null,
+          user_agent: req.headers.get("user-agent")?.slice(0, 250) ?? null,
+          updated_at: new Date().toISOString(),
+        }),
+      }).catch((e) => console.warn("[navigation-bot] session log failed:", String(e)));
+    }
+
+    return json(safeResponse);
   } catch (e) {
     console.error("[navigation-bot] unhandled:", String(e));
     return json(FALLBACK_RESPONSE);
