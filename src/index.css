@@ -258,6 +258,12 @@
 
   html {
     direction: rtl;
+    /* T12 (מובייל): מניעת גלישה אופקית מתפריט-הצד הנשלף (off-canvas) וממכלי-תוכן
+       שחורגים מרוחב-המסך. שתי ההצהרות מכוונות ל-root בלבד כדי לשמור על
+       position: sticky של ה-header. הראשונה (hidden) היא גיבוי ל-Safari < 16;
+       השנייה (clip) גוברת בדפדפנים מודרניים ואינה יוצרת scroll-container. */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {

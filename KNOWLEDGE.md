@@ -8027,3 +8027,18 @@ SYSTEMIC: cat_standalone=0 is NOT an עזרא-ונחמיה-specific bug — it's
 - קבצי-עמוד ששייכים למסלולים אחרים (CategoryPage/TopicPage→T10, ProductPage→T04, WeeklyBookDetail/Library→T04) — נגעתי בהם **רק בתוספת שורת `<Seo>` + import** (head-only). לעשות `git rebase finish/integration` לפני merge; ההוספות additive וממוזגות נקי מעל T10/T04.
 - `api/sitemap.js` לא בבעלות מפורשת של אף מסלול — נכלל תחת SEO. שינוי additive בלבד.
 - canonical/sitemap משקפים routes של `b4631c76`. אם T14 שינה routes — לרענן את STATIC_ROUTES + canonical hosts.
+## 2026-07-01 · T12 — התאמה לנייד (worktree `t12-mobile`, branch `finish/12-mobile`)
+
+**מטרה:** שכבת-responsive רוחבית — שאף עמוד לא ייצור גלישה אופקית בנייד, ניווט/מגע נוחים.
+
+**שינויים:**
+- **`src/index.css`** — נוסף `html { overflow-x: hidden; overflow-x: clip; }` (base layer). זהו רשת-הביטחון הרוחבית: חוסם גלישה אופקית מ-off-canvas drawer וממכלי-תוכן רחבים ב-initial-containing-block. `clip` נבחר כי הוא שומר על `position: sticky` של ה-header (בניגוד ל-`hidden`); `hidden` נשאר כגיבוי ל-Safari<16. שתי ההצהרות על `html` בלבד (לא על `body`) כדי לא לשבור את ה-sticky.
+- **`src/pages/Donate.tsx`** — media-query מובייל: `grid-template-columns: 1fr` → `minmax(0, 1fr)`. מנע מטור-הטופס להרחיב את הרשת מעבר לרוחב-המסך (היה +21px @375). *(קובץ של T05 — תיקון responsive-only, media-query בלבד; ראה _DONE.md תלות.)*
+
+**אימות (headless Playwright מול `vite preview` על 8090, chromium `--proxy-server=direct://`):**
+- 23 מסלולים (כולל דפי-פירוט דינמיים `/rabbis/:id`, `/store/:id`, `/community/:id`) — **canScrollX=0 בכולם** ב-375px ו-390px.
+- `position: sticky` של ה-header נשמר בכל העמודים הרגילים (megilat-esther הוא עמוד standalone ללא sticky — קדם-קיים).
+- צילומי-מסך 375px: בית, תרומות, קהילה, רב, חנות, drawer — נקי, ללא גלישה.
+- **הצ׳ומה המשותפת (header/bottom-nav/footer/drawer) כבר בנויה היטב לנייד** — נבדקה ואומתה, לא שונתה (header מתכווץ ל-64px, bottom-nav 64px + safe-area, drawer נשלף מימין עם שורות ~78px). מינימום-עריכה = merge נקי.
+
+**מדידה — לקח:** `documentElement.scrollWidth` **לא** מתכווץ עם `overflow:hidden/clip` (ממשיך לדווח רוחב-תוכן מלא). המדד האמיתי לגלישה = `window.scrollTo(3000,y)` ואז `window.scrollX` (0 = אין גלישה). סקריפטים ב-scratchpad.

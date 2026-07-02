@@ -498,7 +498,8 @@ const Donate = () => {
       <style>{`
         @media (max-width: 768px) {
           .donate-grid {
-            grid-template-columns: 1fr !important;
+            /* minmax(0,1fr) — מונע מטור-הטופס להרחיב את הרשת מעבר לרוחב-המסך (T12) */
+            grid-template-columns: minmax(0, 1fr) !important;
           }
           .donate-grid > div:last-child {
             order: -1;
