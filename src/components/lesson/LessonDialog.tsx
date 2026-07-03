@@ -458,14 +458,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                   </Link>
                 </span>
               ))}
-              {lesson.bible_book && (
-                <>
-                  <ChevronLeft className="h-3 w-3" />
-                  <Link to={`/bible/${encodeURIComponent(lesson.bible_book)}`} className="hover:text-primary transition-colors" onClick={() => onOpenChange(false)}>
-                    {lesson.bible_book}
-                  </Link>
-                </>
-              )}
+              {/* bible_book crumb removed (Rav Yoav 3.7.2026): metadata is noisy — series chain is the verified path */}
               <ChevronLeft className="h-3 w-3" />
               <span className="text-foreground truncate max-w-[200px]">{lesson.title}</span>
             </nav>

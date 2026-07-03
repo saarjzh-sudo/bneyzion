@@ -18,7 +18,6 @@ import { Separator } from "@/components/ui/separator";
 import { useSEO } from "@/hooks/useSEO";
 import { formatRabbiName } from "@/lib/rabbi-name";
 import SmartAuthCTA from "@/components/auth/SmartAuthCTA";
-import LessonComments from "@/components/lesson/LessonComments";
 import AIChatWidget from "@/components/ai/AIChatWidget";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
@@ -57,20 +56,8 @@ function LessonBreadcrumbs({ lesson, series }: { lesson: any; series: { id: stri
             </Link>
           </span>
         ))}
-        {lesson.bible_book && (
-          <>
-            <ChevronLeft className="h-3 w-3" />
-            <Link to={`/bible/${encodeURIComponent(lesson.bible_book)}`} className="hover:text-primary transition-colors">
-              {lesson.bible_book}
-            </Link>
-            {lesson.bible_chapter && (
-              <>
-                <ChevronLeft className="h-3 w-3" />
-                <span className="text-muted-foreground">פרק {lesson.bible_chapter}</span>
-              </>
-            )}
-          </>
-        )}
+        {/* bible_book crumb removed (Rav Yoav 3.7.2026): metadata is noisy (wrong/duplicate books
+            like שבת חזון→רות, איכה→איכה); the series chain above is the verified 1:1 path */}
         <ChevronLeft className="h-3 w-3" />
         <span className="text-foreground truncate max-w-[200px]">{lesson.title}</span>
       </nav>
@@ -84,6 +71,12 @@ const LessonPage = () => {
   const { data: relatedLessons } = useSeriesLessons(lesson?.series_id, id);
   // ג4: fetch series for image_url (useLesson only returns id+title for series)
   const { data: seriesDetail } = useSeriesDetail(lesson?.series_id ?? undefined);
+  // Rav Yoav 3.7.2026: bible_book metadata is noisy — show the "מקור" box only when the
+  // book is confirmed by the verified series chain (same data the breadcrumb renders)
+  const { data: chainForSource } = useSeriesBreadcrumb(lesson?.series_id ?? undefined);
+  const bibleBookVerified = Boolean(
+    lesson?.bible_book && chainForSource?.some((a) => a.title.includes(lesson.bible_book!))
+  );
   const { play, addToQueue, currentTrack } = usePlayer();
   const { user, signInWithGoogle } = useAuth();
   const mediaProgressRef = useMediaProgress(id);
@@ -471,6 +464,13 @@ const LessonPage = () => {
               );
             })()}
 
+            {/* Promo teaser — the old site's lessonPromo, shown above the content (Rav Yoav 3.7.2026) */}
+            {lesson.description && (lesson as any).content ? (
+              <div className="rounded-lg bg-secondary/30 border border-border p-5 max-w-3xl">
+                <p className="text-foreground leading-relaxed whitespace-pre-line font-display">{lesson.description}</p>
+              </div>
+            ) : null}
+
             {/* Content - full HTML or plain description */}
             {(lesson as any).content ? (
               <div
@@ -490,8 +490,8 @@ const LessonPage = () => {
               </div>
             ) : null}
 
-            {/* Bible reference */}
-            {(lesson.bible_book || lesson.bible_chapter) && (
+            {/* Bible reference — only when verified against the series chain */}
+            {bibleBookVerified && (
               <div className="bg-secondary/40 rounded-lg p-4 border border-border max-w-sm">
                 <h3 className="text-sm font-semibold text-foreground mb-1">מקור</h3>
                 <p className="text-sm text-muted-foreground">
@@ -518,12 +518,7 @@ const LessonPage = () => {
             </div>
           ) : null}
 
-          {/* Comments */}
-          {lesson && (
-            <section className="mt-12">
-              <LessonComments lessonId={lesson.id} />
-            </section>
-          )}
+          {/* Comments removed per Rav Yoav (12.5.2026, re-applied 3.7.2026) — the site has no comments */}
 
           {/* AI Chat Widget */}
           {/* <AIChatWidget context={`שיעור: ${lesson?.title}${rabbi ? ` מאת ${rabbiName}` : ""}`} /> */}
