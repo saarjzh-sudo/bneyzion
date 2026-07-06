@@ -45,6 +45,8 @@ import type { SidebarCategory, ExtraSection } from "@/hooks/useContentSidebar";
 import { usePublicRabbis } from "@/hooks/useRabbis";
 import { useTopicsSidebar } from "@/hooks/useTopicsSidebar";
 import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
+import { useBasicThemesSidebar } from "@/hooks/useBasicThemesSidebar";
+import type { BasicThemeItem } from "@/hooks/useBasicThemesSidebar";
 import RolePanel from "@/components/auth/RolePanel";
 
 // ────────────────────────────────────────────────────────────────────────
@@ -108,6 +110,9 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   // Accordion state (separate per tab so tabs don't clash)
   const [expandedMain, setExpandedMain] = useState<Set<string>>(new Set(["torah"]));
   const [expandedExtras, setExpandedExtras] = useState<Set<string>>(new Set());
+  // R7 6.7.2026: "עוד נושאים" (the pre-existing 126-topic full list) collapsed by default —
+  // the curated 40 "נושאים בסיסיים" show first/prominent per Rav Yoav's request.
+  const [showMoreTopics, setShowMoreTopics] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -120,6 +125,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const { categories, extraSections, riddlesSeriesId, isLoading } = useContentSidebar();
   const { data: rabbisRaw = [] } = usePublicRabbis();
   const { data: thematicTopics = [], isLoading: topicsLoading } = useTopicsSidebar();
+  const { data: basicThemes = [], isLoading: basicThemesLoading } = useBasicThemesSidebar();
 
   // §2.7: full rabbi list — old sidebar showed ~153 rabbis; cap-30 was a known regression (R-SB2).
   // Tier-pinning removed per §2.7 (tier pins stay on /rabbis cards if yoav wants them, not here).
@@ -319,15 +325,55 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
             />
           )}
 
-          {/* ═══ TOPICS tab — thematic taxonomy from themes-root ═══ */}
+          {/* ═══ TOPICS tab — curated 40 "נושאים בסיסיים" (Rav Yoav, 5.7.2026) first,
+                then the pre-existing 126-topic full taxonomy below, collapsed by default ═══ */}
           {activeTab === "topics" && (!collapsed || isDrawer) && (
-            <TopicsTab
-              topics={thematicTopics}
-              isLoading={topicsLoading}
-              search={search}
-              matchesSearch={matchesSearch}
-              onNavigate={handleNavigate}
-            />
+            <>
+              <TopicsTab
+                topics={basicThemes}
+                isLoading={basicThemesLoading}
+                search={search}
+                matchesSearch={matchesSearch}
+                onNavigate={handleNavigate}
+              />
+
+              {!search.trim() && (
+                <button
+                  onClick={() => setShowMoreTopics((v) => !v)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    width: "100%",
+                    marginTop: "0.6rem",
+                    padding: "0.5rem 0.7rem",
+                    borderRadius: radii.sm,
+                    border: `1px solid rgba(139,111,71,0.15)`,
+                    background: "rgba(139,111,71,0.04)",
+                    cursor: "pointer",
+                    fontFamily: fonts.body,
+                    fontSize: "0.76rem",
+                    fontWeight: 600,
+                    color: colors.textMuted,
+                  }}
+                >
+                  <span>עוד נושאים</span>
+                  {showMoreTopics ? <ChevronDown size={13} /> : <ChevronLeft size={13} />}
+                </button>
+              )}
+
+              {(showMoreTopics || search.trim()) && (
+                <div style={{ marginTop: "0.4rem" }}>
+                  <TopicsTab
+                    topics={thematicTopics}
+                    isLoading={topicsLoading}
+                    search={search}
+                    matchesSearch={matchesSearch}
+                    onNavigate={handleNavigate}
+                  />
+                </div>
+              )}
+            </>
           )}
 
           {/* ═══ RABBIS tab ═══ */}
