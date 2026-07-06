@@ -685,7 +685,7 @@ function DesignParashaHolidaySection() {
                     letterSpacing: "0.18em",
                     color: onDark ? holidayAccentLight : GOLD_DARK,
                     textTransform: "uppercase", marginBottom: "0.35rem" }}>
-                    החג הקרוב
+                    המועד הקרוב
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
                     <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,

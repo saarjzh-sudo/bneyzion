@@ -73,7 +73,7 @@ export function OpeningButtons({ onSelect }: Props) {
         className="text-[11px] font-semibold uppercase tracking-wide text-[#8B6F47] mb-0.5"
         style={{ fontFamily: BOT_FONT }}
       >
-        מי אתה?
+        מה מתאים לך?
       </p>
       {OPENING_BUTTONS.map((btn) => {
         const Icon = ICON_MAP[btn.icon as keyof typeof ICON_MAP] ?? Compass;
