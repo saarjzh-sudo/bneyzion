@@ -44,6 +44,20 @@ function getParashaSearchTerms(parasha: string): string[] {
   };
   const short = shortForms[parasha];
   if (short && short !== parasha) terms.push(short);
+
+  // Combined (double) parashiot are joined with a hyphen/maqaf — e.g.
+  // "מטות-מסעי", "נצבים-וילך", "אחרי מות-קדושים". The DB titles content by the
+  // individual parasha ("פרשת מטות" / "פרשת מסעי"), so split on the hyphen/maqaf
+  // and add each half as its own search term (space-joined two-word names like
+  // "שלח לך" are handled by shortForms above and are NOT split here).
+  if (/[-־]/.test(parasha)) {
+    for (const half of parasha.split(/\s*[-־]\s*/)) {
+      const h = half.trim();
+      if (h && !terms.includes(h)) terms.push(h);
+      const hShort = shortForms[h];
+      if (hShort && !terms.includes(hShort)) terms.push(hShort);
+    }
+  }
   return terms;
 }
 
