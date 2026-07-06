@@ -644,42 +644,8 @@ function ContentTree({
         <ChevronRight size={13} />
       </Link>
 
-      {/* פרשת השבוע — top link */}
-      <Link
-        to="/parasha"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0.5rem 0.75rem",
-          marginBottom: "0.25rem",
-          borderRadius: radii.md,
-          background: gradients.goldButton,
-          color: "white",
-          fontFamily: fonts.body,
-          fontSize: "0.82rem",
-          fontWeight: 600,
-          textDecoration: "none",
-        }}
-      >
-        <span>פרשת השבוע</span>
-        <ChevronRight size={13} />
-      </Link>
-
-      {/* איך לומדים — first extra section */}
-      {extraSections
-        .filter((s) => s.title.includes("איך לומדים"))
-        .map((section) => (
-          <ExtraSectionBlock
-            key={section.id}
-            section={section}
-            isExpanded={expandedExtras.has(section.id)}
-            onToggle={() => onToggleExtra(section.id)}
-            matchesSearch={matchesSearch}
-            variant="gold"
-            onNavigate={onNavigate}
-          />
-        ))}
+      {/* פרשת השבוע + "איך לומדים תנ״ך" — הועברו לתוך "תכנים מיוחדים" (סער 6.7),
+          כדי שלא יהיו חופשיים בשורש של "ראשי". ראה קבוצת SPECIAL_CONTENT_KEY למטה. */}
 
       {/* ─── תורה / נביאים / כתובים ─── */}
       {categories.map((cat) => {
@@ -962,7 +928,7 @@ function ContentTree({
           ליווי ת"תים) now lives inside this one collapsible group, instead of sitting
           at ראשי's root level. ─── */}
       {(() => {
-        const specialSections = extraSections.filter((s) => !s.title.includes("איך לומדים"));
+        const specialSections = extraSections; // כולל "איך לומדים תנ״ך" (סער 6.7)
         if (specialSections.length === 0) return null;
         const specialOpen = expandedExtras.has(SPECIAL_CONTENT_KEY);
         const specialVisible =
@@ -1029,6 +995,26 @@ function ContentTree({
 
             {specialOpen && (
               <div style={{ paddingInlineStart: "0.5rem", paddingTop: "0.15rem" }}>
+                {/* פרשת השבוע — בתוך "תכנים מיוחדים" (סער 6.7) */}
+                <Link
+                  to="/parasha"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "0.45rem 0.6rem",
+                    marginBottom: "0.15rem",
+                    borderRadius: radii.sm,
+                    color: colors.textMid,
+                    fontFamily: fonts.body,
+                    fontSize: "0.82rem",
+                    fontWeight: 600,
+                    textDecoration: "none",
+                  }}
+                >
+                  <span>פרשת השבוע</span>
+                  <ChevronRight size={13} />
+                </Link>
                 {specialSections.map((section) => (
                   <ExtraSectionBlock
                     key={section.id}
