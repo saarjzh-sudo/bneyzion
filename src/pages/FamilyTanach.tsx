@@ -20,6 +20,7 @@
  *  3. src/pages/DesignPreviewHome.tsx — FamilyBibleSection "הלימוד היומי" header should link here
  */
 
+import { useState, type FormEvent, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSEO } from "@/hooks/useSEO";
@@ -83,13 +84,6 @@ const BASE_CARDS: LobbyCard[] = [
     image: "/family-bible/abstract-verse.webp",
   },
   {
-    id: "daily-video",
-    title: "וידאו יומי",
-    desc: "כמה דקות ביום, סרטון קצר שמקרב את התנ״ך הביתה",
-    href: "/daily-video",
-    image: "/family-bible/hero-verse.webp",
-  },
-  {
     id: "dor-haplaot",
     title: "דור הפלאות",
     desc: "70 ניסי מלחמת חרבות ברזל, סיפורי הצלה והשגחה שלא ישכחו",
@@ -110,8 +104,11 @@ function FamilyTanachHero() {
     <section
       dir="rtl"
       style={{
-        background: gradients.warmDark,
-        padding: "5rem 1.5rem 6.5rem",
+        backgroundImage:
+          "linear-gradient(180deg, rgba(15,38,35,0.68) 0%, rgba(18,48,44,0.55) 45%, rgba(32,79,73,0.82) 100%), url('/family-bible/family-hero-wall.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center 30%",
+        padding: "6rem 1.5rem 7rem",
         position: "relative",
         overflow: "hidden",
       }}
@@ -123,7 +120,7 @@ function FamilyTanachHero() {
           position: "absolute",
           inset: 0,
           background:
-            "radial-gradient(ellipse at 50% 0%, rgba(232,213,160,0.14) 0%, transparent 60%)",
+            "radial-gradient(ellipse at 50% 20%, rgba(232,213,160,0.18) 0%, transparent 62%)",
           pointerEvents: "none",
         }}
       />
@@ -296,11 +293,134 @@ function LobbyCardTile({ card, onClick }: { card: LobbyCard; onClick: () => void
   );
 }
 
+// Canonical community WhatsApp invite (same group used on ThankYou.tsx).
+const COMMUNITY_WA_LINK = "https://chat.whatsapp.com/L1PZWRh8kxdDojWmUDMBs3";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+/** הישארו מחוברים — הצטרפות לקבוצת הווטסאפ + הרשמה לעדכוני מייל.
+ *  ההרשמה כותבת ל-newsletter_subscribers (source='family-tanach'), אותו מנגנון
+ *  עובד של טופס דף-הבית. */
+function StayConnectedSection() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [errMsg, setErrMsg] = useState("");
+
+  async function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    if (!EMAIL_RE.test(email.trim())) {
+      setErrMsg("רגע, צריך כתובת מייל אמיתית");
+      setStatus("error");
+      return;
+    }
+    setStatus("submitting");
+    setErrMsg("");
+    try {
+      const { error } = await supabase
+        .from("newsletter_subscribers" as never)
+        .insert({
+          email: email.trim().toLowerCase(),
+          consent_at: new Date().toISOString(),
+          source: "family-tanach",
+          agreed_to_terms: true,
+        } as never);
+      if (error && !error.message.toLowerCase().includes("duplicate")) throw error;
+      setStatus("success");
+    } catch (err) {
+      setStatus("error");
+      setErrMsg((err as { message?: string })?.message || "משהו השתבש. נסו שוב בעוד רגע.");
+    }
+  }
+
+  const cardStyle: CSSProperties = {
+    background: "#fff",
+    border: `1px solid rgba(139,111,71,0.18)`,
+    borderRadius: "1rem",
+    padding: "1.7rem",
+    textAlign: "center",
+    boxShadow: shadows.cardSoft,
+  };
+  const h3Style: CSSProperties = {
+    fontFamily: fonts.display, fontWeight: 800, fontSize: "1.3rem",
+    color: colors.textDark, margin: "0 0 0.4rem",
+  };
+  const pStyle: CSSProperties = {
+    fontFamily: fonts.body, fontSize: "0.94rem", lineHeight: 1.6,
+    color: colors.textMuted, margin: "0 0 1.2rem",
+  };
+
+  return (
+    <section dir="rtl" style={{ background: colors.parchment, padding: "1rem 1.5rem 4rem" }}>
+      <div className="family-connect-grid" style={{ maxWidth: 980, margin: "0 auto", display: "grid", gap: "1.25rem", gridTemplateColumns: "1fr 1fr" }}>
+        {/* WhatsApp */}
+        <div style={cardStyle}>
+          <h3 style={h3Style}>קבוצת הווטסאפ שלנו</h3>
+          <p style={pStyle}>תוכן יומי קצר ישר לנייד, יחד עם קהילת הלומדים של בני ציון.</p>
+          <a
+            href={COMMUNITY_WA_LINK}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5rem",
+              background: "hsl(142 68% 34%)", color: "#fff", fontFamily: fonts.body, fontWeight: 700,
+              fontSize: "0.98rem", borderRadius: "0.7rem", padding: "0.8rem 1.9rem", textDecoration: "none",
+            }}
+          >
+            להצטרפות לקבוצה
+          </a>
+        </div>
+
+        {/* Email */}
+        <div style={cardStyle}>
+          <h3 style={h3Style}>עדכונים למייל</h3>
+          {status === "success" ? (
+            <p style={{ fontFamily: fonts.body, fontSize: "0.98rem", color: colors.oliveDark, margin: "1rem 0 0.4rem", fontWeight: 600 }}>
+              נרשמתם בהצלחה. נשמח ללוות אתכם בלימוד 🙏
+            </p>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              <p style={pStyle}>השאירו מייל ונעדכן אתכם בתוכן חדש ובלימוד המשותף.</p>
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "center" }}>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="כתובת המייל שלכם"
+                  aria-label="כתובת מייל"
+                  dir="ltr"
+                  style={{
+                    flex: "1 1 190px", minWidth: 0, padding: "0.75rem 0.9rem", borderRadius: "0.65rem",
+                    border: `1px solid rgba(139,111,71,0.3)`, fontFamily: fonts.body, fontSize: "0.95rem", textAlign: "center",
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={status === "submitting"}
+                  style={{
+                    background: gradients.goldButton, color: "#fff", fontFamily: fonts.body, fontWeight: 700,
+                    fontSize: "0.95rem", border: "none", borderRadius: "0.65rem", padding: "0.75rem 1.6rem",
+                    cursor: status === "submitting" ? "default" : "pointer",
+                  }}
+                >
+                  {status === "submitting" ? "רגע..." : "הרשמה"}
+                </button>
+              </div>
+              {status === "error" && (
+                <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: "#9B2C2C", margin: "0.7rem 0 0" }}>{errMsg}</p>
+              )}
+            </form>
+          )}
+        </div>
+      </div>
+      <style>{`@media (max-width: 640px){ .family-connect-grid { grid-template-columns: 1fr !important; } }`}</style>
+    </section>
+  );
+}
+
 export default function FamilyTanach() {
   useSEO({
     title: "תנ״ך למשפחה",
     description:
-      "לימוד תנ״ך יומי ומשפחתי, פרשת השבוע, הפרק השבועי, פסוק יומי, וידאו יומי, דור הפלאות וחידות לשולחן השבת. מקום אחד לכל המשפחה.",
+      "לימוד תנ״ך יומי ומשפחתי, פרשת השבוע, הפרק השבועי, פסוק יומי, דור הפלאות וחידות לשולחן השבת. מקום אחד לכל המשפחה.",
   });
 
   const navigate = useNavigate();
@@ -365,6 +485,8 @@ export default function FamilyTanach() {
           </div>
         </div>
       </section>
+
+      <StayConnectedSection />
 
       {/* Closing CTA — ties back to the main subscription program */}
       <section
