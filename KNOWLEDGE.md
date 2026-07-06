@@ -1,5 +1,16 @@
 # Bnei Zion — Full Site Knowledge Base
 
+> ## 🏆 רמת מיגרציה 9 — העוגן (7.7.2026) · tag `migration9-baseline-2026-07-07` על `finish/integration`, חי ב-`bneyzion.vercel.app`
+> נבנה מעל 8.5. הכל בפרודקשן + מגובה ל-origin. נעשה מ-worktree `bz-finish/integration`.
+> - **ניווט/סיידבר חדש (יואב):** `DesignSidebar.tsx` — 3 כרטיסיות `ראשי|רבנים|נושאים בתנ״ך`; ב"ראשי": כפתור-זהב "ניווט על פי ספר ופרק" + תורה/נביאים/כתובים + "תכנים מיוחדים" (בולעת מועדים/הפטרות/ימי-עיון/כלי-עזר/מוקלט + פרשת-השבוע + איך-לומדים). "תנ״ך למשפחה" נוסף ל-`DesignHeader` NAV_ITEMS.
+> - **40 תגיות "נושאים בתנ״ך":** שורש `biblical-themes-root` (לא נדרס themes-root), סיווג word-boundary עברי, 3,769 קישורי `lesson_topics` (גיבוי `lesson_topics_bak_20260706`). `useBasicThemesSidebar.ts` → `/topic/:slug`.
+> - **הקדשות:** `lesson_dedications` +series_id/scope/asmachta/paid_at + `dedication_settings`(600/1800) + RLS-fix. `DedicationDialog/Preview/Badge`, אדמין `/admin/dedications`. **תשלום מנוטרל** (כפתור "בקרוב") — חיווט Grow דחוי (יהושע). גיבוי `reports/backups/level9-backup-20260706.json`.
+> - **בנצי:** "מה מתאים לך?" + אווטר Gemini (`public/benzi-avatar.png`) + קופי עדין (`botConfig.ts`) + 4 ערכי-ידע חדשים ב-`benzi_knowledge` (edge קורא מ-DB, בלי redeploy).
+> - **נגישות/עוגיות/פרטיות:** `CookieConsent`+`consent.ts` (**פיקסל פייסבוק מותנה-הסכמה ב-`ThankYou.tsx` — פוגע במעקב יהושע; opt-out זמין**), `SkipToContent`, `/accessibility`, `/privacy-policy`, `AccessibilityWidget`. הצהרת-AA מנוסחת ביושר.
+> - **RolePanel** — כפתור פתיחה/סגירה. **צבע D:** `gradients.warmDark`=`#204F49→#12302C` (טורקיז, חל על פוטר+הירו+~24 סקשנים). **`/family-tanach`** — `FamilyTanach.tsx`, hero חומה-עתיקה (`public/family-bible/family-hero-wall.jpg`) + CTA ווטסאפ (`L1PZWRh8kxdDojWmUDMBs3`) + הרשמה-מייל (`newsletter_subscribers`, anon-insert אומת). **daily-video הוסר.**
+> - **באגים:** פרשה-כפולה ריקה → `getParashaSearchTerms` מפצל על מקף (`useParasha.ts`); "החג"→"המועד הקרוב".
+> - **פתוח:** חיווט-תשלום (יהושע) · pixel-opt-out · 127 שארית (72) · שאלות-ניווט-יואב · 48 over-archived מ-5.7.
+
 > ## T01 finish-track — 2026-06-30 — Admin dashboard polish (branch `finish/01-admin`, base b4631c76)
 > מסלול-סיום מבודד, אזור-בעלות `src/pages/admin/**` + `src/components/admin/**` + admin hooks.
 > - **ContentUpload `FileDropZone` → drag&drop אמיתי:** היה קליק-בלבד. נוסף `onDrop/onDragOver/onDragLeave` + state `dragging`, ולידציית-`accept` (`fileMatchesAccept`) + `maxBytes` (200MB שמע / 2GB וידאו) עם הודעות `role="alert"`, ניהול `object-URL` תקין ב-`useEffect` (היה memory-leak: `URL.createObjectURL` בכל render), נגישות: `sr-only` במקום `hidden` (input נשאר נגיש-מקלדת) + `focus-within` ring.
