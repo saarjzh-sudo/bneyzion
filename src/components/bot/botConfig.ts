@@ -23,12 +23,13 @@ export const BOT_CONFIG = {
 
   // Branding
   botName: "בנצי",
-  botTagline: "הסוכן המנווט שלך באתר בני ציון",
-  botAvatar: "/images/bot-avatar.webp", // optional — gold sealing-wax style
+  botTagline: "המדריך המנווט שלך באתר בני ציון",
+  // Short line shown in the closed launcher pill (below the name)
+  botShortTagline: "מי אתה? אכוון אותך למסלול",
+  botAvatar: "/benzi-avatar.png", // round avatar, falls back to gold letter-avatar "בנ" if missing
 
-  // Welcome message (shown above opening buttons)
-  welcomeMessage:
-    "שלום, אני בנצי. מה אתה מחפש? אכוון אותך.",
+  // Welcome message (shown above the persona picker)
+  welcomeMessage: "שלום, אני בנצי. מי אתה? אכוון אותך למסלול הנכון.",
 } as const;
 
 // ============================================================

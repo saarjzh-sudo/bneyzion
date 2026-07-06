@@ -18,10 +18,12 @@ import {
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { hasMarketingConsent } from "@/lib/consent";
 
 // ─── Facebook pixel helper ───────────────────────────────────────────────────
 function FbPixelLead() {
   useEffect(() => {
+    if (!hasMarketingConsent()) return;
     const script = document.createElement("script");
     script.innerHTML = `
       !function(f,b,e,v,n,t,s)

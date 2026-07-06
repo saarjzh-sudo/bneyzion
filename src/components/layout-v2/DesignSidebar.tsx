@@ -85,6 +85,9 @@ const SECTION_ALIAS: Record<string, string | null> = {
 const STORAGE_KEY = "bnz.sidebar.collapsed";
 const SIDEBAR_W_EXPANDED = 290;
 const SIDEBAR_W_COLLAPSED = 68;
+// R6 6.7.2026: synthetic key for the "תכנים מיוחדים" accordion group (not a real series id,
+// so it can safely share the expandedExtras Set with real section UUIDs).
+const SPECIAL_CONTENT_KEY = "__special-content__";
 
 type Tab = "main" | "topics" | "rabbis";
 
@@ -216,59 +219,11 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           </div>
         )}
 
-        {/* Quick links — above the tree */}
-        {(!collapsed || isDrawer) && (
-          <div style={{ padding: "0.65rem 0.85rem 0.3rem" }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 2,
-                padding: "0.35rem",
-                background: "rgba(196,162,101,0.07)",
-                borderRadius: radii.md,
-                border: `1px solid rgba(139,111,71,0.1)`,
-              }}
-            >
-              {[
-                // R3 15.6.2026 (Saar): "ראשי" removed from sidebar — it lives in the header.
-                // §2.2 tree CA1: "ניווט באתר לפי ספר ופרק" → /bible index page
-                { to: "/bible", label: "ניווט באתר לפי ספר ופרק", icon: BookOpen },
-                { to: "/parasha", label: "פרשת השבוע", icon: BookOpen },
-                // R-SB4: /how-to-learn-tanach had no route → now points to the real category node
-                { to: "/category/62590949-6187-4e17-b84d-65a518467521", label: "איך לומדים תנ״ך", icon: Sparkles },
-              ].map(({ to, label, icon: Icon }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  onClick={onDrawerClose}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    padding: "0.38rem 0.6rem",
-                    borderRadius: radii.sm,
-                    fontFamily: fonts.body,
-                    fontSize: "0.8rem",
-                    fontWeight: 600,
-                    color: colors.textMid,
-                    textDecoration: "none",
-                    transition: "background 0.15s",
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = "rgba(139,111,71,0.08)")
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = "transparent")
-                  }
-                >
-                  <Icon size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
-                  {label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* R6 6.7.2026 (Saar): the 3-link quick-box above the tabs was removed.
+            The sidebar now starts directly at the tabs. Its 3 links relocated:
+            - "ניווט באתר לפי ספר ופרק" (/bible) → gold button at the top of the "ראשי" tree (below).
+            - "פרשת השבוע" (/parasha) → stays as the existing top gold link inside the tree.
+            - "איך לומדים תנ״ך" (/category/...) → stays as a tree item inside "ראשי" (below תורה/נביאים/כתובים). */}
 
         {/* Search removed from sidebar — R3 15.6.2026 (Saar). The `search` state stays
             inert (always ""), so matchesSearch is a no-op and the tree shows everything. */}
@@ -285,8 +240,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               {(
                 [
                   { key: "main" as Tab, label: "ראשי", icon: Library },
-                  { key: "topics" as Tab, label: "נושאים", icon: Filter },
                   { key: "rabbis" as Tab, label: "רבנים", icon: Users },
+                  { key: "topics" as Tab, label: "נושאים בתנ״ך", icon: Filter },
                 ] as const
               ).map((t) => {
                 const Icon = t.icon;
@@ -620,6 +575,29 @@ function ContentTree({
 
   return (
     <div>
+      {/* R6 6.7.2026 (Saar): "ניווט על פי ספר ופרק" — relocated here from the removed
+          quick-links box above the tabs. Gold, prominent, first item in "ראשי". */}
+      <Link
+        to="/bible"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "0.5rem 0.75rem",
+          marginBottom: "0.25rem",
+          borderRadius: radii.md,
+          background: gradients.goldButton,
+          color: "white",
+          fontFamily: fonts.body,
+          fontSize: "0.82rem",
+          fontWeight: 700,
+          textDecoration: "none",
+        }}
+      >
+        <span>ניווט על פי ספר ופרק</span>
+        <ChevronRight size={13} />
+      </Link>
+
       {/* פרשת השבוע — top link */}
       <Link
         to="/parasha"
@@ -687,6 +665,7 @@ function ContentTree({
                   the title toggles the books accordion only (no navigation to an empty /category). */}
               <button
                 onClick={() => onToggle(cat.id)}
+                aria-expanded={catOpen}
                 style={{
                   flex: 1,
                   background: "none",
@@ -705,6 +684,7 @@ function ContentTree({
               <button
                 onClick={() => onToggle(cat.id)}
                 aria-label={catOpen ? "כווץ" : "הרחב"}
+                aria-expanded={catOpen}
                 style={{
                   background: "none",
                   border: "none",
@@ -820,6 +800,7 @@ function ContentTree({
                             <button
                               onClick={() => onToggle(bookKey)}
                               aria-label={bookOpen ? "סגור" : "פתח"}
+                              aria-expanded={bookOpen}
                               style={{
                                 background: "none",
                                 border: "none",
@@ -930,20 +911,94 @@ function ContentTree({
         );
       })}
 
-      {/* ─── Extra sections (מועדים, הפטרות, כלי עזר, ליווי ת"תים...) ─── */}
-      {extraSections
-        .filter((s) => !s.title.includes("איך לומדים"))
-        .map((section) => (
-          <ExtraSectionBlock
-            key={section.id}
-            section={section}
-            isExpanded={expandedExtras.has(section.id)}
-            onToggle={() => onToggleExtra(section.id)}
-            matchesSearch={matchesSearch}
-            variant="neutral"
-            onNavigate={onNavigate}
-          />
-        ))}
+      {/* ─── תכנים מיוחדים — R6 6.7.2026 (Saar): every extra section except "איך לומדים"
+          (נושאים כלליים בתנ"ך, מועדים, הפטרות, ימי עיון בתנ"ך, כלי עזר, פרוייקט המוקלט,
+          ליווי ת"תים) now lives inside this one collapsible group, instead of sitting
+          at ראשי's root level. ─── */}
+      {(() => {
+        const specialSections = extraSections.filter((s) => !s.title.includes("איך לומדים"));
+        if (specialSections.length === 0) return null;
+        const specialOpen = expandedExtras.has(SPECIAL_CONTENT_KEY);
+        const specialVisible =
+          !search.trim() ||
+          specialSections.some(
+            (s) => matchesSearch(s.title) || s.children.some((c) => matchesSearch(c.title))
+          );
+        if (!specialVisible) return null;
+        return (
+          <div style={{ marginBottom: "0.2rem" }}>
+            <div
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "0.5rem 0.75rem",
+                borderRadius: radii.sm,
+                background: specialOpen ? "rgba(196,162,101,0.12)" : "rgba(139,111,71,0.06)",
+                color: specialOpen ? colors.goldDark : colors.textMid,
+              }}
+            >
+              <button
+                onClick={() => onToggleExtra(SPECIAL_CONTENT_KEY)}
+                aria-expanded={specialOpen}
+                style={{
+                  flex: 1,
+                  background: "none",
+                  border: "none",
+                  color: "inherit",
+                  fontFamily: fonts.display,
+                  fontSize: "0.88rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  textAlign: "right",
+                  padding: 0,
+                }}
+              >
+                תכנים מיוחדים
+              </button>
+              <button
+                onClick={() => onToggleExtra(SPECIAL_CONTENT_KEY)}
+                aria-label={specialOpen ? "כווץ" : "הרחב"}
+                aria-expanded={specialOpen}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "0 0 0 0.25rem",
+                }}
+              >
+                <ChevronDown
+                  size={13}
+                  style={{
+                    transition: "transform 0.18s",
+                    transform: specialOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    color: specialOpen ? colors.goldDark : colors.textSubtle,
+                  }}
+                />
+              </button>
+            </div>
+
+            {specialOpen && (
+              <div style={{ paddingInlineStart: "0.5rem", paddingTop: "0.15rem" }}>
+                {specialSections.map((section) => (
+                  <ExtraSectionBlock
+                    key={section.id}
+                    section={section}
+                    isExpanded={expandedExtras.has(section.id)}
+                    onToggle={() => onToggleExtra(section.id)}
+                    matchesSearch={matchesSearch}
+                    variant="neutral"
+                    onNavigate={onNavigate}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -970,6 +1025,7 @@ function NestedSectionChild({
     <div>
       <button
         onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
         style={{
           width: "100%",
           textAlign: "right",
@@ -1119,6 +1175,7 @@ function ExtraSectionBlock({
         <button
           onClick={onToggle}
           aria-label={isExpanded ? "כווץ" : "הרחב"}
+          aria-expanded={isExpanded}
           style={{
             background: "none",
             border: "none",

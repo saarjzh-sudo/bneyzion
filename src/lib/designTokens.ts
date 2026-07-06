@@ -60,7 +60,9 @@ export const gradients = {
   oliveButton: `linear-gradient(135deg, ${colors.oliveDark}, ${colors.oliveMain})`,
   israelButton: `linear-gradient(135deg, ${colors.israelBlue}, ${colors.israelBlueLight})`,
 
-  warmDark: `linear-gradient(180deg, ${colors.textDark}, #1A1208)`,
+  // 6.7.2026 (Saar, אופציה D): הוחלף החום הכבד בטורקיז-ירוק עמוק — נקי ורגוע בלי לאבד עומק.
+  // הטוקן משותף לפוטר + תחתית ההירו + ~24 סקשנים, כך שהשינוי חל בכל המקומות בבת-אחת.
+  warmDark: `linear-gradient(180deg, #204F49, #12302C)`,
   parchmentBlend: `linear-gradient(180deg, ${colors.parchment}, ${colors.parchmentDark})`,
   navyHero: `linear-gradient(180deg, ${colors.navyDeep} 0%, #0F1A30 60%, ${colors.navyDeep} 100%)`,
   oliveHero: `linear-gradient(180deg, ${colors.oliveDark} 0%, #2A3416 60%, ${colors.oliveDark} 100%)`,

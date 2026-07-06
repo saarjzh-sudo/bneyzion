@@ -1,33 +1,38 @@
-import { Heart, Flame } from "lucide-react";
-import { useLessonDedications } from "@/hooks/useLessonDedications";
+import { useLessonDedications, useSeriesDedications } from "@/hooks/useLessonDedications";
+import DedicationPreview from "@/components/lesson/DedicationPreview";
 
-const typeLabels: Record<string, string> = {
-  iluy_neshama: "לעילוי נשמת",
-  refua: "לרפואה שלמה",
-  memory: "לזכרון",
-};
+/**
+ * הבאנר החי "מוקדש ל..." על שיעור או סדרה.
+ * ספק בדיוק אחד מ-lessonId / seriesId. אם השיעור עצמו שייך לסדרה מוקדשת,
+ * אפשר להעביר את שניהם — מציג את שתי ההקדשות (שיעור ואז סדרה).
+ */
+export default function DedicationBadge({
+  lessonId,
+  seriesId,
+}: {
+  lessonId?: string;
+  seriesId?: string;
+}) {
+  const { data: lessonDedications } = useLessonDedications(lessonId);
+  const { data: seriesDedications } = useSeriesDedications(seriesId);
 
-export default function DedicationBadge({ lessonId }: { lessonId: string }) {
-  const { data: dedications } = useLessonDedications(lessonId);
+  const all = [...(lessonDedications ?? []), ...(seriesDedications ?? [])];
 
-  if (!dedications?.length) return null;
+  if (!all.length) return null;
 
   return (
     <div className="space-y-2">
-      {dedications.slice(0, 3).map((d) => (
-        <div
+      {all.slice(0, 3).map((d) => (
+        <DedicationPreview
           key={d.id}
-          className="flex items-start gap-2 px-3 py-2 rounded-lg bg-primary/5 border border-primary/10 text-sm"
-        >
-          <Flame className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
-          <div>
-            <span className="text-muted-foreground">{typeLabels[d.dedication_type] || d.dedication_type}</span>{" "}
-            <span className="font-display text-foreground">{d.dedicated_name}</span>
-            {d.dedicator_name && (
-              <span className="text-muted-foreground text-xs block">מאת {d.dedicator_name}</span>
-            )}
-          </div>
-        </div>
+          variant="live"
+          data={{
+            dedication_type: d.dedication_type,
+            dedicated_name: d.dedicated_name,
+            dedicator_name: d.dedicator_name,
+            message: d.message,
+          }}
+        />
       ))}
     </div>
   );

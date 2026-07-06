@@ -1,9 +1,17 @@
-// Floating bot button — gold circle, bottom-LEFT (per Saar 28.5.2026)
+// Floating bot button — bottom-LEFT (per Saar 28.5.2026)
+// Updated 2026-07-06: pill-shaped launcher with avatar + name + tagline,
+// matching the "מיקי" pattern from the Abulafia site (MikiProvider.tsx).
+// Closed state = white pill with round avatar (image, falls back to gold
+// letter-avatar "בנ"), a live green dot, name "בנצי" + short tagline.
+// Open state stays a simple round X button (no change requested there).
 // Path in repo: src/components/bot/BotButton.tsx
 
-import { forwardRef } from "react";
-import { MessageCircle, X } from "lucide-react";
+import { forwardRef, useState } from "react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BOT_CONFIG } from "./botConfig";
+
+const BOT_FONT = '"Ploni", "Ploni DL 1.1", "Paamon", system-ui, sans-serif';
 
 interface Props {
   isOpen: boolean;
@@ -15,34 +23,80 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
   { isOpen, onClick, hasUnread = false },
   ref
 ) {
+  const [avatarFailed, setAvatarFailed] = useState(false);
+
+  if (isOpen) {
+    return (
+      <button
+        ref={ref}
+        type="button"
+        onClick={onClick}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-label="סגור צ׳אט עם בנצי"
+        className={cn(
+          "fixed bottom-6 left-6 z-[100]",
+          "flex h-12 w-12 items-center justify-center rounded-full",
+          "shadow-lg transition-all duration-200",
+          "bg-[#1A2744] text-[#FAF6F0] hover:bg-[#0E1729]",
+          "focus:outline-none focus-visible:ring-4 focus-visible:ring-[#C4A265]/40"
+        )}
+      >
+        <X className="h-5 w-5" />
+      </button>
+    );
+  }
+
   return (
     <button
       ref={ref}
       type="button"
       onClick={onClick}
+      dir="rtl"
       aria-haspopup="dialog"
       aria-expanded={isOpen}
-      aria-label={isOpen ? "סגור צ׳אט" : "פתח צ׳אט"}
+      aria-label={`פתח צ׳אט עם ${BOT_CONFIG.botName}, המדריך המנווט של אתר בני ציון`}
+      style={{ fontFamily: BOT_FONT }}
       className={cn(
         "fixed bottom-6 left-6 z-[100]",
-        "flex h-12 w-12 items-center justify-center rounded-full",
-        "shadow-lg transition-all duration-200",
-        "focus:outline-none focus-visible:ring-4 focus-visible:ring-[#C4A265]/40",
-        isOpen
-          ? "bg-[#1A2744] text-[#FAF6F0] hover:bg-[#0E1729]"
-          : "bg-[#C4A265] text-[#1A2744] hover:bg-[#8B6F47] hover:text-[#FAF6F0]"
+        "flex items-center gap-2.5 rounded-full bg-white pl-3.5 pr-2 py-2",
+        "shadow-lg transition-all duration-200 hover:shadow-xl",
+        "border border-[#C4A265]/30 hover:border-[#C4A265]",
+        "focus:outline-none focus-visible:ring-4 focus-visible:ring-[#C4A265]/40"
       )}
     >
-      {isOpen ? (
-        <X className="h-5 w-5" />
-      ) : (
-        <>
-          <MessageCircle className="h-5 w-5" />
-          {hasUnread && (
-            <span className="absolute top-1 left-1 h-3 w-3 rounded-full bg-red-500 ring-2 ring-[#FAF6F0]" />
-          )}
-        </>
-      )}
+      <span className="relative shrink-0">
+        {avatarFailed ? (
+          <span
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-[#C4A265] text-[#1A2744] font-bold text-[15px]"
+            style={{ border: "2px solid #8B6F47", fontFamily: BOT_FONT }}
+            aria-hidden="true"
+          >
+            בנ
+          </span>
+        ) : (
+          <img
+            src={BOT_CONFIG.botAvatar}
+            alt=""
+            aria-hidden="true"
+            className="h-12 w-12 rounded-full object-cover"
+            style={{ border: "2px solid #C4A265" }}
+            onError={() => setAvatarFailed(true)}
+          />
+        )}
+        <span className="absolute bottom-0 left-0 h-3 w-3 rounded-full bg-green-500 ring-2 ring-white" />
+        {hasUnread && (
+          <span className="absolute -top-0.5 -right-0.5 h-3 w-3 rounded-full bg-red-500 ring-2 ring-white" />
+        )}
+      </span>
+      <span className="text-right leading-tight">
+        <span className="block font-bold text-[15px] text-[#1A2744]">
+          {BOT_CONFIG.botName}
+        </span>
+        <span className="block text-xs text-[#8B6F47]">
+          {BOT_CONFIG.botShortTagline}
+        </span>
+      </span>
     </button>
   );
 });

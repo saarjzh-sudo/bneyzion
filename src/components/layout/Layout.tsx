@@ -14,6 +14,8 @@ import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav"
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
 import { PromoProvider } from "@/components/promo";
 import { colors } from "@/lib/designTokens";
+import SkipToContent, { MAIN_CONTENT_ID } from "@/components/a11y/SkipToContent";
+import CookieConsent from "@/components/legal/CookieConsent";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -36,6 +38,7 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
     >
       {/* T09 — single global promo injection point (banner / conference strip
           above the header; popup renders fixed, suppressed on product+learning). */}
+      <SkipToContent />
       <PromoProvider />
       <DesignHeader
         transparentOnTop={false}
@@ -58,6 +61,7 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
           />
         )}
         <main
+          id={MAIN_CONTENT_ID}
           className="layout-main"
           style={{
             flex: 1,
@@ -79,6 +83,8 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
           }
         }
       `}</style>
+
+      <CookieConsent />
     </div>
   );
 };

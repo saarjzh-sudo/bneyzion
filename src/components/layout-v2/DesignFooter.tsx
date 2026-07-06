@@ -399,6 +399,13 @@ export default function DesignFooter() {
           >
             מדיניות פרטיות
           </Link>
+          <span> · </span>
+          <Link
+            to="/accessibility"
+            style={{ color: "rgba(232,213,160,0.55)", textDecoration: "underline", textUnderlineOffset: 2 }}
+          >
+            הצהרת נגישות
+          </Link>
         </div>
 
         {/* Bottom bar */}

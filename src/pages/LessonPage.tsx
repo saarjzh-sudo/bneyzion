@@ -256,7 +256,7 @@ const LessonPage = () => {
 
             {/* Dedication */}
             <div className="flex items-center gap-3 flex-wrap">
-              <DedicationDialog lessonId={lesson.id} lessonTitle={lesson.title} />
+              <DedicationDialog lessonId={lesson.id} lessonTitle={lesson.title} seriesId={series?.id} seriesTitle={series?.title} />
               <DedicationBadge lessonId={lesson.id} />
             </div>
 

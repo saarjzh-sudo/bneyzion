@@ -41,10 +41,10 @@ export function OpeningButtons({ onSelect }: Props) {
               onSelect(opt.nextPrompt, opt.persona);
               setFollowUpFor(null);
             }}
-            className="flex items-center gap-2 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-2.5 py-2 text-right transition hover:bg-[#C4A265]/15 hover:border-[#C4A265]"
+            className="flex items-center gap-2.5 rounded-xl border border-[#C4A265]/40 bg-[#FAF6F0] px-3 py-2.5 text-right shadow-sm transition hover:bg-[#C4A265]/15 hover:border-[#C4A265] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]/40"
             style={{ fontFamily: BOT_FONT }}
           >
-            <span className="flex-1 text-[12px] font-medium text-[#1A2744]">
+            <span className="flex-1 text-[12.5px] font-medium text-[#1A2744]">
               {opt.label}
             </span>
           </button>
@@ -62,12 +62,18 @@ export function OpeningButtons({ onSelect }: Props) {
   }
 
   return (
-    <div dir="rtl" className="flex flex-col gap-1.5" style={{ fontFamily: BOT_FONT }}>
+    <div dir="rtl" className="flex flex-col gap-2" style={{ fontFamily: BOT_FONT }}>
       <p
         className="text-[13px] text-[#1A2744] mb-0.5"
         style={{ fontFamily: BOT_FONT }}
       >
         {BOT_CONFIG.welcomeMessage}
+      </p>
+      <p
+        className="text-[11px] font-semibold uppercase tracking-wide text-[#8B6F47] mb-0.5"
+        style={{ fontFamily: BOT_FONT }}
+      >
+        מי אתה?
       </p>
       {OPENING_BUTTONS.map((btn) => {
         const Icon = ICON_MAP[btn.icon as keyof typeof ICON_MAP] ?? Compass;
@@ -82,11 +88,13 @@ export function OpeningButtons({ onSelect }: Props) {
               }
               if (btn.prompt) onSelect(btn.prompt);
             }}
-            className="flex items-center gap-2 rounded-lg border border-[#C4A265]/40 bg-[#FAF6F0] px-2.5 py-2 text-right transition hover:bg-[#C4A265]/15 hover:border-[#C4A265]"
+            className="group flex items-center gap-2.5 rounded-xl border border-[#C4A265]/40 bg-[#FAF6F0] px-3 py-2.5 text-right shadow-sm transition hover:bg-[#C4A265]/15 hover:border-[#C4A265] hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]/40"
             style={{ fontFamily: BOT_FONT }}
           >
-            <Icon className="h-3.5 w-3.5 shrink-0 text-[#8B6F47]" />
-            <span className="flex-1 text-[12px] font-medium text-[#1A2744]">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#C4A265]/20 transition group-hover:bg-[#C4A265]/30">
+              <Icon className="h-3.5 w-3.5 text-[#8B6F47]" />
+            </span>
+            <span className="flex-1 text-[12.5px] font-medium text-[#1A2744]">
               {btn.label}
             </span>
           </button>

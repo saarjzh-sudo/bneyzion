@@ -3,7 +3,7 @@ import {
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
   BarChart3, Bell, PanelTop, Ticket, HeartPulse, CreditCard,
   UserCheck, Upload, Download, Wallet, CalendarDays, Megaphone,
-  Sparkles, BookMarked, MessageCircle,
+  Sparkles, BookMarked, MessageCircle, Heart,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -55,6 +55,7 @@ const SECTIONS: NavSection[] = [
       { title: "נתוני Monday",   url: "/admin/budget",        icon: Wallet,      roles: ADMIN },
       { title: "מנויים",        url: "/admin/subscribers",   icon: UserCheck,   roles: ADMIN },
       { title: "סליקות",        url: "/admin/payments",      icon: CreditCard,  roles: ADMIN },
+      { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },
       { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
       { title: "משתמשים",       url: "/admin/users",         icon: Shield,      roles: ADMIN },
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },

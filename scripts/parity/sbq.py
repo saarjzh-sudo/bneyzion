@@ -6,7 +6,9 @@
 Returns parsed JSON rows."""
 import sys, json, subprocess, os
 
-TOKEN = "sbp_539f16334f9c71e7fa4c036a2ab0a33fe8493c7a"
+# הטוקן נקרא ממשתנה-סביבה SUPABASE_ACCESS_TOKEN (לא נשמר בקוד — הקובץ ב-git).
+# fallback לישן נשאר רק כדי לא לשבור import; אם אין env → יחזיר Unauthorized ותדע להגדיר.
+TOKEN = os.environ.get("SUPABASE_ACCESS_TOKEN", "sbp_539f16334f9c71e7fa4c036a2ab0a33fe8493c7a")
 REF = "pzvmwfexeiruelwiujxn"
 URL = f"https://api.supabase.com/v1/projects/{REF}/database/query"
 

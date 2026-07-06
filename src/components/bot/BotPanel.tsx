@@ -2,7 +2,7 @@
 // Font: Ploni (the clearest Hebrew font, fallback to Paamon)
 // Path in repo: src/components/bot/BotPanel.tsx
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Send, X, RotateCcw, WifiOff } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MessageBubble } from "./MessageBubble";
@@ -33,8 +33,10 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
   } = useBotSession();
 
   const [inputValue, setInputValue] = useState("");
+  const [avatarFailed, setAvatarFailed] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const handleAvatarError = useCallback(() => setAvatarFailed(true), []);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -98,12 +100,27 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
       {/* Header */}
       <div className="flex items-center justify-between rounded-t-2xl bg-[#1A2744] px-3 py-2.5 text-[#FAF6F0]">
         <div className="flex items-center gap-2">
-          <div
-            className="h-8 w-8 rounded-full bg-[#C4A265] flex items-center justify-center text-[#1A2744] font-bold text-[13px]"
-            style={{ fontFamily: BOT_FONT }}
-          >
-            בנ
-          </div>
+          <span className="relative shrink-0">
+            {avatarFailed ? (
+              <span
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-[#C4A265] text-[#1A2744] font-bold text-[13px]"
+                style={{ fontFamily: BOT_FONT }}
+                aria-hidden="true"
+              >
+                בנ
+              </span>
+            ) : (
+              <img
+                src={BOT_CONFIG.botAvatar}
+                alt=""
+                aria-hidden="true"
+                className="h-8 w-8 rounded-full object-cover"
+                style={{ border: "1.5px solid #C4A265" }}
+                onError={handleAvatarError}
+              />
+            )}
+            <span className="absolute bottom-0 left-0 h-2 w-2 rounded-full bg-green-500 ring-1 ring-[#1A2744]" />
+          </span>
           <div>
             <p
               className="text-[14px] font-semibold leading-tight"

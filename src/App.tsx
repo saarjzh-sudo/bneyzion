@@ -135,6 +135,9 @@ const AdminDorHaplaot = lazy(() => import("./pages/admin/DorHaplaot"));
 const AdminDailyContent = lazy(() => import("./pages/admin/DailyContent"));
 const AdminBenziConversations = lazy(() => import("./pages/admin/BenziConversations"));
 const Terms = lazy(() => import("./pages/Terms"));
+const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
+const AccessibilityStatement = lazy(() => import("./pages/AccessibilityStatement"));
+const Dedications = lazy(() => import("./pages/admin/Dedications"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesMilhamotHatanach = lazy(() => import("./pages/KenesMilhamotHatanach"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
@@ -377,7 +380,8 @@ const App = () => (
             <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />
             <Route path="/terms" element={<Suspense fallback={<LazyFallback />}><Terms /></Suspense>} />
-            <Route path="/privacy-policy" element={<Navigate to="/terms#privacy" replace />} />
+            <Route path="/privacy-policy" element={<Suspense fallback={<LazyFallback />}><PrivacyPolicy /></Suspense>} />
+            <Route path="/accessibility" element={<Suspense fallback={<LazyFallback />}><AccessibilityStatement /></Suspense>} />
             {/* ── Admin routes — role-gated (wave-2) ───────────────────── */}
             {/* Admin-only management routes */}
             <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
@@ -387,6 +391,7 @@ const App = () => (
             <Route path="/admin/products" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminProducts /></Suspense></ProtectedRoute>} />
             <Route path="/admin/orders" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminOrders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPayments /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/dedications" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Dedications /></Suspense></ProtectedRoute>} />
             <Route path="/admin/coupons" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Analytics /></Suspense></ProtectedRoute>} />
             <Route path="/admin/messages" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
