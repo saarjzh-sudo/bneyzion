@@ -62,7 +62,7 @@ const BASE_CARDS: LobbyCard[] = [
   {
     id: "parasha",
     title: "פרשת השבוע",
-    desc: "מאמר, שיעורי אודיו ווידאו על פרשת השבוע — כל שבוע מחדש",
+    desc: "מאמר, שיעורי אודיו ווידאו על פרשת השבוע, כל שבוע מחדש",
     href: "/parasha",
     image: "/family-bible/parasha-shavua.webp",
     badge: "מתעדכן שבועית",
@@ -70,7 +70,7 @@ const BASE_CARDS: LobbyCard[] = [
   {
     id: "chapter-weekly",
     title: "הפרק השבועי",
-    desc: "עם הרב יואב אוריאל — לומדים תנ״ך פרק אחרי פרק, כל השנה",
+    desc: "עם הרב יואב אוריאל, לומדים תנ״ך פרק אחרי פרק, כל השנה",
     href: "/chapter-weekly",
     image: "/family-bible/hero-compass.webp",
     badge: "התוכנית המרכזית",
@@ -78,7 +78,7 @@ const BASE_CARDS: LobbyCard[] = [
   {
     id: "daily-verse",
     title: "פסוק אחד ביום",
-    desc: "תנ״ך לחיים — פסוק קצר להתחיל איתו את היום, לכל הגילאים",
+    desc: "תנ״ך לחיים, פסוק קצר להתחיל איתו את היום, לכל הגילאים",
     href: "/daily-verse",
     image: "/family-bible/abstract-verse.webp",
   },
@@ -92,7 +92,7 @@ const BASE_CARDS: LobbyCard[] = [
   {
     id: "dor-haplaot",
     title: "דור הפלאות",
-    desc: "70 ניסי מלחמת חרבות ברזל — סיפורי הצלה והשגחה שלא ישכחו",
+    desc: "70 ניסי מלחמת חרבות ברזל, סיפורי הצלה והשגחה שלא ישכחו",
     href: "/dor-haplaot",
     image: "/family-bible/abstract-miracles.webp",
   },
@@ -169,7 +169,7 @@ function FamilyTanachHero() {
             margin: "0 auto",
           }}
         >
-          כמה דקות ביום, וכל בית הופך לבית תנ״ך. מגיל הגן ועד סבא וסבתא — מקום אחד
+          כמה דקות ביום, וכל בית הופך לבית תנ״ך. מגיל הגן ועד סבא וסבתא, מקום אחד
           שמביא את התנ״ך הביתה, כל יום מחדש.
         </p>
       </div>
@@ -183,7 +183,7 @@ function LobbyCardTile({ card, onClick }: { card: LobbyCard; onClick: () => void
       type="button"
       onClick={onClick}
       disabled={card.disabled}
-      aria-label={`${card.title} — ${card.desc}`}
+      aria-label={`${card.title}, ${card.desc}`}
       className="family-tanach-card"
       style={{
         position: "relative",
@@ -300,7 +300,7 @@ export default function FamilyTanach() {
   useSEO({
     title: "תנ״ך למשפחה",
     description:
-      "לימוד תנ״ך יומי ומשפחתי — פרשת השבוע, הפרק השבועי, פסוק יומי, וידאו יומי, דור הפלאות וחידות לשולחן השבת. מקום אחד לכל המשפחה.",
+      "לימוד תנ״ך יומי ומשפחתי, פרשת השבוע, הפרק השבועי, פסוק יומי, וידאו יומי, דור הפלאות וחידות לשולחן השבת. מקום אחד לכל המשפחה.",
   });
 
   const navigate = useNavigate();
