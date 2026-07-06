@@ -122,7 +122,10 @@ export default function DesignFooter() {
     <footer
       dir="rtl"
       style={{
-        background: gradients.warmDark,
+        // 7.7.2026 (סער): טקסטורת אבן-עתיקה עדינה (Gemini) מתחת ל-gradient הטורקיז השקוף,
+        // כדי לתת עומק לפוטר במקום גוון שטוח.
+        background:
+          "linear-gradient(180deg, rgba(32,79,73,0.90) 0%, rgba(18,48,44,0.95) 100%), url('/family-bible/deep-texture.jpg') center / cover",
         color: "#fff",
         padding: "3.5rem 1.5rem 1.5rem",
         marginTop: "auto",

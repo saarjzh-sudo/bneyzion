@@ -275,7 +275,7 @@ function StatsBar() {
     { num: "+1,300",  label: "סדרות לימוד"      },
   ];
   return (
-    <div dir="rtl" style={{ background: "linear-gradient(180deg, #204F49, #12302C)", padding: "1.25rem 1.5rem" }}>
+    <div dir="rtl" style={{ background: "linear-gradient(180deg, rgba(32,79,73,0.88) 0%, rgba(18,48,44,0.94) 100%), url('/family-bible/deep-texture.jpg') center / cover", padding: "1.25rem 1.5rem" }}>
       <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex",
                     justifyContent: "center", gap: "clamp(2rem, 6vw, 5rem)", flexWrap: "wrap" }}>
         {stats.map(({ num, label }) => (
