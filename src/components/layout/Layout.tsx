@@ -16,6 +16,7 @@ import { PromoProvider } from "@/components/promo";
 import { colors } from "@/lib/designTokens";
 import SkipToContent, { MAIN_CONTENT_ID } from "@/components/a11y/SkipToContent";
 import CookieConsent from "@/components/legal/CookieConsent";
+import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -85,6 +86,7 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
       `}</style>
 
       <CookieConsent />
+      <AccessibilityWidget />
     </div>
   );
 };

@@ -35,6 +35,7 @@ import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 // Order (RTL: first item = rightmost, closest to logo):
 // אגף המורים | פרשת השבוע | הקורסים שלי | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
 const NAV_ITEMS: { label: string; href: string }[] = [
+  { label: "תנ״ך למשפחה", href: "/family-tanach" },
   { label: "אגף המורים", href: "/teachers" },
   { label: "פרשת השבוע", href: "/parasha" },
   { label: "הקורסים שלי", href: "/design-my-courses" },

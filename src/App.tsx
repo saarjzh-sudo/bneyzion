@@ -138,6 +138,7 @@ const Terms = lazy(() => import("./pages/Terms"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const AccessibilityStatement = lazy(() => import("./pages/AccessibilityStatement"));
 const Dedications = lazy(() => import("./pages/admin/Dedications"));
+const FamilyTanach = lazy(() => import("./pages/FamilyTanach"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesMilhamotHatanach = lazy(() => import("./pages/KenesMilhamotHatanach"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
@@ -361,6 +362,7 @@ const App = () => (
             <Route path="/kenes-2026-06" element={<Suspense fallback={<LazyFallback />}><KenesMilhamotHatanach /></Suspense>} />
             <Route path="/kenes-archive" element={<Suspense fallback={<LazyFallback />}><KenesArchive /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
+            <Route path="/family-tanach" element={<Suspense fallback={<LazyFallback />}><FamilyTanach /></Suspense>} />
             <Route path="/daily-verse" element={<Suspense fallback={<LazyFallback />}><DailyVersePage /></Suspense>} />
             <Route path="/daily-video" element={<Suspense fallback={<LazyFallback />}><DailyVideoPage /></Suspense>} />
             {import.meta.env.DEV && (
