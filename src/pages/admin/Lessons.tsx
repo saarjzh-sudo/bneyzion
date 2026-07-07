@@ -13,6 +13,7 @@ import {
   CheckCircle, RotateCcw, Clock, MessageSquare,
 } from "lucide-react";
 import { useLessons, useCreateLesson, useUpdateLesson, useDeleteLesson } from "@/hooks/useLessons";
+import { RichTextEditor, type UploadedMedia } from "@/components/admin/RichTextEditor";
 import { useRabbis } from "@/hooks/useRabbis";
 import { useSeries } from "@/hooks/useSeries";
 import { useToast } from "@/hooks/use-toast";
@@ -135,12 +136,13 @@ export default function Lessons() {
   const [form, setForm] = useState({
     title: "", description: "", rabbi_id: "", series_id: "", video_url: "", audio_url: "",
     duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "",
-    thumbnail_url: "",
+    thumbnail_url: "", content: "", attachment_url: "",
   });
 
   const resetForm = () => {
     setForm({ title: "", description: "", rabbi_id: "", series_id: "", video_url: "", audio_url: "",
-      duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "", thumbnail_url: "" });
+      duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "",
+      thumbnail_url: "", content: "", attachment_url: "" });
     setEditingLesson(null);
   };
 
@@ -152,8 +154,16 @@ export default function Lessons() {
       duration: lesson.duration?.toString() || "", source_type: lesson.source_type, status: lesson.status,
       bible_book: lesson.bible_book || "", bible_chapter: lesson.bible_chapter?.toString() || "", bible_verse: lesson.bible_verse?.toString() || "",
       thumbnail_url: lesson.thumbnail_url || "",
+      content: lesson.content || "", attachment_url: lesson.attachment_url || "",
     });
     setDialogOpen(true);
+  };
+
+  // קובץ שנגרר לעורך התוכן → ממלא את שדה השיעור המתאים
+  const handleEditorMedia = (media: UploadedMedia) => {
+    if (media.kind === "audio") setForm(f => ({ ...f, audio_url: media.url }));
+    else if (media.kind === "video") setForm(f => ({ ...f, video_url: media.url }));
+    else setForm(f => ({ ...f, attachment_url: media.url }));
   };
 
   const generateImage = async () => {
@@ -186,6 +196,8 @@ export default function Lessons() {
       bible_chapter: form.bible_chapter ? parseInt(form.bible_chapter) : null,
       bible_verse: form.bible_verse ? parseInt(form.bible_verse) : null,
       thumbnail_url: form.thumbnail_url || null,
+      content: form.content || null,
+      attachment_url: form.attachment_url || null,
     };
     try {
       if (editingLesson) {
@@ -255,7 +267,7 @@ export default function Lessons() {
                 <Plus className="h-4 w-4" />שיעור חדש
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto" dir="rtl">
+            <DialogContent className="max-w-3xl max-h-[88vh] overflow-y-auto" dir="rtl">
               <DialogHeader>
                 <DialogTitle className="font-heading">{editingLesson ? "עריכת שיעור" : "שיעור חדש"}</DialogTitle>
               </DialogHeader>
@@ -268,6 +280,19 @@ export default function Lessons() {
                   <div className="col-span-2">
                     <Label>תיאור</Label>
                     <Textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={3} />
+                  </div>
+
+                  {/* content — עורך המאמר (רמה 11) */}
+                  <div className="col-span-2 space-y-1.5">
+                    <Label>תוכן המאמר</Label>
+                    <RichTextEditor
+                      value={form.content}
+                      onChange={html => setForm(f => ({ ...f, content: html }))}
+                      onMediaUploaded={handleEditorMedia}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      גרירת תמונה — משתבצת בגוף המאמר · גרירת שמע / וידאו / PDF — מתחברת אוטומטית לשדות השיעור
+                    </p>
                   </div>
 
                   {/* thumbnail */}
@@ -350,6 +375,7 @@ export default function Lessons() {
                   </div>
                   <div><Label>קישור וידאו</Label><Input value={form.video_url} onChange={e => setForm({ ...form, video_url: e.target.value })} /></div>
                   <div><Label>קישור אודיו</Label><Input value={form.audio_url} onChange={e => setForm({ ...form, audio_url: e.target.value })} /></div>
+                  <div className="col-span-2"><Label>קובץ מצורף (PDF / Word)</Label><Input value={form.attachment_url} onChange={e => setForm({ ...form, attachment_url: e.target.value })} dir="ltr" placeholder="https://... או גררו קובץ לעורך למעלה" /></div>
                   <div><Label>משך (שניות)</Label><Input type="number" value={form.duration} onChange={e => setForm({ ...form, duration: e.target.value })} /></div>
                   <div><Label>ספר בתנ"ך</Label><Input value={form.bible_book} onChange={e => setForm({ ...form, bible_book: e.target.value })} /></div>
                   <div><Label>פרק</Label><Input type="number" value={form.bible_chapter} onChange={e => setForm({ ...form, bible_chapter: e.target.value })} /></div>

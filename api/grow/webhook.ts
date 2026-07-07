@@ -387,6 +387,41 @@ async function grantAccessTag(params: {
     if (goRow?.id) growOrderId = goRow.id;
   } catch (_) { /* grow_orders table may not exist */ }
 
+  // ── שער ביטול (רמה 11): מנוי שסומן cancelled_at לא מוחיה אוטומטית ──
+  // חיוב חוזר תוך 45 יום מהביטול = "מומנטום" של הו"ק שטרם בוטלה בפועל ב-Grow —
+  // לא מעניקים גישה מחדש (זה היה הבאג שהחיה מנויים מבוטלים כל חודש).
+  // חיוב אחרי 45+ יום = הרשמה חדשה אמיתית → מנקים את הדגל ומעניקים כרגיל.
+  try {
+    const existingQuery = supabase
+      .from("user_access_tags")
+      .select("id, cancelled_at")
+      .eq("tag", tag);
+    const { data: existingRow } = userId
+      ? await existingQuery.eq("user_id", userId).maybeSingle()
+      : await existingQuery.eq("email", email.toLowerCase()).maybeSingle();
+
+    if (existingRow?.cancelled_at) {
+      const daysSinceCancel =
+        (Date.now() - new Date(existingRow.cancelled_at).getTime()) / 86400000;
+      if (daysSinceCancel <= 45) {
+        console.warn(
+          `[AccessTag] SKIP re-grant for ${email} — cancelled ${Math.round(daysSinceCancel)}d ago. ` +
+          `Charge arrived after cancellation (orderId=${orderId}) — verify the הו"ק was cancelled in Grow!`
+        );
+        await supabase
+          .from("user_access_tags")
+          .update({
+            cancel_note: `⚠️ התקבל חיוב Grow אחרי הביטול (orderId=${orderId}) — לוודא שההו"ק בוטלה בדשבורד Grow`,
+          })
+          .eq("id", existingRow.id);
+        return;
+      }
+      console.log(`[AccessTag] ${email} re-subscribed ${Math.round(daysSinceCancel)}d after cancellation — clearing flag`);
+    }
+  } catch (e) {
+    console.warn("[AccessTag] cancelled_at gate check failed (non-fatal):", e);
+  }
+
   const row = {
     user_id: userId,
     email: email.toLowerCase(),
@@ -395,6 +430,8 @@ async function grantAccessTag(params: {
     source: "grow_webhook",
     grow_order_id: growOrderId,
     pending_user_link: userId == null,
+    cancelled_at: null,
+    cancel_note: null,
     notes: `Auto-granted by Grow webhook. product=${productSlug} orderId=${orderId}`,
   };
 

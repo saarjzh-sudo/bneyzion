@@ -20,6 +20,8 @@ export interface Promo {
   cta_label: string | null;
   cta_url: string | null;
   image_url: string | null;
+  /** וידאו לפופאפ — מוצג media-first, גובר על image_url (שמשמש כ-poster) */
+  video_url: string | null;
   audience_tags: string[];
   priority: number;
   frequency: PromoFrequency;

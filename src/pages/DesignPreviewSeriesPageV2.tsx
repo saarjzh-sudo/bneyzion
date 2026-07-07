@@ -2033,7 +2033,7 @@ function LessonModal({
               }}
             >
               <ExternalLink style={{ width: 13, height: 13 }} />
-              פתח בעמוד מלא
+              פתח כעמוד נפרד — לשיתוף ולהדפסה
             </Link>
           </div>
 

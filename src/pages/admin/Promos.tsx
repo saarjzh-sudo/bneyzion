@@ -5,7 +5,7 @@
  * הצד הציבורי (PromoProvider) קורא רק is_active=true; המסך הזה מנהל הכל.
  * ⚠️ פופאפ מדוכא כברירת-מחדל בדפי מוצר ולמידה (suppress_on_product/learning).
  */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -17,10 +17,20 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Megaphone, Plus, Trash2, Pencil } from "lucide-react";
+import { Megaphone, Plus, Trash2, Pencil, UploadCloud, Loader2, Film, Image as ImageIcon } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+
+// ── העלאת מדיה לפופאפ (תמונה/וידאו) — אותו bucket כמו שיעורים ──────
+const uploadPromoMedia = async (file: File): Promise<string> => {
+  const ext = file.name.split(".").pop();
+  const path = `promos/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  const { error } = await supabase.storage.from("lesson-files").upload(path, file);
+  if (error) throw error;
+  const { data } = supabase.storage.from("lesson-files").getPublicUrl(path);
+  return data.publicUrl;
+};
 
 // הטבלה promos נוצרה אחרי חילול הטיפוסים — עוקפים את הסכמה המקומפלת.
 const promosTable = () => (supabase as any).from("promos");
@@ -33,6 +43,7 @@ interface PromoRow {
   cta_label: string | null;
   cta_url: string | null;
   image_url: string | null;
+  video_url: string | null;
   priority: number;
   frequency: "always" | "session" | "once" | "daily";
   dismissible: boolean;
@@ -71,6 +82,7 @@ interface PromoForm {
   cta_label: string;
   cta_url: string;
   image_url: string;
+  video_url: string;
   priority: string;
   frequency: PromoRow["frequency"];
   dismissible: boolean;
@@ -89,6 +101,7 @@ const emptyForm: PromoForm = {
   cta_label: "",
   cta_url: "",
   image_url: "",
+  video_url: "",
   priority: "0",
   frequency: "session",
   dismissible: true,
@@ -109,6 +122,7 @@ function rowToForm(row: PromoRow): PromoForm {
     cta_label: row.cta_label ?? "",
     cta_url: row.cta_url ?? "",
     image_url: row.image_url ?? "",
+    video_url: row.video_url ?? "",
     priority: String(row.priority ?? 0),
     frequency: row.frequency,
     dismissible: row.dismissible,
@@ -129,6 +143,7 @@ function formToPayload(form: PromoForm) {
     cta_label: form.cta_label.trim() || null,
     cta_url: form.cta_url.trim() || null,
     image_url: form.image_url.trim() || null,
+    video_url: form.video_url.trim() || null,
     priority: parseInt(form.priority) || 0,
     frequency: form.frequency,
     dismissible: form.dismissible,
@@ -139,6 +154,119 @@ function formToPayload(form: PromoForm) {
     ends_at: form.ends_at ? new Date(form.ends_at).toISOString() : null,
     is_active: form.is_active,
   };
+}
+
+/**
+ * PromoMediaField — גוררים תמונה או וידאו (או לוחצים לבחירה) → עולה ל-Storage
+ * ומתמלא image_url / video_url אוטומטית. וידאו + תמונה ביחד = התמונה משמשת poster.
+ */
+function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo }: {
+  imageUrl: string;
+  videoUrl: string;
+  onImage: (url: string) => void;
+  onVideo: (url: string) => void;
+}) {
+  const [uploading, setUploading] = useState(false);
+  const [dragging, setDragging] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleFiles = async (files: File[]) => {
+    setUploading(true);
+    try {
+      for (const file of files) {
+        if (file.type.startsWith("image/")) {
+          onImage(await uploadPromoMedia(file));
+          toast.success("התמונה הועלתה");
+        } else if (file.type.startsWith("video/")) {
+          onVideo(await uploadPromoMedia(file));
+          toast.success("הווידאו הועלה");
+        } else {
+          toast.error(`רק תמונה או וידאו — ${file.name}`);
+        }
+      }
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "ההעלאה נכשלה");
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label>מדיה לפופאפ — תמונה או וידאו</Label>
+      <div
+        role="button"
+        tabIndex={0}
+        onClick={() => inputRef.current?.click()}
+        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") inputRef.current?.click(); }}
+        onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+        onDragLeave={(e) => { e.preventDefault(); setDragging(false); }}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragging(false);
+          void handleFiles(Array.from(e.dataTransfer.files ?? []));
+        }}
+        className={`flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed px-4 py-6 cursor-pointer transition-colors ${
+          dragging ? "border-amber-500 bg-amber-50" : "border-border bg-muted/30 hover:bg-muted/60"
+        }`}
+      >
+        {uploading ? (
+          <>
+            <Loader2 className="h-6 w-6 animate-spin text-amber-600" aria-hidden="true" />
+            <span className="text-sm text-muted-foreground">מעלה…</span>
+          </>
+        ) : (
+          <>
+            <UploadCloud className="h-6 w-6 text-muted-foreground" aria-hidden="true" />
+            <span className="text-sm font-medium">
+              {dragging ? "שחררו כאן" : "גררו תמונה או וידאו — או לחצו לבחירה"}
+            </span>
+            <span className="text-xs text-muted-foreground">וידאו + תמונה ביחד: התמונה תוצג עד שהווידאו נטען</span>
+          </>
+        )}
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/*,video/*"
+          multiple
+          className="hidden"
+          onChange={(e) => {
+            void handleFiles(Array.from(e.target.files ?? []));
+            e.target.value = "";
+          }}
+        />
+      </div>
+
+      {(imageUrl || videoUrl) && (
+        <div className="grid grid-cols-2 gap-2">
+          {imageUrl && (
+            <div className="relative rounded-lg overflow-hidden border border-border">
+              <img src={imageUrl} alt="תמונת הפופאפ" className="w-full h-24 object-cover" />
+              <span className="absolute bottom-1 right-1 inline-flex items-center gap-1 rounded bg-black/60 px-1.5 py-0.5 text-[10px] text-white">
+                <ImageIcon className="h-3 w-3" aria-hidden="true" />תמונה
+              </span>
+              <button type="button" onClick={() => onImage("")} aria-label="הסרת התמונה"
+                className="absolute top-1 left-1 h-6 w-6 rounded-full bg-black/60 text-white text-xs leading-none hover:bg-destructive">
+                ✕
+              </button>
+            </div>
+          )}
+          {videoUrl && (
+            <div className="relative rounded-lg overflow-hidden border border-border bg-black">
+              <video src={videoUrl} muted playsInline className="w-full h-24 object-cover" />
+              <span className="absolute bottom-1 right-1 inline-flex items-center gap-1 rounded bg-black/60 px-1.5 py-0.5 text-[10px] text-white">
+                <Film className="h-3 w-3" aria-hidden="true" />וידאו
+              </span>
+              <button type="button" onClick={() => onVideo("")} aria-label="הסרת הווידאו"
+                className="absolute top-1 left-1 h-6 w-6 rounded-full bg-black/60 text-white text-xs leading-none hover:bg-destructive">
+                ✕
+              </button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
 
 function usePromosAdmin() {
@@ -371,10 +499,12 @@ export default function Promos() {
               </div>
 
               {form.type === "popup" && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="promo-image">תמונה (לפופאפ)</Label>
-                  <Input id="promo-image" dir="ltr" value={form.image_url} onChange={(e) => set("image_url", e.target.value)} placeholder="https://…" />
-                </div>
+                <PromoMediaField
+                  imageUrl={form.image_url}
+                  videoUrl={form.video_url}
+                  onImage={(url) => set("image_url", url)}
+                  onVideo={(url) => set("video_url", url)}
+                />
               )}
 
               <div className="grid grid-cols-2 gap-3">

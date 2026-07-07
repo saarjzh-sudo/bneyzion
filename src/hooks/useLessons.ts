@@ -5,6 +5,9 @@ export interface Lesson {
   id: string;
   title: string;
   description: string | null;
+  /** גוף המאמר — HTML (מוצג ב-LessonPage דרך sanitizeHtml, נערך ב-RichTextEditor) */
+  content: string | null;
+  attachment_url: string | null;
   rabbi_id: string | null;
   series_id: string | null;
   video_url: string | null;

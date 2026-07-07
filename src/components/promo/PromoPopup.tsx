@@ -108,13 +108,24 @@ const PromoPopup = ({ promo, onDismiss }: Props) => {
           fontFamily: promoFonts.body,
         }}
       >
-        {promo.image_url && (
+        {promo.video_url ? (
+          <video
+            src={promo.video_url}
+            poster={promo.image_url ?? undefined}
+            autoPlay
+            muted
+            loop
+            playsInline
+            controls
+            style={{ width: "100%", maxHeight: 300, objectFit: "cover", display: "block", background: "#000" }}
+          />
+        ) : promo.image_url ? (
           <img
             src={promo.image_url}
             alt=""
-            style={{ width: "100%", height: 180, objectFit: "cover", display: "block" }}
+            style={{ width: "100%", height: 220, objectFit: "cover", display: "block" }}
           />
-        )}
+        ) : null}
 
         {/* gold accent bar */}
         <div style={{ height: 4, background: pal.surface }} />

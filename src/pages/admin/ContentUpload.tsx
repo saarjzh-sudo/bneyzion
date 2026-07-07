@@ -37,6 +37,7 @@ import { useContentSidebar } from "@/hooks/useContentSidebar";
 import { ContentLocationPicker, type SelectedLocation } from "@/components/admin/ContentLocationPicker";
 import { MultiRabbiSelector } from "@/components/admin/MultiRabbiSelector";
 import { useLessonRabbis } from "@/hooks/useRabbiMultiSelect";
+import { RichTextEditor, type UploadedMedia } from "@/components/admin/RichTextEditor";
 
 // ─── design tokens ──────────────────────────────────────────────────
 const GOLD   = "#8B6F47";
@@ -91,6 +92,10 @@ interface FormState {
   coverFile:    File | null;
   videoUrl:     string;
   driveFolderUrl: string;
+  // תוכן המאמר (עורך רמה 11) + כתובות שהועלו דרך גרירה לעורך
+  content:       string;
+  audioUrl:      string;
+  attachmentUrl: string;
   // step 1 extra
   bibleBook:       string;
   bibleChapter:    string;
@@ -102,6 +107,7 @@ const EMPTY: FormState = {
   seriesId: "", newSeriesTitle: "", newSeriesParentId: "", topicId: "", audienceTags: ["general"],
   audioFile: null, videoFile: null, pdfFile: null, coverFile: null,
   videoUrl: "", driveFolderUrl: "",
+  content: "", audioUrl: "", attachmentUrl: "",
   bibleBook: "", bibleChapter: "", bookCategoryId: "",
 };
 
@@ -227,9 +233,10 @@ const ContentUpload = () => {
   const submitLesson = useMutation({
     mutationFn: async (intentStatus: "draft" | "pending_review" | "published") => {
       setUploading(true);
-      let audioUrl: string | null = null;
+      // כתובות שכבר הועלו דרך גרירה לעורך התוכן — קובץ שנבחר ב-dropzone גובר עליהן
+      let audioUrl: string | null = form.audioUrl || null;
       let videoUrl: string | null = form.videoUrl || null;
-      let attachmentUrl: string | null = null;
+      let attachmentUrl: string | null = form.attachmentUrl || null;
       let thumbnailUrl: string | null = null;
 
       if (form.audioFile)  audioUrl      = await uploadToStorage(form.audioFile,  "audio");
@@ -258,6 +265,7 @@ const ContentUpload = () => {
       const payload: Record<string, unknown> = {
         title:          form.title.trim(),
         description:    form.description || null,
+        content:        form.content || null,
         series_id:      effectiveSeriesId,
         rabbi_id:       form.rabbiId    || null,
         source_type:    form.sourceType,
@@ -856,6 +864,28 @@ const ContentUpload = () => {
                 onChange={f => set("pdfFile", f)}
                 icon={BookMarked}
               />
+
+              {/* ── תוכן המאמר — עורך רמה 11 ─────────────────────── */}
+              <div>
+                <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
+                  תוכן המאמר {form.sourceType === "text" ? <span style={{ color: "#DC2626" }}>*</span> : <span className="font-normal text-xs" style={{ color: TXT_M }}>(אופציונלי — יוצג בעמוד השיעור)</span>}
+                </label>
+                <RichTextEditor
+                  value={form.content}
+                  onChange={html => set("content", html)}
+                  onMediaUploaded={(media: UploadedMedia) => {
+                    if (media.kind === "audio") set("audioUrl", media.url);
+                    else if (media.kind === "video") set("videoUrl", media.url);
+                    else set("attachmentUrl", media.url);
+                  }}
+                />
+                {(form.audioUrl || form.attachmentUrl) && (
+                  <p className="text-xs mt-1.5" style={{ color: TXT_M }}>
+                    {form.audioUrl && "🎧 קובץ שמע חובר מהעורך · "}
+                    {form.attachmentUrl && "📎 קובץ מצורף חובר מהעורך"}
+                  </p>
+                )}
+              </div>
 
               {/* Feature 5 — AI cover generation */}
               <div>

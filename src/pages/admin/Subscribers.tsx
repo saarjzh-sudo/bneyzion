@@ -98,6 +98,8 @@ interface SubscriberRow {
   grow_order_id: string | null;
   pending_user_link: boolean | null;
   created_at: string;
+  cancelled_at: string | null;
+  cancel_note: string | null;
 }
 
 type StatusFilter = "all" | "active" | "linked" | "pending" | "expired";
@@ -173,6 +175,14 @@ function StatusBadge({ variant, children }: { variant: BadgeVariant; children: R
 }
 
 function rowBadge(row: SubscriberRow) {
+  if (row.cancelled_at) {
+    const manual = !!row.cancel_note && row.cancel_note.includes("ידני");
+    return (
+      <StatusBadge variant={manual ? "amber" : "red"}>
+        {manual ? "בוטל — נדרש ביטול ידני ב-Grow" : "בוטל"}
+      </StatusBadge>
+    );
+  }
   if (isExpired(row)) return <StatusBadge variant="red">פג תוקף</StatusBadge>;
   if (isPending(row)) return <StatusBadge variant="amber"><Clock size={10} />ממתין לקישור</StatusBadge>;
   if (isLinked(row))  return <StatusBadge variant="green"><Link2 size={10} />מקושר</StatusBadge>;
@@ -330,7 +340,7 @@ function useSubscribers() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("user_access_tags" as never)
-        .select("id, user_id, email, display_name, tag, valid_until, source, grow_order_id, pending_user_link, created_at")
+        .select("id, user_id, email, display_name, tag, valid_until, source, grow_order_id, pending_user_link, created_at, cancelled_at, cancel_note")
         .in("tag" as never, PROGRAM_TAGS as never)
         .order("created_at" as never, { ascending: false });
       if (error) throw error;
@@ -509,23 +519,68 @@ function SmooveImportDialog({ open, onClose }: { open: boolean; onClose: () => v
   );
 }
 
-/* ─── End subscription mutation ────────────────────────────────── */
+/* ─── End subscription — ביטול אמיתי ב-Grow (רמה 11) ─────────────
+   קורא ל-/api/grow/cancel-subscription שמבטל את ההו"ק דרך updateDirectDebit.
+   mode=grow_cancelled → ההו"ק בוטלה בפועל. mode=manual_needed → אין עסקת
+   Grow מקושרת (ייבוא Monday/Smoove) והשורה סומנה לביטול ידני בדשבורד. */
 function useEndSubscription() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase
-        .from("user_access_tags" as never)
-        .update({ valid_until: new Date().toISOString() } as never)
-        .eq("id" as never, id);
-      if (error) throw error;
+      const { data: sessionData } = await supabase.auth.getSession();
+      const jwt = sessionData?.session?.access_token;
+      if (!jwt) throw new Error("אין סשן פעיל — התחבר מחדש");
+
+      const res = await fetch("/api/grow/cancel-subscription", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({ tagId: id }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data?.error || `שגיאת שרת (${res.status})`);
+      return data as { ok: boolean; mode: "grow_cancelled" | "manual_needed"; reason?: string };
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       qc.invalidateQueries({ queryKey: ["admin-subscribers"] });
-      toast.success("המנוי הסתיים");
+      if (data.mode === "grow_cancelled") {
+        toast.success("ההו\"ק בוטלה ב-Grow והגישה נקטעה — הביטול מלא");
+      } else {
+        toast.warning(
+          "הגישה נקטעה, אבל לא נמצאה עסקת Grow לביטול אוטומטי — יש לבטל את ההו\"ק ידנית בדשבורד Grow",
+          { duration: 10000 },
+        );
+      }
     },
     onError: (err: Error) => {
       toast.error(`שגיאה: ${err.message}`);
+    },
+  });
+}
+
+/* ─── Grow — מספר האמת: משלמים ייחודיים שחויבו בפועל ב-40 הימים האחרונים ── */
+function useGrowActive() {
+  return useQuery({
+    queryKey: ["grow-active-payers"],
+    staleTime: 30 * 60 * 1000,
+    queryFn: async () => {
+      const cutoff = new Date(Date.now() - 40 * 86400000).toISOString();
+      const { data, error } = await supabase
+        .from("orders" as never)
+        .select("customer_email, customer_phone" as never)
+        .eq("product" as never, "weekly-chapter-subscription")
+        .eq("payment_status" as never, "completed")
+        .gte("charge_date" as never, cutoff)
+        .limit(3000);
+      if (error) throw error;
+      const payers = new Set<string>();
+      for (const r of (data ?? []) as Array<{ customer_email: string | null; customer_phone: string | null }>) {
+        const key = (r.customer_email || "").trim().toLowerCase() || (r.customer_phone || "").trim();
+        if (key) payers.add(key);
+      }
+      return payers.size;
     },
   });
 }
@@ -554,18 +609,20 @@ export default function Subscribers() {
     (r) => new Date(r.created_at).getTime() >= Date.now() - 30 * 86400000,
   ).length;
 
-  /* ── Source reconciliation: Monday vs DB vs Smoove ── */
+  /* ── Source reconciliation: Grow (אמת) vs Monday vs DB ── */
   const qc = useQueryClient();
   const { data: monday } = useMondayInsights();
+  const { data: growActive } = useGrowActive();
   const mondayActive = monday?.current?.active ?? null;
   const smooveOrigin = rows.filter((r) => (r.source ?? "").startsWith("smoove") && isActive(r)).length;
-  const growOrigin   = rows.filter((r) => (r.source ?? "").startsWith("grow") && isActive(r)).length;
   const adminOrigin  = rows.filter((r) => (r.source ?? "") === "admin" && isActive(r)).length;
   const mondayGap = mondayActive != null ? mondayActive - kpiActive : null;
+  const growGap = growActive != null ? kpiActive - growActive : null;
   const refreshAll = () => {
     qc.invalidateQueries({ queryKey: ["admin-subscribers"] });
     qc.invalidateQueries({ queryKey: ["monday-insights"] });
-    toast.success("הנתונים רועננו מ-DB ו-Monday");
+    qc.invalidateQueries({ queryKey: ["grow-active-payers"] });
+    toast.success("הנתונים רועננו מ-Grow, Monday ו-DB");
   };
 
   /* Filtered table */
@@ -761,10 +818,10 @@ export default function Subscribers() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
             {[
-              { label: "Monday (רשמי)", value: mondayActive ?? "—", note: monday ? "לוח יואב" : "edge לא פרוס", accent: C.navy },
-              { label: "DB (אתר)", value: isLoading ? "…" : kpiActive, note: "user_access_tags", accent: C.gold },
-              { label: "מקור Smoove", value: isLoading ? "…" : smooveOrigin, note: "ייבוא/סנכרון", accent: C.green },
-              { label: "מקור Grow", value: isLoading ? "…" : growOrigin, note: "תשלום ישיר", accent: C.blue },
+              { label: "Grow — מקור האמת 💳", value: growActive ?? "…", note: "חויבו בפועל ב-40 הימים האחרונים", accent: C.green },
+              { label: "Monday (לוח יואב)", value: mondayActive ?? "—", note: monday ? "מתוחזק ידנית" : "edge לא פרוס", accent: C.navy },
+              { label: "DB (גישה באתר)", value: isLoading ? "…" : kpiActive, note: "user_access_tags", accent: C.gold },
+              { label: "מקור Smoove", value: isLoading ? "…" : smooveOrigin, note: "ייבוא/סנכרון", accent: C.blue },
               { label: "מקור אדמין", value: isLoading ? "…" : adminOrigin, note: "הוזן ידנית", accent: C.amber },
             ].map((s) => (
               <div key={s.label} style={{ background: C.parchment, borderRadius: 12, padding: "12px 14px", borderInlineStart: `3px solid ${s.accent}` }}>
@@ -775,13 +832,20 @@ export default function Subscribers() {
             ))}
           </div>
 
+          <div style={{ fontSize: 12, color: C.textSubtle, lineHeight: 1.6 }}>
+            <strong style={{ color: C.textMuted }}>מי מספר האמת?</strong> Grow — מי שכרטיסו חויב בפועל.
+            Monday הוא רישום ידני של יואב, וה-DB סופר גישה באתר (סנכרון-Smoove מוסיף ולא מסיים — לכן הוא נוטה למעלה).
+          </div>
+
           {mondayGap != null && Math.abs(mondayGap) >= 5 && (
             <div style={{ display: "flex", alignItems: "flex-start", gap: 10, background: C.amberBg, border: `1px solid ${C.goldShimmer}`, borderRadius: 10, padding: "10px 14px" }}>
               <AlertTriangle size={18} color={C.amber} style={{ flexShrink: 0, marginTop: 1 }} />
               <span style={{ fontSize: 13, color: C.amber, lineHeight: 1.5 }}>
-                פער של <strong>{Math.abs(mondayGap)}</strong> בין Monday ({mondayActive}) ל-DB ({kpiActive}).
-                Monday מתוחזק ידנית ע"י יואב; ה-DB משקף את סנכרון-Smoove (מנויים שפג-תוקפם סומנו soft-delete).
-                החלט מי המספר הרשמי — או השווה מול רשימת Smoove (288) ליישוב.
+                פערים: Grow {growActive ?? "—"} · Monday {mondayActive} · DB {kpiActive}
+                {growGap != null && growGap > 0 && (
+                  <> — כ-<strong>{growGap}</strong> רשומות גישה פעילות בלי חיוב Grow ב-40 הימים האחרונים (שאריות ייבוא / הו"ק שנכשלה / מנויי חסד)</>
+                )}
+                . המספר העסקי הרשמי = Grow.
               </span>
             </div>
           )}
@@ -904,6 +968,11 @@ export default function Subscribers() {
                             Grow: {row.grow_order_id}
                           </div>
                         )}
+                        {row.cancel_note && (
+                          <div style={{ fontSize: 10, color: C.amber, marginTop: 2, maxWidth: 260 }}>
+                            {row.cancel_note}
+                          </div>
+                        )}
                         {row.tag !== WEEKLY_TAG && (
                           <div style={{ fontSize: 10, color: C.gold, marginTop: 2 }}>
                             {programLabel(row.tag)}
@@ -970,8 +1039,13 @@ export default function Subscribers() {
           <DialogHeader>
             <DialogTitle style={{ color: C.red }}>סיום מנוי</DialogTitle>
           </DialogHeader>
-          <p style={{ fontSize: 14, color: C.text }}>
-            האם לסיים את המנוי עכשיו? ה-valid_until יוגדר לרגע זה ולמשתמש לא תהיה גישה מיידית.
+          <p style={{ fontSize: 14, color: C.text, lineHeight: 1.6 }}>
+            הפעולה תנסה <strong>לבטל את הוראת-הקבע ב-Grow</strong> (הפסקת החיוב החודשי)
+            ותקטע מיידית את הגישה באתר.
+          </p>
+          <p style={{ fontSize: 12, color: C.textMuted, lineHeight: 1.6 }}>
+            אם למנוי אין עסקת Grow מקושרת (ייבוא מ-Monday/Smoove) — הגישה תיקטע,
+            השורה תסומן "נדרש ביטול ידני", ותצטרכו לבטל את ההו"ק בדשבורד Grow.
           </p>
           <DialogFooter>
             <Button variant="outline" size="sm" onClick={() => setEndConfirm(null)}>
