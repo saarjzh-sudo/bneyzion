@@ -8158,3 +8158,46 @@ tag: `migration8.5-baseline-2026-07-05` על `finish/integration`. **הרצפה 
 חיווט-תשלום-הקדשות (יהושע) · pixel-opt-out · 127-שארית · מסמך-דרייב לפסוק-יומי (יואב+דניאל) ·
 חיווט חדשות-תנכיות ב... (טור-בהמתנה: 3 ישנים בלי תמונה) · מיון-צפיות ימלא עם מעקב-views ·
 2 phantom-רבניות (חגית אלון/עידית איצקוביץ') להכרעת-יואב.
+
+---
+
+## 🏗️ רמה 11 — סבב ראשון (7.7.2026 לילה, commit `3db44878`)
+
+מענה להקלטות הרב יואב (דרך אליעזר) + הנחיות סער. **בקוד, ממתין ל-deploy באישור סער.**
+
+### מה נבנה
+1. **עורך תוכן לשיעורים** — `src/components/admin/RichTextEditor.tsx` (TipTap v3, HTML נטיבי,
+   RTL, כותרות H2-H4/מודגש/רשימות/ציטוט/קישור/תמונה). משולב בדיאלוג עריכה (`admin/Lessons.tsx`,
+   שדות content+attachment_url חדשים בטופס) ובאשף ההעלאה (`admin/ContentUpload.tsx`, שלב 3).
+   **גרירת קבצים לעורך**: תמונה→משתבצת במאמר (bucket `lesson-files/content-images/`);
+   שמע/וידאו/PDF→עולה ל-Storage וממלא את שדה השיעור המתאים (onMediaUploaded).
+   השראה: RichTextEditor של אבולעפיה (abulafia-institute) — אבל HTML במקום Markdown-המרות-מאבדות,
+   ועם drag&drop שאין שם.
+2. **פופאפ מדיה** — עמודת `promos.video_url` (DDL הורץ) + `PromoMediaField` ב-`admin/Promos.tsx`
+   (גרירת תמונה/וידאו → `lesson-files/promos/`) + `PromoPopup` מציג וידאו media-first
+   (autoplay muted loop, image=poster).
+3. **ביטול מנוי אמיתי ב-Grow** — `api/grow/cancel-subscription.ts`: אימות אדמין ב-JWT →
+   איתור transactionId/transactionToken/asmachta (grow_orders דרך grow_order_id, או orders לפי
+   אימייל) → `POST {GROW_API_URL}/updateDirectDebit` עם `changeStatus=2`. אין מזהים → סימון
+   "נדרש ביטול ידני" (כן, לא מעמיד פנים). עמודות חדשות: `user_access_tags.cancelled_at/cancel_note`.
+4. **שער webhook** — `grantAccessTag` מדלג על re-grant אם `cancelled_at` בתוך 45 יום (זה היה
+   הבאג שהחיה מנוי מבוטל כל חודש); אחרי 45 יום = הרשמה חדשה, הדגל מתנקה.
+5. **פאנל פיוס מנויים** — `admin/Subscribers.tsx`: **Grow=מקור האמת** (useGrowActive: משלמים
+   ייחודיים של weekly-chapter-subscription ב-40 יום; ב-7.7: Grow ~240 · Monday 281 · DB 300).
+   "סיים מנוי" קורא ל-endpoint החדש; badge "בוטל"/"נדרש ביטול ידני".
+6. **"פתח בעמוד מלא" → "פתח כעמוד נפרד — לשיתוף ולהדפסה"** (DesignPreviewSeriesPageV2) —
+   הבלבול של יואב: התוכן המלא מוצג inline והכפתור רמז שהוא קטוע.
+
+### ממצאי חקירה (חשוב לשיחה עם יואב)
+- **"מאמרים בלי הדגשות"**: 8,096 שיעורי-טקסט מהותיים → 2,963 בלי כותרות, 1,459 בלי שום הדגשה.
+  **אודיט 40 מול האתר הישן החי: 38/40 חלקים גם שם** (ובקרה: 6/6 עם-עיצוב נשמרו 1:1 במיגרציה).
+  כלומר לא אובדן-מיגרציה — כך נכתבו. העשרה גורפת = החלטת-תוכן של יואב (LLM מוסיף הדגשות בלבד,
+  בלי לגעת במילים, snapshot+אצוות). דוח: `scripts/parity/reports/bare-content-audit-20260707.json`.
+- **Grow updateDirectDebit** — docs: grow-il.readme.io, אותם userId env-ים של create-payment.
+  ביטול לא מחזיר כסף על חיובים שעברו (refundTransaction נפרד). לאמת בדשבורד אחרי ביטול.
+
+### פתוח לסבב הבא של רמה 11
+- Deploy לפרודקשן (אישור סער) + טיפוסי supabase regen (promos/user_access_tags עדיין `as any`).
+- החלטת יואב על העשרת-הדגשות ל-1,459 השיעורים החלקים.
+- verify חי של עורך-התוכן והביטול באדמין (דורש לוגין אדמין — לא ניתן ב-headless).
+- RLS: לוודא ש-anon לא קורא cancelled_at/cancel_note רגישים (admin בלבד קורא orders — קיים).
