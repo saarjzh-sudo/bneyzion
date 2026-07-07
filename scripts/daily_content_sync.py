@@ -177,6 +177,14 @@ for m in sorted(msgs, key=lambda x: x.get("timestamp", 0)):
             cleaned.append(ln)
         content = to_html("\n".join(cleaned).strip())
         desc = re.sub(r"<[^>]+>", "", content.split("</p>")[0])[:300]
+        # תמונת המסר מהוואטסאפ → ראש הטור (סער 7.7). סלחני למדיה פגת-תוקף.
+        thumb = None
+        if m.get("downloadUrl") and not DRY:
+            try:
+                blob = http(m["downloadUrl"], raw=True)
+                thumb = storage_upload(f"tanach-news/{date}.jpg", blob, "image/jpeg")
+            except Exception as e:
+                log(f"⚠️ חדשות {date}: תמונה לא זמינה ({str(e)[:60]}) — נשמר בלי תמונה")
         if DRY:
             log(f"[dry] חדשות: {title}")
         else:
@@ -184,9 +192,10 @@ for m in sorted(msgs, key=lambda x: x.get("timestamp", 0)):
                 "title": title, "description": desc, "content": content,
                 "rabbi_id": YOAV, "series_id": NEWS_SERIES, "status": "published",
                 "source_type": "article", "audience_tags": ["general"],
+                "thumbnail_url": thumb,
                 "created_at": ts.isoformat(), "published_at": ts.isoformat(),
             }, prefer="return=minimal")
-            log(f"✅ חדשות תנ\"כיות: {title}")
+            log(f"✅ חדשות תנ\"כיות: {title}" + (" (+תמונה)" if thumb else ""))
         added["news"] += 1
         continue
 

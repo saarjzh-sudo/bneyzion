@@ -35,6 +35,7 @@ interface NewsItem {
   description: string | null;
   content: string | null;
   published_at: string | null;
+  thumbnail_url: string | null;
 }
 
 function useTanachNews() {
@@ -44,7 +45,7 @@ function useTanachNews() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("id, title, description, content, published_at")
+        .select("id, title, description, content, published_at, thumbnail_url")
         .eq("series_id", NEWS_SERIES_ID)
         .eq("status", "published")
         .order("published_at", { ascending: false });
@@ -66,7 +67,7 @@ export default function TanachNewsPage() {
     <div style={{ minHeight: "100vh", background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
       <DesignHeader />
 
-      {/* Hero */}
+      {/* Hero — נהר הירדן בצבעי-מים (Gemini, 7.7.2026) בשקיפות מתחת לגרדיאנט */}
       <section
         dir="rtl"
         style={{
@@ -77,6 +78,25 @@ export default function TanachNewsPage() {
           overflow: "hidden",
         }}
       >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0,
+            backgroundImage: "url('/images/tanach-news-hero.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center 62%",
+            opacity: 0.38,
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: "absolute", inset: 0,
+            background: `linear-gradient(180deg, rgba(26,39,68,0.55) 0%, rgba(26,39,68,0.25) 55%, rgba(26,39,68,0.75) 100%)`,
+            pointerEvents: "none",
+          }}
+        />
         <div
           aria-hidden
           style={{
@@ -150,6 +170,23 @@ export default function TanachNewsPage() {
                 >
                   📰 החדשות של היום
                 </div>
+                {/* תמונת המסר מהוואטסאפ — בראש הטור (סער 7.7.2026) */}
+                {latest.thumbnail_url && (
+                  <div
+                    style={{
+                      borderRadius: "1rem", overflow: "hidden",
+                      marginBottom: "1.25rem", maxHeight: 340,
+                      border: "1px solid rgba(139,111,71,0.15)",
+                      position: "relative",
+                    }}
+                  >
+                    <img
+                      src={latest.thumbnail_url}
+                      alt={latest.title}
+                      style={{ width: "100%", height: "100%", maxHeight: 340, objectFit: "cover", objectPosition: "center 30%", display: "block" }}
+                    />
+                  </div>
+                )}
                 <h2
                   style={{
                     fontFamily: "Kedem, Frank Ruhl Libre, serif",
@@ -233,11 +270,25 @@ export default function TanachNewsPage() {
                         border: "1px solid rgba(139,111,71,0.1)",
                         borderRadius: "1.25rem",
                         boxShadow: "0 2px 12px rgba(45,31,14,0.05)",
-                        padding: "1.25rem 1.35rem",
+                        padding: 0,
+                        overflow: "hidden",
                         textDecoration: "none",
                         transition: "all 0.25s ease",
                       }}
                     >
+                      {n.thumbnail_url && (
+                        <div style={{ height: 150, overflow: "hidden", position: "relative" }}>
+                          <img
+                            src={n.thumbnail_url}
+                            alt=""
+                            aria-hidden
+                            loading="lazy"
+                            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
+                          />
+                          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(45,31,14,0.35) 0%, transparent 55%)" }} />
+                        </div>
+                      )}
+                      <div style={{ padding: "1.1rem 1.35rem 1.25rem" }}>
                       {n.published_at && (
                         <div style={{ fontSize: "0.72rem", fontWeight: 700, color: GOLD_DARK, letterSpacing: "0.04em", marginBottom: "0.45rem" }}>
                           {hebrewDateLabel(n.published_at.slice(0, 10))}
@@ -265,6 +316,7 @@ export default function TanachNewsPage() {
                       )}
                       <div style={{ fontSize: "0.78rem", color: GOLD_DARK, fontWeight: 700, marginTop: "0.7rem" }}>
                         לקריאת הטור ←
+                      </div>
                       </div>
                     </Link>
                   ))}

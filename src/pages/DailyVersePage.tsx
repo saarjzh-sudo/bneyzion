@@ -42,6 +42,33 @@ function formatHebrewDate(dateStr: string): string {
   return hebrewDateLabel(dateStr);
 }
 
+/**
+ * formatCommentary — הפירוש כ-HTML מסודר (סער 7.7.2026, "כמו בחדשות התנ״ך"):
+ * חותך את הפניות-הוואטסאפ/דור-הפלאות מהטקסט (יש כפתורים), מוריד שורות-קישור,
+ * וממיר *הדגשות* ל-<strong> מוזהב. עיצוב-תצוגה בלבד — ה-DB לא משתנה.
+ */
+function formatCommentary(text: string): string {
+  let t = text;
+  for (const marker of ["להצטרפות לקבוצ", "לקריאת 'דור", "לקריאת ׳דור", "לקריאת ׳דור", "לקריאת \"דור"]) {
+    const i = t.indexOf(marker);
+    if (i > -1) t = t.slice(0, i);
+  }
+  t = t
+    .split("\n")
+    .filter((ln) => !/^\s*https?:\/\/\S+\s*$/.test(ln))
+    .join("\n")
+    .trim();
+  const esc = t.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // הדגשה יכולה להימתח על-פני ירידת-שורה (הודעות וואטסאפ); non-greedy כדי לא לבלוע
+  // פסקאות. כוכבית בודדת שנותרה (זוג לא-סגור) מוסרת — אסור שתופיע בתצוגה.
+  const bolded = esc.replace(/\*([^*]+?)\*/g, "<strong>$1</strong>").replace(/\*/g, "");
+  return bolded
+    .split(/\n\s*\n/)
+    .filter((p) => p.trim())
+    .map((p) => `<p>${p.trim().replace(/\n/g, "<br/>")}</p>`)
+    .join("");
+}
+
 function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void }) {
   return (
     <div
@@ -117,17 +144,19 @@ function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void
             </div>
           )}
 
-          {/* Commentary */}
+          {/* Commentary — HTML מסודר עם הדגשות מוזהבות (סער 7.7.2026) */}
           {verse.commentary && (
-            <div style={{
-              fontFamily: "Ploni, sans-serif", fontSize: "0.93rem",
-              color: TEXT_DARK, lineHeight: 1.75,
-              background: `rgba(196,162,101,0.07)`,
-              borderRadius: "0.85rem",
-              padding: "1rem 1.1rem",
-            }}>
-              {verse.commentary}
-            </div>
+            <div
+              className="verse-commentary"
+              style={{
+                fontFamily: "Ploni, sans-serif", fontSize: "0.93rem",
+                color: TEXT_DARK, lineHeight: 1.8,
+                background: `rgba(196,162,101,0.07)`,
+                borderRadius: "0.85rem",
+                padding: "1rem 1.1rem",
+              }}
+              dangerouslySetInnerHTML={{ __html: formatCommentary(verse.commentary) }}
+            />
           )}
 
           {/* Author row in modal */}
@@ -322,14 +351,16 @@ export default function DailyVersePage() {
                   </div>
                 )}
                 {verses[0].commentary && (
-                  <p style={{
-                    fontFamily: "Ploni, sans-serif", fontSize: "0.95rem", color: TEXT_MUTED,
-                    lineHeight: 1.75, margin: 0,
-                    display: "-webkit-box" as any, WebkitLineClamp: 3, WebkitBoxOrient: "vertical" as any,
-                    overflow: "hidden",
-                  }}>
-                    {verses[0].commentary}
-                  </p>
+                  <div
+                    className="verse-commentary"
+                    style={{
+                      fontFamily: "Ploni, sans-serif", fontSize: "0.95rem", color: TEXT_MUTED,
+                      lineHeight: 1.8,
+                      display: "-webkit-box" as any, WebkitLineClamp: 4, WebkitBoxOrient: "vertical" as any,
+                      overflow: "hidden",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: formatCommentary(verses[0].commentary) }}
+                  />
                 )}
                 <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem", color: GOLD_DARK, fontWeight: 700, marginTop: "0.85rem" }}>
                   לפירוש המלא ←
@@ -346,6 +377,9 @@ export default function DailyVersePage() {
               @media (max-width: 600px) {
                 .verse-grid { grid-template-columns: 1fr; }
               }
+              .verse-commentary p { margin: 0 0 0.8em; }
+              .verse-commentary p:last-child { margin-bottom: 0; }
+              .verse-commentary strong { color: ${GOLD_DARK}; font-weight: 700; }
             `}</style>
             {grouped.map(group => (
               <div key={group.label} style={{ marginBottom: "3rem" }}>
