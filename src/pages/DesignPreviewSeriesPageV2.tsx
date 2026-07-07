@@ -131,6 +131,12 @@ function WhatsAppIcon() {
   );
 }
 
+// 7.7.2026 (סער): סדרות עם עטיפת-אלבום (פודקאסטים) — ההירו מציג את העטיפה חדה
+// כריבוע ליד הכותרת, והרקע הוא זוהר מטושטש שלה (עטיפת ספוטיפיי הרשמית).
+const ALBUM_ART_SERIES = new Set([
+  "bc1d97b9-e0a5-4b88-8169-5705120bc20c", // ילדי התנ״ך — סיפורי התנ״ך לילדים
+]);
+
 // ─── Compact Hero ─────────────────────────────────────────────────────────
 /**
  * Compact hero — no family badge, no "start series" button.
@@ -148,6 +154,7 @@ function CompactSeriesHero({
   totalDuration,
   imageUrl,
   distinctRabbis,
+  albumArt = false,
 }: {
   series: any;
   totalLessons: number;
@@ -156,6 +163,8 @@ function CompactSeriesHero({
   imageUrl: string;
   /** Distinct rabbi names from loaded lessons (ג1 fix — shows full teacher attribution) */
   distinctRabbis: string[];
+  /** 7.7.2026 (סער): מצב פודקאסט — עטיפה ריבועית כאלבום ליד הכותרת במקום רקע מרוח */
+  albumArt?: boolean;
 }) {
   const [actionsVisible, setActionsVisible] = useState(false);
 
@@ -181,8 +190,11 @@ function CompactSeriesHero({
           backgroundImage: `url(${imageUrl})`,
           backgroundSize: "cover",
           backgroundPosition: "center 35%",
-          opacity: 0.55,
-          filter: "brightness(0.9) saturate(0.95)",
+          // albumArt: עטיפה ריבועית נמרחת רע כרקע — במקום זה זוהר-אווירה מטושטש,
+          // והעטיפה עצמה מוצגת חדה כאלבום ליד הכותרת.
+          opacity: albumArt ? 0.3 : 0.55,
+          filter: albumArt ? "blur(28px) brightness(0.85) saturate(1.1)" : "brightness(0.9) saturate(0.95)",
+          transform: albumArt ? "scale(1.15)" : undefined,
         }}
       />
 
@@ -212,16 +224,35 @@ function CompactSeriesHero({
         style={{
           position: "relative",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: albumArt ? "row" : "column",
+          alignItems: albumArt ? "center" : undefined,
+          gap: albumArt ? "1.75rem" : undefined,
           justifyContent: "flex-start",
           /* padding-top: 2.75rem — slightly more breathing room below the header.
              Bottom: 1.75rem — comfortable gap after the meta row.
              Saar feedback: "2rem top was too tight, expand a bit". */
-          padding: "2.75rem 2rem 1.75rem",
+          padding: albumArt ? "2.75rem 2rem 2.25rem" : "2.75rem 2rem 1.75rem",
           maxWidth: 1100,
           margin: "0 auto",
         }}
       >
+        {albumArt && (
+          <img
+            src={imageUrl}
+            alt={series.title}
+            className="series-album-art"
+            style={{
+              width: "clamp(110px, 18vw, 170px)",
+              height: "clamp(110px, 18vw, 170px)",
+              borderRadius: 18,
+              objectFit: "cover",
+              flexShrink: 0,
+              border: "2px solid rgba(232,213,160,0.55)",
+              boxShadow: "0 18px 48px rgba(0,0,0,0.45)",
+            }}
+          />
+        )}
+        <div style={{ flex: 1, minWidth: 0, display: "flex", flexDirection: "column" }}>
         {/* Eyebrow — marks this as a single LEARNING PATH (mirrors "אוסף" on category pages, T10) */}
         <div
           style={{
@@ -368,6 +399,7 @@ function CompactSeriesHero({
               <span>{totalDuration} סה"כ</span>
             </>
           )}
+        </div>
         </div>
       </div>
     </div>
@@ -2297,6 +2329,7 @@ export default function DesignPreviewSeriesPageV2() {
           totalDuration={totalDuration}
           imageUrl={heroImageUrl}
           distinctRabbis={distinctRabbis}
+          albumArt={ALBUM_ART_SERIES.has(series.id)}
         />
 
         {/* 2. Sub-series group with show-more + optional grouping */}

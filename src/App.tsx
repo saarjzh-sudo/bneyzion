@@ -60,6 +60,7 @@ const Checkout = lazy(() => import("./pages/Checkout"));
 const KnesPage = lazy(() => import("./pages/KnesPage"));
 const DorHaplaot = lazy(() => import("./pages/DorHaplaot"));
 const DailyVersePage = lazy(() => import("./pages/DailyVersePage"));
+const TanachNewsPage = lazy(() => import("./pages/TanachNewsPage"));
 const DevPages = lazy(() => import("./pages/DevPages"));
 const BibleBookPage = lazy(() => import("./pages/BibleBookPage"));
 // §12 / tree CA1: /bible index — "ניווט באתר לפי ספר ופרק" sidebar entry
@@ -365,6 +366,7 @@ const App = () => (
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
             <Route path="/family-tanach" element={<Suspense fallback={<LazyFallback />}><FamilyTanach /></Suspense>} />
             <Route path="/daily-verse" element={<Suspense fallback={<LazyFallback />}><DailyVersePage /></Suspense>} />
+            <Route path="/tanach-news" element={<Suspense fallback={<LazyFallback />}><TanachNewsPage /></Suspense>} />
             {import.meta.env.DEV && (
               <Route path="/dev-pages" element={<Suspense fallback={<LazyFallback />}><DevPages /></Suspense>} />
             )}

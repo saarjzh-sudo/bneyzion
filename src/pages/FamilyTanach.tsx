@@ -33,170 +33,7 @@ const RIDDLES_SERIES_ID = "c852edd8-d959-4c8d-bf7e-17b5881275fa";
 // 7.7.2026 — הפינות היומיות (נקלטו מקבוצות "בכוח התנ״ך ננצח", רב יואב):
 const TANACH_NEWS_SERIES_ID = "5d111b52-b421-4150-adfd-df256950117c";
 const KIDS_PODCAST_SERIES_ID = "bc1d97b9-e0a5-4b88-8169-5705120bc20c";
-
-// ── "התוכן היומי" — הרב יואב 7.7.2026: "בהתחלת העמוד יהיה במודגש התוכן היומי
-//    של אותו היום", מעל מאגר הכרטיסים. שלושה מקורות: פסוק יומי (daily_verses),
-//    הטור האחרון של חדשות תנכיות, והפרק האחרון של פודקאסט הילדים. ────────────
-interface DailyTodayItem {
-  kind: string;
-  title: string;
-  href: string;
-  isToday: boolean;
-}
-
-function useDailyToday() {
-  return useQuery<DailyTodayItem[]>({
-    queryKey: ["family-daily-today"],
-    staleTime: 5 * 60 * 1000,
-    queryFn: async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const items: DailyTodayItem[] = [];
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: verse } = await (supabase as any)
-        .from("daily_verses")
-        .select("id, date, verse_source")
-        .order("date", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (verse) {
-        items.push({
-          kind: "הפסוק היומי",
-          title: verse.verse_source || "פסוק אחד ביום",
-          href: "/daily-verse",
-          isToday: verse.date === today,
-        });
-      }
-
-      const { data: news } = await supabase
-        .from("lessons")
-        .select("id, title, published_at")
-        .eq("series_id", TANACH_NEWS_SERIES_ID)
-        .eq("status", "published")
-        .order("published_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (news) {
-        items.push({
-          kind: "חדשות תנכיות",
-          title: news.title,
-          href: `/lessons/${news.id}`,
-          isToday: (news.published_at || "").slice(0, 10) === today,
-        });
-      }
-
-      const { data: ep } = await supabase
-        .from("lessons")
-        .select("id, title, published_at")
-        .eq("series_id", KIDS_PODCAST_SERIES_ID)
-        .eq("status", "published")
-        .order("published_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (ep) {
-        items.push({
-          kind: "ילדי התנ״ך",
-          title: ep.title,
-          href: `/lessons/${ep.id}`,
-          isToday: (ep.published_at || "").slice(0, 10) === today,
-        });
-      }
-
-      return items;
-    },
-  });
-}
-
-function DailyTodayStrip({ onNavigate }: { onNavigate: (href: string) => void }) {
-  const { data: items = [] } = useDailyToday();
-  if (items.length === 0) return null;
-
-  return (
-    <div
-      dir="rtl"
-      style={{
-        maxWidth: 1140,
-        margin: "0 auto 2rem",
-        background: "#fff",
-        border: `1.5px solid ${colors.goldLight}`,
-        borderRadius: "1rem",
-        boxShadow: shadows.cardSoft,
-        padding: "1.1rem 1.25rem",
-      }}
-    >
-      <p
-        style={{
-          margin: "0 0 0.75rem",
-          fontFamily: fonts.display,
-          fontWeight: 900,
-          fontSize: "1.05rem",
-          color: colors.goldDark,
-        }}
-      >
-        ✨ התוכן היומי —{" "}
-        {new Date().toLocaleDateString("he-IL", { day: "numeric", month: "long" })}
-      </p>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${items.length}, 1fr)`,
-          gap: "0.75rem",
-        }}
-        className="family-daily-strip"
-      >
-        {items.map((it) => (
-          <button
-            key={it.kind}
-            type="button"
-            onClick={() => onNavigate(it.href)}
-            style={{
-              textAlign: "start",
-              border: `1px solid rgba(139,111,71,0.18)`,
-              borderRadius: "0.75rem",
-              background: colors.parchment,
-              padding: "0.7rem 0.85rem",
-              cursor: "pointer",
-              font: "inherit",
-            }}
-          >
-            <span
-              style={{
-                display: "block",
-                fontFamily: fonts.body,
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                color: colors.goldDark,
-                marginBottom: 2,
-              }}
-            >
-              {it.kind}
-              {it.isToday ? " · היום" : ""}
-            </span>
-            <span
-              style={{
-                display: "block",
-                fontFamily: fonts.body,
-                fontSize: "0.9rem",
-                fontWeight: 600,
-                color: colors.textDark,
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {it.title}
-            </span>
-          </button>
-        ))}
-      </div>
-      <style>{`
-        @media (max-width: 700px) {
-          .family-daily-strip { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-    </div>
-  );
-}
+void TANACH_NEWS_SERIES_ID; // הכרטיס מפנה ל-/tanach-news; הקבוע נשמר לתיעוד הסדרה
 
 function useRiddlesSeries() {
   return useQuery({
@@ -215,7 +52,6 @@ function useRiddlesSeries() {
   });
 }
 
-// ── Card model ───────────────────────────────────────────────────────────
 interface LobbyCard {
   id: string;
   title: string;
@@ -270,7 +106,7 @@ const BASE_CARDS: LobbyCard[] = [
     id: "tanach-news",
     title: "חדשות תנכיות",
     desc: "מאורעות השעה לאור התנ״ך, טור יומי מאת הרב יואב אוריאל",
-    href: `/series/${TANACH_NEWS_SERIES_ID}`,
+    href: "/tanach-news",
     image: "/family-bible/abstract-verse.webp",
     badge: "מתעדכן יומית",
   },
@@ -648,8 +484,6 @@ export default function FamilyTanach() {
         }}
       >
         <div style={{ maxWidth: 1140, margin: "-4rem auto 0" }}>
-          {/* התוכן היומי של אותו היום — מודגש בראש, לפני מאגר הכרטיסים (הרב יואב) */}
-          <DailyTodayStrip onNavigate={navigate} />
           <style>{`
             .family-tanach-grid {
               display: grid;

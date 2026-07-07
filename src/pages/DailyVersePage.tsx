@@ -10,6 +10,8 @@ import { supabase } from "@/integrations/supabase/client";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import { useSEO } from "@/hooks/useSEO";
+import { hebrewDateLabel, hebrewMonthLabel, hebrewMonthKey } from "@/lib/hebrewDate";
+import { WhatsAppButton, DorHaplaotButton } from "@/components/family/BrandButtons";
 
 // ── design tokens (match DesignPreviewHome)
 const GOLD_DARK    = "#8B6F47";
@@ -35,9 +37,9 @@ interface DailyVerse {
   raw_caption: string | null;
 }
 
+// 7.7.2026 (סער): תאריך עברי אמיתי (hebcal, מאומת מול hebcal.com) במקום לועזי
 function formatHebrewDate(dateStr: string): string {
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("he-IL", { day: "numeric", month: "long", year: "numeric" });
+  return hebrewDateLabel(dateStr);
 }
 
 function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void }) {
@@ -154,31 +156,33 @@ function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void
               </div>
             </div>
           </div>
+
+          {/* כפתורי-מותג בסיום הפופאפ (סער 7.7.2026): ווטסאפ + דור הפלאות, במקום קישורי-טקסט */}
+          <div style={{
+            display: "flex", flexWrap: "wrap", gap: "0.6rem",
+            marginTop: "1.1rem",
+          }}>
+            <WhatsAppButton />
+            <DorHaplaotButton />
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function formatHebrewMonth(dateStr: string): string {
-  const d = new Date(dateStr + "T00:00:00");
-  return d.toLocaleDateString("he-IL", { month: "long", year: "numeric" });
-}
-
+// 7.7.2026 (סער): קיבוץ הארכיון לפי חודש עברי (תמוז תשפ"ו), לא לועזי
 function groupByMonth(verses: DailyVerse[]): { label: string; verses: DailyVerse[] }[] {
-  const map = new Map<string, DailyVerse[]>();
+  const map = new Map<number, { label: string; verses: DailyVerse[] }>();
   for (const v of verses) {
-    const key = v.date.slice(0, 7); // YYYY-MM
-    if (!map.has(key)) map.set(key, []);
-    map.get(key)!.push(v);
+    const key = hebrewMonthKey(v.date);
+    if (!map.has(key)) map.set(key, { label: hebrewMonthLabel(v.date), verses: [] });
+    map.get(key)!.verses.push(v);
   }
-  // Sort descending (newest month first)
+  // Sort descending (newest Hebrew month first)
   return Array.from(map.entries())
-    .sort((a, b) => b[0].localeCompare(a[0]))
-    .map(([key, items]) => ({
-      label: formatHebrewMonth(key + "-01"),
-      verses: items,
-    }));
+    .sort((a, b) => b[0] - a[0])
+    .map(([, g]) => g);
 }
 
 export default function DailyVersePage() {
@@ -269,6 +273,70 @@ export default function DailyVersePage() {
           </div>
         ) : (
           <>
+            {/* ── הפסוק היומי — האחרון, מודגש במסגרת (סער 7.7.2026: בלי תאריך) ── */}
+            {verses[0] && (
+              <div
+                onClick={() => setSelected(verses[0])}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => e.key === "Enter" && setSelected(verses[0])}
+                style={{
+                  marginBottom: "3rem",
+                  background: "#fff",
+                  border: `2px solid ${GOLD_LIGHT}`,
+                  borderRadius: "1.5rem",
+                  boxShadow: "0 14px 44px rgba(139,111,71,0.16)",
+                  padding: "1.75rem 2rem",
+                  cursor: "pointer",
+                  position: "relative",
+                  overflow: "hidden",
+                }}
+              >
+                <div
+                  aria-hidden
+                  style={{
+                    position: "absolute", inset: 0,
+                    background: "radial-gradient(ellipse at 85% 0%, rgba(232,213,160,0.25), transparent 55%)",
+                    pointerEvents: "none",
+                  }}
+                />
+                <div style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.45rem",
+                  background: `linear-gradient(135deg, ${GOLD_LIGHT}, ${GOLD_DARK})`,
+                  color: "#fff", borderRadius: 999, padding: "0.3rem 0.9rem",
+                  fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700,
+                  marginBottom: "1rem",
+                }}>
+                  ✨ הפסוק היומי
+                </div>
+                <blockquote style={{
+                  fontFamily: "Kedem, Frank Ruhl Libre, serif", fontStyle: "italic",
+                  fontSize: "clamp(1.15rem, 2.6vw, 1.55rem)", color: TEXT_DARK,
+                  lineHeight: 1.7, margin: "0 0 0.5rem",
+                }}>
+                  ״{verses[0].verse_text}״
+                </blockquote>
+                {verses[0].verse_source && (
+                  <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: GOLD_DARK, fontWeight: 700, marginBottom: "0.75rem" }}>
+                    [{verses[0].verse_source}]
+                  </div>
+                )}
+                {verses[0].commentary && (
+                  <p style={{
+                    fontFamily: "Ploni, sans-serif", fontSize: "0.95rem", color: TEXT_MUTED,
+                    lineHeight: 1.75, margin: 0,
+                    display: "-webkit-box" as any, WebkitLineClamp: 3, WebkitBoxOrient: "vertical" as any,
+                    overflow: "hidden",
+                  }}>
+                    {verses[0].commentary}
+                  </p>
+                )}
+                <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem", color: GOLD_DARK, fontWeight: 700, marginTop: "0.85rem" }}>
+                  לפירוש המלא ←
+                </div>
+              </div>
+            )}
+
             <style>{`
               .verse-grid {
                 display: grid;

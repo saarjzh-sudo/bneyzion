@@ -9,6 +9,7 @@
  * "עדכן עכשיו" → updateServiceWorker(true): activates the waiting SW (SKIP_WAITING)
  * and reloads once it takes control. Checks for a new deploy every 60s on an open tab.
  */
+import { useState } from "react";
 import { useRegisterSW } from "virtual:pwa-register/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { RefreshCw, X } from "lucide-react";
@@ -16,6 +17,7 @@ import { RefreshCw, X } from "lucide-react";
 const CHECK_INTERVAL_MS = 60_000;
 
 export default function UpdatePrompt() {
+  const [updating, setUpdating] = useState(false);
   const {
     needRefresh: [needRefresh, setNeedRefresh],
     updateServiceWorker,
@@ -26,6 +28,20 @@ export default function UpdatePrompt() {
       setInterval(() => registration.update().catch(() => {}), CHECK_INTERVAL_MS);
     },
   });
+
+  // 7.7.2026 (סער): "עדכן עכשיו" לא עשה כלום בדסקטופ — updateServiceWorker לבדו
+  // תלוי ב-controllerchange שלא תמיד נורה (SW ישן מדור autoUpdate / ריבוי טאבים).
+  // אחרי הפעלת ה-SW הממתין מרעננים בכוח — רילוד מובטח בכל מקרה.
+  const applyUpdate = async () => {
+    if (updating) return;
+    setUpdating(true);
+    try {
+      await updateServiceWorker(true);
+    } catch {
+      /* נופל לרילוד למטה */
+    }
+    setTimeout(() => window.location.reload(), 1000);
+  };
 
   return (
     <AnimatePresence>
@@ -94,11 +110,12 @@ export default function UpdatePrompt() {
 
             <button
               type="button"
-              onClick={() => updateServiceWorker(true)}
+              onClick={applyUpdate}
+              disabled={updating}
               style={{
                 flexShrink: 0,
                 border: "none",
-                cursor: "pointer",
+                cursor: updating ? "wait" : "pointer",
                 background: "#204F49",
                 color: "#FAF6F0",
                 fontFamily: "inherit",
@@ -106,9 +123,10 @@ export default function UpdatePrompt() {
                 fontSize: "0.85rem",
                 borderRadius: 10,
                 padding: "0.55rem 0.95rem",
+                opacity: updating ? 0.7 : 1,
               }}
             >
-              עדכן עכשיו
+              {updating ? "מעדכן..." : "עדכן עכשיו"}
             </button>
 
             <button

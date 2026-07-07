@@ -301,12 +301,14 @@ function StatsBar() {
 // Replaces TanachLemishpachaSection (2026-05-27)
 // 4 portrait cards with top-arch border-radius, gold ribbon connector, cream+gold only
 
+// 7.7.2026 (סער): דור-הפלאות הוחלף בחדשות-התנ״ך (הטור היומי) והפודקאסט הופעל —
+// שניהם חיים עם תוכן אמיתי שנקלט מקבוצות "בכוח התנ״ך ננצח".
 const FAMILY_BIBLE_CARDS = [
   {
-    id: "dor-haplaot",
-    title: "דור הפלאות",
-    desc: "70 ניסי המלחמה",
-    href: "/dor-haplaot",
+    id: "tanach-news",
+    title: "חדשות תנכיות",
+    desc: "מאורעות השעה לאור התנ\"ך",
+    href: "/tanach-news",
     image: "/family-bible/abstract-miracles.webp",
     disabled: false,
   },
@@ -321,10 +323,10 @@ const FAMILY_BIBLE_CARDS = [
   {
     id: "kids-podcast",
     title: "סיפורי התנ\"ך לילדים",
-    desc: "פודקאסט מבית בני ציון · בקרוב!",
-    href: "#",
+    desc: "פודקאסט לילדים · פרק חדש בכל יום שלישי",
+    href: "/series/bc1d97b9-e0a5-4b88-8169-5705120bc20c",
     image: "/family-bible/abstract-podcast.webp",
-    disabled: true,
+    disabled: false,
   },
 ];
 
