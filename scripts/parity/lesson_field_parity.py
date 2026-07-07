@@ -105,6 +105,10 @@ def main():
                  'old_media_sample': sorted(ent['media'])[:3]})
 
     # --- 2. rabbi sidebar count drift (מול מה שדף-הרב מציג: rpi אם קיים, אחרת שיעורים ציבוריים)
+    # ⚠️ אזהרה (7.7.2026): 'actual' כאן = rabbi_page_items (רשימה מובחרת), לא סך השיעורים.
+    #   לרבנים פוריים page_items << published (יואב 143 vs 1717), אז זה מדווח "drift" שקרי.
+    #   lesson_count המקורי = published lessons (rabbi_id) והוא נכון. אל תסנכרן lesson_count
+    #   לפי הערך הזה — זו רגרסיה. המדד הנכון: count(lessons WHERE rabbi_id AND status=published).
     drift = q("""
 SELECT r.name, r.lesson_count, v.n AS actual FROM rabbis r
 JOIN LATERAL (
