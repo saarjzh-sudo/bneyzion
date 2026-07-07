@@ -79,6 +79,13 @@ def main():
     truth = build_old_truth()
     findings = {'audio_suspects': [], 'rabbi_count_drift': [], 'phantom_rabbis': []}
 
+    # audio שאומת ידנית כתקין (7.7.2026) — מדולג; רק חשודים *חדשים* ידווחו
+    verified_ok = set()
+    try:
+        verified_ok = set(json.load(open(os.path.join(HERE, 'audio_verified_ok.json')))['verified_ok_ids'])
+    except Exception:
+        pass
+
     # --- 1. audio suspects (published, public)
     rows = []
     off = 0
@@ -94,6 +101,8 @@ def main():
         if len(batch) < 2000:
             break
     for x in rows:
+        if x['id'] in verified_ok:
+            continue
         t = norm(x['title']); r = norm(x.get('rabbi') or '')
         ent = truth.get((t, r)) or truth.get((t, ''))
         if not ent or ent['n'] == 0:
@@ -104,35 +113,61 @@ def main():
                  'db_audio': basename(x['audio_url']),
                  'old_media_sample': sorted(ent['media'])[:3]})
 
-    # --- 2. rabbi sidebar count drift (מול מה שדף-הרב מציג: rpi אם קיים, אחרת שיעורים ציבוריים)
-    # ⚠️ אזהרה (7.7.2026): 'actual' כאן = rabbi_page_items (רשימה מובחרת), לא סך השיעורים.
-    #   לרבנים פוריים page_items << published (יואב 143 vs 1717), אז זה מדווח "drift" שקרי.
-    #   lesson_count המקורי = published lessons (rabbi_id) והוא נכון. אל תסנכרן lesson_count
-    #   לפי הערך הזה — זו רגרסיה. המדד הנכון: count(lessons WHERE rabbi_id AND status=published).
+    # --- 2. rabbi sidebar count drift
+    # מדד נכון (תוקן 7.7.2026 אחרי תקרית-רגרסיה): הקונבנציה במערכת היא
+    #   lesson_count = שיעורים published *ציבוריים* (לא teachers-only) לפי rabbi_id.
+    # זה מתקיים ב-186/189 רבנים; הפרות = ספירות-stale (למשל אחרי סבבי-ארכוב).
+    # ⚠️ הגרסה הקודמת השוותה מול rabbi_page_items (רשימה מובחרת, לא סך) ודיווחה
+    #   "134 drift" שקרי → "תיקון" שהוריד את יואב 1717→143 (גולגל מהגיבוי).
+    #   לעולם לא למדוד ספירות מול page_items.
     drift = q("""
 SELECT r.name, r.lesson_count, v.n AS actual FROM rabbis r
 JOIN LATERAL (
-  SELECT CASE WHEN (SELECT count(*) FROM rabbi_page_items i WHERE i.rabbi_id=r.id)>0
-              THEN (SELECT count(*) FROM rabbi_page_items i WHERE i.rabbi_id=r.id)
-              ELSE (SELECT count(*) FROM lessons l WHERE l.rabbi_id=r.id AND l.status='published'
-                    AND NOT (l.audience_tags @> ARRAY['teachers'] AND NOT l.audience_tags @> ARRAY['general'])) END AS n
+  SELECT (SELECT count(*) FROM lessons l WHERE l.rabbi_id=r.id AND l.status='published'
+          AND NOT (l.audience_tags @> ARRAY['teachers'] AND NOT l.audience_tags @> ARRAY['general'])) AS n
 ) v ON true
 WHERE r.status='active' AND r.entity_type='rabbi' AND abs(coalesce(r.lesson_count,0)-v.n)>0
 """)
     if isinstance(drift, list):
         findings['rabbi_count_drift'] = drift
 
-    # --- 3. phantom rabbis: active rabbis שאינם מופיעים בסיידבר-הרבנים הישן
+    # --- 3. phantom rabbis: active rabbis שאינם מופיעים בשום מקור באתר הישן
+    # תוקן 7.7.2026: (א) נרמול משופר — הישן כותב "זצל" בלי גרשיים ו-"(לנשים)" לא-עקבי,
+    # מה שיצר 20 פנטומים-שקריים (קופרמן, דוד לאו, מורות...). (ב) נוכחות באגף-המורים
+    # הישן (old_teachers_listings) = לגיטימי — יוצרי דפי-עבודה לא הופיעו בסיידבר-הרבנים.
+    def norm_name(t):
+        t = norm(t)
+        t = re.sub(r'\s*זצ"?ל\s*$', '', t)
+        t = re.sub(r'\s*\(לנשים\)\s*', ' ', t)
+        return re.sub(r'\s+', ' ', t).strip()
     old_names = set()
+    teachers_blob = ''
     try:
-        s = open(os.path.join(ONEONE, 'old_rabbis_sidebar.json'), encoding='utf-8').read()
-        old_names = {norm(n) for n in re.findall(r'"(?:name|title)"\s*:\s*"([^"]+)"', s)}
+        # json.load (לא regex!) — שמות עם גרשיים נשמרים ב-JSON כ-`זצ\"ל`, ו-regex
+        # `"([^"]+)"` נעצר בגרש המוברח → השם נקטע → phantom שקרי. זה היה המקור ל-20 FP.
+        sidebar = json.load(open(os.path.join(ONEONE, 'old_rabbis_sidebar.json'), encoding='utf-8'))
+        for it in sidebar.get('items', []):
+            for k in ('name', 'name_norm', 'title'):
+                if it.get(k):
+                    old_names.add(norm_name(it[k]))
+        # כל דאטת-הישן (מורים + רשימות כלליות) — רב שמופיע בכל אחת מהן = לא פנטום
+        parts = []
+        for fn in ('old_teachers_listings.json', 'old_listings_torah_ketuvim.json',
+                   'old_listings_neviim_moadim.json'):
+            parts.append(json.dumps(json.load(open(os.path.join(ONEONE, fn), encoding='utf-8')),
+                                    ensure_ascii=False))
+        teachers_blob = norm(' '.join(parts))
     except Exception:
         pass
     if old_names:
         active = q("SELECT name FROM rabbis WHERE status='active' AND entity_type='rabbi' AND lesson_count>0")
         for a in active if isinstance(active, list) else []:
-            if norm(a['name']) not in old_names:
+            nn = norm_name(a['name'])
+            in_sidebar = nn in old_names
+            # יוצר אגף-מורים בישן? (חיפוש בשם ללא תואר "הרב ")
+            bare = re.sub(r'^הרב(נית)?\s+', '', nn)
+            in_teachers = bool(bare) and bare in teachers_blob
+            if not in_sidebar and not in_teachers:
                 findings['phantom_rabbis'].append(a['name'])
 
     os.makedirs(os.path.join(HERE, 'reports'), exist_ok=True)
