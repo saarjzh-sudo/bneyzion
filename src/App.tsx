@@ -73,6 +73,7 @@ const CategoryPage = lazy(() => import("./pages/CategoryPage"));
 const TopicPage = lazy(() => import("./pages/TopicPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
+import UpdatePrompt from "./components/pwa/UpdatePrompt";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
 
 // Lazy-loaded admin pages
@@ -290,6 +291,7 @@ const GlobalChrome = () => {
       <CartDrawer />
       <FloatingPlayer />
       <InstallPrompt />
+      <UpdatePrompt />
       {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/*, /program/* and bare landing routes */}
       <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/"]} />
     </>

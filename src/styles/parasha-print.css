@@ -167,6 +167,18 @@
 
   /* ── STEP 6: Print masthead ───────────────────────────────────── */
 
+  /* Neutralise the on-screen dark hero: the masthead prints on clean white,
+     not on the mahogany gradient / background photo. Hide every decorative
+     layer (bg image + overlays + texture — all aria-hidden), whiten the band. */
+  .parasha-hero {
+    background: #fff !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .parasha-hero > [aria-hidden="true"] {
+    display: none !important;
+  }
+
   .print-masthead {
     text-align: center;
     padding-bottom: 8pt;
@@ -182,17 +194,19 @@
     font-size: 8pt;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: #7a5530;
+    color: #7a5530 !important;
+    opacity: 1 !important;
     margin-bottom: 4pt;
     display: block;
   }
 
-  /* Main parasha title */
+  /* Main parasha title — force dark ink over the on-screen inline white color */
   .print-masthead__title {
     font-family: 'Kedem', 'Frank Ruhl Libre', serif;
     font-size: 36pt;
     font-weight: 900;
-    color: #1a0f05;
+    color: #1a0f05 !important;
+    text-shadow: none !important;
     line-height: 1.1;
     margin: 0 0 4pt;
   }
@@ -201,7 +215,8 @@
   .print-masthead__chumash {
     font-family: 'Ploni', sans-serif;
     font-size: 10pt;
-    color: #7a5530;
+    color: #7a5530 !important;
+    opacity: 1 !important;
     margin-top: 2pt;
     display: block;
   }

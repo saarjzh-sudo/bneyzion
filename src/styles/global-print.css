@@ -1,0 +1,46 @@
+/*
+ * global-print.css — site-wide print reset (imported in main.tsx, loads on EVERY page).
+ *
+ * Goal: whenever a visitor prints ANY page (Ctrl/Cmd-P or a "הדפסה" button that
+ * calls window.print()), the paper should show CONTENT only — never the floating
+ * site chrome. Before this file, printing any page other than /parasha dumped the
+ * cookie banner, accessibility widget, Benzi bot, audio player, install banner,
+ * promo popups and the mobile bottom-nav onto the page.
+ *
+ * Strategy: hide every fixed/overlay widget. Page content is never position:fixed,
+ * so `.fixed` (Tailwind) + the inline-styled widgets (targeted by aria-label/role)
+ * covers all of them without touching real content.
+ *
+ * Page-specific print BEAUTY (masthead, drop-caps, bulletin columns) lives in the
+ * per-page stylesheet, e.g. parasha-print.css. This file only REMOVES chrome.
+ */
+
+@media print {
+  /* ── Floating / fixed site chrome — never print ─────────────────────────── */
+  .fixed,                              /* Tailwind fixed widgets: bot, player, install banner, legacy nav */
+  .design-mobile-bottom-nav,           /* v2 mobile bottom nav (inline-styled) */
+  [data-print-hide],                   /* explicit opt-out hook */
+  [data-radix-toast-viewport],
+  [data-sonner-toaster],
+  [role="dialog"],
+  [role="alertdialog"],
+  [role="presentation"],
+  [aria-label="הודעת עוגיות ופרטיות"],  /* CookieConsent (role=region, inline-styled) */
+  [aria-label="תפריט נגישות"],           /* AccessibilityWidget launcher */
+  [aria-label="הגדרות נגישות"] {         /* AccessibilityWidget panel */
+    display: none !important;
+  }
+
+  /* Anything the app explicitly marks as screen-only */
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Keep colors true and drop shadows/animations that muddy print */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}

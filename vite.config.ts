@@ -15,7 +15,10 @@ export default defineConfig(() => ({
   plugins: [
     react(),
     VitePWA({
-      registerType: "autoUpdate",
+      // "prompt" (was "autoUpdate"): a freshly-deployed SW WAITS instead of
+      // silently reloading the open tab. UpdatePrompt.tsx surfaces a visible
+      // "עדכון חדש זמין → עדכן עכשיו" banner; the user taps to activate + reload.
+      registerType: "prompt",
       includeAssets: ["favicon.ico", "lovable-uploads/logo-bney-zion.png"],
       workbox: {
         navigateFallbackDenylist: [/^\/~oauth/],
@@ -25,9 +28,9 @@ export default defineConfig(() => ({
         // generated SW. generateSW alone can't host custom event listeners,
         // so the handlers live in public/push-sw.js and are imported here.
         importScripts: ["/push-sw.js"],
-        // skipWaiting + clientsClaim: new SW activates immediately on all tabs
-        // without waiting for user to close tabs. Critical for production deploys.
-        skipWaiting: true,
+        // No skipWaiting/clientsClaim: with the "prompt" flow the new SW must
+        // WAIT in the background until the user taps "עדכן עכשיו" (UpdatePrompt
+        // calls updateServiceWorker(true) → SKIP_WAITING → activate → reload).
         clientsClaim: true,
         cleanupOutdatedCaches: true,
         // Supabase requests must NEVER be cached — donation counts and dynamic

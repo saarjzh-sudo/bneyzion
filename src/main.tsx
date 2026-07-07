@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
+import "./styles/global-print.css";
 
 // ── Self-heal stale tabs after a deploy ────────────────────────────────────────
 // Each deploy gives every JS chunk a new content-hash, and only THAT deployment
@@ -34,25 +35,11 @@ window.addEventListener("unhandledrejection", (e) => {
   }
 });
 
-// ── Live code updates without a manual refresh ────────────────────────────────
-// The SW (vite-plugin-pwa, autoUpdate + skipWaiting + clientsClaim) installs new
-// code in the background, but an already-open tab only picked it up on the *next*
-// navigation — which is why a hard-refresh was needed to see a fresh deploy.
-// Here we (1) poll for SW updates every 60s so an open tab notices a deploy, and
-// (2) reload ONCE when the new SW takes control. Guarded so it never reloads on
-// the first-ever install (no prior controller) and never loops.
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.ready
-    .then((reg) => { setInterval(() => { reg.update().catch(() => {}); }, 60_000); })
-    .catch(() => {});
-  if (navigator.serviceWorker.controller) {
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      if (refreshing) return;
-      refreshing = true;
-      window.location.reload();
-    });
-  }
-}
+// ── Live code updates ─────────────────────────────────────────────────────────
+// SW registration + the "new version available" prompt now live in
+// components/pwa/UpdatePrompt.tsx (registerType:"prompt"). Instead of silently
+// reloading an open tab on deploy, the user gets a visible "עדכן עכשיו" banner.
+// The stale-chunk self-heal above stays — it handles lazy-import 404s, a
+// different failure mode from a waiting SW.
 
 createRoot(document.getElementById("root")!).render(<App />);

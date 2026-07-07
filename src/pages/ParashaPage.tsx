@@ -259,7 +259,7 @@ const ParashaPage = () => {
           paddingTop: "4rem",
           paddingBottom: "0",
         }}
-        className="relative overflow-hidden"
+        className="relative overflow-hidden parasha-hero"
       >
         {/* Parasha hero image — behind all text */}
         <img
