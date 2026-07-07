@@ -356,10 +356,14 @@ export default function DesignHeader({
             height: 64px !important;
             padding: 0 0.85rem !important;
           }
-          /* Mobile: hide NotificationBell (2nd) and CartButton (3rd) to reduce clutter.
-             Search (1st) stays visible. DarkModeToggle removed — no offset needed. */
+          /* 7.7.2026 (הרב יואב, תמונה 2): במובייל אין יותר אייקונים עליונים כפולים —
+             חיפוש (1) מוסתר (קיים בשורה התחתונה), פעמון (2) ועגלה (3) מוסתרים כתמיד,
+             וההמבורגר מוסתר — הסיידבר נפתח מכפתור 'ניווט' בשורה התחתונה.
+             נשאר בהאדר: לוגו + UserMenu בלבד. */
+          .design-header-actions > *:nth-child(1),
           .design-header-actions > *:nth-child(2),
-          .design-header-actions > *:nth-child(3) {
+          .design-header-actions > *:nth-child(3),
+          .design-header-burger {
             display: none !important;
           }
         }

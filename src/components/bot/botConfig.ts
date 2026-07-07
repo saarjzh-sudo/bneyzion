@@ -21,15 +21,15 @@ export const BOT_CONFIG = {
   // Window for showing upcoming מועד banners (days before moed)
   moedWindowDays: 20,
 
-  // Branding
+  // Branding — 7.7.2026 (הרב יואב): נרטיב "מלווה במסע", פחות בוט-שעונה-על-שאלות
   botName: "בנצי",
-  botTagline: "העוזר של בני ציון, כאן בשבילכם",
+  botTagline: "המלווה שלך במסע התנ״ך",
   // Short line shown in the closed launcher pill (below the name)
-  botShortTagline: "שמח לעזור, אפשר לשאול אותי הכל",
+  botShortTagline: "בוא נמצא את הצעד הבא שלך",
   botAvatar: "/benzi-avatar.png", // round avatar, falls back to gold letter-avatar "בנ" if missing
 
   // Welcome message (shown above the persona picker)
-  welcomeMessage: "שלום, אני בנצי, ואשמח לעזור לך למצוא כל דבר באתר. מה מעניין אותך היום?",
+  welcomeMessage: "שלום, אני בנצי. כל מי שנכנס לכאן נמצא במסע משלו בתנ״ך — בוא נמצא יחד את הצעד הבא שלך. מה מעניין אותך היום?",
 } as const;
 
 // ============================================================

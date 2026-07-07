@@ -6,7 +6,7 @@
  */
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Search, Heart, Menu, X, Flame } from "lucide-react";
+import { Home, Search, Heart, Menu, X, Flame, Compass } from "lucide-react";
 
 import GlobalSearch from "@/components/search/GlobalSearch";
 import { colors, fonts } from "@/lib/designTokens";
@@ -24,7 +24,13 @@ const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "אודותינו", href: "/about" },
 ];
 
-export default function DesignMobileBottomNav() {
+interface DesignMobileBottomNavProps {
+  /** 7.7.2026 (הרב יואב, תמונה 2): פותח את סיידבר-הניווט (drawer). כשלא מסופק —
+   *  כפתור 'ניווט' לא מוצג (עמודים בלי סיידבר). */
+  onNavigatorOpen?: () => void;
+}
+
+export default function DesignMobileBottomNav({ onNavigatorOpen }: DesignMobileBottomNavProps = {}) {
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -175,6 +181,21 @@ export default function DesignMobileBottomNav() {
           <Heart style={{ width: 20, height: 20 }} />
           <span>מועדפים</span>
         </Link>
+
+        {/* ניווט — פותח את סיידבר הניווט (ספר ופרק / רבנים / נושאים). הרב יואב, תמונה 2. */}
+        {onNavigatorOpen && (
+          <button
+            onClick={() => {
+              setMenuOpen(false);
+              onNavigatorOpen();
+            }}
+            style={tabBase}
+            aria-label="פתיחת סיידבר הניווט"
+          >
+            <Compass style={{ width: 20, height: 20 }} />
+            <span>ניווט</span>
+          </button>
+        )}
 
         <button
           onClick={() => setMenuOpen((v) => !v)}

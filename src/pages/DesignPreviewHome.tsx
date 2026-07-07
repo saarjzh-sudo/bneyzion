@@ -1897,7 +1897,8 @@ export default function DesignPreviewHome() {
       </div>
 
       <DesignFooter />
-      <DesignMobileBottomNav />
+      {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל */}
+      <DesignMobileBottomNav onNavigatorOpen={() => setDrawerOpen(true)} />
 
       {/* Mobile responsive fixes for Home page sections */}
       <style>{`

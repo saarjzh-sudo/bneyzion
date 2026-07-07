@@ -19,6 +19,28 @@ export function stripCantillation(text: string): string {
   return text.replace(/[֑-ֽֿׅ֯ׄ]/g, "");
 }
 
+/**
+ * True when a lesson's `description` is really just the copied opening of its
+ * `content` (a migration artifact on written articles — the "promo" h2 was
+ * scraped as the first paragraph of the body). Such a promo must NOT be
+ * rendered above the article, or the reader sees the opening twice.
+ * (הרב יואב, הערה ד' 7.7.2026). Display-only; DB untouched.
+ */
+export function isDuplicatePromo(description: string | null | undefined, contentHtml: string | null | undefined): boolean {
+  if (!description || !contentHtml) return false;
+  const norm = (s: string) =>
+    s
+      .replace(/<[^>]+>/g, " ") // strip tags
+      .replace(/[֑-ׇ"'׳״“”„…\-–—.,:;!?()\[\]]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  const d = norm(description);
+  if (d.length < 40) return false; // short blurbs are legit promos
+  const probe = d.slice(0, Math.min(200, d.length));
+  const head = norm(contentHtml).slice(0, d.length + 300);
+  return head.includes(probe);
+}
+
 export function sanitizeHtml(dirty: string): string {
   const clean = DOMPurify.sanitize(dirty, {
     ADD_TAGS: ["iframe"],

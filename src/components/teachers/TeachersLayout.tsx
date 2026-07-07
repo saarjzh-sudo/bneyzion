@@ -75,7 +75,8 @@ export default function TeachersLayout({ children, activeSeriesId }: TeachersLay
       </div>
 
       <DesignFooter />
-      <DesignMobileBottomNav />
+      {/* 7.7.2026: 'ניווט' פותח את סיידבר אגף-המורים במובייל (כמו בלייאאוט הראשי) */}
+      <DesignMobileBottomNav onNavigatorOpen={() => setDrawerOpen(true)} />
 
       <style>{`
         @media (max-width: 768px) {

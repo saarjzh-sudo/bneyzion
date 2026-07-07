@@ -284,11 +284,9 @@ export function useContentSidebar() {
           // Direct band-1..999 children (same as all other flat sections, parity with old site's 5 entries)
           children: getChildren(ROOT_IDS.howToLearn),
         },
-        {
-          id: ROOT_IDS.generalTopics,
-          title: 'נושאים כלליים בתנ"ך',
-          children: getChildren(ROOT_IDS.generalTopics),
-        },
+        // 'נושאים כלליים בתנ"ך' — הוסר 7.7.2026 (הרב יואב, הערה א'): כל 23 הסדרות
+        // הומרו לתגיות בלשונית "נושאים בתנ״ך" (392 שיעורים תויגו; 16 נושאים חדשים
+        // תחת themes-root + 7 מיפויים לנושאים קיימים). ראה lesson_topics_bak_yoav_20260707.
         {
           id: ROOT_IDS.moadim,
           title: "מועדים", // old-site exact title
@@ -316,11 +314,7 @@ export function useContentSidebar() {
           // R3 15.6.2026: the ~33 recorded series, aggregated from their book parents in canon order.
           children: recordedChildren,
         },
-        {
-          id: ROOT_IDS.livuyTatim,
-          title: 'ליווי ת"תים',
-          children: getChildren(ROOT_IDS.livuyTatim),
-        },
+        // 'ליווי ת"תים' — הוסר מהסיידבר הציבורי 7.7.2026 (הרב יואב, הערה ג').
       ];
 
       return { categories, extraSections };

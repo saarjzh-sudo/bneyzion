@@ -128,13 +128,28 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const { data: basicThemes = [], isLoading: basicThemesLoading } = useBasicThemesSidebar();
 
   // §2.7: full rabbi list — old sidebar showed ~153 rabbis; cap-30 was a known regression (R-SB2).
-  // Tier-pinning removed per §2.7 (tier pins stay on /rabbis cards if yoav wants them, not here).
-  // Sort: he-alpha by name (א-ב), matching the old site sidebar order.
+  // 7.7.2026 (הרב יואב, הערה ב-2): מיון ברירת-מחדל = לפי מספר שיעורים, עם בורר 3 מיונים:
+  // כמות שיעורים / א-ב / דומיננטיות גולשים (views_total — יתמלא כשמעקב-צפיות יצטבר;
+  // עד אז שובר-שוויון לפי שיעורים כדי שלא ייראה שרירותי).
+  type RabbiSort = "lessons" | "alpha" | "views";
+  const [rabbiSort, setRabbiSort] = useState<RabbiSort>("lessons");
   const topRabbis = useMemo(() => {
-    return (rabbisRaw as { id: string; slug?: string; name?: string; lesson_count?: number }[])
-      .filter((r) => r.name)
-      .sort((a, b) => (a.name || "").localeCompare(b.name || "", "he"));
-  }, [rabbisRaw]);
+    const list = (rabbisRaw as {
+      id: string; slug?: string; name?: string; lesson_count?: number; views_total?: number;
+    }[]).filter((r) => r.name);
+    switch (rabbiSort) {
+      case "alpha":
+        return list.sort((a, b) => (a.name || "").localeCompare(b.name || "", "he"));
+      case "views":
+        return list.sort(
+          (a, b) =>
+            (b.views_total ?? 0) - (a.views_total ?? 0) ||
+            (b.lesson_count ?? 0) - (a.lesson_count ?? 0)
+        );
+      default:
+        return list.sort((a, b) => (b.lesson_count ?? 0) - (a.lesson_count ?? 0));
+    }
+  }, [rabbisRaw, rabbiSort]);
 
   // ── Helper: toggle a key in a Set ──
   const toggle = (setter: React.Dispatch<React.SetStateAction<Set<string>>>, key: string) => {
@@ -379,6 +394,50 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           {/* ═══ RABBIS tab ═══ */}
           {activeTab === "rabbis" && (!collapsed || isDrawer) && (
             <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+              {/* בורר מיון (הרב יואב 7.7.2026): שיעורים (ברירת-מחדל) / א-ב / צפיות */}
+              <div
+                style={{
+                  display: "flex",
+                  gap: 4,
+                  padding: "0.15rem 0.45rem 0.45rem",
+                }}
+                role="group"
+                aria-label="מיון רשימת הרבנים"
+              >
+                {(
+                  [
+                    { key: "lessons", label: "לפי שיעורים" },
+                    { key: "alpha", label: "א-ב" },
+                    { key: "views", label: "לפי צפיות" },
+                  ] as { key: typeof rabbiSort; label: string }[]
+                ).map((opt) => {
+                  const active = rabbiSort === opt.key;
+                  return (
+                    <button
+                      key={opt.key}
+                      type="button"
+                      onClick={() => setRabbiSort(opt.key)}
+                      aria-pressed={active}
+                      style={{
+                        flex: 1,
+                        border: `1px solid ${active ? colors.goldDark : "rgba(139,111,71,0.25)"}`,
+                        background: active ? "rgba(196,162,101,0.14)" : "transparent",
+                        color: active ? colors.goldDark : colors.textSubtle,
+                        fontFamily: fonts.body,
+                        fontSize: "0.68rem",
+                        fontWeight: active ? 700 : 500,
+                        borderRadius: 999,
+                        padding: "0.28rem 0.3rem",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
               {topRabbis
                 .filter((r) => !search.trim() || r.name?.includes(search.trim()))
                 .map((r) => (

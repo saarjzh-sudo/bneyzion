@@ -75,7 +75,8 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
       </div>
 
       <DesignFooter />
-      <DesignMobileBottomNav />
+      {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל */}
+      <DesignMobileBottomNav onNavigatorOpen={sidebar ? () => setDrawerOpen(true) : undefined} />
 
       <style>{`
         @media (max-width: 768px) {

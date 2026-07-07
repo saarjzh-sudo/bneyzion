@@ -83,7 +83,9 @@ export default function DesignLayout({
       </div>
 
       <DesignFooter />
-      <DesignMobileBottomNav />
+      {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל
+          (ההמבורגר והחיפוש העליונים הוסתרו במובייל — אין יותר תפריטים כפולים). */}
+      <DesignMobileBottomNav onNavigatorOpen={sidebar ? () => setDrawerOpen(true) : undefined} />
 
       <style>{`
         @media (max-width: 767px) {

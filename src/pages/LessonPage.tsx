@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { sanitizeHtml } from "@/lib/sanitize";
+import { sanitizeHtml, isDuplicatePromo } from "@/lib/sanitize";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Clock, BookOpen, Calendar, ChevronLeft, Volume2, Headphones, ListPlus, LogIn } from "lucide-react";
@@ -464,8 +464,11 @@ const LessonPage = () => {
               );
             })()}
 
-            {/* Promo teaser — the old site's lessonPromo, shown above the content (Rav Yoav 3.7.2026) */}
-            {lesson.description && (lesson as any).content ? (
+            {/* Promo teaser — the old site's lessonPromo, shown above the content (Rav Yoav 3.7.2026).
+                7.7.2026 (הערה ד'): suppressed when the description is just the copied opening
+                of the article body (migration artifact) — otherwise the reader sees it twice. */}
+            {lesson.description && (lesson as any).content &&
+              !isDuplicatePromo(lesson.description, (lesson as any).content) ? (
               <div className="rounded-lg bg-secondary/30 border border-border p-5 max-w-3xl">
                 <p className="text-foreground leading-relaxed whitespace-pre-line font-display">{lesson.description}</p>
               </div>

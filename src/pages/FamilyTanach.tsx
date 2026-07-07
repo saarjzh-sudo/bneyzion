@@ -97,6 +97,17 @@ const BASE_CARDS: LobbyCard[] = [
     href: `/series/${RIDDLES_SERIES_ID}`,
     image: "/family-bible/abstract-podcast.webp",
   },
+  // חדשות תנכיות — הטור החדש של הרב יואב (הערה ו' 7.7.2026). אין עדיין תוכן/עמוד —
+  // הכרטיס מוצג "בקרוב" (לא לחיץ) ויחווט ליעד אמיתי כשהטור הראשון יפורסם.
+  {
+    id: "tanach-news",
+    title: "חדשות תנכיות",
+    desc: "מבט תנ״כי על מה שקורה עכשיו, טור חדש מאת הרב יואב אוריאל",
+    href: "#",
+    image: "/family-bible/abstract-verse.webp",
+    badge: "בקרוב",
+    disabled: true,
+  },
 ];
 
 function FamilyTanachHero() {
@@ -168,6 +179,19 @@ function FamilyTanachHero() {
         >
           כמה דקות ביום, וכל בית הופך לבית תנ״ך. מגיל הגן ועד סבא וסבתא, מקום אחד
           שמביא את התנ״ך הביתה, כל יום מחדש.
+        </p>
+
+        {/* הקדשת השער — הרב יואב, הערה ו' 7.7.2026 (בלי קישור בינתיים; עמוד הנצחה בהתלבטות) */}
+        <p
+          style={{
+            fontFamily: fonts.body,
+            fontSize: "0.9rem",
+            color: "rgba(232,213,160,0.85)",
+            marginTop: "1.6rem",
+            letterSpacing: "0.02em",
+          }}
+        >
+          לעילוי נשמת מעיין פלסר ז״ל
         </p>
       </div>
     </section>

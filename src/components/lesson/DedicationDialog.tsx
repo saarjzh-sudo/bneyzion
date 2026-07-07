@@ -62,10 +62,13 @@ export default function DedicationDialog({
   const selectedType = TYPES.find((t) => t.value === type)!;
   const canChooseSeries = !!seriesId;
 
-  const amount = useMemo(() => {
-    if (!settings) return scope === "series" ? 1800 : 600;
-    return scope === "series" ? settings.series_price : settings.lesson_price;
-  }, [settings, scope]);
+  // מחירים לשני ההיקפים — מוצגים גם על כפתורי הבחירה (הרב יואב, הערה ה' 7.7.2026)
+  const lessonPrice = settings?.lesson_price ?? 600;
+  const seriesPrice = settings?.series_price ?? 1800;
+  const amount = useMemo(
+    () => (scope === "series" ? seriesPrice : lessonPrice),
+    [scope, lessonPrice, seriesPrice]
+  );
 
   const targetTitle = scope === "series" ? seriesTitle || lessonTitle : lessonTitle;
 
@@ -190,7 +193,10 @@ export default function DedicationDialog({
                     : "bg-secondary/50 text-muted-foreground border-border hover:border-primary/20"
                 }`}
               >
-                השיעור הזה בלבד
+                <span className="block">השיעור הזה בלבד</span>
+                <span className="block mt-0.5 font-bold" dir="rtl">
+                  ₪{lessonPrice.toLocaleString("he-IL")}
+                </span>
               </button>
               <button
                 type="button"
@@ -203,7 +209,10 @@ export default function DedicationDialog({
                     : "bg-secondary/50 text-muted-foreground border-border hover:border-primary/20"
                 }`}
               >
-                כל הסדרה
+                <span className="block">כל הסדרה</span>
+                <span className="block mt-0.5 font-bold" dir="rtl">
+                  ₪{seriesPrice.toLocaleString("he-IL")}
+                </span>
               </button>
             </div>
           )}
