@@ -15,6 +15,8 @@ daily_content_sync.py — סנכרון התוכן היומי של בני ציו�
 מפתחות מ-env בלבד (אין סודות בקוד): GREEN_API_ID_INSTANCE, GREEN_API_TOKEN,
 BZ_SUPABASE_URL, BZ_SERVICE_ROLE_KEY. עטיפה: ~/.config/bneyzion/sync.env.
 הרצה: python3 daily_content_sync.py [--dry-run] [--count N]
+⚠️ launchd מריץ עותק ב-~/.config/bneyzion/daily_content_sync.py (TCC חוסם Downloads!)
+   — אחרי עריכה כאן להריץ: cp scripts/daily_content_sync.py ~/.config/bneyzion/
 שלב ב' מתוכנן: קריאת מסמך-הדרייב של הפסוק היומי (יואב+דניאל) כמקור משלים.
 """
 import json
