@@ -74,8 +74,9 @@ function CategoriesManager() {
         sort_order: Number(form.sort_order) || 0,
       };
       if (editing) {
-        const { error } = await supabase.from("product_categories").update(payload).eq("id", editing.id);
+        const { data, error } = await supabase.from("product_categories").update(payload).eq("id", editing.id).select("id");
         if (error) throw error;
+        if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS). פנה לסער.");
       } else {
         const { error } = await supabase.from("product_categories").insert(payload);
         if (error) throw error;
@@ -92,8 +93,20 @@ function CategoriesManager() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("product_categories").delete().eq("id", id);
+      // Pre-check: a category that still has products cannot be deleted (FK).
+      // Surface a clear Hebrew message instead of a raw constraint error.
+      const { count, error: countErr } = await supabase
+        .from("products")
+        .select("id", { count: "exact", head: true })
+        .eq("category_id", id);
+      if (countErr) throw countErr;
+      if ((count ?? 0) > 0) {
+        throw new Error(`יש ${count} מוצרים בקטגוריה הזו. יש להעביר אותם לקטגוריה אחרת לפני המחיקה.`);
+      }
+      // .select() so RLS silent-failure (0 rows) is caught instead of a false success toast
+      const { data, error } = await supabase.from("product_categories").delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!data?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS). פנה לסער.");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["product-categories"] });
@@ -239,8 +252,9 @@ export default function AdminProducts() {
         digital_file_url: form.digital_file_url || null,
       };
       if (editing) {
-        const { error } = await supabase.from("products").update(payload).eq("id", editing.id);
+        const { data, error } = await supabase.from("products").update(payload).eq("id", editing.id).select("id");
         if (error) throw error;
+        if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS). פנה לסער.");
       } else {
         const { error } = await supabase.from("products").insert(payload);
         if (error) throw error;
@@ -257,13 +271,33 @@ export default function AdminProducts() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("products").delete().eq("id", id);
+      const { data, error } = await supabase.from("products").delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!data?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS). פנה לסער.");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-products"] });
       toast({ title: "המוצר נמחק" });
     },
+    onError: (e: any) => toast({ title: "שגיאה", description: e.message, variant: "destructive" }),
+  });
+
+  // Inline activate/hide from the list (Yoav: "שיהיה אפשר לשנות האם המוצר פעיל — מהתפריט הכללי")
+  const toggleStatusMutation = useMutation({
+    mutationFn: async ({ id, active }: { id: string; active: boolean }) => {
+      const { data, error } = await supabase
+        .from("products")
+        .update({ status: active ? "active" : "draft" })
+        .eq("id", id)
+        .select("id");
+      if (error) throw error;
+      if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS). פנה לסער.");
+    },
+    onSuccess: (_d, vars) => {
+      queryClient.invalidateQueries({ queryKey: ["admin-products"] });
+      toast({ title: vars.active ? "המוצר הופעל — מוצג בחנות" : "המוצר הוסתר מהחנות" });
+    },
+    onError: (e: any) => toast({ title: "שגיאה", description: e.message, variant: "destructive" }),
   });
 
   const filtered = products?.filter((p: any) => p.title.includes(search));
@@ -396,7 +430,18 @@ export default function AdminProducts() {
                           <TableCell>{(p as any).product_categories?.name || "—"}</TableCell>
                           <TableCell>₪{p.price}</TableCell>
                           <TableCell><Badge variant="outline">{p.product_type === "physical" ? "פיזי" : p.product_type === "digital" ? "דיגיטלי" : "חבילה"}</Badge></TableCell>
-                          <TableCell><Badge variant={p.status === "active" ? "default" : "secondary"}>{p.status}</Badge></TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <Switch
+                                checked={p.status === "active"}
+                                disabled={toggleStatusMutation.isPending}
+                                onCheckedChange={(v) => toggleStatusMutation.mutate({ id: p.id, active: v })}
+                              />
+                              <span className={`text-xs ${p.status === "active" ? "text-primary" : "text-muted-foreground"}`}>
+                                {p.status === "active" ? "פעיל" : p.status === "archived" ? "ארכיון" : "מוסתר"}
+                              </span>
+                            </div>
+                          </TableCell>
                           <TableCell>
                             <div className="flex gap-1">
                               <Button variant="ghost" size="icon" onClick={() => openEdit(p)}><Pencil className="h-4 w-4" /></Button>

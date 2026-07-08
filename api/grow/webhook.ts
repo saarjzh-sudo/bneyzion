@@ -253,6 +253,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e) {
         console.error("Post-purchase side effects exception:", e);
       }
+
+      // Coupon used_count — incremented only on CONFIRMED payment (abandoned
+      // checkouts never consume a use). Read-then-write is fine at this scale.
+      const usedCoupon = (mergedPayload as any)?.coupon_code;
+      if (usedCoupon && targetTable === "orders") {
+        try {
+          const { data: coupon } = await supabase
+            .from("coupons")
+            .select("id, used_count")
+            .eq("code", usedCoupon)
+            .maybeSingle();
+          if (coupon) {
+            await supabase
+              .from("coupons")
+              .update({ used_count: (coupon.used_count ?? 0) + 1 })
+              .eq("id", coupon.id);
+            console.log(`Webhook: coupon ${usedCoupon} used_count incremented`);
+          }
+        } catch (e) {
+          console.error("Webhook: coupon increment failed (non-fatal):", e);
+        }
+      }
     }
 
     // Donations: subscribe the donor to the Smoove marketing list. Skips

@@ -71,6 +71,15 @@ export interface StartPaymentParams {
     quantity?: number;
     tos_accepted?: boolean;
     tos_accepted_at?: string;
+    // Shipping (physical store products) — persisted to orders.shipping_* columns
+    shipping_method?: string;
+    shipping_address?: string;
+    shipping_city?: string;
+    shipping_zip?: string;
+    // Coupon — server re-validates and enforces the math in create-payment
+    coupon_code?: string;
+    pre_discount_sum?: number;
+    shipping_fee?: number;
   };
   donationMeta?: {
     is_monthly?: boolean;

@@ -11,17 +11,14 @@ import { Home, Search, Heart, Menu, X, Flame, Compass } from "lucide-react";
 import GlobalSearch from "@/components/search/GlobalSearch";
 import { colors, fonts } from "@/lib/designTokens";
 
-// Hidden 30.4.2026 per Saar — pending deletion decision: { label: "אגף המורים", href: "/teachers" }
+// Menu items mirror the desktop header exactly — single source of truth in
+// src/config/navigation.ts (level 13 fix: this file used to hold a stale copy).
+// "ראשי" is prepended locally: the drawer needs it, the desktop logo covers it.
+import { NAV_ITEMS as SITE_NAV_ITEMS } from "@/config/navigation";
+
 const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "ראשי", href: "/" },
-  { label: "רבנים", href: "/rabbis" },
-  // 27.5.2026 — /series removed
-  { label: "תנ״ך", href: "/bible/בראשית" },
-  { label: "קהילה", href: "/community" },
-  { label: "חנות", href: "/store" },
-  // 27.5.2026 — /pricing removed
-  { label: "פרשת השבוע", href: "/parasha" },
-  { label: "אודותינו", href: "/about" },
+  ...SITE_NAV_ITEMS,
 ];
 
 interface DesignMobileBottomNavProps {

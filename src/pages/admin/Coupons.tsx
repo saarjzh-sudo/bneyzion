@@ -26,7 +26,7 @@ function useCoupons() {
   });
 }
 
-const emptyForm = { code: "", discount_percent: "10", max_uses: "", valid_until: "" };
+const emptyForm = { code: "", discount_type: "percent", discount_percent: "10", discount_amount: "20", max_uses: "", valid_until: "" };
 
 export default function Coupons() {
   const { data: coupons, isLoading } = useCoupons();
@@ -36,9 +36,13 @@ export default function Coupons() {
 
   const createMutation = useMutation({
     mutationFn: async (values: typeof emptyForm) => {
+      const isAmount = values.discount_type === "amount";
       const { error } = await supabase.from("coupons").insert({
         code: values.code.toUpperCase().trim(),
-        discount_percent: parseInt(values.discount_percent) || 10,
+        discount_type: values.discount_type,
+        // percent stays populated for legacy rows/readers; amount is the new column
+        discount_percent: isAmount ? 0 : parseInt(values.discount_percent) || 10,
+        discount_amount: isAmount ? parseInt(values.discount_amount) || 0 : null,
         max_uses: values.max_uses ? parseInt(values.max_uses) : null,
         valid_until: values.valid_until || null,
       } as any);
@@ -84,7 +88,7 @@ export default function Coupons() {
                 <TableHeader>
                   <TableRow>
                     <TableHead className="text-right">קוד</TableHead>
-                    <TableHead className="text-right">אחוז הנחה</TableHead>
+                    <TableHead className="text-right">הנחה</TableHead>
                     <TableHead className="text-right">שימושים</TableHead>
                     <TableHead className="text-right">מקסימום</TableHead>
                     <TableHead className="text-right">תוקף</TableHead>
@@ -100,7 +104,11 @@ export default function Coupons() {
                     return (
                       <TableRow key={c.id}>
                         <TableCell className="font-mono font-bold">{c.code}</TableCell>
-                        <TableCell>{c.discount_percent}%</TableCell>
+                        <TableCell>
+                          {(c as any).discount_type === "amount"
+                            ? `₪${(c as any).discount_amount ?? 0}`
+                            : `${c.discount_percent}%`}
+                        </TableCell>
                         <TableCell>{c.used_count}</TableCell>
                         <TableCell>{c.max_uses ?? "ללא הגבלה"}</TableCell>
                         <TableCell className="text-sm text-muted-foreground">
@@ -136,9 +144,35 @@ export default function Coupons() {
                 <Input placeholder="SAVE20" value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value })} className="font-mono" dir="ltr" />
               </div>
               <div>
-                <Label>אחוז הנחה</Label>
-                <Input type="number" min="1" max="100" value={form.discount_percent} onChange={(e) => setForm({ ...form, discount_percent: e.target.value })} />
+                <Label>סוג הנחה</Label>
+                <div className="grid grid-cols-2 gap-2 mt-1">
+                  <Button
+                    type="button"
+                    variant={form.discount_type === "percent" ? "default" : "outline"}
+                    onClick={() => setForm({ ...form, discount_type: "percent" })}
+                  >
+                    אחוז %
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={form.discount_type === "amount" ? "default" : "outline"}
+                    onClick={() => setForm({ ...form, discount_type: "amount" })}
+                  >
+                    סכום ₪
+                  </Button>
+                </div>
               </div>
+              {form.discount_type === "percent" ? (
+                <div>
+                  <Label>אחוז הנחה</Label>
+                  <Input type="number" min="1" max="100" value={form.discount_percent} onChange={(e) => setForm({ ...form, discount_percent: e.target.value })} />
+                </div>
+              ) : (
+                <div>
+                  <Label>סכום הנחה בש״ח</Label>
+                  <Input type="number" min="1" value={form.discount_amount} onChange={(e) => setForm({ ...form, discount_amount: e.target.value })} />
+                </div>
+              )}
               <div>
                 <Label>מקסימום שימושים (ריק = ללא הגבלה)</Label>
                 <Input type="number" value={form.max_uses} onChange={(e) => setForm({ ...form, max_uses: e.target.value })} />

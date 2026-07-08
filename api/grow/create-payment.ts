@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { validateCoupon, computeCouponDiscount } from "../lib/coupon";
 
 // .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
 // which silently breaks downstream string routing/comparisons.
@@ -37,6 +38,16 @@ interface CreatePaymentBody {
     // ToS / legal consent audit trail (required for Grow live approval)
     tos_accepted?: boolean;
     tos_accepted_at?: string;
+    // Shipping (physical store products) — persisted to orders.shipping_* columns
+    shipping_method?: string;
+    shipping_address?: string;
+    shipping_city?: string;
+    shipping_zip?: string;
+    // Coupon (store checkout) — server re-validates; sum must equal
+    // pre_discount_sum - discount + shipping_fee or the request is rejected
+    coupon_code?: string;
+    pre_discount_sum?: number;
+    shipping_fee?: number;
   };
   // Donation-only metadata (one-time vs monthly, dedications)
   donationMeta?: {
@@ -143,6 +154,30 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.log("create-payment ToS consent recorded:", consentAudit);
 
     const supabaseAdmin = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+    // ───── Coupon — server-side authority ─────
+    // The client already showed the discount via /api/store/validate-coupon,
+    // but the charge amount is verified HERE: re-validate the coupon, recompute
+    // the discount, and reject any sum that doesn't add up (₪1 rounding grace).
+    let couponDiscount = 0;
+    let couponCode: string | null = null;
+    if (meta?.coupon_code) {
+      const check = await validateCoupon(supabaseAdmin, meta.coupon_code);
+      if (!check.valid) {
+        return res.status(400).json({ error: check.reason || "קוד הקופון אינו תקף" });
+      }
+      const preDiscount = Number(meta.pre_discount_sum) || 0;
+      const shippingFee = Number(meta.shipping_fee) || 0;
+      couponDiscount = computeCouponDiscount(check, preDiscount);
+      const expectedSum = preDiscount - couponDiscount + shippingFee;
+      if (Math.abs(expectedSum - sum) > 1) {
+        console.warn("create-payment coupon sum mismatch:", {
+          code: check.code, preDiscount, couponDiscount, shippingFee, expectedSum, sum,
+        });
+        return res.status(400).json({ error: "סכום התשלום אינו תואם את ההנחה — רעננו את העמוד ונסו שוב" });
+      }
+      couponCode = check.code!;
+    }
 
     // ───── Resolve product config (DB → fallback) ─────
     // meta.product can be:
@@ -342,6 +377,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } else {
         // Product / subscription flow → orders table
         const rawPayloadBase: Record<string, any> = { consent: consentAudit };
+        // Keep the chosen shipping method structured (no dedicated column on orders)
+        if (meta?.shipping_method) {
+          rawPayloadBase.shipping_method = meta.shipping_method;
+        }
+        // Coupon audit trail — webhook increments used_count on confirmed payment
+        if (couponCode) {
+          rawPayloadBase.coupon_code = couponCode;
+          rawPayloadBase.coupon_discount = couponDiscount;
+        }
         // For store products, stash the products-table id so webhook can write order_items
         if (isStoreProduct && productCfg?._store_product_id) {
           rawPayloadBase.store_product_id = productCfg._store_product_id;
@@ -356,7 +400,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             customer_name: fullName,
             customer_email: email || null,
             customer_phone: phone,
-            subtotal: sum,
+            // With a coupon: subtotal = products before discount, total = charged.
+            subtotal: meta?.pre_discount_sum ? Number(meta.pre_discount_sum) : sum,
+            discount: couponDiscount || null,
             total: sum,
             installments: safeInstallments,
             invoice_type: "receipt",
@@ -364,6 +410,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             description,
             payment_status: "pending",
             raw_payload: rawPayloadBase,
+            // Shipping — structured columns (previously only free-text in description)
+            shipping_address: meta?.shipping_address || null,
+            shipping_city: meta?.shipping_city || null,
+            shipping_zip: meta?.shipping_zip || null,
           })
           .select("id")
           .single();

@@ -1,9 +1,10 @@
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag } from "lucide-react";
+import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag, Zap } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { useProduct, useProducts } from "@/hooks/useProducts";
+import { useCart } from "@/contexts/CartContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import { Seo, productJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
 const ProductPage = () => {
   const { slug } = useParams<{ slug: string }>();
   const { data: product, isLoading } = useProduct(slug || "");
+  const { addItem } = useCart();
   const { data: relatedProducts } = useProducts(
     product?.category?.slug
   );
@@ -25,7 +27,7 @@ const ProductPage = () => {
 
   if (isLoading) {
     return (
-      <Layout>
+      <Layout sidebar={false}>
         <div className="container py-20 max-w-5xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <Skeleton className="aspect-square rounded-2xl" />
@@ -43,7 +45,7 @@ const ProductPage = () => {
 
   if (!product) {
     return (
-      <Layout>
+      <Layout sidebar={false}>
         <div className="container py-20 text-center">
           <h1 className="text-2xl font-heading text-foreground mb-4">המוצר לא נמצא</h1>
           <Link to="/store" className="text-primary hover:underline">
@@ -60,7 +62,7 @@ const ProductPage = () => {
     `${product.title} — לרכישה בחנות בני ציון. ספרים וחומרי לימוד תנ״ך.`;
 
   return (
-    <Layout>
+    <Layout sidebar={false}>
       <Seo
         title={product.title}
         description={productDesc}
@@ -120,7 +122,7 @@ const ProductPage = () => {
                 <img
                   src={product.image_url}
                   alt={product.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain p-4"
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center">
@@ -197,21 +199,32 @@ const ProductPage = () => {
               </div>
             )}
 
-            {/* CTA — internal Grow flow via StoreCheckoutDialog */}
-            <StoreCheckoutDialog
-              productSlug={product.slug}
-              productTitle={product.title}
-              productPrice={product.price}
-              isPhysical={!product.is_digital}
-            >
+            {/* CTA — add to cart (primary, standard store flow) + quick direct buy */}
+            <div className="space-y-2">
               <Button
                 size="lg"
                 className="w-full text-base gap-2 py-6"
+                onClick={() => addItem(product)}
               >
                 <ShoppingCart className="h-5 w-5" />
-                לרכישה
+                הוספה לעגלה
               </Button>
-            </StoreCheckoutDialog>
+              <StoreCheckoutDialog
+                productSlug={product.slug}
+                productTitle={product.title}
+                productPrice={product.price}
+                isPhysical={!product.is_digital}
+              >
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full text-base gap-2"
+                >
+                  <Zap className="h-4 w-4" />
+                  קנייה מהירה
+                </Button>
+              </StoreCheckoutDialog>
+            </div>
             {/* source_url preserved in DB for fallback reference — not used in UI */}
 
             {/* Content */}
@@ -242,7 +255,7 @@ const ProductPage = () => {
                       <img
                         src={p.image_url}
                         alt={p.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
                     )}

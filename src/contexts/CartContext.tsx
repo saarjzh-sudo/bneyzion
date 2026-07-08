@@ -1,10 +1,30 @@
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
 import type { Product } from "@/hooks/useProducts";
 
 export interface CartItem {
   product: Product;
   quantity: number;
   itemType: "product" | "donation";
+}
+
+// Cart persists across refreshes/navigation (Yoav round, level 13).
+// Sanity-checks the stored shape so a stale/corrupt entry never crashes the app.
+const CART_STORAGE_KEY = "bz-cart-v1";
+
+function loadStoredCart(): CartItem[] {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(
+      (i: any) =>
+        i && i.product && typeof i.product.id === "string" &&
+        typeof i.product.price === "number" && typeof i.quantity === "number" && i.quantity > 0
+    );
+  } catch {
+    return [];
+  }
 }
 
 interface CartContextType {
@@ -24,8 +44,17 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(loadStoredCart);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Persist every cart change (best-effort — private mode may block storage).
+  useEffect(() => {
+    try {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+    } catch {
+      /* storage unavailable — cart stays in-memory */
+    }
+  }, [items]);
 
   const addItem = useCallback((product: Product, quantity = 1, itemType: "product" | "donation" = "product") => {
     setItems((prev) => {

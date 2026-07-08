@@ -116,6 +116,14 @@ export function StoreCheckoutDialog({
           tos_accepted_at: new Date().toISOString(),
           // country always Israel — shipping is Israel-only
           // (sent as string field for Grow audit trail)
+          ...(isPhysical
+            ? {
+                shipping_method: shippingMethod,
+                shipping_address: shippingMethod === "pickup" ? "איסוף עצמי" : street,
+                shipping_city: shippingMethod === "pickup" ? undefined : city,
+                shipping_zip: shippingMethod === "pickup" ? undefined : zip,
+              }
+            : {}),
         } as any,
       });
       setOpen(false);

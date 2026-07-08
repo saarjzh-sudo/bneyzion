@@ -31,24 +31,9 @@ import GlobalSearch from "@/components/search/GlobalSearch";
 
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
-// Nav items — updated 2026-05-27 per Saar (second pass):
-// Order (RTL: first item = rightmost, closest to logo):
-// אגף המורים | פרשת השבוע | הקורסים שלי | חנות | אודותינו | לזכר סעדיה (text-only, no flame icon)
-const NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "תנ״ך למשפחה", href: "/family-tanach" },
-  { label: "אגף המורים", href: "/teachers" },
-  { label: "פרשת השבוע", href: "/parasha" },
-  { label: "הקורסים שלי", href: "/design-my-courses" },
-  { label: "חנות", href: "/store" },
-  { label: "אודותינו", href: "/about" },
-];
-
-// Teacher-context nav: same items minus "אגף המורים" (replaced by the context chip)
-const TEACHER_NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "פרשת השבוע", href: "/parasha" },
-  { label: "חנות", href: "/store" },
-  { label: "אודותינו", href: "/about" },
-];
+// Nav items live in src/config/navigation.ts — the single source of truth
+// shared with DesignMobileBottomNav. Do NOT redefine lists here.
+import { NAV_ITEMS, TEACHER_NAV_ITEMS } from "@/config/navigation";
 
 interface DesignHeaderProps {
   /** When true, header is transparent before scroll (use on pages with a dark hero). */

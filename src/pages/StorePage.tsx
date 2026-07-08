@@ -47,7 +47,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             <img
               src={product.image_url}
               alt={product.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-contain p-2 group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
           ) : (
@@ -112,7 +112,7 @@ const StorePage = () => {
   const { data: products, isLoading } = useProducts(activeCategory);
 
   return (
-    <Layout>
+    <Layout sidebar={false}>
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background">
         <div className="absolute inset-0 opacity-5">
