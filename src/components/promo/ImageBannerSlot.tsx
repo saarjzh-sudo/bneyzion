@@ -62,9 +62,13 @@ export default function ImageBannerSlot({ placement }: { placement: "home" | "co
     <div
       data-print-hide
       style={{
+        // width:100% — בתוך layout עם flex ההיעדר שלו מכווץ את הבאנר לאפס
+        width: "100%",
         maxWidth: 1280,
+        boxSizing: "border-box",
         margin: placement === "home" ? "1.5rem auto 0.5rem" : "2.5rem auto 1.5rem",
         padding: "0 1.25rem",
+        alignSelf: "center",
       }}
     >
       {banner.cta_url ? (
