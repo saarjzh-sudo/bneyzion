@@ -124,10 +124,8 @@ const DesignPreviewYehoshuaCampaign = lazy(() => import("./pages/DesignPreviewYe
 const DesignPreviewYehoshuaAdmin = lazy(() => import("./pages/DesignPreviewYehoshuaAdmin"));
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
-const ContentHealth = lazy(() => import("./pages/admin/ContentHealth"));
 const AdminPayments = lazy(() => import("./pages/admin/Payments"));
 const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
-const ImportContent = lazy(() => import("./pages/admin/ImportContent"));
 const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
 const AdminBudget = lazy(() => import("./pages/admin/Budget"));
 const AdminKenes = lazy(() => import("./pages/admin/Kenes"));
@@ -411,8 +409,6 @@ const App = () => (
             <Route path="/admin/topics" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Topics /></Suspense></ProtectedRoute>} />
             <Route path="/admin/upload" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentUpload /></Suspense></ProtectedRoute>} />
             <Route path="/admin/community-courses" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><CommunityCourses /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/content-health" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentHealth /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/import-content" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ImportContent /></Suspense></ProtectedRoute>} />
             <Route path="/admin/benzi" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><BenziKnowledge /></Suspense></ProtectedRoute>} />
             <Route path="/admin/budget" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBudget /></Suspense></ProtectedRoute>} />
             <Route path="/admin/kenes" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminKenes /></Suspense></ProtectedRoute>} />

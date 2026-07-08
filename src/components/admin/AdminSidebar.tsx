@@ -1,8 +1,8 @@
 import {
   LayoutDashboard, BookOpen, Users2, FolderOpen, Tag,
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
-  BarChart3, Bell, PanelTop, Ticket, HeartPulse, CreditCard,
-  UserCheck, Upload, Download, Wallet, CalendarDays, Megaphone,
+  BarChart3, Bell, PanelTop, Ticket, CreditCard,
+  UserCheck, Upload, Wallet, CalendarDays, Megaphone,
   Sparkles, BookMarked, MessageCircle, Heart,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
@@ -79,8 +79,6 @@ const SECTIONS: NavSection[] = [
       { title: "דור הפלאות",     url: "/admin/dor-haplaot",       icon: Sparkles,      roles: CREATOR },
       { title: "תוכן יומי",      url: "/admin/daily",             icon: BookMarked,    roles: CREATOR },
       { title: "דף הבית",        url: "/admin/homepage",          icon: PanelTop,      roles: ADMIN },
-      { title: "בריאות תוכן",   url: "/admin/content-health",    icon: HeartPulse,    roles: CREATOR },
-      { title: "ייבוא תוכן",    url: "/admin/import-content",    icon: Download,      roles: ADMIN },
       { title: "הגדרות",        url: "/admin/settings",          icon: Settings,      roles: ADMIN },
     ],
   },

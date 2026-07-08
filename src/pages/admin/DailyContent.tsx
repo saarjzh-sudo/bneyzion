@@ -1,10 +1,13 @@
 /**
- * DailyContent (admin) — ניהול הפסוק היומי + הסרטון היומי.
+ * DailyContent (admin) — ניהול הפסוק היומי + חדשות התנ"ך.
  *
- * מנהל את הטבלאות שהעמודים הציבוריים קוראים מהן:
+ * 8.7.2026 (סער): טאב "סרטון יומי" הוחלף ב"חדשות התנ״ך" — ניהול טורי החדשות
+ * של הרב יואב (שיעורים בסדרת "חדשות תנכיות"). הטורים נקלטים אוטומטית
+ * מקבוצת הוואטסאפ פעמיים ביום (launchd daily_content_sync), וכאן עורכים,
+ * מפרסמים ומוסיפים ידנית — עם עורך התוכן המלא.
+ *
  *   • daily_verses — פסוק יומי (טקסט, מקור, פרשנות, תמונה) לפי תאריך
- *   • daily_videos — סרטון יומי (כותרת, תיאור, קישור, תמונה ממוזערת)
- * המדיה (image_url / video_url) יושבת ב-storage / קישור חיצוני; עורכים כאן.
+ *   • lessons בסדרה NEWS_SERIES_ID — טורי חדשות התנ"ך
  */
 import { useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
@@ -15,14 +18,19 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { BookMarked, Video, Pencil, Plus } from "lucide-react";
+import { BookMarked, Newspaper, Pencil, Plus, ExternalLink } from "lucide-react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { toast } from "sonner";
 
 const versesTable = () => (supabase as any).from("daily_verses");
-const videosTable = () => (supabase as any).from("daily_videos");
+
+/** סדרת "חדשות תנכיות" + הרב יואב — הזהויות שהסנכרון האוטומטי כותב אליהן */
+const NEWS_SERIES_ID = "5d111b52-b421-4150-adfd-df256950117c";
+const NEWS_RABBI_ID = "acd34d0f-1288-47b8-9e8e-38e69599c294"; // הרב יואב אוריאל — אומת מול ה-DB
 
 interface Verse {
   id: string;
@@ -32,25 +40,15 @@ interface Verse {
   commentary: string | null;
   image_url: string | null;
 }
-interface Vid {
-  id: string;
-  date: string | null;
-  title: string | null;
-  description: string | null;
-  video_url: string | null;
-  thumbnail_url: string | null;
-  topic: string | null;
-}
 
-function useDaily<T>(table: () => any, key: string, cols: string) {
-  return useQuery({
-    queryKey: [key],
-    queryFn: async (): Promise<T[]> => {
-      const { data, error } = await table().select(cols).order("date", { ascending: false });
-      if (error) throw error;
-      return data as T[];
-    },
-  });
+interface NewsItem {
+  id: string;
+  title: string;
+  content: string | null;
+  thumbnail_url: string | null;
+  status: string;
+  published_at: string | null;
+  created_at: string;
 }
 
 function fmt(d: string | null) {
@@ -95,34 +93,66 @@ function VerseDialog({ row, onClose }: { row: Verse; onClose: () => void }) {
   );
 }
 
-/* ── Video editor ── */
-function VideoDialog({ row, onClose }: { row: Vid; onClose: () => void }) {
+/* ── News column editor — עם עורך התוכן המלא ── */
+function NewsDialog({ row, onClose }: { row: NewsItem; onClose: () => void }) {
   const qc = useQueryClient();
-  const [f, setF] = useState<Vid>(row);
+  const [f, setF] = useState<NewsItem>(row);
   const save = useMutation({
     mutationFn: async () => {
-      const { id, ...rest } = f;
-      const err = id
-        ? (await videosTable().update(rest).eq("id", id)).error
-        : (await videosTable().insert(rest)).error;
-      if (err) throw err;
+      const payload = {
+        title: f.title.trim(),
+        content: f.content || null,
+        thumbnail_url: f.thumbnail_url || null,
+        status: f.status,
+        published_at: f.status === "published" ? (f.published_at ?? new Date().toISOString()) : f.published_at,
+        updated_at: new Date().toISOString(),
+      };
+      if (!payload.title) throw new Error("חסרה כותרת לטור");
+      if (f.id) {
+        const { error } = await supabase.from("lessons").update(payload as any).eq("id", f.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("lessons").insert({
+          ...payload,
+          series_id: NEWS_SERIES_ID,
+          rabbi_id: NEWS_RABBI_ID,
+          source_type: "text",
+          audience_tags: ["general"],
+        } as any);
+        if (error) throw error;
+      }
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-daily-videos"] }); toast.success("הסרטון נשמר"); onClose(); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["admin-tanach-news"] }); toast.success("הטור נשמר"); onClose(); },
     onError: (e: Error) => toast.error(e.message || "השמירה נכשלה"),
   });
-  const set = (k: keyof Vid, v: string) => setF((p) => ({ ...p, [k]: v }));
   return (
     <Dialog open onOpenChange={(v) => !v && onClose()}>
-      <DialogContent dir="rtl" className="max-w-lg max-h-[85vh] overflow-y-auto">
-        <DialogHeader><DialogTitle>{f.id ? "עריכת סרטון יומי" : "סרטון יומי חדש"}</DialogTitle></DialogHeader>
+      <DialogContent dir="rtl" className="max-w-3xl max-h-[88vh] overflow-y-auto">
+        <DialogHeader><DialogTitle>{f.id ? "עריכת טור חדשות" : "טור חדשות חדש"}</DialogTitle></DialogHeader>
         <div className="space-y-3">
-          {f.thumbnail_url && <img src={f.thumbnail_url} alt="" className="w-full h-36 object-cover rounded-lg border border-border/60" />}
-          <div className="space-y-1.5"><Label>תאריך</Label><Input type="date" dir="ltr" value={f.date ?? ""} onChange={(e) => set("date", e.target.value)} /></div>
-          <div className="space-y-1.5"><Label>כותרת</Label><Input value={f.title ?? ""} onChange={(e) => set("title", e.target.value)} /></div>
-          <div className="space-y-1.5"><Label>תיאור</Label><Textarea rows={3} value={f.description ?? ""} onChange={(e) => set("description", e.target.value)} /></div>
-          <div className="space-y-1.5"><Label>קישור וידאו</Label><Input dir="ltr" value={f.video_url ?? ""} onChange={(e) => set("video_url", e.target.value)} /></div>
-          <div className="space-y-1.5"><Label>תמונה ממוזערת</Label><Input dir="ltr" value={f.thumbnail_url ?? ""} onChange={(e) => set("thumbnail_url", e.target.value)} /></div>
-          <div className="space-y-1.5"><Label>נושא</Label><Input value={f.topic ?? ""} onChange={(e) => set("topic", e.target.value)} /></div>
+          <div className="space-y-1.5"><Label>כותרת *</Label><Input value={f.title} onChange={(e) => setF((p) => ({ ...p, title: e.target.value }))} /></div>
+          <div className="space-y-1.5">
+            <Label>תוכן הטור</Label>
+            <RichTextEditor
+              value={f.content ?? ""}
+              onChange={(html) => setF((p) => ({ ...p, content: html }))}
+              placeholder="גוף הטור… אפשר לגרור לכאן תמונה והיא תשתבץ"
+              minHeight={200}
+            />
+          </div>
+          <div className="space-y-1.5">
+            <Label>תמונת הטור</Label>
+            {f.thumbnail_url && <img src={f.thumbnail_url} alt="" className="w-full h-36 object-cover rounded-lg border border-border/60" />}
+            <Input dir="ltr" placeholder="https://…" value={f.thumbnail_url ?? ""} onChange={(e) => setF((p) => ({ ...p, thumbnail_url: e.target.value }))} />
+          </div>
+          <div className="flex items-center justify-between rounded-lg border border-border/60 p-3">
+            <Label htmlFor="news-published" className="font-normal">מפורסם באתר (מופיע ב"חדשות התנ״ך")</Label>
+            <Switch
+              id="news-published"
+              checked={f.status === "published"}
+              onCheckedChange={(v) => setF((p) => ({ ...p, status: v ? "published" : "draft" }))}
+            />
+          </div>
           <div className="flex justify-end gap-2 pt-1">
             <Button variant="outline" onClick={onClose}>ביטול</Button>
             <Button onClick={() => save.mutate()} disabled={save.isPending}>{save.isPending ? "שומר…" : "שמירה"}</Button>
@@ -134,13 +164,49 @@ function VideoDialog({ row, onClose }: { row: Vid; onClose: () => void }) {
 }
 
 const EMPTY_VERSE: Verse = { id: "", date: null, verse_text: "", verse_source: "", commentary: "", image_url: "" };
-const EMPTY_VIDEO: Vid = { id: "", date: null, title: "", description: "", video_url: "", thumbnail_url: "", topic: "" };
+const EMPTY_NEWS: NewsItem = { id: "", title: "", content: "", thumbnail_url: "", status: "published", published_at: null, created_at: "" };
 
 export default function DailyContent() {
-  const verses = useDaily<Verse>(versesTable, "admin-daily-verses", "id, date, verse_text, verse_source, commentary, image_url");
-  const videos = useDaily<Vid>(videosTable, "admin-daily-videos", "id, date, title, description, video_url, thumbnail_url, topic");
+  const qc = useQueryClient();
+
+  const verses = useQuery({
+    queryKey: ["admin-daily-verses"],
+    queryFn: async (): Promise<Verse[]> => {
+      const { data, error } = await versesTable()
+        .select("id, date, verse_text, verse_source, commentary, image_url")
+        .order("date", { ascending: false });
+      if (error) throw error;
+      return data as Verse[];
+    },
+  });
+
+  const news = useQuery({
+    queryKey: ["admin-tanach-news"],
+    queryFn: async (): Promise<NewsItem[]> => {
+      const { data, error } = await supabase
+        .from("lessons")
+        .select("id, title, content, thumbnail_url, status, published_at, created_at")
+        .eq("series_id", NEWS_SERIES_ID)
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data as NewsItem[];
+    },
+  });
+
+  const togglePublish = useMutation({
+    mutationFn: async ({ id, publish }: { id: string; publish: boolean }) => {
+      const { error } = await supabase
+        .from("lessons")
+        .update({ status: publish ? "published" : "draft", updated_at: new Date().toISOString() } as any)
+        .eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-tanach-news"] }),
+    onError: () => toast.error("עדכון הסטטוס נכשל"),
+  });
+
   const [editVerse, setEditVerse] = useState<Verse | null>(null);
-  const [editVideo, setEditVideo] = useState<Vid | null>(null);
+  const [editNews, setEditNews] = useState<NewsItem | null>(null);
 
   return (
     <AdminLayout>
@@ -150,13 +216,15 @@ export default function DailyContent() {
             <BookMarked className="h-6 w-6 text-primary" aria-hidden="true" />
             תוכן יומי
           </h1>
-          <p className="text-sm text-muted-foreground mt-1">ניהול הפסוק היומי והסרטון היומי, כולל המדיה. עדכון מופיע מיד באתר.</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            הפסוק היומי וחדשות התנ״ך. שניהם נקלטים אוטומטית מהוואטסאפ פעמיים ביום — כאן עורכים ומשלימים ידנית.
+          </p>
         </div>
 
         <Tabs defaultValue="verses">
           <TabsList>
             <TabsTrigger value="verses"><BookMarked className="h-4 w-4 ml-1" aria-hidden="true" />פסוק יומי</TabsTrigger>
-            <TabsTrigger value="videos"><Video className="h-4 w-4 ml-1" aria-hidden="true" />סרטון יומי</TabsTrigger>
+            <TabsTrigger value="news"><Newspaper className="h-4 w-4 ml-1" aria-hidden="true" />חדשות התנ״ך</TabsTrigger>
           </TabsList>
 
           <TabsContent value="verses">
@@ -192,30 +260,42 @@ export default function DailyContent() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="videos">
+          <TabsContent value="news">
             <Card>
               <CardHeader className="flex-row items-center justify-between">
-                <CardTitle className="text-base">סרטונים {videos.data ? `(${videos.data.length})` : ""}</CardTitle>
-                <Button size="sm" className="gap-1.5" onClick={() => setEditVideo(EMPTY_VIDEO)}><Plus className="h-4 w-4" aria-hidden="true" />חדש</Button>
+                <CardTitle className="text-base flex items-center gap-2">
+                  טורי חדשות {news.data ? `(${news.data.length})` : ""}
+                  <a href="/tanach-news" target="_blank" rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-normal text-primary hover:underline">
+                    לדף באתר <ExternalLink className="h-3 w-3" aria-hidden="true" />
+                  </a>
+                </CardTitle>
+                <Button size="sm" className="gap-1.5" onClick={() => setEditNews(EMPTY_NEWS)}><Plus className="h-4 w-4" aria-hidden="true" />טור חדש</Button>
               </CardHeader>
               <CardContent>
-                {videos.isLoading ? <p className="text-sm text-muted-foreground py-8 text-center">טוען…</p> : (
+                {news.isLoading ? <p className="text-sm text-muted-foreground py-8 text-center">טוען…</p> : (
                   <Table>
                     <TableHeader><TableRow>
                       <TableHead className="text-right">תאריך</TableHead>
                       <TableHead className="text-right">כותרת</TableHead>
-                      <TableHead className="text-right">נושא</TableHead>
                       <TableHead className="text-right">תמונה</TableHead>
+                      <TableHead className="text-right">מפורסם</TableHead>
                       <TableHead className="text-right"></TableHead>
                     </TableRow></TableHeader>
                     <TableBody>
-                      {videos.data?.map((v) => (
-                        <TableRow key={v.id}>
-                          <TableCell className="whitespace-nowrap text-sm">{fmt(v.date)}</TableCell>
-                          <TableCell className="max-w-[280px] truncate font-medium">{v.title}</TableCell>
-                          <TableCell className="text-sm text-muted-foreground">{v.topic}</TableCell>
-                          <TableCell>{v.thumbnail_url ? <img src={v.thumbnail_url} alt="" className="h-9 w-14 object-cover rounded" /> : <span className="text-xs text-muted-foreground">חסר</span>}</TableCell>
-                          <TableCell><Button variant="ghost" size="icon" onClick={() => setEditVideo(v)} aria-label="עריכה"><Pencil className="h-4 w-4" aria-hidden="true" /></Button></TableCell>
+                      {news.data?.map((n) => (
+                        <TableRow key={n.id} style={{ opacity: n.status === "published" ? 1 : 0.55 }}>
+                          <TableCell className="whitespace-nowrap text-sm">{fmt(n.published_at ?? n.created_at)}</TableCell>
+                          <TableCell className="max-w-[300px] truncate font-medium">{n.title}</TableCell>
+                          <TableCell>{n.thumbnail_url ? <img src={n.thumbnail_url} alt="" className="h-9 w-14 object-cover rounded" /> : <span className="text-xs text-muted-foreground">חסר</span>}</TableCell>
+                          <TableCell>
+                            <Switch
+                              checked={n.status === "published"}
+                              onCheckedChange={(v) => togglePublish.mutate({ id: n.id, publish: v })}
+                              aria-label={`פרסום ${n.title}`}
+                            />
+                          </TableCell>
+                          <TableCell><Button variant="ghost" size="icon" onClick={() => setEditNews(n)} aria-label="עריכה"><Pencil className="h-4 w-4" aria-hidden="true" /></Button></TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
@@ -228,7 +308,7 @@ export default function DailyContent() {
       </div>
 
       {editVerse && <VerseDialog row={editVerse} onClose={() => setEditVerse(null)} />}
-      {editVideo && <VideoDialog row={editVideo} onClose={() => setEditVideo(null)} />}
+      {editNews && <NewsDialog row={editNews} onClose={() => setEditNews(null)} />}
     </AdminLayout>
   );
 }
