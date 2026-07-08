@@ -13,30 +13,23 @@
  */
 import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
-import PromoBanner from "./PromoBanner";
 import PromoConferenceStrip from "./PromoConferenceStrip";
 import PromoPopup from "./PromoPopup";
 import { usePromos, isWithinSchedule, matchesAudience } from "./usePromos";
 import { shouldShowPromo, markPromoDismissed } from "./promoDismissal";
 import { isProductRoute, isLearningRoute, isPromoBlockedRoute } from "./promoRoutes";
+import { pageTypeFromPath, useVisitorAudiences, matchesTargeting } from "./targeting";
 import type { Promo } from "./types";
 
 /** Delay before a popup appears, so it never slams on first paint. */
 const POPUP_DELAY_MS = 1500;
 
-/**
- * Visitor audience tags for targeting. Untargeted promos (empty audience_tags)
- * always match. Richer targeting (e.g. 'weekly-learners' from the auth/profile
- * layer, owned by T06) can be fed in here later — see _DONE.md.
- */
-function useVisitorAudience(): string[] {
-  return useMemo(() => [], []);
-}
-
 const PromoProvider = () => {
   const { pathname } = useLocation();
   const { data: promos } = usePromos();
-  const visitorTags = useVisitorAudience();
+  const visitorTags = useMemo<string[]>(() => [], []);
+  // טרגוט חכם (8.7): סוגי-דפים + סוגי-גולשים מהאדמין
+  const visitorAudiences = useVisitorAudiences();
 
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
   const [popupReady, setPopupReady] = useState(false);
@@ -53,13 +46,15 @@ const PromoProvider = () => {
     setDismissedIds((prev) => new Set(prev).add(promo.id));
   };
 
-  const { banner, conference, popup } = useMemo(() => {
-    const empty = { banner: null as Promo | null, conference: null as Promo | null, popup: null as Promo | null };
+  const { conference, popup } = useMemo(() => {
+    // באנרים לא מרונדרים כאן יותר — הם משולבים בזרימת העמוד דרך ImageBannerSlot.
+    const empty = { conference: null as Promo | null, popup: null as Promo | null };
     if (!promos || isPromoBlockedRoute(pathname)) return empty;
 
     const now = Date.now();
     const onProduct = isProductRoute(pathname);
     const onLearning = isLearningRoute(pathname);
+    const pageType = pageTypeFromPath(pathname);
 
     // eligible = active + scheduled + targeted + not frequency-capped + not just-dismissed
     const eligible = promos.filter(
@@ -67,6 +62,7 @@ const PromoProvider = () => {
         !dismissedIds.has(p.id) &&
         isWithinSchedule(p, now) &&
         matchesAudience(p, visitorTags) &&
+        matchesTargeting(p, pageType, visitorAudiences) &&
         shouldShowPromo(p, now),
     );
 
@@ -83,14 +79,13 @@ const PromoProvider = () => {
       else if (onLearning && popupPick.suppress_on_learning) popupPick = null;
     }
 
-    return { banner: pick("banner"), conference: pick("conference"), popup: popupPick };
-  }, [promos, pathname, dismissedIds, visitorTags]);
+    return { conference: pick("conference"), popup: popupPick };
+  }, [promos, pathname, dismissedIds, visitorTags, visitorAudiences]);
 
-  if (!banner && !conference && !popup) return null;
+  if (!conference && !popup) return null;
 
   return (
     <>
-      {banner && <PromoBanner promo={banner} onDismiss={dismiss} />}
       {conference && <PromoConferenceStrip promo={conference} onDismiss={dismiss} />}
       {popup && popupReady && <PromoPopup promo={popup} onDismiss={dismiss} />}
     </>

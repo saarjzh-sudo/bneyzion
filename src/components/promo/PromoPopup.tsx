@@ -96,22 +96,42 @@ const PromoPopup = ({ promo, onDismiss }: Props) => {
         aria-label={promo.title ? undefined : "הודעה"}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
-        style={{
-          position: "relative",
-          width: promo.video_url || promo.image_url ? "min(560px, 100%)" : "min(440px, 100%)",
-          background: colors.parchment,
-          color: colors.textDark,
-          borderRadius: radii.xl,
-          boxShadow: shadows.modal,
-          overflow: "hidden",
-          outline: "none",
-          fontFamily: promoFonts.body,
-        }}
+        style={
+          promo.video_url || promo.image_url
+            ? {
+                // 8.7 (סער): פופאפ-מדיה = התמונה עצמה בדיוק — בלי קלף, בלי שוליים
+                position: "relative",
+                background: "transparent",
+                outline: "none",
+                maxWidth: "min(620px, 94vw)",
+                fontFamily: promoFonts.body,
+              }
+            : {
+                position: "relative",
+                width: "min(440px, 100%)",
+                background: colors.parchment,
+                color: colors.textDark,
+                borderRadius: radii.xl,
+                boxShadow: shadows.modal,
+                overflow: "hidden",
+                outline: "none",
+                fontFamily: promoFonts.body,
+              }
+        }
       >
         {/* 8.7 (סער): פופאפ עם מדיה = "פשוט תמונה לחיצה" — המדיה היא הפופאפ כולו,
-            כל התמונה מקושרת ל-cta_url, בלי כותרת/טקסט/כפתור. */}
+            כל התמונה מקושרת ל-cta_url; כפתור-CTA מעל המדיה כשיש cta_label. */}
         {promo.video_url || promo.image_url ? (
           (() => {
+            const mediaStyle: React.CSSProperties = {
+              maxWidth: "min(620px, 94vw)",
+              maxHeight: "82vh",
+              width: "auto",
+              height: "auto",
+              display: "block",
+              borderRadius: 18,
+              boxShadow: shadows.modal,
+            };
             const media = promo.video_url ? (
               <video
                 src={promo.video_url}
@@ -120,15 +140,44 @@ const PromoPopup = ({ promo, onDismiss }: Props) => {
                 muted
                 loop
                 playsInline
-                controls
-                style={{ width: "100%", maxHeight: "78vh", display: "block", background: "#000" }}
+                style={{ ...mediaStyle, background: "#000", width: "min(420px, 90vw)" }}
               />
             ) : (
-              <img
-                src={promo.image_url!}
-                alt={promo.title ?? "פרסום"}
-                style={{ width: "100%", maxHeight: "78vh", objectFit: "contain", display: "block" }}
-              />
+              <img src={promo.image_url!} alt={promo.title ?? "פרסום"} style={mediaStyle} />
+            );
+            const cta = promo.cta_label && promo.cta_url && (
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: "1.1rem",
+                  insetInline: 0,
+                  display: "flex",
+                  justifyContent: "center",
+                  pointerEvents: "none",
+                }}
+              >
+                <span
+                  style={{
+                    background: "linear-gradient(135deg, #8B6F47, #C4A265)",
+                    color: "white",
+                    fontFamily: promoFonts.display,
+                    fontWeight: 700,
+                    fontSize: "1.05rem",
+                    padding: "0.65rem 1.9rem",
+                    borderRadius: radii.pill,
+                    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
+                    border: "1px solid rgba(255,255,255,0.35)",
+                  }}
+                >
+                  {promo.cta_label}
+                </span>
+              </span>
+            );
+            const content = (
+              <span style={{ position: "relative", display: "block" }}>
+                {media}
+                {cta}
+              </span>
             );
             return promo.cta_url ? (
               <a
@@ -139,9 +188,9 @@ const PromoPopup = ({ promo, onDismiss }: Props) => {
                 onClick={() => onDismiss(promo)}
                 style={{ display: "block", cursor: "pointer" }}
               >
-                {media}
+                {content}
               </a>
-            ) : media;
+            ) : content;
           })()
         ) : (
           <>
@@ -206,20 +255,23 @@ const PromoPopup = ({ promo, onDismiss }: Props) => {
             aria-label="סגירת החלון"
             style={{
               position: "absolute",
-              insetInlineStart: "0.75rem",
-              insetBlockStart: "0.75rem",
-              width: 36,
-              height: 36,
+              insetInlineStart: promo.video_url || promo.image_url ? "-0.6rem" : "0.75rem",
+              insetBlockStart: promo.video_url || promo.image_url ? "-0.6rem" : "0.75rem",
+              width: 38,
+              height: 38,
               borderRadius: radii.pill,
-              background: "rgba(255,255,255,0.85)",
-              border: `1px solid ${colors.parchmentDeep}`,
-              color: colors.textDark,
+              background: "white",
+              border: "none",
+              color: "#1A2744",
               cursor: "pointer",
-              fontSize: "1.4rem",
+              fontSize: "1.5rem",
+              fontWeight: 700,
               lineHeight: 1,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.35)",
+              zIndex: 2,
             }}
           >
             <span aria-hidden="true">×</span>

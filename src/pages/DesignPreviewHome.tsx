@@ -1858,11 +1858,11 @@ export default function DesignPreviewHome() {
       {/* Hero — full-width (comes right after header, overlaps it with marginTop:-96) */}
       <DesignHero />
 
-      {/* 8.7 (סער): באנר-תמונה מתחת להירו — מנוהל מהאדמין (promos, type=banner, placement=home) */}
-      <ImageBannerSlot placement="home" />
-
       {/* Stats bar — full-width, no sidebar */}
       <StatsBar />
+
+      {/* 8.7 (סער): באנר-תמונה — אחרי שורת המספרים ולפני התוכן */}
+      <ImageBannerSlot placement="home" />
 
       {/*
         #learn-start anchor — CTA button in Hero scrolls here.

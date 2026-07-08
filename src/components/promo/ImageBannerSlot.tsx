@@ -9,7 +9,9 @@
  * מכבד תזמון (starts_at/ends_at) ו-is_active — נעלם לבד בסוף קמפיין.
  */
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { pageTypeFromPath, useVisitorAudiences, matchesTargeting } from "./targeting";
 import type { Promo } from "./types";
 
 function isWithinSchedule(p: Promo, now: Date): boolean {
@@ -19,10 +21,12 @@ function isWithinSchedule(p: Promo, now: Date): boolean {
 }
 
 export default function ImageBannerSlot({ placement }: { placement: "home" | "content" }) {
-  const { data: banner } = useQuery({
+  const { pathname } = useLocation();
+  const visitorAudiences = useVisitorAudiences();
+  const { data: rows } = useQuery({
     queryKey: ["image-banner", placement],
     staleTime: 5 * 60 * 1000,
-    queryFn: async (): Promise<Promo | null> => {
+    queryFn: async (): Promise<Promo[]> => {
       const { data } = await (supabase as any)
         .from("promos")
         .select("*")
@@ -30,11 +34,18 @@ export default function ImageBannerSlot({ placement }: { placement: "home" | "co
         .eq("is_active", true)
         .eq("placement", placement)
         .order("priority", { ascending: false });
-      const now = new Date();
-      const rows = (data ?? []) as Promo[];
-      return rows.find((p) => p.image_url && isWithinSchedule(p, now)) ?? null;
+      return (data ?? []) as Promo[];
     },
   });
+
+  const now = new Date();
+  const pageType = pageTypeFromPath(pathname);
+  const banner = (rows ?? []).find(
+    (p) =>
+      p.image_url &&
+      isWithinSchedule(p, now) &&
+      matchesTargeting(p, pageType, visitorAudiences),
+  ) ?? null;
 
   if (!banner?.image_url) return null;
 

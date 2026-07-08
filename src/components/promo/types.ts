@@ -26,6 +26,9 @@ export interface Promo {
   placement: "home" | "content" | null;
   /** נכס נפרד למובייל (יחס ~3:1); בלעדיו נופלים ל-image_url */
   mobile_image_url: string | null;
+  /** טרגוט חכם (8.7): סוגי-דפים וסוגי-גולשים — ריק = כולם. ראה targeting.ts */
+  page_types: string[] | null;
+  audiences: string[] | null;
   audience_tags: string[];
   priority: number;
   frequency: PromoFrequency;

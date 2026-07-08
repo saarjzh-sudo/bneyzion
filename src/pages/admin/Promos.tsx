@@ -21,6 +21,8 @@ import { Megaphone, Plus, Trash2, Pencil, UploadCloud, Loader2, Film, Image as I
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { Checkbox } from "@/components/ui/checkbox";
+import { PAGE_TYPES, AUDIENCES } from "@/components/promo/targeting";
 
 // ── העלאת מדיה לפופאפ (תמונה/וידאו) — אותו bucket כמו שיעורים ──────
 const uploadPromoMedia = async (file: File): Promise<string> => {
@@ -46,6 +48,8 @@ interface PromoRow {
   video_url: string | null;
   placement: "home" | "content" | null;
   mobile_image_url: string | null;
+  page_types: string[] | null;
+  audiences: string[] | null;
   priority: number;
   frequency: "always" | "session" | "once" | "daily";
   dismissible: boolean;
@@ -87,6 +91,8 @@ interface PromoForm {
   video_url: string;
   placement: "home" | "content";
   mobile_image_url: string;
+  page_types: string[];
+  audiences: string[];
   priority: string;
   frequency: PromoRow["frequency"];
   dismissible: boolean;
@@ -108,6 +114,8 @@ const emptyForm: PromoForm = {
   video_url: "",
   placement: "content",
   mobile_image_url: "",
+  page_types: [],
+  audiences: [],
   priority: "0",
   frequency: "session",
   dismissible: true,
@@ -131,6 +139,8 @@ function rowToForm(row: PromoRow): PromoForm {
     video_url: row.video_url ?? "",
     placement: row.placement ?? "content",
     mobile_image_url: row.mobile_image_url ?? "",
+    page_types: row.page_types ?? [],
+    audiences: row.audiences ?? [],
     priority: String(row.priority ?? 0),
     frequency: row.frequency,
     dismissible: row.dismissible,
@@ -154,6 +164,8 @@ function formToPayload(form: PromoForm) {
     video_url: form.video_url.trim() || null,
     placement: form.placement,
     mobile_image_url: form.mobile_image_url.trim() || null,
+    page_types: form.page_types,
+    audiences: form.audiences,
     priority: parseInt(form.priority) || 0,
     frequency: form.frequency,
     dismissible: form.dismissible,
@@ -581,6 +593,41 @@ export default function Promos() {
                 <div className="space-y-1.5">
                   <Label htmlFor="promo-priority">עדיפות (גבוה מנצח)</Label>
                   <Input id="promo-priority" type="number" value={form.priority} onChange={(e) => set("priority", e.target.value)} />
+                </div>
+              </div>
+
+              {/* ── טרגוט חכם (8.7): סוגי דפים + סוגי גולשים — ריק = כולם ── */}
+              <div className="space-y-2 rounded-lg border border-border/60 p-3">
+                <Label className="font-semibold">באילו דפים להציג? <span className="font-normal text-xs text-muted-foreground">(בלי סימון = בכל האתר)</span></Label>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {PAGE_TYPES.map((pt) => (
+                    <label key={pt.value} className="flex items-center gap-2 text-sm cursor-pointer">
+                      <Checkbox
+                        checked={form.page_types.includes(pt.value)}
+                        onCheckedChange={(v) => set("page_types", v
+                          ? [...form.page_types, pt.value]
+                          : form.page_types.filter((x) => x !== pt.value))}
+                      />
+                      {pt.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-2 rounded-lg border border-border/60 p-3">
+                <Label className="font-semibold">לאילו גולשים להציג? <span className="font-normal text-xs text-muted-foreground">(בלי סימון = לכולם)</span></Label>
+                <div className="grid grid-cols-2 gap-1.5">
+                  {AUDIENCES.map((a) => (
+                    <label key={a.value} className="flex items-center gap-2 text-sm cursor-pointer">
+                      <Checkbox
+                        checked={form.audiences.includes(a.value)}
+                        onCheckedChange={(v) => set("audiences", v
+                          ? [...form.audiences, a.value]
+                          : form.audiences.filter((x) => x !== a.value))}
+                      />
+                      {a.label}
+                    </label>
+                  ))}
                 </div>
               </div>
 
