@@ -8480,3 +8480,43 @@ ip_country=null (צפוי). session-הבדיקה נמחק. tsc+build+deno-check+
 
 **מגבלה שנשארה:** ip_country תלוי בכך שה-CDN יזרים כותרת — כרגע לא. אם צריך מדינה,
 לשקול GeoIP על ה-IP (x-forwarded-for) — לא נעשה (over-engineering לכמות הנוכחית).
+
+---
+
+# 🏆🏆🏆 רמה 12 — נסגרה (8.7.2026, סער: "הגענו לרמה 12")
+
+**tag `level12-baseline-2026-07-08` על `finish/integration` = הרצפה החדשה. אין לסגת.**
+מחסומים בסגירה: `regression_guard` ✅ נקי · `lesson_field_parity`: audio=0, drift=0,
+phantoms=2 (מוסברים: חגית אלון / עידית איצקוביץ'). הכל פרוס חי `bneyzion.vercel.app`.
+אפס שינויי-דאטה בכל הרמה — קוד-בלבד + חיווט edge. בונה על רמה 11 (למטה).
+
+**רמה 12 = רמה 11 + ניקוי-אדמין-מקיף לפי הקלטת הרב יואב + מסך שיחות-בנצי לחקירה:**
+
+1. **סדר-פסח באדמין** (`bed123dd`) — ניהול-התוכן לא נבנה לסקייל המיגרציה (23K שיעורים /
+   1,751 סדרות מעל תקרת max_rows=1000 → הרשימות נחתכו בשקט ל-1000 החדשים). `useAdminContent.ts`:
+   חיפוש/דפדוף/ספירות בצד-שרת (אדמין בלבד; הציבורי לא נגע). `SeriesCombobox`+`TopicCombobox`
+   (בוררים עם חיפוש, בלי הצפת קטגוריות/ארכיון). בורר-נושאים תוקן (`topics.name`, היה ריק).
+   סדרה חדשה מקבלת sort_order ברצועת-אחים. badges published/archived + מחיקה-בטוחה.
+2. **אגף המורים** (`bfa1f0de`) — הכרטיסים המתים מחווטים לסיידבר (`?tab=` + פעימה + מגירת-נייד);
+   **תיקון RTL-drawer** (`insetInlineEnd`→`right:0`, רצועה חוסמת-לחיצות בנייד); מוני-אמת
+   ליוצרים (`useCreatorStats`, לא lesson_count המטעה) + בורר מיון שיעורים/א-ב/צפיות.
+3. **הסרת מסך-מת + סריקת-מסכים** (`f89abc6f`) — "דף הבית" הוסר מהניווט (כתב config שאיש
+   לא קורא); "סליקות" הציג 500 במקום 980/718 → `fetchAllRows`; אנליטיקס-views הוקשח.
+   סריקה: אין mock, אין עמודות-שבורות; שאר המסכים נקיים.
+4. **שיחות בנצי — תיעוד+חקירה** (`586f07df`+`9e0baa30`+`74227fe6`) — `history` מערבב 2
+   פורמטים; הקוד קרא רק `t.text` → בועות ריקות + קישורים אבדו. `normalizeTurn` מיישר
+   (empty 2→0), חושף cta_buttons כשבבי-לינק לחיצים, פס-חקירה (כוונות/פרסונה/סירוב/מדינה).
+   **edge חוּוט** (deploy-benzi): תור-בנצי נשמר עשיר (cta נשמר לתמיד), `intents_detected`/
+   `refused_content` נכתבים, ביקון `cta_click`→RPC `append_bot_link_click`→`links_clicked`
+   ("קישורים שהגולש לחץ בפועל"). כל-השורה-לחיצה. (ip_country=null עד CDN-header/GeoIP.)
+
+**מלכודות שנלמדו ברמה 12:** embed עצמי = `parent:parent_id(title)` (ההינט FK לא ב-schema-cache) ·
+`insetInlineEnd` ב-RTL=שמאל (להשתמש ב-`right` פיזי כמו DesignSidebar) · טאב-רקע בפריוויו
+מקפיא CSS-transitions (drawer "לא נפתח" ב-eval אבל fiber/screenshot נכונים) · orders/donations
+עברו 1000 → fetch-all range-loop · aggregate ב-PostgREST כבוי (`PGRST123`) → count:head / סכום-לקוח ·
+Supabase-edge לא חושף כותרת-מדינה.
+
+**פתוח לרמה 13** (עברו מ-11, לא בוצעו): העשרת-הדגשות-1,459 (החלטת-יואב) · תשלום-הקדשות ·
+מיזוג-איכה 23.7 (`merge_eicha_cohort.py --apply`) · ~25 מנויים בלי-מייל · cutover-דומיין ·
+pixel-opt-out · 127-שארית · RLS-P2 · types-regen · ip_country-GeoIP (אם יידרש) ·
+edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמה 12, ממתין לתעבורה אמיתית).
