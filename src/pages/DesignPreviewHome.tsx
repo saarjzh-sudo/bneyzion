@@ -17,6 +17,7 @@ import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
 import { PromoProvider } from "@/components/promo";
+import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
 import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
 import LazyHeroVideo from "@/components/performance/LazyHeroVideo";
@@ -1856,6 +1857,9 @@ export default function DesignPreviewHome() {
 
       {/* Hero — full-width (comes right after header, overlaps it with marginTop:-96) */}
       <DesignHero />
+
+      {/* 8.7 (סער): באנר-תמונה מתחת להירו — מנוהל מהאדמין (promos, type=banner, placement=home) */}
+      <ImageBannerSlot placement="home" />
 
       {/* Stats bar — full-width, no sidebar */}
       <StatsBar />

@@ -44,6 +44,8 @@ interface PromoRow {
   cta_url: string | null;
   image_url: string | null;
   video_url: string | null;
+  placement: "home" | "content" | null;
+  mobile_image_url: string | null;
   priority: number;
   frequency: "always" | "session" | "once" | "daily";
   dismissible: boolean;
@@ -57,7 +59,7 @@ interface PromoRow {
 }
 
 const TYPE_LABELS: Record<PromoRow["type"], string> = {
-  banner: "באנר עליון",
+  banner: "באנר תמונה",
   popup: "פופאפ",
   conference: "רצועת כנס",
 };
@@ -83,6 +85,8 @@ interface PromoForm {
   cta_url: string;
   image_url: string;
   video_url: string;
+  placement: "home" | "content";
+  mobile_image_url: string;
   priority: string;
   frequency: PromoRow["frequency"];
   dismissible: boolean;
@@ -102,6 +106,8 @@ const emptyForm: PromoForm = {
   cta_url: "",
   image_url: "",
   video_url: "",
+  placement: "content",
+  mobile_image_url: "",
   priority: "0",
   frequency: "session",
   dismissible: true,
@@ -123,6 +129,8 @@ function rowToForm(row: PromoRow): PromoForm {
     cta_url: row.cta_url ?? "",
     image_url: row.image_url ?? "",
     video_url: row.video_url ?? "",
+    placement: row.placement ?? "content",
+    mobile_image_url: row.mobile_image_url ?? "",
     priority: String(row.priority ?? 0),
     frequency: row.frequency,
     dismissible: row.dismissible,
@@ -144,6 +152,8 @@ function formToPayload(form: PromoForm) {
     cta_url: form.cta_url.trim() || null,
     image_url: form.image_url.trim() || null,
     video_url: form.video_url.trim() || null,
+    placement: form.placement,
+    mobile_image_url: form.mobile_image_url.trim() || null,
     priority: parseInt(form.priority) || 0,
     frequency: form.frequency,
     dismissible: form.dismissible,
@@ -160,15 +170,20 @@ function formToPayload(form: PromoForm) {
  * PromoMediaField — גוררים תמונה או וידאו (או לוחצים לבחירה) → עולה ל-Storage
  * ומתמלא image_url / video_url אוטומטית. וידאו + תמונה ביחד = התמונה משמשת poster.
  */
-function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo }: {
+function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo, mobileImageUrl, onMobileImage, bannerMode }: {
   imageUrl: string;
   videoUrl: string;
   onImage: (url: string) => void;
   onVideo: (url: string) => void;
+  /** מצב באנר: בלי וידאו, עם נכס מובייל נפרד (יחס ~3:1) */
+  mobileImageUrl?: string;
+  onMobileImage?: (url: string) => void;
+  bannerMode?: boolean;
 }) {
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const mobileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFiles = async (files: File[]) => {
     setUploading(true);
@@ -177,11 +192,11 @@ function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo }: {
         if (file.type.startsWith("image/")) {
           onImage(await uploadPromoMedia(file));
           toast.success("התמונה הועלתה");
-        } else if (file.type.startsWith("video/")) {
+        } else if (file.type.startsWith("video/") && !bannerMode) {
           onVideo(await uploadPromoMedia(file));
           toast.success("הווידאו הועלה");
         } else {
-          toast.error(`רק תמונה או וידאו — ${file.name}`);
+          toast.error(bannerMode ? `באנר = תמונה בלבד — ${file.name}` : `רק תמונה או וידאו — ${file.name}`);
         }
       }
     } catch (e) {
@@ -191,9 +206,23 @@ function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo }: {
     }
   };
 
+  const handleMobileFile = async (file: File | undefined) => {
+    if (!file || !onMobileImage) return;
+    if (!file.type.startsWith("image/")) { toast.error("תמונה בלבד"); return; }
+    setUploading(true);
+    try {
+      onMobileImage(await uploadPromoMedia(file));
+      toast.success("תמונת המובייל הועלתה");
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "ההעלאה נכשלה");
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <div className="space-y-2">
-      <Label>מדיה לפופאפ — תמונה או וידאו</Label>
+      <Label>{bannerMode ? "תמונת הבאנר (רוחבית, ~1600×280)" : "מדיה לפופאפ — תמונה או וידאו"}</Label>
       <div
         role="button"
         tabIndex={0}
@@ -227,7 +256,7 @@ function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo }: {
         <input
           ref={inputRef}
           type="file"
-          accept="image/*,video/*"
+          accept={bannerMode ? "image/*" : "image/*,video/*"}
           multiple
           className="hidden"
           onChange={(e) => {
@@ -263,6 +292,23 @@ function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo }: {
               </button>
             </div>
           )}
+        </div>
+      )}
+
+      {bannerMode && onMobileImage && (
+        <div className="flex items-center gap-2 pt-1">
+          <Button type="button" variant="outline" size="sm" onClick={() => mobileInputRef.current?.click()} disabled={uploading}>
+            {mobileImageUrl ? "החלפת תמונת מובייל" : "העלאת תמונת מובייל (~900×280)"}
+          </Button>
+          {mobileImageUrl && (
+            <>
+              <img src={mobileImageUrl} alt="תמונת מובייל" className="h-9 w-24 object-cover rounded border border-border" />
+              <button type="button" onClick={() => onMobileImage("")} aria-label="הסרת תמונת המובייל"
+                className="h-6 w-6 rounded-full bg-black/60 text-white text-xs leading-none hover:bg-destructive">✕</button>
+            </>
+          )}
+          <input ref={mobileInputRef} type="file" accept="image/*" className="hidden"
+            onChange={(e) => { void handleMobileFile(e.target.files?.[0]); e.target.value = ""; }} />
         </div>
       )}
     </div>
@@ -452,17 +498,41 @@ export default function Promos() {
               <DialogTitle>{editingId ? "עריכת פרסום" : "פרסום חדש"}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              {/* פופאפים בלבד (8.7) — בורר הסוג הוסר; שורות באנר ישנות עדיין ניתנות לעריכה */}
-              <div className="space-y-1.5">
-                <Label htmlFor="promo-theme">צבע</Label>
-                <Select value={form.theme} onValueChange={(v) => set("theme", v as PromoForm["theme"])}>
-                  <SelectTrigger id="promo-theme"><SelectValue /></SelectTrigger>
-                  <SelectContent>
-                    {(Object.keys(THEME_LABELS) as PromoRow["theme"][]).map((t) => (
-                      <SelectItem key={t} value={t}>{THEME_LABELS[t]}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="promo-type">סוג</Label>
+                  <Select value={form.type} onValueChange={(v) => set("type", v as PromoForm["type"])}>
+                    <SelectTrigger id="promo-type"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="popup">פופאפ — תמונה לחיצה</SelectItem>
+                      <SelectItem value="banner">באנר תמונה</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                {form.type === "banner" ? (
+                  <div className="space-y-1.5">
+                    <Label htmlFor="promo-placement">מיקום</Label>
+                    <Select value={form.placement} onValueChange={(v) => set("placement", v as PromoForm["placement"])}>
+                      <SelectTrigger id="promo-placement"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="content">עמודי התוכן (מעל הפוטר)</SelectItem>
+                        <SelectItem value="home">דף הבית (מתחת להירו)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                ) : (
+                  <div className="space-y-1.5">
+                    <Label htmlFor="promo-theme">צבע</Label>
+                    <Select value={form.theme} onValueChange={(v) => set("theme", v as PromoForm["theme"])}>
+                      <SelectTrigger id="promo-theme"><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {(Object.keys(THEME_LABELS) as PromoRow["theme"][]).map((t) => (
+                          <SelectItem key={t} value={t}>{THEME_LABELS[t]}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-1.5">
@@ -486,14 +556,15 @@ export default function Promos() {
                 </div>
               </div>
 
-              {form.type === "popup" && (
-                <PromoMediaField
-                  imageUrl={form.image_url}
-                  videoUrl={form.video_url}
-                  onImage={(url) => set("image_url", url)}
-                  onVideo={(url) => set("video_url", url)}
-                />
-              )}
+              <PromoMediaField
+                imageUrl={form.image_url}
+                videoUrl={form.video_url}
+                onImage={(url) => set("image_url", url)}
+                onVideo={(url) => set("video_url", url)}
+                mobileImageUrl={form.type === "banner" ? form.mobile_image_url : undefined}
+                onMobileImage={form.type === "banner" ? ((url) => set("mobile_image_url", url)) : undefined}
+                bannerMode={form.type === "banner"}
+              />
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1.5">

@@ -22,6 +22,10 @@ export interface Promo {
   image_url: string | null;
   /** וידאו לפופאפ — מוצג media-first, גובר על image_url (שמשמש כ-poster) */
   video_url: string | null;
+  /** באנר-תמונה: איפה הוא מוצג — 'home' (מתחת להירו בדף הבית) או 'content' (עמודי התוכן) */
+  placement: "home" | "content" | null;
+  /** נכס נפרד למובייל (יחס ~3:1); בלעדיו נופלים ל-image_url */
+  mobile_image_url: string | null;
   audience_tags: string[];
   priority: number;
   frequency: PromoFrequency;

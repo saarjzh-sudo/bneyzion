@@ -17,6 +17,7 @@ import DesignHeader from "./DesignHeader";
 import DesignFooter from "./DesignFooter";
 import DesignMobileBottomNav from "./DesignMobileBottomNav";
 import { PromoProvider } from "@/components/promo";
+import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
 import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import DesignSidebar from "./DesignSidebar";
 import { colors } from "@/lib/designTokens";
@@ -83,6 +84,9 @@ export default function DesignLayout({
           {children}
         </main>
       </div>
+
+      {/* 8.7 (סער): באנר-תמונה בעמודי התוכן — מעל הפוטר, בזרימת העמוד (לא צף) */}
+      <ImageBannerSlot placement="content" />
 
       <DesignFooter />
       {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל
