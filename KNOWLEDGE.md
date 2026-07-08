@@ -8348,7 +8348,7 @@ eichaAccess+is_current), באנר בפורטל "אתם לומדים איכה… 
 - אומת חי מול PostgREST (anon): or-search 206, picker+parent embed, topics.name, counts.
   tsc+build נקיים; דף-הבית הציבורי נטען ללא שגיאות קונסול מה-build החדש.
 
-**לא נפרס** — ממתין לאישור סער. דאטה לא שונה כלל.
+**נפרס לפרודקשן 8.7 ~12:50 באישור סער** (bneyzion.vercel.app, אומת חי: /teachers?tab=yotzrim + דף הבית). דאטה לא שונה כלל. עדכון נשלח לרב יואב בוואטסאפ (3EB0A189B8D4BACF8BE2BD, נקרא).
 
 ---
 
