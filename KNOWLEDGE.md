@@ -8201,3 +8201,25 @@ tag: `migration8.5-baseline-2026-07-05` על `finish/integration`. **הרצפה 
 - החלטת יואב על העשרת-הדגשות ל-1,459 השיעורים החלקים.
 - verify חי של עורך-התוכן והביטול באדמין (דורש לוגין אדמין — לא ניתן ב-headless).
 - RLS: לוודא ש-anon לא קורא cancelled_at/cancel_note רגישים (admin בלבד קורא orders — קיים).
+
+### רמה 11 — סבב 2 (8.7.2026 בוקר, פרוס ואומת חי)
+1. **lib/holidays.ts** — לוח מועדים אוטומטי מ-@hebcal (דחיית צומות משבת, אדר-ב'). החליף רשימת
+   HOLIDAYS_5786 ידנית בדף-הבית שבה י"ז בתמוז היה 13.7 במקום 2.7 (ולכן "עוד 5 ימים" אחרי שעבר).
+   CTA מועד: seriesId מוצמד → הסדרה; אחרת הסדרה העשירה ביותר לפי terms. שתי רשימות-אחיות
+   (ParashaHolidaySection/HolidaySection) = קומפוננטות מתות, לא נגעתי.
+2. **חוברת דור-הפלאות 70 ניסים** — הקובץ המעודכן (19MB, פונטים מוטמעים=בלי ריבועים באייפון)
+   ב-`lesson-files/dor-haplaot/dor-haplaot-booklet-70.pdf` (?download= כופה הורדה); 64→70 בכרטיס;
+   DonationPopup קיבל זרימת תרמתי→הורדה; ה-PDF הישן הוסר מ-public/.
+3. **נגישות** — לשונית צד דקה (28px, right:0, top:58%, שקיפות 0.72) במקום עיגול צף שהסתיר.
+4. **פופאפים בלבד** (החלטת סער) — בורר הסוג הוסר מ-admin/Promos; פופאפ איכה פעיל במערכת
+   (promos id `7ab83992`, פלייר ב-Storage, קישור torah-weekly-chapter.lovable.app, session).
+5. **PromoProvider+AccessibilityWidget בכל ה-layouts** — היו רק ב-Layout הישן; דף-הבית
+   (DesignPreviewHome), DesignLayout ו-TeachersLayout לא הציגו פופאפים/נגישות בכלל.
+6. **מספר-Grow במסך המנויים** — ⚠️ orders תחת RLS `user_own` בלבד → הקריאה מהקליינט החזירה
+   ריק והמסך הציג 0 (סער חשב שזה "0 חויבו"). תוקן ב-RPC `grow_subscription_stats`
+   (SECURITY DEFINER, בדיקת admin, GRANT authenticated/REVOKE anon) + פילוח חודשי.
+   **הנתון האמיתי (מדוח-Grow שיובא, לא מה-webhook): אפריל 219 · מאי 226 · יוני 235 משלמים.**
+7. **RTL רוחבי** — ui/dialog (סגירה בשמאל, פוטר space-x-reverse, כותרת ימינה), alert-dialog,
+   sonner dir=rtl.
+8. **bucket `lesson-files` נוצר** — אשף-ההעלאה + העורך + פופאפ-מדיה הצביעו על bucket שלא היה
+   קיים! policies: קריאה ציבורית, כתיבה ל-admin/creator.
