@@ -118,7 +118,7 @@ function QuickCard({
             marginTop: "auto",
           }}
         >
-          עיון ←
+          פתיחה בתפריט הצדדי ←
         </span>
       </div>
     </Link>
@@ -176,25 +176,28 @@ export default function TeachersWingPage() {
             gap: "1.25rem",
           }}
         >
+          {/* הרב יואב 8.7.2026: הכרטיסים היו קישור לעמוד עצמו (לחיצה = כלום).
+              עכשיו כל כרטיס מפעיל את הלשונית המתאימה בתפריט הצדדי (?tab=),
+              הסיידבר מהבהב, ובנייד נפתחת המגירה. */}
           <QuickCard
             icon={<BookOpen size={22} />}
             title="לפי ספר"
             subtitle="תורה, נביאים, כתובים — פתח ספר בתפריט ובחר סדרה"
-            href="/teachers"
+            href="/teachers?tab=books"
             accent={colors.oliveDark}
           />
           <QuickCard
             icon={<Layers size={22} />}
             title="לפי סוג תוכן"
             subtitle="דפי עבודה, חידות, ביאורי מילים, סיכומים ועוד"
-            href="/teachers"
+            href="/teachers?tab=sogTochn"
             accent={colors.goldDark}
           />
           <QuickCard
             icon={<Users size={22} />}
             title="לפי יוצר"
             subtitle="גלה את כל החומרים שכתב מחנך מסוים"
-            href="/teachers"
+            href="/teachers?tab=yotzrim"
             accent={colors.oliveMain}
           />
         </div>

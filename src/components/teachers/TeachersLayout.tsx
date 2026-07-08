@@ -16,7 +16,8 @@
  *  - RTL logical CSS only
  *  - Mobile: drawer from header burger
  */
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
@@ -32,6 +33,15 @@ interface TeachersLayoutProps {
 
 export default function TeachersLayout({ children, activeSeriesId }: TeachersLayoutProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const location = useLocation();
+
+  // הרב יואב 8.7.2026: כרטיסי /teachers מפנים עם ?tab= — בנייד הסיידבר הוא מגירה
+  // סגורה, אז פותחים אותה כדי שהלחיצה על הכרטיס תראה תוצאה.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hasTab = new URLSearchParams(location.search).has("tab");
+    if (hasTab && window.innerWidth < 1024) setDrawerOpen(true);
+  }, [location.key, location.search]);
 
   return (
     <div

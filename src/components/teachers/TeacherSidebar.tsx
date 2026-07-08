@@ -16,7 +16,7 @@
  *  - localStorage key: bnz.teacher-sidebar.collapsed
  */
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -29,7 +29,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { colors, fonts, radii, shadows, gradients } from "@/lib/designTokens";
-import { useTeacherSidebar } from "@/hooks/useTeacherSidebar";
+import { useTeacherSidebar, useCreatorStats } from "@/hooks/useTeacherSidebar";
 import { SUPABASE_URL_RUNTIME } from "@/integrations/supabase/client";
 import { PARSHIOT_BY_BOOK } from "@/hooks/useTeacherParashaContent";
 
@@ -120,15 +120,34 @@ export default function TeacherSidebar({
   // ד2: expandedTools kept for sogTochn accordion (content types don't expand, but pattern reused)
   const [expandedTools, setExpandedTools] = useState<Set<string>>(new Set());
   const [activeContentType, setActiveContentType] = useState<string | null>(null);
+  // הרב יואב 8.7.2026: מיון היוצרים — שיעורים (ברירת-מחדל) / א-ב / צפיות
+  const [yotzrimSort, setYotzrimSort] = useState<"lessons" | "alpha" | "views">("lessons");
+  // פעימת-הדגשה כשכרטיס בעמוד הראשי מפנה לסיידבר (?tab=)
+  const [pulse, setPulse] = useState(false);
 
   const isMobile   = useMobileViewport();
   const isDrawer   = isMobile;
   const drawerVis  = isDrawer && !!drawerOpen;
   const navigate   = useNavigate();
+  const location   = useLocation();
 
   const { torahBooks, neviimBooks, ketuvimBooks, toolsSections, yotzrimRabbis, isLoading } =
     useTeacherSidebar();
   const contentTypesQ = useContentTypeCountsDeduped();
+  const creatorStatsQ = useCreatorStats();
+
+  // הרב יואב 8.7.2026: הכרטיסים בעמוד /teachers מפנים לכאן עם ?tab= —
+  // מפעילים את הלשונית, פורשים את הסיידבר ומהבהבים כדי שהעין תיתפס.
+  useEffect(() => {
+    const tabParam = new URLSearchParams(location.search).get("tab");
+    if (tabParam === "books" || tabParam === "sogTochn" || tabParam === "yotzrim") {
+      setActiveTab(tabParam);
+      setCollapsed(false);
+      setPulse(true);
+      const t = setTimeout(() => setPulse(false), 1700);
+      return () => clearTimeout(t);
+    }
+  }, [location.key, location.search]);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -506,15 +525,73 @@ export default function TeacherSidebar({
           </div>
         );
 
-      case "yotzrim":
+      case "yotzrim": {
+        // הרב יואב 8.7.2026: המספר ליד כל יוצר = שיעורים שפורסמו בפועל (useCreatorStats,
+        // כולל חומרי-מורים) — לא rabbis.lesson_count הציבורי; + בורר מיון כמו ברבנים.
+        const stats = creatorStatsQ.data;
+        const enriched = yotzrimRabbis.map((r) => ({
+          ...r,
+          count: stats?.counts.get(r.id) ?? r.lessonCount,
+          views: stats?.views.get(r.id) ?? 0,
+        }));
+        const sorted = [...enriched];
+        if (yotzrimSort === "alpha") {
+          sorted.sort((a, b) => a.name.localeCompare(b.name, "he"));
+        } else if (yotzrimSort === "views") {
+          // צפיות עוד לא נצברות — שובר-שוויון לפי שיעורים כדי שלא ייראה שרירותי
+          sorted.sort((a, b) => b.views - a.views || b.count - a.count);
+        } else {
+          sorted.sort((a, b) => b.count - a.count || a.name.localeCompare(b.name, "he"));
+        }
         return (
           <div style={{ padding: "0.25rem 0" }}>
-            {yotzrimRabbis
+            {/* בורר מיון (הרב יואב 8.7.2026): שיעורים (ברירת-מחדל) / א-ב / צפיות */}
+            <div
+              style={{ display: "flex", gap: 4, padding: "0.15rem 0.45rem 0.45rem" }}
+              role="group"
+              aria-label="מיון רשימת היוצרים"
+            >
+              {(
+                [
+                  { key: "lessons", label: "לפי שיעורים" },
+                  { key: "alpha", label: "א-ב" },
+                  { key: "views", label: "לפי צפיות" },
+                ] as { key: typeof yotzrimSort; label: string }[]
+              ).map((opt) => {
+                const active = yotzrimSort === opt.key;
+                return (
+                  <button
+                    key={opt.key}
+                    type="button"
+                    onClick={() => setYotzrimSort(opt.key)}
+                    aria-pressed={active}
+                    style={{
+                      flex: 1,
+                      border: `1px solid ${active ? colors.goldDark : "rgba(139,111,71,0.25)"}`,
+                      background: active ? "rgba(196,162,101,0.14)" : "transparent",
+                      color: active ? colors.goldDark : colors.textSubtle,
+                      fontFamily: fonts.body,
+                      fontSize: "0.68rem",
+                      fontWeight: active ? 700 : 500,
+                      borderRadius: 999,
+                      padding: "0.28rem 0.3rem",
+                      cursor: "pointer",
+                      transition: "all 0.15s",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+            {sorted
               .filter((r) => matchSearch(r.name))
               .map((rabbi) => (
                 <button
                   key={rabbi.id}
                   onClick={() => handleRabbiClick(rabbi.id)}
+                  title={`${rabbi.count} שיעורים`}
                   style={{
                     display: "flex",
                     width: "100%",
@@ -532,12 +609,13 @@ export default function TeacherSidebar({
                 >
                   <span>{rabbi.name}</span>
                   <span style={{ fontSize: "0.72rem", color: colors.textSubtle }}>
-                    {rabbi.lessonCount}
+                    {yotzrimSort === "views" ? rabbi.views : rabbi.count}
                   </span>
                 </button>
               ))}
           </div>
         );
+      }
     }
   };
 
@@ -627,7 +705,9 @@ export default function TeacherSidebar({
           flexShrink: 0,
           position: isDrawer ? "fixed" : "sticky",
           top: isDrawer ? 0 : 96,
-          insetInlineEnd: isDrawer ? 0 : undefined,
+          // right פיזי (כמו DesignSidebar) — insetInlineEnd ב-RTL הוא שמאל, מה שהשאיר
+          // רצועת-מגירה תקועה של ~95px מעל התוכן בנייד וחסם לחיצות (הערת יואב 8.7)
+          right: isDrawer ? 0 : undefined,
           height: isDrawer ? "100vh" : "calc(100vh - 96px)",
           zIndex: isDrawer ? 70 : 30,
           transform: isDrawer && !drawerVis ? "translateX(100%)" : "translateX(0)",
@@ -638,8 +718,18 @@ export default function TeacherSidebar({
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
+          // פעימת-הדגשה כשמגיעים מכרטיס בעמוד הראשי (?tab=)
+          animation: pulse ? "bnzTeacherSidebarPulse 0.8s ease-in-out 2" : "none",
         }}
       >
+        {pulse && (
+          <style>{`
+            @keyframes bnzTeacherSidebarPulse {
+              0%, 100% { box-shadow: none; }
+              50% { box-shadow: 0 0 0 4px rgba(196,162,101,0.55) inset; }
+            }
+          `}</style>
+        )}
         {/* Close button (drawer only) */}
         {isDrawer && (
           <div style={{ display: "flex", justifyContent: "flex-start", padding: "0.85rem 1rem 0" }}>
