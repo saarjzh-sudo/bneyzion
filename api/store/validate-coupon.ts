@@ -8,7 +8,8 @@
 
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { validateCoupon, computeCouponDiscount, couponLabel } from "../lib/coupon";
+// ".js" extension required under "type":"module" (see create-payment.ts)
+import { validateCoupon, computeCouponDiscount, couponLabel } from "../lib/coupon.js";
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim();
 const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();

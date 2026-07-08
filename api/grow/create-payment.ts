@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { validateCoupon, computeCouponDiscount } from "../lib/coupon";
+// NOTE: ".js" extension is required — package.json has "type":"module", so the
+// compiled function resolves ESM specifiers literally (coupon.ts → coupon.js).
+import { validateCoupon, computeCouponDiscount } from "../lib/coupon.js";
 
 // .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
 // which silently breaks downstream string routing/comparisons.
