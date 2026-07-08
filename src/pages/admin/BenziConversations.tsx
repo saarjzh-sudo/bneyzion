@@ -245,7 +245,11 @@ export default function BenziConversations() {
                 </TableHeader>
                 <TableBody>
                   {filtered.map((r) => (
-                    <TableRow key={r.s.id}>
+                    <TableRow
+                      key={r.s.id}
+                      onClick={() => setOpen(r.s)}
+                      className="cursor-pointer hover:bg-muted/50 transition-colors"
+                    >
                       <TableCell className="whitespace-nowrap text-sm">
                         {fmtTime(r.s.updated_at)}
                         {r.refused && (
@@ -274,7 +278,12 @@ export default function BenziConversations() {
                       </TableCell>
                       <TableCell className="text-xs text-muted-foreground" dir="ltr">{r.s.last_route || "—"}</TableCell>
                       <TableCell>
-                        <Button variant="ghost" size="icon" onClick={() => setOpen(r.s)} aria-label="צפייה בשיחה">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={(e) => { e.stopPropagation(); setOpen(r.s); }}
+                          aria-label="צפייה בשיחה"
+                        >
                           <Eye className="h-4 w-4" aria-hidden="true" />
                         </Button>
                       </TableCell>
