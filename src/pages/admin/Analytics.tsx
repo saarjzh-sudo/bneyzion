@@ -91,7 +91,9 @@ export default function Analytics() {
           supabase.from("profiles").select("*", { count: "exact", head: true }),
           supabase.from("user_history").select("*", { count: "exact", head: true }),
           supabase.from("user_favorites").select("*", { count: "exact", head: true }),
-          supabase.from("lessons").select("views_count"),
+          // רק שיעורים עם צפיות בפועל — אחרת נשלפים 23K שיעורים ונחתכים ב-1000
+          // (סכום-צפיות שגוי כשמעקב-הצפיות יצטבר). היום 0 שורות; יגדל לאט.
+          supabase.from("lessons").select("views_count").gt("views_count", 0).limit(1000),
           supabase
             .from("user_access_tags" as never)
             .select("valid_until, created_at")

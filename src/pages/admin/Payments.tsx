@@ -682,37 +682,45 @@ function Row({
 }
 
 /* ─── Supabase hooks ─────────────────────────────────────────── */
+// PostgREST חוסם 1000 שורות לבקשה. הסליקות והתרומות עברו את זה (980/718 ומטפסים),
+// והמסך סיכם/ספר רק את ה-500 החדשים → סטטיסטיקות שגויות. שולפים הכל בלולאת range
+// (ordered desc), כדי שהספירות והסיכומים יהיו מלאים. הכמויות מוגבלות (אלפים) — בטוח.
+const PAY_PAGE = 1000;
+async function fetchAllRows<T>(table: string, columns: string): Promise<T[]> {
+  const rows: T[] = [];
+  for (let from = 0; ; from += PAY_PAGE) {
+    const { data, error } = await supabase
+      .from(table as never)
+      .select(columns)
+      .order("created_at", { ascending: false })
+      .range(from, from + PAY_PAGE - 1);
+    if (error) throw error;
+    const batch = (data ?? []) as unknown as T[];
+    rows.push(...batch);
+    if (batch.length < PAY_PAGE) break;
+  }
+  return rows;
+}
+
 function useOrders() {
   return useQuery<Order[]>({
     queryKey: ["admin-payments-orders"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("orders")
-        .select(
-          "id, created_at, order_number, customer_name, customer_email, customer_phone, total, subtotal, discount, currency, installments, payment_id, payment_method, payment_status, status, invoice_url, invoice_number, asmachta, card_suffix, product, smoove_list_id, smoove_subscribed, raw_payload"
-        )
-        .order("created_at", { ascending: false })
-        .limit(500);
-      if (error) throw error;
-      return (data ?? []) as Order[];
-    },
+    queryFn: () =>
+      fetchAllRows<Order>(
+        "orders",
+        "id, created_at, order_number, customer_name, customer_email, customer_phone, total, subtotal, discount, currency, installments, payment_id, payment_method, payment_status, status, invoice_url, invoice_number, asmachta, card_suffix, product, smoove_list_id, smoove_subscribed, raw_payload"
+      ),
   });
 }
 
 function useDonations() {
   return useQuery<Donation[]>({
     queryKey: ["admin-payments-donations"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("donations")
-        .select(
-          "id, created_at, amount, donor_name, donor_email, phone, dedication_name, dedication_type, payment_status, is_monthly, payment_id, asmachta, card_suffix, product, source, tier_id, tier_name, tier_perks, shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes, invoice_url, smoove_list_id, raw_payload"
-        )
-        .order("created_at", { ascending: false })
-        .limit(500);
-      if (error) throw error;
-      return (data ?? []) as Donation[];
-    },
+    queryFn: () =>
+      fetchAllRows<Donation>(
+        "donations",
+        "id, created_at, amount, donor_name, donor_email, phone, dedication_name, dedication_type, payment_status, is_monthly, payment_id, asmachta, card_suffix, product, source, tier_id, tier_name, tier_perks, shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes, invoice_url, smoove_list_id, raw_payload"
+      ),
   });
 }
 

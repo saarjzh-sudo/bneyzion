@@ -1,7 +1,7 @@
 import {
   LayoutDashboard, BookOpen, Users2, FolderOpen, Tag,
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
-  BarChart3, Bell, PanelTop, Ticket, CreditCard,
+  BarChart3, Bell, Ticket, CreditCard,
   UserCheck, Upload, Wallet, CalendarDays, Megaphone,
   Sparkles, BookMarked, MessageCircle, Heart,
 } from "lucide-react";
@@ -78,7 +78,9 @@ const SECTIONS: NavSection[] = [
       { title: "באנרים ופופאפים", url: "/admin/promos",           icon: Megaphone,     roles: ADMIN },
       { title: "דור הפלאות",     url: "/admin/dor-haplaot",       icon: Sparkles,      roles: CREATOR },
       { title: "תוכן יומי",      url: "/admin/daily",             icon: BookMarked,    roles: CREATOR },
-      { title: "דף הבית",        url: "/admin/homepage",          icon: PanelTop,      roles: ADMIN },
+      // "דף הבית" (/admin/homepage) הוסר מהניווט 8.7.2026 — מסך מיותר: כתב
+      // site_settings.homepage_config שדף הבית החי (DesignPreviewHome) לא קורא כלל.
+      // ניהול הבאנרים/פופאפים עבר ל"באנרים ופופאפים" (/admin/promos). הראוט נשאר route-only.
       { title: "הגדרות",        url: "/admin/settings",          icon: Settings,      roles: ADMIN },
     ],
   },
