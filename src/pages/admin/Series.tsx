@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Plus, Search, Pencil, Trash2, Tag, GraduationCap, Users, CheckCircle, RotateCcw, Clock, AlertCircle } from "lucide-react";
-import { useSeries, useCreateSeries, useUpdateSeries, useDeleteSeries } from "@/hooks/useSeries";
+import { useCreateSeries, useUpdateSeries, useDeleteSeries } from "@/hooks/useSeries";
+import {
+  useAdminSeriesPage, useAdminSeriesCounts, useDebouncedValue,
+  ADMIN_PAGE_SIZE, type AdminSeriesTab, type AdminAudienceFilter,
+} from "@/hooks/useAdminContent";
+import { SeriesCombobox } from "@/components/admin/SeriesCombobox";
 import { useRabbis } from "@/hooks/useRabbis";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
@@ -23,8 +28,11 @@ const SERIES_STATUS_CONFIG: Record<string, { label: string; bg: string; text: st
   draft:          { label: "טיוטה",        bg: "bg-slate-100",   text: "text-slate-600",   dot: "#94A3B8" },
   pending_review: { label: "ממתין לאישור", bg: "bg-amber-50",    text: "text-amber-700",   dot: "#D97706" },
   active:         { label: "פעילה",        bg: "bg-emerald-50",  text: "text-emerald-700", dot: "#059669" },
+  // published = ירושת מיגרציה, שקולה ל"פעילה" בכל שאילתות הצד הציבורי
+  published:      { label: "פורסמה",       bg: "bg-emerald-50",  text: "text-emerald-700", dot: "#059669" },
   completed:      { label: "הושלמה",       bg: "bg-blue-50",     text: "text-blue-700",    dot: "#2563EB" },
   category:       { label: "קטגוריה",      bg: "bg-purple-50",   text: "text-purple-700",  dot: "#7C3AED" },
+  archived:       { label: "בארכיון",      bg: "bg-red-50",      text: "text-red-600",     dot: "#DC2626" },
 };
 
 const SeriesStatusBadge = ({ status }: { status: string }) => {
@@ -66,7 +74,11 @@ function useApproveSeries() {
       const { error } = await supabase.from("series").update(updates as any).eq("id", id);
       if (error) throw error;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["series"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["series"] });
+      qc.invalidateQueries({ queryKey: ["admin-series"] });
+      qc.invalidateQueries({ queryKey: ["admin-series-counts"] });
+    },
   });
 }
 
@@ -131,13 +143,12 @@ const TAG_LABELS: Record<string, string> = {
   advanced: "מתקדמים",
 };
 
-type AudienceFilter = "all" | "teachers" | "general";
+type AudienceFilter = AdminAudienceFilter;
 
-type SeriesTab = "all" | "pending_review" | "active" | "draft";
+type SeriesTab = AdminSeriesTab;
 
 export default function SeriesPage() {
   const { user, isAdmin } = useAuth();
-  const { data: seriesList, isLoading } = useSeries();
   const { data: rabbis } = useRabbis();
   const createSeries = useCreateSeries();
   const updateSeries = useUpdateSeries();
@@ -149,6 +160,24 @@ export default function SeriesPage() {
   const [search, setSearch] = useState("");
   const [audienceFilter, setAudienceFilter] = useState<AudienceFilter>("all");
   const [activeTab, setActiveTab] = useState<SeriesTab>("all");
+  const [page, setPage] = useState(1);
+
+  // חיפוש + סינון + דפדוף בצד השרת — יש 1,750+ סדרות ב-DB,
+  // שליפת-הכל נחתכה בתקרת 1000 השורות של PostgREST (751 סדרות ותיקות נעלמו מהאדמין).
+  const debouncedSearch = useDebouncedValue(search, 350);
+  const { data: seriesPage, isLoading } = useAdminSeriesPage({
+    search: debouncedSearch, tab: activeTab, audience: audienceFilter, page,
+  });
+  const { data: counts } = useAdminSeriesCounts();
+  const seriesList = seriesPage?.rows;
+  const total = seriesPage?.total ?? 0;
+  const totalPages = Math.max(1, Math.ceil(total / ADMIN_PAGE_SIZE));
+
+  const invalidateAdminSeries = () => {
+    qc.invalidateQueries({ queryKey: ["admin-series"] });
+    qc.invalidateQueries({ queryKey: ["admin-series-counts"] });
+    qc.invalidateQueries({ queryKey: ["admin-series-picker"] });
+  };
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<any>(null);
   const [form, setForm] = useState({
@@ -161,8 +190,11 @@ export default function SeriesPage() {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [bulkTagging, setBulkTagging] = useState(false);
 
-  // Feature 6: pending count
-  const pendingCount = (seriesList ?? []).filter((s: any) => s.status === "pending_review").length;
+  // Feature 6: pending count (מדויק מה-DB, לא מהעמוד הנוכחי)
+  const pendingCount = counts?.pending_review ?? 0;
+
+  // חזרה לעמוד 1 בכל שינוי חיפוש/לשונית/קהל
+  useEffect(() => { setPage(1); }, [debouncedSearch, activeTab, audienceFilter]);
 
   // Feature 6: approve/return handlers
   const handleApprove = async (seriesId: string) => {
@@ -234,6 +266,7 @@ export default function SeriesPage() {
       }
       setDialogOpen(false);
       resetForm();
+      invalidateAdminSeries();
     } catch (e: any) {
       toast({ title: "שגיאה", description: e.message, variant: "destructive" });
     }
@@ -254,6 +287,7 @@ export default function SeriesPage() {
         }
       }
       await qc.invalidateQueries({ queryKey: ["series"] });
+      invalidateAdminSeries();
       toast({ title: `${selectedIds.size} סדרות תויגו כ"מורים"` });
       setSelectedIds(new Set());
     } catch (e: any) {
@@ -263,17 +297,8 @@ export default function SeriesPage() {
     }
   };
 
-  // Filtering: audience + search + tab
-  const filtered = (seriesList ?? []).filter((s: any) => {
-    const matchSearch = s.title.includes(search);
-    if (!matchSearch) return false;
-    if (activeTab !== "all" && s.status !== activeTab) return false;
-    if (audienceFilter === "all") return true;
-    const tags: string[] = s.audience_tags ?? ["general"];
-    if (audienceFilter === "teachers") return tags.includes("teachers");
-    if (audienceFilter === "general") return !tags.includes("teachers");
-    return true;
-  });
+  // הסינון (קהל/סטטוס/חיפוש) נעשה בצד השרת — העמוד הנוכחי הוא כבר התוצאה
+  const filtered = seriesList ?? [];
 
   const toggleSelectRow = (id: string) => {
     setSelectedIds((prev) => {
@@ -291,9 +316,7 @@ export default function SeriesPage() {
     }
   };
 
-  const teachersCount = (seriesList ?? []).filter((s: any) =>
-    (s.audience_tags ?? []).includes("teachers")
-  ).length;
+  const teachersCount = counts?.teachers ?? 0;
 
   return (
     <AdminLayout>
@@ -327,15 +350,14 @@ export default function SeriesPage() {
                 </div>
                 <div>
                   <Label>סדרת אב (היררכיה)</Label>
-                  <Select value={form.parent_id} onValueChange={(v) => setForm({ ...form, parent_id: v === "_none" ? "" : v })}>
-                    <SelectTrigger><SelectValue placeholder="ללא — סדרה עליונה" /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="_none">ללא — סדרה עליונה</SelectItem>
-                      {seriesList?.filter((s: any) => s.id !== editing?.id).map((s: any) => (
-                        <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <SeriesCombobox
+                    value={form.parent_id}
+                    onChange={id => setForm(f => ({ ...f, parent_id: id }))}
+                    includeCategories
+                    excludeId={editing?.id}
+                    placeholder="ללא — סדרה עליונה"
+                    clearLabel="ללא — סדרה עליונה"
+                  />
                 </div>
                 <div><Label>קישור תמונה</Label><Input value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} /></div>
                 <div>
@@ -350,6 +372,11 @@ export default function SeriesPage() {
                       )}
                       {isAdmin && <SelectItem value="active">פעילה</SelectItem>}
                       {isAdmin && <SelectItem value="completed">הושלמה</SelectItem>}
+                      {isAdmin && <SelectItem value="archived">בארכיון (מוסתר מהאתר)</SelectItem>}
+                      {/* סטטוסים ירושת-מיגרציה — מוצגים רק אם זה הסטטוס הנוכחי של הסדרה,
+                          כדי שעריכת סדרה "פורסמה"/"קטגוריה" לא תציג שדה ריק ולא תשנה סטטוס בטעות */}
+                      {editing?.status === "published" && <SelectItem value="published">פורסמה (ירושת מיגרציה)</SelectItem>}
+                      {editing?.status === "category" && <SelectItem value="category">קטגוריה (צומת עץ הניווט)</SelectItem>}
                     </SelectContent>
                   </Select>
                 </div>
@@ -398,9 +425,9 @@ export default function SeriesPage() {
           <div className="flex items-center rounded-lg border bg-card overflow-hidden">
             {(["all", "teachers", "general"] as AudienceFilter[]).map((f) => {
               const labels: Record<AudienceFilter, string> = {
-                all: `הכל (${(seriesList ?? []).length})`,
+                all: `הכל (${counts?.all ?? "…"})`,
                 teachers: `מורים (${teachersCount})`,
-                general: `כללי (${(seriesList ?? []).length - teachersCount})`,
+                general: `כללי (${counts?.general ?? "…"})`,
               };
               const icons: Record<AudienceFilter, React.ReactNode> = {
                 all: <Users className="h-3.5 w-3.5" />,
@@ -460,13 +487,16 @@ export default function SeriesPage() {
           </div>
         )}
 
-        {/* Feature 6: Status tabs */}
-        <div className="flex items-center rounded-lg border bg-card overflow-hidden w-fit">
+        {/* Feature 6: Status tabs — כולל קטגוריות/ארכיון בנפרד, שלא יציפו את רשימת העבודה */}
+        <div className="flex items-center rounded-lg border bg-card overflow-x-auto w-fit max-w-full">
           {([
-            { id: "all",            label: `הכל (${(seriesList ?? []).length})` },
+            { id: "all",            label: `הכל (${counts?.all ?? "…"})` },
             { id: "pending_review", label: `ממתין (${pendingCount})`, highlight: pendingCount > 0 },
-            { id: "active",         label: "פעילות" },
-            { id: "draft",          label: "טיוטות" },
+            { id: "active",         label: `פעילות (${counts?.active ?? "…"})` },
+            { id: "published",      label: `פורסמו (${counts?.published ?? "…"})` },
+            { id: "draft",          label: `טיוטות (${counts?.draft ?? "…"})` },
+            { id: "category",       label: `קטגוריות-עץ (${counts?.category ?? "…"})` },
+            { id: "archived",       label: `ארכיון (${counts?.archived ?? "…"})` },
           ] as { id: SeriesTab; label: string; highlight?: boolean }[]).map(tab => (
             <button
               key={tab.id}
@@ -512,6 +542,7 @@ export default function SeriesPage() {
                       />
                     </TableHead>
                     <TableHead className="text-right">כותרת</TableHead>
+                    <TableHead className="text-right">ממוקמת תחת</TableHead>
                     <TableHead className="text-right">רב</TableHead>
                     <TableHead className="text-right">שיעורים</TableHead>
                     <TableHead className="text-right">קהל יעד</TableHead>
@@ -531,6 +562,7 @@ export default function SeriesPage() {
                           />
                         </TableCell>
                         <TableCell className="font-medium">{s.title}</TableCell>
+                        <TableCell className="max-w-[140px] truncate text-muted-foreground">{s.parent?.title || "—"}</TableCell>
                         <TableCell>{s.rabbis?.name || "—"}</TableCell>
                         <TableCell>{s.lesson_count}</TableCell>
                         <TableCell>
@@ -569,7 +601,27 @@ export default function SeriesPage() {
                             </Button>
                             <Button
                               variant="ghost" size="icon"
-                              onClick={() => { if (confirm("למחוק?")) deleteSeries.mutate(s.id); }}
+                              onClick={() => {
+                                if ((s.lesson_count ?? 0) > 0) {
+                                  toast({
+                                    title: "לא ניתן למחוק סדרה עם שיעורים",
+                                    description: `בסדרה "${s.title}" יש ${s.lesson_count} שיעורים. כדי להסתיר אותה מהאתר — העבירו לסטטוס "בארכיון" בעריכה.`,
+                                    variant: "destructive",
+                                  });
+                                  return;
+                                }
+                                if (!confirm(`למחוק לצמיתות את הסדרה "${s.title}"?`)) return;
+                                deleteSeries.mutate(s.id, {
+                                  onSuccess: invalidateAdminSeries,
+                                  onError: (e: any) => toast({
+                                    title: "המחיקה נחסמה",
+                                    description: /foreign key|violates/i.test(e?.message ?? "")
+                                      ? "לסדרה יש קישורים במערכת (תתי-סדרות / הקדשות / הרשמות). במקום מחיקה — העבירו לארכיון בעריכה."
+                                      : e?.message,
+                                    variant: "destructive",
+                                  }),
+                                });
+                              }}
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>
@@ -580,11 +632,31 @@ export default function SeriesPage() {
                   })}
                   {filtered.length === 0 && (
                     <TableRow>
-                      <TableCell colSpan={7} className="text-center text-muted-foreground py-8">אין סדרות</TableCell>
+                      <TableCell colSpan={8} className="text-center text-muted-foreground py-8">אין סדרות</TableCell>
                     </TableRow>
                   )}
                 </TableBody>
               </Table>
+            )}
+
+            {/* ── pagination ─────────────────────────────────────── */}
+            {total > ADMIN_PAGE_SIZE && (
+              <div className="flex items-center justify-between pt-4 border-t border-border mt-2">
+                <p className="text-xs text-muted-foreground">
+                  מציג {(page - 1) * ADMIN_PAGE_SIZE + 1}–{Math.min(page * ADMIN_PAGE_SIZE, total)} מתוך {total.toLocaleString()}
+                </p>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" className="font-display"
+                    disabled={page <= 1} onClick={() => setPage(p => p - 1)}>
+                    הקודם
+                  </Button>
+                  <span className="text-xs text-muted-foreground">עמוד {page} מתוך {totalPages.toLocaleString()}</span>
+                  <Button variant="outline" size="sm" className="font-display"
+                    disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>
+                    הבא
+                  </Button>
+                </div>
+              </div>
             )}
           </CardContent>
         </Card>

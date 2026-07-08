@@ -38,6 +38,7 @@ import { ContentLocationPicker, type SelectedLocation } from "@/components/admin
 import { MultiRabbiSelector } from "@/components/admin/MultiRabbiSelector";
 import { useLessonRabbis } from "@/hooks/useRabbiMultiSelect";
 import { RichTextEditor, type UploadedMedia } from "@/components/admin/RichTextEditor";
+import { TopicCombobox } from "@/components/admin/TopicCombobox";
 
 // ─── design tokens ──────────────────────────────────────────────────
 const GOLD   = "#8B6F47";
@@ -189,21 +190,29 @@ const ContentUpload = () => {
     },
   });
 
-  const { data: topicsList } = useQuery({
-    queryKey: ["admin-topics-list"],
-    queryFn: async () => {
-      const { data } = await supabase
-        .from("topics")
-        .select("id, title, slug")
-        .order("title")
-        .limit(300);
-      return data ?? [];
-    },
-  });
+  // בורר הנושאים עבר ל-TopicCombobox (useTopicsForPicker) — השאילתה הישנה
+  // שלפה עמודת title שלא קיימת ב-topics (העמודה היא name) והבורר היה ריק תמיד.
 
   // ── mutations ───────────────────────────────────────────────────
   const createSeries = useMutation({
     mutationFn: async ({ title, parentId }: { title: string; parentId: string }) => {
+      // רצועת-הסיידבר: רק sort_order 1..999 מוצג בעץ הציבורי; ברירת המחדל בטבלה היא 0
+      // (=דף-הצומת בלבד) — סדרה חדשה נכנסה עד היום "בלתי-נראית" בעץ. יישור קו עם האחים:
+      // אם לצומת-האב יש ילדים ברצועה — הסדרה החדשה נכנסת אחריהם; אחרת נשארת 0 כמוהם.
+      let sortOrder = 0;
+      if (parentId) {
+        const { data: bandSiblings } = await supabase
+          .from("series")
+          .select("sort_order")
+          .eq("parent_id", parentId)
+          .gte("sort_order", 1)
+          .lte("sort_order", 999)
+          .order("sort_order", { ascending: false })
+          .limit(1);
+        if (bandSiblings && bandSiblings.length > 0) {
+          sortOrder = Math.min((bandSiblings[0].sort_order ?? 0) + 1, 999);
+        }
+      }
       const { data, error } = await supabase
         .from("series")
         .insert({
@@ -214,6 +223,7 @@ const ContentUpload = () => {
           audience_tags: form.audienceTags,
           // Fix: attach parent_id from the picker node — previously always missing (orphan bug)
           parent_id: parentId || null,
+          sort_order: sortOrder,
         } as any)
         .select("id, title")
         .single();
@@ -751,16 +761,11 @@ const ContentUpload = () => {
                 <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
                   נושא
                 </label>
-                <Select value={form.topicId} onValueChange={v => set("topicId", v)}>
-                  <SelectTrigger style={{ direction: "rtl" }}>
-                    <SelectValue placeholder="בחר נושא (אופציונלי)" />
-                  </SelectTrigger>
-                  <SelectContent dir="rtl">
-                    {topicsList?.map((t: any) => (
-                      <SelectItem key={t.id} value={t.id}>{t.title}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                <TopicCombobox
+                  value={form.topicId}
+                  onChange={id => set("topicId", id)}
+                  placeholder="חפש ובחר נושא (אופציונלי)"
+                />
               </div>
 
               {/* audience tags */}

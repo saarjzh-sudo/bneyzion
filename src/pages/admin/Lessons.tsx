@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,10 +12,14 @@ import {
   Plus, Search, Pencil, Trash2, Wand2, ImageOff, ExternalLink,
   CheckCircle, RotateCcw, Clock, MessageSquare,
 } from "lucide-react";
-import { useLessons, useCreateLesson, useUpdateLesson, useDeleteLesson } from "@/hooks/useLessons";
+import { useCreateLesson, useUpdateLesson, useDeleteLesson } from "@/hooks/useLessons";
 import { RichTextEditor, type UploadedMedia } from "@/components/admin/RichTextEditor";
 import { useRabbis } from "@/hooks/useRabbis";
-import { useSeries } from "@/hooks/useSeries";
+import {
+  useAdminLessonsPage, useAdminLessonCounts, useDebouncedValue,
+  fetchLessonById, ADMIN_PAGE_SIZE, type AdminLessonStatus,
+} from "@/hooks/useAdminContent";
+import { SeriesCombobox } from "@/components/admin/SeriesCombobox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -57,7 +61,11 @@ function useApproveLesson() {
       const { error } = await supabase.from("lessons").update(updates as any).eq("id", id);
       if (error) throw error;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["lessons"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["lessons"] });
+      qc.invalidateQueries({ queryKey: ["admin-lessons"] });
+      qc.invalidateQueries({ queryKey: ["admin-lesson-counts"] });
+    },
   });
 }
 
@@ -118,20 +126,36 @@ const ReturnDialog = ({
 // ── main component ───────────────────────────────────────────────────
 export default function Lessons() {
   const { user, isAdmin } = useAuth();
-  const { data: lessons, isLoading } = useLessons();
   const { data: rabbis } = useRabbis();
-  const { data: seriesList } = useSeries();
   const createLesson = useCreateLesson();
   const updateLesson = useUpdateLesson();
   const deleteLesson = useDeleteLesson();
   const approveLesson = useApproveLesson();
   const { toast } = useToast();
+  const qc = useQueryClient();
 
   const [search, setSearch]           = useState("");
-  const [activeTab, setActiveTab]     = useState<"all" | "pending_review" | "draft" | "published">("all");
+  const [activeTab, setActiveTab]     = useState<AdminLessonStatus>("all");
+  const [page, setPage]               = useState(1);
   const [dialogOpen, setDialogOpen]   = useState(false);
   const [editingLesson, setEditingLesson] = useState<any>(null);
   const [generatingImage, setGeneratingImage] = useState(false);
+
+  // חיפוש + סינון + דפדוף בצד השרת — הטבלה מכילה 23K+ שיעורים,
+  // שליפת-הכל נחתכת בתקרת 1000 השורות של PostgREST (הבאג הישן).
+  const debouncedSearch = useDebouncedValue(search, 350);
+  const { data: lessonsPage, isLoading } = useAdminLessonsPage({
+    search: debouncedSearch, status: activeTab, page,
+  });
+  const { data: counts } = useAdminLessonCounts();
+  const lessons = lessonsPage?.rows;
+  const total   = lessonsPage?.total ?? 0;
+  const totalPages = Math.max(1, Math.ceil(total / ADMIN_PAGE_SIZE));
+
+  const invalidateAdminLessons = () => {
+    qc.invalidateQueries({ queryKey: ["admin-lessons"] });
+    qc.invalidateQueries({ queryKey: ["admin-lesson-counts"] });
+  };
 
   const [form, setForm] = useState({
     title: "", description: "", rabbi_id: "", series_id: "", video_url: "", audio_url: "",
@@ -146,7 +170,16 @@ export default function Lessons() {
     setEditingLesson(null);
   };
 
-  const openEdit = (lesson: any) => {
+  const openEdit = async (row: any) => {
+    // הרשימה לא נושאת content/קבצים — שולפים את השיעור המלא לפני עריכה,
+    // אחרת שמירה הייתה דורסת את גוף המאמר בערך ריק.
+    let lesson = row;
+    try {
+      lesson = await fetchLessonById(row.id);
+    } catch (e: any) {
+      toast({ title: "שגיאה בטעינת השיעור לעריכה", description: e?.message, variant: "destructive" });
+      return;
+    }
     setEditingLesson(lesson);
     setForm({
       title: lesson.title, description: lesson.description || "", rabbi_id: lesson.rabbi_id || "",
@@ -158,6 +191,9 @@ export default function Lessons() {
     });
     setDialogOpen(true);
   };
+
+  // חזרה לעמוד 1 בכל שינוי חיפוש/לשונית
+  useEffect(() => { setPage(1); }, [debouncedSearch, activeTab]);
 
   // קובץ שנגרר לעורך התוכן → ממלא את שדה השיעור המתאים
   const handleEditorMedia = (media: UploadedMedia) => {
@@ -209,6 +245,7 @@ export default function Lessons() {
       }
       setDialogOpen(false);
       resetForm();
+      invalidateAdminLessons();
     } catch (e: any) {
       toast({ title: "שגיאה", description: e.message, variant: "destructive" });
     }
@@ -234,22 +271,19 @@ export default function Lessons() {
     }
   };
 
-  // ── counts ────────────────────────────────────────────────────────
-  const pendingCount = lessons?.filter((l: any) => l.status === "pending_review").length ?? 0;
+  // ── counts (מדויקים, מה-DB — לא מהעמוד הנוכחי) ────────────────────
+  const pendingCount = counts?.pending_review ?? 0;
 
-  // ── filter ────────────────────────────────────────────────────────
-  const filtered = lessons?.filter((l: any) => {
-    const matchSearch = !search || l.title?.includes(search) || l.description?.includes(search);
-    const matchTab = activeTab === "all" ? true : l.status === activeTab;
-    return matchSearch && matchTab;
-  });
+  // הסינון והחיפוש נעשים בצד השרת — העמוד הנוכחי הוא כבר התוצאה
+  const filtered = lessons;
 
   // ── tabs ──────────────────────────────────────────────────────────
   const TABS = [
-    { id: "all",            label: "כל השיעורים", count: lessons?.length },
+    { id: "all",            label: "כל השיעורים", count: counts?.all },
     { id: "pending_review", label: "ממתין לאישור", count: pendingCount, highlight: pendingCount > 0 },
-    { id: "draft",          label: "טיוטות",       count: lessons?.filter((l: any) => l.status === "draft").length },
-    { id: "published",      label: "פורסמו",       count: lessons?.filter((l: any) => l.status === "published").length },
+    { id: "draft",          label: "טיוטות",       count: counts?.draft },
+    { id: "published",      label: "פורסמו",       count: counts?.published },
+    { id: "archived",       label: "בארכיון",      count: counts?.archived },
   ];
 
   return (
@@ -338,17 +372,21 @@ export default function Lessons() {
 
                   <div>
                     <Label>רב</Label>
-                    <Select value={form.rabbi_id} onValueChange={v => setForm({ ...form, rabbi_id: v })}>
+                    <Select value={form.rabbi_id} onValueChange={v => setForm({ ...form, rabbi_id: v === "_none" ? "" : v })}>
                       <SelectTrigger><SelectValue placeholder="בחר רב" /></SelectTrigger>
-                      <SelectContent>{rabbis?.map(r => <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>)}</SelectContent>
+                      <SelectContent>
+                        <SelectItem value="_none">ללא רב</SelectItem>
+                        {rabbis?.map(r => <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>)}
+                      </SelectContent>
                     </Select>
                   </div>
                   <div>
                     <Label>סדרה</Label>
-                    <Select value={form.series_id} onValueChange={v => setForm({ ...form, series_id: v })}>
-                      <SelectTrigger><SelectValue placeholder="בחר סדרה" /></SelectTrigger>
-                      <SelectContent>{seriesList?.map((s: any) => <SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>)}</SelectContent>
-                    </Select>
+                    <SeriesCombobox
+                      value={form.series_id}
+                      onChange={id => setForm(f => ({ ...f, series_id: id }))}
+                      placeholder="חפש ובחר סדרה"
+                    />
                   </div>
                   <div>
                     <Label>סוג מקור</Label>
@@ -535,7 +573,19 @@ export default function Lessons() {
                           </Button>
                           <Button
                             variant="ghost" size="icon"
-                            onClick={() => { if (confirm("למחוק?")) deleteLesson.mutate(lesson.id); }}
+                            onClick={() => {
+                              if (!confirm(`למחוק לצמיתות את "${lesson.title}"?\nאם הכוונה רק להסתיר מהאתר — עדיף להעביר לארכיון (בעריכת השיעור).`)) return;
+                              deleteLesson.mutate(lesson.id, {
+                                onSuccess: invalidateAdminLessons,
+                                onError: (e: any) => toast({
+                                  title: "המחיקה נחסמה",
+                                  description: /foreign key|violates/i.test(e?.message ?? "")
+                                    ? "לשיעור יש קישורים במערכת (נושאים / היסטוריית צפייה). במקום מחיקה — העבירו לארכיון בעריכת השיעור."
+                                    : e?.message,
+                                  variant: "destructive",
+                                }),
+                              });
+                            }}
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />
                           </Button>
@@ -554,6 +604,26 @@ export default function Lessons() {
                   )}
                 </TableBody>
               </Table>
+            )}
+
+            {/* ── pagination ─────────────────────────────────────── */}
+            {total > ADMIN_PAGE_SIZE && (
+              <div className="flex items-center justify-between pt-4 border-t border-border mt-2">
+                <p className="text-xs text-muted-foreground">
+                  מציג {(page - 1) * ADMIN_PAGE_SIZE + 1}–{Math.min(page * ADMIN_PAGE_SIZE, total)} מתוך {total.toLocaleString()}
+                </p>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm" className="font-display"
+                    disabled={page <= 1} onClick={() => setPage(p => p - 1)}>
+                    הקודם
+                  </Button>
+                  <span className="text-xs text-muted-foreground">עמוד {page} מתוך {totalPages.toLocaleString()}</span>
+                  <Button variant="outline" size="sm" className="font-display"
+                    disabled={page >= totalPages} onClick={() => setPage(p => p + 1)}>
+                    הבא
+                  </Button>
+                </div>
+              </div>
             )}
           </CardContent>
         </Card>
