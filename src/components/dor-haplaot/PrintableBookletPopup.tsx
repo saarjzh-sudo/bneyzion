@@ -3,7 +3,9 @@ import { X, Heart, CheckCircle, Download } from "lucide-react";
 import bookletCover from "@/assets/dor-haplaot-booklet-cover.webp";
 
 const DONATION_URL = "https://givechak.co.il/Saadia?ref=r3";
-const BOOKLET_URL = "/dor-haplaot-booklet.pdf";
+// החוברת המעודכנת (70 ניסים, 8.7.2026) — על Storage של האתר (Rule 13), ?download= כופה הורדה
+export const BOOKLET_URL =
+  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/dor-haplaot/dor-haplaot-booklet-70.pdf?download=dor-haplaot-70-nisim.pdf";
 
 type Step = 1 | 2 | 3;
 

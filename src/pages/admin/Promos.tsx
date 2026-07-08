@@ -95,7 +95,7 @@ interface PromoForm {
 }
 
 const emptyForm: PromoForm = {
-  type: "banner",
+  type: "popup",
   title: "",
   body: "",
   cta_label: "",
@@ -353,10 +353,10 @@ export default function Promos() {
           <div>
             <h1 className="text-2xl font-display text-foreground flex items-center gap-2">
               <Megaphone className="h-6 w-6 text-primary" aria-hidden="true" />
-              באנרים ופופאפים
+              פופאפים
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              פרסומים גלובליים בכל דפי האתר. פופאפ לא קופץ בדפי מוצר ולמידה, אלא אם מבטלים את הדיכוי.
+              פופאפ תמונה או וידאו בכל דפי האתר (החלטת סער 8.7: בלי באנרים). לא קופץ בדפי מוצר ולמידה, אלא אם מבטלים את הדיכוי.
             </p>
           </div>
           <Button onClick={openCreate} className="gap-1.5">
@@ -452,29 +452,17 @@ export default function Promos() {
               <DialogTitle>{editingId ? "עריכת פרסום" : "פרסום חדש"}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <Label htmlFor="promo-type">סוג</Label>
-                  <Select value={form.type} onValueChange={(v) => set("type", v as PromoForm["type"])}>
-                    <SelectTrigger id="promo-type"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {(Object.keys(TYPE_LABELS) as PromoRow["type"][]).map((t) => (
-                        <SelectItem key={t} value={t}>{TYPE_LABELS[t]}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="promo-theme">צבע</Label>
-                  <Select value={form.theme} onValueChange={(v) => set("theme", v as PromoForm["theme"])}>
-                    <SelectTrigger id="promo-theme"><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      {(Object.keys(THEME_LABELS) as PromoRow["theme"][]).map((t) => (
-                        <SelectItem key={t} value={t}>{THEME_LABELS[t]}</SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+              {/* פופאפים בלבד (8.7) — בורר הסוג הוסר; שורות באנר ישנות עדיין ניתנות לעריכה */}
+              <div className="space-y-1.5">
+                <Label htmlFor="promo-theme">צבע</Label>
+                <Select value={form.theme} onValueChange={(v) => set("theme", v as PromoForm["theme"])}>
+                  <SelectTrigger id="promo-theme"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {(Object.keys(THEME_LABELS) as PromoRow["theme"][]).map((t) => (
+                      <SelectItem key={t} value={t}>{THEME_LABELS[t]}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <div className="space-y-1.5">

@@ -6,6 +6,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
   return (
     <Sonner
       theme="light"
+      dir="rtl"
       className="toaster group"
       toastOptions={{
         classNames: {

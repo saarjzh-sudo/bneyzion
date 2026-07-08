@@ -560,27 +560,22 @@ function useEndSubscription() {
   });
 }
 
-/* ─── Grow — מספר האמת: משלמים ייחודיים שחויבו בפועל ב-40 הימים האחרונים ── */
+/* ─── Grow — מספר האמת: משלמים ייחודיים שחויבו בפועל ─────────────
+   דרך RPC grow_subscription_stats (SECURITY DEFINER, אדמין בלבד) —
+   קריאה ישירה ל-orders נחסמת ב-RLS (policy user_own) והחזירה 0 בטעות.
+   הנתונים כוללים את דוח-Grow ההיסטורי שיובא (אפריל 2026 ואילך). */
+interface GrowStats {
+  active_40d: number;
+  by_month: Array<{ month: string; charges: number; payers: number }>;
+}
 function useGrowActive() {
-  return useQuery({
-    queryKey: ["grow-active-payers"],
+  return useQuery<GrowStats>({
+    queryKey: ["grow-subscription-stats"],
     staleTime: 30 * 60 * 1000,
     queryFn: async () => {
-      const cutoff = new Date(Date.now() - 40 * 86400000).toISOString();
-      const { data, error } = await supabase
-        .from("orders" as never)
-        .select("customer_email, customer_phone" as never)
-        .eq("product" as never, "weekly-chapter-subscription")
-        .eq("payment_status" as never, "completed")
-        .gte("charge_date" as never, cutoff)
-        .limit(3000);
+      const { data, error } = await (supabase as any).rpc("grow_subscription_stats");
       if (error) throw error;
-      const payers = new Set<string>();
-      for (const r of (data ?? []) as Array<{ customer_email: string | null; customer_phone: string | null }>) {
-        const key = (r.customer_email || "").trim().toLowerCase() || (r.customer_phone || "").trim();
-        if (key) payers.add(key);
-      }
-      return payers.size;
+      return data as GrowStats;
     },
   });
 }
@@ -612,7 +607,11 @@ export default function Subscribers() {
   /* ── Source reconciliation: Grow (אמת) vs Monday vs DB ── */
   const qc = useQueryClient();
   const { data: monday } = useMondayInsights();
-  const { data: growActive } = useGrowActive();
+  const { data: growStats } = useGrowActive();
+  const growActive = growStats?.active_40d ?? null;
+  const growLastMonth = growStats?.by_month?.length
+    ? growStats.by_month.filter((m) => m.charges > 20).slice(-1)[0]
+    : null;
   const mondayActive = monday?.current?.active ?? null;
   const smooveOrigin = rows.filter((r) => (r.source ?? "").startsWith("smoove") && isActive(r)).length;
   const adminOrigin  = rows.filter((r) => (r.source ?? "") === "admin" && isActive(r)).length;
@@ -818,7 +817,14 @@ export default function Subscribers() {
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12 }}>
             {[
-              { label: "Grow — מקור האמת 💳", value: growActive ?? "…", note: "חויבו בפועל ב-40 הימים האחרונים", accent: C.green },
+              {
+                label: "Grow — מקור האמת 💳",
+                value: growActive ?? "…",
+                note: growLastMonth
+                  ? `חויבו ב-40 יום · ${growLastMonth.month}: ${growLastMonth.payers} משלמים`
+                  : "חויבו בפועל ב-40 הימים האחרונים (כולל הדוח שיובא)",
+                accent: C.green,
+              },
               { label: "Monday (לוח יואב)", value: mondayActive ?? "—", note: monday ? "מתוחזק ידנית" : "edge לא פרוס", accent: C.navy },
               { label: "DB (גישה באתר)", value: isLoading ? "…" : kpiActive, note: "user_access_tags", accent: C.gold },
               { label: "מקור Smoove", value: isLoading ? "…" : smooveOrigin, note: "ייבוא/סנכרון", accent: C.blue },
@@ -833,9 +839,22 @@ export default function Subscribers() {
           </div>
 
           <div style={{ fontSize: 12, color: C.textSubtle, lineHeight: 1.6 }}>
-            <strong style={{ color: C.textMuted }}>מי מספר האמת?</strong> Grow — מי שכרטיסו חויב בפועל.
+            <strong style={{ color: C.textMuted }}>מי מספר האמת?</strong> Grow — מי שכרטיסו חויב בפועל
+            (כולל דוח-Grow ההיסטורי שיובא, אפריל 2026 ואילך).
             Monday הוא רישום ידני של יואב, וה-DB סופר גישה באתר (סנכרון-Smoove מוסיף ולא מסיים — לכן הוא נוטה למעלה).
           </div>
+
+          {growStats?.by_month?.length ? (
+            <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+              {growStats.by_month.map((m) => (
+                <div key={m.month} style={{ background: "white", border: `1px solid ${C.border}`, borderRadius: 10, padding: "6px 12px", fontSize: 12 }}>
+                  <span style={{ color: C.textMuted }}>{m.month}</span>{" "}
+                  <strong style={{ color: C.navy }}>{m.payers}</strong>{" "}
+                  <span style={{ color: C.textSubtle }}>משלמים · {m.charges} חיובים</span>
+                </div>
+              ))}
+            </div>
+          ) : null}
 
           {mondayGap != null && Math.abs(mondayGap) >= 5 && (
             <div style={{ display: "flex", alignItems: "flex-start", gap: 10, background: C.amberBg, border: `1px solid ${C.goldShimmer}`, borderRadius: 10, padding: "10px 14px" }}>

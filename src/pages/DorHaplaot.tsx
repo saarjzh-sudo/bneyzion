@@ -510,7 +510,7 @@ export default function DorHaplaot() {
                 />
                 <div className="p-5 md:p-6 flex flex-col items-center gap-3">
                   <h3 className="font-kedem font-bold text-base md:text-lg text-[#1A2744] text-center leading-tight">
-                    קבלו את כל 64 הניסים בחוברת מעוצבת להדפסה!
+                    קבלו את כל 70 הניסים בחוברת מעוצבת להדפסה!
                   </h3>
                   <p className="font-ploni font-bold text-sm text-[hsl(30_25%_30%)] leading-relaxed text-center">
                     תרמו לבניית אתר התנ״ך לזכר סעדיה הי״ד וקבלו את החוברת המלאה

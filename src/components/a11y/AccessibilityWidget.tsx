@@ -5,7 +5,9 @@
  * גופן קריא, ואיפוס. הבחירות נשמרות ב-localStorage ומוחלות על <html> דרך
  * מחלקות + משתנה CSS. עצמאי לגמרי (בלי תלות חיצונית), נגיש למקלדת, RTL.
  *
- * ממוקם בפינה ימנית-תחתונה (בנצי יושב בשמאלית-תחתונה — לא מתנגשים).
+ * עיצוב (8.7.2026, בקשת סער): לא כפתור צף שמסתיר תוכן — אלא לשונית דקה
+ * צמודת-קצה בצד ימין, במרכז-גובה. שקופה-למחצה עד ריחוף, נפתחת בלחיצה.
+ * לא תופסת שטח תוכן בנייד ובדסקטופ (בנצי בפינה השמאלית — לא מתנגשים).
  */
 import { useEffect, useState, useCallback } from "react";
 import { Accessibility, X, Plus, Minus, Contrast, Link2, Type, RotateCcw } from "lucide-react";
@@ -100,25 +102,31 @@ const AccessibilityWidget = () => {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-label="תפריט נגישות"
+        className="bz-a11y-tab"
         style={{
           position: "fixed",
-          bottom: "1.5rem",
-          right: "1.5rem",
+          top: "58%",
+          right: 0,
+          transform: "translateY(-50%)",
           zIndex: 100,
-          width: 48,
-          height: 48,
-          borderRadius: "50%",
+          width: 28,
+          height: 58,
+          borderRadius: "12px 0 0 12px",
           border: "none",
+          borderInlineEnd: "none",
           background: `linear-gradient(135deg, ${GOLD}, ${GOLD_LIGHT})`,
           color: "#fff",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          boxShadow: "0 4px 14px rgba(45,31,14,0.25)",
+          boxShadow: "-2px 2px 10px rgba(45,31,14,0.18)",
           cursor: "pointer",
+          opacity: open ? 1 : 0.72,
+          transition: "opacity 0.2s, width 0.2s",
+          padding: 0,
         }}
       >
-        <Accessibility size={24} aria-hidden="true" />
+        <Accessibility size={17} aria-hidden="true" />
       </button>
 
       {open && (
@@ -128,11 +136,14 @@ const AccessibilityWidget = () => {
           dir="rtl"
           style={{
             position: "fixed",
-            bottom: "5rem",
-            right: "1.5rem",
+            top: "58%",
+            right: 34,
+            transform: "translateY(-50%)",
             zIndex: 100,
             width: 260,
-            maxWidth: "calc(100vw - 3rem)",
+            maxWidth: "calc(100vw - 3.2rem)",
+            maxHeight: "min(70vh, 430px)",
+            overflowY: "auto",
             background: "#FAF6F0",
             borderRadius: 16,
             border: `1px solid ${GOLD_LIGHT}`,
@@ -204,6 +215,8 @@ const AccessibilityWidget = () => {
 
       {/* מחלקות ההחלה — גלובלי */}
       <style>{`
+        .bz-a11y-tab:hover, .bz-a11y-tab:focus-visible { opacity: 1 !important; width: 34px !important; }
+        @media print { .bz-a11y-tab { display: none !important; } }
         html.a11y-font-scaled body { font-size: calc(1rem * var(--a11y-font-scale, 1)); }
         html.a11y-contrast body { filter: contrast(1.35) saturate(1.1); }
         html.a11y-links a { text-decoration: underline !important; text-underline-offset: 2px; }

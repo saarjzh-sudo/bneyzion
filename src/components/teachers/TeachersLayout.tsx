@@ -20,6 +20,7 @@ import { useState, type ReactNode } from "react";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
+import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import TeacherSidebar from "./TeacherSidebar";
 import { colors } from "@/lib/designTokens";
 
@@ -77,6 +78,9 @@ export default function TeachersLayout({ children, activeSeriesId }: TeachersLay
       <DesignFooter />
       {/* 7.7.2026: 'ניווט' פותח את סיידבר אגף-המורים במובייל (כמו בלייאאוט הראשי) */}
       <DesignMobileBottomNav onNavigatorOpen={() => setDrawerOpen(true)} />
+
+      {/* 8.7.2026: לשונית נגישות גם באגף המורים */}
+      <AccessibilityWidget />
 
       <style>{`
         @media (max-width: 768px) {

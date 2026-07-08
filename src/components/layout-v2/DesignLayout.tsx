@@ -16,6 +16,8 @@ import { useState, type ReactNode } from "react";
 import DesignHeader from "./DesignHeader";
 import DesignFooter from "./DesignFooter";
 import DesignMobileBottomNav from "./DesignMobileBottomNav";
+import { PromoProvider } from "@/components/promo";
+import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import DesignSidebar from "./DesignSidebar";
 import { colors } from "@/lib/designTokens";
 
@@ -86,6 +88,11 @@ export default function DesignLayout({
       {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל
           (ההמבורגר והחיפוש העליונים הוסתרו במובייל — אין יותר תפריטים כפולים). */}
       <DesignMobileBottomNav onNavigatorOpen={sidebar ? () => setDrawerOpen(true) : undefined} />
+
+      {/* 8.7.2026: פופאפים + לשונית נגישות בכל ה-layouts (היו רק ב-Layout הישן —
+          דף הבית ועמודי הסדרות לא קיבלו אותם בכלל) */}
+      <PromoProvider />
+      <AccessibilityWidget />
 
       <style>{`
         @media (max-width: 767px) {
