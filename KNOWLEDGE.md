@@ -8421,3 +8421,30 @@ eichaAccess+is_current), באנר בפורטל "אתם לומדים איכה… 
 
 **מסקנה: המסך המת היחיד היה "דף הבית". "סליקות" היה המסך היחיד עם ספירה שגויה — תוקן.**
 tsc+build נקיים · מחסומים 0/0 · אפס שינויי DB. נפרס עם הסבב.
+
+---
+
+## 🤖 שיחות בנצי — תיעוד מלא + חקירה (8.7.2026, בקשת סער "כמו באבולעפיה")
+
+**הבעיה שסער ראה:** בדיאלוג שיחות-בנצי בועות ריקות, והקישורים שבנצי נתן לא נראים.
+**שורש:** `bot_sessions.history` מערבב 2 פורמטים של תור: פשוט `{role,text}` מול עשיר
+`{role:"user",content:"..."}` / `{role:"model",content:{reply_text,cta_buttons,suggestions,
+intent_detected,persona_guess,refused_content}}`. הגרסה הישנה קראה רק `t.text` →
+כל תור-עשיר יצא בועה ריקה, וכל `cta_buttons` (הקישורים!) נעלם. (24 תורים: 2 ריקים אצל
+סער, בדיוק אלה עם ה-CTA.)
+
+**התיקון (BenziConversations.tsx נכתב מחדש, UI-בלבד):**
+- `normalizeTurn` מיישר שני הפורמטים: text מ-`text`/`content`(string)/`content.reply_text`;
+  role: user מול model/bot/assistant→bot. אומת מול ה-DB: empty-bubbles 2→0.
+- **חשיפת קישורים לחקירה** — `cta_buttons` מוצגים כשבבי-לינק לחיצים (target=_blank ל-
+  `bneyzion.vercel.app{route}`) גם מתחת לכל הודעה וגם כפס-סיכום "קישורים שבנצי נתן" בראש
+  הדיאלוג. עמודת-טבלה חדשה "קישורים שנשלחו".
+- **פס-חקירה:** כוונות (`intents_detected`+`intent_detected` פר-תור), פרסונה, מדינה,
+  ותג "סירוב" אם בנצי סירב תוכן (`refused_content`). חיפוש מכסה גם קישורים+כוונות.
+- **מזון-לעתיד:** העמודות intents_detected/links_clicked/ip_country/refused_content קיימות
+  ב-DB אך edge-navigation-bot עדיין לא מאכלס אותן (0 היום) — המסך קורא מהן וגם מחלץ מה-
+  content-object, אז יעבוד כשה-edge יתחיל לכתוב. אבולעפיה=`bot_conversations` פורמט אחיד
+  (פשוט יותר); בנצי דורש נירמול. **לא נגעתי ב-edge** — רק בקריאה.
+
+build+tsc+guards נקיים · RLS: bot_sessions=admin-only (anon לא רואה — לכן אומת ב-token+
+נורמלייזר-על-דאטה-אמיתי, לא ב-preview). נפרס עם הסבב.
