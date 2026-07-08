@@ -167,12 +167,16 @@ export default function WeeklyBookDetail() {
   const { isAdmin } = useAuth();
   const [previewMode, setPreviewMode] = useState<"subscriber" | "locked">("subscriber");
 
-  // Combine: admin can toggle; real user: either tag grants access
-  const realAccess = bookAccess || programAccess || (eichaAccess && slug === "book-lamentations");
-  const hasAccess = isAdmin ? (previewMode === "subscriber" || realAccess) : realAccess;
-
   // Data
   const { data: course, isLoading: courseLoading, error: courseError } = useWeeklyBookBySlug(slug);
+
+  // Combine: admin can toggle; real user: either tag grants access.
+  // 8.7 (סער): לומד-איכה משלם את אותו מנוי — פתוח לו גם הספר הראשי הנוכחי
+  // (is_current), כדי שהמעבר לפרק השבועי יהיה קל; שאר הארכיון נפתח במיזוג.
+  const realAccess =
+    bookAccess || programAccess ||
+    (eichaAccess && (slug === "book-lamentations" || course?.is_current === true));
+  const hasAccess = isAdmin ? (previewMode === "subscriber" || realAccess) : realAccess;
   const { data: allBooks = [] } = useWeeklyBooks();
   const { data: courseData, isLoading: lessonsLoading } = useCourseDataWithResources(course?.id);
 

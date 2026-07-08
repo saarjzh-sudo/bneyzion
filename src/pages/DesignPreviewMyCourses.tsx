@@ -345,6 +345,25 @@ export default function DesignPreviewMyCourses() {
         isSubscription: true,
         accessType: "subscribers_only",
       });
+      // מעבר קל וברור לתכנית הראשית (8.7, סער) — הספר הנוכחי של ימי רביעי פתוח להם
+      const mainBook = (allCourses as any[]).find((c: any) => c.is_current === true && c.in_weekly_program);
+      if (mainBook) {
+        result.push({
+          id: "weekly-main-switch",
+          title: "הפרק השבועי — התכנית הראשית",
+          subtitle: `ימי רביעי · לומדים עכשיו: ${mainBook.title}`,
+          slug: mainBook.program_slug,
+          gradient: gradients.warmDark,
+          progressPct: 0,
+          lessonCount: mainBook.lesson_count ?? 0,
+          hasAccess: true,
+          ctaTo: `/course/${mainBook.program_slug}`,
+          ctaLabel: "מעבר ללימוד הראשי",
+          tag: "פתוח לכם",
+          isSubscription: true,
+          accessType: "subscribers_only",
+        });
+      }
     }
 
     // 2. קורסים enrolled מה-DB

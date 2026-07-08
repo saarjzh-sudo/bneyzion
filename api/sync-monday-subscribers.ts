@@ -167,29 +167,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // ── 5. קוהורט איכה — הוספה בלבד ──────────────────────────────────────
+    // ⚠️ 8.7 (תיקון): רק חיובי עמוד "לחיות תנ״ך" מאז השקת מבצע איכה (15.6) —
+    // משלמי אפריל-מאי מאותו עמוד הם מנויים רגילים (הראשון תייג 109 במקום ~47).
+    const EICHA_CAMPAIGN_START = "2026-06-15T00:00:00Z";
     try {
       const eichaEmails = new Set(await fetchEichaSmooveEmails());
-      // משלמי עמוד "לחיות תנ״ך" (החיובים של מבצע איכה)
       const { data: eichaOrders } = await supabase
         .from("orders")
         .select("customer_email")
         .ilike("page_name", "%לחיות%")
         .eq("payment_status", "completed")
+        .gte("charge_date", EICHA_CAMPAIGN_START)
         .limit(2000);
       for (const o of eichaOrders ?? []) {
         const e = String(o.customer_email || "").trim().toLowerCase();
         if (e.includes("@")) eichaEmails.add(e);
       }
       const { data: eichaRows } = await supabase
-        .from("user_access_tags").select("email").eq("tag", EICHA_TAG);
-      const haveEicha = new Set((eichaRows ?? []).map((r: any) => String(r.email || "").toLowerCase()));
+        .from("user_access_tags").select("id, email, valid_until").eq("tag", EICHA_TAG);
+      const eichaByEmail = new Map((eichaRows ?? []).map((r: any) => [String(r.email || "").toLowerCase(), r]));
       for (const e of eichaEmails) {
-        if (haveEicha.has(e)) continue;
+        const existing = eichaByEmail.get(e);
+        if (existing) {
+          // שוחזר אם נקטע בטעות (בעל-זכאות תמיד פעיל עד המיזוג)
+          const expired = existing.valid_until && new Date(existing.valid_until) <= new Date();
+          if (expired && !dryRun) {
+            await supabase.from("user_access_tags")
+              .update({ valid_until: null, cancel_note: null }).eq("id", existing.id);
+          }
+          if (expired) report.eicha_granted++;
+          continue;
+        }
         if (!dryRun) {
           await supabase.from("user_access_tags").insert({
             email: e, tag: EICHA_TAG, valid_until: null,
             source: "eicha_cohort_sync", pending_user_link: true,
-            notes: "קוהורט איכה (Smoove מנויי-איכה / עמוד לחיות תנ״ך)",
+            notes: "קוהורט איכה (Smoove מנויי-איכה / עמוד לחיות תנ״ך מאז 15.6)",
           });
         }
         report.eicha_granted++;

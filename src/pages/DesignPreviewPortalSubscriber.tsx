@@ -315,7 +315,9 @@ export default function DesignPreviewPortalSubscriber() {
                     marginBottom: "0.6rem",
                   }}
                 >
-                  {hasSubscription ? <><Sparkles size={10} /> מנוי פעיל — הפרק השבועי</> : <><Shield size={10} /> חבר רשום</>}
+                  {hasSubscription
+                    ? <><Sparkles size={10} /> {eichaOnly ? "מנוי פעיל — תכנית איכה · ימי שני" : "מנוי פעיל — הפרק השבועי"}</>
+                    : <><Shield size={10} /> חבר רשום</>}
                 </div>
 
                 <h1
@@ -342,6 +344,47 @@ export default function DesignPreviewPortalSubscriber() {
                     ? `עכשיו: ${SUBSCRIBER_STATS.currentBook} · ${SUBSCRIBER_STATS.overallProgressPct}% מהתכנית הושלמו`
                     : "ברוך הבא לאזור האישי שלך"}
                 </p>
+
+                {/* 8.7 (סער): מעבר קל וברור מלימוד איכה לתכנית הראשית */}
+                {eichaOnly && (
+                  <div
+                    style={{
+                      marginTop: "0.85rem",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.75rem",
+                      flexWrap: "wrap",
+                      background: "rgba(232,213,160,0.12)",
+                      border: "1px solid rgba(232,213,160,0.35)",
+                      borderRadius: radii.lg,
+                      padding: "0.7rem 1rem",
+                    }}
+                  >
+                    <span style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: "rgba(255,255,255,0.85)", lineHeight: 1.5 }}>
+                      אתם לומדים את <strong style={{ color: colors.goldShimmer }}>מגילת איכה</strong> (ימי שני 21:00).
+                      בסיום, אחרי ט׳ באב, תעברו אוטומטית לתכנית הראשית.
+                    </span>
+                    <Link
+                      to={`/course/${regularCurrentBook?.program_slug ?? "weekly-chapter"}`}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.35rem",
+                        padding: "0.45rem 1rem",
+                        borderRadius: radii.pill,
+                        background: gradients.goldButton,
+                        color: "white",
+                        fontFamily: fonts.body,
+                        fontSize: "0.8rem",
+                        fontWeight: 700,
+                        textDecoration: "none",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      ללימוד הראשי — הפרק השבועי ←
+                    </Link>
+                  </div>
+                )}
 
                 {/* Notification bell */}
                 {hasSubscription && (
