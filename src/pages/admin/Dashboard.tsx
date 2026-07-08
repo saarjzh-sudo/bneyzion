@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { useMondayInsights } from "@/hooks/useMondayInsights";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   BookOpen, Users2, Clock, TrendingUp, Crown,
@@ -96,6 +97,7 @@ function KpiCard({ title, value, sub, icon: Icon, to, accent, bg }: KpiProps) {
 
 /* ─── main component ────────────────────────────────────────────── */
 export default function Dashboard() {
+  const { data: monday } = useMondayInsights();
   const { data: stats, isLoading } = useQuery({
     queryKey: ["admin-dashboard-v2"],
     queryFn: async () => {
@@ -192,13 +194,14 @@ export default function Dashboard() {
       bg:     stats?.pending ? C.amberBg : C.parchment,
     },
     {
+      // 8.7.2026 (סער): המספר הרשמי = לוח Monday של יואב. זה המקור, לא מעקב מקומי.
       title:  "מנויי פרק שבועי",
-      value:  stats?.subscribers ?? 0,
-      sub:    "מנויים פעילים",
+      value:  monday?.current?.active ?? "…",
+      sub:    "המספר הרשמי — לוח Monday",
       icon:   UserCheck,
       to:     "/admin/subscribers",
       accent: "#059669",
-      bg:     stats?.subscribers ? "#f0fdf4" : C.parchment,
+      bg:     "#f0fdf4",
     },
     {
       title:  "הכנסות החודש",

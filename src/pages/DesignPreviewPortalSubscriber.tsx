@@ -98,6 +98,9 @@ function toMiniLesson(row: any): MiniLesson {
 export default function DesignPreviewPortalSubscriber() {
   const { data: topSeries = [], isLoading: seriesLoading } = useTopSeries(8);
   const { hasAccess: realAccess, isLoading: accessLoading, isAuthenticated, user } = useUserAccess("program:weekly-chapter");
+  // קוהורט איכה (ימי שני) — רואה את מסלול איכה עד המיזוג לרגילים אחרי ט' באב
+  const { hasAccess: eichaAccess } = useUserAccess("program:eicha-monday");
+  const eichaOnly = eichaAccess && !realAccess;
 
   // ── Real data hooks (replaces former mock arrays) ───────────────────────
   const { data: books = [], isLoading: booksLoading } = useWeeklyBooks();
@@ -108,7 +111,7 @@ export default function DesignPreviewPortalSubscriber() {
 
   // Real access state — portal is always behind RequireAuth so isAuthenticated is always true here
   const isAuth = isAuthenticated;
-  const hasSubscription = realAccess;
+  const hasSubscription = realAccess || eichaAccess;
 
   // Suggestion series (from real data)
   const suggestions = (topSeries as any[]).slice(0, 4);
@@ -130,8 +133,11 @@ export default function DesignPreviewPortalSubscriber() {
         ? "current"
         : "upcoming",
   }));
-  const currentBook = currentIdx >= 0 ? (books[currentIdx] as any) : (books[0] as any) ?? null;
-  const currentBookSlug = currentBook?.program_slug ?? "weekly-chapter";
+  const regularCurrentBook = currentIdx >= 0 ? (books[currentIdx] as any) : (books[0] as any) ?? null;
+  // לומד-איכה בלבד — הספר הנוכחי שלו הוא איכה (ימי שני), לא ספר ימי-רביעי
+  const eichaBook = eichaOnly ? ((books as any[]).find((b: any) => b.program_slug === "book-lamentations") ?? null) : null;
+  const currentBook = eichaBook ?? regularCurrentBook;
+  const currentBookSlug = eichaOnly ? "book-lamentations" : (currentBook?.program_slug ?? "weekly-chapter");
   const currentLessonHref = `/course/${currentBookSlug}`;
   // Live Zoom link — from the current book, else the program-wide recurring link.
   const PROGRAM_ZOOM_FALLBACK = "https://us02web.zoom.us/j/89674496888?pwd=NjQgO336yAwHATbkkwsimd92kWrXlp.1";

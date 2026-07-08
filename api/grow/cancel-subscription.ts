@@ -23,6 +23,40 @@ const GROW_USER_ID = (process.env.GROW_USER_ID || "").trim();
 const GROW_USER_ID_SUBSCRIPTION = (process.env.GROW_USER_ID_SUBSCRIPTION || "").trim();
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim();
 const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
+const MONDAY_API_TOKEN = (process.env.MONDAY_API_TOKEN || "").trim();
+
+// לוח "מנויי הפרק השבועי" — עדכון סטטוס ל"ביטל" אחרי ביטול מוצלח (אידמפוטנטי)
+const MONDAY_BOARD_ID = 5094750546;
+const MONDAY_COL_EMAIL = "email_mm2f6efy";
+const MONDAY_COL_STATUS = "color_mm2fcgcg";
+
+/**
+ * עדכון Monday אחרי ביטול הו"ק (הוראת סער 8.7, אידמפוטנטי):
+ * מאתר את הפריט לפי המייל; מעדכן סטטוס ל"ביטל" רק אם אינו כבר ביטל/הסתיימה —
+ * כך אין עדכון-כפול גם אם הלוח כבר עודכן מדוח Grow. כשל כאן לא מפיל את הביטול.
+ */
+async function markCancelledInMonday(email: string): Promise<string> {
+  if (!MONDAY_API_TOKEN || !email) return "skipped";
+  const gql = async (query: string) => {
+    const r = await fetch("https://api.monday.com/v2", {
+      method: "POST",
+      headers: { Authorization: MONDAY_API_TOKEN, "Content-Type": "application/json" },
+      body: JSON.stringify({ query }),
+    });
+    return r.json();
+  };
+  const find = await gql(
+    `query { items_page_by_column_values(board_id: ${MONDAY_BOARD_ID}, limit: 5, columns: [{column_id: "${MONDAY_COL_EMAIL}", column_values: ["${email}"]}]) { items { id name column_values(ids: ["${MONDAY_COL_STATUS}"]) { text } } } }`,
+  );
+  const item = find?.data?.items_page_by_column_values?.items?.[0];
+  if (!item) return "not_found_in_monday";
+  const current = item.column_values?.[0]?.text || "";
+  if (current === "ביטל" || current === "הסתיימה") return "already_cancelled";
+  const upd = await gql(
+    `mutation { change_simple_column_value(board_id: ${MONDAY_BOARD_ID}, item_id: ${item.id}, column_id: "${MONDAY_COL_STATUS}", value: "ביטל") { id } }`,
+  );
+  return upd?.data?.change_simple_column_value ? "updated" : `failed: ${JSON.stringify(upd).slice(0, 120)}`;
+}
 
 function getSupabaseAdmin() {
   return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
@@ -140,16 +174,24 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const growOk = String(growData?.status) === "1";
 
       if (growOk) {
+        // עדכון Monday (אידמפוטנטי) — לא חוסם את הביטול אם נכשל
+        let mondayResult = "skipped";
+        try {
+          mondayResult = await markCancelledInMonday(tagRow.email || "");
+        } catch (e) {
+          console.warn("[CancelSub] Monday update failed (non-fatal):", e);
+          mondayResult = "error";
+        }
         await supabase
           .from("user_access_tags")
           .update({
             valid_until: now,
             cancelled_at: now,
-            cancel_note: `הו"ק בוטלה ב-Grow ע"י ${userData.user.email} (transactionId=${ids.transactionId})`,
+            cancel_note: `הו"ק בוטלה ב-Grow ע"י ${userData.user.email} (transactionId=${ids.transactionId}) · Monday: ${mondayResult}`,
           })
           .eq("id", tagId);
-        console.log(`[CancelSub] Grow cancel OK for ${who}`);
-        return res.status(200).json({ ok: true, mode: "grow_cancelled" });
+        console.log(`[CancelSub] Grow cancel OK for ${who} | Monday: ${mondayResult}`);
+        return res.status(200).json({ ok: true, mode: "grow_cancelled", monday: mondayResult });
       }
 
       // Grow דחה — לא מעמידים פנים שבוטל

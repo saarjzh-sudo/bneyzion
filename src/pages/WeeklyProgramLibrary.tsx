@@ -48,8 +48,10 @@ function useBookAccess(course: WeeklyCourse): boolean {
   const bookTag = course.access_tag ?? `course:${course.program_slug}`;
   const { hasAccess: bookAccess } = useUserAccess(bookTag);
   const { hasAccess: programAccess } = useUserAccess("program:weekly-chapter");
+  // קוהורט איכה (ימי שני) — פותח את ספר איכה בלבד, עד המיזוג לרגילים
+  const { hasAccess: eichaAccess } = useUserAccess("program:eicha-monday");
   // base layer always open when access_type=requires_tag (base open policy)
-  return bookAccess || programAccess;
+  return bookAccess || programAccess || (eichaAccess && course.program_slug === "book-lamentations");
 }
 
 // ── Book gradient backgrounds (unique per book) ───────────────────────────
@@ -179,12 +181,18 @@ function BookCard({ course }: { course: WeeklyCourse }) {
 export default function WeeklyProgramLibrary() {
   const { data: books = [], isLoading } = useWeeklyBooks();
   const { hasAccess: hasProgramAccess } = useUserAccess("program:weekly-chapter");
+  const { hasAccess: eichaAccess } = useUserAccess("program:eicha-monday");
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
 
   // Redirect to the current book when one is marked is_current=true.
   // Admin still sees the full library (to switch books via the toggle).
   // WeeklyCourse.is_current is boolean|null after the regen.
+  // קוהורט איכה בלבד → הספר "הנוכחי" שלו הוא איכה (ימי שני), לא ספר ימי-רביעי.
+  const eichaOnly = eichaAccess && !hasProgramAccess;
+  if (!isLoading && eichaOnly && !isAdmin) {
+    return <Navigate to="/course/book-lamentations" replace />;
+  }
   const currentBook = books.find((b) => b.is_current === true);
   if (!isLoading && currentBook && !isAdmin) {
     return <Navigate to={`/course/${currentBook.program_slug}`} replace />;

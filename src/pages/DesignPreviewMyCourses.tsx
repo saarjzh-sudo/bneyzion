@@ -294,6 +294,8 @@ export default function DesignPreviewMyCourses() {
   const { data: enrollments = [], isLoading: enrollLoading } = useMyEnrollments();
   const { data: allCourses = [], isLoading: coursesLoading } = useCommunityCoursesPublic();
   const { hasAccess: hasWeeklyChapter, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
+  // קוהורט איכה (ימי שני) — מסלול איכה עד המיזוג לרגילים אחרי ט' באב
+  const { hasAccess: hasEicha } = useUserAccess("program:eicha-monday");
 
   const isLoading = authLoading || enrollLoading || coursesLoading || accessLoading;
 
@@ -321,6 +323,25 @@ export default function DesignPreviewMyCourses() {
         ctaTo: "/course/weekly-chapter",
         ctaLabel: "המשך ללמוד",
         tag: "מנוי פעיל",
+        isSubscription: true,
+        accessType: "subscribers_only",
+      });
+    }
+
+    // 1ב. קוהורט איכה — מסלול ימי שני (מוצג רק למי שאין לו את המנוי הרגיל)
+    if (hasEicha && !hasWeeklyChapter) {
+      result.push({
+        id: "eicha-monday",
+        title: "לחיות תנ\"ך — מגילת איכה",
+        subtitle: "הרב יואב אוריאל · ימי שני 21:00",
+        slug: "book-lamentations",
+        gradient: gradients.warmDark,
+        progressPct: 0,
+        lessonCount: 6,
+        hasAccess: true,
+        ctaTo: "/course/book-lamentations",
+        ctaLabel: "המשך ללמוד",
+        tag: "תכנית איכה",
         isSubscription: true,
         accessType: "subscribers_only",
       });
@@ -366,7 +387,7 @@ export default function DesignPreviewMyCourses() {
     }
 
     return result;
-  }, [enrollments, allCourses, enrolledIds, hasWeeklyChapter]);
+  }, [enrollments, allCourses, enrolledIds, hasWeeklyChapter, hasEicha]);
 
   // קורסים נעולים — יש מחיר / requires_tag, אין לי גישה
   const lockedCourses = useMemo<CourseCardData[]>(() => {
