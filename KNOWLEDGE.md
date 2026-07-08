@@ -8250,3 +8250,17 @@ snapshot `user_access_tags_bak_mondaysync_20260708`): ended=12, extended=7, eich
 **מעבר קל לראשי (בקשת סער):** לומד-איכה פתוח לו גם הספר הראשי הנוכחי (WeeklyBookDetail:
 eichaAccess+is_current), באנר בפורטל "אתם לומדים איכה… בסיום תעברו אוטומטית" עם כפתור
 ללימוד הראשי, וכרטיס "התכנית הראשית" בקורסים-שלי.
+
+### רמה 11 — באנרים + פופאפ-תמונה + עדכון-שקט (8.7 בוקר, פרוס ואומת)
+דיון-סער: פופאפ="פשוט תמונה לחיצה"; באנר=בזרימת-העמוד (לא צף-בצד ולא sticky-תחתון).
+1. **PromoPopup**: מדיה=הפופאפ כולו (תמונה/וידאו לחיצים ל-cta_url, 560px, בלי טקסט/כפתור);
+   שורה בלי מדיה=קלף-הטקסט הישן.
+2. **ImageBannerSlot** (`components/promo/`): placement `home`=מתחת-להירו בדף-הבית,
+   `content`=עמודי-תוכן מעל-הפוטר (DesignLayout). picture+נכס-מובייל, lazy, מכבד תזמון.
+   ⚠️ חובה width:100% — flex-layout כיווץ אותו ל-2px (תוקן).
+3. **אדמין**: בורר פופאפ/באנר-תמונה + מיקום + העלאת תמונת-מובייל (PromoMediaField bannerMode).
+4. **promos DDL**: placement (default home) + mobile_image_url.
+5. **UpdatePrompt**: רק כש-registration.waiting קיים בפועל; standalone=חלונית מלאה,
+   דפדפן=לשונית-צד קטנה ("במחשב מה קשור עדכון").
+6. באנרי-איכה חיים: home `0db44571` + content `0594b6a5` (נכסים: promos/eicha-banner-demo*.jpg,
+   חיתוך מהפלייר — סער עשוי להחליף בנכס מעוצב). פופאפ-איכה הפך אוטומטית לתמונה-לחיצה.
