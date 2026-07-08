@@ -8448,3 +8448,35 @@ intent_detected,persona_guess,refused_content}}`. הגרסה הישנה קראה
 
 build+tsc+guards נקיים · RLS: bot_sessions=admin-only (anon לא רואה — לכן אומת ב-token+
 נורמלייזר-על-דאטה-אמיתי, לא ב-preview). נפרס עם הסבב.
+
+---
+
+## 🤖➕ סבב ה' — חיווט edge בנצי לתיעוד-עומק (8.7.2026, "תעשה את זה")
+
+המשך ישיר לסבב-ד': כדי שהחקירה תעמיק אוטומטית, ה-edge `navigation-bot` חוּוט לכתוב
+את כל אותות-החקירה (עד היום כתב רק history-פשוט + persona + last_route + user_agent).
+
+### מה שונה ב-edge (`supabase/functions/navigation-bot/index.ts`, נפרס `deploy-benzi.sh`)
+1. **🔑 היסטוריה עשירה** — תור-בנצי נשמר `{role:"model", content: safeResponse}` (זהה
+   לפורמט הקליינט) במקום `{role:"bot", text}` — כך **cta_buttons נשמרים לתמיד** (הבאג
+   שאיבד את הקישורים). היסטוריה חסומה ל-30 תורים אחרונים.
+2. **intents_detected** (text[]) — distinct מכל `content.intent_detected` בשיחה.
+3. **refused_content** (bool) — true אם בנצי סירב תוכן באיזשהו תור.
+4. **ip_country** — best-effort מכותרות CDN (cf-ipcountry/x-vercel-ip-country/x-country).
+   ⚠️ **Supabase edge לא חושף כותרת-מדינה → נשאר null** (מאומת חי). השדה קיים לעתיד.
+5. **ביקון cta_click** — ענף מוקדם ב-edge (`event==="cta_click"`, לא מפעיל Gemini) →
+   RPC `append_bot_link_click(p_session,p_link)` (append אטומי ל-`links_clicked`,
+   service_role-only, revoke public/anon). הקליינט: `reportCtaClick` ב-botApi.ts
+   (navigator.sendBeacon, שורד ניווט) נקרא מ-`handleCtaClick` ב-BotPanel.
+
+### אדמין (BenziConversations.tsx)
+נוסף בלוק "קישורים שהגולש לחץ בפועל" (ירוק) בפס-החקירה — מ-`links_clicked`.
+הנורמלייזר כבר קרא intents/refused; עכשיו הם מגיעים גם מהעמודות החדשות.
+
+### אימות חי (edge פרוס, לא preview)
+שאלה אמיתית → `intents_detected=["how_to_learn"]`, `refused_content=false`,
+history עשיר עם `content.cta_buttons` שמורים · ביקון-קליק → `links_clicked=[{ts,link:/chapter-weekly}]`.
+ip_country=null (צפוי). session-הבדיקה נמחק. tsc+build+deno-check+regression נקיים.
+
+**מגבלה שנשארה:** ip_country תלוי בכך שה-CDN יזרים כותרת — כרגע לא. אם צריך מדינה,
+לשקול GeoIP על ה-IP (x-forwarded-for) — לא נעשה (over-engineering לכמות הנוכחית).

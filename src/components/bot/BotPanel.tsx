@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { MessageBubble } from "./MessageBubble";
 import { OpeningButtons } from "./OpeningButtons";
 import { useBotSession } from "./useBotSession";
+import { reportCtaClick } from "./botApi";
 import { BOT_CONFIG } from "./botConfig";
 import type { BotCta, BotPersona, BotResponse } from "./types";
 
@@ -21,6 +22,7 @@ interface Props {
 
 export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
   const {
+    sessionId,
     history,
     isThinking,
     error,
@@ -64,9 +66,14 @@ export function BotPanel({ isOpen, onClose, currentParasha }: Props) {
     sendMessage(prompt, currentParasha);
   };
 
-  const handleCtaClick = (_cta: BotCta) => {
-    // Future: log click to bot_sessions via API or set state
-    // For now, the <Link> navigation handles routing.
+  const handleCtaClick = (cta: BotCta) => {
+    // רישום לחקירה: אילו קישורים גולשים באמת לחצו (ולא רק קיבלו). fail-soft.
+    reportCtaClick(sessionId, {
+      label: cta.label,
+      route: (cta as { route?: string }).route,
+      url: (cta as { url?: string }).url,
+    });
+    // הניווט עצמו מטופל ע"י ה-<Link>.
   };
 
   const handleSuggestionClick = (text: string) => {

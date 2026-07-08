@@ -158,3 +158,29 @@ export async function sendBotMessage(opts: SendOptions): Promise<BotResponse> {
   }
   throw lastErr;
 }
+
+/**
+ * ביקון קליק-על-קישור — מדווח לאדמין אילו קישורים גולשים באמת לחצו (לא רק קיבלו).
+ * fire-and-forget: sendBeacon שורד ניווט (הגולש עוזב לדף שבנצי הפנה אליו).
+ * fail-soft לחלוטין — כשל כאן לעולם לא פוגע בחוויית הגולש.
+ */
+export function reportCtaClick(sessionId: string, link: { label?: string; route?: string; url?: string }): void {
+  if (!sessionId || !link) return;
+  try {
+    const endpoint = `${SUPABASE_URL_RUNTIME}${BOT_CONFIG.edgeFunctionPath}`;
+    const payload = JSON.stringify({ event: "cta_click", session_id: sessionId, link });
+    if (typeof navigator !== "undefined" && typeof navigator.sendBeacon === "function") {
+      navigator.sendBeacon(endpoint, new Blob([payload], { type: "application/json" }));
+      return;
+    }
+    // fallback — fetch keepalive (עדיין שורד ניווט ברוב הדפדפנים)
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", apikey: SUPABASE_ANON_KEY_RUNTIME },
+      body: payload,
+      keepalive: true,
+    }).catch(() => {});
+  } catch {
+    // מתעלמים — אנליטיקה בלבד
+  }
+}

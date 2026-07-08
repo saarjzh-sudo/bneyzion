@@ -246,13 +246,34 @@ serve(async (req) => {
   try {
     const body = await req.json().catch(() => ({}));
     const {
+      event = null,
       message,
       session_id = "",
       persona = null,
       history = [],
       current_route = null,
       current_parasha = null,
+      link = null,
     } = body as Record<string, unknown>;
+
+    // ── ביקון קליק-על-קישור (fire-and-forget מהקליינט) — רישום לחקירה בלבד,
+    // לא מפעיל את Gemini. append אטומי דרך RPC service_role.
+    if (event === "cta_click") {
+      const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
+      const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+      if (SUPABASE_URL && SERVICE_KEY && session_id && link) {
+        fetch(`${SUPABASE_URL}/rest/v1/rpc/append_bot_link_click`, {
+          method: "POST",
+          headers: {
+            apikey: SERVICE_KEY,
+            Authorization: `Bearer ${SERVICE_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ p_session: String(session_id), p_link: link }),
+        }).catch((e) => console.warn("[navigation-bot] click log failed:", String(e)));
+      }
+      return json({ ok: true });
+    }
 
     if (!message || typeof message !== "string") {
       return json({ error: "message is required" }, 400);
@@ -307,12 +328,40 @@ serve(async (req) => {
 
     // תיעוד השיחה ל-bot_sessions (fire-and-forget, fail-soft) — הדשבורד באדמין
     // קורא מכאן. upsert לפי session_id; history = כל חילופי-הדברים עד עכשיו.
+    //
+    // ⚠️ הבוט מאחסן את תור-בנצי בפורמט העשיר { role:"model", content: safeResponse }
+    // (זהה לפורמט שהקליינט מחזיק) — כדי שה-cta_buttons (הקישורים שבנצי נותן) יישמרו
+    // לתמיד לצורך חקירה. הגרסה הישנה שמרה { role:"bot", text } ואיבדה את הקישורים.
     if (SUPABASE_URL && SERVICE_KEY && session_id) {
       const fullHistory = [
         ...(Array.isArray(history) ? history : []),
-        { role: "user", text: String(message) },
-        { role: "bot", text: (safeResponse as Record<string, unknown>).reply_text ?? "" },
+        { role: "user", content: String(message) },
+        { role: "model", content: safeResponse },
       ];
+
+      // חילוץ אותות-חקירה מכל תורי-בנצי בשיחה (עמיד לשני הפורמטים).
+      const turnMeta = (t: unknown): { intent?: string; refused: boolean } => {
+        const c = (t as { content?: unknown })?.content;
+        if (c && typeof c === "object") {
+          const o = c as { intent_detected?: unknown; refused_content?: unknown };
+          return {
+            intent: typeof o.intent_detected === "string" ? o.intent_detected : undefined,
+            refused: o.refused_content === true,
+          };
+        }
+        return { refused: false };
+      };
+      const metas = fullHistory.map(turnMeta);
+      const intentsDetected = [...new Set(metas.map((m) => m.intent).filter(Boolean))] as string[];
+      const refusedContent = metas.some((m) => m.refused);
+
+      // מדינה — best-effort מכותרות ה-CDN (אם קיימות). ריק אם לא זמין.
+      const ipCountry =
+        req.headers.get("cf-ipcountry") ??
+        req.headers.get("x-vercel-ip-country") ??
+        req.headers.get("x-country") ??
+        null;
+
       fetch(`${SUPABASE_URL}/rest/v1/bot_sessions?on_conflict=session_id`, {
         method: "POST",
         headers: {
@@ -324,7 +373,10 @@ serve(async (req) => {
         body: JSON.stringify({
           session_id: String(session_id),
           persona: persona ? String(persona) : null,
-          history: fullHistory,
+          history: fullHistory.slice(-30), // חסם גדילה — 30 התורים האחרונים
+          intents_detected: intentsDetected,
+          refused_content: refusedContent,
+          ip_country: ipCountry ? String(ipCountry).slice(0, 8) : null,
           last_route: current_route ? String(current_route) : null,
           user_agent: req.headers.get("user-agent")?.slice(0, 250) ?? null,
           updated_at: new Date().toISOString(),

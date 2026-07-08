@@ -115,6 +115,15 @@ function sessionRefused(s: BotSession, turns: Turn[]): boolean {
   return s.refused_content === true || turns.some((t) => t.refused);
 }
 
+/** קישורים שהגולש באמת לחץ (מ-links_clicked, נכתב ע"י ביקון cta_click) */
+function clickedLinks(s: BotSession): CtaButton[] {
+  const raw = s.links_clicked;
+  const arr = Array.isArray(raw) ? raw : [];
+  return arr
+    .map((entry: any) => (entry?.link ? entry.link : entry))
+    .filter((b: any) => b && (b.route || b.url)) as CtaButton[];
+}
+
 function linkHref(b: CtaButton): string {
   const r = b.route || b.url || "";
   if (!r) return SITE_ORIGIN;
@@ -185,6 +194,7 @@ export default function BenziConversations() {
 
   const openTurns = open ? normalizeHistory(open) : [];
   const openLinks = open ? sessionLinks(openTurns) : [];
+  const openClicked = open ? clickedLinks(open) : [];
   const openIntents = open ? sessionIntents(open, openTurns) : [];
 
   return (
@@ -283,8 +293,8 @@ export default function BenziConversations() {
             <DialogTitle>שיחה · {open ? fmtTime(open.updated_at) : ""}</DialogTitle>
           </DialogHeader>
 
-          {/* פס-חקירה: קישורים שנשלחו + כוונות + סירוב + מדינה */}
-          {open && (openLinks.length > 0 || openIntents.length > 0 || sessionRefused(open, openTurns)) && (
+          {/* פס-חקירה: קישורים שנשלחו + נלחצו + כוונות + סירוב + מדינה */}
+          {open && (openLinks.length > 0 || openClicked.length > 0 || openIntents.length > 0 || sessionRefused(open, openTurns)) && (
             <div className="rounded-xl border border-border bg-muted/40 p-3 space-y-2 text-sm">
               {openLinks.length > 0 && (
                 <div className="space-y-1.5">
@@ -293,6 +303,16 @@ export default function BenziConversations() {
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {openLinks.map((b, i) => <LinkChip key={i} b={b} />)}
+                  </div>
+                </div>
+              )}
+              {openClicked.length > 0 && (
+                <div className="space-y-1.5">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
+                    <ExternalLink className="h-3.5 w-3.5" /> קישורים שהגולש לחץ בפועל ({openClicked.length})
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {openClicked.map((b, i) => <LinkChip key={i} b={b} />)}
                   </div>
                 </div>
               )}
