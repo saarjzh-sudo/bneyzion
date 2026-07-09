@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import Layout from "@/components/layout/Layout";
 import PageHero from "@/components/layout/PageHero";
+import heroWatercolorAbout from "@/assets/hero-watercolor-about.webp";
 import AboutStatsSection from "@/components/about/AboutStatsSection";
 import AboutRabbisSection from "@/components/about/AboutRabbisSection";
 import AboutContactSection from "@/components/about/AboutContactSection";
@@ -54,7 +55,7 @@ const About = () => {
 
   return (
     <Layout>
-      <PageHero title="אודות בני ציון" subtitle="הבמה המרכזית של לימוד התנ״ך, בדרך הממשיכה את מסורת ישראל לדורותיה" />
+      <PageHero title="אודות בני ציון" subtitle="הבמה המרכזית של לימוד התנ״ך, בדרך הממשיכה את מסורת ישראל לדורותיה" bgImage={heroWatercolorAbout} />
 
       {/* Vision & Story */}
       <section className="py-20 section-gradient-warm">

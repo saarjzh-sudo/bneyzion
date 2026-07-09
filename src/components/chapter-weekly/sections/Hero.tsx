@@ -1,11 +1,11 @@
 import { ArrowLeft } from "lucide-react";
-import jerusalemWalls from "@/assets/jerusalem-walls.webp";
+import heroWatercolor from "@/assets/hero-watercolor-parasha.webp";
 import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 
 const Hero = () => (
   <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-    <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${jerusalemWalls})` }} />
-    <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-background" />
+    <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: `url(${heroWatercolor})` }} />
+    <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/35 to-background" />
 
     <div className="relative z-10 max-w-4xl mx-auto text-center px-4 py-16 md:py-24">
       <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm px-5 py-2 rounded-full border border-gold/40 mb-6 animate-fade-up" style={{ animationDelay: '0.05s' }}>

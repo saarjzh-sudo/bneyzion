@@ -472,10 +472,12 @@ export default function DesignPreviewMyCourses() {
   return (
     <DesignLayout>
       <div style={{ background: colors.parchment, minHeight: "100vh", direction: "rtl" }}>
-        {/* Hero */}
+        {/* Hero — רמה 13: אקוורל-זהב מאחורי הגרדיאנט הכהה (הקו של יואב), הטקסט המוזהב נשאר קריא */}
         <div
           style={{
-            background: gradients.warmDark,
+            backgroundImage: `linear-gradient(rgba(43,32,18,0.72), rgba(43,32,18,0.72)), url('/images/hero-watercolor-courses.webp')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
             padding: "3rem 1.5rem 2.5rem",
             textAlign: "center",
           }}

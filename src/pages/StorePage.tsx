@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, Monitor, FileText } from "lucide-react";
 import Layout from "@/components/layout/Layout";
+import heroWatercolorStore from "@/assets/hero-watercolor-store.webp";
 import { useProducts, useProductCategories, type Product } from "@/hooks/useProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -115,6 +116,9 @@ const StorePage = () => {
     <Layout sidebar={false}>
       {/* Hero */}
       <section className="relative py-20 md:py-28 overflow-hidden bg-gradient-to-b from-primary/10 via-background to-background">
+        {/* רמה 13: שכבת אקוורל-זהב מתחת להירו — הקו של יואב */}
+        <img src={heroWatercolorStore} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover opacity-45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/30 to-background" />
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 right-10 w-64 h-64 rounded-full bg-primary blur-3xl" />
           <div className="absolute bottom-10 left-10 w-48 h-48 rounded-full bg-accent blur-3xl" />

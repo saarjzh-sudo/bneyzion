@@ -138,6 +138,7 @@ export default function TeachersWingPage() {
       {/* Hero */}
       <DesignPageHero
         variant="olive"
+        imageSrc="/images/hero-watercolor-teachers.webp"
         eyebrow="אגף המורים"
         title='כלים ותכנים למחנכי תנ"ך'
         subtitle='מאגר תכנים מקצועי למורים: דפי עבודה, חידות, כלי עזר, מדריכים והוראות לכיתות א׳–י״ב. ניווט לפי ספר, סוג תוכן, ויוצר — דרך התפריט הצדדי.'

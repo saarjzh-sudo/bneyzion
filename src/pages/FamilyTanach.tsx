@@ -127,7 +127,7 @@ function FamilyTanachHero() {
       dir="rtl"
       style={{
         backgroundImage:
-          "linear-gradient(180deg, rgba(15,38,35,0.68) 0%, rgba(18,48,44,0.55) 45%, rgba(32,79,73,0.82) 100%), url('/family-bible/family-hero-wall.jpg')",
+          "linear-gradient(180deg, rgba(15,38,35,0.52) 0%, rgba(18,48,44,0.42) 45%, rgba(32,79,73,0.68) 100%), url('/family-bible/hero-watercolor-family.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
         padding: "6rem 1.5rem 7rem",

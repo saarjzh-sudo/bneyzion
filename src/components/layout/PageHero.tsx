@@ -39,6 +39,8 @@ interface PageHeroProps {
   /** Meta row rendered under the subtitle — badges, counts, rabbi chip. */
   meta?: ReactNode;
   children?: ReactNode;
+  /** רמה 13: אקוורל-זהב עדין מאחורי הרצועה (הקו של יואב). נשמר קונטרסט הטקסט הכהה. */
+  bgImage?: string;
 }
 
 const CREAM_BG = "linear-gradient(160deg, #FBF6EC 0%, #F5EFE0 60%, #EDE5D0 100%)";
@@ -58,6 +60,7 @@ export default function PageHero({
   variant = "default",
   meta,
   children,
+  bgImage,
 }: PageHeroProps) {
   // Passthrough mode: legacy wrapper usage with no title.
   if (!title) {
@@ -87,6 +90,21 @@ export default function PageHero({
           textAlign: align,
         }}
       >
+        {bgImage && (
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage: `url(${bgImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: 0.35,
+              pointerEvents: "none",
+            }}
+          />
+        )}
+
         {/* Decorative arc — expansive feel for collections (category / default) */}
         {!isSeries && (
           <div
