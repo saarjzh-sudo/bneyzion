@@ -23,5 +23,11 @@
 - [ ] פריטים שאינם-ספר (תרומת-שופטים, מתחדשים, קורסים, מנויים, אזורים) — במודע לא בסבב; לשאול את סער אם רוצה גם.
 - [ ] החלפה ב-DB: snapshot `products` → עדכון `image_url` מוצר-מוצר + אימות 200 → סנדבוקס, בלי פרודקשן עד "פרוס".
 
+## סטטוס 23:30 (הסשן המרוחק) — בנדלים v2/v3 + Veo חוּות
+- סער פסל את הבנדלים המקוריים (איבדו פרופורציה וכיוון; רק esther_shir אושר). **תוקנו כולם מהמוקאפים האמיתיים** (og:image של דפי-הסט הישנים — סטים מקצועיים שקופים!): `bundle_series6_v2` · `bundle_set5_v3` · `bundle_2ruth_v2` · `bundle_2esther_v3` · `bundle_2shoftim_v3` · `bundle_2kohelet_v2` · `bundle_hashlama3_v2` · `bundle_hashlama4_v2`. כולם עברו אימות-חזותי (מספר-ספרים/RTL/כותרות) ונשלחו ל-WA. ⚠️ מלכודות שנלמדו: בלי FIDELITY-clause המודל מצייר את הכריכות · "2 ספרים" חייב "TWO identical copies, both front covers" · רפרנס יחיד⇒ספר-יחיד.
+- הירו דף-הבית: **Veo הוחלף בקובץ המחווט** `public/video/hero-watercolor.mp4` (גיבוי גרוק: `pilots/heroes/_grok_wired_backup.mp4`).
+- SQL: **נעצר ע"י סער לפני הרצה** (בגלל הבנדלים). גיבוי אומת 47/47.
+- ⏳ על אישור-סער לבנדלים: (1) העלאת ה-v2/v3 ל-storage `product-images/watercolor/` באותם שמות (דריסת הישנים) (2) הרצת ה-SQL (3) build+commit+tag `level12.5` (4) deploy (5) אימות חי. השאר (טורקיז-חנות, פריטים-שאינם-ספר, בדיקת-נייד) — לסשן חדש לפי הוראת סער.
+
 ## מקורות/מפתחות
 Gemini key + `gemini-3-pro-image` (api-keys.md). Supabase PAT `sbp_bddd…` proj `pzvmwfexeiruelwiujxn`. Green API 7105260665 (WA לסער 972526018772). rclone `gdrive:` לקבצים>10MB.

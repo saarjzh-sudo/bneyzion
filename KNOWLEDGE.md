@@ -294,6 +294,18 @@ adds to (not overwrites) institutional memory.
 
 ---
 
+## 🔑 גישת אדמין יהושע — allowlist כפול (2026-07-09)
+
+דף `/design-yehoshua-admin` (`DesignPreviewYehoshuaAdmin.tsx`) פתוח **לשני מיילים**, לא רק סער. הגישה חסומה ב-**שתי שכבות שחייבות להישאר מסונכרנות**:
+
+1. **Frontend** — `const ADMIN_EMAILS = ["saar.j.z.h@gmail.com", "yoavoriel@gmail.com"]` (היה `ADMIN_EMAIL` יחיד). השער: `if (!ADMIN_EMAILS.includes(userEmail.toLowerCase()))`.
+2. **RLS** — policy `admin_select_donations` על `public.donations`: `USING (auth.email() = ANY (ARRAY['saar.j.z.h@gmail.com','yoavoriel@gmail.com']))`. (היה `= 'saar.j.z.h@gmail.com'`.)
+
+- **אימות 2026-07-09:** יואב 737 שורות · זר 0 · סער 737. bundle חי כולל את שני המיילים.
+- ⚠️ יואב הוא כבר `admin` ב-`user_roles`, אבל ה-policy בודק **מייל** ולא role — לכן היה חובה לשנות את שתי השכבות. אל תניח ש-role=admin מספיק לטבלת donations.
+- **גלגול-אחורה:** `ALTER POLICY admin_select_donations ON public.donations USING (auth.email() = 'saar.j.z.h@gmail.com');` + החזרת ה-frontend למייל אחד + deploy.
+- מקור-אמת לדף = worktree `bz-finish/integration`, deploy `vercel --prod` (פרויקט `bneyzion`, alias `bneyzion-yehoshua.vercel.app`).
+
 ## ⛔ REGRESSION GUARD — אסור לשבור (Yehoshua donations pipeline, תוקן 2026-06-02)
 
 > **חובה לקרוא לפני כל deploy / merge / שינוי ב: payments, webhook, env vars, DB schema, או הקובץ `DesignPreviewYehoshuaCampaign.tsx`.**
