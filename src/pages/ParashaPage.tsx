@@ -263,7 +263,7 @@ const ParashaPage = () => {
       >
         {/* Parasha hero image — behind all text */}
         <img
-          src="/family-bible/parasha-shavua.webp"
+          src="/images/hero-watercolor-parasha.webp"
           alt=""
           aria-hidden
           className="absolute inset-0 w-full h-full object-cover object-center"

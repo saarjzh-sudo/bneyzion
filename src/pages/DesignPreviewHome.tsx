@@ -196,18 +196,18 @@ function DesignHero() {
                   position: "relative", marginTop: -96 }}>
       {/* Video — poster-first, lazily loaded (T11 perf) */}
       <LazyHeroVideo
-        videoSrc="/video/hero-bg.mp4"
-        poster="/video/hero-poster.jpg"
-        posterAlt="נוף מצדה"
+        videoSrc="/video/hero-watercolor.mp4"
+        poster="/video/hero-watercolor-poster.jpg"
+        posterAlt="חומות ירושלים באקוורל מוזהב"
         mediaStyle={{ objectPosition: "center 40%",
-                      filter: "brightness(0.72) contrast(1.08) saturate(1.1)", transform: "scale(1.04)" }}
+                      filter: "contrast(1.03) saturate(1.05)", transform: "scale(1.04)" }}
       />
 
-      {/* Overlays */}
+      {/* Overlays — light watercolor video: soft cream veil + warm base so dark text stays readable */}
       <div style={{ position: "absolute", inset: 0,
-                    background: "linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 35%, rgba(0,0,0,0.55) 100%)" }} />
+                    background: "linear-gradient(180deg, rgba(255,252,245,0.30) 0%, rgba(255,252,245,0.05) 35%, rgba(62,47,30,0.16) 100%)" }} />
       <div style={{ position: "absolute", inset: 0,
-                    background: "radial-gradient(ellipse at 50% 45%, transparent 20%, rgba(0,0,0,0.38) 100%)" }} />
+                    background: "radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(139,111,71,0.14) 100%)" }} />
 
       {/* Grain */}
       <svg style={{ position: "absolute", inset: 0, opacity: 0.025, pointerEvents: "none" }} width="100%" height="100%">
@@ -240,8 +240,8 @@ function DesignHero() {
         {/* H1 */}
         <h1 className="animate-fade-in-up"
           style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
-                   fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "rgba(255,255,255,0.92)",
-                   textShadow: "0 2px 16px rgba(0,0,0,0.45)", margin: "0 0 0.5rem",
+                   fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "#4A3823",
+                   textShadow: "0 1px 14px rgba(255,252,245,0.55)", margin: "0 0 0.5rem",
                    lineHeight: 1.3, fontStyle: "italic" }}>
           אתר התנ״ך של ישראל
         </h1>
@@ -258,9 +258,9 @@ function DesignHero() {
           </button>
           <button onClick={() => navigate("/chapter-weekly")}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem",
-                     border: "1.5px solid rgba(255,255,255,0.35)",
-                     background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)",
-                     color: "white", fontFamily: "Paamon, serif", fontSize: "0.95rem",
+                     border: "1.5px solid rgba(74,56,35,0.35)",
+                     background: "rgba(255,255,255,0.38)", backdropFilter: "blur(8px)",
+                     color: "#4A3823", fontFamily: "Paamon, serif", fontSize: "0.95rem",
                      fontWeight: 700, cursor: "pointer" }}>
             לתכנית הפרק השבועי
           </button>
