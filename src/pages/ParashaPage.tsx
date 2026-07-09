@@ -275,7 +275,7 @@ const ParashaPage = () => {
           aria-hidden
           style={{
             background:
-              "linear-gradient(180deg, rgba(40,22,18,0.62) 0%, rgba(40,22,18,0.48) 45%, rgba(40,22,18,0.70) 100%)",
+              "linear-gradient(180deg, rgba(251,246,236,0.68) 0%, rgba(251,246,236,0.52) 45%, rgba(237,229,208,0.82) 100%)",
             pointerEvents: "none",
           }}
         />
@@ -298,16 +298,16 @@ const ParashaPage = () => {
         <div className="container max-w-4xl relative z-10">
           {/* Breadcrumb — hidden in print */}
           <div className="flex items-center justify-between mb-6 print:hidden">
-            <nav className="flex items-center gap-1.5 text-sm text-white/55">
-              <Link to="/" className="hover:text-white/90 transition-colors">
+            <nav className="flex items-center gap-1.5 text-sm text-[#4A3823]/60">
+              <Link to="/" className="hover:text-[#4A3823] transition-colors">
                 דף הבית
               </Link>
               <ArrowLeft className="h-3 w-3 rotate-180" />
-              <span className="text-white/80">פרשת השבוע</span>
+              <span className="text-[#4A3823]/85">פרשת השבוע</span>
             </nav>
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-1.5 text-sm text-white/55 hover:text-white transition-colors"
+              className="flex items-center gap-1.5 text-sm text-[#4A3823]/60 hover:text-[#4A3823] transition-colors"
             >
               <Printer className="h-3.5 w-3.5" />
               הדפסה
@@ -323,7 +323,7 @@ const ParashaPage = () => {
           >
             <p
               className="text-sm uppercase tracking-widest mb-3 print-masthead__super"
-              style={{ color: colors.goldShimmer, fontFamily: fonts.body, opacity: 0.75 }}
+              style={{ color: "#8B6F47", fontFamily: fonts.body, opacity: 0.9 }}
             >
               פרשת השבוע
             </p>
@@ -331,8 +331,8 @@ const ParashaPage = () => {
               className="text-4xl md:text-6xl mb-2 leading-tight print-masthead__title"
               style={{
                 fontFamily: fonts.display,
-                color: "#fff",
-                textShadow: "0 2px 24px rgba(0,0,0,0.55)",
+                color: "#4A3823",
+                textShadow: "0 1px 16px rgba(255,252,245,0.6)",
               }}
             >
               פרשת {parasha}
@@ -340,7 +340,7 @@ const ParashaPage = () => {
             {chumash && (
               <p
                 className="text-base mt-1 print-masthead__chumash"
-                style={{ color: colors.goldShimmer, fontFamily: fonts.body, opacity: 0.75 }}
+                style={{ color: "#8B6F47", fontFamily: fonts.body, opacity: 0.9 }}
               >
                 חומש {chumash}
               </p>
@@ -354,7 +354,7 @@ const ParashaPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
               className="print-verse mt-5 max-w-2xl mx-auto text-center text-base md:text-lg leading-relaxed print:mt-3"
-              style={{ fontFamily: fonts.display, color: "rgba(255,255,255,0.78)" }}
+              style={{ fontFamily: fonts.display, color: "rgba(74,56,35,0.85)" }}
             >
               ״{verse.text}״
               <span

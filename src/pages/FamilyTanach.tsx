@@ -68,7 +68,7 @@ const BASE_CARDS: LobbyCard[] = [
     title: "פרשת השבוע",
     desc: "מאמר, שיעורי אודיו ווידאו על פרשת השבוע, כל שבוע מחדש",
     href: "/parasha",
-    image: "/family-bible/parasha-shavua.webp",
+    image: "/family-bible/card-parasha.jpg",
     badge: "מתעדכן שבועית",
   },
   {
@@ -76,7 +76,7 @@ const BASE_CARDS: LobbyCard[] = [
     title: "הפרק השבועי",
     desc: "עם הרב יואב אוריאל, לומדים תנ״ך פרק אחרי פרק, כל השנה",
     href: "/chapter-weekly",
-    image: "/family-bible/hero-compass.webp",
+    image: "/family-bible/card-chapter-weekly.jpg",
     badge: "התוכנית המרכזית",
   },
   {
@@ -84,21 +84,21 @@ const BASE_CARDS: LobbyCard[] = [
     title: "פסוק אחד ביום",
     desc: "תנ״ך לחיים, פסוק קצר להתחיל איתו את היום, לכל הגילאים",
     href: "/daily-verse",
-    image: "/family-bible/abstract-verse.webp",
+    image: "/family-bible/card-daily-verse.jpg",
   },
   {
     id: "dor-haplaot",
     title: "דור הפלאות",
     desc: "70 ניסי מלחמת חרבות ברזל, סיפורי הצלה והשגחה שלא ישכחו",
     href: "/dor-haplaot",
-    image: "/family-bible/abstract-miracles.webp",
+    image: "/family-bible/card-dor-haplaot.jpg",
   },
   {
     id: "riddles",
     title: "חידות לשולחן השבת",
     desc: "חידות תנ״ך לילדים, מוכן להדפסה ולשולחן השבת",
     href: `/series/${RIDDLES_SERIES_ID}`,
-    image: "/family-bible/abstract-podcast.webp",
+    image: "/family-bible/card-riddles.jpg",
   },
   // חדשות תנכיות — הטור היומי של הרב יואב. חוּוט 7.7.2026: הארכיון (10 טורים)
   // נקלט מקבוצות "בכוח התנ״ך ננצח" לסדרה ייעודית.
@@ -107,8 +107,16 @@ const BASE_CARDS: LobbyCard[] = [
     title: "חדשות תנכיות",
     desc: "מאורעות השעה לאור התנ״ך, טור יומי מאת הרב יואב אוריאל",
     href: "/tanach-news",
-    image: "/family-bible/abstract-verse.webp",
+    image: "/family-bible/card-tanach-news.jpg",
     badge: "מתעדכן יומית",
+  },
+  // הניוזלטר — ארכיון מיילי-התוכן של הרב יואב, נמשך מהמייל (10.7.2026)
+  {
+    id: "newsletter",
+    title: "הניוזלטר של בני ציון",
+    desc: "מכתבי עומק תנ״כיים מאת הרב יואב אוריאל, ישירות מהמייל, כל הגיליונות",
+    href: "/newsletter",
+    image: "/family-bible/card-newsletter.jpg",
   },
   // ילדי התנ״ך — פודקאסט שבועי לילדים (הושק 7.7.2026, פרק חדש בכל יום שלישי)
   {
@@ -116,7 +124,7 @@ const BASE_CARDS: LobbyCard[] = [
     title: "ילדי התנ״ך",
     desc: "פודקאסט סיפורי התנ״ך לילדים, פרק חדש בכל יום שלישי, מגיל 6 ומעלה",
     href: `/series/${KIDS_PODCAST_SERIES_ID}`,
-    image: "/family-bible/abstract-podcast.webp",
+    image: "/family-bible/card-kids-podcast.jpg",
     badge: "חדש!",
   },
 ];
@@ -127,7 +135,7 @@ function FamilyTanachHero() {
       dir="rtl"
       style={{
         backgroundImage:
-          "linear-gradient(180deg, rgba(15,38,35,0.52) 0%, rgba(18,48,44,0.42) 45%, rgba(32,79,73,0.68) 100%), url('/family-bible/hero-watercolor-family.webp')",
+          "linear-gradient(180deg, rgba(251,246,236,0.50) 0%, rgba(251,246,236,0.32) 45%, rgba(237,229,208,0.72) 100%), url('/family-bible/hero-watercolor-family.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center 30%",
         padding: "6rem 1.5rem 7rem",
@@ -155,8 +163,9 @@ function FamilyTanachHero() {
             gap: "0.6rem",
             padding: "0.4rem 1.1rem",
             borderRadius: 999,
-            border: `1px solid rgba(232,213,160,0.35)`,
-            color: colors.goldShimmer,
+            border: `1px solid rgba(139,111,71,0.4)`,
+            color: "#8B6F47",
+            background: "rgba(255,252,245,0.5)",
             fontFamily: fonts.body,
             fontSize: "0.85rem",
             marginBottom: "1.5rem",
@@ -172,7 +181,8 @@ function FamilyTanachHero() {
             fontSize: "clamp(2.4rem, 6vw, 4rem)",
             lineHeight: 1.12,
             margin: "0 0 1.1rem",
-            color: "#fff",
+            color: "#1E3B36",
+            textShadow: "0 1px 14px rgba(255,252,245,0.6)",
           }}
         >
           תנ״ך למשפחה
@@ -183,7 +193,7 @@ function FamilyTanachHero() {
             fontFamily: fonts.body,
             fontSize: "clamp(1.05rem, 2.2vw, 1.3rem)",
             lineHeight: 1.7,
-            color: "rgba(255,255,255,0.85)",
+            color: "rgba(30,59,54,0.88)",
             maxWidth: 620,
             margin: "0 auto",
           }}
@@ -197,7 +207,7 @@ function FamilyTanachHero() {
           style={{
             fontFamily: fonts.body,
             fontSize: "0.9rem",
-            color: "rgba(232,213,160,0.85)",
+            color: "rgba(139,111,71,0.9)",
             marginTop: "1.6rem",
             letterSpacing: "0.02em",
           }}

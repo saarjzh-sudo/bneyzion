@@ -313,7 +313,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "חדשות תנכיות",
     desc: "מאורעות השעה לאור התנ\"ך",
     href: "/tanach-news",
-    image: "/family-bible/abstract-miracles.webp",
+    image: "/family-bible/card-tanach-news.jpg",
     disabled: false,
   },
   {
@@ -321,7 +321,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "תנ\"ך לחיים",
     desc: "פסוק אחד ביום",
     href: "/daily-verse",
-    image: "/family-bible/abstract-verse.webp",
+    image: "/family-bible/card-daily-verse.jpg",
     disabled: false,
   },
   {
@@ -329,7 +329,7 @@ const FAMILY_BIBLE_CARDS = [
     title: "סיפורי התנ\"ך לילדים",
     desc: "פודקאסט לילדים · פרק חדש בכל יום שלישי",
     href: "/series/bc1d97b9-e0a5-4b88-8169-5705120bc20c",
-    image: "/family-bible/abstract-podcast.webp",
+    image: "/family-bible/card-kids-podcast.jpg",
     disabled: false,
   },
 ];

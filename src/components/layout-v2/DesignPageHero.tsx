@@ -82,8 +82,8 @@ export default function DesignPageHero({
             backgroundImage: `url(${imageSrc})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            opacity: isDark ? 0.35 : 0.12,
-            filter: isDark ? "brightness(0.55)" : "saturate(0.85)",
+            opacity: isDark ? 0.35 : 0.30,
+            filter: isDark ? "brightness(0.55)" : "saturate(0.95)",
           }}
         />
       )}
@@ -189,7 +189,7 @@ export default function DesignPageHero({
             lineHeight: 1.2,
             margin: 0,
             color: v.textColor,
-            textShadow: isDark ? "0 2px 16px rgba(0,0,0,0.45)" : "none",
+            textShadow: isDark ? "0 2px 16px rgba(0,0,0,0.45)" : "0 1px 14px rgba(255,252,245,0.9)",
             fontStyle: isDark ? "italic" : "normal",
           }}
         >

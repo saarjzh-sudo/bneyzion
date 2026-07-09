@@ -137,12 +137,12 @@ export default function TeachersWingPage() {
     <TeachersLayout>
       {/* Hero */}
       <DesignPageHero
-        variant="olive"
+        variant="parchment"
         imageSrc="/images/hero-watercolor-teachers.webp"
         eyebrow="אגף המורים"
         title='כלים ותכנים למחנכי תנ"ך'
         subtitle='מאגר תכנים מקצועי למורים: דפי עבודה, חידות, כלי עזר, מדריכים והוראות לכיתות א׳–י״ב. ניווט לפי ספר, סוג תוכן, ויוצר — דרך התפריט הצדדי.'
-        icon={<GraduationCap size={28} style={{ color: "#E8D5A0" }} />}
+        icon={<GraduationCap size={28} style={{ color: "#8B6F47" }} />}
       />
 
       {/* Quick-access cards */}

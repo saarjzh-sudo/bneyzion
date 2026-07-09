@@ -475,7 +475,7 @@ export default function DesignPreviewMyCourses() {
         {/* Hero — רמה 13: אקוורל-זהב מאחורי הגרדיאנט הכהה (הקו של יואב), הטקסט המוזהב נשאר קריא */}
         <div
           style={{
-            backgroundImage: `linear-gradient(rgba(43,32,18,0.72), rgba(43,32,18,0.72)), url('/images/hero-watercolor-courses.webp')`,
+            backgroundImage: `linear-gradient(rgba(251,246,236,0.60), rgba(237,229,208,0.72)), url('/images/hero-watercolor-courses.webp')`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             padding: "3rem 1.5rem 2.5rem",
@@ -488,14 +488,15 @@ export default function DesignPreviewMyCourses() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 8,
-                background: "rgba(255,255,255,0.15)",
+                background: "rgba(139,111,71,0.10)",
+                border: "1px solid rgba(139,111,71,0.25)",
                 borderRadius: radii.pill,
                 padding: "4px 16px",
                 marginBottom: 16,
               }}
             >
-              <Trophy size={16} color={colors.goldShimmer} />
-              <span style={{ color: colors.goldShimmer, fontFamily: fonts.display, fontSize: "0.85rem" }}>
+              <Trophy size={16} color="#8B6F47" />
+              <span style={{ color: "#8B6F47", fontFamily: fonts.display, fontSize: "0.85rem" }}>
                 אזור הלמידה האישי
               </span>
             </div>
@@ -504,14 +505,15 @@ export default function DesignPreviewMyCourses() {
                 fontFamily: fonts.display,
                 fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
                 fontWeight: 700,
-                color: "white",
+                color: "#4A3823",
+                textShadow: "0 1px 12px rgba(255,252,245,0.55)",
                 marginBottom: 10,
                 lineHeight: 1.2,
               }}
             >
               הקורסים שלי
             </h1>
-            <p style={{ color: "rgba(255,255,255,0.85)", fontSize: "1.05rem", maxWidth: 480, margin: "0 auto" }}>
+            <p style={{ color: "rgba(74,56,35,0.85)", fontSize: "1.05rem", maxWidth: 480, margin: "0 auto" }}>
               כל הקורסים שיש לך גישה אליהם, במקום אחד
             </p>
           </div>
