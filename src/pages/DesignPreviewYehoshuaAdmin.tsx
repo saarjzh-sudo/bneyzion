@@ -2,16 +2,17 @@
  * DesignPreviewYehoshuaAdmin — Admin Dashboard
  * Route: /design-yehoshua-admin
  *
- * Auth-gated: Google OAuth. Allowlist: saar.j.z.h@gmail.com only.
+ * Auth-gated: Google OAuth. Allowlist: saar + Rav Yoav Oriel.
  * Authenticated admin sees full donations table (PII included) + CSV export.
  * KPI cards are served from yehoshua_campaign_stats view (faster, no RLS issue).
  * Full rows fetched from donations table via authenticated Supabase client.
  *
  * Security model:
  *   - anon: can INSERT (Grow webhook), cannot SELECT (no SELECT policy for anon)
- *   - authenticated (saar only): can SELECT via admin_select_donations policy
- *   - Non-saar authenticated: policy USING clause returns false → 0 rows
- *   - Frontend: checks user.email after auth — shows "no permission" screen for non-saar
+ *   - authenticated (allowlisted only): can SELECT via admin_select_donations policy
+ *   - Non-allowlisted authenticated: policy USING clause returns false → 0 rows
+ *   - Frontend: checks user.email after auth — shows "no permission" screen otherwise
+ *   - Keep this list in sync with the admin_select_donations RLS policy.
  */
 
 import { useState, useEffect, useCallback } from "react";
@@ -20,7 +21,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const GOAL = 80_000;
 const PRODUCT = "yehoshua-campaign";
-const ADMIN_EMAIL = "saar.j.z.h@gmail.com";
+const ADMIN_EMAILS = ["saar.j.z.h@gmail.com", "yoavoriel@gmail.com"];
 
 /* ─── Types ────────────────────────────────────────────────── */
 interface CampaignStatsRow {
@@ -860,7 +861,7 @@ export default function DesignPreviewYehoshuaAdmin() {
 
   const userEmail = user.email ?? "";
 
-  if (userEmail !== ADMIN_EMAIL) {
+  if (!ADMIN_EMAILS.includes(userEmail.toLowerCase())) {
     return (
       <UnauthorizedScreen
         email={userEmail}
