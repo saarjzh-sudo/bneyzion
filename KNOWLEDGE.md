@@ -8520,3 +8520,13 @@ Supabase-edge לא חושף כותרת-מדינה.
 מיזוג-איכה 23.7 (`merge_eicha_cohort.py --apply`) · ~25 מנויים בלי-מייל · cutover-דומיין ·
 pixel-opt-out · 127-שארית · RLS-P2 · types-regen · ip_country-GeoIP (אם יידרש) ·
 edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמה 12, ממתין לתעבורה אמיתית).
+
+### 2026-07-09 — yehoshua admin: access granted to Rav Yoav Oriel
+- **What:** `/design-yehoshua-admin` opened to `yoavoriel@gmail.com` (was saar-only). Two layers changed in sync:
+  1. **Frontend** (`DesignPreviewYehoshuaAdmin.tsx`): `ADMIN_EMAIL` (string) → `ADMIN_EMAILS` (array, lowercase-compared). Commit `fb5de297` on `finish/integration`.
+  2. **RLS** (`pzvmwfexeiruelwiujxn`, explicit Saar approval): `ALTER POLICY admin_select_donations ON public.donations USING (auth.email() = ANY (ARRAY['saar.j.z.h@gmail.com','yoavoriel@gmail.com']));` — rollback: `USING (auth.email() = 'saar.j.z.h@gmail.com')`.
+- **Iron rule:** the frontend allowlist and the RLS policy must stay in sync — adding an email to only one layer yields either a "no permission" screen (RLS-only) or an empty table with 0 rows (frontend-only).
+- **Deploy:** `vercel --prod` from this worktree → `bneyzion-j8c6l2nib`. Verified live chunk `DesignPreviewYehoshuaAdmin-BulQioGB.js` on `bneyzion-yehoshua.vercel.app` contains both emails.
+- **Discovery note:** `bneyzion-yehoshua.vercel.app` is NOT a separate Vercel project — it is a domain alias on project `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x). One deploy updates both hosts. The main repo's `vercel.json` rewrites `/design-yehoshua-{campaign,admin}` to that alias.
+- **State at grant:** donations for `yehoshua-campaign`: 321 rows, 205 completed, ₪27,992 raised.
+- Yoav notified via WhatsApp (delivered, verified via getChatHistory) with login instructions incl. hard-refresh before first login (PWA SW).
