@@ -18,6 +18,7 @@
  * Layout: DesignLayout (v2 with sidebar). Cream+gold, RTL.
  */
 
+import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -46,7 +47,7 @@ import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { Seo, collectionJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
 import { useContentSidebar } from "@/hooks/useContentSidebar";
-import { usePublicBookListing } from "@/hooks/usePublicBookListing";
+import { usePublicBookListing, type PublicListingItem } from "@/hooks/usePublicBookListing";
 import { supabase } from "@/integrations/supabase/client";
 
 // ─── types ───────────────────────────────────────────────────────────────────
@@ -102,6 +103,33 @@ function lessonMediaIcon(l: {
   if (l.audio_url) return <Volume2 size={13} style={{ flexShrink: 0 }} />;
   if (l.attachment_url) return <FileText size={13} style={{ flexShrink: 0 }} />;
   return <BookOpen size={13} style={{ flexShrink: 0 }} />;
+}
+
+// ─── formats (Yoav 9.7: visible per-row marker + filter bar) ─────────────────
+
+export type FormatKey = "video" | "audio" | "pdf" | "text";
+
+export const FORMAT_META: Record<
+  FormatKey,
+  { label: string; Icon: typeof Play }
+> = {
+  video: { label: "וידאו", Icon: Play },
+  audio: { label: "שמע", Icon: Volume2 },
+  pdf: { label: "PDF", Icon: FileText },
+  text: { label: "טקסט", Icon: BookOpen },
+};
+
+const FORMAT_ORDER: FormatKey[] = ["video", "audio", "pdf", "text"];
+
+export function classifyLessonFormat(l: {
+  video_url?: string | null;
+  audio_url?: string | null;
+  attachment_url?: string | null;
+}): FormatKey {
+  if (l.video_url) return "video";
+  if (l.audio_url) return "audio";
+  if (l.attachment_url) return "pdf";
+  return "text";
 }
 
 /** Detect שו"ת by source_type or content_type marker */
@@ -257,6 +285,57 @@ function useSeriesRabbisMap(
   return map;
 }
 
+// ─── hook: formats present per series (for row markers + format filter) ──────
+//
+// One paginated query (PostgREST max_rows=1000 → range-loop) over the visible
+// series' published lessons, classified client-side. text = no media at all.
+
+type SeriesFormatsMap = Map<string, Set<FormatKey>>;
+
+function useSeriesFormatsMap(seriesIds: string[]): SeriesFormatsMap {
+  const key = [...seriesIds].sort().join(",");
+  const { data } = useQuery({
+    queryKey: ["series-formats-batch", key],
+    enabled: seriesIds.length > 0,
+    staleTime: 1000 * 60 * 10,
+    queryFn: async () => {
+      const all: Array<{
+        series_id: string;
+        video_url: string | null;
+        audio_url: string | null;
+        attachment_url: string | null;
+      }> = [];
+      const PAGE = 1000;
+      for (let from = 0; from < 8000; from += PAGE) {
+        const { data: rows, error } = await supabase
+          .from("lessons")
+          .select("series_id, video_url, audio_url, attachment_url")
+          .in("series_id", seriesIds)
+          .eq("status", "published")
+          .not("audience_tags", "cs", "{teachers}")
+          .order("id", { ascending: true })
+          .range(from, from + PAGE - 1);
+        if (error) throw error;
+        all.push(...((rows ?? []) as typeof all));
+        if (!rows || rows.length < PAGE) break;
+      }
+      return all;
+    },
+  });
+
+  const map: SeriesFormatsMap = new Map();
+  for (const row of data ?? []) {
+    if (!row.series_id) continue;
+    let set = map.get(row.series_id);
+    if (!set) {
+      set = new Set<FormatKey>();
+      map.set(row.series_id, set);
+    }
+    set.add(classifyLessonFormat(row));
+  }
+  return map;
+}
+
 // ─── Main component ──────────────────────────────────────────────────────────
 
 export default function CategoryPage() {
@@ -312,6 +391,50 @@ export default function CategoryPage() {
   // Split standalone lessons into regular + שו"ת (C4c)
   const standaloneRegular = allDirectLessons.filter((l) => !isShut(l));
   const standaloneShut = allDirectLessons.filter((l) => isShut(l));
+
+  // ── (Yoav 9.7 #3+#4) format markers + filter bar ──
+  const [formatFilter, setFormatFilter] = useState<FormatKey | null>(null);
+
+  const listingSeries = publicListing.items.filter(
+    (i): i is Extract<PublicListingItem, { type: "series" }> => i.type === "series",
+  );
+  const listingLessons = publicListing.items.filter(
+    (i): i is Extract<PublicListingItem, { type: "lesson" }> => i.type === "lesson",
+  );
+
+  const visibleSeriesIds = publicListing.hasListing
+    ? listingSeries.map((i) => i.series.id)
+    : cardSeriesIds;
+  const seriesFormats = useSeriesFormatsMap(visibleSeriesIds);
+
+  const seriesMatches = (sid: string) =>
+    !formatFilter || (seriesFormats.get(sid)?.has(formatFilter) ?? false);
+  const lessonMatches = (l: {
+    video_url?: string | null;
+    audio_url?: string | null;
+    attachment_url?: string | null;
+  }) => !formatFilter || classifyLessonFormat(l) === formatFilter;
+
+  // Per-format counts (series that contain it + standalone lessons of it) for the bar
+  const formatCounts = new Map<FormatKey, number>();
+  {
+    const allLessonRows = publicListing.hasListing
+      ? listingLessons.map((i) => i.lesson)
+      : allDirectLessons;
+    for (const f of FORMAT_ORDER) {
+      let n = 0;
+      for (const sid of visibleSeriesIds) if (seriesFormats.get(sid)?.has(f)) n++;
+      for (const l of allLessonRows) if (classifyLessonFormat(l) === f) n++;
+      if (n > 0) formatCounts.set(f, n);
+    }
+  }
+
+  // Filtered views
+  const filteredListingSeries = listingSeries.filter((i) => seriesMatches(i.series.id));
+  const filteredListingLessons = listingLessons.filter((i) => lessonMatches(i.lesson));
+  const filteredCanonicalSeries = canonicalSeries.filter((s) => seriesMatches(s.id));
+  const filteredStandaloneRegular = standaloneRegular.filter(lessonMatches);
+  const filteredStandaloneShut = standaloneShut.filter(lessonMatches);
 
   // Badge counts: N סדרות · M שיעורים (real counts, not inflated lesson_count)
   const seriesBadgeCount = publicListing.hasListing ? publicListing.seriesCount : canonicalSeries.length;
@@ -506,7 +629,7 @@ export default function CategoryPage() {
                   fontWeight: 500,
                 }}
               >
-                {lessonBadgeCount} שיעורים
+                {lessonBadgeCount} תכנים
               </div>
             )}
           </div>
@@ -522,58 +645,87 @@ export default function CategoryPage() {
           padding: "2rem 1.5rem",
         }}
       >
+        {/* ── (Yoav 9.7 #4) format filter bar — sticky so the format context never
+            scrolls away. Chips only for formats that actually exist here. ── */}
+        {formatCounts.size > 0 && (
+          <FormatFilterBar
+            counts={formatCounts}
+            active={formatFilter}
+            onChange={setFormatFilter}
+          />
+        )}
+
         {publicListing.hasListing ? (
-          /* ── (R6 Yoav) 1:1 PUBLIC listing — ONE ordered interleaved table (series +
-             standalone lessons), old order_index, author + length. Pollution excluded
-             by construction (allow-list). ── */
-          <section>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {publicListing.items.map((it) =>
-                it.type === "series" ? (
-                  <SeriesRowCard
-                    key={`pls-${it.series.id}-${it.sortOrder}`}
-                    series={it.series}
-                    rabbiNames={it.series.rabbiName ? [it.series.rabbiName] : []}
-                    hrefSuffix={bookKey ? `?book=${encodeURIComponent(bookKey)}` : ""}
-                  />
-                ) : (
-                  <LessonRow
-                    key={`pll-${it.lesson.id}-${it.sortOrder}`}
-                    lesson={it.lesson}
-                    onNavigate={(path) => navigate(path)}
-                  />
-                )
+          /* ── (R6 Yoav) 1:1 PUBLIC listing, old order_index. The listing data is
+             grouped by construction (all series rows, then all lesson rows — verified
+             in DB: zero interleaved books), so the Yoav-9.7 section headings slot in
+             without touching the order. ── */
+          <>
+            {filteredListingSeries.length > 0 && (
+              <section>
+                <SectionHeading>סדרות</SectionHeading>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {filteredListingSeries.map((it) => (
+                    <SeriesRowCard
+                      key={`pls-${it.series.id}-${it.sortOrder}`}
+                      series={it.series}
+                      rabbiNames={it.series.rabbiName ? [it.series.rabbiName] : []}
+                      hrefSuffix={bookKey ? `?book=${encodeURIComponent(bookKey)}` : ""}
+                      formats={seriesFormats.get(it.series.id)}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+            {filteredListingLessons.length > 0 && (
+              <section style={{ marginTop: filteredListingSeries.length > 0 ? "2.5rem" : 0 }}>
+                <SectionHeading>תכנים בודדים</SectionHeading>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  {filteredListingLessons.map((it) => (
+                    <LessonRow
+                      key={`pll-${it.lesson.id}-${it.sortOrder}`}
+                      lesson={it.lesson}
+                      onNavigate={(path) => navigate(path)}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+            {formatFilter &&
+              filteredListingSeries.length === 0 &&
+              filteredListingLessons.length === 0 && (
+                <FilterEmptyState format={formatFilter} onClear={() => setFormatFilter(null)} />
               )}
-            </div>
-          </section>
+          </>
         ) : (
           <>
         {/* ── (a) Series cards — CLOSED, link to /series/:id ── */}
         {isLoading ? (
           <SeriesGridSkeleton />
-        ) : canonicalSeries.length > 0 ? (
+        ) : filteredCanonicalSeries.length > 0 ? (
           <section>
             <SectionHeading>סדרות</SectionHeading>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-              {canonicalSeries.map((s) => (
+              {filteredCanonicalSeries.map((s) => (
                 <SeriesRowCard
                   key={s.id}
                   series={s}
                   rabbiNames={rabbisMap.get(s.id) ?? (s.rabbiName ? [s.rabbiName] : [])}
+                  formats={seriesFormats.get(s.id)}
                 />
               ))}
             </div>
           </section>
-        ) : !lessonsLoading && allDirectLessons.length === 0 ? (
+        ) : !lessonsLoading && allDirectLessons.length === 0 && !formatFilter ? (
           <EmptyState title={title} />
         ) : null}
 
-        {/* ── (b) Standalone lessons (series_id = this node) ── */}
-        {!lessonsLoading && standaloneRegular.length > 0 && (
-          <section style={{ marginTop: canonicalSeries.length > 0 ? "2.5rem" : 0 }}>
-            <SectionHeading>שיעורים</SectionHeading>
+        {/* ── (b) Standalone content (series_id = this node) ── */}
+        {!lessonsLoading && filteredStandaloneRegular.length > 0 && (
+          <section style={{ marginTop: filteredCanonicalSeries.length > 0 ? "2.5rem" : 0 }}>
+            <SectionHeading>תכנים בודדים</SectionHeading>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              {standaloneRegular.map((l) => (
+              {filteredStandaloneRegular.map((l) => (
                 <LessonRow
                   key={l.id}
                   lesson={l}
@@ -585,11 +737,11 @@ export default function CategoryPage() {
         )}
 
         {/* ── (c) שו"ת section ── */}
-        {!lessonsLoading && standaloneShut.length > 0 && (
+        {!lessonsLoading && filteredStandaloneShut.length > 0 && (
           <section style={{ marginTop: "2.5rem" }}>
             <SectionHeading>שאלות ותשובות</SectionHeading>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-              {standaloneShut.map((l) => (
+              {filteredStandaloneShut.map((l) => (
                 <LessonRow
                   key={l.id}
                   lesson={l}
@@ -599,6 +751,12 @@ export default function CategoryPage() {
             </div>
           </section>
         )}
+        {formatFilter &&
+          filteredCanonicalSeries.length === 0 &&
+          filteredStandaloneRegular.length === 0 &&
+          filteredStandaloneShut.length === 0 && (
+            <FilterEmptyState format={formatFilter} onClear={() => setFormatFilter(null)} />
+          )}
           </>
         )}
       </div>
@@ -610,6 +768,132 @@ export default function CategoryPage() {
         }
       `}</style>
     </DesignLayout>
+  );
+}
+
+// ─── FormatFilterBar (Yoav 9.7 #4) ───────────────────────────────────────────
+// Sticky chips bar — filter the category by format (video / audio / pdf / text).
+
+function FormatFilterBar({
+  counts,
+  active,
+  onChange,
+}: {
+  counts: Map<FormatKey, number>;
+  active: FormatKey | null;
+  onChange: (f: FormatKey | null) => void;
+}) {
+  const chipBase: React.CSSProperties = {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "0.35rem",
+    padding: "0.35rem 0.85rem",
+    borderRadius: radii.pill,
+    fontFamily: fonts.body,
+    fontSize: "0.8rem",
+    fontWeight: 600,
+    cursor: "pointer",
+    transition: "background 0.15s, color 0.15s, border-color 0.15s",
+    border: `1px solid rgba(139,111,71,0.18)`,
+    background: "white",
+    color: colors.textMuted,
+  };
+  const chipActive: React.CSSProperties = {
+    background: colors.goldDark,
+    borderColor: colors.goldDark,
+    color: "white",
+  };
+
+  return (
+    <div
+      role="toolbar"
+      aria-label="סינון לפי פורמט"
+      style={{
+        position: "sticky",
+        top: 96, // DesignHeader is sticky with height 96 — stick right below it
+        zIndex: 5,
+        display: "flex",
+        alignItems: "center",
+        gap: "0.4rem",
+        flexWrap: "wrap",
+        padding: "0.65rem 0.25rem",
+        marginBottom: "1.25rem",
+        background: "rgba(251,247,238,0.96)",
+        backdropFilter: "blur(4px)",
+        borderBottom: `1px solid rgba(139,111,71,0.10)`,
+      }}
+    >
+      <button
+        onClick={() => onChange(null)}
+        aria-pressed={active === null}
+        style={{ ...chipBase, ...(active === null ? chipActive : {}) }}
+      >
+        הכל
+      </button>
+      {FORMAT_ORDER.filter((f) => counts.has(f)).map((f) => {
+        const { label, Icon } = FORMAT_META[f];
+        const isActive = active === f;
+        return (
+          <button
+            key={f}
+            onClick={() => onChange(isActive ? null : f)}
+            aria-pressed={isActive}
+            style={{ ...chipBase, ...(isActive ? chipActive : {}) }}
+          >
+            <Icon size={13} style={{ flexShrink: 0 }} />
+            {label}
+            <span style={{ fontWeight: 400, fontSize: "0.72rem", opacity: 0.75 }}>
+              {counts.get(f)}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── FilterEmptyState ────────────────────────────────────────────────────────
+
+function FilterEmptyState({
+  format,
+  onClear,
+}: {
+  format: FormatKey;
+  onClear: () => void;
+}) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        padding: "2.5rem 1.5rem",
+        gap: "0.75rem",
+        color: colors.textSubtle,
+        textAlign: "center",
+        fontFamily: fonts.body,
+      }}
+    >
+      <AlertCircle size={32} style={{ opacity: 0.4 }} />
+      <div style={{ fontSize: "0.95rem", color: colors.textMuted }}>
+        אין תכנים בפורמט {FORMAT_META[format].label} בקטגוריה זו
+      </div>
+      <button
+        onClick={onClear}
+        style={{
+          border: "none",
+          background: "transparent",
+          color: colors.goldDark,
+          fontFamily: fonts.body,
+          fontSize: "0.85rem",
+          fontWeight: 600,
+          cursor: "pointer",
+          textDecoration: "underline",
+        }}
+      >
+        הצגת כל התכנים
+      </button>
+    </div>
   );
 }
 
@@ -641,10 +925,12 @@ function SeriesRowCard({
   series,
   rabbiNames,
   hrefSuffix,
+  formats,
 }: {
   series: CanonicalSeries;
   rabbiNames: string[];
   hrefSuffix?: string;
+  formats?: Set<FormatKey>;
 }) {
   const imgSrc = resolveSeriesImage(series);
   const hasDraftBadge = series.isDraft && (!series.lessonCount || series.lessonCount === 0);
@@ -757,18 +1043,57 @@ function SeriesRowCard({
             </span>
           )}
 
-          {series.lessonCount != null && series.lessonCount > 0 && (
-            <span
-              style={{
-                fontFamily: fonts.body,
-                fontSize: "0.75rem",
-                color: colors.goldDark,
-                fontWeight: 600,
-              }}
-            >
-              {series.lessonCount} שיעורים
-            </span>
-          )}
+          <span
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              flexWrap: "wrap",
+            }}
+          >
+            {series.lessonCount != null && series.lessonCount > 0 && (
+              <span
+                style={{
+                  fontFamily: fonts.body,
+                  fontSize: "0.75rem",
+                  color: colors.goldDark,
+                  fontWeight: 600,
+                }}
+              >
+                {series.lessonCount} תכנים
+              </span>
+            )}
+            {/* (Yoav 9.7 #3) formats the series contains — always-visible marker */}
+            {formats && formats.size > 0 && (
+              <span style={{ display: "inline-flex", gap: "0.3rem", alignItems: "center" }}>
+                {FORMAT_ORDER.filter((f) => formats.has(f)).map((f) => {
+                  const { label, Icon } = FORMAT_META[f];
+                  return (
+                    <span
+                      key={f}
+                      title={label}
+                      aria-label={label}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.2rem",
+                        padding: "0.1rem 0.4rem",
+                        borderRadius: radii.pill,
+                        background: "rgba(139,111,71,0.07)",
+                        color: colors.textMuted,
+                        fontFamily: fonts.body,
+                        fontSize: "0.66rem",
+                        fontWeight: 600,
+                      }}
+                    >
+                      <Icon size={10} style={{ flexShrink: 0 }} />
+                      {label}
+                    </span>
+                  );
+                })}
+              </span>
+            )}
+          </span>
         </div>
 
         {/* Arrow */}
@@ -896,6 +1221,35 @@ function LessonRow({
           </div>
         )}
       </div>
+
+      {/* (Yoav 9.7 #3) always-visible format chip — the thumbnail overlay alone
+          was easy to lose while scrolling */}
+      {(() => {
+        const f = classifyLessonFormat(lesson);
+        const { label, Icon } = FORMAT_META[f];
+        return (
+          <span
+            aria-label={label}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.25rem",
+              padding: "0.15rem 0.5rem",
+              borderRadius: radii.pill,
+              background: "rgba(139,111,71,0.07)",
+              border: `1px solid rgba(139,111,71,0.12)`,
+              color: colors.textMuted,
+              fontSize: "0.68rem",
+              fontWeight: 600,
+              flexShrink: 0,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Icon size={11} style={{ flexShrink: 0 }} />
+            {label}
+          </span>
+        );
+      })()}
 
       {/* Duration */}
       {lesson.duration != null && lesson.duration > 0 && (
