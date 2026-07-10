@@ -33,7 +33,9 @@ import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
 // Nav items live in src/config/navigation.ts — the single source of truth
 // shared with DesignMobileBottomNav. Do NOT redefine lists here.
-import { NAV_ITEMS, TEACHER_NAV_ITEMS } from "@/config/navigation";
+// רמה 13: useNavItems עוטף את הקונפיג עם override נערך-מאדמין (copy.nav.items).
+import { TEACHER_NAV_ITEMS } from "@/config/navigation";
+import { useNavItems } from "@/hooks/useNavItems";
 
 interface DesignHeaderProps {
   /** When true, header is transparent before scroll (use on pages with a dark hero). */
@@ -54,9 +56,12 @@ export default function DesignHeader({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
+  // רמה 13 (יואב): פריטי התפריט ניתנים לעריכה ממרכז-השליטה (copy.nav.items)
+  const navItems = useNavItems();
+
   // Teacher-context mode: activate on /design-teachers-* routes
   const isTeacherContext = location.pathname.startsWith("/design-teachers-");
-  const activeNavItems = isTeacherContext ? TEACHER_NAV_ITEMS : NAV_ITEMS;
+  const activeNavItems = isTeacherContext ? TEACHER_NAV_ITEMS : navItems;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -294,7 +299,7 @@ export default function DesignHeader({
             padding: "0.75rem 1rem 1rem",
           }}
         >
-          {NAV_ITEMS.map(({ label, href }) => (
+          {navItems.map(({ label, href }) => (
             <Link
               key={href}
               to={href}

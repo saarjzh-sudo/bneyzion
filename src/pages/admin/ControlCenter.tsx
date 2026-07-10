@@ -35,6 +35,9 @@ import {
   SUPER_ADMIN_EMAILS,
   type CopyField,
 } from "@/config/siteCopyRegistry";
+import { NAV_ITEMS, type NavItem } from "@/config/navigation";
+import { NAV_ITEMS_KEY, parseNavItems } from "@/hooks/useNavItems";
+import { ArrowUp, ArrowDown, Trash2, Plus } from "lucide-react";
 
 function FieldRow({
   field,
@@ -271,6 +274,101 @@ function AiRequestBox({
   );
 }
 
+/**
+ * (אישור סער 10.7) עורך התפריט הראשי — כותב JSON למפתח copy.nav.items;
+ * ההדר ומגירת-המובייל קוראים דרך useNavItems עם ולידציה fail-closed.
+ */
+function MenuEditor({ overrides }: { overrides: Map<string, string> }) {
+  const saved = overrides.get(NAV_ITEMS_KEY);
+  const effective = (saved && parseNavItems(saved)) || NAV_ITEMS;
+  const [items, setItems] = useState<NavItem[] | null>(null);
+  const update = useUpdateSiteSetting();
+  const del = useDeleteSiteSetting();
+
+  const list = items ?? effective;
+  const dirty = items != null && JSON.stringify(items) !== JSON.stringify(effective);
+
+  const setAt = (i: number, patch: Partial<NavItem>) => {
+    const next = list.map((it, j) => (j === i ? { ...it, ...patch } : it));
+    setItems(next);
+  };
+  const move = (i: number, dir: -1 | 1) => {
+    const j = i + dir;
+    if (j < 0 || j >= list.length) return;
+    const next = [...list];
+    [next[i], next[j]] = [next[j], next[i]];
+    setItems(next);
+  };
+  const remove = (i: number) => setItems(list.filter((_, j) => j !== i));
+  const add = () => setItems([...list, { label: "", href: "/" }]);
+
+  const valid = list.length > 0 && list.every(
+    (it) => it.label.trim().length > 0 && it.label.length <= 30 &&
+      (it.href.startsWith("/") || it.href.startsWith("https://")),
+  );
+
+  const save = () => {
+    if (!valid || !dirty) return;
+    update.mutate(
+      { key: NAV_ITEMS_KEY, value: JSON.stringify(list.map((i) => ({ label: i.label.trim(), href: i.href.trim() }))) },
+      {
+        onSuccess: () => { toast.success("התפריט נשמר — חי באתר"); setItems(null); },
+        onError: (e: any) => toast.error(`השמירה נכשלה: ${e.message ?? e}`),
+      },
+    );
+  };
+  const reset = () => {
+    del.mutate(NAV_ITEMS_KEY, {
+      onSuccess: () => { toast.success("התפריט חזר לברירת המחדל"); setItems(null); },
+      onError: (e: any) => toast.error(`האיפוס נכשל: ${e.message ?? e}`),
+    });
+  };
+
+  return (
+    <section className="mb-8">
+      <h2 className="text-lg font-bold mb-3 border-b border-border pb-1.5">התפריט הראשי</h2>
+      <div className="rounded-xl border border-border bg-card p-4">
+        <p className="text-xs text-muted-foreground mb-3">
+          הפריטים בתפריט העליון ובמגירת המובייל (מימין לשמאל). נתיב = כתובת בתוך האתר, למשל /store.
+        </p>
+        <div className="flex flex-col gap-2">
+          {list.map((it, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <Input dir="rtl" className="flex-1" placeholder="תווית" value={it.label}
+                onChange={(e) => setAt(i, { label: e.target.value })} />
+              <Input dir="ltr" className="flex-1 font-mono text-xs" placeholder="/path" value={it.href}
+                onChange={(e) => setAt(i, { href: e.target.value })} />
+              <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => move(i, -1)} disabled={i === 0} aria-label="העלאה">
+                <ArrowUp className="h-3.5 w-3.5" />
+              </Button>
+              <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => move(i, 1)} disabled={i === list.length - 1} aria-label="הורדה">
+                <ArrowDown className="h-3.5 w-3.5" />
+              </Button>
+              <Button size="icon" variant="ghost" className="h-8 w-8 text-destructive" onClick={() => remove(i)} aria-label="הסרה">
+                <Trash2 className="h-3.5 w-3.5" />
+              </Button>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-2 mt-3 flex-wrap">
+          <Button size="sm" variant="outline" onClick={add} disabled={list.length >= 12} className="gap-1">
+            <Plus className="h-3.5 w-3.5" /> פריט חדש
+          </Button>
+          <Button size="sm" onClick={save} disabled={!dirty || !valid || update.isPending} className="gap-1">
+            <Save className="h-3.5 w-3.5" /> שמירת התפריט
+          </Button>
+          {overrides.has(NAV_ITEMS_KEY) && (
+            <Button size="sm" variant="outline" onClick={reset} disabled={del.isPending} className="gap-1">
+              <RotateCcw className="h-3.5 w-3.5" /> חזרה לברירת המחדל
+            </Button>
+          )}
+          {!valid && <span className="text-xs text-destructive">תווית ריקה או נתיב לא תקין (חייב להתחיל ב-/)</span>}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ControlCenter() {
   const { user } = useAuth();
   const isSuperAdmin = SUPER_ADMIN_EMAILS.includes(user?.email ?? "");
@@ -298,6 +396,8 @@ export default function ControlCenter() {
         </p>
 
         <AiRequestBox overrides={overrides} isSuperAdmin={isSuperAdmin} />
+
+        <MenuEditor overrides={overrides} />
 
         <div className="relative mb-6">
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

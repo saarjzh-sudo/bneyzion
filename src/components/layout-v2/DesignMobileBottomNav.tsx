@@ -13,13 +13,9 @@ import { colors, fonts } from "@/lib/designTokens";
 
 // Menu items mirror the desktop header exactly — single source of truth in
 // src/config/navigation.ts (level 13 fix: this file used to hold a stale copy).
+// רמה 13: useNavItems = הקונפיג + override נערך-מאדמין (copy.nav.items).
 // "ראשי" is prepended locally: the drawer needs it, the desktop logo covers it.
-import { NAV_ITEMS as SITE_NAV_ITEMS } from "@/config/navigation";
-
-const NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "ראשי", href: "/" },
-  ...SITE_NAV_ITEMS,
-];
+import { useNavItems } from "@/hooks/useNavItems";
 
 interface DesignMobileBottomNavProps {
   /** 7.7.2026 (הרב יואב, תמונה 2): פותח את סיידבר-הניווט (drawer). כשלא מסופק —
@@ -31,6 +27,11 @@ export default function DesignMobileBottomNav({ onNavigatorOpen }: DesignMobileB
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const siteNavItems = useNavItems();
+  const NAV_ITEMS: { label: string; href: string }[] = [
+    { label: "ראשי", href: "/" },
+    ...siteNavItems,
+  ];
 
   const isActive = (path: string) => {
     if (path === "/") return location.pathname === "/";
