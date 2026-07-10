@@ -62,6 +62,18 @@ interface CreatePaymentBody {
     source?: string;   // e.g. "yehoshua-campaign"
     tier_id?: string;  // e.g. "tier-90"
   };
+  // הקדשת שיעור/סדרה → lesson_dedications (products: dedication-lesson / dedication-series).
+  // השרת יוצר את שורת ה-pending (service role — למשתמשים אין INSERT policy)
+  // ואוכף את המחיר מול dedication_settings + פופולריות הרב / גודל הסדרה.
+  dedicationMeta?: {
+    scope: "lesson" | "series";
+    lesson_id?: string;
+    series_id?: string;
+    dedication_type: string; // iluy_neshama | refua | hatzlacha | memory
+    dedicated_name: string;
+    dedicator_name?: string;
+    user_id?: string;
+  };
 }
 
 // Conservative fallback if the payment_products row/table isn't there yet.
@@ -115,6 +127,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       cancelUrl,
       meta,
       donationMeta,
+      dedicationMeta,
     } = body;
     let { orderId } = body;
 
@@ -272,6 +285,33 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // ───── Dedication — server-side price authority ─────
+    // The client shows the price, but the charged amount is verified HERE
+    // against dedication_settings + the popularity/size rules. A tampered
+    // sum is rejected before any row is created.
+    const isDedication = productCfg?.target_table === "lesson_dedications";
+    if (isDedication) {
+      if (!dedicationMeta?.scope || !dedicationMeta?.dedicated_name?.trim()) {
+        return res.status(400).json({ error: "חסרים פרטי הקדשה (סוג ושם)" });
+      }
+      if (dedicationMeta.scope === "lesson" && !dedicationMeta.lesson_id) {
+        return res.status(400).json({ error: "חסר מזהה שיעור להקדשה" });
+      }
+      if (dedicationMeta.scope === "series" && !dedicationMeta.series_id) {
+        return res.status(400).json({ error: "חסר מזהה סדרה להקדשה" });
+      }
+      const expectedPrice = await computeDedicationPrice(supabaseAdmin, dedicationMeta);
+      if (Math.abs(expectedPrice - sum) > 1) {
+        console.warn("create-payment dedication sum mismatch:", {
+          expectedPrice, sum, scope: dedicationMeta.scope,
+          lesson_id: dedicationMeta.lesson_id, series_id: dedicationMeta.series_id,
+        });
+        return res.status(400).json({
+          error: "סכום ההקדשה אינו תואם את המחיר — רעננו את העמוד ונסו שוב",
+        });
+      }
+    }
+
     // ───── Decide flow type + pageCode + userId ─────
     // Modern (product-driven): productCfg.type → page_code_env → env var
     // Legacy: type='product' → PRODUCTS, type='donation' → DONATIONS
@@ -328,10 +368,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const maxInstallments = productCfg?.max_installments || 1;
     const safeInstallments = Math.min(requestedInstallments, maxInstallments);
 
-    // ───── Create the order/donation row if not provided ─────
+    // ───── Create the order/donation/dedication row if not provided ─────
     if (!orderId) {
-      // Donation flow (legacy or product-as-donation)
-      if (
+      // Dedication flow → lesson_dedications (pending until webhook confirms)
+      if (isDedication) {
+        const { data: dedication, error: dedErr } = await supabaseAdmin
+          .from("lesson_dedications")
+          .insert({
+            scope: dedicationMeta!.scope,
+            lesson_id: dedicationMeta!.scope === "lesson" ? dedicationMeta!.lesson_id ?? null : null,
+            series_id: dedicationMeta!.scope === "series" ? dedicationMeta!.series_id ?? null : null,
+            dedication_type: dedicationMeta!.dedication_type || "iluy_neshama",
+            dedicated_name: dedicationMeta!.dedicated_name.trim(),
+            dedicator_name: dedicationMeta!.dedicator_name?.trim() || fullName,
+            dedicator_email: email || null,
+            dedicator_phone: phone,
+            amount: sum,
+            status: "pending",
+            user_id: dedicationMeta!.user_id || meta?.user_id || null,
+            raw_payload: { consent: consentAudit },
+          })
+          .select("id")
+          .single();
+
+        if (dedErr) {
+          console.error("Dedication insert error:", dedErr);
+          return res.status(500).json({
+            error: "Failed to create dedication record",
+            details: dedErr.message,
+          });
+        }
+        orderId = dedication.id;
+      } else if (
         type === "donation" ||
         productCfg?.target_table === "donations"
       ) {
@@ -535,4 +603,76 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     console.error("create-payment error:", error);
     return res.status(500).json({ error: error.message });
   }
+}
+
+/**
+ * תמחור הקדשות — מקור אמת אחד לשרת וללקוח (הלקוח מציג, השרת אוכף):
+ *   שיעור: מחיר בסיס; אם לרב של השיעור lesson_count >= popular_rabbi_min_lessons
+ *           → מחיר "רב מבוקש" (price_lesson_popular).
+ *   סדרה:  לפי גודל — עד series_mid_threshold שיעורים = בסיס;
+ *           מעל = price_series_mid; מעל series_large_threshold = price_series_large.
+ * כל הערכים נשלטים מ-dedication_settings (שורה יחידה) וניתנים לכוונון באדמין.
+ */
+async function computeDedicationPrice(
+  supabaseAdmin: ReturnType<typeof createClient>,
+  ded: { scope: "lesson" | "series"; lesson_id?: string; series_id?: string }
+): Promise<number> {
+  let settings: Record<string, any> = {};
+  try {
+    const { data } = await supabaseAdmin
+      .from("dedication_settings")
+      .select("*")
+      .maybeSingle();
+    if (data) settings = data as Record<string, any>;
+  } catch (e) {
+    console.warn("dedication_settings read failed, using defaults", e);
+  }
+  const priceLesson = Number(settings.price_lesson ?? 600);
+  const priceLessonPopular = Number(settings.price_lesson_popular ?? 900);
+  const popularMin = Number(settings.popular_rabbi_min_lessons ?? 100);
+  const priceSeries = Number(settings.price_series ?? 1800);
+  const priceSeriesMid = Number(settings.price_series_mid ?? 2400);
+  const priceSeriesLarge = Number(settings.price_series_large ?? 3200);
+  const midThreshold = Number(settings.series_mid_threshold ?? 21);
+  const largeThreshold = Number(settings.series_large_threshold ?? 61);
+
+  if (ded.scope === "series" && ded.series_id) {
+    try {
+      const { data: series } = await supabaseAdmin
+        .from("series")
+        .select("lesson_count")
+        .eq("id", ded.series_id)
+        .maybeSingle();
+      const count = Number((series as any)?.lesson_count ?? 0);
+      if (count >= largeThreshold) return priceSeriesLarge;
+      if (count >= midThreshold) return priceSeriesMid;
+    } catch (e) {
+      console.warn("series lookup failed for dedication pricing", e);
+    }
+    return priceSeries;
+  }
+
+  if (ded.lesson_id) {
+    try {
+      const { data: lesson } = await supabaseAdmin
+        .from("lessons")
+        .select("rabbi_id")
+        .eq("id", ded.lesson_id)
+        .maybeSingle();
+      const rabbiId = (lesson as any)?.rabbi_id;
+      if (rabbiId) {
+        const { data: rabbi } = await supabaseAdmin
+          .from("rabbis")
+          .select("lesson_count")
+          .eq("id", rabbiId)
+          .maybeSingle();
+        if (Number((rabbi as any)?.lesson_count ?? 0) >= popularMin) {
+          return priceLessonPopular;
+        }
+      }
+    } catch (e) {
+      console.warn("lesson/rabbi lookup failed for dedication pricing", e);
+    }
+  }
+  return priceLesson;
 }

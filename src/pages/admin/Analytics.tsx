@@ -1,18 +1,20 @@
 /**
  * Admin Analytics — /admin/analytics
  *
- * מדדי-מפתח חיים מ-Supabase במבט אחד: מנויים פעילים, חדשים החודש, נטישה,
- * שיעורים שנצפו, הכנסות, ועוד. כל הנתונים אמיתיים (אין mock).
- * שפת-העיצוב של האתר: gold/parchment/navy · Kedem/Ploni · RTL · CSS-only.
+ * 10.7.2026 (איחוד דשבורדים, הוראת סער): העמוד מתמקד אך ורק בניתוח
+ * תוכן ומעורבות — שיעורים/סדרות/רבנים פופולריים, צפיות, מועדפים והיסטוריה.
+ * מדדי מנויים, נטישה והכנסות עברו לדשבורד הראשי (/admin) ואינם כאן.
+ * כל מדד נושא תגית מקור. שפת-העיצוב: gold/parchment/navy · RTL · CSS-only.
  */
 
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { SourceBadge } from "@/components/admin/SourceBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Eye, TrendingUp, Users, BookOpen, Star, UserCheck,
-  UserPlus, UserMinus, Banknote, BarChart3,
+  Eye, TrendingUp, Users, BookOpen, Star, BarChart3, ChevronLeft,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
@@ -36,7 +38,6 @@ const C = {
 };
 
 const PIE_COLORS = [C.goldLight, C.navy, C.green, C.gold, C.amber];
-const WEEKLY_TAG = "program:weekly-chapter";
 const DAY = 86400000;
 
 /* ─── KPI card ─────────────────────────────────────────────────── */
@@ -47,8 +48,9 @@ interface KpiProps {
   icon: React.ElementType;
   accent: string;
   bg?: string;
+  source?: string;
 }
-function KpiCard({ title, value, sub, icon: Icon, accent, bg = C.parchment }: KpiProps) {
+function KpiCard({ title, value, sub, icon: Icon, accent, bg = C.parchment, source }: KpiProps) {
   return (
     <div
       className="rounded-2xl border p-5 flex flex-col gap-2"
@@ -71,19 +73,17 @@ function KpiCard({ title, value, sub, icon: Icon, accent, bg = C.parchment }: Kp
       </div>
       <p className="text-3xl font-kedem font-bold" style={{ color: C.text }}>{value}</p>
       {sub && <p className="text-xs font-ploni" style={{ color: C.textSubtle }}>{sub}</p>}
+      {source && <SourceBadge source={source} />}
     </div>
   );
 }
 
 export default function Analytics() {
-  /* ── KPI + subscriber/revenue stats ─────────────────────────── */
+  /* ── content-engagement stats (מדדי מנויים/הכנסות — בדשבורד הראשי) ── */
   const { data: stats, isLoading } = useQuery({
-    queryKey: ["analytics-kpis-v2"],
+    queryKey: ["analytics-kpis-v3-content"],
     queryFn: async () => {
-      const now = Date.now();
-      const monthAgoISO = new Date(now - 30 * DAY).toISOString();
-
-      const [lessons, rabbis, series, users, history, favorites, viewsData, subs, orders] =
+      const [lessons, rabbis, series, users, history, favorites, viewsData] =
         await Promise.all([
           supabase.from("lessons").select("*", { count: "exact", head: true }),
           supabase.from("rabbis").select("*", { count: "exact", head: true }),
@@ -94,36 +94,9 @@ export default function Analytics() {
           // רק שיעורים עם צפיות בפועל — אחרת נשלפים 23K שיעורים ונחתכים ב-1000
           // (סכום-צפיות שגוי כשמעקב-הצפיות יצטבר). היום 0 שורות; יגדל לאט.
           supabase.from("lessons").select("views_count").gt("views_count", 0).limit(1000),
-          supabase
-            .from("user_access_tags" as never)
-            .select("valid_until, created_at")
-            .eq("tag" as never, WEEKLY_TAG),
-          supabase
-            .from("orders")
-            .select("total, created_at")
-            .gte("created_at", monthAgoISO),
         ]);
 
       const totalViews = (viewsData.data ?? []).reduce((s, l: any) => s + (l.views_count || 0), 0);
-
-      // subscriber metrics computed in JS (reliable for ~hundreds of rows)
-      const subRows = (subs.data ?? []) as { valid_until: string | null; created_at: string }[];
-      const activeSubs = subRows.filter(
-        (r) => !r.valid_until || new Date(r.valid_until).getTime() > now,
-      ).length;
-      const newThisMonth = subRows.filter(
-        (r) => new Date(r.created_at).getTime() >= now - 30 * DAY,
-      ).length;
-      const churnedThisMonth = subRows.filter(
-        (r) => r.valid_until &&
-          new Date(r.valid_until).getTime() >= now - 30 * DAY &&
-          new Date(r.valid_until).getTime() < now,
-      ).length;
-
-      const monthlyRevenue = (orders.data ?? []).reduce(
-        (s, o: any) => s + (Number(o.total) || 0),
-        0,
-      );
 
       return {
         lessons: lessons.count ?? 0,
@@ -133,10 +106,6 @@ export default function Analytics() {
         historyEntries: history.count ?? 0,
         favorites: favorites.count ?? 0,
         totalViews,
-        activeSubs,
-        newThisMonth,
-        churnedThisMonth,
-        monthlyRevenue,
       };
     },
   });
@@ -195,33 +164,13 @@ export default function Analytics() {
   const fmt = (n: number) => (n ?? 0).toLocaleString();
   const dash = isLoading ? "…" : undefined;
 
-  const primaryKpis: KpiProps[] = [
-    {
-      title: "מנויים פעילים", icon: UserCheck, accent: C.green,
-      bg: stats?.activeSubs ? "#f0fdf4" : C.parchment,
-      value: dash ?? fmt(stats?.activeSubs ?? 0), sub: "תכנית הפרק השבועי",
-    },
-    {
-      title: "מנויים חדשים החודש", icon: UserPlus, accent: C.goldLight,
-      value: dash ?? fmt(stats?.newThisMonth ?? 0), sub: "30 הימים האחרונים",
-    },
-    {
-      title: "נטישה החודש", icon: UserMinus, accent: stats?.churnedThisMonth ? C.red : C.gold,
-      value: dash ?? fmt(stats?.churnedThisMonth ?? 0), sub: "מנויים שפג תוקפם",
-    },
-    {
-      title: "הכנסות החודש", icon: Banknote, accent: C.gold,
-      value: dash ?? `₪${fmt(stats?.monthlyRevenue ?? 0)}`, sub: "30 הימים האחרונים",
-    },
-  ];
-
-  const secondaryKpis: KpiProps[] = [
-    { title: "סך צפיות", value: dash ?? fmt(stats?.totalViews ?? 0), icon: Eye, accent: C.navy },
-    { title: "משתמשים רשומים", value: dash ?? fmt(stats?.users ?? 0), icon: Users, accent: C.gold },
-    { title: "שיעורים", value: dash ?? fmt(stats?.lessons ?? 0), icon: BookOpen, accent: C.navy },
-    { title: "סדרות", value: dash ?? fmt(stats?.series ?? 0), icon: TrendingUp, accent: C.goldLight },
-    { title: "צפיות בהיסטוריה", value: dash ?? fmt(stats?.historyEntries ?? 0), icon: BarChart3, accent: C.gold },
-    { title: "מועדפים", value: dash ?? fmt(stats?.favorites ?? 0), icon: Star, accent: C.amber },
+  const contentKpis: KpiProps[] = [
+    { title: "סך צפיות", value: dash ?? fmt(stats?.totalViews ?? 0), icon: Eye, accent: C.navy, source: "Supabase" },
+    { title: "משתמשים רשומים", value: dash ?? fmt(stats?.users ?? 0), icon: Users, accent: C.gold, source: "Supabase" },
+    { title: "שיעורים", value: dash ?? fmt(stats?.lessons ?? 0), icon: BookOpen, accent: C.navy, source: "Supabase" },
+    { title: "סדרות", value: dash ?? fmt(stats?.series ?? 0), icon: TrendingUp, accent: C.goldLight, source: "Supabase" },
+    { title: "צפיות בהיסטוריה", value: dash ?? fmt(stats?.historyEntries ?? 0), icon: BarChart3, accent: C.gold, source: "Supabase" },
+    { title: "מועדפים", value: dash ?? fmt(stats?.favorites ?? 0), icon: Star, accent: C.amber, source: "Supabase" },
   ];
 
   const lessonsChart = (topLessons ?? []).map((l: any) => ({
@@ -243,31 +192,39 @@ export default function Analytics() {
     <AdminLayout>
       <div className="space-y-8 pb-12" dir="rtl">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>אנליטיקס</h1>
-          <p className="font-ploni mt-1" style={{ color: C.textMuted }}>
-            מדדי-המפתח של האתר במבט אחד — נתונים חיים
-          </p>
+        <div className="flex items-start justify-between gap-3 flex-wrap">
+          <div>
+            <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>אנליטיקס — תוכן ומעורבות</h1>
+            <p className="font-ploni mt-1" style={{ color: C.textMuted }}>
+              מה נצפה, מה אהוב ומי מוביל — נתונים חיים <SourceBadge source="Supabase" />
+            </p>
+          </div>
+          <Link
+            to="/admin"
+            className="flex items-center gap-1.5 text-sm font-ploni rounded-xl border px-4 py-2 transition-colors hover:bg-amber-50/60"
+            style={{ borderColor: C.goldShimmer, color: C.gold }}
+          >
+            מדדי מנויים והכנסות — בדשבורד הראשי
+            <ChevronLeft className="w-4 h-4" />
+          </Link>
         </div>
 
-        {/* Primary KPIs — business metrics */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {primaryKpis.map((k) => <KpiCard key={k.title} {...k} />)}
-        </div>
-
-        {/* Secondary KPIs — content metrics */}
+        {/* Content-engagement KPIs */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-          {secondaryKpis.map((k) => <KpiCard key={k.title} {...k} />)}
+          {contentKpis.map((k) => <KpiCard key={k.title} {...k} />)}
         </div>
 
         {/* Charts */}
         <div className="grid lg:grid-cols-2 gap-6">
           <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg font-kedem flex items-center gap-2" style={{ color: C.navy }}>
-                <BarChart3 className="w-5 h-5" style={{ color: C.goldLight }} aria-hidden />
-                פעילות צפייה — 14 ימים אחרונים
-              </CardTitle>
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <CardTitle className="text-lg font-kedem flex items-center gap-2" style={{ color: C.navy }}>
+                  <BarChart3 className="w-5 h-5" style={{ color: C.goldLight }} aria-hidden />
+                  פעילות צפייה — 14 ימים אחרונים
+                </CardTitle>
+                <SourceBadge source="Supabase" note="היסטוריית צפייה" />
+              </div>
             </CardHeader>
             <CardContent>
               <div className="h-64">
@@ -286,10 +243,13 @@ export default function Analytics() {
 
           <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
             <CardHeader className="pb-2">
-              <CardTitle className="text-lg font-kedem flex items-center gap-2" style={{ color: C.navy }}>
-                <Users className="w-5 h-5" style={{ color: C.goldLight }} aria-hidden />
-                רבנים מובילים (לפי מספר שיעורים)
-              </CardTitle>
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <CardTitle className="text-lg font-kedem flex items-center gap-2" style={{ color: C.navy }}>
+                  <Users className="w-5 h-5" style={{ color: C.goldLight }} aria-hidden />
+                  רבנים מובילים (לפי מספר שיעורים)
+                </CardTitle>
+                <SourceBadge source="Supabase" />
+              </div>
             </CardHeader>
             <CardContent>
               <div className="h-64 flex items-center justify-center">
@@ -313,9 +273,12 @@ export default function Analytics() {
         {/* Top lessons table */}
         <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
-              10 השיעורים הנצפים ביותר
-            </CardTitle>
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
+                10 השיעורים הנצפים ביותר
+              </CardTitle>
+              <SourceBadge source="Supabase" note="views_count" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
@@ -354,9 +317,12 @@ export default function Analytics() {
         {/* Top lessons bar */}
         <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
-              גרף צפיות לפי שיעור
-            </CardTitle>
+            <div className="flex items-center justify-between gap-2 flex-wrap">
+              <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
+                גרף צפיות לפי שיעור
+              </CardTitle>
+              <SourceBadge source="Supabase" note="views_count" />
+            </div>
           </CardHeader>
           <CardContent>
             <div className="h-72">

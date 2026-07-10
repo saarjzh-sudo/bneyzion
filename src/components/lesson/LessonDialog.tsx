@@ -18,6 +18,8 @@ import { useAwardPoints } from "@/hooks/usePoints";
 import { useMediaProgress } from "@/hooks/useMediaProgress";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { formatRabbiName } from "@/lib/rabbi-name";
+import DedicationDialog from "@/components/lesson/DedicationDialog";
+import DedicationBadge from "@/components/lesson/DedicationBadge";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -443,6 +445,19 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                 </Link>
               )}
             </DialogHeader>
+
+            {/* (סער 10.7) הקדשת שיעור — זמינה גם מהפופאפ, למעלה, לא רק מדף השיעור */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <DedicationDialog
+                  lessonId={lesson.id}
+                  lessonTitle={lesson.title}
+                  seriesId={series?.id}
+                  seriesTitle={series?.title}
+                />
+              </div>
+              <DedicationBadge lessonId={lesson.id} seriesId={series?.id} />
+            </div>
 
             {/* Breadcrumbs */}
             <nav aria-label="breadcrumb" className="flex items-center gap-1.5 text-xs text-muted-foreground flex-wrap">

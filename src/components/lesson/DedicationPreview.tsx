@@ -1,9 +1,10 @@
-import { Heart, Flame, BookOpen } from "lucide-react";
+import { Heart, Flame, BookOpen, Sparkles } from "lucide-react";
 import { DEDICATION_TYPE_LABELS, type DedicationType } from "@/hooks/useLessonDedications";
 
 const TYPE_ICON: Record<string, typeof Flame> = {
   iluy_neshama: Flame,
   refua: Heart,
+  hatzlacha: Sparkles,
   memory: BookOpen,
 };
 

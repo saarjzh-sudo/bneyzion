@@ -60,6 +60,13 @@ export default defineConfig(() => ({
       },
     }),
   ],
+  // Same esnext requirement applies to dev prebundling (@hebcal top-level await);
+  // without this `vite dev` fails while `vite build` succeeds.
+  optimizeDeps: {
+    esbuildOptions: {
+      target: "esnext",
+    },
+  },
   build: {
     // esnext target required for @hebcal/core which uses top-level await for
     // Temporal polyfill. Audience is iOS 16+ / Chrome 90+ — no real-world risk.

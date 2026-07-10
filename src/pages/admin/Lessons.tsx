@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,9 +18,10 @@ import { RichTextEditor, type UploadedMedia } from "@/components/admin/RichTextE
 import { useRabbis } from "@/hooks/useRabbis";
 import {
   useAdminLessonsPage, useAdminLessonCounts, useDebouncedValue,
-  fetchLessonById, ADMIN_PAGE_SIZE, type AdminLessonStatus,
+  fetchLessonById, useTopicsForPicker, ADMIN_PAGE_SIZE, type AdminLessonStatus,
 } from "@/hooks/useAdminContent";
 import { SeriesCombobox } from "@/components/admin/SeriesCombobox";
+import { TopicCombobox } from "@/components/admin/TopicCombobox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -124,7 +126,8 @@ const ReturnDialog = ({
 };
 
 // ── main component ───────────────────────────────────────────────────
-export default function Lessons() {
+// LessonsContent = הליבה בלי AdminLayout — מוטמעת גם ב"עריכת תוכן" (/admin/content).
+export function LessonsContent() {
   const { user, isAdmin } = useAuth();
   const { data: rabbis } = useRabbis();
   const createLesson = useCreateLesson();
@@ -134,12 +137,23 @@ export default function Lessons() {
   const { toast } = useToast();
   const qc = useQueryClient();
 
+  // דיפ-לינק מהדשבורד: /admin/lessons?tab=pending_review (או ?status=)
+  const [searchParams] = useSearchParams();
+  const VALID_STATUSES: AdminLessonStatus[] = ["all", "pending_review", "draft", "published", "archived"];
+  const statusFromUrl = ([searchParams.get("status"), searchParams.get("tab")]
+    .find(v => v && (VALID_STATUSES as string[]).includes(v)) ?? "all") as AdminLessonStatus;
+
   const [search, setSearch]           = useState("");
-  const [activeTab, setActiveTab]     = useState<AdminLessonStatus>("all");
+  const [activeTab, setActiveTab]     = useState<AdminLessonStatus>(statusFromUrl);
   const [page, setPage]               = useState(1);
   const [dialogOpen, setDialogOpen]   = useState(false);
   const [editingLesson, setEditingLesson] = useState<any>(null);
   const [generatingImage, setGeneratingImage] = useState(false);
+  // נושאי השיעור (lesson_topics) — נטענים בפתיחת עריכה, מוחלים ב-submit לפי diff
+  const [lessonTopicIds, setLessonTopicIds] = useState<string[]>([]);
+  const [originalTopicIds, setOriginalTopicIds] = useState<string[]>([]);
+  const [topicNames, setTopicNames] = useState<Record<string, string>>({});
+  const [topicToAdd, setTopicToAdd] = useState("");
 
   // חיפוש + סינון + דפדוף בצד השרת — הטבלה מכילה 23K+ שיעורים,
   // שליפת-הכל נחתכת בתקרת 1000 השורות של PostgREST (הבאג הישן).
@@ -148,6 +162,10 @@ export default function Lessons() {
     search: debouncedSearch, status: activeTab, page,
   });
   const { data: counts } = useAdminLessonCounts();
+  // מפת id→שם לנושאים (לצ'יפים בטופס) — כולל נושאים שנוספו הרגע דרך הבורר
+  const { data: allTopics } = useTopicsForPicker();
+  const topicName = (id: string) =>
+    topicNames[id] ?? allTopics?.find((t) => t.id === id)?.name ?? "נושא";
   const lessons = lessonsPage?.rows;
   const total   = lessonsPage?.total ?? 0;
   const totalPages = Math.max(1, Math.ceil(total / ADMIN_PAGE_SIZE));
@@ -168,6 +186,9 @@ export default function Lessons() {
       duration: "", source_type: "video", status: "draft", bible_book: "", bible_chapter: "", bible_verse: "",
       thumbnail_url: "", content: "", attachment_url: "" });
     setEditingLesson(null);
+    setLessonTopicIds([]);
+    setOriginalTopicIds([]);
+    setTopicToAdd("");
   };
 
   const openEdit = async (row: any) => {
@@ -189,7 +210,45 @@ export default function Lessons() {
       thumbnail_url: lesson.thumbnail_url || "",
       content: lesson.content || "", attachment_url: lesson.attachment_url || "",
     });
+    // נושאי השיעור — עריכה inline בלי לעזוב לפאנל הנושאים (הוראת סער 10.7)
+    try {
+      const { data: links } = await supabase
+        .from("lesson_topics")
+        .select("topic_id, topics(name)")
+        .eq("lesson_id", row.id);
+      const ids = (links ?? []).map((l: any) => l.topic_id as string);
+      const names: Record<string, string> = {};
+      (links ?? []).forEach((l: any) => { if (l.topics?.name) names[l.topic_id] = l.topics.name; });
+      setLessonTopicIds(ids);
+      setOriginalTopicIds(ids);
+      setTopicNames(names);
+    } catch {
+      setLessonTopicIds([]);
+      setOriginalTopicIds([]);
+    }
+    setTopicToAdd("");
     setDialogOpen(true);
+  };
+
+  /** החלת שינויי-נושאים לפי diff — insert לחדשים, delete למוסרים */
+  const applyTopicChanges = async (lessonId: string) => {
+    const toInsert = lessonTopicIds.filter((id) => !originalTopicIds.includes(id));
+    const toRemove = originalTopicIds.filter((id) => !lessonTopicIds.includes(id));
+    if (toInsert.length === 0 && toRemove.length === 0) return;
+    if (toInsert.length > 0) {
+      const { error } = await supabase
+        .from("lesson_topics")
+        .insert(toInsert.map((topicId) => ({ lesson_id: lessonId, topic_id: topicId })) as any);
+      if (error) throw error;
+    }
+    if (toRemove.length > 0) {
+      const { error } = await supabase
+        .from("lesson_topics")
+        .delete()
+        .eq("lesson_id", lessonId)
+        .in("topic_id", toRemove);
+      if (error) throw error;
+    }
   };
 
   // חזרה לעמוד 1 בכל שינוי חיפוש/לשונית
@@ -236,12 +295,27 @@ export default function Lessons() {
       attachment_url: form.attachment_url || null,
     };
     try {
+      let lessonId: string | null = null;
       if (editingLesson) {
         await updateLesson.mutateAsync({ id: editingLesson.id, ...payload });
+        lessonId = editingLesson.id;
         toast({ title: "השיעור עודכן" });
       } else {
-        await createLesson.mutateAsync(payload);
+        const created: any = await createLesson.mutateAsync(payload);
+        lessonId = created?.id ?? null;
         toast({ title: "השיעור נוצר" });
+      }
+      // נושאים — כשל בקישור נושאים לא מפיל את השמירה (השיעור כבר נשמר)
+      if (lessonId) {
+        try {
+          await applyTopicChanges(lessonId);
+        } catch (topicErr: any) {
+          toast({
+            title: "השיעור נשמר, אך עדכון הנושאים נכשל",
+            description: topicErr?.message,
+            variant: "destructive",
+          });
+        }
       }
       setDialogOpen(false);
       resetForm();
@@ -287,7 +361,6 @@ export default function Lessons() {
   ];
 
   return (
-    <AdminLayout>
       <div className="space-y-6" dir="rtl">
         {/* ── header ──────────────────────────────────────────────── */}
         <div className="flex items-center justify-between">
@@ -387,6 +460,44 @@ export default function Lessons() {
                       onChange={id => setForm(f => ({ ...f, series_id: id }))}
                       placeholder="חפש ובחר סדרה"
                     />
+                  </div>
+
+                  {/* נושאים — תיוג inline, כולל יצירת נושא חדש מהבורר (הוראת סער 10.7) */}
+                  <div className="col-span-2 space-y-2">
+                    <Label>נושאים</Label>
+                    {lessonTopicIds.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {lessonTopicIds.map(id => (
+                          <span
+                            key={id}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display bg-primary/10 text-primary"
+                          >
+                            {topicName(id)}
+                            <button
+                              type="button"
+                              aria-label={`הסר נושא ${topicName(id)}`}
+                              className="hover:text-destructive leading-none"
+                              onClick={() => setLessonTopicIds(ids => ids.filter(x => x !== id))}
+                            >
+                              ✕
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    <TopicCombobox
+                      value={topicToAdd}
+                      onChange={id => {
+                        if (id && !lessonTopicIds.includes(id)) {
+                          setLessonTopicIds(ids => [...ids, id]);
+                        }
+                        setTopicToAdd("");
+                      }}
+                      placeholder="הוסף נושא — חיפוש או יצירה חדשה"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      אפשר לחפש נושא קיים או להקליד שם חדש וללחוץ "נושא חדש" — בלי לעזוב את הטופס.
+                    </p>
                   </div>
                   <div>
                     <Label>סוג מקור</Label>
@@ -628,6 +739,14 @@ export default function Lessons() {
           </CardContent>
         </Card>
       </div>
+  );
+}
+
+// עמוד עצמאי — /admin/lessons (העטיפה היחידה שמוסיפה AdminLayout)
+export default function Lessons() {
+  return (
+    <AdminLayout>
+      <LessonsContent />
     </AdminLayout>
   );
 }

@@ -88,6 +88,16 @@ export interface StartPaymentParams {
     donor_email?: string;
     user_id?: string;
   };
+  /** הקדשת שיעור/סדרה — השרת יוצר את שורת ה-pending ואוכף את המחיר. */
+  dedicationMeta?: {
+    scope: "lesson" | "series";
+    lesson_id?: string;
+    series_id?: string;
+    dedication_type: string;
+    dedicated_name: string;
+    dedicator_name?: string;
+    user_id?: string;
+  };
 }
 
 const SDK_URL = "https://cdn.meshulam.co.il/sdk/gs.min.js";

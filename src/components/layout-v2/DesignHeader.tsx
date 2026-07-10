@@ -344,6 +344,11 @@ export default function DesignHeader({
       )}
 
       <style>{`
+        /* (סער 10.7) גובה ההדר כמשתנה גלובלי — כל אלמנט sticky שנצמד מתחת
+           להדר משתמש ב-var(--bz-header-h) במקום 96 קשיח (בנייד ההדר 64px,
+           וסרגלים שנדבקו על 96 השאירו חור של 32px). */
+        :root { --bz-header-h: 96px; }
+        @media (max-width: 767px) { :root { --bz-header-h: 64px; } }
         .design-header-burger { display: inline-flex; }
         @media (min-width: 768px) {
           .design-header-burger { display: none !important; }

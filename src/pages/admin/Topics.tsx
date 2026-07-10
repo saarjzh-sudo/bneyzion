@@ -13,7 +13,8 @@ import { useTopics, useCreateTopic, useUpdateTopic, useDeleteTopic } from "@/hoo
 import { useToast } from "@/hooks/use-toast";
 import { InlineEditField } from "@/components/admin/InlineEditField";
 
-export default function Topics() {
+// TopicsContent = הליבה בלי AdminLayout — מוטמעת גם ב"עריכת תוכן" (/admin/content).
+export function TopicsContent() {
   const { data: topics, isLoading } = useTopics();
   const createTopic = useCreateTopic();
   const updateTopic = useUpdateTopic();
@@ -49,12 +50,13 @@ export default function Topics() {
   };
 
   return (
-    <AdminLayout>
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-heading gradient-teal">ניהול נושאים</h1>
-            <p className="text-muted-foreground mt-1">ניהול תגיות ונושאים לשיעורים</p>
+            <p className="text-muted-foreground mt-1">
+              נושאים תמטיים (תחת themes-root) — אפשר גם ליצור נושא ישירות מטופס שיעור
+            </p>
           </div>
           <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) resetForm(); }}>
             <DialogTrigger asChild>
@@ -127,6 +129,14 @@ export default function Topics() {
           </CardContent>
         </Card>
       </div>
+  );
+}
+
+// עמוד עצמאי — /admin/topics (העטיפה היחידה שמוסיפה AdminLayout)
+export default function Topics() {
+  return (
+    <AdminLayout>
+      <TopicsContent />
     </AdminLayout>
   );
 }

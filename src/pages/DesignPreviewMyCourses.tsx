@@ -95,6 +95,8 @@ interface CourseCardData {
   subtitle?: string;
   slug: string | null;
   gradient: string;
+  /** (סער 10.7) תמונת אקוורל מה-DB — כשקיימת, מחליפה את הגרדיאנט */
+  imageUrl?: string | null;
   progressPct: number;
   lessonCount: number;
   hasAccess: boolean;
@@ -124,10 +126,13 @@ function CourseCard({ course }: { course: CourseCardData }) {
         (e.currentTarget as HTMLDivElement).style.boxShadow = shadows.card;
       }}
     >
-      {/* Gradient cover */}
+      {/* Cover — תמונת אקוורל כשקיימת, גרדיאנט אחרת. שכבת-כהות עדינה בתחתית
+          שומרת על קריאות הכותרת הלבנה מעל התמונה. */}
       <div
         style={{
-          background: course.gradient,
+          background: course.imageUrl
+            ? `linear-gradient(180deg, rgba(26,39,68,0.06) 30%, rgba(24,32,26,0.66) 100%), url('${course.imageUrl}') center / cover no-repeat`
+            : course.gradient,
           padding: "1.5rem",
           minHeight: 160,
           display: "flex",
@@ -166,12 +171,19 @@ function CourseCard({ course }: { course: CourseCardData }) {
               color: "white",
               marginBottom: 4,
               lineHeight: 1.3,
+              textShadow: course.imageUrl ? "0 1px 10px rgba(0,0,0,0.45)" : undefined,
             }}
           >
             {course.title}
           </h3>
           {course.subtitle && (
-            <p style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.85rem" }}>
+            <p
+              style={{
+                color: "rgba(255,255,255,0.85)",
+                fontSize: "0.85rem",
+                textShadow: course.imageUrl ? "0 1px 8px rgba(0,0,0,0.5)" : undefined,
+              }}
+            >
               {course.subtitle}
             </p>
           )}
@@ -290,7 +302,7 @@ function CourseCard({ course }: { course: CourseCardData }) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function DesignPreviewMyCourses() {
-  const { user, isLoading: authLoading } = useAuth();
+  const { user, isLoading: authLoading, signInWithGoogle } = useAuth();
   const { data: enrollments = [], isLoading: enrollLoading } = useMyEnrollments();
   const { data: allCourses = [], isLoading: coursesLoading } = useCommunityCoursesPublic();
   const { hasAccess: hasWeeklyChapter, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
@@ -376,6 +388,7 @@ export default function DesignPreviewMyCourses() {
         subtitle: cc.rabbis?.name ? `${cc.rabbis.name}` : undefined,
         slug: cc.id,
         gradient: courseGradient(null),
+        imageUrl: cc.image_url ?? null,
         progressPct: 0,
         lessonCount: cc.total_lessons ?? 0,
         hasAccess: true,
@@ -395,6 +408,7 @@ export default function DesignPreviewMyCourses() {
         subtitle: cc.rabbis?.name,
         slug: cc.id,
         gradient: courseGradient(null),
+        imageUrl: cc.image_url ?? null,
         progressPct: 0,
         lessonCount: cc.total_lessons ?? 0,
         hasAccess: true,
@@ -419,6 +433,7 @@ export default function DesignPreviewMyCourses() {
         subtitle: cc.rabbis?.name,
         slug: cc.id,
         gradient: `linear-gradient(135deg, ${colors.textSubtle} 0%, #4a4a4a 100%)`,
+        imageUrl: cc.image_url ?? null,
         progressPct: 0,
         lessonCount: cc.total_lessons ?? 0,
         hasAccess: false,
@@ -449,8 +464,9 @@ export default function DesignPreviewMyCourses() {
           <h2 style={{ fontFamily: fonts.display, fontSize: "1.5rem", color: colors.textDark, fontWeight: 700 }}>
             יש להתחבר כדי לראות את הקורסים שלך
           </h2>
-          <Link
-            to="/portal-login?next=%2Fdesign-my-courses"
+          {/* (סער 10.7) OAuth ישיר — בלי מסך-ביניים /portal-login עם כפתור גוגל שני */}
+          <button
+            onClick={() => signInWithGoogle("/design-my-courses")}
             style={{
               background: colors.goldDark,
               color: "white",
@@ -458,12 +474,22 @@ export default function DesignPreviewMyCourses() {
               fontWeight: 700,
               padding: "0.75rem 2rem",
               borderRadius: radii.lg,
-              textDecoration: "none",
+              border: "none",
+              cursor: "pointer",
               fontSize: "1rem",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
             }}
           >
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+              <path fill="#fff" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" opacity="0.95"/>
+              <path fill="#fff" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" opacity="0.8"/>
+              <path fill="#fff" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" opacity="0.65"/>
+              <path fill="#fff" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" opacity="0.9"/>
+            </svg>
             כניסה עם Google
-          </Link>
+          </button>
         </div>
       </DesignLayout>
     );

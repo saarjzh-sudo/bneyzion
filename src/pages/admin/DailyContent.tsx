@@ -166,7 +166,8 @@ function NewsDialog({ row, onClose }: { row: NewsItem; onClose: () => void }) {
 const EMPTY_VERSE: Verse = { id: "", date: null, verse_text: "", verse_source: "", commentary: "", image_url: "" };
 const EMPTY_NEWS: NewsItem = { id: "", title: "", content: "", thumbnail_url: "", status: "published", published_at: null, created_at: "" };
 
-export default function DailyContent() {
+// DailyContentContent = הליבה בלי AdminLayout — מוטמעת גם ב"עריכת תוכן" (/admin/content).
+export function DailyContentContent() {
   const qc = useQueryClient();
 
   const verses = useQuery({
@@ -209,7 +210,7 @@ export default function DailyContent() {
   const [editNews, setEditNews] = useState<NewsItem | null>(null);
 
   return (
-    <AdminLayout>
+    <>
       <div dir="rtl" className="space-y-6">
         <div>
           <h1 className="text-2xl font-display text-foreground flex items-center gap-2">
@@ -309,6 +310,15 @@ export default function DailyContent() {
 
       {editVerse && <VerseDialog row={editVerse} onClose={() => setEditVerse(null)} />}
       {editNews && <NewsDialog row={editNews} onClose={() => setEditNews(null)} />}
+    </>
+  );
+}
+
+// עמוד עצמאי — /admin/daily (העטיפה היחידה שמוסיפה AdminLayout)
+export default function DailyContent() {
+  return (
+    <AdminLayout>
+      <DailyContentContent />
     </AdminLayout>
   );
 }

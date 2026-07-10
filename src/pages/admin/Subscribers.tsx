@@ -1,17 +1,17 @@
 /**
  * Admin Subscribers — /admin/subscribers
  *
- * Manages user_access_tags with tag='program:weekly-chapter'.
- * Gold/parchment/navy palette — same design system as Payments.tsx.
- * RTL throughout. Admin-only.
+ * 10.7.2026 (הוראת סער): העמוד הוא תצוגת-קריאה. מקור האמת לרשימת המנויים =
+ * לוח ה-Monday (סנכרון פעמיים ביום). הטבלה כאן מציגה את user_access_tags —
+ * מה שקובע בפועל גישה באתר — והפעולות הידניות (הוספה / ייבוא / סיום מנוי)
+ * קופלו תחת "כלי חירום — עוקף את Monday", כדי שלא ייראו כדרך הראשית לנהל מנויים.
  *
  * Features:
- *  - KPI cards: active, linked, pending, expired
- *  - Table with search + status filter
- *  - Add subscriber dialog (INSERT with source='admin')
- *  - End subscription per row (SET valid_until=NOW())
- *  - Import from Smoove placeholder (UI only, no live import)
- *  - CSV export
+ *  - Banner: מקור האמת = Monday + המספר הרשמי
+ *  - KPI cards: active, linked, pending, expired (מקור: Supabase)
+ *  - פיוס מקורות: Grow / Monday / DB
+ *  - Table with search + status filter + CSV export (קריאה בלבד)
+ *  - כלי חירום (מקופל): הוספה ידנית, ייבוא Smoove, סיום מנוי פר-שורה
  */
 
 import { useState, useMemo } from "react";
@@ -61,7 +61,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useMondayInsights } from "@/hooks/useMondayInsights";
-import { RefreshCw, AlertTriangle } from "lucide-react";
+import { SourceBadge } from "@/components/admin/SourceBadge";
+import { RefreshCw, AlertTriangle, ShieldAlert, ChevronDown, CalendarRange } from "lucide-react";
 
 /* ─── Color tokens — same as Payments.tsx ─────────────────────── */
 const C = {
@@ -196,12 +197,14 @@ function KpiCard({
   value,
   sub,
   accent = C.gold,
+  source,
 }: {
   icon: React.ElementType;
   label: string;
   value: string | number;
   sub?: string;
   accent?: string;
+  source?: string;
 }) {
   return (
     <div
@@ -256,6 +259,7 @@ function KpiCard({
         {value}
       </div>
       {sub && <div style={{ fontSize: 12, color: C.textSubtle, paddingInlineEnd: 8 }}>{sub}</div>}
+      {source && <div style={{ paddingInlineEnd: 8 }}><SourceBadge source={source} /></div>}
     </div>
   );
 }
@@ -591,6 +595,8 @@ export default function Subscribers() {
   const [addOpen, setAddOpen] = useState(false);
   const [smooveOpen, setSmooveOpen] = useState(false);
   const [endConfirm, setEndConfirm] = useState<string | null>(null);
+  // כלי-חירום (הוספה/ייבוא/סיום מנוי) מקופלים — Monday הוא הדרך לנהל מנויים
+  const [emergencyOpen, setEmergencyOpen] = useState(false);
 
   const allRows = data ?? [];
   const rows = programFilter === "all" ? allRows : allRows.filter((r) => r.tag === programFilter);
@@ -678,35 +684,14 @@ export default function Subscribers() {
               מנויי תכנית הפרק השבועי
             </h1>
             <p style={{ margin: "4px 0 0", fontSize: 14, color: C.textMuted }}>
-              ניהול מנויים פעילים ·{" "}
+              תצוגת הגישה באתר ·{" "}
               <code style={{ fontSize: 12, background: C.parchment, padding: "1px 6px", borderRadius: 4 }}>
-                {WEEKLY_TAG}
+                user_access_tags
               </code>
             </p>
           </div>
 
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <button
-              onClick={() => setSmooveOpen(true)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                background: C.parchment,
-                border: `1.5px solid ${C.border}`,
-                borderRadius: 10,
-                padding: "8px 16px",
-                fontSize: 13,
-                fontWeight: 700,
-                color: C.gold,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <Upload size={14} />
-              ייבא מ-Smoove
-            </button>
-
             <button
               onClick={() => exportSubscribers(filtered)}
               style={{
@@ -727,27 +712,50 @@ export default function Subscribers() {
               <Download size={14} />
               ייצוא CSV ({filtered.length})
             </button>
+          </div>
+        </div>
 
-            <button
-              onClick={() => setAddOpen(true)}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                background: C.navy,
-                border: "none",
-                borderRadius: 10,
-                padding: "8px 16px",
-                fontSize: 13,
-                fontWeight: 700,
-                color: "white",
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-              }}
-            >
-              <Plus size={14} />
-              הוסף מנוי
-            </button>
+        {/* ── Banner: מקור האמת = Monday ─────────────────────────── */}
+        <div
+          style={{
+            background: C.navy,
+            borderRadius: 16,
+            padding: "18px 22px",
+            display: "flex",
+            alignItems: "center",
+            gap: 16,
+            flexWrap: "wrap",
+            border: `1px solid ${C.goldLight}40`,
+          }}
+        >
+          <div
+            style={{
+              width: 44, height: 44, borderRadius: 12, flexShrink: 0,
+              background: C.goldLight + "22",
+              display: "flex", alignItems: "center", justifyContent: "center",
+            }}
+          >
+            <CalendarRange size={22} color={C.goldShimmer} />
+          </div>
+          <div style={{ flex: 1, minWidth: 220 }}>
+            <div style={{ fontSize: 16, fontWeight: 800, color: C.goldShimmer, fontFamily: "var(--font-display, serif)" }}>
+              מקור האמת לרשימת המנויים: לוח Monday
+            </div>
+            <div style={{ fontSize: 13, color: "#E8D5A0cc", marginTop: 2 }}>
+              הסנכרון רץ פעמיים ביום. הוספה, ביטול ועדכון מנויים נעשים ב-Monday —
+              המסך הזה מציג את הגישה בפועל באתר, לצפייה ולבקרה.
+            </div>
+          </div>
+          <div style={{ textAlign: "center", minWidth: 120 }}>
+            <div style={{ fontSize: 30, fontWeight: 900, color: "white", lineHeight: 1 }}>
+              {mondayActive ?? "…"}
+            </div>
+            <div style={{ fontSize: 11, color: "#E8D5A0aa", marginTop: 4 }}>
+              מנויים פעילים · המספר הרשמי
+            </div>
+            <div style={{ marginTop: 4 }}>
+              <SourceBadge source="Monday" />
+            </div>
           </div>
         </div>
 
@@ -765,6 +773,7 @@ export default function Subscribers() {
             value={isLoading ? "..." : kpiActive}
             sub="valid_until ריק או עתידי"
             accent={C.gold}
+            source="Supabase"
           />
           <KpiCard
             icon={Plus}
@@ -772,6 +781,7 @@ export default function Subscribers() {
             value={isLoading ? "..." : kpiNewMonth}
             sub="נוספו ב-30 הימים האחרונים"
             accent={C.blue}
+            source="Supabase"
           />
           <KpiCard
             icon={CheckCircle2}
@@ -779,6 +789,7 @@ export default function Subscribers() {
             value={isLoading ? "..." : kpiLinked}
             sub="user_id קיים + לא pending"
             accent={C.green}
+            source="Supabase"
           />
           <KpiCard
             icon={Clock}
@@ -786,6 +797,7 @@ export default function Subscribers() {
             value={isLoading ? "..." : kpiPending}
             sub="pending_user_link = true"
             accent={C.amber}
+            source="Supabase"
           />
           <KpiCard
             icon={AlertCircle}
@@ -793,6 +805,7 @@ export default function Subscribers() {
             value={isLoading ? "..." : kpiExpired}
             sub="valid_until עבר"
             accent={C.red}
+            source="Supabase"
           />
         </div>
 
@@ -871,6 +884,98 @@ export default function Subscribers() {
           {monday == null && (
             <div style={{ fontSize: 12, color: C.textSubtle }}>
               נתוני Monday יופיעו כאן לאחר פריסת edge <code>monday-insights</code>. הסנכרון מ-Smoove רץ אוטומטית מדי שעה (cron).
+            </div>
+          )}
+        </div>
+
+        {/* ── כלי חירום — עוקף את Monday (מקופל כברירת מחדל) ────── */}
+        <div
+          style={{
+            background: emergencyOpen ? "#FFFBEB" : "white",
+            border: `1.5px solid ${emergencyOpen ? "#FDE68A" : C.border}`,
+            borderRadius: 16,
+            overflow: "hidden",
+          }}
+        >
+          <button
+            onClick={() => setEmergencyOpen((v) => !v)}
+            aria-expanded={emergencyOpen}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              width: "100%",
+              background: "transparent",
+              border: "none",
+              padding: "14px 18px",
+              cursor: "pointer",
+              textAlign: "right",
+            }}
+          >
+            <ShieldAlert size={18} color={C.amber} style={{ flexShrink: 0 }} />
+            <span style={{ fontSize: 14, fontWeight: 800, color: C.amber }}>
+              כלי חירום — עוקף את Monday
+            </span>
+            <span style={{ fontSize: 12, color: C.textSubtle, flex: 1 }}>
+              הוספה ידנית, ייבוא Smoove וסיום מנוי. שינוי כאן לא מתעדכן בלוח Monday — לשימוש חריג בלבד.
+            </span>
+            <ChevronDown
+              size={16}
+              color={C.textMuted}
+              style={{
+                flexShrink: 0,
+                transform: emergencyOpen ? "rotate(180deg)" : "none",
+                transition: "transform 0.2s",
+              }}
+            />
+          </button>
+
+          {emergencyOpen && (
+            <div style={{ padding: "0 18px 16px", display: "flex", flexDirection: "column", gap: 12 }}>
+              <div
+                style={{
+                  fontSize: 12,
+                  color: C.amber,
+                  background: "#FEF3C7",
+                  border: "1px solid #FDE68A",
+                  borderRadius: 10,
+                  padding: "8px 12px",
+                  lineHeight: 1.6,
+                }}
+              >
+                שינוי ידני כאן משנה את הגישה באתר בלבד. כדי שהרישום הרשמי יישאר נכון —
+                יש לעדכן גם את לוח ה-Monday, אחרת הסנכרון הבא יציג פער.
+              </div>
+              <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                <button
+                  onClick={() => setAddOpen(true)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 6,
+                    background: C.navy, border: "none", borderRadius: 10,
+                    padding: "8px 16px", fontSize: 13, fontWeight: 700,
+                    color: "white", cursor: "pointer", whiteSpace: "nowrap",
+                  }}
+                >
+                  <Plus size={14} />
+                  הוסף מנוי ידנית
+                </button>
+                <button
+                  onClick={() => setSmooveOpen(true)}
+                  style={{
+                    display: "flex", alignItems: "center", gap: 6,
+                    background: "white", border: `1.5px solid ${C.border}`, borderRadius: 10,
+                    padding: "8px 16px", fontSize: 13, fontWeight: 700,
+                    color: C.gold, cursor: "pointer", whiteSpace: "nowrap",
+                  }}
+                >
+                  <Upload size={14} />
+                  ייבא מ-Smoove
+                </button>
+              </div>
+              <div style={{ fontSize: 12, color: C.textSubtle }}>
+                כפתור "סיים מנוי" מופיע כעת ליד כל שורה בטבלה למטה — והוא ינסה גם לבטל את
+                הוראת-הקבע ב-Grow.
+              </div>
             </div>
           )}
         </div>
@@ -1013,7 +1118,8 @@ export default function Subscribers() {
                         {fmtDateTime(row.created_at)}
                       </TableCell>
                       <TableCell>
-                        {!isExpired(row) && (
+                        {/* פעולת סיום-מנוי = כלי חירום — מוצגת רק כשהמגירה פתוחה */}
+                        {emergencyOpen && !isExpired(row) ? (
                           <button
                             onClick={() => setEndConfirm(row.id)}
                             style={{
@@ -1033,6 +1139,8 @@ export default function Subscribers() {
                             <X size={12} />
                             סיים מנוי
                           </button>
+                        ) : (
+                          <span style={{ fontSize: 11, color: C.textSubtle }}>—</span>
                         )}
                       </TableCell>
                     </TableRow>

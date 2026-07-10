@@ -2,7 +2,8 @@
  * Admin Dashboard — /admin
  *
  * תמונת מצב ברורה במבט אחד למנהל לא-טכנולוגי.
- * ללא tabs מתים (גיימיפיקציה / data-ops הוסרו).
+ * 10.7.2026 (סער): איחוד דשבורדים — סקשן ה-Monday (לשעבר /admin/budget) מוטמע
+ * כאן, וכל מדד נושא תגית מקור ("מקור: Monday / Supabase / Grow").
  * KPI cards גדולים ולחיצים → quick-action links.
  * Gold/parchment/navy — בדיוק כמו Payments.tsx ו-Subscribers.tsx.
  * RTL מלא. CSS-only micro-interactions. ללא framer-motion.
@@ -13,6 +14,8 @@ import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { useMondayInsights } from "@/hooks/useMondayInsights";
+import { MondayInsightsSection } from "@/components/admin/MondayInsightsSection";
+import { SourceBadge } from "@/components/admin/SourceBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   BookOpen, Users2, Clock, TrendingUp, Crown,
@@ -50,9 +53,11 @@ interface KpiProps {
   to: string;
   accent: string;    // left-border + icon color
   bg: string;        // card bg
+  /** תגית מקור-הנתונים — Monday / Supabase / Grow */
+  source: string;
 }
 
-function KpiCard({ title, value, sub, icon: Icon, to, accent, bg }: KpiProps) {
+function KpiCard({ title, value, sub, icon: Icon, to, accent, bg, source }: KpiProps) {
   return (
     <Link to={to} className="block group">
       <div
@@ -83,12 +88,15 @@ function KpiCard({ title, value, sub, icon: Icon, to, accent, bg }: KpiProps) {
             <Icon className="w-5 h-5" style={{ color: accent }} />
           </div>
         </div>
-        <div
-          className="flex items-center gap-1 text-xs font-ploni mt-auto"
-          style={{ color: accent }}
-        >
-          <span>מעבר לניהול</span>
-          <ChevronLeft className="w-3.5 h-3.5" />
+        <div className="flex items-center justify-between gap-2 mt-auto">
+          <div
+            className="flex items-center gap-1 text-xs font-ploni"
+            style={{ color: accent }}
+          >
+            <span>מעבר לניהול</span>
+            <ChevronLeft className="w-3.5 h-3.5" />
+          </div>
+          <SourceBadge source={source} />
         </div>
       </div>
     </Link>
@@ -183,6 +191,7 @@ export default function Dashboard() {
       to:     "/admin/lessons",
       accent: C.navy,
       bg:     C.parchment,
+      source: "Supabase",
     },
     {
       title:  "ממתינים לאישור",
@@ -192,6 +201,7 @@ export default function Dashboard() {
       to:     "/admin/lessons?tab=pending_review",
       accent: stats?.pending ? "#D97706" : C.gold,
       bg:     stats?.pending ? C.amberBg : C.parchment,
+      source: "Supabase",
     },
     {
       // 8.7.2026 (סער): המספר הרשמי = לוח Monday של יואב. זה המקור, לא מעקב מקומי.
@@ -202,15 +212,17 @@ export default function Dashboard() {
       to:     "/admin/subscribers",
       accent: "#059669",
       bg:     "#f0fdf4",
+      source: "Monday",
     },
     {
       title:  "הכנסות החודש",
       value:  `₪${(stats?.monthlyRevenue ?? 0).toLocaleString()}`,
-      sub:    "30 הימים האחרונים",
+      sub:    "30 הימים האחרונים · הזמנות באתר",
       icon:   TrendingUp,
       to:     "/admin/payments",
       accent: C.gold,
       bg:     C.parchment,
+      source: "Grow",
     },
   ];
 
@@ -270,13 +282,16 @@ export default function Dashboard() {
             style={{ borderColor: C.goldShimmer }}
           >
             <CardHeader className="pb-2">
-              <CardTitle
-                className="font-kedem text-xl flex items-center gap-2"
-                style={{ color: C.navy }}
-              >
-                <BarChart3 className="w-5 h-5" style={{ color: C.goldLight }} />
-                למידה פעילה — 14 ימים אחרונים
-              </CardTitle>
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <CardTitle
+                  className="font-kedem text-xl flex items-center gap-2"
+                  style={{ color: C.navy }}
+                >
+                  <BarChart3 className="w-5 h-5" style={{ color: C.goldLight }} />
+                  למידה פעילה — 14 ימים אחרונים
+                </CardTitle>
+                <SourceBadge source="Supabase" note="פעילות יומית" />
+              </div>
             </CardHeader>
             <CardContent>
               <div className="h-[240px] w-full">
@@ -329,13 +344,16 @@ export default function Dashboard() {
             style={{ borderColor: C.goldShimmer }}
           >
             <CardHeader className="pb-2">
-              <CardTitle
-                className="font-kedem text-xl flex items-center gap-2"
-                style={{ color: C.navy }}
-              >
-                <Crown className="w-5 h-5" style={{ color: C.goldLight }} />
-                רבנים מובילים
-              </CardTitle>
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <CardTitle
+                  className="font-kedem text-xl flex items-center gap-2"
+                  style={{ color: C.navy }}
+                >
+                  <Crown className="w-5 h-5" style={{ color: C.goldLight }} />
+                  רבנים מובילים
+                </CardTitle>
+                <SourceBadge source="Supabase" />
+              </div>
             </CardHeader>
             <CardContent className="space-y-3">
               {(stats?.topRabbis ?? []).map((rabbi: any, i: number) => (
@@ -390,6 +408,9 @@ export default function Dashboard() {
           </Card>
 
         </div>
+
+        {/* ─── Monday section — איחוד הדשבורדים (לשעבר /admin/budget) ── */}
+        <MondayInsightsSection />
 
         {/* ─── Quick actions row ────────────────────────────────── */}
         <div>

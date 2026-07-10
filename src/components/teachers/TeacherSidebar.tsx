@@ -628,7 +628,7 @@ export default function TeacherSidebar({
           width: SIDEBAR_W_COL,
           flexShrink: 0,
           position: "sticky",
-          top: 96,
+          top: "var(--bz-header-h, 96px)",
           height: "calc(100vh - 96px)",
           background: colors.parchment,
           borderInlineStart: `1px solid rgba(139,111,71,0.12)`,

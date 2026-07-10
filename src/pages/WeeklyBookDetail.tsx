@@ -16,14 +16,14 @@
  *
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalWeeklyNav } from "@/components/weekly/GlobalWeeklyNav";
 import { ZoomCtaCard } from "@/components/weekly/ZoomCtaCard";
 import { WeeklyScheduleCard, type ScheduleItem } from "@/components/weekly/WeeklyScheduleCard";
 import {
   BookOpen, Lock, Play, Headphones, FileText,
-  ChevronLeft, ChevronDown, Heart, Clock, Loader2,
+  ChevronDown, Heart, Clock, Loader2,
   AlertCircle, Film, Volume2, X, BookMarked, Layers,
 } from "lucide-react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -165,18 +165,17 @@ export default function WeeklyBookDetail() {
   const accessLoading = bookAccessLoading || programAccessLoading || eichaLoading;
 
   const { isAdmin } = useAuth();
-  const [previewMode, setPreviewMode] = useState<"subscriber" | "locked">("subscriber");
 
   // Data
   const { data: course, isLoading: courseLoading, error: courseError } = useWeeklyBookBySlug(slug);
 
-  // Combine: admin can toggle; real user: either tag grants access.
-  // 8.7 (סער): לומד-איכה משלם את אותו מנוי — פתוח לו גם הספר הראשי הנוכחי
-  // (is_current), כדי שהמעבר לפרק השבועי יהיה קל; שאר הארכיון נפתח במיזוג.
+  // (סער 10.7) טוגל "תצוגת אדמין מנוי/לא-מנוי" הוסר מהעמוד — אדמין תמיד רואה
+  // כמנוי. 8.7 (סער): לומד-איכה משלם את אותו מנוי — פתוח לו גם הספר הראשי
+  // הנוכחי (is_current), כדי שהמעבר לפרק השבועי יהיה קל; שאר הארכיון נפתח במיזוג.
   const realAccess =
     bookAccess || programAccess ||
     (eichaAccess && (slug === "book-lamentations" || course?.is_current === true));
-  const hasAccess = isAdmin ? (previewMode === "subscriber" || realAccess) : realAccess;
+  const hasAccess = isAdmin || realAccess;
   const { data: allBooks = [] } = useWeeklyBooks();
   const { data: courseData, isLoading: lessonsLoading } = useCourseDataWithResources(course?.id);
 
@@ -324,6 +323,43 @@ export default function WeeklyBookDetail() {
   const chapterNavItems = navList.filter((n) => n !== "intro");
   const taughtFlags = chapterNavItems.map(itemTaught);
   const lastTaughtIdx = taughtFlags.lastIndexOf(true);
+
+  // (סער 10.7) "תכניס אותי ישר לפרק שלי" — בספר הנוכחי (is_current) נוחתים
+  // ישירות על הפרק האחרון שנלמד, לא על ההקדמה. רץ פעם אחת אחרי טעינת הדאטה;
+  // ?chapter=N מנצח (ניווט מפורש), וספרי-ארכיון נשארים על ההקדמה.
+  const autoJumpedRef = useRef(false);
+  useEffect(() => {
+    if (autoJumpedRef.current) return;
+    if (isLoading || !courseData || !course) return;
+    autoJumpedRef.current = true;
+    if (Number(searchParams.get("chapter")) > 0) return;
+    if (!course.is_current) return;
+    if (lastTaughtIdx >= 0) {
+      const target = chapterNavItems[lastTaughtIdx];
+      setActiveNav(target);
+      // בוחרים טאב שבאמת יש בו תוכן: בסיס → השיעור והסיכום (בזכריה, למשל,
+      // אין שכבת בסיס — נחיתה על טאב ריק מרגישה שבורה)
+      let baseCount = 0;
+      let weeklyCount = 0;
+      if (isHZM(slug)) {
+        const subLessons = courseData.rawLessons.filter((l) => l.bible_book === target);
+        baseCount = subLessons.filter((l) => l.layer_type?.toLowerCase() === "base").length;
+        weeklyCount = subLessons.filter((l) => l.layer_type?.toLowerCase() === "weekly").length;
+      } else if (isEsther(slug)) {
+        const odd = target as number;
+        const a = courseData.chapters.get(odd);
+        const b = courseData.chapters.get(odd + 1);
+        baseCount = (a?.base.length ?? 0) + (b?.base.length ?? 0);
+        weeklyCount = (a?.weekly.length ?? 0) + (b?.weekly.length ?? 0);
+      } else {
+        const ch = courseData.chapters.get(target as number);
+        baseCount = ch?.base.length ?? 0;
+        weeklyCount = ch?.weekly.length ?? 0;
+      }
+      if (baseCount === 0 && weeklyCount > 0) setActiveTab("weekly");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoading, courseData, course, lastTaughtIdx]);
   const scheduleItems: ScheduleItem[] = chapterNavItems.map((nav, i) => {
     let status: ScheduleItem["status"];
     if (!taughtFlags[i]) status = "upcoming";
@@ -396,14 +432,7 @@ export default function WeeklyBookDetail() {
         dir="rtl"
         style={{ background: gradients.warmDark, padding: "1.5rem", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
-          <Link
-            to="/program/weekly-chapter"
-            style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.55)", textDecoration: "none" }}
-          >
-            <ChevronLeft size={13} />ספריית הספרים
-          </Link>
-          <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.12)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", minWidth: 0 }}>
           <div>
             <div style={{ fontFamily: fonts.body, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: colors.goldShimmer, marginBottom: "0.15rem" }}>הפרק השבועי בתנ״ך</div>
             <h1 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.2rem", color: "white", margin: 0, lineHeight: 1.2 }}>
@@ -420,32 +449,8 @@ export default function WeeklyBookDetail() {
           {allBooks.length > 1 && (
             <BookSwitcher books={allBooks} currentSlug={slug} accent={accent} />
           )}
-          <Link
-            to="/portal"
-            style={{ padding: "0.45rem 0.9rem", borderRadius: radii.md, border: "1.5px solid rgba(232,213,160,0.25)", background: "rgba(232,213,160,0.07)", color: colors.goldShimmer, fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.74rem", textDecoration: "none", whiteSpace: "nowrap" }}
-          >
-            האזור האישי
-          </Link>
         </div>
       </div>
-
-      {/* ── Admin toggle ─────────────────────────────────────────── */}
-      {isAdmin && (
-        <div dir="rtl" style={{ background: "rgba(45,31,14,0.97)", borderBottom: "1px solid rgba(232,213,160,0.12)", padding: "0.45rem 1.5rem", display: "flex", alignItems: "center", gap: "0.85rem" }}>
-          <span style={{ fontFamily: fonts.body, fontSize: "0.65rem", color: "rgba(232,213,160,0.45)", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase" }}>תצוגת אדמין</span>
-          <div style={{ display: "inline-flex", background: "rgba(255,255,255,0.06)", borderRadius: 20, padding: "0.15rem", gap: "0.1rem" }}>
-            {(["subscriber", "locked"] as const).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => setPreviewMode(mode)}
-                style={{ padding: "0.25rem 0.75rem", borderRadius: 16, border: "none", cursor: "pointer", fontFamily: fonts.body, fontWeight: 700, fontSize: "0.7rem", background: previewMode === mode ? gradients.goldButton : "transparent", color: previewMode === mode ? "white" : "rgba(232,213,160,0.45)", transition: "all 0.15s" }}
-              >
-                {mode === "subscriber" ? "מנוי" : "לא-מנוי"}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* ── Two-column layout ─────────────────────────────────────── */}
       <div dir="rtl" style={{ display: "grid", gridTemplateColumns: "min(280px, 30%) 1fr", minHeight: "calc(100vh - 200px)", background: colors.parchment }} className="book-detail-grid">
@@ -614,7 +619,12 @@ export default function WeeklyBookDetail() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) { .book-detail-grid { grid-template-columns: 1fr !important; } }
+        /* (סער 10.7) נייד: התוכן קודם, אקורדיון הספרים אחריו — בלי בלגן מעל הפרק */
+        @media (max-width: 768px) {
+          .book-detail-grid { grid-template-columns: 1fr !important; display: flex !important; flex-direction: column !important; }
+          .book-detail-grid > main { order: 1; padding: 1.25rem !important; }
+          .book-detail-grid > aside { order: 2; position: static !important; max-height: none !important; border-top: 1px solid rgba(139,111,71,0.12); }
+        }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
     </DesignLayout>

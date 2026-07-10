@@ -301,16 +301,33 @@ const ContentUpload = () => {
 
       const lessonId = insertedLesson?.id;
 
+      // קישורי join-tables אחרי שהשיעור כבר נוצר — כשל בהם לא מפיל את ההעלאה
+      // (אחרת מוצג "שגיאה בהעלאה" למרות שהשיעור נשמר, והמשתמש מעלה כפול).
+      const linkWarnings: string[] = [];
+
       // Feature 3: populate lesson_rabbis join table (all selected rabbis)
       if (lessonId && form.rabbiIds.length > 0) {
-        await insertLessonRabbis.mutateAsync({ lessonId, rabbiIds: form.rabbiIds });
+        try {
+          await insertLessonRabbis.mutateAsync({ lessonId, rabbiIds: form.rabbiIds });
+        } catch (e: any) {
+          linkWarnings.push(`קישור הרבנים נכשל: ${e?.message ?? e}`);
+        }
       }
 
       // link topic if chosen (use returned ID — not title search to avoid dup race)
       if (form.topicId && lessonId) {
-        await supabase.from("lesson_topics").insert({
+        const { error: topicError } = await supabase.from("lesson_topics").insert({
           lesson_id: lessonId,
           topic_id:  form.topicId,
+        });
+        if (topicError) linkWarnings.push(`קישור הנושא נכשל: ${topicError.message}`);
+      }
+
+      if (linkWarnings.length > 0) {
+        toast({
+          title: "השיעור נשמר, אך חלק מהקישורים נכשלו",
+          description: linkWarnings.join(" · "),
+          variant: "destructive",
         });
       }
     },

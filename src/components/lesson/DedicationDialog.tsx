@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Heart, Flame, BookOpen, ShieldCheck, Loader2 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Heart, Flame, BookOpen, Sparkles, ShieldCheck, Loader2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +11,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
-  useCreateDedication,
+  useDedicationPricing,
   useDedicationSettings,
   type DedicationScope,
   type DedicationType,
@@ -23,18 +23,27 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import DedicationPreview from "@/components/lesson/DedicationPreview";
 
+// (סער 10.7) נוסח קצר בלבד: סוג ההקדשה + השם — בלי שדה טקסט חופשי.
 const TYPES: { value: DedicationType; label: string; icon: typeof Flame; placeholder: string }[] = [
   { value: "iluy_neshama", label: "לעילוי נשמת", icon: Flame, placeholder: "שם הנפטר/ת..." },
   { value: "refua", label: "לרפואה שלמה", icon: Heart, placeholder: "שם החולה..." },
+  { value: "hatzlacha", label: "להצלחת", icon: Sparkles, placeholder: "שם המוקדש/ת..." },
   { value: "memory", label: "לזכרון", icon: BookOpen, placeholder: "שם המוקדש..." },
 ];
 
 export interface DedicationDialogProps {
-  lessonId: string;
-  lessonTitle: string;
-  /** אם קיימים — מאפשר למשתמש לבחור להקדיש את הסדרה כולה במקום שיעור בודד. */
+  /** מזהה שיעור — חובה כשמקדישים שיעור. בדף סדרה אפשר בלעדיו (scope=series). */
+  lessonId?: string;
+  lessonTitle?: string;
+  /** אם קיימים — מאפשר להקדיש את הסדרה כולה (או רק אותה, כשאין שיעור). */
   seriesId?: string;
   seriesTitle?: string;
+  /** ברירת מחדל להיקף ההקדשה. בדף סדרה מעבירים "series". */
+  defaultScope?: DedicationScope;
+  /** כיתוב כפתור הפתיחה. ברירת מחדל: "הקדש שיעור" / "הקדש סדרה" לפי ההקשר. */
+  triggerLabel?: string;
+  /** גודל כפתור הפתיחה (ברירת מחדל sm). */
+  triggerSize?: "sm" | "default";
 }
 
 export default function DedicationDialog({
@@ -42,40 +51,47 @@ export default function DedicationDialog({
   lessonTitle,
   seriesId,
   seriesTitle,
+  defaultScope,
+  triggerLabel,
+  triggerSize = "sm",
 }: DedicationDialogProps) {
+  const initialScope: DedicationScope = defaultScope ?? (lessonId ? "lesson" : "series");
   const [open, setOpen] = useState(false);
-  const [scope, setScope] = useState<DedicationScope>("lesson");
+  const [scope, setScope] = useState<DedicationScope>(initialScope);
   const [type, setType] = useState<DedicationType>("iluy_neshama");
   const [name, setName] = useState("");
   const [dedicator, setDedicator] = useState("");
-  const [message, setMessage] = useState("");
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
 
-  const { mutateAsync: createDedication } = useCreateDedication();
   const { data: settings } = useDedicationSettings();
+  const { data: pricing } = useDedicationPricing(lessonId, seriesId);
   const { startPayment, isLoading, isReady } = useGrowPayment();
   const { user } = useAuth();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const selectedType = TYPES.find((t) => t.value === type)!;
-  const canChooseSeries = !!seriesId;
+  // שני היקפים לבחירה רק כשיש גם שיעור וגם סדרה
+  const canChooseScope = !!seriesId && !!lessonId;
 
-  // מחירים לשני ההיקפים — מוצגים גם על כפתורי הבחירה (הרב יואב, הערה ה' 7.7.2026)
-  const lessonPrice = settings?.lesson_price ?? 600;
-  const seriesPrice = settings?.series_price ?? 1800;
+  // תמחור דיפרנציאלי (סער 10.7): רב מבוקש / גודל סדרה — מחושב בהוק,
+  // ונאכף שוב בשרת (create-payment) כך שלא ניתן לשנות מחיר מהדפדפן.
+  const lessonPrice = pricing?.lessonPrice ?? settings?.lesson_price ?? 600;
+  const seriesPrice = pricing?.seriesPrice ?? settings?.series_price ?? 1800;
   const amount = useMemo(
     () => (scope === "series" ? seriesPrice : lessonPrice),
     [scope, lessonPrice, seriesPrice]
   );
 
-  const targetTitle = scope === "series" ? seriesTitle || lessonTitle : lessonTitle;
+  const targetTitle = scope === "series" ? seriesTitle || lessonTitle || "" : lessonTitle || "";
+  const scopeWord = scope === "series" ? "סדרה" : "שיעור";
+  const defaultTrigger = lessonId ? "הקדש שיעור" : "הקדש סדרה";
 
   const resetForm = () => {
     setName("");
     setDedicator("");
-    setMessage("");
     setFullName("");
     setPhone("");
     setEmail("");
@@ -83,18 +99,9 @@ export default function DedicationDialog({
 
   const handleSubmit = async () => {
     if (!name.trim()) {
-      toast({ title: "נא למלא שם", variant: "destructive" });
+      toast({ title: "נא למלא את שם המוקדש", variant: "destructive" });
       return;
     }
-    // ⏸️ הקדשה בתשלום מושהית זמנית — מסלול הסליקה יופעל בנפרד כדי לא להשפיע על קמפיין חי.
-    // הדיאלוג והתצוגה-המקדימה פעילים; ההפעלה בפועל של התשלום תיפתח בקרוב.
-    toast({
-      title: "מערכת ההקדשות בתשלום תיפתח בקרוב 🙏",
-      description: "בינתיים אפשר להקדיש שיעור או סדרה דרך הנהלת האתר.",
-    });
-    return;
-
-    // eslint-disable-next-line no-unreachable
     if (!fullName.trim() || !phone.trim()) {
       toast({ title: "נא למלא שם מלא וטלפון לתשלום", variant: "destructive" });
       return;
@@ -105,54 +112,48 @@ export default function DedicationDialog({
     }
 
     try {
-      // Step 1: create a "pending" dedication row — becomes "active" once the
-      // Grow payment webhook confirms the charge (matched by payment_asmachta).
-      const created = await createDedication({
-        scope,
-        lesson_id: scope === "lesson" ? lessonId : undefined,
-        series_id: scope === "series" ? seriesId : undefined,
-        dedication_type: type,
-        dedicated_name: name.trim(),
-        dedicator_name: dedicator.trim() || undefined,
-        message: message.trim() || undefined,
-        amount,
-        user_id: user?.id,
-        status: "pending",
-      });
-
-      // Step 2: kick off payment. Metadata carries everything the webhook
-      // needs to flip this dedication row to "active".
+      // השרת (create-payment) יוצר את שורת ה-pending ב-lesson_dedications,
+      // אוכף את המחיר, ופותח תהליך Grow. ה-webhook הופך אותה ל-active
+      // ברגע שהחיוב מאושר — רק אז ההקדשה מופיעה באתר.
       await startPayment({
         sum: amount,
-        description: `הקדשת ${scope === "series" ? "סדרה" : "שיעור"}: ${targetTitle}`,
+        description: `הקדשת ${scopeWord}: ${targetTitle}`,
         fullName: fullName.trim(),
         phone: phone.trim(),
         email: email.trim() || undefined,
         type: "product",
         thankYouType: "cart",
         meta: {
-          product: "dedication",
+          product: scope === "series" ? "dedication-series" : "dedication-lesson",
           session_title: targetTitle,
           user_id: user?.id,
           tos_accepted: true,
           tos_accepted_at: new Date().toISOString(),
         },
-        donationMeta: {
+        dedicationMeta: {
+          scope,
+          lesson_id: scope === "lesson" ? lessonId : undefined,
+          series_id: scope === "series" ? seriesId : undefined,
           dedication_type: type,
-          dedication_name: name.trim(),
-          donor_email: email.trim() || undefined,
+          dedicated_name: name.trim(),
+          dedicator_name: dedicator.trim() || undefined,
           user_id: user?.id,
         },
       });
 
-      toast({ title: "התשלום עבר בהצלחה, ההקדשה מאושרת" });
+      toast({
+        title: "התשלום עבר בהצלחה 🙏",
+        description: "ההקדשה תופיע באתר תוך רגעים ספורים",
+      });
+      queryClient.invalidateQueries({ queryKey: ["lesson-dedications"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-dedications"] });
       setOpen(false);
       resetForm();
-      void created;
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : undefined;
       toast({
         title: "התשלום לא הושלם",
-        description: err?.message || "ההקדשה נשמרה כממתינה — נסו שוב או צרו קשר",
+        description: message || "אפשר לנסות שוב, או לפנות אלינו דרך יצירת קשר",
         variant: "destructive",
       });
     }
@@ -167,20 +168,22 @@ export default function DedicationDialog({
       }}
     >
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
+        <Button variant="outline" size={triggerSize} className="gap-2">
           <Heart className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
-          הקדש שיעור
+          {triggerLabel || defaultTrigger}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto" dir="rtl">
         <DialogHeader>
-          <DialogTitle className="font-heading text-xl">הקדשת שיעור</DialogTitle>
-          <DialogDescription>{lessonTitle}</DialogDescription>
+          <DialogTitle className="font-heading text-xl">
+            {scope === "series" ? "הקדשת סדרה" : "הקדשת שיעור"}
+          </DialogTitle>
+          <DialogDescription>{targetTitle}</DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 mt-2">
           {/* Scope: lesson vs whole series */}
-          {canChooseSeries && (
+          {canChooseScope && (
             <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="מה להקדיש">
               <button
                 type="button"
@@ -217,8 +220,8 @@ export default function DedicationDialog({
             </div>
           )}
 
-          {/* Dedication type */}
-          <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="סוג ההקדשה">
+          {/* Dedication type — 4 סוגים, נוסח קצר בלבד */}
+          <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="סוג ההקדשה">
             {TYPES.map((t) => (
               <button
                 key={t.value}
@@ -260,22 +263,10 @@ export default function DedicationDialog({
             />
           </div>
 
-          <div>
-            <Label htmlFor="ded-message">הודעה אישית (רשות)</Label>
-            <Textarea
-              id="ded-message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="תוכן ההקדשה..."
-              rows={2}
-              className="mt-1"
-            />
-          </div>
-
           {/* Live preview — single source with the badge that shows on the lesson */}
           <DedicationPreview
             variant="preview"
-            data={{ dedication_type: type, dedicated_name: name, dedicator_name: dedicator, message }}
+            data={{ dedication_type: type, dedicated_name: name, dedicator_name: dedicator }}
           />
 
           <div className="h-px bg-border" />

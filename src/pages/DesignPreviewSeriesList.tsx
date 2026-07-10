@@ -140,7 +140,7 @@ export default function DesignPreviewSeriesList() {
           background: colors.parchment,
           padding: "1rem 1.5rem 0",
           position: "sticky",
-          top: 96,
+          top: "var(--bz-header-h, 96px)",
           zIndex: 10,
           borderBottom: `1px solid rgba(139,111,71,0.1)`,
         }}

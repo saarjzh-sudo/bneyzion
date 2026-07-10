@@ -186,7 +186,8 @@ export default function WeeklyProgramLibrary() {
   const navigate = useNavigate();
 
   // Redirect to the current book when one is marked is_current=true.
-  // Admin still sees the full library (to switch books via the toggle).
+  // (סער 10.7) גם אדמין מופנה ישר לפרק — "ספריית הספרים" לא נחוצה כעמוד ביניים;
+  // החלפת ספרים נעשית מה-BookSwitcher והאקורדיון בדף הספר עצמו.
   // WeeklyCourse.is_current is boolean|null after the regen.
   // קוהורט איכה בלבד → הספר "הנוכחי" שלו הוא איכה (ימי שני), לא ספר ימי-רביעי.
   const eichaOnly = eichaAccess && !hasProgramAccess;
@@ -194,7 +195,7 @@ export default function WeeklyProgramLibrary() {
     return <Navigate to="/course/book-lamentations" replace />;
   }
   const currentBook = books.find((b) => b.is_current === true);
-  if (!isLoading && currentBook && !isAdmin) {
+  if (!isLoading && currentBook) {
     return <Navigate to={`/course/${currentBook.program_slug}`} replace />;
   }
 

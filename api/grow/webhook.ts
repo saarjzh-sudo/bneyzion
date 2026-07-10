@@ -196,25 +196,39 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       txData.invoiceUrl || txData.invoice_url || txData.documentUrl || null;
     const invoiceId = txData.invoiceId || txData.invoice_id || txData.documentId || null;
 
-    // Update the row with all transaction details + receipt links
-    const updateRow: Record<string, any> = {
-      payment_status: statusCode === "2" ? "completed" : "failed",
-      payment_method: txData.cardBrand || "credit",
-      payment_id: String(transactionId),
-      transaction_type_id: txData.transactionTypeId
-        ? Number(txData.transactionTypeId)
-        : null,
-      asmachta: txData.asmachta || null,
-      card_suffix: txData.cardSuffix || null,
-      raw_payload: mergedPayload,
-      invoice_number: invoiceNumber,
-      invoice_url: invoiceUrl,
-      invoice_id: invoiceId,
-    };
-    // `orders` has a `status` column that Lovable used for fulfilment
-    // tracking — flip it on success so old admin views keep working.
-    if (targetTable === "orders") {
-      updateRow.status = statusCode === "2" ? "confirmed" : "payment_failed";
+    // Update the row with all transaction details + receipt links.
+    // lesson_dedications has a different (narrower) column set than
+    // orders/donations — build its update separately, or the generic
+    // payment_status/payment_method columns would fail with "column not found".
+    let updateRow: Record<string, any>;
+    if (targetTable === "lesson_dedications") {
+      updateRow = {
+        // active רק על חיוב מוצלח — לעולם לא ממציאים הקדשה פעילה על כשל
+        status: statusCode === "2" ? "active" : "pending",
+        asmachta: txData.asmachta ? String(txData.asmachta) : null,
+        paid_at: statusCode === "2" ? new Date().toISOString() : null,
+        raw_payload: mergedPayload,
+      };
+    } else {
+      updateRow = {
+        payment_status: statusCode === "2" ? "completed" : "failed",
+        payment_method: txData.cardBrand || "credit",
+        payment_id: String(transactionId),
+        transaction_type_id: txData.transactionTypeId
+          ? Number(txData.transactionTypeId)
+          : null,
+        asmachta: txData.asmachta || null,
+        card_suffix: txData.cardSuffix || null,
+        raw_payload: mergedPayload,
+        invoice_number: invoiceNumber,
+        invoice_url: invoiceUrl,
+        invoice_id: invoiceId,
+      };
+      // `orders` has a `status` column that Lovable used for fulfilment
+      // tracking — flip it on success so old admin views keep working.
+      if (targetTable === "orders") {
+        updateRow.status = statusCode === "2" ? "confirmed" : "payment_failed";
+      }
     }
 
     const { error: updateErr } = await supabase
@@ -240,8 +254,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await approveTransaction(txData, productSlug, supabase);
     console.log("[Grow ApproveTransaction] Completed for orderId:", orderId);
 
-    // Post-purchase side effects (only on successful payment)
-    if (statusCode === "2") {
+    // Post-purchase side effects (only on successful payment).
+    // Dedications: no access tags / Smoove — the row flip to 'active' above
+    // is the entire effect, so skip the generic side-effect pass.
+    if (statusCode === "2" && targetTable !== "lesson_dedications") {
       try {
         await runPostPurchaseSideEffects({
           supabase,

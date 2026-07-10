@@ -834,7 +834,7 @@ function FormatFilterBar({
       aria-label="סינון לפי פורמט"
       style={{
         position: "sticky",
-        top: 96, // DesignHeader is sticky with height 96 — stick right below it
+        top: "var(--bz-header-h, 96px)", // נצמד ממש מתחת להדר (96 דסקטופ / 64 נייד)
         zIndex: 5,
         display: "flex",
         alignItems: "center",

@@ -454,7 +454,7 @@ const ParashaPage = () => {
           className="print:hidden"
           style={{
             position: tocSticky ? "sticky" : "relative",
-            top: tocSticky ? 96 : undefined,
+            top: tocSticky ? "var(--bz-header-h, 96px)" : undefined,
             zIndex: 40,
             background: colors.parchmentDark,
             borderBottom: `1px solid rgba(139,111,71,0.18)`,

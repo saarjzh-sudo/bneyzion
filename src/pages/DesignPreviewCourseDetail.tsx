@@ -195,7 +195,7 @@ export default function DesignPreviewCourseDetail() {
       <div dir="rtl" style={{ display: "grid", gridTemplateColumns: "min(280px, 30%) 1fr", minHeight: "calc(100vh - 220px)", background: colors.parchment }} className="course-detail-grid">
 
         {/* ─── Sidebar ──────────────────────────────────────────── */}
-        <aside style={{ background: "white", borderInlineStart: `1px solid rgba(139,111,71,0.1)`, overflowY: "auto", position: "sticky", top: 96, maxHeight: "calc(100vh - 96px)" }}>
+        <aside style={{ background: "white", borderInlineStart: `1px solid rgba(139,111,71,0.1)`, overflowY: "auto", position: "sticky", top: "var(--bz-header-h, 96px)", maxHeight: "calc(100vh - var(--bz-header-h, 96px))" }}>
           {/* Header */}
           <div style={{ padding: "1.1rem 1rem", borderBottom: `1px solid rgba(139,111,71,0.08)`, background: colors.parchment }}>
             <div style={{ fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, color: colors.goldDark, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.15rem" }}>ספר עזרא · {totalChapters} פרקים</div>

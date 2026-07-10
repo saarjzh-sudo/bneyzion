@@ -136,12 +136,13 @@ function MiracleDialog({ miracle, onClose }: { miracle: Miracle; onClose: () => 
   );
 }
 
-export default function DorHaplaot() {
+// DorHaplaotContent = הליבה בלי AdminLayout — מוטמעת גם ב"עריכת תוכן" (/admin/content).
+export function DorHaplaotContent() {
   const { data: miracles, isLoading } = useMiracles();
   const [editing, setEditing] = useState<Miracle | null>(null);
 
   return (
-    <AdminLayout>
+    <>
       <div dir="rtl" className="space-y-6">
         <div>
           <h1 className="text-2xl font-display text-foreground flex items-center gap-2">
@@ -205,6 +206,15 @@ export default function DorHaplaot() {
       </div>
 
       {editing && <MiracleDialog miracle={editing} onClose={() => setEditing(null)} />}
+    </>
+  );
+}
+
+// עמוד עצמאי — /admin/dor-haplaot (העטיפה היחידה שמוסיפה AdminLayout)
+export default function DorHaplaot() {
+  return (
+    <AdminLayout>
+      <DorHaplaotContent />
     </AdminLayout>
   );
 }

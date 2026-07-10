@@ -82,6 +82,8 @@ import {
   formatDuration,
 } from "@/lib/designTokens";
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
+import DedicationDialog from "@/components/lesson/DedicationDialog";
+import DedicationBadge from "@/components/lesson/DedicationBadge";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 import { usePublicBookListing } from "@/hooks/usePublicBookListing";
 import { useLesson } from "@/hooks/useLesson";
@@ -401,6 +403,24 @@ function CompactSeriesHero({
               <span>{totalDuration} סה"כ</span>
             </>
           )}
+        </div>
+
+        {/* (סער 10.7) הקדשת סדרה — זמינה ישירות מדף הסדרה, לא רק מדף שיעור */}
+        <div
+          style={{
+            marginTop: "1.1rem",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.5rem",
+            alignItems: "flex-start",
+          }}
+        >
+          <DedicationDialog seriesId={series.id} seriesTitle={series.title} defaultScope="series" />
+          <div style={{ maxWidth: 420 }}>
+            <div style={{ background: "rgba(255,255,255,0.93)", borderRadius: 12, overflow: "hidden" }}>
+              <DedicationBadge seriesId={series.id} />
+            </div>
+          </div>
         </div>
         </div>
       </div>

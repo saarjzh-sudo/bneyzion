@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, Users as UsersIcon, Crown, UserCheck, UserX, CreditCard, Ban, CheckCircle2, Download, GraduationCap, KeyRound, Plus } from "lucide-react";
+import { Shield, Users as UsersIcon, Crown, UserCheck, UserX, CreditCard, Ban, CheckCircle2, Download, GraduationCap, KeyRound, Plus, AlertTriangle } from "lucide-react";
 import {
   useProfiles, useUserRoles, useAddRole, useRemoveRole, useCommunityMembers,
   useUpdateMemberTier, useUpdateMemberStatus, useAccessTags, useGrantAccessTag, useRevokeAccessTag,
@@ -224,6 +224,21 @@ export default function Users() {
             <Download className="h-3.5 w-3.5" /> ייצוא CSV
           </Button>
         </div>
+
+        {/* אזהרה כנה: טבלת profiles ריקה / חסומה ב-RLS — הפאנל יציג רשימה ריקה.
+            אומת 10.7.2026: ב-DB יש 9 משתמשי auth אך 0 שורות profiles (אין טריגר
+            אכלוס), ומדיניות ה-RLS היחידה היא user_own. נדרש תיקון צד-DB. */}
+        {!isLoading && (profiles?.length ?? 0) === 0 && (
+          <div className="flex items-start gap-3 p-4 rounded-xl border border-amber-200 bg-amber-50">
+            <AlertTriangle className="h-5 w-5 shrink-0 mt-0.5 text-amber-600" />
+            <div className="text-sm text-amber-800 leading-relaxed">
+              <strong>לא נטענו משתמשים.</strong> טבלת <code>profiles</code> ריקה או שהרשאת
+              הקריאה (RLS) חוסמת אדמין. משתמשי ההתחברות קיימים במערכת — אך בלי שורת
+              פרופיל הם לא יופיעו כאן ולא יקבלו התראות "כל המשתמשים". נדרש תיקון בצד
+              בסיס הנתונים (אכלוס profiles + מדיניות קריאה לאדמין).
+            </div>
+          </div>
+        )}
 
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

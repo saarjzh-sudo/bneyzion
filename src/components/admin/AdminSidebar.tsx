@@ -1,9 +1,9 @@
 import {
-  LayoutDashboard, BookOpen, Users2, FolderOpen, Tag,
-  Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
-  BarChart3, Bell, Ticket, CreditCard,
-  UserCheck, Upload, Wallet, CalendarDays, Megaphone,
-  Sparkles, BookMarked, MessageCircle, Heart, SlidersHorizontal,
+  LayoutDashboard, BookOpen, Users2,
+  Shield, Home, ShoppingBag, Mail, GraduationCap,
+  BarChart3, Ticket, CreditCard,
+  UserCheck, Upload, CalendarDays, Megaphone,
+  MessageCircle, Heart, SlidersHorizontal, HelpCircle,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -46,21 +46,29 @@ const CREATOR: AppRole[] = ["admin", "creator"];
  * "נתונים" ראשון (כולל מכירות), אחריו "תוכן אתר".
  * "הזמנות" הוסר מהניווט — כלול בעמוד "סליקות" (Orders ⊂ Payments).
  * "מיגרציה" + "השוואת תוכן" נשארים route-only לדיבאג (לא בניווט).
+ *
+ * ארגון מחדש 10.7.2026 (הוראת סער):
+ * - "נתוני Monday" הוסר — אוחד לתוך הדשבורד הראשי (/admin).
+ * - "הודעות" + "התראות" אוחדו לכניסה אחת "הודעות והתראות" (/admin/messages).
+ * - "רבנים" → "רבנים ויוצרים" (הפאנל מנהל גם content_creators).
+ * - שיעורים/סדרות/נושאים/דור-הפלאות/תוכן-יומי אוחדו ל"עריכת תוכן" (/admin/content);
+ *   "העלאת תוכן" נשאר נפרד (flow יצירה). הראוטים הישנים חיים (route-only).
+ * - "הגדרות" הוסר — כל ההגדרות (הנצחה + הדפסה) במרכז השליטה; /admin/settings מפנה לשם.
  */
 const SECTIONS: NavSection[] = [
   {
     label: "נתונים",
     items: [
       { title: "דשבורד",        url: "/admin",               icon: LayoutDashboard, roles: ADMIN, end: true },
-      { title: "נתוני Monday",   url: "/admin/budget",        icon: Wallet,      roles: ADMIN },
       { title: "מנויים",        url: "/admin/subscribers",   icon: UserCheck,   roles: ADMIN },
       { title: "סליקות",        url: "/admin/payments",      icon: CreditCard,  roles: ADMIN },
       { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },
       { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
       { title: "משתמשים",       url: "/admin/users",         icon: Shield,      roles: ADMIN },
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
-      { title: "הודעות",        url: "/admin/messages",      icon: Mail,        roles: ADMIN },
-      { title: "התראות",        url: "/admin/notifications", icon: Bell,        roles: ADMIN },
+      { title: "הודעות והתראות", url: "/admin/messages",     icon: Mail,        roles: ADMIN },
+      // רמה 14 (סער 10.7): שאלות ותשובות — "שאל את הרב" באתר → תור מסודר כאן
+      { title: "שאל את הרב",    url: "/admin/questions",     icon: HelpCircle,  roles: ADMIN },
       { title: "שיחות בנצי",    url: "/admin/benzi-conversations", icon: MessageCircle, roles: ADMIN },
     ],
   },
@@ -68,22 +76,17 @@ const SECTIONS: NavSection[] = [
     label: "תוכן אתר",
     items: [
       { title: "העלאת תוכן",     url: "/admin/upload",            icon: Upload,        roles: CREATOR },
-      { title: "שיעורים",        url: "/admin/lessons",           icon: BookOpen,      roles: CREATOR },
-      { title: "סדרות",          url: "/admin/series",            icon: FolderOpen,    roles: CREATOR },
-      { title: "רבנים",          url: "/admin/rabbis",            icon: Users2,        roles: CREATOR },
-      { title: "נושאים",         url: "/admin/topics",            icon: Tag,           roles: CREATOR },
+      { title: "עריכת תוכן",     url: "/admin/content",           icon: BookOpen,      roles: CREATOR },
+      { title: "רבנים ויוצרים",  url: "/admin/rabbis",            icon: Users2,        roles: CREATOR },
       { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap, roles: CREATOR },
       { title: "מוצרים",         url: "/admin/products",          icon: ShoppingBag,   roles: ADMIN },
       { title: "כנסים",          url: "/admin/kenes",             icon: CalendarDays,  roles: ADMIN },
       { title: "באנרים ופופאפים", url: "/admin/promos",           icon: Megaphone,     roles: ADMIN },
-      { title: "דור הפלאות",     url: "/admin/dor-haplaot",       icon: Sparkles,      roles: CREATOR },
-      { title: "תוכן יומי",      url: "/admin/daily",             icon: BookMarked,    roles: CREATOR },
       // "דף הבית" (/admin/homepage) הוסר מהניווט 8.7.2026 — מסך מיותר: כתב
       // site_settings.homepage_config שדף הבית החי (DesignPreviewHome) לא קורא כלל.
       // ניהול הבאנרים/פופאפים עבר ל"באנרים ופופאפים" (/admin/promos). הראוט נשאר route-only.
       // רמה 13: מרכז שליטה — עריכת נוסחי-האתר (הרב יואב: "עדיף מאשר שאשלח פניות")
       { title: "מרכז שליטה",    url: "/admin/control-center",    icon: SlidersHorizontal, roles: ADMIN },
-      { title: "הגדרות",        url: "/admin/settings",          icon: Settings,      roles: ADMIN },
     ],
   },
 ];

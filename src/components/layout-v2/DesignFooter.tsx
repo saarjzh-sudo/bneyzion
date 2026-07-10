@@ -10,7 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Flame, Mail, Smartphone, Heart } from "lucide-react";
 
 import logoBright from "@/assets/logo-horizontal-bright.png";
-import { colors, fonts, gradients } from "@/lib/designTokens";
+import { colors, fonts } from "@/lib/designTokens";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -75,13 +75,6 @@ const COLUMNS: { title: string; links: { label: string; href: string; flame?: bo
       { label: "לזכר סעדיה הי״ד", href: "/memorial/saadia", flame: true },
     ],
   },
-];
-
-const STATS = [
-  { value: "11,000+", label: "שיעורים" },
-  { value: "200+", label: "רבנים" },
-  { value: "1,300+", label: "סדרות" },
-  { value: "24/7", label: "גישה חופשית" },
 ];
 
 // Links hidden in the teachers-wing context (not relevant to educators flow)
@@ -325,49 +318,6 @@ export default function DesignFooter() {
           ))}
         </div>
 
-        {/* Stats bar */}
-        <div
-          className="footer-stats"
-          style={{
-            borderTop: "1px solid rgba(232,213,160,0.08)",
-            padding: "1.5rem 0",
-            display: "flex",
-            justifyContent: "center",
-            gap: "2rem",
-            flexWrap: "wrap",
-          }}
-        >
-          {STATS.map((stat) => (
-            <div key={stat.label} style={{ textAlign: "center" }}>
-              <div
-                style={{
-                  fontFamily: fonts.display,
-                  fontWeight: 800,
-                  fontSize: "1.4rem",
-                  background: gradients.goldText,
-                  backgroundSize: "300% 300%",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  marginBottom: "0.15rem",
-                }}
-                className="animate-shimmer"
-              >
-                {stat.value}
-              </div>
-              <div
-                style={{
-                  fontFamily: fonts.body,
-                  fontSize: "0.72rem",
-                  color: "rgba(255,255,255,0.45)",
-                  letterSpacing: "0.05em",
-                }}
-              >
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
         {/* Legal address + links — required for Grow/Meshulam audit: visible in rendered DOM */}
         <div
           style={{
@@ -427,13 +377,26 @@ export default function DesignFooter() {
           }}
         >
           <span>© {new Date().getFullYear()} בני ציון — כל הזכויות שמורות</span>
-          <span>
-            נבנה ב<Heart style={{ width: 10, height: 10, display: "inline", color: colors.goldShimmer, margin: "0 0.25rem" }} />ע״י{" "}
+          <span
+            style={{
+              fontSize: "0.85rem",
+              color: "rgba(255,255,255,0.72)",
+              display: "inline-flex",
+              alignItems: "center",
+            }}
+          >
+            נבנה ב<Heart style={{ width: 12, height: 12, display: "inline", color: colors.goldShimmer, margin: "0 0.3rem", fill: colors.goldShimmer }} />ע״י{" "}
             <a
               href="https://wa.me/972526018772"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: "rgba(232,213,160,0.7)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              style={{
+                color: colors.goldShimmer,
+                fontWeight: 700,
+                textDecoration: "underline",
+                textUnderlineOffset: 3,
+                marginRight: "0.3rem",
+              }}
             >
               סער חלק
             </a>
@@ -448,17 +411,10 @@ export default function DesignFooter() {
             grid-template-columns: 1fr 1fr !important;
             gap: 1.5rem !important;
           }
-          .footer-stats {
-            gap: 1.25rem !important;
-          }
         }
         @media (max-width: 480px) {
           .footer-grid {
             grid-template-columns: 1fr !important;
-          }
-          .footer-stats {
-            gap: 1rem !important;
-            justify-content: space-around !important;
           }
         }
       `}</style>

@@ -1165,6 +1165,38 @@ function ContentTree({
           </div>
         );
       })()}
+
+      {/* (סער 10.7) שאל את הרב — קבוע בתחתית הסיידבר הראשי */}
+      <div
+        style={{
+          marginTop: "0.6rem",
+          paddingTop: "0.6rem",
+          borderTop: `1px solid rgba(139,111,71,0.12)`,
+        }}
+      >
+        <button
+          onClick={() => onNavigate("/ask-rabbi")}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.55rem 0.6rem",
+            borderRadius: radii.sm,
+            border: "none",
+            background: "rgba(139,111,71,0.06)",
+            color: colors.goldDark,
+            fontFamily: fonts.body,
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            cursor: "pointer",
+            textAlign: "right",
+          }}
+        >
+          <span>שאל את הרב</span>
+          <ChevronRight size={13} />
+        </button>
+      </div>
     </div>
   );
 }

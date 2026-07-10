@@ -71,10 +71,57 @@ export function OnboardingBot({
   );
   const [isOpen, setIsOpen] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
+  const [footerVisible, setFooterVisible] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const wasOpenRef = useRef(false);
 
   const isDisabled = disabledOnRoutes.some((r) => location.pathname.startsWith(r));
+
+  // (סער 10.7) בנצי מכסה את הפוטר בנייד — כשהפוטר נראה על המסך, הכפתור מתקפל
+  // החוצה (רק כשהצ'אט סגור). IntersectionObserver על כל אלמנטי ה-footer בדף.
+  // הדפים נטענים lazy (Suspense) — הפוטר לרוב עוד לא ב-DOM כשה-effect רץ,
+  // לכן מנסים שוב במרווחים קצרים עד שהוא מופיע.
+  useEffect(() => {
+    if (isDisabled) return;
+    if (typeof IntersectionObserver === "undefined") return;
+    let obs: IntersectionObserver | null = null;
+    let retryTimer: ReturnType<typeof setInterval> | null = null;
+    let attempts = 0;
+    const visible = new Set<Element>();
+
+    const attach = () => {
+      const footers = document.querySelectorAll("footer");
+      if (!footers.length) return false;
+      obs = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) visible.add(entry.target);
+            else visible.delete(entry.target);
+          }
+          setFooterVisible(visible.size > 0);
+        },
+        { threshold: 0.05 }
+      );
+      footers.forEach((f) => obs!.observe(f));
+      return true;
+    };
+
+    if (!attach()) {
+      retryTimer = setInterval(() => {
+        attempts += 1;
+        if (attach() || attempts > 25) {
+          if (retryTimer) clearInterval(retryTimer);
+          retryTimer = null;
+        }
+      }, 400);
+    }
+
+    return () => {
+      if (retryTimer) clearInterval(retryTimer);
+      obs?.disconnect();
+      setFooterVisible(false);
+    };
+  }, [isDisabled, location.pathname]);
 
   // Accessibility — return focus to the launcher button when the panel closes.
   useEffect(() => {
@@ -146,7 +193,13 @@ export function OnboardingBot({
 
   return (
     <>
-      <BotButton ref={buttonRef} isOpen={isOpen} onClick={toggleOpen} hasUnread={hasUnread} />
+      <BotButton
+        ref={buttonRef}
+        isOpen={isOpen}
+        onClick={toggleOpen}
+        hasUnread={hasUnread}
+        hidden={footerVisible && !isOpen}
+      />
       <BotPanel
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

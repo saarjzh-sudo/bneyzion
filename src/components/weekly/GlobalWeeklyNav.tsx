@@ -39,8 +39,12 @@ export function GlobalWeeklyNav({ currentSlug, activeNav, onNavSelect, accent }:
   const navigate = useNavigate();
   const { data: books = [] } = useWeeklyBooks();
 
-  // Which book accordion is open. Start with the current book.
-  const [expandedSlug, setExpandedSlug] = useState<string>(currentSlug);
+  // Which book accordion is open. Start with the current book on desktop;
+  // (סער 10.7) בנייד האקורדיון נפתח סגור — הרשימה יושבת מתחת לתוכן ולא
+  // דוחפת את הפרק למטה.
+  const [expandedSlug, setExpandedSlug] = useState<string>(() =>
+    typeof window !== "undefined" && window.innerWidth < 768 ? "" : currentSlug
+  );
 
   function toggleBook(slug: string) {
     const willOpen = expandedSlug !== slug;
@@ -58,8 +62,8 @@ export function GlobalWeeklyNav({ currentSlug, activeNav, onNavSelect, accent }:
         borderInlineStart: `1px solid rgba(139,111,71,0.08)`,
         overflowY: "auto",
         position: "sticky",
-        top: 96,
-        maxHeight: "calc(100vh - 96px)",
+        top: "var(--bz-header-h, 96px)",
+        maxHeight: "calc(100vh - var(--bz-header-h, 96px))",
         // Mobile: when grid collapses to 1 col this becomes block-level
         // and the sticky/maxHeight still allow it to scroll if content is tall
       }}

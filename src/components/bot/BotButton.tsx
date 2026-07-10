@@ -28,10 +28,15 @@ interface Props {
   isOpen: boolean;
   onClick: () => void;
   hasUnread?: boolean;
+  /** (סער 10.7) true כשהפוטר נראה — הכפתור מתקפל כדי לא לכסות אותו (בעיקר בנייד) */
+  hidden?: boolean;
 }
 
+// מעבר עדין של קיפול-החוצה כשהפוטר נגלל לתצוגה
+const HIDE_CLASSES = "opacity-0 invisible pointer-events-none translate-y-3";
+
 export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton(
-  { isOpen, onClick, hasUnread = false },
+  { isOpen, onClick, hasUnread = false, hidden = false },
   ref
 ) {
   const [avatarFailed, setAvatarFailed] = useState(false);
@@ -79,8 +84,10 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
         className={cn(
           "fixed left-2 md:left-3 z-[100]",
           "bottom-[calc(4rem+env(safe-area-inset-bottom,0px)+0.5rem)] md:bottom-4",
-          "block"
+          "block transition-all duration-300",
+          hidden && HIDE_CLASSES
         )}
+        aria-hidden={hidden || undefined}
       >
         <button
           ref={ref}
@@ -137,8 +144,10 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
       className={cn(
         "fixed left-4 md:left-6 z-[100]",
         "bottom-[calc(4rem+env(safe-area-inset-bottom,0px)+0.75rem)] md:bottom-6",
-        "block"
+        "block transition-all duration-300",
+        hidden && HIDE_CLASSES
       )}
+      aria-hidden={hidden || undefined}
     >
     <button
       ref={ref}

@@ -57,19 +57,19 @@ function useApproveSeries() {
       note?: string;
       reviewerId: string;
     }) => {
+      // 🐛 תוקן 10.7.2026: לטבלת series אין עמודת updated_at (אומת מול
+      // information_schema) — שליחתה גרמה ל-PGRST204 וכל אישור/החזרה נכשל.
       const updates: Record<string, unknown> =
         action === "approve"
           ? {
               status:      "active",
               reviewed_by: reviewerId,
               published_at: new Date().toISOString(),
-              updated_at:  new Date().toISOString(),
             }
           : {
               status:      "draft",
               reviewed_by: reviewerId,
               review_note: note ?? null,
-              updated_at:  new Date().toISOString(),
             };
       const { error } = await supabase.from("series").update(updates as any).eq("id", id);
       if (error) throw error;
@@ -147,7 +147,8 @@ type AudienceFilter = AdminAudienceFilter;
 
 type SeriesTab = AdminSeriesTab;
 
-export default function SeriesPage() {
+// SeriesContent = הליבה בלי AdminLayout — מוטמעת גם ב"עריכת תוכן" (/admin/content).
+export function SeriesContent() {
   const { user, isAdmin } = useAuth();
   const { data: rabbis } = useRabbis();
   const createSeries = useCreateSeries();
@@ -319,7 +320,6 @@ export default function SeriesPage() {
   const teachersCount = counts?.teachers ?? 0;
 
   return (
-    <AdminLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -661,6 +661,14 @@ export default function SeriesPage() {
           </CardContent>
         </Card>
       </div>
+  );
+}
+
+// עמוד עצמאי — /admin/series (העטיפה היחידה שמוסיפה AdminLayout)
+export default function SeriesPage() {
+  return (
+    <AdminLayout>
+      <SeriesContent />
     </AdminLayout>
   );
 }

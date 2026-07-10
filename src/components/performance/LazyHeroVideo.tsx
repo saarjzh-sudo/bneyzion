@@ -103,7 +103,8 @@ const LazyHeroVideo = ({ videoSrc, poster, posterAlt, className, style, mediaSty
         src={poster}
         alt={posterAlt}
         decoding="async"
-        fetchPriority="high"
+        // React 18 לא מכיר fetchPriority (camelCase) — מוזרם lowercase ישירות ל-DOM
+        {...({ fetchpriority: "high" } as Record<string, string>)}
         style={{ ...fill, ...mediaStyle }}
       />
       {showVideo && (

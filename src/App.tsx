@@ -97,6 +97,7 @@ const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
 const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const ControlCenter = lazy(() => import("./pages/admin/ControlCenter"));
+const ContentWorkspace = lazy(() => import("./pages/admin/ContentWorkspace"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
 const DesignPreviewLesson = lazy(() => import("./pages/DesignPreviewLesson"));
 const DesignPreviewLayout = lazy(() => import("./pages/DesignPreviewLayout"));
@@ -146,6 +147,9 @@ const KenesMilhamotHatanach = lazy(() => import("./pages/KenesMilhamotHatanach")
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
 const WeeklyProgramLibrary = lazy(() => import("./pages/WeeklyProgramLibrary"));
 const WeeklyBookDetail = lazy(() => import("./pages/WeeklyBookDetail"));
+// (סער 10.7) שאל את הרב — שו"ת באתר: טופס → תור אדמין → תשובה מתפרסמת
+const AskRabbiPage = lazy(() => import("./pages/AskRabbiPage"));
+const AdminQuestions = lazy(() => import("./pages/admin/Questions"));
 
 /** Redirect /design-teachers-series/:id → /teachers/series/:id (client-side fallback) */
 function SandboxSeriesRedirect() {
@@ -358,6 +362,7 @@ const App = () => (
             <Route path="/memorial" element={<Suspense fallback={<LazyFallback />}><Memorial /></Suspense>} />
             <Route path="/memorial/saadia" element={<Suspense fallback={<LazyFallback />}><MemorialSaadia /></Suspense>} />
             <Route path="/contact" element={<Suspense fallback={<LazyFallback />}><Contact /></Suspense>} />
+            <Route path="/ask-rabbi" element={<Suspense fallback={<LazyFallback />}><AskRabbiPage /></Suspense>} />
             {/* ROLLOUT T05 (2.7.2026): דף התרומות החדש חי ב-/donate. הישן נשמר ב-Donate.tsx — החזרה = החלפת הקומפוננטה. */}
             <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
@@ -404,6 +409,7 @@ const App = () => (
             <Route path="/admin/coupons" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
             <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Analytics /></Suspense></ProtectedRoute>} />
             <Route path="/admin/messages" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/questions" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminQuestions /></Suspense></ProtectedRoute>} />
             <Route path="/admin/notifications" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminNotifications /></Suspense></ProtectedRoute>} />
             <Route path="/admin/homepage" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><HomepageManager /></Suspense></ProtectedRoute>} />
             {/* רמה 13: מרכז שליטה — עריכת נוסחים/תמונות מהמרשם (siteCopyRegistry) */}
@@ -413,6 +419,7 @@ const App = () => (
             <Route path="/admin/content-compare" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ContentCompare /></Suspense></ProtectedRoute>} />
             {/* Content routes — admin + creator */}
             <Route path="/admin/lessons" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Lessons /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/content" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><ContentWorkspace /></Suspense></ProtectedRoute>} />
             <Route path="/admin/rabbis" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Rabbis /></Suspense></ProtectedRoute>} />
             <Route path="/admin/series" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><SeriesPage /></Suspense></ProtectedRoute>} />
             <Route path="/admin/topics" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><Topics /></Suspense></ProtectedRoute>} />
