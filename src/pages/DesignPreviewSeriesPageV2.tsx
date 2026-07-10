@@ -43,7 +43,7 @@
  *   - /design-series-page-v2  →  35781f30... (איכה — has 9 children sub-series)
  *   - /design-series-page-v2/41b62e31-0643-4368-b8ff-04dc25dc2603  →  שיר השירים (18L, no children)
  */
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, useSearchParams, Link, Navigate } from "react-router-dom";
 import { useSEO } from "@/hooks/useSEO";
 import {
@@ -65,7 +65,9 @@ import {
   LayoutGrid,
   List,
   FileText,
+  Headphones,
 } from "lucide-react";
+import { usePlayer, saveLocalPosition } from "@/contexts/PlayerContext";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { sanitizeHtml } from "@/lib/sanitize";
@@ -1423,17 +1425,45 @@ function LessonModal({
   const shareText = `${lesson.title}${lesson.rabbis?.name ? ` - ${lesson.rabbis.name}` : ""}`;
   const mediaType = getLessonMediaType(lesson);
 
+  // ── (משימה 4 של סער) נגן צף — העברת האודיו מהמודל לנגן הגלובלי ──
+  // המודל מנגן <audio> מקומי שנקטע בסגירה; ההעברה שומרת את המיקום (playTrack
+  // מחדש ממנו) ומדליקה את ה-FloatingPlayer, כך שההאזנה שורדת ניווט באתר.
+  const { play: playFloating } = usePlayer();
+  const inlineAudioState = useRef({ time: 0, dur: 0, playing: false });
+
+  const handoffToFloatingPlayer = useCallback(() => {
+    const { time, dur } = inlineAudioState.current;
+    if (time > 3) saveLocalPosition(lesson.id, time, dur);
+    playFloating({
+      id: lesson.id,
+      title: lesson.title,
+      audioUrl: lesson.audio_url,
+      rabbiName: lesson.rabbis?.name || undefined,
+      seriesTitle: seriesTitle || undefined,
+      duration: lesson.duration ?? null,
+      thumbnailUrl: lesson.thumbnail_url ?? null,
+    });
+  }, [lesson, playFloating, seriesTitle]);
+
+  // סגירה עם המשך-האזנה: אם האודיו של המודל מתנגן — ממשיכים בנגן הצף
+  const handleClose = useCallback(() => {
+    if (lesson.audio_url && inlineAudioState.current.playing) {
+      handoffToFloatingPlayer();
+    }
+    onClose();
+  }, [lesson.audio_url, handoffToFloatingPlayer, onClose]);
+
   // Other lessons (max 6)
   const moreLessons = allLessons.filter((l) => l.id !== lesson.id).slice(0, 6);
 
   // Close on Escape
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [onClose]);
+  }, [handleClose]);
 
   // Lock body scroll
   useEffect(() => {
@@ -1523,7 +1553,7 @@ function LessonModal({
     <>
       {/* Backdrop */}
       <div
-        onClick={onClose}
+        onClick={handleClose}
         style={{
           position: "fixed",
           inset: 0,
@@ -1600,7 +1630,7 @@ function LessonModal({
 
           {/* Close — top-left (RTL = physical left) */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="סגור"
             style={{
               position: "absolute",
@@ -1916,7 +1946,39 @@ function LessonModal({
                 src={lesson.audio_url}
                 style={{ width: "100%", height: 36 }}
                 preload="metadata"
+                onTimeUpdate={(e) => {
+                  const el = e.currentTarget;
+                  inlineAudioState.current.time = el.currentTime;
+                  inlineAudioState.current.dur = el.duration || 0;
+                }}
+                onPlay={() => { inlineAudioState.current.playing = true; }}
+                onPause={() => { inlineAudioState.current.playing = false; }}
               />
+              {/* (משימה 4) העברה מפורשת לנגן הצף — האזנה ממשיכה תוך כדי גלישה */}
+              <button
+                type="button"
+                onClick={() => { handoffToFloatingPlayer(); onClose(); }}
+                title="ההאזנה ממשיכה בנגן צף בתחתית המסך"
+                style={{
+                  flexShrink: 0,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.35rem",
+                  padding: "0.45rem 0.9rem",
+                  borderRadius: radii.pill,
+                  border: `1px solid ${colors.goldDark}`,
+                  background: "transparent",
+                  color: colors.goldDark,
+                  fontFamily: fonts.body,
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <Headphones style={{ width: 14, height: 14 }} />
+                האזנה ברקע
+              </button>
             </div>
           ) : null}
 

@@ -75,7 +75,10 @@ async function loadProgress(trackId: string): Promise<number> {
 const POSITION_PREFIX = "bneyzion_position_";
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
-function saveLocalPosition(trackId: string, position: number, dur: number) {
+// exported: LessonModal (series page) hands playback off to the floating player
+// by saving the inline <audio> position here before calling play() — playTrack
+// then auto-resumes from it.
+export function saveLocalPosition(trackId: string, position: number, dur: number) {
   try {
     localStorage.setItem(`${POSITION_PREFIX}${trackId}`, JSON.stringify({
       position,
