@@ -89,33 +89,70 @@ def only_allowed_tags(html_src: str) -> bool:
 # ─── Gemini ──────────────────────────────────────────────────────────────────
 
 SYSTEM = """אתה עורך-עיצוב של מאמרי תורה באתר "בני ציון". תקבל גוף-מאמר בעברית, שטוח (בלי הדגשות).
-תפקידך: העשרת-הדגשות בלבד — עיטוף קטעי טקסט קיימים בתגיות.
+תפקידך: לבחור אילו קטעים ראויים להדגשה. אתה לא כותב ולא משנה טקסט — רק בוחר.
 
-חוקים מוחלטים:
-1. אסור לשנות, להוסיף, למחוק או לנסח מחדש אף מילה. כל תו בטקסט נשאר בדיוק כפי שהוא — אתה רק עוטף.
-2. מותר אך ורק: לעטוף פסוקים וציטוטים ב-<em>, ולעטוף ביטויי-מפתח ורעיונות מרכזיים ב-<strong>.
-3. אין להשתמש בשום תגית אחרת ואין להוסיף שום טקסט חדש — בלי כותרות, בלי class, בלי style.
-4. במידה: 3-10 הדגשות <strong> למאמר, קצרות (עד ~8 מילים כל אחת). פסוקים מודגשים ב-<em> לפי הצורך.
-5. החזר את ה-HTML בלבד — בלי הסברים, בלי גדרות-קוד."""
+החזר JSON בלבד במבנה:
+{"strong": ["ביטוי מדויק מהמאמר", ...], "em": ["פסוק או ציטוט מדויק מהמאמר", ...]}
 
+חוקים:
+1. כל ביטוי חייב להיות העתק מדויק, אות-באות כולל ניקוד וסימני פיסוק, של קטע רציף מהמאמר.
+2. strong = 3-10 ביטויי-מפתח ורעיונות מרכזיים, קצרים (2-10 מילים).
+3. em = פסוקים וציטוטים (אם יש), כפי שהם מופיעים במאמר, בלי המירכאות העוטפות.
+4. אל תבחר קטע שכבר נמצא בתוך תגית HTML.
+5. JSON בלבד — בלי הסברים."""
 
-def enrich_one(content: str) -> str | None:
+# עיטוף דטרמיניסטי: המודל רק בוחר ביטויים; פייתון עוטף אותם במקור —
+# הטקסט פיזית לא יכול להשתנות. (הגרסה הקודמת ביקשה מהמודל HTML מלא —
+# 48% נפסלו על שכתוב/תגיות-מקור; ראה checkpoint מהפיילוט.)
+
+def pick_highlights(content: str) -> dict:
     body = {
         "systemInstruction": {"parts": [{"text": SYSTEM}]},
         "contents": [{"role": "user", "parts": [{"text": content}]}],
-        "generationConfig": {"temperature": 0.2, "maxOutputTokens": 16384},
+        "generationConfig": {
+            "temperature": 0.2,
+            "maxOutputTokens": 2048,
+            "responseMimeType": "application/json",
+            "thinkingConfig": {"thinkingBudget": 0},
+        },
     }
     req = urllib.request.Request(
-        f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
         data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json", "X-goog-api-key": GEMINI_KEY},
         method="POST",
     )
-    with _OPENER.open(req, timeout=180) as r:
+    with _OPENER.open(req, timeout=120) as r:
         resp = json.load(r)
     out = resp["candidates"][0]["content"]["parts"][0]["text"].strip()
-    out = re.sub(r"^```(?:html)?\s*|\s*```$", "", out).strip()
-    return out or None
+    return json.loads(out)
+
+
+def apply_highlights(content: str, picks: dict) -> tuple[str, int, int]:
+    """עוטף ביטויים נבחרים בתוך מקטעי-הטקסט בלבד (לא בתוך תגיות קיימות)."""
+    # פיצול לתגיות/טקסט — עוטפים רק בתוך טקסט
+    parts = re.split(r"(<[^>]+>)", content)
+    n_strong = n_em = 0
+
+    def wrap_in_text(span: str, tag: str) -> bool:
+        nonlocal parts
+        for i, seg in enumerate(parts):
+            if seg.startswith("<"):
+                continue
+            idx = seg.find(span)
+            if idx >= 0:
+                parts[i] = seg[:idx] + f"<{tag}>" + span + f"</{tag}>" + seg[idx + len(span):]
+                return True
+        return False
+
+    # הארוכים קודם — מונע עיטוף-חלקי של ביטוי שמוכל באחר
+    for span in sorted(set(picks.get("em") or []), key=len, reverse=True):
+        if isinstance(span, str) and 3 <= len(span) <= 400 and wrap_in_text(span, "em"):
+            n_em += 1
+    for span in sorted(set(picks.get("strong") or []), key=len, reverse=True):
+        if isinstance(span, str) and 3 <= len(span) <= 120 and wrap_in_text(span, "strong"):
+            n_strong += 1
+    return "".join(parts), n_strong, n_em
 
 
 def report(rec):
@@ -128,22 +165,14 @@ def report(rec):
 def process(lesson, stats):
     lid, title, content = lesson["id"], lesson["title"], lesson["content"]
     try:
-        enriched = enrich_one(content)
-        if not enriched:
-            raise ValueError("empty model output")
-        # שער 1: רק תגיות מותרות
-        if not only_allowed_tags(enriched):
-            raise ValueError("disallowed tags")
-        # שער 2: הטקסט זהה אות-באות (בלי רווחים)
-        if strip_to_text(enriched) != strip_to_text(content):
-            raise ValueError("text changed")
-        # שער 3: יש העשרה בפועל ובמידה
-        n_strong = len(re.findall(r"<strong[ >]", enriched, re.I))
-        n_em = len(re.findall(r"<em[ >]", enriched, re.I))
+        picks = pick_highlights(content)
+        enriched, n_strong, n_em = apply_highlights(content, picks)
+        # שער 1: יש העשרה בפועל
         if n_strong + n_em == 0:
-            raise ValueError("no enrichment produced")
-        if n_strong > 25:
-            raise ValueError(f"too many highlights ({n_strong})")
+            raise ValueError("no spans matched verbatim")
+        # שער 2 (רשת-ביטחון): הטקסט-ללא-תגיות זהה — חייב להתקיים בבנייה
+        if strip_to_text(enriched) != strip_to_text(content):
+            raise ValueError("text changed (bug!)")
         sb(f"lessons?id=eq.{lid}&select=id", "PATCH", {"content": enriched},
            prefer="return=minimal")
         with _LOCK:
