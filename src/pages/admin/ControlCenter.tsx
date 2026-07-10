@@ -14,7 +14,8 @@
  * דטרמיניסטי, בלי LLM. שכבת בקשה-חופשית-ב-AI תתווסף כשסער יקבע רמת הרשאה.
  */
 import { useMemo, useState } from "react";
-import { Search, RotateCcw, Save, Lock, CheckCircle2 } from "lucide-react";
+import { Search, RotateCcw, Save, Lock, CheckCircle2, Sparkles, Loader2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Input } from "@/components/ui/input";
@@ -130,6 +131,146 @@ function FieldRow({
   );
 }
 
+interface AiSuggestion {
+  key: string | null;
+  label?: string;
+  current?: string;
+  new_value?: string;
+  explanation?: string;
+  sensitive?: boolean;
+}
+
+/**
+ * (אישור סער 10.7) בקשה חופשית — "תשנה את הכותרת של החנות ל..." —
+ * edge copy-assistant (אדמין-בלבד, Gemini) מציע שדה+נוסח; ההחלה תמיד ידנית
+ * בכפתור אישור, דרך אותו מסלול RLS של עריכה רגילה. שום apply אוטומטי.
+ */
+function AiRequestBox({
+  overrides,
+  isSuperAdmin,
+}: {
+  overrides: Map<string, string>;
+  isSuperAdmin: boolean;
+}) {
+  const [request, setRequest] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [suggestion, setSuggestion] = useState<AiSuggestion | null>(null);
+  const update = useUpdateSiteSetting();
+
+  const ask = async () => {
+    if (!request.trim() || busy) return;
+    setBusy(true);
+    setSuggestion(null);
+    try {
+      const registry = SITE_COPY_REGISTRY.map((f) => ({
+        key: f.key,
+        label: f.label,
+        group: f.group,
+        hint: f.hint,
+        sensitive: f.sensitive,
+        current: overrides.get(f.key) ?? f.defaultValue,
+      }));
+      const { data, error } = await supabase.functions.invoke("copy-assistant", {
+        body: { message: request.trim(), registry },
+      });
+      if (error) throw error;
+      setSuggestion(data as AiSuggestion);
+    } catch (e: any) {
+      toast.error(`הבקשה נכשלה: ${e.message ?? e}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const canApply =
+    suggestion?.key &&
+    suggestion.new_value &&
+    (!suggestion.sensitive || isSuperAdmin) &&
+    SITE_COPY_REGISTRY.some((f) => f.key === suggestion.key);
+
+  const apply = () => {
+    if (!canApply) return;
+    update.mutate(
+      { key: suggestion!.key!, value: suggestion!.new_value! },
+      {
+        onSuccess: () => {
+          toast.success(`"${suggestion!.label}" עודכן — האתר מציג את הנוסח החדש`);
+          setSuggestion(null);
+          setRequest("");
+        },
+        onError: (e: any) => toast.error(`ההחלה נכשלה: ${e.message ?? e}`),
+      },
+    );
+  };
+
+  return (
+    <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 mb-6">
+      <div className="flex items-center gap-2 mb-2">
+        <Sparkles className="h-4 w-4 text-primary" />
+        <span className="font-semibold text-sm">בקשה חופשית</span>
+        <span className="text-xs text-muted-foreground">
+          — כותבים מה לשנות, מקבלים הצעה, מאשרים ביד
+        </span>
+      </div>
+      <div className="flex gap-2">
+        <Input
+          dir="rtl"
+          placeholder='למשל: "תשנה את כותרת החנות — זה לא רק ספרי תנ״ך"'
+          value={request}
+          onChange={(e) => setRequest(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && ask()}
+          disabled={busy}
+        />
+        <Button onClick={ask} disabled={busy || !request.trim()} className="gap-1 shrink-0">
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+          הצע
+        </Button>
+      </div>
+
+      {suggestion && !suggestion.key && (
+        <p className="text-sm text-muted-foreground mt-3">{suggestion.explanation}</p>
+      )}
+
+      {suggestion?.key && (
+        <div className="mt-3 rounded-lg border border-border bg-card p-3">
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            <Badge variant="outline">{suggestion.label}</Badge>
+            {suggestion.sensitive && (
+              <Badge variant="secondary" className="gap-1 text-[11px]">
+                <Lock className="h-3 w-3" /> רק סער
+              </Badge>
+            )}
+          </div>
+          <div className="grid gap-2 text-sm">
+            <div>
+              <span className="text-xs text-muted-foreground block mb-0.5">לפני:</span>
+              <p className="line-through opacity-60">{suggestion.current}</p>
+            </div>
+            <div>
+              <span className="text-xs text-muted-foreground block mb-0.5">אחרי:</span>
+              <p className="font-medium">{suggestion.new_value}</p>
+            </div>
+            {suggestion.explanation && (
+              <p className="text-xs text-muted-foreground">{suggestion.explanation}</p>
+            )}
+          </div>
+          <div className="flex items-center gap-2 mt-3">
+            <Button size="sm" onClick={apply} disabled={!canApply || update.isPending} className="gap-1">
+              <CheckCircle2 className="h-3.5 w-3.5" /> אישור והחלה
+            </Button>
+            <Button size="sm" variant="outline" onClick={() => setSuggestion(null)}>
+              ביטול
+            </Button>
+            {suggestion.sensitive && !isSuperAdmin && (
+              <span className="text-xs text-muted-foreground">שדה זה נערך רק על ידי סער.</span>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ControlCenter() {
   const { user } = useAuth();
   const isSuperAdmin = SUPER_ADMIN_EMAILS.includes(user?.email ?? "");
@@ -155,6 +296,8 @@ export default function ControlCenter() {
         <p className="text-sm text-muted-foreground mb-5">
           כל שינוי כאן חי באתר מיד אחרי שמירה. "חזרה לנוסח המקורי" מבטלת את השינוי.
         </p>
+
+        <AiRequestBox overrides={overrides} isSuperAdmin={isSuperAdmin} />
 
         <div className="relative mb-6">
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
