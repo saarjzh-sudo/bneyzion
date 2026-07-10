@@ -1,31 +1,27 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, Monitor, FileText } from "lucide-react";
+import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, Monitor, FileText, Flame, Sparkles } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroWatercolorStore from "@/assets/hero-watercolor-store.webp";
 import { useProducts, useProductCategories, type Product } from "@/hooks/useProducts";
+import { getUpcomingHoliday } from "@/lib/holidays";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
 
+// keys = actual product_categories.slug values in the DB
 const categoryIcons: Record<string, any> = {
   courses: Monitor,
   books: BookOpen,
+  "books-digital": FileText,
+  upcoming: Star,
+  membership: ShoppingBag,
+  events: GraduationCap,
   discs: Disc,
-  "digital-books": FileText,
-  "learning-tools": GraduationCap,
-  "upcoming-books": Star,
   bundles: Gift,
-  subscription: ShoppingBag,
-};
-
-const categoryDescriptions: Record<string, string> = {
-  books: "ספרי פרשנות, עיון ולימוד מבית בני ציון",
-  discs: "הרצאות ושיעורים מוקלטים על גבי דיסק",
-  "learning-tools": "כלי עזר ומשאבים ללימוד יומיומי",
 };
 
 const fadeUp = {
@@ -96,11 +92,34 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
-const defaultCategories = [
-  { key: "books", label: "ספרים", icon: BookOpen, desc: "ספרי פרשנות, עיון ולימוד" },
-  { key: "discs", label: "דיסקים", icon: Disc, desc: "הרצאות ושיעורים מוקלטים" },
-  { key: "learning-tools", label: "מוצרי לימוד", icon: GraduationCap, desc: "כלי עזר ומשאבים" },
-];
+// ─── (יואב 9.7 / משימה 16) קטלוג: סליידר מוצרים אופקי ─────────────────────────
+
+function ProductSlider({
+  title,
+  icon: Icon,
+  products,
+}: {
+  title: string;
+  icon: any;
+  products: Product[];
+}) {
+  if (products.length === 0) return null;
+  return (
+    <div className="mb-10">
+      <h2 className="font-display text-xl text-foreground mb-4 flex items-center gap-2">
+        <Icon className="h-5 w-5 text-primary" />
+        {title}
+      </h2>
+      <div className="flex gap-4 overflow-x-auto pb-3 scrollbar-hide snap-x snap-mandatory">
+        {products.map((p, i) => (
+          <div key={p.id} className="w-44 md:w-52 shrink-0 snap-start">
+            <ProductCard product={p} index={i} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 const StorePage = () => {
   useSEO({
@@ -111,6 +130,35 @@ const StorePage = () => {
   const [activeCategory, setActiveCategory] = useState<string | undefined>();
   const { data: categories, isLoading: catLoading } = useProductCategories();
   const { data: products, isLoading } = useProducts(activeCategory);
+  // כל המוצרים הפעילים — לקטלוג (ספירות-קטגוריה, מבצעים, מועד קרוב)
+  const { data: allProducts } = useProducts(undefined);
+
+  // ספירת מוצרים פעילים לקטגוריה — קטגוריה ריקה (ימי-עיון שעברו) לא מוצגת כלל
+  const categoryCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const p of allProducts ?? []) {
+      if (p.category_id) m.set(p.category_id, (m.get(p.category_id) ?? 0) + 1);
+    }
+    return m;
+  }, [allProducts]);
+  const visibleCategories = (categories || []).filter((c) => (categoryCounts.get(c.id) ?? 0) > 0);
+
+  // סליידר מבצעים — מוצרים עם מחיר-לפני-הנחה
+  const saleProducts = useMemo(
+    () => (allProducts ?? []).filter((p) => p.original_price && p.original_price > p.price),
+    [allProducts],
+  );
+
+  // סליידר "לקראת המועד" — התאמת מונחי המועד הקרוב (hebcal) לכותרות המוצרים
+  const holiday = useMemo(() => getUpcomingHoliday(30), []);
+  const holidayProducts = useMemo(() => {
+    if (!holiday) return [];
+    return (allProducts ?? []).filter((p) =>
+      holiday.terms.some((t) => p.title.includes(t)),
+    );
+  }, [allProducts, holiday]);
+
+  const isCatalog = !activeCategory;
 
   return (
     <Layout sidebar={false}>
@@ -157,7 +205,7 @@ const StorePage = () => {
             >
               כל המוצרים
             </button>
-            {(categories || []).map((cat) => {
+            {visibleCategories.map((cat) => {
               const Icon = categoryIcons[cat.slug] || BookOpen;
               return (
                 <button
@@ -181,9 +229,57 @@ const StorePage = () => {
         </div>
       </section>
 
+      {/* ── (יואב 9.7) קטלוג בדף-הבית של החנות: אייקוני-קטגוריות + סליידרים ── */}
+      {isCatalog && !isLoading && !catLoading && (
+        <section className="py-10 border-b border-border/40">
+          <div className="container">
+            {/* אייקוני קטגוריות */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-10">
+              {visibleCategories.map((cat, i) => {
+                const Icon = categoryIcons[cat.slug] || BookOpen;
+                return (
+                  <motion.button
+                    key={cat.id}
+                    variants={fadeUp}
+                    initial="hidden"
+                    animate="visible"
+                    custom={i}
+                    onClick={() => setActiveCategory(cat.slug)}
+                    className="glass-card-light rounded-2xl p-5 text-center group hover:shadow-lg hover:border-primary/30 transition-all"
+                  >
+                    <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <Icon className="h-6 w-6" />
+                    </span>
+                    <span className="block font-display text-sm text-foreground">{cat.name}</span>
+                    <span className="block text-xs text-muted-foreground mt-1">
+                      {categoryCounts.get(cat.id)} מוצרים
+                    </span>
+                  </motion.button>
+                );
+              })}
+            </div>
+
+            {/* סליידר מועד קרוב */}
+            {holiday && holidayProducts.length > 0 && (
+              <ProductSlider
+                title={`לקראת ${holiday.name}`}
+                icon={Sparkles}
+                products={holidayProducts}
+              />
+            )}
+
+            {/* סליידר מבצעים */}
+            <ProductSlider title="מבצעים" icon={Flame} products={saleProducts} />
+          </div>
+        </section>
+      )}
+
       {/* Products Grid */}
       <section className="py-12 section-gradient-warm min-h-[60vh]">
         <div className="container">
+          {isCatalog && !isLoading && (
+            <h2 className="font-display text-xl text-foreground mb-6">כל המוצרים</h2>
+          )}
           {isLoading || catLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {Array.from({ length: 8 }).map((_, i) => (
