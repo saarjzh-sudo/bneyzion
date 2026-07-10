@@ -218,7 +218,18 @@ const AccessibilityWidget = () => {
         .bz-a11y-tab:hover, .bz-a11y-tab:focus-visible { opacity: 1 !important; width: 34px !important; }
         @media print { .bz-a11y-tab { display: none !important; } }
         html.a11y-font-scaled body { font-size: calc(1rem * var(--a11y-font-scale, 1)); }
-        html.a11y-contrast body { filter: contrast(1.35) saturate(1.1); }
+        /* (יואב 9.7) ניגודיות דרך backdrop-filter על שכבת-על קבועה — filter על body
+           הופך אותו ל-containing block של position:fixed, וכל האלמנטים הצפים
+           (הלשונית הזו, בנצי, ניווט-תחתון) נגללו עם הדף במקום להישאר במקומם. */
+        html.a11y-contrast::after {
+          content: "";
+          position: fixed;
+          inset: 0;
+          z-index: 2147483600;
+          pointer-events: none;
+          -webkit-backdrop-filter: contrast(1.35) saturate(1.1);
+          backdrop-filter: contrast(1.35) saturate(1.1);
+        }
         html.a11y-links a { text-decoration: underline !important; text-underline-offset: 2px; }
         html.a11y-readable body, html.a11y-readable body * { font-family: Arial, "Helvetica Neue", sans-serif !important; letter-spacing: 0.01em; }
       `}</style>
