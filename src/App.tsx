@@ -72,6 +72,7 @@ const CommunityDetailPage = lazy(() => import("./pages/CommunityDetailPage"));
 const PortalLogin = lazy(() => import("./pages/PortalLogin"));
 const DesignPreviewMyCourses = lazy(() => import("./pages/DesignPreviewMyCourses"));
 const CategoryPage = lazy(() => import("./pages/CategoryPage"));
+const LearningStylePage = lazy(() => import("./pages/LearningStylePage"));
 const TopicPage = lazy(() => import("./pages/TopicPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
@@ -381,6 +382,8 @@ const App = () => (
             <Route path="/series/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />
             <Route path="/category/:id" element={<Suspense fallback={<LazyFallback />}><CategoryPage /></Suspense>} />
             <Route path="/topic/:slug" element={<Suspense fallback={<LazyFallback />}><TopicPage /></Suspense>} />
+            {/* רמה 13 (יואב 9.7): ניווט לפי אופי-הלימוד — מוקלט / מוקלט+פירוש / PDF+פירוש / מבטים רחבים */}
+            <Route path="/learning-style/:key" element={<Suspense fallback={<LazyFallback />}><LearningStylePage /></Suspense>} />
             <Route path="/store" element={<Suspense fallback={<LazyFallback />}><StorePage /></Suspense>} />
             <Route path="/store/:slug" element={<Suspense fallback={<LazyFallback />}><ProductPage /></Suspense>} />
             <Route path="/about" element={<Suspense fallback={<LazyFallback />}><About /></Suspense>} />

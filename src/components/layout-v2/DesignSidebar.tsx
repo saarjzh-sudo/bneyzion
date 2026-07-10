@@ -37,6 +37,10 @@ import {
   Heart,
   Home,
   CalendarDays,
+  Headphones,
+  BookOpenText,
+  FileText,
+  Telescope,
 } from "lucide-react";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
@@ -648,6 +652,15 @@ interface ContentTreeProps {
   onNavigate: (path: string) => void;
 }
 
+// (יואב 9.7) ניווט לפי אופי-הלימוד — 4 מסלולים קבועים, כמו אגף-המורים שוויתר על תגיות.
+// המיפוי דטרמיניסטי ב-RPC get_learning_style_series (ראה LearningStylePage).
+const LEARNING_STYLES = [
+  { key: "muklat", label: "מוקלט", Icon: Headphones },
+  { key: "muklat-perush", label: "מוקלט + פירוש", Icon: BookOpenText },
+  { key: "pdf-perush", label: "PDF + פירוש", Icon: FileText },
+  { key: "mabatim", label: "מבטים רחבים", Icon: Telescope },
+] as const;
+
 function ContentTree({
   categories,
   extraSections,
@@ -661,6 +674,8 @@ function ContentTree({
   matchesSearch,
   onNavigate,
 }: ContentTreeProps) {
+  const [learningStyleOpen, setLearningStyleOpen] = useState(false);
+
   if (collapsed) {
     return (
       <div>
@@ -702,6 +717,66 @@ function ContentTree({
         <span>ניווט על פי ספר ופרק</span>
         <ChevronRight size={13} />
       </Link>
+
+      {/* ─── (יואב 9.7) לפי אופי הלימוד — מוקלט / מוקלט+פירוש / PDF+פירוש / מבטים רחבים ─── */}
+      <div style={{ marginBottom: "0.25rem" }}>
+        <button
+          onClick={() => setLearningStyleOpen((v) => !v)}
+          aria-expanded={learningStyleOpen}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.5rem 0.75rem",
+            borderRadius: radii.sm,
+            border: "none",
+            cursor: "pointer",
+            background: learningStyleOpen ? "rgba(196,162,101,0.12)" : "rgba(139,111,71,0.06)",
+            color: learningStyleOpen ? colors.goldDark : colors.textMid,
+            fontFamily: fonts.body,
+            fontSize: "0.82rem",
+            fontWeight: 700,
+          }}
+        >
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem" }}>
+            <Filter size={13} />
+            לפי אופי הלימוד
+          </span>
+          {learningStyleOpen ? <ChevronDown size={13} /> : <ChevronLeft size={13} />}
+        </button>
+        {learningStyleOpen && (
+          <div style={{ padding: "0.15rem 0" }}>
+            {LEARNING_STYLES.map(({ key, label, Icon }) => (
+              <button
+                key={key}
+                onClick={() => onNavigate(`/learning-style/${key}`)}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.42rem 1.1rem",
+                  background: "transparent",
+                  border: "none",
+                  borderInlineStart: "3px solid transparent",
+                  cursor: "pointer",
+                  color: colors.textMid,
+                  fontSize: "0.8rem",
+                  fontFamily: fonts.body,
+                  textAlign: "right",
+                  transition: "background 0.12s",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.06)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+              >
+                <Icon size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                {label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* פרשת השבוע + "איך לומדים תנ״ך" — הועברו לתוך "תכנים מיוחדים" (סער 6.7),
           כדי שלא יהיו חופשיים בשורש של "ראשי". ראה קבוצת SPECIAL_CONTENT_KEY למטה. */}
