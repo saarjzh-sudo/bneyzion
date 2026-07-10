@@ -2,15 +2,18 @@
  * NewsletterPage — /newsletter
  * "הניוזלטר של בני ציון" — ארכיון המיילים התוכניים של הרב יואב אוריאל.
  *
- * נבנה 10.7.2026 (סער): הגיליונות נמשכים מתיבת-המייל (Gmail) ונשמרים סטטית
- * ב-src/data/newsletters.json — אפס שינויי-DB. במודל חדשות-התנ״ך: הגיליון
- * האחרון מודגש בראש העמוד, והארכיון נפרס תחתיו.
+ * נבנה 10.7.2026 (סער) על newsletters.json סטטי; שודרג באותו יום לקריאה
+ * מטבלת `newsletters` (מסונכרנת אוטומטית מ-Gmail ע"י scripts/newsletters_sync.py,
+ * launchd יומי — 52 גיליונות עם תמונות-הירו מאוחסנות-מחדש). ה-JSON נשאר
+ * fallback אם ה-DB ריק/נכשל. הגיליון האחרון מודגש בראש, הארכיון תחתיו.
  */
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import { useSEO } from "@/hooks/useSEO";
 import { hebrewDateLabel } from "@/lib/hebrewDate";
+import { supabase } from "@/integrations/supabase/client";
 import newsletters from "@/data/newsletters.json";
 
 const GOLD_DARK = "#8B6F47";
@@ -25,9 +28,27 @@ interface NewsletterIssue {
   date: string;
   body_text: string;
   links: { label: string; url: string }[];
+  image_url?: string | null;
 }
 
-const ISSUES = newsletters as NewsletterIssue[];
+const FALLBACK_ISSUES = newsletters as NewsletterIssue[];
+
+function useNewsletterIssues(): NewsletterIssue[] {
+  const { data } = useQuery({
+    queryKey: ["newsletters"],
+    staleTime: 1000 * 60 * 10,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("newsletters")
+        .select("id, subject, date, body_text, links, image_url")
+        .order("date", { ascending: false })
+        .limit(200);
+      if (error) throw error;
+      return (data ?? []) as NewsletterIssue[];
+    },
+  });
+  return data && data.length > 0 ? data : FALLBACK_ISSUES;
+}
 
 function IssueBody({ text }: { text: string }) {
   return (
@@ -75,6 +96,11 @@ function ArchiveItem({ issue }: { issue: NewsletterIssue }) {
       </button>
       {open && (
         <div style={{ padding: "0 1.4rem 1.3rem" }}>
+          {issue.image_url && (
+            <img src={issue.image_url} alt="" loading="lazy"
+              style={{ width: "100%", maxHeight: 320, objectFit: "cover", borderRadius: 12,
+                       marginBottom: "1rem", border: `1px solid ${GOLD_LIGHT}33` }} />
+          )}
           <IssueBody text={issue.body_text} />
           <IssueLinks links={issue.links} />
         </div>
@@ -89,7 +115,8 @@ export default function NewsletterPage() {
     description: "ארכיון מכתבי התוכן של הרב יואב אוריאל — עומק תנ״כי ישירות למייל, גיליון אחר גיליון.",
   });
 
-  const [latest, ...rest] = ISSUES;
+  const issues = useNewsletterIssues();
+  const [latest, ...rest] = issues;
 
   return (
     <div dir="rtl" style={{ background: PARCHMENT, minHeight: "100vh" }}>
@@ -135,6 +162,11 @@ export default function NewsletterPage() {
                          fontSize: "1.55rem", color: TEXT_DARK, margin: "0 0 1rem", lineHeight: 1.35 }}>
               {latest.subject}
             </h2>
+            {latest.image_url && (
+              <img src={latest.image_url} alt="" loading="lazy"
+                style={{ width: "100%", maxHeight: 380, objectFit: "cover", borderRadius: 14,
+                         marginBottom: "1.1rem", border: `1px solid ${GOLD_LIGHT}44` }} />
+            )}
             <IssueBody text={latest.body_text} />
             <IssueLinks links={latest.links} />
           </article>
