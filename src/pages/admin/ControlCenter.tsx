@@ -37,7 +37,9 @@ import {
 } from "@/config/siteCopyRegistry";
 import { NAV_ITEMS, type NavItem } from "@/config/navigation";
 import { NAV_ITEMS_KEY, parseNavItems } from "@/hooks/useNavItems";
-import { ArrowUp, ArrowDown, Trash2, Plus } from "lucide-react";
+import { SHIPPING_OPTIONS, type ShippingOption } from "@/config/shipping";
+import { SHIPPING_OPTIONS_KEY, parseShippingOptions } from "@/hooks/useShippingOptions";
+import { ArrowUp, ArrowDown, Trash2, Plus, Truck } from "lucide-react";
 
 function FieldRow({
   field,
@@ -369,6 +371,80 @@ function MenuEditor({ overrides }: { overrides: Map<string, string> }) {
   );
 }
 
+/**
+ * (משימה 8 של סער) עורך מחירי-משלוח — copy.shipping.options;
+ * ה-checkout (עגלה + דיאלוג-מוצר) קורא דרך useShippingOptions עם fallback.
+ */
+function ShippingEditor({ overrides }: { overrides: Map<string, string> }) {
+  const saved = overrides.get(SHIPPING_OPTIONS_KEY);
+  const effective = (saved && parseShippingOptions(saved)) || SHIPPING_OPTIONS;
+  const [items, setItems] = useState<ShippingOption[] | null>(null);
+  const update = useUpdateSiteSetting();
+  const del = useDeleteSiteSetting();
+
+  const list = items ?? effective;
+  const dirty = items != null && JSON.stringify(items) !== JSON.stringify(effective);
+  const valid = list.every(
+    (o) => o.label.trim().length > 0 && Number.isFinite(o.price) && o.price >= 0 && o.price <= 500,
+  );
+
+  const setAt = (i: number, patch: Partial<ShippingOption>) =>
+    setItems(list.map((it, j) => (j === i ? { ...it, ...patch } : it)));
+
+  const save = () => {
+    if (!valid || !dirty) return;
+    update.mutate(
+      { key: SHIPPING_OPTIONS_KEY, value: JSON.stringify(list) },
+      {
+        onSuccess: () => { toast.success("מחירי המשלוח נשמרו — חיים בקופה"); setItems(null); },
+        onError: (e: any) => toast.error(`השמירה נכשלה: ${e.message ?? e}`),
+      },
+    );
+  };
+  const reset = () => {
+    del.mutate(SHIPPING_OPTIONS_KEY, {
+      onSuccess: () => { toast.success("מחירי המשלוח חזרו לברירת המחדל"); setItems(null); },
+      onError: (e: any) => toast.error(`האיפוס נכשל: ${e.message ?? e}`),
+    });
+  };
+
+  return (
+    <section className="mb-8">
+      <h2 className="text-lg font-bold mb-3 border-b border-border pb-1.5 flex items-center gap-2">
+        <Truck className="h-4 w-4" /> משלוחים
+      </h2>
+      <div className="rounded-xl border border-border bg-card p-4">
+        <div className="flex flex-col gap-2">
+          {list.map((o, i) => (
+            <div key={o.id} className="flex items-center gap-2">
+              <Input dir="rtl" className="flex-1" value={o.label} placeholder="שם"
+                onChange={(e) => setAt(i, { label: e.target.value })} />
+              <Input dir="rtl" className="flex-1" value={o.sublabel} placeholder="תיאור"
+                onChange={(e) => setAt(i, { sublabel: e.target.value })} />
+              <div className="flex items-center gap-1 shrink-0">
+                <span className="text-sm text-muted-foreground">₪</span>
+                <Input dir="ltr" type="number" min={0} max={500} className="w-20" value={o.price}
+                  onChange={(e) => setAt(i, { price: Number(e.target.value) })} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="flex items-center gap-2 mt-3">
+          <Button size="sm" onClick={save} disabled={!dirty || !valid || update.isPending} className="gap-1">
+            <Save className="h-3.5 w-3.5" /> שמירה
+          </Button>
+          {overrides.has(SHIPPING_OPTIONS_KEY) && (
+            <Button size="sm" variant="outline" onClick={reset} disabled={del.isPending} className="gap-1">
+              <RotateCcw className="h-3.5 w-3.5" /> חזרה לברירת המחדל
+            </Button>
+          )}
+          {!valid && <span className="text-xs text-destructive">שם ריק או מחיר לא תקין (0–500)</span>}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default function ControlCenter() {
   const { user } = useAuth();
   const isSuperAdmin = SUPER_ADMIN_EMAILS.includes(user?.email ?? "");
@@ -398,6 +474,8 @@ export default function ControlCenter() {
         <AiRequestBox overrides={overrides} isSuperAdmin={isSuperAdmin} />
 
         <MenuEditor overrides={overrides} />
+
+        <ShippingEditor overrides={overrides} />
 
         <div className="relative mb-6">
           <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />

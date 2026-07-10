@@ -16,7 +16,9 @@ import { useCart } from "@/contexts/CartContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
-import { SHIPPING_OPTIONS, getShippingPrice, getShippingLabel, type ShippingMethod } from "@/config/shipping";
+import { type ShippingMethod } from "@/config/shipping";
+// רמה 13: מחירי המשלוח נערכים ממרכז-השליטה (copy.shipping.options, fallback לקונפיג)
+import { useShippingOptions } from "@/hooks/useShippingOptions";
 import { Link } from "react-router-dom";
 
 export default function Checkout() {
@@ -25,6 +27,7 @@ export default function Checkout() {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError } = useGrowPayment();
+  const { options: SHIPPING_OPTIONS, getPrice: getShippingPrice, getLabel: getShippingLabel } = useShippingOptions();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     name: "", email: "", phone: "",

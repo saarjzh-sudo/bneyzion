@@ -15,11 +15,9 @@ import { Loader2, Shield, Truck, MapPin, Package } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useToast } from "@/hooks/use-toast";
-import {
-  SHIPPING_OPTIONS,
-  getShippingPrice,
-  type ShippingMethod,
-} from "@/config/shipping";
+import { type ShippingMethod } from "@/config/shipping";
+// רמה 13: מחירי המשלוח נערכים ממרכז-השליטה (copy.shipping.options, fallback לקונפיג)
+import { useShippingOptions } from "@/hooks/useShippingOptions";
 
 export interface StoreCheckoutDialogProps {
   /** Product slug from the `products` table. */
@@ -63,6 +61,7 @@ export function StoreCheckoutDialog({
   const { startPayment, isLoading, isReady } = useGrowPayment();
   const { toast } = useToast();
 
+  const { options: shippingOptions, getPrice: getShippingPrice } = useShippingOptions();
   const shippingPrice = isPhysical ? getShippingPrice(shippingMethod) : 0;
   const totalPrice = productPrice + shippingPrice;
 
@@ -237,7 +236,7 @@ export function StoreCheckoutDialog({
                   אפשרויות משלוח
                 </p>
                 <div className="space-y-2">
-                  {SHIPPING_OPTIONS.map((opt) => (
+                  {shippingOptions.map((opt) => (
                     <label
                       key={opt.id}
                       className={`flex items-center justify-between p-3 rounded-lg border cursor-pointer transition-colors ${
