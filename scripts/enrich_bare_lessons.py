@@ -111,7 +111,8 @@ def pick_highlights(content: str) -> dict:
         "contents": [{"role": "user", "parts": [{"text": content}]}],
         "generationConfig": {
             "temperature": 0.2,
-            "maxOutputTokens": 2048,
+            # 6144 — ב-2048 נחתך ה-JSON על מאמרים עתירי-פסוקים (42 נפילות בריצה הראשונה)
+            "maxOutputTokens": 6144,
             "responseMimeType": "application/json",
             "thinkingConfig": {"thinkingBudget": 0},
         },
