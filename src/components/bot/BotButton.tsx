@@ -7,11 +7,22 @@
 // Path in repo: src/components/bot/BotButton.tsx
 
 import { forwardRef, useState } from "react";
-import { X } from "lucide-react";
+import { X, Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BOT_CONFIG } from "./botConfig";
 
 const BOT_FONT = '"Ploni", "Ploni DL 1.1", "Paamon", system-ui, sans-serif';
+
+// (יואב 9.7) "שיהיה אפשר להקטין אותו" — מצב ממוזער נשמר בין ביקורים
+const MINIMIZED_KEY = "bz_benzi_minimized_v1";
+
+function readMinimized(): boolean {
+  try {
+    return localStorage.getItem(MINIMIZED_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
 
 interface Props {
   isOpen: boolean;
@@ -24,6 +35,16 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
   ref
 ) {
   const [avatarFailed, setAvatarFailed] = useState(false);
+  const [minimized, setMinimized] = useState(readMinimized);
+
+  const toggleMinimized = (next: boolean) => {
+    setMinimized(next);
+    try {
+      localStorage.setItem(MINIMIZED_KEY, next ? "1" : "0");
+    } catch {
+      /* מצב פרטי — מתעלמים */
+    }
+  };
 
   if (isOpen) {
     return (
@@ -50,7 +71,75 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
     );
   }
 
+  // (יואב 9.7) מצב ממוזער — נקודת-אווטר קטנה וחצי-שקופה בפינה, לא מפריעה לתוכן.
+  // לחיצה עליה פותחת את הצ׳אט כרגיל; ה"+" הקטן מחזיר לגודל מלא.
+  if (minimized) {
+    return (
+      <span
+        className={cn(
+          "fixed left-2 md:left-3 z-[100]",
+          "bottom-[calc(4rem+env(safe-area-inset-bottom,0px)+0.5rem)] md:bottom-4",
+          "block"
+        )}
+      >
+        <button
+          ref={ref}
+          type="button"
+          onClick={onClick}
+          dir="rtl"
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+          aria-label={`פתח צ׳אט עם ${BOT_CONFIG.botName}`}
+          className={cn(
+            "flex h-9 w-9 items-center justify-center rounded-full bg-white",
+            "border border-[#C4A265]/40 shadow-md",
+            "opacity-60 hover:opacity-100 focus-visible:opacity-100 transition-opacity duration-200",
+            "focus:outline-none focus-visible:ring-4 focus-visible:ring-[#C4A265]/40"
+          )}
+        >
+          {avatarFailed ? (
+            <span
+              className="flex h-7 w-7 items-center justify-center rounded-full bg-[#C4A265] text-[#1A2744] font-bold text-[11px]"
+              style={{ fontFamily: BOT_FONT }}
+              aria-hidden="true"
+            >
+              בנ
+            </span>
+          ) : (
+            <img
+              src={BOT_CONFIG.botAvatar}
+              alt=""
+              aria-hidden="true"
+              className="h-7 w-7 rounded-full object-cover"
+              onError={() => setAvatarFailed(true)}
+            />
+          )}
+        </button>
+        <button
+          type="button"
+          onClick={() => toggleMinimized(false)}
+          aria-label="הגדלת בנצי חזרה"
+          className={cn(
+            "absolute -top-1.5 -right-1.5 flex h-4 w-4 items-center justify-center",
+            "rounded-full bg-[#1A2744] text-white shadow",
+            "opacity-70 hover:opacity-100 transition-opacity",
+            "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]"
+          )}
+        >
+          <Plus className="h-3 w-3" />
+        </button>
+      </span>
+    );
+  }
+
   return (
+    <span
+      className={cn(
+        "fixed left-4 md:left-6 z-[100]",
+        "bottom-[calc(4rem+env(safe-area-inset-bottom,0px)+0.75rem)] md:bottom-6",
+        "block"
+      )}
+    >
     <button
       ref={ref}
       type="button"
@@ -63,8 +152,6 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
       className={cn(
         // Mobile: compact round avatar lifted above the 64px bottom-nav (clears the תפריט tab).
         // Desktop (md+): full pill with name + tagline in the bottom-left corner.
-        "fixed left-4 md:left-6 z-[100]",
-        "bottom-[calc(4rem+env(safe-area-inset-bottom,0px)+0.75rem)] md:bottom-6",
         "flex items-center gap-0 md:gap-2.5 rounded-full bg-white",
         "p-1 md:pl-3.5 md:pr-2 md:py-2",
         "shadow-lg transition-all duration-200 hover:shadow-xl",
@@ -105,5 +192,21 @@ export const BotButton = forwardRef<HTMLButtonElement, Props>(function BotButton
         </span>
       </span>
     </button>
+      {/* (יואב 9.7) כפתור מזעור — מקטין את בנצי לנקודה קטנה שלא מסתירה תוכן */}
+      <button
+        type="button"
+        onClick={() => toggleMinimized(true)}
+        aria-label="מזעור בנצי"
+        title="מזעור"
+        className={cn(
+          "absolute -top-1.5 -left-1.5 flex h-5 w-5 items-center justify-center",
+          "rounded-full bg-[#1A2744] text-white shadow",
+          "opacity-70 hover:opacity-100 transition-opacity",
+          "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#C4A265]"
+        )}
+      >
+        <Minus className="h-3.5 w-3.5" />
+      </button>
+    </span>
   );
 });

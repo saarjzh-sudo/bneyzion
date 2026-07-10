@@ -292,8 +292,9 @@ const GlobalChrome = () => {
       <FloatingPlayer />
       <InstallPrompt />
       <UpdatePrompt />
-      {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/*, /program/* and bare landing routes */}
-      <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/"]} />
+      {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/*, /program/* and bare landing routes.
+          10.7 (סער): "בחנות הוא מיותר" — מוסתר גם ב-/store, /checkout, /cart */}
+      <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/", "/store", "/checkout", "/cart"]} />
     </>
   );
 };
