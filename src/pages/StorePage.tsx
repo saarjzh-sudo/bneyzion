@@ -6,6 +6,7 @@ import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, M
 import Layout from "@/components/layout/Layout";
 import heroWatercolorStore from "@/assets/hero-watercolor-store.webp";
 import { useProducts, useProductCategories, type Product } from "@/hooks/useProducts";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 import { getUpcomingHoliday } from "@/lib/holidays";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -127,6 +128,8 @@ const StorePage = () => {
     description: "ספרי תנ״ך, מגילות, קורסים וימי עיון של עמותת בני ציון – הוצאת מכלל יופי.",
     url: "https://bneyzion.co.il/store",
   });
+  // רמה 13 (מרכז שליטה): נוסחי הירו-החנות נערכים מ-/admin/control-center
+  const copy = useSiteCopy();
   const [activeCategory, setActiveCategory] = useState<string | undefined>();
   const { data: categories, isLoading: catLoading } = useProductCategories();
   const { data: products, isLoading } = useProducts(activeCategory);
@@ -182,10 +185,10 @@ const StorePage = () => {
               החנות של בני ציון
             </div>
             <h1 className="text-4xl md:text-5xl font-kedem-hollow-aaa mb-4 text-foreground">
-              ספרי תנ״ך מבית בני ציון
+              {copy("copy.store.hero_title", "ספרי תנ״ך מבית בני ציון")}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-              ספרי פרשנות מקוריים, מגילות, קורסים דיגיטליים וימי עיון — הכל מבית בני ציון
+              {copy("copy.store.hero_subtitle", "ספרי פרשנות מקוריים, מגילות, קורסים דיגיטליים וימי עיון — הכל מבית בני ציון")}
             </p>
           </motion.div>
         </div>

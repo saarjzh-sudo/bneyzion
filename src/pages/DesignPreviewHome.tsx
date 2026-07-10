@@ -5,6 +5,7 @@ import { useLessons } from "@/hooks/useLessons";
 import { useSeries } from "@/hooks/useSeries";
 import { usePublicRabbis } from "@/hooks/useRabbis";
 import { useParasha } from "@/hooks/useParasha";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 import { getParashaVerse } from "@/lib/parashaCalendar";
 import { getUpcomingHoliday } from "@/lib/holidays";
 import { useQuery } from "@tanstack/react-query";
@@ -186,6 +187,9 @@ function DesignNavBar() {
 // ── DesignHero ─────────────────────────────────────────────────────────────
 function DesignHero() {
   const navigate = useNavigate();
+  // רמה 13 (מרכז שליטה): נוסחי ההירו נערכים מ-/admin/control-center;
+  // ה-fallback = הנוסח המקודד, אפס שינוי עד עריכה בפועל.
+  const copy = useSiteCopy();
 
   const scrollToLearn = () => {
     document.getElementById("learn-start")?.scrollIntoView({ behavior: "smooth" });
@@ -243,7 +247,7 @@ function DesignHero() {
                    fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "#4A3823",
                    textShadow: "0 1px 14px rgba(255,252,245,0.55)", margin: "0 0 0.5rem",
                    lineHeight: 1.3, fontStyle: "italic" }}>
-          אתר התנ״ך של ישראל
+          {copy("copy.home.hero_title", "אתר התנ״ך של ישראל")}
         </h1>
 
         {/* CTAs */}
@@ -254,7 +258,7 @@ function DesignHero() {
                      color: "white", fontFamily: "Paamon, serif", fontWeight: 700,
                      fontSize: "1rem", cursor: "pointer",
                      boxShadow: "0 4px 24px rgba(139,111,71,0.4)" }}>
-            התחילו ללמוד
+            {copy("copy.home.hero_cta_primary", "התחילו ללמוד")}
           </button>
           <button onClick={() => navigate("/chapter-weekly")}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem",
@@ -262,7 +266,7 @@ function DesignHero() {
                      background: "rgba(255,255,255,0.38)", backdropFilter: "blur(8px)",
                      color: "#4A3823", fontFamily: "Paamon, serif", fontSize: "0.95rem",
                      fontWeight: 700, cursor: "pointer" }}>
-            לתכנית הפרק השבועי
+            {copy("copy.home.hero_cta_secondary", "לתכנית הפרק השבועי")}
           </button>
         </div>
 
@@ -273,10 +277,12 @@ function DesignHero() {
 
 // ── StatsBar ───────────────────────────────────────────────────────────────
 function StatsBar() {
+  // רמה 13 (מרכז שליטה): המספרים והתוויות נערכים מ-/admin/control-center
+  const copy = useSiteCopy();
   const stats = [
-    { num: "+11,000", label: "שיעורים ומאמרים" },
-    { num: "+200",    label: "רבנים ומרצים"     },
-    { num: "+1,300",  label: "סדרות לימוד"      },
+    { num: copy("copy.home.stat1_num", "+11,000"), label: copy("copy.home.stat1_label", "שיעורים ומאמרים") },
+    { num: copy("copy.home.stat2_num", "+200"),    label: copy("copy.home.stat2_label", "רבנים ומרצים") },
+    { num: copy("copy.home.stat3_num", "+1,300"),  label: copy("copy.home.stat3_label", "סדרות לימוד") },
   ];
   return (
     <div dir="rtl" style={{ background: "linear-gradient(180deg, rgba(32,79,73,0.88) 0%, rgba(18,48,44,0.94) 100%), url('/family-bible/deep-texture.jpg') center / cover", padding: "1.25rem 1.5rem" }}>

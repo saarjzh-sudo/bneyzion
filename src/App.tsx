@@ -96,6 +96,7 @@ const CommunityCourses = lazy(() => import("./pages/admin/CommunityCourses"));
 const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
 const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
+const ControlCenter = lazy(() => import("./pages/admin/ControlCenter"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
 const DesignPreviewLesson = lazy(() => import("./pages/DesignPreviewLesson"));
 const DesignPreviewLayout = lazy(() => import("./pages/DesignPreviewLayout"));
@@ -405,6 +406,8 @@ const App = () => (
             <Route path="/admin/messages" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
             <Route path="/admin/notifications" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminNotifications /></Suspense></ProtectedRoute>} />
             <Route path="/admin/homepage" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><HomepageManager /></Suspense></ProtectedRoute>} />
+            {/* רמה 13: מרכז שליטה — עריכת נוסחים/תמונות מהמרשם (siteCopyRegistry) */}
+            <Route path="/admin/control-center" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ControlCenter /></Suspense></ProtectedRoute>} />
             {/* Debug-only — not in nav */}
             <Route path="/admin/migration" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Migration /></Suspense></ProtectedRoute>} />
             <Route path="/admin/content-compare" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ContentCompare /></Suspense></ProtectedRoute>} />

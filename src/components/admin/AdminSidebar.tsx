@@ -3,7 +3,7 @@ import {
   Shield, Home, Settings, ShoppingBag, Mail, GraduationCap,
   BarChart3, Bell, Ticket, CreditCard,
   UserCheck, Upload, Wallet, CalendarDays, Megaphone,
-  Sparkles, BookMarked, MessageCircle, Heart,
+  Sparkles, BookMarked, MessageCircle, Heart, SlidersHorizontal,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -81,6 +81,8 @@ const SECTIONS: NavSection[] = [
       // "דף הבית" (/admin/homepage) הוסר מהניווט 8.7.2026 — מסך מיותר: כתב
       // site_settings.homepage_config שדף הבית החי (DesignPreviewHome) לא קורא כלל.
       // ניהול הבאנרים/פופאפים עבר ל"באנרים ופופאפים" (/admin/promos). הראוט נשאר route-only.
+      // רמה 13: מרכז שליטה — עריכת נוסחי-האתר (הרב יואב: "עדיף מאשר שאשלח פניות")
+      { title: "מרכז שליטה",    url: "/admin/control-center",    icon: SlidersHorizontal, roles: ADMIN },
       { title: "הגדרות",        url: "/admin/settings",          icon: Settings,      roles: ADMIN },
     ],
   },
