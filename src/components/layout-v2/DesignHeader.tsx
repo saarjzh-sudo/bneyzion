@@ -40,6 +40,9 @@ import { useNavItems } from "@/hooks/useNavItems";
 interface DesignHeaderProps {
   /** When true, header is transparent before scroll (use on pages with a dark hero). */
   transparentOnTop?: boolean;
+  /** רמה 13 (סער 10.7): כשההירו בהיר (וידאו-האקוורל בדף הבית) — הדר שקוף עם
+   *  טקסט/אייקונים כהים במקום לבנים. משפיע רק על צבעים, לא על השקיפות. */
+  transparentDarkText?: boolean;
   /** When provided, shows a sidebar-toggle burger that calls this on click.
    *  On desktop, the sidebar is always visible; the burger is only useful on
    *  mobile. We render it whenever sidebar mode is enabled and let CSS hide
@@ -49,6 +52,7 @@ interface DesignHeaderProps {
 
 export default function DesignHeader({
   transparentOnTop = false,
+  transparentDarkText = false,
   onSidebarToggle,
 }: DesignHeaderProps) {
   const location = useLocation();
@@ -82,8 +86,12 @@ export default function DesignHeader({
         boxShadow: shadows.navScroll,
       };
 
-  const linkColor = isTransparent ? "rgba(255,255,255,0.9)" : colors.textMuted;
-  const linkHover = isTransparent ? "#fff" : colors.goldDark;
+  // lightChrome = שקוף עם כרום לבן (הירו כהה). כשההירו בהיר (transparentDarkText)
+  // הצבעים נשארים כהים גם במצב שקוף — רק הרקע שקוף.
+  const lightChrome = isTransparent && !transparentDarkText;
+
+  const linkColor = lightChrome ? "rgba(255,255,255,0.9)" : isTransparent ? "#4A3823" : colors.textMuted;
+  const linkHover = lightChrome ? "#fff" : colors.goldDark;
 
   return (
     <header
@@ -185,14 +193,14 @@ export default function DesignHeader({
                   fontSize: "0.85rem",
                   fontWeight: isActive ? 700 : 500,
                   color: isActive
-                    ? isTransparent
+                    ? lightChrome
                       ? "#fff"
                       : colors.goldDark
                     : linkColor,
                   textDecoration: "none",
                   transition: "color 0.2s",
                   borderBottom: isActive
-                    ? `1.5px solid ${isTransparent ? "rgba(255,255,255,0.7)" : colors.goldDark}`
+                    ? `1.5px solid ${lightChrome ? "rgba(255,255,255,0.7)" : colors.goldDark}`
                     : "1.5px solid transparent",
                   paddingBottom: 2,
                   whiteSpace: "nowrap",
@@ -202,7 +210,7 @@ export default function DesignHeader({
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.color = isActive
-                    ? isTransparent
+                    ? lightChrome
                       ? "#fff"
                       : colors.goldDark
                     : linkColor;
@@ -218,7 +226,7 @@ export default function DesignHeader({
             style={{
               fontFamily: fonts.body,
               fontSize: "0.85rem",
-              color: isTransparent ? "rgba(232,213,160,0.95)" : colors.goldDark,
+              color: lightChrome ? "rgba(232,213,160,0.95)" : colors.goldDark,
               textDecoration: "none",
               whiteSpace: "nowrap",
               paddingBottom: 2,
@@ -248,9 +256,9 @@ export default function DesignHeader({
               width: 40,
               height: 40,
               borderRadius: 12,
-              border: isTransparent ? "1px solid rgba(255,255,255,0.25)" : `1px solid rgba(139,111,71,0.2)`,
-              background: isTransparent ? "rgba(255,255,255,0.08)" : "rgba(250,246,240,0.7)",
-              color: isTransparent ? "rgba(255,255,255,0.85)" : colors.textMuted,
+              border: lightChrome ? "1px solid rgba(255,255,255,0.25)" : `1px solid rgba(139,111,71,0.2)`,
+              background: lightChrome ? "rgba(255,255,255,0.08)" : "rgba(250,246,240,0.7)",
+              color: lightChrome ? "rgba(255,255,255,0.85)" : colors.textMuted,
               cursor: "pointer",
               display: "inline-flex",
               alignItems: "center",
@@ -260,9 +268,9 @@ export default function DesignHeader({
           >
             <Search style={{ width: 18, height: 18 }} />
           </button>
-          <NotificationBell isTransparent={isTransparent} />
-          <CartButton isTransparent={isTransparent} />
-          <UserMenu isTransparent={isTransparent} />
+          <NotificationBell isTransparent={lightChrome} />
+          <CartButton isTransparent={lightChrome} />
+          <UserMenu isTransparent={lightChrome} />
           <button
             className="design-header-burger"
             onClick={() => {
@@ -276,7 +284,7 @@ export default function DesignHeader({
               borderRadius: 12,
               border: "none",
               background: "transparent",
-              color: isTransparent ? "rgba(255,255,255,0.85)" : colors.textMuted,
+              color: lightChrome ? "rgba(255,255,255,0.85)" : colors.textMuted,
               cursor: "pointer",
               alignItems: "center",
               justifyContent: "center",

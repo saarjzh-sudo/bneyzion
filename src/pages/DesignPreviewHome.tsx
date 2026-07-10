@@ -423,20 +423,20 @@ function FamilyBibleSection() {
                 transition: "transform 0.28s ease, box-shadow 0.28s ease",
                 borderRadius: "8px 8px 50% 50% / 8px 8px 30% 30%",
                 overflow: "hidden",
-                border: `1px solid rgba(201,169,97,0.3)`,
+                border: `1px solid rgba(201,169,97,0.35)`,
                 background: "white",
-                boxShadow: "0 4px 20px rgba(45,31,14,0.07)",
+                boxShadow: "none",
                 aspectRatio: "3 / 4",
               }}
               onMouseEnter={e => {
                 if (!card.disabled) {
                   (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
-                  (e.currentTarget as HTMLElement).style.boxShadow = "0 20px 56px rgba(45,31,14,0.14)";
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,169,97,0.7)";
                 }
               }}
               onMouseLeave={e => {
                 (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 20px rgba(45,31,14,0.07)";
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,169,97,0.35)";
               }}
             >
               {/* Image fills entire card — portrait */}
@@ -453,11 +453,12 @@ function FamilyBibleSection() {
                 }}
               />
 
-              {/* Gold gradient overlay from TOP (text sits on top arch) */}
+              {/* 10.7 (סער): התמונות v2 בהירות — בלי שכבת-החשכה ובלי צללים;
+                  מעבר-שמנת עדין בראש שומר על קריאות הטקסט הכהה. */}
               <div style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(to bottom, rgba(45,31,14,0.85) 0%, rgba(45,31,14,0.4) 38%, transparent 65%)",
+                background: "linear-gradient(to bottom, rgba(251,246,236,0.85) 0%, rgba(251,246,236,0.45) 30%, transparent 55%)",
               }} />
 
               {/* Text content — TOP of card (avoids chapel-arch curve at bottom) */}
@@ -473,19 +474,17 @@ function FamilyBibleSection() {
                   fontFamily: "Kedem, Frank Ruhl Libre, serif",
                   fontWeight: 900,
                   fontSize: "clamp(1rem, 2.2vw, 1.2rem)",
-                  color: "white",
+                  color: "#4A3823",
                   marginBottom: "0.3rem",
                   lineHeight: 1.2,
-                  textShadow: "0 1px 3px rgba(0,0,0,0.4)",
                 }}>
                   {card.title}
                 </div>
                 <div style={{
                   fontFamily: "Ploni, sans-serif",
                   fontSize: "0.78rem",
-                  color: "rgba(255,255,255,0.88)",
+                  color: "rgba(74,56,35,0.78)",
                   lineHeight: 1.45,
-                  textShadow: "0 1px 2px rgba(0,0,0,0.35)",
                 }}>
                   {card.desc}
                 </div>
@@ -494,9 +493,42 @@ function FamilyBibleSection() {
           ))}
         </div>
 
+        {/* 10.7 (סער): כפתור מתחת בצד — לכל תכני תנ״ך למשפחה */}
+        <div style={{ marginTop: "2rem", display: "flex", justifyContent: "flex-end" }}>
+          <button
+            onClick={() => navigate("/family-tanach")}
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.6rem 1.5rem",
+              borderRadius: "1rem",
+              border: `1.5px solid ${GOLD_DARK}`,
+              background: "transparent",
+              color: GOLD_DARK,
+              fontFamily: "Paamon, serif",
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "background 0.2s, color 0.2s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = GOLD_DARK;
+              e.currentTarget.style.color = "white";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = GOLD_DARK;
+            }}
+          >
+            לכל תכני תנ״ך למשפחה
+            <span aria-hidden>←</span>
+          </button>
+        </div>
+
         {/* Memorial line — לעילוי נשמת מעיין פלסר */}
         <div style={{
-          marginTop: "3rem",
+          marginTop: "2rem",
           textAlign: "center",
           fontFamily: "Frank Ruhl Libre, serif",
           fontSize: "0.85rem",
@@ -1855,9 +1887,11 @@ export default function DesignPreviewHome() {
   return (
     <div dir="rtl" style={{ display: "flex", flexDirection: "column", minHeight: "100vh",
                              background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
-      {/* Global header — transparent over hero, burger opens drawer sidebar */}
+      {/* Global header — transparent over hero, burger opens drawer sidebar.
+          10.7 (סער): ההירו בהיר (וידאו-אקוורל) → שורת ההדר בטקסט כהה, לא לבן */}
       <DesignHeader
         transparentOnTop={true}
+        transparentDarkText={true}
         onSidebarToggle={() => setDrawerOpen((v) => !v)}
       />
 
