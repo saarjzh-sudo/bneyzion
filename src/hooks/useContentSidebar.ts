@@ -38,6 +38,71 @@ const ROOT_IDS = {
 
 const TORAH_BOOK_ORDER = ["בראשית", "שמות", "ויקרא", "במדבר", "דברים"];
 
+// ─── פרוייקט התנ"ך המוקלט — אגרגציה משותפת (סיידבר + CategoryPage) ─────────────
+// הסדרות המוקלטות חיות תחת הורי-הספרים; צומת-הפרוייקט עצמו ריק. הדפוס מכסה גם
+// "...מוקלט..." וגם "...קריאה בטעמים..." (migration-rules §2). דדופ תאומי-מיגרציה
+// במפתח חזק, ומיון בסדר-הקאנון (תורה→נביאים→כתובים).
+export const RECORDED_PROJECT_ID = "041ce810-92ae-59e4-9e07-11fd014255fa";
+
+const recNorm = (t: string) => t.replace(/[״"'׳`|\-–—]/g, "").replace(/\s+/g, "").trim();
+const RECORDED_BOOK_CANON = [
+  "בראשית", "שמות", "ויקרא", "במדבר", "דברים",
+  "יהושע", "שופטים", "שמואל א", "שמואל ב", "שמואל",
+  "מלכים א", "מלכים ב", "מלכים",
+  "ישעיהו", "ישעיה", "ירמיהו", "ירמיה", "יחזקאל",
+  "הושע", "יואל", "עמוס", "עובדיה", "יונה", "מיכה", "נחום",
+  "חבקוק", "צפניה", "חגי", "זכריה", "מלאכי",
+  "תהילים", "תהלים", "משלי", "איוב", "שיר השירים", "רות",
+  "איכה", "קהלת", "אסתר", "דניאל", "עזרא", "נחמיה", "דברי הימים",
+];
+const stripGershayim = (t: string) => t.replace(/['׳״"]/g, "");
+const recCanonIndex = (title: string) => {
+  const t = stripGershayim(title.replace(/^חומש\s+/, "")).replace(/[\-–—|]/g, " ").replace(/\s+/g, " ").trim();
+  let best = 9999, bestLen = -1;
+  for (let i = 0; i < RECORDED_BOOK_CANON.length; i++) {
+    const b = stripGershayim(RECORDED_BOOK_CANON[i]);
+    if ((t === b || t.startsWith(b + " ")) && b.length > bestLen) { best = i; bestLen = b.length; }
+  }
+  return best;
+};
+
+export interface RecordedProjectSeries {
+  id: string;
+  title: string;
+  imageUrl: string | null;
+  lessonCount: number | null;
+}
+
+export async function fetchRecordedProjectSeries(): Promise<RecordedProjectSeries[]> {
+  const { data } = await supabase
+    .from("series")
+    .select("id, title, image_url, lesson_count")
+    .or("title.ilike.%מוקלט%,title.ilike.%קריאה בטעמים%")
+    .in("status", ["active", "published"])
+    .not("audience_tags", "cs", "{teachers}")
+    .order("title");
+  const seen = new Set<string>();
+  return (data || [])
+    .filter((s) => {
+      const k = recNorm(s.title);
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .map((s) => ({
+      id: s.id,
+      title: s.title,
+      imageUrl: (s as any).image_url ?? null,
+      lessonCount: (s as any).lesson_count ?? null,
+    }))
+    .sort((a, b) => {
+      const ia = recCanonIndex(a.title);
+      const ib = recCanonIndex(b.title);
+      if (ia !== ib) return ia - ib; // biblical canon (Torah → Neviim → Ketuvim)
+      return a.title.localeCompare(b.title, "he"); // variants within a book
+    });
+}
+
 export function useContentSidebar() {
   const sidebarQuery = useQuery({
     queryKey: ["content-sidebar"],
@@ -153,59 +218,11 @@ export function useContentSidebar() {
       // this section root, which has 0 direct children). R3 15.6.2026 (Saar): the old public page
       // (/פרוייקט-התנך-המוקלט-מתעדכן) lists ~33 recorded series in biblical-canon order. We
       // aggregate them here by title pattern WITHOUT re-parenting (they stay under their books).
-      // Pattern covers both "...מוקלט..." and the "...קריאה בטעמים..." variants (title-alone is
-      // insufficient — the בטעמים rows have no "מוקלט", per migration-rules §2).
-      const { data: recordedSeriesRaw } = await supabase
-        .from("series")
-        .select("id, title, parent_id")
-        .or("title.ilike.%מוקלט%,title.ilike.%קריאה בטעמים%")
-        .in("status", ["active", "published"])
-        .not("audience_tags", "cs", "{teachers}")
-        .order("title");
-      // Dedup migration twins (e.g. "בראשית מוקלט | ללא טעמים" vs "בראשית- מוקלט | ללא טעמים")
-      // by a strong key that strips quotes/pipes/dashes/spaces. Distinct variants
-      // ("...| אשכנזי" vs "...| נוסח אשכנזי") keep separate keys → both retained.
-      const recNorm = (t: string) => t.replace(/[״"'׳`|\-–—]/g, "").replace(/\s+/g, "").trim();
-      // GLOBAL biblical-canon order (Torah → Neviim → Ketuvim) for the recorded list.
-      // NOTE: biblicalOrder.getBiblicalSortIndex can't be reused here — its parshiot vs
-      // books maps each start at 0, so cross-category order collides. This is a single
-      // ordered book list (multi-word books before their bare form for longest-prefix match).
-      const RECORDED_BOOK_CANON = [
-        "בראשית", "שמות", "ויקרא", "במדבר", "דברים",
-        "יהושע", "שופטים", "שמואל א", "שמואל ב", "שמואל",
-        "מלכים א", "מלכים ב", "מלכים",
-        "ישעיהו", "ישעיה", "ירמיהו", "ירמיה", "יחזקאל",
-        "הושע", "יואל", "עמוס", "עובדיה", "יונה", "מיכה", "נחום",
-        "חבקוק", "צפניה", "חגי", "זכריה", "מלאכי",
-        "תהילים", "תהלים", "משלי", "איוב", "שיר השירים", "רות",
-        "איכה", "קהלת", "אסתר", "דניאל", "עזרא", "נחמיה", "דברי הימים",
-      ];
-      const stripGershayim = (t: string) => t.replace(/['׳״"]/g, "");
-      const recCanonIndex = (title: string) => {
-        // Strip "חומש " prefix, gershayim, turn dashes/pipes into spaces → clean leading book.
-        const t = stripGershayim(title.replace(/^חומש\s+/, "")).replace(/[\-–—|]/g, " ").replace(/\s+/g, " ").trim();
-        let best = 9999, bestLen = -1;
-        for (let i = 0; i < RECORDED_BOOK_CANON.length; i++) {
-          const b = stripGershayim(RECORDED_BOOK_CANON[i]);
-          if ((t === b || t.startsWith(b + " ")) && b.length > bestLen) { best = i; bestLen = b.length; }
-        }
-        return best;
-      };
-      const recordedSeen = new Set<string>();
-      const recordedChildren: ExtraSectionChild[] = (recordedSeriesRaw || [])
-        .filter((s) => {
-          const k = recNorm(s.title);
-          if (recordedSeen.has(k)) return false;
-          recordedSeen.add(k);
-          return true;
-        })
-        .map((s) => ({ id: s.id, title: s.title }))
-        .sort((a, b) => {
-          const ia = recCanonIndex(a.title);
-          const ib = recCanonIndex(b.title);
-          if (ia !== ib) return ia - ib; // biblical canon (Torah → Neviim → Ketuvim)
-          return a.title.localeCompare(b.title, "he"); // variants within a book
-        });
+      // רמה 13: the aggregation moved to the exported fetchRecordedProjectSeries so the
+      // /category/<recordedProject> page (which was EMPTY — 0 direct children) reuses it.
+      const recordedChildren: ExtraSectionChild[] = (await fetchRecordedProjectSeries()).map(
+        (s) => ({ id: s.id, title: s.title }),
+      );
 
       // “איך לומדים” is treated as a flat section like the other expandable sections:
       // only its direct children with sort_order 1..999 appear in the sidebar (old site showed 5 leaf series).

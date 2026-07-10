@@ -46,7 +46,11 @@ import {
 import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { Seo, collectionJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
-import { useContentSidebar } from "@/hooks/useContentSidebar";
+import {
+  useContentSidebar,
+  RECORDED_PROJECT_ID,
+  fetchRecordedProjectSeries,
+} from "@/hooks/useContentSidebar";
 import { usePublicBookListing, type PublicListingItem } from "@/hooks/usePublicBookListing";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -348,13 +352,33 @@ export default function CategoryPage() {
   const { useSeriesForNode } = useContentSidebar();
   const { data: seriesList = [], isLoading: seriesLoading } = useSeriesForNode(id ?? null);
 
+  // רמה 13 (משימה 10 של סער): צומת "פרוייקט התנ"ך המוקלט" ריק מילדים ישירים —
+  // הסדרות המוקלטות חיות תחת הורי-הספרים. הדף הציג EmptyState; עכשיו הוא מאגרג
+  // באותו דפוס-כותרת של הסיידבר (fetchRecordedProjectSeries, סדר-קאנון).
+  const isRecordedProject = id === RECORDED_PROJECT_ID;
+  const { data: recordedSeries = [], isLoading: recordedLoading } = useQuery({
+    queryKey: ["recorded-project-series-full"],
+    enabled: isRecordedProject,
+    staleTime: 1000 * 60 * 10,
+    queryFn: fetchRecordedProjectSeries,
+  });
+
   // Cast to canonical type (hook returns extra fields rabbiId + imageUrl + isDraft)
   // Filter out empty placeholder nodes (lesson_count=0, not a draft-in-progress):
   //   - nav containers like "סדרות על החומש" (active, 0 lessons) or "דפי עבודה" (published, 0)
   //   - Only keep 0-lesson entries if isDraft=true (they show a "בהכנה" badge on the card)
-  const canonicalSeries = (seriesList as unknown as CanonicalSeries[]).filter(
-    (s) => (s.lessonCount ?? 0) > 0 || s.isDraft,
-  );
+  const canonicalSeries: CanonicalSeries[] = isRecordedProject
+    ? recordedSeries.map((s) => ({
+        id: s.id,
+        title: s.title,
+        lessonCount: s.lessonCount,
+        rabbiId: null,
+        rabbiName: null,
+        imageUrl: s.imageUrl,
+      }))
+    : (seriesList as unknown as CanonicalSeries[]).filter(
+        (s) => (s.lessonCount ?? 0) > 0 || s.isDraft,
+      );
 
   // Card series IDs — used to exclude their lessons from the standalone band
   const cardSeriesIds = canonicalSeries.map((s) => s.id);
@@ -382,7 +406,7 @@ export default function CategoryPage() {
   const bookKey = nodeForBook?.bible_book || nodeForBook?.title || node?.title || null;
   const publicListing = usePublicBookListing(bookKey);
 
-  const isLoading = nodeLoading || seriesLoading;
+  const isLoading = nodeLoading || (isRecordedProject ? recordedLoading : seriesLoading);
   const title = node?.title ?? "קטגוריה";
 
   // Batched multi-rabbi map (C6)
