@@ -5,22 +5,29 @@
  * Each book is an accordion row: click to expand its chapters.
  * The current book is open by default.
  *
- * Mobile: on narrow viewports the grid collapses to 1 column (via CSS in
- * WeeklyBookDetail), so this aside stacks above main content — it stays
- * compact and scrollable.
+ * (11.7.2026 — level 15) Chapter rows are now built from REAL data via
+ * useWeeklyProgramChapters (one query for the whole program), not from the
+ * old 1..total_lessons proxy. This fixes:
+ *   - נחמיה showed פרק א׳-ח׳ while the real chapters are 1,2,3,8,9,10,11,13;
+ *   - אסתר showed פרק א׳-ה׳ instead of the pair units (פרקים א׳-ב׳ …);
+ *   - the selected chapter was never highlighted because the proxy rows did
+ *     not correspond to the page's activeNav (the bug in Saar's screenshot).
+ * "done" (✓) now means the chapter really has a published weekly recording —
+ * the same deterministic source-of-truth documented in
+ * src/hooks/useWeeklyProgramChapters.ts.
  *
- * Critique #6+#20 addressed: SbRow, BOOK_ACCENTS, HEB_NUMS imported from
- * shared.ts — no circular dependency.
- * Critique #10 addressed: aside has maxHeight + overflowY; on mobile the
- * grid collapses to a single column so the aside stacks naturally.
+ * Mobile: on narrow viewports the grid collapses to 1 column (via CSS in
+ * WeeklyBookDetail), so this aside stacks below main content — it stays
+ * compact and scrollable.
  */
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { useWeeklyBooks } from "@/hooks/useCommunity";
+import { useWeeklyProgramChapters } from "@/hooks/useWeeklyProgramChapters";
 import { colors, fonts } from "@/lib/designTokens";
-import { SbRow, BOOK_ACCENTS, HEB_NUMS } from "./shared";
+import { SbRow, BOOK_ACCENTS, chapterRowLabel } from "./shared";
 
 type NavItem = "intro" | number | string;
 
@@ -29,7 +36,7 @@ interface Props {
   currentSlug: string;
   /** currently-active nav item in the displayed book */
   activeNav: NavItem;
-  /** called when user clicks a chapter/sub-book row within the current book */
+  /** called when user clicks a chapter row within the current book */
   onNavSelect: (item: NavItem) => void;
   /** accent color for the current book */
   accent: string;
@@ -38,6 +45,7 @@ interface Props {
 export function GlobalWeeklyNav({ currentSlug, activeNav, onNavSelect, accent }: Props) {
   const navigate = useNavigate();
   const { data: books = [] } = useWeeklyBooks();
+  const { data: chaptersMap } = useWeeklyProgramChapters(books.map((b) => b.id));
 
   // Which book accordion is open. Start with the current book on desktop;
   // (סער 10.7) בנייד האקורדיון נפתח סגור — הרשימה יושבת מתחת לתוכן ולא
@@ -106,13 +114,11 @@ export function GlobalWeeklyNav({ currentSlug, activeNav, onNavSelect, accent }:
         const bookAccent = BOOK_ACCENTS[slug] ?? colors.goldDark;
         const isCurrentBook = slug === currentSlug;
         const isOpen = expandedSlug === slug;
-        const chapterCount = book.total_lessons ?? book.lesson_count ?? 0;
 
-        // Build chapter list for this book
-        // We use a numeric range 1..chapterCount as a proxy.
-        // WeeklyBookDetail uses bible_chapter data from DB; here we show the
-        // same count so the sidebar "matches" the chapter count badge.
-        const chapters = Array.from({ length: chapterCount }, (_, i) => i + 1);
+        // Real chapters with published content (see useWeeklyProgramChapters).
+        const bookData = chaptersMap?.get(book.id);
+        const chapters = bookData?.chapters ?? [];
+        const chapterCount = chapters.length || (book.total_lessons ?? 0);
 
         return (
           <div key={slug}>
@@ -194,10 +200,11 @@ export function GlobalWeeklyNav({ currentSlug, activeNav, onNavSelect, accent }:
                   }}
                 />
 
-                {/* Chapter rows */}
+                {/* Chapter rows — real bible_chapter numbers */}
                 {chapters.map((ch) => {
-                  const label = `פרק ${HEB_NUMS[ch - 1] ?? ch}`;
+                  const label = chapterRowLabel(slug, ch);
                   const isActive = isCurrentBook && activeNav === ch;
+                  const taught = bookData?.taught.has(ch) ?? false;
                   return (
                     <SbRow
                       key={ch}
@@ -205,7 +212,7 @@ export function GlobalWeeklyNav({ currentSlug, activeNav, onNavSelect, accent }:
                       subtitle=""
                       isActive={isActive}
                       accent={bookAccent}
-                      done
+                      done={taught}
                       onClick={() => {
                         if (isCurrentBook) {
                           onNavSelect(ch);

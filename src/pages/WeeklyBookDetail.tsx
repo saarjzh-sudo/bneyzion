@@ -2,17 +2,29 @@
  * /course/book-<slug> — Weekly Program Book Detail (data-driven, v1)
  *
  * Replaces the hardcoded DesignPreviewCourseDetail with a fully dynamic page
- * that works for all 6 books in the weekly program.
+ * that works for all 8 books in the weekly program.
  *
  * Special cases:
  *  - אסתר (book-esther): chapters shown as pairs (פרקים א-ב etc.)
- *  - חגי-זכריה-מלאכי (book-haggai-zechariah-malachi): 3 sub-books, grouped by bible_book
  *  - דניאל (book-daniel): resources layer shown as "תכנים נוספים" section
+ *
+ * (11.7.2026 — level 15) הקורס המאוחד "חגי, זכריה ומלאכי" פוצל ב-DB לשלושה
+ * ספרים אמיתיים (book-haggai / book-zechariah / book-malachi, השיעורים שויכו
+ * לפי bible_book). כל לוגיקת ה-sub-books (isHZM) הוסרה; הסלאג הישן
+ * book-haggai-zechariah-malachi ממופה כאן ל-book-zechariah (הספר הנלמד) —
+ * redirect בתוך הקומפוננטה, לא ב-App.tsx.
+ *
+ * מקור האמת ל"פרק הנוכחי הנלמד" מתועד ב-src/hooks/useWeeklyProgramChapters.ts:
+ * ספר = is_current=true; פרק = ה-bible_chapter הגבוה ביותר עם שיעור weekly
+ * שפורסם (הקלטת הזום שנשלחת לקבוצות הוואטסאפ). ה-auto-jump למטה נגזר ממנו.
  *
  * Access:
  *   hasAccess = useUserAccess(course.access_tag).hasAccess
  *             || useUserAccess('program:weekly-chapter').hasAccess
  *   Both hooks ALWAYS called (no conditional hooks).
+ *   בפועל (אומת ב-DB 11.7.26): כל 355 המנויים מחזיקים תג program:weekly-chapter
+ *   (ועוד 109 program:eicha-monday) — אין תגי course:* פר-ספר, ולכן הפיצול
+ *   לא נגע בגישה של אף מנוי.
  *
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
@@ -54,20 +66,12 @@ function estherPairLabel(ch: number): string {
   return `פרקים ${hebNum(a)}′-${hebNum(b)}′`;
 }
 
-// ── Sub-book display names (for Haggai/Zechariah/Malachi) ─────────────────
-const SUB_BOOK_NAMES: Record<string, string> = {
-  haggai:   "חגי",
-  zechariah:"זכריה",
-  malachi:  "מלאכי",
-  // Hebrew variants
-  "חגי":    "חגי",
-  "זכריה":  "זכריה",
-  "מלאכי":  "מלאכי",
+// ── Legacy slug redirects ──────────────────────────────────────────────────
+// הקורס המאוחד פוצל ל-3 ספרים (11.7.26). קישורים ישנים (וואטסאפ/מיילים)
+// ממשיכים לעבוד — הסלאג הישן ממופה לספר הנלמד (זכריה), בלי לגעת ב-App.tsx.
+const LEGACY_SLUG_REDIRECTS: Record<string, string> = {
+  "book-haggai-zechariah-malachi": "book-zechariah",
 };
-function subBookLabel(bible_book: string | null): string {
-  if (!bible_book) return "ספר";
-  return SUB_BOOK_NAMES[bible_book.toLowerCase()] ?? SUB_BOOK_NAMES[bible_book] ?? bible_book;
-}
 
 // ── Book accent colors ─────────────────────────────────────────────────────
 const BOOK_ACCENTS: Record<string, string> = {
@@ -75,24 +79,29 @@ const BOOK_ACCENTS: Record<string, string> = {
   "book-nehemiah":                "#5B6E3A",
   "book-daniel":                  "#6B4E8B",
   "book-esther":                  "#A52A2A",
-  "book-haggai-zechariah-malachi":"#3A7A85",
+  "book-haggai":                  "#2E6E5E",
+  "book-zechariah":               "#3A7A85",
+  "book-malachi":                 "#456E8A",
   "book-lamentations":            "#7A5A3A",
 };
 
 // ── Designed schedule images (לו״ז) — exported from the lessons Drive, ─────
 // self-hosted under public/schedules/<slug>.jpg for reliability.
 // Note: esther uses "מבנה הלימוד" (closest available); no dedicated לו״ז yet.
+// חגי/זכריה/מלאכי חולקים את הלו״ז המעוצב של היחידה המשולשת (זה שנשלח לקבוצות).
 const SCHEDULE_IMAGES: Record<string, string> = {
   "book-ezra":                     "/schedules/book-ezra.jpg",
   "book-nehemiah":                 "/schedules/book-nehemiah.jpg",
   "book-daniel":                   "/schedules/book-daniel.jpg",
   "book-esther":                   "/schedules/book-esther.jpg",
   "book-lamentations":             "/schedules/book-lamentations.jpg",
-  "book-haggai-zechariah-malachi": "/schedules/book-haggai-zechariah-malachi.jpg",
+  "book-haggai":                   "/schedules/book-haggai-zechariah-malachi.jpg",
+  "book-zechariah":                "/schedules/book-haggai-zechariah-malachi.jpg",
+  "book-malachi":                  "/schedules/book-haggai-zechariah-malachi.jpg",
 };
 
-// ── NavItem type: intro | chapter-number | sub-book string ────────────────
-type NavItem = "intro" | number | string;
+// ── NavItem type: intro | resources | chapter-number ──────────────────────
+type NavItem = "intro" | "resources" | number;
 type TabKey  = "base" | "enrichment" | "weekly";
 
 // ── Media helpers ──────────────────────────────────────────────────────────
@@ -107,8 +116,6 @@ const KIND_COLOR: Record<string, string> = { video: colors.goldDark, audio: "#3a
 const KIND_LABEL: Record<string, string> = { video: "וידאו", audio: "אודיו", pdf: "PDF", none: "" };
 const KIND_ACTION: Record<string, string> = { video: "צפה", audio: "האזן", pdf: "פתח", none: "" };
 
-// ── isHaggaiZechariahMalachi ───────────────────────────────────────────────
-function isHZM(slug: string | null) { return slug === "book-haggai-zechariah-malachi"; }
 function isEsther(slug: string | null) { return slug === "book-esther"; }
 
 // ── BookSwitcher (dropdown) ────────────────────────────────────────────────
@@ -153,7 +160,18 @@ function BookSwitcher({ books, currentSlug, accent }: { books: WeeklyCourse[]; c
 
 // ── Main component ─────────────────────────────────────────────────────────
 export default function WeeklyBookDetail() {
-  const { slug = "book-ezra" } = useParams<{ slug: string }>();
+  const { slug: rawSlug = "book-ezra" } = useParams<{ slug: string }>();
+  // Legacy slug → new slug (הפיצול של חגי-זכריה-מלאכי). הדאטה נטענת מיד עם
+  // הסלאג החדש; ה-useEffect למטה רק מיישר את שורת הכתובת (replace, שומר query).
+  const slug = LEGACY_SLUG_REDIRECTS[rawSlug] ?? rawSlug;
+  const legacyNavigate = useNavigate();
+  const isLegacySlug = slug !== rawSlug;
+  useEffect(() => {
+    if (isLegacySlug) {
+      legacyNavigate({ pathname: `/course/${slug}`, search: window.location.search }, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLegacySlug, slug]);
 
   // Access: ALWAYS call both hooks unconditionally (iron rule: no conditional hooks)
   const bookTagSource = `course:${slug.replace("book-", "")}`;
@@ -196,38 +214,6 @@ export default function WeeklyBookDetail() {
 
   function selectNav(nav: NavItem) { setActiveNav(nav); setActiveTab("base"); setEmbeddedId(null); }
 
-  // ── Special: Haggai-Zechariah-Malachi sub-books ─────────────────────────
-  // Group by bible_book directly from rawLessons — not from chapters Map.
-  // The chapters Map mixes all 3 sub-books per chapter number (ch1 has
-  // חגי+זכריה+מלאכי lessons), so using it for grouping gives wrong results.
-  // rawLessons preserves each lesson's own bible_book field.
-  //
-  // Desired order: זכריה → חגי → מלאכי (canonical Tanakh order for these books)
-  const HZM_ORDER = ["זכריה", "חגי", "מלאכי"];
-
-  const hzmSubBooks: Map<string, number[]> = new Map();
-  if (isHZM(slug) && courseData) {
-    for (const lesson of courseData.rawLessons) {
-      const bk = lesson.bible_book ?? "unknown";
-      const ch = lesson.bible_chapter;
-      if (!ch) continue; // skip null-chapter lessons (intro handled separately)
-      if (!hzmSubBooks.has(bk)) hzmSubBooks.set(bk, []);
-      const existing = hzmSubBooks.get(bk)!;
-      if (!existing.includes(ch)) existing.push(ch);
-    }
-    // Sort chapter numbers within each sub-book
-    for (const [, chs] of hzmSubBooks) chs.sort((a, b) => a - b);
-  }
-  // Sort sub-book keys by canonical order; unknown books go last
-  const hzmSubBookKeys = Array.from(hzmSubBooks.keys()).sort((a, b) => {
-    const ai = HZM_ORDER.indexOf(a);
-    const bi = HZM_ORDER.indexOf(b);
-    if (ai === -1 && bi === -1) return 0;
-    if (ai === -1) return 1;
-    if (bi === -1) return -1;
-    return ai - bi;
-  });
-
   // ── Special: Esther pairs ────────────────────────────────────────────────
   // Each pair = odd chapter (1, 3, 5, 7, 9). Both chapters combined into one slot.
   const estherPairs: number[] = []; // list of odd-chapter anchors
@@ -238,29 +224,11 @@ export default function WeeklyBookDetail() {
 
   // ── Chapter for current nav ──────────────────────────────────────────────
   // For Esther: activeNav is the odd-chapter anchor; we merge data from ch + ch+1
-  // For HZM: activeNav is a sub-book string
   // Otherwise: activeNav is a chapter number
 
   function getActiveChapterData(): ChapterLayersMulti | null {
-    if (activeNav === "intro") return null;
+    if (activeNav === "intro" || activeNav === "resources") return null;
     if (!courseData) return null;
-    if (isHZM(slug)) {
-      // sub-book level: collect lessons by bible_book directly from rawLessons.
-      // This correctly handles the case where a sub-book has only 'weekly' layers
-      // (like זכריה) and no 'base' layer — it would be invisible otherwise.
-      const targetBook = activeNav as string;
-      const subLessons = courseData.rawLessons.filter((l) => l.bible_book === targetBook);
-      if (subLessons.length === 0) return null;
-      const merged: ChapterLayersMulti = { chapter: 1, topic: null, base: [], enrichment: [], weekly: [] };
-      for (const lesson of subLessons) {
-        const lt = lesson.layer_type?.toLowerCase();
-        if (lt === "base") merged.base.push(lesson);
-        else if (lt === "enrichment") merged.enrichment.push(lesson);
-        else if (lt === "weekly") merged.weekly.push(lesson);
-        if (!merged.topic && lesson.description) merged.topic = lesson.description;
-      }
-      return merged;
-    }
     if (isEsther(slug)) {
       // pair: merge odd and even chapter
       const oddCh = activeNav as number;
@@ -281,7 +249,7 @@ export default function WeeklyBookDetail() {
   // ── Nav label for heading ────────────────────────────────────────────────
   function activeNavLabel(): string {
     if (activeNav === "intro") return "הקדמה";
-    if (isHZM(slug)) return `ספר ${subBookLabel(activeNav as string)}`;
+    if (activeNav === "resources") return "תכנים נוספים";
     if (isEsther(slug)) return estherPairLabel(activeNav as number);
     return chapterLabel(activeNav as number);
   }
@@ -289,7 +257,6 @@ export default function WeeklyBookDetail() {
   // ── Prev / Next nav ──────────────────────────────────────────────────────
   function buildNavList(): NavItem[] {
     if (!courseData) return [];
-    if (isHZM(slug)) return ["intro", ...hzmSubBookKeys];
     if (isEsther(slug)) return ["intro", ...estherPairs];
     return ["intro", ...courseData.chapterNumbers];
   }
@@ -298,35 +265,33 @@ export default function WeeklyBookDetail() {
 
   // ── Weekly schedule (לו״ז) — real per-chapter status ─────────────────────
   // A chapter that already has a 'weekly' layer (the live-lesson recording /
-  // "הפרק במבט רחב") has been taught. That's a genuine progress signal.
+  // "הפרק במבט רחב") has been taught. That's a genuine progress signal —
+  // the same source-of-truth documented in useWeeklyProgramChapters.ts.
   function itemTaught(nav: NavItem): boolean {
-    if (nav === "intro" || !courseData) return false;
-    if (isHZM(slug)) {
-      return courseData.rawLessons.some(
-        (l) => l.bible_book === (nav as string) && l.layer_type?.toLowerCase() === "weekly"
-      );
-    }
+    if (typeof nav !== "number" || !courseData) return false;
     if (isEsther(slug)) {
-      const odd = nav as number;
+      const odd = nav;
       const a = courseData.chapters.get(odd);
       const b = courseData.chapters.get(odd + 1);
       return (a?.weekly.length ?? 0) > 0 || (b?.weekly.length ?? 0) > 0;
     }
-    return (courseData.chapters.get(nav as number)?.weekly.length ?? 0) > 0;
+    return (courseData.chapters.get(nav)?.weekly.length ?? 0) > 0;
   }
   function itemLabel(nav: NavItem): string {
-    if (isHZM(slug)) return `ספר ${subBookLabel(nav as string)}`;
-    if (isEsther(slug)) return estherPairLabel(nav as number);
-    return chapterLabel(nav as number);
+    if (typeof nav !== "number") return nav === "intro" ? "הקדמה" : "תכנים נוספים";
+    if (isEsther(slug)) return estherPairLabel(nav);
+    return chapterLabel(nav);
   }
 
   const chapterNavItems = navList.filter((n) => n !== "intro");
   const taughtFlags = chapterNavItems.map(itemTaught);
   const lastTaughtIdx = taughtFlags.lastIndexOf(true);
 
-  // (סער 10.7) "תכניס אותי ישר לפרק שלי" — בספר הנוכחי (is_current) נוחתים
-  // ישירות על הפרק האחרון שנלמד, לא על ההקדמה. רץ פעם אחת אחרי טעינת הדאטה;
-  // ?chapter=N מנצח (ניווט מפורש), וספרי-ארכיון נשארים על ההקדמה.
+  // (סער 10.7, דויק 11.7) "תכניס אותי ישר לפרק שלי" — בספר הנוכחי (is_current)
+  // נוחתים ישירות על הפרק הנוכחי הנלמד = הפרק האחרון עם שיעור weekly שפורסם
+  // (מקור האמת — ראה useWeeklyProgramChapters.ts; זה הפרק שנשלח לקבוצות
+  // הוואטסאפ). רץ פעם אחת אחרי טעינת הדאטה; ?chapter=N מנצח (ניווט מפורש),
+  // וספרי-ארכיון נשארים על ההקדמה. activeNav מספרי → הסיידבר מדגיש את הפרק.
   const autoJumpedRef = useRef(false);
   useEffect(() => {
     if (autoJumpedRef.current) return;
@@ -341,11 +306,7 @@ export default function WeeklyBookDetail() {
       // אין שכבת בסיס — נחיתה על טאב ריק מרגישה שבורה)
       let baseCount = 0;
       let weeklyCount = 0;
-      if (isHZM(slug)) {
-        const subLessons = courseData.rawLessons.filter((l) => l.bible_book === target);
-        baseCount = subLessons.filter((l) => l.layer_type?.toLowerCase() === "base").length;
-        weeklyCount = subLessons.filter((l) => l.layer_type?.toLowerCase() === "weekly").length;
-      } else if (isEsther(slug)) {
+      if (isEsther(slug)) {
         const odd = target as number;
         const a = courseData.chapters.get(odd);
         const b = courseData.chapters.get(odd + 1);
@@ -595,12 +556,12 @@ export default function WeeklyBookDetail() {
               <div style={{ marginTop: "3rem", paddingTop: "1.5rem", borderTop: `1px solid rgba(139,111,71,0.1)`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 {navIdx > 0 ? (
                   <button onClick={() => selectNav(navList[navIdx - 1])} style={navBtnStyle("prev", accent)}>
-                    ← {navIdx === 1 ? "הקדמה" : (isEsther(slug) ? estherPairLabel(navList[navIdx - 1] as number) : isHZM(slug) ? `ספר ${subBookLabel(navList[navIdx - 1] as string)}` : chapterLabel(navList[navIdx - 1] as number))}
+                    ← {navIdx === 1 ? "הקדמה" : (isEsther(slug) ? estherPairLabel(navList[navIdx - 1] as number) : chapterLabel(navList[navIdx - 1] as number))}
                   </button>
                 ) : <span />}
                 {navIdx < navList.length - 1 && (
                   <button onClick={() => selectNav(navList[navIdx + 1])} style={navBtnStyle("next", accent)}>
-                    {isEsther(slug) ? estherPairLabel(navList[navIdx + 1] as number) : isHZM(slug) ? `ספר ${subBookLabel(navList[navIdx + 1] as string)}` : chapterLabel(navList[navIdx + 1] as number)} →
+                    {isEsther(slug) ? estherPairLabel(navList[navIdx + 1] as number) : chapterLabel(navList[navIdx + 1] as number)} →
                   </button>
                 )}
               </div>
@@ -611,7 +572,7 @@ export default function WeeklyBookDetail() {
           {activeNav === "intro" && navList.length > 1 && (
             <div style={{ marginTop: "2.5rem", paddingTop: "1.5rem", borderTop: `1px solid rgba(139,111,71,0.1)` }}>
               <button onClick={() => selectNav(navList[1])} style={navBtnStyle("next", accent)}>
-                → {isEsther(slug) ? estherPairLabel(navList[1] as number) : isHZM(slug) ? `ספר ${subBookLabel(navList[1] as string)}` : chapterLabel(navList[1] as number)}
+                → {isEsther(slug) ? estherPairLabel(navList[1] as number) : chapterLabel(navList[1] as number)}
               </button>
             </div>
           )}
@@ -635,26 +596,6 @@ export default function WeeklyBookDetail() {
 function navBtnStyle(dir: "prev" | "next", accent: string): React.CSSProperties {
   if (dir === "next") return { padding: "0.7rem 1.5rem", borderRadius: radii.md, background: `linear-gradient(90deg, ${accent} 0%, ${accent}cc 100%)`, border: "none", cursor: "pointer", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.88rem", color: "white", boxShadow: `0 4px 14px ${accent}40`, display: "inline-flex", alignItems: "center", gap: "0.4rem" };
   return { padding: "0.7rem 1.25rem", borderRadius: radii.md, background: "white", border: `1px solid rgba(139,111,71,0.14)`, cursor: "pointer", fontFamily: fonts.body, fontSize: "0.84rem", color: colors.textMid, display: "inline-flex", alignItems: "center", gap: "0.4rem" };
-}
-
-// ── SbRow ─────────────────────────────────────────────────────────────────
-function SbRow({ label, subtitle, isActive, done, accent, onClick }: { label: string; subtitle: string; isActive: boolean; done: boolean; accent: string; onClick: () => void }) {
-  return (
-    <button
-      onClick={onClick}
-      style={{ width: "100%", padding: "0.7rem 1rem", background: isActive ? `${accent}0d` : "none", border: "none", borderBottom: `1px solid rgba(139,111,71,0.05)`, borderInlineEnd: isActive ? `3px solid ${accent}` : "3px solid transparent", cursor: "pointer", textAlign: "right", display: "flex", alignItems: "center", gap: "0.55rem" }}
-    >
-      <div style={{ width: 22, height: 22, borderRadius: "50%", background: done ? `${accent}18` : "rgba(139,111,71,0.06)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-        {done
-          ? <span style={{ fontSize: "0.52rem", color: accent, fontWeight: 900 }}>✓</span>
-          : <Clock size={9} style={{ color: colors.textSubtle }} />}
-      </div>
-      <div style={{ flex: 1, textAlign: "right", minWidth: 0 }}>
-        <div style={{ fontFamily: fonts.body, fontWeight: isActive ? 700 : 500, fontSize: "0.82rem", color: isActive ? accent : colors.textDark, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{label}</div>
-        {subtitle && <div style={{ fontFamily: fonts.body, fontSize: "0.6rem", color: colors.textSubtle, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{subtitle}</div>}
-      </div>
-    </button>
-  );
 }
 
 // ── LayerSection ──────────────────────────────────────────────────────────
@@ -691,9 +632,22 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent }: {
   const kindAccent = KIND_COLOR[kind] ?? accent;
   const embedH = kind === "pdf" ? 600 : kind === "audio" ? 130 : 420;
 
+  // (סער, level 15) כל השורה לחיצה — לא רק כפתור ה"פתח". השורה עצמה היא
+  // הפקד היחיד (role="button" + מקלדת); ה"כפתור" הוויזואלי הוא span תצוגתי,
+  // כדי שלא יהיה פקד מקונן בתוך פקד (נגישות).
+  const toggle = url ? () => onEmbed(isOpen ? null : lesson.id) : undefined;
+
   return (
     <div style={{ background: "white", borderRadius: radii.xl, border: featured ? `2px solid ${accent}` : `1px solid rgba(139,111,71,0.1)`, boxShadow: featured ? `0 8px 24px ${accent}20` : shadows.cardSoft, overflow: "hidden" }}>
-      <div style={{ padding: featured ? "1.3rem 1.6rem" : "1rem 1.35rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+      <div
+        role={toggle ? "button" : undefined}
+        tabIndex={toggle ? 0 : undefined}
+        aria-expanded={toggle ? isOpen : undefined}
+        aria-label={toggle ? `${isOpen ? "סגור" : KIND_ACTION[kind]} — ${lesson.title}` : undefined}
+        onClick={toggle}
+        onKeyDown={toggle ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } } : undefined}
+        style={{ padding: featured ? "1.3rem 1.6rem" : "1rem 1.35rem", display: "flex", alignItems: "center", gap: "1rem", cursor: toggle ? "pointer" : undefined }}
+      >
         <div style={{ width: featured ? 48 : 40, height: featured ? 48 : 40, borderRadius: radii.md, background: `${kindAccent}18`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: kindAccent }}>
           {kind === "video" ? <Film size={featured ? 22 : 18} /> : kind === "audio" ? <Headphones size={featured ? 22 : 18} /> : <FileText size={featured ? 22 : 18} />}
         </div>
@@ -709,12 +663,12 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent }: {
           )}
         </div>
         {url && (
-          <button
-            onClick={() => onEmbed(isOpen ? null : lesson.id)}
-            style={{ padding: "0.44rem 0.9rem", borderRadius: radii.md, background: isOpen ? `${kindAccent}15` : `linear-gradient(90deg, ${accent} 0%, ${accent}cc 100%)`, border: isOpen ? `1px solid ${kindAccent}40` : "none", color: isOpen ? kindAccent : "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.75rem", cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.3rem", flexShrink: 0, boxShadow: isOpen ? "none" : `0 4px 12px ${accent}35`, transition: "all 0.15s" }}
+          <span
+            aria-hidden="true"
+            style={{ padding: "0.44rem 0.9rem", borderRadius: radii.md, background: isOpen ? `${kindAccent}15` : `linear-gradient(90deg, ${accent} 0%, ${accent}cc 100%)`, border: isOpen ? `1px solid ${kindAccent}40` : "none", color: isOpen ? kindAccent : "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.75rem", display: "inline-flex", alignItems: "center", gap: "0.3rem", flexShrink: 0, boxShadow: isOpen ? "none" : `0 4px 12px ${accent}35`, transition: "all 0.15s" }}
           >
             {isOpen ? <><X size={12} /> סגור</> : <><Play size={11} fill="currentColor" /> {KIND_ACTION[kind]}</>}
-          </button>
+          </span>
         )}
       </div>
       {isOpen && url && (

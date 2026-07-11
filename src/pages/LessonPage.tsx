@@ -79,7 +79,7 @@ const LessonPage = () => {
   );
   const { play, addToQueue, currentTrack } = usePlayer();
   const { user, signInWithGoogle } = useAuth();
-  const mediaProgressRef = useMediaProgress(id);
+  const { mediaRef: mediaProgressRef, flushPosition } = useMediaProgress(id);
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
 
   const rabbiName = formatRabbiName(rabbi);
@@ -300,15 +300,20 @@ const LessonPage = () => {
                     variant="outline"
                     size="sm"
                     className="gap-2"
-                    onClick={() => play({
-                      id: lesson.id,
-                      title: lesson.title,
-                      audioUrl: lesson.audio_url!,
-                      rabbiName: rabbiName || undefined,
-                      seriesTitle: (lesson.series as any)?.title || undefined,
-                      duration: lesson.duration,
-                      thumbnailUrl: lesson.thumbnail_url,
-                    })}
+                    onClick={() => {
+                      // Handoff: save the inline position (and pause) so the
+                      // floating player resumes from the exact same point
+                      flushPosition({ pause: true });
+                      play({
+                        id: lesson.id,
+                        title: lesson.title,
+                        audioUrl: lesson.audio_url!,
+                        rabbiName: rabbiName || undefined,
+                        seriesTitle: (lesson.series as any)?.title || undefined,
+                        duration: lesson.duration,
+                        thumbnailUrl: lesson.thumbnail_url,
+                      });
+                    }}
                   >
                     <Headphones className="h-3.5 w-3.5" />
                     {currentTrack?.id === lesson.id ? "מושמע כעת" : "השמע ברקע"}

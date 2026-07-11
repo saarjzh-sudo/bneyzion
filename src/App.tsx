@@ -472,6 +472,9 @@ const App = () => (
             <Route path="/design-teachers-wing-v2" element={<Suspense fallback={<LazyFallback />}><DesignPreviewTeachersWingV2 /></Suspense>} />
             <Route path="/design-teachers-series/:id" element={<SandboxSeriesRedirect />} />
 
+            {/* Catch-all: NotFound also resolves old-site (Umbraco) URLs in-house —
+                deep content paths (/מאגר-עזרי-הלמידה/... etc.) are matched against
+                Supabase to the exact series/lesson page (src/lib/legacyResolver.ts). */}
             <Route path="*" element={<NotFound />} />
           </Routes>
           </ErrorBoundary>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { BookOpen, Users, Calendar, Video, Crown, Clock, ArrowLeft, Sparkles, GraduationCap, Lock, CheckCircle2, Shield, Award, Headphones, MessageCircle, FileText } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCommunityCoursesPublic, useMyEnrollments, useNextSession } from "@/hooks/useCourseEnrollment";
-import { useMemberAccess } from "@/hooks/useCommunity";
+import { useMemberAccess, isWeeklyChapterProgram } from "@/hooks/useCommunity";
 import Layout from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -28,9 +28,11 @@ const CommunityPage = () => {
   });
 
   const enrolledIds = new Set(enrollments.map((e: any) => e.course_id));
-  // Hide the weekly-chapter program from the community list — it has its own
-  // dedicated page at /course/weekly-chapter.
-  const visibleCourses = courses?.filter((c: any) => c.program_slug !== "weekly-chapter") ?? [];
+  // הערת סער 11.7.2026: "תכנית לחיות תנ״ך — היא תכנית הפרק השבועי. תוריד, זה כפילות."
+  // סינון תצוגה בלבד (לא מוחקים שורות מ-community_courses — סוכן אחר עובד על הטבלה):
+  // כל כרטיס שמייצג את התכנית עצמה (program_slug=weekly-chapter או כותרת "לחיות תנ״ך")
+  // מוסתר, ובמקומו מוצג כרטיס סטטי אחד — <WeeklyChapterProgramCard /> — שמוביל ל-/chapter-weekly.
+  const visibleCourses = courses?.filter((c: any) => !isWeeklyChapterProgram(c)) ?? [];
   const weeklyCourses = visibleCourses.filter((c: any) => c.course_type === "weekly");
   const onDemandCourses = visibleCourses.filter((c: any) => c.course_type !== "weekly");
 
@@ -130,7 +132,7 @@ const CommunityPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {enrollments.map((e: any, i: number) => (
                 <motion.div key={e.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
-                  <Link to={e.community_courses?.program_slug === "weekly-chapter" ? "/course/weekly-chapter" : `/community/${e.course_id}`} aria-label={`המשך בקורס ${e.community_courses?.title ?? ""}`}>
+                  <Link to={e.community_courses && isWeeklyChapterProgram(e.community_courses) ? "/chapter-weekly" : `/community/${e.course_id}`} aria-label={`המשך בקורס ${e.community_courses?.title ?? ""}`}>
                     <Card className="hover:shadow-lg hover:border-gold/40 transition-all group overflow-hidden border-border/70">
                       {e.community_courses?.image_url ? (
                         <div className="h-32 overflow-hidden">
@@ -193,14 +195,14 @@ const CommunityPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[1, 2, 3].map(i => <Skeleton key={i} className="h-72 rounded-2xl" />)}
                 </div>
-              ) : weeklyCourses.length > 0 ? (
+              ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  {/* הכרטיס היחיד של תכנית הפרק השבועי (לחיות תנ״ך) — במקום שורות ה-DB שסוננו */}
+                  <WeeklyChapterProgramCard />
                   {weeklyCourses.map((course: any, i: number) => (
-                    <CourseCard key={course.id} course={course} enrolled={enrolledIds.has(course.id)} isMember={isMember} index={i} />
+                    <CourseCard key={course.id} course={course} enrolled={enrolledIds.has(course.id)} isMember={isMember} index={i + 1} />
                   ))}
                 </div>
-              ) : (
-                <EmptyState icon={Video} text="בקרוב — קורסים שבועיים חדשים!" />
               )}
             </TabsContent>
 
@@ -237,6 +239,44 @@ const CommunityPage = () => {
     </Layout>
   );
 };
+
+/* ───────── Weekly Chapter Program Card ─────────
+   כרטיס סטטי יחיד לתכנית "הפרק השבועי" (היא-היא "לחיות תנ״ך" — הערת סער 11.7.2026).
+   מחליף בתצוגה את שורות ה-DB של התכנית שסוננו ב-visibleCourses, ומוביל ל-/chapter-weekly. */
+const WeeklyChapterProgramCard = () => (
+  <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+    <Link to="/chapter-weekly" aria-label="לעמוד תכנית הפרק השבועי — לחיות תנ״ך">
+      <Card className="group hover:shadow-xl hover:border-gold/40 transition-all duration-300 overflow-hidden h-full relative border-gold/30">
+        <div className="relative h-40 overflow-hidden bg-muted">
+          <img
+            src="/family-bible/card-chapter-weekly.jpg"
+            alt="תכנית הפרק השבועי"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+          />
+          <div className="absolute top-3 right-3">
+            <Badge className="bg-gold/90 text-primary border-0 backdrop-blur-sm text-[10px] font-bold">
+              <Crown className="h-2.5 w-2.5 ml-0.5" /> התוכנית המרכזית
+            </Badge>
+          </div>
+        </div>
+        <CardContent className="p-4 space-y-2">
+          <h3 className="font-heading text-foreground group-hover:text-primary transition-colors line-clamp-2 text-lg">
+            הפרק השבועי — לחיות תנ״ך
+          </h3>
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            תוכנית הדגל של בני ציון: לומדים תנ״ך פרק אחרי פרק עם הרב יואב אוריאל, כל השנה
+          </p>
+          <div className="pt-2">
+            <Button variant="outline" size="sm" className="w-full gap-1.5 group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary transition-all">
+              <ArrowLeft className="h-3.5 w-3.5" /> לעמוד התוכנית
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </Link>
+  </motion.div>
+);
 
 /* ───────── Course Card ───────── */
 const CourseCard = ({ course, enrolled, isMember, index }: { course: any; enrolled: boolean; isMember: boolean; index: number }) => {

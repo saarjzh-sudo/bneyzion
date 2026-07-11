@@ -75,9 +75,13 @@ async function loadProgress(trackId: string): Promise<number> {
 const POSITION_PREFIX = "bneyzion_position_";
 const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
 
-// exported: LessonModal (series page) hands playback off to the floating player
-// by saving the inline <audio> position here before calling play() — playTrack
-// then auto-resumes from it.
+// Unified resume threshold: if fewer than this many seconds remain until the end,
+// restart from the beginning instead of resuming.
+export const RESUME_END_THRESHOLD_SECONDS = 15;
+
+// exported: the inline players (LessonDialog / LessonPage via useMediaProgress, and
+// LessonModal on the series page) save their position here — playTrack then
+// auto-resumes from it, so handoff to the floating player keeps continuity.
 export function saveLocalPosition(trackId: string, position: number, dur: number) {
   try {
     localStorage.setItem(`${POSITION_PREFIX}${trackId}`, JSON.stringify({
@@ -88,13 +92,19 @@ export function saveLocalPosition(trackId: string, position: number, dur: number
   } catch { /* quota errors */ }
 }
 
-function loadLocalPosition(trackId: string): number {
+export function loadLocalPosition(trackId: string): number {
   try {
     const raw = localStorage.getItem(`${POSITION_PREFIX}${trackId}`);
     if (!raw) return 0;
     const saved = JSON.parse(raw);
     return saved.position || 0;
   } catch { return 0; }
+}
+
+export function clearLocalPosition(trackId: string) {
+  try {
+    localStorage.removeItem(`${POSITION_PREFIX}${trackId}`);
+  } catch { /* ignore */ }
 }
 
 function cleanupOldPositions() {
@@ -168,6 +178,7 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
       // Save completed state
       const track = currentTrackRef.current;
       if (track) {
+        clearLocalPosition(track.id);
         saveProgress(track.id, audio.duration || 0).then(() => {
           // Mark as completed
           supabase.auth.getUser().then(({ data: { user } }) => {
@@ -223,8 +234,20 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    // If same track, just resume
+    // If same track, just resume — but honor a fresher saved position first
+    // (e.g. the user kept listening in an inline player and handed back off)
     if (currentTrackRef.current?.id === track.id && audio.src) {
+      if (audio.paused) {
+        const localPos = loadLocalPosition(track.id);
+        if (
+          localPos > 0 &&
+          Math.abs(localPos - audio.currentTime) > 3 &&
+          localPos < (audio.duration || Infinity) - RESUME_END_THRESHOLD_SECONDS
+        ) {
+          audio.currentTime = localPos;
+          setCurrentTime(localPos);
+        }
+      }
       audio.play();
       return;
     }
@@ -241,8 +264,8 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (savedPos > 0) {
       const onCanPlay = () => {
-        // Don't resume if near the end (within 10 seconds)
-        if (savedPos < (audio.duration || Infinity) - 10) {
+        // Don't resume if near the end (within RESUME_END_THRESHOLD_SECONDS)
+        if (savedPos < (audio.duration || Infinity) - RESUME_END_THRESHOLD_SECONDS) {
           audio.currentTime = savedPos;
           setCurrentTime(savedPos);
           setResumeTime(savedPos);

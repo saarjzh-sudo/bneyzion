@@ -5,6 +5,7 @@ import { useLessons } from "@/hooks/useLessons";
 import { useSeries } from "@/hooks/useSeries";
 import { usePublicRabbis } from "@/hooks/useRabbis";
 import { useParasha } from "@/hooks/useParasha";
+import { useFamilyCards } from "@/hooks/useCommunity";
 import { useSiteCopy } from "@/hooks/useSiteSettings";
 import { getParashaVerse } from "@/lib/parashaCalendar";
 import { getUpcomingHoliday } from "@/lib/holidays";
@@ -307,12 +308,15 @@ function StatsBar() {
   );
 }
 
-// ── FamilyBibleSection — chapel-arch design ───────────────────────────────
-// Replaces TanachLemishpachaSection (2026-05-27)
-// 4 portrait cards with top-arch border-radius, gold ribbon connector, cream+gold only
-
+// ── FamilyBibleSection — lesson-card watercolor design ────────────────────
+// Replaces TanachLemishpachaSection (2026-05-27); chapel-arch → lesson-card 11.7.2026.
+//
 // 7.7.2026 (סער): דור-הפלאות הוחלף בחדשות-התנ״ך (הטור היומי) והפודקאסט הופעל —
 // שניהם חיים עם תוכן אמיתי שנקלט מקבוצות "בכוח התנ״ך ננצח".
+// 11.7.2026 (סער): הכרטיסים מנוהלים מהאדמין — טבלת family_cards (show_on_home=true),
+// כולל כותרת/תיאור/תמונה/לינק/סדר. העיצוב הוחלף לשפת כרטיסי-השיעורים עם תמונות
+// אקוורל צבעוניות 16:9 מ-storage (product-images/family-cards/).
+// FAMILY_BIBLE_CARDS נשאר fallback בלבד — שהסקשן לא יעלה ריק אם השליפה נכשלה.
 const FAMILY_BIBLE_CARDS = [
   {
     id: "tanach-news",
@@ -342,6 +346,24 @@ const FAMILY_BIBLE_CARDS = [
 
 function FamilyBibleSection() {
   const navigate = useNavigate();
+  const { data: familyCards } = useFamilyCards();
+
+  // תוכן מהאדמין: רק כרטיסים פעילים שסומנו show_on_home, לפי sort_order.
+  // home_title/home_description גוברים על הכותרת/תיאור של עמוד /family-tanach.
+  const fromDb = (familyCards ?? [])
+    .filter((c) => c.show_on_home)
+    .map((c) => ({
+      id: c.card_key,
+      title: c.home_title ?? c.title,
+      desc: c.home_description ?? c.description ?? "",
+      href: c.href,
+      image:
+        c.image_url ??
+        FAMILY_BIBLE_CARDS.find((f) => f.id === c.card_key)?.image ??
+        "",
+      disabled: false,
+    }));
+  const cards = fromDb.length ? fromDb : FAMILY_BIBLE_CARDS;
 
   return (
     <section dir="rtl" style={{ background: PARCHMENT, padding: "5.5rem 1.5rem", position: "relative", overflow: "hidden" }}>
@@ -385,11 +407,11 @@ function FamilyBibleSection() {
           </p>
         </div>
 
-        {/* Chapel-arch cards grid */}
+        {/* Lesson-card style grid — 16:9 watercolor, RTL, mobile 1-col */}
         <style>{`
           .family-bible-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
           @media (max-width: 900px) { .family-bible-grid { grid-template-columns: repeat(2, 1fr); } }
-          @media (max-width: 480px) { .family-bible-grid { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; } }
+          @media (max-width: 600px) { .family-bible-grid { grid-template-columns: 1fr; gap: 1rem; } }
         `}</style>
 
         <div className="family-bible-grid" style={{ position: "relative" }}>
@@ -411,85 +433,52 @@ function FamilyBibleSection() {
             <rect x="0" y="35%" width="100%" height="4" rx="2" fill="url(#ribbon-grad)" />
           </svg>
 
-          {FAMILY_BIBLE_CARDS.map((card) => (
-            <div
+          {cards.map((card) => (
+            <button
               key={card.id}
+              type="button"
               onClick={() => !card.disabled && navigate(card.href)}
-              style={{
-                position: "relative",
-                zIndex: 1,
-                cursor: card.disabled ? "default" : "pointer",
-                opacity: card.disabled ? 0.5 : 1,
-                transition: "transform 0.28s ease, box-shadow 0.28s ease",
-                borderRadius: "8px 8px 50% 50% / 8px 8px 30% 30%",
-                overflow: "hidden",
-                border: `1px solid rgba(201,169,97,0.35)`,
-                background: "white",
-                boxShadow: "none",
-                aspectRatio: "3 / 4",
-              }}
-              onMouseEnter={e => {
-                if (!card.disabled) {
-                  (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,169,97,0.7)";
-                }
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(0)";
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(201,169,97,0.35)";
-              }}
+              disabled={card.disabled}
+              aria-label={`${card.title}, ${card.desc}`}
+              className="group block w-full text-start bg-card border border-border rounded-2xl overflow-hidden
+                hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200
+                cursor-pointer disabled:opacity-55 disabled:cursor-default disabled:hover:translate-y-0
+                focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-primary focus-visible:outline-offset-2"
+              style={{ position: "relative", zIndex: 1 }}
             >
-              {/* Image fills entire card — portrait */}
-              <img
-                src={card.image}
-                alt={card.title}
-                loading="lazy"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center",
-                  display: "block",
-                }}
-              />
+              {/* אקוורל צבעוני 16:9 — אותה שפה כמו כרטיסי השיעורים */}
+              <div className="relative aspect-video overflow-hidden bg-muted">
+                {card.image && (
+                  <img
+                    src={card.image}
+                    alt=""
+                    aria-hidden
+                    loading="lazy"
+                    className="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500"
+                  />
+                )}
+              </div>
 
-              {/* 10.7 (סער): התמונות v2 בהירות — בלי שכבת-החשכה ובלי צללים;
-                  מעבר-שמנת עדין בראש שומר על קריאות הטקסט הכהה. */}
-              <div style={{
-                position: "absolute",
-                inset: 0,
-                background: "linear-gradient(to bottom, rgba(251,246,236,0.85) 0%, rgba(251,246,236,0.45) 30%, transparent 55%)",
-              }} />
-
-              {/* Text content — TOP of card (avoids chapel-arch curve at bottom) */}
-              <div style={{
-                position: "absolute",
-                top: 0,
-                insetInlineStart: 0,
-                insetInlineEnd: 0,
-                padding: "1.4rem 1.1rem 1.1rem",
-                textAlign: "center",
-              }}>
+              <div style={{ padding: "1rem 1.1rem 1.2rem", textAlign: "center" }}>
                 <div style={{
                   fontFamily: "Kedem, Frank Ruhl Libre, serif",
                   fontWeight: 900,
-                  fontSize: "clamp(1rem, 2.2vw, 1.2rem)",
-                  color: "#4A3823",
+                  fontSize: "clamp(1.05rem, 2.2vw, 1.25rem)",
                   marginBottom: "0.3rem",
-                  lineHeight: 1.2,
-                }}>
+                  lineHeight: 1.25,
+                }} className="text-foreground group-hover:text-primary transition-colors">
                   {card.title}
                 </div>
                 <div style={{
                   fontFamily: "Ploni, sans-serif",
-                  fontSize: "0.78rem",
-                  color: "rgba(74,56,35,0.78)",
-                  lineHeight: 1.45,
+                  fontSize: "0.85rem",
+                  color: TEXT_MUTED,
+                  lineHeight: 1.5,
                 }}>
                   {card.desc}
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
 

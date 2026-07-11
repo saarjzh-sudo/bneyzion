@@ -15,19 +15,22 @@
 import { useSearchParams } from "react-router-dom";
 import { AdminLayout } from "@/components/admin/AdminLayout";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FolderOpen, BookOpen, Sparkles, BookMarked, Tag, PencilRuler } from "lucide-react";
+import { FolderOpen, BookOpen, Sparkles, BookMarked, Tag, PencilRuler, BookHeart } from "lucide-react";
 import { SeriesContent } from "./Series";
 import { LessonsContent } from "./Lessons";
 import { DorHaplaotContent } from "./DorHaplaot";
 import { DailyContentContent } from "./DailyContent";
 import { TopicsContent } from "./Topics";
+import { FamilyCardsContent } from "./FamilyCards";
 
 const TABS = [
-  { id: "series",  label: "סדרות",      icon: FolderOpen },
-  { id: "lessons", label: "שיעורים",    icon: BookOpen },
-  { id: "dor",     label: "דור הפלאות", icon: Sparkles },
-  { id: "daily",   label: "תוכן יומי",  icon: BookMarked },
-  { id: "topics",  label: "נושאים",     icon: Tag },
+  { id: "series",  label: "סדרות",       icon: FolderOpen },
+  { id: "lessons", label: "שיעורים",     icon: BookOpen },
+  { id: "dor",     label: "דור הפלאות",  icon: Sparkles },
+  { id: "daily",   label: "תוכן יומי",   icon: BookMarked },
+  { id: "topics",  label: "נושאים",      icon: Tag },
+  // 11.7.2026 (סער): כרטיסיות "תנ״ך למשפחה" (טבלת family_cards) — העמוד + סקשן דף-הבית
+  { id: "family",  label: "תנ״ך למשפחה", icon: BookHeart },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
@@ -52,7 +55,7 @@ export default function ContentWorkspace() {
           <div>
             <h1 className="text-2xl font-heading text-foreground">עריכת תוכן</h1>
             <p className="text-sm text-muted-foreground">
-              כל עריכת התוכן במקום אחד — סדרות, שיעורים, דור הפלאות, תוכן יומי ונושאים
+              כל עריכת התוכן במקום אחד — סדרות, שיעורים, דור הפלאות, תוכן יומי, נושאים ותנ״ך למשפחה
             </p>
           </div>
         </div>
@@ -81,6 +84,9 @@ export default function ContentWorkspace() {
           </TabsContent>
           <TabsContent value="topics" className="pt-4">
             <TopicsContent />
+          </TabsContent>
+          <TabsContent value="family" className="pt-4">
+            <FamilyCardsContent />
           </TabsContent>
         </Tabs>
       </div>

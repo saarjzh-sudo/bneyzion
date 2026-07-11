@@ -17,14 +17,35 @@ export const HEB_NUMS = [
 ];
 
 // ── Book accent colors ─────────────────────────────────────────────────────
+// (11.7.2026) חגי-זכריה-מלאכי פוצל ל-3 ספרים ב-DB; שלושתם שומרים על גוון
+// המשפחה הטורקיזית עם הבחנה קלה. הסלאג הישן נשמר ל-redirect בלבד.
 export const BOOK_ACCENTS: Record<string, string> = {
   "book-ezra":                    "#8B6F47",
   "book-nehemiah":                "#5B6E3A",
   "book-daniel":                  "#6B4E8B",
   "book-esther":                  "#A52A2A",
+  "book-haggai":                  "#2E6E5E",
+  "book-zechariah":               "#3A7A85",
+  "book-malachi":                 "#456E8A",
   "book-haggai-zechariah-malachi":"#3A7A85",
   "book-lamentations":            "#7A5A3A",
 };
+
+// ── Chapter labels ─────────────────────────────────────────────────────────
+export function hebNum(n: number): string {
+  return HEB_NUMS[n - 1] ?? String(n);
+}
+
+/** Esther is learned in chapter pairs anchored on the odd chapter (1→א׳-ב׳). */
+export function estherPairLabel(oddCh: number): string {
+  return `פרקים ${hebNum(oddCh)}′-${hebNum(oddCh + 1)}′`;
+}
+
+/** Chapter row label for a book: Esther uses pair labels, the rest פרק X. */
+export function chapterRowLabel(bookSlug: string, ch: number): string {
+  if (bookSlug === "book-esther") return estherPairLabel(ch);
+  return `פרק ${hebNum(ch)}`;
+}
 
 // ── SbRow ──────────────────────────────────────────────────────────────────
 // A sidebar navigation row — shared between WeeklyBookDetail and GlobalWeeklyNav.

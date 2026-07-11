@@ -32,11 +32,16 @@ const HEB_NUMS = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב
 function hebNum(n: number) { return HEB_NUMS[n - 1] ?? String(n); }
 
 // ── Book colors (visual identity per book) ────────────────────────────────
+// (11.7.2026 — level 15) חגי-זכריה-מלאכי פוצל ל-3 ספרים ב-DB; הסלאג המאוחד
+// נשמר רק לתאימות-אחורה (redirect ב-WeeklyBookDetail).
 const BOOK_ACCENTS: Record<string, string> = {
   "book-ezra":                    "#8B6F47",
   "book-nehemiah":                "#5B6E3A",
   "book-daniel":                  "#6B4E8B",
   "book-esther":                  "#A52A2A",
+  "book-haggai":                  "#2E6E5E",
+  "book-zechariah":               "#3A7A85",
+  "book-malachi":                 "#456E8A",
   "book-haggai-zechariah-malachi":"#3A7A85",
   "book-lamentations":            "#7A5A3A",
 };
@@ -60,6 +65,9 @@ const BOOK_GRADIENTS: Record<string, string> = {
   "book-nehemiah":                "linear-gradient(140deg, #2D4A1E 0%, #4A7A2E 45%, #78A84A 100%)",
   "book-daniel":                  "linear-gradient(140deg, #3A1F5C 0%, #6B3EA8 45%, #9B6AD4 100%)",
   "book-esther":                  "linear-gradient(140deg, #6B1212 0%, #A52A2A 45%, #D45050 100%)",
+  "book-haggai":                  "linear-gradient(140deg, #17453A 0%, #2E6E5E 45%, #4E9A86 100%)",
+  "book-zechariah":               "linear-gradient(140deg, #1B4A52 0%, #3A7A85 45%, #5AABB8 100%)",
+  "book-malachi":                 "linear-gradient(140deg, #24404F 0%, #456E8A 45%, #6C97B4 100%)",
   "book-haggai-zechariah-malachi":"linear-gradient(140deg, #1B4A52 0%, #3A7A85 45%, #5AABB8 100%)",
   "book-lamentations":            "linear-gradient(140deg, #3A2A1A 0%, #7A5A3A 45%, #A88060 100%)",
 };
@@ -194,6 +202,11 @@ export default function WeeklyProgramLibrary() {
   if (!isLoading && eichaOnly && !isAdmin) {
     return <Navigate to="/course/book-lamentations" replace />;
   }
+  // "להתחיל ללמוד" נוחת על הספר *והפרק* הנלמדים עכשיו:
+  // הספרייה מפנה לספר הנוכחי (is_current=true, יחיד ב-DB), ובתוך
+  // WeeklyBookDetail ה-auto-jump נוחת על הפרק הנוכחי — ה-bible_chapter הגבוה
+  // ביותר עם שיעור weekly שפורסם. מקור האמת המלא מתועד
+  // ב-src/hooks/useWeeklyProgramChapters.ts — לא לשכפל את הלוגיקה כאן.
   const currentBook = books.find((b) => b.is_current === true);
   if (!isLoading && currentBook) {
     return <Navigate to={`/course/${currentBook.program_slug}`} replace />;

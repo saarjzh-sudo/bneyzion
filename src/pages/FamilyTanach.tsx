@@ -25,6 +25,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useSEO } from "@/hooks/useSEO";
 import { supabase } from "@/integrations/supabase/client";
+import { useFamilyCards } from "@/hooks/useCommunity";
 import Layout from "@/components/layout/Layout";
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
@@ -62,6 +63,9 @@ interface LobbyCard {
   disabled?: boolean;
 }
 
+// 11.7.2026 (סער): תוכן הכרטיסיות עבר לטבלת family_cards ב-Supabase וניתן לשליטה
+// מהאדמין (/admin/content?tab=family). BASE_CARDS נשאר כ-fallback בלבד — מוצג רק
+// אם הטבלה ריקה או שהשליפה נכשלה, כדי שהעמוד לעולם לא יעלה ריק.
 const BASE_CARDS: LobbyCard[] = [
   {
     id: "parasha",
@@ -219,6 +223,10 @@ function FamilyTanachHero() {
   );
 }
 
+/* 11.7.2026 (סער): הכרטיס עוצב מחדש בשפת כרטיסי-השיעורים של האתר
+   (src/components/cards/LessonCard.tsx — bg-card, border-border, rounded-2xl,
+   hover עדין של הרמה+צל, כותרת שמצטבעת ב-primary). התמונות הן אקוורל צבעוני
+   בסגנון תמונות-השיעורים (סדרה 3 ב-DESIGN-IMAGE-STYLES.md), 16:9. */
 function LobbyCardTile({ card, onClick }: { card: LobbyCard; onClick: () => void }) {
   return (
     <button
@@ -226,111 +234,37 @@ function LobbyCardTile({ card, onClick }: { card: LobbyCard; onClick: () => void
       onClick={onClick}
       disabled={card.disabled}
       aria-label={`${card.title}, ${card.desc}`}
-      className="family-tanach-card"
-      style={{
-        position: "relative",
-        display: "block",
-        width: "100%",
-        textAlign: "start",
-        cursor: card.disabled ? "default" : "pointer",
-        opacity: card.disabled ? 0.55 : 1,
-        border: `1px solid rgba(139,111,71,0.18)`,
-        borderRadius: "1rem",
-        overflow: "hidden",
-        background: "#fff",
-        boxShadow: shadows.cardSoft,
-        padding: 0,
-        font: "inherit",
-        color: "inherit",
-      }}
+      className="group block w-full text-start bg-card border border-border rounded-2xl overflow-hidden
+        hover:border-primary/30 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200
+        cursor-pointer disabled:opacity-55 disabled:cursor-default disabled:hover:translate-y-0
+        focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-primary focus-visible:outline-offset-2"
     >
-      <div style={{ position: "relative", aspectRatio: "16 / 10", overflow: "hidden" }}>
-        <img
-          src={card.image}
-          alt=""
-          aria-hidden
-          loading="lazy"
-          style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-        />
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: "linear-gradient(180deg, rgba(45,31,14,0.05) 0%, rgba(45,31,14,0.55) 100%)",
-          }}
-        />
+      <div className="relative aspect-video overflow-hidden bg-muted">
+        {card.image && (
+          <img
+            src={card.image}
+            alt=""
+            aria-hidden
+            loading="lazy"
+            className="w-full h-full object-cover block group-hover:scale-105 transition-transform duration-500"
+          />
+        )}
         {card.badge && (
-          <span
-            style={{
-              position: "absolute",
-              top: 12,
-              insetInlineStart: 12,
-              background: "rgba(45,31,14,0.75)",
-              color: colors.goldShimmer,
-              fontFamily: fonts.body,
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              padding: "0.3rem 0.7rem",
-              borderRadius: 999,
-              letterSpacing: "0.01em",
-            }}
-          >
+          <span className="absolute top-3 right-3 bg-card/90 backdrop-blur-sm text-primary border border-gold/40 text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
             {card.badge}
           </span>
         )}
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            insetInlineStart: 0,
-            insetInlineEnd: 0,
-            padding: "1rem 1.1rem",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: fonts.display,
-              fontWeight: 800,
-              fontSize: "1.25rem",
-              color: "#fff",
-              textShadow: "0 1px 3px rgba(0,0,0,0.4)",
-            }}
-          >
-            {card.title}
-          </div>
-        </div>
       </div>
 
-      <div style={{ padding: "1rem 1.1rem 1.3rem" }}>
-        <p
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.92rem",
-            lineHeight: 1.6,
-            color: colors.textMuted,
-            margin: 0,
-          }}
-        >
-          {card.desc}
-        </p>
+      <div className="p-4 pb-5 space-y-1.5">
+        <h3 className="font-heading text-lg text-foreground group-hover:text-primary transition-colors leading-snug">
+          {card.title}
+        </h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
         {!card.disabled && (
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.35rem",
-              marginTop: "0.85rem",
-              fontFamily: fonts.body,
-              fontWeight: 700,
-              fontSize: "0.88rem",
-              color: colors.goldDark,
-            }}
-          >
+          <span className="inline-flex items-center gap-1.5 pt-1.5 text-sm font-bold text-primary">
             להיכנס
-            <span aria-hidden style={{ fontSize: "1rem" }}>
-              ←
-            </span>
+            <span aria-hidden>←</span>
           </span>
         )}
       </div>
@@ -470,17 +404,36 @@ export default function FamilyTanach() {
 
   const navigate = useNavigate();
   const { data: riddlesSeries } = useRiddlesSeries();
+  const { data: dbCards } = useFamilyCards();
 
-  const cards: LobbyCard[] = BASE_CARDS.map((c) => {
-    if (c.id !== "riddles") return c;
-    const count = riddlesSeries?.lesson_count;
-    return {
-      ...c,
-      desc: count
-        ? `${count} חידות תנ״ך לילדים, מוכן להדפסה ולשולחן השבת`
-        : c.desc,
-    };
-  });
+  // מקור ראשי = family_cards (בשליטת האדמין). BASE_CARDS = fallback בלבד,
+  // כדי שהעמוד לעולם לא יעלה ריק אם הטבלה ריקה או שהשליפה נכשלה.
+  const fromDb: LobbyCard[] = (dbCards ?? []).map((c) => ({
+    id: c.card_key,
+    title: c.title,
+    desc: c.description ?? "",
+    href: c.href,
+    image:
+      c.image_url ??
+      BASE_CARDS.find((b) => b.id === c.card_key)?.image ??
+      "",
+    badge: c.badge ?? undefined,
+  }));
+
+  // כשמציגים fallback סטטי, מזריקים לחידות את מספר החידות החי מהסדרה.
+  // כשהתוכן מגיע מהטבלה — התיאור של האדמין הוא הקובע, בלי דריסה.
+  const cards: LobbyCard[] = fromDb.length
+    ? fromDb
+    : BASE_CARDS.map((c) => {
+        if (c.id !== "riddles") return c;
+        const count = riddlesSeries?.lesson_count;
+        return {
+          ...c,
+          desc: count
+            ? `${count} חידות תנ״ך לילדים, מוכן להדפסה ולשולחן השבת`
+            : c.desc,
+        };
+      });
 
   return (
     <Layout>

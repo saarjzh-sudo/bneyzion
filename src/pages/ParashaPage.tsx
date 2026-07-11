@@ -3,7 +3,8 @@
  *
  * Rolled out from DesignPreviewParasha.tsx on 2026-04-30.
  * Uses production Layout (Header + Footer from layout/).
- * Design: mahogany dark hero, 3 CTA cards, sticky TOC, editorial article sections.
+ * Design: light parchment hero with full-strength watercolor image and dark
+ * headings (Saar 11.7.2026), 3 CTA cards, sticky TOC, editorial article sections.
  */
 
 import { sanitizeHtml } from "@/lib/sanitize";
@@ -116,6 +117,7 @@ const ParashaPage = () => {
     audioLessons,
     articleSeries,
     riddle,
+    riddleSeriesId,
     parashaSeriesId,
     isLoading,
   } = useParasha();
@@ -195,7 +197,8 @@ const ParashaPage = () => {
         title: "חידות לשולחן השבת",
         subtitle: hasRiddle ? "חידות מגרות לילדים ולמבוגרים" : "חידות לפרשת השבוע",
         anchor: hasRiddle ? "riddle" : undefined,
-        href: hasRiddle ? undefined : `/series/c852edd8-d959-4c8d-bf7e-17b5881275fa`,
+        // No riddle matched this week → link to the riddle series of the current chumash
+        href: hasRiddle ? undefined : `/series/${riddleSeriesId}`,
         color: colors.tealMain,
       },
       {
@@ -207,7 +210,7 @@ const ParashaPage = () => {
         color: colors.oliveDark,
       },
     ],
-    [hasAudio, hasRiddle, audioLessons.length, parashaSeriesId]
+    [hasAudio, hasRiddle, audioLessons.length, parashaSeriesId, riddleSeriesId]
   );
 
   // Sticky TOC on scroll
@@ -251,31 +254,34 @@ const ParashaPage = () => {
   return (
     <Layout>
       {/* ═══════════════════════════════════════════════════════════════
-          HERO — mahogany dark, title + verse + 3 CTA cards
+          HERO — light parchment, watercolor image at full strength,
+          dark title + subtitles (Saar 11.7.2026: no dark backdrop under
+          the image; strengthen the image; all headings dark).
           ═══════════════════════════════════════════════════════════════ */}
       <section
         style={{
-          background: `linear-gradient(180deg, ${colors.textDark} 0%, #2A1A0A 60%, ${colors.mahogany} 100%)`,
+          background: `linear-gradient(180deg, ${colors.parchment} 0%, ${colors.parchmentDark} 100%)`,
           paddingTop: "4rem",
           paddingBottom: "0",
         }}
         className="relative overflow-hidden parasha-hero"
       >
-        {/* Parasha hero image — behind all text */}
+        {/* Parasha hero image — full strength, behind all text */}
         <img
           src="/images/hero-watercolor-parasha.webp"
           alt=""
           aria-hidden
           className="absolute inset-0 w-full h-full object-cover object-center"
-          style={{ opacity: 0.55, pointerEvents: "none" }}
+          style={{ pointerEvents: "none" }}
         />
-        {/* Dark overlay over the image so gold/white text stays readable */}
+        {/* Soft cream wash — keeps the image strong in the middle while the
+            dark headings stay AA-readable; fades into the TOC strip below */}
         <div
           className="absolute inset-0"
           aria-hidden
           style={{
             background:
-              "linear-gradient(180deg, rgba(251,246,236,0.68) 0%, rgba(251,246,236,0.52) 45%, rgba(237,229,208,0.82) 100%)",
+              "linear-gradient(180deg, rgba(250,246,240,0.62) 0%, rgba(250,246,240,0.34) 42%, rgba(245,240,232,0.96) 100%)",
             pointerEvents: "none",
           }}
         />
@@ -288,8 +294,8 @@ const ParashaPage = () => {
               -45deg,
               transparent,
               transparent 40px,
-              rgba(255,255,255,0.6) 40px,
-              rgba(255,255,255,0.6) 41px
+              rgba(45,31,14,0.5) 40px,
+              rgba(45,31,14,0.5) 41px
             )`,
           }}
           aria-hidden
@@ -297,17 +303,20 @@ const ParashaPage = () => {
 
         <div className="container max-w-4xl relative z-10">
           {/* Breadcrumb — hidden in print */}
-          <div className="flex items-center justify-between mb-6 print:hidden">
-            <nav className="flex items-center gap-1.5 text-sm text-[#4A3823]/60">
-              <Link to="/" className="hover:text-[#4A3823] transition-colors">
+          <div
+            className="flex items-center justify-between mb-6 print:hidden"
+            style={{ textShadow: "0 1px 10px rgba(250,246,240,0.9)" }}
+          >
+            <nav className="flex items-center gap-1.5 text-sm text-[#4A3823]/85">
+              <Link to="/" className="hover:text-[#2D1F0E] transition-colors">
                 דף הבית
               </Link>
               <ArrowLeft className="h-3 w-3 rotate-180" />
-              <span className="text-[#4A3823]/85">פרשת השבוע</span>
+              <span className="text-[#2D1F0E]">פרשת השבוע</span>
             </nav>
             <button
               onClick={() => window.print()}
-              className="flex items-center gap-1.5 text-sm text-[#4A3823]/60 hover:text-[#4A3823] transition-colors"
+              className="flex items-center gap-1.5 text-sm text-[#4A3823]/85 hover:text-[#2D1F0E] transition-colors"
             >
               <Printer className="h-3.5 w-3.5" />
               הדפסה
@@ -323,7 +332,11 @@ const ParashaPage = () => {
           >
             <p
               className="text-sm uppercase tracking-widest mb-3 print-masthead__super"
-              style={{ color: "#8B6F47", fontFamily: fonts.body, opacity: 0.9 }}
+              style={{
+                color: colors.goldDeep,
+                fontFamily: fonts.body,
+                textShadow: "0 1px 10px rgba(250,246,240,0.9)",
+              }}
             >
               פרשת השבוע
             </p>
@@ -331,8 +344,9 @@ const ParashaPage = () => {
               className="text-4xl md:text-6xl mb-2 leading-tight print-masthead__title"
               style={{
                 fontFamily: fonts.display,
-                color: "#4A3823",
-                textShadow: "0 1px 16px rgba(255,252,245,0.6)",
+                color: colors.textDark,
+                textShadow:
+                  "0 2px 18px rgba(250,246,240,0.95), 0 0 6px rgba(250,246,240,0.8)",
               }}
             >
               פרשת {parasha}
@@ -340,7 +354,11 @@ const ParashaPage = () => {
             {chumash && (
               <p
                 className="text-base mt-1 print-masthead__chumash"
-                style={{ color: "#8B6F47", fontFamily: fonts.body, opacity: 0.9 }}
+                style={{
+                  color: colors.goldDeep,
+                  fontFamily: fonts.body,
+                  textShadow: "0 1px 10px rgba(250,246,240,0.9)",
+                }}
               >
                 חומש {chumash}
               </p>
@@ -354,12 +372,16 @@ const ParashaPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
               className="print-verse mt-5 max-w-2xl mx-auto text-center text-base md:text-lg leading-relaxed print:mt-3"
-              style={{ fontFamily: fonts.display, color: "rgba(74,56,35,0.85)" }}
+              style={{
+                fontFamily: fonts.display,
+                color: "rgba(45,31,14,0.9)",
+                textShadow: "0 1px 12px rgba(250,246,240,0.9)",
+              }}
             >
               ״{verse.text}״
               <span
                 className="verse-ref block text-xs mt-2"
-                style={{ color: colors.goldShimmer, opacity: 0.65, fontFamily: fonts.body }}
+                style={{ color: colors.goldDeep, opacity: 0.9, fontFamily: fonts.body }}
               >
                 [{verse.reference}]
               </span>
@@ -378,17 +400,18 @@ const ParashaPage = () => {
                 <div
                   className="group relative flex flex-col items-center text-center gap-3 rounded-t-2xl px-4 py-5 cursor-pointer transition-all duration-200"
                   style={{
-                    background: "rgba(255,255,255,0.07)",
-                    border: "1px solid rgba(255,255,255,0.13)",
+                    background: "rgba(255,255,255,0.72)",
+                    border: "1px solid rgba(139,111,71,0.22)",
                     borderBottom: "none",
                     backdropFilter: "blur(8px)",
+                    boxShadow: shadows.cardSoft,
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.13)";
+                    (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.95)";
                     (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.07)";
+                    (e.currentTarget as HTMLDivElement).style.background = "rgba(255,255,255,0.72)";
                     (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
                   }}
                 >
@@ -396,8 +419,8 @@ const ParashaPage = () => {
                   <div
                     className="w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center shrink-0"
                     style={{
-                      background: `${card.color}28`,
-                      border: `1.5px solid ${card.color}55`,
+                      background: `${card.color}1A`,
+                      border: `1.5px solid ${card.color}66`,
                     }}
                   >
                     <span style={{ color: card.color }}>{card.icon}</span>
@@ -405,13 +428,13 @@ const ParashaPage = () => {
                   <div>
                     <p
                       className="font-semibold text-sm md:text-base leading-tight"
-                      style={{ fontFamily: fonts.body, color: "#fff" }}
+                      style={{ fontFamily: fonts.body, color: colors.textDark }}
                     >
                       {card.title}
                     </p>
                     <p
                       className="text-xs mt-0.5 leading-snug hidden md:block"
-                      style={{ color: "rgba(255,255,255,0.55)", fontFamily: fonts.body }}
+                      style={{ color: colors.textMuted, fontFamily: fonts.body }}
                     >
                       {card.subtitle}
                     </p>

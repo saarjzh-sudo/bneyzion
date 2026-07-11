@@ -67,7 +67,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
   const removeFav = useRemoveFavorite();
   const isFavorited = !!favoriteRecord;
   const awardPoints = useAwardPoints();
-  const mediaProgressRef = useMediaProgress(lessonId);
+  const { mediaRef: mediaProgressRef } = useMediaProgress(lessonId);
 
   // Update URL for SEO when dialog opens/closes
   useEffect(() => {

@@ -275,6 +275,97 @@ export function getParashaVerse(parasha: string): { text: string; reference: str
   return PARASHA_VERSES[parasha];
 }
 
+// ── חידות לילדים — סדרה-לכל-חומש ────────────────────────────────────────────
+// 5 series titled "חידות לילדים - פרשת השבוע, לפי סדר העולים לתורה" (published),
+// one per chumash. On 11.7.2026 their `bible_book` column was set in the DB
+// (backup: series_bak_riddles_20260711), so the primary lookup is by bible_book.
+// This map is the code-side safety net if bible_book is ever wiped again.
+export const CHUMASH_RIDDLE_SERIES: Record<string, string> = {
+  "בראשית": "faaf06ea-0b08-4634-b1fb-d489249e7ed0",
+  "שמות":   "26a2076b-f716-4d49-87f9-59673f18db07",
+  "ויקרא":  "dd663cb8-5866-4aff-ba36-5e977338756b",
+  "במדבר":  "b654c91c-1d39-4ede-8f2b-6fd3ed2f3985",
+  "דברים":  "00b7226a-cb33-470b-8710-ba574662f406",
+};
+
+// Legacy mixed riddles series ("חידות לילדים פ\"ש", 50 lessons) — fallback only.
+export const LEGACY_RIDDLES_SERIES_ID = "c852edd8-d959-4c8d-bf7e-17b5881275fa";
+
+// DB spelling variants per parasha (titles differ from the hebcal names):
+// "ניצבים" (עם יו"ד), "שלח" (בלי "לך"), וכן הלאה.
+const PARASHA_NAME_ALIASES: Record<string, string[]> = {
+  "נצבים":   ["ניצבים"],
+  "שלח לך":  ["שלח"],
+  "קורח":    ["קרח"],
+  "חוקת":    ["חקת"],
+  "בחוקותי": ["בחקתי", "בחקותי", "בחוקתי"],
+  "תצוה":    ["תצווה"],
+  "פנחס":    ["פינחס"],
+};
+
+/** Normalize a riddle/lesson title for matching: strip quotes, unify
+ *  hyphen/maqaf → space, collapse whitespace. "פרשות מטות-מסעי" → "פרשות מטות מסעי". */
+function normalizeForMatch(s: string): string {
+  return s
+    .replace(/[״"'׳`]/g, "")
+    .replace(/[-–—־]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/** True if `seq` appears as a consecutive token run inside `tokens`. */
+function seqInTokens(tokens: string[], seq: string[]): boolean {
+  outer: for (let i = 0; i + seq.length <= tokens.length; i++) {
+    for (let j = 0; j < seq.length; j++) {
+      if (tokens[i + j] !== seq[j]) continue outer;
+    }
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Which parashiot (canonical names from PARASHIOT) are mentioned in a title.
+ * Token-exact, so "בשלח" never matches "שלח", and "מנחם" never matches "נח".
+ * Handles "פרשת"/"פרשות" prefixes implicitly (they're just extra tokens) and
+ * hyphen/space double-parasha forms via normalizeForMatch.
+ */
+export function detectParashiotInTitle(title: string): Set<string> {
+  const tokens = normalizeForMatch(title).split(" ");
+  const found = new Set<string>();
+  for (const name of PARASHIOT) {
+    const variants = [name, ...(PARASHA_NAME_ALIASES[name] ?? [])];
+    for (const v of variants) {
+      if (seqInTokens(tokens, v.split(" "))) {
+        found.add(name);
+        break;
+      }
+    }
+  }
+  return found;
+}
+
+/**
+ * Score how well a riddle-lesson title matches the current week's parasha.
+ * Works for double parashiot in BOTH directions:
+ *   - week "מטות-מסעי" ← lesson "פרשות מטות מסעי" (exact, 3) or "פרשת מטות" (half, 2)
+ *   - week "מטות" (a year they're read separately) ← lesson "פרשות מטות מסעי" (superset, 1)
+ * Returns 0 = no match; higher = better.
+ */
+export function scoreRiddleLessonMatch(lessonTitle: string, parasha: string): number {
+  const want = detectParashiotInTitle(parasha);
+  if (want.size === 0) return 0;
+  const have = detectParashiotInTitle(lessonTitle);
+  if (have.size === 0) return 0;
+  const haveArr = [...have];
+  const wantArr = [...want];
+  const sameSet = have.size === want.size && haveArr.every((n) => want.has(n));
+  if (sameSet) return 3; // exact — e.g. "פרשות מטות מסעי" in a מטות-מסעי week
+  if (haveArr.every((n) => want.has(n))) return 2; // lesson covers half of a double week
+  if (wantArr.every((n) => have.has(n))) return 1; // combined lesson covers a single week
+  return 0;
+}
+
 // Article series that appear on the parasha page
 // These are standalone series with one lesson per parasha
 // Parsha-page editorial columns. Round-2 (14.6.2026): list rebuilt against the

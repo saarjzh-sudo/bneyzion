@@ -436,6 +436,59 @@ export function useBibleChapter(book: string | undefined, chapter: number | unde
   });
 }
 
+// ── family_cards — כרטיסיות "תנ״ך למשפחה" (הערת סער, 11.7.2026) ───────────
+// התוכן עבר מ-hardcoded בקוד (FamilyTanach.tsx + DesignPreviewHome.tsx) לטבלת
+// family_cards ב-Supabase, כדי שאפשר יהיה לשלוט בו מהאדמין (/admin/content?tab=family).
+// RLS: קריאה ציבורית לפעילים בלבד (is_active=true), כתיבה לאדמין בלבד (level14).
+
+export interface FamilyCard {
+  id: string;
+  card_key: string;          // מזהה קבוע (parasha / chapter-weekly / ...)
+  title: string;
+  description: string | null;
+  href: string;              // נתיב פנימי באתר
+  image_url: string | null;
+  badge: string | null;
+  home_title: string | null;       // כותרת חלופית לסקשן דף-הבית (אם שונה)
+  home_description: string | null; // תיאור חלופי לדף-הבית
+  show_on_home: boolean;     // האם הכרטיס מופיע גם בסקשן "תנ״ך למשפחה" בדף הבית
+  sort_order: number;
+  is_active: boolean;
+}
+
+// כל הכרטיסיות הפעילות, לפי סדר — לעמוד /family-tanach.
+// public_read ב-RLS כבר מסנן is_active=true; הסינון כאן הוא הגנה כפולה בלבד.
+export function useFamilyCards() {
+  return useQuery({
+    queryKey: ["family-cards"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("family_cards")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order", { ascending: true });
+      if (error) throw error;
+      return (data ?? []) as FamilyCard[];
+    },
+    staleTime: 1000 * 60 * 10,
+  });
+}
+
+// ── isWeeklyChapterProgram — סינון-תצוגה נגד כפילות (הערת סער, 11.7.2026) ──
+// "בקורסים, תכנית לחיות תנ״ך — היא תכנית הפרק השבועי. תוריד, זה כפילות."
+// שורת התכנית ב-community_courses לא נמחקת (סוכן אחר עובד על הטבלה במקביל) —
+// הכפילות נפתרת בקוד: CommunityPage מסתיר כל כרטיס שמייצג את התכנית עצמה
+// ומציג במקומו כרטיס סטטי אחד שמוביל ל-/chapter-weekly.
+export function isWeeklyChapterProgram(course: {
+  program_slug?: string | null;
+  title?: string | null;
+}): boolean {
+  if (course.program_slug === "weekly-chapter") return true;
+  // תופס גם את "לחיות תנ״ך - תכנית המנויים" בכל וריאציית גרשיים
+  const title = (course.title ?? "").replace(/["״׳']/g, "");
+  return title.includes("לחיות תנך") || title.includes("הפרק השבועי");
+}
+
 export function useMemberAccess(userEmail: string | undefined) {
   return useQuery({
     queryKey: ["member-access", userEmail],

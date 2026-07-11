@@ -8,11 +8,17 @@
  *   אם אין answer → מדלג (ok:false, skipped: "not-answered")
  *   אחרת שולח מייל RTL נקי עם השאלה והתשובה, ומחתים email_sent_at.
  *
- * תעבורת מייל: Resend — בדיוק כמו send-admin-email (אומת 1.7.2026: ל-Smoove
- * אין endpoint transactional). צריך את אותם secrets:
- *   RESEND_API_KEY   — מפתח Resend
- *   RESEND_FROM      — כתובת מאומתת, למשל "בני ציון <office@bneyzion.co.il>"
- * (SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY מוזרקים אוטומטית ע"י הפלטפורמה.)
+ * תעבורת מייל: Smoove (הוחלף מ-Resend 11.7.2026 — RESEND_API_KEY מעולם לא הוגדר).
+ * מתכון מייל-לנמען-בודד המאומת של Smoove:
+ *   1. upsert איש קשר: POST /Contacts?updateIfExists=true&restoreIfDeleted=true
+ *      ⚠️ בלי lists_ToSubscribe — אסור לגעת ברשימות (רשימה = שיגור המוני / אוטומציות).
+ *   2. POST /Campaigns?sendnow=true עם:
+ *      { subject, fromName, body(html), toMembersByEmail:[email], customUnsubscribeMode:"None" }
+ *      ⚠️ fromName חובה בנמען בודד (בלעדיו Smoove מחזירה ErrNotExists).
+ *      ⚠️ לעולם לא toListsById — Smoove שולחת ל-UNION של הרשימה והבודד.
+ * Secret נדרש:
+ *   SMOOVE_API_KEY — מפתח ה-API של חשבון Smoove של בני ציון (Supabase secrets, לא בקוד)
+ * (SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY + SUPABASE_ANON_KEY מוזרקים אוטומטית ע"י הפלטפורמה.)
  *
  * תמיד מחזיר 200 (חוץ מ-OPTIONS) עם { ok, sent?, skipped?, error? } — כישלון
  * מייל לעולם לא אמור לשבור את זרימת המענה בצד האדמין.
@@ -26,6 +32,12 @@ const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
+
+const SMOOVE_BASE = "https://rest.smoove.io/v1";
+const FROM_NAME = "בית המדרש בני ציון";
+// Cloudflare של Smoove חוסם User-Agent לא-דפדפני (403 error 1010) — מזדהים כדפדפן.
+const SMOOVE_UA =
+  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
 
 /** בריחת HTML לתוכן שהגיע מגולשים — השאלה/השם נכנסים למייל כטקסט, לא כתגיות. */
 function esc(s: string): string {
@@ -73,6 +85,63 @@ function buildEmailHtml(askerName: string, question: string, answer: string, ans
     </div>
   </div>
 </div>`;
+}
+
+/**
+ * שליחת מייל טרנזקציוני לנמען יחיד דרך Smoove.
+ * מחזיר { ok, campaignId?, error? }. לעולם לא נוגע ברשימות.
+ */
+async function sendSingleEmailViaSmoove(
+  apiKey: string,
+  toEmail: string,
+  toName: string,
+  subject: string,
+  html: string,
+): Promise<{ ok: boolean; campaignId?: number; error?: string }> {
+  const headers = {
+    Authorization: `Bearer ${apiKey}`,
+    "Content-Type": "application/json",
+    "User-Agent": SMOOVE_UA,
+  };
+
+  // שלב 1 — upsert איש קשר (בלי שום רשימה!) כדי שהקמפיין לנמען-בודד ימצא אותו.
+  const contactRes = await fetch(`${SMOOVE_BASE}/Contacts?updateIfExists=true&restoreIfDeleted=true`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ email: toEmail, firstName: toName }),
+  });
+  if (!contactRes.ok) {
+    const t = await contactRes.text();
+    return { ok: false, error: `smoove contact upsert failed (${contactRes.status}): ${t.slice(0, 300)}` };
+  }
+
+  // שלב 2 — קמפיין sendnow לנמען הבודד בלבד.
+  // ⚠️ אסור להוסיף toListsById בשום תנאי — זה משגר לרשימה שלמה.
+  const campaignRes = await fetch(`${SMOOVE_BASE}/Campaigns?sendnow=true`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      subject,
+      fromName: FROM_NAME,
+      body: html,
+      toMembersByEmail: [toEmail],
+      customUnsubscribeMode: "None",
+    }),
+  });
+  const bodyText = await campaignRes.text();
+  if (!campaignRes.ok) {
+    return { ok: false, error: `smoove campaign failed (${campaignRes.status}): ${bodyText.slice(0, 300)}` };
+  }
+  let campaignId: number | undefined;
+  try {
+    campaignId = JSON.parse(bodyText || "{}")?.id;
+  } catch {
+    /* גוף לא-JSON — נשאיר undefined */
+  }
+  if (!campaignId) {
+    return { ok: false, error: `smoove returned 200 without campaign id: ${bodyText.slice(0, 300)}` };
+  }
+  return { ok: true, campaignId };
 }
 
 Deno.serve(async (req) => {
@@ -125,23 +194,20 @@ Deno.serve(async (req) => {
     if (q.email_sent_at) return json({ ok: true, sent: false, skipped: "already-sent" });
     if (!q.answer) return json({ ok: false, sent: false, skipped: "not-answered" });
 
-    // תעבורת Resend — זהה ל-send-admin-email (אותו ספק, אותם env names).
-    const key = Deno.env.get("RESEND_API_KEY");
-    const from = Deno.env.get("RESEND_FROM") || "בני ציון <onboarding@resend.dev>";
-    if (!key) return json({ ok: false, error: "RESEND_API_KEY not configured", needs: "RESEND_API_KEY + RESEND_FROM" });
+    // תעבורת Smoove — מייל טרנזקציוני לנמען יחיד. המפתח מגיע מ-secret, לא מהקוד.
+    const smooveKey = Deno.env.get("SMOOVE_API_KEY");
+    if (!smooveKey) return json({ ok: false, error: "SMOOVE_API_KEY not configured", needs: "SMOOVE_API_KEY" });
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from,
-        to: q.asker_email,
-        subject: "התשובה לשאלה ששאלתם באתר בני ציון",
-        html: buildEmailHtml(q.asker_name, q.question, q.answer, q.answered_by),
-      }),
-    });
-    const body = await res.text();
-    if (!res.ok) return json({ ok: false, status: res.status, error: body.slice(0, 500) });
+    // בלי אמוג'י בכותרת מייל — כלל ברזל.
+    const subject = "התשובה לשאלה ששאלתם באתר בני ציון";
+    const result = await sendSingleEmailViaSmoove(
+      smooveKey,
+      q.asker_email,
+      q.asker_name,
+      subject,
+      buildEmailHtml(q.asker_name, q.question, q.answer, q.answered_by),
+    );
+    if (!result.ok) return json({ ok: false, error: result.error });
 
     // חותמת אידמפוטנטיות — רק אחרי שליחה מוצלחת.
     const { error: stampError } = await supabase
@@ -153,7 +219,7 @@ Deno.serve(async (req) => {
       return json({ ok: true, sent: true, warning: `email sent but stamp failed: ${stampError.message}` });
     }
 
-    return json({ ok: true, sent: true, provider: "resend", result: JSON.parse(body || "{}") });
+    return json({ ok: true, sent: true, provider: "smoove", campaign_id: result.campaignId });
   } catch (e) {
     return json({ ok: false, error: e instanceof Error ? e.message : String(e) });
   }

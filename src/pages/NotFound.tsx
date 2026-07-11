@@ -1,17 +1,21 @@
-import { useLocation, Link, Navigate } from "react-router-dom";
+import { useLocation, Link, Navigate, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { BookOpen, Home, Search, Library } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import GlobalSearch from "@/components/search/GlobalSearch";
+import { isLegacyContentPath, resolveLegacyContentUrl } from "@/lib/legacyResolver";
 
 /**
  * Client-side safety net for old Umbraco (www.bneyzion.co.il) URLs.
- * The authoritative 301s live in vercel.json and fire server-side before React
- * loads. This map is the belt-and-suspenders fallback for any legacy path that
- * reaches the SPA catch-all (dev, cached client nav, or a missed edge case) —
- * so a visitor never lands on a dead 404 for a URL we already know how to route.
- * Keep in sync with the Hebrew redirects in vercel.json.
+ * All legacy routing is handled in-house (Saar's rule: no vercel.json
+ * redirects). Two layers:
+ *   1. Deep content URLs (/מאגר-עזרי-הלמידה/..., /מאגר-השיעורים-והמאמרים/...)
+ *      → LegacyContentRedirect below resolves them against Supabase to the
+ *      exact series/lesson page (see src/lib/legacyResolver.ts).
+ *   2. Simple top-level pages → the static map here.
+ * SEO: this is a client-side JS redirect — Google follows it and indexes the
+ * destination; the canonical stays the target page's own canonical.
  */
 const LEGACY_PATHS: Record<string, string> = {
   "אודותינו": "/about",
@@ -19,10 +23,10 @@ const LEGACY_PATHS: Record<string, string> = {
   "תרומות": "/donate",
   "חנות-הספרים": "/store",
   "אגף-המורים": "/teachers",
-  "מאגר-עזרי-הלמידה": "/teachers",
+  // ⚠️ "מאגר-עזרי-הלמידה" deliberately NOT mapped here — its deep URLs point
+  // at real series/lessons and are resolved exactly by LegacyContentRedirect.
   "בן-ציון-חיים-הנמן-היד": "/memorial",
   "פרשת-השבוע": "/parasha",
-  "מאגר-השיעורים-והמאמרים": "/series",
   "דרך-לימוד-התנך": "/series",
   "מקורות-על-חשיבות-לימוד-תנך": "/series",
   "תורה": "/series",
@@ -57,6 +61,46 @@ function resolveLegacyPath(pathname: string): string | null {
   return LEGACY_PATHS[firstSegment] ?? null;
 }
 
+/**
+ * Resolves a deep legacy content URL (old learning-aids / shiurim repositories)
+ * to the exact new-site page via Supabase, showing a minimal parchment+gold
+ * loader meanwhile — never a 404 flash for a Hebrew content path.
+ */
+const LegacyContentRedirect = ({ decodedPath }: { decodedPath: string }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let cancelled = false;
+    resolveLegacyContentUrl(decodedPath)
+      .then((res) => {
+        if (!cancelled) navigate(res.target, { replace: true });
+      })
+      .catch(() => {
+        if (!cancelled) navigate("/series", { replace: true });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [decodedPath, navigate]);
+
+  return (
+    <div
+      dir="rtl"
+      className="min-h-screen flex flex-col items-center justify-center gap-5 section-gradient-warm"
+      role="status"
+      aria-live="polite"
+    >
+      <span
+        className="h-10 w-10 rounded-full border-[3px] border-accent/30 border-t-accent animate-spin"
+        aria-hidden="true"
+      />
+      <p className="font-serif text-base text-muted-foreground">
+        רק רגע, מאתרים בשבילכם את הדף המדויק…
+      </p>
+    </div>
+  );
+};
+
 const bookPages = [
   { text: "בְּרֵאשִׁית בָּרָא אֱלֹהִים", opacity: 0.15, y: -20 },
   { text: "אֵת הַשָּׁמַיִם וְאֵת הָאָֽרֶץ", opacity: 0.12, y: 10 },
@@ -68,16 +112,28 @@ const NotFound = () => {
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
 
-  // Client-side safety net: if a known legacy URL slips past the server-side
-  // 301s in vercel.json (dev, cached SPA nav, or a missed edge case), catch it
-  // here and send the visitor to the right place instead of showing 404.
-  const legacyTarget = resolveLegacyPath(location.pathname);
+  let decodedPath: string;
+  try {
+    decodedPath = decodeURIComponent(location.pathname);
+  } catch {
+    decodedPath = location.pathname;
+  }
+
+  // Deep legacy content URL → exact series/lesson resolution (async, in-house).
+  const isLegacyContent = isLegacyContentPath(decodedPath);
+
+  // Simple top-level legacy page → static map.
+  const legacyTarget = isLegacyContent ? null : resolveLegacyPath(location.pathname);
 
   useEffect(() => {
-    if (!legacyTarget) {
+    if (!legacyTarget && !isLegacyContent) {
       console.error("404 Error: User attempted to access non-existent route:", location.pathname);
     }
-  }, [location.pathname, legacyTarget]);
+  }, [location.pathname, legacyTarget, isLegacyContent]);
+
+  if (isLegacyContent) {
+    return <LegacyContentRedirect decodedPath={decodedPath} />;
+  }
 
   if (legacyTarget) {
     return <Navigate to={legacyTarget} replace />;

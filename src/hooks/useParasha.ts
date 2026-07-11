@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { getCurrentParasha, getParashaSeriesTitle, getParashaChumash, PARASHA_ARTICLE_SERIES } from "@/lib/parashaCalendar";
-
-const RIDDLES_SERIES_ID = "c852edd8-d959-4c8d-bf7e-17b5881275fa";
+import {
+  getCurrentParasha,
+  getParashaSeriesTitle,
+  getParashaChumash,
+  PARASHA_ARTICLE_SERIES,
+  CHUMASH_RIDDLE_SERIES,
+  LEGACY_RIDDLES_SERIES_ID,
+  scoreRiddleLessonMatch,
+} from "@/lib/parashaCalendar";
 
 export interface ParashaLesson {
   id: string;
@@ -307,21 +313,65 @@ export function useParasha() {
     },
   });
 
-  // Get riddle for current parasha
+  // Get riddle for current parasha (Saar 11.7.2026: "יש 5 סדרות כאלה על כל הפרשות").
+  // Primary source: the per-chumash series "חידות לילדים - פרשת השבוע, לפי סדר
+  // העולים לתורה" — looked up by series.bible_book (set in DB 11.7.2026, backup
+  // series_bak_riddles_20260711), with a hardcoded ID map as safety net.
+  // Matching is done client-side with scoreRiddleLessonMatch, which handles
+  // "פרשת"/"פרשות", hyphen vs space, spelling variants (ניצבים/שלח), and double
+  // parashiot in both directions (combined week ↔ combined/single lesson).
+  // Fallback: the legacy mixed series (c852edd8) when nothing matches.
   const riddleQuery = useQuery({
-    queryKey: ["parasha-riddle", parasha],
+    queryKey: ["parasha-riddle", parasha, chumash],
     refetchInterval: 30_000,
     refetchOnWindowFocus: true,
     queryFn: async () => {
-      const { data: lessons } = await supabase
-        .from("lessons")
-        .select("id, title, content, description")
-        .eq("series_id", RIDDLES_SERIES_ID)
-        .eq("status", "published")
-        .ilike("title", `%${parasha}%`)
-        .limit(1);
+      type RiddleLesson = { id: string; title: string; content: string | null; description: string | null; series_id: string };
 
-      return lessons?.[0] || null;
+      const pickBest = (lessons: RiddleLesson[] | null): RiddleLesson | null => {
+        const scored = (lessons || [])
+          .map((l) => ({ l, score: scoreRiddleLessonMatch(l.title, parasha) }))
+          .filter((x) => x.score > 0 && x.l.content);
+        scored.sort((a, b) => b.score - a.score);
+        return scored[0]?.l || null;
+      };
+
+      // 1) Per-chumash riddle series
+      if (chumash) {
+        const { data: seriesMatches } = await supabase
+          .from("series")
+          .select("id")
+          .eq("bible_book", chumash)
+          .ilike("title", "%חידות לילדים%")
+          .in("status", ["active", "published"]);
+        let seriesIds = (seriesMatches || []).map((s) => s.id);
+        if (seriesIds.length === 0 && CHUMASH_RIDDLE_SERIES[chumash]) {
+          seriesIds = [CHUMASH_RIDDLE_SERIES[chumash]];
+        }
+        if (seriesIds.length > 0) {
+          const { data: lessons } = await supabase
+            .from("lessons")
+            .select("id, title, content, description, series_id")
+            .in("series_id", seriesIds)
+            .eq("status", "published")
+            .limit(60);
+          const best = pickBest(lessons as RiddleLesson[] | null);
+          if (best) return { lesson: best, seriesId: best.series_id };
+        }
+      }
+
+      // 2) Legacy fallback series
+      const { data: legacy } = await supabase
+        .from("lessons")
+        .select("id, title, content, description, series_id")
+        .eq("series_id", LEGACY_RIDDLES_SERIES_ID)
+        .eq("status", "published")
+        .limit(80);
+      const legacyBest = pickBest(legacy as RiddleLesson[] | null);
+      return {
+        lesson: legacyBest,
+        seriesId: (chumash && CHUMASH_RIDDLE_SERIES[chumash]) || LEGACY_RIDDLES_SERIES_ID,
+      };
     },
   });
 
@@ -355,7 +405,10 @@ export function useParasha() {
     lessons: parashaLessonsQuery.data || [],
     audioLessons: audioLessonsQuery.data || [],
     articleSeries: articleSeriesQuery.data || PARASHA_ARTICLE_SERIES.map(s => ({ title: s.title, rabbi: s.rabbi, seriesId: null, lessonId: null, lessonTitle: null, lessonContent: null })),
-    riddle: riddleQuery.data || null,
+    riddle: riddleQuery.data?.lesson || null,
+    // The riddle series that fits the current chumash — used by the CTA card
+    // when there's no matched lesson to scroll to.
+    riddleSeriesId: riddleQuery.data?.seriesId || LEGACY_RIDDLES_SERIES_ID,
     isLoading: parashaLessonsQuery.isLoading || audioLessonsQuery.isLoading || articleSeriesQuery.isLoading,
   };
 }
