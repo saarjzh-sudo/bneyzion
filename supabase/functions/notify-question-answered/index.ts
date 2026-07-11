@@ -35,6 +35,9 @@ const corsHeaders = {
 
 const SMOOVE_BASE = "https://rest.smoove.io/v1";
 const FROM_NAME = "בית המדרש בני ציון";
+// ⚠️ fromEmail חובה: קמפיין בלי שולח מפורש מקבל "Successful" מ-Smoove אבל לא נמסר בפועל
+// (אומת 11.7.2026 — בלי fromEmail המייל לא הגיע לג'ימייל; עם fromEmail נמסר תוך דקות).
+const FROM_EMAIL = Deno.env.get("SMOOVE_FROM_EMAIL") || "office@bneyzion.co.il";
 // Cloudflare של Smoove חוסם User-Agent לא-דפדפני (403 error 1010) — מזדהים כדפדפן.
 const SMOOVE_UA =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36";
@@ -123,6 +126,7 @@ async function sendSingleEmailViaSmoove(
     body: JSON.stringify({
       subject,
       fromName: FROM_NAME,
+      fromEmail: FROM_EMAIL,
       body: html,
       toMembersByEmail: [toEmail],
       customUnsubscribeMode: "None",
