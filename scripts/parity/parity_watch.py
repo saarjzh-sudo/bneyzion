@@ -17,6 +17,13 @@ Foundational checks (deterministic, no fuzzy old-matching needed):
   3. THIN       — a book-category child series with lesson_count=1 (caught "1 of 18").
   4. MEMBERSHIP — old child-series of a section not present in new (where cache resolves).
 
+Plus 3 source-level DB-integrity checks (R8, 22.6.2026 — run ONCE per audit, catch the
+round 7-8 data-shape regressions at the source before they reach any page):
+  5. DUPLICATES   — exact dup rows in rabbi_page_items / lesson_topics / series_topics (the 101 class).
+  6. TEACHER-LEAK — a teacher-EXCLUSIVE lesson/series wired to a public topic (the דניאל 4383e052 class).
+  7. GUARD-HEALTH — the unique indexes that prevent re-duplication still exist.
+Run isolated+fast with `--integrity`.
+
 Usage:
   python3 parity_watch.py            # full run → report + WhatsApp
   python3 parity_watch.py --no-wa    # run, write report, skip WhatsApp (dry)
@@ -60,7 +67,10 @@ def q(sql, _tries=6):
         if isinstance(data, dict) and "Throttler" in str(data.get("message","")):
             time.sleep(2.0 * (i + 1)); continue
         time.sleep(1.0 * (i + 1))   # other transient error
-    return []
+    # Exhausted retries = a definitive measurement FAILURE. Raise instead of returning []:
+    # a silent [] becomes surfaced=0 downstream and fakes a "REGRESSION →0" (caught רות + the
+    # all-zeros 01:56 run). The caller's try/except turns this into an honest status="error" row.
+    raise RuntimeError(f"query failed after {_tries} tries")
 
 # Recorded project is surfaced by title-pattern (W1), NOT by parent_id — mirror that count.
 RECORDED_COUNT_SQL = ("""SELECT COUNT(*) n FROM series
@@ -216,6 +226,59 @@ def check_teacher_section(sec):
             "severity": "foundational" if flags else "clean",
             "status": "gap" if flags else "ok"}
 
+# ── global DB-integrity checks (R8, 22.6.2026) ───────────────────────────────
+# The per-section checks above are render-faithful but miss the data-shape bug classes
+# that caused the round 7-8 regressions. These run ONCE per audit (not per section) and
+# catch them at the source — before they ever reach a page.
+DUP_TABLES = [
+    ("rabbi_page_items", "rabbi_id, COALESCE(lesson_id,series_id), kind", "דפי-רבנים"),
+    ("lesson_topics",    "topic_id, lesson_id",                          "נושא→שיעור"),
+    ("series_topics",    "topic_id, series_id",                          "נושא→סדרה"),
+]
+# unique guards that MUST stay present (else duplicates can silently re-form)
+REQUIRED_GUARDS = {
+    "rabbi_page_items": ["rabbi_page_items_uniq_lesson", "rabbi_page_items_uniq_series"],
+}
+
+def check_db_integrity():
+    """3 source-level checks added after round 8:
+       1. DUPLICATES   — the 101-row class (same rabbi+ref+kind / same topic+ref twice).
+       2. TEACHER-LEAK — a teacher-EXCLUSIVE lesson/series wired to a PUBLIC topic (דניאל 4383e052).
+       3. GUARD-HEALTH — the 22.6 unique indexes still exist (else dups re-form on next re-run)."""
+    findings = []
+
+    # 1. DUPLICATES — exact duplicate rows the migration kept re-inserting.
+    for table, keys, label in DUP_TABLES:
+        r = q(f"SELECT count(*) n FROM (SELECT {keys} FROM {table} "
+              f"GROUP BY {keys} HAVING count(*)>1) t")
+        n = int(r[0]["n"]) if r else 0
+        if n:
+            findings.append({"check": "DUPLICATES", "severity": "foundational",
+                             "detail": f"{n} כפילויות ב-{table} ({label})"})
+
+    # 2. TEACHER-LEAK into public topics — teacher-only item linked to a topic.
+    #    Public query hides it (audience filter), but the relation itself is dirty → iron rule.
+    leak_l = q("""SELECT count(*) n FROM lesson_topics lt JOIN lessons l ON l.id=lt.lesson_id
+        WHERE l.audience_tags @> '{teachers}' AND NOT (l.audience_tags @> '{general}')""")
+    nl = int(leak_l[0]["n"]) if leak_l else 0
+    leak_s = q("""SELECT count(*) n FROM series_topics st JOIN series s ON s.id=st.series_id
+        WHERE s.audience_tags @> '{teachers}' AND NOT (s.audience_tags @> '{general}')""")
+    ns = int(leak_s[0]["n"]) if leak_s else 0
+    if nl or ns:
+        findings.append({"check": "TEACHER_LEAK", "severity": "foundational",
+                         "detail": f"תוכן-מורים מקושר לנושא ציבורי: {nl} שיעורים + {ns} סדרות"})
+
+    # 3. GUARD-HEALTH — the anti-duplicate unique indexes must stay present.
+    for table, guards in REQUIRED_GUARDS.items():
+        names = "','".join(guards)
+        r = q(f"SELECT count(*) n FROM pg_indexes WHERE tablename='{table}' "
+              f"AND indexname IN ('{names}')")
+        have = int(r[0]["n"]) if r else 0
+        if have < len(guards):
+            findings.append({"check": "GUARD_MISSING", "severity": "foundational",
+                             "detail": f"חסר unique-guard ב-{table} ({have}/{len(guards)}) — כפילויות יכולות לחזור"})
+    return findings
+
 # ── run ──────────────────────────────────────────────────────────────────────
 def run(send_wa=True):
     secs = load_sections()
@@ -228,38 +291,64 @@ def run(send_wa=True):
             results.append({"key": s["key"], "label": s["label"], "status": "error",
                             "severity": "error", "flags": [f"ERR:{e}"]})
     # REGRESSION vs baseline — a section's surfaced count dropping = content vanished (hard alert).
+    # GUARD: only sections with a REAL surfaced reading are eligible. A query timeout/failure
+    # gives status="error" with no "surfaced" — that is a measurement failure, NOT a regression
+    # to 0. Skipping it kills the false "REGRESSION 54→0" class (רות timeout, all-zeros run).
     base = json.load(open(BASELINE, encoding="utf-8")) if BASELINE.exists() else {}
     for r in results:
+        if r.get("status") == "error" or "surfaced" not in r:
+            continue
         prev = base.get(r["key"])
-        cur = r.get("surfaced", 0)
+        cur = r["surfaced"]
         if prev is not None and cur < prev * 0.9 and prev - cur >= 3:
             r["flags"].append(f"REGRESSION {prev}→{cur}")
             r["severity"] = "foundational"; r["status"] = "gap"
-    # update baseline to the max-ever surfaced (so a later fix raises the bar, a drop trips it)
-    new_base = {r["key"]: max(base.get(r["key"], 0), r.get("surfaced", 0)) for r in results}
+    # Baseline = max-ever surfaced, updated ONLY from real reads (an error's implicit 0 must never
+    # touch it). To RESET the bar after legitimate content cleanup, delete watch-baseline.json and
+    # run once — a missing baseline adopts the current counts as the new floor.
+    new_base = dict(base)
+    for r in results:
+        if r.get("status") == "error" or "surfaced" not in r:
+            continue
+        new_base[r["key"]] = max(base.get(r["key"], 0), r["surfaced"])
     json.dump(new_base, open(BASELINE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+
+    # R8 global DB-integrity (duplicates / teacher-leak / guard health) — source-level, once per run
+    try:
+        integrity = check_db_integrity()
+    except Exception as e:
+        integrity = [{"check": "ERROR", "severity": "error",
+                      "detail": f"בדיקת-שלמות-DB נכשלה (query error, לא ממצא): {e}"}]
 
     gaps = [r for r in results if r["status"] == "gap"]
     foundational = [r for r in gaps if r["severity"] == "foundational"]
     ts = il_now().strftime("%Y%m%d-%H%M")
     report = {"ts": il_now().isoformat(), "sections": len(results),
-              "gaps": len(gaps), "foundational": len(foundational), "results": results}
+              "gaps": len(gaps), "foundational": len(foundational) + len(integrity),
+              "integrity": integrity, "results": results}
     out = REPORTS / f"watch-{ts}.json"
     json.dump(report, open(out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    print(f"sections={len(results)} gaps={len(gaps)} foundational={len(foundational)} → {out.name}")
+    print(f"sections={len(results)} gaps={len(gaps)} foundational={len(foundational)} "
+          f"integrity={len(integrity)} → {out.name}")
     for g in gaps:
         print(f"  [{g['severity']:11s}] {g['label']}: {' '.join(g['flags'])}")
+    for fnd in integrity:
+        print(f"  [DB:{fnd['check']:11s}] {fnd['detail']}")
     if send_wa:
         send_summary(report, out.name)
     return report
 
 def send_summary(report, fname):
     hhmm = il_now().strftime("%H:%M")
-    g, f = report["gaps"], report["foundational"]
-    if g == 0:
-        msg = f"🟢 audit פאריטי {hhmm} — ✓ 0 פערים, פאריטי מלא ({report['sections']} סקשנים)."
+    g = report["gaps"]
+    integ = report.get("integrity", [])
+    total = g + len(integ)
+    if total == 0:
+        msg = f"🟢 audit פאריטי {hhmm} — ✓ 0 פערים, פאריטי מלא + שלמות-DB ({report['sections']} סקשנים)."
     else:
-        lines = [f"🔶 audit פאריטי {hhmm} — {g} פערים ({f} יסוד) מתוך {report['sections']} סקשנים:"]
+        lines = [f"🔶 audit פאריטי {hhmm} — {g} פערי-סקשן + {len(integ)} שלמות-DB ({report['sections']} סקשנים):"]
+        for fnd in integ:   # DB-integrity first — these are the hard data-shape regressions
+            lines.append(f"🔴 {fnd['detail']}")
         for r in report["results"]:
             if r["status"] == "gap":
                 lines.append(f"• {r['label']}: {' '.join(r['flags'])}")
@@ -281,4 +370,12 @@ def send_summary(report, fname):
 if __name__ == "__main__":
     if "--sections" in sys.argv:
         secs = build_sections(); print(f"built {len(secs)} sections → {SECTIONS_FILE.name}"); sys.exit(0)
+    if "--integrity" in sys.argv:   # fast, isolated DB-integrity run (no 50-section sweep)
+        fnd = check_db_integrity()
+        print(f"DB integrity: {len(fnd)} findings")
+        for f in fnd:
+            print(f"  🔴 [{f['check']}] {f['detail']}")
+        if not fnd:
+            print("  ✓ clean — 0 duplicates, 0 teacher-leak, unique-guards present")
+        sys.exit(0)
     run(send_wa="--no-wa" not in sys.argv)
