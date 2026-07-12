@@ -2,26 +2,23 @@
  * DesignPreviewYehoshuaAdmin — Admin Dashboard
  * Route: /design-yehoshua-admin
  *
- * Auth-gated: Google OAuth. Allowlist: saar + Rav Yoav Oriel.
- * Authenticated admin sees full donations table (PII included) + CSV export.
- * KPI cards are served from yehoshua_campaign_stats view (faster, no RLS issue).
- * Full rows fetched from donations table via authenticated Supabase client.
+ * Auth: simple password gate (default "123456", overridable via the
+ * YEHOSHUA_ADMIN_PASSWORD env on the endpoint).
  *
- * Security model:
- *   - anon: can INSERT (Grow webhook), cannot SELECT (no SELECT policy for anon)
- *   - authenticated (allowlisted only): can SELECT via admin_select_donations policy
- *   - Non-allowlisted authenticated: policy USING clause returns false → 0 rows
- *   - Frontend: checks user.email after auth — shows "no permission" screen otherwise
- *   - Keep this list in sync with the admin_select_donations RLS policy.
+ * WHY a server endpoint instead of a direct Supabase read:
+ *   The donor rows carry PII (name, email, phone, shipping address) and the
+ *   `donations` table RLS is fail-closed — anon cannot SELECT it. So the
+ *   password-gated page does NOT read Supabase directly; it POSTs the password
+ *   to /api/yehoshua/donations, which checks it server-side and returns the
+ *   rows using the service-role key. The DB stays locked to anon; only the
+ *   endpoint (behind the password) exposes the data. See that file for detail.
  */
 
-import { useState, useEffect, useCallback } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
+import { useState, useEffect, useCallback, useMemo } from "react";
 
 const GOAL = 80_000;
-const PRODUCT = "yehoshua-campaign";
-const ADMIN_EMAILS = ["saar.j.z.h@gmail.com", "yoavoriel@gmail.com"];
+const API_ENDPOINT = "/api/yehoshua/donations";
+const PW_STORAGE_KEY = "yehoshua_admin_pw";
 
 /* ─── Types ────────────────────────────────────────────────── */
 interface CampaignStatsRow {
@@ -62,6 +59,11 @@ interface DonationRow {
   shipping_city: string | null;
   shipping_zip: string | null;
   shipping_notes: string | null;
+}
+
+interface AdminData {
+  stats: CampaignStatsRow;
+  donations: DonationRow[];
 }
 
 /* ─── Helpers ───────────────────────────────────────────────── */
@@ -155,19 +157,21 @@ function KpiCard({
   );
 }
 
-/* ─── Login Screen ───────────────────────────────────────────── */
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
-  const [loading, setLoading] = useState(false);
+/* ─── Password Screen ────────────────────────────────────────── */
+function PasswordScreen({
+  onSubmit,
+  loading,
+  error,
+}: {
+  onSubmit: (pw: string) => void;
+  loading: boolean;
+  error: string | null;
+}) {
+  const [pw, setPw] = useState("");
 
-  const handleLogin = async () => {
-    setLoading(true);
-    await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/design-yehoshua-admin`,
-      },
-    });
-    // Navigation happens automatically after OAuth round-trip
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pw.trim()) onSubmit(pw.trim());
   };
 
   return (
@@ -182,7 +186,8 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
         justifyContent: "center",
       }}
     >
-      <div
+      <form
+        onSubmit={submit}
         style={{
           background: "white",
           borderRadius: 20,
@@ -221,103 +226,65 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
           style={{
             fontSize: 14,
             color: "hsl(215 20% 50%)",
-            margin: "0 0 32px",
+            margin: "0 0 28px",
             lineHeight: 1.6,
           }}
         >
           כניסה מוגבלת למנהל בלבד.
           <br />
-          התחבר עם חשבון Google המורשה.
+          הזן את הסיסמה כדי להיכנס.
         </p>
-        <button
-          onClick={handleLogin}
-          disabled={loading}
+        <input
+          type="password"
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
+          placeholder="סיסמה"
+          autoFocus
+          dir="ltr"
           style={{
             width: "100%",
-            background: loading ? "hsl(215 15% 88%)" : "hsl(215 55% 20%)",
-            color: loading ? "hsl(215 20% 55%)" : "white",
+            border: "1.5px solid hsl(215 15% 85%)",
+            borderRadius: 12,
+            padding: "13px 16px",
+            fontSize: 16,
+            textAlign: "center",
+            letterSpacing: "0.1em",
+            color: "hsl(215 40% 15%)",
+            marginBottom: 14,
+            fontFamily: "inherit",
+          }}
+        />
+        {error && (
+          <div
+            style={{
+              color: "hsl(0 65% 45%)",
+              fontSize: 13,
+              fontWeight: 600,
+              marginBottom: 14,
+            }}
+          >
+            {error}
+          </div>
+        )}
+        <button
+          type="submit"
+          disabled={loading || !pw.trim()}
+          style={{
+            width: "100%",
+            background: loading || !pw.trim() ? "hsl(215 15% 88%)" : "hsl(215 55% 20%)",
+            color: loading || !pw.trim() ? "hsl(215 20% 55%)" : "white",
             border: "none",
             borderRadius: 12,
             padding: "14px 24px",
             fontSize: 15,
             fontWeight: 700,
-            cursor: loading ? "not-allowed" : "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 10,
+            cursor: loading || !pw.trim() ? "not-allowed" : "pointer",
             transition: "background 0.2s",
           }}
         >
-          {loading ? (
-            <span>מעבד...</span>
-          ) : (
-            <>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-              </svg>
-              כניסה עם Google
-            </>
-          )}
+          {loading ? "מאמת..." : "כניסה"}
         </button>
-      </div>
-    </div>
-  );
-}
-
-/* ─── Unauthorized Screen ────────────────────────────────────── */
-function UnauthorizedScreen({ email, onSignOut }: { email: string; onSignOut: () => void }) {
-  return (
-    <div
-      dir="rtl"
-      style={{
-        fontFamily: "'Heebo', sans-serif",
-        background: "hsl(215 55% 15%)",
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          background: "white",
-          borderRadius: 20,
-          padding: "48px 40px",
-          maxWidth: 400,
-          width: "100%",
-          textAlign: "center",
-        }}
-      >
-        <div style={{ fontSize: 40, marginBottom: 16 }}>⛔</div>
-        <h2 style={{ fontSize: 20, fontWeight: 800, color: "hsl(0 55% 40%)", margin: "0 0 8px" }}>
-          אין הרשאה
-        </h2>
-        <p style={{ fontSize: 14, color: "hsl(215 20% 50%)", margin: "0 0 8px", lineHeight: 1.6 }}>
-          המשתמש <strong>{email}</strong> אינו מורשה לעמוד זה.
-        </p>
-        <p style={{ fontSize: 13, color: "hsl(215 20% 60%)", margin: "0 0 28px" }}>
-          פנה למנהל המערכת להוספת הרשאה.
-        </p>
-        <button
-          onClick={onSignOut}
-          style={{
-            background: "hsl(215 55% 20%)",
-            color: "white",
-            border: "none",
-            borderRadius: 10,
-            padding: "12px 24px",
-            fontSize: 14,
-            fontWeight: 700,
-            cursor: "pointer",
-          }}
-        >
-          התנתק
-        </button>
-      </div>
+      </form>
     </div>
   );
 }
@@ -386,77 +353,35 @@ function exportCSV(rows: DonationRow[]) {
 }
 
 /* ─── Main Admin View ────────────────────────────────────────── */
-function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () => void }) {
-  const [stats, setStats] = useState<CampaignStatsRow>({ supporters: 0, raised: 0 });
-  const [donations, setDonations] = useState<DonationRow[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  // Filters
+function AdminView({
+  data,
+  loading,
+  error,
+  onRefresh,
+  onSignOut,
+}: {
+  data: AdminData;
+  loading: boolean;
+  error: string | null;
+  onRefresh: () => void;
+  onSignOut: () => void;
+}) {
+  // Filters (applied in-memory over the full row set from the endpoint)
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  const donations = useMemo(() => {
+    return data.donations.filter((d) => {
+      if (dateFrom && d.created_at < dateFrom) return false;
+      if (dateTo && d.created_at > dateTo + "T23:59:59") return false;
+      if (statusFilter !== "all" && d.payment_status !== statusFilter) return false;
+      return true;
+    });
+  }, [data.donations, dateFrom, dateTo, statusFilter]);
 
-    // KPIs from view (fast, no RLS issue)
-    const { data: statsData, error: statsErr } = await supabase
-      .from("yehoshua_campaign_stats")
-      .select("*")
-      .single();
-    if (statsErr) {
-      setError("שגיאה בטעינת סטטיסטיקות: " + statsErr.message);
-      setLoading(false);
-      return;
-    }
-    if (statsData) {
-      const s = statsData as { raised: number; supporters: number };
-      setStats({ supporters: Number(s.supporters) || 0, raised: Number(s.raised) || 0 });
-    }
-
-    // Full donations from table (authenticated — RLS allows saar only)
-    let query = supabase
-      .from("donations")
-      .select(
-        "id, created_at, donor_name, donor_email, phone, amount, asmachta, payment_id, payment_status, product, payment_method, card_suffix, tier_id, description, shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes"
-      )
-      .eq("product", PRODUCT)
-      .order("created_at", { ascending: false });
-
-    if (dateFrom) query = query.gte("created_at", dateFrom);
-    if (dateTo) query = query.lte("created_at", dateTo + "T23:59:59");
-    if (statusFilter !== "all") query = query.eq("payment_status", statusFilter);
-
-    const { data: donationsData, error: donationsErr } = await query;
-    if (donationsErr) {
-      setError("שגיאה בטעינת תרומות: " + donationsErr.message);
-      setLoading(false);
-      return;
-    }
-    setDonations((donationsData as DonationRow[]) || []);
-    setLoading(false);
-  }, [dateFrom, dateTo, statusFilter]);
-
-  useEffect(() => {
-    fetchData();
-
-    // Realtime subscription
-    const channel = supabase
-      .channel("yehoshua-admin-realtime")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "donations", filter: `product=eq.${PRODUCT}` },
-        () => fetchData()
-      )
-      .subscribe();
-
-    return () => { supabase.removeChannel(channel); };
-  }, [fetchData]);
-
-  const totalRaised = stats.raised;
-  const donorCount = stats.supporters;
+  const totalRaised = data.stats.raised;
+  const donorCount = data.stats.supporters;
   const remaining = Math.max(0, GOAL - totalRaised);
   const progressPct = Math.min(100, Math.round((totalRaised / GOAL) * 100));
   const avgDonation = donorCount > 0 ? Math.round(totalRaised / donorCount) : 0;
@@ -505,8 +430,23 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
             ניהול תרומות — ספר יהושע
           </h1>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ fontSize: 12, color: "hsl(38 60% 70%)" }}>{userEmail}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <button
+            onClick={onRefresh}
+            disabled={loading}
+            style={{
+              background: "hsl(215 40% 22%)",
+              color: "hsl(38 60% 78%)",
+              border: "1px solid hsl(215 30% 30%)",
+              borderRadius: 8,
+              padding: "6px 14px",
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: loading ? "not-allowed" : "pointer",
+            }}
+          >
+            {loading ? "מרענן..." : "↻ רענן"}
+          </button>
           <button
             onClick={onSignOut}
             style={{
@@ -527,11 +467,6 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
 
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "32px 24px" }}>
 
-        {loading && (
-          <div style={{ textAlign: "center", color: "hsl(215 20% 55%)", padding: "32px", fontSize: 14 }}>
-            טוען...
-          </div>
-        )}
         {error && (
           <div style={{ textAlign: "center", color: "hsl(0 65% 50%)", padding: "16px", fontSize: 13, background: "hsl(0 65% 97%)", borderRadius: 12, marginBottom: 20 }}>
             {error}
@@ -813,10 +748,10 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
           </table>
         </div>
 
-        <div style={{ marginBlockStart: 12, fontSize: 11, color: "hsl(215 20% 60%)", display: "flex", gap: 16 }}>
-          <span>KPIs: <code>yehoshua_campaign_stats</code> view</span>
-          <span>פירוט: <code>donations</code> table (RLS: admin only)</span>
-          <span>מתעדכן: realtime</span>
+        <div style={{ marginBlockStart: 12, fontSize: 11, color: "hsl(215 20% 60%)", display: "flex", gap: 16, flexWrap: "wrap" }}>
+          <span>KPIs: <code>yehoshua_campaign_stats</code></span>
+          <span>פירוט: <code>donations</code> (דרך endpoint מאובטח)</span>
+          <span>מתרענן כל 45 שניות</span>
         </div>
       </div>
     </div>
@@ -825,10 +760,73 @@ function AdminView({ userEmail, onSignOut }: { userEmail: string; onSignOut: () 
 
 /* ─── Root ───────────────────────────────────────────────────── */
 export default function DesignPreviewYehoshuaAdmin() {
-  const { user, isLoading, signOut } = useAuth();
+  const [data, setData] = useState<AdminData | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  // Attempt silent login if a password was stored from a previous visit.
+  const [booting, setBooting] = useState(
+    () => typeof window !== "undefined" && !!localStorage.getItem(PW_STORAGE_KEY)
+  );
 
-  // Auth state machine
-  if (isLoading) {
+  const load = useCallback(async (pw: string, opts?: { silent?: boolean }) => {
+    if (!opts?.silent) setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(API_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw }),
+      });
+      if (res.status === 401) {
+        localStorage.removeItem(PW_STORAGE_KEY);
+        setData(null);
+        setError("סיסמה שגויה");
+        return;
+      }
+      if (!res.ok) {
+        setError("שגיאה בטעינת הנתונים. נסה שוב.");
+        return;
+      }
+      const json = (await res.json()) as AdminData;
+      localStorage.setItem(PW_STORAGE_KEY, pw);
+      setData(json);
+      setError(null);
+    } catch {
+      setError("שגיאת רשת. בדוק חיבור ונסה שוב.");
+    } finally {
+      setLoading(false);
+      setBooting(false);
+    }
+  }, []);
+
+  // Silent re-auth on mount if we already have a stored password.
+  useEffect(() => {
+    const stored = typeof window !== "undefined" ? localStorage.getItem(PW_STORAGE_KEY) : null;
+    if (stored) load(stored, { silent: true });
+  }, [load]);
+
+  // Periodic refresh while logged in.
+  useEffect(() => {
+    if (!data) return;
+    const id = setInterval(() => {
+      const pw = localStorage.getItem(PW_STORAGE_KEY);
+      if (pw) load(pw, { silent: true });
+    }, 45_000);
+    return () => clearInterval(id);
+  }, [data, load]);
+
+  const signOut = () => {
+    localStorage.removeItem(PW_STORAGE_KEY);
+    setData(null);
+    setError(null);
+  };
+
+  const refresh = () => {
+    const pw = localStorage.getItem(PW_STORAGE_KEY);
+    if (pw) load(pw);
+  };
+
+  if (booting) {
     return (
       <div
         style={{
@@ -855,29 +853,17 @@ export default function DesignPreviewYehoshuaAdmin() {
     );
   }
 
-  if (!user) {
-    return <LoginScreen onLogin={() => {}} />;
-  }
-
-  const userEmail = user.email ?? "";
-
-  if (!ADMIN_EMAILS.includes(userEmail.toLowerCase())) {
-    return (
-      <UnauthorizedScreen
-        email={userEmail}
-        onSignOut={async () => {
-          await signOut();
-        }}
-      />
-    );
+  if (!data) {
+    return <PasswordScreen onSubmit={(pw) => load(pw)} loading={loading} error={error} />;
   }
 
   return (
     <AdminView
-      userEmail={userEmail}
-      onSignOut={async () => {
-        await signOut();
-      }}
+      data={data}
+      loading={loading}
+      error={error}
+      onRefresh={refresh}
+      onSignOut={signOut}
     />
   );
 }
