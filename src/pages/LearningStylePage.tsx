@@ -8,7 +8,7 @@
  *
  * Layout: DesignLayout (v2 + sidebar). Cream+gold, RTL — כמו CategoryPage.
  */
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -18,6 +18,9 @@ import {
   Telescope,
   ChevronLeft,
   AlertCircle,
+  Search,
+  SearchX,
+  X,
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -82,10 +85,31 @@ export default function LearningStylePage() {
   const { data: series = [], isLoading } = useLearningStyleSeries(key);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
+  // חיפוש בתוך המסלול — סינון מיידי בצד-הלקוח (ה-RPC מחזיר את כל הסדרות מראש)
+  const [searchInput, setSearchInput] = useState("");
+  const [query, setQuery] = useState("");
+  useEffect(() => {
+    const t = setTimeout(() => setQuery(searchInput.trim()), 200);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE); // חיפוש חדש מאפס את "הצגת עוד"
+  }, [query]);
+
+  const filtered = useMemo(() => {
+    if (!query) return series;
+    const q = query.toLowerCase();
+    return series.filter(
+      (s) =>
+        s.title.toLowerCase().includes(q) ||
+        (s.rabbi_name ?? "").toLowerCase().includes(q),
+    );
+  }, [series, query]);
+
   if (key && !meta) return <Navigate to="/" replace />;
   const { label, Icon, desc } = meta ?? STYLE_META.muklat;
 
-  const visible = series.slice(0, visibleCount);
+  const visible = filtered.slice(0, visibleCount);
   const path = `/learning-style/${key}`;
 
   return (
@@ -211,6 +235,151 @@ export default function LearningStylePage() {
           </div>
         ) : (
           <>
+            {/* ── חיפוש במסלול ── */}
+            <div style={{ marginBottom: "1.25rem" }}>
+              <label
+                htmlFor="learning-style-search"
+                style={{
+                  position: "absolute",
+                  width: 1,
+                  height: 1,
+                  padding: 0,
+                  margin: -1,
+                  overflow: "hidden",
+                  clip: "rect(0 0 0 0)",
+                  whiteSpace: "nowrap",
+                  border: 0,
+                }}
+              >
+                חיפוש במסלול {label}
+              </label>
+              <div style={{ position: "relative", maxWidth: 420 }}>
+                <Search
+                  size={16}
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    insetInlineStart: "0.85rem",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    color: colors.textSubtle,
+                    pointerEvents: "none",
+                  }}
+                />
+                <input
+                  id="learning-style-search"
+                  type="text"
+                  dir="rtl"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="חיפוש במסלול..."
+                  autoComplete="off"
+                  style={{
+                    width: "100%",
+                    padding: "0.6rem 2.4rem",
+                    borderRadius: radii.pill,
+                    border: `1px solid rgba(139,111,71,0.25)`,
+                    background: "white",
+                    fontFamily: fonts.body,
+                    fontSize: "0.88rem",
+                    color: colors.textDark,
+                    outline: "none",
+                    boxShadow: "0 1px 4px rgba(45,31,14,0.04)",
+                    transition: "border-color 0.15s, box-shadow 0.15s",
+                  }}
+                  onFocus={(e) => {
+                    e.currentTarget.style.borderColor = colors.goldDark;
+                    e.currentTarget.style.boxShadow = "0 2px 10px rgba(139,111,71,0.15)";
+                  }}
+                  onBlur={(e) => {
+                    e.currentTarget.style.borderColor = "rgba(139,111,71,0.25)";
+                    e.currentTarget.style.boxShadow = "0 1px 4px rgba(45,31,14,0.04)";
+                  }}
+                />
+                {searchInput && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchInput("")}
+                    aria-label="ניקוי החיפוש"
+                    style={{
+                      position: "absolute",
+                      insetInlineEnd: "0.6rem",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: 24,
+                      height: 24,
+                      borderRadius: "50%",
+                      border: "none",
+                      background: "rgba(139,111,71,0.10)",
+                      color: colors.goldDark,
+                      cursor: "pointer",
+                      padding: 0,
+                    }}
+                  >
+                    <X size={13} aria-hidden="true" />
+                  </button>
+                )}
+              </div>
+              {query && filtered.length > 0 && (
+                <div
+                  aria-live="polite"
+                  style={{
+                    marginTop: "0.5rem",
+                    fontFamily: fonts.body,
+                    fontSize: "0.78rem",
+                    color: colors.textMuted,
+                  }}
+                >
+                  {filtered.length === 1 ? "סדרה אחת נמצאה" : `${filtered.length} סדרות נמצאו`}
+                </div>
+              )}
+            </div>
+
+            {filtered.length === 0 ? (
+              <div
+                role="status"
+                aria-live="polite"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  padding: "2.5rem 1.5rem",
+                  gap: "0.75rem",
+                  color: colors.textSubtle,
+                  textAlign: "center",
+                }}
+              >
+                <SearchX size={36} style={{ opacity: 0.4 }} aria-hidden="true" />
+                <div style={{ fontFamily: fonts.display, fontSize: "1.05rem", fontWeight: 600, color: colors.textMuted }}>
+                  לא נמצאו תוצאות במסלול הזה
+                </div>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textSubtle }}>
+                  אפשר לנסות מילה אחרת או קצרה יותר
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSearchInput("")}
+                  style={{
+                    marginTop: "0.25rem",
+                    padding: "0.45rem 1.3rem",
+                    borderRadius: radii.pill,
+                    border: `1px solid ${colors.goldDark}`,
+                    background: "transparent",
+                    color: colors.goldDark,
+                    fontFamily: fonts.body,
+                    fontSize: "0.82rem",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  ניקוי החיפוש
+                </button>
+              </div>
+            ) : (
+              <>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               {visible.map((s) => (
                 <Link key={s.id} to={`/series/${s.id}`} style={{ textDecoration: "none", display: "block" }}>
@@ -275,7 +444,7 @@ export default function LearningStylePage() {
               ))}
             </div>
 
-            {series.length > visibleCount && (
+            {filtered.length > visibleCount && (
               <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
                 <button
                   onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
@@ -291,9 +460,11 @@ export default function LearningStylePage() {
                     cursor: "pointer",
                   }}
                 >
-                  הצגת עוד ({series.length - visibleCount} נותרו)
+                  הצגת עוד ({filtered.length - visibleCount} נותרו)
                 </button>
               </div>
+            )}
+              </>
             )}
           </>
         )}

@@ -10,9 +10,8 @@
  * a closing CTA. Wrapped in the production <Layout> (header + sidebar + footer), matching
  * ParashaPage.tsx's pattern.
  *
- * Real data only: the "חידות לשולחן השבת" card pulls its live lesson count from Supabase
- * (series id c852edd8-d959-4c8d-bf7e-17b5881275fa — "חידות לילדים פ"ש", 50 lessons, active,
- * audience_tags=[general] — verified 7.7.2026 via Management API). No mock numbers.
+ * Real data only — card content is admin-managed via the family_cards table.
+ * (12.7.2026, סער: כרטיס "חידות לשולחן השבת" כובה — is_active=false, נשאר באדמין.)
  *
  * SHARED-FILE PATCHES NEEDED (not applied here — see report to Saar):
  *  1. src/App.tsx — lazy import + <Route path="/family-tanach">
@@ -22,36 +21,20 @@
 
 import { useState, type FormEvent, type CSSProperties } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { useSEO } from "@/hooks/useSEO";
 import { supabase } from "@/integrations/supabase/client";
 import { useFamilyCards } from "@/hooks/useCommunity";
 import Layout from "@/components/layout/Layout";
 import { colors, fonts, gradients, shadows } from "@/lib/designTokens";
 
-// ── Riddles series — real data, no mock ────────────────────────────────────
-const RIDDLES_SERIES_ID = "c852edd8-d959-4c8d-bf7e-17b5881275fa";
 // 7.7.2026 — הפינות היומיות (נקלטו מקבוצות "בכוח התנ״ך ננצח", רב יואב):
 const TANACH_NEWS_SERIES_ID = "5d111b52-b421-4150-adfd-df256950117c";
 const KIDS_PODCAST_SERIES_ID = "bc1d97b9-e0a5-4b88-8169-5705120bc20c";
 void TANACH_NEWS_SERIES_ID; // הכרטיס מפנה ל-/tanach-news; הקבוע נשמר לתיעוד הסדרה
 
-function useRiddlesSeries() {
-  return useQuery({
-    queryKey: ["family-tanach-riddles-series", RIDDLES_SERIES_ID],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("series")
-        .select("id, title, lesson_count, image_url, status, audience_tags")
-        .eq("id", RIDDLES_SERIES_ID)
-        .not("audience_tags", "cs", '{"teachers"}')
-        .maybeSingle();
-      if (error) throw error;
-      return data;
-    },
-    staleTime: 5 * 60 * 1000,
-  });
-}
+// 12.7.2026 (סער): כרטיס "חידות לשולחן השבת" כובה — is_active=false ב-family_cards
+// (נשאר באדמין להפעלה עתידית). הוסר גם מה-fallback הסטטי כאן, כולל hook ספירת
+// החידות (useRiddlesSeries) שכבר אין לו צרכן.
 
 interface LobbyCard {
   id: string;
@@ -96,13 +79,6 @@ const BASE_CARDS: LobbyCard[] = [
     desc: "70 ניסי מלחמת חרבות ברזל, סיפורי הצלה והשגחה שלא ישכחו",
     href: "/dor-haplaot",
     image: "/family-bible/card-dor-haplaot.jpg",
-  },
-  {
-    id: "riddles",
-    title: "חידות לשולחן השבת",
-    desc: "חידות תנ״ך לילדים, מוכן להדפסה ולשולחן השבת",
-    href: `/series/${RIDDLES_SERIES_ID}`,
-    image: "/family-bible/card-riddles.jpg",
   },
   // חדשות תנכיות — הטור היומי של הרב יואב. חוּוט 7.7.2026: הארכיון (10 טורים)
   // נקלט מקבוצות "בכוח התנ״ך ננצח" לסדרה ייעודית.
@@ -272,8 +248,9 @@ function LobbyCardTile({ card, onClick }: { card: LobbyCard; onClick: () => void
   );
 }
 
-// Canonical community WhatsApp invite (same group used on ThankYou.tsx).
-const COMMUNITY_WA_LINK = "https://chat.whatsapp.com/L1PZWRh8kxdDojWmUDMBs3";
+// 12.7.2026 (סער): הקישור הקודם הפנה לקבוצה שגויה. היעד הנכון — קבוצה 8 של
+// "בכוח התנ״ך ננצח" (יש בה מקום, 635 חברים). אותו קישור משמש גם בסקשן הדיוור בדף הבית.
+const COMMUNITY_WA_LINK = "https://chat.whatsapp.com/GVy0Gg0PCXBKouJmWVm8wY";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /** הישארו מחוברים — הצטרפות לקבוצת הווטסאפ + הרשמה לעדכוני מייל.
@@ -281,6 +258,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  *  עובד של טופס דף-הבית. */
 function StayConnectedSection() {
   const [email, setEmail] = useState("");
+  const [agreed, setAgreed] = useState(false);
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [errMsg, setErrMsg] = useState("");
 
@@ -288,6 +266,13 @@ function StayConnectedSection() {
     e.preventDefault();
     if (!EMAIL_RE.test(email.trim())) {
       setErrMsg("רגע, צריך כתובת מייל אמיתית");
+      setStatus("error");
+      return;
+    }
+    // 12.7.2026 (סער): אישור דיוור — אותו מנגנון בדיוק כמו NewsletterSection בדף הבית
+    // (checkbox חובה, אותו נוסח; agreed_to_terms + consent_at כבר נשמרים ב-insert).
+    if (!agreed) {
+      setErrMsg("יש לאשר את תנאי השימוש לפני הצטרפות");
       setStatus("error");
       return;
     }
@@ -383,6 +368,45 @@ function StayConnectedSection() {
                   {status === "submitting" ? "רגע..." : "הרשמה"}
                 </button>
               </div>
+
+              {/* אישור דיוור — נוסח זהה לטופס בדף הבית (NewsletterSection) */}
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "center",
+                  gap: "0.6rem",
+                  cursor: "pointer",
+                  textAlign: "right",
+                  marginTop: "0.75rem",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={agreed}
+                  onChange={(e) => setAgreed(e.target.checked)}
+                  style={{
+                    marginTop: "0.15rem",
+                    width: 18,
+                    height: 18,
+                    accentColor: "#8B6F47",
+                    flexShrink: 0,
+                    cursor: "pointer",
+                  }}
+                />
+                <span style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, lineHeight: 1.55 }}>
+                  קראתי ואני מסכים ל
+                  <a
+                    href="/terms"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#8B6F47", textDecoration: "underline", textUnderlineOffset: "2px" }}
+                  >
+                    תנאי השימוש
+                  </a>
+                </span>
+              </label>
+
               {status === "error" && (
                 <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: "#9B2C2C", margin: "0.7rem 0 0" }}>{errMsg}</p>
               )}
@@ -403,7 +427,6 @@ export default function FamilyTanach() {
   });
 
   const navigate = useNavigate();
-  const { data: riddlesSeries } = useRiddlesSeries();
   const { data: dbCards } = useFamilyCards();
 
   // מקור ראשי = family_cards (בשליטת האדמין). BASE_CARDS = fallback בלבד,
@@ -420,20 +443,8 @@ export default function FamilyTanach() {
     badge: c.badge ?? undefined,
   }));
 
-  // כשמציגים fallback סטטי, מזריקים לחידות את מספר החידות החי מהסדרה.
   // כשהתוכן מגיע מהטבלה — התיאור של האדמין הוא הקובע, בלי דריסה.
-  const cards: LobbyCard[] = fromDb.length
-    ? fromDb
-    : BASE_CARDS.map((c) => {
-        if (c.id !== "riddles") return c;
-        const count = riddlesSeries?.lesson_count;
-        return {
-          ...c,
-          desc: count
-            ? `${count} חידות תנ״ך לילדים, מוכן להדפסה ולשולחן השבת`
-            : c.desc,
-        };
-      });
+  const cards: LobbyCard[] = fromDb.length ? fromDb : BASE_CARDS;
 
   return (
     <Layout>

@@ -1442,6 +1442,11 @@ function RabbisSection() {
 
 // ── NewsletterSection ──────────────────────────────────────────────────────
 // redesign 2026-05-27: side-by-side inputs + checkbox consent + new copy
+// 12.7.2026 (סער): נוסף כפתור הצטרפות לקבוצת הוואטסאפ לצד ההרשמה — באותו סגנון
+// כמו בעמוד תנ״ך למשפחה. היעד: קבוצה 8 של "בכוח התנ״ך ננצח" (אותו קישור
+// כמו COMMUNITY_WA_LINK ב-FamilyTanach.tsx).
+const NEWSLETTER_WA_LINK = "https://chat.whatsapp.com/GVy0Gg0PCXBKouJmWVm8wY";
+
 function NewsletterSection() {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -1716,6 +1721,47 @@ function NewsletterSection() {
             </div>
           </form>
         )}
+
+        {/* הצטרפות לקבוצת הוואטסאפ — לצד הדיוור, כמו בעמוד תנ"ך למשפחה (הערת סער 12.7) */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.9rem", maxWidth: 520, margin: "1.5rem auto 0" }}>
+          <div aria-hidden style={{ flex: 1, height: 1, background: `${GOLD_DARK}30` }} />
+          <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.85rem", color: TEXT_MUTED }}>או</span>
+          <div aria-hidden style={{ flex: 1, height: 1, background: `${GOLD_DARK}30` }} />
+        </div>
+        <a
+          href={NEWSLETTER_WA_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.6rem",
+            marginTop: "1rem",
+            padding: "0.9rem 1.6rem",
+            borderRadius: "0.85rem",
+            border: "1.5px solid #25D36655",
+            background: "linear-gradient(135deg, #128C7E, #25D366)",
+            color: "white",
+            fontFamily: "Ploni, sans-serif",
+            fontWeight: 700,
+            fontSize: "1rem",
+            textDecoration: "none",
+            boxShadow: "0 6px 24px rgba(18,140,126,0.3)",
+            transition: "transform 0.2s, box-shadow 0.2s",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "translateY(-1px)";
+            e.currentTarget.style.boxShadow = "0 8px 32px rgba(18,140,126,0.4)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 6px 24px rgba(18,140,126,0.3)";
+          }}
+        >
+          <span aria-hidden style={{ fontSize: "1.15rem" }}>💬</span>
+          מצטרפים לקבוצת הוואטסאפ "בכוח התנ"ך ננצח"
+        </a>
       </div>
     </section>
   );

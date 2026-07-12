@@ -8,9 +8,13 @@
  * עיצוב: שפת parchment+gold של האתר (designTokens), inline styles, RTL,
  * mobile-first. עטוף ב-DesignLayout כמו שאר העמודים הציבוריים.
  */
-import { useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import {
+  BookOpen,
   ChevronDown,
+  ChevronLeft,
   HelpCircle,
   Loader2,
   Mail,
@@ -25,6 +29,7 @@ import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { Seo } from "@/components/seo/Seo";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { usePublishedQuestions, useSubmitQuestion, type SiteQuestion } from "@/hooks/useSiteQuestions";
+import { supabase } from "@/integrations/supabase/client";
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -465,6 +470,174 @@ function PublishedList() {
   );
 }
 
+// ── ארכיון השו"ת מהאתר הישן ─────────────────────────────────────────────────
+/**
+ * שיעורי השו"ת שהגיעו במיגרציה מהאתר הישן (חיפוש mediaType=שות במאגר).
+ * המיפוי אומת מול תוצאות החיפוש החיות באתר הישן (12.7.2026): הפריטים שם יושבים
+ * ב-lessons עם content_type 'שו"ת' או 'שאלות ותשובות' (193 מתוך 206 תואמים
+ * בכותרת מדויקת; היתר טיוטות/הבדלי-גרשיים). 'שאלות ותשובות על סדר הפרקים'
+ * נשאר בחוץ בכוונה — אלה דפי עבודה לפרקים, לא שו"ת.
+ */
+const SHUT_ARCHIVE_TYPES = ['שו"ת', "שאלות ותשובות"];
+const SHUT_PAGE_SIZE = 30;
+
+interface ShutArchiveItem {
+  id: string;
+  title: string;
+  bible_book: string | null;
+  content_type: string | null;
+}
+
+function useShutArchive(search: string, limit: number) {
+  return useQuery({
+    queryKey: ["shut-archive", search, limit],
+    queryFn: async () => {
+      let q = supabase
+        .from("lessons")
+        .select("id, title, bible_book, content_type", { count: "exact" })
+        .in("content_type", SHUT_ARCHIVE_TYPES)
+        .eq("status", "published")
+        .order("title", { ascending: true })
+        .limit(limit);
+      const term = search.trim();
+      if (term) q = q.ilike("title", `%${term}%`);
+      const { data, error, count } = await q;
+      if (error) throw error;
+      return { items: (data ?? []) as ShutArchiveItem[], total: count ?? 0 };
+    },
+    staleTime: 5 * 60_000,
+  });
+}
+
+function ShutArchiveList() {
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(SHUT_PAGE_SIZE);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      setSearch(searchInput);
+      setLimit(SHUT_PAGE_SIZE);
+    }, 250);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
+
+  const { data, isLoading, isError } = useShutArchive(search, limit);
+  const items = data?.items ?? [];
+  const total = data?.total ?? 0;
+
+  return (
+    <section style={{ marginTop: "3.5rem" }} aria-label="ארכיון השו״ת">
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
+        <div>
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.35rem", color: colors.textDark, margin: 0, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <BookOpen size={20} style={{ color: colors.goldDark }} aria-hidden />
+            ארכיון השו״ת
+          </h2>
+          <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted, margin: "0.3rem 0 0" }}>
+            {total > 0 ? `${total} שאלות ותשובות מהמאגר הוותיק של בית המדרש` : "שאלות ותשובות מהמאגר הוותיק של בית המדרש"}
+          </p>
+        </div>
+
+        <div style={{ position: "relative", minWidth: 220, flex: "0 1 280px" }}>
+          <Search
+            size={15}
+            aria-hidden
+            style={{ position: "absolute", insetInlineStart: 12, top: "50%", transform: "translateY(-50%)", color: colors.textSubtle }}
+          />
+          <input
+            type="search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="חיפוש בארכיון..."
+            aria-label="חיפוש בארכיון השו״ת"
+            style={{ ...fieldInput, padding: "0.55rem 2.2rem 0.55rem 0.9rem", fontSize: "0.82rem", borderRadius: radii.pill }}
+          />
+        </div>
+      </div>
+
+      {isLoading && (
+        <div style={{ display: "flex", justifyContent: "center", padding: "2.5rem 0" }}>
+          <Loader2 size={26} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} aria-label="טוען" />
+        </div>
+      )}
+
+      {isError && !isLoading && (
+        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, textAlign: "center", padding: "2rem 0" }}>
+          לא הצלחנו לטעון את הארכיון כרגע. רעננו את הדף ונסו שוב.
+        </p>
+      )}
+
+      {!isLoading && !isError && items.length === 0 && (
+        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, textAlign: "center", padding: "2rem 0" }}>
+          {search.trim() ? `לא נמצאו תשובות בארכיון לחיפוש "${search.trim()}".` : "הארכיון ריק כרגע."}
+        </p>
+      )}
+
+      <div style={{ display: "grid", gap: "0.5rem" }}>
+        {items.map((l) => (
+          <Link
+            key={l.id}
+            to={`/lessons/${l.id}`}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              padding: "0.85rem 1rem",
+              background: "#fff",
+              border: "1px solid rgba(139,111,71,0.16)",
+              borderRadius: radii.lg,
+              textDecoration: "none",
+              transition: "border-color 0.15s, box-shadow 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.borderColor = "rgba(139,111,71,0.45)";
+              e.currentTarget.style.boxShadow = shadows.goldGlowSoft;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.borderColor = "rgba(139,111,71,0.16)";
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <HelpCircle size={16} style={{ color: colors.goldDark, flexShrink: 0 }} aria-hidden />
+            <span style={{ fontFamily: fonts.body, fontSize: "0.9rem", fontWeight: 600, color: colors.textDark, flex: 1, lineHeight: 1.45 }}>
+              {l.title}
+            </span>
+            {l.bible_book && (
+              <span style={{ fontFamily: fonts.body, fontSize: "0.7rem", fontWeight: 700, color: colors.goldDark, background: "rgba(196,162,101,0.12)", padding: "0.2rem 0.55rem", borderRadius: radii.pill, flexShrink: 0 }}>
+                {l.bible_book}
+              </span>
+            )}
+            <ChevronLeft size={15} style={{ color: colors.textSubtle, flexShrink: 0 }} aria-hidden />
+          </Link>
+        ))}
+      </div>
+
+      {!isLoading && !isError && items.length < total && (
+        <div style={{ textAlign: "center", marginTop: "1.25rem" }}>
+          <button
+            type="button"
+            onClick={() => setLimit((v) => v + SHUT_PAGE_SIZE)}
+            style={{
+              padding: "0.6rem 1.6rem",
+              borderRadius: radii.pill,
+              border: "1.5px solid rgba(139,111,71,0.35)",
+              background: "transparent",
+              fontFamily: fonts.body,
+              fontWeight: 700,
+              fontSize: "0.85rem",
+              color: colors.goldDark,
+              cursor: "pointer",
+            }}
+          >
+            עוד מהארכיון ({total - items.length} נוספות)
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
 // ── Page ───────────────────────────────────────────────────────────────────
 
 export default function AskRabbiPage() {
@@ -502,6 +675,8 @@ export default function AskRabbiPage() {
         </div>
 
         <PublishedList />
+
+        <ShutArchiveList />
       </div>
     </DesignLayout>
   );
