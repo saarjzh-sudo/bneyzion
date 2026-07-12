@@ -9,20 +9,15 @@
  * mobile-first. עטוף ב-DesignLayout כמו שאר העמודים הציבוריים.
  */
 import { useEffect, useMemo, useState, type CSSProperties } from "react";
-import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
-  BookOpen,
   ChevronDown,
-  ChevronLeft,
   HelpCircle,
   Loader2,
-  Mail,
   MessageCircleQuestion,
   Search,
   Send,
-  Sparkles,
-  User,
+  X,
 } from "lucide-react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -286,149 +281,324 @@ function QuestionForm() {
   );
 }
 
-// ── Published Q&A accordion ────────────────────────────────────────────────
+// ── ארכיון השו"ת (טבלת shut_archive) + שאלות הגולשים שנענו ────────────────────
+/**
+ * הארכיון = 206 שאלות ותשובות שהיגרו מהאתר הישן (mediaType=שות), עם טקסט השאלה
+ * המלא שנגרד מהמקור והתשובה מ-lessons.content. הטבלה לא ב-generated types →
+ * גישה דרך `as never` (תבנית useSiteQuestions). קריאה ציבורית (RLS public read).
+ *
+ * התצוגה: כרטיסיות ב-3 טורים (כותרת + פתיח השאלה) → פופאפ עם שאלה+תשובה מלאות,
+ * בלי ניווט לדף המקור. שאלות הגולשים שנענו (site_questions) מוצגות באותו גריד.
+ */
+interface ShutCard {
+  id: string;
+  kind: "archive" | "user";
+  title: string;
+  question: string;
+  rabbi: string | null;
+  asker: string | null;
+}
 
-function QAItem({ q, isOpen, onToggle }: { q: SiteQuestion; isOpen: boolean; onToggle: () => void }) {
+interface ShutFull extends ShutCard {
+  answerHtml: string | null; // ארכיון = HTML
+  answerText: string | null; // גולשים = טקסט
+}
+
+const PAGE = 24;
+
+function useShutList(search: string, limit: number) {
+  return useQuery({
+    queryKey: ["shut-list", search, limit],
+    queryFn: async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let q: any = supabase
+        .from("shut_archive" as never)
+        .select("id,title,question,rabbi,sort_order", { count: "exact" })
+        .order("sort_order" as never, { ascending: true })
+        .limit(limit);
+      const term = search.trim();
+      if (term) {
+        q = q.or(`title.ilike.%${term}%,question.ilike.%${term}%`);
+      }
+      const { data, error, count } = (await q) as {
+        data: Array<{ id: string; title: string; question: string; rabbi: string | null }> | null;
+        error: unknown;
+        count: number | null;
+      };
+      if (error) throw error;
+      const cards: ShutCard[] = (data ?? []).map((r) => ({
+        id: r.id,
+        kind: "archive",
+        title: r.title,
+        question: r.question,
+        rabbi: r.rabbi,
+        asker: null,
+      }));
+      return { cards, total: count ?? cards.length };
+    },
+    staleTime: 5 * 60_000,
+  });
+}
+
+function useShutAnswer(id: string | null) {
+  return useQuery({
+    enabled: !!id,
+    queryKey: ["shut-answer", id],
+    queryFn: async () => {
+      const { data, error } = (await supabase
+        .from("shut_archive" as never)
+        .select("answer_html,rabbi,title,question")
+        .eq("id" as never, id as never)
+        .single()) as {
+        data: { answer_html: string; rabbi: string | null; title: string; question: string } | null;
+        error: unknown;
+      };
+      if (error) throw error;
+      return data;
+    },
+    staleTime: 10 * 60_000,
+  });
+}
+
+// ── פופאפ שאלה+תשובה ──────────────────────────────────────────────────────────
+function ShutDialog({ card, onClose }: { card: ShutFull; onClose: () => void }) {
+  const isArchive = card.kind === "archive";
+  const { data, isLoading } = useShutAnswer(isArchive ? card.id : null);
+  const answerHtml = isArchive ? data?.answer_html ?? null : null;
+  const rabbi = (isArchive ? data?.rabbi : card.rabbi) ?? card.rabbi;
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
   return (
     <div
+      onClick={onClose}
       style={{
-        background: "#fff",
-        borderRadius: radii.lg,
-        border: `1px solid ${isOpen ? "rgba(139,111,71,0.35)" : "rgba(139,111,71,0.12)"}`,
-        boxShadow: isOpen ? shadows.cardHover : shadows.cardSoft,
-        overflow: "hidden",
-        transition: "box-shadow 0.2s, border-color 0.2s",
+        position: "fixed",
+        inset: 0,
+        zIndex: 90,
+        background: "rgba(45,31,14,0.55)",
+        backdropFilter: "blur(4px)",
+        display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "center",
+        padding: "5vh 1rem 2rem",
+        overflowY: "auto",
       }}
     >
-      <button
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
+      <div
+        dir="rtl"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={card.title}
         style={{
           width: "100%",
-          display: "flex",
-          alignItems: "flex-start",
-          gap: "0.75rem",
-          padding: "1rem 1.1rem",
-          background: "transparent",
-          border: "none",
-          cursor: "pointer",
-          textAlign: "right",
+          maxWidth: 640,
+          background: colors.parchment,
+          borderRadius: radii.xl,
+          boxShadow: "0 24px 80px rgba(45,31,14,0.35)",
+          overflow: "hidden",
+          animation: "shutPop 0.22s ease",
         }}
       >
-        <span
-          style={{
-            flexShrink: 0,
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            background: "rgba(139,111,71,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 2,
-          }}
-        >
-          <HelpCircle size={16} style={{ color: colors.goldDark }} aria-hidden />
-        </span>
-        <span style={{ flex: 1, minWidth: 0 }}>
-          <span style={{ display: "block", fontFamily: fonts.display, fontWeight: 700, fontSize: "1rem", color: colors.textDark, lineHeight: 1.5 }}>
-            {q.question}
-          </span>
-          <span style={{ display: "flex", alignItems: "center", gap: "0.4rem", marginTop: "0.35rem", fontFamily: fonts.body, fontSize: "0.72rem", color: colors.textSubtle }}>
-            <User size={11} aria-hidden />
-            {q.asker_name}
-            <span aria-hidden>·</span>
-            {fmtDate(q.answered_at ?? q.created_at)}
-          </span>
-        </span>
-        <ChevronDown
-          size={18}
-          aria-hidden
-          style={{
-            flexShrink: 0,
-            color: colors.goldDark,
-            marginTop: 6,
-            transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-            transition: "transform 0.2s",
-          }}
-        />
-      </button>
-
-      {isOpen && (
-        <div style={{ padding: "0 1.1rem 1.1rem", marginInlineStart: "2.75rem" }}>
-          <div
+        {/* כותרת השאלה + סגירה */}
+        <div style={{ background: gradients.warmDark, padding: "1.5rem 1.5rem 1.6rem", position: "relative" }}>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="סגירה"
             style={{
-              background: colors.parchment,
-              borderRadius: radii.md,
-              borderInlineStart: `3px solid ${colors.goldLight}`,
-              padding: "0.9rem 1rem",
+              position: "absolute",
+              insetInlineStart: 14,
+              top: 14,
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              border: "none",
+              background: "rgba(255,255,255,0.14)",
+              color: "#fff",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <p style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMid, lineHeight: 1.8, margin: 0, whiteSpace: "pre-wrap" }}>
-              {q.answer}
-            </p>
-            {q.answered_by && (
-              <p style={{ fontFamily: fonts.body, fontSize: "0.75rem", fontWeight: 700, color: colors.goldDark, margin: "0.75rem 0 0" }}>
-                {q.answered_by}
+            <X size={18} aria-hidden />
+          </button>
+          <div style={{ fontFamily: fonts.body, fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.15em", color: colors.goldShimmer, marginBottom: "0.5rem" }}>
+            שאלה ותשובה
+          </div>
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "1.4rem", color: "#fff", margin: 0, lineHeight: 1.3, paddingInlineEnd: "2.5rem" }}>
+            {card.title.replace(/^"|"$/g, "")}
+          </h2>
+        </div>
+
+        <div style={{ padding: "1.5rem" }}>
+          {/* השאלה */}
+          <div style={{ display: "flex", gap: "0.6rem", marginBottom: "1.25rem" }}>
+            <span style={{ flexShrink: 0, width: 30, height: 30, borderRadius: "50%", background: "rgba(139,111,71,0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <HelpCircle size={16} style={{ color: colors.goldDark }} aria-hidden />
+            </span>
+            <div>
+              <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.goldDark, marginBottom: "0.25rem" }}>
+                {card.asker ? `${card.asker} שואל/ת` : "השאלה"}
+              </div>
+              <p style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textDark, lineHeight: 1.8, margin: 0, whiteSpace: "pre-wrap" }}>
+                {card.question}
               </p>
+            </div>
+          </div>
+
+          {/* התשובה */}
+          <div
+            style={{
+              background: "#fff",
+              borderRadius: radii.lg,
+              borderInlineStart: `3px solid ${colors.goldLight}`,
+              padding: "1.1rem 1.2rem",
+            }}
+          >
+            {isArchive ? (
+              isLoading ? (
+                <div style={{ display: "flex", justifyContent: "center", padding: "1.5rem 0" }}>
+                  <Loader2 size={22} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} aria-label="טוען" />
+                </div>
+              ) : (
+                <div
+                  className="shut-answer"
+                  style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMid, lineHeight: 1.85 }}
+                  dangerouslySetInnerHTML={{ __html: answerHtml ?? "" }}
+                />
+              )
+            ) : (
+              <>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.goldDark, marginBottom: "0.4rem" }}>התשובה</div>
+                <p style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMid, lineHeight: 1.85, margin: 0, whiteSpace: "pre-wrap" }}>
+                  {card.answerText}
+                </p>
+              </>
+            )}
+            {rabbi && !isArchive && (
+              <p style={{ fontFamily: fonts.body, fontSize: "0.78rem", fontWeight: 700, color: colors.goldDark, margin: "0.9rem 0 0" }}>{rabbi}</p>
             )}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 }
 
-function PublishedList() {
-  const { data: questions, isLoading, isError } = usePublishedQuestions();
-  const [search, setSearch] = useState("");
-  const [openId, setOpenId] = useState<string | null>(null);
+// ── כרטיסיית שאלה ─────────────────────────────────────────────────────────────
+function ShutCardTile({ card, onOpen }: { card: ShutCard; onOpen: () => void }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "right",
+        background: "#fff",
+        border: `1px solid ${hover ? "rgba(139,111,71,0.4)" : "rgba(139,111,71,0.14)"}`,
+        borderRadius: radii.xl,
+        boxShadow: hover ? shadows.cardHover : shadows.cardSoft,
+        padding: "1.25rem 1.25rem 1.1rem",
+        cursor: "pointer",
+        transition: "box-shadow 0.2s, border-color 0.2s, transform 0.2s",
+        transform: hover ? "translateY(-3px)" : "none",
+        height: "100%",
+      }}
+    >
+      <span style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", fontFamily: fonts.body, fontSize: "0.68rem", fontWeight: 700, color: colors.goldDark, marginBottom: "0.6rem" }}>
+        <HelpCircle size={13} aria-hidden />
+        {card.kind === "archive" ? "שו״ת" : "שאלת גולש"}
+      </span>
+      <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: colors.textDark, margin: "0 0 0.5rem", lineHeight: 1.4 }}>
+        {card.title.replace(/^"|"$/g, "")}
+      </h3>
+      <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, lineHeight: 1.65, margin: 0, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
+        {card.question}
+      </p>
+      <span style={{ marginTop: "auto", paddingTop: "0.9rem", display: "inline-flex", alignItems: "center", gap: "0.35rem", fontFamily: fonts.body, fontSize: "0.82rem", fontWeight: 700, color: colors.goldDark }}>
+        {card.rabbi ? `לתשובת ${card.rabbi}` : "לתשובה המלאה"}
+        <ChevronDown size={15} style={{ transform: "rotate(90deg)" }} aria-hidden />
+      </span>
+    </button>
+  );
+}
 
-  const filtered = useMemo(() => {
-    const list = questions ?? [];
+// ── גריד הארכיון ──────────────────────────────────────────────────────────────
+function ShutArchiveSection() {
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const [limit, setLimit] = useState(PAGE);
+  const [active, setActive] = useState<ShutFull | null>(null);
+
+  const published = usePublishedQuestions();
+
+  useEffect(() => {
+    const t = window.setTimeout(() => {
+      setSearch(searchInput);
+      setLimit(PAGE);
+    }, 250);
+    return () => window.clearTimeout(t);
+  }, [searchInput]);
+
+  const { data, isLoading, isError } = useShutList(search, limit);
+  const archiveCards = data?.cards ?? [];
+  const total = data?.total ?? 0;
+
+  // שאלות הגולשים שנענו — מסוננות מקומית ומוצגות ראשונות
+  const userCards: ShutFull[] = useMemo(() => {
+    const list = (published.data ?? []) as SiteQuestion[];
     const term = search.trim();
-    if (!term) return list;
-    return list.filter(
-      (q) =>
-        q.question.includes(term) ||
-        (q.answer ?? "").includes(term) ||
-        (q.answered_by ?? "").includes(term) ||
-        q.asker_name.includes(term)
-    );
-  }, [questions, search]);
+    return list
+      .filter((q) => !term || q.question.includes(term) || (q.answer ?? "").includes(term))
+      .map((q) => ({
+        id: q.id,
+        kind: "user" as const,
+        title: q.question.length > 48 ? q.question.slice(0, 46) + "…" : q.question,
+        question: q.question,
+        rabbi: q.answered_by,
+        asker: q.asker_name,
+        answerHtml: null,
+        answerText: q.answer,
+      }));
+  }, [published.data, search]);
 
   return (
-    <section style={{ marginTop: "3rem" }} aria-label="שאלות שנענו">
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
+    <section style={{ marginTop: "3.25rem" }} aria-label="ארכיון שאלות ותשובות">
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
         <div>
-          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.35rem", color: colors.textDark, margin: 0 }}>
-            שאלות שכבר נענו
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.5rem", color: colors.textDark, margin: 0 }}>
+            שאלות ותשובות
           </h2>
-          {(questions?.length ?? 0) > 0 && (
-            <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted, margin: "0.3rem 0 0" }}>
-              {questions!.length} תשובות מהרב, פתוחות לכולם
-            </p>
-          )}
+          <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: "0.35rem 0 0" }}>
+            {total > 0 ? `${total} תשובות מרבני בית המדרש — לחצו על כל שאלה` : "אוצר של שאלות ותשובות בתנ״ך ובאמונה"}
+          </p>
         </div>
-
-        {(questions?.length ?? 0) > 0 && (
-          <div style={{ position: "relative", minWidth: 220, flex: "0 1 280px" }}>
-            <Search
-              size={15}
-              aria-hidden
-              style={{ position: "absolute", insetInlineStart: 12, top: "50%", transform: "translateY(-50%)", color: colors.textSubtle }}
-            />
-            <input
-              type="search"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="חיפוש בשאלות..."
-              aria-label="חיפוש בשאלות שנענו"
-              style={{ ...fieldInput, padding: "0.55rem 2.2rem 0.55rem 0.9rem", fontSize: "0.82rem", borderRadius: radii.pill }}
-            />
-          </div>
-        )}
+        <div style={{ position: "relative", minWidth: 220, flex: "0 1 300px" }}>
+          <Search size={15} aria-hidden style={{ position: "absolute", insetInlineStart: 12, top: "50%", transform: "translateY(-50%)", color: colors.textSubtle }} />
+          <input
+            type="search"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="חיפוש בשאלות ובתשובות..."
+            aria-label="חיפוש בארכיון השו״ת"
+            style={{ ...fieldInput, padding: "0.6rem 2.2rem 0.6rem 0.9rem", fontSize: "0.85rem", borderRadius: radii.pill }}
+          />
+        </div>
       </div>
 
       {isLoading && (
@@ -439,244 +609,141 @@ function PublishedList() {
 
       {isError && !isLoading && (
         <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, textAlign: "center", padding: "2rem 0" }}>
-          לא הצלחנו לטעון את השאלות כרגע. רעננו את הדף ונסו שוב.
-        </p>
-      )}
-
-      {!isLoading && !isError && (questions?.length ?? 0) === 0 && (
-        <div style={{ textAlign: "center", padding: "3rem 1.5rem", background: "rgba(139,111,71,0.04)", borderRadius: radii.xl, border: "1px dashed rgba(139,111,71,0.2)" }}>
-          <Sparkles size={32} style={{ color: colors.goldDark, opacity: 0.45, margin: "0 auto 0.75rem" }} aria-hidden />
-          <p style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1rem", color: colors.textMuted, margin: "0 0 0.3rem" }}>
-            התשובות הראשונות בדרך
-          </p>
-          <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textSubtle, margin: 0 }}>
-            שאלו עכשיו, והתשובה שלכם תוכל להיות הראשונה שמתפרסמת כאן.
-          </p>
-        </div>
-      )}
-
-      {!isLoading && !isError && (questions?.length ?? 0) > 0 && filtered.length === 0 && (
-        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, textAlign: "center", padding: "2rem 0" }}>
-          לא נמצאו שאלות שמתאימות לחיפוש "{search.trim()}".
-        </p>
-      )}
-
-      <div style={{ display: "grid", gap: "0.75rem" }}>
-        {filtered.map((q) => (
-          <QAItem key={q.id} q={q} isOpen={openId === q.id} onToggle={() => setOpenId(openId === q.id ? null : q.id)} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-// ── ארכיון השו"ת מהאתר הישן ─────────────────────────────────────────────────
-/**
- * שיעורי השו"ת שהגיעו במיגרציה מהאתר הישן (חיפוש mediaType=שות במאגר).
- * המיפוי אומת מול תוצאות החיפוש החיות באתר הישן (12.7.2026): הפריטים שם יושבים
- * ב-lessons עם content_type 'שו"ת' או 'שאלות ותשובות' (193 מתוך 206 תואמים
- * בכותרת מדויקת; היתר טיוטות/הבדלי-גרשיים). 'שאלות ותשובות על סדר הפרקים'
- * נשאר בחוץ בכוונה — אלה דפי עבודה לפרקים, לא שו"ת.
- */
-const SHUT_ARCHIVE_TYPES = ['שו"ת', "שאלות ותשובות"];
-const SHUT_PAGE_SIZE = 30;
-
-interface ShutArchiveItem {
-  id: string;
-  title: string;
-  bible_book: string | null;
-  content_type: string | null;
-}
-
-function useShutArchive(search: string, limit: number) {
-  return useQuery({
-    queryKey: ["shut-archive", search, limit],
-    queryFn: async () => {
-      let q = supabase
-        .from("lessons")
-        .select("id, title, bible_book, content_type", { count: "exact" })
-        .in("content_type", SHUT_ARCHIVE_TYPES)
-        .eq("status", "published")
-        .order("title", { ascending: true })
-        .limit(limit);
-      const term = search.trim();
-      if (term) q = q.ilike("title", `%${term}%`);
-      const { data, error, count } = await q;
-      if (error) throw error;
-      return { items: (data ?? []) as ShutArchiveItem[], total: count ?? 0 };
-    },
-    staleTime: 5 * 60_000,
-  });
-}
-
-function ShutArchiveList() {
-  const [searchInput, setSearchInput] = useState("");
-  const [search, setSearch] = useState("");
-  const [limit, setLimit] = useState(SHUT_PAGE_SIZE);
-
-  useEffect(() => {
-    const t = window.setTimeout(() => {
-      setSearch(searchInput);
-      setLimit(SHUT_PAGE_SIZE);
-    }, 250);
-    return () => window.clearTimeout(t);
-  }, [searchInput]);
-
-  const { data, isLoading, isError } = useShutArchive(search, limit);
-  const items = data?.items ?? [];
-  const total = data?.total ?? 0;
-
-  return (
-    <section style={{ marginTop: "3.5rem" }} aria-label="ארכיון השו״ת">
-      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
-        <div>
-          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.35rem", color: colors.textDark, margin: 0, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <BookOpen size={20} style={{ color: colors.goldDark }} aria-hidden />
-            ארכיון השו״ת
-          </h2>
-          <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textMuted, margin: "0.3rem 0 0" }}>
-            {total > 0 ? `${total} שאלות ותשובות מהמאגר הוותיק של בית המדרש` : "שאלות ותשובות מהמאגר הוותיק של בית המדרש"}
-          </p>
-        </div>
-
-        <div style={{ position: "relative", minWidth: 220, flex: "0 1 280px" }}>
-          <Search
-            size={15}
-            aria-hidden
-            style={{ position: "absolute", insetInlineStart: 12, top: "50%", transform: "translateY(-50%)", color: colors.textSubtle }}
-          />
-          <input
-            type="search"
-            value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            placeholder="חיפוש בארכיון..."
-            aria-label="חיפוש בארכיון השו״ת"
-            style={{ ...fieldInput, padding: "0.55rem 2.2rem 0.55rem 0.9rem", fontSize: "0.82rem", borderRadius: radii.pill }}
-          />
-        </div>
-      </div>
-
-      {isLoading && (
-        <div style={{ display: "flex", justifyContent: "center", padding: "2.5rem 0" }}>
-          <Loader2 size={26} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} aria-label="טוען" />
-        </div>
-      )}
-
-      {isError && !isLoading && (
-        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, textAlign: "center", padding: "2rem 0" }}>
           לא הצלחנו לטעון את הארכיון כרגע. רעננו את הדף ונסו שוב.
         </p>
       )}
 
-      {!isLoading && !isError && items.length === 0 && (
-        <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, textAlign: "center", padding: "2rem 0" }}>
-          {search.trim() ? `לא נמצאו תשובות בארכיון לחיפוש "${search.trim()}".` : "הארכיון ריק כרגע."}
+      {!isLoading && !isError && archiveCards.length === 0 && userCards.length === 0 && (
+        <p style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMuted, textAlign: "center", padding: "2.5rem 0" }}>
+          {search.trim() ? `לא נמצאו שאלות לחיפוש "${search.trim()}".` : "הארכיון ריק כרגע."}
         </p>
       )}
 
-      <div style={{ display: "grid", gap: "0.5rem" }}>
-        {items.map((l) => (
-          <Link
-            key={l.id}
-            to={`/lessons/${l.id}`}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              padding: "0.85rem 1rem",
-              background: "#fff",
-              border: "1px solid rgba(139,111,71,0.16)",
-              borderRadius: radii.lg,
-              textDecoration: "none",
-              transition: "border-color 0.15s, box-shadow 0.15s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "rgba(139,111,71,0.45)";
-              e.currentTarget.style.boxShadow = shadows.goldGlowSoft;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "rgba(139,111,71,0.16)";
-              e.currentTarget.style.boxShadow = "none";
-            }}
-          >
-            <HelpCircle size={16} style={{ color: colors.goldDark, flexShrink: 0 }} aria-hidden />
-            <span style={{ fontFamily: fonts.body, fontSize: "0.9rem", fontWeight: 600, color: colors.textDark, flex: 1, lineHeight: 1.45 }}>
-              {l.title}
-            </span>
-            {l.bible_book && (
-              <span style={{ fontFamily: fonts.body, fontSize: "0.7rem", fontWeight: 700, color: colors.goldDark, background: "rgba(196,162,101,0.12)", padding: "0.2rem 0.55rem", borderRadius: radii.pill, flexShrink: 0 }}>
-                {l.bible_book}
-              </span>
-            )}
-            <ChevronLeft size={15} style={{ color: colors.textSubtle, flexShrink: 0 }} aria-hidden />
-          </Link>
+      <div className="shut-grid">
+        {userCards.map((c) => (
+          <ShutCardTile key={c.id} card={c} onOpen={() => setActive(c)} />
+        ))}
+        {archiveCards.map((c) => (
+          <ShutCardTile
+            key={c.id}
+            card={c}
+            onOpen={() => setActive({ ...c, answerHtml: null, answerText: null })}
+          />
         ))}
       </div>
 
-      {!isLoading && !isError && items.length < total && (
-        <div style={{ textAlign: "center", marginTop: "1.25rem" }}>
+      {!isLoading && !isError && archiveCards.length < total && (
+        <div style={{ textAlign: "center", marginTop: "1.75rem" }}>
           <button
             type="button"
-            onClick={() => setLimit((v) => v + SHUT_PAGE_SIZE)}
-            style={{
-              padding: "0.6rem 1.6rem",
-              borderRadius: radii.pill,
-              border: "1.5px solid rgba(139,111,71,0.35)",
-              background: "transparent",
-              fontFamily: fonts.body,
-              fontWeight: 700,
-              fontSize: "0.85rem",
-              color: colors.goldDark,
-              cursor: "pointer",
-            }}
+            onClick={() => setLimit((v) => v + PAGE)}
+            style={{ padding: "0.7rem 1.8rem", borderRadius: radii.pill, border: "1.5px solid rgba(139,111,71,0.35)", background: "transparent", fontFamily: fonts.body, fontWeight: 700, fontSize: "0.88rem", color: colors.goldDark, cursor: "pointer" }}
           >
-            עוד מהארכיון ({total - items.length} נוספות)
+            עוד שאלות ({total - archiveCards.length})
           </button>
         </div>
       )}
+
+      {active && <ShutDialog card={active} onClose={() => setActive(null)} />}
     </section>
   );
 }
 
-// ── Page ───────────────────────────────────────────────────────────────────
+// ── טופס שאלה מתקפל ───────────────────────────────────────────────────────────
+function CollapsibleAsk() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginTop: "-2.75rem", position: "relative", zIndex: 2 }}>
+      {open ? (
+        <div style={{ position: "relative" }}>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="סגירת הטופס"
+            style={{ position: "absolute", insetInlineStart: 16, top: 16, zIndex: 3, width: 32, height: 32, borderRadius: "50%", border: "1px solid rgba(139,111,71,0.25)", background: "#fff", color: colors.goldDark, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+          >
+            <X size={16} aria-hidden />
+          </button>
+          <QuestionForm />
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            gap: "0.9rem",
+            padding: "1.15rem 1.5rem",
+            background: "#fff",
+            border: "1px solid rgba(139,111,71,0.18)",
+            borderRadius: radii.xl,
+            boxShadow: shadows.card,
+            cursor: "pointer",
+            textAlign: "right",
+          }}
+        >
+          <span style={{ flexShrink: 0, width: 42, height: 42, borderRadius: "50%", background: gradients.goldButton, boxShadow: shadows.goldGlowSoft, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <MessageCircleQuestion size={22} style={{ color: "#fff" }} aria-hidden />
+          </span>
+          <span style={{ flex: 1 }}>
+            <span style={{ display: "block", fontFamily: fonts.display, fontWeight: 800, fontSize: "1.05rem", color: colors.textDark }}>
+              רוצים לשאול את הרב?
+            </span>
+            <span style={{ display: "block", fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, marginTop: "0.15rem" }}>
+              לחצו כאן לפתיחת טופס שאלה — התשובה תתפרסם כאן ותגיע גם למייל
+            </span>
+          </span>
+          <ChevronDown size={20} style={{ color: colors.goldDark, flexShrink: 0 }} aria-hidden />
+        </button>
+      )}
+    </div>
+  );
+}
 
+// ── Page ───────────────────────────────────────────────────────────────────
 export default function AskRabbiPage() {
   return (
     <DesignLayout sidebar={false}>
       <Seo
         title="שאל את הרב"
-        description="שלחו שאלה בתנ״ך ובאמונה לרב יואב אוריאל, וקראו את התשובות לשאלות שכבר נענו."
+        description="שלחו שאלה בתנ״ך ובאמונה לרב, וקראו אלפי שאלות ותשובות מבית המדרש בני ציון."
         url="https://bneyzion.co.il/ask-rabbi"
       />
+
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes shutPop { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: none; } }
+        .shut-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        @media (max-width: 900px) { .shut-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .shut-grid { grid-template-columns: 1fr; } }
+        .shut-answer p { margin: 0 0 0.85rem; }
+        .shut-answer h2 { font-family: ${fonts.display}; font-size: 1.05rem; color: ${colors.goldDark}; margin: 0 0 0.75rem; }
+        .shut-answer .author { color: ${colors.goldDark}; font-weight: 700; }
+        .shut-answer a { color: ${colors.goldDark}; text-decoration: underline; }
+      `}</style>
 
       {/* ── Hero ── */}
       <div dir="rtl" style={{ background: gradients.warmDark, padding: "2.75rem 1.5rem 4.5rem", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse at 70% 40%, rgba(232,213,160,0.09) 0%, transparent 70%)", pointerEvents: "none" }} />
-        <div style={{ maxWidth: 760, margin: "0 auto", position: "relative", textAlign: "center" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", position: "relative", textAlign: "center" }}>
           <div style={{ fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", color: colors.goldShimmer, marginBottom: "0.6rem" }}>
             בית המדרש בני ציון
           </div>
           <h1 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.8rem, 5vw, 2.6rem)", color: "#fff", margin: 0, lineHeight: 1.15 }}>
             שאל את הרב
           </h1>
-          <p style={{ fontFamily: fonts.body, fontSize: "0.92rem", color: "rgba(255,255,255,0.65)", margin: "0.75rem auto 0", maxWidth: 520, lineHeight: 1.7 }}>
-            מקום לשאלות שעולות תוך כדי הלימוד. שלחו שאלה, הרב עונה, והתשובה מתפרסמת כאן לתועלת כל הלומדים.
+          <p style={{ fontFamily: fonts.body, fontSize: "0.92rem", color: "rgba(255,255,255,0.65)", margin: "0.75rem auto 0", maxWidth: 560, lineHeight: 1.7 }}>
+            אוצר של שאלות ותשובות בתנ״ך ובאמונה מבית המדרש. עיינו בשאלות של אחרים, ואם עלתה לכם שאלה — שאלו גם אתם.
           </p>
         </div>
       </div>
 
       {/* ── Content ── */}
-      <div dir="rtl" style={{ maxWidth: 760, margin: "0 auto", padding: "0 1.25rem 3.5rem" }}>
-        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-
-        {/* Form card overlapping the hero */}
-        <div style={{ marginTop: "-2.75rem", position: "relative" }}>
-          <QuestionForm />
-        </div>
-
-        <PublishedList />
-
-        <ShutArchiveList />
+      <div dir="rtl" style={{ maxWidth: 1000, margin: "0 auto", padding: "0 1.25rem 4rem" }}>
+        <CollapsibleAsk />
+        <ShutArchiveSection />
       </div>
     </DesignLayout>
   );
