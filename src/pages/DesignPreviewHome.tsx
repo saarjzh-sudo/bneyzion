@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { useNavigate } from "react-router-dom";
 import { useLessons } from "@/hooks/useLessons";
@@ -1440,6 +1440,112 @@ function RabbisSection() {
   );
 }
 
+// ── Slider arrows (משותף לסליידרים) ────────────────────────────────────────
+function SliderArrows({ onPrev, onNext, accent }: { onPrev: () => void; onNext: () => void; accent: string }) {
+  const enter = (e: any) => { e.currentTarget.style.background = accent; e.currentTarget.style.color = "white"; };
+  const leave = (e: any) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = accent; };
+  const base = { width: 38, height: 38, borderRadius: "50%", border: `1.5px solid ${accent}`, background: "transparent", color: accent, cursor: "pointer", fontSize: "1.05rem", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "all 0.18s ease" } as const;
+  return (
+    <div style={{ display: "flex", gap: "0.5rem" }}>
+      <button aria-label="הקודם" onClick={onPrev} onMouseEnter={enter} onMouseLeave={leave} style={base}>→</button>
+      <button aria-label="הבא" onClick={onNext} onMouseEnter={enter} onMouseLeave={leave} style={base}>←</button>
+    </div>
+  );
+}
+
+// ── SelectedLessonsSlider (יואב 13.7) — סליידר "שיעורים נבחרים" בשפת-האתר ────
+// הוחזר לבקשת הרב יואב (הוסר 27.5). "נבחרים" = פורסמו לאחרונה; מיון-צפיות
+// יופעל כשמעקב-הצפיות יצטבר — בלי מספרי-צפיות מומצאים.
+function SelectedLessonsSlider() {
+  const { data: lessonsRaw } = useLessons();
+  const navigate = useNavigate();
+  const scroller = useRef<HTMLDivElement>(null);
+  const lessons = ((lessonsRaw || []) as any[]).filter((l: any) => l.status === "published").slice(0, 12);
+  const LESSON_IMAGES = ["/images/lesson-audio.webp", "/images/lesson-video.webp", "/images/lesson-text.webp", "/images/series-middot.webp"];
+  const getLessonImage = (lesson: any, index: number) => lesson?.thumbnail_url || LESSON_IMAGES[index % LESSON_IMAGES.length];
+  const typeLabel = (t: string) => (t === "video" ? "וידאו" : t === "audio" ? "אודיו" : "טקסט");
+  const nudge = (dir: number) => scroller.current?.scrollBy({ left: dir * 300, behavior: "smooth" });
+  if (lessons.length === 0) return null;
+  return (
+    <section style={{ background: PARCHMENT, padding: "5rem 1.5rem" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <div dir="rtl" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2.25rem", gap: "1rem", flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700, color: GOLD_DARK, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>מה לומדים עכשיו</div>
+            <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900, fontSize: "clamp(1.5rem, 3vw, 2.1rem)", color: TEXT_DARK, margin: 0 }}>שיעורים נבחרים</h2>
+          </div>
+          <div dir="rtl" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <SliderArrows onPrev={() => nudge(1)} onNext={() => nudge(-1)} accent={GOLD_DARK} />
+            <span onClick={() => navigate("/series")} style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.88rem", color: GOLD_DARK, cursor: "pointer", borderBottom: `1px solid ${GOLD_DARK}`, paddingBottom: "1px", whiteSpace: "nowrap" }}>הצג הכל ←</span>
+          </div>
+        </div>
+        <div ref={scroller} className="scrollbar-hide" dir="rtl" style={{ display: "flex", gap: "1.35rem", overflowX: "auto", scrollSnapType: "x mandatory", paddingBottom: "0.4rem" }}>
+          {lessons.map((lesson: any, i: number) => (
+            <div key={lesson.id} onClick={() => navigate(`/lessons/${lesson.id}`)}
+              style={{ scrollSnapAlign: "start", flex: "0 0 auto", width: 264, borderRadius: "1.25rem", overflow: "hidden", border: "1px solid rgba(139,111,71,0.1)", background: "white", cursor: "pointer", transition: "all 0.28s ease", boxShadow: "0 2px 12px rgba(45,31,14,0.05)" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 16px 48px rgba(45,31,14,0.12)"; (e.currentTarget as HTMLElement).style.borderColor = GOLD_DARK; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(45,31,14,0.05)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(139,111,71,0.1)"; }}>
+              <div style={{ height: 170, overflow: "hidden", position: "relative", background: PARCHMENT_DARK }}>
+                <img src={getLessonImage(lesson, i)} alt={lesson?.title || ""} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)" }} />
+                <span style={{ position: "absolute", top: 10, right: 10, padding: "0.2rem 0.65rem", borderRadius: "0.5rem", background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`, color: "white", fontFamily: "Ploni, sans-serif", fontSize: "0.68rem", fontWeight: 700 }}>{typeLabel(lesson.source_type || "audio")}</span>
+              </div>
+              <div style={{ padding: "1rem 1.1rem 1.25rem" }}>
+                {lesson?.rabbis?.name && (<div style={{ fontFamily: "Ploni, sans-serif", fontWeight: 700, fontSize: "0.72rem", color: GOLD_DARK, marginBottom: "0.3rem" }}>{lesson.rabbis.name}</div>)}
+                <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700, fontSize: "0.9rem", color: TEXT_DARK, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", marginBottom: "0.5rem", minHeight: "2.6em" }}>{lesson?.title ?? ""}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  {lesson?.duration ? (<span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: TEXT_SUBTLE }}>{Math.floor(lesson.duration / 60)} דקות</span>) : <span />}
+                  <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: GOLD_DARK, fontWeight: 600 }}>האזן ←</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── RabbisSlider (יואב 13.7) — סליידר "הרבנים שלנו" בשפת-האתר ────────────────
+function RabbisSlider() {
+  const { data: rabbisRaw } = usePublicRabbis();
+  const navigate = useNavigate();
+  const scroller = useRef<HTMLDivElement>(null);
+  const rabbis = ((rabbisRaw || []) as any[]).slice(0, 16);
+  const nudge = (dir: number) => scroller.current?.scrollBy({ left: dir * 300, behavior: "smooth" });
+  if (rabbis.length === 0) return null;
+  return (
+    <section style={{ background: OLIVE_BG, padding: "5rem 1.5rem" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <div dir="rtl" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", marginBottom: "2.25rem", gap: "1rem", flexWrap: "wrap" }}>
+          <div>
+            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700, color: OLIVE_MAIN, letterSpacing: "0.15em", textTransform: "uppercase", marginBottom: "0.3rem" }}>המורים שלנו</div>
+            <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900, fontSize: "clamp(1.5rem, 3vw, 2.1rem)", color: TEXT_DARK, margin: 0 }}>הרבנים שלנו</h2>
+          </div>
+          <div dir="rtl" style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+            <SliderArrows onPrev={() => nudge(1)} onNext={() => nudge(-1)} accent={OLIVE_MAIN} />
+            <span onClick={() => navigate("/rabbis")} style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.88rem", color: OLIVE_MAIN, cursor: "pointer", borderBottom: `1px solid ${OLIVE_MAIN}`, paddingBottom: "1px", whiteSpace: "nowrap" }}>כל הרבנים ←</span>
+          </div>
+        </div>
+        <div ref={scroller} className="scrollbar-hide" dir="rtl" style={{ display: "flex", gap: "1.5rem", overflowX: "auto", scrollSnapType: "x mandatory", paddingBottom: "0.5rem" }}>
+          {rabbis.map((rabbi: any) => (
+            <div key={rabbi.id} onClick={() => navigate(`/rabbis/${rabbi.slug ?? rabbi.id}`)}
+              style={{ scrollSnapAlign: "start", flex: "0 0 auto", width: 150, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "0.65rem", cursor: "pointer", padding: "1.35rem 0.75rem", borderRadius: "1.25rem", background: "white", border: "1px solid rgba(139,111,71,0.1)", boxShadow: "0 2px 12px rgba(45,31,14,0.05)", transition: "all 0.25s ease" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-4px)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 14px 40px rgba(74,90,46,0.18)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 2px 12px rgba(45,31,14,0.05)"; }}>
+              <div style={{ width: 92, height: 92, borderRadius: "50%", overflow: "hidden", border: "2.5px solid rgba(139,111,71,0.2)", background: rabbi?.image_url ? "transparent" : `linear-gradient(135deg, ${GOLD_DARK}, ${OLIVE_MAIN})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {rabbi?.image_url ? (<img src={rabbi.image_url} alt={rabbi.name} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover" }} />) : (<span style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900, fontSize: "1.75rem", color: "white" }}>{rabbi?.name ? rabbi.name.replace("הרב ", "")[0] : "?"}</span>)}
+              </div>
+              <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700, fontSize: "0.85rem", color: TEXT_DARK, lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{rabbi.name}</div>
+              {rabbi?.lesson_count !== undefined && (<div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.7rem", fontWeight: 600, color: OLIVE_MAIN }}>{rabbi.lesson_count} שיעורים</div>)}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── NewsletterSection ──────────────────────────────────────────────────────
 // redesign 2026-05-27: side-by-side inputs + checkbox consent + new copy
 // 12.7.2026 (סער): נוסף כפתור הצטרפות לקבוצת הוואטסאפ לצד ההרשמה — באותו סגנון
@@ -1956,9 +2062,11 @@ export default function DesignPreviewHome() {
           {/* 27.5.2026 — KenesBanner removed (outdated 19.4 event) */}
           <FamilyBibleSection />
           <DesignParashaHolidaySection />
-          {/* 27.5.2026 — PopularLessonsSection removed per Saar (homepage cleanup) */}
+          {/* יואב 13.7: סליידר שיעורים נבחרים — הוחזר בשפת-האתר (הוסר 27.5) */}
+          <SelectedLessonsSlider />
           <WarMiraclesSection />
-          {/* 27.5.2026 — TopSeriesSection, RabbisSection, WhatsAppCTASection removed per Saar */}
+          {/* יואב 13.7: סליידר רבנים — הוחזר בשפת-האתר (הוסר 27.5; TopSeries+WhatsAppCTA נשארו בחוץ) */}
+          <RabbisSlider />
           <NewsletterSection />
         </main>
       </div>
