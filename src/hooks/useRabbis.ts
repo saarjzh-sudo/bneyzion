@@ -110,9 +110,26 @@ export function useUpdateRabbi() {
 export function useDeleteRabbi() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (id: string) => {
+    // מחיקה אמיתית עובדת רק לרב ללא שיעורים/סדרות. לרב עם שיעורים יש FK
+    // (lessons.rabbi_id, ON DELETE NO ACTION) שחוסם מחיקה — עד כה זה נכשל
+    // בשקט (יואב 13.7: "עושה כאילו מוחק אבל לא מחק"). במקרה כזה מסתירים
+    // (status='inactive') כדי שהפעולה תצליח והרב ייעלם מהאתר הציבורי
+    // (get_public_rabbis מסנן status='active') בלי לאבד את שיעוריו.
+    mutationFn: async (id: string): Promise<{ hidden: boolean }> => {
       const { error } = await supabase.from("rabbis").delete().eq("id", id);
-      if (error) throw error;
+      if (error) {
+        // 23503 = foreign_key_violation → לרב יש שיעורים/סדרות. הסתרה במקום מחיקה.
+        if ((error as { code?: string }).code === "23503") {
+          const { error: upErr } = await supabase
+            .from("rabbis")
+            .update({ status: "inactive" })
+            .eq("id", id);
+          if (upErr) throw upErr;
+          return { hidden: true };
+        }
+        throw error;
+      }
+      return { hidden: false };
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["rabbis"] }),
   });

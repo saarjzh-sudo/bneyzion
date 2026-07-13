@@ -251,9 +251,23 @@ export default function Rabbis() {
                         <div className="flex gap-1">
                           <Button variant="ghost" size="icon" onClick={() => openEdit(r)} aria-label="עריכה"><Pencil className="h-4 w-4" /></Button>
                           <Button
-                            variant="ghost" size="icon" aria-label="מחיקה"
-                            onClick={() => {
-                              if (confirm(`למחוק את "${r.name}" (${ENTITY_LABELS[entityOf(r)]})?`)) deleteRabbi.mutate(r.id);
+                            variant="ghost" size="icon" aria-label="מחיקה / הסתרה מהאתר"
+                            onClick={async () => {
+                              const hasLessons = (r.lesson_count ?? 0) > 0;
+                              const msg = hasLessons
+                                ? `ל"${r.name}" יש ${r.lesson_count} שיעורים ולכן לא ניתן למחוק לצמיתות. להסתיר אותו מהאתר? (השיעורים יישמרו; ניתן להחזיר דרך עריכת סטטוס)`
+                                : `למחוק את "${r.name}" (${ENTITY_LABELS[entityOf(r)]})?`;
+                              if (!confirm(msg)) return;
+                              try {
+                                const res = await deleteRabbi.mutateAsync(r.id);
+                                toast({
+                                  title: res.hidden
+                                    ? `"${r.name}" הוסתר מהאתר`
+                                    : `"${r.name}" נמחק`,
+                                });
+                              } catch (e: any) {
+                                toast({ title: "הפעולה נכשלה", description: e.message, variant: "destructive" });
+                              }
                             }}
                           >
                             <Trash2 className="h-4 w-4 text-destructive" />

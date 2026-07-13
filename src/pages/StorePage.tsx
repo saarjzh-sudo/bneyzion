@@ -65,6 +65,12 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           )}
         </div>
         <div className="p-4">
+          {/* יואב 13.7: שם הקטגוריה על כל מוצר — כדי שברור אם זה ספר / ספר שטרם יצא / קורס */}
+          {product.category?.name && (
+            <span className="inline-block text-[11px] font-display text-primary/90 bg-primary/10 rounded-full px-2 py-0.5 mb-1.5">
+              {product.category.name}
+            </span>
+          )}
           <h3 className="font-display text-sm text-foreground line-clamp-2 mb-2 group-hover:text-primary transition-colors">
             {product.title}
           </h3>

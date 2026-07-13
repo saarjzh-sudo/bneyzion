@@ -333,8 +333,16 @@ export default function AdminProducts() {
                       <div><Label>כותרת *</Label><Input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} /></div>
                       <div><Label>Slug</Label><Input value={form.slug} onChange={e => setForm({ ...form, slug: e.target.value })} placeholder="אוטומטי מהכותרת" dir="ltr" /></div>
                     </div>
-                    <div><Label>תיאור</Label><Textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={2} /></div>
-                    <div><Label>תוכן (HTML)</Label><Textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={3} /></div>
+                    <div>
+                      <Label>תיאור</Label>
+                      <Textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={2} />
+                      <p className="text-xs text-muted-foreground mt-1">תיאור קצר בטקסט רגיל — מופיע בכרטיס המוצר בחנות.</p>
+                    </div>
+                    <div>
+                      <Label>תוכן (HTML)</Label>
+                      <Textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={3} />
+                      <p className="text-xs text-muted-foreground mt-1">תיאור מורחב בעמוד המוצר. אם נגרר לכאן קוד מוזר מהאתר הישן (למשל &lt;svg&gt;) — אפשר לרוקן ולכתוב טקסט נקי.</p>
+                    </div>
                     <div className="grid grid-cols-3 gap-4">
                       <div><Label>מחיר *</Label><Input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} /></div>
                       <div><Label>מחיר מקורי</Label><Input type="number" value={form.original_price} onChange={e => setForm({ ...form, original_price: e.target.value })} /></div>
@@ -361,8 +369,16 @@ export default function AdminProducts() {
                       </div>
                     </div>
                     <ImageUpload value={form.image_url} onChange={url => setForm({ ...form, image_url: url })} folder="products" label="תמונת מוצר" />
-                    <div><Label>קישור קובץ דיגיטלי</Label><Input value={form.digital_file_url} onChange={e => setForm({ ...form, digital_file_url: e.target.value })} dir="ltr" /></div>
-                    <div><Label>קישור מקור</Label><Input value={form.source_url} onChange={e => setForm({ ...form, source_url: e.target.value })} dir="ltr" /></div>
+                    <div>
+                      <Label>קישור קובץ דיגיטלי</Label>
+                      <Input value={form.digital_file_url} onChange={e => setForm({ ...form, digital_file_url: e.target.value })} dir="ltr" />
+                      <p className="text-xs text-muted-foreground mt-1">למוצר דיגיטלי — קישור ישיר לקובץ (PDF) שהרוכש מקבל אחרי התשלום. למוצר פיזי משאירים ריק.</p>
+                    </div>
+                    <div>
+                      <Label>קישור מקור</Label>
+                      <Input value={form.source_url} onChange={e => setForm({ ...form, source_url: e.target.value })} dir="ltr" />
+                      <p className="text-xs text-muted-foreground mt-1">כתובת המוצר באתר הישן (club.bneyzion) — לשימוש פנימי בלבד, לא מוצג לרוכשים.</p>
+                    </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label>סטטוס</Label>
@@ -375,7 +391,11 @@ export default function AdminProducts() {
                           </SelectContent>
                         </Select>
                       </div>
-                      <div><Label>סדר מיון</Label><Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: e.target.value })} /></div>
+                      <div>
+                        <Label>סדר מיון</Label>
+                        <Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: e.target.value })} />
+                        <p className="text-xs text-muted-foreground mt-1">קובע את סדר הופעת המוצרים בחנות — מספר נמוך מופיע קודם.</p>
+                      </div>
                     </div>
                     <div className="flex items-center gap-6">
                       <div className="flex items-center gap-2">

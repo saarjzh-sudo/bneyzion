@@ -517,34 +517,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
           {/* תפקיד + קיצורי-ניהול — לבעלי-תפקיד בלבד (T06, שיבוץ 2.7.2026) */}
           {(!collapsed || isDrawer) && <RolePanel staffOnly className="mb-1" />}
 
-          {/* תכנית הפרק השבועי */}
-          <Link
-            to="/chapter-weekly"
-            onClick={onDrawerClose}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.55rem",
-              padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
-              borderRadius: radii.md,
-              fontFamily: fonts.body,
-              fontSize: "0.8rem",
-              color: colors.textMid,
-              fontWeight: 600,
-              textDecoration: "none",
-              justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
-              transition: "background 0.15s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(139,111,71,0.08)")}
-            onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-          >
-            <CalendarDays size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
-            {(!collapsed || isDrawer) && <span>תכנית הפרק השבועי</span>}
-          </Link>
-
-          {/* תרומות + צמצם — share one row when expanded so the footer is more compact.
-              R3 15.6.2026 (Saar): "לזכר סעדיה" removed (it lives in the header);
-              the collapse button sits beside תרומות on half a row. */}
+          {/* יואב 13.7: "תכנית הפרק השבועי" ו"תרומות" הוסרו מפוטר הסיידבר (החלטת סער).
+              נשאר רק כפתור "צמצם". */}
           <div
             style={{
               display: "flex",
@@ -553,33 +527,6 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               flexDirection: collapsed && !isDrawer ? "column" : "row",
             }}
           >
-            <Link
-              to="/donate"
-              onClick={onDrawerClose}
-              style={{
-                flex: collapsed && !isDrawer ? undefined : 1,
-                display: "flex",
-                alignItems: "center",
-                gap: "0.55rem",
-                padding: collapsed && !isDrawer ? "0.45rem" : "0.45rem 0.7rem",
-                borderRadius: radii.md,
-                fontFamily: fonts.body,
-                fontSize: "0.8rem",
-                color: "white",
-                fontWeight: 600,
-                textDecoration: "none",
-                justifyContent: collapsed && !isDrawer ? "center" : "flex-start",
-                background: gradients.goldButton,
-                boxShadow: shadows.goldGlowSoft,
-                transition: "opacity 0.15s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-            >
-              <Heart size={13} style={{ flexShrink: 0 }} />
-              {(!collapsed || isDrawer) && <span>תרומות</span>}
-            </Link>
-
             {!isDrawer && (
               <button
                 onClick={() => setCollapsed((c) => !c)}
