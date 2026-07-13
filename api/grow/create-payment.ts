@@ -472,7 +472,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             customer_phone: phone,
             // With a coupon: subtotal = products before discount, total = charged.
             subtotal: meta?.pre_discount_sum ? Number(meta.pre_discount_sum) : sum,
-            discount: couponDiscount || null,
+            // orders.discount is NOT NULL — an explicit null overrides the column
+            // default and violates the constraint, failing EVERY coupon-less
+            // purchase ("Failed to create order record"). No coupon = 0, not null.
+            discount: couponDiscount || 0,
             total: sum,
             installments: safeInstallments,
             invoice_type: "receipt",
