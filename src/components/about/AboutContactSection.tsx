@@ -21,16 +21,16 @@ const AboutContactSection = () => {
           <motion.div variants={fadeUp} custom={0} className="glass-card-light rounded-2xl p-8">
             <h2 className="text-2xl font-heading gradient-warm mb-6">צור קשר</h2>
             <div className="space-y-4">
-              <a href="mailto:info@bneyzion.co.il" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+              <a href="mailto:office@bneyzion.co.il" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                   <Mail className="h-5 w-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm font-medium">אימייל</p>
-                  <p className="text-xs text-muted-foreground">info@bneyzion.co.il</p>
+                  <p className="text-xs text-muted-foreground">office@bneyzion.co.il</p>
                 </div>
               </a>
-              <a href="https://wa.me/972000000000" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+              <a href="https://wa.me/972527368607" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0">
                   <MessageCircle className="h-5 w-5 text-accent-foreground" />
                 </div>
@@ -39,7 +39,7 @@ const AboutContactSection = () => {
                   <p className="text-xs text-muted-foreground">שלחו לנו הודעה</p>
                 </div>
               </a>
-              <a href="tel:+972000000000" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+              <a href="tel:+972527368607" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0">
                   <Phone className="h-5 w-5 text-foreground" />
                 </div>

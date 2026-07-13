@@ -12,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Link } from "react-router-dom";
 import {
   useDedicationPricing,
   useDedicationSettings,
@@ -64,6 +66,7 @@ export default function DedicationDialog({
   const [fullName, setFullName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [tosAccepted, setTosAccepted] = useState(false);
 
   const { data: settings } = useDedicationSettings();
   const { data: pricing } = useDedicationPricing(lessonId, seriesId);
@@ -95,6 +98,7 @@ export default function DedicationDialog({
     setFullName("");
     setPhone("");
     setEmail("");
+    setTosAccepted(false);
   };
 
   const handleSubmit = async () => {
@@ -108,6 +112,10 @@ export default function DedicationDialog({
     }
     if (!isReady) {
       toast({ title: "מערכת התשלומים עדיין נטענת — נסו שוב בעוד רגע", variant: "destructive" });
+      return;
+    }
+    if (!tosAccepted) {
+      toast({ title: "יש לאשר את התקנון לפני התשלום", variant: "destructive" });
       return;
     }
 
@@ -127,7 +135,7 @@ export default function DedicationDialog({
           product: scope === "series" ? "dedication-series" : "dedication-lesson",
           session_title: targetTitle,
           user_id: user?.id,
-          tos_accepted: true,
+          tos_accepted: tosAccepted,
           tos_accepted_at: new Date().toISOString(),
         },
         dedicationMeta: {
@@ -316,7 +324,19 @@ export default function DedicationDialog({
             תשלום מאובטח דרך Grow / Meshulam · אישור אוטומטי מיידי
           </div>
 
-          <Button onClick={handleSubmit} disabled={isLoading} className="w-full font-display gap-2">
+          {/* יואב 13.7 (אודיט): הסכמת-תקנון אמיתית — קודם נשלח tos_accepted:true קשיח בלי checkbox */}
+          <div className="flex items-start gap-2">
+            <Checkbox id="ded-tos" checked={tosAccepted} onCheckedChange={(v) => setTosAccepted(!!v)} />
+            <label htmlFor="ded-tos" className="text-xs leading-relaxed cursor-pointer select-none text-muted-foreground">
+              אני מאשר/ת את{" "}
+              <Link to="/terms" target="_blank" rel="noopener noreferrer" className="underline text-primary hover:opacity-80" onClick={(e) => e.stopPropagation()}>
+                תקנון האתר ומדיניות הפרטיות
+              </Link>
+              , ומסכים/ה לחיוב עבור ההקדשה.
+            </label>
+          </div>
+
+          <Button onClick={handleSubmit} disabled={isLoading || !tosAccepted} className="w-full font-display gap-2">
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

@@ -233,10 +233,14 @@ function CourseCard({ course }: { course: CourseCardData }) {
           direction: "rtl",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 6, color: colors.textMuted, fontSize: "0.8rem" }}>
-          <BookOpen size={14} />
-          <span>{course.lessonCount} שיעורים</span>
-        </div>
+        {course.lessonCount > 0 ? (
+          <div style={{ display: "flex", alignItems: "center", gap: 6, color: colors.textMuted, fontSize: "0.8rem" }}>
+            <BookOpen size={14} />
+            <span>{course.lessonCount} שיעורים</span>
+          </div>
+        ) : (
+          <span />
+        )}
 
         {course.hasAccess && course.lessonCount === 0 && !course.isSubscription ? (
           /* קורס בלי שיעורים עדיין — אין לאן להיכנס, אומרים את זה בכנות */
@@ -329,8 +333,10 @@ export default function DesignPreviewMyCourses() {
         subtitle: "הרב יואב אוריאל · תכנית מנויים",
         slug: "weekly-chapter",
         gradient: gradients.warmDark,
-        progressPct: 43,
-        lessonCount: 64,
+        // יואב 13.7 (אודיט): הוסרו מספרי-דמה (43%/64). מנוי מתמשך אין לו "אחוז השלמה",
+        // וספירת-שיעורים קשיחה מטעה — 0 → הפס והספירה מוסתרים (guard בפוטר).
+        progressPct: 0,
+        lessonCount: 0,
         hasAccess: true,
         ctaTo: "/course/weekly-chapter",
         ctaLabel: "המשך ללמוד",
