@@ -85,7 +85,8 @@ const Lessons = lazy(() => import("./pages/admin/Lessons"));
 const Rabbis = lazy(() => import("./pages/admin/Rabbis"));
 const SeriesPage = lazy(() => import("./pages/admin/Series"));
 const Topics = lazy(() => import("./pages/admin/Topics"));
-const Users = lazy(() => import("./pages/admin/Users"));
+// רמה 17: /admin/users = עמוד המשתמשים המאוחד (מחליף את הפיצול מנויים/משתמשים)
+const AdminUnifiedUsers = lazy(() => import("./pages/admin/UnifiedUsers"));
 const Migration = lazy(() => import("./pages/admin/Migration"));
 const AdminSettings = lazy(() => import("./pages/admin/Settings"));
 const AdminProducts = lazy(() => import("./pages/admin/Products"));
@@ -402,7 +403,7 @@ const App = () => (
             {/* ── Admin routes — role-gated (wave-2) ───────────────────── */}
             {/* Admin-only management routes */}
             <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Dashboard /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/users" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Users /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/users" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminUnifiedUsers /></Suspense></ProtectedRoute>} />
             <Route path="/admin/subscribers" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSubscribers /></Suspense></ProtectedRoute>} />
             <Route path="/admin/settings" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSettings /></Suspense></ProtectedRoute>} />
             <Route path="/admin/products" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminProducts /></Suspense></ProtectedRoute>} />

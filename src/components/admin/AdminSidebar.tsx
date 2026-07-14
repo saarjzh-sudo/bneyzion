@@ -60,11 +60,12 @@ const SECTIONS: NavSection[] = [
     label: "נתונים",
     items: [
       { title: "דשבורד",        url: "/admin",               icon: LayoutDashboard, roles: ADMIN, end: true },
-      { title: "מנויים",        url: "/admin/subscribers",   icon: UserCheck,   roles: ADMIN },
+      // רמה 17: "משתמשים" = העמוד המאוחד (מנויים+תורמים+קונים לפי אימייל).
+      // "מנויים" הישן נשאר נגיש ככלי-חירום דרך קישור בתוך העמוד המאוחד.
+      { title: "משתמשים",       url: "/admin/users",         icon: UserCheck,   roles: ADMIN },
       { title: "סליקות",        url: "/admin/payments",      icon: CreditCard,  roles: ADMIN },
       { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },
       { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
-      { title: "משתמשים",       url: "/admin/users",         icon: Shield,      roles: ADMIN },
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
       { title: "הודעות והתראות", url: "/admin/messages",     icon: Mail,        roles: ADMIN },
       // רמה 14 (סער 10.7): שאלות ותשובות — "שאל את הרב" באתר → תור מסודר כאן

@@ -12,10 +12,12 @@
  * מצב תצוגה בלי DB: ‎?mock=1‎ טוען נתוני-דוגמה (לאימות עיצוב לפני יצירת ה-RPC).
  */
 import { useMemo, useState, useEffect, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   Search, Download, UserPlus, X, ChevronLeft, KeyRound, Mail, AlertTriangle,
 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import {
   useUnifiedUsers, useUserDetail, truthStatus, userFlags,
   type UnifiedUser, type UserFlag, type TruthStatus,
@@ -130,7 +132,50 @@ export default function DesignPreviewUsers() {
   const [filter, setFilter] = useState<FilterKey>("all");
   const [openEmail, setOpenEmail] = useState<string | null>(null);
   const [grantFor, setGrantFor] = useState<UnifiedUser | null>(null);
+  const [grantTag, setGrantTag] = useState("program:weekly-chapter");
+  const [grantUntil, setGrantUntil] = useState("");
+  const [newEmail, setNewEmail] = useState("");
   const [toast, setToast] = useState<string | null>(null);
+  const queryClient = useQueryClient();
+
+  const refresh = () => {
+    queryClient.invalidateQueries({ queryKey: ["admin-unified-users"] });
+    queryClient.invalidateQueries({ queryKey: ["admin-user-detail"] });
+  };
+
+  // הענקת גישה — כתיבה אמיתית ל-user_access_tags (RLS: admin בלבד).
+  // upsert על (email,tag): מחיה tag קטוע במקום שורה כפולה.
+  const grantMutation = useMutation({
+    mutationFn: async ({ email, tag, validUntil }: { email: string; tag: string; validUntil: string | null }) => {
+      const { error } = await (supabase as any).from("user_access_tags").upsert({
+        email: email.toLowerCase(),
+        tag,
+        valid_until: validUntil,
+        cancelled_at: null,
+        cancel_note: null,
+        source: "admin_manual",
+        pending_user_link: true,
+        notes: `הוענק ידנית מעמוד המשתמשים (${new Date().toLocaleDateString("he-IL")})`,
+      }, { onConflict: "email,tag" });
+      if (error) throw new Error(error.message);
+    },
+    onSuccess: (_d, v) => { refresh(); setGrantFor(null); setToast(`הגישה הוענקה ל-${v.email}`); },
+    onError: (e: Error) => setToast(`שגיאה בהענקה: ${e.message}`),
+  });
+
+  // הסרת גישה — קוטע את התוקף עכשיו (לא מוחק היסטוריה)
+  const removeMutation = useMutation({
+    mutationFn: async ({ email, tag }: { email: string; tag: string }) => {
+      const { error } = await (supabase as any)
+        .from("user_access_tags")
+        .update({ valid_until: new Date().toISOString(), cancel_note: "הוסר ידנית מעמוד המשתמשים" })
+        .eq("email", email.toLowerCase())
+        .eq("tag", tag);
+      if (error) throw new Error(error.message);
+    },
+    onSuccess: () => { refresh(); setToast("הגישה הוסרה"); },
+    onError: (e: Error) => setToast(`שגיאה בהסרה: ${e.message}`),
+  });
 
   useEffect(() => {
     if (!toast) return;
@@ -221,14 +266,19 @@ export default function DesignPreviewUsers() {
             </div>
             <h1 className="font-heading" style={{ margin: 0, fontSize: "clamp(24px,3.4vw,32px)", color: C.navy }}>משתמשים</h1>
             <div style={{ fontSize: 11, color: C.faint, marginTop: 3 }}>
-              {mock ? "מצב הדגמה (mock) — נתוני-דוגמה בלבד" : "סנדבוקס · קריאה בלבד · מחליף את ״מנויים״"}
+              {mock
+                ? "מצב הדגמה (mock) — נתוני-דוגמה בלבד"
+                : <>רשומת-אדם אחת לכל אימייל · מנויים, תורמים וקונים במקום אחד · <Link to="/admin/subscribers" style={{ color: C.gold }}>כלי חירום ומנויי-Monday (העמוד הישן)</Link></>}
             </div>
           </div>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <button onClick={exportCsv} style={btnStyle(false)}>
               <Download size={15} /> ייצוא
             </button>
-            <button onClick={() => setToast("הוספת משתמש תחובר בשלב המיזוג")} style={btnStyle(true)}>
+            <button
+              onClick={() => { setNewEmail(""); setGrantFor({ email: "", full_name: null } as UnifiedUser); }}
+              style={btnStyle(true)}
+            >
               <UserPlus size={15} /> משתמש חדש
             </button>
           </div>
@@ -415,6 +465,10 @@ export default function DesignPreviewUsers() {
             mock={mock}
             onClose={() => setOpenEmail(null)}
             onGrant={() => setGrantFor(openUser.u)}
+            onRemoveTag={(email, tag) => {
+              if (mock) { setToast("מצב הדגמה — לא נשמר"); return; }
+              removeMutation.mutate({ email, tag });
+            }}
             notify={setToast}
           />
         </>
@@ -430,27 +484,62 @@ export default function DesignPreviewUsers() {
             <h3 className="font-heading" style={{ margin: "0 0 4px", fontSize: 19, color: C.navy, display: "flex", alignItems: "center", gap: 8 }}>
               <KeyRound size={18} /> הענקת גישה
             </h3>
-            <p style={{ margin: "0 0 15px", fontSize: 13, color: C.muted }}>
-              ל-<b>{grantFor.full_name || grantFor.email}</b>
-            </p>
+            {grantFor.email ? (
+              <p style={{ margin: "0 0 15px", fontSize: 13, color: C.muted }}>
+                ל-<b>{grantFor.full_name || grantFor.email}</b>
+              </p>
+            ) : (
+              <div style={{ marginBottom: 13 }}>
+                <label htmlFor="grant-email" style={labelStyle}>אימייל של המשתמש</label>
+                <input
+                  id="grant-email"
+                  type="email"
+                  style={{ ...inputStyle, direction: "ltr" }}
+                  placeholder="name@example.com"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                />
+              </div>
+            )}
             <div style={{ marginBottom: 13 }}>
               <label htmlFor="grant-type" style={labelStyle}>סוג גישה</label>
-              <select id="grant-type" style={inputStyle} defaultValue="program:weekly-chapter">
+              <select id="grant-type" style={inputStyle} value={grantTag} onChange={(e) => setGrantTag(e.target.value)}>
                 <option value="program:weekly-chapter">מנוי הפרק השבועי</option>
                 <option value="program:eicha-monday">איכה — ימי שני</option>
-                <option value="donor">סימון כתורם</option>
+                <option value="course:daniel">קורס ספר דניאל</option>
+                <option value="course:ezra">קורס ספר עזרא</option>
+                <option value="course:nehemiah">קורס ספר נחמיה</option>
+                <option value="course:esther">קורס מגילת אסתר</option>
+                <option value="course:lamentations">קורס מגילת איכה</option>
+                <option value="course:haggai-zechariah-malachi">קורס חגי-זכריה-מלאכי</option>
               </select>
             </div>
             <div style={{ marginBottom: 13 }}>
               <label htmlFor="grant-until" style={labelStyle}>תוקף עד (ריק = ללא הגבלה)</label>
-              <input id="grant-until" type="date" style={inputStyle} />
+              <input id="grant-until" type="date" style={inputStyle} value={grantUntil} onChange={(e) => setGrantUntil(e.target.value)} />
             </div>
-            <div style={{ background: C.warnBg, border: `1px solid ${C.line}`, borderRadius: 11, padding: "11px 13px", fontSize: 12.5, color: C.warn, fontWeight: 600 }}>
-              שלב קריאה-בלבד: ההענקה (כולל סנכרון ל-user_access_tags / Smoove / Monday) תחובר בשלב המיזוג, אחרי אישור.
+            <div style={{ background: C.panel2, border: `1px solid ${C.line}`, borderRadius: 11, padding: "11px 13px", fontSize: 12.5, color: C.muted }}>
+              <b style={{ color: C.ink }}>מה קורה:</b> הגישה נרשמת מיידית באתר (user_access_tags).
+              ⚠️ הוספה לרשימת Smoove ולעדכון Monday — ידנית בשלב זה.
             </div>
             <div style={{ display: "flex", gap: 8, justifyContent: "flex-end", marginTop: 16 }}>
-              <button onClick={() => setGrantFor(null)} style={btnStyle(false)}>סגירה</button>
-              <button disabled style={{ ...btnStyle(true), opacity: 0.45, cursor: "not-allowed" }}>הענק גישה</button>
+              <button onClick={() => setGrantFor(null)} style={btnStyle(false)}>ביטול</button>
+              <button
+                onClick={() => {
+                  if (mock) { setGrantFor(null); setToast("מצב הדגמה — לא נשמר"); return; }
+                  const email = (grantFor.email || newEmail).trim();
+                  if (!email.includes("@")) { setToast("צריך אימייל תקין"); return; }
+                  grantMutation.mutate({
+                    email,
+                    tag: grantTag,
+                    validUntil: grantUntil ? new Date(grantUntil + "T23:59:59").toISOString() : null,
+                  });
+                }}
+                disabled={grantMutation.isPending}
+                style={{ ...btnStyle(true), opacity: grantMutation.isPending ? 0.6 : 1 }}
+              >
+                {grantMutation.isPending ? "מעניק..." : "הענק גישה"}
+              </button>
             </div>
           </div>
         </div>
@@ -475,9 +564,11 @@ export default function DesignPreviewUsers() {
 }
 
 // ── Drawer ────────────────────────────────────────────────────────────────
-function UserDrawer({ u, flags, truth, mock, onClose, onGrant, notify }: {
+function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, notify }: {
   u: UnifiedUser; flags: UserFlag[]; truth: TruthStatus; mock: boolean;
-  onClose: () => void; onGrant: () => void; notify: (m: string) => void;
+  onClose: () => void; onGrant: () => void;
+  onRemoveTag: (email: string, tag: string) => void;
+  notify: (m: string) => void;
 }) {
   const detail = useUserDetail(mock ? null : u.email);
 
@@ -574,6 +665,16 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, notify }: {
                     {t.source || "—"}{t.valid_until ? ` · עד ${fmtDate(t.valid_until)}` : ""}
                   </div>
                 </div>
+                {t.active && (
+                  <button
+                    onClick={() => {
+                      if (window.confirm(`להסיר את הגישה "${t.tag}" מ-${u.email}?`)) onRemoveTag(u.email, t.tag);
+                    }}
+                    style={{ fontSize: 11, color: C.bad, cursor: "pointer", fontWeight: 700, background: "none", border: "none" }}
+                  >
+                    הסר
+                  </button>
+                )}
               </div>
             ))}
           </div>
@@ -603,7 +704,7 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, notify }: {
 
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", paddingTop: 4 }}>
           <button onClick={onGrant} style={btnStyle(true)}><KeyRound size={14} /> תן גישה</button>
-          <button onClick={() => notify("שליחת מייל תחובר בשלב המיזוג")} style={btnStyle(false)}><Mail size={14} /> שלח מייל</button>
+          <a href={`mailto:${u.email}`} style={{ ...btnStyle(false), textDecoration: "none" }}><Mail size={14} /> שלח מייל</a>
         </div>
       </div>
     </aside>
