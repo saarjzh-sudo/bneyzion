@@ -445,6 +445,56 @@ export default function WeeklyBookDetail() {
         {/* ── Main content ─────────────────────────────────────── */}
         <main style={{ padding: "2rem", maxWidth: 900 }}>
 
+          {/* ── פס-מכירה (יואב 14.7): הצעת הרכישה גלויה מיד, לא רק בטאבים הנעולים ── */}
+          {!hasAccess && bookPaymentProduct && (
+            <div
+              dir="rtl"
+              style={{
+                marginBottom: "1.75rem",
+                background: `linear-gradient(105deg, rgba(24,19,11,0.94) 0%, rgba(30,25,14,0.82) 60%, rgba(24,19,11,0.68) 100%)`,
+                borderRadius: radii.xl,
+                border: "1px solid rgba(196,162,101,0.4)",
+                padding: "1.4rem 1.6rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "1.25rem",
+                flexWrap: "wrap",
+              }}
+            >
+              <div style={{ flex: 1, minWidth: 240 }}>
+                <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: "white", marginBottom: 4 }}>
+                  קורס {bookTitle} — כל השיעורים, הסיכומים וההרחבות
+                </div>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: "rgba(255,255,255,0.78)", lineHeight: 1.6 }}>
+                  רכישה חד-פעמית של ₪{Number(bookPaymentProduct.default_amount).toLocaleString()} פותחת את הקורס המלא לתמיד · מאת הרב יואב אוריאל
+                </div>
+              </div>
+              <div style={{ display: "flex", gap: "0.6rem", alignItems: "center", flexWrap: "wrap" }}>
+                <QuickBuyDialog
+                  product={bookPaymentProduct.id}
+                  amount={Number(bookPaymentProduct.default_amount)}
+                  description={`קורס ${bookTitle}`}
+                  title={`רכישת קורס ${bookTitle}`}
+                  subtitle={`תשלום חד-פעמי של ₪${Number(bookPaymentProduct.default_amount).toLocaleString()} — גישה מלאה לתמיד`}
+                  thankYouType="store"
+                >
+                  <button
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.8rem 1.6rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.92rem", border: "none", cursor: "pointer", boxShadow: shadows.goldGlow, whiteSpace: "nowrap" }}
+                  >
+                    לרכישת הקורס — ₪{Number(bookPaymentProduct.default_amount).toLocaleString()}
+                  </button>
+                </QuickBuyDialog>
+                <Link
+                  to="/chapter-weekly"
+                  style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.9)", textDecoration: "underline", whiteSpace: "nowrap" }}
+                >
+                  או מנוי שפותח הכל
+                </Link>
+              </div>
+            </div>
+          )}
+
           {/* Heading */}
           <div style={{ marginBottom: "1.75rem" }}>
             <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "clamp(1.3rem, 3vw, 1.9rem)", color: colors.textDark, margin: "0 0 0.3rem", lineHeight: 1.2 }}>

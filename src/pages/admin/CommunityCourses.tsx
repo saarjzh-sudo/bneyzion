@@ -50,6 +50,21 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
   const [title, setTitle] = useState(course?.title || "");
   const [description, setDescription] = useState(course?.description || "");
   const [imageUrl, setImageUrl] = useState(course?.image_url || "");
+  // יואב 14.7: עריכת קורס ברמת החנות — מחיר, רב-יוצר וסטטוס באותו טופס
+  const [price, setPrice] = useState(course?.price != null ? String(course.price) : "0");
+  const [rabbiId, setRabbiId] = useState(course?.rabbi_id || "");
+  const [status, setStatus] = useState(course?.status || "active");
+
+  const { data: rabbis = [] } = useQuery({
+    queryKey: ["admin-rabbis-for-courses"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("rabbis").select("id, name").eq("status", "active").order("name");
+      if (error) throw error;
+      return data ?? [];
+    },
+    staleTime: 300_000,
+  });
 
   return (
     <div className="space-y-5">
@@ -59,7 +74,37 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
       </div>
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">תיאור</label>
-        <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="תיאור קצר שיופיע ברשימת הקורסים" rows={3} className="resize-none" />
+        <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="כמה מילים שמופיעות על כרטיס הקורס, למשל: לימוד ספר דניאל באופן יסודי, פרק אחרי פרק" rows={3} className="resize-none" />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">מחיר (₪)</label>
+          <Input type="number" min="0" value={price} onChange={(e) => setPrice(e.target.value)} className="h-11" />
+          <p className="text-xs text-muted-foreground">מחיר גדול מ-0 מציג כפתור רכישה בעמוד הקורס ובקטלוג. 0 = לא נמכר בנפרד.</p>
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">הרב המלמד</label>
+          <select
+            value={rabbiId}
+            onChange={(e) => setRabbiId(e.target.value)}
+            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="">הרב יואב אוריאל (ברירת מחדל)</option>
+            {rabbis.map((r: any) => <option key={r.id} value={r.id}>{r.name}</option>)}
+          </select>
+          <p className="text-xs text-muted-foreground">מוצג על הכרטיס: "מאת {rabbis.find((r: any) => r.id === rabbiId)?.name || "הרב יואב אוריאל"}"</p>
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">סטטוס</label>
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="active">פעיל — מוצג בקטלוג</option>
+            <option value="draft">טיוטה — מוסתר</option>
+          </select>
+        </div>
       </div>
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">תמונת כיסוי</label>
@@ -73,7 +118,16 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
       <Separator />
       <div className="flex gap-3 justify-end">
         <Button variant="outline" onClick={onCancel} className="min-w-[80px]">ביטול</Button>
-        <Button onClick={() => onSave({ title, description, image_url: imageUrl || null })} disabled={!title.trim() || isPending} className="min-w-[100px]">
+        <Button
+          onClick={() => onSave({
+            title, description, image_url: imageUrl || null,
+            price: Number(price) || 0,
+            rabbi_id: rabbiId || null,
+            status,
+          })}
+          disabled={!title.trim() || isPending}
+          className="min-w-[100px]"
+        >
           {isPending ? <span className="animate-pulse">שומר...</span> : course ? "שמור שינויים" : "צור קורס"}
         </Button>
       </div>
@@ -209,7 +263,11 @@ export default function CommunityCourses() {
         const { error } = await supabase.from("community_courses").update(data).eq("id", data.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("community_courses").insert({ title: data.title!, description: data.description, image_url: data.image_url, sort_order: courses.length });
+        const { error } = await supabase.from("community_courses").insert({
+          title: data.title!, description: data.description, image_url: data.image_url,
+          price: data.price ?? 0, rabbi_id: data.rabbi_id ?? null, status: data.status ?? "active",
+          sort_order: courses.length,
+        });
         if (error) throw error;
       }
     },

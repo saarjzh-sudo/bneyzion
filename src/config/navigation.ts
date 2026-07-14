@@ -12,7 +12,7 @@ export const NAV_ITEMS: NavItem[] = [
   { label: "תנ״ך למשפחה", href: "/family-tanach" },
   { label: "אגף המורים", href: "/teachers" },
   { label: "פרשת השבוע", href: "/parasha" },
-  { label: "הקורסים שלי", href: "/design-my-courses" },
+  { label: "קורסים בתנ״ך", href: "/design-my-courses" },
   { label: "חנות", href: "/store" },
   { label: "אודותינו", href: "/about" },
 ];

@@ -95,6 +95,8 @@ interface CourseCardData {
   subtitle?: string;
   /** יואב 14.7: כמה מילים על הקורס — מוצג על הכרטיס */
   description?: string | null;
+  /** מחיר רכישה חד-פעמית (מ-community_courses.price) — הופך את הכרטיס למכירתי */
+  price?: number | null;
   slug: string | null;
   gradient: string;
   /** (סער 10.7) תמונת אקוורל מה-DB — כשקיימת, מחליפה את הגרדיאנט */
@@ -300,6 +302,27 @@ function CourseCard({ course }: { course: CourseCardData }) {
             {course.isSubscription ? <Play size={14} /> : <ChevronLeft size={14} />}
             {course.ctaLabel}
           </Link>
+        ) : course.price && course.price > 0 ? (
+          /* מכירתי (יואב 14.7): מחיר גלוי + כניסה ישירה לעמוד הקורס לרכישה */
+          <Link
+            to={course.ctaTo}
+            style={{
+              background: gradients.goldButton,
+              color: "white",
+              fontFamily: fonts.display,
+              fontWeight: 700,
+              fontSize: "0.85rem",
+              padding: "0.45rem 1.1rem",
+              borderRadius: radii.md,
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              boxShadow: shadows.goldGlow,
+            }}
+          >
+            לרכישה — ₪{Number(course.price).toLocaleString()}
+          </Link>
         ) : (
           <Link
             to={course.ctaTo}
@@ -464,6 +487,7 @@ export default function DesignPreviewMyCourses() {
         title: cc.title,
         subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
         description: cc.description ?? null,
+        price: cc.access_type === "requires_tag" ? Number(cc.price) || null : null,
         slug: cc.id,
         gradient: `linear-gradient(135deg, ${colors.textSubtle} 0%, #4a4a4a 100%)`,
         imageUrl: cc.image_url ?? null,
