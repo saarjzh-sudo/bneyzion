@@ -251,7 +251,18 @@ export const PARASHA_VERSES: Record<string, { text: string; reference: string }>
     text: "אֵלֶּה תּוֹלְדֹת נֹחַ נֹחַ אִישׁ צַדִּיק תָּמִים הָיָה בְּדֹרֹתָיו אֶת הָאֱלֹהִים הִתְהַלֶּךְ נֹחַ",
     reference: "בראשית ו, ט",
   },
-  // Default verse for parashiot without a specific verse
+  "דברים": {
+    text: "אֵלֶּה הַדְּבָרִים אֲשֶׁר דִּבֶּר מֹשֶׁה אֶל כָּל יִשְׂרָאֵל בְּעֵבֶר הַיַּרְדֵּן",
+    reference: "דברים א, א",
+  },
+};
+
+// יואב 13.7 (אודיט): פסוק ברירת-מחדל — קודם ~51 שבועות בשנה תיבת-הפסוק בהירו
+// הייתה ריקה (רק 3/54 פרשות מופו). כך התיבה לעולם לא ריקה; מוסיפים פסוקי-פתיחה
+// ספציפיים בהדרגה מעל הדיפולט הזה.
+export const DEFAULT_PARASHA_VERSE = {
+  text: "תּוֹרַת ה' תְּמִימָה מְשִׁיבַת נָפֶשׁ, עֵדוּת ה' נֶאֱמָנָה מַחְכִּימַת פֶּתִי",
+  reference: "תהלים יט, ח",
 };
 
 /**
@@ -271,8 +282,8 @@ export function getParashaChumash(parasha: string): string | undefined {
 /**
  * Get the featured verse for a parasha
  */
-export function getParashaVerse(parasha: string): { text: string; reference: string } | undefined {
-  return PARASHA_VERSES[parasha];
+export function getParashaVerse(parasha: string): { text: string; reference: string } {
+  return PARASHA_VERSES[parasha] ?? DEFAULT_PARASHA_VERSE;
 }
 
 // ── חידות לילדים — סדרה-לכל-חומש ────────────────────────────────────────────

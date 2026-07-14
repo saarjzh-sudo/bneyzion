@@ -18,6 +18,8 @@ import { useToast } from "@/hooks/use-toast";
 import { type ShippingMethod } from "@/config/shipping";
 // רמה 13: מחירי המשלוח נערכים ממרכז-השליטה (copy.shipping.options, fallback לקונפיג)
 import { useShippingOptions } from "@/hooks/useShippingOptions";
+// יואב 13.7: נקודות-איסוף מנוהלות באדמין — הרוכש בוחר מהפעילות בלבד.
+import { usePublicSalePoints } from "@/hooks/useSalePoints";
 
 export interface StoreCheckoutDialogProps {
   /** Product slug from the `products` table. */
@@ -62,6 +64,9 @@ export function StoreCheckoutDialog({
   const { toast } = useToast();
 
   const { options: shippingOptions, getPrice: getShippingPrice } = useShippingOptions();
+  const { data: salePoints = [] } = usePublicSalePoints();
+  const [pickupPointId, setPickupPointId] = useState<string>("");
+  const pickupPoint = salePoints.find((p) => p.id === pickupPointId);
   const shippingPrice = isPhysical ? getShippingPrice(shippingMethod) : 0;
   const totalPrice = productPrice + shippingPrice;
 
@@ -92,8 +97,11 @@ export function StoreCheckoutDialog({
     }
 
     const fullName = `${firstName} ${lastName}`.trim();
+    const pickupLabel = pickupPoint
+      ? `איסוף עצמי — ${pickupPoint.name}${pickupPoint.city ? `, ${pickupPoint.city}` : ""}`
+      : "איסוף עצמי";
     const shippingNote = isPhysical
-      ? `משלוח: ${shippingMethod === "pickup" ? "איסוף עצמי" : `${street}, ${city}${zip ? " " + zip : ""}`}`
+      ? `משלוח: ${shippingMethod === "pickup" ? pickupLabel : `${street}, ${city}${zip ? " " + zip : ""}`}`
       : "";
     const descriptionParts = [productTitle];
     if (shippingNote) descriptionParts.push(shippingNote);
@@ -118,7 +126,7 @@ export function StoreCheckoutDialog({
           ...(isPhysical
             ? {
                 shipping_method: shippingMethod,
-                shipping_address: shippingMethod === "pickup" ? "איסוף עצמי" : street,
+                shipping_address: shippingMethod === "pickup" ? pickupLabel : street,
                 shipping_city: shippingMethod === "pickup" ? undefined : city,
                 shipping_zip: shippingMethod === "pickup" ? undefined : zip,
               }
@@ -311,9 +319,39 @@ export function StoreCheckoutDialog({
                 )}
 
                 {shippingMethod === "pickup" && (
-                  <p className="text-xs text-muted-foreground bg-muted/40 rounded-lg px-3 py-2">
-                    נציגנו ייצרו איתך קשר לתיאום מועד האיסוף.
-                  </p>
+                  salePoints.length > 0 ? (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">בחרו נקודת איסוף:</p>
+                      {salePoints.map((p) => (
+                        <label
+                          key={p.id}
+                          className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition-colors ${
+                            pickupPointId === p.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                          }`}
+                        >
+                          <input
+                            type="radio"
+                            name="pickup-point"
+                            value={p.id}
+                            checked={pickupPointId === p.id}
+                            onChange={() => setPickupPointId(p.id)}
+                            className="accent-primary mt-1"
+                          />
+                          <div>
+                            <p className="text-sm font-display">{p.name}</p>
+                            {(p.address || p.city) && (
+                              <p className="text-xs text-muted-foreground">{[p.address, p.city].filter(Boolean).join(", ")}</p>
+                            )}
+                            {p.notes && <p className="text-xs text-muted-foreground">{p.notes}</p>}
+                          </div>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-xs text-muted-foreground bg-muted/40 rounded-lg px-3 py-2">
+                      נציגנו ייצרו איתך קשר לתיאום מועד האיסוף.
+                    </p>
+                  )
                 )}
               </div>
             </>

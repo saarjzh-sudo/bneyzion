@@ -11,10 +11,11 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Search, Pencil, Trash2, FolderOpen, Sparkles, Loader2 } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, FolderOpen, Sparkles, Loader2, MapPin } from "lucide-react";
 import { toast as sonnerToast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 import { useProductCategories } from "@/hooks/useProducts";
+import { useSalePoints, useCreateSalePoint, useUpdateSalePoint, useDeleteSalePoint, type SalePoint } from "@/hooks/useSalePoints";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -179,6 +180,105 @@ function CategoriesManager() {
   );
 }
 
+// יואב 13.7: ניהול נקודות-מכירה / איסוף-עצמי. פעילה/לא-פעילה בטוגל אחד; רק פעילות מוצגות לרוכשים.
+const emptySalePointForm = { name: "", address: "", city: "", contact: "", notes: "", sort_order: "0", is_active: true };
+
+function SalePointsManager() {
+  const { data: points, isLoading } = useSalePoints();
+  const createSP = useCreateSalePoint();
+  const updateSP = useUpdateSalePoint();
+  const deleteSP = useDeleteSalePoint();
+  const { toast } = useToast();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editing, setEditing] = useState<any>(null);
+  const [form, setForm] = useState(emptySalePointForm);
+
+  const resetForm = () => { setForm(emptySalePointForm); setEditing(null); };
+  const openEdit = (p: SalePoint) => {
+    setEditing(p);
+    setForm({ name: p.name, address: p.address || "", city: p.city || "", contact: p.contact || "", notes: p.notes || "", sort_order: String(p.sort_order), is_active: p.is_active });
+    setDialogOpen(true);
+  };
+  const save = async () => {
+    const payload = { name: form.name, address: form.address || null, city: form.city || null, contact: form.contact || null, notes: form.notes || null, sort_order: Number(form.sort_order) || 0, is_active: form.is_active };
+    try {
+      if (editing) { await updateSP.mutateAsync({ id: editing.id, ...payload } as any); toast({ title: "נקודת המכירה עודכנה" }); }
+      else { await createSP.mutateAsync(payload as any); toast({ title: "נקודת המכירה נוספה" }); }
+      setDialogOpen(false); resetForm();
+    } catch (e: any) { toast({ title: "שגיאה", description: e.message, variant: "destructive" }); }
+  };
+  const toggleActive = async (p: SalePoint) => {
+    try { await updateSP.mutateAsync({ id: p.id, is_active: !p.is_active }); toast({ title: !p.is_active ? "הנקודה הופעלה — מוצגת לרוכשים" : "הנקודה הוסתרה מהרוכשים" }); }
+    catch (e: any) { toast({ title: "שגיאה", description: e.message, variant: "destructive" }); }
+  };
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between pb-3">
+        <div>
+          <h2 className="font-heading text-lg">נקודות מכירה ואיסוף עצמי</h2>
+          <p className="text-xs text-muted-foreground mt-1">רק נקודות "פעילות" מוצגות לרוכשים בסליקה, תחת "איסוף עצמי".</p>
+        </div>
+        <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) resetForm(); }}>
+          <DialogTrigger asChild><Button size="sm" className="font-display"><Plus className="h-4 w-4 ml-1" />נקודה חדשה</Button></DialogTrigger>
+          <DialogContent dir="rtl">
+            <DialogHeader><DialogTitle className="font-heading">{editing ? "עריכת נקודה" : "נקודת מכירה חדשה"}</DialogTitle></DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div><Label>שם הנקודה *</Label><Input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="למשל: איסוף עצמי - צ'יטה, רמות" /></div>
+              <div className="grid grid-cols-2 gap-4">
+                <div><Label>כתובת</Label><Input value={form.address} onChange={e => setForm({ ...form, address: e.target.value })} /></div>
+                <div><Label>עיר</Label><Input value={form.city} onChange={e => setForm({ ...form, city: e.target.value })} /></div>
+              </div>
+              <div><Label>איש קשר / טלפון</Label><Input value={form.contact} onChange={e => setForm({ ...form, contact: e.target.value })} dir="ltr" /></div>
+              <div><Label>הערות (שעות פעילות וכו')</Label><Textarea value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} /></div>
+              <div className="grid grid-cols-2 gap-4 items-end">
+                <div><Label>סדר מיון</Label><Input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: e.target.value })} /></div>
+                <div className="flex items-center gap-2 pb-2"><Switch checked={form.is_active} onCheckedChange={v => setForm({ ...form, is_active: v })} /><Label>פעילה (מוצגת לרוכשים)</Label></div>
+              </div>
+              <Button onClick={save} disabled={!form.name || createSP.isPending || updateSP.isPending} className="font-display">{editing ? "עדכן" : "צור נקודה"}</Button>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </CardHeader>
+      <CardContent>
+        {isLoading ? <p className="text-center py-8 text-muted-foreground">טוען...</p> : (
+          <Table>
+            <TableHeader><TableRow>
+              <TableHead className="text-right">שם</TableHead>
+              <TableHead className="text-right">כתובת</TableHead>
+              <TableHead className="text-right">איש קשר</TableHead>
+              <TableHead className="text-right">פעילה</TableHead>
+              <TableHead className="text-right">פעולות</TableHead>
+            </TableRow></TableHeader>
+            <TableBody>
+              {points?.map((p) => (
+                <TableRow key={p.id}>
+                  <TableCell className="font-medium">{p.name}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{[p.address, p.city].filter(Boolean).join(", ") || "—"}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground" dir="ltr">{p.contact || "—"}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Switch checked={p.is_active} disabled={updateSP.isPending} onCheckedChange={() => toggleActive(p)} />
+                      <span className={`text-xs ${p.is_active ? "text-primary" : "text-muted-foreground"}`}>{p.is_active ? "פעילה" : "מוסתרת"}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" onClick={() => openEdit(p)}><Pencil className="h-4 w-4" /></Button>
+                      <Button variant="ghost" size="icon" onClick={() => { if (confirm(`למחוק את "${p.name}"?`)) deleteSP.mutate(p.id); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {points?.length === 0 && <TableRow><TableCell colSpan={5} className="text-center text-muted-foreground py-8">אין נקודות מכירה עדיין — הוסף אחת כדי שתופיע לרוכשים באיסוף עצמי</TableCell></TableRow>}
+            </TableBody>
+          </Table>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 function EnrichProductsButton({ onDone }: { onDone: () => void }) {
   const [loading, setLoading] = useState(false);
 
@@ -316,6 +416,10 @@ export default function AdminProducts() {
             <TabsTrigger value="categories" className="font-display flex items-center gap-1.5">
               <FolderOpen className="h-4 w-4" />
               קטגוריות
+            </TabsTrigger>
+            <TabsTrigger value="salepoints" className="font-display flex items-center gap-1.5">
+              <MapPin className="h-4 w-4" />
+              נקודות מכירה
             </TabsTrigger>
           </TabsList>
 
@@ -480,6 +584,10 @@ export default function AdminProducts() {
 
           <TabsContent value="categories" className="mt-4">
             <CategoriesManager />
+          </TabsContent>
+
+          <TabsContent value="salepoints" className="mt-4">
+            <SalePointsManager />
           </TabsContent>
         </Tabs>
       </div>
