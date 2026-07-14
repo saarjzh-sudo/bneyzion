@@ -8556,3 +8556,13 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 **Backfill 14.7:** ‏220 שורות (142 donations + 78 orders) הוכנסו עם snapshot ‏`*_bak_growfeed_20260714`; אימות still_missing=0; replay E2E → duplicate-skip. אחרי: last_charge=14.7, ‏894 אנשים ייחודיים, ירוק-35d=223, אמבר=33.
 
 **עוד:** עסקאות-בדיקה ("בדיקה"/"בדיקת חיווט") מוחרגות מה-backfill אבל *לא* מה-edge — עסקת-בדיקה עתידית תיכנס ל-DB (לנקות ידנית או להוסיף החרגה). `paymentType` בפועל = "הוראת קבע" (לא רק 'הו"ק'). מיפוי product לשורות orders מה-webhook: לחיות/מנוי/הפרק→weekly-chapter-subscription · בית המדרש→beit-midrash-participation · אחרת other.
+
+### 2026-07-14 (המשך) — רמה 17 חלק ב': מסירה דיגיטלית + הערות יואב (חנות+קורסים)
+
+**מסירה דיגיטלית E2E (אומת בפרודקשן כולל מייל-בתיבה):** bucket פרטי `digital-products` (אפס policies; service_role בלבד) עם 9 ספרים — 7 מכלל-יופי מהדרייב של יואב + יהושע-סופי + מלכים (docx→GoogleDoc→PDF, ‏233 עמ'). `products.digital_file_url='storage:digital-products/<slug>.pdf'` (snapshot `products_bak_digital_20260714`; יהושע/מלכים היו קישורי Google-Doc עריכים). מסירה: `api/lib/digital-delivery.ts` — מייל-Smoove לרוכש (קישורים חתומים 30 יום, שם-קובץ עברי דרך פרמטר download) + התראת-רכישה ל-office@bneyzion.co.il + אידמפוטנטיות ב-raw_payload. דף-תודה: `api/store/order-download` (קישורי-שעה, polling עד אישור webhook) + בלוק DigitalDownloads.
+
+**🔴 מלכודת פונקציות-Vercel (עלתה בפרודקשן):** ייבוא יחסי ב-api/ **חייב** סיומת `.js` (`../lib/digital-delivery.js`) — node16 ESM. בלעדיה ה-deploy "מצליח" והפונקציה 500 בזמן-ריצה. וגם: `ReturnType<typeof createClient>` מקשיח insert/update ל-never — טיפוס supabase רופף ב-api/lib.
+
+**רכישת קורסי-ספרים:** payment_products תחת RLS בלי policies → הקליינט לא רואה מחירים (זו הסיבה ש"אי-אפשר לרכוש את דניאל"). פתרון בלי פתיחת-הרשאות: מחיר נקרא מ-`community_courses.price`; ה-id (`book-daniel` = program_slug) משמש את create-payment בשרת. ‏₪90 נקבע (אישור סער) על 6 מוצרי book-* + 6 שורות courses. LockedPanel בדף-ספר קיבל QuickBuyDialog. ⚠️ חגי/זכריה/מלאכי: 3 קורסים נפרדים מול מוצר-חבילה `book-haggai-zechariah-malachi` אחד + tag חבילה אחד — בלי כפתור-רכישה עד יישור (מכירה שלהם תדרוש מיפוי slug→bundle+פיצול-tag).
+
+**עוד:** עגלת /checkout שולחת meta.cart_items → order_items (נסגר הבאג) · מייל חובה בקנייה-מהירה · אדמין-Orders=מעקב-משלוחים (וגם באג `payment_status==='paid'` — הערך האמיתי 'completed') · קטלוג `/design-my-courses` ציבורי ("קורסים בתנ"ך", בלי חומת-login) · טסט-מסירה מלא רץ ונוקה (order+items נמחקו) · פער-parity 66→316 = ‏251 שיעורי dual מוסתרים בכוונה + בסיס — לא רגרסיה.
