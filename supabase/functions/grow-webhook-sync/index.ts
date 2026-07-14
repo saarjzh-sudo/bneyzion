@@ -61,6 +61,18 @@ function classify(desc: string): "donations" | "orders" {
   return "orders";
 }
 
+// מיפוי תיאור-עסקה → payment_products.id עבור שורות orders. חיוני לעמוד
+// "משתמשים" (רמה 17): מקור-האמת "מנוי פעיל" = charge אחרון של מוצר directDebit,
+// והחישוב מזהה מנוי לפי orders.product. (הייבוא ההיסטורי השתמש באותם מזהים.)
+function productSlug(desc: string): string {
+  const d = desc || "";
+  if (/לחיות|מנוי חודשי|הפרק השבועי|חידוש הוראת קבע|תשלום לתכנית|הרשמה לתכנית/.test(d)) {
+    return "weekly-chapter-subscription";
+  }
+  if (/בית המדרש/.test(d)) return "beit-midrash-participation";
+  return "other";
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   const json = (b: unknown, s = 200) => new Response(JSON.stringify(b), { status: s, headers: { ...cors, "Content-Type": "application/json" } });
@@ -107,14 +119,27 @@ Deno.serve(async (req) => {
     // (api/grow/webhook.ts) מעדכן אותה בעצמו. לא מוסיפים שורה שנייה.
     const siteOrderId = deepFind(raw, ["cField1"]);
 
+    // ── זיהוי הצלחה/כשל (תוקן 14.7.2026 — רמה 17) ─────────────────────────
+    // ה-webhook החשבוני (account-level) של Grow *לא שולח statusCode בכלל*:
+    //   • חיוב מוצלח  = יש asmachta+paymentDate+paymentSum (ואין error_message).
+    //   • כשל הו"ק    = צורת snake_case עם error_message + regular_payment_id.
+    // השער הישן (statusCode==="2" בלבד) זרק את כל חיובי יולי ללוג —
+    // 222 עסקאות (כולל 95 חיובי הו"ק) נעצרו בדיוק כך ב-1.7. אל תחזירו אותו.
+    const isFailurePayload = raw && typeof raw === "object" && "error_message" in raw;
+    const isSuccess =
+      !isFailurePayload &&
+      asmachta !== null && sum > 0 &&
+      (statusCode === "2" || (statusCode === "" && chargeDate !== null));
+
     let action = "logged-only";
     if (siteOrderId) {
       action = "site-flow-skip";
-    } else if (statusCode !== "2") {
-      // רק statusCode==="2" = חיוב מוצלח (כמו ב-webhook של האתר).
-      // כשל-הו״ק / עסקה שנכשלה / payload לא-מוכר → תיעוד בלוג בלבד.
-      action = statusCode ? `non-success:${statusCode}` : "no-statuscode-logged";
-    } else if (asmachta && sum > 0) {
+    } else if (isFailurePayload) {
+      // כשל חיוב-הו"ק — מידע חשוב לרשימת "בסיכון" (regular_payment_id בלוג)
+      action = `recurring-charge-failed:attempt-${String((raw as any).charges_attempts ?? "?")}`;
+    } else if (!isSuccess) {
+      action = statusCode && statusCode !== "2" ? `non-success:${statusCode}` : "unrecognized-logged";
+    } else {
       // ⚠️ דדופ לפי אסמכתא + תאריך-חיוב (2.7.2026): חיובי הו"ק חודשיים חוזרים
       // על אותה אסמכתא! דדופ לפי אסמכתא בלבד בלע את חיובי ההמשך —
       // בדיוק הפער שנמצא בדוחות של סער (37 שורות אבדו). charge_date מבדיל.
@@ -134,7 +159,8 @@ Deno.serve(async (req) => {
             grow_status: "חוייב", payment_label: paymentLabel, card_brand: cardBrand,
             page_name: paymentSource ? String(paymentSource) : null,
             invoice_name: invoiceName ? String(invoiceName) : null, charge_date: today,
-            is_monthly: paymentType === 'הו"ק',
+            // Grow שולח "הוראת קבע" (וגם 'הו"ק' בצורות ישנות)
+            is_monthly: /הו"ק|הוראת קבע/.test(paymentType),
           });
         } else {
           await supabase.from("orders").insert({
@@ -142,6 +168,7 @@ Deno.serve(async (req) => {
             payment_method: "credit", customer_name: name, customer_email: email ? String(email).toLowerCase() : null,
             customer_phone: phone ? String(phone) : null, subtotal: sum, discount: 0, total: sum,
             currency: "ILS", installments: allPaymentNum || 1, invoice_type: "receipt", asmachta,
+            product: productSlug(desc),
             card_suffix: cardSuffix ? String(cardSuffix) : null, description: desc || null, notes: "grow-webhook",
             grow_status: "חוייב", payment_label: paymentLabel, card_brand: cardBrand,
             page_name: paymentSource ? String(paymentSource) : null,
@@ -156,7 +183,7 @@ Deno.serve(async (req) => {
 
     await supabase.from("grow_webhook_log").insert({
       event_hint: desc.slice(0, 120) || null, asmachta, target_table: target, action,
-      parsed: { asmachta, sum, name, email, phone, desc, statusCode }, raw,
+      parsed: { asmachta, sum, name, email, phone, desc, statusCode, chargeDate, paymentType }, raw,
     });
 
     return json({ ok: true, action });
