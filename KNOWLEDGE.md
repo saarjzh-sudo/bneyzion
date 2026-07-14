@@ -8575,3 +8575,6 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 
 ### 2026-07-14 (ה') — המשתמשים המאוחד הוטמע ב-/admin/users
 העמוד המאוחד יצא מהסנדבוקס אל פאנל הניהול: `/admin/users` = `admin/UnifiedUsers.tsx` (עוטף את `DesignPreviewUsers` ב-AdminLayout). **הענקה/הסרה חיות:** upsert על `ux_email_tag` (מחיה tag קטוע, source=admin_manual) + קטיעת valid_until; RLS "admin all" על user_access_tags מאפשר זאת מהקליינט. "משתמש חדש"=דיאלוג עם שדה-מייל. סיידבר: פריט "משתמשים" יחיד (הוסר "מנויים"); `/admin/subscribers` חי ככלי-חירום (קישור מכותרת העמוד). Users.tsx הישן נותק. סנכרון Smoove/Monday בהענקה ידנית — עדיין ידני (מסומן בדיאלוג).
+
+### 2026-07-14 (ו') — סבב הערות סער: קטלוג-אורח, sales_content, ניתוב-רוכש, קרדיט-מובייל
+אורח לא רואה "הקורסים שלי" (חינמיים→רשימה כללית) · requires_tag בלי מחיר (חזל"מ) מוסתר מהקטלוג · עמודת `community_courses.sales_content` (nullable) + שדה באדמין — דף-המכירה מציג אותה, fallback להקדמה · **רוכש/נרשם מנותב ל-`/course/<program_slug>`** (פרקים→שכבות→תגי-סוג) במקום `/portal/course/<uuid>` השטוח · אדמין-שיעורים מקובץ לפי `bible_chapter` + תג-`layer_type` + חיווי-טקסט; טופס-שיעור עם פרק+שכבה (ערכי layer_type: base/enrichment/weekly/intro/resources) · פוטר-מובייל: padding-bottom 64px+safe-area מתחת ל-768px — הקרדיט "נבנה ע"י סער חלק" היה מוסתר מתחת לתפריט התחתון.
