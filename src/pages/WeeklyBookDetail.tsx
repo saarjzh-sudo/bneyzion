@@ -47,7 +47,6 @@ import {
   useWeeklyBooks,
   useWeeklyBookBySlug,
   useCourseDataWithResources,
-  usePaymentProduct,
   type CommunityLesson,
   type ChapterLayersMulti,
   type WeeklyCourse,
@@ -178,9 +177,11 @@ export default function WeeklyBookDetail() {
 
   // Access: ALWAYS call both hooks unconditionally (iron rule: no conditional hooks)
   const bookTagSource = `course:${slug.replace("book-", "")}`;
-  // מוצר-הרכישה של הספר (payment_products.id === program_slug, למשל book-daniel).
-  // default_amount>0 → כפתור רכישה בפאנל הנעול; 0 → רק CTA מנוי (אין חיוב ₪0).
-  const { data: bookPaymentProduct } = usePaymentProduct(slug.startsWith("book-") ? slug : undefined);
+  // מוצר-הרכישה של הספר: payment_products.id === program_slug (למשל book-daniel).
+  // ⚠️ המחיר נקרא מ-community_courses.price (קריא לציבור) ולא מ-payment_products —
+  // על payment_products יש RLS בלי policies (הקשחת-סליקה) והקליינט לא רואה אותה.
+  // עדיף להשאיר אותה סגורה מאשר לפתוח הרשאות; ה-id עדיין משמש את create-payment בשרת.
+  // price>0 → כפתור רכישה בפאנל הנעול; 0/ריק → רק CTA מנוי (אין חיוב ₪0).
   const { hasAccess: bookAccess, isLoading: bookAccessLoading } = useUserAccess(bookTagSource);
   const { hasAccess: programAccess, isLoading: programAccessLoading } = useUserAccess("program:weekly-chapter");
   // תכנית איכה בימי שני (2.7.2026) — תכנית מקבילה לפרק השבועי; מנוייה מקבלים
@@ -200,6 +201,11 @@ export default function WeeklyBookDetail() {
     bookAccess || programAccess ||
     (eichaAccess && (slug === "book-lamentations" || course?.is_current === true));
   const hasAccess = isAdmin || realAccess;
+  // רכישה חד-פעמית (יואב 14.7): מחיר מ-community_courses.price (ראו הערה למעלה)
+  const bookPaymentProduct =
+    slug.startsWith("book-") && Number((course as any)?.price ?? 0) > 0
+      ? { id: slug, display_name: course?.title ?? null, default_amount: Number((course as any).price), active: true }
+      : null;
   const { data: allBooks = [] } = useWeeklyBooks();
   const { data: courseData, isLoading: lessonsLoading } = useCourseDataWithResources(course?.id);
 
