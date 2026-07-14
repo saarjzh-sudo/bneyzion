@@ -116,6 +116,7 @@ const DesignPreviewCommunity = lazy(() => import("./pages/DesignPreviewCommunity
 const DesignPreviewBibleBook = lazy(() => import("./pages/DesignPreviewBibleBook"));
 const DesignPreviewDonate = lazy(() => import("./pages/DesignPreviewDonate"));
 const DesignPreviewUsers = lazy(() => import("./pages/DesignPreviewUsers"));
+const CourseCheckout = lazy(() => import("./pages/CourseCheckout"));
 const DesignPreviewMemorialSaadia = lazy(() => import("./pages/DesignPreviewMemorialSaadia"));
 const DesignPreviewResearch = lazy(() => import("./pages/DesignPreviewResearch"));
 const DesignPreviewLessonPage = lazy(() => import("./pages/DesignPreviewLessonPage"));
@@ -345,6 +346,7 @@ const App = () => (
             {/* Back-compat: /course/weekly-chapter → library (was hardcoded ezra) */}
             <Route path="/course/weekly-chapter" element={<Navigate to="/program/weekly-chapter" replace />} />
             {/* /course/:slug — WeeklyBookDetail handles book-* slugs; DesignPreviewCourseDetail handles the rest */}
+            <Route path="/course/:slug/checkout" element={<Suspense fallback={<LazyFallback />}><CourseCheckout /></Suspense>} />
             <Route path="/course/:slug" element={<Suspense fallback={<LazyFallback />}><WeeklyBookDetailOrLegacy /></Suspense>} />
             {/* LEGACY — archived, accessible for rollback comparison */}
             <Route path="/portal-old" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />

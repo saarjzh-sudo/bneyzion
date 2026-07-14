@@ -381,6 +381,26 @@ export default function WeeklyBookDetail() {
     course?.description ||
     (course ? `לימוד ${course.title} בתוכנית השבועית של בני ציון — פרק בכל שבוע, עם שיעורים וחומרי לימוד.` : undefined);
 
+  // ── מודל גישה (סער 14.7): תוכן הקורס סגור לחלוטין ללא-גישה ──────────────
+  // מנוי-הפרק-השבועי רואה את כל הקורסים · רוכש רואה רק את הקורס שלו ·
+  // מי שאין לו — רואה דף-מכירה (הסבר מההקדמה, מחיר, רכישה) ולא שום תוכן.
+  if (!isLoading && course && !hasAccess) {
+    return (
+      <CourseSalesPage
+        course={course}
+        slug={slug}
+        bookTitle={bookTitle}
+        courseDesc={courseDesc}
+        coursePath={coursePath}
+        accent={accent}
+        paymentProduct={bookPaymentProduct}
+        introItems={introItems}
+        lessonCount={courseData ? Array.from(courseData.chapters.values()).reduce((s, c) => s + c.base.length + c.enrichment.length + c.weekly.length, 0) : (course.total_lessons ?? 0)}
+        chapterCount={chapterNumbers.length}
+      />
+    );
+  }
+
   return (
     <DesignLayout sidebar={false}>
       {course && (
@@ -753,6 +773,167 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent }: {
 }
 
 // ── LockedPanel ───────────────────────────────────────────────────────────
+// ── דף מכירה לקורס (סער 14.7) ────────────────────────────────────────────
+// מוצג לכל מי שאין לו גישה — אורח או מחובר-בלי-רכישה. ההסבר נלקח מההקדמה,
+// הרכישה בדף checkout מסודר (לא פופאפ). אחרי רכישה: התחברות Google עם מייל
+// הרכישה פותחת את הקורס (linkPendingAccessTags ב-AuthContext).
+function stripHtml(html: string): string {
+  return html
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function CourseSalesPage({ course, slug, bookTitle, courseDesc, coursePath, accent, paymentProduct, introItems, lessonCount, chapterCount }: {
+  course: WeeklyCourse;
+  slug: string;
+  bookTitle: string;
+  courseDesc?: string;
+  coursePath: string;
+  accent: string;
+  paymentProduct: { id: string; display_name?: string | null; default_amount?: number | null; active?: boolean | null } | null;
+  introItems: CommunityLesson[];
+  lessonCount: number;
+  chapterCount: number;
+}) {
+  const price = Number(paymentProduct?.default_amount ?? 0);
+  const canBuy = !!paymentProduct?.active && price > 0;
+
+  // דברי ההסבר — מתוך ההקדמה (טקסטים בלבד, בלי לחשוף וידאו/קבצים)
+  const introText = introItems
+    .map((it) => (it.content_html ? stripHtml(it.content_html) : it.description || ""))
+    .filter((t) => t.length > 40)
+    .join("\n\n")
+    .slice(0, 1400);
+
+  const included = [
+    `${lessonCount > 0 ? lessonCount + " " : ""}שיעורים מוקלטים על כל ${chapterCount > 0 ? chapterCount + " הפרקים" : "הספר"}`,
+    "סיכומים מעוצבים לכל פרק",
+    "שיעורי הרחבה, מאמרים ומקורות",
+    "גישה מלאה לתמיד — לומדים בקצב שלכם",
+  ];
+
+  return (
+    <DesignLayout sidebar={false}>
+      <Seo title={`${bookTitle} — קורס מוקלט`} description={courseDesc} image={course.image_url ?? undefined} url={`https://bneyzion.co.il${coursePath}`} />
+
+      {/* Hero */}
+      <div dir="rtl" style={{ background: gradients.warmDark, padding: "3rem 1.5rem 2.5rem" }}>
+        <div style={{ maxWidth: 880, margin: "0 auto", display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ flex: 1, minWidth: 280 }}>
+            <div style={{ fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: colors.goldShimmer, marginBottom: "0.5rem" }}>
+              קורסים בתנ״ך · קורס מוקלט
+            </div>
+            <h1 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.7rem, 4vw, 2.5rem)", color: "white", margin: "0 0 0.5rem", lineHeight: 1.15 }}>
+              קורס {bookTitle}
+            </h1>
+            <div style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: "rgba(255,255,255,0.85)", marginBottom: "0.4rem" }}>
+              מאת הרב יואב אוריאל
+            </div>
+            {courseDesc && (
+              <p style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 520, margin: "0.6rem 0 1.4rem" }}>
+                {courseDesc}
+              </p>
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              {canBuy ? (
+                <>
+                  <Link
+                    to={`${coursePath}/checkout`}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2.2rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "1.05rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
+                  >
+                    לרכישת הקורס — ₪{price.toLocaleString()}
+                  </Link>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(255,255,255,0.65)" }}>
+                    תשלום חד-פעמי · גישה לתמיד
+                  </span>
+                </>
+              ) : (
+                <Link
+                  to="/chapter-weekly"
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2.2rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "1rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
+                >
+                  <Heart size={15} fill="currentColor" /> הקורס פתוח למנויי הפרק השבועי
+                </Link>
+              )}
+            </div>
+          </div>
+          {course.image_url && (
+            <img
+              src={course.image_url}
+              alt={bookTitle}
+              style={{ width: 240, borderRadius: radii.xl, boxShadow: "0 18px 50px rgba(0,0,0,0.35)", flexShrink: 0 }}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div dir="rtl" style={{ background: colors.parchment, padding: "2.5rem 1.5rem 4rem" }}>
+        <div style={{ maxWidth: 880, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr", gap: "1.5rem" }}>
+
+          {/* מה מקבלים */}
+          <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem" }}>
+            <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.25rem", color: colors.textDark, margin: "0 0 1rem" }}>מה מקבלים בקורס?</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "0.8rem" }}>
+              {included.map((line, i) => (
+                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem", fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMid, lineHeight: 1.6 }}>
+                  <span style={{ color: accent, fontWeight: 900, marginTop: 1 }}>✓</span>
+                  {line}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* על הקורס — מתוך ההקדמה */}
+          {introText && (
+            <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem" }}>
+              <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.25rem", color: colors.textDark, margin: "0 0 0.9rem" }}>על הקורס — מתוך ההקדמה</h2>
+              <p style={{ fontFamily: fonts.body, fontSize: "0.92rem", color: colors.textMid, lineHeight: 1.9, whiteSpace: "pre-line", margin: 0 }}>
+                {introText}{introText.length >= 1400 ? "…" : ""}
+              </p>
+              <p style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: colors.textSubtle, marginTop: "0.9rem" }}>
+                ההקדמה המלאה — יחד עם כל השיעורים — נפתחת מיד אחרי הרכישה.
+              </p>
+            </section>
+          )}
+
+          {/* CTA תחתון + מסלולים */}
+          <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem", textAlign: "center" }}>
+            {canBuy && (
+              <>
+                <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.35rem", color: colors.textDark, marginBottom: 4 }}>
+                  ₪{price.toLocaleString()} · תשלום חד-פעמי
+                </div>
+                <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: "0 0 1.2rem" }}>
+                  אפשר לרכוש בלי להתחבר — אחרי התשלום מתחברים עם Google עם המייל של הרכישה, והקורס נפתח אוטומטית.
+                </p>
+                <Link
+                  to={`${coursePath}/checkout`}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "0.95rem 2.4rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "1rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
+                >
+                  מעבר לרכישה מאובטחת
+                </Link>
+              </>
+            )}
+            <div style={{ marginTop: canBuy ? "1.4rem" : 0, paddingTop: canBuy ? "1.2rem" : 0, borderTop: canBuy ? "1px solid rgba(139,111,71,0.12)" : "none", display: "flex", justifyContent: "center", gap: "1.5rem", flexWrap: "wrap", fontFamily: fonts.body, fontSize: "0.82rem" }}>
+              <Link to="/chapter-weekly" style={{ color: accent, textDecoration: "underline" }}>
+                מנוי הפרק השבועי פותח את כל הקורסים
+              </Link>
+              <Link to="/portal" style={{ color: colors.textMuted, textDecoration: "underline" }}>
+                כבר רכשת? כניסה עם Google עם מייל הרכישה
+              </Link>
+            </div>
+          </section>
+        </div>
+      </div>
+    </DesignLayout>
+  );
+}
+
 function LockedPanel({ tab, accent, bookTitle, paymentProduct }: {
   tab: string;
   accent: string;
