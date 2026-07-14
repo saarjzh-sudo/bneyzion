@@ -10,13 +10,14 @@
  * ברירת-מחדל cart), פיקסל Lead של פייסבוק נטען רק עם הסכמת שיווק,
  * וכל הניווטים הקיימים (/, /store, /portal, קבוצת הוואטסאפ) נשארו.
  */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
   BookOpen,
   Calendar,
   CheckCircle2,
+  Download,
   FileText,
   Gift,
   Heart,
@@ -387,6 +388,91 @@ function CtaRow({
 }
 
 // ─── Variant: Store / book purchase ─────────────────────────────────────────
+/**
+ * רמה 17 — הורדות דיגיטליות בדף התודה. מושך קישורים חתומים (שעה) לפי מזהי
+ * ההזמנות שב-URL. אם ה-webhook של Grow טרם אישר — מנסה שוב כמה פעמים ואז
+ * מציג "הקישורים בדרך אליך במייל" (המייל נשלח אוטומטית עם אישור התשלום).
+ */
+function DigitalDownloads() {
+  const [searchParams] = useSearchParams();
+  const ordersParam = searchParams.get("orders") || "";
+  const orderIds = ordersParam.split(",").filter(Boolean);
+  const [items, setItems] = useState<Array<{ title: string; url: string }>>([]);
+  const [state, setState] = useState<"loading" | "ready" | "pending" | "none">(
+    orderIds.length ? "loading" : "none",
+  );
+
+  useEffect(() => {
+    if (!orderIds.length) return;
+    let cancelled = false;
+    let attempts = 0;
+    async function poll() {
+      attempts++;
+      try {
+        const res = await fetch("/api/store/order-download", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ orderIds }),
+        });
+        const data = await res.json();
+        if (cancelled) return;
+        if (data.items?.length) {
+          setItems(data.items);
+          setState("ready");
+          return;
+        }
+        if (data.pending && attempts < 6) {
+          setState("pending");
+          setTimeout(poll, 5000);
+          return;
+        }
+        setState(data.pending ? "pending" : "none");
+      } catch {
+        if (!cancelled) setState("none");
+      }
+    }
+    poll();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ordersParam]);
+
+  if (state === "none") return null;
+  return (
+    <section style={cardStyle} aria-label="הספרים הדיגיטליים שלך">
+      <h2 style={cardTitleStyle}>הספרים הדיגיטליים שלך</h2>
+      {state === "loading" && <p style={{ margin: 0 }}>מכינים את הקבצים…</p>}
+      {state === "pending" && (
+        <p style={{ margin: 0 }}>
+          התשלום מאושר ממש עכשיו — הקישורים יופיעו כאן בעוד רגע, ובכל מקרה נשלחו
+          גם למייל שהזנת.
+        </p>
+      )}
+      {state === "ready" && (
+        <div style={{ display: "grid", gap: "0.75rem" }}>
+          {items.map((it) => (
+            <a
+              key={it.url}
+              href={it.url}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                background: colors.navyDeep, color: "#fff", textDecoration: "none",
+                padding: "0.8rem 1.3rem", borderRadius: radii.md, fontWeight: 700,
+                justifyContent: "center",
+              }}
+            >
+              <Download size={17} /> להורדת {it.title}
+            </a>
+          ))}
+          <p style={{ margin: 0, fontSize: "0.8rem", opacity: 0.7 }}>
+            הקישורים כאן תקפים לשעה. עותק קבוע נשלח אליך במייל — אפשר להוריד
+            ולשמור את הקובץ לתמיד.
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function StoreThankYou() {
   return (
     <ThankYouShell
@@ -396,6 +482,7 @@ function StoreThankYou() {
       footerTitle="תודה שבחרת בבני ציון"
       footerNote="נתראה בלימוד"
     >
+      <DigitalDownloads />
       <section style={cardStyle} aria-label="מה קורה עכשיו">
         <h2 style={cardTitleStyle}>מה קורה עכשיו?</h2>
         <div style={{ display: "grid", gap: "0.75rem" }}>
@@ -731,6 +818,7 @@ function CartThankYou() {
       footerTitle="תודה שבחרת בבני ציון"
       footerNote="נתראה בלימוד"
     >
+      <DigitalDownloads />
       <section style={cardStyle} aria-label="פרטי ההזמנה">
         <h2 style={cardTitleStyle}>ההזמנה התקבלה בהצלחה</h2>
         <div style={{ display: "grid", gap: "0.75rem" }}>

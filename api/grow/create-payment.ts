@@ -462,6 +462,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           rawPayloadBase.store_product_slug = productCfg._store_product_slug;
           rawPayloadBase.product_source = "products"; // webhook routing key
         }
+        // רמה 17 (יואב 14.7): רכישת-עגלה (/checkout) שולחת meta.cart_items —
+        // בלעדיהם הזמנת-עגלה נוצרה בלי order_items, בלי גישה ובלי מסירת קובץ.
+        const cartItems: Array<{ product_id?: string; title?: string; quantity?: number; unit_price?: number }> =
+          Array.isArray(meta?.cart_items) ? meta.cart_items.slice(0, 50) : [];
+        if (cartItems.length) {
+          rawPayloadBase.product_source = "products";
+          rawPayloadBase.cart_item_count = cartItems.length;
+        }
 
         const { data: order, error: orderErr } = await supabaseAdmin
           .from("orders")
@@ -479,7 +487,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             total: sum,
             installments: safeInstallments,
             invoice_type: "receipt",
-            product: productSlug || null,
+            product: productSlug || (cartItems.length ? "store-order" : null),
             description,
             payment_status: "pending",
             raw_payload: rawPayloadBase,
@@ -515,6 +523,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           } catch (e) {
             // Non-fatal — order row is already created. Log and continue.
             console.warn("create-payment: order_items insert failed (non-fatal):", e);
+          }
+        }
+
+        // רכישת-עגלה: order_items לכל פריט בסל (רמה 17)
+        if (cartItems.length) {
+          try {
+            await supabaseAdmin.from("order_items").insert(
+              cartItems.map((ci) => ({
+                order_id: orderId,
+                product_id: ci.product_id || null,
+                title: String(ci.title || "פריט"),
+                quantity: Number(ci.quantity) || 1,
+                unit_price: Number(ci.unit_price) || 0,
+                total_price: (Number(ci.unit_price) || 0) * (Number(ci.quantity) || 1),
+                item_type: "product",
+              })),
+            );
+          } catch (e) {
+            console.warn("create-payment: cart order_items insert failed (non-fatal):", e);
           }
         }
       }

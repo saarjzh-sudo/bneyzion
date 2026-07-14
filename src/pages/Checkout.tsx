@@ -26,7 +26,7 @@ export default function Checkout() {
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError } = useGrowPayment();
+  const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError, lastOrderIdRef } = useGrowPayment();
   const { options: SHIPPING_OPTIONS, getPrice: getShippingPrice, getLabel: getShippingLabel } = useShippingOptions();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -90,6 +90,7 @@ export default function Checkout() {
         { items: donationItems, type: "donation" as const },
       ].filter((g) => g.items.length > 0);
 
+      const completedOrderIds: string[] = [];
       for (const group of orderGroups) {
         const isProductGroup = group.type === "product";
         // Shipping fee + coupon discount apply to the physical-products group only.
@@ -122,6 +123,19 @@ export default function Checkout() {
             user_id: user?.id,
             tos_accepted: true,
             tos_accepted_at: new Date().toISOString(),
+            // רמה 17 (יואב 14.7): פריטי הסל עוברים לשרת → order_items נוצרות
+            // גם ברכישת-עגלה (קודם נוצרו רק בקנייה-מהירה) → גישה/קובץ/מעקב-משלוח
+            ...(isProductGroup
+              ? {
+                  cart_items: group.items.map((i) => ({
+                    product_id: i.product.id,
+                    slug: i.product.slug,
+                    title: i.product.title,
+                    quantity: i.quantity,
+                    unit_price: i.product.price,
+                  })),
+                }
+              : {}),
             ...(needsShipping && isProductGroup
               ? {
                   shipping_method: shippingMethod,
@@ -139,11 +153,14 @@ export default function Checkout() {
               : {}),
           },
         });
+        if (lastOrderIdRef.current) completedOrderIds.push(lastOrderIdRef.current);
       }
 
       clearCart();
       toast({ title: "התשלום בוצע בהצלחה!" });
-      navigate("/thank-you?type=cart");
+      navigate(
+        `/thank-you?type=cart${completedOrderIds.length ? `&orders=${completedOrderIds.join(",")}` : ""}`,
+      );
     } catch (err: any) {
       toast({ title: "שגיאה בתהליך התשלום", description: err.message, variant: "destructive" });
     } finally {

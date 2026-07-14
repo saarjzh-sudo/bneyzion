@@ -93,6 +93,8 @@ interface CourseCardData {
   id: string;
   title: string;
   subtitle?: string;
+  /** יואב 14.7: כמה מילים על הקורס — מוצג על הכרטיס */
+  description?: string | null;
   slug: string | null;
   gradient: string;
   /** (סער 10.7) תמונת אקוורל מה-DB — כשקיימת, מחליפה את הגרדיאנט */
@@ -221,6 +223,27 @@ function CourseCard({ course }: { course: CourseCardData }) {
           </div>
         )}
       </div>
+
+      {/* תיאור קצר (יואב 14.7) — "לימוד ספר דניאל באופן יסודי, פרק אחרי פרק" */}
+      {course.description && (
+        <p
+          style={{
+            background: "white",
+            margin: 0,
+            padding: "0.9rem 1.25rem 0",
+            color: colors.textMuted,
+            fontSize: "0.85rem",
+            lineHeight: 1.6,
+            direction: "rtl",
+            display: "-webkit-box",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
+          }}
+        >
+          {course.description}
+        </p>
+      )}
 
       {/* Footer */}
       <div
@@ -391,7 +414,9 @@ export default function DesignPreviewMyCourses() {
       result.push({
         id: cc.id,
         title: cc.title,
-        subtitle: cc.rabbis?.name ? `${cc.rabbis.name}` : undefined,
+        // יואב 14.7: על כל קורס כתוב מי יצר אותו — ברירת מחדל הרב יואב אוריאל
+        subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
+        description: cc.description ?? null,
         slug: cc.id,
         gradient: courseGradient(null),
         imageUrl: cc.image_url ?? null,
@@ -411,7 +436,8 @@ export default function DesignPreviewMyCourses() {
       result.push({
         id: cc.id,
         title: cc.title,
-        subtitle: cc.rabbis?.name,
+        subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
+        description: cc.description ?? null,
         slug: cc.id,
         gradient: courseGradient(null),
         imageUrl: cc.image_url ?? null,
@@ -436,70 +462,31 @@ export default function DesignPreviewMyCourses() {
       .map((cc: any) => ({
         id: cc.id,
         title: cc.title,
-        subtitle: cc.rabbis?.name,
+        subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
+        description: cc.description ?? null,
         slug: cc.id,
         gradient: `linear-gradient(135deg, ${colors.textSubtle} 0%, #4a4a4a 100%)`,
         imageUrl: cc.image_url ?? null,
         progressPct: 0,
         lessonCount: cc.total_lessons ?? 0,
         hasAccess: false,
-        ctaTo: cc.access_type === "subscribers_only" ? "/chapter-weekly" : `/store/${cc.id}`,
-        ctaLabel: "הצטרף",
+        // דניאל וחבריו (requires_tag עם program_slug) — דף הספר עצמו הוא דף
+        // הרכישה (WeeklyBookDetail): שם רואים תוכן, מחיר וכפתור רכישה.
+        ctaTo:
+          cc.access_type === "subscribers_only"
+            ? "/chapter-weekly"
+            : cc.program_slug
+              ? `/course/${cc.program_slug}`
+              : `/portal/course/${cc.id}`,
+        ctaLabel: "לצפייה ורכישה",
         accessType: cc.access_type,
       }));
   }, [allCourses, myCourses]);
 
-  // לא מחובר
-  if (!authLoading && !user) {
-    return (
-      <DesignLayout>
-        <div
-          style={{
-            minHeight: "60vh",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 20,
-            padding: "3rem 1rem",
-            background: colors.parchment,
-            direction: "rtl",
-          }}
-        >
-          <Lock size={48} color={colors.textSubtle} />
-          <h2 style={{ fontFamily: fonts.display, fontSize: "1.5rem", color: colors.textDark, fontWeight: 700 }}>
-            יש להתחבר כדי לראות את הקורסים שלך
-          </h2>
-          {/* (סער 10.7) OAuth ישיר — בלי מסך-ביניים /portal-login עם כפתור גוגל שני */}
-          <button
-            onClick={() => signInWithGoogle("/design-my-courses")}
-            style={{
-              background: colors.goldDark,
-              color: "white",
-              fontFamily: fonts.display,
-              fontWeight: 700,
-              padding: "0.75rem 2rem",
-              borderRadius: radii.lg,
-              border: "none",
-              cursor: "pointer",
-              fontSize: "1rem",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-              <path fill="#fff" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z" opacity="0.95"/>
-              <path fill="#fff" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332C2.438 15.983 5.482 18 9 18z" opacity="0.8"/>
-              <path fill="#fff" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" opacity="0.65"/>
-              <path fill="#fff" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0 5.482 0 2.438 2.017.957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z" opacity="0.9"/>
-            </svg>
-            כניסה עם Google
-          </button>
-        </div>
-      </DesignLayout>
-    );
-  }
+  // יואב 14.7: העמוד הוא קטלוג ציבורי — "קורסים בתנ"ך" — פתוח גם בלי התחברות.
+  // אורח רואה את כל הקורסים עם CTA לרכישה/הצטרפות; ההתחברות מוצעת בעדינות
+  // (כרטיס "יש לך כבר קורסים?") במקום חומת-נעילה שמבריחה מתעניינים.
+  const isGuest = !authLoading && !user;
 
   return (
     <DesignLayout>
@@ -529,7 +516,7 @@ export default function DesignPreviewMyCourses() {
             >
               <Trophy size={16} color="#8B6F47" />
               <span style={{ color: "#8B6F47", fontFamily: fonts.display, fontSize: "0.85rem" }}>
-                אזור הלמידה האישי
+                בית הקורסים של בני ציון
               </span>
             </div>
             <h1
@@ -543,10 +530,10 @@ export default function DesignPreviewMyCourses() {
                 lineHeight: 1.2,
               }}
             >
-              הקורסים שלי
+              קורסים בתנ"ך
             </h1>
             <p style={{ color: "rgba(74,56,35,0.85)", fontSize: "1.05rem", maxWidth: 480, margin: "0 auto" }}>
-              כל הקורסים שיש לך גישה אליהם, במקום אחד
+              קורסי עומק מוקלטים מאת הרב יואב אוריאל — והקורסים שלך, במקום אחד
             </p>
           </div>
         </div>
@@ -685,11 +672,31 @@ export default function DesignPreviewMyCourses() {
                 >
                   <BookOpen size={48} color={colors.textSubtle} style={{ margin: "0 auto 12px" }} />
                   <h3 style={{ fontFamily: fonts.display, fontSize: "1.2rem", color: colors.textDark, marginBottom: 8 }}>
-                    עדיין אין לך קורסים
+                    {isGuest ? "יש לך כבר קורסים אצלנו?" : "עדיין אין לך קורסים"}
                   </h3>
                   <p style={{ color: colors.textSubtle, marginBottom: 20 }}>
-                    הצטרף לתכנית הפרק השבועי או בחר קורס מהרשימה למטה
+                    {isGuest
+                      ? "התחברות מהירה עם Google תציג כאן את הקורסים שרכשת"
+                      : "הצטרפו לתכנית הפרק השבועי או בחרו קורס מהרשימה למטה"}
                   </p>
+                  {isGuest && (
+                    <button
+                      onClick={() => signInWithGoogle("/design-my-courses")}
+                      style={{
+                        background: "white",
+                        color: colors.textDark,
+                        fontFamily: fonts.display,
+                        fontWeight: 700,
+                        padding: "0.65rem 1.5rem",
+                        borderRadius: radii.md,
+                        border: `1px solid ${colors.parchmentDeep}`,
+                        cursor: "pointer",
+                        marginLeft: 10,
+                      }}
+                    >
+                      כניסה עם Google
+                    </button>
+                  )}
                   <Link
                     to="/chapter-weekly"
                     style={{
@@ -725,11 +732,11 @@ export default function DesignPreviewMyCourses() {
                         margin: 0,
                       }}
                     >
-                      קורסים נוספים שתאהב
+                      כל הקורסים בתנ"ך
                     </h2>
                   </div>
                   <p style={{ color: colors.textSubtle, marginBottom: "1.25rem", fontSize: "0.9rem" }}>
-                    תכנים פרמיום שממתינים לך — הצטרף כדי לפתוח גישה מלאה
+                    קורסי עומק מוקלטים, ספר אחר ספר — רכישה חד-פעמית פותחת גישה מלאה
                   </p>
 
                   <div

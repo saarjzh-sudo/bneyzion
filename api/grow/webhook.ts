@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
+import { deliverOrder } from "../lib/digital-delivery";
 // subscribeToSmoove is defined locally below — it handles the 409 "already
 // exists" case by looking up the contact and adding to the list via PUT.
 // splitFullName is imported for any future use but not currently needed here.
@@ -542,6 +543,18 @@ async function runPostPurchaseSideEffects(args: {
     await grantAccessTag({ supabase, email, productSlug, orderId });
   } catch (e) {
     console.error("[AccessTag] Exception (non-fatal):", e);
+  }
+
+  // ── מסירה דיגיטלית + התראת-משרד (רמה 17) ────────────────────────────────
+  // חייב לרוץ לפני ה-return המוקדם של Smoove (מוצר בלי smoove_list_id יוצא שם).
+  // deliverOrder אידמפוטנטי (raw_payload.digital_delivered_at) ובודק order_items —
+  // מנויים/תרומות בלי פריטי-חנות = no-op.
+  if (targetTable === "orders") {
+    try {
+      await deliverOrder(supabase, orderId);
+    } catch (e) {
+      console.error("[DigitalDelivery] Exception (non-fatal):", e);
+    }
   }
 
   // ── Smoove subscribe ─────────────────────────────────────────────────────

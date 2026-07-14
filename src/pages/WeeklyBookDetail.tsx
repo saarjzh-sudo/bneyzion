@@ -47,10 +47,13 @@ import {
   useWeeklyBooks,
   useWeeklyBookBySlug,
   useCourseDataWithResources,
+  usePaymentProduct,
   type CommunityLesson,
   type ChapterLayersMulti,
   type WeeklyCourse,
 } from "@/hooks/useCommunity";
+// יואב 14.7: רכישה חד-פעמית של קורס-ספר ישירות מדף הספר (payment_products book-*)
+import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
 
 // ── Hebrew helpers ─────────────────────────────────────────────────────────
 const HEB_NUMS = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב","יג","יד","טו","טז","יז","יח","יט","כ","כא","כב","כג","כד"];
@@ -175,6 +178,9 @@ export default function WeeklyBookDetail() {
 
   // Access: ALWAYS call both hooks unconditionally (iron rule: no conditional hooks)
   const bookTagSource = `course:${slug.replace("book-", "")}`;
+  // מוצר-הרכישה של הספר (payment_products.id === program_slug, למשל book-daniel).
+  // default_amount>0 → כפתור רכישה בפאנל הנעול; 0 → רק CTA מנוי (אין חיוב ₪0).
+  const { data: bookPaymentProduct } = usePaymentProduct(slug.startsWith("book-") ? slug : undefined);
   const { hasAccess: bookAccess, isLoading: bookAccessLoading } = useUserAccess(bookTagSource);
   const { hasAccess: programAccess, isLoading: programAccessLoading } = useUserAccess("program:weekly-chapter");
   // תכנית איכה בימי שני (2.7.2026) — תכנית מקבילה לפרק השבועי; מנוייה מקבלים
@@ -527,7 +533,7 @@ export default function WeeklyBookDetail() {
               )}
               {activeTab === "enrichment" && (
                 !hasAccess
-                  ? <LockedPanel tab="הרחבה" accent={accent} />
+                  ? <LockedPanel tab="הרחבה" accent={accent} bookTitle={course?.title} paymentProduct={bookPaymentProduct} />
                   : <LayerSection
                       items={activeChapterData?.enrichment ?? []}
                       embeddedId={embeddedId}
@@ -540,7 +546,7 @@ export default function WeeklyBookDetail() {
               )}
               {activeTab === "weekly" && (
                 !hasAccess
-                  ? <LockedPanel tab="שיעור שבועי" accent={accent} />
+                  ? <LockedPanel tab="שיעור שבועי" accent={accent} bookTitle={course?.title} paymentProduct={bookPaymentProduct} />
                   : <LayerSection
                       items={activeChapterData?.weekly ?? []}
                       embeddedId={embeddedId}
@@ -691,24 +697,55 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent }: {
 }
 
 // ── LockedPanel ───────────────────────────────────────────────────────────
-function LockedPanel({ tab, accent }: { tab: string; accent: string }) {
+function LockedPanel({ tab, accent, bookTitle, paymentProduct }: {
+  tab: string;
+  accent: string;
+  bookTitle?: string;
+  paymentProduct?: { id: string; display_name?: string | null; default_amount?: number | null; active?: boolean | null } | null;
+}) {
+  // רכישה חד-פעמית של הקורס (יואב 14.7) — רק כשיש מחיר אמיתי (אין חיוב ₪0)
+  const price = Number(paymentProduct?.default_amount ?? 0);
+  const canBuy = !!paymentProduct?.active && price > 0;
+  const courseName = bookTitle || paymentProduct?.display_name || "הקורס";
   return (
     <div dir="rtl" style={{ background: "white", borderRadius: radii.xl, padding: "3rem 2rem", border: `1px solid rgba(139,111,71,0.1)`, boxShadow: shadows.cardSoft, textAlign: "center" }}>
       <div style={{ width: 64, height: 64, borderRadius: "50%", background: `${accent}10`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem" }}>
         <Lock size={28} style={{ color: accent, opacity: 0.65 }} />
       </div>
-      <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 0.5rem" }}>תוכן ה{tab} למנויים בלבד</h3>
+      <h3 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 0.5rem" }}>
+        {canBuy ? `תוכן ה${tab} לרוכשי הקורס ולמנויים` : `תוכן ה${tab} למנויים בלבד`}
+      </h3>
       <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", lineHeight: 1.8, color: colors.textMuted, maxWidth: 380, margin: "0 auto 1.75rem" }}>
-        שיעורי ההרחבה, המאמרים וההקלטות השבועיות פתוחים למנויי הפרק השבועי בלבד.
+        {canBuy
+          ? `אפשר לרכוש את קורס ${courseName} ברכישה חד-פעמית שפותחת את כל השיעורים לתמיד — או להצטרף למנוי הפרק השבועי שפותח הכל.`
+          : "שיעורי ההרחבה, המאמרים וההקלטות השבועיות פתוחים למנויי הפרק השבועי בלבד."}
       </p>
-      <Link
-        to="/chapter-weekly"
-        style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.75rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
-      >
-        <Heart size={14} fill="currentColor" />הצטרף לתכנית הפרק השבועי
-      </Link>
+      <div style={{ display: "flex", gap: "0.75rem", justifyContent: "center", flexWrap: "wrap" }}>
+        {canBuy && (
+          <QuickBuyDialog
+            product={paymentProduct!.id}
+            amount={price}
+            description={`קורס ${courseName}`}
+            title={`רכישת קורס ${courseName}`}
+            subtitle={`תשלום חד-פעמי של ₪${price.toLocaleString()} — גישה מלאה לתמיד`}
+            thankYouType="store"
+          >
+            <button
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.75rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.9rem", border: "none", cursor: "pointer", boxShadow: shadows.goldGlow }}
+            >
+              רכישת הקורס — ₪{price.toLocaleString()}
+            </button>
+          </QuickBuyDialog>
+        )}
+        <Link
+          to="/chapter-weekly"
+          style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.75rem", borderRadius: radii.lg, background: canBuy ? "white" : gradients.goldButton, color: canBuy ? accent : "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.9rem", textDecoration: "none", border: canBuy ? `1.5px solid ${accent}` : "none", boxShadow: canBuy ? "none" : shadows.goldGlow }}
+        >
+          <Heart size={14} fill="currentColor" />הצטרפות למנוי הפרק השבועי
+        </Link>
+      </div>
       <div style={{ marginTop: "0.85rem" }}>
-        <Link to="/portal" style={{ fontFamily: fonts.body, fontSize: "0.77rem", color: accent, textDecoration: "underline" }}>כבר מנוי? התחבר לאזור האישי</Link>
+        <Link to="/portal" style={{ fontFamily: fonts.body, fontSize: "0.77rem", color: accent, textDecoration: "underline" }}>כבר יש לך גישה? כניסה לאזור האישי</Link>
       </div>
     </div>
   );

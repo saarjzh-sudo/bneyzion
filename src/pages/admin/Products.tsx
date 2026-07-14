@@ -476,7 +476,9 @@ export default function AdminProducts() {
                     <div>
                       <Label>קישור קובץ דיגיטלי</Label>
                       <Input value={form.digital_file_url} onChange={e => setForm({ ...form, digital_file_url: e.target.value })} dir="ltr" />
-                      <p className="text-xs text-muted-foreground mt-1">למוצר דיגיטלי — קישור ישיר לקובץ (PDF) שהרוכש מקבל אחרי התשלום. למוצר פיזי משאירים ריק.</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        למוצר דיגיטלי — הקובץ שהרוכש מקבל במייל אחרי התשלום. ערך שמתחיל ב-<span dir="ltr">storage:</span> = קובץ מאובטח במערכת (מנוהל אוטומטית — לא לשנות ידנית). קובץ חדש או מהדורה מעודכנת? שולחים לסער והוא מעלה. למוצר פיזי משאירים ריק.
+                      </p>
                     </div>
                     <div>
                       <Label>קישור מקור</Label>

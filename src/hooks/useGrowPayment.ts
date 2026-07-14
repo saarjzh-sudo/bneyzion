@@ -114,6 +114,8 @@ export function useGrowPayment() {
   const [error, setError] = useState<string | null>(null);
   const resolveRef = useRef<((value: GrowSuccessResponse) => void) | null>(null);
   const rejectRef = useRef<((reason: any) => void) | null>(null);
+  /** מזהה ההזמנה מהקריאה האחרונה ל-create-payment (לדף התודה — קבצים דיגיטליים) */
+  const lastOrderIdRef = useRef<string | null>(null);
 
   // Load SDK script
   useEffect(() => {
@@ -229,6 +231,9 @@ export function useGrowPayment() {
           throw new Error(data.error || "Failed to create payment");
         }
 
+        // רמה 17: מזהה ההזמנה נשמר כדי שדף התודה יוכל למשוך קבצים דיגיטליים
+        lastOrderIdRef.current = data.orderId ?? null;
+
         // Step 2a: Wallet flow (products) — open SDK overlay
         if (data.authCode) {
           return new Promise<GrowSuccessResponse>((resolve, reject) => {
@@ -253,5 +258,5 @@ export function useGrowPayment() {
     []
   );
 
-  return { startPayment, isReady, isLoading, error, setError };
+  return { startPayment, isReady, isLoading, error, setError, lastOrderIdRef };
 }

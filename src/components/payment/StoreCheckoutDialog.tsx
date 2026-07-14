@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { Loader2, Shield, Truck, MapPin, Package } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useToast } from "@/hooks/use-toast";
 import { type ShippingMethod } from "@/config/shipping";
@@ -60,8 +60,9 @@ export function StoreCheckoutDialog({
   const country = "ישראל";
 
   const [tosAccepted, setTosAccepted] = useState(false);
-  const { startPayment, isLoading, isReady } = useGrowPayment();
+  const { startPayment, isLoading, isReady, lastOrderIdRef } = useGrowPayment();
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const { options: shippingOptions, getPrice: getShippingPrice } = useShippingOptions();
   const { data: salePoints = [] } = usePublicSalePoints();
@@ -73,8 +74,9 @@ export function StoreCheckoutDialog({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    if (!firstName || !lastName || !phone) {
-      toast({ title: "יש למלא שם פרטי, שם משפחה וטלפון", variant: "destructive" });
+    // יואב 14.7: מייל = חובה. בלעדיו אין קבלה, אין מעקב, ואין מסירת קובץ דיגיטלי.
+    if (!firstName || !lastName || !phone || !email) {
+      toast({ title: "יש למלא שם פרטי, שם משפחה, טלפון ואימייל", variant: "destructive" });
       return;
     }
     if (!tosAccepted) {
@@ -134,6 +136,9 @@ export function StoreCheckoutDialog({
         } as any,
       });
       setOpen(false);
+      // רמה 17: מעבר לדף התודה עם מזהה ההזמנה — שם מחכים הקבצים הדיגיטליים
+      const orderId = lastOrderIdRef.current;
+      navigate(`/thank-you?type=store${orderId ? `&orders=${orderId}` : ""}`);
     } catch (err: any) {
       toast({
         title: "התשלום נכשל",
@@ -211,7 +216,7 @@ export function StoreCheckoutDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="sc-email">אימייל (לשליחת קבלה)</Label>
+              <Label htmlFor="sc-email">אימייל *</Label>
               <Input
                 id="sc-email"
                 type="email"
@@ -219,7 +224,9 @@ export function StoreCheckoutDialog({
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@example.com"
                 dir="ltr"
+                required
               />
+              <p className="text-xs text-muted-foreground">לקבלה, לעדכוני משלוח ולקבצים דיגיטליים</p>
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="sc-country">מדינה</Label>
