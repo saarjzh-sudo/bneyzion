@@ -45,6 +45,14 @@ interface CreatePaymentBody {
     shipping_address?: string;
     shipping_city?: string;
     shipping_zip?: string;
+    // רמה 17: פריטי עגלה (/checkout) → order_items לכל פריט
+    cart_items?: Array<{
+      product_id?: string;
+      slug?: string;
+      title?: string;
+      quantity?: number;
+      unit_price?: number;
+    }>;
     // Coupon (store checkout) — server re-validates; sum must equal
     // pre_discount_sum - discount + shipping_fee or the request is rejected
     coupon_code?: string;

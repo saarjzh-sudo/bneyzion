@@ -13,9 +13,10 @@
  * ⚠️ fromEmail חובה — קמפיין בלי שולח מפורש מקבל "Successful" אבל לא נמסר.
  * ⚠️ לעולם לא toListsById — זה משגר לרשימה שלמה.
  */
-import type { createClient } from "@supabase/supabase-js";
-
-type SupabaseAdmin = ReturnType<typeof createClient>;
+// הקליינט מגיע מהקורא (service_role). טיפוס רופף בכוונה — supabase-js עם
+// גנריקים לא-ידועים מקשיח insert/update ל-never (זה מה ששבר את בילד-הפונקציות).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type SupabaseAdmin = any;
 
 const SMOOVE_BASE = "https://rest.smoove.io/v1";
 const FROM_NAME = "בני ציון";

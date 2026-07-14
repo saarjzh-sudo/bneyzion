@@ -10,7 +10,7 @@
  */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { loadDigitalItems, signItems } from "../lib/digital-delivery";
+import { loadDigitalItems, signItems } from "../lib/digital-delivery.js";
 
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim();
 const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();

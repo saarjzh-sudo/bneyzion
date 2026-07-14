@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { deliverOrder } from "../lib/digital-delivery";
+import { deliverOrder } from "../lib/digital-delivery.js";
 // subscribeToSmoove is defined locally below — it handles the 409 "already
 // exists" case by looking up the contact and adding to the list via PUT.
 // splitFullName is imported for any future use but not currently needed here.
