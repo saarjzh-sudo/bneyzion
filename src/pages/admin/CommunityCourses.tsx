@@ -9,6 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogDescription } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { ImageUpload } from "@/components/admin/ImageUpload";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
@@ -103,18 +104,12 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
           >
             <option value="active">פעיל — מוצג בקטלוג</option>
             <option value="draft">טיוטה — מוסתר</option>
+            <option value="archived">בארכיון — מוסתר (שחזור = החזרה לפעיל)</option>
           </select>
         </div>
       </div>
-      <div className="space-y-1.5">
-        <label className="text-sm font-medium text-foreground">תמונת כיסוי</label>
-        <Input value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} placeholder="https://..." dir="ltr" className="h-11 font-mono text-sm" />
-        {imageUrl && (
-          <div className="mt-2 aspect-video w-full max-w-xs overflow-hidden rounded-lg border">
-            <img src={imageUrl} alt="תצוגה מקדימה" className="h-full w-full object-cover" onError={(e) => (e.currentTarget.style.display = "none")} />
-          </div>
-        )}
-      </div>
+      {/* יואב 14.7: העלאת תמונה כמו בחנות — לא שדה קישור */}
+      <ImageUpload value={imageUrl} onChange={setImageUrl} folder="courses" label="תמונת כיסוי" />
       <Separator />
       <div className="flex gap-3 justify-end">
         <Button variant="outline" onClick={onCancel} className="min-w-[80px]">ביטול</Button>
@@ -281,14 +276,26 @@ export default function CommunityCourses() {
   });
 
   const deleteCourse = useMutation({
-    mutationFn: async (id: string) => {
+    // מחיקה אמיתית נחסמת ב-FK כשיש לקורס שיעורים/מפגשים/נרשמים (אותה מלכודת
+    // כמו מחיקת-רב, 16.5) → נופלים לארכוב רך: הקורס נעלם מהאתר, ההיסטוריה נשמרת.
+    mutationFn: async (id: string): Promise<"deleted" | "archived"> => {
       const { error } = await supabase.from("community_courses").delete().eq("id", id);
-      if (error) throw error;
+      if (!error) return "deleted";
+      const isFk = (error as any).code === "23503" || /foreign key/i.test(error.message);
+      if (!isFk) throw error;
+      const { error: archiveErr } = await supabase
+        .from("community_courses").update({ status: "archived" }).eq("id", id);
+      if (archiveErr) throw archiveErr;
+      return "archived";
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ["admin-community-courses"] });
       if (selectedCourse) setSelectedCourse(null);
-      toast.success("הקורס נמחק");
+      toast.success(
+        result === "deleted"
+          ? "הקורס נמחק"
+          : "לקורס יש שיעורים או נרשמים — הועבר לארכיון והוסר מהאתר (אפשר לשחזר דרך עריכה → סטטוס)",
+      );
     },
     onError: (e) => toast.error("שגיאה: " + e.message),
   });
@@ -707,6 +714,7 @@ export default function CommunityCourses() {
                               <SelectItem value="active">פעיל</SelectItem>
                               <SelectItem value="draft">טיוטה</SelectItem>
                               <SelectItem value="completed">הסתיים</SelectItem>
+                              <SelectItem value="archived">בארכיון</SelectItem>
                             </SelectContent>
                           </Select>
                           <Tooltip>

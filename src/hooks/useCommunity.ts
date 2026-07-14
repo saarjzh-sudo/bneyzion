@@ -40,6 +40,8 @@ export function useWeeklyBooks() {
         .from("community_courses")
         .select("*")
         .eq("in_weekly_program", true)
+        // קורס בארכיון (מחיקה רכה מהאדמין) לא מופיע בניווט הספרים
+        .neq("status", "archived")
         .order("sort_order", { ascending: true, nullsFirst: false });
       if (error) throw error;
       return (data ?? []) as WeeklyCourse[];

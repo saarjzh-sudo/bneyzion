@@ -79,7 +79,7 @@ const SECTIONS: NavSection[] = [
       { title: "העלאת תוכן",     url: "/admin/upload",            icon: Upload,        roles: CREATOR },
       { title: "עריכת תוכן",     url: "/admin/content",           icon: BookOpen,      roles: CREATOR },
       { title: "רבנים ויוצרים",  url: "/admin/rabbis",            icon: Users2,        roles: CREATOR },
-      { title: "קורסים - קהילה", url: "/admin/community-courses", icon: GraduationCap, roles: CREATOR },
+      { title: "קורסים", url: "/admin/community-courses", icon: GraduationCap, roles: CREATOR },
       { title: "מוצרים",         url: "/admin/products",          icon: ShoppingBag,   roles: ADMIN },
       { title: "כנסים",          url: "/admin/kenes",             icon: CalendarDays,  roles: ADMIN },
       { title: "באנרים ופופאפים", url: "/admin/promos",           icon: Megaphone,     roles: ADMIN },
