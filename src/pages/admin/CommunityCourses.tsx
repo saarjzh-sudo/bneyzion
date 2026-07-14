@@ -55,6 +55,7 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
   const [price, setPrice] = useState(course?.price != null ? String(course.price) : "0");
   const [rabbiId, setRabbiId] = useState(course?.rabbi_id || "");
   const [status, setStatus] = useState(course?.status || "active");
+  const [salesContent, setSalesContent] = useState((course as any)?.sales_content || "");
 
   const { data: rabbis = [] } = useQuery({
     queryKey: ["admin-rabbis-for-courses"],
@@ -76,6 +77,11 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
       <div className="space-y-1.5">
         <label className="text-sm font-medium text-foreground">תיאור</label>
         <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="כמה מילים שמופיעות על כרטיס הקורס, למשל: לימוד ספר דניאל באופן יסודי, פרק אחרי פרק" rows={3} className="resize-none" />
+      </div>
+      <div className="space-y-1.5">
+        <label className="text-sm font-medium text-foreground">טקסט דף המכירה</label>
+        <Textarea value={salesContent} onChange={(e) => setSalesContent(e.target.value)} placeholder="דברי ההסבר שמופיעים בדף המכירה של הקורס — למה ללמוד, מה מיוחד, למי זה מתאים. אפשר כמה פסקאות." rows={6} />
+        <p className="text-xs text-muted-foreground">מוצג למי שעוד לא רכש, תחת "על הקורס". אם ריק — נלקח אוטומטית מטקסט ההקדמה.</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="space-y-1.5">
@@ -119,7 +125,8 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
             price: Number(price) || 0,
             rabbi_id: rabbiId || null,
             status,
-          })}
+            sales_content: salesContent || null,
+          } as any)}
           disabled={!title.trim() || isPending}
           className="min-w-[100px]"
         >
@@ -146,6 +153,9 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
   const [attachmentUrl, setAttachmentUrl] = useState(lesson?.attachment_url || "");
   const [contentHtml, setContentHtml] = useState(lesson?.content_html || "");
   const [lessonNumber, setLessonNumber] = useState(lesson?.lesson_number ?? nextNumber);
+  // סער 14.7: שיוך לפרק ולשכבה — כך השיעור מסתדר במבנה שהלומד רואה
+  const [bibleChapter, setBibleChapter] = useState((lesson as any)?.bible_chapter != null ? String((lesson as any).bible_chapter) : "");
+  const [layerType, setLayerType] = useState((lesson as any)?.layer_type || "base");
 
   return (
     <div className="space-y-5">
@@ -164,6 +174,29 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
       <div className="space-y-1.5">
         <label className="text-sm font-medium">תיאור</label>
         <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="תיאור קצר של השיעור" rows={2} className="resize-none" />
+      </div>
+
+      {/* שיוך במבנה הקורס: פרק + שכבה */}
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium">פרק</label>
+          <Input type="number" min="0" value={bibleChapter} onChange={(e) => setBibleChapter(e.target.value)} placeholder="ריק = כללי/הקדמה" className="h-11" />
+          <p className="text-xs text-muted-foreground">קובע תחת איזה פרק החומר מופיע ללומד.</p>
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium">שכבה</label>
+          <select
+            value={layerType}
+            onChange={(e) => setLayerType(e.target.value)}
+            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="base">תכני הבסיס</option>
+            <option value="enrichment">הרחבה</option>
+            <option value="weekly">השיעור והסיכום</option>
+            <option value="intro">הקדמה</option>
+            <option value="resources">תכנים נוספים</option>
+          </select>
+        </div>
       </div>
 
       {/* Media section */}
@@ -200,7 +233,9 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
           title, description, video_url: videoUrl || null, audio_url: audioUrl || null,
           attachment_url: attachmentUrl || null, content_html: contentHtml || null,
           lesson_number: lessonNumber, course_id: courseId,
-        })} disabled={!title.trim() || isPending} className="min-w-[100px]">
+          bible_chapter: bibleChapter !== "" ? Number(bibleChapter) : null,
+          layer_type: layerType,
+        } as any)} disabled={!title.trim() || isPending} className="min-w-[100px]">
           {isPending ? <span className="animate-pulse">שומר...</span> : lesson ? "שמור שינויים" : "הוסף שיעור"}
         </Button>
       </div>
@@ -261,8 +296,9 @@ export default function CommunityCourses() {
         const { error } = await supabase.from("community_courses").insert({
           title: data.title!, description: data.description, image_url: data.image_url,
           price: data.price ?? 0, rabbi_id: data.rabbi_id ?? null, status: data.status ?? "active",
+          sales_content: (data as any).sales_content ?? null,
           sort_order: courses.length,
-        });
+        } as any);
         if (error) throw error;
       }
     },
@@ -467,13 +503,41 @@ export default function CommunityCourses() {
           ) : (
             <div className="rounded-xl border border-border/50 overflow-hidden bg-card shadow-sm">
               <AnimatePresence>
-                {lessons.map((lesson, index) => (
+                {/* סער 14.7: השיעורים מקובצים לפי פרק — כמו שהלומד רואה אותם.
+                    בתוך כל פרק: השכבה (בסיס/הרחבה/שיעור) + סוג כל חומר. */}
+                {(() => {
+                  const groups: Array<{ key: string; label: string; items: typeof lessons }> = [];
+                  const byKey = new Map<string, (typeof lessons)[number][]>();
+                  for (const l of lessons) {
+                    const ch = (l as any).bible_chapter;
+                    const key = ch != null ? `ch-${ch}` : "general";
+                    if (!byKey.has(key)) {
+                      byKey.set(key, []);
+                      groups.push({ key, label: ch != null ? `פרק ${ch}` : "כללי / הקדמה", items: byKey.get(key)! as any });
+                    }
+                    byKey.get(key)!.push(l);
+                  }
+                  groups.sort((a, b) => {
+                    if (a.key === "general") return -1;
+                    if (b.key === "general") return 1;
+                    return Number(a.key.slice(3)) - Number(b.key.slice(3));
+                  });
+                  const LAYER_LABEL: Record<string, string> = { base: "בסיס", enrichment: "הרחבה", weekly: "שיעור ושיכום" };
+                  return groups.map((g) => (
+                    <div key={g.key}>
+                      {groups.length > 1 && (
+                        <div className="flex items-center gap-2 bg-muted/50 px-4 py-2 border-b border-border/30">
+                          <span className="text-xs font-bold text-foreground">{g.label}</span>
+                          <span className="text-[10px] text-muted-foreground">{g.items.length} פריטים</span>
+                        </div>
+                      )}
+                      {g.items.map((lesson: any, index: number) => (
                   <motion.div
                     key={lesson.id}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.03 }}
-                    className={`group flex items-center gap-3 px-4 py-3 hover:bg-accent/30 transition-colors ${index < lessons.length - 1 ? "border-b border-border/30" : ""}`}
+                    className={`group flex items-center gap-3 px-4 py-3 hover:bg-accent/30 transition-colors border-b border-border/30`}
                   >
                     <GripVertical className="h-4 w-4 text-muted-foreground/30 shrink-0 cursor-grab group-hover:text-muted-foreground/60 transition-colors" />
 
@@ -490,11 +554,19 @@ export default function CommunityCourses() {
                       )}
                     </div>
 
-                    {/* Media indicators */}
+                    {/* שכבה (בסיס/הרחבה/שיעור) */}
+                    {lesson.layer_type && LAYER_LABEL[lesson.layer_type] && (
+                      <Badge variant="outline" className="text-[10px] shrink-0 border-border/60 text-muted-foreground">
+                        {LAYER_LABEL[lesson.layer_type]}
+                      </Badge>
+                    )}
+
+                    {/* Media indicators — סוג כל חומר: וידאו / שמע / קובץ / טקסט */}
                     <div className="flex items-center gap-1.5 shrink-0">
                       <MediaDot has={!!lesson.video_url} icon={Video} label="וידאו" />
-                      <MediaDot has={!!lesson.audio_url} icon={Headphones} label="אודיו" />
-                      <MediaDot has={!!lesson.attachment_url} icon={Paperclip} label="קובץ מצורף" />
+                      <MediaDot has={!!lesson.audio_url} icon={Headphones} label="שמע" />
+                      <MediaDot has={!!lesson.attachment_url} icon={Paperclip} label="קובץ" />
+                      <MediaDot has={!!lesson.content_html} icon={FileText} label="טקסט" />
                     </div>
 
                     {/* Status badge */}
@@ -537,7 +609,10 @@ export default function CommunityCourses() {
                       </Tooltip>
                     </div>
                   </motion.div>
-                ))}
+                      ))}
+                    </div>
+                  ));
+                })()}
               </AnimatePresence>
             </div>
           )}

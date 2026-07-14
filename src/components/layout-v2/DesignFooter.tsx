@@ -404,7 +404,9 @@ export default function DesignFooter() {
         </div>
       </div>
 
-      {/* Mobile responsive: collapse columns on small screens */}
+      {/* Mobile responsive: collapse columns on small screens.
+          סער 14.7: התפריט התחתון (64px, fixed) הסתיר את סוף הפוטר במובייל —
+          מוסיפים ריווח תחתון בגובה התפריט + safe-area כדי שהקרדיט ייראה. */}
       <style>{`
         @media (max-width: 768px) {
           .footer-grid {
@@ -415,6 +417,11 @@ export default function DesignFooter() {
         @media (max-width: 480px) {
           .footer-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 767px) {
+          footer[dir="rtl"] {
+            padding-bottom: calc(1.5rem + 64px + env(safe-area-inset-bottom, 0px)) !important;
           }
         }
       `}</style>

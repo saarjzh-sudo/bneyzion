@@ -431,6 +431,8 @@ export default function DesignPreviewMyCourses() {
     }
 
     // 2. קורסים enrolled מה-DB
+    // סער 14.7: קורס-ספר שנרכש נפתח בדף הספר המסודר-לפי-פרקים
+    // (/course/book-*), לא בדף הפורטל השטוח.
     for (const enr of enrollments as any[]) {
       const cc = enr.community_courses;
       if (!cc) continue;
@@ -446,42 +448,73 @@ export default function DesignPreviewMyCourses() {
         progressPct: 0,
         lessonCount: cc.total_lessons ?? 0,
         hasAccess: true,
-        ctaTo: `/portal/course/${cc.id}`,
+        ctaTo: cc.program_slug ? `/course/${cc.program_slug}` : `/portal/course/${cc.id}`,
         ctaLabel: "כניסה לקורס",
         accessType: cc.access_type ?? "open",
       });
     }
 
-    // 3. קורסים open שאין לי enrollment (auto-access)
-    for (const cc of allCourses as any[]) {
-      if (enrolledIds.has(cc.id)) continue;
-      if (cc.access_type !== "open" && cc.access_type !== null) continue;
-      result.push({
-        id: cc.id,
-        title: cc.title,
-        subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
-        description: cc.description ?? null,
-        slug: cc.id,
-        gradient: courseGradient(null),
-        imageUrl: cc.image_url ?? null,
-        progressPct: 0,
-        lessonCount: cc.total_lessons ?? 0,
-        hasAccess: true,
-        ctaTo: `/portal/course/${cc.id}`,
-        ctaLabel: "כניסה לקורס",
-        tag: "חינמי",
-        accessType: "open",
-      });
+    // 3. קורסים חינמיים (access_type=open) — רק למחובר. סער 14.7: לאורח הם
+    // לא "הקורסים שלי" — הם מוצגים לו בהמשך העמוד ברשימה הכללית.
+    if (user) {
+      for (const cc of allCourses as any[]) {
+        if (enrolledIds.has(cc.id)) continue;
+        if (cc.access_type !== "open" && cc.access_type !== null) continue;
+        result.push({
+          id: cc.id,
+          title: cc.title,
+          subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
+          description: cc.description ?? null,
+          slug: cc.id,
+          gradient: courseGradient(null),
+          imageUrl: cc.image_url ?? null,
+          progressPct: 0,
+          lessonCount: cc.total_lessons ?? 0,
+          hasAccess: true,
+          ctaTo: cc.program_slug ? `/course/${cc.program_slug}` : `/portal/course/${cc.id}`,
+          ctaLabel: "כניסה לקורס",
+          tag: "חינמי",
+          accessType: "open",
+        });
+      }
     }
 
     return result;
-  }, [enrollments, allCourses, enrolledIds, hasWeeklyChapter, hasEicha]);
+  }, [enrollments, allCourses, enrolledIds, hasWeeklyChapter, hasEicha, user]);
 
-  // קורסים נעולים — יש מחיר / requires_tag, אין לי גישה
+  // "כל הקורסים בתנ"ך" — מה שזמין למי שעוד אין לו גישה:
+  // • requires_tag עם מחיר > 0 (ניתן לרכישה)
+  // • subscribers_only (מפנה למנוי)
+  // • לאורח: גם הקורסים החינמיים (כניסה אחרי התחברות)
+  // סער 14.7: קורס בלי מחיר ובלי מסלול (חזל"מ) — לא מוצג בכלל.
   const lockedCourses = useMemo<CourseCardData[]>(() => {
     const ownedIds = new Set(myCourses.map((c) => c.id));
-    return (allCourses as any[])
-      .filter((cc: any) => !ownedIds.has(cc.id) && cc.access_type !== "open" && cc.access_type !== null)
+    const guestFree: CourseCardData[] = !user
+      ? (allCourses as any[])
+          .filter((cc: any) => cc.access_type === "open" || cc.access_type === null)
+          .map((cc: any) => ({
+            id: cc.id,
+            title: cc.title,
+            subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
+            description: cc.description ?? null,
+            slug: cc.id,
+            gradient: courseGradient(null),
+            imageUrl: cc.image_url ?? null,
+            progressPct: 0,
+            lessonCount: cc.total_lessons ?? 0,
+            hasAccess: true,
+            ctaTo: cc.program_slug ? `/course/${cc.program_slug}` : `/portal/course/${cc.id}`,
+            ctaLabel: "כניסה חינם",
+            tag: "חינמי",
+            accessType: "open",
+          }))
+      : [];
+    const paid = (allCourses as any[])
+      .filter((cc: any) => {
+        if (ownedIds.has(cc.id) || cc.access_type === "open" || cc.access_type === null) return false;
+        if (cc.access_type === "subscribers_only") return true;
+        return (Number(cc.price) || 0) > 0; // requires_tag בלי מחיר = מוסתר
+      })
       .map((cc: any) => ({
         id: cc.id,
         title: cc.title,
@@ -505,7 +538,8 @@ export default function DesignPreviewMyCourses() {
         ctaLabel: "לצפייה ורכישה",
         accessType: cc.access_type,
       }));
-  }, [allCourses, myCourses]);
+    return [...paid, ...guestFree];
+  }, [allCourses, myCourses, user]);
 
   // יואב 14.7: העמוד הוא קטלוג ציבורי — "קורסים בתנ"ך" — פתוח גם בלי התחברות.
   // אורח רואה את כל הקורסים עם CTA לרכישה/הצטרפות; ההתחברות מוצעת בעדינות

@@ -802,8 +802,10 @@ function CourseSalesPage({ course, slug, bookTitle, courseDesc, coursePath, acce
   const price = Number(paymentProduct?.default_amount ?? 0);
   const canBuy = !!paymentProduct?.active && price > 0;
 
-  // דברי ההסבר — מתוך ההקדמה (טקסטים בלבד, בלי לחשוף וידאו/קבצים)
-  const introText = introItems
+  // דברי ההסבר: קודם הטקסט שנערך באדמין (sales_content); כשריק — מתוך
+  // ההקדמה (טקסטים בלבד, בלי לחשוף וידאו/קבצים).
+  const editedSales = String((course as any)?.sales_content || "").trim();
+  const introText = editedSales || introItems
     .map((it) => (it.content_html ? stripHtml(it.content_html) : it.description || ""))
     .filter((t) => t.length > 40)
     .join("\n\n")
@@ -891,7 +893,7 @@ function CourseSalesPage({ course, slug, bookTitle, courseDesc, coursePath, acce
           {/* על הקורס — מתוך ההקדמה */}
           {introText && (
             <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem" }}>
-              <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.25rem", color: colors.textDark, margin: "0 0 0.9rem" }}>על הקורס — מתוך ההקדמה</h2>
+              <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.25rem", color: colors.textDark, margin: "0 0 0.9rem" }}>{editedSales ? "על הקורס" : "על הקורס — מתוך ההקדמה"}</h2>
               <p style={{ fontFamily: fonts.body, fontSize: "0.92rem", color: colors.textMid, lineHeight: 1.9, whiteSpace: "pre-line", margin: 0 }}>
                 {introText}{introText.length >= 1400 ? "…" : ""}
               </p>
