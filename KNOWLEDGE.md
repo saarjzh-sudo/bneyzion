@@ -8572,3 +8572,6 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 
 ### 2026-07-14 (ד') — מודל גישה חדש לקורסים + דף רכישה (הוראת סער)
 **מודל:** תוכן קורס book-* סגור לגמרי ללא-גישה (גם תכני-בסיס — קודם היו public). מנוי=רואה הכל · רוכש=רק שלו · אחרת=דף-מכירה (`CourseSalesPage` ב-WeeklyBookDetail): הירו+מחיר, "מה מקבלים", טקסט מההקדמה (stripHtml, בלי מדיה), CTA. **רכישה:** דף מלא `/course/:slug/checkout` (`CourseCheckout.tsx`) במקום פופאפ — סיכום+טופס+Grow; מייל=חובה. **"נפתח לו משתמש"** = מנגנון קיים: tag לפי מייל (pending_user_link) + `linkPendingAccessTags` ב-AuthContext מקשר בהתחברות-Google ראשונה — לא יוצרים auth-user ידנית (ההתחברות היא Google-only; יצירת email-user הייתה מתנגשת). דף-תודה מסביר את זה לרוכש.
+
+### 2026-07-14 (ה') — המשתמשים המאוחד הוטמע ב-/admin/users
+העמוד המאוחד יצא מהסנדבוקס אל פאנל הניהול: `/admin/users` = `admin/UnifiedUsers.tsx` (עוטף את `DesignPreviewUsers` ב-AdminLayout). **הענקה/הסרה חיות:** upsert על `ux_email_tag` (מחיה tag קטוע, source=admin_manual) + קטיעת valid_until; RLS "admin all" על user_access_tags מאפשר זאת מהקליינט. "משתמש חדש"=דיאלוג עם שדה-מייל. סיידבר: פריט "משתמשים" יחיד (הוסר "מנויים"); `/admin/subscribers` חי ככלי-חירום (קישור מכותרת העמוד). Users.tsx הישן נותק. סנכרון Smoove/Monday בהענקה ידנית — עדיין ידני (מסומן בדיאלוג).
