@@ -150,7 +150,7 @@ const Portal = () => {
                       </p>
                     )}
                     <Button asChild variant="outline" size="sm" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <Link to={`/portal/course/${course.id}`}>
+                      <Link to={(course as any).program_slug ? `/course/${(course as any).program_slug}` : `/portal/course/${course.id}`}>
                         כניסה לקורס
                         <ChevronLeft className="w-4 h-4 mr-1" />
                       </Link>

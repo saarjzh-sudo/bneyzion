@@ -351,7 +351,9 @@ const App = () => (
             <Route path="/course/:slug" element={<Suspense fallback={<LazyFallback />}><WeeklyBookDetailOrLegacy /></Suspense>} />
             {/* LEGACY — archived, accessible for rollback comparison */}
             <Route path="/portal-old" element={<RequireAuth><Suspense fallback={<LazyFallback />}><Portal /></Suspense></RequireAuth>} />
-            <Route path="/portal/course/:id" element={<RequireAuth><Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense></RequireAuth>} />
+            {/* בלי RequireAuth ברמת-הראוט: הרכיב מפנה קורס-ספר ל-/course/<slug>
+                (דף-מכירה לאורח) לפני בדיקת-ההתחברות, ובודק auth בעצמו לשאר. */}
+            <Route path="/portal/course/:id" element={<Suspense fallback={<LazyFallback />}><CommunityCoursePage /></Suspense>} />
             <Route path="/roadmap" element={<Suspense fallback={<LazyFallback />}><Roadmap /></Suspense>} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/portal-login" element={<Suspense fallback={<LazyFallback />}><PortalLogin /></Suspense>} />

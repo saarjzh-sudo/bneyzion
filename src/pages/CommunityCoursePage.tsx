@@ -52,6 +52,24 @@ const CommunityCoursePage = () => {
     image: course?.image_url ?? undefined,
   });
 
+  // סער 14.7: קורס-ספר (יש לו program_slug) נלמד בדף הספר המסודר-לפי-פרקים —
+  // הדף השטוח הזה נשאר רק לקורסי-קהילה חופשיים בלי מבנה פרקים.
+  // הסדר קריטי: קודם מחכים לקורס ומפנים (גם אורח מגיע לדף-המכירה של הספר),
+  // ורק אחר-כך דורשים התחברות עבור קורסי-הקהילה שנשארים כאן.
+  if (courseLoading) {
+    return (
+      <div className="min-h-screen bg-background" dir="rtl">
+        <div className="max-w-4xl mx-auto p-8 space-y-4">
+          <Skeleton className="h-8 w-1/3" />
+          <Skeleton className="h-20 w-full" />
+        </div>
+      </div>
+    );
+  }
+  if (course && (course as any).program_slug) {
+    return <Navigate to={`/course/${(course as any).program_slug}`} replace />;
+  }
+
   if (!authLoading && !user) return <Navigate to="/auth?redirect=/portal" replace />;
 
   const courseIsOpen = !course?.access_type || course.access_type === "open";
