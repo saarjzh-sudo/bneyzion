@@ -8546,3 +8546,13 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 - **Discovery note:** `bneyzion-yehoshua.vercel.app` is NOT a separate Vercel project — it is a domain alias on project `bneyzion` (prj_P2KNzQJKsnpF1ZXShOBH3XL03c2x). One deploy updates both hosts. The main repo's `vercel.json` rewrites `/design-yehoshua-{campaign,admin}` to that alias.
 - **State at grant:** donations for `yehoshua-campaign`: 321 rows, 205 completed, ₪27,992 raised.
 - Yoav notified via WhatsApp (delivered, verified via getChatHistory) with login instructions incl. hard-refresh before first login (PWA SW).
+
+### 2026-07-14 — רמה 17: עמוד "משתמשים" מאוחד + תיקון feed מ-Grow (finish/integration)
+
+**RPC חדשים (באישור סער):** `admin_unified_users()` + `admin_user_detail(p_email)` — SECURITY DEFINER, שער `has_role(auth.uid(),'admin')` fail-closed, GRANT ל-authenticated בלבד. מיגרציה: `supabase/migrations/20260714_admin_unified_users.sql`. עמוד סנדבוקס `/design-users` (`?mock=1` לתצוגה בלי DB) + hook ‏`useUnifiedUsers`.
+
+**🔴 לקח ברזל — ה-webhook החשבוני של Grow לא שולח statusCode:** שער `statusCode==="2"` ב-`grow-webhook-sync` זרק 220 עסקאות-יולי אמיתיות (₪24,939, כולל 82 חיובי-הו"ק) ל-`no-statuscode-logged` — זה מקור "ה-feed נעצר ב-1.7". צורות ה-payload: הצלחה = camelCase עם asmachta+paymentDate(D/M/YY)+paymentSum (בלי statusCode!); כשל-הו"ק = snake_case עם error_message+regular_payment_id+charges_attempts. תוקן ב-v5 (פרוס, verify_jwt=false). **אין API לרשימת עסקאות ב-Grow** (אומת פעמיים: 2.6 נוסו 26 endpoints; 14.7) — ה-feed היחיד הוא ה-webhook, ולכן grow_webhook_log הוא רשת-הביטחון: backfill תמיד אפשרי ממנו (`scripts/bz_grow_backfill.py`, אידמפוטנטי, dry-run ברירת-מחדל).
+
+**Backfill 14.7:** ‏220 שורות (142 donations + 78 orders) הוכנסו עם snapshot ‏`*_bak_growfeed_20260714`; אימות still_missing=0; replay E2E → duplicate-skip. אחרי: last_charge=14.7, ‏894 אנשים ייחודיים, ירוק-35d=223, אמבר=33.
+
+**עוד:** עסקאות-בדיקה ("בדיקה"/"בדיקת חיווט") מוחרגות מה-backfill אבל *לא* מה-edge — עסקת-בדיקה עתידית תיכנס ל-DB (לנקות ידנית או להוסיף החרגה). `paymentType` בפועל = "הוראת קבע" (לא רק 'הו"ק'). מיפוי product לשורות orders מה-webhook: לחיות/מנוי/הפרק→weekly-chapter-subscription · בית המדרש→beit-midrash-participation · אחרת other.
