@@ -66,8 +66,15 @@ Deno.serve(async (req) => {
           continue;
         }
 
+        // שומר-ג'יבריש: דף ישן בלי תיאור אמיתי מחזיר את תפריט האתר — לא שומרים.
+        if (looksLikeJunk(extracted.content) || looksLikeJunk(extracted.description)) {
+          skipped++;
+          results.push({ title: product.title, status: "skipped", reason: "extracted content looks like old-site nav junk" });
+          continue;
+        }
+
         const updates: any = {};
-        
+
         // Update content (full HTML description)
         if (extracted.content) {
           updates.content = extracted.content;
@@ -221,10 +228,28 @@ function extractProductContent(html: string): {
   };
 }
 
+// רמה 18 (יואב 14.7): שומר-ג'יבריש — טקסט שנגרף מתפריט/עגלה של האתר הישן
+// (nav + "הוספה לסל" + מחירים ישנים) זיהם 5 מוצרים. תוכן שמכיל את הסמנים
+// האלה נפסל, כדי שהרצה חוזרת של ההעשרה לא תחזיר את הזבל.
+const JUNK_MARKERS = [
+  "הוספה לסל",
+  "תוכנית המנויים",
+  "המחיר המקורי היה",
+  "עמוד הבית /",
+  "כמות של",
+  "התחברות עמוד הבית",
+];
+
+function looksLikeJunk(text: string | null): boolean {
+  if (!text) return false;
+  return JUNK_MARKERS.some((m) => text.includes(m));
+}
+
 function cleanProductHtml(html: string): string {
   return html
     .replace(/<script[\s\S]*?<\/script>/gi, "")
     .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<svg[\s\S]*?<\/svg>/gi, "")
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, "")
     .replace(/\s+class=["'][^"']*["']/gi, "")
     .replace(/\s+style=["'][^"']*["']/gi, "")

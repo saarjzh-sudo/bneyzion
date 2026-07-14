@@ -4,6 +4,7 @@ import {
   BarChart3, Ticket, CreditCard,
   UserCheck, Upload, CalendarDays, Megaphone,
   MessageCircle, Heart, SlidersHorizontal, HelpCircle,
+  Package, Bot,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -64,6 +65,8 @@ const SECTIONS: NavSection[] = [
       // "מנויים" הישן נשאר נגיש ככלי-חירום דרך קישור בתוך העמוד המאוחד.
       { title: "משתמשים",       url: "/admin/users",         icon: UserCheck,   roles: ADMIN },
       { title: "סליקות",        url: "/admin/payments",      icon: CreditCard,  roles: ADMIN },
+      // רמה 18: העמוד היה יתום — טבלת מעקב-משלוחים מלאה בלי שום קישור אליה
+      { title: "הזמנות ומשלוחים", url: "/admin/orders",      icon: Package,     roles: ADMIN },
       { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },
       { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
@@ -71,6 +74,8 @@ const SECTIONS: NavSection[] = [
       // רמה 14 (סער 10.7): שאלות ותשובות — "שאל את הרב" באתר → תור מסודר כאן
       { title: "שאל את הרב",    url: "/admin/questions",     icon: HelpCircle,  roles: ADMIN },
       { title: "שיחות בנצי",    url: "/admin/benzi-conversations", icon: MessageCircle, roles: ADMIN },
+      // רמה 18: גם עמוד הידע של בנצי היה יתום (נגיש רק בהקלדת URL)
+      { title: "הידע של בנצי",  url: "/admin/benzi",         icon: Bot,         roles: ADMIN },
     ],
   },
   {

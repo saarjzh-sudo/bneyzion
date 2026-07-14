@@ -468,61 +468,6 @@ function AddSubscriberDialog({
   );
 }
 
-/* ─── Smoove import placeholder dialog ──────────────────────── */
-function SmooveImportDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  return (
-    <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
-      <DialogContent className="max-w-md" dir="rtl">
-        <DialogHeader>
-          <DialogTitle style={{ fontFamily: "var(--font-display, serif)", color: C.navy }}>
-            ייבוא מ-Smoove
-          </DialogTitle>
-        </DialogHeader>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          <div
-            style={{
-              background: C.amberBg,
-              border: `1px solid ${C.goldShimmer}`,
-              borderRadius: 12,
-              padding: "14px 16px",
-              fontSize: 13,
-              color: C.amber,
-              lineHeight: 1.6,
-            }}
-          >
-            <strong>ייבוא Smoove</strong> — 288 מנויי הרשימה ייובאו ל-user_access_tags עם tag='program:weekly-chapter'.
-            <br /><br />
-            הייבוא יורץ ע"י סאר ידנית כדי לאמת שהרשימה עדכנית לפני ייבוא.
-            <br /><br />
-            מנויים שכבר קיימים ב-DB לא ייובאו כפולים (upsert on email+tag).
-          </div>
-
-          <Button
-            disabled
-            size="lg"
-            style={{
-              background: "#e2e8f0",
-              color: "#94a3b8",
-              cursor: "not-allowed",
-              width: "100%",
-            }}
-          >
-            <Upload size={16} style={{ marginLeft: 8 }} />
-            ייבא 288 מנויים מ-Smoove (דורש אישור סאר — יורץ ידנית)
-          </Button>
-        </div>
-
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline" size="sm">סגור</Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
-  );
-}
-
 /* ─── End subscription — ביטול אמיתי ב-Grow (רמה 11) ─────────────
    קורא ל-/api/grow/cancel-subscription שמבטל את ההו"ק דרך updateDirectDebit.
    mode=grow_cancelled → ההו"ק בוטלה בפועל. mode=manual_needed → אין עסקת
@@ -593,7 +538,6 @@ export default function Subscribers() {
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [programFilter, setProgramFilter] = useState<string>("all");
   const [addOpen, setAddOpen] = useState(false);
-  const [smooveOpen, setSmooveOpen] = useState(false);
   const [endConfirm, setEndConfirm] = useState<string | null>(null);
   // כלי-חירום (הוספה/ייבוא/סיום מנוי) מקופלים — Monday הוא הדרך לנהל מנויים
   const [emergencyOpen, setEmergencyOpen] = useState(false);
@@ -959,18 +903,8 @@ export default function Subscribers() {
                   <Plus size={14} />
                   הוסף מנוי ידנית
                 </button>
-                <button
-                  onClick={() => setSmooveOpen(true)}
-                  style={{
-                    display: "flex", alignItems: "center", gap: 6,
-                    background: "white", border: `1.5px solid ${C.border}`, borderRadius: 10,
-                    padding: "8px 16px", fontSize: 13, fontWeight: 700,
-                    color: C.gold, cursor: "pointer", whiteSpace: "nowrap",
-                  }}
-                >
-                  <Upload size={14} />
-                  ייבא מ-Smoove
-                </button>
+                {/* רמה 18: כפתור "ייבא מ-Smoove" הוסר — פתח דיאלוג-דמה עם כפתור מת
+                    ומספר קשיח (288). ייבוא Smoove נעשה ידנית ע"י סער כשנדרש. */}
               </div>
               <div style={{ fontSize: 12, color: C.textSubtle }}>
                 כפתור "סיים מנוי" מופיע כעת ליד כל שורה בטבלה למטה — והוא ינסה גם לבטל את
@@ -1158,7 +1092,6 @@ export default function Subscribers() {
 
       {/* ── Dialogs ── */}
       <AddSubscriberDialog open={addOpen} onClose={() => setAddOpen(false)} />
-      <SmooveImportDialog open={smooveOpen} onClose={() => setSmooveOpen(false)} />
 
       {/* End-subscription confirmation */}
       <Dialog open={!!endConfirm} onOpenChange={(v) => !v && setEndConfirm(null)}>

@@ -19,6 +19,8 @@ import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { type ShippingMethod } from "@/config/shipping";
 // רמה 13: מחירי המשלוח נערכים ממרכז-השליטה (copy.shipping.options, fallback לקונפיג)
 import { useShippingOptions } from "@/hooks/useShippingOptions";
+// רמה 18 (יואב 14.7): נקודות-האיסוף מוצגות גם ברכישת-עגלה, לא רק בקנייה-מהירה
+import { usePublicSalePoints } from "@/hooks/useSalePoints";
 import { Link } from "react-router-dom";
 
 export default function Checkout() {
@@ -28,9 +30,13 @@ export default function Checkout() {
   const navigate = useNavigate();
   const { startPayment, isLoading: paymentLoading, isReady: paymentReady, error: paymentError, lastOrderIdRef } = useGrowPayment();
   const { options: SHIPPING_OPTIONS, getPrice: getShippingPrice, getLabel: getShippingLabel } = useShippingOptions();
+  const { data: salePoints = [] } = usePublicSalePoints();
+  const [pickupPointId, setPickupPointId] = useState<string>("");
+  const pickupPoint = salePoints.find((p) => p.id === pickupPointId);
   const [loading, setLoading] = useState(false);
+  // רמה 18 (יואב 14.7): שם פרטי + שם משפחה — אחיד עם הקנייה-המהירה, דאטה אחיד באקסל הרכישות
   const [form, setForm] = useState({
-    name: "", email: "", phone: "",
+    firstName: "", lastName: "", email: "", phone: "",
     address: "", city: "", zip: "",
     installments: "1", notes: "",
   });
@@ -102,9 +108,14 @@ export default function Checkout() {
         // Build a description that includes item titles and, for physical products,
         // the shipping method + address so the webhook can store it.
         const itemTitles = group.items.map((i) => i.product.title).join(", ");
+        const pickupLabel = pickupPoint
+          ? `איסוף עצמי — ${pickupPoint.name}${pickupPoint.city ? `, ${pickupPoint.city}` : ""}`
+          : "איסוף עצמי";
         const shippingPart = needsShipping && isProductGroup
-          ? ` | משלוח: ${getShippingLabel(shippingMethod)}${
-              needsAddress ? ` — ${form.address}, ${form.city}${form.zip ? " " + form.zip : ""}` : ""
+          ? ` | משלוח: ${
+              shippingMethod === "pickup"
+                ? pickupLabel
+                : `${getShippingLabel(shippingMethod)} — ${form.address}, ${form.city}${form.zip ? " " + form.zip : ""}`
             }`
           : "";
         const description = `${itemTitles}${shippingPart}`;
@@ -114,7 +125,7 @@ export default function Checkout() {
         await startPayment({
           sum: groupTotal,
           description,
-          fullName: form.name,
+          fullName: `${form.firstName} ${form.lastName}`.trim(),
           phone: form.phone,
           email: form.email,
           type: group.type,
@@ -139,7 +150,7 @@ export default function Checkout() {
             ...(needsShipping && isProductGroup
               ? {
                   shipping_method: shippingMethod,
-                  shipping_address: needsAddress ? form.address : "איסוף עצמי",
+                  shipping_address: needsAddress ? form.address : pickupLabel,
                   shipping_city: needsAddress ? form.city : undefined,
                   shipping_zip: needsAddress ? form.zip : undefined,
                 }
@@ -198,10 +209,15 @@ export default function Checkout() {
               <CardHeader><CardTitle className="font-heading text-lg">פרטי הלקוח</CardTitle></CardHeader>
               <CardContent className="grid gap-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div><Label>שם מלא *</Label><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>
-                  <div><Label>טלפון *</Label><Input required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} type="tel" dir="ltr" /></div>
+                  <div><Label>שם פרטי *</Label><Input required value={form.firstName} onChange={(e) => setForm({ ...form, firstName: e.target.value })} /></div>
+                  <div><Label>שם משפחה *</Label><Input required value={form.lastName} onChange={(e) => setForm({ ...form, lastName: e.target.value })} /></div>
                 </div>
-                <div><Label>אימייל *</Label><Input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} dir="ltr" /></div>
+                <div><Label>טלפון *</Label><Input required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} type="tel" dir="ltr" /></div>
+                <div>
+                  <Label>אימייל *</Label>
+                  <Input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} dir="ltr" />
+                  <p className="text-xs text-muted-foreground mt-1">לקבלה, לעדכוני משלוח ולקבצים דיגיטליים</p>
+                </div>
               </CardContent>
             </Card>
 
@@ -249,6 +265,43 @@ export default function Checkout() {
                         <div><Label>מיקוד</Label><Input value={form.zip} onChange={(e) => setForm({ ...form, zip: e.target.value })} dir="ltr" /></div>
                       </div>
                     </div>
+                  )}
+
+                  {/* רמה 18 (יואב 14.7): בחירת נקודת-איסוף — זהה לקנייה-המהירה */}
+                  {shippingMethod === "pickup" && (
+                    salePoints.length > 0 ? (
+                      <div className="space-y-2 pt-2 border-t">
+                        <p className="text-xs text-muted-foreground">בחרו נקודת איסוף:</p>
+                        {salePoints.map((p) => (
+                          <label
+                            key={p.id}
+                            className={`flex items-start gap-2 p-2.5 rounded-lg border cursor-pointer transition-colors ${
+                              pickupPointId === p.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name="pickup-point"
+                              value={p.id}
+                              checked={pickupPointId === p.id}
+                              onChange={() => setPickupPointId(p.id)}
+                              className="accent-primary mt-1"
+                            />
+                            <div>
+                              <p className="text-sm font-display">{p.name}</p>
+                              {(p.address || p.city) && (
+                                <p className="text-xs text-muted-foreground">{[p.address, p.city].filter(Boolean).join(", ")}</p>
+                              )}
+                              {p.notes && <p className="text-xs text-muted-foreground">{p.notes}</p>}
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-xs text-muted-foreground bg-muted/40 rounded-lg px-3 py-2">
+                        נציגנו ייצרו איתך קשר לתיאום מועד האיסוף.
+                      </p>
+                    )
                   )}
                 </CardContent>
               </Card>

@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { deliverOrder } from "../lib/digital-delivery.js";
+import { deliverOrder, sendDonationThankYouEmail } from "../lib/digital-delivery.js";
 // subscribeToSmoove is defined locally below — it handles the 409 "already
 // exists" case by looking up the contact and adding to the list via PUT.
 // splitFullName is imported for any future use but not currently needed here.
@@ -294,6 +294,38 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // רמה 18 (אודיט הקדשות): הקדשה עולה לאתר אוטומטית עם אישור החיוב, בלי
+    // שום עין אנושית על השם. לא חוסמים (החלטת-מוצר קיימת: "אישור מיידי"),
+    // אבל המשרד מקבל התראה כדי שיוכל לבדוק את הנוסח ולהוריד במקרה הצורך.
+    if (targetTable === "lesson_dedications" && statusCode === "2") {
+      try {
+        const { data: ded } = await supabase
+          .from("lesson_dedications")
+          .select("dedicated_name, dedicator_name, dedication_type, scope, amount")
+          .eq("id", orderId)
+          .maybeSingle();
+        if (ded) {
+          const { sendSingleEmail } = await import("../lib/digital-delivery.js");
+          const d: any = ded;
+          await sendSingleEmail(
+            "office@bneyzion.co.il",
+            "משרד בני ציון",
+            `הקדשה חדשה עלתה לאתר — ${d.dedicated_name || ""}`,
+            `<div dir="rtl" style="font-family:Arial;font-size:15px;line-height:1.7">
+              <p><b>הקדשה חדשה שולמה ועלתה לאתר.</b></p>
+              <p>מוקדש: <b>${d.dedicated_name || "—"}</b><br/>
+                 מקדיש: ${d.dedicator_name || "—"}<br/>
+                 סוג: ${d.dedication_type || "—"} · היקף: ${d.scope === "series" ? "סדרה" : "שיעור"} · סכום: ₪${Number(d.amount || 0).toLocaleString()}</p>
+              <p>ההקדשה מוצגת עכשיו בעמוד השיעור/הסדרה. אם הנוסח לא מתאים —
+                 אפשר להעביר לארכיון מ<a href="https://bneyzion.vercel.app/admin/dedications">עמוד ההקדשות באדמין</a>.</p>
+            </div>`,
+          );
+        }
+      } catch (e) {
+        console.error("Webhook: dedication office notification failed (non-fatal):", e);
+      }
+    }
+
     // Donations: subscribe the donor to the Smoove marketing list. Skips
     // silently if SMOOVE_API_KEY is unset, the email is empty, or the call
     // fails — donation completion is never blocked on this.
@@ -307,6 +339,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         company: "תרומה",
         listId: parseInt(process.env.SMOOVE_DEFAULT_LIST_ID || "1118798", 10),
       });
+
+      // רמה 18 (אודיט תרומות): מייל תודה חם מהעמותה — עד עכשיו תורם קיבל רק
+      // קבלה יבשה מ-Grow. נשלח פעם אחת (ה-webhook של האתר רץ פעם אחת לעסקה;
+      // חיובי-המשך של הו"ק מגיעים ל-grow-webhook-sync ולא לכאן).
+      try {
+        const { data: donationRow } = await supabase
+          .from("donations")
+          .select("amount, donor_name, donor_email, is_monthly")
+          .eq("id", orderId)
+          .maybeSingle();
+        const donorEmail = (donationRow as any)?.donor_email || txData.payerEmail;
+        if (donorEmail) {
+          await sendDonationThankYouEmail({
+            email: donorEmail,
+            name: (donationRow as any)?.donor_name || txData.fullName || "",
+            amount: Number((donationRow as any)?.amount || 0),
+            isMonthly: !!(donationRow as any)?.is_monthly,
+          });
+        }
+      } catch (e) {
+        console.error("Webhook: donation thank-you email failed (non-fatal):", e);
+      }
     }
 
     return res.status(200).json({ received: true, processed: true });

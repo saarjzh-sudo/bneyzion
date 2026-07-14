@@ -1,7 +1,7 @@
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag, Zap } from "lucide-react";
+import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag, Zap, PenLine } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { useProduct, useProducts } from "@/hooks/useProducts";
 import { useCart } from "@/contexts/CartContext";
@@ -152,6 +152,13 @@ const ProductPage = () => {
                 {product.category && (
                   <Badge variant="secondary" className="text-xs">
                     {product.category.name}
+                  </Badge>
+                )}
+                {/* רמה 18 (יואב 14.7): בידול חזותי לספר שעוד לא יצא לאור */}
+                {product.category?.slug === "upcoming" && (
+                  <Badge className="text-xs gap-1 bg-amber-500 text-white border-0">
+                    <PenLine className="h-3 w-3" />
+                    בתהליך כתיבה — קובץ להורדה
                   </Badge>
                 )}
                 {product.is_digital && (

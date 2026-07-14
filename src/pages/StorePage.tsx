@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, Monitor, FileText, Flame, Sparkles } from "lucide-react";
+import { ShoppingBag, BookOpen, Disc, GraduationCap, Gift, Star, ShoppingCart, Monitor, FileText, Flame, Sparkles, PenLine } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import heroWatercolorStore from "@/assets/hero-watercolor-store.webp";
 import { useProducts, useProductCategories, type Product } from "@/hooks/useProducts";
@@ -33,14 +33,21 @@ const fadeUp = {
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const { addItem } = useCart();
   const hasDiscount = product.original_price && product.original_price > product.price;
+  // רמה 18 (יואב 14.7): "הספרים שעוד לא יצאו" צריכים להיראות אחרת — שיהיה
+  // ברור חזותית שזה קובץ בתהליך כתיבה ולא ספר מודפס.
+  const isUpcoming = product.category?.slug === "upcoming";
 
   return (
     <motion.div variants={fadeUp} custom={index}>
       <Link
         to={`/store/${product.slug}`}
-        className="glass-card-light rounded-2xl overflow-hidden block group hover:shadow-lg hover:border-primary/20 transition-all"
+        className={`rounded-2xl overflow-hidden block group hover:shadow-lg transition-all ${
+          isUpcoming
+            ? "bg-amber-50/70 border-2 border-dashed border-amber-300/80 hover:border-amber-400"
+            : "glass-card-light hover:border-primary/20"
+        }`}
       >
-        <div className="aspect-square bg-secondary/30 relative overflow-hidden">
+        <div className={`aspect-square relative overflow-hidden ${isUpcoming ? "bg-amber-100/40" : "bg-secondary/30"}`}>
           {product.image_url ? (
             <img
               src={product.image_url}
@@ -50,7 +57,11 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center">
-              <BookOpen className="h-12 w-12 text-muted-foreground/30" />
+              {isUpcoming ? (
+                <PenLine className="h-12 w-12 text-amber-400/60" />
+              ) : (
+                <BookOpen className="h-12 w-12 text-muted-foreground/30" />
+              )}
             </div>
           )}
           {hasDiscount && (
@@ -58,16 +69,25 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               מבצע!
             </Badge>
           )}
-          {product.is_digital && (
+          {isUpcoming ? (
+            <Badge className="absolute top-3 left-3 text-xs bg-amber-500 text-white border-0 gap-1">
+              <PenLine className="h-3 w-3" />
+              בתהליך כתיבה
+            </Badge>
+          ) : product.is_digital ? (
             <Badge variant="secondary" className="absolute top-3 left-3 text-xs">
               דיגיטלי
             </Badge>
-          )}
+          ) : null}
         </div>
         <div className="p-4">
           {/* יואב 13.7: שם הקטגוריה על כל מוצר — כדי שברור אם זה ספר / ספר שטרם יצא / קורס */}
           {product.category?.name && (
-            <span className="inline-block text-[11px] font-display text-primary/90 bg-primary/10 rounded-full px-2 py-0.5 mb-1.5">
+            <span
+              className={`inline-block text-[11px] font-display rounded-full px-2 py-0.5 mb-1.5 ${
+                isUpcoming ? "text-amber-900 bg-amber-200/70" : "text-primary/90 bg-primary/10"
+              }`}
+            >
               {product.category.name}
             </span>
           )}
@@ -220,6 +240,7 @@ const StorePage = () => {
                 <button
                   key={cat.id}
                   onClick={() => setActiveCategory(cat.slug)}
+                  title={cat.description || undefined}
                   className={`shrink-0 px-4 py-2 rounded-full text-sm font-display transition-all flex items-center gap-1.5 ${
                     activeCategory === cat.slug
                       ? "bg-primary text-primary-foreground"
@@ -260,7 +281,13 @@ const StorePage = () => {
                       <Icon className="h-6 w-6" />
                     </span>
                     <span className="block font-display text-sm text-foreground">{cat.name}</span>
-                    <span className="block text-xs text-muted-foreground mt-1">
+                    {/* רמה 18 (יואב 14.7): התיאור שיואב כתב לקטגוריה גלוי לגולשים כבר בקטלוג */}
+                    {cat.description && (
+                      <span className="block text-xs text-muted-foreground mt-1.5 leading-relaxed line-clamp-2">
+                        {cat.description}
+                      </span>
+                    )}
+                    <span className="block text-xs text-primary/70 mt-1">
                       {categoryCounts.get(cat.id)} מוצרים
                     </span>
                   </motion.button>
@@ -289,6 +316,19 @@ const StorePage = () => {
           {isCatalog && !isLoading && (
             <h2 className="font-display text-xl text-foreground mb-6">כל המוצרים</h2>
           )}
+          {/* רמה 18 (יואב 14.7): כותרת + תיאור הקטגוריה כשנכנסים אליה */}
+          {!isCatalog && !catLoading && (() => {
+            const activeCat = (categories || []).find((c) => c.slug === activeCategory);
+            if (!activeCat) return null;
+            return (
+              <div className="mb-8 max-w-3xl">
+                <h2 className="font-heading text-2xl text-foreground mb-2">{activeCat.name}</h2>
+                {activeCat.description && (
+                  <p className="text-muted-foreground leading-relaxed">{activeCat.description}</p>
+                )}
+              </div>
+            );
+          })()}
           {isLoading || catLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {Array.from({ length: 8 }).map((_, i) => (

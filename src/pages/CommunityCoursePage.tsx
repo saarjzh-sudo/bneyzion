@@ -13,6 +13,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useSEO } from "@/hooks/useSEO";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+// רמה 18 (יואב 14.7): מעקב התקדמות — סימון "נלמד" אישי לכל שיעור
+import { useCourseProgress, useToggleLessonComplete } from "@/hooks/useCourseProgress";
+import { Circle } from "lucide-react";
 
 const CommunityCoursePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -45,6 +48,9 @@ const CommunityCoursePage = () => {
   });
   const { data: lessons, isLoading: lessonsLoading } = useCourseLessons(id);
   const [selectedLesson, setSelectedLesson] = useState<any | null>(null);
+  // רמה 18: מעקב התקדמות אישי — הסימונים נשמרים לכל לומד בנפרד
+  const { completedIds, canTrack } = useCourseProgress(id);
+  const toggleComplete = useToggleLessonComplete(id);
 
   useSEO({
     title: course?.title,
@@ -119,6 +125,20 @@ const CommunityCoursePage = () => {
             <p className="text-primary-foreground/80 mt-2">{course.description}</p>
           )}
           <Badge className="mt-3 bg-accent/20 text-primary-foreground">{course?.total_lessons} שיעורים</Badge>
+          {/* רמה 18: התקדמות אישית */}
+          {canTrack && (lessons?.length ?? 0) > 0 && (
+            <div className="mt-3 flex items-center gap-3">
+              <div className="h-1.5 w-40 rounded-full bg-primary-foreground/20 overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-accent transition-all"
+                  style={{ width: `${Math.min(100, Math.round((completedIds.size / (lessons?.length || 1)) * 100))}%` }}
+                />
+              </div>
+              <span className="text-xs text-primary-foreground/80">
+                סימנת {completedIds.size} מתוך {lessons?.length} שיעורים כנלמדו
+              </span>
+            </div>
+          )}
         </div>
       </div>
 
@@ -131,32 +151,49 @@ const CommunityCoursePage = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.03 }}
           >
-            <Card
-              className="hover:shadow-md transition-all cursor-pointer border hover:border-gold/40 group"
-              onClick={() => setSelectedLesson(lesson)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedLesson(lesson); } }}
-              aria-label={`פתיחת שיעור: ${lesson.title}`}
-            >
-              <CardContent className="p-4 flex items-center gap-4">
-                <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-primary font-bold text-sm group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                  {lesson.lesson_number || i + 1}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">{lesson.title}</h3>
-                  {lesson.description && (
-                    <p className="text-xs text-muted-foreground mt-0.5 truncate">{lesson.description}</p>
-                  )}
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  {lesson.video_url && <Play className="h-4 w-4 text-primary/60" />}
-                  {lesson.audio_url && <Headphones className="h-4 w-4 text-accent/60" />}
-                  {lesson.attachment_url && <Paperclip className="h-4 w-4 text-muted-foreground/60" />}
-                  <ChevronLeft className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary transition-colors" />
-                </div>
-              </CardContent>
-            </Card>
+            <div className="flex items-center gap-2">
+              <Card
+                className="flex-1 hover:shadow-md transition-all cursor-pointer border hover:border-gold/40 group"
+                onClick={() => setSelectedLesson(lesson)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedLesson(lesson); } }}
+                aria-label={`פתיחת שיעור: ${lesson.title}`}
+              >
+                <CardContent className="p-4 flex items-center gap-4">
+                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-primary font-bold text-sm group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                    {lesson.lesson_number || i + 1}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors truncate">{lesson.title}</h3>
+                    {lesson.description && (
+                      <p className="text-xs text-muted-foreground mt-0.5 truncate">{lesson.description}</p>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {lesson.video_url && <Play className="h-4 w-4 text-primary/60" />}
+                    {lesson.audio_url && <Headphones className="h-4 w-4 text-accent/60" />}
+                    {lesson.attachment_url && <Paperclip className="h-4 w-4 text-muted-foreground/60" />}
+                    <ChevronLeft className="h-4 w-4 text-muted-foreground/40 group-hover:text-primary transition-colors" />
+                  </div>
+                </CardContent>
+              </Card>
+              {/* רמה 18: סימון "נלמד" — אח של הכרטיס (לא פקד בתוך פקד) */}
+              {canTrack && (
+                <button
+                  type="button"
+                  title={completedIds.has(lesson.id) ? "סומן כנלמד — לחיצה מבטלת" : "סמן שלמדתי את השיעור"}
+                  aria-label={completedIds.has(lesson.id) ? `בטל סימון נלמד — ${lesson.title}` : `סמן כנלמד — ${lesson.title}`}
+                  aria-pressed={completedIds.has(lesson.id)}
+                  onClick={() =>
+                    toggleComplete.mutate({ lessonId: lesson.id, completed: !completedIds.has(lesson.id) })
+                  }
+                  className={`shrink-0 p-1.5 transition-colors ${completedIds.has(lesson.id) ? "text-green-700" : "text-muted-foreground/40 hover:text-muted-foreground"}`}
+                >
+                  {completedIds.has(lesson.id) ? <CheckCircle2 className="h-6 w-6" /> : <Circle className="h-6 w-6" />}
+                </button>
+              )}
+            </div>
           </motion.div>
         ))}
       </div>

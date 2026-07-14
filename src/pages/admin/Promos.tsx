@@ -379,8 +379,9 @@ export default function Promos() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await promosTable().delete().eq("id", id);
+      const { data: delRows, error } = await promosTable().delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!delRows?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS).");
     },
     onSuccess: () => {
       invalidate();

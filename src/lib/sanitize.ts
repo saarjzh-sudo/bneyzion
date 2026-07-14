@@ -45,6 +45,9 @@ export function sanitizeHtml(dirty: string): string {
   const clean = DOMPurify.sanitize(dirty, {
     ADD_TAGS: ["iframe"],
     ADD_ATTR: ["allow", "allowfullscreen", "frameborder", "scrolling", "target"],
+    // svg מהאתר הישן (אייקוני תפריט/סגירה) מתרנדר כ-X ענק בעמוד מוצר —
+    // אין לנו שום תוכן לגיטימי ב-svg inline, אז חוסמים גלובלית (יואב 14.7).
+    FORBID_TAGS: ["svg", "use", "path", "style", "math"],
   });
   return stripCantillation(clean);
 }

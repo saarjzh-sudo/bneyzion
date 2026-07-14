@@ -69,8 +69,9 @@ export function useDeleteTopic() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("topics").delete().eq("id", id);
+      const { data: delRows, error } = await supabase.from("topics").delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!delRows?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS).");
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["topics"] }),
   });

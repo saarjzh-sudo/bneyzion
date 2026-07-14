@@ -15,6 +15,8 @@ import { BookOpen, ChevronLeft } from "lucide-react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { useSEO } from "@/hooks/useSEO";
 import { colors, fonts, radii, shadows } from "@/lib/designTokens";
+// רמה 18 (יואב 14.7): "נהר התנ״ך" — הניווט המעוצב חטיבה←ספר←פרק, מהאב-טיפוס של הרב יואב
+import { BibleRiver } from "@/components/bible/BibleRiver";
 
 // Canonical 24 books in biblical order
 const TANAKH: { section: string; books: string[] }[] = [
@@ -123,8 +125,24 @@ export default function BibleIndexPage() {
         </div>
       </div>
 
-      {/* ── Content ── */}
+      {/* ── נהר התנ״ך — הניווט הראשי (רמה 18) ── */}
+      <div dir="rtl" style={{ padding: "2rem 1.5rem 0.5rem", maxWidth: 1000, margin: "0 auto" }}>
+        <BibleRiver />
+      </div>
+
+      {/* ── Content — רשימת הספרים המלאה (קישורים סטטיים, נגישות + SEO) ── */}
       <div dir="rtl" style={{ padding: "2rem 1.5rem", maxWidth: 900, margin: "0 auto" }}>
+        <h2
+          style={{
+            fontFamily: fonts.display,
+            fontSize: "1.1rem",
+            fontWeight: 700,
+            color: colors.textMid,
+            margin: "0 0 1.5rem",
+          }}
+        >
+          כל הספרים — רשימה מלאה
+        </h2>
         {TANAKH.map(({ section, books }) => (
           <section key={section} style={{ marginBottom: "2.5rem" }}>
             {/* Section header */}

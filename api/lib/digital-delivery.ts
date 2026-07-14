@@ -81,7 +81,7 @@ export async function signItems(
 }
 
 /** שליחת מייל טרנזקציוני לנמען יחיד דרך Smoove (הדפוס המאומת). */
-async function sendSingleEmail(
+export async function sendSingleEmail(
   toEmail: string,
   toName: string,
   subject: string,
@@ -154,9 +154,38 @@ export async function sendBuyerDeliveryEmail(params: {
     <p>תודה על הרכישה! ${items.length > 1 ? "הספרים הדיגיטליים שרכשת מחכים לך כאן:" : "הספר הדיגיטלי שרכשת מחכה לך כאן:"}</p>
     ${links}
     <p style="font-size:13px;color:#6B5C4A">הקישורים תקפים לחודש. אפשר להוריד את הקובץ ולשמור אותו אצלך לתמיד.</p>
+    <p style="font-size:13px;color:#6B5C4A">הקובץ אישי, לשימושך בלבד — נשמח שלא יועבר הלאה. כך אנחנו יכולים להמשיך להוציא ספרים חדשים 🙏</p>
     ${orderNumber ? `<p style="font-size:12px;color:#A69882">אסמכתת הזמנה: ${orderNumber}</p>` : ""}`;
   const subject = items.length > 1 ? "הספרים הדיגיטליים שרכשת — בני ציון" : `${items[0].title} — הספר הדיגיטלי שרכשת`;
   return sendSingleEmail(email, name, subject, emailShell(inner));
+}
+
+/**
+ * מייל תודה לתורם (רמה 18, אודיט תרומות): עד עכשיו תורם קיבל רק קבלה מ-Grow —
+ * בלי שום מילה חמה מהעמותה. נשלח פעם אחת, מיד אחרי אישור התשלום.
+ */
+export async function sendDonationThankYouEmail(params: {
+  email: string;
+  name: string;
+  amount: number;
+  isMonthly: boolean;
+}): Promise<boolean> {
+  const { email, name, amount, isMonthly } = params;
+  if (!email) return false;
+  const firstName = (name || "").trim().split(/\s+/)[0] || "";
+  const inner = `
+    <p>שלום ${firstName || "וברכה"},</p>
+    <p>תודה מכל הלב על ${isMonthly ? "ההצטרפות למעגל השותפים הקבועים" : "התרומה"} לבני ציון${amount ? ` — ₪${Number(amount).toLocaleString()}` : ""}.</p>
+    <p>בזכות שותפים כמוך התנ"ך פתוח לכולם: שיעורים, סדרות וספרים שמגיעים לאלפי לומדים בכל שבוע.</p>
+    ${isMonthly ? `<p style="font-size:13px;color:#6B5C4A">התרומה תתחדש מדי חודש. לכל שינוי או ביטול אפשר פשוט להשיב למייל הזה.</p>` : ""}
+    <p style="font-size:13px;color:#6B5C4A">קבלה רשמית (מוכרת לזיכוי מס לפי סעיף 46) נשלחת אליך במייל נפרד ממערכת הסליקה.</p>
+    <p>בברכת התורה,<br/>צוות בני ציון</p>`;
+  return sendSingleEmail(
+    email,
+    name,
+    "תודה על תרומתך לבני ציון",
+    emailShell(inner),
+  );
 }
 
 /** התראת רכישה למייל המשרדי — כל הזמנת-חנות שאושרה (פיזי ודיגיטלי). */

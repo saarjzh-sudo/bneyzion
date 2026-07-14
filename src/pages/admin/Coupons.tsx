@@ -57,15 +57,18 @@ export default function Coupons() {
     onError: (e: any) => toast.error(e.message),
   });
 
+  // רמה 18: .select() נגד כשל-RLS שקט + onError — קודם מחיקה כושלת הציגה "נמחק"
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("coupons").delete().eq("id", id);
+      const { data, error } = await supabase.from("coupons").delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!data?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS). פנה לסער.");
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin-coupons"] });
       toast.success("קופון נמחק");
     },
+    onError: (e: any) => toast.error(`מחיקת הקופון נכשלה: ${e.message}`),
   });
 
   return (

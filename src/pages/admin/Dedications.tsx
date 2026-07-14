@@ -26,7 +26,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Heart, Plus, Trash2, CheckCircle2, Clock, Archive, Settings2 } from "lucide-react";
+import { Heart, Plus, Trash2, CheckCircle2, Clock, Archive, Settings2, Download } from "lucide-react";
 import {
   useAllDedications,
   useCreateDedication,
@@ -88,6 +88,13 @@ export default function Dedications() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [lessonPrice, setLessonPrice] = useState(settings?.lesson_price ?? 600);
   const [seriesPrice, setSeriesPrice] = useState(settings?.series_price ?? 1800);
+  // רמה 18 (אודיט הקדשות): התמחור הדיפרנציאלי שהשרת אוכף — עכשיו גם עריך מהאדמין
+  const [lessonPricePopular, setLessonPricePopular] = useState(settings?.lesson_price_popular ?? 900);
+  const [popularMinLessons, setPopularMinLessons] = useState(settings?.popular_rabbi_min_lessons ?? 100);
+  const [seriesPriceMid, setSeriesPriceMid] = useState(settings?.series_price_mid ?? 2400);
+  const [seriesPriceLarge, setSeriesPriceLarge] = useState(settings?.series_price_large ?? 3200);
+  const [seriesMidThreshold, setSeriesMidThreshold] = useState(settings?.series_mid_threshold ?? 21);
+  const [seriesLargeThreshold, setSeriesLargeThreshold] = useState(settings?.series_large_threshold ?? 61);
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
   const rows = dedications ?? [];
@@ -105,17 +112,60 @@ export default function Dedications() {
   const openSettings = () => {
     setLessonPrice(settings?.lesson_price ?? 600);
     setSeriesPrice(settings?.series_price ?? 1800);
+    setLessonPricePopular(settings?.lesson_price_popular ?? 900);
+    setPopularMinLessons(settings?.popular_rabbi_min_lessons ?? 100);
+    setSeriesPriceMid(settings?.series_price_mid ?? 2400);
+    setSeriesPriceLarge(settings?.series_price_large ?? 3200);
+    setSeriesMidThreshold(settings?.series_mid_threshold ?? 21);
+    setSeriesLargeThreshold(settings?.series_large_threshold ?? 61);
     setSettingsOpen(true);
   };
 
   const saveSettings = async () => {
     try {
-      await updateSettings.mutateAsync({ lesson_price: lessonPrice, series_price: seriesPrice });
+      await updateSettings.mutateAsync({
+        lesson_price: lessonPrice,
+        series_price: seriesPrice,
+        lesson_price_popular: lessonPricePopular,
+        popular_rabbi_min_lessons: popularMinLessons,
+        series_price_mid: seriesPriceMid,
+        series_price_large: seriesPriceLarge,
+        series_mid_threshold: seriesMidThreshold,
+        series_large_threshold: seriesLargeThreshold,
+      });
       toast({ title: "המחירים עודכנו" });
       setSettingsOpen(false);
     } catch (e: any) {
       toast({ title: "שגיאה בשמירת מחירים", description: e.message, variant: "destructive" });
     }
+  };
+
+  // רמה 18: ייצוא CSV — היה חסר רק בעמוד הזה (יש בהזמנות ובתרומות)
+  const exportCsv = () => {
+    const headers = ["תאריך", "סוג", "שם מוקדש", "שם מקדיש", "טלפון", "אימייל", "היקף", "סכום", "סטטוס"];
+    const typeLabel: Record<string, string> = {
+      iluy_neshama: "לעילוי נשמת", refua: "לרפואה", hatzlacha: "להצלחה", memory: "לזכר",
+    };
+    const csvRows = filtered.map((d) => [
+      d.created_at ? new Date(d.created_at).toLocaleDateString("he-IL") : "",
+      typeLabel[d.dedication_type] || d.dedication_type,
+      d.dedicated_name || "",
+      d.dedicator_name || "",
+      (d as any).dedicator_phone || "",
+      (d as any).dedicator_email || "",
+      d.scope === "series" ? "סדרה" : "שיעור",
+      (d as any).amount ?? "",
+      d.status,
+    ]);
+    const csv = [headers, ...csvRows]
+      .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
+      .join("\n");
+    const blob = new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" });
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `dedications-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(a.href);
   };
 
   const saveSeed = async () => {
@@ -183,6 +233,14 @@ export default function Dedications() {
             </p>
           </div>
           <div className="flex gap-2">
+            <Button
+              variant="outline"
+              onClick={exportCsv}
+              className="font-ploni gap-1.5"
+              style={{ borderColor: C.goldShimmer, color: C.navy }}
+            >
+              <Download className="h-4 w-4" /> ייצוא CSV ({filtered.length})
+            </Button>
             <Button
               variant="outline"
               onClick={openSettings}
@@ -457,38 +515,109 @@ export default function Dedications() {
         </DialogContent>
       </Dialog>
 
-      {/* Price settings dialog */}
+      {/* Price settings dialog — רמה 18: כולל התמחור הדיפרנציאלי שהשרת אוכף */}
       <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
-        <DialogContent className="max-w-sm" dir="rtl">
+        <DialogContent className="max-w-md" dir="rtl">
           <DialogHeader>
             <DialogTitle className="font-kedem">מחירי הקדשה</DialogTitle>
           </DialogHeader>
           <div className="grid gap-3 py-2">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>שיעור בודד (₪)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={lessonPrice}
+                  onChange={(e) => setLessonPrice(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label>שיעור של רב מבוקש (₪)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={lessonPricePopular}
+                  onChange={(e) => setLessonPricePopular(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
+            </div>
             <div>
-              <Label>מחיר הקדשת שיעור בודד (₪)</Label>
+              <Label>רב נחשב "מבוקש" החל מ- (מספר שיעורים)</Label>
               <Input
                 type="number"
                 min={0}
-                value={lessonPrice}
-                onChange={(e) => setLessonPrice(Number(e.target.value))}
+                value={popularMinLessons}
+                onChange={(e) => setPopularMinLessons(Number(e.target.value))}
                 dir="ltr"
                 className="mt-1"
               />
             </div>
-            <div>
-              <Label>מחיר הקדשת סדרה שלמה (₪)</Label>
-              <Input
-                type="number"
-                min={0}
-                value={seriesPrice}
-                onChange={(e) => setSeriesPrice(Number(e.target.value))}
-                dir="ltr"
-                className="mt-1"
-              />
+            <div className="grid grid-cols-3 gap-3">
+              <div>
+                <Label>סדרה רגילה (₪)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={seriesPrice}
+                  onChange={(e) => setSeriesPrice(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label>סדרה בינונית (₪)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={seriesPriceMid}
+                  onChange={(e) => setSeriesPriceMid(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label>סדרה גדולה (₪)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={seriesPriceLarge}
+                  onChange={(e) => setSeriesPriceLarge(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label>סדרה "בינונית" החל מ- (שיעורים)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={seriesMidThreshold}
+                  onChange={(e) => setSeriesMidThreshold(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
+              <div>
+                <Label>סדרה "גדולה" החל מ- (שיעורים)</Label>
+                <Input
+                  type="number"
+                  min={0}
+                  value={seriesLargeThreshold}
+                  onChange={(e) => setSeriesLargeThreshold(Number(e.target.value))}
+                  dir="ltr"
+                  className="mt-1"
+                />
+              </div>
             </div>
             <p className="text-xs font-ploni" style={{ color: C.textMuted }}>
-              אם טבלת ההגדרות (dedication_settings) עדיין לא קיימת ב-DB, השמירה תיכשל בעדינות — יש
-              להמתין למיגרציה המקבילה של סוכן ה-DB.
+              המחירים נאכפים בשרת בזמן התשלום — מה שמוגדר כאן הוא מה שנגבה בפועל.
             </p>
           </div>
           <DialogFooter>

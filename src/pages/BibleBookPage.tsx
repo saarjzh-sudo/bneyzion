@@ -82,7 +82,9 @@ const BibleBookPage = () => {
   const category = getBookCategory(decodedBook);
   const isTorahBook = TORAH_BOOKS.includes(decodedBook);
 
-  const [selectedChapter, setSelectedChapter] = useState<number | null>(null);
+  // רמה 18 (נהר התנ"ך): ?chapter=N מ"נהר" הניווט פותח ישר את הפרק שנבחר
+  const initialChapter = Number(new URLSearchParams(window.location.search).get("chapter")) || null;
+  const [selectedChapter, setSelectedChapter] = useState<number | null>(initialChapter);
 
   const { data: bookCategoryId, isLoading: idLoading } = useBookCategoryId(decodedBook);
   const { data: seriesList = [], isLoading: seriesLoading } = useBibleBookSeries(bookCategoryId ?? undefined);

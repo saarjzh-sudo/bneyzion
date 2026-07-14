@@ -1116,6 +1116,66 @@ function OrdersTab({ orders, loading, error }: { orders: Order[]; loading: boole
 }
 
 /* ─── DONATIONS TAB ─────────────────────────────────────────── */
+/**
+ * רמה 18 (אודיט תרומות): חיובי הו"ק שנכשלו — עד עכשיו נרשמו רק ללוג
+ * (grow_webhook_log, action=recurring-charge-failed) ואף מסך לא הציג אותם.
+ * תורם-קבע שהחיוב שלו נפל היה בלתי-נראה. RLS: admin-read בלבד.
+ */
+function useFailedRecurringCharges() {
+  return useQuery({
+    queryKey: ["failed-recurring-charges"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("grow_webhook_log")
+        .select("id, received_at, action, parsed, raw")
+        .like("action", "recurring-charge-failed%")
+        .order("received_at", { ascending: false })
+        .limit(50);
+      if (error) throw error;
+      return data ?? [];
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+}
+
+function FailedRecurringCard() {
+  const { data: failures = [], isLoading } = useFailedRecurringCharges();
+  if (isLoading || failures.length === 0) return null;
+  return (
+    <Card style={{ border: "1.5px solid #E1A03C55", background: "#FDF6E9", borderRadius: 14 }}>
+      <CardContent style={{ padding: "14px 18px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+          <AlertTriangle size={16} style={{ color: "#B4762A" }} />
+          <span style={{ fontWeight: 800, fontSize: 14, color: "#8A5A18" }}>
+            חיובים חודשיים שנכשלו ({failures.length})
+          </span>
+          <span style={{ fontSize: 12, color: C.textMuted }}>
+            הוראות קבע שהחיוב שלהן נדחה — כדאי ליצור קשר עם התורם או לעדכן אמצעי תשלום
+          </span>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+          {failures.map((f: any) => {
+            const p = f.parsed || {};
+            const raw = f.raw || {};
+            return (
+              <div key={f.id} style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "baseline", fontSize: 13, background: "#fff", borderRadius: 8, padding: "8px 12px", border: "1px solid #E1A03C33" }}>
+                <span style={{ fontWeight: 700 }}>{p.name || raw.full_name || "ללא שם"}</span>
+                {p.sum ? <span>{fmtILS(Number(p.sum))}</span> : null}
+                {p.phone ? <span dir="ltr" style={{ color: C.textMuted }}>{String(p.phone)}</span> : null}
+                <span style={{ color: C.textMuted }}>{fmtDate(f.received_at)}</span>
+                {raw.error_message ? <span style={{ color: "#A33" }}>{String(raw.error_message)}</span> : null}
+                {f.action?.includes("attempt") ? (
+                  <span style={{ color: C.textMuted, fontSize: 12 }}>ניסיון {String(f.action).split("attempt-")[1]}</span>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 function DonationsTab({ donations, loading, error }: { donations: Donation[]; loading: boolean; error: Error | null }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -1144,6 +1204,9 @@ function DonationsTab({ donations, loading, error }: { donations: Donation[]; lo
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      {/* רמה 18: כשלי חיוב הו"ק — גלויים לאדמין (מוצג רק כשיש) */}
+      <FailedRecurringCard />
+
       {/* Toolbar */}
       <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ position: "relative", flex: "1 1 220px", maxWidth: 340 }}>

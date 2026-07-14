@@ -14,6 +14,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, Search, Pencil, Trash2, FolderOpen, Sparkles, Loader2, MapPin } from "lucide-react";
 import { toast as sonnerToast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+// רמה 18 (יואב 14.7): עריכת תוכן מוצר בעורך ויזואלי — לא HTML גולמי
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
+// רמה 18 (יואב 14.7): ניהול משלוחים אוחד לכאן — טאב "משלוח ואיסוף"
+import { ShippingOptionsEditor } from "@/components/admin/ShippingOptionsEditor";
 import { useProductCategories } from "@/hooks/useProducts";
 import { useSalePoints, useCreateSalePoint, useUpdateSalePoint, useDeleteSalePoint, type SalePoint } from "@/hooks/useSalePoints";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -369,15 +373,40 @@ export default function AdminProducts() {
     onError: (e: any) => toast({ title: "שגיאה", description: e.message, variant: "destructive" }),
   });
 
+  // רמה 18 (יואב 14.7): מוצר שכבר נרכש אי-פעם אי-אפשר למחוק (FK מ-order_items) —
+  // במקום שגיאת constraint באנגלית, הוא עובר לארכיון (יורד מהחנות, ההזמנות נשמרות).
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
+      const { count, error: countErr } = await supabase
+        .from("order_items")
+        .select("id", { count: "exact", head: true })
+        .eq("product_id", id);
+      if (countErr) throw countErr;
+      if ((count ?? 0) > 0) {
+        const { data, error } = await supabase
+          .from("products")
+          .update({ status: "archived" })
+          .eq("id", id)
+          .select("id");
+        if (error) throw error;
+        if (!data?.length) throw new Error("הארכוב לא בוצע — אין הרשאת עריכה (RLS). פנה לסער.");
+        return "archived" as const;
+      }
+      // .select() so RLS silent-failure (0 rows) is caught instead of a false success toast
       const { data, error } = await supabase.from("products").delete().eq("id", id).select("id");
       if (error) throw error;
       if (!data?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS). פנה לסער.");
+      return "deleted" as const;
     },
-    onSuccess: () => {
+    onSuccess: (result) => {
       queryClient.invalidateQueries({ queryKey: ["admin-products"] });
-      toast({ title: "המוצר נמחק" });
+      toast({
+        title: result === "archived" ? "המוצר הועבר לארכיון" : "המוצר נמחק",
+        description:
+          result === "archived"
+            ? "יש רכישות קיימות על המוצר, לכן אי-אפשר למחוק אותו לגמרי — הוא הוסתר מהחנות וההזמנות נשמרו."
+            : undefined,
+      });
     },
     onError: (e: any) => toast({ title: "שגיאה", description: e.message, variant: "destructive" }),
   });
@@ -419,7 +448,7 @@ export default function AdminProducts() {
             </TabsTrigger>
             <TabsTrigger value="salepoints" className="font-display flex items-center gap-1.5">
               <MapPin className="h-4 w-4" />
-              נקודות מכירה
+              משלוח ואיסוף
             </TabsTrigger>
           </TabsList>
 
@@ -443,9 +472,14 @@ export default function AdminProducts() {
                       <p className="text-xs text-muted-foreground mt-1">תיאור קצר בטקסט רגיל — מופיע בכרטיס המוצר בחנות.</p>
                     </div>
                     <div>
-                      <Label>תוכן (HTML)</Label>
-                      <Textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={3} />
-                      <p className="text-xs text-muted-foreground mt-1">תיאור מורחב בעמוד המוצר. אם נגרר לכאן קוד מוזר מהאתר הישן (למשל &lt;svg&gt;) — אפשר לרוקן ולכתוב טקסט נקי.</p>
+                      <Label>תוכן מורחב</Label>
+                      <RichTextEditor
+                        value={form.content}
+                        onChange={(html) => setForm({ ...form, content: html })}
+                        placeholder="תיאור מורחב שמופיע בעמוד המוצר — כותרות, הדגשות ורשימות"
+                        minHeight={140}
+                      />
+                      <p className="text-xs text-muted-foreground mt-1">מופיע בעמוד המוצר מתחת לכפתורי הרכישה. עריכה רגילה — מודגש, כותרות ורשימות מסרגל הכלים.</p>
                     </div>
                     <div className="grid grid-cols-3 gap-4">
                       <div><Label>מחיר *</Label><Input type="number" value={form.price} onChange={e => setForm({ ...form, price: e.target.value })} /></div>
@@ -588,7 +622,8 @@ export default function AdminProducts() {
             <CategoriesManager />
           </TabsContent>
 
-          <TabsContent value="salepoints" className="mt-4">
+          <TabsContent value="salepoints" className="mt-4 space-y-6">
+            <ShippingOptionsEditor />
             <SalePointsManager />
           </TabsContent>
         </Tabs>

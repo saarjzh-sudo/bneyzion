@@ -222,7 +222,8 @@ export default function Dashboard() {
       to:     "/admin/payments",
       accent: C.gold,
       bg:     C.parchment,
-      source: "Grow",
+      // רמה 18: התגית אמרה "Grow" אבל המספר נשלף מטבלת orders — תגית מקור מדויקת
+      source: "הזמנות",
     },
   ];
 

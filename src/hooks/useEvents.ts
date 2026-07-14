@@ -59,8 +59,9 @@ export function useDeleteEvent() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("events" as never).delete().eq("id" as never, id);
+      const { data: delRows, error } = await (supabase.from("events" as never).delete().eq("id" as never, id) as any).select("id");
       if (error) throw error;
+      if (!delRows?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS).");
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["admin-events"] }),
   });

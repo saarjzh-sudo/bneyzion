@@ -89,7 +89,13 @@ function H2({ children, center = false, big = false }: { children: React.ReactNo
 // ───────────────────────────────────────────────────────────
 
 export default function DesignPreviewDonate() {
-  const [amount, setAmount] = useState<number>(180);
+  // רמה 18 (יואב 14.7): קמפיינים מפנים לכאן עם ?source=&tier=&amount= —
+  // בלי לקרוא אותם, תרומת-fallback מקמפיין נרשמה כ"donate-page" ואיבדה ייחוס.
+  const params = new URLSearchParams(window.location.search);
+  const sourceParam = params.get("source") || "donate-page";
+  const tierParam = params.get("tier");
+  const amountParam = Number(params.get("amount")) || 0;
+  const [amount, setAmount] = useState<number>(amountParam > 0 ? amountParam : 180);
   const [showBar, setShowBar] = useState(false);
   const stats = useDonationStats();
   const { data: recentDonations } = useRecentDonations();
@@ -118,7 +124,7 @@ export default function DesignPreviewDonate() {
         <div className="donate-grid" style={{ maxWidth: 1180, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr minmax(370px, 440px)", gap: "clamp(2.5rem, 5vw, 5rem)", alignItems: "start" }}>
           <Story />
           <div className="donate-form-col" style={{ position: "sticky", top: "5.5rem" }}>
-            <DonateForm amount={amount} onAmount={setAmount} source="donate-page" />
+            <DonateForm amount={amount} onAmount={setAmount} source={sourceParam} tier={tierParam} />
           </div>
         </div>
       </section>

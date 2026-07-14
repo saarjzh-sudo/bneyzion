@@ -37,6 +37,7 @@ import {
   BookOpen, Lock, Play, Headphones, FileText,
   ChevronDown, Heart, Clock, Loader2,
   AlertCircle, Film, Volume2, X, BookMarked, Layers,
+  CheckCircle2, Circle,
 } from "lucide-react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { Seo, courseJsonLd, breadcrumbJsonLd } from "@/components/seo/Seo";
@@ -53,6 +54,8 @@ import {
 } from "@/hooks/useCommunity";
 // יואב 14.7: רכישה חד-פעמית של קורס-ספר ישירות מדף הספר (payment_products book-*)
 import { QuickBuyDialog } from "@/components/payment/QuickBuyDialog";
+// רמה 18 (יואב 14.7): מעקב התקדמות אישי — "מה למדתי, מה השלמתי, מסמן כזה"
+import { useCourseProgress, useToggleLessonComplete } from "@/hooks/useCourseProgress";
 
 // ── Hebrew helpers ─────────────────────────────────────────────────────────
 const HEB_NUMS = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב","יג","יד","טו","טז","יז","יח","יט","כ","כא","כב","כג","כד"];
@@ -208,6 +211,22 @@ export default function WeeklyBookDetail() {
       : null;
   const { data: allBooks = [] } = useWeeklyBooks();
   const { data: courseData, isLoading: lessonsLoading } = useCourseDataWithResources(course?.id);
+
+  // רמה 18 (יואב 14.7): מעקב התקדמות — סימון "נלמד" לכל פריט, אישי לכל לומד
+  const { completedIds, canTrack } = useCourseProgress(course?.id);
+  const toggleComplete = useToggleLessonComplete(course?.id);
+  const showProgress = canTrack && hasAccess;
+  const progressProps = (item: CommunityLesson) =>
+    showProgress
+      ? {
+          completed: completedIds.has(item.id),
+          onToggleComplete: () =>
+            toggleComplete.mutate({ lessonId: item.id, completed: !completedIds.has(item.id) }),
+        }
+      : {};
+  const totalTrackable = courseData
+    ? courseData.intro.length + courseData.resources.length + courseData.rawLessons.length
+    : 0;
 
   const accent = BOOK_ACCENTS[slug] ?? colors.goldDark;
   const isLoading = accessLoading || courseLoading || lessonsLoading;
@@ -525,6 +544,17 @@ export default function WeeklyBookDetail() {
             {activeChapterData?.topic && activeNav !== "intro" && activeNav !== "resources" && (
               <div style={{ fontFamily: fonts.body, fontSize: "1rem", color: accent, fontWeight: 600 }}>{activeChapterData.topic}</div>
             )}
+            {/* רמה 18: שורת התקדמות אישית — כמה תכנים סומנו כנלמדו */}
+            {showProgress && totalTrackable > 0 && (
+              <div style={{ marginTop: "0.6rem", display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                <div style={{ flex: "0 0 160px", height: 6, background: "rgba(139,111,71,0.12)", borderRadius: 999, overflow: "hidden" }}>
+                  <div style={{ width: `${Math.min(100, Math.round((completedIds.size / totalTrackable) * 100))}%`, height: "100%", background: accent, borderRadius: 999, transition: "width 0.3s" }} />
+                </div>
+                <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted }}>
+                  סימנת {completedIds.size} מתוך {totalTrackable} תכנים כנלמדו
+                </span>
+              </div>
+            )}
           </div>
 
           {/* ── Intro ─────────────────────────────────────────── */}
@@ -555,7 +585,7 @@ export default function WeeklyBookDetail() {
                     לפני שצוללים לפרקים — כמה פריטי פתיחה שיעזרו לך להיכנס לרוח הספר.
                   </div>
                   {introItems.map((item, idx) => (
-                    <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={setEmbeddedId} accent={accent} />
+                    <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={setEmbeddedId} accent={accent} {...progressProps(item)} />
                   ))}
                 </>
               )}
@@ -569,7 +599,7 @@ export default function WeeklyBookDetail() {
                 תכנים נוספים של הרב ברוך סליי ומלומדים נוספים לספר דניאל.
               </div>
               {resourceItems.map((item, idx) => (
-                <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={setEmbeddedId} accent={accent} />
+                <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={setEmbeddedId} accent={accent} {...progressProps(item)} />
               ))}
             </div>
           )}
@@ -599,6 +629,7 @@ export default function WeeklyBookDetail() {
               {activeTab === "base" && (
                 <LayerSection
                   items={activeChapterData?.base ?? []}
+                  progressProps={progressProps}
                   embeddedId={embeddedId}
                   onEmbed={setEmbeddedId}
                   emptyTitle="התוכן יתווסף בקרוב"
@@ -612,6 +643,7 @@ export default function WeeklyBookDetail() {
                   ? <LockedPanel tab="הרחבה" accent={accent} bookTitle={course?.title} paymentProduct={bookPaymentProduct} />
                   : <LayerSection
                       items={activeChapterData?.enrichment ?? []}
+                      progressProps={progressProps}
                       embeddedId={embeddedId}
                       onEmbed={setEmbeddedId}
                       emptyTitle="התוכן יתווסף בקרוב"
@@ -625,6 +657,7 @@ export default function WeeklyBookDetail() {
                   ? <LockedPanel tab="שיעור שבועי" accent={accent} bookTitle={course?.title} paymentProduct={bookPaymentProduct} />
                   : <LayerSection
                       items={activeChapterData?.weekly ?? []}
+                      progressProps={progressProps}
                       embeddedId={embeddedId}
                       onEmbed={setEmbeddedId}
                       emptyTitle="התוכן יתווסף בקרוב"
@@ -681,7 +714,7 @@ function navBtnStyle(dir: "prev" | "next", accent: string): React.CSSProperties 
 }
 
 // ── LayerSection ──────────────────────────────────────────────────────────
-function LayerSection({ items, embeddedId, onEmbed, emptyTitle, emptyDesc, noData, accent }: {
+function LayerSection({ items, embeddedId, onEmbed, emptyTitle, emptyDesc, noData, accent, progressProps }: {
   items: CommunityLesson[];
   embeddedId: string | null;
   onEmbed: (id: string | null) => void;
@@ -689,24 +722,29 @@ function LayerSection({ items, embeddedId, onEmbed, emptyTitle, emptyDesc, noDat
   emptyDesc: string;
   noData?: boolean;
   accent: string;
+  /** רמה 18: מזריק completed/onToggleComplete לכל כרטיס (ריק כשאין מעקב) */
+  progressProps?: (item: CommunityLesson) => { completed?: boolean; onToggleComplete?: () => void };
 }) {
   if (noData || items.length === 0) return <EmptyState icon={<Clock size={32} />} title={emptyTitle} desc={emptyDesc} />;
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       {items.map((item, idx) => (
-        <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={onEmbed} accent={accent} />
+        <MediaCard key={item.id} lesson={item} featured={idx === 0} embeddedId={embeddedId} onEmbed={onEmbed} accent={accent} {...(progressProps ? progressProps(item) : {})} />
       ))}
     </div>
   );
 }
 
 // ── MediaCard ─────────────────────────────────────────────────────────────
-function MediaCard({ lesson, featured, embeddedId, onEmbed, accent }: {
+function MediaCard({ lesson, featured, embeddedId, onEmbed, accent, completed, onToggleComplete }: {
   lesson: CommunityLesson;
   featured: boolean;
   embeddedId: string | null;
   onEmbed: (id: string | null) => void;
   accent: string;
+  /** רמה 18: סימון "נלמד" אישי — מוצג רק ללומד מחובר עם גישה */
+  completed?: boolean;
+  onToggleComplete?: () => void;
 }) {
   const kind  = mediaKind(lesson);
   const url   = mediaUrl(lesson);
@@ -721,36 +759,52 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent }: {
 
   return (
     <div style={{ background: "white", borderRadius: radii.xl, border: featured ? `2px solid ${accent}` : `1px solid rgba(139,111,71,0.1)`, boxShadow: featured ? `0 8px 24px ${accent}20` : shadows.cardSoft, overflow: "hidden" }}>
-      <div
-        role={toggle ? "button" : undefined}
-        tabIndex={toggle ? 0 : undefined}
-        aria-expanded={toggle ? isOpen : undefined}
-        aria-label={toggle ? `${isOpen ? "סגור" : KIND_ACTION[kind]} — ${lesson.title}` : undefined}
-        onClick={toggle}
-        onKeyDown={toggle ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } } : undefined}
-        style={{ padding: featured ? "1.3rem 1.6rem" : "1rem 1.35rem", display: "flex", alignItems: "center", gap: "1rem", cursor: toggle ? "pointer" : undefined }}
-      >
-        <div style={{ width: featured ? 48 : 40, height: featured ? 48 : 40, borderRadius: radii.md, background: `${kindAccent}18`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: kindAccent }}>
-          {kind === "video" ? <Film size={featured ? 22 : 18} /> : kind === "audio" ? <Headphones size={featured ? 22 : 18} /> : <FileText size={featured ? 22 : 18} />}
-        </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-            <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: featured ? "1rem" : "0.9rem", color: colors.textDark }}>{lesson.title}</div>
-            {KIND_LABEL[kind] && (
-              <span style={{ padding: "0.08rem 0.4rem", borderRadius: radii.pill, background: `${kindAccent}14`, color: kindAccent, fontFamily: fonts.body, fontSize: "0.6rem", fontWeight: 700 }}>{KIND_LABEL[kind]}</span>
+      {/* רמה 18: שורת-הכותרת = פקד-הפתיחה + כפתור "נלמד" — אחים, לא מקוננים
+          (נגישות: אין פקד בתוך פקד; ה-padding עבר לעוטף) */}
+      <div style={{ padding: featured ? "1.3rem 1.6rem" : "1rem 1.35rem", display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        <div
+          role={toggle ? "button" : undefined}
+          tabIndex={toggle ? 0 : undefined}
+          aria-expanded={toggle ? isOpen : undefined}
+          aria-label={toggle ? `${isOpen ? "סגור" : KIND_ACTION[kind]} — ${lesson.title}` : undefined}
+          onClick={toggle}
+          onKeyDown={toggle ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } } : undefined}
+          style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", gap: "1rem", cursor: toggle ? "pointer" : undefined }}
+        >
+          <div style={{ width: featured ? 48 : 40, height: featured ? 48 : 40, borderRadius: radii.md, background: `${kindAccent}18`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: kindAccent }}>
+            {kind === "video" ? <Film size={featured ? 22 : 18} /> : kind === "audio" ? <Headphones size={featured ? 22 : 18} /> : <FileText size={featured ? 22 : 18} />}
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+              <div style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: featured ? "1rem" : "0.9rem", color: colors.textDark }}>{lesson.title}</div>
+              {KIND_LABEL[kind] && (
+                <span style={{ padding: "0.08rem 0.4rem", borderRadius: radii.pill, background: `${kindAccent}14`, color: kindAccent, fontFamily: fonts.body, fontSize: "0.6rem", fontWeight: 700 }}>{KIND_LABEL[kind]}</span>
+              )}
+            </div>
+            {lesson.description && (
+              <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted, marginTop: "0.2rem", lineHeight: 1.5 }}>{lesson.description}</div>
             )}
           </div>
-          {lesson.description && (
-            <div style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textMuted, marginTop: "0.2rem", lineHeight: 1.5 }}>{lesson.description}</div>
+          {url && (
+            <span
+              aria-hidden="true"
+              style={{ padding: "0.44rem 0.9rem", borderRadius: radii.md, background: isOpen ? `${kindAccent}15` : `linear-gradient(90deg, ${accent} 0%, ${accent}cc 100%)`, border: isOpen ? `1px solid ${kindAccent}40` : "none", color: isOpen ? kindAccent : "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.75rem", display: "inline-flex", alignItems: "center", gap: "0.3rem", flexShrink: 0, boxShadow: isOpen ? "none" : `0 4px 12px ${accent}35`, transition: "all 0.15s" }}
+            >
+              {isOpen ? <><X size={12} /> סגור</> : <><Play size={11} fill="currentColor" /> {KIND_ACTION[kind]}</>}
+            </span>
           )}
         </div>
-        {url && (
-          <span
-            aria-hidden="true"
-            style={{ padding: "0.44rem 0.9rem", borderRadius: radii.md, background: isOpen ? `${kindAccent}15` : `linear-gradient(90deg, ${accent} 0%, ${accent}cc 100%)`, border: isOpen ? `1px solid ${kindAccent}40` : "none", color: isOpen ? kindAccent : "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.75rem", display: "inline-flex", alignItems: "center", gap: "0.3rem", flexShrink: 0, boxShadow: isOpen ? "none" : `0 4px 12px ${accent}35`, transition: "all 0.15s" }}
+        {onToggleComplete && (
+          <button
+            type="button"
+            title={completed ? "סומן כנלמד — לחיצה מבטלת" : "סמן שלמדתי את התוכן"}
+            aria-label={completed ? `בטל סימון נלמד — ${lesson.title}` : `סמן כנלמד — ${lesson.title}`}
+            aria-pressed={!!completed}
+            onClick={onToggleComplete}
+            style={{ background: "none", border: "none", cursor: "pointer", padding: "0.3rem", flexShrink: 0, color: completed ? "#2E7D32" : "rgba(139,111,71,0.35)", display: "inline-flex", alignItems: "center", transition: "color 0.15s" }}
           >
-            {isOpen ? <><X size={12} /> סגור</> : <><Play size={11} fill="currentColor" /> {KIND_ACTION[kind]}</>}
-          </span>
+            {completed ? <CheckCircle2 size={22} /> : <Circle size={22} />}
+          </button>
         )}
       </div>
       {isOpen && url && (

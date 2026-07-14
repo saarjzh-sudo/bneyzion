@@ -36,6 +36,19 @@ const DEDICATION_PREFIX: Record<Exclude<DonationType, "regular">, string> = {
   simcha: "לכבוד",
 };
 
+// רמה 18 (יואב 14.7): בגרואו אין שם מוצר על העסקה, ולכן תרומות משני קמפיינים
+// התערבבו. ה-description הוא מה שרואים בדשבורד של Grow — כולל בו את שם המקור.
+const SOURCE_LABELS: Record<string, string> = {
+  "donate-page": "דף התרומה",
+  "yehoshua-campaign": "קמפיין ספר יהושע",
+};
+
+function growDescription(source: string | null, dedicationText: string): string {
+  const label = source ? SOURCE_LABELS[source] || source : null;
+  const base = label && source !== "donate-page" ? `תרומה — ${label}` : "תרומה לבני ציון";
+  return `${base}${dedicationText}`;
+}
+
 interface DonateFormProps {
   amount: number;
   onAmount: (n: number) => void;
@@ -94,7 +107,7 @@ export default function DonateForm({
 
       await startPayment({
         sum: amount,
-        description: `תרומה לבני ציון${dedicationText}`,
+        description: growDescription(source, dedicationText),
         fullName: donorName,
         phone: donorPhone,
         email: donorEmail,

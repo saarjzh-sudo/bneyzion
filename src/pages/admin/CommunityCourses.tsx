@@ -10,6 +10,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, Dialog
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ImageUpload } from "@/components/admin/ImageUpload";
+// רמה 18 (יואב 14.7): עורך ויזואלי לתוכן השיעור — לא HTML גולמי
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
@@ -220,10 +222,15 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
         </div>
       </div>
 
-      {/* Content */}
+      {/* Content — רמה 18 (יואב 14.7): עורך ויזואלי במקום HTML גולמי */}
       <div className="space-y-1.5">
-        <label className="text-sm font-medium flex items-center gap-1.5"><FileText className="h-4 w-4" /> תוכן HTML</label>
-        <Textarea value={contentHtml} onChange={(e) => setContentHtml(e.target.value)} placeholder="<p>תוכן השיעור...</p>" rows={5} dir="ltr" className="font-mono text-xs resize-none bg-muted/30" />
+        <label className="text-sm font-medium flex items-center gap-1.5"><FileText className="h-4 w-4" /> תוכן השיעור</label>
+        <RichTextEditor
+          value={contentHtml}
+          onChange={setContentHtml}
+          placeholder="תוכן כתוב של השיעור — טקסט, כותרות, רשימות ותמונות"
+          minHeight={160}
+        />
       </div>
 
       <Separator />
@@ -315,8 +322,12 @@ export default function CommunityCourses() {
     // מחיקה אמיתית נחסמת ב-FK כשיש לקורס שיעורים/מפגשים/נרשמים (אותה מלכודת
     // כמו מחיקת-רב, 16.5) → נופלים לארכוב רך: הקורס נעלם מהאתר, ההיסטוריה נשמרת.
     mutationFn: async (id: string): Promise<"deleted" | "archived"> => {
-      const { error } = await supabase.from("community_courses").delete().eq("id", id);
-      if (!error) return "deleted";
+      const { data: delRows, error } = await supabase.from("community_courses").delete().eq("id", id).select("id");
+      if (!error) {
+        // רמה 18: RLS שחסם בשקט (0 שורות, בלי שגיאה) ≠ מחיקה מוצלחת
+        if (!delRows?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS).");
+        return "deleted";
+      }
       const isFk = (error as any).code === "23503" || /foreign key/i.test(error.message);
       if (!isFk) throw error;
       const { error: archiveErr } = await supabase
@@ -338,8 +349,9 @@ export default function CommunityCourses() {
 
   const updateCourseStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
-      const { error } = await supabase.from("community_courses").update({ status }).eq("id", id);
+      const { data, error } = await supabase.from("community_courses").update({ status }).eq("id", id).select("id");
       if (error) throw error;
+      if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS).");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-community-courses"] });
@@ -382,8 +394,9 @@ export default function CommunityCourses() {
 
   const deleteLesson = useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from("community_course_lessons").delete().eq("id", id);
+      const { data: delRows, error } = await supabase.from("community_course_lessons").delete().eq("id", id).select("id");
       if (error) throw error;
+      if (!delRows?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS).");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-community-lessons"] });
@@ -731,6 +744,19 @@ export default function CommunityCourses() {
                       </div>
 
                       <Separator />
+
+                      {/* רמה 18 (יואב 14.7): "לא ראיתי שום מקום בו אני יכול לערוך את תוכן
+                          הקורס" — כפתור מפורש וגלוי-תמיד לעריכת הפרקים והשיעורים,
+                          במקום להסתמך על לחיצה על גוף הכרטיס. */}
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="w-full font-display gap-1.5 border-primary/30 text-primary hover:bg-primary/5"
+                        onClick={(e) => { e.stopPropagation(); setSelectedCourse(course); }}
+                      >
+                        <BookOpen className="h-3.5 w-3.5" />
+                        עריכת פרקים, שיעורים ותכנים
+                      </Button>
 
                       <div className="flex items-center justify-between">
                         <span className="text-xs text-muted-foreground flex items-center gap-1.5">

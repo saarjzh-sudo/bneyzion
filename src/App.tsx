@@ -52,7 +52,7 @@ const MemorialSaadia = lazy(() => import("./pages/MemorialSaadia"));
 const StorePage = lazy(() => import("./pages/StorePage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 const Contact = lazy(() => import("./pages/Contact"));
-const Donate = lazy(() => import("./pages/Donate"));
+// Donate.tsx (הישן) נשמר בכוונה כעותק-חזרה — ראו הערת ROLLOUT T05 למטה. אין לו route.
 const ParashaPage = lazy(() => import("./pages/ParashaPage"));
 const SeriesPagePublic = lazy(() => import("./pages/SeriesPagePublic"));
 const Portal = lazy(() => import("./pages/Portal"));
@@ -96,7 +96,6 @@ const ContentCompare = lazy(() => import("./pages/admin/ContentCompare"));
 const CommunityCourses = lazy(() => import("./pages/admin/CommunityCourses"));
 const Analytics = lazy(() => import("./pages/admin/Analytics"));
 const AdminNotifications = lazy(() => import("./pages/admin/Notifications"));
-const HomepageManager = lazy(() => import("./pages/admin/HomepageManager"));
 const ControlCenter = lazy(() => import("./pages/admin/ControlCenter"));
 const ContentWorkspace = lazy(() => import("./pages/admin/ContentWorkspace"));
 const AdminOrders = lazy(() => import("./pages/admin/Orders"));
@@ -417,7 +416,6 @@ const App = () => (
             <Route path="/admin/messages" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
             <Route path="/admin/questions" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminQuestions /></Suspense></ProtectedRoute>} />
             <Route path="/admin/notifications" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminNotifications /></Suspense></ProtectedRoute>} />
-            <Route path="/admin/homepage" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><HomepageManager /></Suspense></ProtectedRoute>} />
             {/* רמה 13: מרכז שליטה — עריכת נוסחים/תמונות מהמרשם (siteCopyRegistry) */}
             <Route path="/admin/control-center" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><ControlCenter /></Suspense></ProtectedRoute>} />
             {/* Debug-only — not in nav */}

@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2, Shield, Truck, MapPin, Package } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
@@ -55,6 +56,8 @@ export function StoreCheckoutDialog({
   const [city, setCity] = useState("");
   const [zip, setZip] = useState("");
   const [notes, setNotes] = useState("");
+  // רמה 18 (יואב 14.7): תשלומים גם בקנייה-מהירה — אחיד עם רכישת-העגלה
+  const [installments, setInstallments] = useState("1");
 
   // Country is hardcoded to Israel — shipping is Israel-only.
   const country = "ישראל";
@@ -118,6 +121,7 @@ export function StoreCheckoutDialog({
         phone,
         email: email || undefined,
         type: "product",
+        installments: Number(installments),
         thankYouType: "store",
         meta: {
           product: `store:${productSlug}`, // prefixed so webhook knows source=products table
@@ -160,6 +164,7 @@ export function StoreCheckoutDialog({
       setCity("");
       setZip("");
       setNotes("");
+      setInstallments("1");
       setTosAccepted(false);
       setShippingMethod(isPhysical ? "registered_mail" : "pickup");
     }
@@ -374,6 +379,24 @@ export function StoreCheckoutDialog({
               placeholder="הערות לגבי ההזמנה..."
               dir="rtl"
             />
+          </div>
+
+          {/* Installments — רמה 18: אחיד עם רכישת-העגלה */}
+          <div className="space-y-1.5">
+            <Label>מספר תשלומים</Label>
+            <Select value={installments} onValueChange={setInstallments}>
+              <SelectTrigger><SelectValue /></SelectTrigger>
+              <SelectContent>
+                {[1, 2, 3, 4, 5, 6, 10, 12].map((n) => (
+                  <SelectItem key={n} value={String(n)}>{n === 1 ? "תשלום אחד" : `${n} תשלומים`}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {Number(installments) > 1 && (
+              <p className="text-xs text-muted-foreground">
+                {installments} תשלומים של ₪{(totalPrice / Number(installments)).toFixed(0)}
+              </p>
+            )}
           </div>
 
           <Separator />
