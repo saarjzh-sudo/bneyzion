@@ -578,9 +578,10 @@ export default function WeeklyBookDetail() {
               )}
 
               {/* Chapter schedule (לו״ז) — Drive image when set, else live list.
-                  מוצג רק לחברי התכנית (מנוי/איכה/אדמין): לרוכש קורס-ספר בודד
-                  לו״ז השיעורים החיים לא רלוונטי (יואב 15.7). */}
-              {scheduleItems.length > 0 && (isAdmin || programAccess || eichaAccess) && (
+                  מוצג רק בספר הנוכחי ורק לחברי התכנית (מנוי/איכה/אדמין):
+                  לרוכש קורס-ספר בודד — וגם בספרי-ארכיון שהסתיימו (עזרא) —
+                  לו״ז השיעורים החיים לא רלוונטי (יואב 15.7, סער 16.7). */}
+              {scheduleItems.length > 0 && course?.is_current && (isAdmin || programAccess || eichaAccess) && (
                 <WeeklyScheduleCard
                   bookTitle={bookTitle}
                   scheduleImageUrl={(course as any)?.schedule_image_url ?? SCHEDULE_IMAGES[slug] ?? null}
