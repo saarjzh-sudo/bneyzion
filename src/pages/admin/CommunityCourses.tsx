@@ -609,8 +609,8 @@ export default function CommunityCourses() {
                       )}
                     </div>
 
-                    {/* שכבה (בסיס/הרחבה/שיעור) */}
-                    {lesson.layer_type && LAYER_LABEL[lesson.layer_type] && (
+                    {/* שכבה (בסיס/הרחבה/שיעור) — רק בספרי הפרק-השבועי; בקורס רגיל אין שכבות */}
+                    {program && lesson.layer_type && LAYER_LABEL[lesson.layer_type] && (
                       <Badge variant="outline" className="text-[10px] shrink-0 border-border/60 text-muted-foreground">
                         {LAYER_LABEL[lesson.layer_type]}
                       </Badge>

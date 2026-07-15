@@ -98,6 +98,9 @@ def main():
             "audio_url": item.get("audio_url"),
             "attachment_url": item.get("attachment_url"),
             "content_html": item.get("content_html"),
+            # קורס רגיל — אין שכבות ואין פרק-תנ"כי. layer_type הוא NOT NULL עם
+            # DEFAULT='base' ב-DB, אז נשאר 'base' (לא נשלח) — אבל תג-השכבה מוסתר
+            # בתצוגת קורס-רגיל (האדמין וגם הלומד לא קוראים אותו). המבנה = section_title.
             "status": "published",
         })
 
