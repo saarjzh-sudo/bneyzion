@@ -451,16 +451,43 @@ const PRODUCT_VALID_DURATION_DAYS: Record<string, number | null> = {
   "book-lamentations":                   null,
 };
 
+// רמה 19: מוצרי-חנות שהם קורסים — רכישת המוצר פותחת את הקורס באתר.
+// (מיגרציית "קצב הפעימות" + "יהושע במבט רחב" מאתר המכירות הישן, 16.7.)
+const STORE_PRODUCT_COURSE_TAGS: Record<string, string> = {
+  "wc-989": "course:pulses",         // קצב הפעימות של התנ"ך
+  "wc-401": "course:yehoshua-wide",  // ספר יהושע במבט רחב
+};
+
+async function grantStoreCourseTags(params: {
+  supabase: ReturnType<typeof getSupabaseAdmin>;
+  email: string;
+  orderId: string;
+}) {
+  const { supabase, email, orderId } = params;
+  const { data: items } = await supabase
+    .from("order_items")
+    .select("products:product_id (slug)")
+    .eq("order_id", orderId);
+  for (const it of (items ?? []) as any[]) {
+    const slug = it?.products?.slug as string | undefined;
+    const tag = slug ? STORE_PRODUCT_COURSE_TAGS[slug] : undefined;
+    if (!tag) continue;
+    await grantAccessTag({ supabase, email, productSlug: slug, orderId, tagOverride: tag });
+  }
+}
+
 async function grantAccessTag(params: {
   supabase: ReturnType<typeof getSupabaseAdmin>;
   email: string;
   productSlug: string | undefined;
   orderId: string;
+  /** מסלול-החנות: תג מפורש במקום מיפוי payment_products */
+  tagOverride?: string;
 }) {
-  const { supabase, email, productSlug, orderId } = params;
+  const { supabase, email, productSlug, orderId, tagOverride } = params;
   if (!productSlug) return;
 
-  const tag = PRODUCT_ACCESS_TAGS[productSlug];
+  const tag = tagOverride ?? PRODUCT_ACCESS_TAGS[productSlug];
   if (!tag) {
     console.log(`[AccessTag] No tag mapped for product "${productSlug}" — skipping`);
     return;
@@ -618,6 +645,12 @@ async function runPostPurchaseSideEffects(args: {
       await deliverOrder(supabase, orderId);
     } catch (e) {
       console.error("[DigitalDelivery] Exception (non-fatal):", e);
+    }
+    // רמה 19: פריטי-חנות שהם קורסים → תג-גישה לקורס (course:pulses וכו')
+    try {
+      await grantStoreCourseTags({ supabase, email, orderId });
+    } catch (e) {
+      console.error("[StoreCourseTag] Exception (non-fatal):", e);
     }
   }
 

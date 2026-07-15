@@ -12,6 +12,7 @@
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserAccess } from "@/hooks/useUserAccess";
 import { useCourseLessons } from "@/hooks/useCommunity";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -42,7 +43,7 @@ function mediaIcon(l: any) {
 
 const CommunityCoursePage = () => {
   const { id } = useParams<{ id: string }>();
-  const { user, isLoading: authLoading } = useAuth();
+  const { user, isAdmin, isLoading: authLoading } = useAuth();
   const { data: course, isLoading: courseLoading } = useQuery({
     queryKey: ["community-course", id],
     enabled: !!id,
@@ -68,6 +69,11 @@ const CommunityCoursePage = () => {
       return data;
     },
   });
+  // רמה 19: קורס בתשלום שנקנה בחנות — הגישה דרך user_access_tags (access_tag),
+  // אותו מנגנון של קורסי-הספרים. useUserAccess מקבל תג ריק → hasAccess=false.
+  const { hasAccess: tagAccess, isLoading: tagLoading } = useUserAccess(
+    ((course as any)?.access_tag as string) || ""
+  );
   const { data: lessons, isLoading: lessonsLoading } = useCourseLessons(id);
   const { completedIds, canTrack } = useCourseProgress(id);
   const toggleComplete = useToggleLessonComplete(id);
@@ -128,8 +134,8 @@ const CommunityCoursePage = () => {
   if (!authLoading && !user) return <Navigate to="/auth?redirect=/portal" replace />;
 
   const courseIsOpen = !course?.access_type || course.access_type === "open";
-  const isMember = courseIsOpen || !!enrollment;
-  const isLoading = authLoading || lessonsLoading || (!courseIsOpen && enrollLoading);
+  const isMember = courseIsOpen || !!enrollment || tagAccess || isAdmin;
+  const isLoading = authLoading || lessonsLoading || (!courseIsOpen && (enrollLoading || tagLoading));
 
   if (isLoading) {
     return (
@@ -153,8 +159,17 @@ const CommunityCoursePage = () => {
                 <Lock className="w-8 h-8 text-gold" />
               </div>
               <h2 className="text-xl font-heading text-primary">הקורס עוד לא פתוח לך</h2>
-              <p className="text-sm text-muted-foreground">אפשר להכיר את הקורס ולהצטרף אליו בדף הקורס</p>
-              <Button asChild><Link to={`/community/${id}`}>לדף הקורס</Link></Button>
+              {(course as any)?.store_product_slug ? (
+                <>
+                  <p className="text-sm text-muted-foreground">אפשר לרכוש את הקורס בחנות — הגישה נפתחת מיד אחרי הרכישה, עם המייל של הרכישה</p>
+                  <Button asChild><Link to={`/store/${(course as any).store_product_slug}`}>לרכישת הקורס</Link></Button>
+                </>
+              ) : (
+                <>
+                  <p className="text-sm text-muted-foreground">אפשר להכיר את הקורס ולהצטרף אליו בדף הקורס</p>
+                  <Button asChild><Link to={`/community/${id}`}>לדף הקורס</Link></Button>
+                </>
+              )}
             </CardContent>
           </Card>
         </div>

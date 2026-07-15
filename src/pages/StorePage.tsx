@@ -41,13 +41,9 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
     <motion.div variants={fadeUp} custom={index}>
       <Link
         to={`/store/${product.slug}`}
-        className={`rounded-2xl overflow-hidden block group hover:shadow-lg transition-all ${
-          isUpcoming
-            ? "bg-amber-50/70 border-2 border-dashed border-amber-300/80 hover:border-amber-400"
-            : "glass-card-light hover:border-primary/20"
-        }`}
+        className="rounded-2xl overflow-hidden block group hover:shadow-lg transition-all glass-card-light hover:border-primary/20"
       >
-        <div className={`aspect-square relative overflow-hidden ${isUpcoming ? "bg-amber-100/40" : "bg-secondary/30"}`}>
+        <div className="aspect-square relative overflow-hidden bg-secondary/30">
           {product.image_url ? (
             <img
               src={product.image_url}
@@ -69,10 +65,12 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
               מבצע!
             </Badge>
           )}
+          {/* יואב 15.7: "בתהליך כתיבה" עם מסגרת מקווקוות הפחיד קונים — רוכך
+              לניסוח מזמין; מופיע אוטומטית על קטגוריית "הספרים שבתהליך כתיבה" */}
           {isUpcoming ? (
-            <Badge className="absolute top-3 left-3 text-xs bg-amber-500 text-white border-0 gap-1">
+            <Badge className="absolute top-3 left-3 text-xs bg-secondary text-secondary-foreground border-0 gap-1">
               <PenLine className="h-3 w-3" />
-              בתהליך כתיבה
+              מהדורה דיגיטלית מוקדמת
             </Badge>
           ) : product.is_digital ? (
             <Badge variant="secondary" className="absolute top-3 left-3 text-xs">
@@ -85,7 +83,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           {product.category?.name && (
             <span
               className={`inline-block text-[11px] font-display rounded-full px-2 py-0.5 mb-1.5 ${
-                isUpcoming ? "text-amber-900 bg-amber-200/70" : "text-primary/90 bg-primary/10"
+                "text-primary/90 bg-primary/10"
               }`}
             >
               {product.category.name}

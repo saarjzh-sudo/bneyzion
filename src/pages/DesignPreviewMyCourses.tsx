@@ -352,7 +352,7 @@ function CourseCard({ course }: { course: CourseCardData }) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 export default function DesignPreviewMyCourses() {
-  const { user, isLoading: authLoading, signInWithGoogle } = useAuth();
+  const { user, isAdmin, isLoading: authLoading, signInWithGoogle } = useAuth();
   const { data: enrollments = [], isLoading: enrollLoading } = useMyEnrollments();
   const { data: allCourses = [], isLoading: coursesLoading } = useCommunityCoursesPublic();
   const { hasAccess: hasWeeklyChapter, isLoading: accessLoading } = useUserAccess("program:weekly-chapter");
@@ -454,6 +454,36 @@ export default function DesignPreviewMyCourses() {
       });
     }
 
+    // 2ב. אדמין + מנוי הפרק השבועי — קורסי-הספרים פתוחים להם בפועל
+    // (זהה לשער בדף הקורס: hasAccess = isAdmin || programAccess). בלי זה
+    // הקטלוג הציג להם "לצפייה ורכישה" בעוד שהדף עצמו נפתח מלא — הבאג
+    // שיואב מצא 15.7. מנוי גם עלול היה לרכוש שוב קורס שכלול במנוי שלו.
+    for (const cc of allCourses as any[]) {
+      if (enrolledIds.has(cc.id)) continue;
+      if (cc.access_type === "open" || cc.access_type === null) continue;
+      const isBookProgram = String(cc.program_slug || "").startsWith("book-");
+      // איכה למנויי-הקוהורט כבר מיוצגת בכרטיס "תכנית איכה" למעלה
+      if (hasEicha && !hasWeeklyChapter && cc.program_slug === "book-lamentations") continue;
+      const viaProgram = (hasWeeklyChapter && isBookProgram);
+      if (!viaProgram && !isAdmin) continue;
+      result.push({
+        id: cc.id,
+        title: cc.title,
+        subtitle: `מאת ${cc.rabbis?.name || "הרב יואב אוריאל"}`,
+        description: cc.description ?? null,
+        slug: cc.id,
+        gradient: courseGradient(null),
+        imageUrl: cc.image_url ?? null,
+        progressPct: 0,
+        lessonCount: cc.total_lessons ?? 0,
+        hasAccess: true,
+        ctaTo: cc.program_slug ? `/course/${cc.program_slug}` : `/portal/course/${cc.id}`,
+        ctaLabel: "כניסה לקורס",
+        tag: viaProgram ? "כלול במנוי" : "גישת מנהל",
+        accessType: cc.access_type,
+      });
+    }
+
     // 3. קורסים חינמיים (access_type=open) — רק למחובר. סער 14.7: לאורח הם
     // לא "הקורסים שלי" — הם מוצגים לו בהמשך העמוד ברשימה הכללית.
     if (user) {
@@ -480,7 +510,7 @@ export default function DesignPreviewMyCourses() {
     }
 
     return result;
-  }, [enrollments, allCourses, enrolledIds, hasWeeklyChapter, hasEicha, user]);
+  }, [enrollments, allCourses, enrolledIds, hasWeeklyChapter, hasEicha, user, isAdmin]);
 
   // "כל הקורסים בתנ"ך" — מה שזמין למי שעוד אין לו גישה:
   // • requires_tag עם מחיר > 0 (ניתן לרכישה)

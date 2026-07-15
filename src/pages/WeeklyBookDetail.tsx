@@ -317,6 +317,14 @@ export default function WeeklyBookDetail() {
   const chapterNavItems = navList.filter((n) => n !== "intro");
   const taughtFlags = chapterNavItems.map(itemTaught);
   const lastTaughtIdx = taughtFlags.lastIndexOf(true);
+  // הפרק הנוכחי = הפרק *הנלמד* השבוע: אחרי השיעור האחרון שהועבר עוברים לפרק
+  // הבא (תכני הבסיס שלו כבר פורסמו), עד תקרת הפרק האחרון שיש בו תוכן.
+  // (יואב 15.7: "אנחנו בזכריה פרק יד" בעוד שהשיעור האחרון היה על יג —
+  // ההגדרה הישנה "האחרון שהועבר" נחתה פרק אחד אחורה.)
+  const currentIdx =
+    lastTaughtIdx < 0
+      ? (chapterNavItems.length > 0 ? 0 : -1)
+      : Math.min(lastTaughtIdx + 1, chapterNavItems.length - 1);
 
   // (סער 10.7, דויק 11.7) "תכניס אותי ישר לפרק שלי" — בספר הנוכחי (is_current)
   // נוחתים ישירות על הפרק הנוכחי הנלמד = הפרק האחרון עם שיעור weekly שפורסם
@@ -330,8 +338,8 @@ export default function WeeklyBookDetail() {
     autoJumpedRef.current = true;
     if (Number(searchParams.get("chapter")) > 0) return;
     if (!course.is_current) return;
-    if (lastTaughtIdx >= 0) {
-      const target = chapterNavItems[lastTaughtIdx];
+    if (currentIdx >= 0) {
+      const target = chapterNavItems[currentIdx];
       setActiveNav(target);
       // בוחרים טאב שבאמת יש בו תוכן: בסיס → השיעור והסיכום (בזכריה, למשל,
       // אין שכבת בסיס — נחיתה על טאב ריק מרגישה שבורה)
@@ -351,16 +359,16 @@ export default function WeeklyBookDetail() {
       if (baseCount === 0 && weeklyCount > 0) setActiveTab("weekly");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoading, courseData, course, lastTaughtIdx]);
+  }, [isLoading, courseData, course, currentIdx]);
   const scheduleItems: ScheduleItem[] = chapterNavItems.map((nav, i) => {
     let status: ScheduleItem["status"];
-    if (!taughtFlags[i]) status = "upcoming";
-    else if (course?.is_current && i === lastTaughtIdx) status = "current";
-    else status = "done";
+    if (course?.is_current && i === currentIdx) status = "current";
+    else if (taughtFlags[i]) status = "done";
+    else status = "upcoming";
     return { label: itemLabel(nav), status, onOpen: () => selectNav(nav) };
   });
   const currentChapterLabel =
-    lastTaughtIdx >= 0 ? itemLabel(chapterNavItems[lastTaughtIdx]) : undefined;
+    currentIdx >= 0 ? itemLabel(chapterNavItems[currentIdx]) : undefined;
 
   // ── Loading ──────────────────────────────────────────────────────────────
   if (isLoading) {
@@ -569,8 +577,10 @@ export default function WeeklyBookDetail() {
                 />
               )}
 
-              {/* Chapter schedule (לו״ז) — Drive image when set, else live list */}
-              {scheduleItems.length > 0 && (
+              {/* Chapter schedule (לו״ז) — Drive image when set, else live list.
+                  מוצג רק לחברי התכנית (מנוי/איכה/אדמין): לרוכש קורס-ספר בודד
+                  לו״ז השיעורים החיים לא רלוונטי (יואב 15.7). */}
+              {scheduleItems.length > 0 && (isAdmin || programAccess || eichaAccess) && (
                 <WeeklyScheduleCard
                   bookTitle={bookTitle}
                   scheduleImageUrl={(course as any)?.schedule_image_url ?? SCHEDULE_IMAGES[slug] ?? null}
@@ -669,14 +679,15 @@ export default function WeeklyBookDetail() {
 
               {/* Chapter nav arrows */}
               <div style={{ marginTop: "3rem", paddingTop: "1.5rem", borderTop: `1px solid rgba(139,111,71,0.1)`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                {/* RTL: "הקודם" יושב מימין וחץ ימינה; "הבא" משמאל וחץ שמאלה (יואב 15.7) */}
                 {navIdx > 0 ? (
                   <button onClick={() => selectNav(navList[navIdx - 1])} style={navBtnStyle("prev", accent)}>
-                    ← {navIdx === 1 ? "הקדמה" : (isEsther(slug) ? estherPairLabel(navList[navIdx - 1] as number) : chapterLabel(navList[navIdx - 1] as number))}
+                    → הקודם: {navIdx === 1 ? "הקדמה" : (isEsther(slug) ? estherPairLabel(navList[navIdx - 1] as number) : chapterLabel(navList[navIdx - 1] as number))}
                   </button>
                 ) : <span />}
                 {navIdx < navList.length - 1 && (
                   <button onClick={() => selectNav(navList[navIdx + 1])} style={navBtnStyle("next", accent)}>
-                    {isEsther(slug) ? estherPairLabel(navList[navIdx + 1] as number) : chapterLabel(navList[navIdx + 1] as number)} →
+                    הבא: {isEsther(slug) ? estherPairLabel(navList[navIdx + 1] as number) : chapterLabel(navList[navIdx + 1] as number)} ←
                   </button>
                 )}
               </div>
@@ -687,7 +698,7 @@ export default function WeeklyBookDetail() {
           {activeNav === "intro" && navList.length > 1 && (
             <div style={{ marginTop: "2.5rem", paddingTop: "1.5rem", borderTop: `1px solid rgba(139,111,71,0.1)` }}>
               <button onClick={() => selectNav(navList[1])} style={navBtnStyle("next", accent)}>
-                → {isEsther(slug) ? estherPairLabel(navList[1] as number) : chapterLabel(navList[1] as number)}
+                לתחילת הלימוד: {isEsther(slug) ? estherPairLabel(navList[1] as number) : chapterLabel(navList[1] as number)} ←
               </button>
             </div>
           )}
@@ -801,9 +812,10 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent, completed, o
             aria-label={completed ? `בטל סימון נלמד — ${lesson.title}` : `סמן כנלמד — ${lesson.title}`}
             aria-pressed={!!completed}
             onClick={onToggleComplete}
-            style={{ background: "none", border: "none", cursor: "pointer", padding: "0.3rem", flexShrink: 0, color: completed ? "#2E7D32" : "rgba(139,111,71,0.35)", display: "inline-flex", alignItems: "center", transition: "color 0.15s" }}
+            style={{ background: completed ? "#2E7D3212" : "white", border: completed ? "1px solid #2E7D3240" : "1px dashed rgba(139,111,71,0.4)", borderRadius: radii.pill, cursor: "pointer", padding: "0.35rem 0.7rem", flexShrink: 0, color: completed ? "#2E7D32" : colors.textMuted, display: "inline-flex", alignItems: "center", gap: "0.35rem", fontFamily: fonts.body, fontSize: "0.7rem", fontWeight: 700, transition: "all 0.15s" }}
           >
-            {completed ? <CheckCircle2 size={22} /> : <Circle size={22} />}
+            {completed ? <CheckCircle2 size={16} /> : <Circle size={16} />}
+            {completed ? "נלמד ✓" : "סמן כנלמד"}
           </button>
         )}
       </div>

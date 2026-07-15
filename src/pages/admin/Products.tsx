@@ -494,17 +494,9 @@ export default function AdminProducts() {
                           <SelectContent>{categories?.map(c => <SelectItem key={c.id} value={c.id}>{c.name}</SelectItem>)}</SelectContent>
                         </Select>
                       </div>
-                      <div>
-                        <Label>סוג מוצר</Label>
-                        <Select value={form.product_type} onValueChange={v => setForm({ ...form, product_type: v })}>
-                          <SelectTrigger><SelectValue /></SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="physical">פיזי</SelectItem>
-                            <SelectItem value="digital">דיגיטלי</SelectItem>
-                            <SelectItem value="bundle">חבילה</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
+                      {/* יואב 15.7: היו שני שדות "דיגיטלי" (סוג-מוצר + מתג) — אוחדו.
+                          המתג "מוצר דיגיטלי" למטה הוא המקור היחיד; product_type לא
+                          בשימוש בשום מקום (כל המוצרים 'simple'). */}
                     </div>
                     <ImageUpload value={form.image_url} onChange={url => setForm({ ...form, image_url: url })} folder="products" label="תמונת מוצר" />
                     <div>
@@ -544,7 +536,10 @@ export default function AdminProducts() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Switch checked={form.is_digital} onCheckedChange={v => setForm({ ...form, is_digital: v })} />
-                        <Label>דיגיטלי</Label>
+                        <div>
+                          <Label>מוצר דיגיטלי (קובץ להורדה)</Label>
+                          <p className="text-xs text-muted-foreground">מופעל = הרוכש מקבל קישור הורדה במייל ובדף התודה (מהשדה "קובץ דיגיטלי")</p>
+                        </div>
                       </div>
                     </div>
                     <Button onClick={() => saveMutation.mutate()} disabled={!form.title || saveMutation.isPending} className="font-display">
@@ -589,7 +584,7 @@ export default function AdminProducts() {
                           </TableCell>
                           <TableCell>{(p as any).product_categories?.name || "—"}</TableCell>
                           <TableCell>₪{p.price}</TableCell>
-                          <TableCell><Badge variant="outline">{p.product_type === "physical" ? "פיזי" : p.product_type === "digital" ? "דיגיטלי" : "חבילה"}</Badge></TableCell>
+                          <TableCell><Badge variant="outline">{p.is_digital ? "דיגיטלי" : "פיזי"}</Badge></TableCell>
                           <TableCell>
                             <div className="flex items-center gap-2">
                               <Switch

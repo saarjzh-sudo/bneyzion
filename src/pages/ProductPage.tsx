@@ -156,9 +156,9 @@ const ProductPage = () => {
                 )}
                 {/* רמה 18 (יואב 14.7): בידול חזותי לספר שעוד לא יצא לאור */}
                 {product.category?.slug === "upcoming" && (
-                  <Badge className="text-xs gap-1 bg-amber-500 text-white border-0">
+                  <Badge className="text-xs gap-1 bg-secondary text-secondary-foreground border-0">
                     <PenLine className="h-3 w-3" />
-                    בתהליך כתיבה — קובץ להורדה
+                    מהדורה דיגיטלית מוקדמת — קובץ להורדה
                   </Badge>
                 )}
                 {product.is_digital && (
