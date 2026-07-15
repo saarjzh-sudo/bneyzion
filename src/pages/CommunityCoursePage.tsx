@@ -142,15 +142,25 @@ const CommunityCoursePage = () => {
         </div>
       </div>
 
-      {/* Lessons List */}
+      {/* Lessons List — רמה 18ב (סער 15.7): קיבוץ לפי "נושא/פרק" בשם חופשי,
+          כמו מערכות קורסים רגילות. קורס בלי נושאים נשאר רשימה שטוחה. */}
       <div className="max-w-4xl mx-auto px-4 py-8 space-y-3">
-        {lessons?.map((lesson, i) => (
+        {lessons?.map((lesson, i) => {
+          const section = String((lesson as any).section_title || "").trim();
+          const prevSection = i > 0 ? String((lessons[i - 1] as any).section_title || "").trim() : "";
+          const showSectionHeader = !!section && section !== prevSection;
+          return (
           <motion.div
             key={lesson.id}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: i * 0.03 }}
           >
+            {showSectionHeader && (
+              <h2 className="font-heading text-lg text-primary mt-5 mb-2 pb-1 border-b border-gold/30">
+                {section}
+              </h2>
+            )}
             <div className="flex items-center gap-2">
               <Card
                 className="flex-1 hover:shadow-md transition-all cursor-pointer border hover:border-gold/40 group"
@@ -195,7 +205,8 @@ const CommunityCoursePage = () => {
               )}
             </div>
           </motion.div>
-        ))}
+          );
+        })}
       </div>
 
       {/* Lesson Dialog */}

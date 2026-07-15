@@ -26,6 +26,14 @@ import type { Tables } from "@/integrations/supabase/types";
 type Course = Tables<"community_courses">;
 type Lesson = Tables<"community_course_lessons">;
 
+// רמה 18ב (סער 15.7): פרקים תמיד באותיות עבריות — "פרק ג׳", לא "פרק 3"
+const HEB_NUMS = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב","יג","יד","טו","טז","יז","יח","יט","כ","כא","כב","כג","כד","כה","כו","כז","כח","כט","ל"];
+const hebChapter = (n: number) => `פרק ${HEB_NUMS[n - 1] ?? n}׳`;
+
+// ספר של הפרק-השבועי = מבנה פרק+שלוש-שכבות; קורס רגיל = נושאים בשם חופשי
+const isProgramBook = (c: Course | null | undefined) =>
+  !!((c as any)?.program_slug || (c as any)?.in_weekly_program);
+
 /* ── Stats Card ─────────────────────────────────────────── */
 function StatCard({ icon: Icon, label, value, accent }: {
   icon: React.ElementType; label: string; value: string | number; accent?: string;
@@ -140,10 +148,12 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
 }
 
 /* ── Lesson Form ────────────────────────────────────────── */
-function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending }: {
+function LessonForm({ lesson, courseId, nextNumber, programBook, onSave, onCancel, isPending }: {
   lesson?: Lesson;
   courseId: string;
   nextNumber: number;
+  /** true = ספר של הפרק-השבועי (פרק+שכבות); false = קורס רגיל (נושאים חופשיים) */
+  programBook: boolean;
   onSave: (data: Partial<Lesson>) => void;
   onCancel: () => void;
   isPending?: boolean;
@@ -158,6 +168,8 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
   // סער 14.7: שיוך לפרק ולשכבה — כך השיעור מסתדר במבנה שהלומד רואה
   const [bibleChapter, setBibleChapter] = useState((lesson as any)?.bible_chapter != null ? String((lesson as any).bible_chapter) : "");
   const [layerType, setLayerType] = useState((lesson as any)?.layer_type || "base");
+  // רמה 18ב (סער 15.7): קורס רגיל — "נושא/פרק" בשם חופשי, כמו מערכות קורסים רגילות
+  const [sectionTitle, setSectionTitle] = useState((lesson as any)?.section_title || "");
 
   return (
     <div className="space-y-5">
@@ -178,28 +190,40 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
         <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="תיאור קצר של השיעור" rows={2} className="resize-none" />
       </div>
 
-      {/* שיוך במבנה הקורס: פרק + שכבה */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1.5">
-          <label className="text-sm font-medium">פרק</label>
-          <Input type="number" min="0" value={bibleChapter} onChange={(e) => setBibleChapter(e.target.value)} placeholder="ריק = כללי/הקדמה" className="h-11" />
-          <p className="text-xs text-muted-foreground">קובע תחת איזה פרק החומר מופיע ללומד.</p>
+      {/* שיוך במבנה הקורס — שני מבנים (סער 15.7):
+          ספר פרק-שבועי: פרק + שלוש שכבות (כך מלמדים בשטח).
+          קורס רגיל: נושא/פרק בשם חופשי, כמו מערכות קורסים רגילות. */}
+      {programBook ? (
+        <div className="grid grid-cols-2 gap-4">
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">פרק</label>
+            <Input type="number" min="0" value={bibleChapter} onChange={(e) => setBibleChapter(e.target.value)} placeholder="ריק = כללי/הקדמה" className="h-11" />
+            <p className="text-xs text-muted-foreground">
+              קובע תחת איזה פרק החומר מופיע ללומד. {bibleChapter !== "" && Number(bibleChapter) > 0 ? `יוצג ללומד: ${hebChapter(Number(bibleChapter))}` : ""}
+            </p>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium">שכבה</label>
+            <select
+              value={layerType}
+              onChange={(e) => setLayerType(e.target.value)}
+              className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+            >
+              <option value="base">תכני הבסיס</option>
+              <option value="enrichment">הרחבה</option>
+              <option value="weekly">השיעור והסיכום</option>
+              <option value="intro">הקדמה</option>
+              <option value="resources">תכנים נוספים</option>
+            </select>
+          </div>
         </div>
+      ) : (
         <div className="space-y-1.5">
-          <label className="text-sm font-medium">שכבה</label>
-          <select
-            value={layerType}
-            onChange={(e) => setLayerType(e.target.value)}
-            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
-          >
-            <option value="base">תכני הבסיס</option>
-            <option value="enrichment">הרחבה</option>
-            <option value="weekly">השיעור והסיכום</option>
-            <option value="intro">הקדמה</option>
-            <option value="resources">תכנים נוספים</option>
-          </select>
+          <label className="text-sm font-medium">נושא / פרק</label>
+          <Input value={sectionTitle} onChange={(e) => setSectionTitle(e.target.value)} placeholder='למשל: "מבוא", "המראות הראשונים", "פרק א׳" — שם חופשי' className="h-11" />
+          <p className="text-xs text-muted-foreground">שיעורים עם אותו נושא מקובצים יחד אצל הלומד, לפי סדר מספרי השיעורים. ריק = ללא קיבוץ.</p>
         </div>
-      </div>
+      )}
 
       {/* Media section */}
       <div className="rounded-lg border border-border/50 bg-muted/30 p-4 space-y-3">
@@ -240,8 +264,12 @@ function LessonForm({ lesson, courseId, nextNumber, onSave, onCancel, isPending 
           title, description, video_url: videoUrl || null, audio_url: audioUrl || null,
           attachment_url: attachmentUrl || null, content_html: contentHtml || null,
           lesson_number: lessonNumber, course_id: courseId,
-          bible_chapter: bibleChapter !== "" ? Number(bibleChapter) : null,
-          layer_type: layerType,
+          ...(programBook
+            ? {
+                bible_chapter: bibleChapter !== "" ? Number(bibleChapter) : null,
+                layer_type: layerType,
+              }
+            : { section_title: sectionTitle.trim() || null }),
         } as any)} disabled={!title.trim() || isPending} className="min-w-[100px]">
           {isPending ? <span className="animate-pulse">שומר...</span> : lesson ? "שמור שינויים" : "הוסף שיעור"}
         </Button>
@@ -491,6 +519,7 @@ export default function CommunityCourses() {
                 <LessonForm
                   lesson={editingLesson}
                   courseId={selectedCourse.id}
+                  programBook={isProgramBook(selectedCourse)}
                   nextNumber={(lessons.length > 0 ? Math.max(...lessons.map(l => l.lesson_number)) : 0) + 1}
                   onSave={(data) => upsertLesson.mutate({ ...data, id: editingLesson?.id })}
                   onCancel={() => { setLessonDialogOpen(false); setEditingLesson(undefined); }}
@@ -516,26 +545,39 @@ export default function CommunityCourses() {
           ) : (
             <div className="rounded-xl border border-border/50 overflow-hidden bg-card shadow-sm">
               <AnimatePresence>
-                {/* סער 14.7: השיעורים מקובצים לפי פרק — כמו שהלומד רואה אותם.
-                    בתוך כל פרק: השכבה (בסיס/הרחבה/שיעור) + סוג כל חומר. */}
+                {/* סער 14.7 + 15.7: השיעורים מקובצים כמו שהלומד רואה אותם —
+                    ספר פרק-שבועי: לפי פרק (באות עברית) עם שכבות.
+                    קורס רגיל: לפי "נושא/פרק" בשם חופשי. */}
                 {(() => {
+                  const program = isProgramBook(selectedCourse);
                   const groups: Array<{ key: string; label: string; items: typeof lessons }> = [];
                   const byKey = new Map<string, (typeof lessons)[number][]>();
                   for (const l of lessons) {
-                    const ch = (l as any).bible_chapter;
-                    const key = ch != null ? `ch-${ch}` : "general";
+                    let key: string, label: string;
+                    if (program) {
+                      const ch = (l as any).bible_chapter;
+                      key = ch != null ? `ch-${ch}` : "general";
+                      label = ch != null ? hebChapter(ch) : "כללי / הקדמה";
+                    } else {
+                      const sec = ((l as any).section_title || "").trim();
+                      key = sec ? `sec-${sec}` : "general";
+                      label = sec || "ללא נושא";
+                    }
                     if (!byKey.has(key)) {
                       byKey.set(key, []);
-                      groups.push({ key, label: ch != null ? `פרק ${ch}` : "כללי / הקדמה", items: byKey.get(key)! as any });
+                      groups.push({ key, label, items: byKey.get(key)! as any });
                     }
                     byKey.get(key)!.push(l);
                   }
-                  groups.sort((a, b) => {
-                    if (a.key === "general") return -1;
-                    if (b.key === "general") return 1;
-                    return Number(a.key.slice(3)) - Number(b.key.slice(3));
-                  });
-                  const LAYER_LABEL: Record<string, string> = { base: "בסיס", enrichment: "הרחבה", weekly: "שיעור ושיכום" };
+                  if (program) {
+                    groups.sort((a, b) => {
+                      if (a.key === "general") return -1;
+                      if (b.key === "general") return 1;
+                      return Number(a.key.slice(3)) - Number(b.key.slice(3));
+                    });
+                  }
+                  // קורס רגיל: סדר הנושאים לפי מספר-השיעור הנמוך בכל נושא (סדר הכנסה טבעי)
+                  const LAYER_LABEL: Record<string, string> = { base: "בסיס", enrichment: "הרחבה", weekly: "שיעור וסיכום" };
                   return groups.map((g) => (
                     <div key={g.key}>
                       {groups.length > 1 && (
