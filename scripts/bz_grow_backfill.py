@@ -70,9 +70,12 @@ WITH ok AS (
          ELSE nullif(pt,'') END AS payment_label
   FROM ok
 ), missing AS (
+  -- ⚠️ תיקון 15.7.2026: שורות שדף-הקמפיין יצר נשארו עם charge_date=NULL,
+  -- ולכן ההשוואה = לא תפסה אותן — ה-backfill מ-14.7 הכניס 56 כפילויות-יהושע
+  -- (~₪7.7K ניפוח). אסמכתא זהה עם charge_date NULL = אותה עסקה.
   SELECT t.* FROM typed t
-  WHERE NOT EXISTS (SELECT 1 FROM orders o    WHERE o.asmachta = t.asm AND o.charge_date = t.charge_date)
-    AND NOT EXISTS (SELECT 1 FROM donations d WHERE d.asmachta = t.asm AND d.charge_date = t.charge_date)
+  WHERE NOT EXISTS (SELECT 1 FROM orders o    WHERE o.asmachta = t.asm AND (o.charge_date = t.charge_date OR o.charge_date IS NULL))
+    AND NOT EXISTS (SELECT 1 FROM donations d WHERE d.asmachta = t.asm AND (d.charge_date = t.charge_date OR d.charge_date IS NULL))
 )
 """
 

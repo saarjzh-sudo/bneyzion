@@ -197,6 +197,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       txData.invoiceUrl || txData.invoice_url || txData.documentUrl || null;
     const invoiceId = txData.invoiceId || txData.invoice_id || txData.documentId || null;
 
+    // charge_date (fix 2026-07-15): Grow sends paymentDate as DD/MM/YY.
+    // Without this, page-created rows keep charge_date=NULL and the
+    // accounting feed's dedup guard (asmachta+charge_date) can't see them —
+    // every yehoshua donation since 3.7 was double-inserted (~₪10K inflation).
+    let chargeDate: string | null = null;
+    const pd = String(txData.paymentDate || "").trim();
+    const pdMatch = pd.match(/^(\d{2})\/(\d{2})\/(\d{2})$/);
+    if (pdMatch) chargeDate = `20${pdMatch[3]}-${pdMatch[2]}-${pdMatch[1]}`;
+
     // Update the row with all transaction details + receipt links.
     // lesson_dedications has a different (narrower) column set than
     // orders/donations — build its update separately, or the generic
@@ -220,6 +229,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           : null,
         asmachta: txData.asmachta || null,
         card_suffix: txData.cardSuffix || null,
+        charge_date: chargeDate,
         raw_payload: mergedPayload,
         invoice_number: invoiceNumber,
         invoice_url: invoiceUrl,

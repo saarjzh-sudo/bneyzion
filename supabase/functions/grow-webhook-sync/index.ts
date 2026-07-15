@@ -143,10 +143,18 @@ Deno.serve(async (req) => {
       // ⚠️ דדופ לפי אסמכתא + תאריך-חיוב (2.7.2026): חיובי הו"ק חודשיים חוזרים
       // על אותה אסמכתא! דדופ לפי אסמכתא בלבד בלע את חיובי ההמשך —
       // בדיוק הפער שנמצא בדוחות של סער (37 שורות אבדו). charge_date מבדיל.
+      //
+      // ⚠️ תיקון 15.7.2026: שורות שנוצרו ע"י דף-הקמפיין (site flow) נשארו עם
+      // charge_date=NULL — ההשוואה eq(charge_date) לא תפסה אותן, וכל תרומת
+      // יהושע מ-3.7 הוכנסה פעמיים (~₪10K ניפוח). לכן: אסמכתא זהה עם
+      // charge_date=NULL נחשבת לאותה עסקה (השורה של האתר). webhook.ts תוקן
+      // במקביל לקבוע charge_date, אז NULL ילך וייעלם.
       const today = chargeDate ?? new Date().toISOString().slice(0, 10);
       const [{ data: inDon }, { data: inOrd }] = await Promise.all([
-        supabase.from("donations").select("id").eq("asmachta", asmachta).eq("charge_date", today).maybeSingle(),
-        supabase.from("orders").select("id").eq("asmachta", asmachta).eq("charge_date", today).maybeSingle(),
+        supabase.from("donations").select("id").eq("asmachta", asmachta)
+          .or(`charge_date.eq.${today},charge_date.is.null`).limit(1).maybeSingle(),
+        supabase.from("orders").select("id").eq("asmachta", asmachta)
+          .or(`charge_date.eq.${today},charge_date.is.null`).limit(1).maybeSingle(),
       ]);
       if (!inDon && !inOrd) {
         if (target === "donations") {
