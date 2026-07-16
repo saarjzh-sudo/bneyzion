@@ -452,12 +452,9 @@ const PRODUCT_VALID_DURATION_DAYS: Record<string, number | null> = {
 };
 
 // רמה 19: מוצרי-חנות שהם קורסים — רכישת המוצר פותחת את הקורס באתר.
-// (מיגרציית "קצב הפעימות" + "יהושע במבט רחב" מאתר המכירות הישן, 16.7.)
-const STORE_PRODUCT_COURSE_TAGS: Record<string, string> = {
-  "wc-989": "course:pulses",         // קצב הפעימות של התנ"ך
-  "wc-401": "course:yehoshua-wide",  // ספר יהושע במבט רחב
-};
-
+// דינמי (סער 16.7): הקישור מוגדר באדמין — community_courses.store_product_slug
+// מצביע על slug של מוצר בחנות, והתג שמוענק הוא access_tag של הקורס.
+// כך יואב מקשר קורס חדש למוצר בעצמו, בלי שינוי קוד.
 async function grantStoreCourseTags(params: {
   supabase: ReturnType<typeof getSupabaseAdmin>;
   email: string;
@@ -468,11 +465,21 @@ async function grantStoreCourseTags(params: {
     .from("order_items")
     .select("products:product_id (slug)")
     .eq("order_id", orderId);
-  for (const it of (items ?? []) as any[]) {
-    const slug = it?.products?.slug as string | undefined;
-    const tag = slug ? STORE_PRODUCT_COURSE_TAGS[slug] : undefined;
-    if (!tag) continue;
-    await grantAccessTag({ supabase, email, productSlug: slug, orderId, tagOverride: tag });
+  const slugs = ((items ?? []) as any[])
+    .map((it) => it?.products?.slug as string | undefined)
+    .filter(Boolean) as string[];
+  if (!slugs.length) return;
+  const { data: courses } = await supabase
+    .from("community_courses")
+    .select("access_tag, store_product_slug")
+    .in("store_product_slug", slugs)
+    .not("access_tag", "is", null);
+  for (const c of (courses ?? []) as any[]) {
+    await grantAccessTag({
+      supabase, email, orderId,
+      productSlug: c.store_product_slug,
+      tagOverride: c.access_tag,
+    });
   }
 }
 

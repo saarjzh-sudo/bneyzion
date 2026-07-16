@@ -10,6 +10,7 @@
  * קורסי-ספר של הפרק-השבועי (program_slug) ממשיכים להפנות לדף הספר.
  */
 import { sanitizeHtml } from "@/lib/sanitize";
+import { normalizeMediaUrl, isDriveUrl } from "@/lib/mediaUrl";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAccess } from "@/hooks/useUserAccess";
@@ -326,14 +327,19 @@ const CommunityCoursePage = () => {
                   <div style={{ padding: "0 1.7rem 1.4rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
                     {selected.video_url && (
                       <div style={{ aspectRatio: "16/9", borderRadius: radii.lg, overflow: "hidden", background: "black", border: "1px solid rgba(139,111,71,0.15)" }}>
-                        <iframe src={selected.video_url} style={{ width: "100%", height: "100%", border: "none" }} allowFullScreen title={selected.title} />
+                        <iframe src={normalizeMediaUrl(selected.video_url)!} style={{ width: "100%", height: "100%", border: "none" }} allowFullScreen title={selected.title} />
                       </div>
                     )}
 
+                    {/* שמע מדרייב לא מתנגן ב-<audio> — חייב iframe של /preview (סער 16.7) */}
                     {selected.audio_url && (
                       <div style={{ borderRadius: radii.lg, background: "rgba(58,138,133,0.07)", border: "1px solid rgba(58,138,133,0.2)", padding: "0.9rem 1.1rem", display: "flex", alignItems: "center", gap: "0.9rem" }}>
                         <Headphones size={20} style={{ color: "#3a8a85", flexShrink: 0 }} />
-                        <audio controls src={selected.audio_url} style={{ width: "100%", height: 38 }} />
+                        {isDriveUrl(selected.audio_url) ? (
+                          <iframe src={normalizeMediaUrl(selected.audio_url)!} style={{ width: "100%", height: 110, border: "none", borderRadius: 8 }} title={selected.title} />
+                        ) : (
+                          <audio controls src={selected.audio_url} style={{ width: "100%", height: 38 }} />
+                        )}
                       </div>
                     )}
 

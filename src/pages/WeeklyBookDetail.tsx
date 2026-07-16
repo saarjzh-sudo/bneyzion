@@ -29,6 +29,7 @@
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
 import { useEffect, useRef, useState } from "react";
+import { normalizeMediaUrl } from "@/lib/mediaUrl";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalWeeklyNav } from "@/components/weekly/GlobalWeeklyNav";
 import { ZoomCtaCard } from "@/components/weekly/ZoomCtaCard";
@@ -102,7 +103,7 @@ type NavItem = "intro" | "resources" | number;
 type TabKey  = "base" | "enrichment" | "weekly";
 
 // ── Media helpers ──────────────────────────────────────────────────────────
-function mediaUrl(l: CommunityLesson) { return l.video_url ?? l.audio_url ?? l.attachment_url ?? null; }
+function mediaUrl(l: CommunityLesson) { return normalizeMediaUrl(l.video_url ?? l.audio_url ?? l.attachment_url ?? null); }
 function mediaKind(l: CommunityLesson): "video" | "audio" | "pdf" | "none" {
   if (l.video_url) return "video";
   if (l.audio_url) return "audio";

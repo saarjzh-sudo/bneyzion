@@ -66,6 +66,9 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
   const [rabbiId, setRabbiId] = useState(course?.rabbi_id || "");
   const [status, setStatus] = useState(course?.status || "active");
   const [salesContent, setSalesContent] = useState((course as any)?.sales_content || "");
+  // סער 16.7: בלי זה קורס חדש נולד 'open' — קורס בתשלום היה נפתח חינם לכולם
+  const [accessType, setAccessType] = useState((course as any)?.access_type || "open");
+  const [storeProductSlug, setStoreProductSlug] = useState((course as any)?.store_product_slug || "");
 
   const { data: rabbis = [] } = useQuery({
     queryKey: ["admin-rabbis-for-courses"],
@@ -77,6 +80,18 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
     },
     staleTime: 300_000,
   });
+
+  const { data: storeProducts = [] } = useQuery({
+    queryKey: ["admin-store-products-for-courses"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("products").select("slug, title, price").eq("status", "active").order("title");
+      if (error) throw error;
+      return data ?? [];
+    },
+    staleTime: 300_000,
+  });
+  const linkedProduct = storeProducts.find((p: any) => p.slug === storeProductSlug);
 
   return (
     <div className="space-y-5">
@@ -124,6 +139,39 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
           </select>
         </div>
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">גישה לקורס</label>
+          <select
+            value={accessType}
+            onChange={(e) => setAccessType(e.target.value)}
+            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="open">פתוח — כל גולש מחובר לומד חינם</option>
+            <option value="requires_tag">בתשלום — נפתח רק לרוכשים ולמנויים</option>
+            <option value="subscribers_only">למנויי הפרק השבועי בלבד</option>
+          </select>
+          <p className="text-xs text-muted-foreground">קורס בתשלום סגור לגמרי למי שלא רכש — מוצג לו דף מכירה בלבד.</p>
+        </div>
+        <div className="space-y-1.5">
+          <label className="text-sm font-medium text-foreground">מוצר מקושר בחנות</label>
+          <select
+            value={storeProductSlug}
+            onChange={(e) => setStoreProductSlug(e.target.value)}
+            className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
+          >
+            <option value="">— ללא (רכישה מדף הקורס עצמו) —</option>
+            {storeProducts.map((p: any) => (
+              <option key={p.slug} value={p.slug}>{p.title} · ₪{p.price}</option>
+            ))}
+          </select>
+          <p className="text-xs text-muted-foreground">
+            {linkedProduct
+              ? `מי שרוכש את "${linkedProduct.title}" בחנות מקבל את הקורס אוטומטית. החיוב בפועל לפי מחיר המוצר (₪${linkedProduct.price}) — המחיר למעלה הוא לתצוגה בקטלוג.`
+              : "לקורס שנמכר דרך מוצר בחנות — הרכישה פותחת את הקורס אוטומטית עם המייל של הרוכש."}
+          </p>
+        </div>
+      </div>
       {/* יואב 14.7: העלאת תמונה כמו בחנות — לא שדה קישור */}
       <ImageUpload value={imageUrl} onChange={setImageUrl} folder="courses" label="תמונת כיסוי" />
       <Separator />
@@ -136,6 +184,8 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
             rabbi_id: rabbiId || null,
             status,
             sales_content: salesContent || null,
+            access_type: accessType,
+            store_product_slug: storeProductSlug || null,
           } as any)}
           disabled={!title.trim() || isPending}
           className="min-w-[100px]"
@@ -327,14 +377,27 @@ export default function CommunityCourses() {
       if (data.id) {
         const { error } = await supabase.from("community_courses").update(data).eq("id", data.id);
         if (error) throw error;
+        // קורס בתשלום חייב תג-גישה (זה מה שהרכישה מעניקה) — משלימים אם חסר
+        if ((data as any).access_type === "requires_tag") {
+          await supabase.from("community_courses")
+            .update({ access_tag: `course:${data.id}` } as any)
+            .eq("id", data.id).is("access_tag", null);
+        }
       } else {
-        const { error } = await supabase.from("community_courses").insert({
+        const { data: created, error } = await supabase.from("community_courses").insert({
           title: data.title!, description: data.description, image_url: data.image_url,
           price: data.price ?? 0, rabbi_id: data.rabbi_id ?? null, status: data.status ?? "active",
           sales_content: (data as any).sales_content ?? null,
+          access_type: (data as any).access_type ?? "open",
+          store_product_slug: (data as any).store_product_slug ?? null,
           sort_order: courses.length,
-        } as any);
+        } as any).select("id").single();
         if (error) throw error;
+        if ((data as any).access_type === "requires_tag" && created?.id) {
+          const { error: tagErr } = await supabase.from("community_courses")
+            .update({ access_tag: `course:${created.id}` } as any).eq("id", created.id);
+          if (tagErr) throw tagErr;
+        }
       }
     },
     onSuccess: () => {
