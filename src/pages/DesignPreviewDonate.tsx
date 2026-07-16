@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { useRecentDonations } from "@/hooks/useDonations";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 import DonateForm from "@/components/donate/DonateForm";
 import { useScrollReveal } from "@/components/donate/useScrollReveal";
 import { useDonationStats } from "@/components/donate/useDonationStats";
@@ -145,26 +146,33 @@ export default function DesignPreviewDonate() {
 // ───────────────────────────────────────────────────────────
 
 function Story() {
+  // רמה 20 (יואב 16.7: "איפה אני יכול לערוך את המלל בדף התרומות?") —
+  // המלל נערך מאדמין ← מרכז שליטה ← קבוצת "דף התרומות".
+  const siteCopy = useSiteCopy();
   return (
     <Reveal>
-      <Kicker>שותפים לבית התנ״ך</Kicker>
-      <H2 big>היו שותפים איתנו<br />להפצת אור התנ״ך!</H2>
+      <Kicker>{siteCopy("copy.donate.hero_eyebrow", "שותפים לבית התנ״ך")}</Kicker>
+      <H2 big>
+        {siteCopy("copy.donate.hero_title_line1", "היו שותפים איתנו")}
+        <br />
+        {siteCopy("copy.donate.hero_title_line2", "להפצת אור התנ״ך!")}
+      </H2>
 
       <figure className="yoav-figure">
         <div className="yoav-frame">
           <img className="yoav-photo" src={IMAGES.yoavTeaching} alt="הרב יואב אוריאל אוחז בסט ספרי בני ציון" loading="lazy" />
         </div>
-        <figcaption>מאחורי כל שיעור עומדים אנשים אמיתיים שבונים תורה</figcaption>
+        <figcaption>{siteCopy("copy.donate.photo_caption", "מאחורי כל שיעור עומדים אנשים אמיתיים שבונים תורה")}</figcaption>
       </figure>
 
-      <p style={pStyle}>בני ציון נולדה מתוך אמונה פשוטה: התנ״ך הוא לא רק ספר של פעם. הוא הלב של עם ישראל — הוא מספר לנו מי אנחנו, מאיפה באנו ולאן אנחנו הולכים.</p>
-      <p style={pStyle}>בשנים האחרונות נבנה כאן בית גדול ללימוד תנ״ך: שיעורים, סדרות, ספרי מכלל יופי, קורסים, תשובות וכלים למורים, הורים ולומדים. אבל כדי שכל זה יישאר פתוח באמת — צריך להחזיק אותו.</p>
-      <p style={pStyle}>כל שיעור עובר דרך ארוכה: הכנה, הקלטה, עריכה, תמלול, עיצוב והעלאה. מבחוץ זה נראה פשוט. בפנים זו עבודה גדולה.</p>
-      <p style={{ ...pStyle, color: C.ink, fontWeight: 600 }}>יכולנו לסגור את התוכן מאחורי תשלום. לעשות מנוי. אבל בחרנו אחרת.</p>
-      <p style={pStyle}>התנ״ך שייך לעם ישראל — ולכן אנחנו רוצים שהוא יישאר פתוח לכל יהודי. ילד, מורה, חייל, הורה, וכל מי שמחפש שער להיכנס דרכו.</p>
+      <p style={pStyle}>{siteCopy("copy.donate.story_p1", "בני ציון נולדה מתוך אמונה פשוטה: התנ״ך הוא לא רק ספר של פעם. הוא הלב של עם ישראל — הוא מספר לנו מי אנחנו, מאיפה באנו ולאן אנחנו הולכים.")}</p>
+      <p style={pStyle}>{siteCopy("copy.donate.story_p2", "בשנים האחרונות נבנה כאן בית גדול ללימוד תנ״ך: שיעורים, סדרות, ספרי מכלל יופי, קורסים, תשובות וכלים למורים, הורים ולומדים. אבל כדי שכל זה יישאר פתוח באמת — צריך להחזיק אותו.")}</p>
+      <p style={pStyle}>{siteCopy("copy.donate.story_p3", "כל שיעור עובר דרך ארוכה: הכנה, הקלטה, עריכה, תמלול, עיצוב והעלאה. מבחוץ זה נראה פשוט. בפנים זו עבודה גדולה.")}</p>
+      <p style={{ ...pStyle, color: C.ink, fontWeight: 600 }}>{siteCopy("copy.donate.story_p4", "יכולנו לסגור את התוכן מאחורי תשלום. לעשות מנוי. אבל בחרנו אחרת.")}</p>
+      <p style={pStyle}>{siteCopy("copy.donate.story_p5", "התנ״ך שייך לעם ישראל — ולכן אנחנו רוצים שהוא יישאר פתוח לכל יהודי. ילד, מורה, חייל, הורה, וכל מי שמחפש שער להיכנס דרכו.")}</p>
 
       <blockquote className="pull-quote">
-        התרומה שלכם היא לא ״תרומה לאתר״. היא עוד שיעור שילד יפגוש. עוד אדם שיפתח תנ״ך וירגיש שהוא נכנס הביתה.
+        {siteCopy("copy.donate.quote", "התרומה שלכם היא לא ״תרומה לאתר״. היא עוד שיעור שילד יפגוש. עוד אדם שיפתח תנ״ך וירגיש שהוא נכנס הביתה.")}
       </blockquote>
     </Reveal>
   );
