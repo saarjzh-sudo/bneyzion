@@ -13,7 +13,7 @@
  */
 import { useMemo, useState, useEffect, useCallback } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Search, Download, UserPlus, X, ChevronLeft, KeyRound, Mail, AlertTriangle,
 } from "lucide-react";
@@ -130,6 +130,8 @@ export default function DesignPreviewUsers() {
 
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
+  // סער 16.7: "למי יש גישה למה" — סינון לפי קורס, ורשימת קורסים דינמית
+  const [courseFilter, setCourseFilter] = useState<string>("");
   const [openEmail, setOpenEmail] = useState<string | null>(null);
   const [grantFor, setGrantFor] = useState<UnifiedUser | null>(null);
   const [grantTag, setGrantTag] = useState("program:weekly-chapter");
@@ -142,6 +144,30 @@ export default function DesignPreviewUsers() {
     queryClient.invalidateQueries({ queryKey: ["admin-unified-users"] });
     queryClient.invalidateQueries({ queryKey: ["admin-user-detail"] });
   };
+
+  // רשימת הקורסים חיה מה-DB — קורס חדש שנוצר באדמין מופיע כאן אוטומטית,
+  // גם בבורר-ההענקה, גם בסינון וגם בתוויות התגים (סער 16.7).
+  const { data: courseTags = [] } = useQuery({
+    queryKey: ["admin-course-tags"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_courses")
+        .select("title, access_tag, status")
+        .not("access_tag", "is", null)
+        .neq("status", "archived")
+        .order("title");
+      if (error) throw error;
+      return (data ?? []) as Array<{ title: string; access_tag: string; status: string }>;
+    },
+    staleTime: 60_000,
+  });
+  const tagLabel = useCallback((tag: string) => {
+    if (tag === "program:weekly-chapter") return "מנוי הפרק השבועי";
+    if (tag === "program:eicha-monday") return "איכה — ימי שני";
+    const c = courseTags.find((x) => x.access_tag === tag);
+    if (c) return `קורס ${c.title}`;
+    return tag;
+  }, [courseTags]);
 
   // הענקת גישה — כתיבה אמיתית ל-user_access_tags (RLS: admin בלבד).
   // upsert על (email,tag): מחיה tag קטוע במקום שורה כפולה.
@@ -209,6 +235,7 @@ export default function DesignPreviewUsers() {
     const needle = q.trim().toLowerCase();
     return enriched
       .filter((e) => filter === "all" || e.flags.includes(filter))
+      .filter((e) => !courseFilter || (e.u.tags || []).some((t: any) => t.tag === courseFilter && t.active))
       .filter((e) =>
         !needle ||
         e.u.email.includes(needle) ||
@@ -219,7 +246,7 @@ export default function DesignPreviewUsers() {
         const lb = b.u.last_any_charge || b.u.last_donation_date || b.u.first_seen || "";
         return lb.localeCompare(la);
       });
-  }, [enriched, q, filter]);
+  }, [enriched, q, filter, courseFilter]);
 
   const exportCsv = useCallback(() => {
     const head = "email,name,phone,flags,truth,last_sub_charge,donation_total,purchase_total\n";
@@ -330,6 +357,24 @@ export default function DesignPreviewUsers() {
 
             {/* Toolbar */}
             <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+              {/* סער 16.7: "למי יש גישה למה" — סינון לפי תכנית/קורס, רשימה חיה מה-DB */}
+              <select
+                value={courseFilter}
+                onChange={(e) => setCourseFilter(e.target.value)}
+                aria-label="סינון לפי גישה לקורס"
+                style={{
+                  height: 40, borderRadius: 10, border: `1px solid ${courseFilter ? C.gold2 : C.line}`,
+                  background: C.panel, color: C.ink, padding: "0 12px", fontFamily: "inherit", fontSize: 13,
+                  boxShadow: courseFilter ? `0 0 0 1.5px ${C.gold2}` : "none", maxWidth: 260,
+                }}
+              >
+                <option value="">כל הגישות (סינון לפי קורס…)</option>
+                <option value="program:weekly-chapter">מנוי הפרק השבועי</option>
+                <option value="program:eicha-monday">איכה — ימי שני</option>
+                {courseTags.map((c) => (
+                  <option key={c.access_tag} value={c.access_tag}>קורס {c.title}</option>
+                ))}
+              </select>
               <div style={{ position: "relative", flex: "1 1 260px", maxWidth: 400 }}>
                 <Search size={16} color={C.faint} style={{ position: "absolute", insetInlineEnd: 12, top: "50%", transform: "translateY(-50%)" }} />
                 <input
@@ -470,6 +515,7 @@ export default function DesignPreviewUsers() {
               removeMutation.mutate({ email, tag });
             }}
             notify={setToast}
+            tagLabel={tagLabel}
           />
         </>
       )}
@@ -503,15 +549,13 @@ export default function DesignPreviewUsers() {
             )}
             <div style={{ marginBottom: 13 }}>
               <label htmlFor="grant-type" style={labelStyle}>סוג גישה</label>
+              {/* דינמי (סער 16.7): כל קורס עם access_tag — כולל קורסים חדשים */}
               <select id="grant-type" style={inputStyle} value={grantTag} onChange={(e) => setGrantTag(e.target.value)}>
                 <option value="program:weekly-chapter">מנוי הפרק השבועי</option>
                 <option value="program:eicha-monday">איכה — ימי שני</option>
-                <option value="course:daniel">קורס ספר דניאל</option>
-                <option value="course:ezra">קורס ספר עזרא</option>
-                <option value="course:nehemiah">קורס ספר נחמיה</option>
-                <option value="course:esther">קורס מגילת אסתר</option>
-                <option value="course:lamentations">קורס מגילת איכה</option>
-                <option value="course:haggai-zechariah-malachi">קורס חגי-זכריה-מלאכי</option>
+                {courseTags.map((c) => (
+                  <option key={c.access_tag} value={c.access_tag}>קורס {c.title}</option>
+                ))}
               </select>
             </div>
             <div style={{ marginBottom: 13 }}>
@@ -564,11 +608,12 @@ export default function DesignPreviewUsers() {
 }
 
 // ── Drawer ────────────────────────────────────────────────────────────────
-function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, notify }: {
+function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, notify, tagLabel }: {
   u: UnifiedUser; flags: UserFlag[]; truth: TruthStatus; mock: boolean;
   onClose: () => void; onGrant: () => void;
   onRemoveTag: (email: string, tag: string) => void;
   notify: (m: string) => void;
+  tagLabel: (tag: string) => string;
 }) {
   const detail = useUserDetail(mock ? null : u.email);
 
@@ -656,9 +701,7 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, noti
                 }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontWeight: 700, fontSize: 13.5 }}>
-                    {t.tag === "program:weekly-chapter" ? "מנוי הפרק השבועי"
-                      : t.tag === "program:eicha-monday" ? "איכה — ימי שני"
-                      : t.tag}
+                    {tagLabel(t.tag)}
                     {!t.active && " · לא פעיל"}
                   </div>
                   <div style={{ fontSize: 11.5, color: C.muted, direction: "ltr", textAlign: "right" }}>
