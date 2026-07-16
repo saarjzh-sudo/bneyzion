@@ -90,20 +90,12 @@ const BOOK_ACCENTS: Record<string, string> = {
   "book-lamentations":            "#7A5A3A",
 };
 
-// ── Designed schedule images (לו״ז) — exported from the lessons Drive, ─────
-// self-hosted under public/schedules/<slug>.jpg for reliability.
-// Note: esther uses "מבנה הלימוד" (closest available); no dedicated לו״ז yet.
-// חגי/זכריה/מלאכי חולקים את הלו״ז המעוצב של היחידה המשולשת (זה שנשלח לקבוצות).
-const SCHEDULE_IMAGES: Record<string, string> = {
-  "book-ezra":                     "/schedules/book-ezra.jpg",
-  "book-nehemiah":                 "/schedules/book-nehemiah.jpg",
-  "book-daniel":                   "/schedules/book-daniel.jpg",
-  "book-esther":                   "/schedules/book-esther.jpg",
-  "book-lamentations":             "/schedules/book-lamentations.jpg",
-  "book-haggai":                   "/schedules/book-haggai-zechariah-malachi.jpg",
-  "book-zechariah":                "/schedules/book-haggai-zechariah-malachi.jpg",
-  "book-malachi":                  "/schedules/book-haggai-zechariah-malachi.jpg",
-};
+// ── לו״ז הלימוד = פריט-תוכן רגיל בקורס (סער 16.7) ──────────────────────────
+// התמונה המעוצבת יושבת על שורת-שיעור (layer=intro, בלי פרק, כותרת "לו״ז")
+// שנערכת מהאדמין כמו כל פריט: החלפת תמונה, עריכת כותרת, הסתרה = טיוטה.
+// אין יותר מפה קשיחה בקוד — מחיקת הפריט מורידה את הכרטיס מהדף.
+const isScheduleLesson = (l: CommunityLesson) =>
+  l.bible_chapter == null && /לו[״"']?ז|לוח זמנים|תאריכי מפגש/.test(l.title || "");
 
 // ── NavItem type: intro | resources | chapter-number ──────────────────────
 type NavItem = "intro" | "resources" | number;
@@ -400,8 +392,11 @@ export default function WeeklyBookDetail() {
 
   const bookTitle = course?.title ?? slug;
   const chapterNumbers = courseData?.chapterNumbers ?? [];
-  const introItems    = courseData?.intro ?? [];
-  const resourceItems = courseData?.resources ?? [];
+  // הלו״ז יוצא מרשימת-ההקדמה ומרונדר ככרטיס-הלו״ז (פריט נערך באדמין, סער 16.7)
+  const allIntroItems  = courseData?.intro ?? [];
+  const scheduleLesson = allIntroItems.find(isScheduleLesson) ?? (courseData?.resources ?? []).find(isScheduleLesson);
+  const introItems     = allIntroItems.filter((l) => !isScheduleLesson(l));
+  const resourceItems  = (courseData?.resources ?? []).filter((l) => !isScheduleLesson(l));
 
   const coursePath = `/course/${course?.program_slug ?? slug}`;
   const courseDesc =
@@ -577,14 +572,14 @@ export default function WeeklyBookDetail() {
                 />
               )}
 
-              {/* Chapter schedule (לו״ז) — Drive image when set, else live list.
-                  מוצג רק בספר הנוכחי ורק לחברי התכנית (מנוי/איכה/אדמין):
-                  לרוכש קורס-ספר בודד — וגם בספרי-ארכיון שהסתיימו (עזרא) —
-                  לו״ז השיעורים החיים לא רלוונטי (יואב 15.7, סער 16.7). */}
-              {scheduleItems.length > 0 && course?.is_current && (isAdmin || programAccess || eichaAccess) && (
+              {/* Chapter schedule (לו״ז) — ניזון מפריט-תוכן שנערך באדמין (סער 16.7):
+                  התמונה = של הפריט; מחיקה/טיוטה של הפריט מסירה את הכרטיס.
+                  מוצג רק בספר הנוכחי ורק לחברי התכנית (מנוי/איכה/אדמין) —
+                  לרוכש קורס-ספר בודד ובספרי-ארכיון לא רלוונטי (יואב 15.7). */}
+              {scheduleLesson && course?.is_current && (isAdmin || programAccess || eichaAccess) && (
                 <WeeklyScheduleCard
                   bookTitle={bookTitle}
-                  scheduleImageUrl={(course as any)?.schedule_image_url ?? SCHEDULE_IMAGES[slug] ?? null}
+                  scheduleImageUrl={scheduleLesson.thumbnail_url || scheduleLesson.attachment_url || null}
                   items={scheduleItems}
                   accent={accent}
                 />
