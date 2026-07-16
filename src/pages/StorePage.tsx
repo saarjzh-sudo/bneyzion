@@ -291,7 +291,7 @@ const StorePage = () => {
                           className="absolute inset-0"
                           style={{
                             background:
-                              "linear-gradient(180deg, rgba(250,246,240,0.55) 0%, rgba(250,246,240,0.82) 45%, rgba(250,246,240,0.94) 100%)",
+                              "linear-gradient(180deg, rgba(250,246,240,0.2) 0%, rgba(250,246,240,0.62) 42%, rgba(250,246,240,0.9) 100%)",
                           }}
                         />
                       </>
