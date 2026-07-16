@@ -146,6 +146,32 @@ export function useCreateDedication() {
 // Admin: full list + status/price management
 // ---------------------------------------------------------------------------
 
+/**
+ * מפת מזהה→כותרת לכל השיעורים/סדרות שהוקדשו (יואב 16.7: "מה הוקדש" באדמין).
+ * שאילתה אחת לכל טבלה, רק על המזהים שבפועל בהקדשות.
+ */
+export function useDedicationTargets(dedications?: Array<{ scope: string; lesson_id: string | null; series_id: string | null }>) {
+  const lessonIds = [...new Set((dedications ?? []).filter((d) => d.lesson_id).map((d) => d.lesson_id as string))];
+  const seriesIds = [...new Set((dedications ?? []).filter((d) => d.series_id).map((d) => d.series_id as string))];
+  return useQuery({
+    queryKey: ["dedication-targets", lessonIds.sort().join(","), seriesIds.sort().join(",")],
+    enabled: lessonIds.length > 0 || seriesIds.length > 0,
+    staleTime: 1000 * 60 * 5,
+    queryFn: async () => {
+      const map: Record<string, string> = {};
+      if (lessonIds.length) {
+        const { data } = await supabase.from("lessons").select("id, title").in("id", lessonIds);
+        for (const r of (data ?? []) as Array<{ id: string; title: string }>) map[`lesson:${r.id}`] = r.title;
+      }
+      if (seriesIds.length) {
+        const { data } = await supabase.from("series").select("id, title").in("id", seriesIds);
+        for (const r of (data ?? []) as Array<{ id: string; title: string }>) map[`series:${r.id}`] = r.title;
+      }
+      return map;
+    },
+  });
+}
+
 /** כל ההקדשות (לכל הסטטוסים) — לשימוש פאנל האדמין. */
 export function useAllDedications() {
   return useQuery({

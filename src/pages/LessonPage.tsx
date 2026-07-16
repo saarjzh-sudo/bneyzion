@@ -257,7 +257,8 @@ const LessonPage = () => {
             {/* Dedication */}
             <div className="flex items-center gap-3 flex-wrap">
               <DedicationDialog lessonId={lesson.id} lessonTitle={lesson.title} seriesId={series?.id} seriesTitle={series?.title} />
-              <DedicationBadge lessonId={lesson.id} />
+              {/* יואב 16.7: שיעור בתוך סדרה מוקדשת מציג גם את הקדשת-הסדרה */}
+              <DedicationBadge lessonId={lesson.id} seriesId={series?.id} />
             </div>
 
             <Separator />

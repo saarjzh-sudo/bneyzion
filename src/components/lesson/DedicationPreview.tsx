@@ -53,9 +53,7 @@ export default function DedicationPreview({
           <span className="font-display text-foreground">
             {hasName ? data.dedicated_name : "שם המוקדש"}
           </span>
-          {data.dedicator_name?.trim() && (
-            <span className="text-muted-foreground text-xs block">מאת {data.dedicator_name}</span>
-          )}
+          {/* יואב 16.7: לא מציגים "מאת מי" — ההקדשה עצמה מדברת, בלי שם התורם */}
           {data.message?.trim() && (
             <span className="text-muted-foreground text-xs block mt-0.5">{data.message}</span>
           )}

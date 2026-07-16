@@ -308,6 +308,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (dedicationMeta.scope === "series" && !dedicationMeta.series_id) {
         return res.status(400).json({ error: "חסר מזהה סדרה להקדשה" });
       }
+      // מניעת כפילות בשרת (יואב 16.7): פריט שכבר הוקדש נחסם — גם אם עוקפים
+      // את חסימת-הדפדפן. סדרה מוקדשת חוסמת גם הקדשת שיעור מתוכה.
+      {
+        const active = ["active", "pending"];
+        if (dedicationMeta.scope === "series") {
+          const { data: dup } = await supabaseAdmin
+            .from("lesson_dedications").select("id")
+            .eq("series_id", dedicationMeta.series_id).in("status", active).limit(1);
+          if (dup && dup.length) return res.status(409).json({ error: "הסדרה הזו כבר הוקדשה" });
+        } else {
+          const { data: lessonRow } = await supabaseAdmin
+            .from("lessons").select("series_id").eq("id", dedicationMeta.lesson_id!).maybeSingle();
+          const sid = (lessonRow as any)?.series_id;
+          const { data: dupL } = await supabaseAdmin
+            .from("lesson_dedications").select("id")
+            .eq("lesson_id", dedicationMeta.lesson_id).in("status", active).limit(1);
+          if (dupL && dupL.length) return res.status(409).json({ error: "השיעור הזה כבר הוקדש" });
+          if (sid) {
+            const { data: dupS } = await supabaseAdmin
+              .from("lesson_dedications").select("id")
+              .eq("series_id", sid).in("status", active).limit(1);
+            if (dupS && dupS.length) return res.status(409).json({ error: "הסדרה של השיעור כבר הוקדשה" });
+          }
+        }
+      }
       const expectedPrice = await computeDedicationPrice(supabaseAdmin, dedicationMeta);
       if (Math.abs(expectedPrice - sum) > 1) {
         console.warn("create-payment dedication sum mismatch:", {

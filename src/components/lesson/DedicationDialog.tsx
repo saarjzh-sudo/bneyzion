@@ -17,6 +17,8 @@ import { Link } from "react-router-dom";
 import {
   useDedicationPricing,
   useDedicationSettings,
+  useLessonDedications,
+  useSeriesDedications,
   type DedicationScope,
   type DedicationType,
 } from "@/hooks/useLessonDedications";
@@ -76,7 +78,19 @@ export default function DedicationDialog({
   const queryClient = useQueryClient();
 
   const selectedType = TYPES.find((t) => t.value === type)!;
-  // שני היקפים לבחירה רק כשיש גם שיעור וגם סדרה
+
+  // מניעת כפילות (יואב 16.7): פריט שכבר הוקדש — לא ניתן להקדיש שוב.
+  // סדרה מוקדשת חוסמת גם הקדשת שיעור בתוכה (השיעור כבר מוצג כמוקדש).
+  const { data: lessonDeds } = useLessonDedications(lessonId);
+  const { data: seriesDeds } = useSeriesDedications(seriesId);
+  const seriesTaken = (seriesDeds?.length ?? 0) > 0;
+  const lessonTaken = (lessonDeds?.length ?? 0) > 0 || seriesTaken;
+  const scopeTaken = scope === "series" ? seriesTaken : lessonTaken;
+  const takenReason = seriesTaken
+    ? "הסדרה הזו כבר הוקדשה — אי אפשר להקדיש אותה או שיעור מתוכה שוב."
+    : "השיעור הזה כבר הוקדש.";
+
+  // שני היקפים לבחירה רק כשיש גם שיעור וגם סדרה, וההיקף פנוי
   const canChooseScope = !!seriesId && !!lessonId;
 
   // תמחור דיפרנציאלי (סער 10.7): רב מבוקש / גודל סדרה — מחושב בהוק,
@@ -102,6 +116,10 @@ export default function DedicationDialog({
   };
 
   const handleSubmit = async () => {
+    if (scopeTaken) {
+      toast({ title: takenReason, variant: "destructive" });
+      return;
+    }
     if (!name.trim()) {
       toast({ title: "נא למלא את שם המוקדש", variant: "destructive" });
       return;
@@ -190,6 +208,12 @@ export default function DedicationDialog({
         </DialogHeader>
 
         <div className="space-y-4 mt-2">
+          {/* יואב 16.7: פריט שכבר הוקדש — הודעה במקום טופס */}
+          {scopeTaken && (
+            <div className="rounded-xl border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-foreground text-center">
+              {takenReason}
+            </div>
+          )}
           {/* Scope: lesson vs whole series */}
           {canChooseScope && (
             <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="מה להקדיש">
@@ -336,7 +360,7 @@ export default function DedicationDialog({
             </label>
           </div>
 
-          <Button onClick={handleSubmit} disabled={isLoading || !tosAccepted} className="w-full font-display gap-2">
+          <Button onClick={handleSubmit} disabled={isLoading || !tosAccepted || scopeTaken} className="w-full font-display gap-2">
             {isLoading ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />

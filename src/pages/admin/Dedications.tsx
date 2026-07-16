@@ -29,6 +29,7 @@ import {
 import { Heart, Plus, Trash2, CheckCircle2, Clock, Archive, Settings2, Download } from "lucide-react";
 import {
   useAllDedications,
+  useDedicationTargets,
   useCreateDedication,
   useUpdateDedication,
   useDeleteDedication,
@@ -76,6 +77,12 @@ const emptySeedForm = () => ({
 
 export default function Dedications() {
   const { data: dedications, isLoading } = useAllDedications();
+  const { data: targetNames } = useDedicationTargets(dedications);
+  // "מה הוקדש" (יואב 16.7): שם השיעור/סדרה, לא UUID
+  const targetName = (d: { scope: string; lesson_id: string | null; series_id: string | null }) =>
+    d.scope === "series"
+      ? (d.series_id ? targetNames?.[`series:${d.series_id}`] : null) || "סדרה"
+      : (d.lesson_id ? targetNames?.[`lesson:${d.lesson_id}`] : null) || "שיעור";
   const updateDedication = useUpdateDedication();
   const deleteDedication = useDeleteDedication();
   const createDedication = useCreateDedication();
@@ -142,7 +149,7 @@ export default function Dedications() {
 
   // רמה 18: ייצוא CSV — היה חסר רק בעמוד הזה (יש בהזמנות ובתרומות)
   const exportCsv = () => {
-    const headers = ["תאריך", "סוג", "שם מוקדש", "שם מקדיש", "טלפון", "אימייל", "היקף", "סכום", "סטטוס"];
+    const headers = ["תאריך", "סוג", "שם מוקדש", "היקף", "מה הוקדש", "שם מקדיש", "טלפון", "אימייל", "סכום", "סטטוס"];
     const typeLabel: Record<string, string> = {
       iluy_neshama: "לעילוי נשמת", refua: "לרפואה", hatzlacha: "להצלחה", memory: "לזכר",
     };
@@ -150,10 +157,11 @@ export default function Dedications() {
       d.created_at ? new Date(d.created_at).toLocaleDateString("he-IL") : "",
       typeLabel[d.dedication_type] || d.dedication_type,
       d.dedicated_name || "",
+      d.scope === "series" ? "סדרה" : "שיעור",
+      targetName(d),  // יואב 16.7: מה הוקדש
       d.dedicator_name || "",
       (d as any).dedicator_phone || "",
       (d as any).dedicator_email || "",
-      d.scope === "series" ? "סדרה" : "שיעור",
       (d as any).amount ?? "",
       d.status,
     ]);
@@ -324,8 +332,9 @@ export default function Dedications() {
                           <Badge variant="secondary" className="font-ploni">
                             {d.scope === "series" ? "סדרה" : "שיעור"}
                           </Badge>
-                          <div dir="ltr" className="text-[10px] mt-1 truncate max-w-[140px]" style={{ color: C.textMuted }}>
-                            {d.scope === "series" ? d.series_id : d.lesson_id}
+                          {/* יואב 16.7: מה הוקדש — שם השיעור/סדרה במקום מזהה */}
+                          <div className="text-xs mt-1 truncate max-w-[200px]" style={{ color: C.text }} title={targetName(d)}>
+                            {targetName(d)}
                           </div>
                         </TableCell>
                         <TableCell className="text-sm" style={{ color: C.textMuted }}>
