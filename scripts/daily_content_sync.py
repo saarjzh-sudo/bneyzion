@@ -9,8 +9,9 @@ daily_content_sync.py — סנכרון התוכן היומי של בני ציו�
 
   1. פסוק יומי   → upsert ל-daily_verses לפי תאריך (verse_text/מקור/פירוש/תמונה).
   2. חדשות תנ"כיות → שיעור published בסדרה 5d111b52 (dedup לפי כותרת-פנימית).
-  3. פודקאסט mp3 → העלאה ל-Storage + שיעור **draft** בסדרה bc1d97b9 —
-     בכוונה טיוטה: כותרת-פרק אמיתית דורשת עריכה אנושית (אין ניחוש תוכן-לקוח).
+  3. פודקאסט "ילדי התנ״ך" → שיעור **published** בסדרה bc1d97b9, נקרא מהודעת-פרק
+     בקבוצה (כותרת בבולד + ספוטיפי /episode/ + יוטיוב + עטיפה). dedup לפי מזהה-
+     הפרק בספוטיפי. (רמה 20, 16.7 — יואב: לקרוא מהקבוצה, לא ללכוד mp3 פנימי.)
 
 מפתחות מ-env בלבד (אין סודות בקוד): GREEN_API_ID_INSTANCE, GREEN_API_TOKEN,
 BZ_SUPABASE_URL, BZ_SERVICE_ROLE_KEY. עטיפה: ~/.config/bneyzion/sync.env.
@@ -201,30 +202,56 @@ for m in sorted(msgs, key=lambda x: x.get("timestamp", 0)):
         added["news"] += 1
         continue
 
-    # ── פודקאסט (mp3) ──
-    if m.get("typeMessage") == "audioMessage" and (m.get("downloadUrl") or "").endswith(".mp3"):
-        fname = m["downloadUrl"].rsplit("/", 1)[-1]
-        dst = f"yaldei-hatanach/wa-{fname}"
-        exists = sb(f"lessons?series_id=eq.{POD_SERIES}&audio_url=like.*{fname}&select=id")
-        # פרק 1 הועלה ידנית בשם אחר — dedup גם לפי תאריך
-        same_day = sb(f"lessons?series_id=eq.{POD_SERIES}&published_at=gte.{date}T00:00:00&published_at=lte.{date}T23:59:59&select=id")
-        if exists or same_day:
+    # ── פודקאסט "ילדי התנ״ך" (רמה 20, הכרעת יואב 16.7) ──
+    # הפרקים עולים לקבוצת "בכוח התנ״ך ננצח" כהודעת-פרק: כותרת בבולד + קישור
+    # ספוטיפי (episode) + קישור יוטיוב + תמונת-עטיפה. קוראים אותה בדיוק כמו
+    # החדשות/הפסוק — ומפרסמים אוטומטית (בלי לכידת-mp3 ובלי שלב-עריכה ידני).
+    # (הודעת ההשקה עם קישור /show/ כללי מסוננת — דורשים /episode/.)
+    if "ילדי התנ" in cap and "open.spotify.com/episode/" in cap:
+        mt = re.search(r"\*([^*\n]+)\*", cap)
+        if not mt:
             continue
-        if DRY:
-            log(f"[dry] פודקאסט: פרק חדש {date} ({fname})")
+        # כותרת נקייה: מסירים אימוג'י ואת קידומת שם-הסדרה (מיותרת בכרטיס)
+        title = re.sub(r"[📻🎧🎙️📹✨🔴]", "", mt.group(1)).strip()
+        title = re.sub(r"^ילדי התנ[\"״׳']?ך\s*[-–]\s*", "", title).strip()
+        spot = re.search(r"https://open\.spotify\.com/episode/\S+", cap)
+        yt = re.search(r"https://youtu\.be/\S+|https://(?:www\.)?youtube\.com/\S+", cap)
+        spotify_url = spot.group(0).rstrip(">") if spot else None
+        youtube_url = yt.group(0).rstrip(">") if yt else None
+        # dedup לפי מזהה-הפרק בספוטיפי (יציב), אחרת לפי כותרת
+        ep_id = re.search(r"/episode/([\w]+)", spotify_url or "")
+        if ep_id:
+            exists = sb(f"lessons?series_id=eq.{POD_SERIES}&spotify_url=like.*{ep_id.group(1)}*&select=id")
         else:
-            blob = http(m["downloadUrl"], raw=True)
-            audio_url = storage_upload(dst, blob, "audio/mpeg")
+            exists = sb(f"lessons?series_id=eq.{POD_SERIES}&title=eq.{urllib.parse.quote(title)}&select=id")
+        if exists:
+            continue
+        # תיאור = גוף ההודעה עד בלוק-הקישורים
+        body = cap.split("🎧 להאזנה")[0].split("\n", 1)
+        desc = (body[1] if len(body) > 1 else "").replace("*", "").strip()
+        desc = re.split(r"להצטרפות לקבוצ", desc)[0].strip()
+        thumb = f"{PUB}/yaldei-hatanach/cover.jpg"
+        if m.get("downloadUrl") and not DRY:
+            try:
+                blob = http(m["downloadUrl"], raw=True)
+                thumb = storage_upload(f"yaldei-hatanach/ep-{date}.jpg", blob, "image/jpeg")
+            except Exception as e:
+                log(f"⚠️ פודקאסט {date}: עטיפה לא זמינה ({str(e)[:50]}) — cover ברירת-מחדל")
+        if DRY:
+            log(f"[dry] פודקאסט: {title} (spotify+youtube)")
+        else:
             sb("lessons", "POST", {
-                "title": f"פרק חדש (טרם נערך) — {ts:%d.%m.%Y}",
-                "description": "פרק שנקלט אוטומטית מקבוצת הוואטסאפ — ממתין לכותרת ותיאור לפני פרסום.",
-                "rabbi_id": YOAV, "series_id": POD_SERIES, "status": "draft",
+                "title": title, "description": desc,
+                "rabbi_id": YOAV, "series_id": POD_SERIES, "status": "published",
                 "source_type": "audio", "audience_tags": ["general"],
-                "audio_url": audio_url, "thumbnail_url": f"{PUB}/yaldei-hatanach/cover.jpg",
-                "created_at": ts.isoformat(),
+                "spotify_url": spotify_url, "youtube_url": youtube_url,
+                "video_url": youtube_url,  # מאפשר לנגן-הווידאו הקיים להטמיע את היוטיוב
+                "thumbnail_url": thumb,
+                "created_at": ts.isoformat(), "published_at": ts.isoformat(),
             }, prefer="return=minimal")
-            log(f"📻 פודקאסט: פרק חדש נקלט כטיוטה ({date}) — לערוך כותרת ולפרסם")
+            log(f"📻 פודקאסט: פרק חדש פורסם — {title}")
         added["podcast"] += 1
+        continue
 
 # ── עדכון lesson_count על הסדרות ─────────────────────────────────────────────
 if not DRY and (added["news"] or added["podcast"]):

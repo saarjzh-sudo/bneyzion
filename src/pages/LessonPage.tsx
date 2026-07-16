@@ -35,6 +35,16 @@ function isDirectVideo(url: string): boolean {
   return /\.(mp4|webm|ogg|mov)(\?.*)?$/.test(lower);
 }
 
+// רמה 20 — פודקאסט: המרת קישורי-שיתוף להטמעה (iframe)
+function toYouTubeEmbed(url: string): string | null {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+}
+function toSpotifyEmbed(url: string): string | null {
+  const m = url.match(/open\.spotify\.com\/(episode|show|track)\/([\w]+)/);
+  return m ? `https://open.spotify.com/embed/${m[1]}/${m[2]}` : null;
+}
+
 function formatDate(d: string | null) {
   if (!d) return null;
   return new Date(d).toLocaleDateString("he-IL", { year: "numeric", month: "long", day: "numeric" });
@@ -294,8 +304,33 @@ const LessonPage = () => {
 
             <Separator />
 
-            {/* Compact media player */}
-            {lesson.video_url ? (
+            {/* רמה 20 — פודקאסט "ילדי התנ״ך": הטמעת ספוטיפי + יוטיוב (קדימות על נגן רגיל) */}
+            {((lesson as any).spotify_url || (lesson as any).youtube_url) ? (
+              <div className="space-y-4">
+                {(lesson as any).spotify_url && toSpotifyEmbed((lesson as any).spotify_url) && (
+                  <iframe
+                    title="האזנה בספוטיפיי"
+                    src={toSpotifyEmbed((lesson as any).spotify_url)!}
+                    className="w-full rounded-xl border border-border"
+                    style={{ height: 232 }}
+                    loading="lazy"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  />
+                )}
+                {(lesson as any).youtube_url && toYouTubeEmbed((lesson as any).youtube_url) && (
+                  <div className="aspect-video rounded-xl overflow-hidden bg-black border border-border">
+                    <iframe
+                      title="צפייה ביוטיוב"
+                      src={toYouTubeEmbed((lesson as any).youtube_url)!}
+                      className="w-full h-full"
+                      loading="lazy"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  </div>
+                )}
+              </div>
+            ) : lesson.video_url ? (
               isDirectVideo(lesson.video_url) ? (
                 <div className="aspect-video rounded-lg overflow-hidden bg-black border border-border">
                   <video

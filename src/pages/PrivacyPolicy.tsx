@@ -3,8 +3,15 @@ import PageHero from "@/components/layout/PageHero";
 import { useSEO } from "@/hooks/useSEO";
 import { Link } from "react-router-dom";
 import { reopenCookieBanner } from "@/components/legal/CookieConsent";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
+import { sanitizeHtml } from "@/lib/sanitize";
+import { copyDefault } from "@/config/siteCopyRegistry";
 
 const LAST_UPDATED = "6 ביולי 2026";
+
+/** Shared prose styling so admin-editable HTML bodies match the original look. */
+const LEGAL_PROSE =
+  "text-muted-foreground leading-relaxed space-y-3 [&_p]:leading-relaxed [&_ul]:space-y-2 [&_ul]:list-disc [&_ul]:list-inside [&_strong]:text-foreground [&_a]:underline [&_a]:text-primary hover:[&_a]:opacity-80";
 
 const PrivacyPolicy = () => {
   useSEO({
@@ -12,6 +19,7 @@ const PrivacyPolicy = () => {
     description: "מדיניות הפרטיות של אתר בני ציון — איסוף מידע, שימוש, עוגיות וזכויות המשתמש.",
     url: "https://bneyzion.co.il/privacy-policy",
   });
+  const copy = useSiteCopy();
 
   return (
     <Layout>
@@ -21,29 +29,20 @@ const PrivacyPolicy = () => {
       />
 
       <div className="max-w-3xl mx-auto px-4 py-12 space-y-10 text-right" dir="rtl">
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">1. כללי</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            מדיניות פרטיות זו חלה על האתר <strong>bneyzion.co.il</strong>, המופעל
-            על-ידי <strong>עמותת מכלל יופי (ע"ר)</strong>, מספר עמותה{" "}
-            <strong>580731974</strong>, רחוב הרקפת 5, ירושלים. המדיניות
-            מתארת אילו נתונים אנו אוספים, כיצד אנו משתמשים בהם, ומהן
-            זכויותיך כמשתמש.
-          </p>
-        </section>
+        {[
+          { t: "copy.privacy.s1_title", b: "copy.privacy.s1_body" },
+          { t: "copy.privacy.s2_title", b: "copy.privacy.s2_body" },
+        ].map((s) => (
+          <section key={s.t} className="space-y-3">
+            <h2 className="text-2xl font-bold">{copy(s.t, copyDefault(s.t))}</h2>
+            <div className={LEGAL_PROSE} dangerouslySetInnerHTML={{ __html: sanitizeHtml(copy(s.b, copyDefault(s.b))) }} />
+          </section>
+        ))}
 
+        {/* Section 3 (Cookies) — title editable; body kept in JSX for the
+            reopen-preferences button (interactive). */}
         <section className="space-y-3">
-          <h2 className="text-2xl font-bold">2. איזה מידע אנו אוספים</h2>
-          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
-            <li>שם מלא, כתובת דוא"ל ומספר טלפון — שנמסרו בעת הרשמה, רכישה או פנייה.</li>
-            <li>היסטוריית צפייה, מעקב התקדמות ותכנים שנרכשו — לצורך מתן השירות ושיפורו.</li>
-            <li>כתובת IP, סוג דפדפן ונתוני מכשיר — לצורכי אבטחה, מניעת הונאות וניתוח תעבורה.</li>
-            <li>פרטי תשלום — מעובדים ונשמרים אצל ספק הסליקה בלבד (ראו סעיף 5), לא בשרתי האתר.</li>
-          </ul>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">3. עוגיות (Cookies)</h2>
+          <h2 className="text-2xl font-bold">{copy("copy.privacy.s3_title", copyDefault("copy.privacy.s3_title"))}</h2>
           <p className="text-muted-foreground leading-relaxed">
             האתר משתמש בשני סוגי עוגיות:
           </p>
@@ -73,80 +72,18 @@ const PrivacyPolicy = () => {
           </p>
         </section>
 
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">4. כיצד אנו משתמשים במידע</h2>
-          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
-            <li>הפעלת השירות — אימות זהות, מתן גישה לתכנים, שליחת קבלות ותמיכה טכנית.</li>
-            <li>שיפור חוויית המשתמש ופיתוח תכנים חדשים.</li>
-            <li>משלוח עדכונים רלוונטיים (ניתן לביטול בכל עת בלחיצה על "הסרה" בתחתית כל מייל).</li>
-            <li>מדידת ביצועי קמפיינים שיווקיים — בכפוף להסכמתך לעוגיות שיווקיות (סעיף 3).</li>
-          </ul>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">5. שיתוף מידע עם צדדים שלישיים</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            איננו מוכרים את המידע האישי שלך. אנו משתפים מידע מוגבל עם ספקים
-            הפועלים בשמנו, בהיקף הנדרש לתפעול השירות בלבד:
-          </p>
-          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
-            <li>
-              <strong>Grow / Meshulam</strong> — לצורך עיבוד תשלומים וסליקת
-              כרטיסי אשראי (מאובטח בתקן PCI-DSS). פרטי הכרטיס אינם נשמרים
-              בשרתי האתר.
-            </li>
-            <li>
-              <strong>Meta (פייסבוק/אינסטגרם)</strong> — פיקסל מדידת המרות,
-              נטען אך ורק בהסכמתך לעוגיות שיווקיות.
-            </li>
-            <li>
-              <strong>Paperless</strong> — לצורך הפקת חשבוניות/קבלות (שם
-              מלא, דוא"ל, טלפון).
-            </li>
-            <li>
-              <strong>Smoove</strong> — לצורך משלוח דיוור ועדכונים במייל,
-              בכפוף לזכותך להסרה בכל עת.
-            </li>
-          </ul>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">6. אבטחת מידע</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            אנו נוקטים באמצעי אבטחה מקובלים (הצפנת תעבורה, בקרת גישה) כדי
-            להגן על המידע האישי שלך, אך אין באפשרותנו להבטיח הגנה מוחלטת
-            מפני כל שימוש לרעה, ככל שירותי אינטרנט אחרים.
-          </p>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">7. זכויות המשתמש</h2>
-          <ul className="text-muted-foreground leading-relaxed space-y-2 list-disc list-inside">
-            <li>ניתן לבקש עיון, תיקון או מחיקת המידע האישי שלך בכל עת.</li>
-            <li>ניתן להסיר את עצמך מרשימות תפוצה בלחיצה אחת בתחתית כל מייל.</li>
-            <li>ניתן לעדכן את בחירת העוגיות בכל עת (סעיף 3).</li>
-            <li>
-              לכל פנייה בנושאי פרטיות:{" "}
-              <Link to="/contact" className="underline text-primary hover:opacity-80">
-                דף יצירת קשר
-              </Link>{" "}
-              או{" "}
-              <a href="mailto:office@bneyzion.co.il" className="underline text-primary hover:opacity-80">
-                office@bneyzion.co.il
-              </a>
-              .
-            </li>
-          </ul>
-        </section>
-
-        <section className="space-y-3">
-          <h2 className="text-2xl font-bold">8. שינויים במדיניות</h2>
-          <p className="text-muted-foreground leading-relaxed">
-            עמותת מכלל יופי (ע"ר) שומרת לעצמה את הזכות לעדכן מדיניות זו
-            מעת לעת. שינויים מהותיים יפורסמו באתר. המשך שימוש בשירות לאחר
-            עדכון המדיניות מהווה הסכמה לתנאים המעודכנים.
-          </p>
-        </section>
+        {[
+          { t: "copy.privacy.s4_title", b: "copy.privacy.s4_body" },
+          { t: "copy.privacy.s5_title", b: "copy.privacy.s5_body" },
+          { t: "copy.privacy.s6_title", b: "copy.privacy.s6_body" },
+          { t: "copy.privacy.s7_title", b: "copy.privacy.s7_body" },
+          { t: "copy.privacy.s8_title", b: "copy.privacy.s8_body" },
+        ].map((s) => (
+          <section key={s.t} className="space-y-3">
+            <h2 className="text-2xl font-bold">{copy(s.t, copyDefault(s.t))}</h2>
+            <div className={LEGAL_PROSE} dangerouslySetInnerHTML={{ __html: sanitizeHtml(copy(s.b, copyDefault(s.b))) }} />
+          </section>
+        ))}
 
         <div className="rounded-xl border border-border bg-muted/40 px-6 py-5 text-sm text-muted-foreground space-y-1">
           <p>עודכן לאחרונה: {LAST_UPDATED}</p>

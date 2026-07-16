@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 const Contact = () => {
   useSEO({
@@ -17,6 +18,7 @@ const Contact = () => {
     url: "https://bneyzion.co.il/contact",
   });
   const { toast } = useToast();
+  const copy = useSiteCopy();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
 
@@ -59,8 +61,8 @@ const Contact = () => {
         dir="rtl"
       >
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-heading gradient-warm mb-3 text-center">צרו קשר</h1>
-          <p className="text-muted-foreground text-center mb-10">נשמח לשמוע מכם — שאלות, הצעות, או סתם מילה טובה</p>
+          <h1 className="text-3xl md:text-4xl font-heading gradient-warm mb-3 text-center">{copy("copy.contact.title", "צרו קשר")}</h1>
+          <p className="text-muted-foreground text-center mb-10">{copy("copy.contact.subtitle", "נשמח לשמוע מכם — שאלות, הצעות, או סתם מילה טובה")}</p>
 
           {/* Contact info cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">

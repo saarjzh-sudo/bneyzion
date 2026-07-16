@@ -5,6 +5,7 @@ import { BookOpen, Home, Search, Library } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import GlobalSearch from "@/components/search/GlobalSearch";
 import { isLegacyContentPath, resolveLegacyContentUrl } from "@/lib/legacyResolver";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 /**
  * Client-side safety net for old Umbraco (www.bneyzion.co.il) URLs.
@@ -111,6 +112,7 @@ const bookPages = [
 const NotFound = () => {
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
+  const copy = useSiteCopy();
 
   let decodedPath: string;
   try {
@@ -194,10 +196,10 @@ const NotFound = () => {
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             <h1 className="text-2xl md:text-4xl font-heading text-foreground mb-3">
-              הדף לא נמצא
+              {copy("copy.notfound.title", "הדף לא נמצא")}
             </h1>
             <p className="text-muted-foreground font-serif mb-2 text-base md:text-lg">
-              אולי הדף הזה עדיין לא נכתב...
+              {copy("copy.notfound.message", "אולי הדף הזה עדיין לא נכתב...")}
             </p>
             <p className="text-muted-foreground font-serif mb-6 text-sm">
               אבל בתנ״ך יש הרבה תוכן שכן!

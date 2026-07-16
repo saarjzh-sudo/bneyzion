@@ -13,6 +13,8 @@ import AboutMemorialSection from "@/components/about/AboutMemorialSection";
 import AboutPrinciplesSection from "@/components/about/AboutPrinciplesSection";
 import AboutInstitutionsSection from "@/components/about/AboutInstitutionsSection";
 import { useSEO } from "@/hooks/useSEO";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -21,6 +23,7 @@ const fadeUp = {
 
 const About = () => {
   useSEO({ title: "אודות", description: "בני ציון – עמותה ללימוד תנ״ך בישראל. מאות רבנים, אלפי שיעורים ותכנים ללימוד התנ״ך" });
+  const copy = useSiteCopy();
   const { data: stats } = useQuery({
     queryKey: ["about-stats"],
     queryFn: async () => {
@@ -68,24 +71,11 @@ const About = () => {
           >
             <motion.div variants={fadeUp} custom={0}>
               <div className="glass-card-gold rounded-2xl p-8 md:p-10">
-                <div className="space-y-5 text-lg leading-[2] text-foreground/90 font-serif">
-                  <p>
-                    <strong className="text-foreground">'בני ציון'</strong> היא הבמה המרכזית של לימוד התנ"ך, בדרך הממשיכה את מסורת ישראל לדורותיה.
-                  </p>
-                  <p>
-                    דרך זו מאגדת עשרות רבנים המתמחים בתנ"ך ומלמדים אותו במשך שנים רבות.
-                  </p>
-                  <p>
-                    'בני ציון' הוקמה להנצחת זכרו של{" "}
-                    <Link to="/memorial" className="text-foreground font-bold hover:text-primary transition-colors underline underline-offset-2 decoration-primary/40">
-                      בן ציון חיים הנמן הי"ד
-                    </Link>
-                    {" "}— בחור ישיבה מלא חיים, אוהב תנ"ך, אשר מסר נפשו בקרב עם מחבלים בשכם.
-                    שמו הטהור נושא את שם התנועה עד היום.
-                  </p>
-                  <p>
-                    בראש התכנית עומד <strong className="text-foreground">הרב יואב אוריאל</strong>.
-                  </p>
+                <div className="space-y-5 text-lg leading-[2] text-foreground/90 font-serif [&_strong]:text-foreground [&_a]:text-foreground [&_a]:font-bold [&_a]:underline [&_a]:underline-offset-2 [&_a]:decoration-primary/40 hover:[&_a]:text-primary [&_a]:transition-colors">
+                  <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(copy("copy.about.vision_p1", "<strong>'בני ציון'</strong> היא הבמה המרכזית של לימוד התנ\"ך, בדרך הממשיכה את מסורת ישראל לדורותיה.")) }} />
+                  <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(copy("copy.about.vision_p2", "דרך זו מאגדת עשרות רבנים המתמחים בתנ\"ך ומלמדים אותו במשך שנים רבות.")) }} />
+                  <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(copy("copy.about.vision_p3", "'בני ציון' הוקמה להנצחת זכרו של <a href=\"/memorial\">בן ציון חיים הנמן הי\"ד</a> — בחור ישיבה מלא חיים, אוהב תנ\"ך, אשר מסר נפשו בקרב עם מחבלים בשכם. שמו הטהור נושא את שם התנועה עד היום.")) }} />
+                  <p dangerouslySetInnerHTML={{ __html: sanitizeHtml(copy("copy.about.vision_p4", "בראש התכנית עומד <strong>הרב יואב אוריאל</strong>.")) }} />
                 </div>
               </div>
             </motion.div>
@@ -98,22 +88,22 @@ const About = () => {
                     <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-3">
                       <BookOpen className="h-7 w-7 text-primary" />
                     </div>
-                    <h3 className="font-display text-foreground mb-2">להנגיש</h3>
-                    <p className="text-sm text-muted-foreground">אלפי שיעורים ומאמרים בחינם, זמינים לכל אחד בכל עת</p>
+                    <h3 className="font-display text-foreground mb-2">{copy("copy.about.card1_title", "להנגיש")}</h3>
+                    <p className="text-sm text-muted-foreground">{copy("copy.about.card1_desc", "אלפי שיעורים ומאמרים בחינם, זמינים לכל אחד בכל עת")}</p>
                   </div>
                   <div className="text-center">
                     <div className="w-14 h-14 rounded-2xl bg-accent/15 flex items-center justify-center mx-auto mb-3">
                       <ScrollText className="h-7 w-7 text-accent-foreground" />
                     </div>
-                    <h3 className="font-display text-foreground mb-2">להעמיק</h3>
-                    <p className="text-sm text-muted-foreground">תוכן ברמה גבוהה מרבני ומורי הדור, המחבר בין פשט לדרש</p>
+                    <h3 className="font-display text-foreground mb-2">{copy("copy.about.card2_title", "להעמיק")}</h3>
+                    <p className="text-sm text-muted-foreground">{copy("copy.about.card2_desc", "תוכן ברמה גבוהה מרבני ומורי הדור, המחבר בין פשט לדרש")}</p>
                   </div>
                   <div className="text-center">
                     <div className="w-14 h-14 rounded-2xl bg-secondary flex items-center justify-center mx-auto mb-3">
                       <Heart className="h-7 w-7 text-foreground" />
                     </div>
-                    <h3 className="font-display text-foreground mb-2">לחבר</h3>
-                    <p className="text-sm text-muted-foreground">לבנות קהילה של לומדים שמתחברים לשורשים ולמורשת ישראל</p>
+                    <h3 className="font-display text-foreground mb-2">{copy("copy.about.card3_title", "לחבר")}</h3>
+                    <p className="text-sm text-muted-foreground">{copy("copy.about.card3_desc", "לבנות קהילה של לומדים שמתחברים לשורשים ולמורשת ישראל")}</p>
                   </div>
                 </div>
               </div>

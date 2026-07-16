@@ -11,6 +11,7 @@ import { Flame, Mail, Smartphone, Heart } from "lucide-react";
 
 import logoBright from "@/assets/logo-horizontal-bright.png";
 import { colors, fonts } from "@/lib/designTokens";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -82,6 +83,7 @@ const TEACHER_HIDDEN_HREFS = new Set(["/series", "/rabbis", "/bible/בראשית
 
 export default function DesignFooter() {
   const location = useLocation();
+  const copy = useSiteCopy();
   const isTeacherContext = location.pathname.startsWith("/design-teachers-");
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
@@ -152,7 +154,7 @@ export default function DesignFooter() {
                 marginBottom: "1.25rem",
               }}
             >
-              אתר התנ״ך הגדול בישראל — שיעורים, סדרות, ופרשנות מ-200+ רבנים, בגישה חופשית.
+              {copy("copy.footer.description", "אתר התנ״ך הגדול בישראל — שיעורים, סדרות, ופרשנות מ-200+ רבנים, בגישה חופשית.")}
             </p>
 
             {/* Memorial block */}
@@ -176,7 +178,7 @@ export default function DesignFooter() {
                 }}
               >
                 <Flame style={{ width: 12, height: 12 }} />
-                לעילוי נשמת
+                {copy("copy.footer.memorial_label", "לעילוי נשמת")}
                 <Flame style={{ width: 12, height: 12 }} />
               </div>
               <div>
@@ -376,7 +378,7 @@ export default function DesignFooter() {
             color: "rgba(255,255,255,0.32)",
           }}
         >
-          <span>© {new Date().getFullYear()} בני ציון — כל הזכויות שמורות</span>
+          <span>© {new Date().getFullYear()} {copy("copy.footer.copyright", "בני ציון — כל הזכויות שמורות")}</span>
           <span
             style={{
               fontSize: "0.85rem",

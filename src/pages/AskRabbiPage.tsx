@@ -25,6 +25,7 @@ import { Seo } from "@/components/seo/Seo";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { usePublishedQuestions, useSubmitQuestion, type SiteQuestion } from "@/hooks/useSiteQuestions";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -68,6 +69,7 @@ const errorText: CSSProperties = {
 
 function QuestionForm() {
   const submitQuestion = useSubmitQuestion();
+  const copy = useSiteCopy();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [question, setQuestion] = useState("");
@@ -123,7 +125,7 @@ function QuestionForm() {
           השאלה התקבלה!
         </h2>
         <p style={{ fontFamily: fonts.body, fontSize: "0.9rem", color: colors.textMuted, lineHeight: 1.7, margin: "0 auto", maxWidth: 420 }}>
-          הרב עובר על השאלות ועונה אישית. נפרסם תשובה בקרוב כאן בעמוד
+          {copy("copy.ask_rabbi.success", "הרב עובר על השאלות ועונה אישית. נפרסם תשובה בקרוב כאן בעמוד")}
           {email.trim() ? ", ועותק ממנה יגיע גם למייל שהשארתם." : "."}
         </p>
         <button
@@ -170,7 +172,7 @@ function QuestionForm() {
         שלחו שאלה לרב
       </h2>
       <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, margin: "0 0 1.25rem", lineHeight: 1.6 }}>
-        כל שאלה בתנ״ך, באמונה או בלימוד מתקבלת בשמחה. התשובות מתפרסמות כאן בעמוד.
+        {copy("copy.ask_rabbi.intro", "כל שאלה בתנ״ך, באמונה או בלימוד מתקבלת בשמחה. התשובות מתפרסמות כאן בעמוד.")}
       </p>
 
       <div style={{ display: "grid", gap: "1rem" }}>
