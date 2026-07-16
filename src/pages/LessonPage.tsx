@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { sanitizeHtml, isDuplicatePromo } from "@/lib/sanitize";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Clock, BookOpen, Calendar, ChevronLeft, Volume2, Headphones, ListPlus, LogIn } from "lucide-react";
+import { Clock, BookOpen, Calendar, ChevronLeft, Volume2, Headphones, ListPlus, LogIn, Share2, Printer } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import Layout from "@/components/layout/Layout";
 import { useLesson, useSeriesLessons } from "@/hooks/useLesson";
@@ -80,6 +81,7 @@ const LessonPage = () => {
   const { play, addToQueue, currentTrack } = usePlayer();
   const { user, signInWithGoogle } = useAuth();
   const { mediaRef: mediaProgressRef, flushPosition } = useMediaProgress(id);
+  const { toast } = useToast();
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
 
   const rabbiName = formatRabbiName(rabbi);
@@ -254,11 +256,40 @@ const LessonPage = () => {
               )}
             </div>
 
-            {/* Dedication */}
-            <div className="flex items-center gap-3 flex-wrap">
+            {/* Dedication + share/print (רמה 20 — יואב 16.7: "לא מוצא את אפשרות השיתוף וההדפסה") */}
+            <div className="flex items-center gap-3 flex-wrap print:hidden">
               <DedicationDialog lessonId={lesson.id} lessonTitle={lesson.title} seriesId={series?.id} seriesTitle={series?.title} />
               {/* יואב 16.7: שיעור בתוך סדרה מוקדשת מציג גם את הקדשת-הסדרה */}
               <DedicationBadge lessonId={lesson.id} seriesId={series?.id} />
+              <div className="flex items-center gap-1.5 mr-auto">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5"
+                  onClick={async () => {
+                    const url = window.location.href;
+                    const shareData = { title: lesson.title, text: `${lesson.title} — בני ציון`, url };
+                    if (navigator.share) {
+                      try { await navigator.share(shareData); } catch { /* המשתמש ביטל */ }
+                    } else {
+                      await navigator.clipboard.writeText(url);
+                      toast({ title: "הקישור הועתק", description: "אפשר להדביק ולשלוח לכל מקום" });
+                    }
+                  }}
+                >
+                  <Share2 className="h-3.5 w-3.5" />
+                  שיתוף
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5"
+                  onClick={() => window.print()}
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  הדפסה
+                </Button>
+              </div>
             </div>
 
             <Separator />
@@ -571,6 +602,15 @@ const LessonPage = () => {
           )}
         </div>
       </motion.div>
+      {/* רמה 20: הדפסת שיעור נקייה — מסתירים ניווט/סיידבר/נגן/וידג'טים */}
+      <style>{`
+        @media print {
+          header, footer, nav, aside,
+          [data-radix-popper-content-wrapper],
+          .print\\:hidden { display: none !important; }
+          body { background: white !important; }
+        }
+      `}</style>
     </Layout>
   );
 };

@@ -47,10 +47,12 @@ export function useTopicsSidebar() {
       // Step 2: fetch children with aggregated lesson counts via RPC-less approach.
       // PostgREST doesn't support direct GROUP BY, so we fetch children then
       // aggregate counts via the lesson_topics table separately.
-      const { data: children, error: childError } = await supabase
+      // רמה 20: תגית שיואב העביר ל"אופי הלימוד" (is_learning_style) יורדת מכאן.
+      const { data: children, error: childError } = await (supabase as any)
         .from("topics")
         .select("id, name, slug, sort_order")
         .eq("parent_id", parent.id)
+        .eq("is_learning_style", false)
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("name");
 

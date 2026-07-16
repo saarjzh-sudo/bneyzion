@@ -41,6 +41,7 @@ import {
   BookOpenText,
   FileText,
   Telescope,
+  Tag,
 } from "lucide-react";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
@@ -51,6 +52,8 @@ import { useTopicsSidebar } from "@/hooks/useTopicsSidebar";
 import type { TopicSidebarItem } from "@/hooks/useTopicsSidebar";
 import { useBasicThemesSidebar } from "@/hooks/useBasicThemesSidebar";
 import type { BasicThemeItem } from "@/hooks/useBasicThemesSidebar";
+import { useLearningStyleTopics } from "@/hooks/useLearningStyleTopics";
+import type { LearningStyleTopic } from "@/hooks/useLearningStyleTopics";
 import RolePanel from "@/components/auth/RolePanel";
 
 // ────────────────────────────────────────────────────────────────────────
@@ -130,6 +133,26 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const { data: rabbisRaw = [] } = usePublicRabbis();
   const { data: thematicTopics = [], isLoading: topicsLoading } = useTopicsSidebar();
   const { data: basicThemes = [], isLoading: basicThemesLoading } = useBasicThemesSidebar();
+  // רמה 20 (יואב 16.7): תגיות אופי-הלימוד שיואב מסמן באדמין (topics.is_learning_style)
+  const { data: learningStyleTopics = [] } = useLearningStyleTopics();
+
+  // רמה 20 (יואב 16.7 14:15): מיון רשימת הנושאים — לפי כמות תכנים (ברירת-מחדל) / א-ב
+  type TopicSort = "count" | "alpha";
+  const [topicSort, setTopicSort] = useState<TopicSort>("count");
+  const sortTopicList = useCallback(
+    <T extends { name: string; lessonCount: number }>(list: T[]): T[] =>
+      [...list].sort((a, b) =>
+        topicSort === "alpha"
+          ? a.name.localeCompare(b.name, "he")
+          : b.lessonCount - a.lessonCount || a.name.localeCompare(b.name, "he")
+      ),
+    [topicSort]
+  );
+  const sortedBasicThemes = useMemo(() => sortTopicList(basicThemes), [basicThemes, sortTopicList]);
+  const sortedThematicTopics = useMemo(
+    () => sortTopicList(thematicTopics),
+    [thematicTopics, sortTopicList]
+  );
 
   // §2.7: full rabbi list — old sidebar showed ~153 rabbis; cap-30 was a known regression (R-SB2).
   // 7.7.2026 (הרב יואב, הערה ב-2): מיון ברירת-מחדל = לפי מספר שיעורים, עם בורר 3 מיונים:
@@ -333,6 +356,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               categories={categories}
               extraSections={extraSections}
               riddlesSeriesId={riddlesSeriesId}
+              learningStyleTopics={learningStyleTopics}
               expanded={expandedMain}
               expandedExtras={expandedExtras}
               onToggle={(key) => toggle(setExpandedMain, key)}
@@ -348,8 +372,47 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 then the pre-existing 126-topic full taxonomy below, collapsed by default ═══ */}
           {activeTab === "topics" && (!collapsed || isDrawer) && (
             <>
+              {/* בורר מיון (הרב יואב 16.7): כמות תכנים (ברירת-מחדל) / א-ב */}
+              <div
+                style={{ display: "flex", gap: 4, padding: "0.15rem 0.45rem 0.45rem" }}
+                role="group"
+                aria-label="מיון רשימת הנושאים"
+              >
+                {(
+                  [
+                    { key: "count", label: "לפי כמות תכנים" },
+                    { key: "alpha", label: "א-ב" },
+                  ] as { key: typeof topicSort; label: string }[]
+                ).map((opt) => {
+                  const active = topicSort === opt.key;
+                  return (
+                    <button
+                      key={opt.key}
+                      type="button"
+                      onClick={() => setTopicSort(opt.key)}
+                      aria-pressed={active}
+                      style={{
+                        flex: 1,
+                        border: `1px solid ${active ? colors.goldDark : "rgba(139,111,71,0.25)"}`,
+                        background: active ? "rgba(196,162,101,0.14)" : "transparent",
+                        color: active ? colors.goldDark : colors.textSubtle,
+                        fontFamily: fonts.body,
+                        fontSize: "0.68rem",
+                        fontWeight: active ? 700 : 500,
+                        borderRadius: 999,
+                        padding: "0.28rem 0.3rem",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {opt.label}
+                    </button>
+                  );
+                })}
+              </div>
               <TopicsTab
-                topics={basicThemes}
+                topics={sortedBasicThemes}
                 isLoading={basicThemesLoading}
                 search={search}
                 matchesSearch={matchesSearch}
@@ -384,7 +447,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
               {(showMoreTopics || search.trim()) && (
                 <div style={{ marginTop: "0.4rem" }}>
                   <TopicsTab
-                    topics={thematicTopics}
+                    topics={sortedThematicTopics}
                     isLoading={topicsLoading}
                     search={search}
                     matchesSearch={matchesSearch}
@@ -597,6 +660,7 @@ interface ContentTreeProps {
   search: string;
   matchesSearch: (t: string) => boolean;
   onNavigate: (path: string) => void;
+  learningStyleTopics: LearningStyleTopic[];
 }
 
 // (יואב 9.7) ניווט לפי אופי-הלימוד — 4 מסלולים קבועים, כמו אגף-המורים שוויתר על תגיות.
@@ -620,6 +684,7 @@ function ContentTree({
   search,
   matchesSearch,
   onNavigate,
+  learningStyleTopics,
 }: ContentTreeProps) {
   const [learningStyleOpen, setLearningStyleOpen] = useState(false);
 
@@ -665,7 +730,9 @@ function ContentTree({
         <ChevronRight size={13} />
       </Link>
 
-      {/* ─── (יואב 9.7) לפי אופי הלימוד — מוקלט / מוקלט+פירוש / PDF+פירוש / מבטים רחבים ─── */}
+      {/* ─── (יואב 9.7 + 16.7) ניווט לפי אופי הלימוד — מעוצב בדיוק כמו "ניווט על פי
+          ספר ופרק" שמעליו (בקשת הרב יואב 16.7 13:59). הרשימה: 4 מסלולים קבועים +
+          ימי-עיון + תגיות שיואב מסמן באדמין (topics.is_learning_style). ─── */}
       <div style={{ marginBottom: "0.25rem" }}>
         <button
           onClick={() => setLearningStyleOpen((v) => !v)}
@@ -676,20 +743,18 @@ function ContentTree({
             alignItems: "center",
             justifyContent: "space-between",
             padding: "0.5rem 0.75rem",
-            borderRadius: radii.sm,
+            marginBottom: "0.25rem",
+            borderRadius: radii.md,
             border: "none",
             cursor: "pointer",
-            background: learningStyleOpen ? "rgba(196,162,101,0.12)" : "rgba(139,111,71,0.06)",
-            color: learningStyleOpen ? colors.goldDark : colors.textMid,
+            background: gradients.goldButton,
+            color: "white",
             fontFamily: fonts.body,
             fontSize: "0.82rem",
             fontWeight: 700,
           }}
         >
-          <span style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem" }}>
-            <Filter size={13} />
-            לפי אופי הלימוד
-          </span>
+          <span>ניווט לפי אופי הלימוד</span>
           {learningStyleOpen ? <ChevronDown size={13} /> : <ChevronLeft size={13} />}
         </button>
         {learningStyleOpen && (
@@ -719,6 +784,59 @@ function ContentTree({
               >
                 <Icon size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
                 {label}
+              </button>
+            ))}
+            {/* ימי עיון בתנ"ך — תוכן-סדרות מבני (לא תגית), מפנה לעמוד הקטגוריה */}
+            <button
+              onClick={() => onNavigate("/category/f4040001-0001-4000-8000-000000000000")}
+              style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                gap: "0.5rem",
+                padding: "0.42rem 1.1rem",
+                background: "transparent",
+                border: "none",
+                borderInlineStart: "3px solid transparent",
+                cursor: "pointer",
+                color: colors.textMid,
+                fontSize: "0.8rem",
+                fontFamily: fonts.body,
+                textAlign: "right",
+                transition: "background 0.12s",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.06)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+            >
+              <CalendarDays size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+              ימי עיון בתנ"ך
+            </button>
+            {/* תגיות אופי-לימוד שיואב סימן באדמין (עריכת תוכן ← נושאים ← "אופי הלימוד") */}
+            {learningStyleTopics.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => onNavigate(`/topic/${t.slug}`)}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  padding: "0.42rem 1.1rem",
+                  background: "transparent",
+                  border: "none",
+                  borderInlineStart: "3px solid transparent",
+                  cursor: "pointer",
+                  color: colors.textMid,
+                  fontSize: "0.8rem",
+                  fontFamily: fonts.body,
+                  textAlign: "right",
+                  transition: "background 0.12s",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(139,111,71,0.06)"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+              >
+                <Tag size={13} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                {t.name}
               </button>
             ))}
           </div>
@@ -1113,7 +1231,8 @@ function ContentTree({
         );
       })()}
 
-      {/* (סער 10.7) שאל את הרב — קבוע בתחתית הסיידבר הראשי */}
+      {/* רמה 20 (הרב יואב 16.7 15:00): כפתור תרומות קבוע — במקום "שאל את הרב"
+          (שעבר לדף הבית). נראות מובחנת מהקטגוריות: navy עמוק + מסגרת זהב + לב. */}
       <div
         style={{
           marginTop: "0.6rem",
@@ -1122,26 +1241,36 @@ function ContentTree({
         }}
       >
         <button
-          onClick={() => onNavigate("/ask-rabbi")}
+          onClick={() => onNavigate("/donate")}
           style={{
             width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
-            padding: "0.55rem 0.6rem",
-            borderRadius: radii.sm,
-            border: "none",
-            background: "rgba(139,111,71,0.06)",
-            color: colors.goldDark,
+            justifyContent: "center",
+            gap: "0.5rem",
+            padding: "0.65rem 0.6rem",
+            borderRadius: radii.md,
+            border: "1px solid rgba(196,162,101,0.55)",
+            background: "linear-gradient(135deg, #1A2744 0%, #24335A 100%)",
+            color: "#E8D5A0",
             fontFamily: fonts.body,
-            fontSize: "0.85rem",
+            fontSize: "0.88rem",
             fontWeight: 700,
             cursor: "pointer",
-            textAlign: "right",
+            boxShadow: "0 2px 10px rgba(26,39,68,0.25)",
+            transition: "transform 0.15s, box-shadow 0.15s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 14px rgba(26,39,68,0.35)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.transform = "none";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 2px 10px rgba(26,39,68,0.25)";
           }}
         >
-          <span>שאל את הרב</span>
-          <ChevronRight size={13} />
+          <Heart size={15} fill="#E8D5A0" strokeWidth={0} />
+          <span>שותפים בהפצת התנ"ך — לתרומה</span>
         </button>
       </div>
     </div>

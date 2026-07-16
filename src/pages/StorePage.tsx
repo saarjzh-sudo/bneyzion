@@ -7,6 +7,7 @@ import Layout from "@/components/layout/Layout";
 import heroWatercolorStore from "@/assets/hero-watercolor-store.webp";
 import { useProducts, useProductCategories, type Product } from "@/hooks/useProducts";
 import { useSiteCopy } from "@/hooks/useSiteSettings";
+import { normalizeImageUrl } from "@/lib/mediaUrl";
 import { getUpcomingHoliday } from "@/lib/holidays";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -265,6 +266,9 @@ const StorePage = () => {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 mb-10">
               {visibleCategories.map((cat, i) => {
                 const Icon = categoryIcons[cat.slug] || BookOpen;
+                // רמה 20 (יואב 16.7): תמונת הרקע שיואב מזין בעריכת הקטגוריה
+                // מוצגת ברקע הכרטיס, עם שכבת-בהירות כדי שהטקסט יישאר קריא.
+                const bgImage = normalizeImageUrl(cat.image_url);
                 return (
                   <motion.button
                     key={cat.id}
@@ -273,20 +277,39 @@ const StorePage = () => {
                     animate="visible"
                     custom={i}
                     onClick={() => setActiveCategory(cat.slug)}
-                    className="glass-card-light rounded-2xl p-5 text-center group hover:shadow-lg hover:border-primary/30 transition-all"
+                    className="glass-card-light relative overflow-hidden rounded-2xl p-5 text-center group hover:shadow-lg hover:border-primary/30 transition-all"
                   >
-                    <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <Icon className="h-6 w-6" />
-                    </span>
-                    <span className="block font-display text-sm text-foreground">{cat.name}</span>
-                    {/* רמה 18 (יואב 14.7): התיאור שיואב כתב לקטגוריה גלוי לגולשים כבר בקטלוג */}
-                    {cat.description && (
-                      <span className="block text-xs text-muted-foreground mt-1.5 leading-relaxed line-clamp-2">
-                        {cat.description}
-                      </span>
+                    {bgImage && (
+                      <>
+                        <span
+                          aria-hidden
+                          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                          style={{ backgroundImage: `url(${bgImage})` }}
+                        />
+                        <span
+                          aria-hidden
+                          className="absolute inset-0"
+                          style={{
+                            background:
+                              "linear-gradient(180deg, rgba(250,246,240,0.55) 0%, rgba(250,246,240,0.82) 45%, rgba(250,246,240,0.94) 100%)",
+                          }}
+                        />
+                      </>
                     )}
-                    <span className="block text-xs text-primary/70 mt-1">
-                      {categoryCounts.get(cat.id)} מוצרים
+                    <span className="relative block">
+                      <span className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <Icon className="h-6 w-6" />
+                      </span>
+                      <span className="block font-display text-sm text-foreground">{cat.name}</span>
+                      {/* רמה 18 (יואב 14.7): התיאור שיואב כתב לקטגוריה גלוי לגולשים כבר בקטלוג */}
+                      {cat.description && (
+                        <span className="block text-xs text-muted-foreground mt-1.5 leading-relaxed line-clamp-2">
+                          {cat.description}
+                        </span>
+                      )}
+                      <span className="block text-xs text-primary/70 mt-1">
+                        {categoryCounts.get(cat.id)} מוצרים
+                      </span>
                     </span>
                   </motion.button>
                 );

@@ -8,6 +8,8 @@ export interface Topic {
   description: string | null;
   parent_id: string | null;
   sort_order: number;
+  /** רמה 20: תגית שמוצגת ב"ניווט לפי אופי הלימוד" בסיידבר במקום ב"נושאים בתנ״ך" */
+  is_learning_style?: boolean;
 }
 
 export function useTopics() {
@@ -57,11 +59,19 @@ export function useUpdateTopic() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async ({ id, ...updates }: Partial<Topic> & { id: string }) => {
-      const { data, error } = await supabase.from("topics").update(updates).eq("id", id).select().single();
+      // cast: is_learning_style (רמה 20) עדיין לא בטיפוסים המג'ונרטים של Supabase
+      const { data, error } = await (supabase as any).from("topics").update(updates).eq("id", id).select().single();
       if (error) throw error;
       return data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["topics"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["topics"] });
+      qc.invalidateQueries({ queryKey: ["topics-themes-only"] });
+      // רמה 20: עדכון נושא משפיע גם על רשימות הסיידבר (אופי-הלימוד / נושאים)
+      qc.invalidateQueries({ queryKey: ["learning-style-topics"] });
+      qc.invalidateQueries({ queryKey: ["topics-sidebar-themes"] });
+      qc.invalidateQueries({ queryKey: ["basic-themes-sidebar"] });
+    },
   });
 }
 

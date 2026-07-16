@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
 import { Plus, Search, Pencil, Trash2 } from "lucide-react";
 import { useTopics, useCreateTopic, useUpdateTopic, useDeleteTopic } from "@/hooks/useTopics";
 import { useToast } from "@/hooks/use-toast";
@@ -99,6 +100,7 @@ export function TopicsContent() {
                     <TableHead className="text-right">שם</TableHead>
                     <TableHead className="text-right">Slug</TableHead>
                     <TableHead className="text-right">נושא אב</TableHead>
+                    <TableHead className="text-right" title='נושא מסומן מוצג בסיידבר תחת "ניווט לפי אופי הלימוד" במקום ב"נושאים בתנ״ך"'>אופי הלימוד</TableHead>
                     <TableHead className="text-right">פעולות</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -114,6 +116,21 @@ export function TopicsContent() {
                       </TableCell>
                       <TableCell dir="ltr" className="text-left">{t.slug}</TableCell>
                       <TableCell>{getParentName(t.parent_id)}</TableCell>
+                      <TableCell>
+                        {/* רמה 20 (יואב 16.7): העברת תגית ל"ניווט לפי אופי הלימוד" */}
+                        <Switch
+                          checked={!!t.is_learning_style}
+                          onCheckedChange={async (v) => {
+                            try {
+                              await updateTopic.mutateAsync({ id: t.id, is_learning_style: v });
+                              toast({ title: v ? 'הנושא הועבר ל"ניווט לפי אופי הלימוד"' : 'הנושא הוחזר ל"נושאים בתנ״ך"' });
+                            } catch (e: any) {
+                              toast({ title: "שגיאה", description: e.message, variant: "destructive" });
+                            }
+                          }}
+                          aria-label="הצגה בניווט לפי אופי הלימוד"
+                        />
+                      </TableCell>
                       <TableCell>
                         <div className="flex gap-1">
                           <Button variant="ghost" size="icon" onClick={() => openEdit(t)}><Pencil className="h-4 w-4" /></Button>

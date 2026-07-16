@@ -100,6 +100,87 @@ export const SITE_COPY_REGISTRY: CopyField[] = [
     defaultValue: "סדרות לימוד",
   },
 
+  // ── דף הבית — שורת הנצחה (רמה 20, יואב 16.7) ──
+  {
+    key: "copy.home.memorial_line",
+    label: "שורת ההנצחה בפס הנתונים",
+    group: "דף הבית",
+    type: "text",
+    defaultValue: "האתר מוקדש לזכר סעדיה דרעי ז״ל",
+    hint: "השורה מתחת למספרים בפס הכהה — מקשרת לעמוד ההנצחה",
+  },
+
+  // ── דף התרומות (רמה 20, יואב 16.7: "איפה אני יכול לערוך את המלל בדף התרומות?") ──
+  {
+    key: "copy.donate.hero_eyebrow",
+    label: "תגית פתיחה",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "תורמים מאמינים",
+    hint: "התגית הקטנה מעל הכותרת בראש עמוד /donate",
+  },
+  {
+    key: "copy.donate.hero_title_line1",
+    label: "כותרת ראשית — שורה 1",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "כל שיעור באתר נבנה",
+  },
+  {
+    key: "copy.donate.hero_title_line2",
+    label: "כותרת ראשית — שורה 2 (מוזהבת)",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "בידי מי שאיכפת לו",
+  },
+  {
+    key: "copy.donate.hero_paragraph",
+    label: "פסקת הפתיחה",
+    group: "דף התרומות",
+    type: "textarea",
+    defaultValue:
+      "האתר פועל בזכות תרומות של אנשים פרטיים שמאמינים שתורה צריכה להיות נגישה לכולם — ללא פרסומות, ללא מנויים.",
+  },
+  {
+    key: "copy.donate.why_title",
+    label: "כותרת 'למה כדאי לתמוך'",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "למה כדאי לתמוך?",
+  },
+  {
+    key: "copy.donate.why_paragraph",
+    label: "פסקת 'למה כדאי לתמוך'",
+    group: "דף התרומות",
+    type: "textarea",
+    defaultValue:
+      "אנחנו לא ארגון ממומן. כל שיעור שעולה לאתר עבר הקלטה, עריכה, וקידוד — תהליך שעולה זמן וכסף. התרומה שלך מאפשרת לנו להמשיך לבנות, לשדרג, ולהנגיש תוכן לכלל ישראל.",
+  },
+  {
+    key: "copy.donate.impact_rows",
+    label: "שורות ההשפעה (סכום|תיאור, שורה לכל פריט)",
+    group: "דף התרומות",
+    type: "textarea",
+    defaultValue:
+      "50₪|הקלטה ועריכה של שיעור אחד\n180₪|עריכת מצגת שיעור עם איורים\n360₪|הסבת שיעור לתסריט וקריינות\n1,000₪|הפקת פרק שלם בקורס דיגיטלי",
+    hint: "כל שורה: סכום|תיאור — מופיעות כרשימת 'מה התרומה עושה'",
+  },
+  {
+    key: "copy.donate.memorial_title",
+    label: "כותרת כרטיס ההנצחה",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "לעילוי נשמת סעדיה יעקב בן חיים דרעי הי״ד",
+  },
+  {
+    key: "copy.donate.memorial_text",
+    label: "טקסט כרטיס ההנצחה",
+    group: "דף התרומות",
+    type: "textarea",
+    defaultValue:
+      "כל תרומה לאתר נצרבת כשעת לימוד לעילוי נשמתו. שיעורי בני ציון ממשיכים את דרכו.",
+  },
+
   // ── חנות ──
   {
     key: "copy.store.hero_title",

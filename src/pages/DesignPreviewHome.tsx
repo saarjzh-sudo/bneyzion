@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useSEO } from "@/hooks/useSEO";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLessons } from "@/hooks/useLessons";
 import { useSeries } from "@/hooks/useSeries";
 import { usePublicRabbis } from "@/hooks/useRabbis";
@@ -205,7 +205,8 @@ function DesignHero() {
         poster="/video/hero-watercolor-poster.jpg"
         posterAlt="חומות ירושלים באקוורל מוזהב"
         mediaStyle={{ objectPosition: "center 40%",
-                      filter: "contrast(1.03) saturate(1.05)", transform: "scale(1.04)" }}
+                      /* רמה 20 (יואב 16.7): "להוסיף צבעוניות לאנימציה העליונה" — חיזוק רוויה עדין */
+                      filter: "contrast(1.05) saturate(1.28)", transform: "scale(1.04)" }}
       />
 
       {/* Overlays — light watercolor video: soft cream veil + warm base so dark text stays readable */}
@@ -303,6 +304,16 @@ function StatsBar() {
             </div>
           </div>
         ))}
+      </div>
+      {/* רמה 20 (הרב יואב 16.7 13:53): שורת הנצחה קבועה — נערכת ממרכז השליטה */}
+      <div style={{ maxWidth: 1280, margin: "0.9rem auto 0", paddingTop: "0.75rem",
+                    borderTop: "1px solid rgba(232,213,160,0.22)", textAlign: "center" }}>
+        <Link to="/memorial/saadia" style={{ textDecoration: "none" }}>
+          <span style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
+                         fontSize: "0.95rem", color: "#E8D5A0", letterSpacing: "0.04em" }}>
+            {copy("copy.home.memorial_line", "האתר מוקדש לזכר סעדיה דרעי ז״ל")}
+          </span>
+        </Link>
       </div>
     </div>
   );
@@ -664,22 +675,29 @@ function DesignParashaHolidaySection() {
               border: onDark ? "none" : "1px solid rgba(139,111,71,0.1)",
               boxShadow: onDark ? "none" : "0 2px 16px rgba(45,31,14,0.06)" }}>
 
-              {/* Image header — 160px tall, same as TanachLemishpacha cards */}
+              {/* Image header — 160px tall, same as TanachLemishpacha cards.
+                  רמה 20 (יואב 16.7): צבעוניות — רוויה מוגברת + פס אקוורל צבעוני עליון */}
               <div style={{ height: 160, position: "relative", overflow: "hidden",
                 background: isYomHaatzmaout
                   ? `linear-gradient(135deg, #0d1f3d, #1a3566)`
-                  : `linear-gradient(135deg, ${GOLD_DARK}, #a07840)` }}>
+                  : `linear-gradient(135deg, ${GOLD_DARK}, #B4682F)` }}>
                 {isYomHaatzmaout ? (
                   <img src="/images/yom-haatzmaut-hero.webp"
                     alt="יום העצמאות"
-                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9,
+                             filter: "saturate(1.18)" }} />
                 ) : (holiday.imageUrl || MOED_PLACEHOLDER_IMG) ? (
                   <img src={holiday.imageUrl || MOED_PLACEHOLDER_IMG}
                     alt={holiday.name}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                    style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9,
+                             filter: "saturate(1.18)" }} />
                 ) : null}
                 <div style={{ position: "absolute", inset: 0,
                   background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, transparent 55%)" }} />
+                {!isYomHaatzmaout && (
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4,
+                    background: "linear-gradient(90deg, #2E6E65, #C4A265, #B4682F)" }} />
+                )}
                 {/* Badge top-right */}
                 <div style={{ position: "absolute", top: 12, right: 12,
                   padding: "0.15rem 0.65rem", borderRadius: "1rem",
@@ -813,16 +831,20 @@ function DesignParashaHolidaySection() {
             border: onDark ? "none" : "1px solid rgba(139,111,71,0.1)",
             boxShadow: onDark ? "none" : "0 2px 16px rgba(45,31,14,0.06)" }}>
 
-            {/* Parasha visual header — 160px, gold gradient with placeholder image */}
+            {/* Parasha visual header — 160px. רמה 20 (יואב 16.7): צבעוניות —
+                גרדיאנט יער→זהב + רוויה מוגברת + פס אקוורל צבעוני עליון */}
             <div style={{ height: 160, position: "relative", overflow: "hidden",
-              background: `linear-gradient(135deg, #5a3f20, ${GOLD_DARK})` }}>
+              background: `linear-gradient(135deg, #2E6E65, ${GOLD_DARK})` }}>
               {PARASHA_PLACEHOLDER_IMG && (
                 <img src={PARASHA_PLACEHOLDER_IMG}
                   alt={`פרשת ${parasha}`}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.85 }} />
+                  style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.9,
+                           filter: "saturate(1.18)" }} />
               )}
               <div style={{ position: "absolute", inset: 0,
                 background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 55%)" }} />
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 4,
+                background: "linear-gradient(90deg, #2E6E65, #C4A265, #B4682F)" }} />
               {/* Badge */}
               <div style={{ position: "absolute", top: 12, right: 12,
                 padding: "0.15rem 0.65rem", borderRadius: "1rem",
@@ -1873,6 +1895,34 @@ function NewsletterSection() {
   );
 }
 
+// ── AskRabbiStrip ──────────────────────────────────────────────────────────
+// רמה 20 (הרב יואב 16.7 15:01): "שאל את הרב לא דחוף לי... אפשר לשים אותו כרגע
+// בדף הבית, ולא בנדל"ן היקר של הסיידבר" — רצועה צרה במקום הכפתור שהוסר.
+function AskRabbiStrip() {
+  const navigate = useNavigate();
+  return (
+    <section dir="rtl" style={{ background: "white", padding: "2.25rem 1.5rem",
+      borderTop: "1px solid rgba(139,111,71,0.1)", borderBottom: "1px solid rgba(139,111,71,0.1)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", alignItems: "center",
+        justifyContent: "center", gap: "1.25rem", flexWrap: "wrap", textAlign: "center" }}>
+        <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700,
+          fontSize: "1.15rem", color: TEXT_DARK }}>
+          יש לכם שאלה בתנ״ך?
+        </div>
+        <button onClick={() => navigate("/ask-rabbi")}
+          style={{ padding: "0.6rem 1.6rem", borderRadius: "0.85rem",
+            border: `1.5px solid rgba(139,111,71,0.35)`, background: "transparent",
+            color: GOLD_DARK, fontFamily: "Paamon, serif", fontWeight: 700,
+            fontSize: "0.95rem", cursor: "pointer", transition: "all 0.15s" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(196,162,101,0.1)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}>
+          שאל את הרב ←
+        </button>
+      </div>
+    </section>
+  );
+}
+
 // ── WhatsAppCTASection ─────────────────────────────────────────────────────
 function WhatsAppCTASection() {
   return (
@@ -2067,6 +2117,8 @@ export default function DesignPreviewHome() {
           <WarMiraclesSection />
           {/* יואב 13.7: סליידר רבנים — הוחזר בשפת-האתר (הוסר 27.5; TopSeries+WhatsAppCTA נשארו בחוץ) */}
           <RabbisSlider />
+          {/* רמה 20 (יואב 16.7 15:01): "שאל את הרב" עבר מהסיידבר לדף הבית */}
+          <AskRabbiStrip />
           <NewsletterSection />
         </main>
       </div>

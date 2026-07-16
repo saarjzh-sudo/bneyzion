@@ -453,7 +453,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             product: productSlug || donationSource || null,
             source: donationSource,
             tier_id: donationTierId,
-            is_monthly: donationMeta?.is_monthly || flowType === "directDebit",
+            // flowType is "directDebit" for ALL donate-page payments (it routes to the
+            // donations merchant page) — it does NOT mean the donor chose monthly.
+            // The recurring signal is the explicit donationMeta flag / request type.
+            is_monthly: donationMeta?.is_monthly ?? type === "directDebit",
             dedication_type: donationMeta?.dedication_type || "regular",
             dedication_name: donationMeta?.dedication_name || null,
             user_id: donationMeta?.user_id || meta?.user_id || null,

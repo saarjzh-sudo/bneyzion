@@ -30,6 +30,7 @@ import { useRecentDonations } from "@/hooks/useDonations";
 import { useAuth } from "@/contexts/AuthContext";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useSEO } from "@/hooks/useSEO";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 
@@ -77,6 +78,9 @@ const Donate = () => {
   const [searchParams] = useSearchParams();
   const campaign = searchParams.get("campaign");
   const isSaadiaCampaign = campaign === "saadia";
+
+  // רמה 20 (יואב 16.7): מלל הדף נערך ממרכז השליטה (אדמין ← מרכז שליטה ← דף התרומות)
+  const siteCopy = useSiteCopy();
 
   // Campaign-specific params — forwarded to create-payment so the DB row
   // gets the right product/source/tier_id for stat views like yehoshua_campaign_stats.
@@ -242,7 +246,7 @@ const Donate = () => {
               marginBottom: "1.5rem",
             }}
           >
-            תורמים מאמינים
+            {siteCopy("copy.donate.hero_eyebrow", "תורמים מאמינים")}
           </span>
 
           <h1
@@ -255,9 +259,11 @@ const Donate = () => {
               color: "white",
             }}
           >
-            כל שיעור באתר נבנה
+            {siteCopy("copy.donate.hero_title_line1", "כל שיעור באתר נבנה")}
             <br />
-            <span style={{ color: colors.goldShimmer }}>בידי מי שאיכפת לו</span>
+            <span style={{ color: colors.goldShimmer }}>
+              {siteCopy("copy.donate.hero_title_line2", "בידי מי שאיכפת לו")}
+            </span>
           </h1>
 
           <p
@@ -270,8 +276,10 @@ const Donate = () => {
               maxWidth: 560,
             }}
           >
-            האתר פועל בזכות תרומות של אנשים פרטיים שמאמינים שתורה צריכה
-            להיות נגישה לכולם — ללא פרסומות, ללא מנויים.
+            {siteCopy(
+              "copy.donate.hero_paragraph",
+              "האתר פועל בזכות תרומות של אנשים פרטיים שמאמינים שתורה צריכה להיות נגישה לכולם — ללא פרסומות, ללא מנויים."
+            )}
           </p>
         </div>
       </section>
@@ -335,7 +343,7 @@ const Donate = () => {
                   margin: "0 0 1rem",
                 }}
               >
-                למה כדאי לתמוך?
+                {siteCopy("copy.donate.why_title", "למה כדאי לתמוך?")}
               </h2>
               <p
                 style={{
@@ -346,16 +354,23 @@ const Donate = () => {
                   margin: "0 0 1.5rem",
                 }}
               >
-                אנחנו לא ארגון ממומן. כל שיעור שעולה לאתר עבר הקלטה, עריכה,
-                וקידוד — תהליך שעולה זמן וכסף. התרומה שלך מאפשרת לנו להמשיך
-                לבנות, לשדרג, ולהנגיש תוכן לכלל ישראל.
+                {siteCopy(
+                  "copy.donate.why_paragraph",
+                  "אנחנו לא ארגון ממומן. כל שיעור שעולה לאתר עבר הקלטה, עריכה, וקידוד — תהליך שעולה זמן וכסף. התרומה שלך מאפשרת לנו להמשיך לבנות, לשדרג, ולהנגיש תוכן לכלל ישראל."
+                )}
               </p>
 
               <div style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
-                <ImpactRow amount="50₪" desc="הקלטה ועריכה של שיעור אחד" />
-                <ImpactRow amount="180₪" desc="עריכת מצגת שיעור עם איורים" />
-                <ImpactRow amount="360₪" desc="הסבת שיעור לתסריט וקריינות" />
-                <ImpactRow amount="1,000₪" desc="הפקת פרק שלם בקורס דיגיטלי" />
+                {siteCopy(
+                  "copy.donate.impact_rows",
+                  "50₪|הקלטה ועריכה של שיעור אחד\n180₪|עריכת מצגת שיעור עם איורים\n360₪|הסבת שיעור לתסריט וקריינות\n1,000₪|הפקת פרק שלם בקורס דיגיטלי"
+                )
+                  .split("\n")
+                  .map((line) => line.split("|"))
+                  .filter((parts) => parts.length >= 2 && parts[0].trim())
+                  .map(([amount, ...desc]) => (
+                    <ImpactRow key={amount} amount={amount.trim()} desc={desc.join("|").trim()} />
+                  ))}
               </div>
             </div>
 
@@ -379,7 +394,7 @@ const Donate = () => {
                   margin: "0 0 0.75rem",
                 }}
               >
-                לעילוי נשמת סעדיה יעקב בן חיים דרעי הי״ד
+                {siteCopy("copy.donate.memorial_title", "לעילוי נשמת סעדיה יעקב בן חיים דרעי הי״ד")}
               </h3>
               <p
                 style={{
@@ -390,8 +405,10 @@ const Donate = () => {
                   margin: 0,
                 }}
               >
-                כל תרומה לאתר נצרבת כשעת לימוד לעילוי נשמתו.
-                שיעורי בני ציון ממשיכים את דרכו.
+                {siteCopy(
+                  "copy.donate.memorial_text",
+                  "כל תרומה לאתר נצרבת כשעת לימוד לעילוי נשמתו. שיעורי בני ציון ממשיכים את דרכו."
+                )}
               </p>
             </div>
 

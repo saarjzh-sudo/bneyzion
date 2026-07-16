@@ -48,10 +48,12 @@ export function useBasicThemesSidebar() {
         return [];
       }
 
-      const { data: children, error: childError } = await supabase
+      // רמה 20: תגית שיואב העביר ל"אופי הלימוד" (is_learning_style) יורדת מכאן.
+      const { data: children, error: childError } = await (supabase as any)
         .from("topics")
         .select("id, name, slug, sort_order")
         .eq("parent_id", parent.id)
+        .eq("is_learning_style", false)
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("name");
 
