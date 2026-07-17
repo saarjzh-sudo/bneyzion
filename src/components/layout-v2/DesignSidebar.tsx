@@ -707,35 +707,6 @@ function ContentTree({
 
   return (
     <div>
-      {/* רמה 20 (הרב יואב 15:00 + סער "תחזיר"): "תכנית הפרק השבועי" — המסלול-הדגל
-          חזר לראש הסיידבר, בהבלטה מובחנת (navy כהה + מסגרת זהב) מעל כפתורי הניווט. */}
-      <Link
-        to="/chapter-weekly"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "0.5rem",
-          padding: "0.62rem 0.75rem",
-          marginBottom: "0.4rem",
-          borderRadius: radii.md,
-          background: "linear-gradient(135deg, #1A2744 0%, #24335A 100%)",
-          border: "1px solid rgba(196,162,101,0.5)",
-          color: "#E8D5A0",
-          fontFamily: fonts.body,
-          fontSize: "0.86rem",
-          fontWeight: 700,
-          textDecoration: "none",
-          boxShadow: "0 2px 10px rgba(26,39,68,0.22)",
-        }}
-      >
-        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem" }}>
-          <CalendarDays size={15} />
-          תכנית הפרק השבועי
-        </span>
-        <ChevronRight size={13} />
-      </Link>
-
       {/* R6 6.7.2026 (Saar): "ניווט על פי ספר ופרק" — relocated here from the removed
           quick-links box above the tabs. Gold, prominent, first item in "ראשי". */}
       <Link
@@ -1260,13 +1231,16 @@ function ContentTree({
         );
       })()}
 
-      {/* רמה 20 (הרב יואב 16.7 15:00): כפתור תרומות קבוע — במקום "שאל את הרב"
-          (שעבר לדף הבית). נראות מובחנת מהקטגוריות: navy עמוק + מסגרת זהב + לב. */}
+      {/* רמה 20 (יואב 15:00 + חידודי-סער 17.7): תחתית הסיידבר — "לתרומות" מקוצר
+          (בלי אייקונים) ואחריו "תכנית הפרק השבועי". שניהם navy+זהב, מובחנים מהקטגוריות. */}
       <div
         style={{
           marginTop: "0.6rem",
           paddingTop: "0.6rem",
           borderTop: `1px solid rgba(139,111,71,0.12)`,
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.4rem",
         }}
       >
         <button
@@ -1275,9 +1249,8 @@ function ContentTree({
             width: "100%",
             display: "flex",
             alignItems: "center",
-            justifyContent: "center",
-            gap: "0.5rem",
-            padding: "0.65rem 0.6rem",
+            justifyContent: "space-between",
+            padding: "0.62rem 0.75rem",
             borderRadius: radii.md,
             border: "1px solid rgba(196,162,101,0.55)",
             background: "linear-gradient(135deg, #1A2744 0%, #24335A 100%)",
@@ -1298,8 +1271,36 @@ function ContentTree({
             (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 2px 10px rgba(26,39,68,0.25)";
           }}
         >
-          <Heart size={15} fill="#E8D5A0" strokeWidth={0} />
-          <span>שותפים בהפצת התנ"ך — לתרומה</span>
+          <span>לתרומות</span>
+          <ChevronLeft size={13} />
+        </button>
+        <button
+          onClick={() => onNavigate("/chapter-weekly")}
+          style={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0.62rem 0.75rem",
+            borderRadius: radii.md,
+            border: "1px solid rgba(196,162,101,0.4)",
+            background: "rgba(26,39,68,0.06)",
+            color: colors.goldDark,
+            fontFamily: fonts.body,
+            fontSize: "0.85rem",
+            fontWeight: 700,
+            cursor: "pointer",
+            transition: "background 0.15s",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = "rgba(26,39,68,0.11)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = "rgba(26,39,68,0.06)";
+          }}
+        >
+          <span>תכנית הפרק השבועי</span>
+          <ChevronLeft size={13} />
         </button>
       </div>
     </div>
