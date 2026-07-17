@@ -99,6 +99,7 @@ function SourceCardItem({ card }: { card: SourceCard }) {
       <button
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
+        className="source-card-toggle"
         style={{
           width: "100%",
           display: "flex",
@@ -115,6 +116,7 @@ function SourceCardItem({ card }: { card: SourceCard }) {
         <span style={{ display: "inline-flex", alignItems: "center", gap: "0.65rem", minWidth: 0 }}>
           <ScrollText size={17} style={{ color: GOLD_LIGHT, flexShrink: 0 }} />
           <span
+            className="source-card-title"
             style={{
               fontFamily: "Kedem, Frank Ruhl Libre, serif",
               fontWeight: 700,
@@ -244,8 +246,11 @@ export default function SourcesCollectionPage() {
           )}
           {data?.categories.map((cat, ci) => (
             <section key={cat.id} style={{ marginBottom: ci < data.categories.length - 1 ? "3.25rem" : 0 }}>
-              {/* Category heading */}
-              <div style={{ display: "flex", alignItems: "center", gap: "0.85rem", marginBottom: "1.4rem" }}>
+              {/* Category heading — flexWrap: כותרת ארוכה בנייד שוברת שורה ולא גולשת */}
+              <div
+                className="sources-cat-head"
+                style={{ display: "flex", alignItems: "center", gap: "0.85rem", marginBottom: "1.4rem", flexWrap: "wrap" }}
+              >
                 <h2
                   style={{
                     fontFamily: "Kedem, Frank Ruhl Libre, serif",
@@ -253,7 +258,7 @@ export default function SourcesCollectionPage() {
                     fontSize: "clamp(1.35rem, 2.6vw, 1.8rem)",
                     color: TEXT_DARK,
                     margin: 0,
-                    whiteSpace: "nowrap",
+                    lineHeight: 1.3,
                   }}
                 >
                   {cat.title}
@@ -296,12 +301,18 @@ export default function SourcesCollectionPage() {
       </main>
 
       <DesignFooter />
-      {/* המקור מודגש (ה-<h3> של הציטוט) בגוף הכרטיס */}
+      {/* המקור מודגש (ה-<h3> של הציטוט) בגוף הכרטיס + התאמות נייד */}
       <style>{`
         .source-card-body h3 { font-family: Kedem, "Frank Ruhl Libre", serif; font-weight: 700;
           font-size: 0.95rem; color: ${GOLD_DARK}; margin: 0 0 0.5rem; }
         .source-card-body p { margin: 0 0 0.75rem; }
         .source-card-body p:last-child { margin-bottom: 0; }
+        @media (max-width: 640px) {
+          .source-card-toggle { padding: 0.85rem 0.95rem !important; }
+          .source-card-title { font-size: 0.95rem !important; }
+          .source-card-body { padding: 0 1rem 1.1rem !important; font-size: 0.94rem !important; }
+          .sources-cat-head { gap: 0.55rem !important; margin-bottom: 1.1rem !important; }
+        }
       `}</style>
     </div>
   );
