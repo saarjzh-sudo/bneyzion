@@ -49,6 +49,7 @@ const Favorites = lazy(() => import("./pages/Favorites"));
 const HistoryPage = lazy(() => import("./pages/HistoryPage"));
 const Memorial = lazy(() => import("./pages/Memorial"));
 const MemorialSaadia = lazy(() => import("./pages/MemorialSaadia"));
+const SourcesCollectionPage = lazy(() => import("./pages/SourcesCollectionPage"));
 const StorePage = lazy(() => import("./pages/StorePage"));
 const ProductPage = lazy(() => import("./pages/ProductPage"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -378,6 +379,8 @@ const App = () => (
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
             <Route path="/family-tanach" element={<Suspense fallback={<LazyFallback />}><FamilyTanach /></Suspense>} />
             <Route path="/daily-verse" element={<Suspense fallback={<LazyFallback />}><DailyVersePage /></Suspense>} />
+            {/* רמה 20 (יואב 17.7): אוספי-מקורות כ"כרטיסיות נפתחות" ולא כסדרה רגילה */}
+            <Route path="/sources/:seriesId" element={<Suspense fallback={<LazyFallback />}><SourcesCollectionPage /></Suspense>} />
             <Route path="/tanach-news" element={<Suspense fallback={<LazyFallback />}><TanachNewsPage /></Suspense>} />
             <Route path="/newsletter" element={<Suspense fallback={<LazyFallback />}><NewsletterPage /></Suspense>} />
             {import.meta.env.DEV && (
