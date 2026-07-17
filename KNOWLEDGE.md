@@ -8653,3 +8653,11 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 5. **חץ סיידבר:** "ניווט על פי ספר ופרק" — `ChevronRight`→`ChevronLeft` (RTL, אחיד עם "ניווט לפי אופי הלימוד").
 
 **אומת חי:** /kenes (hero + תחתית), /bible, /category/ימי-עיון — צילומי playwright על bneyzion.vercel.app אחרי alias. דפי שבועות/מלחמות נבדקו — כבר תקינים (כרטיס-קרם), לא נגעתי.
+
+### רמה 21ב — כפתור הקדשה על פריט מוקדש (סער 17.7 צהריים)
+
+**בעיה:** סדרה שכבר הוקדשה ("בכח התנ״ך ננצח", הקדשה active ברמת series) עדיין הציגה כפתור "הקדש סדרה" — הטופס נחסם (יואב 16.7) אבל הכפתור הוצג.
+**תיקון:** `DedicationDialog` מחזיר `null` כשהפריט תפוס — דף סדרה: הסדרה מוקדשת; דף שיעור: השיעור או הסדרה שלו מוקדשים. `DedicationBadge` נשאר.
+**⚠️ לקח hooks:** הגרסה הראשונה שמה את ה-early-return לפני ה-`useMemo` של המחיר → "Rendered fewer hooks" → מסך "משהו השתבש" בכל דפי הסדרות. נתפס באימות-preview לפני alias (השער עבד). early-return בקומפוננטה עם hooks = תמיד אחרי הקריאה האחרונה.
+**אומת ב-preview + חי:** מוקדשת (b6eac28f) = תג בלי כפתור · לא-מוקדשת ("בין שאול לדוד" 0094d88d) = כפתור מוצג.
+**commits:** `e91e…`+fix · **tag:** `level21b-2026-07-17` · **prod:** `dpl_3K4DX5SP6WJUkVvST5PVtGpG7nJt` · **rollback:** alias ל-`dpl_GJZpfReTEuF1yh4UhhkQyWjqvCp7`.
