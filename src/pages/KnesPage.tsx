@@ -1,13 +1,11 @@
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
-import { Play, MessageCircle, ExternalLink, BookOpen, ChevronDown, ChevronUp, Heart } from "lucide-react";
+import { Play, BookOpen, ChevronDown, ChevronUp, Heart } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import Layout from "@/components/layout/Layout";
 import { useSEO } from "@/hooks/useSEO";
 // 27.5.2026 — hero-bg-bney-zion.jpg showed European/Scottish mountains. Replaced with Israeli Jerusalem walls.
 import kenesHeroBg from "@/assets/jerusalem-walls.webp";
-import watercolorBook from "@/assets/watercolor-book.webp";
-import kriatKivunBanner from "@/assets/kriat-kivun-banner.webp";
 
 interface Recording {
   name: string;
@@ -113,27 +111,6 @@ function RecordingCard({ recording, index }: { recording: Recording; index: numb
   );
 }
 
-function PhoneMockup({ children, headerColor, headerText }: { children: React.ReactNode; headerColor: string; headerText: string }) {
-  return (
-    <div className="mx-auto max-w-[320px] w-full">
-      <div className="rounded-[2rem] border-[3px] border-[hsl(0_0%_30%)] bg-[hsl(0_0%_15%)] p-1.5 shadow-2xl">
-        {/* Notch */}
-        <div className="flex justify-center mb-1">
-          <div className="w-24 h-5 bg-[hsl(0_0%_10%)] rounded-b-xl" />
-        </div>
-        {/* Header */}
-        <div className={`${headerColor} rounded-t-xl px-4 py-3`}>
-          <p className="text-white font-kedem font-bold text-sm text-center">{headerText}</p>
-        </div>
-        {/* Content */}
-        <div className="bg-[hsl(38_30%_94%)] rounded-b-xl overflow-hidden">
-          {children}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export default function KnesPage() {
   useSEO({
     title: "כנס ההודאה והתפילה – בני ציון",
@@ -150,27 +127,21 @@ export default function KnesPage() {
             alt=""
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0" />
-          <div className="relative z-10 text-center px-4 py-20 max-w-3xl mx-auto">
-            <p className="font-kedem font-light text-[hsl(30_40%_20%)] text-lg md:text-xl mb-3 tracking-wide md:mt-16">
-              תנועת בני ציון ללימוד תנ״ך:
-            </p>
-            <h1 className="font-kedem-hollow text-5xl sm:text-5xl md:text-7xl mb-8 leading-tight bg-gradient-to-l from-[hsl(25_50%_25%)] to-[hsl(30_40%_18%)] bg-clip-text text-transparent">
-              כנס ההודאה והתפילה
-            </h1>
-            <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-4">
-              <a
-                href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(85_35%_35%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(85_35%_28%)] hover:shadow-xl hover:scale-105"
-              >
-                <MessageCircle className="w-5 h-5" />
-                קהילת הווצאפ
-              </a>
+          {/* רמה 21 (סער 17.7): הבאנר היה בלתי-קריא — כותרת חלולה ישירות על התמונה,
+              בלי overlay ובלי כרטיס. הותאם לדפוס של כנסי שבועות/מלחמות-התנ״ך:
+              overlay עדין + כרטיס קרם + כותרת שחורה. */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_60%_92%/0.15)] via-[hsl(38_60%_90%/0.25)] to-[hsl(38_60%_88%/0.40)]" />
+          <div className="relative z-10 px-4 py-20 max-w-3xl mx-auto md:mt-12">
+            <div className="bg-[hsl(38_50%_94%/0.90)] backdrop-blur-sm rounded-3xl p-8 md:p-12 text-center shadow-xl border border-[hsl(38_40%_80%/0.5)]">
+              <p className="font-kedem font-bold text-[hsl(30_40%_25%)] text-base md:text-lg mb-3 tracking-wide">
+                תנועת בני ציון ללימוד תנ״ך
+              </p>
+              <h1 className="font-kedem-hollow-aaa text-5xl sm:text-6xl md:text-7xl mb-4 leading-[1.05] tracking-tight text-black">
+                כנס ההודאה והתפילה
+              </h1>
               <a
                 href="#recordings"
-                className="flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+                className="inline-flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
               >
                 <Play className="w-5 h-5" fill="currentColor" />
                 הקלטות הכנס
@@ -223,7 +194,7 @@ export default function KnesPage() {
           </div>
         </section>
 
-        {/* ===== DONATION CTA - BEFORE COMMUNITY ===== */}
+        {/* ===== DONATION CTA - BOTTOM ===== */}
         <section className="py-10 md:py-14 px-4 bg-[hsl(38_50%_93%)]">
           <div className="max-w-2xl mx-auto text-center">
             <div className="bg-[hsl(38_40%_90%)]/60 backdrop-blur-sm border border-[hsl(38_40%_75%)] rounded-2xl p-6 md:p-8">
@@ -242,129 +213,6 @@ export default function KnesPage() {
                 <Heart className="w-5 h-5" />
                 לתרומה זכר למחצית השקל
               </a>
-            </div>
-          </div>
-        </section>
-
-        {/* ===== COMMUNITY ===== */}
-        <section className="py-16 md:py-24 px-4 md:px-8 bg-[hsl(38_40%_88%)]">
-          <h2 className="font-kedem font-bold text-3xl md:text-4xl text-[hsl(30_40%_25%)] text-center mb-4">
-            הצטרפו לקהילה שלנו
-          </h2>
-          <p className="font-ploni text-[hsl(30_30%_45%)] text-center mb-14 text-lg max-w-2xl mx-auto">
-            תוכן יומי שמחזק ומחבר – פסוק יומי וסרטון קצר שיחדד לכם את הכיוון בתנ״ך
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-10 max-w-4xl mx-auto">
-            {/* Daily Verse Phone */}
-            <div className="flex flex-col items-center gap-5">
-              <PhoneMockup headerColor="bg-[hsl(142_70%_30%)]" headerText="📜 פסוק יומי – בני ציון">
-                <div className="p-3">
-                  <img src={watercolorBook} alt="ספר תנ״ך מאויר" className="w-full rounded-lg mb-3" loading="lazy" />
-                  <div className="bg-white rounded-xl p-3 shadow-sm text-right">
-                    <p className="font-kedem font-bold text-sm text-[hsl(30_40%_25%)] mb-2">
-                      להפוך את הגזירה, לא למחוק אותה
-                    </p>
-                    <p className="font-ploni font-bold text-xs text-[hsl(30_30%_25%)] leading-relaxed mb-2">
-                      הרב יואב אוריאל
-                    </p>
-                    <p className="font-kedem font-bold text-xs text-[hsl(30_30%_25%)] leading-relaxed mb-2 italic">
-                      "וְאַתֶּם כִּתְבוּ עַל הַיְּהוּדִים כַּטּוֹב בְּעֵינֵיכֶם בְּשֵׁם הַמֶּלֶךְ וְחִתְמוּ בְּטַבַּעַת הַמֶּלֶךְ כִּי כְתָב אֲשֶׁר נִכְתָּב בְּשֵׁם הַמֶּלֶךְ וְנַחְתּוֹם בְּטַבַּעַת הַמֶּלֶךְ אֵין לְהָשִׁיב" (אסתר ח, ח)
-                    </p>
-                    <p className="font-ploni font-bold text-xs text-[hsl(30_30%_25%)] leading-relaxed mb-2">
-                      📜 באופן מפתיע, המלך אחשורוש אינו מבטל את הגזירה הראשונה להשמיד את היהודים. החותם המלכותי אינו יכול להימחק, והסכנה נשארת בעינה. מה כן משתנה? לפי חלק מהמפרשים המלך נותן ליהודים רשות להתגונן ולעמוד על נפשם. <strong>הישועה לא הגיעה על ידי העלמת הקושי או מחיקת העבר, אלא על ידי מתן כוח להתמודד מולו ולנצח אותו</strong>. זהו לימוד גדול בהנהגה: לפעמים הקב"ה אינו מסיר את האיום או את הניסיון, אלא נותן לאדם כלים חדשים וכוחות נפש להתמודד עם המציאות כפי שהיא, ומתוך כך לצמוח.
-                    </p>
-                    <p className="font-ploni font-bold text-xs text-[hsl(30_30%_25%)] leading-relaxed">
-                      🌿 נקודת חיים: לפעמים אנו מתפללים שהבעיות פשוט ייעלמו, או שהעבר שלנו יימחק כאילו לא היה. אולם הדרך האמיתית היא לעיתים אחרת: <strong>במקום לחכות שהמציאות תשתנה, עלינו לבקש את הכוח "לכתוב" את הפרק הבא שלנו, ולמצוא בתוכנו את הכוחות לעמוד ולהתמודד מול מה שאי אפשר לשנות</strong>.
-                    </p>
-                  </div>
-                </div>
-              </PhoneMockup>
-              <a
-                href="https://chat.whatsapp.com/LghgDJHZngl4QBpji7MwAT"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-[hsl(142_70%_30%)] text-white font-kedem font-bold transition-all duration-300 hover:bg-[hsl(142_70%_25%)] hover:shadow-lg hover:scale-105"
-              >
-                <MessageCircle className="w-5 h-5" />
-                הצטרפו לפסוק היומי
-              </a>
-            </div>
-
-            {/* Kriat Kivun Phone */}
-            <div className="flex flex-col items-center gap-5">
-              <PhoneMockup headerColor="bg-[hsl(30_40%_25%)]" headerText="🎬 קריאת כיוון – סרטון יומי">
-                <div className="relative cursor-pointer" onClick={(e) => {
-                  const video = e.currentTarget.querySelector('video') as HTMLVideoElement;
-                  const poster = e.currentTarget.querySelector('.poster-overlay') as HTMLElement;
-                  const playBtn = e.currentTarget.querySelector('.play-overlay') as HTMLElement;
-                  if (video) {
-                    if (video.paused) {
-                      video.currentTime = 0;
-                      video.play();
-                      if (poster) poster.style.display = 'none';
-                      if (playBtn) playBtn.style.opacity = '0';
-                    } else {
-                      video.pause();
-                      if (playBtn) playBtn.style.opacity = '1';
-                    }
-                  }
-                }}>
-                  <video
-                    src="/videos/kriat-kivun-sample.mp4"
-                    className="w-full"
-                    playsInline
-                    preload="auto"
-                  />
-                  <img
-                    src={kriatKivunBanner}
-                    alt="קריאת כיוון"
-                    className="poster-overlay absolute inset-0 w-full h-full object-cover"
-                  />
-                  <div className="play-overlay absolute inset-0 flex items-center justify-center transition-opacity duration-300">
-                    <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
-                      <Play className="w-7 h-7 text-[hsl(30_40%_25%)]" fill="currentColor" />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-3">
-                  <p className="font-kedem font-bold text-sm text-[hsl(30_40%_25%)] mb-1">
-                    קריאת כיוון – המצפן היומי שלך בתנ״ך
-                  </p>
-                  <p className="font-ploni text-xs text-[hsl(30_30%_40%)]">
-                    5 דקות תנ״ך ביום עם הרב יואב אוריאל
-                  </p>
-                </div>
-              </PhoneMockup>
-              <div className="flex flex-col sm:flex-row items-center gap-3">
-                <a
-                  href="https://www.youtube.com/playlist?list=PLOx20t5YE1oBmOajK5567uJT1bpHjTqmb"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[hsl(0_80%_50%)] text-white font-ploni font-light transition-all duration-300 hover:bg-[hsl(0_80%_42%)] hover:shadow-lg hover:scale-105"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  יוטיוב
-                </a>
-                <a
-                  href="https://open.spotify.com/show/4dulNchco8ghwVgXsKlxYP"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[hsl(142_70%_38%)] text-white font-ploni font-light transition-all duration-300 hover:bg-[hsl(142_70%_30%)] hover:shadow-lg hover:scale-105"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  ספוטיפיי
-                </a>
-                <a
-                  href="https://chat.whatsapp.com/LnJJBRXwkf24GTvotWbdOw"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[hsl(142_70%_30%)] text-white font-ploni font-light transition-all duration-300 hover:bg-[hsl(142_70%_25%)] hover:shadow-lg hover:scale-105"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  ווצאפ
-                </a>
-              </div>
             </div>
           </div>
         </section>

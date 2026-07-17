@@ -53,6 +53,11 @@ import {
 } from "@/hooks/useContentSidebar";
 import { usePublicBookListing, type PublicListingItem } from "@/hooks/usePublicBookListing";
 import { supabase } from "@/integrations/supabase/client";
+// רמה 21 (סער 17.7): דפי הכנסים הייעודיים מוצגים כבלוק בקטגוריית "ימי עיון בתנ"ך"
+import { KNESIM } from "@/data/kenesim";
+
+// content_nodes root של "ימי עיון בתנ"ך" (ROOT_IDS.yemeiIyun ב-useContentSidebar)
+const YEMEI_IYUN_ID = "f4040001-0001-4000-8000-000000000000";
 
 // ─── types ───────────────────────────────────────────────────────────────────
 
@@ -677,6 +682,59 @@ export default function CategoryPage() {
             active={formatFilter}
             onChange={setFormatFilter}
           />
+        )}
+
+        {/* ── רמה 21 (סער 17.7): כנסי בני ציון — דפי הכנסים הייעודיים תחת "ימי עיון בתנ"ך" ── */}
+        {id === YEMEI_IYUN_ID && (
+          <section style={{ marginBottom: "2.5rem" }}>
+            <SectionHeading>כנסי בני ציון</SectionHeading>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+              {KNESIM.map((knes) => (
+                <Link
+                  key={knes.slug}
+                  to={knes.to}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "1rem",
+                    padding: "1rem 1.25rem",
+                    background: "#fff",
+                    border: `1px solid rgba(139,111,71,0.15)`,
+                    borderRadius: radii.md,
+                    boxShadow: shadows.card,
+                    textDecoration: "none",
+                    transition: "box-shadow 0.15s, border-color 0.15s, transform 0.1s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = shadows.cardHover;
+                    e.currentTarget.style.borderColor = colors.goldDark;
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = shadows.card;
+                    e.currentTarget.style.borderColor = "rgba(139,111,71,0.15)";
+                    e.currentTarget.style.transform = "none";
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", marginBottom: "0.2rem" }}>
+                      <span style={{ fontFamily: fonts.display, fontSize: "1.05rem", fontWeight: 700, color: colors.textDark }}>
+                        {knes.title}
+                      </span>
+                      <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", color: colors.textSubtle }}>
+                        {knes.hebrewDate} · {knes.date}
+                      </span>
+                    </div>
+                    <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: 0, lineHeight: 1.5 }}>
+                      {knes.subtitle} · {formatRabbis(knes.rabbis)}
+                    </p>
+                  </div>
+                  <ChevronLeft size={16} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                </Link>
+              ))}
+            </div>
+          </section>
         )}
 
         {publicListing.hasListing ? (
