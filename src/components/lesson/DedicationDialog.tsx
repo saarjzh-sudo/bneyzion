@@ -90,11 +90,6 @@ export default function DedicationDialog({
     ? "הסדרה הזו כבר הוקדשה — אי אפשר להקדיש אותה או שיעור מתוכה שוב."
     : "השיעור הזה כבר הוקדש.";
 
-  // רמה 21ב (סער 17.7): פריט שכבר הוקדש — כפתור ההקדשה לא מוצג בכלל
-  // (עד עכשיו הוצג ורק הטופס נחסם). בדף סדרה: הסדרה מוקדשת. בדף שיעור:
-  // השיעור מוקדש או שהסדרה שלו מוקדשת (הקדשת-סדרה חוסמת את שיעוריה).
-  if (lessonId ? lessonTaken : seriesTaken) return null;
-
   // שני היקפים לבחירה רק כשיש גם שיעור וגם סדרה, וההיקף פנוי
   const canChooseScope = !!seriesId && !!lessonId;
 
@@ -110,6 +105,12 @@ export default function DedicationDialog({
   const targetTitle = scope === "series" ? seriesTitle || lessonTitle || "" : lessonTitle || "";
   const scopeWord = scope === "series" ? "סדרה" : "שיעור";
   const defaultTrigger = lessonId ? "הקדש שיעור" : "הקדש סדרה";
+
+  // רמה 21ב (סער 17.7): פריט שכבר הוקדש — כפתור ההקדשה לא מוצג בכלל
+  // (עד עכשיו הוצג ורק הטופס נחסם). בדף סדרה: הסדרה מוקדשת. בדף שיעור:
+  // השיעור מוקדש או שהסדרה שלו מוקדשת (הקדשת-סדרה חוסמת את שיעוריה).
+  // חייב לשבת אחרי כל קריאות-ה-hooks (יציאה מוקדמת לפני useMemo = קריסת hooks).
+  if (lessonId ? lessonTaken : seriesTaken) return null;
 
   const resetForm = () => {
     setName("");
