@@ -70,6 +70,8 @@ export default function DonateForm({
   const [donorName, setDonorName] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
+  // מיכאל (קבוצת המבקרים 17.7): ת"ז/ח.פ לזיכוי מס סעיף 46 — רשות
+  const [donorTaxId, setDonorTaxId] = useState("");
   const [tosAccepted, setTosAccepted] = useState(false);
 
   const { toast } = useToast();
@@ -92,6 +94,10 @@ export default function DonateForm({
     }
     if (!donorPhone || !/^05\d{8}$/.test(donorPhone.replace(/[-\s]/g, ""))) {
       toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
+      return;
+    }
+    if (donorTaxId && !/^\d{8,9}$/.test(donorTaxId.replace(/[-\s]/g, ""))) {
+      toast({ title: "ת\"ז / ח.פ לא תקין — 8-9 ספרות (או להשאיר ריק)", variant: "destructive" });
       return;
     }
     if (!tosAccepted) {
@@ -126,6 +132,7 @@ export default function DonateForm({
           dedication_type: donationType,
           dedication_name: dedication || undefined,
           donor_email: donorEmail || undefined,
+          donor_tax_id: donorTaxId.replace(/[-\s]/g, "") || undefined,
           user_id: user?.id,
           ...(source && { source }),
           ...(tier && { tier_id: tier }),
@@ -270,6 +277,10 @@ export default function DonateForm({
             <label htmlFor="donor-email" className="df-label">אימייל (לקבלה)</label>
             <input id="donor-email" type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="email@example.com" dir="ltr" autoComplete="email" className="df-input" style={{ textAlign: "right" }} />
           </div>
+        </div>
+        <div>
+          <label htmlFor="donor-tax-id" className="df-label">ת"ז / ח.פ — לזיכוי מס לפי סעיף 46 (לא חובה)</label>
+          <input id="donor-tax-id" value={donorTaxId} onChange={(e) => setDonorTaxId(e.target.value)} placeholder="למי שמעוניין שהתרומה תדווח לרשות המסים" inputMode="numeric" dir="ltr" className="df-input" style={{ textAlign: "right" }} />
         </div>
       </div>
 

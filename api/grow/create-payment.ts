@@ -65,6 +65,8 @@ interface CreatePaymentBody {
     dedication_type?: string;
     dedication_name?: string;
     donor_email?: string;
+    /** ת"ז/ח.פ לזיכוי מס לפי סעיף 46 (מיכאל מקבוצת המבקרים 17.7) — לא חובה */
+    donor_tax_id?: string;
     user_id?: string;
     // Campaign-specific routing (added by Donate.tsx when ?source= param exists)
     source?: string;   // e.g. "yehoshua-campaign"
@@ -459,6 +461,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             is_monthly: donationMeta?.is_monthly ?? type === "directDebit",
             dedication_type: donationMeta?.dedication_type || "regular",
             dedication_name: donationMeta?.dedication_name || null,
+            // ת"ז/ח.פ לדיווח סעיף 46 — ספרות בלבד, עד 9 (המשרד משתמש בזה לקבלה)
+            donor_tax_id: (donationMeta?.donor_tax_id || "").replace(/\D/g, "").slice(0, 9) || null,
             user_id: donationMeta?.user_id || meta?.user_id || null,
             payment_status: "pending",
             raw_payload: { consent: consentAudit },
