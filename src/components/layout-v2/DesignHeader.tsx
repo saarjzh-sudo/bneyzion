@@ -184,6 +184,39 @@ export default function DesignHeader({
               href === "/"
                 ? location.pathname === "/"
                 : location.pathname.startsWith(href);
+            // 17.7 (מיכאל מקבוצת המבקרים): קישור התרומות בתפריט היה קטן וחיוור —
+            // מקבל עיצוב כפתור-זהב בולט כמו "התחילו ללמוד" בהירו.
+            if (href.startsWith("/donate")) {
+              return (
+                <Link
+                  key={href}
+                  to={href}
+                  style={{
+                    fontFamily: fonts.body,
+                    fontSize: "0.83rem",
+                    fontWeight: 700,
+                    color: "#fff",
+                    textDecoration: "none",
+                    whiteSpace: "nowrap",
+                    padding: "0.42rem 1rem",
+                    borderRadius: 999,
+                    background: "linear-gradient(135deg, #8B6F47 0%, #C4A265 100%)",
+                    boxShadow: "0 2px 8px rgba(139,111,71,0.3)",
+                    transition: "transform 0.15s, box-shadow 0.15s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(139,111,71,0.4)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "none";
+                    e.currentTarget.style.boxShadow = "0 2px 8px rgba(139,111,71,0.3)";
+                  }}
+                >
+                  {label}
+                </Link>
+              );
+            }
             return (
               <Link
                 key={href}

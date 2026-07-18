@@ -300,7 +300,7 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 return (
                   <button
                     key={t.key}
-                    onClick={() => setActiveTab(t.key)}
+                    onClick={() => { setActiveTab(t.key); setSearch(""); }}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
@@ -324,6 +324,42 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* 17.7 (מיכאל+תרצה מקבוצת המבקרים): חיפוש בלשוניות רבנים/נושאים בלבד —
+            הטאב הראשי נשאר נקי (החלטת סער R3 15.6). מנוע הסינון כבר קיים. */}
+        {(!collapsed || isDrawer) && activeTab !== "main" && (
+          <div style={{ padding: "0.45rem 0.85rem 0.15rem", position: "relative" }}>
+            <Search
+              size={13}
+              style={{
+                position: "absolute",
+                top: "50%",
+                transform: "translateY(-38%)",
+                insetInlineStart: "1.35rem",
+                color: colors.textSubtle,
+                pointerEvents: "none",
+              }}
+            />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={activeTab === "rabbis" ? "חיפוש רב לפי שם…" : "חיפוש נושא…"}
+              aria-label={activeTab === "rabbis" ? "חיפוש רב לפי שם" : "חיפוש נושא"}
+              style={{
+                width: "100%",
+                boxSizing: "border-box",
+                padding: "0.42rem 2rem 0.42rem 0.6rem",
+                borderRadius: radii.sm,
+                border: "1px solid rgba(139,111,71,0.2)",
+                background: "rgba(139,111,71,0.04)",
+                fontFamily: fonts.body,
+                fontSize: "0.8rem",
+                color: colors.textMid,
+                outline: "none",
+              }}
+            />
           </div>
         )}
 
@@ -1198,13 +1234,22 @@ function ContentTree({
 
             {specialOpen && (
               <div style={{ paddingInlineStart: "0.5rem", paddingTop: "0.15rem" }}>
-                {/* פרשת השבוע — בתוך "תכנים מיוחדים" (סער 6.7) */}
+                {/* פרשת השבוע — בתוך "תכנים מיוחדים" (סער 6.7).
+                    17.7 (יואב): + שתי פינות המקורות החדשות + סרטוני המלחמה. */}
+                {[
+                  { to: "/parasha", label: "פרשת השבוע" },
+                  { to: "/series/68582fdf-9d89-4327-9d50-a87147604103", label: "למה ללמוד תנ״ך? — מקורות" },
+                  { to: "/series/a8e770fd-6967-4628-893c-342f7a817feb", label: "הדרכות חכמים איך ללמוד תנ״ך" },
+                  { to: "/series/b6eac28f-ee7f-4e3b-8b56-3946a00a979a", label: "בכוח התנ״ך ננצח — סרטונים על המלחמה" },
+                ].map(({ to, label }) => (
                 <Link
-                  to="/parasha"
+                  key={to}
+                  to={to}
                   style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
+                    gap: "0.4rem",
                     padding: "0.45rem 0.6rem",
                     marginBottom: "0.15rem",
                     borderRadius: radii.sm,
@@ -1215,9 +1260,10 @@ function ContentTree({
                     textDecoration: "none",
                   }}
                 >
-                  <span>פרשת השבוע</span>
-                  <ChevronRight size={13} />
+                  <span>{label}</span>
+                  <ChevronRight size={13} style={{ flexShrink: 0 }} />
                 </Link>
+                ))}
                 {specialSections.map((section) => (
                   <ExtraSectionBlock
                     key={section.id}
@@ -1278,6 +1324,7 @@ function ContentTree({
           <span>לתרומות</span>
           <ChevronLeft size={13} />
         </button>
+        {/* יואב 17.7 16:35: ירוק — "היעד השיווקי העיקרי שלנו" */}
         <button
           onClick={() => onNavigate("/chapter-weekly")}
           style={{
@@ -1287,20 +1334,23 @@ function ContentTree({
             justifyContent: "space-between",
             padding: "0.62rem 0.75rem",
             borderRadius: radii.md,
-            border: "1px solid rgba(196,162,101,0.4)",
-            background: "rgba(26,39,68,0.06)",
-            color: colors.goldDark,
+            border: "1px solid rgba(196,162,101,0.45)",
+            background: "linear-gradient(135deg, #3E5226 0%, #4A5A2E 100%)",
+            color: "#F2EBD9",
             fontFamily: fonts.body,
             fontSize: "0.85rem",
             fontWeight: 700,
             cursor: "pointer",
-            transition: "background 0.15s",
+            boxShadow: "0 2px 10px rgba(74,90,46,0.28)",
+            transition: "transform 0.15s, box-shadow 0.15s",
           }}
           onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "rgba(26,39,68,0.11)";
+            (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 4px 14px rgba(74,90,46,0.4)";
           }}
           onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = "rgba(26,39,68,0.06)";
+            (e.currentTarget as HTMLButtonElement).style.transform = "none";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 2px 10px rgba(74,90,46,0.28)";
           }}
         >
           <span>תכנית הפרק השבועי</span>
