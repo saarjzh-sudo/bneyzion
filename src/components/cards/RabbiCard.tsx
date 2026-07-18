@@ -37,7 +37,20 @@ function getRabbiInitial(name: string): string {
   return cleanName.charAt(0) || name.charAt(0);
 }
 
+// 17.7 (תרצה מקבוצת המבקרים): "רב" הופיע מתחת לכל שם — גם לנשים (רבנית/ד"ר/פרופ')
+// וגם כשהשם עצמו כבר מתחיל בתואר. תואר גנרי שכבר גלום בשם — לא מציגים שוב.
+const GENERIC_TITLES = new Set(["רב", "הרב", "רבנית", "הרבנית"]);
+function displayTitle(name: string, title?: string | null): string | null {
+  if (!title) return null;
+  const t = title.trim();
+  if (GENERIC_TITLES.has(t)) return null;
+  // התואר כבר מופיע כחלק מהשם (למשל "ד"ר רותי שפירא" עם title='ד"ר')
+  if (name.includes(t)) return null;
+  return t;
+}
+
 const RabbiCard = memo(function RabbiCard({ id, slug, name, title, specialty, imageUrl, lessonCount }: RabbiCardProps) {
+  const subtitle = displayTitle(name, title);
   return (
     <Link to={`/rabbis/${slug ?? id}`}>
       <Card className="hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 h-full group text-center border-border">
@@ -57,7 +70,7 @@ const RabbiCard = memo(function RabbiCard({ id, slug, name, title, specialty, im
             </div>
           )}
           <h3 className="font-heading text-foreground group-hover:text-primary transition-colors">{name}</h3>
-          {title && <span className="text-xs text-muted-foreground mt-1">{title}</span>}
+          {subtitle && <span className="text-xs text-muted-foreground mt-1">{subtitle}</span>}
           {specialty && <span className="text-xs text-accent mt-1">{specialty}</span>}
           <span className="flex items-center gap-1 text-xs text-muted-foreground mt-3 bg-muted/50 px-2 py-0.5 rounded-md">
             <BookOpen className="h-3 w-3" />
