@@ -94,6 +94,7 @@ interface PromoForm {
   page_types: string[];
   audiences: string[];
   priority: string;
+  popup_delay_seconds: string;
   frequency: PromoRow["frequency"];
   dismissible: boolean;
   suppress_on_product: boolean;
@@ -117,6 +118,7 @@ const emptyForm: PromoForm = {
   page_types: [],
   audiences: [],
   priority: "0",
+  popup_delay_seconds: "3",
   frequency: "session",
   dismissible: true,
   suppress_on_product: true,
@@ -142,6 +144,7 @@ function rowToForm(row: PromoRow): PromoForm {
     page_types: row.page_types ?? [],
     audiences: row.audiences ?? [],
     priority: String(row.priority ?? 0),
+    popup_delay_seconds: String((row as any).popup_delay_seconds ?? 3),
     frequency: row.frequency,
     dismissible: row.dismissible,
     suppress_on_product: row.suppress_on_product,
@@ -167,6 +170,7 @@ function formToPayload(form: PromoForm) {
     page_types: form.page_types,
     audiences: form.audiences,
     priority: parseInt(form.priority) || 0,
+    popup_delay_seconds: Math.max(0, parseInt(form.popup_delay_seconds) || 3),
     frequency: form.frequency,
     dismissible: form.dismissible,
     suppress_on_product: form.suppress_on_product,
@@ -197,11 +201,32 @@ function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo, mobileImageUrl,
   const inputRef = useRef<HTMLInputElement>(null);
   const mobileInputRef = useRef<HTMLInputElement>(null);
 
+  // יואב 17.7 + סער: "אסדר שלא יהיה אפשר להעלות באנר במידה לא נכונה" —
+  // באנר = רצועה נמוכה ורחבה, יחס רוחב:גובה של לפחות 2.5:1.
+  const checkBannerRatio = (file: File): Promise<boolean> =>
+    new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = () => {
+        const ratio = img.width / img.height;
+        URL.revokeObjectURL(url);
+        if (ratio < 2.5) {
+          toast.error(
+            `התמונה ${img.width}×${img.height} גבוהה מדי לבאנר — צריך רצועה רחבה ונמוכה (יחס לפחות 2.5:1, למשל 1280×360)`,
+          );
+          resolve(false);
+        } else resolve(true);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); resolve(true); };
+      img.src = url;
+    });
+
   const handleFiles = async (files: File[]) => {
     setUploading(true);
     try {
       for (const file of files) {
         if (file.type.startsWith("image/")) {
+          if (bannerMode && !(await checkBannerRatio(file))) continue;
           onImage(await uploadPromoMedia(file));
           toast.success("התמונה הועלתה");
         } else if (file.type.startsWith("video/") && !bannerMode) {
@@ -221,6 +246,7 @@ function PromoMediaField({ imageUrl, videoUrl, onImage, onVideo, mobileImageUrl,
   const handleMobileFile = async (file: File | undefined) => {
     if (!file || !onMobileImage) return;
     if (!file.type.startsWith("image/")) { toast.error("תמונה בלבד"); return; }
+    if (!(await checkBannerRatio(file))) return;
     setUploading(true);
     try {
       onMobileImage(await uploadPromoMedia(file));
@@ -352,7 +378,8 @@ export default function Promos() {
   const saveMutation = useMutation({
     mutationFn: async () => {
       const payload = formToPayload(form);
-      if (!payload.title && !payload.body) throw new Error("חסר תוכן — כותרת או גוף הודעה");
+      if (!payload.image_url && !payload.video_url) throw new Error("חסרה מדיה — פופאפ/באנר הם תמונה (או וידאו) לחיצה");
+      if (!payload.title) throw new Error("חסר שם פנימי לפרסום (לזיהוי ברשימה)");
       const { error } = editingId
         ? await promosTable().update(payload).eq("id", editingId)
         : await promosTable().insert(payload);
@@ -528,7 +555,7 @@ export default function Promos() {
                     <Select value={form.placement} onValueChange={(v) => set("placement", v as PromoForm["placement"])}>
                       <SelectTrigger id="promo-placement"><SelectValue /></SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="content">עמודי התוכן (מעל הפוטר)</SelectItem>
+                        <SelectItem value="content">עמודי התוכן (רצועה עליונה מתחת להדר)</SelectItem>
                         <SelectItem value="home">דף הבית (מתחת להירו)</SelectItem>
                       </SelectContent>
                     </Select>
@@ -548,14 +575,12 @@ export default function Promos() {
                 )}
               </div>
 
+              {/* יואב 17.7: פופאפ/באנר = תמונה + כפתור בלבד. הכותרת נשארת כשם
+                  פנימי לרשימה, שדה "גוף ההודעה" הוסר (לא מוצג באתר ורק בלבל). */}
               <div className="space-y-1.5">
-                <Label htmlFor="promo-title">כותרת</Label>
-                <Input id="promo-title" value={form.title} onChange={(e) => set("title", e.target.value)} placeholder="למשל: כנס מלחמות התנ״ך — ההרשמה נפתחה" />
-              </div>
-
-              <div className="space-y-1.5">
-                <Label htmlFor="promo-body">גוף ההודעה</Label>
-                <Textarea id="promo-body" value={form.body} onChange={(e) => set("body", e.target.value)} rows={2} />
+                <Label htmlFor="promo-title">שם הפרסום (פנימי — לא מוצג באתר)</Label>
+                <Input id="promo-title" value={form.title} onChange={(e) => set("title", e.target.value)} placeholder="למשל: קמפיין ספר יהושע" />
+                <p className="text-xs text-muted-foreground">מה שהגולש רואה: התמונה/וידאו + כפתור מתחתיה. אין כותרת או טקסט על הפופאפ.</p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -568,6 +593,21 @@ export default function Promos() {
                   <Input id="promo-cta-url" dir="ltr" value={form.cta_url} onChange={(e) => set("cta_url", e.target.value)} placeholder="/kenes" />
                 </div>
               </div>
+
+              {form.type === "popup" && (
+                <div className="space-y-1.5">
+                  <Label htmlFor="promo-delay">אחרי כמה שניות לקפוץ</Label>
+                  <Input
+                    id="promo-delay"
+                    type="number"
+                    min={0}
+                    max={120}
+                    value={form.popup_delay_seconds}
+                    onChange={(e) => set("popup_delay_seconds", e.target.value)}
+                  />
+                  <p className="text-xs text-muted-foreground">שלא יקפוץ מיד — נותנים לגולש רגע לראות את הדף (מומלץ 3–8 שניות).</p>
+                </div>
+              )}
 
               <PromoMediaField
                 imageUrl={form.image_url}

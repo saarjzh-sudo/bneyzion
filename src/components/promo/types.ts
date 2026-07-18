@@ -30,6 +30,8 @@ export interface Promo {
   page_types: string[] | null;
   audiences: string[] | null;
   audience_tags: string[];
+  /** יואב 17.7: "אחרי כמה שניות לקפוץ" — השהיית הפופאפ מכניסת הגולש (ברירת-מחדל 3) */
+  popup_delay_seconds: number | null;
   priority: number;
   frequency: PromoFrequency;
   dismissible: boolean;

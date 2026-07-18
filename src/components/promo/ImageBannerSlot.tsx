@@ -61,6 +61,10 @@ export default function ImageBannerSlot({ placement }: { placement: "home" | "co
         style={{
           width: "100%",
           display: "block",
+          // יואב 17.7: "באנר עליון, נמוך ורחב" — תמונה בכל יחס נחתכת לרצועה,
+          // לא משתלטת על העמוד.
+          maxHeight: "clamp(110px, 18vw, 210px)",
+          objectFit: "cover",
           borderRadius: 14,
           border: "1px solid rgba(196,162,101,0.4)",
           boxShadow: "0 6px 24px rgba(45,31,14,0.16)",

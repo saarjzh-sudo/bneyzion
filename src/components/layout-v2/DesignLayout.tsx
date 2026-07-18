@@ -55,6 +55,10 @@ export default function DesignLayout({
         onSidebarToggle={sidebar ? () => setDrawerOpen((v) => !v) : undefined}
       />
 
+      {/* יואב 17.7: הבאנר בעמודי-תוכן = רצועה עליונה נמוכה ורחבה מתחת להדר
+          (היה מעל הפוטר — "רואים אותו בתחתית העמוד ובתמונה ענקית"). */}
+      {!overlapHero && <ImageBannerSlot placement="content" />}
+
       <div
         style={{
           display: "flex",
@@ -85,8 +89,9 @@ export default function DesignLayout({
         </main>
       </div>
 
-      {/* 8.7 (סער): באנר-תמונה בעמודי התוכן — מעל הפוטר, בזרימת העמוד (לא צף) */}
-      <ImageBannerSlot placement="content" />
+      {/* בעמודים עם הירו חופף (overlapHero) הרצועה העליונה תשבור את העיצוב —
+          שם הבאנר נשאר מעל הפוטר כמו קודם. */}
+      {overlapHero && <ImageBannerSlot placement="content" />}
 
       <DesignFooter />
       {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל

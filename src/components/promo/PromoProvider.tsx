@@ -21,8 +21,9 @@ import { isProductRoute, isLearningRoute, isPromoBlockedRoute } from "./promoRou
 import { pageTypeFromPath, useVisitorAudiences, matchesTargeting } from "./targeting";
 import type { Promo } from "./types";
 
-/** Delay before a popup appears, so it never slams on first paint. */
-const POPUP_DELAY_MS = 1500;
+/** Delay before a popup appears, so it never slams on first paint.
+ *  יואב 17.7: ניתן להגדרה פר-פופאפ באדמין (popup_delay_seconds, ברירת-מחדל 3ש'). */
+const POPUP_DELAY_MS_DEFAULT = 3000;
 
 const PromoProvider = () => {
   const { pathname } = useLocation();
@@ -33,13 +34,6 @@ const PromoProvider = () => {
 
   const [dismissedIds, setDismissedIds] = useState<Set<string>>(new Set());
   const [popupReady, setPopupReady] = useState(false);
-
-  // Reset the popup delay on every route change.
-  useEffect(() => {
-    setPopupReady(false);
-    const t = window.setTimeout(() => setPopupReady(true), POPUP_DELAY_MS);
-    return () => window.clearTimeout(t);
-  }, [pathname]);
 
   const dismiss = (promo: Promo) => {
     markPromoDismissed(promo, Date.now());
@@ -81,6 +75,15 @@ const PromoProvider = () => {
 
     return { conference: pick("conference"), popup: popupPick };
   }, [promos, pathname, dismissedIds, visitorTags, visitorAudiences]);
+
+  // Reset the popup delay on every route change; duration = per-popup setting.
+  const popupDelayMs =
+    popup?.popup_delay_seconds != null ? popup.popup_delay_seconds * 1000 : POPUP_DELAY_MS_DEFAULT;
+  useEffect(() => {
+    setPopupReady(false);
+    const t = window.setTimeout(() => setPopupReady(true), popupDelayMs);
+    return () => window.clearTimeout(t);
+  }, [pathname, popup?.id, popupDelayMs]);
 
   if (!conference && !popup) return null;
 

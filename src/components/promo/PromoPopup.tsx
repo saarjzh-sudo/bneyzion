@@ -6,7 +6,7 @@
  * focus is trapped inside while open and returned to the opener on close,
  * backdrop click closes (when dismissible).
  */
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { colors, radii, shadows } from "@/lib/designTokens";
 import { promoPalette, promoFonts } from "./promoTheme";
 import type { Promo } from "./types";
@@ -22,6 +22,10 @@ const FOCUSABLE =
 const PromoPopup = ({ promo, onDismiss }: Props) => {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
+  // יואב 17.7: וידאו בפופאפ בלי קול. הדפדפן מחייב autoplay מושתק —
+  // כפתור-רמקול מפעיל את הקול בלחיצת המשתמש (אינטראקציה = מותר).
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
   const pal = promoPalette[promo.theme];
   const titleId = `promo-title-${promo.id}`;
   const bodyId = `promo-body-${promo.id}`;
@@ -119,62 +123,90 @@ const PromoPopup = ({ promo, onDismiss }: Props) => {
               }
         }
       >
-        {/* 8.7 (סער): פופאפ עם מדיה = "פשוט תמונה לחיצה" — המדיה היא הפופאפ כולו,
-            כל התמונה מקושרת ל-cta_url; כפתור-CTA מעל המדיה כשיש cta_label. */}
+        {/* 8.7 (סער): פופאפ עם מדיה = "פשוט תמונה לחיצה" — המדיה היא הפופאפ כולו.
+            יואב 17.7: הכפתור עבר אל מתחת לתמונה (לא מכסה מידע), ולווידאו נוסף
+            כפתור-רמקול להפעלת קול. */}
         {promo.video_url || promo.image_url ? (
           (() => {
             const mediaStyle: React.CSSProperties = {
               maxWidth: "min(620px, 94vw)",
-              maxHeight: "82vh",
+              maxHeight: "76vh",
               width: "auto",
               height: "auto",
               display: "block",
-              borderRadius: 18,
+              borderRadius: promo.cta_label && promo.cta_url ? "18px 18px 0 0" : 18,
               boxShadow: shadows.modal,
             };
             const media = promo.video_url ? (
-              <video
-                src={promo.video_url}
-                poster={promo.image_url ?? undefined}
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{ ...mediaStyle, background: "#000", width: "min(420px, 90vw)" }}
-              />
+              <span style={{ position: "relative", display: "block" }}>
+                <video
+                  ref={videoRef}
+                  src={promo.video_url}
+                  poster={promo.image_url ?? undefined}
+                  autoPlay
+                  muted={muted}
+                  loop
+                  playsInline
+                  style={{ ...mediaStyle, background: "#000", width: "min(420px, 90vw)" }}
+                />
+                <button
+                  type="button"
+                  aria-label={muted ? "הפעלת קול" : "השתקה"}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setMuted((m) => {
+                      if (videoRef.current) videoRef.current.muted = !m;
+                      return !m;
+                    });
+                  }}
+                  style={{
+                    position: "absolute",
+                    bottom: "0.75rem",
+                    insetInlineEnd: "0.75rem",
+                    width: 40,
+                    height: 40,
+                    borderRadius: radii.pill,
+                    border: "1px solid rgba(255,255,255,0.4)",
+                    background: "rgba(0,0,0,0.55)",
+                    color: "white",
+                    fontSize: "1.1rem",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 2,
+                  }}
+                >
+                  <span aria-hidden>{muted ? "🔇" : "🔊"}</span>
+                </button>
+              </span>
             ) : (
               <img src={promo.image_url!} alt={promo.title ?? "פרסום"} style={mediaStyle} />
             );
+            // הכפתור = פס מתחת למדיה, לא שכבה עליה (יואב 17.7 13:00)
             const cta = promo.cta_label && promo.cta_url && (
               <span
                 style={{
-                  position: "absolute",
-                  bottom: "1.1rem",
-                  insetInline: 0,
                   display: "flex",
                   justifyContent: "center",
-                  pointerEvents: "none",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  background: "linear-gradient(135deg, #8B6F47, #C4A265)",
+                  color: "white",
+                  fontFamily: promoFonts.display,
+                  fontWeight: 700,
+                  fontSize: "1.05rem",
+                  padding: "0.8rem 1.9rem",
+                  borderRadius: "0 0 18px 18px",
+                  boxShadow: shadows.modal,
                 }}
               >
-                <span
-                  style={{
-                    background: "linear-gradient(135deg, #8B6F47, #C4A265)",
-                    color: "white",
-                    fontFamily: promoFonts.display,
-                    fontWeight: 700,
-                    fontSize: "1.05rem",
-                    padding: "0.65rem 1.9rem",
-                    borderRadius: radii.pill,
-                    boxShadow: "0 6px 20px rgba(0,0,0,0.35)",
-                    border: "1px solid rgba(255,255,255,0.35)",
-                  }}
-                >
-                  {promo.cta_label}
-                </span>
+                {promo.cta_label}
               </span>
             );
             const content = (
-              <span style={{ position: "relative", display: "block" }}>
+              <span style={{ display: "block" }}>
                 {media}
                 {cta}
               </span>
