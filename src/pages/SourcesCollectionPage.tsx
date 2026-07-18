@@ -29,9 +29,18 @@ const GOLD_DARK = "#8B6F47";
 const GOLD_LIGHT = "#C4A265";
 
 // רק שני האוספים האלה משתמשים בתצוגה הזו (אבטחה: לא כל סדרה נפתחת כאן).
-const COLLECTIONS: Record<string, { eyebrow: string }> = {
-  "68582fdf-9d89-4327-9d50-a87147604103": { eyebrow: "אוסף מקורות" },
-  "a8e770fd-6967-4628-893c-342f7a817feb": { eyebrow: "הדרכות ללימוד" },
+// יואב 17.7 11:46: התמונה שנוצרה לכל פינה — גם כרקע לכותרת בכניסה אליה.
+const COLLECTIONS: Record<string, { eyebrow: string; heroImage: string }> = {
+  "68582fdf-9d89-4327-9d50-a87147604103": {
+    eyebrow: "אוסף מקורות",
+    heroImage:
+      "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/product-images/family-cards/why-learn-tanach.webp",
+  },
+  "a8e770fd-6967-4628-893c-342f7a817feb": {
+    eyebrow: "הדרכות ללימוד",
+    heroImage:
+      "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/product-images/family-cards/how-to-learn-tanach.webp",
+  },
 };
 
 interface SourceCard {
@@ -184,16 +193,27 @@ export default function SourcesCollectionPage() {
     <div dir="rtl" style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: PARCHMENT }}>
       <DesignHeader transparentOnTop={false} />
 
-      {/* Hero — light parchment, matching תנ״ך למשפחה */}
+      {/* Hero — תמונת האקוורל של הפינה כרקע, עם שכבת-קרם לקריאות (יואב 17.7) */}
       <section
         style={{
-          background: `linear-gradient(180deg, ${PARCHMENT_DARK} 0%, ${PARCHMENT} 100%)`,
+          position: "relative",
+          backgroundImage: `url(${meta.heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center 35%",
           borderBottom: "1px solid rgba(139,111,71,0.12)",
           padding: "3.5rem 1.5rem 2.75rem",
           textAlign: "center",
         }}
       >
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `linear-gradient(180deg, rgba(250,246,240,0.82) 0%, rgba(250,246,240,0.68) 55%, ${PARCHMENT} 100%)`,
+          }}
+        />
+        <div style={{ maxWidth: 820, margin: "0 auto", position: "relative" }}>
           <div
             style={{
               display: "inline-flex",

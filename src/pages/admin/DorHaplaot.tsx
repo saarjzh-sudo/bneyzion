@@ -136,6 +136,93 @@ function MiracleDialog({ miracle, onClose }: { miracle: Miracle; onClose: () => 
   );
 }
 
+// ─── בלוקי-תוכן של הדף (dor_site_content) — יואב 18.7: "לא מצאתי איך לערוך"
+// את כותרת-ההקדמה ("פרוייקט דור הפלאות – 60 ניסי מלחמת התקומה") וגוף ההקדמה. ───
+interface SiteContentBlock {
+  key: string;
+  title: string | null;
+  body: string | null;
+  image_url: string | null;
+}
+
+const BLOCK_LABELS: Record<string, string> = { introduction: "הקדמת הדף" };
+
+function SiteContentCard() {
+  const qc = useQueryClient();
+  const { data: blocks } = useQuery({
+    queryKey: ["admin-dor-site-content"],
+    queryFn: async (): Promise<SiteContentBlock[]> => {
+      const { data, error } = await contentTable().select("key, title, body, image_url");
+      if (error) throw error;
+      return data as SiteContentBlock[];
+    },
+  });
+  const [editing, setEditing] = useState<SiteContentBlock | null>(null);
+  const save = useMutation({
+    mutationFn: async (form: SiteContentBlock) => {
+      const { key, ...rest } = form;
+      const { error } = await contentTable().update(rest).eq("key", key);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin-dor-site-content"] });
+      toast.success("בלוק התוכן נשמר");
+      setEditing(null);
+    },
+    onError: (e: Error) => toast.error(e.message || "השמירה נכשלה"),
+  });
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-base">תוכן הדף (כותרת ההקדמה וגוף ההקדמה)</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        {blocks?.map((b) => (
+          <div key={b.key} className="flex items-center justify-between gap-3 rounded-lg border border-border/60 px-4 py-3">
+            <div className="min-w-0">
+              <p className="text-sm font-medium">{BLOCK_LABELS[b.key] ?? b.key}</p>
+              <p className="text-xs text-muted-foreground truncate">{b.title}</p>
+            </div>
+            <Button variant="ghost" size="icon" onClick={() => setEditing(b)} aria-label="עריכה">
+              <Pencil className="h-4 w-4" aria-hidden="true" />
+            </Button>
+          </div>
+        ))}
+        {editing && (
+          <Dialog open onOpenChange={(v) => !v && setEditing(null)}>
+            <DialogContent dir="rtl" className="max-w-lg max-h-[85vh] overflow-y-auto">
+              <DialogHeader>
+                <DialogTitle>עריכת {BLOCK_LABELS[editing.key] ?? editing.key}</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="sc-title">כותרת</Label>
+                  <Input id="sc-title" value={editing.title ?? ""} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="sc-body">גוף (מותר **הדגשה** בכוכביות)</Label>
+                  <Textarea id="sc-body" rows={10} value={editing.body ?? ""} onChange={(e) => setEditing({ ...editing, body: e.target.value })} />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="sc-img">קישור תמונה</Label>
+                  <Input id="sc-img" dir="ltr" value={editing.image_url ?? ""} onChange={(e) => setEditing({ ...editing, image_url: e.target.value })} />
+                </div>
+                <div className="flex justify-end gap-2 pt-1">
+                  <Button variant="outline" onClick={() => setEditing(null)}>ביטול</Button>
+                  <Button onClick={() => save.mutate(editing)} disabled={save.isPending}>
+                    {save.isPending ? "שומר…" : "שמירה"}
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 // DorHaplaotContent = הליבה בלי AdminLayout — מוטמעת גם ב"עריכת תוכן" (/admin/content).
 export function DorHaplaotContent() {
   const { data: miracles, isLoading } = useMiracles();
@@ -150,9 +237,11 @@ export function DorHaplaotContent() {
             דור הפלאות
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            ניהול הפלאות, הפסוקים והמדיה של הדף. עריכה מתעדכנת מיד באתר החי.
+            ניהול הפלאות, הפסוקים והמדיה של הדף — וגם בלוקי התוכן של הדף (ההקדמה). עריכה מתעדכנת מיד באתר החי.
           </p>
         </div>
+
+        <SiteContentCard />
 
         <Card>
           <CardHeader>

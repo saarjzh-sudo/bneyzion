@@ -110,6 +110,30 @@ export const SITE_COPY_REGISTRY: CopyField[] = [
     hint: "השורה מתחת למספרים בפס הכהה — מקשרת לעמוד ההנצחה",
   },
 
+  // ── דף הבית — רצועת דור הפלאות (יואב 18.7: "אני רוצה לשנות את השורה הזאת") ──
+  {
+    key: "copy.home.miracles_eyebrow",
+    label: "רצועת דור הפלאות — תגית עליונה",
+    group: "דף הבית",
+    type: "text",
+    defaultValue: "ניסי המלחמה",
+  },
+  {
+    key: "copy.home.miracles_title",
+    label: "רצועת דור הפלאות — כותרת",
+    group: "דף הבית",
+    type: "text",
+    defaultValue: "דור הפלאות — נסים מהמלחמה",
+  },
+  {
+    key: "copy.home.miracles_subtitle",
+    label: "רצועת דור הפלאות — שורת המשנה",
+    group: "דף הבית",
+    type: "text",
+    defaultValue: "מאות סיפורים מתועדים של נסים גלויים שהתרחשו בשדות הקרב ובעורף",
+    hint: "השורה הבהירה מתחת לכותרת ברצועה הכהה של דור הפלאות",
+  },
+
   // ── דף התרומות /donate (רמה 20, יואב 16.7: "איפה אני יכול לערוך את המלל בדף התרומות?") ──
   {
     key: "copy.donate.hero_eyebrow",

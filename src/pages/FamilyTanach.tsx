@@ -182,17 +182,27 @@ function FamilyTanachHero() {
           שמביא את התנ״ך הביתה, כל יום מחדש.
         </p>
 
-        {/* הקדשת השער — הרב יואב, הערה ו' 7.7.2026 (בלי קישור בינתיים; עמוד הנצחה בהתלבטות) */}
-        <p
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.9rem",
-            color: "rgba(139,111,71,0.9)",
-            marginTop: "1.6rem",
-            letterSpacing: "0.02em",
-          }}
-        >
-          לעילוי נשמת מעיין פלסר ז״ל
+        {/* הקדשת השער — יואב 18.7: מודגשת יותר (הייתה קטנה וחיוורת) */}
+        <p style={{ marginTop: "1.6rem", marginBottom: 0 }}>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.55rem",
+              padding: "0.55rem 1.4rem",
+              borderRadius: 999,
+              border: "1px solid rgba(196,162,101,0.5)",
+              background: "rgba(196,162,101,0.12)",
+              fontFamily: fonts.body,
+              fontSize: "1.05rem",
+              fontWeight: 700,
+              color: "#8B6F47",
+              letterSpacing: "0.03em",
+            }}
+          >
+            <span aria-hidden style={{ fontSize: "0.95rem" }}>🕯</span>
+            לעילוי נשמת מעיין פלסר ז״ל
+          </span>
         </p>
       </div>
     </section>

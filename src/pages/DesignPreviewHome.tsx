@@ -526,16 +526,27 @@ function FamilyBibleSection() {
           </button>
         </div>
 
-        {/* Memorial line — לעילוי נשמת מעיין פלסר */}
-        <div style={{
-          marginTop: "2rem",
-          textAlign: "center",
-          fontFamily: "Frank Ruhl Libre, serif",
-          fontSize: "0.85rem",
-          color: "rgba(139,111,71,0.7)",
-          letterSpacing: "0.04em",
-        }}>
-          לעילוי נשמת מעיין פלסר ז״ל
+        {/* Memorial line — יואב 18.7: מודגשת יותר (הייתה קטנה וחיוורת) */}
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <span
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.55rem",
+              padding: "0.55rem 1.4rem",
+              borderRadius: 999,
+              border: "1px solid rgba(196,162,101,0.5)",
+              background: "rgba(196,162,101,0.1)",
+              fontFamily: "Frank Ruhl Libre, serif",
+              fontSize: "1.02rem",
+              fontWeight: 700,
+              color: "#8B6F47",
+              letterSpacing: "0.04em",
+            }}
+          >
+            <span aria-hidden style={{ fontSize: "0.95rem" }}>🕯</span>
+            לעילוי נשמת מעיין פלסר ז״ל
+          </span>
         </div>
       </div>
     </section>
@@ -1003,6 +1014,8 @@ const FALLBACK_MIRACLES = [
 // ── WarMiraclesSection ─────────────────────────────────────────────────────
 function WarMiraclesSection() {
   const navigate = useNavigate();
+  // יואב 18.7: כל טקסטי הרצועה עריכים ממרכז השליטה (copy.home.miracles_*)
+  const copy = useSiteCopy();
 
   const { data: realMiracles = [] } = useQuery({
     queryKey: ["design-war-miracles"],
@@ -1041,15 +1054,15 @@ function WarMiraclesSection() {
           <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.78rem", fontWeight: 700,
                         letterSpacing: "0.2em", color: GOLD_LIGHT, textTransform: "uppercase",
                         marginBottom: "0.75rem" }}>
-            ניסי המלחמה
+            {copy("copy.home.miracles_eyebrow", "ניסי המלחמה")}
           </div>
           <h2 style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
                         fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)", color: "white", margin: "0 0 1rem" }}>
-            דור הפלאות — נסים מהמלחמה
+            {copy("copy.home.miracles_title", "דור הפלאות — נסים מהמלחמה")}
           </h2>
           <p style={{ fontFamily: "Ploni, sans-serif", fontSize: "1rem", color: "rgba(255,255,255,0.55)",
                       maxWidth: 520, margin: "0 auto" }}>
-            מאות סיפורים מתועדים של נסים גלויים שהתרחשו בשדות הקרב ובעורף
+            {copy("copy.home.miracles_subtitle", "מאות סיפורים מתועדים של נסים גלויים שהתרחשו בשדות הקרב ובעורף")}
           </p>
         </div>
 
