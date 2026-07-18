@@ -21,6 +21,7 @@
 
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import {
   Library,
   Users,
@@ -128,6 +129,8 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const isMobile = useMobileViewport();
   const isDrawer = isMobile;
   const drawerVisible = isDrawer && !!drawerOpen;
+  // יואב 17.7 (הקלטה+וידאו): כשהמגירה פתוחה הדף מאחור המשיך להיגלל
+  useBodyScrollLock(drawerVisible);
 
   const { categories, extraSections, riddlesSeriesId, isLoading } = useContentSidebar();
   const { data: rabbisRaw = [] } = usePublicRabbis();

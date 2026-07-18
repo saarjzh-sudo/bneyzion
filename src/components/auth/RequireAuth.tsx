@@ -18,13 +18,11 @@ export const RequireAuth = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     const next = encodeURIComponent(location.pathname + location.search);
-    // נתיבי פורטל ולומד → PortalLogin (ממשק ידידותי, לא "דשבורד ניהול")
-    const isPortalPath =
-      location.pathname.startsWith("/portal") ||
-      location.pathname.startsWith("/course") ||
-      location.pathname.startsWith("/my-courses");
-    const loginPath = isPortalPath ? "/portal-login" : "/auth";
-    return <Navigate to={`${loginPath}?next=${next}`} replace />;
+    // 18.7 (תרצה+יפעת מקבוצת המבקרים): אורח שלחץ "מועדפים" נחת על "כניסה
+    // לדשבורד ניהול" ונבהל. כל הראוטים שעטופים ב-RequireAuth הם דפי-לומד
+    // (פורטל/מועדפים/היסטוריה) → תמיד PortalLogin הידידותי. מסך האדמין
+    // נשאר רק ל-/admin דרך ProtectedRoute.
+    return <Navigate to={`/portal-login?next=${next}`} replace />;
   }
 
   return <>{children}</>;

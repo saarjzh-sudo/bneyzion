@@ -9,6 +9,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Search, Heart, Menu, X, Flame, Compass } from "lucide-react";
 
 import GlobalSearch from "@/components/search/GlobalSearch";
+import { useBodyScrollLock } from "@/hooks/useBodyScrollLock";
 import { colors, fonts } from "@/lib/designTokens";
 
 // Menu items mirror the desktop header exactly — single source of truth in
@@ -27,6 +28,8 @@ export default function DesignMobileBottomNav({ onNavigatorOpen }: DesignMobileB
   const location = useLocation();
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // יואב 17.7: תפריט פתוח = הדף מאחור נעול, לא נגלל
+  useBodyScrollLock(menuOpen);
   const siteNavItems = useNavItems();
   const NAV_ITEMS: { label: string; href: string }[] = [
     { label: "ראשי", href: "/" },

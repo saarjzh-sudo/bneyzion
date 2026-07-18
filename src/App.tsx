@@ -391,7 +391,9 @@ const App = () => (
             {/* §12 / tree CA1: /bible index — book+chapter navigation */}
             <Route path="/bible" element={<Suspense fallback={<LazyFallback />}><BibleIndexPage /></Suspense>} />
             <Route path="/bible/:book" element={<Suspense fallback={<LazyFallback />}><BibleBookPage /></Suspense>} />
-            <Route path="/community" element={<Suspense fallback={<LazyFallback />}><CommunityPage /></Suspense>} />
+            {/* 17.7 (תרצה מקבוצת המבקרים + סער): עמוד הקהילה הישן ("הצטרף לקהילה"→login)
+                לא אמור להתקיים — כל הקישורים נוחתים על עמוד תכנית הפרק השבועי. */}
+            <Route path="/community" element={<Navigate to="/chapter-weekly" replace />} />
             <Route path="/community/:id" element={<Suspense fallback={<LazyFallback />}><CommunityDetailPage /></Suspense>} />
             <Route path="/series/:id" element={<Suspense fallback={<LazyFallback />}><DesignPreviewSeriesPageV2 /></Suspense>} />
             <Route path="/category/:id" element={<Suspense fallback={<LazyFallback />}><CategoryPage /></Suspense>} />

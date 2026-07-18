@@ -31,12 +31,13 @@ const AboutStatsSection = ({ stats }: Props) => {
               key={stat.label}
               variants={fadeUp}
               custom={i}
-              className="glass-card-light rounded-2xl p-6 text-center"
+              className="glass-card-light rounded-2xl p-4 sm:p-6 text-center min-w-0"
             >
               <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center mx-auto mb-3`}>
                 <stat.icon className="h-6 w-6" />
               </div>
-              <p className="text-3xl md:text-4xl font-heading gradient-warm">{stat.value}</p>
+              {/* 17.7 (תרצה): "22,645" גלש מהכרטיס במובייל — גופן רספונסיבי + מניעת חיתוך */}
+              <p className="text-xl sm:text-3xl md:text-4xl font-heading gradient-warm whitespace-nowrap" dir="ltr">{stat.value}</p>
               <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
             </motion.div>
           ))}
