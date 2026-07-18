@@ -376,7 +376,8 @@ export default function DesignPreviewMyCourses() {
       result.push({
         id: "weekly-chapter",
         title: "הפרק השבועי בתנ\"ך",
-        subtitle: "הרב יואב אוריאל · תכנית מנויים",
+        // יואב 18.7: כרטיס-שער אחד לכל התכנית — כל ספרי הפרק השבועי בפנים
+        subtitle: "הרב יואב אוריאל · השער לכל ספרי התכנית",
         slug: "weekly-chapter",
         gradient: gradients.warmDark,
         // יואב 13.7 (אודיט): הוסרו מספרי-דמה (43%/64). מנוי מתמשך אין לו "אחוז השלמה",
@@ -466,6 +467,9 @@ export default function DesignPreviewMyCourses() {
       if (hasEicha && !hasWeeklyChapter && cc.program_slug === "book-lamentations") continue;
       const viaProgram = (hasWeeklyChapter && isBookProgram);
       if (!viaProgram && !isAdmin) continue;
+      // יואב 18.7: למנוי התכנית ספרי הפרק-השבועי לא נפרסים ככרטיסים נפרדים —
+      // נכנסים דרך כרטיס-השער "הפרק השבועי בתנ\"ך" ושם כל הספרים.
+      if (viaProgram) continue;
       result.push({
         id: cc.id,
         title: cc.title,

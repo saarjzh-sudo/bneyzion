@@ -11,7 +11,7 @@
  */
 import { sanitizeHtml } from "@/lib/sanitize";
 import { normalizeMediaUrl, isDriveUrl } from "@/lib/mediaUrl";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAccess } from "@/hooks/useUserAccess";
 import { useCourseLessons } from "@/hooks/useCommunity";
@@ -44,6 +44,7 @@ function mediaIcon(l: any) {
 
 const CommunityCoursePage = () => {
   const { id } = useParams<{ id: string }>();
+  const backNav = useNavigate();
   const { user, isAdmin, isLoading: authLoading } = useAuth();
   const { data: course, isLoading: courseLoading } = useQuery({
     queryKey: ["community-course", id],
@@ -189,13 +190,16 @@ const CommunityCoursePage = () => {
         {/* ── הירו הקורס ── */}
         <div style={{ background: gradients.mahoganyHero, padding: "2.2rem 1.5rem 1.8rem" }}>
           <div style={{ maxWidth: 1180, margin: "0 auto" }}>
-            <Link
-              to="/portal"
-              style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(232,213,160,0.85)", textDecoration: "none", marginBottom: "0.8rem" }}
+            {/* יואב 18.7: "בחזרה לפורטל" החזיר לאזור האישי ולא לאזור הקורסים
+                שממנו הגעת — עכשיו חוזרים אחורה בהיסטוריה (fallback: הפורטל). */}
+            <button
+              type="button"
+              onClick={() => (window.history.length > 1 ? backNav(-1) : backNav("/portal"))}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(232,213,160,0.85)", textDecoration: "none", marginBottom: "0.8rem", background: "none", border: "none", cursor: "pointer", padding: 0 }}
             >
               <ArrowRight size={14} />
-              חזרה לפורטל
-            </Link>
+              חזרה
+            </button>
             <div style={{ display: "flex", gap: "1.4rem", alignItems: "center", flexWrap: "wrap" }}>
               {course?.image_url && (
                 <img
