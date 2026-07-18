@@ -325,7 +325,13 @@ export default function TeachersParashaPage() {
       <div dir="rtl" style={{ maxWidth: 1100, margin: "0 auto", padding: "2rem 1.5rem 3rem" }}>
         {isLoading ? (
           <div style={{ display: "flex", justifyContent: "center", padding: "4rem" }}>
-            <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+            <span style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.8rem" }}>
+              <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
+              {/* מיכאל (קבוצת המבקרים 17.7): חיווי ברור שהתוכן בטעינה */}
+              <span style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMuted }}>
+                התוכן נטען — עוד רגע קטן…
+              </span>
+            </span>
           </div>
         ) : series.length === 0 && lessons.length === 0 ? (
           <div style={{ textAlign: "center", padding: "4rem 2rem", color: colors.textSubtle, fontFamily: fonts.body }}>

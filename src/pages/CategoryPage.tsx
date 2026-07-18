@@ -680,9 +680,22 @@ export default function CategoryPage() {
           <FormatFilterBar
             counts={formatCounts}
             active={formatFilter}
-            onChange={setFormatFilter}
+            onChange={(f) => {
+              setFormatFilter(f);
+              // מיכאל (קבוצת המבקרים 17.7): אחרי בחירת פילטר "התוכן שאני רוצה
+              // נמצא יותר למטה" — גוללים אוטומטית לתחילת התוצאות.
+              if (f) {
+                window.setTimeout(() => {
+                  document
+                    .getElementById("category-results")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 60);
+              }
+            }}
           />
         )}
+
+        <div id="category-results" style={{ scrollMarginTop: 120 }} />
 
         {/* ── רמה 21 (סער 17.7): כנסי בני ציון — דפי הכנסים הייעודיים תחת "ימי עיון בתנ"ך" ── */}
         {id === YEMEI_IYUN_ID && (
