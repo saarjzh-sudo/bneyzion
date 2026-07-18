@@ -2251,6 +2251,13 @@ function LessonModal({
   );
 }
 
+// שתי פינות-המקורות (רמה 20ו) חיות בתצוגת הכרטיסיות ב-/sources — כל קישור
+// ישן/חדש ל-/series שלהן מנותב לשם (יואב 17.7: התצוגה המיוחדת היא הדף שלהן).
+const SOURCES_COLLECTION_IDS = new Set([
+  "68582fdf-9d89-4327-9d50-a87147604103",
+  "a8e770fd-6967-4628-893c-342f7a817feb",
+]);
+
 // ─── Main page component ───────────────────────────────────────────────────
 export default function DesignPreviewSeriesPageV2() {
   const { id } = useParams<{ id?: string }>();
@@ -2325,6 +2332,12 @@ export default function DesignPreviewSeriesPageV2() {
       .sort((a, b) => b[1] - a[1])
       .map(([name]) => name);
   }, [lessons]);
+
+  // פינות-המקורות → תצוגת הכרטיסיות. אחרי כל ה-hooks (לקח רמה 21ב: early-return
+  // לפני hook מפיל את הדף ב-"Rendered fewer hooks").
+  if (id && SOURCES_COLLECTION_IDS.has(id)) {
+    return <Navigate to={`/sources/${id}`} replace />;
+  }
 
   // Loading state
   if (seriesLoading) {
