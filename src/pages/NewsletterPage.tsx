@@ -38,9 +38,11 @@ function useNewsletterIssues(): NewsletterIssue[] {
     queryKey: ["newsletters"],
     staleTime: 1000 * 60 * 10,
     queryFn: async () => {
+      // 18.7 (יואב+תרצה): רק גיליונות-תוכן — מיילים תפעוליים מסומנים hidden בסנכרון
       const { data, error } = await (supabase as any)
         .from("newsletters")
         .select("id, subject, date, body_text, links, image_url")
+        .eq("hidden", false)
         .order("date", { ascending: false })
         .limit(200);
       if (error) throw error;

@@ -127,9 +127,23 @@ def part_body(part):
 FOOTER_MARKERS = [
     "להסרה מרשימת התפוצה", "לחץ כאן להסרה", "unsubscribe", "נשלח באמצעות",
     "אם אינך רואה מייל זה", "להסרה לחץ",
+    # 18.7 (תרצה מקבוצת המבקרים): הפוטר של Smoove דלף לארכיון עם קישור
+    # "עדכון פרטים" אישי — חותכים גם את הווריאציות האלה.
+    "אם אינכם רואים מייל זה", "עדכון פרטים", "דיווח כספאם",
 ]
 # פיקסלים/לוגו-ספק — לא תמונת-הירו
 IMG_SKIP = re.compile(r"(pixel|track|open\.aspx|spacer|logo_smoove|vpcontact\.com/l/)", re.I)
+
+# 18.7 (יואב 16:51 + תרצה): "באגף הניוזלטרים מופיעים כל המיילים שנשלחים מסמוב".
+# מיילים תפעוליים (תזכורות-שיעור, מיילי-הצטרפות, מסירה דיגיטלית, כנסים, בדיקות)
+# נקלטים אבל מסומנים hidden=true — הארכיון הציבורי מציג רק גיליונות-תוכן.
+OPERATIONAL_SUBJECT = re.compile(
+    r"(הערב: השיעור השבועי|סיכום והקלטת השיעור|ברוכים הבאים לתכנית|שרכשת"
+    r"|\[בדיקה\]|בדיקת ערוץ|^test$|עוד \d+ דקות|כעת — עלינו לאוויר"
+    r"|הערב ב-?\d|הערב \d|^מחר: |מחר: מעצמה|תזכורת|הקישור לזום|לינק לזום"
+    r"|עכשיו בכנס|בעוד רבע שעה|מתחיל בעוד|עדיין לא מאוחר|הערב בזום|התחלנו!|פותח את כנס)",
+    re.I,
+)
 
 
 def extract_hero_image(html_src):
@@ -153,7 +167,9 @@ def extract_links(html_src):
         label = html.unescape(re.sub(r"\s+", " ", label)).strip()
         if not label or len(label) < 3 or url in seen:
             continue
-        if re.search(r"(unsubscribe|הסרה|vpcontact\.com/l/)", url + label, re.I):
+        # 18.7: קישורי Smoove אישיים (portal.smoove.io — עדכון-פרטים/הסרה של הנמען
+        # שהמייל נקלט מתיבתו) = דליפת פרטים. נחסמים כולם, לפי דומיין וגם לפי תווית.
+        if re.search(r"(unsubscribe|הסרה|vpcontact\.com/l/|smoove\.io|עדכון פרטים|דיווח כספאם)", url + label, re.I):
             continue
         if not url.startswith("http"):
             continue
@@ -230,6 +246,7 @@ def main():
             except Exception as e:
                 log(f"⚠️ תמונה נכשלה ({subject[:30]}): {e}")
 
+        hidden = bool(OPERATIONAL_SUBJECT.search(subject))
         sb("newsletters", "POST", {
             "id": mid,
             "subject": subject,
@@ -237,6 +254,7 @@ def main():
             "body_text": html_to_text(html_src),
             "links": extract_links(html_src),
             "image_url": image_url,
+            "hidden": hidden,
         }, prefer="resolution=merge-duplicates")
         log(f"✅ {date} · {subject[:50]}" + (" (+תמונה)" if image_url else " (בלי תמונה)"))
         added += 1
