@@ -9,7 +9,7 @@
  */
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ShieldQuestion, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { roleMeta, adminLinksFor } from "./roleMeta";
 
@@ -95,16 +95,7 @@ const RolePanel = ({ className = "", staffOnly = false }: RolePanelProps) => {
             </nav>
           )}
 
-          {/* משתמש רגיל — בקשת גישה */}
-          {!isAdmin && adminLinks.length === 0 && (
-            <Link
-              to="/contact?subject=access"
-              className="flex items-center gap-2 px-2 py-1.5 rounded-lg text-sm text-muted-foreground hover:bg-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            >
-              <ShieldQuestion className="h-4 w-4 shrink-0" aria-hidden="true" />
-              בקשת גישת ניהול
-            </Link>
-          )}
+          {/* "בקשת גישת ניהול" הוסר מהציבור — הוראת הרב יואב 17.7 */}
         </div>
       )}
     </div>

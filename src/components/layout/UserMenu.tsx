@@ -1,4 +1,4 @@
-import { User, LogOut, Heart, History, UserCircle, BookOpen, ShieldQuestion } from "lucide-react";
+import { User, LogOut, Heart, History, UserCircle, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import {
@@ -135,18 +135,7 @@ const UserMenu = ({ isTransparent }: UserMenuProps) => {
             ))}
           </>
         )}
-        {/* משתמש רגיל בלי גישת-ניהול — נתיב מסודר לבקש גישה */}
-        {!isAdmin && adminLinks.length === 0 && (
-          <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="cursor-pointer">
-              <Link to="/contact?subject=access" className="flex items-center gap-2 text-muted-foreground">
-                <ShieldQuestion className="h-4 w-4" />
-                בקשת גישת ניהול
-              </Link>
-            </DropdownMenuItem>
-          </>
-        )}
+        {/* "בקשת גישת ניהול" הוסר מהציבור — הוראת הרב יואב 17.7 */}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut} className="cursor-pointer text-destructive">
           <LogOut className="h-4 w-4 ml-2" />

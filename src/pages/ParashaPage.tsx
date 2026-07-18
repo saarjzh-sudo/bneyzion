@@ -153,6 +153,14 @@ const ParashaPage = () => {
   const hasRiddle = !!(riddle?.content);
   const hasLessons = lessons.length > 0;
 
+  // יואב 17.7: הלשונית "קריאה בטעמים" הובילה לסקשן מעורב של כל התכנים.
+  // מפצלים — הקריאות בטעמים לבד (עוגן audio), ושאר התכנים בסקשן נפרד.
+  const audioIds = useMemo(() => new Set(audioLessons.map((l: any) => l.id)), [audioLessons]);
+  const otherItems = useMemo(
+    () => combinedItems.filter((l: any) => !audioIds.has(l.id)),
+    [combinedItems, audioIds]
+  );
+
   // Build TOC from available content
   const tocItems = useMemo<TocItem[]>(() => {
     const items: TocItem[] = [];
@@ -170,15 +178,22 @@ const ParashaPage = () => {
         icon: <Sparkles className="h-3.5 w-3.5" />,
       });
     }
-    if (hasAudio || hasLessons) {
+    if (hasAudio) {
       items.push({
         id: "audio",
-        label: "שיעורי שמע",
+        label: "קריאה בטעמים",
+        icon: <Headphones className="h-3.5 w-3.5" />,
+      });
+    }
+    if (otherItems.length > 0) {
+      items.push({
+        id: "all-lessons",
+        label: "עוד תכנים לפרשה",
         icon: <Headphones className="h-3.5 w-3.5" />,
       });
     }
     return items;
-  }, [articlesWithContent, hasRiddle, hasAudio, hasLessons]);
+  }, [articlesWithContent, hasRiddle, hasAudio, otherItems.length]);
 
   // 3 CTA cards
   const ctaCards = useMemo<CtaCard[]>(
@@ -188,7 +203,8 @@ const ParashaPage = () => {
         icon: <ShofarIcon className="h-7 w-7" />,
         title: "קריאה בטעמים",
         subtitle: hasAudio ? `${audioLessons.length} הקלטות קריאה` : "קריאה בטעמים ועם ביאור",
-        anchor: "audio",
+        // יואב 17.7: העוגן מוביל עכשיו לסקשן קריאה-בטעמים בלבד (לא לכל התכנים)
+        anchor: hasAudio ? "audio" : "all-lessons",
         color: colors.goldDark,
       },
       {
@@ -204,7 +220,7 @@ const ParashaPage = () => {
       {
         id: "all-parasha",
         icon: <OpenBookIcon className="h-7 w-7" />,
-        title: "כל תכני הפרשה",
+        title: "כל תכני הפרשה באתר",
         subtitle: "כל השיעורים, המאמרים והחידות לפרשה",
         href: parashaSeriesId ? `/series/${parashaSeriesId}` : "/series",
         color: colors.oliveDark,
@@ -788,10 +804,14 @@ const ParashaPage = () => {
           )}
           </div>{/* end print-columns */}
 
-          {/* Audio & lessons section */}
-          {(hasAudio || hasLessons) && (
+          {/* קריאה בטעמים + עוד תכנים — שני סקשנים נפרדים (יואב 17.7) */}
+          {[
+            { id: "audio", title: "קריאה בטעמים", items: audioLessons },
+            { id: "all-lessons", title: "עוד תכנים לפרשה", items: otherItems },
+          ].filter((sec) => sec.items.length > 0).map((sec) => (
             <motion.div
-              id="audio"
+              key={sec.id}
+              id={sec.id}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
@@ -822,16 +842,16 @@ const ParashaPage = () => {
                     className="text-xl md:text-2xl leading-tight"
                     style={{ fontFamily: fonts.display, color: colors.textDark }}
                   >
-                    שיעורי שמע ותכנים נוספים
+                    {sec.title}
                   </h2>
                   <p className="text-sm mt-0.5" style={{ color: colors.textMuted, fontFamily: fonts.body }}>
-                    {combinedItems.length} פריטים
+                    {sec.items.length} פריטים
                   </p>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {combinedItems.map((lesson) => (
+                {sec.items.map((lesson) => (
                   <button
                     key={lesson.id}
                     onClick={() => setSelectedLessonId(lesson.id)}
@@ -913,7 +933,7 @@ const ParashaPage = () => {
                 </button>
               </div>
             </motion.div>
-          )}
+          ))}
         </div>
       </section>
 

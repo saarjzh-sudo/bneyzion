@@ -208,10 +208,11 @@ export function useDeleteDedication() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      // לא מוחקים בפועל — מסמנים archived (כלל-ברזל: לעולם לא למחוק, לשמור עותק).
+      // לא מוחקים בפועל — מסמנים hidden (כלל-ברזל: לעולם לא למחוק, לשמור עותק).
+      // ⚠️ ה-check constraint בטבלה מתיר רק pending/active/hidden/refunded.
       const { error } = await supabase
         .from("lesson_dedications")
-        .update({ status: "archived" } as never)
+        .update({ status: "hidden" } as never)
         .eq("id", id);
       if (error) throw error;
     },

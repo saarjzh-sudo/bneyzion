@@ -1478,14 +1478,44 @@ function SliderArrows({ onPrev, onNext, accent }: { onPrev: () => void; onNext: 
 // ── SelectedLessonsSlider (יואב 13.7) — סליידר "שיעורים נבחרים" בשפת-האתר ────
 // הוחזר לבקשת הרב יואב (הוסר 27.5). "נבחרים" = פורסמו לאחרונה; מיון-צפיות
 // יופעל כשמעקב-הצפיות יצטבר — בלי מספרי-צפיות מומצאים.
+// יואב 17.7: בלי חדשות-תנ"כיות (יש להן ארכיון משלהן), מקסימום 2 לכל סדרה כדי
+// שהסליידר יגוון, ותווית פעולה לפי סוג התוכן (קרא/האזן/צפה) — לא "האזן" גורף.
+const NEWS_SERIES_ID = "5d111b52-b421-4150-adfd-df256950117c";
+
 function SelectedLessonsSlider() {
-  const { data: lessonsRaw } = useLessons();
+  const { data: lessonsRaw } = useQuery({
+    queryKey: ["home-selected-lessons"],
+    staleTime: 1000 * 60 * 10,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("lessons")
+        .select("id, title, thumbnail_url, source_type, duration, series_id, rabbis!lessons_rabbi_id_fkey(name)")
+        .eq("status", "published")
+        .neq("series_id", NEWS_SERIES_ID)
+        .order("created_at", { ascending: false })
+        .limit(60);
+      if (error) throw error;
+      return data;
+    },
+  });
   const navigate = useNavigate();
   const scroller = useRef<HTMLDivElement>(null);
-  const lessons = ((lessonsRaw || []) as any[]).filter((l: any) => l.status === "published").slice(0, 12);
+  // גיוון: לא יותר מ-2 שיעורים מאותה סדרה
+  const lessons = (() => {
+    const perSeries: Record<string, number> = {};
+    const out: any[] = [];
+    for (const l of (lessonsRaw || []) as any[]) {
+      const key = l.series_id || l.id;
+      perSeries[key] = (perSeries[key] || 0) + 1;
+      if (perSeries[key] <= 2) out.push(l);
+      if (out.length >= 12) break;
+    }
+    return out;
+  })();
   const LESSON_IMAGES = ["/images/lesson-audio.webp", "/images/lesson-video.webp", "/images/lesson-text.webp", "/images/series-middot.webp"];
   const getLessonImage = (lesson: any, index: number) => lesson?.thumbnail_url || LESSON_IMAGES[index % LESSON_IMAGES.length];
   const typeLabel = (t: string) => (t === "video" ? "וידאו" : t === "audio" ? "אודיו" : "טקסט");
+  const actionLabel = (t: string) => (t === "video" ? "צפה" : t === "audio" ? "האזן" : "קרא");
   const nudge = (dir: number) => scroller.current?.scrollBy({ left: dir * 300, behavior: "smooth" });
   if (lessons.length === 0) return null;
   return (
@@ -1517,7 +1547,7 @@ function SelectedLessonsSlider() {
                 <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 700, fontSize: "0.9rem", color: TEXT_DARK, lineHeight: 1.45, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", marginBottom: "0.5rem", minHeight: "2.6em" }}>{lesson?.title ?? ""}</div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   {lesson?.duration ? (<span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: TEXT_SUBTLE }}>{Math.floor(lesson.duration / 60)} דקות</span>) : <span />}
-                  <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: GOLD_DARK, fontWeight: 600 }}>האזן ←</span>
+                  <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: GOLD_DARK, fontWeight: 600 }}>{actionLabel(lesson.source_type || "audio")} ←</span>
                 </div>
               </div>
             </div>
