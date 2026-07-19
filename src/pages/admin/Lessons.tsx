@@ -376,7 +376,20 @@ export function LessonsContent() {
             </DialogTrigger>
             <DialogContent className="max-w-3xl max-h-[88vh] overflow-y-auto" dir="rtl">
               <DialogHeader>
-                <DialogTitle className="font-heading">{editingLesson ? "עריכת שיעור" : "שיעור חדש"}</DialogTitle>
+                <DialogTitle className="font-heading flex items-center gap-3">
+                  {editingLesson ? "עריכת שיעור" : "שיעור חדש"}
+                  {/* יואב 19.7: קישור מהעריכה אל העמוד החי — לראות מה עוד צריך לערוך */}
+                  {editingLesson && (
+                    <a
+                      href={`/lessons/${editingLesson.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-normal text-primary hover:underline"
+                    >
+                      צפייה בדף השיעור באתר ↗
+                    </a>
+                  )}
+                </DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div className="grid grid-cols-2 gap-4">

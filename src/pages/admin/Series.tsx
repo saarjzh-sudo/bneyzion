@@ -336,7 +336,20 @@ export function SeriesContent() {
             </DialogTrigger>
             <DialogContent className="max-w-lg" dir="rtl">
               <DialogHeader>
-                <DialogTitle className="font-heading">{editing ? "עריכת סדרה" : "סדרה חדשה"}</DialogTitle>
+                <DialogTitle className="font-heading flex items-center gap-3">
+                  {editing ? "עריכת סדרה" : "סדרה חדשה"}
+                  {/* יואב 19.7: קישור מהעריכה אל העמוד החי — לראות מה עוד צריך לערוך */}
+                  {editing && (
+                    <a
+                      href={`/series/${editing.id}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-normal text-primary hover:underline"
+                    >
+                      צפייה בדף הסדרה באתר ↗
+                    </a>
+                  )}
+                </DialogTitle>
               </DialogHeader>
               <div className="grid gap-4 py-4">
                 <div><Label>כותרת *</Label><Input value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} /></div>
