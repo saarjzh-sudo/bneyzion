@@ -115,10 +115,11 @@ export default async function handler(req, res) {
   // Ensure bucket exists (idempotent — fails silently if already exists)
   await supabase.storage.createBucket('lesson-images', { public: true }).catch(() => {});
 
-  // Filename: timestamp + sanitised title slug
+  // Filename: ASCII \u05D1\u05DC\u05D1\u05D3 \u2014 \u05D0\u05D5\u05EA\u05D9\u05D5\u05EA \u05E2\u05D1\u05E8\u05D9\u05D5\u05EA \u05D4\u05DF \u05DE\u05E4\u05EA\u05D7 \u05DC\u05D0-\u05D7\u05D5\u05E7\u05D9 \u05D1-Storage
+  // (\u05D9\u05D5\u05D0\u05D1 19.7: "\u05E6\u05D5\u05E8 \u05EA\u05DE\u05D5\u05E0\u05D4" \u05E0\u05DB\u05E9\u05DC \u05E2\u05DC "Invalid key: ...-\u05DE\u05E2\u05D1\u05E8-\u05D4\u05D9\u05E8\u05D3\u05DF.png")
   const timestamp  = Date.now();
-  const slug       = (title || 'lesson').substring(0, 40).replace(/[^\u0590-\u05FFa-zA-Z0-9]+/g, '-');
-  const filename   = `${timestamp}-${slug}.png`;
+  const asciiSlug  = (title || 'lesson').replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').substring(0, 40);
+  const filename   = `${timestamp}-${asciiSlug || 'lesson'}.png`;
 
   const { error: uploadErr } = await supabase.storage
     .from('lesson-images')
