@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { getGoogleIdToken } from "@/lib/googleAuth";
 import type { User, Session } from "@supabase/supabase-js";
 
 // app_role mirrors the Supabase enum. "creator" is a future role
@@ -118,11 +119,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const signInWithGoogle = async (next?: string) => {
-    // If a `next` path is provided (e.g. user clicked login from /portal or
-    // landed on /portal-login?next=/course/X), we send Google → Supabase →
-    // /portal-login?next=ENCODED, and PortalLogin's "already-logged-in"
-    // effect immediately forwards to `next`. This avoids race conditions
-    // with sessionStorage and survives hard reloads / new tabs.
+    // ── מסלול מועדף: GIS על הדומיין שלנו — בלי מסך supabase.co מפחיד (יפעת 18.7).
+    // אם ה-origin עדיין לא מורשה ב-GCP / הסקריפט נחסם / One Tap דוכא → נופלים
+    // אוטומטית לזרימת ה-redirect הישנה למטה, בלי לשבור התחברות.
+    try {
+      const { credential, nonce } = await getGoogleIdToken();
+      const { error } = await supabase.auth.signInWithIdToken({
+        provider: "google",
+        token: credential,
+        nonce,
+      });
+      if (error) throw error;
+      // הסשן נקבע דרך onAuthStateChange; מנווטים ליעד (או לדף הבית).
+      window.location.href = next || window.location.origin;
+      return;
+    } catch (gisErr) {
+      console.warn("[auth] GIS unavailable, falling back to redirect flow:", gisErr);
+    }
+
+    // ── Fallback: זרימת ה-OAuth הקלאסית (redirect דרך supabase). עובדת תמיד,
+    // גם לפני שהגדרת GCP הושלמה. If a `next` path is provided we route
+    // Google → Supabase → /portal-login?next=ENCODED, and PortalLogin's
+    // "already-logged-in" effect immediately forwards to `next`.
     const origin = window.location.origin;
     const redirectTo = next
       ? `${origin}/portal-login?next=${encodeURIComponent(next)}`
