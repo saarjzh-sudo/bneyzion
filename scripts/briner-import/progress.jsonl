@@ -1,0 +1,43 @@
+{"phase": "series_done", "count": 4, "mode": "--pilot", "ts": "2026-07-19T21:57:26"}
+{"phase": "import_done", "mode": "--pilot", "lessons_inserted_attempted": 2, "skipped_dup_hypothesis": 0, "ts": "2026-07-19T21:57:28"}
+{"phase": "series_done", "count": 113, "mode": "--apply", "ts": "2026-07-19T22:00:15"}
+{"phase": "lessons", "done": 20, "of": 730, "ts": "2026-07-19T22:01:01"}
+{"phase": "lessons", "done": 40, "of": 730, "ts": "2026-07-19T22:01:42"}
+{"phase": "lessons", "done": 60, "of": 730, "ts": "2026-07-19T22:02:18"}
+{"phase": "lessons", "done": 80, "of": 730, "ts": "2026-07-19T22:02:53"}
+{"phase": "lessons", "done": 100, "of": 730, "ts": "2026-07-19T22:04:31"}
+{"phase": "lessons", "done": 120, "of": 730, "ts": "2026-07-19T22:05:12"}
+{"phase": "lessons", "done": 140, "of": 730, "ts": "2026-07-19T22:06:00"}
+{"phase": "lessons", "done": 160, "of": 730, "ts": "2026-07-19T22:06:50"}
+{"phase": "lessons", "done": 180, "of": 730, "ts": "2026-07-19T22:07:27"}
+{"phase": "lessons", "done": 200, "of": 730, "ts": "2026-07-19T22:08:06"}
+{"phase": "lessons", "done": 220, "of": 730, "ts": "2026-07-19T22:08:37"}
+{"phase": "lessons", "done": 240, "of": 730, "ts": "2026-07-19T22:09:10"}
+{"phase": "lessons", "done": 260, "of": 730, "ts": "2026-07-19T22:09:36"}
+{"phase": "lessons", "done": 280, "of": 730, "ts": "2026-07-19T22:10:22"}
+{"phase": "lessons", "done": 300, "of": 730, "ts": "2026-07-19T22:11:00"}
+{"phase": "lessons", "done": 320, "of": 730, "ts": "2026-07-19T22:11:18"}
+{"phase": "lessons", "done": 340, "of": 730, "ts": "2026-07-19T22:11:41"}
+{"phase": "lessons", "done": 360, "of": 730, "ts": "2026-07-19T22:11:59"}
+{"phase": "lessons", "done": 380, "of": 730, "ts": "2026-07-19T22:12:19"}
+{"phase": "lessons", "done": 400, "of": 730, "ts": "2026-07-19T22:12:49"}
+{"phase": "lessons", "done": 420, "of": 730, "ts": "2026-07-19T22:13:14"}
+{"phase": "lessons", "done": 440, "of": 730, "ts": "2026-07-19T22:13:33"}
+{"phase": "lessons", "done": 460, "of": 730, "ts": "2026-07-19T22:13:57"}
+{"phase": "lessons", "done": 480, "of": 730, "ts": "2026-07-19T22:14:30"}
+{"phase": "lessons", "done": 500, "of": 730, "ts": "2026-07-19T22:15:04"}
+{"phase": "lessons", "done": 520, "of": 730, "ts": "2026-07-19T22:15:26"}
+{"phase": "lessons", "done": 540, "of": 730, "ts": "2026-07-19T22:15:50"}
+{"phase": "lessons", "done": 560, "of": 730, "ts": "2026-07-19T22:16:19"}
+{"phase": "lessons", "done": 580, "of": 730, "ts": "2026-07-19T22:16:56"}
+{"phase": "lessons", "done": 600, "of": 730, "ts": "2026-07-19T22:17:36"}
+{"phase": "lessons", "done": 620, "of": 730, "ts": "2026-07-19T22:19:14"}
+{"phase": "lessons", "done": 640, "of": 730, "ts": "2026-07-19T22:19:35"}
+{"phase": "lessons", "done": 660, "of": 730, "ts": "2026-07-19T22:20:03"}
+{"phase": "lessons", "done": 680, "of": 730, "ts": "2026-07-19T22:20:22"}
+{"phase": "lessons", "done": 700, "of": 730, "ts": "2026-07-19T22:20:47"}
+{"phase": "lessons", "done": 720, "of": 730, "ts": "2026-07-19T22:21:07"}
+{"phase": "import_done", "mode": "--apply", "lessons_inserted_attempted": 726, "skipped_dup_hypothesis": 4, "ts": "2026-07-19T22:21:26"}
+{"phase": "retag", "table": "series", "changed": 15, "ts": "2026-07-19T22:23:20"}
+{"phase": "retag", "table": "lessons", "changed": 35, "ts": "2026-07-19T22:23:56"}
+{"phase": "retag_done", "series_changed": ["ee16bb53-a2cf-49a7-bba7-62294dfa6e3d", "a64ada4b-87b7-46a6-873a-0cdc503ddb34", "4915aec2-2343-46d1-b350-f16add13979a", "2d121967-7773-4e54-a486-67ecb2fedc00", "ad002f20-89a3-476e-8c37-92b285a89b9f", "ca117e7c-b8e4-4c6c-bb78-882ba3a1f591", "6762cff2-4323-4382-9116-5d1ee1533f33", "29eb7c0b-308a-494d-a36f-1fcfdd2cff6a", "3af005f9-d1b0-4dfa-bc0b-60b92c1e9dd0", "4266e310-fc38-426c-98f3-1f3ebaebdce9", "dff2b236-73db-4ca0-83de-6f77fe20d2c1", "43c1040b-fdda-4dca-a766-428530273b7e", "3f9978c4-c405-4cd0-b95e-ee7e248a69f8", "896aafa4-82fc-4a0b-93d7-417fecf6d692", "62e24b0d-c0f2-4aef-b305-5f302ccc5b97"], "lessons_changed": ["ddec199e-f17d-4b87-8515-39b75f15fa46", "9ffd00be-79cd-4900-8b8a-4989937095fa", "d281eb74-af22-4529-bcf7-f81e6f72f066", "2288c655-add9-4e84-ab5b-f154de89365a", "ec4639a5-15bb-4415-a103-11ab037ecfcc", "2db3d799-fdfc-4dd9-afa9-ac500b97fbce", "2ff36146-a711-4164-bd07-7fef5f79cfac", "1be89cee-b74a-4eb0-a42a-8924ea887630", "dd3e91e1-2486-449e-9110-8c99f557eebe", "3475ebf7-c7c0-405d-9eb8-a470b7ca48a7", "19ba47ad-77ea-48f5-9c93-41015de6362f", "6b3a72d8-daab-4c3f-ad3f-33b25e92231f", "90ee0966-6098-4657-a9c8-a77a80c886b1", "9ce9e9c5-d736-4193-aea8-4abfe46ac8a0", "beb21899-fad1-47dd-9cd0-d03b6aa8c541", "f009fbbf-243a-464c-858a-0f651d3b035d", "d5e4973f-64d7-4ba1-ac97-9bf7a9fd2011", "9db56cd8-54cf-4018-9ece-d1584624b6c9", "c9f8b245-5c22-4eaa-bf4b-32a8a625e82e", "cde8bdf7-38da-4cc1-9970-c40718363c1b", "fb40466d-4148-475b-947a-6e7136699a37", "694763f2-77a3-4f37-ba06-19b3bc4e0865", "5851f116-0b35-4ba4-978f-49406b6280e2", "edc128de-233e-4f4e-8b14-398fae8ebaed", "4383e052-506b-4bf3-800f-2d8904ce9dcf", "15e64f44-e4cd-4b1d-bfb9-076ff4057b26", "7654ceca-5284-479e-a1ae-955ffd975584", "5b86ab74-35f7-41e9-b759-23598eead09a", "4a3aabe4-821b-4132-8227-71cc8040b351", "fab81dd9-aaae-41b2-a574-e5342bd238b2", "ce9398ac-6c0e-45bc-abd6-eb6e61e973db", "3e6fa828-d4ad-5a99-80be-eeb1ae42a462", "55fc81ef-8ac4-565b-beb6-4948dfa6f5f7", "609c5902-e4b3-5e0d-b98b-28a58243b577", "1c15b740-a781-5bdd-91b1-394f44df1e1f"], "ts": "2026-07-19T22:23:56"}
