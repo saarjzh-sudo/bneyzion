@@ -36,14 +36,16 @@ const AboutStatsSection = ({ stats }: Props) => {
               <div className={`w-12 h-12 rounded-xl ${stat.color} flex items-center justify-center mx-auto mb-3`}>
                 <stat.icon className="h-6 w-6" />
               </div>
-              {/* 17.7 (תרצה): "22,645" גלש מהכרטיס במובייל — גופן רספונסיבי + מניעת חיתוך */}
-              {/* 19.7 (אלי): "המספרים חתוכים" — ספרות פונט-הכותרות עם חיתוכי-דיו + קצה-גרדיאנט בהיר נראו קטועות.
-                  ספרות סאנס נקיות + גרדיאנט שנגמר כהה */}
+              {/* 17.7 (תרצה) + 19.7 (אלי): "22,645" נחתך במובייל והציג רק "45" —
+                  ה-nowrap גלש מהכרטיס וה-overflow חתך את הספרות המובילות.
+                  גודל-גופן נוזלי (clamp לפי רוחב-מסך) שתמיד נכנס בכרטיס,
+                  ספרות סאנס נקיות וגרדיאנט שנגמר כהה (לא נמוג ללבן). */}
               <p
-                className="text-xl sm:text-3xl md:text-4xl font-bold whitespace-nowrap"
+                className="font-bold whitespace-nowrap"
                 dir="ltr"
                 style={{
                   fontFamily: "Ploni, sans-serif",
+                  fontSize: "clamp(0.95rem, 4.2vw, 2.25rem)",
                   background: "linear-gradient(135deg, hsl(25, 50%, 28%) 0%, hsl(36, 55%, 52%) 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
