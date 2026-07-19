@@ -20,7 +20,11 @@ function isWithinSchedule(p: Promo, now: Date): boolean {
   return true;
 }
 
-export default function ImageBannerSlot({ placement }: { placement: "home" | "content" }) {
+export type BannerPlacement = "home" | "content" | "store";
+
+/** הבאנר הפעיל למיקום הנתון (או null) — משותף לסלוט ול-DesignLayout,
+ *  שצריך לדעת אם יש באנר עליון כדי לבטל את חפיפת-ההירו. */
+export function useActiveImageBanner(placement: BannerPlacement): Promo | null {
   const { pathname } = useLocation();
   const visitorAudiences = useVisitorAudiences();
   const { data: rows } = useQuery({
@@ -40,12 +44,16 @@ export default function ImageBannerSlot({ placement }: { placement: "home" | "co
 
   const now = new Date();
   const pageType = pageTypeFromPath(pathname);
-  const banner = (rows ?? []).find(
+  return (rows ?? []).find(
     (p) =>
       p.image_url &&
       isWithinSchedule(p, now) &&
       matchesTargeting(p, pageType, visitorAudiences),
   ) ?? null;
+}
+
+export default function ImageBannerSlot({ placement }: { placement: BannerPlacement }) {
+  const banner = useActiveImageBanner(placement);
 
   if (!banner?.image_url) return null;
 

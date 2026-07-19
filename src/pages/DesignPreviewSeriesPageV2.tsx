@@ -71,6 +71,7 @@ import { usePlayer, saveLocalPosition } from "@/contexts/PlayerContext";
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { sanitizeHtml } from "@/lib/sanitize";
+import { pdfEmbedSrc } from "@/lib/pdfEmbed";
 import {
   colors,
   fonts,
@@ -2044,7 +2045,7 @@ function LessonModal({
                   <div style={{ borderRadius: radii.xl, overflow: "hidden", border: "1px solid rgba(139,111,71,0.15)" }}>
                     <iframe
                       src={isPdf
-                        ? url
+                        ? pdfEmbedSrc(url)
                         : `https://view.officeapps.live.com/op/embed.aspx?src=${encoded}`
                       }
                       style={{ width: "100%", border: "none", height: "70vh", minHeight: "480px", display: "block" }}
@@ -2056,6 +2057,32 @@ function LessonModal({
               </div>
             );
           })()}
+
+          {/* אלי 19.7: במאמרים ארוכים — קישור עמוד-נפרד גם לפני התוכן, לא רק בסופו */}
+          {((lesson as any).content?.length ?? 0) > 2000 && (
+            <div style={{ marginBottom: "1rem" }}>
+              <Link
+                to={`/lessons/${lesson.id}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.45rem 1rem",
+                  borderRadius: radii.md,
+                  border: `1.5px solid rgba(139,111,71,0.25)`,
+                  background: "transparent",
+                  color: colors.textMid,
+                  fontFamily: fonts.body,
+                  fontSize: "0.78rem",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                <ExternalLink style={{ width: 13, height: 13 }} />
+                פתח כעמוד נפרד — לשיתוף ולהדפסה
+              </Link>
+            </div>
+          )}
 
           {/* ── ג3: Full content / description — no truncation ── */}
           {(lesson as any).content ? (

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { formatRabbiName } from "@/lib/rabbi-name";
 
 /** Strip Hebrew diacritics (nikud), special punctuation, and normalize whitespace */
 function normalizeHebrew(text: string): string {
@@ -60,6 +61,9 @@ interface LessonResult {
   title: string;
   rabbis: { name: string } | null;
   series: { title: string } | null;
+  /** קיבוץ כפילויות (הערת אלי 19.7): כמה שיעורים נוספים עם אותה כותרת+רב, ובאילו סדרות */
+  altCount?: number;
+  altSeriesTitles?: string[];
 }
 
 interface BookResult {
@@ -141,10 +145,24 @@ export function useGlobalSearch(query: string) {
           .limit(6),
       ]);
 
+      // קיבוץ שיעורים כפולים (אלי 19.7): אותה כותרת + אותו רב בפרשות שונות → פריט אחד עם מונה
+      const rawLessons = (lessonsRes.data as LessonResult[]) || [];
+      const lessonGroups = new Map<string, LessonResult>();
+      for (const l of rawLessons) {
+        const key = `${normalizeHebrew(l.title)}|${l.rabbis?.name ?? ""}`;
+        const existing = lessonGroups.get(key);
+        if (!existing) {
+          lessonGroups.set(key, { ...l, altCount: 0, altSeriesTitles: l.series?.title ? [l.series.title] : [] });
+        } else {
+          existing.altCount = (existing.altCount ?? 0) + 1;
+          if (l.series?.title) existing.altSeriesTitles = [...(existing.altSeriesTitles ?? []), l.series.title];
+        }
+      }
+
       setResults({
         rabbis: (rabbisRes.data as RabbiResult[]) || [],
         series: (seriesRes.data as SeriesResult[]) || [],
-        lessons: (lessonsRes.data as LessonResult[]) || [],
+        lessons: Array.from(lessonGroups.values()),
         books: (booksRes.data as BookResult[]) || [],
       });
       setIsLoading(false);
@@ -158,11 +176,12 @@ export function useGlobalSearch(query: string) {
   // Generate autocomplete suggestions from results
   const suggestions = useMemo<SearchSuggestion[]>(() => {
     const items: SearchSuggestion[] = [];
-    for (const r of results.rabbis.slice(0, 3)) {
-      items.push({ text: r.title ? `${r.title} ${r.name}` : r.name, type: "rabbi" });
-    }
+    // תוכן לפני שמות רבנים (אלי 19.7) + formatRabbiName נגד "הרב הרב"
     for (const s of results.series.slice(0, 3)) {
       items.push({ text: s.title, type: "series" });
+    }
+    for (const r of results.rabbis.slice(0, 3)) {
+      items.push({ text: formatRabbiName(r), type: "rabbi" });
     }
     return items;
   }, [results]);

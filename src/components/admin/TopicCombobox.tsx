@@ -22,12 +22,15 @@ import { supabase } from "@/integrations/supabase/client";
 import { useTopicsForPicker } from "@/hooks/useAdminContent";
 
 interface TopicComboboxProps {
-  /** topic id או "" */
+  /** topic id או "" (מצב בחירה-יחידה) */
   value: string;
   onChange: (id: string) => void;
   placeholder?: string;
   /** יצירת נושא חדש מתוך שורת החיפוש (ברירת מחדל: מופעל) */
   allowCreate?: boolean;
+  /** יואב 19.7: מצב רב-בחירה — כשמועבר, value/onChange מוחלפים ב-values/onValuesChange */
+  values?: string[];
+  onValuesChange?: (ids: string[]) => void;
 }
 
 /** slug בתבנית הקיימת ב-DB: theme-<שם-במקפים> (למשל theme-דוד-המלך) */
@@ -45,11 +48,21 @@ export function TopicCombobox({
   onChange,
   placeholder = "בחר נושא (אופציונלי)",
   allowCreate = true,
+  values,
+  onValuesChange,
 }: TopicComboboxProps) {
   const [open, setOpen] = useState(false);
   const [term, setTerm] = useState("");
   const { data: topics, isLoading } = useTopicsForPicker();
   const qc = useQueryClient();
+
+  const multi = values !== undefined;
+  const selectedIds = multi ? values! : value ? [value] : [];
+  const isSelected = (id: string) => selectedIds.includes(id);
+  const toggle = (id: string) => {
+    if (!multi) { onChange(id); setOpen(false); setTerm(""); return; }
+    onValuesChange?.(isSelected(id) ? selectedIds.filter(v => v !== id) : [...selectedIds, id]);
+  };
 
   const byId = useMemo(() => new Map((topics ?? []).map(t => [t.id, t])), [topics]);
   const current = value ? byId.get(value) : undefined;
@@ -89,8 +102,12 @@ export function TopicCombobox({
       qc.invalidateQueries({ queryKey: ["topics"] });
       qc.invalidateQueries({ queryKey: ["topics-themes-only"] });
       toast.success(`הנושא "${data.name}" נוצר ונבחר`);
-      onChange(data.id);
-      setOpen(false);
+      if (multi) {
+        onValuesChange?.([...selectedIds, data.id]);
+      } else {
+        onChange(data.id);
+        setOpen(false);
+      }
       setTerm("");
     },
     onError: (e: Error) => {
@@ -109,9 +126,13 @@ export function TopicCombobox({
           className="w-full justify-between font-normal"
         >
           <span className="truncate">
-            {current
-              ? current.name
-              : <span className="text-muted-foreground">{placeholder}</span>}
+            {multi
+              ? (selectedIds.length > 0
+                  ? selectedIds.map(id => byId.get(id)?.name).filter(Boolean).join(" · ")
+                  : <span className="text-muted-foreground">{placeholder}</span>)
+              : current
+                ? current.name
+                : <span className="text-muted-foreground">{placeholder}</span>}
           </span>
           <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -129,13 +150,17 @@ export function TopicCombobox({
               {isLoading ? "טוען..." : allowCreate ? "לא נמצאו נושאים — אפשר ליצור חדש למטה" : "לא נמצאו נושאים"}
             </CommandEmpty>
             <CommandGroup>
-              {value && (
+              {selectedIds.length > 0 && (
                 <CommandItem
                   value="__clear__"
-                  onSelect={() => { onChange(""); setOpen(false); setTerm(""); }}
+                  onSelect={() => {
+                    if (multi) { onValuesChange?.([]); }
+                    else { onChange(""); setOpen(false); }
+                    setTerm("");
+                  }}
                 >
                   <X className="h-3.5 w-3.5 ml-2 opacity-60" />
-                  ללא נושא
+                  {multi ? "נקה בחירה" : "ללא נושא"}
                 </CommandItem>
               )}
               {filtered.map(t => {
@@ -144,9 +169,9 @@ export function TopicCombobox({
                   <CommandItem
                     key={t.id}
                     value={t.id}
-                    onSelect={() => { onChange(t.id); setOpen(false); setTerm(""); }}
+                    onSelect={() => toggle(t.id)}
                   >
-                    <Check className={`h-3.5 w-3.5 ml-2 shrink-0 ${t.id === value ? "opacity-100" : "opacity-0"}`} />
+                    <Check className={`h-3.5 w-3.5 ml-2 shrink-0 ${isSelected(t.id) ? "opacity-100" : "opacity-0"}`} />
                     <div className="flex-1 min-w-0">
                       <div className="truncate text-sm">{t.name}</div>
                       {parent && (

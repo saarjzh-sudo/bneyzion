@@ -68,6 +68,7 @@ function truthText(u: UnifiedUser, t: TruthStatus): string {
     return n === 0 ? "חויב היום" : n === 1 ? "חויב אתמול" : n === 2 ? "חויב לפני יומיים" : `חויב לפני ${n} ימים`;
   }
   if (t === "stale") return "רק ב-Monday";
+  if (t === "donor_hok") return `הו״ק תרומה חודשית${u.last_donation_date ? ` (אחרונה ${fmtDate(u.last_donation_date)})` : ""}`;
   if (u.last_sub_charge) return `הו"ק פגה (${fmtDate(u.last_sub_charge)})`;
   return "ללא הו״ק";
 }
@@ -90,6 +91,7 @@ function Beacon({ status }: { status: TruthStatus }) {
   const map = {
     live: { bg: C.ok, ring: C.okBg, label: "חויב ב-Grow" },
     stale: { bg: C.warn, ring: C.warnBg, label: "רק ב-Monday — ללא חיוב מאומת" },
+    donor_hok: { bg: "#38BDF8", ring: "rgba(56,189,248,0.18)", label: "הו״ק תרומה חודשית" },
     none: { bg: C.faint, ring: C.chip, label: "ללא הוראת-קבע" },
   }[status];
   return (
@@ -676,6 +678,7 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, noti
               <div style={{ fontWeight: 700, fontSize: 13.5 }}>
                 {truth === "live" && `מנוי חי — ${truthText(u, truth)} ב-Grow`}
                 {truth === "stale" && "רק ב-Monday — ללא חיוב Grow מאומת"}
+                {truth === "donor_hok" && `תורם בהו״ק חודשית — ${truthText(u, truth)}`}
                 {truth === "none" && (u.has_account ? "חשבון אתר, ללא הוראת-קבע" : "ללא הוראת-קבע")}
               </div>
               <div style={{ fontSize: 11.5, color: C.muted }}>

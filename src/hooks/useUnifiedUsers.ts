@@ -45,8 +45,9 @@ export interface UnifiedUser {
   first_seen: string | null;
 }
 
-/** אינדיקטור מקור-אמת: ירוק=חויב ב-Grow בחלון · אמבר=tag פעיל בלי חיוב · אפור=ללא הו"ק. */
-export type TruthStatus = "live" | "stale" | "none";
+/** אינדיקטור מקור-אמת: ירוק=חויב ב-Grow בחלון · אמבר=tag פעיל בלי חיוב ·
+ *  תכלת=הו"ק תרומה חודשית (בלי מנוי-תכנית) · אפור=ללא הו"ק. */
+export type TruthStatus = "live" | "stale" | "donor_hok" | "none";
 
 export function truthStatus(u: UnifiedUser): TruthStatus {
   if (u.last_sub_charge) {
@@ -54,6 +55,8 @@ export function truthStatus(u: UnifiedUser): TruthStatus {
     if (ageDays <= LIVE_CHARGE_WINDOW_DAYS) return "live";
   }
   if (u.is_subscriber_active) return "stale";
+  // יואב 19.7: תורם בהו"ק חודשית הוצג "ללא הוראת-קבע" — יש לו הו"ק, רק לא מנוי-תכנית
+  if (u.has_monthly_donation) return "donor_hok";
   return "none";
 }
 

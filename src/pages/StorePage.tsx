@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/contexts/CartContext";
+import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
 
 // keys = actual product_categories.slug values in the DB
 const categoryIcons: Record<string, any> = {
@@ -218,6 +219,9 @@ const StorePage = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* יואב 19.7 (בעקבות הצעת מיכאל): מקום פרסום מרכזי בחנות — באנר promo מתחת להירו */}
+      <ImageBannerSlot placement="store" />
 
       {/* Filter Bar */}
       <section className="py-4 border-b border-border/50 sticky top-16 z-30 bg-background/95 backdrop-blur-sm">

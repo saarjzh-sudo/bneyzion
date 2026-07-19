@@ -84,7 +84,8 @@ interface FormState {
   seriesId:          string;
   newSeriesTitle:    string;
   newSeriesParentId: string;   // parent_id for createSeries — from picker node (fix: was always empty)
-  topicId:           string;
+  /** יואב 19.7: תוכן יכול להשתייך לכמה נושאים (ארץ ישראל + ספר יהושע + גאולה) */
+  topicIds:          string[];
   audienceTags:      string[];
   // step 3
   audioFile:    File | null;
@@ -105,7 +106,7 @@ interface FormState {
 
 const EMPTY: FormState = {
   title: "", description: "", sourceType: "audio", rabbiId: "", rabbiIds: [],
-  seriesId: "", newSeriesTitle: "", newSeriesParentId: "", topicId: "", audienceTags: ["general"],
+  seriesId: "", newSeriesTitle: "", newSeriesParentId: "", topicIds: [], audienceTags: ["general"],
   audioFile: null, videoFile: null, pdfFile: null, coverFile: null,
   videoUrl: "", driveFolderUrl: "",
   content: "", audioUrl: "", attachmentUrl: "",
@@ -314,13 +315,12 @@ const ContentUpload = () => {
         }
       }
 
-      // link topic if chosen (use returned ID — not title search to avoid dup race)
-      if (form.topicId && lessonId) {
-        const { error: topicError } = await supabase.from("lesson_topics").insert({
-          lesson_id: lessonId,
-          topic_id:  form.topicId,
-        });
-        if (topicError) linkWarnings.push(`קישור הנושא נכשל: ${topicError.message}`);
+      // link topics if chosen — רב-נושאים (יואב 19.7)
+      if (form.topicIds.length > 0 && lessonId) {
+        const { error: topicError } = await supabase.from("lesson_topics").insert(
+          form.topicIds.map(topicId => ({ lesson_id: lessonId, topic_id: topicId })),
+        );
+        if (topicError) linkWarnings.push(`קישור הנושאים נכשל: ${topicError.message}`);
       }
 
       if (linkWarnings.length > 0) {
@@ -365,7 +365,7 @@ const ContentUpload = () => {
     if (s === 2) {
       // חובה לבחור מיקום בעץ — אחרת התוכן "נעלם" (לא מופיע בסיידבר)
       if (!locationValue) {
-        setStepErrors(e => ({ ...e, 2: "נא לבחור מיקום לתוכן בעץ הניווט (או בחר במפורש 'שיעור עצמאי')" }));
+        setStepErrors(e => ({ ...e, 2: "נא להשלים את השיוך: אחרי סימון מקום בעץ, בחרו סדרה מהרשימה שנפתחת מתחתיו (או 'צור סדרה חדשה כאן'). לשיעור בלי סדרה — לשונית 'ללא שיוך'." }));
         return false;
       }
       if (
@@ -722,7 +722,7 @@ const ContentUpload = () => {
 
                 <div>
                   <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
-                    פרק
+                    פרק <span className="font-normal text-xs" style={{ color: TXT_M }}>(רשות)</span>
                   </label>
                   <Input
                     type="number"
@@ -731,6 +731,9 @@ const ContentUpload = () => {
                     placeholder="1"
                     min={1}
                   />
+                  <p className="text-xs mt-1" style={{ color: TXT_M }}>
+                    מספר הפרק בספר שהשיעור עוסק בו — משמש לניווט "לפי ספר ופרק". אפשר להשאיר ריק.
+                  </p>
                 </div>
               </div>
             </div>
@@ -773,15 +776,17 @@ const ContentUpload = () => {
                 )}
               </div>
 
-              {/* topic */}
+              {/* topics — רב-בחירה (יואב 19.7) */}
               <div>
                 <label className="block text-sm font-display mb-1.5" style={{ color: TXT }}>
-                  נושא
+                  נושאים <span className="font-normal text-xs" style={{ color: TXT_M }}>(אפשר לבחור כמה)</span>
                 </label>
                 <TopicCombobox
-                  value={form.topicId}
-                  onChange={id => set("topicId", id)}
-                  placeholder="חפש ובחר נושא (אופציונלי)"
+                  value=""
+                  onChange={() => {}}
+                  values={form.topicIds}
+                  onValuesChange={ids => set("topicIds", ids)}
+                  placeholder="חפש ובחר נושאים (אופציונלי)"
                 />
               </div>
 
@@ -1109,6 +1114,15 @@ const ContentUpload = () => {
           )}
 
           {/* ── nav row ───────────────────────────────────────────── */}
+          {step < 4 && stepErrors[step] && (
+            <div
+              className="flex items-start gap-2 mt-6 p-3 rounded-lg text-sm"
+              style={{ background: "#FEF2F2", color: "#DC2626", border: "1px solid #FECACA" }}
+            >
+              <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+              <span>{stepErrors[step]}</span>
+            </div>
+          )}
           {step < 4 && (
             <div className="flex items-center justify-between mt-8 pt-6" style={{ borderTop: `1px solid ${GOLD_S}` }}>
               {step > 1 ? (

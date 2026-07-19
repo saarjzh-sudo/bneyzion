@@ -17,7 +17,7 @@ import DesignHeader from "./DesignHeader";
 import DesignFooter from "./DesignFooter";
 import DesignMobileBottomNav from "./DesignMobileBottomNav";
 import { PromoProvider } from "@/components/promo";
-import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
+import ImageBannerSlot, { useActiveImageBanner } from "@/components/promo/ImageBannerSlot";
 import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import DesignSidebar from "./DesignSidebar";
 import { colors } from "@/lib/designTokens";
@@ -39,6 +39,8 @@ export default function DesignLayout({
   sidebar = true,
 }: DesignLayoutProps) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // באנר-תוכן פעיל → הרצועה עולה לראש העמוד גם בעמודי-הירו וחפיפת ההירו מבוטלת
+  const contentBannerActive = !!useActiveImageBanner("content");
 
   return (
     <div
@@ -56,8 +58,10 @@ export default function DesignLayout({
       />
 
       {/* יואב 17.7: הבאנר בעמודי-תוכן = רצועה עליונה נמוכה ורחבה מתחת להדר
-          (היה מעל הפוטר — "רואים אותו בתחתית העמוד ובתמונה ענקית"). */}
-      {!overlapHero && <ImageBannerSlot placement="content" />}
+          (היה מעל הפוטר — "רואים אותו בתחתית העמוד ובתמונה ענקית").
+          יואב 19.7: גם בעמודי-הירו (סדרות) הבאנר עולה לראש העמוד; חפיפת-ההירו
+          מבוטלת רק כשבאנר פעיל בפועל. */}
+      {(!overlapHero || contentBannerActive) && <ImageBannerSlot placement="content" />}
 
       <div
         style={{
@@ -80,7 +84,7 @@ export default function DesignLayout({
             // תשלום. inline style גובר עליו — לכן כל המידות מוגדרות כאן במפורש.
             width: "100%",
             maxWidth: "none",
-            margin: overlapHero ? "-96px 0 0" : 0,
+            margin: overlapHero && !contentBannerActive ? "-96px 0 0" : 0,
             padding: "0 0 calc(env(safe-area-inset-bottom, 0px))",
           }}
           className="design-layout-main"
@@ -89,9 +93,6 @@ export default function DesignLayout({
         </main>
       </div>
 
-      {/* בעמודים עם הירו חופף (overlapHero) הרצועה העליונה תשבור את העיצוב —
-          שם הבאנר נשאר מעל הפוטר כמו קודם. */}
-      {overlapHero && <ImageBannerSlot placement="content" />}
 
       <DesignFooter />
       {/* 7.7.2026 (הרב יואב): 'ניווט' בשורה התחתונה פותח את סיידבר-הניווט במובייל

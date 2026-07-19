@@ -51,7 +51,10 @@ export function useCreateTopic() {
       if (error) throw error;
       return data;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["topics"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["topics"] });
+      qc.invalidateQueries({ queryKey: ["topics-themes-only"] });
+    },
   });
 }
 
@@ -79,10 +82,19 @@ export function useDeleteTopic() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
+      // FK מ-lesson_topics הוא NO ACTION — מחיקת נושא עם שיוכים נחסמת; מסירים את השיוכים קודם
+      const { error: linkErr } = await supabase.from("lesson_topics").delete().eq("topic_id", id);
+      if (linkErr) throw linkErr;
       const { data: delRows, error } = await supabase.from("topics").delete().eq("id", id).select("id");
       if (error) throw error;
       if (!delRows?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS).");
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["topics"] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["topics"] });
+      qc.invalidateQueries({ queryKey: ["topics-themes-only"] });
+      qc.invalidateQueries({ queryKey: ["learning-style-topics"] });
+      qc.invalidateQueries({ queryKey: ["topics-sidebar-themes"] });
+      qc.invalidateQueries({ queryKey: ["basic-themes-sidebar"] });
+    },
   });
 }

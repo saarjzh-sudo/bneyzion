@@ -19,6 +19,7 @@ import { useMediaProgress } from "@/hooks/useMediaProgress";
 import { useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
 import { formatRabbiName } from "@/lib/rabbi-name";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
+import { pdfEmbedSrc } from "@/lib/pdfEmbed";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
 
 function formatDuration(seconds: number | null) {
@@ -545,7 +546,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                       </div>
                     </div>
                     <iframe
-                      src={url}
+                      src={pdfEmbedSrc(url)}
                       className="w-full border-0"
                       style={{ height: "60vh", minHeight: "400px" }}
                       loading="lazy"

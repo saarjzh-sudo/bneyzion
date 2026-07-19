@@ -37,7 +37,19 @@ const AboutStatsSection = ({ stats }: Props) => {
                 <stat.icon className="h-6 w-6" />
               </div>
               {/* 17.7 (תרצה): "22,645" גלש מהכרטיס במובייל — גופן רספונסיבי + מניעת חיתוך */}
-              <p className="text-xl sm:text-3xl md:text-4xl font-heading gradient-warm whitespace-nowrap" dir="ltr">{stat.value}</p>
+              {/* 19.7 (אלי): "המספרים חתוכים" — ספרות פונט-הכותרות עם חיתוכי-דיו + קצה-גרדיאנט בהיר נראו קטועות.
+                  ספרות סאנס נקיות + גרדיאנט שנגמר כהה */}
+              <p
+                className="text-xl sm:text-3xl md:text-4xl font-bold whitespace-nowrap"
+                dir="ltr"
+                style={{
+                  fontFamily: "Ploni, sans-serif",
+                  background: "linear-gradient(135deg, hsl(25, 50%, 28%) 0%, hsl(36, 55%, 52%) 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >{stat.value}</p>
               <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
             </motion.div>
           ))}

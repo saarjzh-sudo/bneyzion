@@ -89,7 +89,7 @@ interface PromoForm {
   cta_url: string;
   image_url: string;
   video_url: string;
-  placement: "home" | "content";
+  placement: "home" | "content" | "store";
   mobile_image_url: string;
   page_types: string[];
   audiences: string[];
@@ -557,6 +557,7 @@ export default function Promos() {
                       <SelectContent>
                         <SelectItem value="content">עמודי התוכן (רצועה עליונה מתחת להדר)</SelectItem>
                         <SelectItem value="home">דף הבית (מתחת להירו)</SelectItem>
+                        <SelectItem value="store">החנות (מתחת להירו של החנות)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

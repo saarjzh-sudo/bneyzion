@@ -55,7 +55,8 @@ interface NodeSeriesPanelProps {
 
 function NodeSeriesPanel({ nodeId, nodeTitle, onSelect, currentValue }: NodeSeriesPanelProps) {
   const { useSeriesForNode } = useContentSidebar();
-  const { data: series, isLoading } = useSeriesForNode(nodeId);
+  // leafOnly: מסנן צמתי-מיכל (קטגוריות בעץ) מרשימת הסדרות — כאן בוחרים סדרה בלבד
+  const { data: series, isLoading } = useSeriesForNode(nodeId, { leafOnly: true });
   const [creatingNew, setCreatingNew] = useState(false);
   const [newTitle, setNewTitle] = useState("");
 

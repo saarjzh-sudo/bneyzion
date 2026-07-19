@@ -24,6 +24,7 @@ import DedicationDialog from "@/components/lesson/DedicationDialog";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
 import { useMediaProgress } from "@/hooks/useMediaProgress";
 import { saveLocalLastLesson } from "@/hooks/useLastLesson";
+import { pdfEmbedSrc } from "@/lib/pdfEmbed";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -441,7 +442,7 @@ const LessonPage = () => {
                       </div>
                     </div>
                     <iframe
-                      src={url}
+                      src={pdfEmbedSrc(url)}
                       className="w-full border-0"
                       style={{ height: "75vh", minHeight: "500px" }}
                       loading="lazy"

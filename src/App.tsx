@@ -78,6 +78,7 @@ const TopicPage = lazy(() => import("./pages/TopicPage"));
 import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 import UpdatePrompt from "./components/pwa/UpdatePrompt";
+import CookieConsent from "./components/legal/CookieConsent";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
 
 // Lazy-loaded admin pages
@@ -301,6 +302,8 @@ const GlobalChrome = () => {
       <FloatingPlayer />
       <InstallPrompt />
       <UpdatePrompt />
+      {/* הודעת עוגיות — גלובלית, מהעמוד הראשון שנכנסים אליו (הערת אלי 19.7; קודם חיה רק ב-Layout הישן) */}
+      <CookieConsent />
       {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/*, /program/* and bare landing routes.
           10.7 (סער): "בחנות הוא מיותר" — מוסתר גם ב-/store, /checkout, /cart */}
       <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/", "/store", "/checkout", "/cart"]} />

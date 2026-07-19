@@ -103,35 +103,7 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
 
         {(hasResults && suggestions.length > 0) && <CommandSeparator />}
 
-        {/* Rabbis */}
-        {results.rabbis.length > 0 && (
-          <CommandGroup heading={
-            <span className="flex items-center gap-1.5">
-              <Users className="h-3.5 w-3.5" />
-              רבנים
-            </span>
-          }>
-            {results.rabbis.map((rabbi) => (
-              <CommandItem
-                key={rabbi.id}
-                value={rabbi.name}
-                onSelect={() => go(`/rabbis/${rabbi.slug ?? rabbi.id}`)}
-                className="flex items-center gap-3 cursor-pointer"
-              >
-                <Avatar className="h-8 w-8">
-                  {rabbi.image_url && <AvatarImage src={rabbi.image_url} alt={rabbi.name} />}
-                  <AvatarFallback className="text-xs"><Users className="h-3.5 w-3.5" /></AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col flex-1">
-                  <span className="font-medium">{formatRabbiName(rabbi)}</span>
-                  <span className="text-xs text-muted-foreground">{rabbi.lesson_count} שיעורים</span>
-                </div>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        )}
-
-        {/* Series */}
+        {/* Series — תוכן לפני רבנים (אלי 19.7) */}
         {results.series.length > 0 && (
           <CommandGroup heading={
             <span className="flex items-center gap-1.5">
@@ -177,8 +149,39 @@ const GlobalSearch = ({ open, onOpenChange }: GlobalSearchProps) => {
                 <div className="flex flex-col flex-1">
                   <span className="font-medium">{l.title}</span>
                   <span className="text-xs text-muted-foreground">
-                    {[l.rabbis?.name, l.series?.title].filter(Boolean).join(" · ")}
+                    {l.altCount
+                      ? [l.rabbis?.name, `${l.altCount + 1} שיעורים: ${(l.altSeriesTitles ?? []).slice(0, 3).join(", ")}${(l.altSeriesTitles?.length ?? 0) > 3 ? "…" : ""}`]
+                          .filter(Boolean).join(" · ")
+                      : [l.rabbis?.name, l.series?.title].filter(Boolean).join(" · ")}
                   </span>
+                </div>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        )}
+
+        {/* Rabbis — אחרי התוכן (אלי 19.7) */}
+        {results.rabbis.length > 0 && (
+          <CommandGroup heading={
+            <span className="flex items-center gap-1.5">
+              <Users className="h-3.5 w-3.5" />
+              רבנים
+            </span>
+          }>
+            {results.rabbis.map((rabbi) => (
+              <CommandItem
+                key={rabbi.id}
+                value={rabbi.name}
+                onSelect={() => go(`/rabbis/${rabbi.slug ?? rabbi.id}`)}
+                className="flex items-center gap-3 cursor-pointer"
+              >
+                <Avatar className="h-8 w-8">
+                  {rabbi.image_url && <AvatarImage src={rabbi.image_url} alt={rabbi.name} />}
+                  <AvatarFallback className="text-xs"><Users className="h-3.5 w-3.5" /></AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col flex-1">
+                  <span className="font-medium">{formatRabbiName(rabbi)}</span>
+                  <span className="text-xs text-muted-foreground">{rabbi.lesson_count} שיעורים</span>
                 </div>
               </CommandItem>
             ))}

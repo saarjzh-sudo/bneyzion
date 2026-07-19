@@ -1624,7 +1624,7 @@ export default function DesignPreviewPortalSubscriber() {
                     גישה מלאה להרחבה, מצגות, מאמרים והקלטות שבועיות — ₪5 לחודש הראשון.
                   </p>
                   <Link
-                    to="/megilat-esther"
+                    to="/chapter-weekly"
                     style={{
                       display: "inline-flex",
                       alignItems: "center",

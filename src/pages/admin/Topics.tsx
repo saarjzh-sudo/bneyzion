@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Switch } from "@/components/ui/switch";
 import { Plus, Search, Pencil, Trash2 } from "lucide-react";
 import { useTopics, useCreateTopic, useUpdateTopic, useDeleteTopic } from "@/hooks/useTopics";
+import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { InlineEditField } from "@/components/admin/InlineEditField";
 
@@ -134,7 +135,33 @@ export function TopicsContent() {
                       <TableCell>
                         <div className="flex gap-1">
                           <Button variant="ghost" size="icon" onClick={() => openEdit(t)}><Pencil className="h-4 w-4" /></Button>
-                          <Button variant="ghost" size="icon" onClick={() => { if (confirm("למחוק?")) deleteTopic.mutate(t.id); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={async () => {
+                              const { count } = await supabase
+                                .from("lesson_topics")
+                                .select("lesson_id", { count: "exact", head: true })
+                                .eq("topic_id", t.id);
+                              const suffix = count
+                                ? `\nמשויכים אליו ${count} שיעורים — השיוך שלהם יוסר.`
+                                : "";
+                              if (!confirm(`למחוק את הנושא "${t.name}"?${suffix}`)) return;
+                              try {
+                                await deleteTopic.mutateAsync(t.id);
+                                toast({ title: "הנושא נמחק" });
+                              } catch (e: any) {
+                                const msg: string = e?.message || "";
+                                toast({
+                                  title: "המחיקה נכשלה",
+                                  description: msg.includes("foreign key") || msg.includes("violates")
+                                    ? "יש שיעורים או סדרות שמשויכים לנושא הזה — יש להסיר את השיוך לפני המחיקה."
+                                    : msg,
+                                  variant: "destructive",
+                                });
+                              }
+                            }}
+                          ><Trash2 className="h-4 w-4 text-destructive" /></Button>
                         </div>
                       </TableCell>
                     </TableRow>

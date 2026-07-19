@@ -15,7 +15,6 @@ import DesignSidebar from "@/components/layout-v2/DesignSidebar";
 import { PromoProvider } from "@/components/promo";
 import { colors } from "@/lib/designTokens";
 import SkipToContent, { MAIN_CONTENT_ID } from "@/components/a11y/SkipToContent";
-import CookieConsent from "@/components/legal/CookieConsent";
 import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 
 interface LayoutProps {
@@ -86,7 +85,7 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
         }
       `}</style>
 
-      <CookieConsent />
+      {/* CookieConsent עבר ל-App root — מוצג בכל האתר מהעמוד הראשון (הערת אלי 19.7) */}
       <AccessibilityWidget />
     </div>
   );

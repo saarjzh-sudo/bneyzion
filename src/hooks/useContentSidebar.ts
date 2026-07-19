@@ -345,9 +345,10 @@ export function useContentSidebar() {
   //   - Else if only a draft copy exists (no active twin) → show it (mirrors old site)
   //   - Never show a draft that has an active/published twin (bad duplicate)
   // Excludes the root node itself and intermediate category nodes (status=category).
-  const useSeriesForNode = (nodeId: string | null) => {
+  const useSeriesForNode = (nodeId: string | null, opts?: { leafOnly?: boolean }) => {
+    const leafOnly = opts?.leafOnly ?? false;
     return useQuery({
-      queryKey: ["content-series-canonical", nodeId],
+      queryKey: ["content-series-canonical", nodeId, leafOnly],
       queryFn: async () => {
         if (!nodeId) return [];
         const { data: descendants } = await supabase.rpc("get_series_descendant_ids", {
@@ -390,10 +391,15 @@ export function useContentSidebar() {
         // Drop direct-child placeholder sub-categories: a draft node with 0 lessons whose parent IS
         // the requested node is a sub-category shell (old site shows it in the sidebar, not as a
         // center series). Deeper draft-only leaves (e.g. parent = a sub-category) are kept.
+        // leafOnly (אשף ההעלאה): צומת שמשמש הורה לסדרות אחרות הוא מיכל-קטגוריה בעץ,
+        // לא סדרה שמשייכים אליה שיעור — מסתירים אותו מרשימת הבחירה (הערת יואב 19.7).
+        const containerIds = new Set(series.map((s) => s.parent_id).filter(Boolean));
+
         const seriesFiltered = series.filter(
           (s) =>
             !isParshaEventSeries(s.title) &&
-            !(s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === nodeId),
+            !(s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === nodeId) &&
+            !(leafOnly && containerIds.has(s.id)),
         );
 
         // Canonical dedup: group by normalized title, pick best version

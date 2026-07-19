@@ -338,6 +338,23 @@ export default function DailyVersePage() {
                 }}>
                   ✨ הפסוק היומי
                 </div>
+                {/* תמונת הטור — בראש, כמו בחדשות תנ"כיות (יואב 19.7) */}
+                {verses[0].image_url && (
+                  <div
+                    style={{
+                      borderRadius: "1rem", overflow: "hidden",
+                      marginBottom: "1.25rem", maxHeight: 340,
+                      border: "1px solid rgba(139,111,71,0.15)",
+                      position: "relative",
+                    }}
+                  >
+                    <img
+                      src={verses[0].image_url}
+                      alt="הפסוק היומי"
+                      style={{ width: "100%", height: "100%", maxHeight: 340, objectFit: "cover", objectPosition: "center 30%", display: "block" }}
+                    />
+                  </div>
+                )}
                 <blockquote style={{
                   fontFamily: "Kedem, Frank Ruhl Libre, serif", fontStyle: "italic",
                   fontSize: "clamp(1.15rem, 2.6vw, 1.55rem)", color: TEXT_DARK,
