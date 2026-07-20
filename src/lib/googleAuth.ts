@@ -15,8 +15,10 @@
  */
 
 // מזהה לקוח ציבורי (נשלח ממילא לדפדפן בכל בקשת OAuth) — בטוח בקוד.
+// Client חדש בפרויקט site-bz של סער (20.7.2026) — מסך consent "בני ציון", In production.
+// הישן (746397450172, פרויקט tidy-rig שלא נגיש לנו) נשאר audience מוכר ב-Supabase לרולבק.
 export const GOOGLE_CLIENT_ID =
-  "746397450172-646chd5hh545pamh0k7s3g4soacuha6a.apps.googleusercontent.com";
+  "1093150239727-rg1jcm3nhaua3snmi61v002ktniq36kk.apps.googleusercontent.com";
 
 interface GoogleIdConfig {
   client_id: string;
