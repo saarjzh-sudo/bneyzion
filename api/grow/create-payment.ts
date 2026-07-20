@@ -587,6 +587,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // ───── Server-side price floor (anti price-tampering) ─────
+    // A fixed-price purchase (store product, or a one-time wallet book) must be
+    // charged at its DB price × quantity, minus only a server-validated coupon.
+    // Closes the "₪440 product paid as ₪1" forgery class (audit 21.7). Donations
+    // and variable-amount flows are untouched (default_amount there is a suggestion).
+    const isFixedPriceProduct =
+      isStoreProduct || (productCfg?.type === "wallet" && Number(productCfg?.default_amount) > 0);
+    if (isFixedPriceProduct && Number(productCfg?.default_amount) > 0) {
+      const qty = Math.max(1, Number(meta?.quantity) || 1);
+      const priceFloor = Number(productCfg.default_amount) * qty - couponDiscount - 1; // ₪1 grace
+      if (sum < priceFloor) {
+        console.warn("create-payment price floor breach:", {
+          product: storeProductSlug ?? productSlug, expected: Number(productCfg.default_amount) * qty,
+          couponDiscount, sum,
+        });
+        return res
+          .status(400)
+          .json({ error: "סכום התשלום אינו תואם את מחיר המוצר — רעננו את העמוד ונסו שוב" });
+      }
+    }
+
     // ───── Build Grow createPaymentProcess payload ─────
     const formData = new FormData();
     formData.append("pageCode", pageCode);

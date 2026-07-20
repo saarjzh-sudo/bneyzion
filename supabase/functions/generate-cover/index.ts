@@ -19,52 +19,38 @@ const corsHeaders = {
 };
 
 // Maps series/lesson title keywords to English scene descriptions for the AI prompt.
-// No Hebrew in the prompt — Imagen may render Hebrew text, which we explicitly forbid.
-const FAMILY_THEMES: Record<string, string> = {
-  "בראשית": "Garden of Eden, ancient wilderness, patriarchs, desert landscape",
-  "שמות":   "desert exodus, ancient Egypt, burning bush, wilderness camp",
-  "ויקרא":  "ancient temple, priestly altar, stone courtyard, ritual vessels",
-  "במדבר":  "desert wilderness, ancient Israelite camp, wandering dunes",
-  "דברים":  "mountain landscape, ancient speeches, vast desert horizon",
-  "יהושע":  "Canaan landscape, ancient stone walls, Jordan river crossing",
-  "שופטים": "ancient Israelite hills, tribal landscape, rocky terrain",
-  "שמואל":  "ancient Israelite kingdom, royal court, prophet by river",
-  "מלכים":  "ancient palace, olive grove, hilltop temple ruins",
-  "ישעיהו": "ancient Jerusalem olive trees, prophetic vision, stone walls",
-  "ירמיהו": "ancient Jerusalem gate, weeping willow, crumbling walls",
-  "יחזקאל": "golden light over water, mystical sky, abstract celestial",
-  "תהלים":  "sunrise over mountains, ancient harp on olive branch",
-  "משלי":   "wisdom tree, ancient scroll, olive branch, morning light",
-  "איוב":   "desert storm, lone tree, ancient desolate landscape",
-  "שיר השירים": "blooming vineyard, spring flowers, ancient garden, NO PEOPLE",
-  "רות":    "wheat fields at harvest, rolling hills, ancient village",
-  "אסתר":   "ancient Persian garden architecture, abstract royal arches",
-  "עזרא":   "ancient Jerusalem rebuilt walls, cedar wood, sunrise",
-  "נחמיה":  "ancient city walls under construction, torches, night sky",
-  "דברי הימים": "ancient Israelite chronicles, royal palace, candlelight",
-  "פרשה":   "ancient desert landscape, parchment scroll, golden light",
-  "שבת":    "candles, warm golden light, wooden table, Friday sunset",
-  "חנוכה":  "oil lamp menorah, ancient stone wall, winter evening",
-  "פסח":    "wheat fields, desert horizon, golden afternoon light",
-  "ראש השנה": "ram's horn shofar on stone, autumn leaves, sunrise",
-  "יום כיפור": "white cloth, quiet stone sanctuary, single candle",
-  "סוכות":  "harvest fruit, palm branch, ancient harvest fields",
-};
+// סגנון-הבית של איורי-הסדרות: אשכול-אקוורל מופשט על נייר קרם (סער 21.7.2026).
+// לא סצנה ריאליסטית — כתמי-צבע רכים בקשת-עדינה סביב מרכז ממוקד. בלי אותיות.
+// כדי לשמור עקביות + מעט מגוון: האלמנט-המרכזי נבחר דטרמיניסטית מכותרת השיעור,
+// כך שאותה כותרת מקבלת תמיד את אותו איור, וכותרות שונות מקבלות צורות-מרכז שונות.
+const CENTER_ELEMENTS = [
+  "a blooming radial cluster like an opening flower of color",
+  "a soft open wreath of dabs around a luminous cream center",
+  "a gentle flowing arc of dabs like a soft current of water",
+  "a small dense cluster radiating outward into lighter scattered dabs",
+  "a soft leaf-like sprig of green, teal and gold dabs growing gently upward",
+  "a soft teardrop gathering of blue, teal and lavender dabs",
+  "a warm upward gesture of coral, gold and rose dabs like a gentle rising light",
+];
+
+function pickCenter(title: string): string {
+  let h = 0;
+  for (const ch of title) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return CENTER_ELEMENTS[h % CENTER_ELEMENTS.length];
+}
 
 function buildPrompt(title: string): string {
-  const matched = Object.entries(FAMILY_THEMES).find(([k]) => title.includes(k));
-  const theme = matched
-    ? matched[1]
-    : "ancient Israel landscape, olive trees, stone walls, golden hour";
-
   return [
-    "Fine art watercolor illustration,",
-    theme + ",",
-    "warm golden hour light, earth tones, soft brush strokes,",
-    "artistic and serene, suitable for educational religious content,",
-    "NO TEXT, NO LETTERS, NO NUMBERS, NO WRITING OF ANY KIND,",
-    "NO HUMAN FIGURES, NO FACES, NO SILHOUETTES, NO PEOPLE,",
-    "16:9 landscape composition",
+    "Delicate loose watercolor on warm cream paper with visible paper grain.",
+    "Soft translucent watercolor blobs and dabs in a muted rainbow palette —",
+    "sage green, dusty teal, soft slate blue, gentle lavender, warm ochre, coral, muted rose —",
+    "wet-on-wet bleeding edges, airy with generous empty cream space,",
+    "gathered into a single central focal cluster. Abstract, symbolic, gentle and serene.",
+    "Central element:", pickCenter(title) + ".",
+    // דיכוי-טקסט בגוף-הפרומפט (negativePrompt הוסר מ-Imagen 4, 21.7.2026):
+    "Absolutely NO text, NO letters, NO Hebrew characters, NO numbers, NO writing,",
+    "NO code, NO captions, NO watermark, NO human figures, NO faces, NO recognizable objects.",
+    "16:9 landscape composition.",
   ].join(" ");
 }
 
@@ -181,8 +167,7 @@ serve(async (req) => {
           parameters: {
             sampleCount: 1,
             aspectRatio: "16:9",
-            negativePrompt:
-              "text, letters, hebrew, arabic, writing, people, faces, silhouettes, calligraphy, inscription, watermark",
+            // negativePrompt הוסר מ-Imagen 4 (מחזיר 400) — הדיכוי מוטמע ב-buildPrompt.
           },
         }),
       }
