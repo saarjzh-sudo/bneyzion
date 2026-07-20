@@ -322,7 +322,8 @@ const CommunityCoursePage = () => {
                       {selected.title}
                     </h2>
                     {selected.description && (
-                      <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMuted, margin: "0.4rem 0 0", lineHeight: 1.6 }}>
+                      // pre-line: שורה 1 = כותרת הפרומו, שורה 2 = המשפט המוביל (מסמך יואב 20.7)
+                      <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMuted, margin: "0.4rem 0 0", lineHeight: 1.6, whiteSpace: "pre-line" }}>
                         {selected.description}
                       </p>
                     )}

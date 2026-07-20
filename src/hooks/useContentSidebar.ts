@@ -395,11 +395,17 @@ export function useContentSidebar() {
         // לא סדרה שמשייכים אליה שיעור — מסתירים אותו מרשימת הבחירה (הערת יואב 19.7).
         const containerIds = new Set(series.map((s) => s.parent_id).filter(Boolean));
 
+        // leafOnly: אוספי-פרקים מהאתר הישן ("מינוי יהושע | פרק א") הם ארכיוני מאמרים
+        // פר-פרק, לא סדרות שמעלים אליהן תוכן חדש — קונבנציית "| פרק" של הייבוא
+        // (207 בכל האתר). שיוך-לפרק של שיעור חדש נעשה דרך שדה bible_chapter (יואב 20.7).
+        const isChapterCollection = (t: string) => /\|\s*פרק(ים)?\b/.test(t);
+
         const seriesFiltered = series.filter(
           (s) =>
             !isParshaEventSeries(s.title) &&
             !(s.status === "draft" && (s.lesson_count ?? 0) === 0 && s.parent_id === nodeId) &&
-            !(leafOnly && containerIds.has(s.id)),
+            !(leafOnly && containerIds.has(s.id)) &&
+            !(leafOnly && isChapterCollection(s.title)),
         );
 
         // Canonical dedup: group by normalized title, pick best version

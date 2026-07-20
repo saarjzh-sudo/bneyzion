@@ -120,7 +120,6 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
   const [expandedExtras, setExpandedExtras] = useState<Set<string>>(new Set());
   // R7 6.7.2026: "עוד נושאים" (the pre-existing 126-topic full list) collapsed by default —
   // the curated 40 "נושאים בסיסיים" show first/prominent per Rav Yoav's request.
-  const [showMoreTopics, setShowMoreTopics] = useState(false);
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
@@ -458,42 +457,16 @@ export default function DesignSidebar({ drawerOpen, onDrawerClose }: DesignSideb
                 onNavigate={handleNavigate}
               />
 
-              {!search.trim() && (
-                <button
-                  onClick={() => setShowMoreTopics((v) => !v)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "100%",
-                    marginTop: "0.6rem",
-                    padding: "0.5rem 0.7rem",
-                    borderRadius: radii.sm,
-                    border: `1px solid rgba(139,111,71,0.15)`,
-                    background: "rgba(139,111,71,0.04)",
-                    cursor: "pointer",
-                    fontFamily: fonts.body,
-                    fontSize: "0.76rem",
-                    fontWeight: 600,
-                    color: colors.textMuted,
-                  }}
-                >
-                  <span>עוד נושאים</span>
-                  {showMoreTopics ? <ChevronDown size={13} /> : <ChevronLeft size={13} />}
-                </button>
-              )}
-
-              {(showMoreTopics || search.trim()) && (
-                <div style={{ marginTop: "0.4rem" }}>
-                  <TopicsTab
-                    topics={sortedThematicTopics}
-                    isLoading={topicsLoading}
-                    search={search}
-                    matchesSearch={matchesSearch}
-                    onNavigate={handleNavigate}
-                  />
-                </div>
-              )}
+              {/* כל הנושאים גלויים תמיד — כפתור "עוד נושאים" הוסר (יואב 20.7) */}
+              <div style={{ marginTop: "0.4rem" }}>
+                <TopicsTab
+                  topics={sortedThematicTopics}
+                  isLoading={topicsLoading}
+                  search={search}
+                  matchesSearch={matchesSearch}
+                  onNavigate={handleNavigate}
+                />
+              </div>
             </>
           )}
 

@@ -514,11 +514,15 @@
   font-weight: 400;
 }
 
-/* Mudgash - highlighted emphasis paragraphs from Umbraco content */
+/* Mudgash — פסקת הדגשה בגופן מיוחד, כמו באתר הישן (יואב 20.7).
+   חל גם על תוכן מיובא (<p class="mudgash"> מאומברקו) וגם על הדגשות חדשות מהעורך.
+   (אוחד משני בלוקים סותרים — הישן דרס weight/color.) */
 .prose .mudgash,
+.bz-rte-content .mudgash,
 .mudgash {
   display: block;
-  font-size: 1.15em;
+  font-family: 'Kedem', 'Frank Ruhl Libre', serif;
+  font-size: 1.2em;
   line-height: 1.9;
   font-weight: 500;
   color: hsl(var(--foreground));
@@ -526,12 +530,6 @@
   border-bottom: 3px solid hsl(var(--primary));
   padding: 1rem 0.5rem;
   margin: 1.5rem 0;
-}
-
-/* Umbraco imported content styles */
-.mudgash {
-  font-weight: 700;
-  color: hsl(var(--primary));
 }
 
 .umbraco-content h2,

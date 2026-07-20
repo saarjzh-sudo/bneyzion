@@ -108,7 +108,13 @@ function NodeSeriesPanel({ nodeId, nodeTitle, onSelect, currentValue }: NodeSeri
                     color: isSelected ? GOLD : TXT,
                   }}
                 >
-                  <span className="flex-1 truncate">{s.title}</span>
+                  <span className="flex-1 min-w-0 text-right">
+                    <span className="block truncate">{s.title}</span>
+                    {/* הרב המשויך לסדרה — יואב 20.7: "לא רואים שם איזה רב משויך לכל סידרה" */}
+                    {s.rabbiName && (
+                      <span className="block truncate text-xs" style={{ color: TXT_M }}>{s.rabbiName}</span>
+                    )}
+                  </span>
                   <span className="shrink-0 text-xs font-display" style={{ color: TXT_M }}>
                     {s.lessonCount ?? 0} שיעורים
                   </span>

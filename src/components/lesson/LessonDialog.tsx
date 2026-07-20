@@ -1,4 +1,4 @@
-import { sanitizeHtml } from "@/lib/sanitize";
+import { sanitizeHtml, isDuplicatePromo } from "@/lib/sanitize";
 import { useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link, useNavigate } from "react-router-dom";
@@ -600,6 +600,14 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                 </div>
               );
             })()}
+
+            {/* Promo teaser — "תיאור קצר" מוצג גם בפופאפ, לא רק בדף השיעור (יואב 20.7) */}
+            {lesson.description && (lesson as any).content &&
+              !isDuplicatePromo(lesson.description, (lesson as any).content) ? (
+              <div className="rounded-lg bg-secondary/30 border border-border p-4">
+                <p className="text-foreground leading-relaxed whitespace-pre-line font-display">{lesson.description}</p>
+              </div>
+            ) : null}
 
             {/* Full content */}
             {(lesson as any).content ? (

@@ -67,12 +67,33 @@ export function TopicCombobox({
   const byId = useMemo(() => new Map((topics ?? []).map(t => [t.id, t])), [topics]);
   const current = value ? byId.get(value) : undefined;
 
+  // הבורר מציע רק נושאים תמטיים אמיתיים — צאצאי שורשי-הנושאים.
+  // טבלת topics מכילה גם מאות צמתי-פרקים מהייבוא ("אדוניהו והמלכת שלמה | פרק א'")
+  // שאינם נושאים לשיוך (יואב 20.7: "קטגוריות לא קשורות ברשימת הנושאים").
+  // byId נשאר על הרשימה המלאה — כדי ששמות של שיוכים ישנים עדיין יוצגו.
+  const themeTopics = useMemo(() => {
+    const list = topics ?? [];
+    const rootIds = new Set(
+      list.filter(t => t.slug === "themes-root" || t.slug === "biblical-themes-root").map(t => t.id),
+    );
+    if (rootIds.size === 0) return list; // fallback — בלי שורשים אין ממה לסנן
+    const underRoot = (t: (typeof list)[number]) => {
+      let cur: (typeof list)[number] | undefined = t;
+      for (let i = 0; i < 6 && cur; i++) {
+        if (!cur.parent_id) return false;
+        if (rootIds.has(cur.parent_id)) return true;
+        cur = byId.get(cur.parent_id);
+      }
+      return false;
+    };
+    return list.filter(t => !t.is_learning_style && !rootIds.has(t.id) && underRoot(t));
+  }, [topics, byId]);
+
   const filtered = useMemo(() => {
     const q = term.trim();
-    const list = topics ?? [];
-    if (!q) return list.slice(0, 60);
-    return list.filter(t => t.name.includes(q)).slice(0, 60);
-  }, [topics, term]);
+    if (!q) return themeTopics.slice(0, 60);
+    return themeTopics.filter(t => t.name.includes(q)).slice(0, 60);
+  }, [themeTopics, term]);
 
   const parentName = (parentId: string | null) =>
     parentId ? byId.get(parentId)?.name ?? null : null;

@@ -214,6 +214,17 @@ const ContentUpload = () => {
           sortOrder = Math.min((bandSiblings[0].sort_order ?? 0) + 1, 999);
         }
       }
+      // הספר נגזר מצומת-האב — סדרה חדשה בצומת "יהושע" מקבלת bible_book="יהושע",
+      // כדי שתופיע בניווט הספר ובחיפוש (יואב 20.7: הסדרה החדשה לא נמצאה בניווט).
+      let parentBibleBook: string | null = null;
+      if (parentId) {
+        const { data: parentNode } = await supabase
+          .from("series")
+          .select("bible_book")
+          .eq("id", parentId)
+          .maybeSingle();
+        parentBibleBook = (parentNode as any)?.bible_book ?? null;
+      }
       const { data, error } = await supabase
         .from("series")
         .insert({
@@ -225,6 +236,10 @@ const ContentUpload = () => {
           // Fix: attach parent_id from the picker node — previously always missing (orphan bug)
           parent_id: parentId || null,
           sort_order: sortOrder,
+          // הרב הראשי של השיעור הופך לרב של הסדרה החדשה — בלעדיו הסדרה
+          // לא מופיעה בדף-הרב (useRabbiSeries מסנן לפי rabbi_id). יואב 20.7.
+          rabbi_id: form.rabbiId || null,
+          bible_book: parentBibleBook,
         } as any)
         .select("id, title")
         .single();
@@ -233,6 +248,8 @@ const ContentUpload = () => {
     },
     onSuccess: (newSeries) => {
       queryClient.invalidateQueries({ queryKey: ["admin-series-list"] });
+      // רשימת הסדרות של פאנל-הבחירה באשף — בלי זה סדרה חדשה לא מופיעה עד רענון (יואב 20.7)
+      queryClient.invalidateQueries({ queryKey: ["content-series-canonical"] });
       set("seriesId", newSeries.id);
       set("newSeriesTitle", "");
       set("newSeriesParentId", "");
@@ -336,6 +353,9 @@ const ContentUpload = () => {
       setDone(true);
       queryClient.invalidateQueries({ queryKey: ["lessons"] });
       queryClient.invalidateQueries({ queryKey: ["admin-lessons"] });
+      // סדרה חדשה נוצרת רק ברגע השליחה — לרענן גם את רשימות הסדרות (יואב 20.7)
+      queryClient.invalidateQueries({ queryKey: ["content-series-canonical"] });
+      queryClient.invalidateQueries({ queryKey: ["admin-series-list"] });
     },
     onError: (err: unknown) => {
       setUploading(false);
@@ -423,6 +443,33 @@ const ContentUpload = () => {
     }
   };
 
+  // ── auto-fill book from the chosen location ─────────────────────
+  // סדרה שמקושרת לספר שלם: הולכים במעלה העץ עד צומת עם bible_book וממלאים
+  // את שדה הספר בשלב 1 — כך אפשר לשייך כל שיעור בסדרה לפרק שלו (יואב 20.7).
+  const autofillBookFromLocation = async (startId: string) => {
+    if (form.bibleBook) return; // המשתמש כבר בחר ספר — לא דורסים
+    try {
+      let currentId: string | null = startId;
+      for (let i = 0; i < 6 && currentId; i++) {
+        const { data: row } = await supabase
+          .from("series")
+          .select("id, parent_id, bible_book")
+          .eq("id", currentId)
+          .maybeSingle();
+        if (!row) break;
+        const book = (row as any).bible_book as string | null;
+        if (book) {
+          setBookInput(book);
+          set("bibleBook", book);
+          const node = allBookNodes.find(b => b.title === book);
+          if (node) set("bookCategoryId", node.id);
+          return;
+        }
+        currentId = (row as any).parent_id;
+      }
+    } catch { /* best-effort — הספר נשאר לבחירה ידנית */ }
+  };
+
   // ── location picker handler ──────────────────────────────────────
   const handleLocationSelect = (loc: SelectedLocation) => {
     setLocationValue(loc);
@@ -431,6 +478,7 @@ const ContentUpload = () => {
       set("newSeriesParentId", "");
       set("newSeriesTitle", "");
       setCreatingNewSeries(false);
+      void autofillBookFromLocation(loc.seriesId!);
     } else if (loc.mode === "new_series_in_node") {
       set("seriesId", "");
       set("newSeriesParentId", loc.parentNodeId!);
@@ -733,6 +781,7 @@ const ContentUpload = () => {
                   />
                   <p className="text-xs mt-1" style={{ color: TXT_M }}>
                     מספר הפרק בספר שהשיעור עוסק בו — משמש לניווט "לפי ספר ופרק". אפשר להשאיר ריק.
+                    גם כשהסדרה מקושרת לספר כולו — הפרק כאן משייך את השיעור הבודד לפרק שלו.
                   </p>
                 </div>
               </div>

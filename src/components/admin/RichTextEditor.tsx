@@ -8,6 +8,7 @@
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
+import { Extension } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
 import ImageExt from "@tiptap/extension-image";
@@ -15,7 +16,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import {
   Bold, Italic, Underline as UnderlineIcon, Heading2, Heading3, Heading4,
   List, ListOrdered, Quote, Link2, Link2Off, ImagePlus, Undo2, Redo2,
-  Loader2, UploadCloud, Minus,
+  Loader2, UploadCloud, Minus, Highlighter,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -38,6 +39,28 @@ interface RichTextEditorProps {
   minHeight?: number;
   className?: string;
 }
+
+// ── "טקסט מודגש" — פסקת הדגשה בגופן המיוחד של האתר הישן (יואב 20.7) ──
+// שומר/קורא את class על פסקאות, כך שהדגשות מיובאות (<p class="mudgash">)
+// שורדות עריכה, וכפתור-הטולבר מדליק/מכבה את אותו class בדיוק.
+const ParagraphClass = Extension.create({
+  name: "paragraphClass",
+  addGlobalAttributes() {
+    return [
+      {
+        types: ["paragraph"],
+        attributes: {
+          class: {
+            default: null,
+            parseHTML: (el: HTMLElement) => el.getAttribute("class"),
+            renderHTML: (attrs: { class?: string | null }) =>
+              attrs.class ? { class: attrs.class } : {},
+          },
+        },
+      },
+    ];
+  },
+});
 
 // ── Storage upload (אותו bucket ואותו דפוס כמו אשף ההעלאה) ──────────
 const uploadToStorage = async (file: File, folder: string): Promise<string> => {
@@ -110,6 +133,7 @@ export function RichTextEditor({
       }),
       ImageExt.configure({ inline: false }),
       Placeholder.configure({ placeholder }),
+      ParagraphClass,
     ],
     content: value || "",
     editorProps: {
@@ -255,6 +279,13 @@ export function RichTextEditor({
         <TB title="קו תחתון" active={editor.isActive("underline")}
           onClick={() => editor.chain().focus().toggleUnderline().run()}>
           <UnderlineIcon className="h-4 w-4" />
+        </TB>
+        <TB title="טקסט מודגש — גופן ההדגשה של האתר" active={editor.isActive("paragraph", { class: "mudgash" })}
+          onClick={() => {
+            const on = editor.isActive("paragraph", { class: "mudgash" });
+            editor.chain().focus().updateAttributes("paragraph", { class: on ? null : "mudgash" }).run();
+          }}>
+          <Highlighter className="h-4 w-4" />
         </TB>
         <Separator orientation="vertical" className="h-6 mx-1" />
         <TB title="רשימה" active={editor.isActive("bulletList")}

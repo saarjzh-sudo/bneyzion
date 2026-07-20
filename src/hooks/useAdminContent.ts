@@ -197,6 +197,8 @@ export interface TopicPickerItem {
   id: string;
   name: string;
   parent_id: string | null;
+  slug?: string | null;
+  is_learning_style?: boolean | null;
 }
 
 /**
@@ -209,11 +211,12 @@ export function useTopicsForPicker() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("topics")
-        .select("id, name, parent_id")
+        .select("id, name, parent_id, slug, is_learning_style")
         .order("name")
         .limit(1000);
       if (error) throw error;
-      return (data ?? []) as TopicPickerItem[];
+      // is_learning_style חסר ב-types.ts הישן (נוסף ברמה 20) — cast דרך unknown
+      return (data ?? []) as unknown as TopicPickerItem[];
     },
     staleTime: 60_000,
   });
