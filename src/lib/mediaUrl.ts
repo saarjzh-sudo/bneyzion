@@ -22,6 +22,26 @@ export function isDriveUrl(url?: string | null): boolean {
 }
 
 /**
+ * שמע מדרייב — קישור הזרמה ישירה לתג <audio> נטיבי.
+ *
+ * יואב 21.7 (איכה פרק ב): נגן ה-preview של דרייב ב-iframe נכנס למצב "מנגן"
+ * אבל תקוע על 0:00 — לא מזרים (שוחזר בדפדפן; הקובץ עצמו תקין). לעומת זאת
+ * צורת uc?export=download מחזירה את בייטי ה-MP3 עצמם (כולל Range לניווט),
+ * ותג <audio> מנגן אותה מצוין (אומת: currentTime מתקדם, duration מזוהה).
+ * ⚠️ תקף לקבצים עד ~100MB — מעבר לזה דרייב מחזיר דף-ביניים של סריקת וירוסים.
+ * הקלטות השיעורים הן ~20MB, בטווח בטוח.
+ */
+export function driveAudioStreamUrl(url?: string | null): string | null {
+  if (!url) return null;
+  const m = url.match(
+    /drive\.google\.com\/(?:file\/d\/([\w-]{10,})|open\?[^#]*\bid=([\w-]{10,})|uc\?[^#]*\bid=([\w-]{10,}))/
+  );
+  const id = m?.[1] || m?.[2] || m?.[3];
+  if (id) return `https://drive.google.com/uc?export=download&id=${id}`;
+  return null;
+}
+
+/**
  * נרמול קישור תמונה שהוזן ידנית באדמין: קישור-שיתוף דרייב לא עובד בתוך
  * <img>/background-image (מחזיר HTML) — ממירים לצורת lh3 הישירה.
  */

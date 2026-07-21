@@ -29,7 +29,7 @@
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
 import { useEffect, useRef, useState } from "react";
-import { normalizeMediaUrl } from "@/lib/mediaUrl";
+import { normalizeMediaUrl, driveAudioStreamUrl } from "@/lib/mediaUrl";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalWeeklyNav } from "@/components/weekly/GlobalWeeklyNav";
 import { ZoomCtaCard } from "@/components/weekly/ZoomCtaCard";
@@ -818,16 +818,23 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent, completed, o
       </div>
       {isOpen && url && (
         <div style={{ borderTop: `1px solid rgba(139,111,71,0.07)`, background: "#f5f0e8", padding: "0.75rem" }}>
-          <iframe
-            src={url}
-            allow="autoplay"
-            style={{ width: "100%", height: embedH, border: "none", borderRadius: 8, display: "block" }}
-            title={lesson.title}
-          />
-          {kind === "audio" && (
-            <p style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textSubtle, margin: "0.35rem 0 0", textAlign: "center" }}>
-              אם השמע לא מתחיל — לחץ על ה-Play בתוך הנגן
-            </p>
+          {/* יואב 21.7 (איכה פרק ב): שמע מנוגן בתג <audio> נטיבי עם קישור ההזרמה
+              הישירה — נגן ה-preview של דרייב ב-iframe נתקע על 0:00 ולא משמיע. */}
+          {kind === "audio" ? (
+            <audio
+              controls
+              preload="metadata"
+              src={driveAudioStreamUrl(lesson.audio_url) ?? lesson.audio_url ?? url}
+              style={{ width: "100%", display: "block" }}
+              title={lesson.title}
+            />
+          ) : (
+            <iframe
+              src={url}
+              allow="autoplay"
+              style={{ width: "100%", height: embedH, border: "none", borderRadius: 8, display: "block" }}
+              title={lesson.title}
+            />
           )}
         </div>
       )}

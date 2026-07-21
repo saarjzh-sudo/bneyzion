@@ -10,7 +10,7 @@
  * קורסי-ספר של הפרק-השבועי (program_slug) ממשיכים להפנות לדף הספר.
  */
 import { sanitizeHtml } from "@/lib/sanitize";
-import { normalizeMediaUrl, isDriveUrl } from "@/lib/mediaUrl";
+import { normalizeMediaUrl, isDriveUrl, driveAudioStreamUrl } from "@/lib/mediaUrl";
 import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useUserAccess } from "@/hooks/useUserAccess";
@@ -336,15 +336,18 @@ const CommunityCoursePage = () => {
                       </div>
                     )}
 
-                    {/* שמע מדרייב לא מתנגן ב-<audio> — חייב iframe של /preview (סער 16.7) */}
+                    {/* יואב 21.7 (איכה פרק ב): שמע-דרייב מנוגן ב-<audio> נטיבי עם קישור
+                        ההזרמה הישירה (uc?export=download) — נגן ה-preview ב-iframe נתקע על 0:00. */}
                     {selected.audio_url && (
                       <div style={{ borderRadius: radii.lg, background: "rgba(58,138,133,0.07)", border: "1px solid rgba(58,138,133,0.2)", padding: "0.9rem 1.1rem", display: "flex", alignItems: "center", gap: "0.9rem" }}>
                         <Headphones size={20} style={{ color: "#3a8a85", flexShrink: 0 }} />
-                        {isDriveUrl(selected.audio_url) ? (
-                          <iframe src={normalizeMediaUrl(selected.audio_url)!} style={{ width: "100%", height: 110, border: "none", borderRadius: 8 }} title={selected.title} />
-                        ) : (
-                          <audio controls src={selected.audio_url} style={{ width: "100%", height: 38 }} />
-                        )}
+                        <audio
+                          controls
+                          preload="metadata"
+                          src={isDriveUrl(selected.audio_url) ? driveAudioStreamUrl(selected.audio_url)! : selected.audio_url}
+                          style={{ width: "100%", height: 38 }}
+                          title={selected.title}
+                        />
                       </div>
                     )}
 
