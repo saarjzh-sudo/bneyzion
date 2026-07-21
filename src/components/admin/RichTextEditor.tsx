@@ -16,7 +16,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import {
   Bold, Italic, Underline as UnderlineIcon, Heading2, Heading3, Heading4,
   List, ListOrdered, Quote, Link2, Link2Off, ImagePlus, Undo2, Redo2,
-  Loader2, UploadCloud, Minus, Highlighter,
+  Loader2, UploadCloud, Minus, Highlighter, RemoveFormatting,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -227,7 +227,8 @@ export function RichTextEditor({
   return (
     <div
       className={cn(
-        "rounded-xl border bg-white overflow-hidden transition-colors",
+        // בלי overflow-hidden — הוא שובר position:sticky של סרגל-הכלים (יואב 21.7)
+        "rounded-xl border bg-white transition-colors",
         dragging ? "border-amber-500 ring-2 ring-amber-200" : "border-border",
         className,
       )}
@@ -246,8 +247,12 @@ export function RichTextEditor({
         if (files.length > 0) void handleFiles(files);
       }}
     >
-      {/* ── toolbar ── */}
-      <div className="flex flex-wrap items-center gap-0.5 px-2 py-1.5 border-b border-border bg-muted/40" dir="rtl">
+      {/* ── toolbar — דביק: נשאר גלוי גם בגלילה בתוך טקסט ארוך (יואב 21.7) ── */}
+      <div
+        className="sticky top-0 z-20 flex flex-wrap items-center gap-0.5 px-2 py-1.5 border-b border-border rounded-t-[inherit]"
+        style={{ background: "linear-gradient(hsl(var(--muted) / 0.4), hsl(var(--muted) / 0.4)), #fff" }}
+        dir="rtl"
+      >
         <TB title="ביטול" onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().undo()}>
           <Undo2 className="h-4 w-4" />
         </TB>
@@ -286,6 +291,17 @@ export function RichTextEditor({
             editor.chain().focus().updateAttributes("paragraph", { class: on ? null : "mudgash" }).run();
           }}>
           <Highlighter className="h-4 w-4" />
+        </TB>
+        {/* יואב 21.7: החזרת כותרת/הדגשה/מודגש לטקסט רגיל ופשוט בלחיצה אחת */}
+        <TB title="טקסט רגיל — ניקוי כל העיצוב"
+          onClick={() => {
+            editor.chain().focus()
+              .clearNodes()
+              .unsetAllMarks()
+              .updateAttributes("paragraph", { class: null })
+              .run();
+          }}>
+          <RemoveFormatting className="h-4 w-4" />
         </TB>
         <Separator orientation="vertical" className="h-6 mx-1" />
         <TB title="רשימה" active={editor.isActive("bulletList")}
@@ -336,7 +352,7 @@ export function RichTextEditor({
       </div>
 
       {/* ── editing surface ── */}
-      <div className="relative">
+      <div className="relative overflow-hidden rounded-b-[inherit]">
         <EditorContent editor={editor} />
         {dragging && (
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-amber-50/90 pointer-events-none">

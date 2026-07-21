@@ -126,7 +126,7 @@ export function useAdminSeriesPage({
         .from("series")
         .select(
           // parent:parent_id — embed עצמי דרך עמודת ה-FK; ההינט series!series_parent_id_fkey לא קיים ב-schema cache
-          "id, title, description, rabbi_id, parent_id, image_url, lesson_count, status, audience_tags, sort_order, created_at, rabbis!series_rabbi_id_fkey(name), parent:parent_id(id, title)",
+          "id, title, description, rabbi_id, parent_id, image_url, lesson_count, status, audience_tags, sort_order, show_in_parasha, created_at, rabbis!series_rabbi_id_fkey(name), parent:parent_id(id, title)",
           { count: "exact" },
         )
         .order("created_at", { ascending: false })

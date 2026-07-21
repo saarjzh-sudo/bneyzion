@@ -372,7 +372,8 @@ export default function DesignPreviewMyCourses() {
     const result: CourseCardData[] = [];
 
     // 1. תכנית הפרק השבועי — מבוסס user_access_tags
-    if (hasWeeklyChapter) {
+    // יואב 21.7: גם אדמין נכנס דרך כרטיס-השער — ספרי התכנית לא נפרסים לו ככרטיסים.
+    if (hasWeeklyChapter || isAdmin) {
       result.push({
         id: "weekly-chapter",
         title: "הפרק השבועי בתנ\"ך",
@@ -387,7 +388,7 @@ export default function DesignPreviewMyCourses() {
         hasAccess: true,
         ctaTo: "/course/weekly-chapter",
         ctaLabel: "המשך ללמוד",
-        tag: "מנוי פעיל",
+        tag: hasWeeklyChapter ? "מנוי פעיל" : "גישת מנהל",
         isSubscription: true,
         accessType: "subscribers_only",
       });
@@ -462,14 +463,14 @@ export default function DesignPreviewMyCourses() {
     for (const cc of allCourses as any[]) {
       if (enrolledIds.has(cc.id)) continue;
       if (cc.access_type === "open" || cc.access_type === null) continue;
-      const isBookProgram = String(cc.program_slug || "").startsWith("book-");
       // איכה למנויי-הקוהורט כבר מיוצגת בכרטיס "תכנית איכה" למעלה
       if (hasEicha && !hasWeeklyChapter && cc.program_slug === "book-lamentations") continue;
-      const viaProgram = (hasWeeklyChapter && isBookProgram);
-      if (!viaProgram && !isAdmin) continue;
-      // יואב 18.7: למנוי התכנית ספרי הפרק-השבועי לא נפרסים ככרטיסים נפרדים —
-      // נכנסים דרך כרטיס-השער "הפרק השבועי בתנ\"ך" ושם כל הספרים.
-      if (viaProgram) continue;
+      // יואב 18.7 + 21.7: ספרי הפרק-השבועי לא נפרסים ככרטיסים נפרדים לאיש —
+      // גם לא לאדמין. הכניסה תמיד דרך כרטיס-השער "הפרק השבועי בתנ\"ך".
+      const isWeeklyBook =
+        cc.in_weekly_program === true || String(cc.program_slug || "").startsWith("book-");
+      if (isWeeklyBook) continue;
+      if (!isAdmin) continue;
       result.push({
         id: cc.id,
         title: cc.title,
@@ -483,7 +484,7 @@ export default function DesignPreviewMyCourses() {
         hasAccess: true,
         ctaTo: cc.program_slug ? `/course/${cc.program_slug}` : `/portal/course/${cc.id}`,
         ctaLabel: "כניסה לקורס",
-        tag: viaProgram ? "כלול במנוי" : "גישת מנהל",
+        tag: "גישת מנהל",
         accessType: cc.access_type,
       });
     }
@@ -546,6 +547,9 @@ export default function DesignPreviewMyCourses() {
     const paid = (allCourses as any[])
       .filter((cc: any) => {
         if (ownedIds.has(cc.id) || cc.access_type === "open" || cc.access_type === null) return false;
+        // יואב 21.7: ספרי הפרק-השבועי לא מופיעים כקורסים בודדים גם ברשימה הכללית —
+        // התכנית מיוצגת בבאנר "הפרק השבועי" למעלה.
+        if (cc.in_weekly_program === true || String(cc.program_slug || "").startsWith("book-")) return false;
         if (cc.access_type === "subscribers_only") return true;
         return (Number(cc.price) || 0) > 0; // requires_tag בלי מחיר = מוסתר
       })

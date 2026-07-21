@@ -516,20 +516,21 @@
 
 /* Mudgash — פסקת הדגשה בגופן מיוחד, כמו באתר הישן (יואב 20.7).
    חל גם על תוכן מיובא (<p class="mudgash"> מאומברקו) וגם על הדגשות חדשות מהעורך.
-   (אוחד משני בלוקים סותרים — הישן דרס weight/color.) */
+   (אוחד משני בלוקים סותרים — הישן דרס weight/color.)
+   יואב 21.7: הוקטן — היה בומבסטי מדי ביחס לטקסט הרגיל. */
 .prose .mudgash,
 .bz-rte-content .mudgash,
 .mudgash {
   display: block;
   font-family: 'Kedem', 'Frank Ruhl Libre', serif;
-  font-size: 1.2em;
-  line-height: 1.9;
+  font-size: 1.06em;
+  line-height: 1.8;
   font-weight: 500;
   color: hsl(var(--foreground));
-  border-top: 3px solid hsl(var(--primary));
-  border-bottom: 3px solid hsl(var(--primary));
-  padding: 1rem 0.5rem;
-  margin: 1.5rem 0;
+  border-top: 2px solid hsl(var(--primary));
+  border-bottom: 2px solid hsl(var(--primary));
+  padding: 0.65rem 0.4rem;
+  margin: 1rem 0;
 }
 
 .umbraco-content h2,

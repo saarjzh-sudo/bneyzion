@@ -185,6 +185,7 @@ export function SeriesContent() {
     title: "", description: "", rabbi_id: "", parent_id: "",
     image_url: "", status: "draft",
     audience_tags: ["general"] as string[],
+    show_in_parasha: false,
   });
 
   // Bulk-tag state
@@ -219,7 +220,7 @@ export function SeriesContent() {
   };
 
   const resetForm = () => {
-    setForm({ title: "", description: "", rabbi_id: "", parent_id: "", image_url: "", status: "draft", audience_tags: ["general"] });
+    setForm({ title: "", description: "", rabbi_id: "", parent_id: "", image_url: "", status: "draft", audience_tags: ["general"], show_in_parasha: false });
     setEditing(null);
   };
 
@@ -233,6 +234,7 @@ export function SeriesContent() {
       image_url: s.image_url || "",
       status: s.status,
       audience_tags: (s.audience_tags as string[]) ?? ["general"],
+      show_in_parasha: s.show_in_parasha === true,
     });
     setDialogOpen(true);
   };
@@ -256,6 +258,7 @@ export function SeriesContent() {
       image_url: form.image_url || null,
       status: form.status,
       audience_tags: form.audience_tags,
+      show_in_parasha: form.show_in_parasha,
     };
     try {
       if (editing) {
@@ -393,6 +396,23 @@ export function SeriesContent() {
                     </SelectContent>
                   </Select>
                 </div>
+
+                {/* יואב 21.7 (Y6): סדרה קבועה בפינת פרשת השבוע — בשליטת יואב */}
+                {isAdmin && (
+                  <div className="flex items-start gap-2.5 rounded-lg border border-border bg-muted/30 p-3">
+                    <Checkbox
+                      id="show-in-parasha"
+                      checked={form.show_in_parasha}
+                      onCheckedChange={(v) => setForm({ ...form, show_in_parasha: v === true })}
+                    />
+                    <div>
+                      <Label htmlFor="show-in-parasha" className="cursor-pointer">מופיעה תמיד בפינת פרשת השבוע</Label>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        בכל שבוע יוצג מתוכה המאמר של הפרשה הנוכחית (לפי שם הפרשה בכותרת השיעור).
+                      </p>
+                    </div>
+                  </div>
+                )}
 
                 {/* Audience tags multi-select */}
                 <div>

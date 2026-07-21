@@ -3464,6 +3464,7 @@ export type Database = {
           rabbi_id: string | null
           review_note: string | null
           reviewed_by: string | null
+          show_in_parasha: boolean
           sort_order: number
           status: string
           submitted_at: string | null
@@ -3483,6 +3484,7 @@ export type Database = {
           rabbi_id?: string | null
           review_note?: string | null
           reviewed_by?: string | null
+          show_in_parasha?: boolean
           sort_order?: number
           status?: string
           submitted_at?: string | null
@@ -3502,6 +3504,7 @@ export type Database = {
           rabbi_id?: string | null
           review_note?: string | null
           reviewed_by?: string | null
+          show_in_parasha?: boolean
           sort_order?: number
           status?: string
           submitted_at?: string | null

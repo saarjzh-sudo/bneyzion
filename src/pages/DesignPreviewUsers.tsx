@@ -631,11 +631,14 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, noti
       text: `${o.description || o.product || "עסקה"}${o.status === "refunded" ? " · הוחזר" : ""}`,
       amount: o.total != null ? `₪${Number(o.total).toLocaleString()}` : null,
     }));
-    const donations = detail.data.donations.map((d) => ({
-      date: d.date,
-      text: d.is_monthly ? "תרומה חודשית (הו״ק)" : "תרומה",
-      amount: d.amount != null ? `₪${Number(d.amount).toLocaleString()}` : null,
-    }));
+    const donations = detail.data.donations
+      // ניסיונות תשלום שלא הושלמו (pending) אינם תרומה — הצגתם נראית ככפל הו״ק
+      .filter((d) => d.status === "completed")
+      .map((d) => ({
+        date: d.date,
+        text: d.is_monthly ? "תרומה חודשית (הו״ק)" : "תרומה",
+        amount: d.amount != null ? `₪${Number(d.amount).toLocaleString()}` : null,
+      }));
     return [...orders, ...donations]
       .sort((a, b) => (b.date || "").localeCompare(a.date || ""))
       .slice(0, 30);

@@ -387,6 +387,15 @@ export default function ControlCenter() {
     return q.split(/\s+/).every((term) => hay.includes(term));
   };
 
+  // יואב 21.7: הגלילה נהייתה ארוכה — תפריט דילוג דביק בין המדורים.
+  const jumpTargets = [
+    { id: "sec-ai", label: "בקשה חופשית" },
+    { id: "sec-menu", label: "התפריט הראשי" },
+    ...COPY_GROUPS.map((g, i) => ({ id: `sec-group-${i}`, label: g })),
+  ];
+  const jumpTo = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+
   return (
     <AdminLayout>
       <div dir="rtl" className="max-w-3xl mx-auto">
@@ -395,9 +404,30 @@ export default function ControlCenter() {
           כל שינוי כאן חי באתר מיד אחרי שמירה. "חזרה לנוסח המקורי" מבטלת את השינוי.
         </p>
 
-        <AiRequestBox overrides={overrides} isSuperAdmin={isSuperAdmin} />
+        {/* תפריט דילוג — דביק מתחת להדר האדמין (h-14) */}
+        <nav
+          aria-label="דילוג בין מדורי העריכה"
+          className="sticky top-14 z-20 -mx-2 mb-6 flex flex-wrap gap-1.5 rounded-b-xl border-b border-border bg-background/95 px-2 py-2 backdrop-blur"
+        >
+          {jumpTargets.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => jumpTo(t.id)}
+              className="rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              {t.label}
+            </button>
+          ))}
+        </nav>
 
-        <MenuEditor overrides={overrides} />
+        <div id="sec-ai" className="scroll-mt-32">
+          <AiRequestBox overrides={overrides} isSuperAdmin={isSuperAdmin} />
+        </div>
+
+        <div id="sec-menu" className="scroll-mt-32">
+          <MenuEditor overrides={overrides} />
+        </div>
 
         {/* רמה 18 (יואב 14.7): עורך המשלוחים אוחד לניהול המוצרים — טאב "משלוח ואיסוף" */}
         <p className="text-xs text-muted-foreground mb-6 -mt-2">
@@ -416,11 +446,11 @@ export default function ControlCenter() {
           />
         </div>
 
-        {COPY_GROUPS.map((group) => {
+        {COPY_GROUPS.map((group, gi) => {
           const fields = SITE_COPY_REGISTRY.filter((f) => f.group === group).filter(matches);
           if (fields.length === 0) return null;
           return (
-            <section key={group} className="mb-8">
+            <section key={group} id={`sec-group-${gi}`} className="mb-8 scroll-mt-32">
               <h2 className="text-lg font-bold mb-3 border-b border-border pb-1.5">{group}</h2>
               <div className="flex flex-col gap-3">
                 {fields.map((f) => (

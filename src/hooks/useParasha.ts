@@ -249,7 +249,25 @@ export function useParasha() {
     refetchOnWindowFocus: true,
     queryFn: async () => {
       const results: ParashaArticleSeries[] = [];
-      
+
+      // מאתר בתוך קבוצת סדרות את מאמר הפרשה הנוכחית — מהמונח הספציפי לקצר.
+      const findParashaLesson = async (seriesIds: string[]) => {
+        for (const term of parashaSearchTerms) {
+          const { data: lessons } = await supabase
+            .from("lessons")
+            .select("id, title, content, series_id")
+            .in("series_id", seriesIds)
+            .eq("status", "published")
+            .ilike("title", `%${term}%`)
+            .limit(10);
+          // R-PAR1 word-boundary guard: '%חוקת%' also matches 'בחוקתי' etc.
+          const valid = (lessons || []).filter((l) => titleMatchesParasha(l.title, parashaSearchTerms));
+          const pick = valid.find((l) => l.content) || valid[0];
+          if (pick) return pick as { id: string; title: string; content: string | null; series_id: string };
+        }
+        return null;
+      };
+
       for (const articleSeries of PARASHA_ARTICLE_SERIES) {
         // Round-2 fix: the migration produced DUPLICATE series with the same title
         // (e.g. "מידות בפרשה" exists 6×). The old .limit(2)+pick logic often landed on an
@@ -275,22 +293,7 @@ export function useParasha() {
         if (seriesIds.length > 0) {
           // Try each search term in order — most specific first (e.g. "שלח לך"),
           // then short form (e.g. "שלח") so "פרשת שלח" articles are found.
-          let lesson: { id: string; title: string; content: string | null; series_id: string } | null = null;
-          for (const term of parashaSearchTerms) {
-            const { data: lessons } = await supabase
-              .from("lessons")
-              .select("id, title, content, series_id")
-              .in("series_id", seriesIds)
-              .eq("status", "published")
-              .ilike("title", `%${term}%`)
-              .limit(10);
-            // R-PAR1 word-boundary guard: '%חוקת%' also matches 'בחוקתי' etc. Pick the
-            // candidate whose title contains the parasha as a whole word; prefer one with content.
-            const valid = (lessons || []).filter((l) => titleMatchesParasha(l.title, parashaSearchTerms));
-            const pick = valid.find((l) => l.content) || valid[0];
-            if (pick) { lesson = pick as any; break; }
-          }
-
+          const lesson = await findParashaLesson(seriesIds);
           if (lesson) {
             lessonId = lesson.id;
             lessonTitle = lesson.title;
@@ -308,6 +311,42 @@ export function useParasha() {
           lessonContent,
         });
       }
+
+      // Y6 (יואב 21.7): סדרות שסומנו באדמין (series.show_in_parasha) מצטרפות
+      // לפינה בלי דיפלוי — יואב מסמן בעריכת-סדרה והסדרה חיה כאן תוך חצי דקה.
+      const { data: flagged } = await supabase
+        .from("series")
+        .select("id, title, rabbis!series_rabbi_id_fkey(name)")
+        .eq("show_in_parasha", true)
+        .in("status", ["active", "published"]);
+
+      const hardcodedTitles = new Set(PARASHA_ARTICLE_SERIES.map((s) => s.seriesTitle));
+      const flaggedByTitle = new Map<string, { rabbi: string; ids: string[] }>();
+      for (const s of flagged || []) {
+        if (hardcodedTitles.has(s.title)) continue; // כבר מיוצגת ברשימה הקבועה
+        const cur = flaggedByTitle.get(s.title) || {
+          rabbi: (s as any).rabbis?.name || "",
+          ids: [] as string[],
+        };
+        cur.ids.push(s.id);
+        flaggedByTitle.set(s.title, cur);
+      }
+
+      const flaggedResults: ParashaArticleSeries[] = [];
+      for (const [title, spec] of flaggedByTitle) {
+        const lesson = await findParashaLesson(spec.ids);
+        flaggedResults.push({
+          title,
+          rabbi: spec.rabbi,
+          seriesId: lesson?.series_id ?? spec.ids[0],
+          lessonId: lesson?.id ?? null,
+          lessonTitle: lesson?.title ?? null,
+          lessonContent: lesson?.content ?? null,
+        });
+      }
+      // מיד אחרי הסדרה הראשית — בעמוד הבית מוצגות רק 5 הראשונות, ו"תופיע תמיד"
+      // מחייב שהסדרות המסומנות לא ייחתכו בסוף הרשימה.
+      results.splice(Math.min(1, results.length), 0, ...flaggedResults);
 
       return results;
     },
