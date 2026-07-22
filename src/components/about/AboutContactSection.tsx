@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Heart, Mail, Phone, MessageCircle, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -8,6 +9,11 @@ const fadeUp = {
 };
 
 const AboutContactSection = () => {
+  // רמה 27 (יואב 22.7 16:39): הטלפון של אביה — לשיחה ולוואטסאפ. עריך ממרכז השליטה.
+  const copy = useSiteCopy();
+  const phoneDisplay = copy("copy.about.contact_phone", "052-747-1094");
+  const phoneDigits = phoneDisplay.replace(/\D/g, "");
+  const phoneIntl = phoneDigits.startsWith("0") ? `972${phoneDigits.slice(1)}` : phoneDigits;
   return (
     <section className="py-20 section-gradient-warm">
       <div className="container max-w-4xl">
@@ -30,22 +36,22 @@ const AboutContactSection = () => {
                   <p className="text-xs text-muted-foreground">office@bneyzion.co.il</p>
                 </div>
               </a>
-              <a href="https://wa.me/972527368607" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+              <a href={`https://wa.me/${phoneIntl}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-accent/15 flex items-center justify-center shrink-0">
                   <MessageCircle className="h-5 w-5 text-accent-foreground" />
                 </div>
                 <div>
                   <p className="text-sm font-medium">WhatsApp</p>
-                  <p className="text-xs text-muted-foreground">שלחו לנו הודעה</p>
+                  <p className="text-xs text-muted-foreground" dir="ltr">{phoneDisplay}</p>
                 </div>
               </a>
-              <a href="tel:+972527368607" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
+              <a href={`tel:+${phoneIntl}`} className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center shrink-0">
                   <Phone className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
                   <p className="text-sm font-medium">טלפון</p>
-                  <p className="text-xs text-muted-foreground">נשמח לשמוע מכם</p>
+                  <p className="text-xs text-muted-foreground" dir="ltr">{phoneDisplay}</p>
                 </div>
               </a>
             </div>

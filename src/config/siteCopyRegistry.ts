@@ -743,6 +743,72 @@ export const SITE_COPY_REGISTRY: CopyField[] = [
     defaultValue: "נשמח לשמוע מכם — שאלות, הצעות, או סתם מילה טובה",
   },
 
+  // ── אודות — הנצחה (AboutMemorialSection, רמה 27: יואב 16:40) ──
+  {
+    key: "copy.about.memorial_benzion_summary",
+    label: "בן ציון — שורת תקציר",
+    group: "אודות — הנצחה",
+    type: "text",
+    defaultValue: "'בני ציון' הוקמה להנצחת זכרו. מסר נפשו בקרב עם מחבלים בשכם.",
+  },
+  {
+    key: "copy.about.memorial_benzion_bio",
+    label: "בן ציון — קורות חיים (פסקאות מופרדות בשורה ריקה)",
+    group: "אודות — הנצחה",
+    type: "textarea",
+    defaultValue: "",
+    hint: "ריק = הנוסח המלא מהאתר הישן. דף ההנצחה המלא: /memorial",
+  },
+  {
+    key: "copy.about.memorial_saadia_summary",
+    label: "סעדיה — שורת תקציר",
+    group: "אודות — הנצחה",
+    type: "text",
+    defaultValue: "ספר תורה מהלך — לוחם בחטיבת אלכסנדרוני שנפל במלחמת חרבות ברזל.",
+  },
+  {
+    key: "copy.about.memorial_saadia_bio",
+    label: "סעדיה — קורות חיים (פסקאות מופרדות בשורה ריקה)",
+    group: "אודות — הנצחה",
+    type: "textarea",
+    defaultValue: "",
+    hint: "ריק = התקציר הנאמן מדף ההנצחה. דף ההנצחה המלא: /memorial/saadia",
+  },
+  {
+    key: "copy.about.memorial_maayan_summary",
+    label: "מעין — שורת תקציר",
+    group: "אודות — הנצחה",
+    type: "text",
+    defaultValue: "תהא נשמתה צרורה בצרור החיים.",
+  },
+  {
+    key: "copy.about.memorial_maayan_bio",
+    label: "מעין — קורות חיים (פסקאות מופרדות בשורה ריקה)",
+    group: "אודות — הנצחה",
+    type: "textarea",
+    defaultValue: "",
+  },
+
+  // ── אודות — צור קשר (רמה 27: יואב 16:39, הטלפון של אביה) ──
+  {
+    key: "copy.about.contact_phone",
+    label: "טלפון ליצירת קשר (אביה)",
+    group: "אודות",
+    type: "text",
+    defaultValue: "052-747-1094",
+    hint: "משמש גם לכפתור הטלפון וגם לכפתור הוואטסאפ בתחתית דף האודות",
+  },
+
+  // ── רצועת הרצה (TrialStrip, רמה 27) ──
+  {
+    key: "copy.trial.strip_text",
+    label: "רצועת הרצה",
+    group: "רצועת הרצה",
+    type: "text",
+    defaultValue: "האתר בגרסת הרצה — נשמח לכל הערה או דיווח על תקלה",
+    hint: "רצועה דקה מתחת להדר עם כפתור דיווח. כדי לכבות (בעת העלייה לאוויר) — כותבים כאן: כבוי",
+  },
+
   // ── פוטר (DesignFooter) ──
   {
     key: "copy.footer.description",

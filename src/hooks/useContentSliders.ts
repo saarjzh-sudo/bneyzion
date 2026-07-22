@@ -16,6 +16,8 @@ export interface ContentSlider {
   source_id: string;
   sort_order: number;
   is_active: boolean;
+  /** עיצוב קבוע (הכרעת סער 22.7 18:00): cards=כרטיסים עם תמונה · compact=קומפקטי */
+  variant: "cards" | "compact";
   sourceTitle?: string | null;
 }
 
@@ -26,14 +28,14 @@ export function useContentSliders(placement?: "home" | "teachers") {
     queryFn: async () => {
       let q = (supabase as any)
         .from("content_sliders")
-        .select("id, title, eyebrow, placement, source_id, sort_order, is_active, series:source_id(title)")
+        .select("id, title, eyebrow, placement, source_id, sort_order, is_active, variant, series:source_id(title)")
         .order("sort_order", { ascending: true })
         .order("created_at", { ascending: true });
       if (placement) q = q.eq("placement", placement).eq("is_active", true);
       const { data, error } = await q;
       // הטבלה עוד לא קיימת (קוד נפרס לפני DB)? — אין סליידרים, בלי לשבור את הדף
       if (error) return [];
-      return ((data ?? []) as any[]).map((r) => ({ ...r, sourceTitle: r.series?.title ?? null }));
+      return ((data ?? []) as any[]).map((r) => ({ variant: "cards", ...r, sourceTitle: r.series?.title ?? null }));
     },
   });
 }
@@ -45,11 +47,16 @@ export interface SliderLessonItem {
   video_url: string | null;
   audio_url: string | null;
   attachment_url: string | null;
+  thumbnail_url: string | null;
+  source_type: string | null;
+  duration: number | null;
   series_id: string | null;
   rabbiName: string | null;
 }
 
-/** שיעורי הסליידר: הצומת + ילדיו הישירים, published בלבד, מגוון, עד 12. */
+/** שיעורי הסליידר: הצומת + ילדיו הישירים, published בלבד, עד 12.
+ *  הערת יואב 22.7 17:04 ("רק מעט משבצות נכנסות"): כלל הגיוון עד-2-לסדרה
+ *  חנק סליידר של סדרה בודדת ל-2 פריטים — הוא חל עכשיו רק כשיש כמה סדרות. */
 export function useSliderLessons(sourceId: string | undefined) {
   return useQuery<SliderLessonItem[]>({
     queryKey: ["content-slider-lessons", sourceId],
@@ -63,18 +70,19 @@ export function useSliderLessons(sourceId: string | undefined) {
       const ids = [sourceId!, ...((children ?? []) as any[]).map((c) => c.id)];
       const { data, error } = await (supabase as any)
         .from("lessons")
-        .select("id, title, content_type, video_url, audio_url, attachment_url, series_id, rabbis!lessons_rabbi_id_fkey(name)")
+        .select("id, title, content_type, video_url, audio_url, attachment_url, thumbnail_url, source_type, duration, series_id, rabbis!lessons_rabbi_id_fkey(name)")
         .in("series_id", ids)
         .eq("status", "published")
         .order("created_at", { ascending: false })
         .limit(60);
       if (error) throw error;
+      const diversify = ids.length > 1;
       const perSeries: Record<string, number> = {};
       const out: SliderLessonItem[] = [];
       for (const l of (data ?? []) as any[]) {
         const key = l.series_id || l.id;
         perSeries[key] = (perSeries[key] || 0) + 1;
-        if (perSeries[key] <= 2) out.push({ ...l, rabbiName: l.rabbis?.name ?? null });
+        if (!diversify || perSeries[key] <= 2) out.push({ ...l, rabbiName: l.rabbis?.name ?? null });
         if (out.length >= 12) break;
       }
       return out;
@@ -86,7 +94,7 @@ export function useSliderLessons(sourceId: string | undefined) {
 export function useCreateSlider() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async (input: { title: string; eyebrow: string | null; placement: string; source_id: string; sort_order: number }) => {
+    mutationFn: async (input: { title: string; eyebrow: string | null; placement: string; variant: string; source_id: string; sort_order: number }) => {
       const { error } = await (supabase as any).from("content_sliders").insert([input]);
       if (error) throw error;
     },

@@ -142,6 +142,7 @@ const AdminBudget = lazy(() => import("./pages/admin/Budget"));
 const AdminKenes = lazy(() => import("./pages/admin/Kenes"));
 const AdminPromos = lazy(() => import("./pages/admin/Promos"));
 const AdminSliders = lazy(() => import("./pages/admin/Sliders"));
+const AdminFeedback = lazy(() => import("./pages/admin/Feedback"));
 const AdminDorHaplaot = lazy(() => import("./pages/admin/DorHaplaot"));
 const AdminDailyContent = lazy(() => import("./pages/admin/DailyContent"));
 const AdminBenziConversations = lazy(() => import("./pages/admin/BenziConversations"));
@@ -450,6 +451,7 @@ const App = () => (
             <Route path="/admin/kenes" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminKenes /></Suspense></ProtectedRoute>} />
             <Route path="/admin/promos" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPromos /></Suspense></ProtectedRoute>} />
             <Route path="/admin/sliders" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSliders /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/feedback" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminFeedback /></Suspense></ProtectedRoute>} />
             <Route path="/admin/dor-haplaot" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><AdminDorHaplaot /></Suspense></ProtectedRoute>} />
             <Route path="/admin/daily" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><AdminDailyContent /></Suspense></ProtectedRoute>} />
             <Route path="/admin/benzi-conversations" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBenziConversations /></Suspense></ProtectedRoute>} />

@@ -14,6 +14,7 @@
 import { useState, type ReactNode } from "react";
 
 import DesignHeader from "./DesignHeader";
+import TrialStrip from "@/components/common/TrialStrip";
 import DesignFooter from "./DesignFooter";
 import DesignMobileBottomNav from "./DesignMobileBottomNav";
 import { PromoProvider } from "@/components/promo";
@@ -56,6 +57,10 @@ export default function DesignLayout({
         transparentOnTop={transparentHeader}
         onSidebarToggle={sidebar ? () => setDrawerOpen((v) => !v) : undefined}
       />
+
+      {/* רמה 27 (יואב 22.7 16:31): רצועת "האתר בהרצה" + דיווח תקלות.
+          כיבוי: מרכז השליטה → מרוקנים את copy.trial.strip_text. */}
+      <TrialStrip />
 
       {/* יואב 17.7: הבאנר בעמודי-תוכן = רצועה עליונה נמוכה ורחבה מתחת להדר
           (היה מעל הפוטר — "רואים אותו בתחתית העמוד ובתמונה ענקית").

@@ -1,135 +1,104 @@
-import { motion, type Easing } from "framer-motion";
-import { useSEO } from "@/hooks/useSEO";
-import { Flame, Star, Heart, BookOpen, Quote } from "lucide-react";
-import Layout from "@/components/layout/Layout";
-import { useSiteSetting } from "@/hooks/useSiteSettings";
+/**
+ * /memorial — דף ההנצחה של בן ציון חיים הנמן הי"ד (רמה 27, 22.7.2026).
+ *
+ * יואב 16:36: "כשלוחצים על בן ציון חיים הנמן עולה הדף של סעדיה. צריך להקים דף
+ * הנצחה גם לבן ציון — אפשר להעתיק אחד לאחד מבחינת הטקסט והתמונות מהאתר הישן."
+ *
+ * הטקסט, התמונה והסרטון הועתקו 1:1 מהעמוד הישן bneyzion.co.il/בן-ציון-חיים-הנמן-היד/
+ * (הביוגרפיה זהה לזו שבסקשן ההנצחה באודות). קודם לכן הראוט הזה הציג בטעות את
+ * תכני סעדיה מ-site_settings (memorial_*) — סעדיה נשאר ב-/memorial/saadia.
+ */
+import DesignLayout from "@/components/layout-v2/DesignLayout";
+import { Seo } from "@/components/seo/Seo";
+import { Flame, Play } from "lucide-react";
+import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 
-const easeOut: Easing = [0.16, 1, 0.3, 1];
+const PHOTO = "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/product-images/memorial/benzion-hanemann.jpg";
+const VIDEO_EMBED = "https://www.youtube.com/embed/7r2VG9ZifSk";
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.7, ease: easeOut },
-  }),
-};
+const BIO: string[] = [
+  "בן תמר ויעקב. נולד ביום ח' בטבת תשמ\"ו ביישוב סוסיא שבדרום הר חברון. אח ליעל, איילת, עפרה, רועי, מוריה, נעמה, יפעת, אהוביה ושירה. לאחר לידתו עברה המשפחה לירושלים. בן-ציון חיים למד בגן של תלמוד תורה \"מורשה\" ולאחר מכן בכיתות היסוד של בית הספר הממלכתי-דתי \"חורב\".",
+  "בשנת תשנ\"ה שבה המשפחה להתגורר במקום מגוריה המקורי, במושב נוב שברמת הגולן, ובן-ציון המשיך את לימודיו בבית הספר האזורי הממלכתי-דתי \"גולן\" שבחספין. את לימודיו התיכוניים עשה ב\"ישיבת ירושלים לצעירים\" שליד מרכז הרב. לאחר מכן המשיך לישיבה הגבוהה \"מדברה כעדן\" שבמצפה רמון ולמד בה כחצי שנה ואז החליט להתגייס. בן-ציון ששאף לשרת בצה\"ל כחייל קרבי עשה מאמצים גדולים להעלות את הפרופיל הרפואי שנקבע לו, ולצורך כך אף עבר ניתוח לייזר בעיניו.",
+  "בשנת תשס\"ד התגייס בן-ציון לחטיבת הצנחנים לסיירת הצנחנים ועבר את מסלול ההכשרה המפרך שבסיומו הוצב כלוחם בגדוד הסיור. יחד עם חבריו לצוות לחם ופעל במשימות הסיירת.",
+  "בתחנות חייו השונות הכיר בן-ציון אנשים רבים ורקם קשרים מיוחדים עם חברים ומכרים מכל רחבי הארץ. במפגשיו עם הזולת ניכרו מידותיו הטובות ואישיותו הכובשת ורבים נקשרו אליו אפילו לאחר מפגש בודד. בן-ציון היה חבר נאמן לכל אדם, קיבל כל אחד כמו שהוא והיה חסר פניות. את קשריו החברתיים טיפח בחיבה ובתשומת לב נדירה ואף כי היה ביישן ומופנם, בלט מאוד ברגישותו לזולת. תכונות אופיו של בן-ציון שילבו את מידת הענווה לצד עוז רוחו, מידת האמת וחוש צדק מפותח, והוא ידע לשמח גם אנשים אומללים וקשי יום.",
+  "בן-ציון אהב מאוד את החיים ותכנן תכניות רבות לתקופה שלאחר השחרור. הוא חלם לטייל בעולם, ואחר כך ללמוד חקלאות וייננות. בן-ציון קיווה לחזור למשק ההורים בגולן – לכרמי היין ולכרם הזיתים האורגני, להקים משפחה ולבנות במקום את ביתו. במשפחה סיפרו עליו: \"בן-ציון לא דיבר הרבה, אך מאחורי עיניו הכחולות והחודרות עמד עולם שלם.\"",
+  "ביום ו' בתשרי תשס\"ח נפל בן-ציון בקרב במחנה הפליטים עין בית-עילמה הסמוך לשכם. דקות לפני הקרב שבו נהרג תועד במצלמת דובר צה\"ל אומר: \"קוראים לי בן-ציון הנמן, אני גר במושב נוב ברמת הגולן, יש לי תשעה אחים ואחיות, לא אתחיל לפרט את הגילאים. דבר ציונות? יש לנו אחלה מדינה, אחלה צבא, הייתה תקופה אדירה, שיהיה בהצלחה לכולם.\" במהלך הסרט נראים בן-ציון וחבריו למחלקה כשהם מקבלים תדרוך ושרים את \"התקווה\" בדרכם לפעילות ללכידת מבוקשים. הודות לפעילותם סוכל פיגוע התאבדות שתכננו המחבלים במרכז הארץ.",
+  "סמל-ראשון בן-ציון חיים הנמן היה בן עשרים ושתיים בנופלו. הוא הובא למנוחות בבית העלמין בחספין. הותיר הורים ותשעה אחים ואחיות.",
+];
 
-const Memorial = () => {
-  useSEO({
-    title: "בן ציון חיים הנמן היד",
-    description: "לזכרו של בן ציון חיים הנמן ז״ל – יד ושם לאיש שחי את התנ״ך.",
-    url: "https://bneyzion.co.il/memorial",
-  });
-  const { data: name } = useSiteSetting("memorial_name");
-  const { data: subtitle } = useSiteSetting("memorial_subtitle");
-  const { data: dedication } = useSiteSetting("memorial_dedication");
-  const { data: bio } = useSiteSetting("memorial_bio");
-  const { data: legacy } = useSiteSetting("memorial_legacy");
-  const { data: verse } = useSiteSetting("memorial_verse");
+const Memorial = () => (
+  <DesignLayout sidebar={false}>
+    <Seo
+      title="לזכר בן ציון חיים הנמן הי״ד"
+      description="עמוד הנצחה לזכרו של בן ציון חיים הנמן הי״ד — תנועת בני ציון הוקמה להנצחת זכרו."
+      url="https://bneyzion.co.il/memorial"
+      type="article"
+    />
 
-  const displayName = name || "סעדיה ז״ל";
-  const displaySubtitle = subtitle || "תהא נשמתו צרורה בצרור החיים";
+    {/* Hero */}
+    <div dir="rtl" style={{ background: gradients.warmDark, padding: "3.5rem 1.5rem 3rem", textAlign: "center" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto" }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", fontFamily: fonts.body, fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.18em", color: colors.goldShimmer, marginBottom: "1rem" }}>
+          <Flame size={14} /> לעילוי נשמת <Flame size={14} />
+        </div>
+        <h1 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.8rem, 5vw, 2.6rem)", color: "white", margin: "0 0 0.5rem", lineHeight: 1.2 }}>
+          בן ציון חיים הנמן הי״ד
+        </h1>
+        <p style={{ fontFamily: fonts.body, fontSize: "1rem", color: "rgba(255,255,255,0.85)", margin: "0 0 1.75rem", lineHeight: 1.8 }}>
+          תנועת 'בני ציון' הוקמה להנצחת זכרו — בחור ישיבה מלא חיים, אוהב תנ״ך,
+          אשר מסר נפשו בקרב עם מחבלים בשכם. שמו הטהור נושא את שם התנועה עד היום.
+        </p>
+        <img
+          src={PHOTO}
+          alt="בן ציון חיים הנמן הי״ד"
+          style={{ width: 220, borderRadius: radii.xl, boxShadow: "0 18px 50px rgba(0,0,0,0.4)", border: "3px solid rgba(232,213,160,0.35)" }}
+        />
+      </div>
+    </div>
 
-  return (
-    <Layout>
-      {/* Hero - dark, solemn */}
-      <section className="relative py-28 md:py-36 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[hsl(var(--brand-mahogany))] via-[hsl(var(--brand-mahogany)/0.85)] to-background" />
-        <div className="absolute inset-0 noise-overlay opacity-30" />
+    {/* Bio */}
+    <div dir="rtl" style={{ background: colors.parchment, padding: "3rem 1.5rem 4rem" }}>
+      <div style={{ maxWidth: 720, margin: "0 auto" }}>
+        <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "2rem 2.25rem" }}>
+          <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.3rem", color: colors.textDark, margin: "0 0 1.25rem" }}>
+            קורות חייו
+          </h2>
+          {BIO.map((p, i) => (
+            <p key={i} style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMid, lineHeight: 2, margin: "0 0 1.1rem" }}>
+              {p}
+            </p>
+          ))}
+        </section>
 
-        <div className="container relative z-10 text-center max-w-2xl">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className="relative w-24 h-24 mx-auto mb-10"
+        {/* Video */}
+        <section style={{ marginTop: "1.5rem", background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "2rem 2.25rem" }}>
+          <h2 style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 1rem" }}>
+            <Play size={18} style={{ color: colors.goldDark }} />
+            בן ציון מדבר ביציאה לפעולה שבה נפל
+          </h2>
+          <div style={{ position: "relative", paddingBottom: "56.25%", borderRadius: radii.lg, overflow: "hidden" }}>
+            <iframe
+              src={VIDEO_EMBED}
+              title="בן ציון הנמן — סרטון לזכרו"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
+            />
+          </div>
+        </section>
+
+        {/* הקדשה */}
+        <div style={{ textAlign: "center", marginTop: "2rem" }}>
+          <a
+            href="/donate"
+            style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.9rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.95rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
           >
-            <div className="absolute inset-0 bg-accent/20 rounded-full animate-glow-pulse blur-md" />
-            <div className="relative w-full h-full rounded-full bg-card/10 backdrop-blur-sm border border-accent/30 flex items-center justify-center">
-              <Flame className="h-11 w-11 text-accent" />
-            </div>
-          </motion.div>
-
-          <motion.p variants={fadeUp} custom={0} initial="hidden" animate="visible" className="text-accent/80 text-sm font-display tracking-widest mb-3">
-            לעילוי נשמת
-          </motion.p>
-
-          <motion.h1 variants={fadeUp} custom={1} initial="hidden" animate="visible" className="text-5xl md:text-7xl font-heading text-primary-foreground hero-text-shadow mb-4">
-            {displayName}
-          </motion.h1>
-
-          <motion.div variants={fadeUp} custom={2} initial="hidden" animate="visible" className="flex items-center justify-center gap-3 mb-6">
-            <Star className="h-4 w-4 text-accent/60" />
-            <span className="text-primary-foreground/60 font-serif text-sm">{displaySubtitle}</span>
-            <Star className="h-4 w-4 text-accent/60" />
-          </motion.div>
+            <Flame size={15} /> להקדשת שיעור לעילוי נשמתו
+          </a>
         </div>
-      </section>
-
-      {/* Main content */}
-      <section className="py-16 section-gradient-warm">
-        <div className="container max-w-3xl">
-          {/* Dedication card */}
-          {dedication && (
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="glass-card-gold rounded-2xl p-8 md:p-10 mb-12 text-center">
-              <Quote className="h-8 w-8 text-accent/40 mx-auto mb-4 rotate-180" />
-              <p className="text-foreground leading-[2] font-serif text-lg md:text-xl">{dedication}</p>
-              <Quote className="h-8 w-8 text-accent/40 mx-auto mt-4" />
-            </motion.div>
-          )}
-
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="space-y-8">
-            {/* Bio */}
-            {bio && (
-              <div className="glass-card-light rounded-2xl p-8">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Heart className="h-5 w-5 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-heading gradient-sunset">על {displayName}</h2>
-                </div>
-                {bio.split("\n").filter(Boolean).map((p, i) => (
-                  <p key={i} className={`text-foreground leading-[2] font-serif ${i > 0 ? "mt-4" : ""}`}>{p}</p>
-                ))}
-              </div>
-            )}
-
-            {/* Legacy */}
-            {legacy && (
-              <div className="glass-card-light rounded-2xl p-8">
-                <div className="flex items-center gap-3 mb-5">
-                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                    <BookOpen className="h-5 w-5 text-primary" />
-                  </div>
-                  <h2 className="text-xl font-heading gradient-earth">ההנצחה שלנו</h2>
-                </div>
-                <p className="text-foreground leading-[2] font-serif">{legacy}</p>
-                {verse && (
-                  <div className="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/10">
-                    <p className="text-sm text-muted-foreground font-display text-center">{verse}</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </motion.div>
-
-          {/* CTA */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="text-center mt-12">
-            <motion.a
-              href="/"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="px-8 py-3.5 bg-card border border-border text-foreground rounded-xl font-display text-sm shadow-sm hover:shadow-md hover:border-primary/30 transition-all inline-flex items-center gap-2"
-            >
-              <Flame className="h-4 w-4 text-primary" />
-              להקדשת שיעור לעילוי נשמתו
-            </motion.a>
-          </motion.div>
-        </div>
-      </section>
-    </Layout>
-  );
-};
+      </div>
+    </div>
+  </DesignLayout>
+);
 
 export default Memorial;

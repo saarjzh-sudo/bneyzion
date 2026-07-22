@@ -24,6 +24,7 @@ import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
 import LazyHeroVideo from "@/components/performance/LazyHeroVideo";
 import CustomSlidersSlot from "@/components/common/CustomSlidersSlot";
+import TrialStrip from "@/components/common/TrialStrip";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK    = "#8B6F47";
@@ -2122,6 +2123,10 @@ export default function DesignPreviewHome() {
   return (
     <div dir="rtl" style={{ display: "flex", flexDirection: "column", minHeight: "100vh",
                              background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
+      {/* רמה 27 (יואב 16:31): רצועת "האתר בהרצה" — בדף הבית מעל ההדר, כי ההירו
+          חופף להדר (marginTop:-96) ורצועה ביניהם הייתה נבלעת בו. */}
+      <TrialStrip />
+
       {/* Global header — transparent over hero, burger opens drawer sidebar.
           10.7 (סער): ההירו בהיר (וידאו-אקוורל) → שורת ההדר בטקסט כהה, לא לבן */}
       <DesignHeader

@@ -4,7 +4,7 @@ import {
   BarChart3, Ticket, CreditCard,
   UserCheck, Upload, CalendarDays, Megaphone,
   MessageCircle, Heart, SlidersHorizontal, HelpCircle,
-  Package, Bot, Link2,
+  Package, Bot, Link2, AlertTriangle,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -74,6 +74,8 @@ const SECTIONS: NavSection[] = [
       { title: "הודעות והתראות", url: "/admin/messages",     icon: Mail,        roles: ADMIN },
       // רמה 14 (סער 10.7): שאלות ותשובות — "שאל את הרב" באתר → תור מסודר כאן
       { title: "שאל את הרב",    url: "/admin/questions",     icon: HelpCircle,  roles: ADMIN },
+      // רמה 27 (יואב 22.7 16:31): דיווחי "האתר בהרצה"
+      { title: "דיווחי הרצה",   url: "/admin/feedback",      icon: AlertTriangle, roles: ADMIN },
       { title: "שיחות בנצי",    url: "/admin/benzi-conversations", icon: MessageCircle, roles: ADMIN },
       // רמה 18: גם עמוד הידע של בנצי היה יתום (נגיש רק בהקלדת URL)
       { title: "הידע של בנצי",  url: "/admin/benzi",         icon: Bot,         roles: ADMIN },

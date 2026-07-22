@@ -16,6 +16,8 @@ import {
 } from "@/hooks/useContentSliders";
 
 const PLACEMENTS: Record<string, string> = { home: "דף הבית", teachers: "אגף המורים" };
+// עיצובים קבועים (הכרעת סער 22.7): לא עיצוב חופשי — בחירה בין תבניות מוכנות.
+const VARIANTS: Record<string, string> = { cards: "כרטיסים עם תמונה (כמו דף הבית)", compact: "קומפקטי — טקסט בלבד" };
 
 const box: React.CSSProperties = { background: "white", border: "1px solid rgba(139,111,71,0.16)", borderRadius: 14, padding: 18 };
 const label: React.CSSProperties = { display: "block", fontSize: 13, fontWeight: 700, color: "#6B5C4A", marginBottom: 5 };
@@ -30,6 +32,7 @@ export default function AdminSliders() {
   const [title, setTitle] = useState("");
   const [eyebrow, setEyebrow] = useState("");
   const [placement, setPlacement] = useState("home");
+  const [variant, setVariant] = useState("cards");
   const [term, setTerm] = useState("");
   const [source, setSource] = useState<{ id: string; title: string } | null>(null);
   const { data: results = [], isFetching } = useSeriesSearch(term);
@@ -45,6 +48,7 @@ export default function AdminSliders() {
         title: title.trim(),
         eyebrow: eyebrow.trim() || null,
         placement,
+        variant,
         source_id: source.id,
         sort_order: sliders.filter((s) => s.placement === placement).length,
       },
@@ -86,6 +90,12 @@ export default function AdminSliders() {
               <label style={label}>מיקום</label>
               <select style={input} value={placement} onChange={(e) => setPlacement(e.target.value)}>
                 {Object.entries(PLACEMENTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+              </select>
+            </div>
+            <div>
+              <label style={label}>עיצוב</label>
+              <select style={input} value={variant} onChange={(e) => setVariant(e.target.value)}>
+                {Object.entries(VARIANTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
               </select>
             </div>
             <div>
@@ -154,6 +164,14 @@ export default function AdminSliders() {
                     {!s.is_active && " · מוסתר"}
                   </div>
                 </div>
+                <select
+                  title="עיצוב הסליידר"
+                  value={s.variant ?? "cards"}
+                  onChange={(e) => updateSlider.mutate({ id: s.id, variant: e.target.value as "cards" | "compact" })}
+                  style={{ border: "1px solid rgba(139,111,71,0.2)", background: "white", borderRadius: 8, padding: "5px 8px", fontSize: 12, fontFamily: "inherit", color: "#6B5C4A", maxWidth: 170 }}
+                >
+                  {Object.entries(VARIANTS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
+                </select>
                 <button
                   title={s.is_active ? "הסתר" : "הצג"}
                   onClick={() => updateSlider.mutate({ id: s.id, is_active: !s.is_active })}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, ChevronDown, Play } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -37,12 +38,15 @@ const people: MemorialPerson[] = [
     ],
   },
   {
-    name: "סעדיה יעקב בן חיים (דרעי)",
+    // רמה 27 (יואב 22.7 16:40): הטקסט הקודם כאן היה כללי ולא מדויק — הוחלף
+    // בתקציר נאמן מדף ההנצחה המלא (/memorial/saadia) שנבנה עם המשפחה.
+    name: "סעדיה יעקב דרעי",
     suffix: "הי\"ד",
-    summary: "תהא נשמתו צרורה בצרור החיים. מהתומכים הראשונים של בני ציון.",
+    summary: "ספר תורה מהלך — לוחם בחטיבת אלכסנדרוני שנפל במלחמת חרבות ברזל.",
+    linkTo: "/memorial/saadia",
     bio: [
-      "סעדיה היה אדם מיוחד שחיבר בין אהבת התורה לאהבת הארץ. הוא האמין שלימוד התנ\"ך הוא הגשר בין העבר להווה, ושדרך ההיכרות עם סיפורי התנ\"ך אפשר להבין את עומק הקשר שלנו לארץ ישראל.",
-      "סעדיה היה מהראשונים שתמכו בהקמת אתר בני ציון, מתוך חזון ברור שלימוד התנ\"ך צריך להיות נגיש לכל יהודי – בכל מקום ובכל זמן. זכרו מלווה אותנו בכל שיעור שנוסף, בכל סדרה שנפתחת, ובכל אדם שמגלה את עומק התנ\"ך דרך האתר הזה.",
+      "סעדיה (27), בנם של חיים וללי מהיישוב עלי, גדל על אהבת התורה, העם ותקומת ישראל. בעל קורא מדויק שאהב את קריאת התורה ואת הציבור, מסר שיעורי דף יומי במסירות עצומה, והקים עם אשתו רחלי את ביתו ביפו. אבא אוהב להללי ולינון — ולאחר נופלו התברר שרחלי מצפה לתינוק נוסף.",
+      "בשמחת תורה התייצב מיד בצו 8 כלוחם בחטיבת אלכסנדרוני. התמונות מהקרבות בעזה — סעדיה עטור תפילין, יושב על טנק בציוד מלא ושוקע בלימוד גמרא — הפכו לסמל מובהק של תורת ארץ ישראל. אתר בני ציון מוקדש להנצחתו: כאן תורתו ממשיכה לחיות.",
     ],
   },
   {
@@ -131,7 +135,22 @@ const MemorialCard = ({ person, index }: { person: MemorialPerson; index: number
   );
 };
 
+// מפתחות מרכז-השליטה לכל נופל (רמה 27, יואב 16:40: "אפשרות לערוך את טקסטי ההנצחה")
+const COPY_KEYS = ["benzion", "saadia", "maayan"] as const;
+
 const AboutMemorialSection = () => {
+  const copy = useSiteCopy();
+
+  // ברירות-המחדל = המערך הקנוני למעלה; עריכה במרכז השליטה ← "אודות — הנצחה".
+  // הביוגרפיה נערכת כטקסט אחד, פסקאות מופרדות בשורה ריקה.
+  const editablePeople: MemorialPerson[] = people.map((p, i) => {
+    const key = COPY_KEYS[i];
+    if (!key) return p;
+    const summary = copy(`copy.about.memorial_${key}_summary`, p.summary);
+    const bioText = copy(`copy.about.memorial_${key}_bio`, p.bio.join("\n\n"));
+    return { ...p, summary, bio: bioText.split(/\n\s*\n/).map((s: string) => s.trim()).filter(Boolean) };
+  });
+
   return (
     <section className="py-20 section-gradient-cool">
       <div className="container max-w-4xl">
@@ -148,7 +167,7 @@ const AboutMemorialSection = () => {
             </p>
           </motion.div>
 
-          {people.map((person, i) => (
+          {editablePeople.map((person, i) => (
             <MemorialCard key={person.name} person={person} index={i + 1} />
           ))}
         </motion.div>
