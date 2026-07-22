@@ -1280,12 +1280,15 @@ function LessonsSection({
   seriesTitle,
   isLoading,
   onOpenLesson,
+  rubricMode = false,
 }: {
   lessons: any[];
   seriesImageUrl: string | null;
   seriesTitle: string;
   isLoading: boolean;
   onOpenLesson: (lesson: any) => void;
+  /** צומת-פרשה/פרק רב-רבני: קיבוץ לפי רב לרובריקות סגורות (הערת בודק 22.7, הקלטה 13:16) */
+  rubricMode?: boolean;
 }) {
   // View mode — persisted in localStorage
   const [viewMode, setViewMode] = useState<ViewMode>(() => {
@@ -1324,6 +1327,29 @@ function LessonsSection({
     if (mediaFilter === "all") return lessons;
     return lessons.filter((l) => getLessonMediaType(l) === mediaFilter);
   }, [lessons, mediaFilter]);
+
+  // רובריקות לפי רב — סגורות כברירת-מחדל, נפתחות בלחיצה. סדר: לפי כמות תכנים.
+  const [openRubrics, setOpenRubrics] = useState<Set<string>>(() => new Set());
+  const rubricGroups = useMemo(() => {
+    if (!rubricMode) return [];
+    const byRabbi = new Map<string, any[]>();
+    for (const l of filtered) {
+      const name = l.rabbis?.name || "תכנים נוספים";
+      const arr = byRabbi.get(name) || [];
+      arr.push(l);
+      byRabbi.set(name, arr);
+    }
+    return Array.from(byRabbi.entries())
+      .map(([rabbi, items]) => ({ rabbi, items }))
+      .sort((a, b) => b.items.length - a.items.length);
+  }, [rubricMode, filtered]);
+  const toggleRubric = (rabbi: string) =>
+    setOpenRubrics((prev) => {
+      const next = new Set(prev);
+      if (next.has(rabbi)) next.delete(rabbi);
+      else next.add(rabbi);
+      return next;
+    });
 
   return (
     <section
@@ -1367,6 +1393,67 @@ function LessonsSection({
             {mediaFilter === "all"
               ? "אין שיעורים זמינים בסדרה זו כרגע"
               : `אין שיעורי ${mediaFilter === "audio" ? "אודיו" : mediaFilter === "video" ? "וידאו" : "PDF"} בסדרה זו`}
+          </div>
+        ) : rubricMode && rubricGroups.length > 1 ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            {rubricGroups.map(({ rabbi, items }) => {
+              const open = openRubrics.has(rabbi);
+              return (
+                <div
+                  key={rabbi}
+                  style={{
+                    background: "white",
+                    borderRadius: radii.lg,
+                    border: `1px solid ${open ? "rgba(196,162,101,0.45)" : "rgba(139,111,71,0.14)"}`,
+                    boxShadow: open ? shadows.cardSoft : "none",
+                    overflow: "hidden",
+                  }}
+                >
+                  <button
+                    onClick={() => toggleRubric(rabbi)}
+                    aria-expanded={open}
+                    style={{
+                      width: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: "0.75rem",
+                      padding: "0.9rem 1.1rem",
+                      background: open ? "rgba(196,162,101,0.08)" : "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      textAlign: "right",
+                    }}
+                  >
+                    <span style={{ display: "flex", alignItems: "center", gap: "0.6rem", minWidth: 0 }}>
+                      <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1rem", color: colors.textDark, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {rabbi}
+                      </span>
+                      <span style={{ fontFamily: fonts.body, fontSize: "0.75rem", fontWeight: 600, color: colors.goldDark, background: "rgba(196,162,101,0.12)", borderRadius: 999, padding: "0.1rem 0.55rem", flexShrink: 0 }}>
+                        {items.length} {items.length === 1 ? "תוכן" : "תכנים"}
+                      </span>
+                    </span>
+                    <ChevronDown
+                      size={17}
+                      style={{ flexShrink: 0, color: colors.goldDark, transition: "transform 0.18s", transform: open ? "rotate(180deg)" : "none" }}
+                    />
+                  </button>
+                  {open && (
+                    <div style={{ padding: "0.35rem 0.9rem 1rem", display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+                      {items.map((lesson) => (
+                        <LessonRow
+                          key={lesson.id}
+                          lesson={lesson}
+                          seriesImageUrl={seriesImageUrl}
+                          seriesTitle={seriesTitle}
+                          onOpen={onOpenLesson}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         ) : viewMode === "grid" ? (
           <div
@@ -2360,6 +2447,16 @@ export default function DesignPreviewSeriesPageV2() {
       .map(([name]) => name);
   }, [lessons]);
 
+  // צומת-פרשה/פרק רב-רבני (הערת בודק 22.7, הקלטה 13:16): במקום 70+ שיעורים ברשימה
+  // שטוחה — רובריקות סגורות לפי רב שנפתחות בלחיצה. הזיהוי: כותרת של צומת-אירוע
+  // ("פרשת … |" או טווח-פרקים "| יב-יז" או "פרק …"), 4+ רבנים, 15+ תכנים.
+  const isAggregationNode = useMemo(() => {
+    const t = series?.title || "";
+    const looksLikeEventNode =
+      /פרשת .+\|/.test(t) || /\|\s*[א-ת"׳]{1,4}\s*-\s*[א-ת"׳]{1,4}/.test(t) || / פרקים? /.test(t);
+    return looksLikeEventNode && distinctRabbis.length >= 4 && (lessons as any[]).length >= 15;
+  }, [series?.title, distinctRabbis, lessons]);
+
   // פינות-המקורות → תצוגת הכרטיסיות. אחרי כל ה-hooks (לקח רמה 21ב: early-return
   // לפני hook מפיל את הדף ב-"Rendered fewer hooks").
   if (id && SOURCES_COLLECTION_IDS.has(id)) {
@@ -2467,6 +2564,7 @@ export default function DesignPreviewSeriesPageV2() {
           seriesTitle={series.title}
           isLoading={lessonsLoading}
           onOpenLesson={handleOpenLesson}
+          rubricMode={isAggregationNode}
         />
 
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>

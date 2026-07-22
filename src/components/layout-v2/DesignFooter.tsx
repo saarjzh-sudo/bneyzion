@@ -157,6 +157,20 @@ export default function DesignFooter() {
               {copy("copy.footer.description", "אתר התנ״ך הגדול בישראל — שיעורים, סדרות, ופרשנות מ-200+ רבנים, בגישה חופשית.")}
             </p>
 
+            {/* הערת בודק 22.7 (הקלטה 13:16): להצהיר שהאתר שובת בשבת — הכיסוי
+                עצמו נדלק אוטומטית בזמני שבת/חג (ShabbatGate). */}
+            <p
+              style={{
+                fontFamily: fonts.body,
+                fontSize: "0.8rem",
+                color: "rgba(232,213,160,0.75)",
+                marginTop: "-0.75rem",
+                marginBottom: "1.25rem",
+              }}
+            >
+              {copy("copy.footer.shabbat_line", "האתר שובת בשבתות ובחגי ישראל 🕯️")}
+            </p>
+
             {/* Memorial block */}
             <div
               style={{

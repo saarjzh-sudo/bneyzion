@@ -23,6 +23,7 @@ import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
 import AccessibilityWidget from "@/components/a11y/AccessibilityWidget";
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
 import LazyHeroVideo from "@/components/performance/LazyHeroVideo";
+import CustomSlidersSlot from "@/components/common/CustomSlidersSlot";
 
 // ── Design tokens ──────────────────────────────────────────────────────────
 const GOLD_DARK    = "#8B6F47";
@@ -2157,6 +2158,10 @@ export default function DesignPreviewHome() {
           <DesignParashaHolidaySection />
           {/* יואב 13.7: סליידר שיעורים נבחרים — הוחזר בשפת-האתר (הוסר 27.5) */}
           <SelectedLessonsSlider />
+          {/* רמה 26ד (יואב 22.7 13:25): סליידרים שיואב יוצר לבד ב-/admin/sliders */}
+          <div style={{ padding: "0 1.5rem", maxWidth: 1200, margin: "0 auto" }}>
+            <CustomSlidersSlot placement="home" />
+          </div>
           <WarMiraclesSection />
           {/* יואב 13.7: סליידר רבנים — הוחזר בשפת-האתר (הוסר 27.5; TopSeries+WhatsAppCTA נשארו בחוץ) */}
           <RabbisSlider />

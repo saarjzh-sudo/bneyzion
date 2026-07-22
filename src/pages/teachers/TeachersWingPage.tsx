@@ -20,6 +20,7 @@ import { useSEO } from "@/hooks/useSEO";
 import TeachersLayout from "@/components/teachers/TeachersLayout";
 import DesignPageHero from "@/components/layout-v2/DesignPageHero";
 import TeacherContentSlider from "@/components/teachers/TeacherContentSlider";
+import CustomSlidersSlot from "@/components/common/CustomSlidersSlot";
 import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
 import { colors, fonts, radii } from "@/lib/designTokens";
 
@@ -75,6 +76,9 @@ export default function TeachersWingPage() {
           viewAllTo={`/teachers/content-type/${encodeURIComponent("חידות חזרה")}`}
           viewAllLabel="לכל החידות"
         />
+
+        {/* רמה 26ד (יואב 22.7 13:25): סליידרים שיואב יוצר לבד ב-/admin/sliders */}
+        <CustomSlidersSlot placement="teachers" />
 
         {/* Hint — ניווט מלא דרך הסיידבר */}
         <div

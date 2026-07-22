@@ -79,6 +79,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 import UpdatePrompt from "./components/pwa/UpdatePrompt";
 import CookieConsent from "./components/legal/CookieConsent";
+import ShabbatGate from "./components/common/ShabbatGate";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
 
 // Lazy-loaded admin pages
@@ -140,6 +141,7 @@ const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
 const AdminBudget = lazy(() => import("./pages/admin/Budget"));
 const AdminKenes = lazy(() => import("./pages/admin/Kenes"));
 const AdminPromos = lazy(() => import("./pages/admin/Promos"));
+const AdminSliders = lazy(() => import("./pages/admin/Sliders"));
 const AdminDorHaplaot = lazy(() => import("./pages/admin/DorHaplaot"));
 const AdminDailyContent = lazy(() => import("./pages/admin/DailyContent"));
 const AdminBenziConversations = lazy(() => import("./pages/admin/BenziConversations"));
@@ -323,6 +325,8 @@ const App = () => (
           <CartProvider>
           <PlayerProvider>
           <ScrollToTop />
+          {/* שבת/חג בא"י → כיסוי "האתר שובת" (רמה 26ד; חל גם על דפי-נחיתה עירומים) */}
+          <ShabbatGate />
           <GlobalChrome />
           {/* <GlobalAIChat /> */}
           <ChunkErrorBoundary>
@@ -445,6 +449,7 @@ const App = () => (
             <Route path="/admin/budget" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBudget /></Suspense></ProtectedRoute>} />
             <Route path="/admin/kenes" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminKenes /></Suspense></ProtectedRoute>} />
             <Route path="/admin/promos" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPromos /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/sliders" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSliders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/dor-haplaot" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><AdminDorHaplaot /></Suspense></ProtectedRoute>} />
             <Route path="/admin/daily" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><AdminDailyContent /></Suspense></ProtectedRoute>} />
             <Route path="/admin/benzi-conversations" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBenziConversations /></Suspense></ProtectedRoute>} />

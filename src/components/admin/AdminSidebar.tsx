@@ -89,6 +89,8 @@ const SECTIONS: NavSection[] = [
       { title: "מוצרים",         url: "/admin/products",          icon: ShoppingBag,   roles: ADMIN },
       { title: "כנסים",          url: "/admin/kenes",             icon: CalendarDays,  roles: ADMIN },
       { title: "באנרים ופופאפים", url: "/admin/promos",           icon: Megaphone,     roles: ADMIN },
+      // רמה 26ד (יואב 22.7 13:25): סליידרים לסדרה/קטגוריה בדף הבית ובאגף המורים
+      { title: "סליידרים",       url: "/admin/sliders",           icon: SlidersHorizontal, roles: ADMIN },
       // "דף הבית" (/admin/homepage) הוסר מהניווט 8.7.2026 — מסך מיותר: כתב
       // site_settings.homepage_config שדף הבית החי (DesignPreviewHome) לא קורא כלל.
       // ניהול הבאנרים/פופאפים עבר ל"באנרים ופופאפים" (/admin/promos). הראוט נשאר route-only.

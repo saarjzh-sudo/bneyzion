@@ -24,6 +24,7 @@ import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { Seo, collectionJsonLd } from "@/components/seo/Seo";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useWeeklyBooks, type WeeklyCourse } from "@/hooks/useCommunity";
+import { useWeeklyProgramChapters, currentChapterOf } from "@/hooks/useWeeklyProgramChapters";
 import { useUserAccess } from "@/hooks/useUserAccess";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -190,6 +191,7 @@ function BookCard({ course }: { course: WeeklyCourse }) {
 // ── Main ──────────────────────────────────────────────────────────────────
 export default function WeeklyProgramLibrary() {
   const { data: books = [], isLoading } = useWeeklyBooks();
+  const { data: chaptersMap } = useWeeklyProgramChapters(books.map((b) => b.id));
   const { hasAccess: hasProgramAccess } = useUserAccess("program:weekly-chapter");
   const { hasAccess: eichaAccess } = useUserAccess("program:eicha-monday");
   const { isAdmin } = useAuth();
@@ -199,15 +201,13 @@ export default function WeeklyProgramLibrary() {
   if (!isLoading && eichaOnly && !isAdmin) {
     return <Navigate to="/course/book-lamentations" replace />;
   }
-  // הכרעת סער+יואב 22.7 ("מסכים", 10:45-10:48, ביטול ניסוי-השער של 21.7):
-  // בלי לובי "ספריית הספרים" — הכניסה נוחתת ישר על הספר הנוכחי, והמעבר בין
-  // ספרים נעשה מהבר הנגלל בצד בתוך דף הספר (GlobalWeeklyNav). ה-auto-jump
-  // לפרק הנוכחי: src/hooks/useWeeklyProgramChapters.ts. העמוד למטה נשאר רק
-  // כ-fallback למקרה שאין ספר is_current.
+  // הקלטת יואב 22.7 13:29 (מחליפה את ה-redirect של הבוקר): לא נחיתה ישירה בתוך
+  // הפרק — אלא שער *פשוט*: "ברוכים הבאים", הספר הנלמד כעת בגדול, ומתחתיו קוביות
+  // שאר הספרים. לחיצה על ספר נכנסת בדיוק כמו קודם (הסיידבר GlobalWeeklyNav
+  // נשאר הניווט המרכזי בתוך דף הספר).
   const currentBook = books.find((b) => b.is_current === true);
-  if (!isLoading && currentBook) {
-    return <Navigate to={`/course/${currentBook.program_slug}`} replace />;
-  }
+  const otherBooks = books.filter((b) => !b.is_current);
+  const currentChapter = currentChapterOf(chaptersMap?.get(currentBook?.id ?? ""));
 
   return (
     <DesignLayout sidebar={false}>
@@ -246,11 +246,14 @@ export default function WeeklyProgramLibrary() {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
             <div>
               {/* יואב 22.7 (10:42): "ספריית הספרים" ירד — הכותרת הגדולה היא שם התכנית */}
+              <div style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.14em", color: "rgba(232,213,160,0.85)", marginBottom: "0.35rem" }}>
+                ברוכים הבאים לתכנית
+              </div>
               <h1 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.6rem, 4vw, 2.4rem)", color: "white", margin: 0, lineHeight: 1.15 }}>
                 הפרק השבועי בתנ״ך
               </h1>
-              <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: "rgba(255,255,255,0.55)", margin: "0.5rem 0 0", lineHeight: 1.7 }}>
-                תכנית המנויים של הרב יואב אוריאל · {books.length} ספרים
+              <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: "rgba(255,255,255,0.75)", margin: "0.5rem 0 0", lineHeight: 1.7 }}>
+                תכנית המנויים של הרב יואב אוריאל · פרק אחד בשבוע, ספר אחר ספר
               </p>
             </div>
 
@@ -278,11 +281,63 @@ export default function WeeklyProgramLibrary() {
           </div>
         )}
 
-        {/* Books grid */}
+        {/* ── הספר הנלמד כעת — הכרטיס הראשי של השער (הקלטת יואב 13:29) ── */}
+        {!isLoading && currentBook && (
+          <Link
+            to={`/course/${currentBook.program_slug}`}
+            style={{ textDecoration: "none", display: "block", marginBottom: "2.25rem" }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                gap: "1.5rem",
+                background: "white",
+                borderRadius: radii.xl,
+                border: "1.5px solid rgba(196,162,101,0.5)",
+                boxShadow: shadows.goldGlow,
+                padding: "1.5rem",
+                transition: "transform 0.18s, box-shadow 0.22s",
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)"; }}
+            >
+              {currentBook.image_url && (
+                <img
+                  src={currentBook.image_url}
+                  alt={currentBook.title}
+                  style={{ width: 150, height: 110, objectFit: "cover", borderRadius: radii.lg, flexShrink: 0 }}
+                />
+              )}
+              <div style={{ flex: 1, minWidth: 220 }}>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "rgba(196,162,101,0.14)", borderRadius: 999, padding: "0.25rem 0.8rem", marginBottom: "0.5rem" }}>
+                  <span style={{ width: 7, height: 7, borderRadius: "50%", background: colors.goldDark, display: "inline-block" }} />
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.goldDark }}>הספר הנלמד כעת</span>
+                </div>
+                <h2 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.35rem, 3.5vw, 1.8rem)", color: colors.textDark, margin: "0 0 0.25rem", lineHeight: 1.2 }}>
+                  {currentBook.title}
+                </h2>
+                <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: 0 }}>
+                  {currentChapter ? `השבוע לומדים פרק ${hebNum(currentChapter)}׳` : "ממשיכים בלימוד השבועי"}
+                </p>
+              </div>
+              <span
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.75rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.95rem", boxShadow: shadows.goldGlow, whiteSpace: "nowrap" }}
+              >
+                כניסה ללימוד <ChevronLeft size={16} />
+              </span>
+            </div>
+          </Link>
+        )}
+
+        {/* Books grid — שאר ספרי התכנית */}
         {!isLoading && books.length > 0 && (
           <>
             <div style={{ marginBottom: "1.5rem" }}>
-              <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 0.3rem" }}>כל ספרי התכנית</h2>
+              <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.15rem", color: colors.textDark, margin: "0 0 0.3rem" }}>
+                {currentBook ? "הספרים שכבר למדנו בתכנית" : "כל ספרי התכנית"}
+              </h2>
               <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, margin: 0 }}>
                 {hasProgramAccess
                   ? "יש לך גישה מלאה לכל ספרי התכנית"
@@ -297,7 +352,7 @@ export default function WeeklyProgramLibrary() {
                 gap: "1.25rem",
               }}
             >
-              {books.map((book) => (
+              {(currentBook ? otherBooks : books).map((book) => (
                 <BookCard key={book.id} course={book} />
               ))}
             </div>

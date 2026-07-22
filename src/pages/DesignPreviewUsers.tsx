@@ -22,6 +22,7 @@ import {
   useUnifiedUsers, useUserDetail, truthStatus, userFlags,
   type UnifiedUser, type UserFlag, type TruthStatus,
 } from "@/hooks/useUnifiedUsers";
+import { useUserRoles, useAddRole, useRemoveRole } from "@/hooks/useUsers";
 
 // ── פלטה (שפת האתר — קרם חם, נייבי, זהב) ─────────────────────────────────
 const C = {
@@ -729,6 +730,13 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, noti
           </div>
         </section>
 
+        {/* הרשאות צוות — שאלת יואב 22.7 14:32: "איך אני מגדיר אנשים שיוכלו
+            להוסיף תכנים?" — הענקת תפקיד 'יוצר תוכן' (אשף-העלאה + ניהול שיעורים
+            בלבד, בלי שאר האדמין). RLS: admin_insert/admin_delete על user_roles. */}
+        {!mock && (
+          <StaffRolesSection u={u} notify={notify} />
+        )}
+
         <section>
           <div style={secHeadStyle}>היסטוריית תשלומים ותרומות</div>
           {!mock && detail.isLoading && <div style={{ fontSize: 13, color: C.faint }}>טוען היסטוריה…</div>}
@@ -757,6 +765,78 @@ function UserDrawer({ u, flags, truth, mock, onClose, onGrant, onRemoveTag, noti
         </div>
       </div>
     </aside>
+  );
+}
+
+// ── הרשאות צוות (בתוך ה-drawer) ──────────────────────────────────────────
+function StaffRolesSection({ u, notify }: { u: UnifiedUser; notify: (m: string) => void }) {
+  const { data: allRoles = [] } = useUserRoles();
+  const addRole = useAddRole();
+  const removeRole = useRemoveRole();
+
+  const userRoles = u.user_id ? allRoles.filter((r) => r.user_id === u.user_id) : [];
+  const creatorRole = userRoles.find((r) => r.role === "creator");
+  const isAdminUser = userRoles.some((r) => r.role === "admin");
+  const busy = addRole.isPending || removeRole.isPending;
+
+  return (
+    <section>
+      <div style={secHeadStyle}>הרשאות צוות</div>
+      {!u.user_id ? (
+        <div style={{ fontSize: 12.5, color: C.faint, background: C.panel, border: `1px solid ${C.line}`, borderRadius: 11, padding: "11px 13px" }}>
+          אין למשתמש חשבון באתר — כדי לתת הרשאת יוצר-תוכן צריך שיירשם קודם (התחברות עם גוגל).
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+          {isAdminUser && (
+            <div style={{ fontSize: 13, fontWeight: 700, color: C.navy, background: C.panel, border: `1px solid ${C.line}`, borderRadius: 11, padding: "11px 13px" }}>
+              🛡️ מנהל מערכת — גישה מלאה לכל האדמין
+            </div>
+          )}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, background: C.panel, border: `1px solid ${C.line}`, borderRadius: 11, padding: "11px 13px" }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontWeight: 700, fontSize: 13.5 }}>
+                יוצר תוכן {creatorRole ? "· פעיל ✓" : ""}
+              </div>
+              <div style={{ fontSize: 11.5, color: C.muted }}>
+                גישה לאשף העלאת-התוכן ולניהול השיעורים בלבד — בלי שאר פאנל הניהול
+              </div>
+            </div>
+            {creatorRole ? (
+              <button
+                disabled={busy}
+                onClick={() => {
+                  if (!window.confirm(`להסיר את הרשאת יוצר-התוכן מ-${u.email}?`)) return;
+                  removeRole.mutate(creatorRole.id, {
+                    onSuccess: () => notify("הרשאת יוצר-התוכן הוסרה"),
+                    onError: (e: Error) => notify(`שגיאה: ${e.message}`),
+                  });
+                }}
+                style={{ fontSize: 11, color: C.bad, cursor: "pointer", fontWeight: 700, background: "none", border: "none" }}
+              >
+                הסר
+              </button>
+            ) : (
+              <button
+                disabled={busy}
+                onClick={() =>
+                  addRole.mutate(
+                    { user_id: u.user_id!, role: "creator" },
+                    {
+                      onSuccess: () => notify(`${u.full_name || u.email} הוא עכשיו יוצר תוכן`),
+                      onError: (e: Error) => notify(`שגיאה: ${e.message}`),
+                    }
+                  )
+                }
+                style={{ fontSize: 12, fontWeight: 700, cursor: "pointer", padding: "7px 13px", borderRadius: 9, border: `1.5px solid ${C.gold2}`, background: "rgba(196,162,101,0.1)", color: C.gold }}
+              >
+                הפוך ליוצר תוכן
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+    </section>
   );
 }
 

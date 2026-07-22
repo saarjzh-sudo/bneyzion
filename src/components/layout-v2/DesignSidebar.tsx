@@ -994,11 +994,13 @@ function ContentTree({
                             if (!bookOpen) (e.currentTarget as HTMLDivElement).style.background = "transparent";
                           }}
                         >
-                          {/* Book title — navigates to /category/:id */}
+                          {/* Book title — navigates to /bible/:title (הערת בודק 22.7, הקלטה 13:16:
+                              "קודם כל תן את הפרשות" — עמוד הספר החדש מציג פרשות/פרקים לפני
+                              הסדרות; התצוגה הישנה-המשורגת נשארת נגישה ב-/category/:id). */}
                           <button
                             onClick={() => {
                               onToggle(bookKey);
-                              onNavigate(`/category/${book.id}`);
+                              onNavigate(`/bible/${encodeURIComponent(book.title)}`);
                             }}
                             style={{
                               flex: 1,

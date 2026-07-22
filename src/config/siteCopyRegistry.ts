@@ -753,6 +753,14 @@ export const SITE_COPY_REGISTRY: CopyField[] = [
     hint: "מתחת ללוגו בעמודת המותג בפוטר",
   },
   {
+    key: "copy.footer.shabbat_line",
+    label: "שורת השבת בפוטר",
+    group: "פוטר",
+    type: "text",
+    defaultValue: "האתר שובת בשבתות ובחגי ישראל 🕯️",
+    hint: "מתחת לתיאור המותג; הכיסוי עצמו נדלק אוטומטית בזמני שבת/חג בא״י",
+  },
+  {
     key: "copy.footer.memorial_label",
     label: "שורת 'לעילוי נשמת' בפוטר",
     group: "פוטר",

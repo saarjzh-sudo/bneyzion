@@ -35,10 +35,15 @@ BASE = "https://pzvmwfexeiruelwiujxn.supabase.co/rest/v1"
 APPLY = "--apply" in sys.argv
 
 # ספר → (program course id, קורס עצמאי קיים אם יש)
+# 22.7 אחה"צ (יואב 13:25): נוספו אסתר, איכה וזכריה — "ואז זהו, יש לנו אותם".
+# course_title מפורש כי מגילות ≠ "קורס ספר X".
 BOOKS = [
-    {"name": "עזרא",   "program_id": "35e7d37b-a263-4e85-a8d8-16fdbae312ae", "standalone_id": "fa23abe0-d580-4fa8-a9aa-98062e7e41d2"},
-    {"name": "נחמיה",  "program_id": "e1ec3ebc-fdf6-41be-a1fe-262174c2c8dd", "standalone_id": None},
-    {"name": "דניאל",  "program_id": "ccee8278-ca37-4025-a5b8-13ea99617a24", "standalone_id": None},
+    {"name": "עזרא",   "course_title": "קורס ספר עזרא",   "program_id": "35e7d37b-a263-4e85-a8d8-16fdbae312ae", "standalone_id": "fa23abe0-d580-4fa8-a9aa-98062e7e41d2"},
+    {"name": "נחמיה",  "course_title": "קורס ספר נחמיה",  "program_id": "e1ec3ebc-fdf6-41be-a1fe-262174c2c8dd", "standalone_id": "3c429936-3fa3-4c16-9bd6-24c4e7f226be"},
+    {"name": "דניאל",  "course_title": "קורס ספר דניאל",  "program_id": "ccee8278-ca37-4025-a5b8-13ea99617a24", "standalone_id": "1f17bb44-d1a2-4478-948d-48b407b310a2"},
+    {"name": "אסתר",   "course_title": "קורס מגילת אסתר", "program_id": "e3ee44dd-07f8-4902-a5cf-07bd1645de92", "standalone_id": None},
+    {"name": "איכה",   "course_title": "קורס מגילת איכה", "program_id": "3f9742e3-370e-4f98-b9d2-3aaae94da38e", "standalone_id": None},
+    {"name": "זכריה",  "course_title": "קורס ספר זכריה",  "program_id": "dff61c84-48d4-4d11-88de-1f52ecbd7885", "standalone_id": None},
 ]
 
 HEB = ["א","ב","ג","ד","ה","ו","ז","ח","ט","י","יא","יב","יג","יד","טו","טז","יז","יח","יט","כ","כא","כב","כג","כד"]
@@ -65,12 +70,13 @@ def include_lesson(lesson) -> bool:
     return "מסמך נלווה" not in t
 
 
-# שמות קבצים גולמיים ("נחמיה פרק א'.mp4") → כותרת אחידה ומכירתית
+# שמות קבצים גולמיים ("נחמיה פרק א'.mp4") → כותרת אחידה ומכירתית.
+# יואב 22.7 13:25: בקורסים הבודדים השם הוא "שיעור על הפרק" (לא "השיעור השבועי").
 def clean_title(lesson) -> str:
     t = (lesson.get("title") or "").strip()
     if t.lower().endswith(".mp4") or ".mp4" in t.lower():
-        return "השיעור השבועי — הרב יואב אוריאל"
-    return t
+        return "שיעור על הפרק — הרב יואב אוריאל"
+    return t.replace("השיעור השבועי", "שיעור על הפרק")
 
 
 # סדר קבוע בתוך פרק: וידאו → שמע → סיכום חזותי → סיכום השיעור
@@ -109,9 +115,16 @@ for book in BOOKS:
         continue
 
     # ── הקורס העצמאי ──
-    title = f"קורס ספר {book['name']}"
-    desc = "מבוסס על תכנית הפרק השבועי — השיעור השבועי של הרב יואב אוריאל והסיכום שלו, לכל פרק בספר."
+    title = book.get("course_title") or f"קורס ספר {book['name']}"
+    desc = "מבוסס על תכנית הפרק השבועי — שיעור על הפרק מאת הרב יואב אוריאל והסיכום שלו, לכל פרק בספר."
     cid = book["standalone_id"]
+    # אידמפוטנטיות אמיתית: קורס שכבר בנוי במלואו — מדלגים (בלי DELETE+rebuild,
+    # כדי לא להחליף ids של שיעורים לחינם). rebuild מלא: למחוק את שיעוריו ידנית קודם.
+    if cid:
+        existing = req(f"/community_course_lessons?course_id=eq.{cid}&select=id")
+        if len(existing) == total and total > 0:
+            print(f"   ✓ כבר בנוי במלואו ({total} שיעורים) — מדלג ({cid})")
+            continue
     if cid:
         req(f"/community_courses?id=eq.{cid}", body={
             "title": title, "description": desc, "image_url": prog.get("image_url"),
