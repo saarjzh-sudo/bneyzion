@@ -20,7 +20,7 @@ function isWithinSchedule(p: Promo, now: Date): boolean {
   return true;
 }
 
-export type BannerPlacement = "home" | "content" | "store";
+export type BannerPlacement = "home" | "content" | "store" | "teachers";
 
 /** הבאנר הפעיל למיקום הנתון (או null) — משותף לסלוט ול-DesignLayout,
  *  שצריך לדעת אם יש באנר עליון כדי לבטל את חפיפת-ההירו. */

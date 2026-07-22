@@ -46,7 +46,7 @@ interface PromoRow {
   cta_url: string | null;
   image_url: string | null;
   video_url: string | null;
-  placement: "home" | "content" | null;
+  placement: "home" | "content" | "store" | "teachers" | null;
   mobile_image_url: string | null;
   page_types: string[] | null;
   audiences: string[] | null;
@@ -89,7 +89,7 @@ interface PromoForm {
   cta_url: string;
   image_url: string;
   video_url: string;
-  placement: "home" | "content" | "store";
+  placement: "home" | "content" | "store" | "teachers";
   mobile_image_url: string;
   page_types: string[];
   audiences: string[];
@@ -558,6 +558,7 @@ export default function Promos() {
                         <SelectItem value="content">עמודי התוכן (רצועה עליונה מתחת להדר)</SelectItem>
                         <SelectItem value="home">דף הבית (מתחת להירו)</SelectItem>
                         <SelectItem value="store">החנות (מתחת להירו של החנות)</SelectItem>
+                        <SelectItem value="teachers">אגף המורים (מתחת להירו)</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

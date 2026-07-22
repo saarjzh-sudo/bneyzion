@@ -22,9 +22,9 @@ export interface Promo {
   image_url: string | null;
   /** וידאו לפופאפ — מוצג media-first, גובר על image_url (שמשמש כ-poster) */
   video_url: string | null;
-  /** באנר-תמונה: איפה הוא מוצג — 'home' (מתחת להירו בדף הבית), 'content' (ראש עמודי התוכן)
-   *  או 'store' (החנות, מתחת להירו) — יואב 19.7 */
-  placement: "home" | "content" | "store" | null;
+  /** באנר-תמונה: איפה הוא מוצג — 'home' (מתחת להירו בדף הבית), 'content' (ראש עמודי התוכן),
+   *  'store' (החנות, מתחת להירו) — יואב 19.7 · 'teachers' (אגף המורים, מתחת להירו) — יואב 22.7 */
+  placement: "home" | "content" | "store" | "teachers" | null;
   /** נכס נפרד למובייל (יחס ~3:1); בלעדיו נופלים ל-image_url */
   mobile_image_url: string | null;
   /** טרגוט חכם (8.7): סוגי-דפים וסוגי-גולשים — ריק = כולם. ראה targeting.ts */

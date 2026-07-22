@@ -4,126 +4,24 @@
  * Production Teachers Wing main page.
  *
  * A — redesigned (2026-06-02): the central tabs/accordion have been removed.
- * Navigation is entirely via the sidebar (TeacherSidebar) — books, content types,
- * creators. This page is now the landing / entry point only.
+ * Navigation is entirely via the sidebar (TeacherSidebar).
+ *
+ * B — redesigned (2026-07-22, יואב + אישור-היקף סער): שלושת כפתורי-הקיצור
+ * שבלב העמוד ירדו ("להוריד את הכפתורים"), ובמקומם סליידרים של תוכן אמיתי —
+ * חדש באגף, דפי עבודה, חידות חזרה — בשפת סליידר "שיעורים נבחרים" של דף הבית,
+ * בפלטת הזית. נוסף גם סלוט-באנר בניהול (promos placement="teachers").
  *
  * Layout: TeachersLayout (DesignHeader + TeacherSidebar + DesignFooter)
  * Hero: olive variant
  */
-import { GraduationCap, BookOpen, Layers, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import { GraduationCap } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
 
 import TeachersLayout from "@/components/teachers/TeachersLayout";
 import DesignPageHero from "@/components/layout-v2/DesignPageHero";
-import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
-
-// ─── Quick-access card ────────────────────────────────────────────────────────
-function QuickCard({
-  icon,
-  title,
-  subtitle,
-  href,
-  accent,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  subtitle: string;
-  href: string;
-  accent: string;
-}) {
-  return (
-    <Link to={href} style={{ textDecoration: "none", color: "inherit" }}>
-      <div
-        style={{
-          background: "white",
-          borderRadius: radii.xl,
-          border: "1px solid rgba(139,111,71,0.1)",
-          boxShadow: shadows.cardSoft,
-          padding: "1.5rem",
-          cursor: "pointer",
-          transition: "all 0.2s ease",
-          display: "flex",
-          flexDirection: "column",
-          gap: "0.65rem",
-          position: "relative",
-          overflow: "hidden",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "translateY(-3px)";
-          e.currentTarget.style.boxShadow = shadows.cardHover;
-          e.currentTarget.style.borderColor = accent;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "translateY(0)";
-          e.currentTarget.style.boxShadow = shadows.cardSoft;
-          e.currentTarget.style.borderColor = "rgba(139,111,71,0.1)";
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            right: 0,
-            bottom: 0,
-            width: 4,
-            background: gradients.oliveButton,
-          }}
-        />
-        <div
-          style={{
-            width: 44,
-            height: 44,
-            borderRadius: radii.lg,
-            background: "rgba(74,90,46,0.1)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: accent,
-          }}
-        >
-          {icon}
-        </div>
-        <div>
-          <h3
-            style={{
-              fontFamily: fonts.display,
-              fontSize: "1rem",
-              fontWeight: 800,
-              color: colors.textDark,
-              margin: 0,
-              lineHeight: 1.3,
-            }}
-          >
-            {title}
-          </h3>
-          <p
-            style={{
-              fontFamily: fonts.body,
-              fontSize: "0.8rem",
-              color: colors.textMuted,
-              margin: "0.35rem 0 0",
-              lineHeight: 1.55,
-            }}
-          >
-            {subtitle}
-          </p>
-        </div>
-        <span
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.75rem",
-            color: colors.oliveMain,
-            fontWeight: 700,
-            marginTop: "auto",
-          }}
-        >
-          פתיחה בתפריט הצדדי ←
-        </span>
-      </div>
-    </Link>
-  );
-}
+import TeacherContentSlider from "@/components/teachers/TeacherContentSlider";
+import ImageBannerSlot from "@/components/promo/ImageBannerSlot";
+import { colors, fonts, radii } from "@/lib/designTokens";
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 export default function TeachersWingPage() {
@@ -145,68 +43,43 @@ export default function TeachersWingPage() {
         icon={<GraduationCap size={28} style={{ color: "#8B6F47" }} />}
       />
 
-      {/* Quick-access cards */}
+      {/* באנר בניהול — עריכה מ"באנרים ופופאפים" באדמין, מיקום "אגף המורים" */}
+      <ImageBannerSlot placement="teachers" />
+
+      {/* סליידרי תוכן */}
       <div
         dir="rtl"
         style={{
           maxWidth: 1100,
           margin: "0 auto",
-          padding: "2.5rem 1.5rem 3rem",
+          padding: "2rem 1.5rem 3rem",
         }}
       >
-        {/* Intro */}
-        <p
-          style={{
-            fontFamily: fonts.body,
-            fontSize: "0.92rem",
-            color: colors.textMuted,
-            marginBottom: "2rem",
-            lineHeight: 1.7,
-            maxWidth: 640,
-          }}
-        >
-          השתמש בתפריט הצדדי לניווט: בחר ספר, הרחב אותו וגלה את כל הסדרות והשיעורים
-          הרלוונטיים — או עיין לפי סוג תוכן ויוצר.
-        </p>
+        <TeacherContentSlider
+          eyebrow="מה חדש"
+          title="חדש באגף המורים"
+          viewAllTo="/teachers?tab=sogTochn"
+          viewAllLabel="כל סוגי התוכן"
+        />
+        <TeacherContentSlider
+          eyebrow="מוכן לכיתה"
+          title="דפי עבודה"
+          contentType="דפי עבודה"
+          viewAllTo={`/teachers/content-type/${encodeURIComponent("דפי עבודה")}`}
+          viewAllLabel="לכל דפי העבודה"
+        />
+        <TeacherContentSlider
+          eyebrow="לחזרה ולשינון"
+          title="חידות חזרה"
+          contentType="חידות חזרה"
+          viewAllTo={`/teachers/content-type/${encodeURIComponent("חידות חזרה")}`}
+          viewAllLabel="לכל החידות"
+        />
 
-        {/* Three quick-entry cards */}
+        {/* Hint — ניווט מלא דרך הסיידבר */}
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
-            gap: "1.25rem",
-          }}
-        >
-          {/* הרב יואב 8.7.2026: הכרטיסים היו קישור לעמוד עצמו (לחיצה = כלום).
-              עכשיו כל כרטיס מפעיל את הלשונית המתאימה בתפריט הצדדי (?tab=),
-              הסיידבר מהבהב, ובנייד נפתחת המגירה. */}
-          <QuickCard
-            icon={<BookOpen size={22} />}
-            title="לפי ספר"
-            subtitle="תורה, נביאים, כתובים — פתח ספר בתפריט ובחר סדרה"
-            href="/teachers?tab=books"
-            accent={colors.oliveDark}
-          />
-          <QuickCard
-            icon={<Layers size={22} />}
-            title="לפי סוג תוכן"
-            subtitle="דפי עבודה, חידות, ביאורי מילים, סיכומים ועוד"
-            href="/teachers?tab=sogTochn"
-            accent={colors.goldDark}
-          />
-          <QuickCard
-            icon={<Users size={22} />}
-            title="לפי יוצר"
-            subtitle="גלה את כל החומרים שכתב מחנך מסוים"
-            href="/teachers?tab=yotzrim"
-            accent={colors.oliveMain}
-          />
-        </div>
-
-        {/* Hint */}
-        <div
-          style={{
-            marginTop: "2.5rem",
+            marginTop: "0.5rem",
             padding: "1rem 1.25rem",
             background: "rgba(74,90,46,0.06)",
             borderRadius: radii.lg,
@@ -218,15 +91,10 @@ export default function TeachersWingPage() {
           }}
         >
           <strong style={{ color: colors.oliveDark }}>טיפ:</strong>{" "}
-          בתפריט הצדדי (tab "ראשי") — לחץ על שם ספר כדי לפתוח את תוכנו. הכפתור
-          "כל התכנים ב..." יציג את כל הסדרות והשיעורים של אותו ספר. לחיצה על שם הסדרה
-          תוביל ישירות לדף הסדרה.
+          כל המאגר נגיש מהתפריט הצדדי — לפי ספר, לפי סוג תוכן או לפי יוצר. לחיצה
+          על שם ספר פותחת את כל הסדרות והשיעורים שלו.
         </div>
       </div>
-
-      <style>{`
-        @keyframes spin { to { transform: rotate(360deg); } }
-      `}</style>
     </TeachersLayout>
   );
 }
