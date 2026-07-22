@@ -550,6 +550,11 @@ export default function DesignPreviewMyCourses() {
         // יואב 21.7: ספרי הפרק-השבועי לא מופיעים כקורסים בודדים גם ברשימה הכללית —
         // התכנית מיוצגת בבאנר "הפרק השבועי" למעלה.
         if (cc.in_weekly_program === true || String(cc.program_slug || "").startsWith("book-")) return false;
+        // סער+יואב 22.7 (10:45 "מסכים"): קורסי-הספר הבודדים ("מבוסס על תכנית
+        // הפרק השבועי") חסומים למנויי התכנית — התוכן כבר פתוח להם במנוי,
+        // והצגת הקורסים רק מבלבלת. מזוהים לפי תחילת התיאור (נכתב בסקריפט הבנייה).
+        const basedOnProgram = String(cc.description || "").startsWith("מבוסס על תכנית הפרק השבועי");
+        if (basedOnProgram && (hasWeeklyChapter || hasEicha)) return false;
         if (cc.access_type === "subscribers_only") return true;
         return (Number(cc.price) || 0) > 0; // requires_tag בלי מחיר = מוסתר
       })
@@ -577,7 +582,7 @@ export default function DesignPreviewMyCourses() {
         accessType: cc.access_type,
       }));
     return [...paid, ...guestFree];
-  }, [allCourses, myCourses, user]);
+  }, [allCourses, myCourses, user, hasWeeklyChapter, hasEicha]);
 
   // יואב 14.7: העמוד הוא קטלוג ציבורי — "קורסים בתנ"ך" — פתוח גם בלי התחברות.
   // אורח רואה את כל הקורסים עם CTA לרכישה/הצטרפות; ההתחברות מוצעת בעדינות
@@ -628,8 +633,9 @@ export default function DesignPreviewMyCourses() {
             >
               קורסים בתנ"ך
             </h1>
+            {/* יואב 22.7 (11:16): בלי "— והקורסים שלך, במקום אחד" */}
             <p style={{ color: "rgba(74,56,35,0.85)", fontSize: "1.05rem", maxWidth: 480, margin: "0 auto" }}>
-              קורסי עומק מוקלטים מאת הרב יואב אוריאל — והקורסים שלך, במקום אחד
+              קורסי עומק מוקלטים מאת הרב יואב אוריאל
             </p>
           </div>
         </div>
@@ -654,8 +660,10 @@ export default function DesignPreviewMyCourses() {
             </div>
           ) : (
             <>
-              {/* ─── באנר תכנית הפרק השבועי — "הקורס" המרכזי (למי שעוד לא מנוי) ─── */}
-              {!hasWeeklyChapter && !accessLoading && (
+              {/* ─── באנר תכנית הפרק השבועי — "הקורס" המרכזי (למי שעוד לא מנוי) ───
+                  יואב 22.7 (10:39): מי שכבר בפנים (מנוי/אדמין) רואה את כרטיס
+                  קורס-הדגל — באנר-ההצטרפות לידו רק מבלבל, מוסתר. */}
+              {!hasWeeklyChapter && !isAdmin && !accessLoading && (
                 <section
                   style={{
                     marginBottom: "3rem",
