@@ -11,8 +11,9 @@ create table if not exists public.short_links (
 
 alter table public.short_links enable row level security;
 
--- כולם קוראים (ההפניה רצה אצל הגולש); כתיבה — אדמין בלבד (אותו דפוס כמו
--- admin_all של community_courses: user_roles.role in admin/creator).
+-- כולם קוראים (ההפניה רצה אצל הגולש); כתיבה — אדמין/עורך בלבד, דרך has_role
+-- (אותו דפוס כמו admin_all של community_course_lessons; user_roles.user_id
+-- הוא text — השוואה ישירה ל-auth.uid() נופלת על text=uuid).
 drop policy if exists short_links_public_read on public.short_links;
 create policy short_links_public_read on public.short_links
   for select using (true);
@@ -20,15 +21,11 @@ create policy short_links_public_read on public.short_links
 drop policy if exists short_links_admin_write on public.short_links;
 create policy short_links_admin_write on public.short_links
   for all using (
-    exists (
-      select 1 from public.user_roles ur
-      where ur.user_id = auth.uid() and ur.role in ('admin', 'creator')
-    )
+    public.has_role(auth.uid(), 'admin'::app_role)
+    or public.has_role(auth.uid(), 'creator'::app_role)
   ) with check (
-    exists (
-      select 1 from public.user_roles ur
-      where ur.user_id = auth.uid() and ur.role in ('admin', 'creator')
-    )
+    public.has_role(auth.uid(), 'admin'::app_role)
+    or public.has_role(auth.uid(), 'creator'::app_role)
   );
 
 -- ספירת קליקים בלי לפתוח update ציבורי: פונקציה security definer שמעלה
