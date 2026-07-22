@@ -30,7 +30,9 @@ import {
 
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
-import jerusalemWalls from "@/assets/jerusalem-walls.webp";
+// עטיפת "תכנית הפרק השבועי" — אקוורל מסדרת עטיפות-הקורסים (סער אישר 22.7)
+const WEEKLY_CHAPTER_COVER =
+  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/product-images/course-covers/course-weekly-chapter.jpg";
 import { useMyEnrollments, useCommunityCoursesPublic } from "@/hooks/useCourseEnrollment";
 import { useUserAccess } from "@/hooks/useUserAccess";
 import { useAuth } from "@/contexts/AuthContext";
@@ -667,7 +669,7 @@ export default function DesignPreviewMyCourses() {
                 <section
                   style={{
                     marginBottom: "3rem",
-                    backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.92) 0%, rgba(30,25,14,0.78) 48%, rgba(24,19,11,0.5) 100%), url(${jerusalemWalls})`,
+                    backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.88) 0%, rgba(30,25,14,0.72) 48%, rgba(24,19,11,0.42) 100%), url(${WEEKLY_CHAPTER_COVER})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center 35%",
                     borderRadius: radii.xl,
@@ -769,7 +771,7 @@ export default function DesignPreviewMyCourses() {
                           >
                             <div
                               style={{
-                                backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.94) 0%, rgba(30,25,14,0.82) 48%, rgba(24,19,11,0.55) 100%), url(${jerusalemWalls})`,
+                                backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.9) 0%, rgba(30,25,14,0.76) 48%, rgba(24,19,11,0.45) 100%), url(${WEEKLY_CHAPTER_COVER})`,
                                 backgroundSize: "cover",
                                 backgroundPosition: "center 35%",
                                 borderRadius: radii.xl,
