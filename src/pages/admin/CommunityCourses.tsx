@@ -157,7 +157,13 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
           <label className="text-sm font-medium text-foreground">מוצר מקושר בחנות</label>
           <select
             value={storeProductSlug}
-            onChange={(e) => setStoreProductSlug(e.target.value)}
+            onChange={(e) => {
+              const slug = e.target.value;
+              setStoreProductSlug(slug);
+              // יואב 22.7: קישר מוצר אבל הגישה נשארה "פתוח" — הקורס נשאר חינמי
+              // לכולם. קישור מוצר = הקורס נמכר → הגישה עוברת אוטומטית ל"בתשלום".
+              if (slug && accessType === "open") setAccessType("requires_tag");
+            }}
             className="h-11 w-full rounded-md border border-input bg-background px-3 text-sm"
           >
             <option value="">— ללא (רכישה מדף הקורס עצמו) —</option>
@@ -170,6 +176,11 @@ function CourseForm({ course, onSave, onCancel, isPending }: {
               ? `מי שרוכש את "${linkedProduct.title}" בחנות מקבל את הקורס אוטומטית. החיוב בפועל לפי מחיר המוצר (₪${linkedProduct.price}) — המחיר למעלה הוא לתצוגה בקטלוג.`
               : "לקורס שנמכר דרך מוצר בחנות — הרכישה פותחת את הקורס אוטומטית עם המייל של הרוכש."}
           </p>
+          {storeProductSlug && accessType === "open" && (
+            <p className="text-xs font-medium text-destructive">
+              שים לב: הקורס מקושר למוצר אבל הגישה "פתוח" — כל גולש מחובר ילמד חינם. מומלץ לבחור "בתשלום".
+            </p>
+          )}
         </div>
       </div>
       {/* יואב 14.7: העלאת תמונה כמו בחנות — לא שדה קישור */}
@@ -763,7 +774,8 @@ export default function CommunityCourses() {
                 <Plus className="h-4 w-4" /> קורס חדש
               </Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg">
+            {/* יואב 22.7: הטופס גבוה מהמסך ולא נגלל — max-h + overflow */}
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle className="text-xl">{editingCourse ? "עריכת קורס" : "קורס חדש"}</DialogTitle>
                 <DialogDescription>

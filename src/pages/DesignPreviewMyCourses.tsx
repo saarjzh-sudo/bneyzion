@@ -743,17 +743,94 @@ export default function DesignPreviewMyCourses() {
                     </span>
                   </div>
 
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-                      gap: "1.25rem",
-                    }}
-                  >
-                    {myCourses.map((course) => (
-                      <CourseCard key={course.id} course={course} />
-                    ))}
-                  </div>
+                  {/* קורס הדגל (יואב 21.7, הקלטה 19:05): הפרק השבועי = משבצת רחבה
+                      ברוחב מלא עם רשימת הספרים; שאר הקורסים בכרטיסים רגילים לידו */}
+                  {(() => {
+                    const flagship = myCourses.find((c) => c.id === "weekly-chapter");
+                    const rest = myCourses.filter((c) => c.id !== "weekly-chapter");
+                    const programBooks = (allCourses as any[])
+                      .filter((cc: any) => cc.in_weekly_program === true && cc.title)
+                      .map((cc: any) => cc.title as string);
+                    return (
+                      <>
+                        {flagship && (
+                          <Link
+                            to={flagship.ctaTo}
+                            style={{ textDecoration: "none", display: "block", marginBottom: "1.25rem" }}
+                            aria-label="קורס הדגל — תכנית הפרק השבועי"
+                          >
+                            <div
+                              style={{
+                                backgroundImage: `linear-gradient(105deg, rgba(24,19,11,0.94) 0%, rgba(30,25,14,0.82) 48%, rgba(24,19,11,0.55) 100%), url(${jerusalemWalls})`,
+                                backgroundSize: "cover",
+                                backgroundPosition: "center 35%",
+                                borderRadius: radii.xl,
+                                border: "1px solid rgba(196,162,101,0.4)",
+                                boxShadow: "0 14px 44px rgba(24,19,11,0.28)",
+                                padding: "1.9rem 2.1rem",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                gap: "1.5rem",
+                                flexWrap: "wrap",
+                                transition: "transform 0.18s, box-shadow 0.22s",
+                              }}
+                              onMouseEnter={(e) => {
+                                (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
+                                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 56px rgba(24,19,11,0.38)";
+                              }}
+                              onMouseLeave={(e) => {
+                                (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 14px 44px rgba(24,19,11,0.28)";
+                              }}
+                            >
+                              <div style={{ flex: 1, minWidth: 260 }}>
+                                <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: "0.6rem" }}>
+                                  <span style={{ background: gradients.goldButton, color: "white", fontSize: "0.68rem", fontWeight: 700, fontFamily: fonts.display, padding: "3px 12px", borderRadius: radii.pill, boxShadow: shadows.goldGlow }}>
+                                    קורס הדגל
+                                  </span>
+                                  {flagship.tag && (
+                                    <span style={{ background: "rgba(255,255,255,0.16)", color: "white", fontSize: "0.68rem", fontWeight: 700, fontFamily: fonts.display, padding: "3px 12px", borderRadius: radii.pill }}>
+                                      {flagship.tag}
+                                    </span>
+                                  )}
+                                </div>
+                                <h3 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.3rem, 2.6vw, 1.8rem)", color: "white", margin: "0 0 0.35rem", lineHeight: 1.2 }}>
+                                  תכנית הפרק השבועי בתנ״ך
+                                </h3>
+                                <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: "rgba(255,255,255,0.78)", margin: 0, lineHeight: 1.6 }}>
+                                  הרב יואב אוריאל · השער לכל ספרי התכנית
+                                </p>
+                                {programBooks.length > 0 && (
+                                  <p style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.85)", margin: "0.5rem 0 0", lineHeight: 1.6 }}>
+                                    {programBooks.join(" · ")}
+                                  </p>
+                                )}
+                              </div>
+                              <span
+                                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.9rem 2rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.display, fontWeight: 700, fontSize: "0.95rem", boxShadow: shadows.goldGlow, whiteSpace: "nowrap", flexShrink: 0 }}
+                              >
+                                <Play size={15} /> המשך ללמוד
+                              </span>
+                            </div>
+                          </Link>
+                        )}
+                        {rest.length > 0 && (
+                          <div
+                            style={{
+                              display: "grid",
+                              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                              gap: "1.25rem",
+                            }}
+                          >
+                            {rest.map((course) => (
+                              <CourseCard key={course.id} course={course} />
+                            ))}
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                 </section>
               ) : (
                 <div

@@ -16,7 +16,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Filter, Download, FileText, Package } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 const statusLabels: Record<string, string> = { pending: "ממתין", confirmed: "אושר", paid: "שולם", shipped: "נשלח", completed: "הושלם", cancelled: "בוטל", refunded: "הוחזר" };
@@ -55,6 +56,23 @@ function shippingText(o: any): string {
 
 export default function Orders() {
   const { data: orders, isLoading } = useAdminOrders();
+  const queryClient = useQueryClient();
+  // יואב 22.7 (07:30): אביה מסמנת מה כבר נשלח — עדכון סטטוס טיפול ישירות מהטבלה.
+  // RLS: דורש את policy ‏orders_admin_all (מיגרציה 20260722) — בלעדיה
+  // העדכון חוזר עם 0 שורות ומוצגת שגיאה ברורה.
+  const updateStatus = useMutation({
+    mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      const { data, error } = await supabase
+        .from("orders").update({ status }).eq("id", id).select("id");
+      if (error) throw error;
+      if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS)");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
+      toast.success("סטטוס הטיפול עודכן");
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [onlyStore, setOnlyStore] = useState(true);
@@ -156,6 +174,7 @@ export default function Orders() {
                     <TableHead className="text-right">משלוח</TableHead>
                     <TableHead className="text-right">סכום</TableHead>
                     <TableHead className="text-right">תשלום</TableHead>
+                    <TableHead className="text-right">טיפול</TableHead>
                     <TableHead className="text-right">תאריך</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -176,14 +195,32 @@ export default function Orders() {
                       <TableCell className="text-sm max-w-[220px]">{shippingText(o)}</TableCell>
                       <TableCell className="font-bold whitespace-nowrap">₪{Number(o.total).toLocaleString()}</TableCell>
                       <TableCell>
-                        <Badge className={`${isPaid(o) ? "bg-primary/10 text-primary" : statusColors[o.status] || "bg-muted text-muted-foreground"} border-0`}>
-                          {isPaid(o) ? "שולם" : statusLabels[o.status] || o.status}
+                        <Badge className={`${isPaid(o) ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"} border-0`}>
+                          {isPaid(o) ? "שולם" : "ממתין"}
                         </Badge>
+                      </TableCell>
+                      <TableCell>
+                        {/* סטטוס טיפול/משלוח — נערך בשטח ע"י המשרד (אביה) */}
+                        <Select
+                          value={["pending", "confirmed", "shipped", "completed", "cancelled"].includes(o.status) ? o.status : "pending"}
+                          onValueChange={(v) => updateStatus.mutate({ id: o.id, status: v })}
+                        >
+                          <SelectTrigger className={`h-8 w-[120px] text-xs border-0 ${statusColors[o.status] || "bg-muted"}`}>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="pending">ממתין לטיפול</SelectItem>
+                            <SelectItem value="confirmed">בטיפול</SelectItem>
+                            <SelectItem value="shipped">נשלח 📦</SelectItem>
+                            <SelectItem value="completed">הושלם ✓</SelectItem>
+                            <SelectItem value="cancelled">בוטל</SelectItem>
+                          </SelectContent>
+                        </Select>
                       </TableCell>
                       <TableCell className="text-sm text-muted-foreground whitespace-nowrap">{new Date(o.created_at).toLocaleDateString("he-IL")}</TableCell>
                     </TableRow>
                   ))}
-                  {filtered.length === 0 && <TableRow><TableCell colSpan={7} className="text-center text-muted-foreground py-8">אין הזמנות</TableCell></TableRow>}
+                  {filtered.length === 0 && <TableRow><TableCell colSpan={8} className="text-center text-muted-foreground py-8">אין הזמנות</TableCell></TableRow>}
                 </TableBody>
               </Table>
             )}

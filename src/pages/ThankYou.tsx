@@ -398,6 +398,8 @@ function DigitalDownloads() {
   const ordersParam = searchParams.get("orders") || "";
   const orderIds = ordersParam.split(",").filter(Boolean);
   const [items, setItems] = useState<Array<{ title: string; url: string }>>([]);
+  // יואב 22.7 (06:55): קורסים שנפתחו ברכישה — כפתור כניסה ישיר מדף התודה
+  const [courses, setCourses] = useState<Array<{ id: string; title: string }>>([]);
   const [state, setState] = useState<"loading" | "ready" | "pending" | "none">(
     orderIds.length ? "loading" : "none",
   );
@@ -416,8 +418,9 @@ function DigitalDownloads() {
         });
         const data = await res.json();
         if (cancelled) return;
-        if (data.items?.length) {
-          setItems(data.items);
+        if (data.items?.length || data.courses?.length) {
+          setItems(data.items ?? []);
+          setCourses(data.courses ?? []);
           setState("ready");
           return;
         }
@@ -437,6 +440,35 @@ function DigitalDownloads() {
   }, [ordersParam]);
 
   if (state === "none") return null;
+
+  // רכישת קורס בלבד (בלי קבצים) — כרטיס "הקורס שלך" עם כניסה ישירה
+  if (state === "ready" && !items.length && courses.length) {
+    return (
+      <section style={cardStyle} aria-label="הקורס שרכשת">
+        <h2 style={cardTitleStyle}>הקורס שלך מוכן 🎓</h2>
+        <div style={{ display: "grid", gap: "0.75rem" }}>
+          {courses.map((c) => (
+            <Link
+              key={c.id}
+              to={`/portal/course/${c.id}`}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                background: colors.navyDeep, color: "#fff", textDecoration: "none",
+                padding: "0.8rem 1.3rem", borderRadius: radii.md, fontWeight: 700,
+                justifyContent: "center",
+              }}
+            >
+              <BookOpen size={17} /> כניסה לקורס — {c.title}
+            </Link>
+          ))}
+          <p style={{ margin: 0, fontSize: "0.8rem", opacity: 0.7 }}>
+            מתחברים עם Google — עם אותו מייל שאיתו רכשת — והקורס נפתח אוטומטית.
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section style={cardStyle} aria-label="הספרים הדיגיטליים שלך">
       <h2 style={cardTitleStyle}>הספרים הדיגיטליים שלך</h2>

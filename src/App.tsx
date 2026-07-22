@@ -132,6 +132,8 @@ const DesignPreviewYehoshuaCampaign = lazy(() => import("./pages/DesignPreviewYe
 const DesignPreviewYehoshuaAdmin = lazy(() => import("./pages/DesignPreviewYehoshuaAdmin"));
 const DesignPreviewTeacherSeriesPage = lazy(() => import("./pages/DesignPreviewTeacherSeriesPage"));
 const AdminCoupons = lazy(() => import("./pages/admin/Coupons"));
+const AdminShortLinks = lazy(() => import("./pages/admin/ShortLinks"));
+const ShortLinkRedirect = lazy(() => import("./pages/ShortLinkRedirect"));
 const AdminPayments = lazy(() => import("./pages/admin/Payments"));
 const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
 const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
@@ -341,6 +343,7 @@ const App = () => (
             <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
+            <Route path="/s/:code" element={<Suspense fallback={<LazyFallback />}><ShortLinkRedirect /></Suspense>} />
             <Route path="/thank-you" element={<Suspense fallback={<LazyFallback />}><ThankYou /></Suspense>} />
             {/* PRODUCTION — new design (2026-04-30 swap) */}
             <Route path="/portal" element={<RequireAuth><Suspense fallback={<LazyFallback />}><DesignPreviewPortalSubscriber /></Suspense></RequireAuth>} />
@@ -420,6 +423,7 @@ const App = () => (
             <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPayments /></Suspense></ProtectedRoute>} />
             <Route path="/admin/dedications" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Dedications /></Suspense></ProtectedRoute>} />
             <Route path="/admin/coupons" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminCoupons /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/short-links" element={<ProtectedRoute allowedRoles={["admin", "creator"]}><Suspense fallback={<PageSkeleton />}><AdminShortLinks /></Suspense></ProtectedRoute>} />
             <Route path="/admin/analytics" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><Analytics /></Suspense></ProtectedRoute>} />
             <Route path="/admin/messages" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminMessages /></Suspense></ProtectedRoute>} />
             <Route path="/admin/questions" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminQuestions /></Suspense></ProtectedRoute>} />

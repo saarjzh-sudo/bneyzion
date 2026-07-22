@@ -506,3 +506,25 @@ export function useMemberAccess(userEmail: string | undefined) {
     },
   });
 }
+
+/**
+ * הקורס שמקושר למוצר-חנות (community_courses.store_product_slug), אם יש.
+ * משמש את עמוד המוצר: מוצר-קורס לא מציג "משלוח עד הבית", ומציג את תכנית
+ * הקורס המלאה כדף מכירה (סער 22.7).
+ */
+export function useCourseByProductSlug(productSlug: string | undefined) {
+  return useQuery({
+    queryKey: ["course-by-product-slug", productSlug],
+    enabled: !!productSlug,
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("community_courses")
+        .select("id, title, description, access_type, access_tag, store_product_slug")
+        .eq("store_product_slug", productSlug!)
+        .maybeSingle();
+      if (error) throw error;
+      return data as { id: string; title: string; description: string | null } | null;
+    },
+    staleTime: 300_000,
+  });
+}

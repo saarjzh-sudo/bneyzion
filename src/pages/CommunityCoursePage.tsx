@@ -22,8 +22,6 @@ import {
   ChevronDown, CheckCircle2, Circle, ArrowRight, ArrowLeft, BookOpen,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { useSEO } from "@/hooks/useSEO";
 import { useEffect, useMemo, useState } from "react";
 import DesignLayout from "@/components/layout-v2/DesignLayout";
@@ -133,11 +131,16 @@ const CommunityCoursePage = () => {
   if (course && (course as any).program_slug) {
     return <Navigate to={`/course/${(course as any).program_slug}`} replace />;
   }
-  if (!authLoading && !user) return <Navigate to="/auth?redirect=/portal" replace />;
 
   const courseIsOpen = !course?.access_type || course.access_type === "open";
+  // אורח בקורס בתשלום רואה את דף המכירה (22.7) — לא נזרק להתחברות.
+  // אורח בקורס פתוח עדיין מתחבר קודם (הלמידה נרשמת על המשתמש).
+  if (!authLoading && !user && courseIsOpen) {
+    return <Navigate to="/auth?redirect=/portal" replace />;
+  }
   const isMember = courseIsOpen || !!enrollment || tagAccess || isAdmin;
-  const isLoading = authLoading || lessonsLoading || (!courseIsOpen && (enrollLoading || tagLoading));
+  const isLoading =
+    authLoading || lessonsLoading || (!courseIsOpen && !!user && (enrollLoading || tagLoading));
 
   if (isLoading) {
     return (
@@ -151,29 +154,124 @@ const CommunityCoursePage = () => {
     );
   }
 
+  // ── דף מכירה (סער 22.7): מי שאין לו גישה רואה דף מכירה מלא כמו בקורסי-הספרים —
+  // הירו, "על הקורס", וכל תכנית הקורס (כותרות הפרקים והשיעורים), בלי המדיה עצמה.
   if (!isMember) {
+    const buyTo = (course as any)?.store_product_slug
+      ? `/store/${encodeURIComponent((course as any).store_product_slug)}`
+      : `/community/${id}`;
+    const price = Number((course as any)?.price) || 0;
+    const salesText = String((course as any)?.sales_content || "").trim() || course?.description || "";
     return (
       <DesignLayout sidebar={false}>
-        <div className="min-h-[60vh] flex items-center justify-center" dir="rtl">
-          <Card className="max-w-md border-2 border-gold/30 shadow-lg">
-            <CardContent className="p-8 text-center space-y-4">
-              <div className="h-16 w-16 rounded-2xl bg-gold/15 flex items-center justify-center mx-auto">
-                <Lock className="w-8 h-8 text-gold" />
+        <div dir="rtl">
+          {/* הירו */}
+          <div style={{ background: gradients.warmDark, padding: "3rem 1.5rem 2.5rem" }}>
+            <div style={{ maxWidth: 880, margin: "0 auto", display: "flex", gap: "2rem", alignItems: "center", flexWrap: "wrap" }}>
+              <div style={{ flex: 1, minWidth: 280 }}>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: colors.goldShimmer, marginBottom: "0.5rem" }}>
+                  קורסים בתנ״ך · קורס דיגיטלי מוקלט
+                </div>
+                <h1 style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.7rem, 4vw, 2.5rem)", color: "white", margin: "0 0 0.5rem", lineHeight: 1.15 }}>
+                  {course?.title}
+                </h1>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: "rgba(255,255,255,0.85)", marginBottom: "0.4rem" }}>
+                  מאת הרב יואב אוריאל
+                </div>
+                {course?.description && (
+                  <p style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.7, maxWidth: 520, margin: "0.6rem 0 1.4rem" }}>
+                    {course.description}
+                  </p>
+                )}
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+                  <Link
+                    to={buyTo}
+                    style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "1rem 2.2rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "1.05rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
+                  >
+                    לרכישת הקורס{price > 0 ? ` — ₪${price.toLocaleString()}` : ""}
+                  </Link>
+                  <span style={{ fontFamily: fonts.body, fontSize: "0.8rem", color: "rgba(255,255,255,0.65)" }}>
+                    תשלום חד-פעמי · גישה לתמיד
+                  </span>
+                </div>
               </div>
-              <h2 className="text-xl font-heading text-primary">הקורס עוד לא פתוח לך</h2>
-              {(course as any)?.store_product_slug ? (
-                <>
-                  <p className="text-sm text-muted-foreground">אפשר לרכוש את הקורס בחנות — הגישה נפתחת מיד אחרי הרכישה, עם המייל של הרכישה</p>
-                  <Button asChild><Link to={`/store/${(course as any).store_product_slug}`}>לרכישת הקורס</Link></Button>
-                </>
-              ) : (
-                <>
-                  <p className="text-sm text-muted-foreground">אפשר להכיר את הקורס ולהצטרף אליו בדף הקורס</p>
-                  <Button asChild><Link to={`/community/${id}`}>לדף הקורס</Link></Button>
-                </>
+              {course?.image_url && (
+                <img
+                  src={course.image_url}
+                  alt={course?.title || ""}
+                  style={{ width: 240, borderRadius: radii.xl, boxShadow: "0 18px 50px rgba(0,0,0,0.35)", flexShrink: 0 }}
+                />
               )}
-            </CardContent>
-          </Card>
+            </div>
+          </div>
+
+          {/* גוף */}
+          <div style={{ background: colors.parchment, padding: "2.5rem 1.5rem 4rem" }}>
+            <div style={{ maxWidth: 880, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr", gap: "1.5rem" }}>
+
+              {/* על הקורס */}
+              {salesText && (
+                <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem" }}>
+                  <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.25rem", color: colors.textDark, margin: "0 0 0.9rem" }}>על הקורס</h2>
+                  <p style={{ fontFamily: fonts.body, fontSize: "0.92rem", color: colors.textMid, lineHeight: 1.9, whiteSpace: "pre-line", margin: 0 }}>
+                    {salesText}
+                  </p>
+                </section>
+              )}
+
+              {/* תכנית הקורס — כל הפרקים והשיעורים (סער 22.7: זה לב דף המכירה) */}
+              {sections.length > 0 && (
+                <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem" }}>
+                  <h2 style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.25rem", color: colors.textDark, margin: "0 0 0.35rem" }}>תכנית הקורס</h2>
+                  <p style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: colors.textMuted, margin: "0 0 1.2rem" }}>
+                    {flat.length} שיעורים · {sections.length === 1 ? "פרק אחד" : `${sections.length} פרקים`} — כל התכנים נפתחים מיד אחרי הרכישה
+                  </p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "1.1rem" }}>
+                    {sections.map((sec) => (
+                      <div key={sec.title}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.45rem" }}>
+                          <BookOpen size={15} style={{ color: colors.goldDark, flexShrink: 0 }} />
+                          <span style={{ fontFamily: fonts.display, fontWeight: 700, fontSize: "1rem", color: colors.textDark }}>{sec.title}</span>
+                          <span style={{ fontFamily: fonts.body, fontSize: "0.68rem", color: colors.textMuted }}>{sec.lessons.length} שיעורים</span>
+                        </div>
+                        <div style={{ borderInlineStart: "2px solid rgba(196,162,101,0.35)", marginInlineStart: 7, paddingInlineStart: "0.9rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                          {sec.lessons.map((l: any) => (
+                            <div key={l.id} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMid }}>
+                              <Lock size={11} style={{ color: "rgba(139,111,71,0.45)", flexShrink: 0 }} />
+                              <span>{l.title}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* CTA תחתון */}
+              <section style={{ background: "white", borderRadius: radii.xl, border: "1px solid rgba(139,111,71,0.12)", boxShadow: shadows.cardSoft, padding: "1.75rem 2rem", textAlign: "center" }}>
+                {price > 0 && (
+                  <div style={{ fontFamily: fonts.display, fontWeight: 800, fontSize: "1.35rem", color: colors.textDark, marginBottom: 4 }}>
+                    ₪{price.toLocaleString()} · תשלום חד-פעמי
+                  </div>
+                )}
+                <p style={{ fontFamily: fonts.body, fontSize: "0.85rem", color: colors.textMuted, margin: "0 0 1.2rem" }}>
+                  אפשר לרכוש בלי להתחבר — אחרי התשלום מתחברים עם Google עם המייל של הרכישה, והקורס נפתח אוטומטית.
+                </p>
+                <Link
+                  to={buyTo}
+                  style={{ display: "inline-flex", alignItems: "center", gap: "0.6rem", padding: "0.95rem 2.4rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "1rem", textDecoration: "none", boxShadow: shadows.goldGlow }}
+                >
+                  מעבר לרכישה מאובטחת
+                </Link>
+                <div style={{ marginTop: "1.2rem", paddingTop: "1rem", borderTop: "1px solid rgba(139,111,71,0.12)", fontFamily: fonts.body, fontSize: "0.82rem" }}>
+                  <Link to="/portal" style={{ color: colors.textMuted, textDecoration: "underline" }}>
+                    כבר רכשת? כניסה עם Google עם מייל הרכישה
+                  </Link>
+                </div>
+              </section>
+            </div>
+          </div>
         </div>
       </DesignLayout>
     );
@@ -382,8 +480,9 @@ const CommunityCoursePage = () => {
                     })()}
 
                     {selected.content_html && (
+                      // bz-rte-content (יואב 21.7): בלעדיו כותרות מהעורך מוצגות כטקסט שטוח
                       <div
-                        className="prose prose-sm md:prose-base max-w-none text-foreground prose-headings:font-heading prose-headings:text-primary leading-relaxed"
+                        className="bz-rte-content prose prose-sm md:prose-base max-w-none text-foreground leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: sanitizeHtml(selected.content_html ?? "") }}
                       />
                     )}

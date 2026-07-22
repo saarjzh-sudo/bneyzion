@@ -200,11 +200,16 @@ export async function notifyOfficeNewOrder(params: {
   shippingCity?: string | null;
   description?: string | null;
   hasDigital: boolean;
+  /** יואב 22.7: קורסים שנפתחו לרוכש בעקבות ההזמנה — מוצג במייל המשרד */
+  courseTitles?: string[];
 }): Promise<boolean> {
   const p = params;
   const itemsHtml = p.itemTitles.length
     ? `<ul>${p.itemTitles.map((t) => `<li>${t}</li>`).join("")}</ul>`
     : `<p>${p.description || "—"}</p>`;
+  const coursesHtml = p.courseTitles?.length
+    ? `<p><b>נפתחה גישה לקורס:</b> ${p.courseTitles.join(" · ")} (לפי מייל הרוכש)</p>`
+    : "";
   const shipping = p.shippingAddress
     ? `<p><b>משלוח:</b> ${p.shippingAddress}${p.shippingCity ? ", " + p.shippingCity : ""}</p>`
     : `<p><b>משלוח:</b> ${p.hasDigital ? "דיגיטלי — נשלח אוטומטית במייל" : "איסוף עצמי / לא צוין"}</p>`;
@@ -214,6 +219,7 @@ export async function notifyOfficeNewOrder(params: {
        <b>מייל:</b> ${p.customerEmail || "—"}<br/>
        <b>טלפון:</b> ${p.customerPhone || "—"}</p>
     <p><b>מוצרים:</b></p>${itemsHtml}
+    ${coursesHtml}
     <p><b>סכום:</b> ₪${Number(p.total).toLocaleString()}</p>
     ${shipping}
     ${p.orderNumber ? `<p style="font-size:12px;color:#A69882">הזמנה: ${p.orderNumber}</p>` : ""}
@@ -245,8 +251,31 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
 
   const digitalItems = await loadDigitalItems(supabase, orderId);
   const { data: allItems } = await supabase
-    .from("order_items").select("title").eq("order_id", orderId);
-  const itemTitles = (allItems ?? []).map((r: any) => String(r.title)).filter(Boolean);
+    .from("order_items")
+    .select("title, quantity, total_price, products:product_id (slug)")
+    .eq("order_id", orderId);
+  const itemTitles = (allItems ?? [])
+    .map((r: any) => {
+      const qty = Number(r.quantity) || 1;
+      const price = Number(r.total_price) || 0;
+      return `${r.title}${qty > 1 ? ` ×${qty}` : ""}${price ? ` — ₪${price.toLocaleString()}` : ""}`;
+    })
+    .filter(Boolean);
+
+  // יואב 22.7: אם ההזמנה פותחת קורס דיגיטלי — מציינים את זה במייל המשרד
+  let courseTitles: string[] = [];
+  try {
+    const slugs = (allItems ?? [])
+      .map((r: any) => r.products?.slug)
+      .filter((s: unknown): s is string => typeof s === "string" && !!s);
+    if (slugs.length) {
+      const { data: courses } = await supabase
+        .from("community_courses")
+        .select("title, store_product_slug")
+        .in("store_product_slug", slugs);
+      courseTitles = (courses ?? []).map((c: any) => String(c.title)).filter(Boolean);
+    }
+  } catch { /* non-fatal */ }
 
   let deliveredToBuyer = false;
   if (digitalItems.length && (order as any).customer_email) {
@@ -275,6 +304,7 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
       shippingCity: (order as any).shipping_city,
       description: (order as any).description,
       hasDigital: digitalItems.length > 0,
+      courseTitles,
     });
   }
 

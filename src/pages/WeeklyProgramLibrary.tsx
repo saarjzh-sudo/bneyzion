@@ -9,7 +9,7 @@
  *
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import {
   BookOpen,
   Lock,
@@ -191,26 +191,17 @@ export default function WeeklyProgramLibrary() {
   const { hasAccess: hasProgramAccess } = useUserAccess("program:weekly-chapter");
   const { hasAccess: eichaAccess } = useUserAccess("program:eicha-monday");
   const { isAdmin } = useAuth();
-  const navigate = useNavigate();
 
-  // Redirect to the current book when one is marked is_current=true.
-  // (סער 10.7) גם אדמין מופנה ישר לפרק — "ספריית הספרים" לא נחוצה כעמוד ביניים;
-  // החלפת ספרים נעשית מה-BookSwitcher והאקורדיון בדף הספר עצמו.
-  // WeeklyCourse.is_current is boolean|null after the regen.
   // קוהורט איכה בלבד → הספר "הנוכחי" שלו הוא איכה (ימי שני), לא ספר ימי-רביעי.
   const eichaOnly = eichaAccess && !hasProgramAccess;
   if (!isLoading && eichaOnly && !isAdmin) {
     return <Navigate to="/course/book-lamentations" replace />;
   }
-  // "להתחיל ללמוד" נוחת על הספר *והפרק* הנלמדים עכשיו:
-  // הספרייה מפנה לספר הנוכחי (is_current=true, יחיד ב-DB), ובתוך
-  // WeeklyBookDetail ה-auto-jump נוחת על הפרק הנוכחי — ה-bible_chapter הגבוה
-  // ביותר עם שיעור weekly שפורסם. מקור האמת המלא מתועד
-  // ב-src/hooks/useWeeklyProgramChapters.ts — לא לשכפל את הלוגיקה כאן.
+  // יואב 21.7 (17:47, ביטול החלטת 10.7): הכניסה לקורס הפרק השבועי היא עמוד
+  // שער — תפריט לכל הספרים, והכפתור הראשון "כניסה לפרק השבועי הנוכחי" מוביל
+  // לספר הנוכחי (is_current=true). בתוך WeeklyBookDetail ה-auto-jump נוחת על
+  // הפרק הנוכחי (מקור האמת: src/hooks/useWeeklyProgramChapters.ts).
   const currentBook = books.find((b) => b.is_current === true);
-  if (!isLoading && currentBook) {
-    return <Navigate to={`/course/${currentBook.program_slug}`} replace />;
-  }
 
   return (
     <DesignLayout sidebar={false}>
@@ -281,6 +272,56 @@ export default function WeeklyProgramLibrary() {
             <Loader2 size={32} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} />
             <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
           </div>
+        )}
+
+        {/* הכפתור הראשון (יואב 21.7): כניסה לפרק השבועי הנוכחי */}
+        {!isLoading && currentBook && (
+          <Link
+            to={`/course/${currentBook.program_slug}`}
+            style={{ textDecoration: "none", display: "block", marginBottom: "2rem" }}
+            aria-label={`כניסה לפרק השבועי הנוכחי — ${currentBook.title}`}
+          >
+            <div
+              style={{
+                background: gradients.warmDark,
+                borderRadius: radii.xl,
+                border: "1px solid rgba(196,162,101,0.4)",
+                boxShadow: "0 14px 40px rgba(24,19,11,0.25)",
+                padding: "1.6rem 1.9rem",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "1.25rem",
+                flexWrap: "wrap",
+                transition: "transform 0.18s, box-shadow 0.22s",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLDivElement).style.transform = "translateY(-3px)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 52px rgba(24,19,11,0.35)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
+                (e.currentTarget as HTMLDivElement).style.boxShadow = "0 14px 40px rgba(24,19,11,0.25)";
+              }}
+            >
+              <div style={{ flex: 1, minWidth: 240 }}>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.15em", color: colors.goldShimmer, marginBottom: "0.35rem" }}>
+                  לומדים עכשיו
+                </div>
+                <div style={{ fontFamily: fonts.display, fontWeight: 900, fontSize: "clamp(1.2rem, 2.6vw, 1.6rem)", color: "white", lineHeight: 1.2 }}>
+                  כניסה לפרק השבועי הנוכחי — {currentBook.title}
+                </div>
+                <div style={{ fontFamily: fonts.body, fontSize: "0.82rem", color: "rgba(255,255,255,0.65)", marginTop: "0.3rem" }}>
+                  נוחתים ישר על הפרק הנלמד השבוע
+                </div>
+              </div>
+              <span
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", padding: "0.85rem 1.9rem", borderRadius: radii.lg, background: gradients.goldButton, color: "white", fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.95rem", boxShadow: shadows.goldGlow, whiteSpace: "nowrap" }}
+              >
+                <BookOpen size={16} /> להמשיך ללמוד
+              </span>
+            </div>
+          </Link>
         )}
 
         {/* Books grid */}

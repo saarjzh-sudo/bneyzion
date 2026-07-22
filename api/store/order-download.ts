@@ -29,6 +29,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
   const items: Array<{ title: string; url: string }> = [];
+  // יואב 22.7 (06:55): רוכש קורס מקבל בדף התודה כפתור כניסה ישיר לקורס
+  const courses: Array<{ id: string; title: string }> = [];
   let pending = false;
 
   for (const orderId of orderIds) {
@@ -39,13 +41,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       .maybeSingle();
     if (!order) continue;
     const digital = await loadDigitalItems(supabase as any, orderId);
-    if (!digital.length) continue;
+
+    // קורסים שההזמנה פותחת — דרך order_items → products.slug → community_courses
+    const { data: orderItems } = await supabase
+      .from("order_items")
+      .select("products:product_id (slug)")
+      .eq("order_id", orderId);
+    const slugs = (orderItems ?? [])
+      .map((r: any) => r.products?.slug)
+      .filter((s: unknown): s is string => typeof s === "string" && !!s);
+    let orderCourses: Array<{ id: string; title: string }> = [];
+    if (slugs.length) {
+      const { data: linked } = await supabase
+        .from("community_courses")
+        .select("id, title, store_product_slug")
+        .in("store_product_slug", slugs);
+      orderCourses = (linked ?? []).map((c: any) => ({ id: String(c.id), title: String(c.title) }));
+    }
+
+    if (!digital.length && !orderCourses.length) continue;
     if ((order as any).payment_status !== "completed") {
       pending = true;
       continue;
     }
     items.push(...(await signItems(supabase as any, digital, LINK_EXPIRY_SEC)));
+    courses.push(...orderCourses);
   }
 
-  return res.status(200).json({ items, pending });
+  return res.status(200).json({ items, courses, pending });
 }

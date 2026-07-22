@@ -4,7 +4,7 @@ import {
   BarChart3, Ticket, CreditCard,
   UserCheck, Upload, CalendarDays, Megaphone,
   MessageCircle, Heart, SlidersHorizontal, HelpCircle,
-  Package, Bot,
+  Package, Bot, Link2,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -70,6 +70,7 @@ const SECTIONS: NavSection[] = [
       { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },
       { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
+      { title: "קישורים מקוצרים", url: "/admin/short-links",  icon: Link2,       roles: CREATOR },
       { title: "הודעות והתראות", url: "/admin/messages",     icon: Mail,        roles: ADMIN },
       // רמה 14 (סער 10.7): שאלות ותשובות — "שאל את הרב" באתר → תור מסודר כאן
       { title: "שאל את הרב",    url: "/admin/questions",     icon: HelpCircle,  roles: ADMIN },

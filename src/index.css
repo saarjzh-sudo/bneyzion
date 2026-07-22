@@ -533,6 +533,37 @@
   margin: 1rem 0;
 }
 
+/* bz-rte-content — תצוגת תוכן שנכתב בעורך (TipTap) בכל האתר.
+   יואב 21.7 (הקלטה 07:59): כותרות שהוגדרו בעורך נראו למשתמשים כטקסט רגיל —
+   הסטיילים חיו רק בתוך RichTextEditor (style scoped באדמין), ובאתר עצמו
+   ה-preflight של Tailwind מאפס h1-h4 ל-inherit. הבלוק הזה = אותם כללים
+   בדיוק כמו בעורך (WYSIWYG), גלובלית, לכל מקום שמרנדר תוכן-עורך. */
+.bz-rte-content h2 {
+  font-size: 1.5rem; font-weight: 700; color: hsl(var(--primary));
+  margin: 1.25em 0 0.4em;
+}
+.bz-rte-content h3 {
+  font-size: 1.25rem; font-weight: 700; color: hsl(var(--primary));
+  margin: 1.1em 0 0.35em;
+}
+.bz-rte-content h4 {
+  font-size: 1.1rem; font-weight: 700;
+  margin: 1em 0 0.3em;
+}
+.bz-rte-content p { margin: 0.5em 0; }
+.bz-rte-content strong { font-weight: 700; }
+.bz-rte-content blockquote {
+  border-inline-start: 3px solid #C4A265;
+  padding-inline-start: 1rem;
+  margin: 0.75em 0;
+  color: hsl(var(--muted-foreground));
+}
+.bz-rte-content ul { list-style: disc; padding-inline-start: 1.5rem; margin: 0.5em 0; }
+.bz-rte-content ol { list-style: decimal; padding-inline-start: 1.5rem; margin: 0.5em 0; }
+.bz-rte-content a { color: hsl(var(--primary)); text-decoration: underline; }
+.bz-rte-content img { max-width: 100%; border-radius: 0.75rem; margin: 0.75em 0; }
+.bz-rte-content hr { border: none; border-top: 1px solid #C4A26555; margin: 1.25em 0; }
+
 .umbraco-content h2,
 .umbraco-content h3 {
   font-family: 'Kedem', 'Frank Ruhl Libre', serif;

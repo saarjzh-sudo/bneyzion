@@ -1,9 +1,10 @@
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag, Zap, PenLine } from "lucide-react";
+import { ArrowRight, BookOpen, Monitor, FileText, ShoppingCart, Package, Tag, Zap, PenLine, GraduationCap, Lock } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { useProduct, useProducts } from "@/hooks/useProducts";
+import { useCourseByProductSlug, useCourseLessons } from "@/hooks/useCommunity";
 import { useCart } from "@/contexts/CartContext";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +25,22 @@ const ProductPage = () => {
   const discountPercent = hasDiscount
     ? Math.round(((product.original_price! - product.price) / product.original_price!) * 100)
     : 0;
+
+  // מוצר-קורס (יואב 22.7): מוצר שקורס דיגיטלי מקושר אליו — בלי משלוח,
+  // עם תכנית הקורס המלאה על עמוד המוצר (דף המכירה — סער 22.7).
+  const { data: linkedCourse } = useCourseByProductSlug(product?.slug);
+  const { data: courseLessons } = useCourseLessons(linkedCourse?.id);
+  const isCourseProduct = !!linkedCourse;
+  const courseSections = (() => {
+    const out: Array<{ title: string; lessons: string[] }> = [];
+    for (const l of (courseLessons ?? []) as any[]) {
+      const t = String(l.section_title || "").trim() || "שיעורי הקורס";
+      const last = out[out.length - 1];
+      if (last && last.title === t) last.lessons.push(l.title);
+      else out.push({ title: t, lessons: [l.title] });
+    }
+    return out;
+  })();
 
   if (isLoading) {
     return (
@@ -129,9 +146,10 @@ const ProductPage = () => {
                   <BookOpen className="h-20 w-20 text-muted-foreground/20" />
                 </div>
               )}
+              {/* יואב 22.7: "-63%" עם מינוס בצד המבלבל ב-RTL → "63% הנחה" ברור */}
               {hasDiscount && (
-                <div className="absolute top-4 right-4 bg-destructive text-destructive-foreground rounded-full w-14 h-14 flex items-center justify-center text-sm font-heading">
-                  -{discountPercent}%
+                <div className="absolute top-4 right-4 bg-destructive text-destructive-foreground rounded-full px-4 py-2 text-sm font-heading shadow-md">
+                  {discountPercent}% הנחה
                 </div>
               )}
             </div>
@@ -161,13 +179,19 @@ const ProductPage = () => {
                     מהדורה דיגיטלית מוקדמת — קובץ להורדה
                   </Badge>
                 )}
-                {product.is_digital && (
+                {/* יואב 22.7: מוצר-קורס אינו "משלוח עד הבית" ואינו קובץ במייל —
+                    הגישה נפתחת באתר מיד אחרי הרכישה */}
+                {isCourseProduct ? (
+                  <Badge variant="outline" className="text-xs gap-1">
+                    <GraduationCap className="h-3 w-3" />
+                    קורס דיגיטלי — צפייה באתר מיד אחרי הרכישה
+                  </Badge>
+                ) : product.is_digital ? (
                   <Badge variant="outline" className="text-xs gap-1">
                     <Monitor className="h-3 w-3" />
                     מוצר דיגיטלי
                   </Badge>
-                )}
-                {!product.is_digital && (
+                ) : (
                   <Badge variant="outline" className="text-xs gap-1">
                     <Package className="h-3 w-3" />
                     משלוח עד הבית
@@ -206,44 +230,96 @@ const ProductPage = () => {
               </div>
             )}
 
-            {/* CTA — add to cart (primary, standard store flow) + quick direct buy */}
-            <div className="space-y-2">
-              <Button
-                size="lg"
-                className="w-full text-base gap-2 py-6"
-                onClick={() => addItem(product)}
-              >
-                <ShoppingCart className="h-5 w-5" />
-                הוספה לעגלה
-              </Button>
-              <StoreCheckoutDialog
-                productSlug={product.slug}
-                productTitle={product.title}
-                productPrice={product.price}
-                isPhysical={!product.is_digital}
-              >
+            {/* CTA — מוצר-קורס: רכישה ישירה בלבד (בלי עגלה ובלי משלוח — הגישה
+                נפתחת לפי מייל הרכישה). מוצר רגיל: עגלה + קנייה מהירה. */}
+            {isCourseProduct ? (
+              <div className="space-y-2">
+                <StoreCheckoutDialog
+                  productSlug={product.slug}
+                  productTitle={product.title}
+                  productPrice={product.price}
+                  isPhysical={false}
+                >
+                  <Button size="lg" className="w-full text-base gap-2 py-6">
+                    <GraduationCap className="h-5 w-5" />
+                    רכישת הקורס — גישה מיידית
+                  </Button>
+                </StoreCheckoutDialog>
+                <p className="text-xs text-muted-foreground text-center">
+                  אחרי התשלום מתחברים לאתר עם Google — עם המייל של הרכישה — והקורס נפתח אוטומטית
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-2">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="w-full text-base gap-2"
+                  className="w-full text-base gap-2 py-6"
+                  onClick={() => addItem(product)}
                 >
-                  <Zap className="h-4 w-4" />
-                  קנייה מהירה
+                  <ShoppingCart className="h-5 w-5" />
+                  הוספה לעגלה
                 </Button>
-              </StoreCheckoutDialog>
-            </div>
+                <StoreCheckoutDialog
+                  productSlug={product.slug}
+                  productTitle={product.title}
+                  productPrice={product.price}
+                  isPhysical={!product.is_digital}
+                >
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full text-base gap-2"
+                  >
+                    <Zap className="h-4 w-4" />
+                    קנייה מהירה
+                  </Button>
+                </StoreCheckoutDialog>
+              </div>
+            )}
             {/* source_url preserved in DB for fallback reference — not used in UI */}
 
             {/* Content */}
             {product.content && (
               <div
-                className="prose prose-sm max-w-none text-foreground/80 mt-6"
+                className="bz-rte-content prose prose-sm max-w-none text-foreground/80 mt-6"
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.content ?? "") }}
               />
             )}
           </motion.div>
         </div>
       </section>
+
+      {/* תכנית הקורס (סער 22.7): דף המכירה של קורס מציג את כל כותרות
+          הפרקים והשיעורים — הלקוח יודע בדיוק מה הוא קונה */}
+      {isCourseProduct && courseSections.length > 0 && (
+        <section className="container py-4 max-w-5xl">
+          <div className="glass-card-light rounded-2xl p-6 md:p-8">
+            <h2 className="text-xl font-heading text-foreground mb-1">תכנית הקורס</h2>
+            <p className="text-sm text-muted-foreground mb-6">
+              {(courseLessons ?? []).length} שיעורים · {courseSections.length === 1 ? "פרק אחד" : `${courseSections.length} פרקים`} — כל התכנים נפתחים מיד אחרי הרכישה
+            </p>
+            <div className="space-y-5">
+              {courseSections.map((sec) => (
+                <div key={sec.title}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <BookOpen className="h-4 w-4 text-primary shrink-0" />
+                    <span className="font-heading text-foreground">{sec.title}</span>
+                    <span className="text-xs text-muted-foreground">{sec.lessons.length} שיעורים</span>
+                  </div>
+                  <div className="border-r-2 border-primary/20 mr-2 pr-4 space-y-1.5">
+                    {sec.lessons.map((title, i) => (
+                      <div key={i} className="flex items-center gap-2 text-sm text-foreground/80">
+                        <Lock className="h-3 w-3 text-muted-foreground/50 shrink-0" />
+                        <span>{title}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Products */}
       {related && related.length > 0 && (
