@@ -564,6 +564,17 @@
 .bz-rte-content img { max-width: 100%; border-radius: 0.75rem; margin: 0.75em 0; }
 .bz-rte-content hr { border: none; border-top: 1px solid #C4A26555; margin: 1.25em 0; }
 
+/* יואב 23.7 (רמה 28): מספור כותרות "נעלם במיגרציה" — המספרים שמורים ב-DB
+   כ-<ol><li>, אבל אין @tailwindcss/typography בפרויקט (prose = מחלקה אינרטית)
+   וה-preflight מאפס list-style. הכללים כאן מחזירים רשימות בכל מעטפת prose. */
+.prose ol { list-style: decimal; padding-inline-start: 1.5rem; margin: 0.5em 0; }
+.prose ul { list-style: disc; padding-inline-start: 1.5rem; margin: 0.5em 0; }
+.prose li { margin-bottom: 0.25em; }
+.prose ol > li::marker, .prose ul > li::marker { color: inherit; font-weight: 700; }
+
+.umbraco-content ol { list-style: decimal; padding-inline-start: 1.5rem; margin: 0.5em 0; }
+.umbraco-content ul { list-style: disc; padding-inline-start: 1.5rem; margin: 0.5em 0; }
+
 .umbraco-content h2,
 .umbraco-content h3 {
   font-family: 'Kedem', 'Frank Ruhl Libre', serif;

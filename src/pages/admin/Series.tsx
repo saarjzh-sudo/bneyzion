@@ -10,11 +10,11 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Plus, Search, Pencil, Trash2, Tag, GraduationCap, Users, CheckCircle, RotateCcw, Clock, AlertCircle } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Tag, GraduationCap, Users, CheckCircle, RotateCcw, Clock, AlertCircle, ListTree, List as ListIcon, ChevronLeft, FolderOpen, Home } from "lucide-react";
 import { useCreateSeries, useUpdateSeries, useDeleteSeries } from "@/hooks/useSeries";
 import {
-  useAdminSeriesPage, useAdminSeriesCounts, useDebouncedValue,
-  ADMIN_PAGE_SIZE, type AdminSeriesTab, type AdminAudienceFilter,
+  useAdminSeriesPage, useAdminSeriesCounts, useDebouncedValue, useSeriesTreeLevel,
+  ADMIN_PAGE_SIZE, type AdminSeriesTab, type AdminAudienceFilter, type SeriesTreeRow,
 } from "@/hooks/useAdminContent";
 import { SeriesCombobox } from "@/components/admin/SeriesCombobox";
 import { useRabbis } from "@/hooks/useRabbis";
@@ -44,6 +44,81 @@ const SeriesStatusBadge = ({ status }: { status: string }) => {
     </span>
   );
 };
+
+// ── ניווט-עץ (יואב 23.7 22:12: "לנווט כאילו בתוך עץ האתר, כמו באתר הישן") ──
+function SeriesTreeBrowser({ path, onPathChange, onEdit }: {
+  path: { id: string; title: string }[];
+  onPathChange: (p: { id: string; title: string }[]) => void;
+  onEdit: (s: SeriesTreeRow) => void;
+}) {
+  const current = path.length ? path[path.length - 1] : null;
+  const { data: rows = [], isLoading } = useSeriesTreeLevel(current?.id ?? null);
+
+  return (
+    <div className="space-y-3">
+      {/* Breadcrumb */}
+      <div className="flex items-center flex-wrap gap-1 text-sm">
+        <button
+          onClick={() => onPathChange([])}
+          className={`flex items-center gap-1 px-2 py-1 rounded-md transition-colors ${
+            path.length === 0 ? "font-bold text-foreground" : "text-muted-foreground hover:bg-muted"
+          }`}
+        >
+          <Home className="h-3.5 w-3.5" />
+          ראש העץ
+        </button>
+        {path.map((node, i) => (
+          <span key={node.id} className="flex items-center gap-1">
+            <ChevronLeft className="h-3.5 w-3.5 text-muted-foreground" />
+            <button
+              onClick={() => onPathChange(path.slice(0, i + 1))}
+              className={`px-2 py-1 rounded-md transition-colors max-w-[220px] truncate ${
+                i === path.length - 1 ? "font-bold text-foreground" : "text-muted-foreground hover:bg-muted"
+              }`}
+            >
+              {node.title}
+            </button>
+          </span>
+        ))}
+      </div>
+
+      {isLoading ? (
+        <p className="text-center py-8 text-muted-foreground">טוען...</p>
+      ) : rows.length === 0 ? (
+        <p className="text-center py-8 text-muted-foreground">אין סדרות תחת הצומת הזה.</p>
+      ) : (
+        <div className="divide-y rounded-lg border">
+          {rows.map((r) => (
+            <div key={r.id} className="flex items-center gap-3 px-3 py-2.5 hover:bg-muted/40">
+              {r.hasChildren ? (
+                <button
+                  onClick={() => onPathChange([...path, { id: r.id, title: r.title }])}
+                  className="flex items-center gap-2 flex-1 min-w-0 text-right"
+                  title="פתיחת הצומת"
+                >
+                  <FolderOpen className="h-4 w-4 text-purple-600 shrink-0" />
+                  <span className="font-medium truncate">{r.title}</span>
+                  <ChevronLeft className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                </button>
+              ) : (
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <span className="w-4 shrink-0" />
+                  <span className="font-medium truncate">{r.title}</span>
+                </div>
+              )}
+              <span className="text-xs text-muted-foreground w-32 truncate hidden md:block">{r.rabbis?.name || "—"}</span>
+              <span className="text-xs text-muted-foreground w-16 hidden sm:block">{r.lesson_count ?? 0} שיעורים</span>
+              <SeriesStatusBadge status={r.status} />
+              <Button variant="ghost" size="icon" onClick={() => onEdit(r)} aria-label="עריכה">
+                <Pencil className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 // ── Feature 6: useApproveSeries mutation ────────────────────────────────────
 function useApproveSeries() {
@@ -162,6 +237,9 @@ export function SeriesContent() {
   const [audienceFilter, setAudienceFilter] = useState<AudienceFilter>("all");
   const [activeTab, setActiveTab] = useState<SeriesTab>("all");
   const [page, setPage] = useState(1);
+  // יואב 23.7 22:12: ניווט-עץ כמו באתר הישן — "רשימה" (ברירת-מחדל) / "עץ"
+  const [viewMode, setViewMode] = useState<"list" | "tree">("list");
+  const [treePath, setTreePath] = useState<{ id: string; title: string }[]>([]);
 
   // חיפוש + סינון + דפדוף בצד השרת — יש 1,750+ סדרות ב-DB,
   // שליפת-הכל נחתכה בתקרת 1000 השורות של PostgREST (751 סדרות ותיקות נעלמו מהאדמין).
@@ -337,7 +415,7 @@ export function SeriesContent() {
             <DialogTrigger asChild>
               <Button className="font-display"><Plus className="h-4 w-4 ml-1" />סדרה חדשה</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg" dir="rtl">
+            <DialogContent className="max-w-lg max-h-[88vh] overflow-y-auto" dir="rtl">
               <DialogHeader>
                 <DialogTitle className="font-heading flex items-center gap-3">
                   {editing ? "עריכת סדרה" : "סדרה חדשה"}
@@ -551,18 +629,44 @@ export function SeriesContent() {
         {/* Table */}
         <Card>
           <CardHeader className="pb-3">
-            <div className="relative">
-              <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="חיפוש סדרות..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="pr-9"
-              />
+            <div className="flex items-center gap-2">
+              <div className="relative flex-1">
+                <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="חיפוש לפי שם סדרה או שם רב..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="pr-9"
+                />
+              </div>
+              {/* יואב 23.7 22:12: מצב עץ — ניווט בסדרות כמו בעץ האתר */}
+              <div className="flex items-center rounded-lg border overflow-hidden shrink-0">
+                {([
+                  { id: "list", label: "רשימה", Icon: ListIcon },
+                  { id: "tree", label: "עץ", Icon: ListTree },
+                ] as const).map(({ id, label, Icon }) => (
+                  <button
+                    key={id}
+                    onClick={() => setViewMode(id)}
+                    className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors ${
+                      viewMode === id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"
+                    }`}
+                  >
+                    <Icon className="h-3.5 w-3.5" />
+                    {label}
+                  </button>
+                ))}
+              </div>
             </div>
           </CardHeader>
           <CardContent>
-            {isLoading ? (
+            {viewMode === "tree" ? (
+              <SeriesTreeBrowser
+                path={treePath}
+                onPathChange={setTreePath}
+                onEdit={openEdit}
+              />
+            ) : isLoading ? (
               <p className="text-center py-8 text-muted-foreground">טוען...</p>
             ) : (
               <Table>

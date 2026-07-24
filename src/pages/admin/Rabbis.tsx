@@ -134,7 +134,8 @@ export default function Rabbis() {
             <DialogTrigger asChild>
               <Button className="font-display"><Plus className="h-4 w-4 ml-1" />רב / יוצר חדש</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg" dir="rtl">
+            {/* יואב 23.7 23:12: הטופס עבר את גובה המסך בלי גלילה */}
+            <DialogContent className="max-w-lg max-h-[88vh] overflow-y-auto" dir="rtl">
               <DialogHeader><DialogTitle className="font-heading">{editing ? "עריכת רב / יוצר" : "רב / יוצר חדש"}</DialogTitle></DialogHeader>
               <div className="grid gap-4 py-4">
                 <div>

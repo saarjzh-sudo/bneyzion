@@ -92,7 +92,7 @@ const PainAndDream = () => (
           <h3 className="text-3xl md:text-4xl lg:text-5xl font-bold text-accent mb-12">דמיין את עצמך עוד שנה מהיום...</h3>
 
           <div className="space-y-8 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed text-primary-foreground/90">
-            <div className="premium-card bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground">
+            <div className="rounded-2xl border p-6 md:p-8 shadow-xl bg-white/10 border-white/25 text-primary-foreground backdrop-blur-sm">
               <h4 className="font-bold text-accent text-xl mb-3">בבית הכנסת</h4>
               <p>
                 אתה יושב באותו מקום. החזן מתחיל לקרוא את ההפטרה.
@@ -104,7 +104,7 @@ const PainAndDream = () => (
               </p>
             </div>
 
-            <div className="premium-card bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground">
+            <div className="rounded-2xl border p-6 md:p-8 shadow-xl bg-white/10 border-white/25 text-primary-foreground backdrop-blur-sm">
               <h4 className="font-bold text-accent text-xl mb-3">בשולחן שבת, עם הילדים</h4>
               <p>
                 הילדים מפתיעים עם שאלה על התנ"ך. אתה לא מחפש תירוץ או מפנה אותם למורה.
@@ -114,7 +114,7 @@ const PainAndDream = () => (
               </p>
             </div>
 
-            <div className="premium-card bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground">
+            <div className="rounded-2xl border p-6 md:p-8 shadow-xl bg-white/10 border-white/25 text-primary-foreground backdrop-blur-sm">
               <h4 className="font-bold text-accent text-xl mb-3">השינוי הפנימי</h4>
               <p>
                 כשחבר שואל אותך על דניאל, עזרא, או יחזקאל – <span className="text-accent font-semibold">אתה לא מגמגם.</span>
@@ -123,7 +123,7 @@ const PainAndDream = () => (
               </p>
             </div>
 
-            <div className="premium-card bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground">
+            <div className="rounded-2xl border p-6 md:p-8 shadow-xl bg-white/10 border-white/25 text-primary-foreground backdrop-blur-sm">
               <h4 className="font-bold text-accent text-xl mb-3">והכי חשוב...</h4>
               <p>
                 חיי השיגרה שלך נשארו אותו הדבר – אותה עבודה, אותה משפחה, אותם הרגלים.

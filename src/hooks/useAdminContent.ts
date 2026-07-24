@@ -19,6 +19,19 @@ export const ADMIN_PAGE_SIZE = 50;
 const sanitizeTerm = (t: string) =>
   t.replace(/[%_,()\\]/g, " ").replace(/\s+/g, " ").trim();
 
+/** יואב 23.7 22:12: חיפוש באדמין גם לפי שם הרב — מזהי רבנים שתואמים למונח.
+ *  הרשימה קטנה (מאות), אז שאילתת-עזר אחת מספיקה; "הרב"/"הרבנית" בתחילת
+ *  המונח מוסרים כדי ש"הרב בניה" ימצא את "בניה כהן" גם אם השם שמור בלי תואר. */
+async function rabbiIdsMatching(term: string): Promise<string[]> {
+  const bare = term.replace(/^(הרב|הרבנית|רב)\s+/, "");
+  const { data } = await supabase
+    .from("rabbis")
+    .select("id")
+    .or(`name.ilike.%${term}%${bare !== term ? `,name.ilike.%${bare}%` : ""}`)
+    .limit(40);
+  return (data ?? []).map((r) => r.id);
+}
+
 export function useDebouncedValue<T>(value: T, delay = 350): T {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -69,7 +82,11 @@ export function useAdminLessonsPage({
         .order("created_at", { ascending: false })
         .range((page - 1) * ADMIN_PAGE_SIZE, page * ADMIN_PAGE_SIZE - 1);
       if (status !== "all") q = q.eq("status", status);
-      if (term) q = q.or(`title.ilike.%${term}%,description.ilike.%${term}%`);
+      if (term) {
+        const rabbiIds = await rabbiIdsMatching(term);
+        const rabbiClause = rabbiIds.length ? `,rabbi_id.in.(${rabbiIds.join(",")})` : "";
+        q = q.or(`title.ilike.%${term}%,description.ilike.%${term}%${rabbiClause}`);
+      }
       const { data, error, count } = await q;
       if (error) throw error;
       return { rows: (data ?? []) as any[], total: count ?? 0 };
@@ -134,12 +151,74 @@ export function useAdminSeriesPage({
       if (tab !== "all") q = q.eq("status", tab);
       if (audience === "teachers") q = q.contains("audience_tags", ["teachers"]);
       if (audience === "general") q = q.not("audience_tags", "cs", "{teachers}");
-      if (term) q = q.ilike("title", `%${term}%`);
+      if (term) {
+        const rabbiIds = await rabbiIdsMatching(term);
+        const rabbiClause = rabbiIds.length ? `,rabbi_id.in.(${rabbiIds.join(",")})` : "";
+        q = q.or(`title.ilike.%${term}%${rabbiClause}`);
+      }
       const { data, error, count } = await q;
       if (error) throw error;
       return { rows: (data ?? []) as any[], total: count ?? 0 };
     },
     placeholderData: (prev) => prev,
+  });
+}
+
+// ─── עץ הסדרות (יואב 23.7 22:12: "לנווט כאילו בתוך עץ האתר") ─────────
+
+export interface SeriesTreeRow {
+  id: string;
+  title: string;
+  rabbi_id: string | null;
+  parent_id: string | null;
+  lesson_count: number | null;
+  status: string;
+  audience_tags: string[] | null;
+  sort_order: number | null;
+  image_url: string | null;
+  description: string | null;
+  show_in_parasha: boolean | null;
+  created_at: string;
+  rabbis: { name: string } | null;
+  parent: { id: string; title: string } | null;
+  hasChildren: boolean;
+}
+
+/** רמת-עץ אחת: ילדי הצומת (או שורשים כש-parentId=null), עם דגל has-children. */
+export function useSeriesTreeLevel(parentId: string | null) {
+  return useQuery({
+    queryKey: ["admin-series-tree", parentId ?? "roots"],
+    queryFn: async () => {
+      let q = supabase
+        .from("series")
+        .select(
+          "id, title, description, rabbi_id, parent_id, image_url, lesson_count, status, audience_tags, sort_order, show_in_parasha, created_at, rabbis!series_rabbi_id_fkey(name), parent:parent_id(id, title)",
+        )
+        .neq("status", "archived")
+        .order("sort_order", { ascending: true, nullsFirst: false })
+        .order("title", { ascending: true })
+        .limit(500);
+      q = parentId ? q.eq("parent_id", parentId) : q.is("parent_id", null);
+      const { data, error } = await q;
+      if (error) throw error;
+      const rows = (data ?? []) as any[];
+      const ids = rows.map((r) => r.id);
+      const withChildren = new Set<string>();
+      if (ids.length > 0) {
+        // באצוות של 100 — רשימת in() ארוכה מדי נחתכת ב-URL
+        for (let i = 0; i < ids.length; i += 100) {
+          const { data: kids } = await supabase
+            .from("series")
+            .select("parent_id")
+            .in("parent_id", ids.slice(i, i + 100))
+            .neq("status", "archived")
+            .limit(1000);
+          for (const k of kids ?? []) if (k.parent_id) withChildren.add(k.parent_id);
+        }
+      }
+      return rows.map((r) => ({ ...r, hasChildren: withChildren.has(r.id) })) as SeriesTreeRow[];
+    },
+    staleTime: 60_000,
   });
 }
 

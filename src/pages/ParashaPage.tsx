@@ -16,6 +16,8 @@ import {
   Sparkles,
   BookOpen,
   ChevronUp,
+  ChevronRight,
+  ChevronLeft,
   ArrowLeft,
   Printer,
 } from "lucide-react";
@@ -132,6 +134,22 @@ const ParashaPage = () => {
   const [activeSection, setActiveSection] = useState<string>("");
   const tocRef = useRef<HTMLDivElement>(null);
   const [tocSticky, setTocSticky] = useState(false);
+  // יואב 23.7 22:17: במחשב אין דרך לגלול את רצועת-התגיות (הסקרולבר מוסתר) —
+  // חיצי-דפדוף + מעקב overflow
+  const tocScrollerRef = useRef<HTMLDivElement>(null);
+  const [tocOverflowing, setTocOverflowing] = useState(false);
+  const nudgeToc = useCallback((dir: number) => {
+    tocScrollerRef.current?.scrollBy({ left: dir * 220, behavior: "smooth" });
+  }, []);
+  useEffect(() => {
+    const el = tocScrollerRef.current;
+    if (!el) return;
+    const check = () => setTocOverflowing(el.scrollWidth > el.clientWidth + 4);
+    check();
+    const ro = new ResizeObserver(check);
+    ro.observe(el);
+    return () => ro.disconnect();
+  });
 
   const articlesWithContent = useMemo(
     () => articleSeries.filter((s) => s.lessonContent),
@@ -502,8 +520,10 @@ const ParashaPage = () => {
           }}
         >
           <div className="container max-w-4xl">
+            <div className="flex items-center gap-1">
             <div
-              className="flex items-center gap-1 overflow-x-auto py-2.5 scrollbar-none"
+              ref={tocScrollerRef}
+              className="flex items-center gap-1 overflow-x-auto py-2.5 scrollbar-none flex-1 min-w-0"
               style={{ scrollbarWidth: "none" }}
             >
               <span
@@ -546,6 +566,29 @@ const ParashaPage = () => {
                   </button>
                 );
               })}
+            </div>
+            {tocOverflowing && (
+              <div className="hidden md:flex items-center gap-1 shrink-0 mr-1 print:hidden">
+                <button
+                  type="button"
+                  onClick={() => nudgeToc(1)}
+                  aria-label="גלילת תגיות ימינה"
+                  className="w-7 h-7 rounded-full border flex items-center justify-center bg-white"
+                  style={{ borderColor: "rgba(139,111,71,0.3)", color: colors.goldDark, cursor: "pointer" }}
+                >
+                  <ChevronRight size={15} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => nudgeToc(-1)}
+                  aria-label="גלילת תגיות שמאלה"
+                  className="w-7 h-7 rounded-full border flex items-center justify-center bg-white"
+                  style={{ borderColor: "rgba(139,111,71,0.3)", color: colors.goldDark, cursor: "pointer" }}
+                >
+                  <ChevronLeft size={15} />
+                </button>
+              </div>
+            )}
             </div>
           </div>
         </div>

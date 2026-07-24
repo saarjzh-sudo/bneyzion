@@ -14,8 +14,7 @@
  *  - ESC/X/backdrop all close
  */
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { X, Headphones, Video, FileDown, ExternalLink, GraduationCap } from "lucide-react";
+import { X, Headphones, Video, FileDown, GraduationCap } from "lucide-react";
 import { colors, fonts, radii, shadows, getSeriesCoverImage, formatDuration } from "@/lib/designTokens";
 import { sanitizeHtml } from "@/lib/sanitize";
 import RecommendedTeacherLessons from "@/components/teachers/RecommendedTeacherLessons";
@@ -193,26 +192,8 @@ export default function TeacherLessonModal({
             )}
           </div>
 
-          {/* Full content (HTML) — shown when available; falls back to plain description */}
-          {lesson.content ? (
-            <div
-              style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMid, lineHeight: 1.75, margin: "0 0 1rem" }}
-              className="prose prose-sm max-w-none
-                [&_p]:mb-3 [&_p]:leading-relaxed
-                [&_h2]:text-base [&_h2]:font-bold [&_h2]:mt-4 [&_h2]:mb-2
-                [&_h3]:text-sm [&_h3]:font-bold [&_h3]:mt-3 [&_h3]:mb-1
-                [&_strong]:font-bold
-                [&_blockquote]:border-r-4 [&_blockquote]:border-amber-400/50 [&_blockquote]:pr-3 [&_blockquote]:italic [&_blockquote]:text-stone-500"
-              dir="rtl"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(lesson.content) }}
-            />
-          ) : lesson.description ? (
-            <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMid, lineHeight: 1.65, margin: "0 0 1rem" }}>
-              {lesson.description}
-            </p>
-          ) : null}
-
-          {/* Media player / embed (video first, then audio) */}
+          {/* Media player first — יואב 24.7: הסרטון הוא התוכן העיקרי,
+              הסדר תמיד וידאו → שמע → טקסט */}
           {videoSrc && (
             <div style={{ marginBottom: "1rem", borderRadius: radii.lg, overflow: "hidden", background: "#000" }}>
               <video
@@ -228,15 +209,32 @@ export default function TeacherLessonModal({
             </div>
           )}
 
+          {/* Full content (HTML) — shown when available; falls back to plain description */}
+          {lesson.content ? (
+            <div
+              style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMid, lineHeight: 1.75, margin: "0 0 1rem" }}
+              className="prose prose-sm max-w-none
+                [&_p]:mb-3 [&_p]:leading-relaxed
+                [&_h2]:text-base [&_h2]:font-bold [&_h2]:mt-4 [&_h2]:mb-2
+                [&_h3]:text-sm [&_h3]:font-bold [&_h3]:mt-3 [&_h3]:mb-1
+                [&_strong]:font-bold
+                [&_ol]:list-decimal [&_ol]:ps-6 [&_ol]:mb-4 [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:mb-4 [&_li]:mb-1 [&_li]:leading-[1.8]
+                  [&_blockquote]:border-r-4 [&_blockquote]:border-amber-400/50 [&_blockquote]:pr-3 [&_blockquote]:italic [&_blockquote]:text-stone-500"
+              dir="rtl"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(lesson.content) }}
+            />
+          ) : lesson.description ? (
+            <p style={{ fontFamily: fonts.body, fontSize: "0.88rem", color: colors.textMid, lineHeight: 1.65, margin: "0 0 1rem" }}>
+              {lesson.description}
+            </p>
+          ) : null}
+
           {/* Fallback: no content at all */}
           {!lesson.content && !lesson.description && !videoSrc && !lesson.audioUrl && !lesson.attachmentUrl && (
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "2rem 1rem", gap: "0.6rem", color: colors.textSubtle, fontFamily: fonts.body, textAlign: "center" }}>
               <FileDown size={32} style={{ color: colors.goldDark, opacity: 0.4 }} />
               <p style={{ margin: 0, fontSize: "0.85rem" }}>
-                תוכן השיעור זמין בדף המלא.
-              </p>
-              <p style={{ margin: 0, fontSize: "0.78rem", color: colors.textSubtle }}>
-                לחץ על "לדף המלא" כדי לצפות בחומר.
+                התוכן לשיעור זה עדיין בהעלאה — שווה לחזור בקרוב.
               </p>
             </div>
           )}
@@ -306,7 +304,9 @@ export default function TeacherLessonModal({
           />
         </div>
 
-        {/* Footer CTAs */}
+        {/* Footer CTA — הורדת קובץ בלבד. "לדף המלא" הוסר (יואב 24.7:
+            כל התוכן כבר בפופאפ, והדף המלא הציג פרומו שבור). */}
+        {lesson.attachmentUrl && (
         <div
           style={{
             padding: "1rem 1.5rem",
@@ -316,34 +316,7 @@ export default function TeacherLessonModal({
             flexShrink: 0,
           }}
         >
-          {/* Primary CTA — full lesson page */}
-          <Link
-            to={`/teachers/lesson/${lesson.id}`}
-            style={{
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0.4rem",
-              padding: "0.7rem 1rem",
-              background: `linear-gradient(135deg, ${colors.oliveDark}, ${colors.oliveMain})`,
-              color: "white",
-              borderRadius: radii.lg,
-              fontFamily: fonts.body,
-              fontWeight: 700,
-              fontSize: "0.88rem",
-              textDecoration: "none",
-              transition: "opacity 0.15s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; }}
-          >
-            <ExternalLink size={15} />
-            לדף המלא ←
-          </Link>
-
-          {/* Secondary CTA — attachment download */}
-          {lesson.attachmentUrl && (() => {
+          {(() => {
             const lower = String(lesson.attachmentUrl).toLowerCase();
             const label = lower.includes('.pdf') ? 'הורד PDF' : lower.includes('.doc') ? 'הורד Word' : isVideoFile(lower) ? 'הורד וידאו' : 'הורד קובץ';
             return (
@@ -353,8 +326,10 @@ export default function TeacherLessonModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
+                  flex: 1,
                   display: "flex",
                   alignItems: "center",
+                  justifyContent: "center",
                   gap: "0.4rem",
                   padding: "0.7rem 1rem",
                   background: colors.goldDark,
@@ -373,6 +348,7 @@ export default function TeacherLessonModal({
             );
           })()}
         </div>
+        )}
       </div>
 
       {/* Mobile bottom sheet override */}

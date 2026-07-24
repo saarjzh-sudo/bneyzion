@@ -279,11 +279,20 @@ export default function TeachersCreatorPage() {
     });
   }, [items, search, mediaFilter]);
 
+  // יואב 24.7 09:47: "הכל (0)" אצל יוצר שכל התוכן שלו בסדרות — הספירה
+  // התבססה על שיעורים בודדים בלבד; סוכמים גם את שיעורי הסדרות שבעמוד.
+  const totalLessons = useMemo(
+    () =>
+      lessons.length +
+      items.reduce((sum, it) => (it.type === "series" ? sum + (it.series.lessonCount || 0) : sum), 0),
+    [lessons, items],
+  );
+
   const counts = useMemo((): Record<MediaFilter, number> => {
-    const c: Record<MediaFilter, number> = { all: lessons.length, audio: 0, video: 0, pdf: 0, text: 0 };
+    const c: Record<MediaFilter, number> = { all: totalLessons, audio: 0, video: 0, pdf: 0, text: 0 };
     for (const l of lessons) c[getLessonMediaType(l)]++;
     return c;
-  }, [lessons]);
+  }, [lessons, totalLessons]);
 
   const modalLesson = modalLessonId ? lessons.find((l) => l.id === modalLessonId) || null : null;
 
@@ -317,7 +326,7 @@ export default function TeachersCreatorPage() {
           </Link>
           {!isLoading && (
             <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: "rgba(232,213,160,0.6)" }}>
-              • {isRpiDriven ? `${items.length} פריטים` : `${lessons.length} שיעורים`}
+              • {totalLessons} שיעורים
             </span>
           )}
         </div>

@@ -34,6 +34,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { sanitizeHtml, isDuplicatePromo } from "@/lib/sanitize";
 import { useSEO } from "@/hooks/useSEO";
 
 import TeachersLayout from "@/components/teachers/TeachersLayout";
@@ -307,8 +308,9 @@ export default function TeachersLessonPage() {
             </div>
           )}
 
-          {/* Description */}
-          {lesson.description && (
+          {/* Description — מדולג כשהוא "פרומו שבור" שהועתק מפתיחת הגוף במיגרציה
+              (יואב 24.7 09:51, אותו כלל כמו בעמוד השיעור הציבורי) */}
+          {lesson.description && !isDuplicatePromo(lesson.description, lesson.content) && (
             <div style={{ marginBottom: "1.5rem", background: "white", borderRadius: radii.xl, padding: "1.25rem 1.5rem", boxShadow: shadows.cardSoft, border: "1px solid rgba(139,111,71,0.08)" }}>
               <p style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMid, lineHeight: 1.8, margin: 0 }}>
                 {lesson.description}
@@ -319,8 +321,9 @@ export default function TeachersLessonPage() {
           {/* Content (HTML from Umbraco) */}
           {lesson.content && (
             <div
+              className="bz-rte-content"
               style={{ background: "white", borderRadius: radii.xl, padding: "1.5rem 2rem", boxShadow: shadows.cardSoft, border: "1px solid rgba(139,111,71,0.08)", fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMid, lineHeight: 1.85 }}
-              dangerouslySetInnerHTML={{ __html: lesson.content }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(lesson.content) }}
             />
           )}
 

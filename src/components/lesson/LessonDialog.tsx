@@ -618,6 +618,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                   [&_h4]:text-lg [&_h4]:font-display [&_h4]:font-bold [&_h4]:text-foreground [&_h4]:mt-6 [&_h4]:mb-2
                   [&_p]:text-foreground [&_p]:mb-4 [&_p]:leading-[1.9]
                   [&_strong]:text-foreground [&_strong]:font-bold
+                  [&_ol]:list-decimal [&_ol]:ps-6 [&_ol]:mb-4 [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:mb-4 [&_li]:mb-1 [&_li]:leading-[1.8]
                   [&_blockquote]:border-r-4 [&_blockquote]:border-primary/30 [&_blockquote]:pr-4 [&_blockquote]:mr-0 [&_blockquote]:italic [&_blockquote]:text-muted-foreground"
                 dir="rtl"
                 dangerouslySetInnerHTML={{ __html: sanitizeHtml((lesson as any).content ?? "") }}

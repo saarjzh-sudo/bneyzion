@@ -16,8 +16,11 @@ import { useContentSliders, useSliderLessons, type ContentSlider, type SliderLes
 const FALLBACK_IMAGES = ["/images/lesson-audio.webp", "/images/lesson-video.webp", "/images/lesson-text.webp", "/images/series-middot.webp"];
 const lessonImage = (l: SliderLessonItem, i: number) => l.thumbnail_url || FALLBACK_IMAGES[i % FALLBACK_IMAGES.length];
 
+// יואב 23.7 21:44: "להורדה" על כרטיס-שיעור קרא כאילו הכרטיס הוא קובץ להורדה —
+// התג מציין את סוג המדיה, אז קובץ מוצג לפי הסוג שלו (PDF/קובץ)
+const attachLabel = (u: string | null) => (u && u.toLowerCase().includes(".pdf") ? "PDF" : "קובץ");
 const mediaOf = (l: SliderLessonItem): [typeof Video, string, string] =>
-  l.video_url ? [Video, "וידאו", "צפה"] : l.audio_url ? [Headphones, "שמע", "האזן"] : l.attachment_url ? [FileDown, "להורדה", "פתח"] : [FileText, "טקסט", "קרא"];
+  l.video_url ? [Video, "וידאו", "צפה"] : l.audio_url ? [Headphones, "שמע", "האזן"] : l.attachment_url ? [FileDown, attachLabel(l.attachment_url), "פתח"] : [FileText, "טקסט", "קרא"];
 
 function MediaBadge({ l, accent }: { l: SliderLessonItem; accent: string }) {
   const [Icon, label] = mediaOf(l);
@@ -163,10 +166,11 @@ export default function CustomSlidersSlot({ placement }: { placement: "home" | "
   if (sliders.length === 0) return null;
 
   const accent = placement === "teachers" ? colors.oliveMain : colors.goldDark;
+  // יואב 23.7 21:44: הקישור /series/:id?lesson= נבלע כשהצומת הוא סקשן —
+  // הראוט מפנה ל-/category ומאבד את הפרמטר, והגולש נחת על הקטגוריה במקום
+  // על השיעור. דף-השיעור המלא הוא יעד יציב לכל סוגי הצמתים.
   const lessonHref = (l: SliderLessonItem) =>
-    placement === "teachers"
-      ? `/teachers/lesson/${l.id}`
-      : `/series/${l.series_id}?lesson=${l.id}`;
+    placement === "teachers" ? `/teachers/lesson/${l.id}` : `/lessons/${l.id}`;
 
   return (
     <>

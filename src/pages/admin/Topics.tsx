@@ -64,7 +64,7 @@ export function TopicsContent() {
             <DialogTrigger asChild>
               <Button className="font-display"><Plus className="h-4 w-4 ml-1" />נושא חדש</Button>
             </DialogTrigger>
-            <DialogContent className="max-w-lg" dir="rtl">
+            <DialogContent className="max-w-lg max-h-[88vh] overflow-y-auto" dir="rtl">
               <DialogHeader><DialogTitle className="font-heading">{editing ? "עריכת נושא" : "נושא חדש"}</DialogTitle></DialogHeader>
               <div className="grid gap-4 py-4">
                 <div><Label>שם *</Label><Input value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></div>

@@ -14,6 +14,7 @@ interface FeedbackRow {
   phone: string | null;
   page: string | null;
   status: "new" | "handled";
+  kind?: "bug" | "content" | null;
   created_at: string;
 }
 
@@ -51,9 +52,9 @@ export default function AdminFeedback() {
   return (
     <AdminLayout>
       <div dir="rtl" style={{ maxWidth: 860 }}>
-        <h1 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 4px" }}>דיווחי הרצה</h1>
+        <h1 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 4px" }}>דיווחי הרצה והצעות תוכן</h1>
         <p style={{ fontSize: 13.5, color: "#6B5C4A", margin: "0 0 18px" }}>
-          הודעות מהכפתור "דיווח על תקלה" שברצועת-ההרצה. {newCount > 0 ? `${newCount} חדשים.` : "אין חדשים."}
+          הודעות מכפתורי "דיווח על תקלה" ו"הצעת תוכן לאתר" שברצועת-ההרצה. {newCount > 0 ? `${newCount} חדשים.` : "אין חדשים."}
           {" "}כיבוי הרצועה: מרכז השליטה ← "רצועת הרצה" ← מרוקנים את הטקסט.
         </p>
         {isLoading && <Loader2 size={18} style={{ animation: "spin 1s linear infinite" }} />}
@@ -65,6 +66,9 @@ export default function AdminFeedback() {
             <div key={r.id} style={{ background: "white", border: `1px solid ${r.status === "new" ? "rgba(196,162,101,0.5)" : "rgba(139,111,71,0.14)"}`, borderRadius: 12, padding: "12px 16px", opacity: r.status === "handled" ? 0.65 : 1 }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ display: "inline-block", fontSize: 11, fontWeight: 700, borderRadius: 999, padding: "1px 10px", marginBottom: 6, background: r.kind === "content" ? "rgba(60,110,71,0.12)" : "rgba(196,162,101,0.16)", color: r.kind === "content" ? "#3C6E47" : "#8B6F47" }}>
+                    {r.kind === "content" ? "💡 הצעת תוכן" : "🛠️ דיווח תקלה"}
+                  </span>
                   <div style={{ fontSize: 14, whiteSpace: "pre-wrap", lineHeight: 1.6 }}>{r.message}</div>
                   <div style={{ fontSize: 11.5, color: "#A69882", marginTop: 6 }}>
                     {new Date(r.created_at).toLocaleString("he-IL")} · עמוד: {r.page || "—"}
