@@ -134,6 +134,63 @@ export const SITE_COPY_REGISTRY: CopyField[] = [
     hint: "השורה הבהירה מתחת לכותרת ברצועה הכהה של דור הפלאות",
   },
 
+  // ── רמה 28ב (יואב 25.7 23:00: "רציתי לתקן את השמות שמופיעים בדף התרומות") ──
+  {
+    key: "copy.donate.recent_donors",
+    label: "שותפים שהצטרפו לאחרונה — תצוגה",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "מוצג",
+    hint: "מוצג = שמות תורמים מקוצרים (נ. ידגרי) · אנונימי = בלי שמות, רק סכומים והקדשות · כבוי = הסתרת הסקשן כולו",
+  },
+  {
+    key: "copy.donate.testi_name_1",
+    label: "שם ממליץ 1",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "נתנאל ידגרי",
+    hint: "השם שמוצג מתחת לציטוט מספר 1 ב\"מה אומרים הלומדים\"",
+  },
+  {
+    key: "copy.donate.testi_name_2",
+    label: "שם ממליץ 2",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "חנה יצחקי",
+    hint: "השם שמוצג מתחת לציטוט מספר 2 ב\"מה אומרים הלומדים\"",
+  },
+  {
+    key: "copy.donate.testi_name_3",
+    label: "שם ממליץ 3",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "ישורון צוקרמן",
+    hint: "השם שמוצג מתחת לציטוט מספר 3 ב\"מה אומרים הלומדים\"",
+  },
+  {
+    key: "copy.donate.testi_name_4",
+    label: "שם ממליץ 4",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "מעין ליב",
+    hint: "השם שמוצג מתחת לציטוט מספר 4 ב\"מה אומרים הלומדים\"",
+  },
+  {
+    key: "copy.donate.testi_name_5",
+    label: "שם ממליץ 5",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "ברכיה גרוסברג",
+    hint: "השם שמוצג מתחת לציטוט מספר 5 ב\"מה אומרים הלומדים\"",
+  },
+  {
+    key: "copy.donate.testi_name_6",
+    label: "שם ממליץ 6",
+    group: "דף התרומות",
+    type: "text",
+    defaultValue: "שלומית דביר",
+    hint: "השם שמוצג מתחת לציטוט מספר 6 ב\"מה אומרים הלומדים\"",
+  },
   // ── דף התרומות /donate (רמה 20, יואב 16.7: "איפה אני יכול לערוך את המלל בדף התרומות?") ──
   {
     key: "copy.donate.hero_eyebrow",

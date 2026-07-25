@@ -206,6 +206,8 @@ function WhySection() {
 // ───────────────────────────────────────────────────────────
 
 function Testimonials() {
+  // יואב 25.7: שמות הממליצים עריכים ממרכז השליטה (copy.donate.testi_name_N)
+  const siteCopy = useSiteCopy();
   return (
     <section style={{ background: C.creamDeep, padding: "clamp(4rem, 8vw, 7rem) 2rem" }} dir="rtl">
       <div style={{ maxWidth: 1180, margin: "0 auto" }}>
@@ -220,7 +222,7 @@ function Testimonials() {
                 <span aria-hidden="true" className="testi-mark">״</span>
                 <blockquote>{t.text}</blockquote>
                 <figcaption>
-                  <span className="testi-name">{shortName(t.name)}</span>
+                  <span className="testi-name">{shortName(siteCopy(`copy.donate.testi_name_${i + 1}`, t.name))}</span>
                   {t.role && <span className="testi-role">{t.role}</span>}
                 </figcaption>
               </figure>
@@ -308,6 +310,11 @@ function Transparency() {
 // ───────────────────────────────────────────────────────────
 
 function RecentDonors({ donations }: { donations: ReturnType<typeof useRecentDonations>["data"] }) {
+  // יואב 25.7: שליטה בתצוגת שמות התורמים — מוצג / אנונימי / כבוי (מרכז השליטה → דף התרומות)
+  const siteCopy = useSiteCopy();
+  const mode = (siteCopy("copy.donate.recent_donors", "מוצג") || "מוצג").trim();
+  if (mode === "כבוי" || mode.toLowerCase() === "off") return null;
+  const anonymous = mode === "אנונימי";
   if (!donations || donations.length === 0) return null;
   return (
     <section style={{ background: C.paper, borderTop: `1px solid ${C.line}`, padding: "clamp(3.5rem, 6vw, 5rem) 2rem" }} dir="rtl">
@@ -319,7 +326,7 @@ function RecentDonors({ donations }: { donations: ReturnType<typeof useRecentDon
         <div className="donors-grid">
           {donations.slice(0, 6).map((d) => (
             <div key={d.id} className="donor-row">
-              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.ink }}>{d.donor_name ? shortName(d.donor_name) : "אנונימי"}</span>
+              <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.ink }}>{anonymous ? "שותף/ה יקר/ה" : d.donor_name ? shortName(d.donor_name) : "אנונימי"}</span>
               <span style={{ fontFamily: fonts.display, fontWeight: 700, color: C.goldDeep }}>{Number(d.amount).toLocaleString()} ₪</span>
               {d.dedication_name && <span style={{ fontFamily: fonts.body, fontSize: "0.78rem", color: C.ink42, gridColumn: "1 / -1" }}>{typeLabels[d.dedication_type]} {d.dedication_name}</span>}
               <span style={{ fontFamily: fonts.body, fontSize: "0.72rem", color: C.ink42, gridColumn: "1 / -1" }}>{timeAgo(d.created_at)}</span>

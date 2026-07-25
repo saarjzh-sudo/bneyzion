@@ -37,6 +37,9 @@ for i, a in enumerate(sys.argv):
         COUNT = int(sys.argv[i + 1])
 
 GROUP = "120363149928936992@g.us"  # בכוח התנ״ך ננצח #3 (הקבוצה הראשית — התוכן זהה בכולן)
+# הפסוק היומי עבר לקבוצות "תנ״ך לחיים: פסוק אחד ביום" (סדרת "גבורה אישית", מוצאי ת"ב 24.7.2026)
+# — הקבוצה הראשית מקבלת רק פרומו. מושכים גם משם; הזיהוי נשאר תוכני וה-upsert לפי תאריך.
+VERSE_GROUP = "120363419764266967@g.us"  # תנ"ך לחיים - בני ציון
 NEWS_SERIES = "5d111b52-b421-4150-adfd-df256950117c"
 POD_SERIES = "bc1d97b9-e0a5-4b88-8169-5705120bc20c"
 YOAV = "acd34d0f-1288-47b8-9e8e-38e69599c294"
@@ -114,7 +117,21 @@ msgs = http(
     "POST",
     {"chatId": GROUP, "count": COUNT},
 )
+for m in msgs:
+    m["_src_group"] = GROUP
 log(f"נמשכו {len(msgs)} הודעות מהקבוצה")
+try:
+    verse_msgs = http(
+        f"https://api.greenapi.com/waInstance{GA_ID}/getChatHistory/{GA_TOKEN}",
+        "POST",
+        {"chatId": VERSE_GROUP, "count": COUNT},
+    )
+    for m in verse_msgs:
+        m["_src_group"] = VERSE_GROUP
+    log(f"נמשכו {len(verse_msgs)} הודעות מקבוצת הפסוק-היומי")
+    msgs = msgs + verse_msgs
+except Exception as e:
+    log(f"⚠️ קבוצת הפסוק-היומי לא נמשכה ({str(e)[:80]}) — ממשיכים עם הראשית בלבד")
 
 added = {"verse": 0, "news": 0, "podcast": 0}
 
@@ -150,7 +167,7 @@ for m in sorted(msgs, key=lambda x: x.get("timestamp", 0)):
             sb("daily_verses", "POST", {
                 "date": date, "verse_text": verse_text, "verse_source": verse_source,
                 "commentary": commentary, "image_url": image_url, "raw_caption": cap,
-                "group_id": GROUP,
+                "group_id": m.get("_src_group", GROUP),
             }, prefer="return=minimal")
             log(f"✅ פסוק יומי {date}: {verse_source}")
         added["verse"] += 1

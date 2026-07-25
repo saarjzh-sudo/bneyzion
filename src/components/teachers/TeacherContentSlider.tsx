@@ -58,12 +58,13 @@ function useTeacherSliderLessons(contentType?: string) {
 }
 
 function MediaBadge({ l }: { l: SliderLesson }) {
+  // רמה 28: תג-מדיה לפי סוג הקובץ (כמו בסליידר דף-הבית) — "להורדה" קרא כאילו הכרטיס הוא קובץ
   const [Icon, label] = l.video_url
     ? [Video, "וידאו"]
     : l.audio_url
       ? [Headphones, "שמע"]
       : l.attachment_url
-        ? [FileDown, "להורדה"]
+        ? [FileDown, l.attachment_url.toLowerCase().includes(".pdf") ? "PDF" : "קובץ"]
         : [FileText, "טקסט"];
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", padding: "0.18rem 0.6rem", borderRadius: radii.pill, background: "rgba(74,90,46,0.1)", color: colors.oliveDark, fontFamily: fonts.body, fontSize: "0.66rem", fontWeight: 700 }}>

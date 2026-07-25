@@ -265,33 +265,20 @@ export function useCreatorStats() {
   return useQuery<CreatorStats>({
     queryKey: ["teacher-creator-stats"],
     queryFn: async () => {
-      const ids = [...CREATOR_IDS_ORDERED];
-
-      const countResults = await Promise.all(
-        ids.map((id) =>
-          supabase
-            .from("lessons")
-            .select("id", { count: "exact", head: true })
-            .eq("rabbi_id", id)
-            .eq("status", "published"),
-        ),
-      );
+      // רמה 28ב (יואב 25.7: "לאגף המורים לוקח המון זמן להיטען") — 31 שאילתות-ספירה
+      // נפרדות + שאילתת-צפיות הוחלפו בקריאה אחת ל-view המרוכז creator_published_counts
+      // (count+sum(views) לכל רב, מחושב בצד ה-DB).
+      const { data, error } = await (supabase as any)
+        .from("creator_published_counts")
+        .select("rabbi_id, published_count, total_views")
+        .in("rabbi_id", [...CREATOR_IDS_ORDERED]);
+      if (error) throw error;
       const counts = new Map<string, number>();
-      ids.forEach((id, i) => counts.set(id, countResults[i].count ?? 0));
-
-      const { data: viewRows } = await supabase
-        .from("lessons")
-        .select("rabbi_id, views_count")
-        .in("rabbi_id", ids)
-        .eq("status", "published")
-        .gt("views_count", 0)
-        .limit(1000);
       const views = new Map<string, number>();
-      for (const r of viewRows || []) {
-        if (!r.rabbi_id) continue;
-        views.set(r.rabbi_id, (views.get(r.rabbi_id) ?? 0) + (r.views_count ?? 0));
+      for (const r of (data ?? []) as any[]) {
+        counts.set(r.rabbi_id, r.published_count ?? 0);
+        if ((r.total_views ?? 0) > 0) views.set(r.rabbi_id, r.total_views);
       }
-
       return { counts, views };
     },
     staleTime: 1000 * 60 * 10,
