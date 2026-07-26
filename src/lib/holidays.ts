@@ -44,6 +44,15 @@ interface HolidayDef {
 
 // months: NISAN=1 IYYAR=2 SIVAN=3 TAMUZ=4 AV=5 ELUL=6 TISHREI=7 CHESHVAN=8 KISLEV=9 TEVET=10 SHVAT=11 ADAR_I=12 ADAR_II=13
 const DEFS: HolidayDef[] = [
+  {
+    // יואב 26.7 (סבב רמה 29): אלול נעדר מהלוח — הכרטיס קפץ ישר לראש השנה
+    key: "elul",         name: "חודש אלול",   month: 6,  day: 1,
+    terms: ["אלול", "תשובה", "סליחות", "ימים נוראים"],
+    seriesId: "edc74757-ae3e-4b1c-9432-7206d24a2cd1", // "חודש אלול וימי התשובה"
+    emoji: "🎺",
+    quote: "אֲנִי לְדוֹדִי וְדוֹדִי לִי",
+    quoteAttribution: "שיר השירים ו, ג",
+  },
   { key: "rosh-hashana", name: "ראש השנה",    month: 7,  day: 1,  terms: ["ראש השנה"], emoji: "🍯" },
   { key: "yom-kippur",   name: "יום כיפור",   month: 7,  day: 10, terms: ["יום כיפור", "יום הכיפורים", "כיפור"], emoji: "🙏" },
   { key: "sukkot",       name: "סוכות",       month: 7,  day: 15, terms: ["סוכות"], emoji: "🌿" },

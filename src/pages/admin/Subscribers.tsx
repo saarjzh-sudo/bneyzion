@@ -562,7 +562,8 @@ export default function Subscribers() {
   const growLastMonth = growStats?.by_month?.length
     ? growStats.by_month.filter((m) => m.charges > 20).slice(-1)[0]
     : null;
-  const mondayActive = monday?.current?.active ?? null;
+  // הלוח החי (ספירת "פעילה") = המספר הרשמי; שורת-ההיסטוריה החודשית רק כגיבוי
+  const mondayActive = monday?.liveActive ?? monday?.current?.active ?? null;
   const smooveOrigin = rows.filter((r) => (r.source ?? "").startsWith("smoove") && isActive(r)).length;
   const adminOrigin  = rows.filter((r) => (r.source ?? "") === "admin" && isActive(r)).length;
   const mondayGap = mondayActive != null ? mondayActive - kpiActive : null;

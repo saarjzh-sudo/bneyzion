@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import { useSEO } from "@/hooks/useSEO";
-import { hebrewDateLabel, hebrewMonthLabel, hebrewMonthKey } from "@/lib/hebrewDate";
+import { hebrewDateLabel, hebrewMonthLabel } from "@/lib/hebrewDate";
 import { WhatsAppButton, DorHaplaotButton } from "@/components/family/BrandButtons";
 
 // ── design tokens (match DesignPreviewHome)
@@ -181,7 +181,8 @@ function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void
                 {RABBI_NAME}
               </div>
               <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: TEXT_MUTED }}>
-                פסוק יומי — בכוח התנ״ך ננצח
+                {/* יואב 26.7: כל פסוק נושא את שם הסדרה שלו */}
+                פסוק יומי — {verseSeries(verse)}
               </div>
             </div>
           </div>
@@ -200,18 +201,39 @@ function VerseModal({ verse, onClose }: { verse: DailyVerse; onClose: () => void
   );
 }
 
-// 7.7.2026 (סער): קיבוץ הארכיון לפי חודש עברי (תמוז תשפ"ו), לא לועזי
-function groupByMonth(verses: DailyVerse[]): { label: string; verses: DailyVerse[] }[] {
-  const map = new Map<number, { label: string; verses: DailyVerse[] }>();
-  for (const v of verses) {
-    const key = hebrewMonthKey(v.date);
-    if (!map.has(key)) map.set(key, { label: hebrewMonthLabel(v.date), verses: [] });
-    map.get(key)!.verses.push(v);
+/**
+ * שם הסדרה של פסוק — מהשורה הראשונה של הודעת-הוואטסאפ המקורית
+ * ("*הפסוק היומי - מחורבן לבניין*" → "מחורבן לבניין").
+ * תצוגה בלבד — ה-DB לא משתנה (אותו דפוס כמו formatCommentary).
+ */
+function verseSeries(v: DailyVerse): string {
+  const first = (v.raw_caption ?? "").split("\n")[0].replace(/\*/g, "").trim();
+  const sep = first.indexOf(" - ");
+  if (sep > -1) {
+    const name = first.slice(sep + 3).trim();
+    if (name) return name;
   }
-  // Sort descending (newest Hebrew month first)
-  return Array.from(map.entries())
-    .sort((a, b) => b[0] - a[0])
-    .map(([, g]) => g);
+  return "פסוק יומי";
+}
+
+// יואב 26.7 (רמה 29): חלוקה לפי סדרות במקום חודשים — "זה הכי נכון".
+// הסדרות הן רצפים כרונולוגיים, אז מקבצים ריצות עוקבות ושומרים על סדר הארכיון
+// (מהחדש לישן). תווית-המשנה: כמות + טווח החודשים העבריים של הסדרה.
+function groupBySeries(verses: DailyVerse[]): { label: string; sub: string; verses: DailyVerse[] }[] {
+  const groups: { label: string; verses: DailyVerse[] }[] = [];
+  for (const v of verses) {
+    const name = verseSeries(v);
+    const last = groups[groups.length - 1];
+    if (last && last.label === name) last.verses.push(v);
+    else groups.push({ label: name, verses: [v] });
+  }
+  return groups.map((g) => {
+    // verses ממוינים מהחדש לישן — האחרון ברשימה הוא הראשון כרונולוגית
+    const newest = hebrewMonthLabel(g.verses[0].date);
+    const oldest = hebrewMonthLabel(g.verses[g.verses.length - 1].date);
+    const range = newest === oldest ? newest : `${oldest} – ${newest}`;
+    return { label: g.label, sub: `${g.verses.length} פסוקים · ${range}`, verses: g.verses };
+  });
 }
 
 export default function DailyVersePage() {
@@ -231,7 +253,7 @@ export default function DailyVersePage() {
     },
   });
 
-  const grouped = groupByMonth(verses);
+  const grouped = groupBySeries(verses);
 
   return (
     <div style={{ minHeight: "100vh", background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
@@ -398,23 +420,23 @@ export default function DailyVersePage() {
               .verse-commentary p:last-child { margin-bottom: 0; }
               .verse-commentary strong { color: ${GOLD_DARK}; font-weight: 700; }
             `}</style>
-            {grouped.map(group => (
-              <div key={group.label} style={{ marginBottom: "3rem" }}>
-                {/* Month header */}
+            {grouped.map((group, gi) => (
+              <div key={`${group.label}-${gi}`} style={{ marginBottom: "3rem" }}>
+                {/* Series header (יואב 26.7 — חלוקה לפי סדרות) */}
                 <div style={{
                   display: "flex", alignItems: "center", gap: "1rem",
                   marginBottom: "1.5rem",
                 }}>
                   <h2 style={{
                     fontFamily: "Kedem, Frank Ruhl Libre, serif",
-                    fontSize: "1.15rem", fontWeight: 700,
-                    color: NAVY_DEEP, margin: 0, whiteSpace: "nowrap",
+                    fontSize: "1.25rem", fontWeight: 700,
+                    color: NAVY_DEEP, margin: 0,
                   }}>
                     {group.label}
                   </h2>
                   <div style={{ flex: 1, height: 1, background: `rgba(139,111,71,0.2)` }} />
                   <span style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", color: TEXT_MUTED, whiteSpace: "nowrap" }}>
-                    {group.verses.length} פסוקים
+                    {group.sub}
                   </span>
                 </div>
 

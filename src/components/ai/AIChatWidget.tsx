@@ -21,8 +21,16 @@ const PERSONA_KEY = "bnz_persona";
 const mkId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
 // ── Markdown renderer ─────────────────────────────────────────────────────────
+// אבטחה: הפלט נכנס ל-dangerouslySetInnerHTML, לכן כל תו-HTML בטקסט הגולמי
+// מנוטרל *לפני* המרת-המרקדאון. בלי זה, מודל שהתבקש (prompt injection) להחזיר
+// `<img src=x onerror=...>` היה מריץ סקריפט בדפדפן הגולש. התחביר שהפונקציה
+// תומכת בו (**מודגש**, תבליטים, [תווית](קישור)) לא מכיל < > &, אז הבריחה
+// לא פוגעת בעיצוב. (הרכיב כרגע מנוטרל ב-App.tsx — נשמר מאובטח לקראת הפעלה.)
+const escapeHtml = (s: string) =>
+  s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
 function renderMarkdown(raw: string): string {
-  const lines = raw.split("\n");
+  const lines = escapeHtml(raw).split("\n");
   const out: string[] = [];
   let inList = false;
 

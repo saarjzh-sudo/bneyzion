@@ -29,7 +29,7 @@
  * Built 2026-06-03 — feat/weekly-chapter-data-driven
  */
 import { useEffect, useRef, useState } from "react";
-import { normalizeMediaUrl, driveAudioStreamUrl } from "@/lib/mediaUrl";
+import { normalizeMediaUrl, driveAudioStreamUrl, driveViewUrl } from "@/lib/mediaUrl";
 import { Link, useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { GlobalWeeklyNav } from "@/components/weekly/GlobalWeeklyNav";
 import { ZoomCtaCard } from "@/components/weekly/ZoomCtaCard";
@@ -829,12 +829,24 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent, completed, o
               title={lesson.title}
             />
           ) : (
-            <iframe
-              src={url}
-              allow="autoplay"
-              style={{ width: "100%", height: embedH, border: "none", borderRadius: 8, display: "block" }}
-              title={lesson.title}
-            />
+            <>
+              <iframe
+                src={url}
+                allow="autoplay"
+                style={{ width: "100%", height: embedH, border: "none", borderRadius: 8, display: "block" }}
+                title={lesson.title}
+              />
+              {kind === "video" && driveViewUrl(lesson.video_url) && (
+                <a
+                  href={driveViewUrl(lesson.video_url)!}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: "block", textAlign: "left", marginTop: "0.35rem", fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.textMuted, textDecoration: "underline", textUnderlineOffset: 3 }}
+                >
+                  הסרטון לא מתנגן? לצפייה ישירה בדרייב ↗
+                </a>
+              )}
+            </>
           )}
         </div>
       )}

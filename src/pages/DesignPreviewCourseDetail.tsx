@@ -41,6 +41,7 @@ import {
   useCourseDataMulti,
 } from "@/hooks/useCommunity";
 import type { CommunityLesson, ChapterLayersMulti } from "@/hooks/useCommunity";
+import { driveViewUrl } from "@/lib/mediaUrl";
 
 // ── Constants ──────────────────────────────────────────────────────────────
 const COURSE_ID = "35e7d37b-a263-4e85-a8d8-16fdbae312ae";
@@ -457,6 +458,16 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed }: {
             <p style={{ fontFamily: fonts.body, fontSize: "0.7rem", color: colors.textSubtle, margin: "0.4rem 0 0", textAlign: "center" }}>
               אם השמע לא מתחיל — לחץ על ה-Play בתוך הנגן
             </p>
+          )}
+          {kind === "video" && driveViewUrl(lesson.video_url) && (
+            <a
+              href={driveViewUrl(lesson.video_url)!}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: "block", textAlign: "left", marginTop: "0.35rem", fontFamily: fonts.body, fontSize: "0.72rem", fontWeight: 700, color: colors.textMuted, textDecoration: "underline", textUnderlineOffset: 3 }}
+            >
+              הסרטון לא מתנגן? לצפייה ישירה בדרייב ↗
+            </a>
           )}
         </div>
       )}

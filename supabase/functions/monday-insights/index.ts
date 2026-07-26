@@ -23,6 +23,7 @@ const corsHeaders = {
 };
 
 const SUBS_BOARD = 5094769002;
+const LIVE_BOARD = 5094750546; // "מנויי הפרק השבועי" — הרשימה החיה (מקור האמת)
 const DONATIONS_BOARD = 5099487161;
 
 const SUBS_COL = {
@@ -58,6 +59,36 @@ async function fetchMonths(token: string) {
     }))
     .filter((m: any) => m.month)
     .sort((a: any, b: any) => a.month.localeCompare(b.month));
+}
+
+/**
+ * ספירת מנויים פעילים מהלוח החי (5094750546) — סטטוס הו״ק "פעילה".
+ *
+ * יואב 26.7 (רמה 29): "המספר הרשמי" באתר הוצג מהשורה האחרונה של לוח
+ * ההיסטוריה החודשית — שורת-סיכום ידנית שמתעדכנת באיחור, ולכן האתר הראה
+ * מספר שונה מהלוח החי. עכשיו סופרים ישירות מהרשימה החיה.
+ */
+async function fetchLiveActive(token: string): Promise<number | null> {
+  const STATUS_COL = "color_mm2fcgcg"; // "סטטוס הו״ק"
+  let active = 0;
+  let cursor: string | null = null;
+  let guard = 0;
+  try {
+    do {
+      const data: any = cursor
+        ? await mondayFetch(token, `query { next_items_page(limit: 500, cursor: "${cursor}") { cursor items { column_values(ids: ["${STATUS_COL}"]) { text } } } }`)
+        : await mondayFetch(token, `query { boards(ids: [${LIVE_BOARD}]) { items_page(limit: 500) { cursor items { column_values(ids: ["${STATUS_COL}"]) { text } } } } }`);
+      const pageData = cursor ? data.next_items_page : data.boards?.[0]?.items_page;
+      for (const it of pageData?.items ?? []) {
+        if ((it.column_values?.[0]?.text ?? "") === "פעילה") active += 1;
+      }
+      cursor = pageData?.cursor ?? null;
+      guard += 1;
+    } while (cursor && guard < 10);
+    return active;
+  } catch {
+    return null; // הלוח החי לא זמין → הלקוח נופל לשורת-ההיסטוריה
+  }
 }
 
 /** מסווג תרומה לקמפיין לפי תיאור-העסקה */
@@ -112,10 +143,12 @@ Deno.serve(async (req) => {
     const token = Deno.env.get("MONDAY_API_TOKEN");
     if (!token) throw new Error("MONDAY_API_TOKEN not configured");
 
-    const [months, donations] = await Promise.all([fetchMonths(token), fetchDonations(token)]);
+    const [months, donations, liveActive] = await Promise.all([
+      fetchMonths(token), fetchDonations(token), fetchLiveActive(token),
+    ]);
     const current = months[months.length - 1] ?? null;
 
-    return new Response(JSON.stringify({ months, current, donations }), {
+    return new Response(JSON.stringify({ months, current, donations, liveActive }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {

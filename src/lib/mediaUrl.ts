@@ -42,6 +42,26 @@ export function driveAudioStreamUrl(url?: string | null): string | null {
 }
 
 /**
+ * קישור צפייה ישירה בדרייב (first-party, לשונית חדשה).
+ *
+ * יואב 26.7: נגן ה-preview המוטמע ב-iframe הציג אצלו "אירעה בעיה בהפעלת
+ * הסרטון" בקורסי איך/למה ללמוד תנ"ך — הקבצים עצמם אומתו תקינים
+ * (get_video_info=ok, /preview נגיש אנונימית); הכשל הוא חסימת ההזרמה בתוך
+ * iframe צד-שלישי (עוגיות צד-שלישי / סינון תוכן). הקבצים גדולים מ-100MB אז
+ * אין הזרמה ישירה לתג <video> (דף סריקת-וירוסים). צפייה ב-drive.google.com
+ * עצמו היא first-party ועוקפת את החסימה — לכן קישור-חילוץ קבוע מתחת לנגן.
+ */
+export function driveViewUrl(url?: string | null): string | null {
+  if (!url) return null;
+  const m = url.match(
+    /drive\.google\.com\/(?:file\/d\/([\w-]{10,})|open\?[^#]*\bid=([\w-]{10,})|uc\?[^#]*\bid=([\w-]{10,}))/
+  );
+  const id = m?.[1] || m?.[2] || m?.[3];
+  if (id) return `https://drive.google.com/file/d/${id}/view`;
+  return null;
+}
+
+/**
  * נרמול קישור תמונה שהוזן ידנית באדמין: קישור-שיתוף דרייב לא עובד בתוך
  * <img>/background-image (מחזיר HTML) — ממירים לצורת lh3 הישירה.
  */

@@ -36,6 +36,8 @@ export interface MondayInsights {
   months: MonthPoint[];
   current: MonthPoint | null;
   donations: DonationSummary | null;
+  /** ספירה חיה מלוח "מנויי הפרק השבועי" (סטטוס הו״ק=פעילה) — המספר הרשמי */
+  liveActive: number | null;
 }
 
 export function useMondayInsights() {
@@ -51,6 +53,7 @@ export function useMondayInsights() {
         months: (data?.months ?? []) as MonthPoint[],
         current: (data?.current ?? null) as MonthPoint | null,
         donations: (data?.donations ?? null) as DonationSummary | null,
+        liveActive: (data?.liveActive ?? null) as number | null,
       };
     },
   });

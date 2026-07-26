@@ -153,7 +153,8 @@ export function MondayInsightsSection() {
         <>
           {/* KPIs — current month */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Kpi label="מנויים פעילים" value={cur.active.toLocaleString()} icon={Users} accent={C.green} bg="#f0fdf4" source="Monday" />
+            {/* הלוח החי (סטטוס הו״ק=פעילה) = המספר הרשמי; שורת-ההיסטוריה רק כגיבוי */}
+            <Kpi label="מנויים פעילים" value={(data?.liveActive ?? cur.active).toLocaleString()} icon={Users} accent={C.green} bg="#f0fdf4" source="Monday" />
             <Kpi label="הכנסה חודשית (MRR)" value={shekel(cur.mrr)} icon={Banknote} accent={C.gold} source="Monday" />
             <Kpi label="חדשים החודש" value={cur.newSubs.toLocaleString()} icon={UserPlus} accent={C.teal} source="Monday" />
             <Kpi label="אחוז נטישה" value={`${cur.churn}%`} icon={UserMinus} accent={cur.churn >= 12 ? C.red : C.goldLight} source="Monday" />

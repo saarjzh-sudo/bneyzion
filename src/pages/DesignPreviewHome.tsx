@@ -679,12 +679,14 @@ function DesignParashaHolidaySection() {
           </div>
         </div>
 
+        {/* יואב 26.7: stretch (לא start) — במחשב שני הכרטיסים באותו גובה, ה-CTA נצמד לתחתית */}
         <div className="parasha-holiday-grid" style={{ display: "grid", gridTemplateColumns: holiday && holidaySeries.length > 0 ? "1fr 1fr" : "1fr",
-                      gap: "2rem", alignItems: "start" }}>
+                      gap: "2rem", alignItems: "stretch" }}>
 
           {/* ── RIGHT (first in RTL): Holiday ── */}
           {holiday && holidaySeries.length > 0 && (
             <div style={{ borderRadius: "1.5rem", overflow: "hidden",
+              display: "flex", flexDirection: "column",
               background: onDark ? "transparent" : "white",
               border: onDark ? "none" : "1px solid rgba(139,111,71,0.1)",
               boxShadow: onDark ? "none" : "0 2px 16px rgba(45,31,14,0.06)" }}>
@@ -723,7 +725,7 @@ function DesignParashaHolidaySection() {
               </div>
 
               {/* Body */}
-              <div style={{ padding: "1.25rem 1.4rem 1.5rem" }}>
+              <div style={{ padding: "1.25rem 1.4rem 1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
                 {/* Header */}
                 <div style={{ marginBottom: "1rem" }}>
                   <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", fontWeight: 700,
@@ -826,7 +828,7 @@ function DesignParashaHolidaySection() {
                       : navigate("/series")
                 }
                   style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem",
-                    border: "none",
+                    border: "none", marginTop: "auto", alignSelf: "flex-start",
                     background: isYomHaatzmaout
                       ? `linear-gradient(135deg, ${ISRAEL_BLUE}, #1a5fb4)`
                       : `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
@@ -841,6 +843,7 @@ function DesignParashaHolidaySection() {
 
           {/* ── LEFT (second in RTL): Parasha ── */}
           <div style={{ borderRadius: "1.5rem", overflow: "hidden",
+            display: "flex", flexDirection: "column",
             background: onDark ? "transparent" : "white",
             border: onDark ? "none" : "1px solid rgba(139,111,71,0.1)",
             boxShadow: onDark ? "none" : "0 2px 16px rgba(45,31,14,0.06)" }}>
@@ -870,7 +873,7 @@ function DesignParashaHolidaySection() {
             </div>
 
             {/* Body */}
-            <div style={{ padding: "1.25rem 1.4rem 1.5rem" }}>
+            <div style={{ padding: "1.25rem 1.4rem 1.5rem", flex: 1, display: "flex", flexDirection: "column" }}>
               {/* Header */}
               <div style={{ marginBottom: "1rem" }}>
                 <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.72rem", fontWeight: 700,
@@ -969,7 +972,7 @@ function DesignParashaHolidaySection() {
               )}
 
               {/* Dual CTAs */}
-              <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: "0.65rem", flexWrap: "wrap", marginTop: "auto" }}>
                 <button onClick={() => navigate("/parasha")}
                   style={{ padding: "0.75rem 1.75rem", borderRadius: "0.85rem", border: "none",
                     background: `linear-gradient(135deg, ${GOLD_DARK}, ${GOLD_LIGHT})`,
