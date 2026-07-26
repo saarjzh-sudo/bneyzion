@@ -360,6 +360,8 @@ const FAMILY_BIBLE_CARDS = [
 function FamilyBibleSection() {
   const navigate = useNavigate();
   const { data: familyCards } = useFamilyCards();
+  // רמה 29ב (יואב 26.7): כותרת הסקשן עריכה ממרכז השליטה
+  const copy = useSiteCopy();
 
   // תוכן מהאדמין: רק כרטיסים פעילים שסומנו show_on_home, לפי sort_order.
   // home_title/home_description גוברים על הכותרת/תיאור של עמוד /family-tanach.
@@ -411,12 +413,12 @@ function FamilyBibleSection() {
                 letterSpacing: "0.02em",
               }}
             >
-              תנ״ך למשפחה
+              {copy("copy.home.family_title", "תנ״ך למשפחה")}
             </h2>
             <div style={{ flex: 1, maxWidth: 140, height: 1, background: `linear-gradient(to right, ${GOLD_LIGHT}, transparent)` }} />
           </div>
           <p style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.9rem", color: TEXT_MUTED, margin: 0 }}>
-            הלימוד היומי
+            {copy("copy.home.family_subtitle", "הלימוד היומי")}
           </p>
         </div>
 

@@ -86,8 +86,16 @@ const LazyHeroVideo = ({ videoSrc, poster, posterAlt, className, style, mediaSty
     );
     io.observe(el);
 
+    // יואב 26.7 (רמה 29ב, "קרה משהו לאנימציה"): בדפדפנים עם סינון-תוכן
+    // ה-IntersectionObserver לפעמים לא יורה בכלל (אומת: observer על אלמנט
+    // גלוי בטאב חי לא קיבל callback) — והווידאו לא עולה לעולם. ההירו ממילא
+    // בראש הדף, אז אחרי 4 שניות טוענים אותו בכל מקרה. ה-poster כבר על המסך,
+    // כך שאין פגיעה בביצועי הצביעה הראשונה.
+    const fallbackId = window.setTimeout(load, 4000);
+
     return () => {
       io.disconnect();
+      window.clearTimeout(fallbackId);
       if (idleId !== undefined) {
         if (win.cancelIdleCallback) win.cancelIdleCallback(idleId);
         else window.clearTimeout(idleId);
