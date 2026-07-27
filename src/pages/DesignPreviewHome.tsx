@@ -614,23 +614,29 @@ function DesignParashaHolidaySection() {
   // Holiday accent color — blue for Yom Haatzmaout, gold otherwise
   const holidayAccentLight = isYomHaatzmaout ? "#6ba3e8" : GOLD_LIGHT;
 
-  // Fetch first lesson content for holiday preview
+  // קטע-שיעור למועד (יואב 27.7: "קטע טקסט קטן מתוך אחד השיעורים — שישווה לפרשת שבוע").
+  // תיקון-שורש: המיון היה על order_index שלא קיימת ב-lessons (העמודה היא sort_order)
+  // → השאילתה נכשלה בשקט והבלוק לא הוצג באף מועד. עכשיו: קודם הסדרה המוצמדת
+  // (holiday.seriesId), אחרת הסדרה שנמצאה בחיפוש; ובוחרים שיעור שיש בו טקסט ממשי.
   const firstHolidaySeries = holidaySeries[0];
+  const previewSeriesId = holiday?.seriesId || firstHolidaySeries?.id || null;
   const { data: holidayLessonPreview } = useQuery({
-    queryKey: ["holiday-lesson-preview", firstHolidaySeries?.id],
-    enabled: !!firstHolidaySeries,
+    queryKey: ["holiday-lesson-preview", previewSeriesId],
+    enabled: !!previewSeriesId,
     staleTime: 1000 * 60 * 60,
     queryFn: async () => {
-      if (!firstHolidaySeries) return null;
       const { data } = await supabase
         .from("lessons")
         .select("id, title, content, rabbis!lessons_rabbi_id_fkey(name)")
-        .eq("series_id", firstHolidaySeries.id)
+        .eq("series_id", previewSeriesId!)
         .eq("status", "published")
-        .order("order_index")
-        .limit(1)
-        .single();
-      return data;
+        .not("content", "is", null)
+        .order("sort_order")
+        .limit(8);
+      const withText = (data ?? []).find(
+        (l) => (l.content ?? "").replace(/<[^>]+>/g, " ").trim().length >= 200
+      );
+      return withText ?? null;
     },
   });
 
