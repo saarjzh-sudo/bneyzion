@@ -4,7 +4,7 @@ import {
   BarChart3, Ticket, CreditCard,
   UserCheck, Upload, CalendarDays, Megaphone,
   MessageCircle, Heart, SlidersHorizontal, HelpCircle,
-  Package, Bot, Link2, AlertTriangle,
+  Package, Bot, Link2, AlertTriangle, Target,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -65,6 +65,8 @@ const SECTIONS: NavSection[] = [
       // "מנויים" הישן נשאר נגיש ככלי-חירום דרך קישור בתוך העמוד המאוחד.
       { title: "משתמשים",       url: "/admin/users",         icon: UserCheck,   roles: ADMIN },
       { title: "סליקות",        url: "/admin/payments",      icon: CreditCard,  roles: ADMIN },
+      // רמה 30 (27.7): קמפייני-גיוס — דף ציבורי + תרומות + סליקה ממקום אחד
+      { title: "קמפיינים",      url: "/admin/campaigns",     icon: Target,      roles: ADMIN },
       // רמה 18: העמוד היה יתום — טבלת מעקב-משלוחים מלאה בלי שום קישור אליה
       { title: "הזמנות ומשלוחים", url: "/admin/orders",      icon: Package,     roles: ADMIN },
       { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },

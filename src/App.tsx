@@ -140,6 +140,10 @@ const AdminSubscribers = lazy(() => import("./pages/admin/Subscribers"));
 const BenziKnowledge = lazy(() => import("./pages/admin/BenziKnowledge"));
 const AdminBudget = lazy(() => import("./pages/admin/Budget"));
 const AdminKenes = lazy(() => import("./pages/admin/Kenes"));
+// רמה 30 (27.7.2026): מנגנון קמפיינים רב-פעמי — דף ציבורי + אדמין
+const CampaignPage = lazy(() => import("./pages/CampaignPage"));
+const AdminCampaigns = lazy(() => import("./pages/admin/Campaigns"));
+const AdminCampaignDetail = lazy(() => import("./pages/admin/CampaignDetail"));
 const AdminPromos = lazy(() => import("./pages/admin/Promos"));
 const AdminSliders = lazy(() => import("./pages/admin/Sliders"));
 const AdminFeedback = lazy(() => import("./pages/admin/Feedback"));
@@ -382,6 +386,8 @@ const App = () => (
             <Route path="/ask-rabbi" element={<Suspense fallback={<LazyFallback />}><AskRabbiPage /></Suspense>} />
             {/* ROLLOUT T05 (2.7.2026): דף התרומות החדש חי ב-/donate. הישן נשמר ב-Donate.tsx — החזרה = החלפת הקומפוננטה. */}
             <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
+            {/* רמה 30: דף קמפיין-גיוס גנרי מונע-DB (campaigns/campaign_tiers) */}
+            <Route path="/campaign/:slug" element={<Suspense fallback={<LazyFallback />}><CampaignPage /></Suspense>} />
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/kenes-2026-05" element={<Suspense fallback={<LazyFallback />}><KenesShavuot2026 /></Suspense>} />
@@ -449,6 +455,9 @@ const App = () => (
             <Route path="/admin/benzi" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><BenziKnowledge /></Suspense></ProtectedRoute>} />
             <Route path="/admin/budget" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminBudget /></Suspense></ProtectedRoute>} />
             <Route path="/admin/kenes" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminKenes /></Suspense></ProtectedRoute>} />
+            {/* רמה 30: מנגנון קמפיינים — רשימה + דשבורד-קמפיין */}
+            <Route path="/admin/campaigns" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminCampaigns /></Suspense></ProtectedRoute>} />
+            <Route path="/admin/campaigns/:slug" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminCampaignDetail /></Suspense></ProtectedRoute>} />
             <Route path="/admin/promos" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminPromos /></Suspense></ProtectedRoute>} />
             <Route path="/admin/sliders" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminSliders /></Suspense></ProtectedRoute>} />
             <Route path="/admin/feedback" element={<ProtectedRoute allowedRoles={["admin"]}><Suspense fallback={<PageSkeleton />}><AdminFeedback /></Suspense></ProtectedRoute>} />

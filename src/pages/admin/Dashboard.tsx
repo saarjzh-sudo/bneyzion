@@ -20,7 +20,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   BookOpen, Users2, Clock, TrendingUp, Crown,
   ChevronLeft, Upload, UserCheck, BarChart3, Database,
+  Target,
 } from "lucide-react";
+import { useCampaignsAdmin, useCampaignStatsMap } from "@/hooks/useCampaigns";
 import {
   AreaChart, Area, XAxis, YAxis, Tooltip,
   ResponsiveContainer, CartesianGrid,
@@ -104,6 +106,56 @@ function KpiCard({ title, value, sub, icon: Icon, to, accent, bg, source }: KpiP
 }
 
 /* ─── main component ────────────────────────────────────────────── */
+/* ─── רמה 30: כרטיס קמפייני-גיוס (מקור: Supabase donations) ───── */
+function CampaignsSummaryCard() {
+  const { data: campaigns } = useCampaignsAdmin();
+  const { data: statsMap } = useCampaignStatsMap();
+  const active = (campaigns ?? []).filter((c) => c.is_active);
+  if (!active.length) return null;
+
+  return (
+    <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer, background: "#fff" }}>
+      <CardHeader className="pb-2 flex-row items-center justify-between">
+        <CardTitle className="font-kedem text-lg flex items-center gap-2" style={{ color: C.navy }}>
+          <Target className="w-5 h-5" style={{ color: C.gold }} aria-hidden />
+          קמפיינים פעילים
+        </CardTitle>
+        <SourceBadge source="Supabase" />
+      </CardHeader>
+      <CardContent className="grid gap-3 sm:grid-cols-2">
+        {active.map((c) => {
+          const stats = statsMap?.[c.slug];
+          const raised = stats?.raised ?? 0;
+          const goal = Number(c.goal_amount) || 0;
+          const pct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : null;
+          return (
+            <Link
+              key={c.id}
+              to={`/admin/campaigns/${c.slug}`}
+              className="block rounded-xl border p-4 transition-shadow hover:shadow-md"
+              style={{ borderColor: C.goldShimmer, background: C.parchment }}
+            >
+              <div className="flex items-baseline justify-between gap-2">
+                <span className="font-ploni font-bold" style={{ color: C.text }}>{c.title}</span>
+                <span className="text-xs font-ploni" style={{ color: C.textMuted }}>{stats?.supporters ?? 0} תומכים</span>
+              </div>
+              <div className="mt-2 text-xl font-bold" style={{ color: C.navy }}>₪{raised.toLocaleString()}</div>
+              {pct !== null && (
+                <>
+                  <div className="h-1.5 w-full rounded-full overflow-hidden mt-2" style={{ background: "#e5e0d5" }}>
+                    <div className="h-full rounded-full" style={{ width: `${pct}%`, background: "linear-gradient(90deg,#E8C97A,#B98A3C)" }} />
+                  </div>
+                  <div className="text-xs mt-1 font-ploni" style={{ color: C.textMuted }}>{pct}% מיעד של ₪{goal.toLocaleString()}</div>
+                </>
+              )}
+            </Link>
+          );
+        })}
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Dashboard() {
   const { data: monday } = useMondayInsights();
   const { data: stats, isLoading } = useQuery({
@@ -412,6 +464,9 @@ export default function Dashboard() {
 
         {/* ─── Monday section — איחוד הדשבורדים (לשעבר /admin/budget) ── */}
         <MondayInsightsSection />
+
+        {/* ─── רמה 30: קמפייני-גיוס פעילים (מקור: Supabase donations) ── */}
+        <CampaignsSummaryCard />
 
         {/* ─── Quick actions row ────────────────────────────────── */}
         <div>

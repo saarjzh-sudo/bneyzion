@@ -1180,13 +1180,22 @@ function DonationsTab({ donations, loading, error }: { donations: Donation[]; lo
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [monthlyFilter, setMonthlyFilter] = useState("all");
+  // רמה 30: סינון לפי מקור/קמפיין (donations.product = slug הקמפיין)
+  const [sourceFilter, setSourceFilter] = useState("all");
   const [selected, setSelected] = useState<Donation | null>(null);
+
+  const sourceOptions = useMemo(() => {
+    const set = new Set<string>();
+    for (const d of donations) if (d.product) set.add(d.product);
+    return Array.from(set).sort();
+  }, [donations]);
 
   const filtered = useMemo(() => {
     return donations.filter((d) => {
       if (statusFilter !== "all" && d.payment_status !== statusFilter) return false;
       if (monthlyFilter === "monthly" && !d.is_monthly) return false;
       if (monthlyFilter === "once" && d.is_monthly) return false;
+      if (sourceFilter !== "all" && d.product !== sourceFilter) return false;
       if (search) {
         const q = search.toLowerCase();
         return (
@@ -1200,7 +1209,7 @@ function DonationsTab({ donations, loading, error }: { donations: Donation[]; lo
       }
       return true;
     });
-  }, [donations, search, statusFilter, monthlyFilter]);
+  }, [donations, search, statusFilter, monthlyFilter, sourceFilter]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -1242,6 +1251,19 @@ function DonationsTab({ donations, loading, error }: { donations: Donation[]; lo
             <SelectItem value="once">חד-פעמי</SelectItem>
           </SelectContent>
         </Select>
+        {sourceOptions.length > 1 && (
+          <Select value={sourceFilter} onValueChange={setSourceFilter}>
+            <SelectTrigger style={{ width: 190 }}>
+              <SelectValue placeholder="מקור / קמפיין" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">כל המקורות</SelectItem>
+              {sourceOptions.map((s) => (
+                <SelectItem key={s} value={s}>{s}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
         <button
           onClick={() => exportDonations(filtered)}
           style={{
