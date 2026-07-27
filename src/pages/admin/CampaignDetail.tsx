@@ -24,7 +24,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
-import { ArrowRight, Download, ExternalLink, Pencil, Plus, Target, Trash2 } from "lucide-react";
+import { ArrowRight, Download, ExternalLink, Pencil, Plus, Search, Target, Trash2 } from "lucide-react";
 import {
   useCampaignBySlug,
   useLiveCampaignStats,
@@ -88,6 +88,8 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
   const { raised, supporters } = useLiveCampaignStats(campaign.slug);
   const { data: donations, isLoading } = useCampaignDonations(campaign.slug);
   const [statusFilter, setStatusFilter] = useState<"all" | "completed" | "pending">("completed");
+  // הערת יואב 27.7: שורת חיפוש תורם ספציפי לפני רשימת התורמים
+  const [search, setSearch] = useState("");
 
   const tierNames = useMemo(() => {
     const m: Record<string, string> = { "tier-custom": "סכום חופשי" };
@@ -113,7 +115,14 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
     return m;
   }, [completed]);
 
-  const visible = statusFilter === "all" ? all : statusFilter === "completed" ? completed : pending;
+  const byStatus = statusFilter === "all" ? all : statusFilter === "completed" ? completed : pending;
+  const q = search.trim().toLowerCase();
+  const visible = !q
+    ? byStatus
+    : byStatus.filter((d) =>
+        [d.donor_name, d.donor_email, d.phone, d.asmachta, d.shipping_city, d.tier_id ? tierNames[d.tier_id] : null]
+          .some((v) => v && v.toLowerCase().includes(q))
+      );
 
   return (
     <div className="space-y-6">
@@ -225,6 +234,17 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
           </div>
         </CardHeader>
         <CardContent>
+          {/* הערת יואב 27.7: חיפוש תורם ספציפי לפני הרשימה */}
+          <div className="relative mb-4" style={{ maxWidth: 360 }}>
+            <Search className="h-4 w-4 absolute top-1/2 -translate-y-1/2" style={{ insetInlineStart: 12, color: C.textMuted }} />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="חיפוש תורם: שם, טלפון, אימייל, אסמכתא, עיר…"
+              dir="rtl"
+              style={{ paddingInlineStart: 36 }}
+            />
+          </div>
           {isLoading ? (
             <p className="text-center py-10 font-ploni" style={{ color: C.textMuted }}>טוען…</p>
           ) : (
