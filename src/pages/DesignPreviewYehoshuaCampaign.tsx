@@ -19,7 +19,7 @@ import { useTierCounts } from "@/hooks/useTierCounts";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard } from "lucide-react";
 
 /* ─── Campaign constants ────────────────────────────────── */
-const GOAL = 80_000;
+const GOAL = 40_000;
 
 /* ─── Realtime donations hook ───────────────────────────── */
 // Reads from the SECURITY DEFINER view yehoshua_campaign_stats.
