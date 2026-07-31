@@ -19,7 +19,59 @@ import { useTierCounts } from "@/hooks/useTierCounts";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard } from "lucide-react";
 
 /* ─── Campaign constants ────────────────────────────────── */
-const GOAL = 40_000;
+const GOAL_1 = 35_000; // יעד ראשון
+const GOAL_2 = 40_000; // יעד שני — נפתח אחרי שעוברים את הראשון
+// מוצאי שבת, חצות (שעון ישראל, IDT +03:00)
+const CAMPAIGN_DEADLINE = new Date("2026-08-02T00:00:00+03:00").getTime();
+
+/** היעד הפעיל: הראשון עד שעוברים אותו, ואז השני */
+const activeGoalFor = (raised: number) => (raised >= GOAL_1 ? GOAL_2 : GOAL_1);
+
+/* ─── ספירה לאחור לסגירת הקמפיין ─── */
+function CampaignCountdown() {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(id);
+  }, []);
+  const diff = Math.max(0, CAMPAIGN_DEADLINE - now);
+  const dd = Math.floor(diff / 86_400_000);
+  const hh = Math.floor((diff % 86_400_000) / 3_600_000);
+  const mm = Math.floor((diff % 3_600_000) / 60_000);
+  const ss = Math.floor((diff % 60_000) / 1_000);
+  const unit = (n: number, label: string) => (
+    <div style={{ textAlign: "center", minWidth: 42 }}>
+      <div
+        style={{
+          fontSize: 20,
+          fontWeight: 900,
+          color: "hsl(43 90% 68%)",
+          fontVariantNumeric: "tabular-nums",
+          lineHeight: 1.1,
+        }}
+      >
+        {String(n).padStart(2, "0")}
+      </div>
+      <div style={{ fontSize: 10, color: "hsl(215 12% 60%)" }}>{label}</div>
+    </div>
+  );
+  return (
+    <div style={{ marginBlockStart: 14 }}>
+      <div style={{ fontSize: 12, color: "hsl(38 85% 70%)", fontWeight: 700, marginBlockEnd: 6 }}>
+        ⏳ ההזמנה נסגרת במוצאי שבת
+      </div>
+      <div style={{ display: "flex", gap: 6, alignItems: "flex-start" }}>
+        {unit(dd, "ימים")}
+        <div style={{ fontSize: 18, fontWeight: 900, color: "hsl(215 12% 45%)" }}>:</div>
+        {unit(hh, "שעות")}
+        <div style={{ fontSize: 18, fontWeight: 900, color: "hsl(215 12% 45%)" }}>:</div>
+        {unit(mm, "דקות")}
+        <div style={{ fontSize: 18, fontWeight: 900, color: "hsl(215 12% 45%)" }}>:</div>
+        {unit(ss, "שניות")}
+      </div>
+    </div>
+  );
+}
 
 /* ─── Realtime donations hook ───────────────────────────── */
 // Reads from the SECURITY DEFINER view yehoshua_campaign_stats.
@@ -215,8 +267,8 @@ const maxInstallmentsFor = (price: number): number => (price <= 220 ? 1 : 5);
 const CAMPAIGN_PHASES = [
   { label: "בניית הקמפיין", sub: 'אייר תשפ"ו', done: true },
   { label: "השקה", sub: 'סיון תשפ"ו', done: false, current: true },
-  { label: "יעד ראשון — ₪40K", sub: 'תמוז תשפ"ו', done: false },
-  { label: "יעד מלא — ₪80K", sub: 'אב תשפ"ו', done: false },
+  { label: "יעד ראשון — ₪35K", sub: 'תמוז תשפ"ו', done: false },
+  { label: "יעד שני — ₪40K", sub: 'אב תשפ"ו', done: false },
   { label: "הוצאה לאור", sub: 'אלול תשפ"ו', done: false },
   { label: "הספר אצלכם", sub: 'תשרי תשפ"ז', done: false },
 ];
@@ -372,6 +424,8 @@ function StickyNav({ scrolled, onSupportClick, progressPct }: { scrolled: boolea
 }
 
 function HeroSection({ onSupportClick, raised, supporters, progressPct }: { onSupportClick: () => void } & StatsProps) {
+  const activeGoal = activeGoalFor(raised);
+  const goalReached = raised >= GOAL_1;
   return (
     <section
       style={{
@@ -588,7 +642,7 @@ function HeroSection({ onSupportClick, raised, supporters, progressPct }: { onSu
                 ₪{raised.toLocaleString()}
               </span>
               <span style={{ color: "hsl(215 10% 48%)", fontSize: 13 }}>
-                מתוך ₪{GOAL.toLocaleString()}
+                מתוך ₪{activeGoal.toLocaleString()}
               </span>
               <span style={{ color: "hsl(38 85% 68%)", fontWeight: 700, fontSize: 13 }}>
                 {supporters} תומכים
@@ -613,8 +667,9 @@ function HeroSection({ onSupportClick, raised, supporters, progressPct }: { onSu
               />
             </div>
             <div style={{ fontSize: 11, color: "hsl(215 10% 40%)", marginBlockStart: 4 }}>
-              {progressPct}% מהיעד · הקמפיין בעיצומו
+              {progressPct}% מהיעד {goalReached ? "השני" : "הראשון"} · הקמפיין בעיצומו
             </div>
+            <CampaignCountdown />
           </div>
 
           {/* CTA */}
@@ -1824,7 +1879,7 @@ export default function DesignPreviewYehoshuaCampaign() {
   const scrolled = scrollY > 80;
   const [toastTier, setToastTier] = useState<Tier | null>(null);
   const { raised, supporters } = useCampaignStats();
-  const progressPct = Math.min(100, Math.round((raised / GOAL) * 100));
+  const progressPct = Math.min(100, Math.round((raised / activeGoalFor(raised)) * 100));
 
   // Inline checkout state
   const [checkoutTier, setCheckoutTier] = useState<Tier | null>(null);
