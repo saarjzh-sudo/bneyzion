@@ -142,7 +142,7 @@ const WhySecondTemple = () => {
               type="button"
               className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-l from-crimson via-crimson to-crimson-dark text-white px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all hover:shadow-xl hover:scale-105"
             >
-              אני מצטרף ללימוד הקיץ
+              אני מצטרף ללימוד
               <ArrowLeft className="w-5 h-5" />
             </button>
           </SubscribeButton>
