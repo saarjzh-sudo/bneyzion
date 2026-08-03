@@ -152,7 +152,7 @@ const AboutMemorialSection = () => {
   });
 
   return (
-    <section className="py-20 section-gradient-cool">
+    <section id="memorial" className="py-20 section-gradient-cool">
       <div className="container max-w-4xl">
         <motion.div
           initial="hidden"

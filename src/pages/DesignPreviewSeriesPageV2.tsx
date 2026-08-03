@@ -86,9 +86,11 @@ import { useSeriesDetail } from "@/hooks/useSeriesDetail";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
+import { useLessonParashot } from "@/hooks/useLessonParashot";
 import { usePublicBookListing } from "@/hooks/usePublicBookListing";
 import { useLesson } from "@/hooks/useLesson";
 import { useSeriesChildren, useSeriesBreadcrumb } from "@/hooks/useSeriesHierarchy";
+import { formatLessonDate } from "@/lib/lessonDate";
 // TeacherContentBadge import removed — badge no longer shown on regular series page (2026-06-09 fix)
 
 // Stable default series for no-param route: "איכה" — has 9 active sub-series
@@ -118,8 +120,8 @@ function getLessonMediaType(lesson: any): "audio" | "video" | "pdf" | "text" {
 }
 
 function formatDate(d: string | null) {
-  if (!d) return null;
-  return new Date(d).toLocaleDateString("he-IL", { year: "numeric", month: "long", day: "numeric" });
+  // תאריך עתידי (ארטיפקט ייבוא) לא מוצג — ראו lessonDate.ts
+  return formatLessonDate(d);
 }
 
 function isDirectVideo(url: string): boolean {
@@ -969,11 +971,13 @@ function LessonCard({
   seriesImageUrl,
   seriesTitle,
   onOpen,
+  parashaLabel = null,
 }: {
   lesson: any;
   seriesImageUrl: string | null;
   seriesTitle: string;
   onOpen: (lesson: any) => void;
+  parashaLabel?: string | null;
 }) {
   const imgUrl = lessonImage(lesson, seriesImageUrl, seriesTitle);
   const mediaType = getLessonMediaType(lesson);
@@ -1054,6 +1058,26 @@ function LessonCard({
         >
           {lessonTypeLabel(lesson.source_type)}
         </span>
+        {/* הערת סוקר 2.8: תווית פרשה — שיוך השיעור לפרשה גלוי על הכרטיס */}
+        {parashaLabel && (
+          <span
+            style={{
+              position: "absolute",
+              top: 9,
+              left: 9,
+              padding: "0.18rem 0.55rem",
+              borderRadius: radii.sm,
+              background: "rgba(255,255,255,0.92)",
+              color: colors.goldDark,
+              fontFamily: fonts.body,
+              fontSize: "0.65rem",
+              fontWeight: 700,
+              boxShadow: "0 1px 4px rgba(0,0,0,0.18)",
+            }}
+          >
+            {parashaLabel}
+          </span>
+        )}
         {/* TeacherContentBadge removed from regular series page — only in /teachers wing */}
         {/* Play/Listen/PDF button — only when lesson has playable/downloadable media */}
         {mediaIcon !== null && (
@@ -1145,11 +1169,13 @@ function LessonRow({
   seriesImageUrl,
   seriesTitle,
   onOpen,
+  parashaLabel = null,
 }: {
   lesson: any;
   seriesImageUrl: string | null;
   seriesTitle: string;
   onOpen: (lesson: any) => void;
+  parashaLabel?: string | null;
 }) {
   const imgUrl = lessonImage(lesson, seriesImageUrl, seriesTitle);
   const mediaType = getLessonMediaType(lesson);
@@ -1237,6 +1263,12 @@ function LessonRow({
             <>
               {lesson.rabbis?.name && <span style={{ opacity: 0.4 }}>·</span>}
               <span>{formatDuration(lesson.duration)}</span>
+            </>
+          )}
+          {parashaLabel && (
+            <>
+              <span style={{ opacity: 0.4 }}>·</span>
+              <span style={{ fontWeight: 600 }}>{parashaLabel}</span>
             </>
           )}
         </div>
@@ -1327,6 +1359,10 @@ function LessonsSection({
     if (mediaFilter === "all") return lessons;
     return lessons.filter((l) => getLessonMediaType(l) === mediaFilter);
   }, [lessons, mediaFilter]);
+
+  // הערת סוקר 2.8: תווית פרשה על כל כרטיס (כשיש תגית-פרשה לשיעור)
+  const lessonIds = useMemo(() => lessons.map((l: any) => l.id).filter(Boolean), [lessons]);
+  const { data: parashaMap = {} } = useLessonParashot(lessonIds);
 
   // רובריקות לפי רב — סגורות כברירת-מחדל, נפתחות בלחיצה. סדר: לפי כמות תכנים.
   const [openRubrics, setOpenRubrics] = useState<Set<string>>(() => new Set());
@@ -1447,6 +1483,7 @@ function LessonsSection({
                           seriesImageUrl={seriesImageUrl}
                           seriesTitle={seriesTitle}
                           onOpen={onOpenLesson}
+                          parashaLabel={parashaMap[lesson.id] || null}
                         />
                       ))}
                     </div>
@@ -1470,6 +1507,7 @@ function LessonsSection({
                 seriesImageUrl={seriesImageUrl}
                 seriesTitle={seriesTitle}
                 onOpen={onOpenLesson}
+                parashaLabel={parashaMap[lesson.id] || null}
               />
             ))}
           </div>
@@ -1482,6 +1520,7 @@ function LessonsSection({
                 seriesImageUrl={seriesImageUrl}
                 seriesTitle={seriesTitle}
                 onOpen={onOpenLesson}
+                parashaLabel={parashaMap[lesson.id] || null}
               />
             ))}
           </div>
@@ -2174,7 +2213,7 @@ function LessonModal({
           {/* ── ג3: Full content / description — no truncation ── */}
           {(lesson as any).content ? (
             <div
-              className="prose prose-sm max-w-none"
+              className="prose prose-sm max-w-none [&_p]:text-justify"
               style={{
                 fontFamily: fonts.body,
                 fontSize: "0.88rem",

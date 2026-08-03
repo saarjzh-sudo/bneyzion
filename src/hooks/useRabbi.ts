@@ -58,11 +58,13 @@ export function useRabbiSeries(rabbiId: string | undefined) {
       // The "guest series" second query inflated the list with giant shared containers
       // (e.g. פרשת השבוע for any rabbi with even 1 lesson there).
       // R-RAB3 fix: exclude teacher-tagged series from the public rabbi page.
+      // הערת סוקר 2.8: סדרות עם 0 שיעורים הופיעו בעמוד הרב — מסננים ריקות
       const { data: owned, error: ownedErr } = await supabase
         .from("series")
         .select("id, title, description, image_url, lesson_count, status, sort_order, audience_tags")
         .eq("rabbi_id", rabbiId!)
         .in("status", ["active", "published"])
+        .gt("lesson_count", 0)
         .not("audience_tags", "cs", '{"teachers"}')
         .order("sort_order", { ascending: true, nullsFirst: false })
         .order("lesson_count", { ascending: false });
@@ -99,7 +101,11 @@ export function useRabbiPageItems(rabbiId: string | undefined) {
         if (error.code === "42P01" || error.message?.includes("does not exist")) return [];
         throw error;
       }
-      return (data ?? []) as any[];
+      // הערת סוקר 2.8: גם ברשימה האצורה — סדרה בלי שיעורים פורסמו לא מוצגת
+      // (אם יתווספו לה שיעורים בעתיד היא תחזור אוטומטית)
+      return ((data ?? []) as any[]).filter(
+        (row: any) => row.kind !== "series" || ((row.series as any)?.lesson_count ?? 0) > 0,
+      );
     },
     staleTime: 1000 * 60 * 5,
   });

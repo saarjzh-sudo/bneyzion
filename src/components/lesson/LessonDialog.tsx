@@ -21,6 +21,7 @@ import { formatRabbiName } from "@/lib/rabbi-name";
 import DedicationDialog from "@/components/lesson/DedicationDialog";
 import { pdfEmbedSrc } from "@/lib/pdfEmbed";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
+import { formatLessonDate } from "@/lib/lessonDate";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -33,8 +34,8 @@ function isDirectVideo(url: string): boolean {
 }
 
 function formatDate(d: string | null) {
-  if (!d) return null;
-  return new Date(d).toLocaleDateString("he-IL", { year: "numeric", month: "long", day: "numeric" });
+  // תאריך עתידי (ארטיפקט ייבוא) לא מוצג — ראו lessonDate.ts
+  return formatLessonDate(d);
 }
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -248,7 +249,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
           .content h2 { font-size: 20px; }
           .content h3 { font-size: 17px; }
 
-          .content p { margin-bottom: 12px; }
+          .content p { margin-bottom: 12px; text-align: justify; }
 
           .content strong {
             font-weight: 700;
@@ -616,7 +617,7 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
                   [&_h2]:text-2xl [&_h2]:font-heading [&_h2]:font-bold [&_h2]:text-primary [&_h2]:mt-10 [&_h2]:mb-4
                   [&_h3]:text-xl [&_h3]:font-heading [&_h3]:font-bold [&_h3]:text-primary [&_h3]:mt-8 [&_h3]:mb-3
                   [&_h4]:text-lg [&_h4]:font-display [&_h4]:font-bold [&_h4]:text-foreground [&_h4]:mt-6 [&_h4]:mb-2
-                  [&_p]:text-foreground [&_p]:mb-4 [&_p]:leading-[1.9]
+                  [&_p]:text-foreground [&_p]:mb-4 [&_p]:leading-[1.9] [&_p]:text-justify
                   [&_strong]:text-foreground [&_strong]:font-bold
                   [&_ol]:list-decimal [&_ol]:ps-6 [&_ol]:mb-4 [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:mb-4 [&_li]:mb-1 [&_li]:leading-[1.8]
                   [&_blockquote]:border-r-4 [&_blockquote]:border-primary/30 [&_blockquote]:pr-4 [&_blockquote]:mr-0 [&_blockquote]:italic [&_blockquote]:text-muted-foreground"

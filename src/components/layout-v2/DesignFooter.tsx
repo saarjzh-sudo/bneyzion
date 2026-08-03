@@ -139,11 +139,14 @@ export default function DesignFooter() {
         >
           {/* Brand column */}
           <div>
-            <img
-              src={logoBright}
-              alt="בני ציון"
-              style={{ height: 56, width: "auto", marginBottom: "1rem" }}
-            />
+            {/* הערת סוקר 2.8: לחיצה על הלוגו בפוטר מובילה לעמוד הראשי */}
+            <Link to="/" aria-label="לעמוד הראשי" style={{ display: "inline-block" }}>
+              <img
+                src={logoBright}
+                alt="בני ציון"
+                style={{ height: 56, width: "auto", marginBottom: "1rem" }}
+              />
+            </Link>
             <p
               style={{
                 fontFamily: fonts.body,
@@ -202,9 +205,10 @@ export default function DesignFooter() {
                 <Link to="/memorial/saadia" style={{ ...linkBase, display: "block" }}>
                   סעדיה יעקב בן חיים הי״ד
                 </Link>
-                <span style={{ ...linkBase, display: "block" }}>
+                {/* הערת סוקר 2.8: הייתה היחידה שלא לחיצה — מקשרת לסקשן ההנצחה באודות */}
+                <Link to="/about#memorial" style={{ ...linkBase, display: "block" }}>
                   מעין פלסר ז״ל
-                </span>
+                </Link>
               </div>
             </div>
 

@@ -1824,11 +1824,14 @@ function NewsletterSection() {
               />
             </div>
 
-            {/* Terms checkbox */}
+            {/* Terms checkbox — הערת סוקר 2.8: הקובייה לא הייתה סימטרית לכיוון;
+                עכשיו השורה ממורכזת וב-RTL מפורש כך שהקובייה צמודה מימין לטקסט */}
             <label
               style={{
                 display: "flex",
-                alignItems: "flex-start",
+                alignItems: "center",
+                justifyContent: "center",
+                direction: "rtl",
                 gap: "0.6rem",
                 cursor: "pointer",
                 textAlign: "right",
@@ -1839,7 +1842,6 @@ function NewsletterSection() {
                 checked={agreed}
                 onChange={(e) => setAgreed(e.target.checked)}
                 style={{
-                  marginTop: "0.15rem",
                   width: 18,
                   height: 18,
                   accentColor: GOLD_DARK,
