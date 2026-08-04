@@ -1,3 +1,4 @@
+import { requireAdmin } from "../_shared/admin-auth.ts";
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 
 const corsHeaders = {
@@ -7,6 +8,13 @@ const corsHeaders = {
 
 serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  // ── אבטחה (אודיט 2.8.2026) ──────────────────────────────────────────────
+  // M6 — פרוקסי AI פתוח: הקורא שלט בכל תפקיד-הודעה, והשימוש מחויב לפרויקט.
+  // הבדיקה חייבת להיות בקוד: verify_jwt ב-config.toml אינו אימות —
+  // ה-anon key הציבורי הוא JWT חתום ותקף. ראו _shared/admin-auth.ts.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
 
   try {
     const { messages, context } = await req.json();

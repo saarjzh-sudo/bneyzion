@@ -502,6 +502,16 @@ export default function AdminProducts() {
                     <div>
                       <Label>קישור קובץ דיגיטלי</Label>
                       <Input value={form.digital_file_url} onChange={e => setForm({ ...form, digital_file_url: e.target.value })} dir="ltr" />
+                      {/* אודיט M13: הדבקת קישור Drive/ישיר כאן חשפה את הקובץ —
+                          products קריאה ל-anon, ולכן הקישור הפך זמין לכל גולש.
+                          המסירה בשרת מקבלת storage: בלבד (digital-delivery.ts). */}
+                      {form.digital_file_url && !form.digital_file_url.startsWith("storage:") && (
+                        <p className="text-xs text-destructive mt-1 font-medium">
+                          ⚠️ ערך לא תקין. רק קישור שמתחיל ב-<span dir="ltr">storage:</span> נמסר לרוכשים —
+                          קישור Drive או כתובת ישירה נחשפים לכל גולש (העמודה קריאה לציבור) ולא יישלחו במייל.
+                          שלחו את הקובץ לסער להעלאה מאובטחת.
+                        </p>
+                      )}
                       <p className="text-xs text-muted-foreground mt-1">
                         למוצר דיגיטלי — הקובץ שהרוכש מקבל במייל אחרי התשלום. ערך שמתחיל ב-<span dir="ltr">storage:</span> = קובץ מאובטח במערכת (מנוהל אוטומטית — לא לשנות ידנית). קובץ חדש או מהדורה מעודכנת? שולחים לסער והוא מעלה. למוצר פיזי משאירים ריק.
                       </p>

@@ -17,6 +17,7 @@
  * Secret:  supabase secrets set MONDAY_API_TOKEN=<token>
  */
 
+import { requireAdmin } from "../_shared/admin-auth.ts";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
@@ -139,6 +140,13 @@ async function fetchDonations(token: string) {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  // ── אבטחה (אודיט 2.8.2026) ──────────────────────────────────────────────
+  // M5 — חשיפת מדדים פיננסיים פנימיים (MRR, נטישה, מספר מנויים) — ה-anon key הספיק.
+  // הבדיקה חייבת להיות בקוד: verify_jwt ב-config.toml אינו אימות —
+  // ה-anon key הציבורי הוא JWT חתום ותקף. ראו _shared/admin-auth.ts.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
   try {
     const token = Deno.env.get("MONDAY_API_TOKEN");
     if (!token) throw new Error("MONDAY_API_TOKEN not configured");

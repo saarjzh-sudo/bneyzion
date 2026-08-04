@@ -1,3 +1,4 @@
+import { requireAdmin } from "../_shared/admin-auth.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
@@ -83,6 +84,13 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
+  // ── אבטחה (אודיט 2.8.2026) ──────────────────────────────────────────────
+  // M4 — כתיבת service_role ללא אימות (שדה נגזר, אך עדיין כתיבה ציבורית ל-DB).
+  // הבדיקה חייבת להיות בקוד: verify_jwt ב-config.toml אינו אימות —
+  // ה-anon key הציבורי הוא JWT חתום ותקף. ראו _shared/admin-auth.ts.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
 
   try {
     const supabase = createClient(

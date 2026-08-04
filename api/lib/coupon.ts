@@ -10,6 +10,92 @@ export interface CouponCheck {
   code?: string;
   discountType?: "percent" | "amount";
   discountValue?: number;
+  /** Set only by reserveCoupon() — the webhook consumes or releases it. */
+  reservationId?: string;
+}
+
+/**
+ * Atomically reserve one use of a coupon (audit M10).
+ *
+ * validateCoupon() below is a READ. Between that read at create-payment time
+ * and the used_count increment in the webhook there are minutes of the buyer
+ * typing card details into Grow — so a max_uses=1 coupon could be redeemed in
+ * 20 parallel tabs, every one of them reading used_count=0 and passing.
+ *
+ * This takes a row lock on the coupon and counts open reservations alongside
+ * used_count, so concurrent callers queue instead of racing. Reservations
+ * expire on their own after 30 minutes, which is why an abandoned checkout
+ * still doesn't burn a single-use coupon — the property the webhook-only
+ * counting was there to preserve.
+ *
+ * Use this at payment time. validateCoupon stays for the read-only preview at
+ * /api/store/validate-coupon, where reserving would be wrong.
+ */
+export async function reserveCoupon(
+  supabase: SupabaseClient,
+  rawCode: string | undefined | null,
+  orderId?: string | null
+): Promise<CouponCheck> {
+  const code = (rawCode || "").toUpperCase().trim();
+  if (!code) return { valid: false, reason: "לא הוזן קוד קופון" };
+
+  const { data, error } = await supabase.rpc("reserve_coupon", {
+    p_code: code,
+    p_order_id: orderId ?? null,
+  });
+
+  if (error) {
+    console.error("reserveCoupon RPC error:", error);
+    // Fail closed. A coupon that cannot be reserved must not be honoured —
+    // silently continuing at full price would be wrong too, so the caller
+    // surfaces this as a retryable error.
+    return { valid: false, reason: "שגיאה בבדיקת הקופון — נסו שוב" };
+  }
+
+  const row = Array.isArray(data) ? data[0] : data;
+  if (!row || !row.valid) {
+    return { valid: false, reason: row?.reason || "קוד הקופון אינו תקף" };
+  }
+
+  return {
+    valid: true,
+    code: row.code,
+    discountType: row.discount_type === "amount" ? "amount" : "percent",
+    discountValue: Number(row.discount_value) || 0,
+    reservationId: row.reservation_id,
+  };
+}
+
+/** Mark a reservation used and increment used_count. Idempotent per reservation. */
+export async function consumeCouponReservation(
+  supabase: SupabaseClient,
+  reservationId: string | null | undefined
+): Promise<boolean> {
+  if (!reservationId) return false;
+  const { data, error } = await supabase.rpc("consume_coupon_reservation", {
+    p_reservation_id: reservationId,
+  });
+  if (error) {
+    console.error("consumeCouponReservation RPC error:", error);
+    return false;
+  }
+  return data === true;
+}
+
+/** Release a reservation after a failed payment so the use returns immediately. */
+export async function releaseCouponReservation(
+  supabase: SupabaseClient,
+  reservationId: string | null | undefined
+): Promise<boolean> {
+  if (!reservationId) return false;
+  const { error } = await supabase.rpc("release_coupon_reservation", {
+    p_reservation_id: reservationId,
+  });
+  if (error) {
+    console.error("releaseCouponReservation RPC error:", error);
+    return false;
+  }
+  return true;
 }
 
 export async function validateCoupon(

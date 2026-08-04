@@ -2,23 +2,27 @@
  * DesignPreviewYehoshuaAdmin — Admin Dashboard
  * Route: /design-yehoshua-admin
  *
- * Auth: simple password gate (default "123456", overridable via the
- * YEHOSHUA_ADMIN_PASSWORD env on the endpoint).
+ * Auth: Google sign-in + the `admin` role, enforced server-side.
+ *
+ * Was a shared password defaulting to "123456" (audit H4, replaced 2.8.2026).
+ * The gate now sends the caller's Supabase access token to
+ * /api/yehoshua/donations, which verifies it and checks user_roles before
+ * touching the data. The sign-in screen below is UX only — it is the server
+ * that decides, and it will 403 a non-admin regardless of what renders here.
  *
  * WHY a server endpoint instead of a direct Supabase read:
  *   The donor rows carry PII (name, email, phone, shipping address) and the
- *   `donations` table RLS is fail-closed — anon cannot SELECT it. So the
- *   password-gated page does NOT read Supabase directly; it POSTs the password
- *   to /api/yehoshua/donations, which checks it server-side and returns the
- *   rows using the service-role key. The DB stays locked to anon; only the
- *   endpoint (behind the password) exposes the data. See that file for detail.
+ *   `donations` table RLS is fail-closed — anon cannot SELECT it. The page does
+ *   NOT read Supabase directly; the endpoint returns the rows with the
+ *   service-role key after authorizing the caller. The DB stays locked to anon.
  */
 
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 
 const GOAL = 80_000;
 const API_ENDPOINT = "/api/yehoshua/donations";
-const PW_STORAGE_KEY = "yehoshua_admin_pw";
 
 /* ─── Types ────────────────────────────────────────────────── */
 interface CampaignStatsRow {
@@ -157,21 +161,19 @@ function KpiCard({
   );
 }
 
-/* ─── Password Screen ────────────────────────────────────────── */
-function PasswordScreen({
-  onSubmit,
+/* ─── Sign-in Screen ─────────────────────────────────────────── */
+function SignInScreen({
+  onSignIn,
   loading,
   error,
 }: {
-  onSubmit: (pw: string) => void;
+  onSignIn: () => void;
   loading: boolean;
   error: string | null;
 }) {
-  const [pw, setPw] = useState("");
-
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (pw.trim()) onSubmit(pw.trim());
+    onSignIn();
   };
 
   return (
@@ -230,30 +232,10 @@ function PasswordScreen({
             lineHeight: 1.6,
           }}
         >
-          כניסה מוגבלת למנהל בלבד.
+          כניסה מוגבלת למנהלי המערכת.
           <br />
-          הזן את הסיסמה כדי להיכנס.
+          התחברו עם חשבון Google המורשה.
         </p>
-        <input
-          type="password"
-          value={pw}
-          onChange={(e) => setPw(e.target.value)}
-          placeholder="סיסמה"
-          autoFocus
-          dir="ltr"
-          style={{
-            width: "100%",
-            border: "1.5px solid hsl(215 15% 85%)",
-            borderRadius: 12,
-            padding: "13px 16px",
-            fontSize: 16,
-            textAlign: "center",
-            letterSpacing: "0.1em",
-            color: "hsl(215 40% 15%)",
-            marginBottom: 14,
-            fontFamily: "inherit",
-          }}
-        />
         {error && (
           <div
             style={{
@@ -268,21 +250,21 @@ function PasswordScreen({
         )}
         <button
           type="submit"
-          disabled={loading || !pw.trim()}
+          disabled={loading}
           style={{
             width: "100%",
-            background: loading || !pw.trim() ? "hsl(215 15% 88%)" : "hsl(215 55% 20%)",
-            color: loading || !pw.trim() ? "hsl(215 20% 55%)" : "white",
+            background: loading ? "hsl(215 15% 88%)" : "hsl(215 55% 20%)",
+            color: loading ? "hsl(215 20% 55%)" : "white",
             border: "none",
             borderRadius: 12,
             padding: "14px 24px",
             fontSize: 15,
             fontWeight: 700,
-            cursor: loading || !pw.trim() ? "not-allowed" : "pointer",
+            cursor: loading ? "not-allowed" : "pointer",
             transition: "background 0.2s",
           }}
         >
-          {loading ? "מאמת..." : "כניסה"}
+          {loading ? "מאמת..." : "התחברות עם Google"}
         </button>
       </form>
     </div>
@@ -760,27 +742,41 @@ function AdminView({
 
 /* ─── Root ───────────────────────────────────────────────────── */
 export default function DesignPreviewYehoshuaAdmin() {
+  const { user, isAdmin, isLoading: authLoading, signInWithGoogle, signOut: authSignOut } = useAuth();
   const [data, setData] = useState<AdminData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Attempt silent login if a password was stored from a previous visit.
-  const [booting, setBooting] = useState(
-    () => typeof window !== "undefined" && !!localStorage.getItem(PW_STORAGE_KEY)
-  );
 
-  const load = useCallback(async (pw: string, opts?: { silent?: boolean }) => {
+  const load = useCallback(async (opts?: { silent?: boolean }) => {
     if (!opts?.silent) setLoading(true);
     setError(null);
     try {
+      // The access token is the credential. getSession() rather than a stored
+      // value, so an expired token is refreshed instead of silently 401-ing.
+      const { data: sessionData } = await supabase.auth.getSession();
+      const token = sessionData.session?.access_token;
+      if (!token) {
+        setData(null);
+        setError("ההתחברות פגה — התחברו מחדש.");
+        return;
+      }
+
       const res = await fetch(API_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: pw }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: "{}",
       });
       if (res.status === 401) {
-        localStorage.removeItem(PW_STORAGE_KEY);
         setData(null);
-        setError("סיסמה שגויה");
+        setError("ההתחברות פגה — התחברו מחדש.");
+        return;
+      }
+      if (res.status === 403) {
+        setData(null);
+        setError("החשבון הזה אינו מנהל מערכת. פנו לסער להרשאה.");
         return;
       }
       if (!res.ok) {
@@ -788,43 +784,36 @@ export default function DesignPreviewYehoshuaAdmin() {
         return;
       }
       const json = (await res.json()) as AdminData;
-      localStorage.setItem(PW_STORAGE_KEY, pw);
       setData(json);
       setError(null);
     } catch {
       setError("שגיאת רשת. בדוק חיבור ונסה שוב.");
     } finally {
       setLoading(false);
-      setBooting(false);
     }
   }, []);
 
-  // Silent re-auth on mount if we already have a stored password.
+  // Load as soon as we have a signed-in admin.
   useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem(PW_STORAGE_KEY) : null;
-    if (stored) load(stored, { silent: true });
-  }, [load]);
+    if (!authLoading && user && isAdmin) load({ silent: true });
+  }, [authLoading, user, isAdmin, load]);
 
   // Periodic refresh while logged in.
   useEffect(() => {
     if (!data) return;
-    const id = setInterval(() => {
-      const pw = localStorage.getItem(PW_STORAGE_KEY);
-      if (pw) load(pw, { silent: true });
-    }, 45_000);
+    const id = setInterval(() => load({ silent: true }), 45_000);
     return () => clearInterval(id);
   }, [data, load]);
 
   const signOut = () => {
-    localStorage.removeItem(PW_STORAGE_KEY);
     setData(null);
     setError(null);
+    void authSignOut();
   };
 
-  const refresh = () => {
-    const pw = localStorage.getItem(PW_STORAGE_KEY);
-    if (pw) load(pw);
-  };
+  const refresh = () => void load();
+
+  const booting = authLoading || (!!user && isAdmin && !data && !error);
 
   if (booting) {
     return (
@@ -854,7 +843,19 @@ export default function DesignPreviewYehoshuaAdmin() {
   }
 
   if (!data) {
-    return <PasswordScreen onSubmit={(pw) => load(pw)} loading={loading} error={error} />;
+    // Not signed in, not an admin, or the load failed. The server decides
+    // either way — this only picks which message to show.
+    const gateError =
+      user && !isAdmin
+        ? "החשבון הזה אינו מנהל מערכת. פנו לסער להרשאה."
+        : error;
+    return (
+      <SignInScreen
+        onSignIn={() => void signInWithGoogle("/design-yehoshua-admin")}
+        loading={loading}
+        error={gateError}
+      />
+    );
   }
 
   return (

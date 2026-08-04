@@ -1,3 +1,4 @@
+import { requireAdmin } from "../_shared/admin-auth.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
@@ -162,6 +163,13 @@ function json(data: any, status = 200) {
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  // ── אבטחה (אודיט 2.8.2026) ──────────────────────────────────────────────
+  // H6 — כתיבות-תוכן בכמות עם service_role, verify_jwt=false, ללא בדיקת-קורא.
+  // הבדיקה חייבת להיות בקוד: verify_jwt ב-config.toml אינו אימות —
+  // ה-anon key הציבורי הוא JWT חתום ותקף. ראו _shared/admin-auth.ts.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;

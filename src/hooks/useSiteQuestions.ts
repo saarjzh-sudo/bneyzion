@@ -55,10 +55,12 @@ export function usePublishedQuestions() {
   return useQuery({
     queryKey: ["site-questions", "published"],
     queryFn: async () => {
+      // אודיט F5-10: קריאה מ-view ולא מהטבלה. הגבלת `is_published = true`
+      // היא סינון-**שורות**, ולכן `select=*` על שאלה שפורסמה עדיין החזיר את
+      // `asker_email` של השואל. ה-view משמיט אותו.
       const { data, error } = await supabase
-        .from("site_questions" as never)
+        .from("public_site_questions" as never)
         .select("id, asker_name, question, answer, answered_by, answered_at, created_at")
-        .eq("is_published" as never, true)
         .not("answer", "is", null)
         .order("answered_at" as never, { ascending: false, nullsFirst: false })
         .order("created_at" as never, { ascending: false });

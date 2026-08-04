@@ -1,6 +1,12 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
 import { deliverOrder, sendDonationThankYouEmail } from "../lib/digital-delivery.js";
+import {
+  verifyOrderCallback,
+  isWebhookSecretConfigured,
+  WEBHOOK_TOKEN_PARAM,
+} from "../lib/webhook-auth.js";
+import { consumeCouponReservation, releaseCouponReservation } from "../lib/coupon.js";
 // subscribeToSmoove is defined locally below — it handles the 409 "already
 // exists" case by looking up the contact and adding to the list via PUT.
 // splitFullName is imported for any future use but not currently needed here.
@@ -133,6 +139,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ received: true, processed: false });
     }
 
+    // ───── GATE 1 · Authenticity (audit H1) ─────────────────────────────────
+    // Grow does not sign its callbacks, so authenticity comes from the
+    // notifyUrl create-payment handed it: only this server can mint a token
+    // that verifies against this orderId. Without this gate the entire body was
+    // trusted — a plain POST with status=1 and someone else's orderId flipped
+    // an order to `completed`, mailed the signed download links, and granted
+    // the course access tags.
+    //
+    // Fails closed, and stays 200 so Grow's retry queue doesn't spin.
+    if (!isWebhookSecretConfigured()) {
+      console.error(
+        "[Webhook REJECT] GROW_WEBHOOK_SECRET is not configured — cannot authenticate " +
+          "callbacks. Set it in the Vercel environment. orderId=" + orderId
+      );
+      return res.status(200).json({ received: true, processed: false });
+    }
+    const callbackToken =
+      (req.query?.[WEBHOOK_TOKEN_PARAM] as string | undefined) ??
+      new URL(req.url || "", "https://placeholder.local").searchParams.get(
+        WEBHOOK_TOKEN_PARAM
+      ) ??
+      undefined;
+    if (!verifyOrderCallback(orderId, callbackToken)) {
+      console.error(
+        "[Webhook REJECT] invalid or missing callback token — refusing to process. " +
+          "This is what a forged payment notification looks like.",
+        {
+          orderId,
+          hasToken: !!callbackToken,
+          ip: (req.headers["x-forwarded-for"] as string) || null,
+          ua: req.headers["user-agent"] || null,
+        }
+      );
+      return res.status(200).json({ received: true, processed: false });
+    }
+
     const supabase = getSupabaseAdmin();
 
     // Decide which table to update.
@@ -173,19 +215,70 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       console.log(`Webhook: no productSlug, legacy targetTable="${targetTable}" (flowType="${flowType}")`);
     }
 
-    // Preserve existing raw_payload (e.g. consent audit from create-payment)
-    let mergedPayload: any = { webhook: payload };
+    // Load the target row once: we need its raw_payload (to preserve the
+    // consent audit), its expected amount (gate 2) and its current status
+    // (gate 3). `lesson_dedications` tracks completion in `status`; orders and
+    // donations use `payment_status`.
+    const isDedicationTable = targetTable === "lesson_dedications";
+    const amountColumn = targetTable === "orders" ? "total" : "amount";
+    const statusColumn = isDedicationTable ? "status" : "payment_status";
+
+    let existingRow: Record<string, any> | null = null;
     try {
       const { data: existing } = await supabase
         .from(targetTable)
-        .select("raw_payload")
+        .select(`raw_payload, ${amountColumn}, ${statusColumn}`)
         .eq("id", orderId)
         .maybeSingle();
-      if (existing?.raw_payload && typeof existing.raw_payload === "object") {
-        mergedPayload = { ...existing.raw_payload, webhook: payload };
-      }
+      existingRow = (existing as Record<string, any>) || null;
     } catch (e) {
-      console.warn("Webhook: failed to read existing raw_payload, will overwrite", e);
+      console.warn("Webhook: failed to read existing row", e);
+    }
+
+    // A signed token for an id that has no row is not a normal situation.
+    if (!existingRow) {
+      console.error("[Webhook REJECT] no row found for orderId", { targetTable, orderId });
+      return res.status(200).json({ received: true, processed: false });
+    }
+
+    let mergedPayload: any = { webhook: payload };
+    if (existingRow.raw_payload && typeof existingRow.raw_payload === "object") {
+      mergedPayload = { ...existingRow.raw_payload, webhook: payload };
+    }
+
+    // ───── GATE 2 · Charged amount matches the order (audit H1) ─────────────
+    // Independent of the token: even a genuine Grow callback must not be able
+    // to settle a ₪440 order against a ₪1 charge. ₪1 grace matches the rounding
+    // tolerance used everywhere else in this flow.
+    const expectedAmount = Number(existingRow[amountColumn]);
+    const chargedAmount = Number(txData.sum);
+    if (
+      statusCode === "2" &&
+      Number.isFinite(expectedAmount) &&
+      expectedAmount > 0 &&
+      Number.isFinite(chargedAmount) &&
+      chargedAmount < expectedAmount - 1
+    ) {
+      console.error(
+        "[Webhook REJECT] charged sum is below the recorded order total — not settling.",
+        { orderId, targetTable, expectedAmount, chargedAmount, transactionId }
+      );
+      return res.status(200).json({ received: true, processed: false });
+    }
+
+    // ───── GATE 3 · Idempotency (audit M9) ──────────────────────────────────
+    // Without this, replaying one captured callback re-ran every side effect —
+    // and grantAccessTag recomputes valid_until from Date.now(), so a monthly
+    // replay renewed a subscription forever. The conditional update below is
+    // the real guard; this read is what we log against.
+    const currentStatus = existingRow[statusColumn];
+    const finalValue = isDedicationTable ? "active" : "completed";
+    if (currentStatus === finalValue) {
+      console.warn(
+        "[Webhook] duplicate callback for an already-settled row — acknowledged, not re-processed.",
+        { orderId, targetTable, transactionId }
+      );
+      return res.status(200).json({ received: true, processed: false, duplicate: true });
     }
 
     // Capture Grow-issued receipt fields if present — Grow handles invoicing
@@ -242,13 +335,28 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
-    const { error: updateErr } = await supabase
+    // Conditional on the row not already being final — this, not the read
+    // above, is what makes the settlement atomic. Two callbacks arriving at the
+    // same instant both pass gate 3, but only one gets a row back here, so the
+    // side effects below run exactly once. The `.or(is.null, ...)` form is
+    // required: a bare `.neq` drops NULL statuses, because in SQL
+    // `NULL <> 'completed'` is NULL, not true.
+    const { data: updatedRows, error: updateErr } = await supabase
       .from(targetTable)
       .update(updateRow)
-      .eq("id", orderId);
+      .eq("id", orderId)
+      .or(`${statusColumn}.is.null,${statusColumn}.neq.${finalValue}`)
+      .select("id");
 
     if (updateErr) {
       console.error(`Webhook: failed to update ${targetTable}`, updateErr);
+    }
+    const transitioned = (updatedRows?.length ?? 0) > 0;
+    if (!transitioned && !updateErr) {
+      console.warn(
+        "[Webhook] row was already settled by a concurrent callback — skipping side effects.",
+        { orderId, targetTable, transactionId }
+      );
     }
 
     // Approve the transaction (REQUIRED by Grow — חנה actively monitors and
@@ -268,7 +376,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Post-purchase side effects (only on successful payment).
     // Dedications: no access tags / Smoove — the row flip to 'active' above
     // is the entire effect, so skip the generic side-effect pass.
-    if (statusCode === "2" && targetTable !== "lesson_dedications") {
+    if (statusCode === "2" && targetTable !== "lesson_dedications" && transitioned) {
       try {
         await runPostPurchaseSideEffects({
           supabase,
@@ -281,10 +389,32 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         console.error("Post-purchase side effects exception:", e);
       }
 
-      // Coupon used_count — incremented only on CONFIRMED payment (abandoned
-      // checkouts never consume a use). Read-then-write is fine at this scale.
+      // Coupon (audit M10) — consume the reservation create-payment took under
+      // a row lock, rather than re-reading used_count by code. The old
+      // read-then-increment could not bound a max_uses=1 coupon, because every
+      // parallel checkout read used_count=0 minutes before any of them settled.
+      // consume_coupon_reservation is idempotent per reservation, so a replay
+      // cannot inflate the count either.
+      const reservationId = (mergedPayload as any)?.coupon_reservation_id;
       const usedCoupon = (mergedPayload as any)?.coupon_code;
-      if (usedCoupon && targetTable === "orders") {
+      if (targetTable === "orders" && reservationId) {
+        try {
+          const consumed = await consumeCouponReservation(supabase, reservationId);
+          console.log(
+            consumed
+              ? `Webhook: coupon ${usedCoupon} reservation consumed`
+              : `Webhook: coupon reservation ${reservationId} was already consumed/released`
+          );
+        } catch (e) {
+          console.error("Webhook: coupon consume failed (non-fatal):", e);
+        }
+      } else if (targetTable === "orders" && usedCoupon) {
+        // Orders created before this migration have no reservation id. Counting
+        // them by code preserves the historical behaviour for the short tail of
+        // in-flight checkouts; new orders always take the path above.
+        console.warn(
+          `Webhook: order ${orderId} used coupon ${usedCoupon} with no reservation id (pre-migration order) — counting by code`
+        );
         try {
           const { data: coupon } = await supabase
             .from("coupons")
@@ -296,10 +426,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               .from("coupons")
               .update({ used_count: (coupon.used_count ?? 0) + 1 })
               .eq("id", coupon.id);
-            console.log(`Webhook: coupon ${usedCoupon} used_count incremented`);
           }
         } catch (e) {
-          console.error("Webhook: coupon increment failed (non-fatal):", e);
+          console.error("Webhook: legacy coupon increment failed (non-fatal):", e);
+        }
+      }
+    }
+
+    // Failed payment → hand the coupon use straight back instead of waiting out
+    // the 30-minute reservation window.
+    if (statusCode !== "2") {
+      const reservationId = (mergedPayload as any)?.coupon_reservation_id;
+      if (reservationId) {
+        try {
+          await releaseCouponReservation(supabase, reservationId);
+        } catch (e) {
+          console.error("Webhook: coupon release failed (non-fatal):", e);
         }
       }
     }
@@ -307,7 +449,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // רמה 18 (אודיט הקדשות): הקדשה עולה לאתר אוטומטית עם אישור החיוב, בלי
     // שום עין אנושית על השם. לא חוסמים (החלטת-מוצר קיימת: "אישור מיידי"),
     // אבל המשרד מקבל התראה כדי שיוכל לבדוק את הנוסח ולהוריד במקרה הצורך.
-    if (targetTable === "lesson_dedications" && statusCode === "2") {
+    if (targetTable === "lesson_dedications" && statusCode === "2" && transitioned) {
       try {
         const { data: ded } = await supabase
           .from("lesson_dedications")
@@ -341,7 +483,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // fails — donation completion is never blocked on this.
     // Note: check targetTable (not flowType) so wallet-type donations like
     // yehoshua-campaign are also subscribed correctly.
-    if (targetTable === "donations" && statusCode === "2") {
+    if (targetTable === "donations" && statusCode === "2" && transitioned) {
       await subscribeToSmoove({
         email: txData.payerEmail,
         fullName: txData.fullName || "",

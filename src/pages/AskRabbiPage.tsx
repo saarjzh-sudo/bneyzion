@@ -26,6 +26,7 @@ import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { usePublishedQuestions, useSubmitQuestion, type SiteQuestion } from "@/hooks/useSiteQuestions";
 import { supabase } from "@/integrations/supabase/client";
 import { useSiteCopy } from "@/hooks/useSiteSettings";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -474,10 +475,14 @@ function ShutDialog({ card, onClose }: { card: ShutFull; onClose: () => void }) 
                   <Loader2 size={22} style={{ color: colors.goldDark, animation: "spin 1s linear infinite" }} aria-label="טוען" />
                 </div>
               ) : (
+                // אודיט XSS: זה היה אתר ה-dangerouslySetInnerHTML היחיד מתוך 43
+                // שלא עבר sanitizeHtml. answerHtml מגיע גולמי מ-shut_archive.
+                // כרגע רק אדמין כותב לשם, ולכן זו הייתה חוסר-עקביות ולא ניצול
+                // חי — אבל זה הופך ל-stored XSS ברגע שהטבלה תיפתח לכתיבה.
                 <div
                   className="shut-answer"
                   style={{ fontFamily: fonts.body, fontSize: "0.95rem", color: colors.textMid, lineHeight: 1.85 }}
-                  dangerouslySetInnerHTML={{ __html: answerHtml ?? "" }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(answerHtml ?? "") }}
                 />
               )
             ) : (

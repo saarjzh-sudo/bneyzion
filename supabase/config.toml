@@ -1,34 +1,69 @@
 project_id = "pzvmwfexeiruelwiujxn"
 
+# ══════════════════════════════════════════════════════════════════════════════
+# קראו את זה לפני שמשנים כאן משהו (אודיט אבטחה 2.8.2026)
+# ══════════════════════════════════════════════════════════════════════════════
+# `verify_jwt` **אינו אימות**, וקובץ הקונפיג הזה **אינו** גבול-אבטחה.
+#
+# verify_jwt = true דורש רק ש-*איזשהו* JWT חתום במפתח-הפרויקט יימצא בבקשה —
+# וה-anon key שאנחנו משגרים לכל גולש בתוך ה-bundle של הדפדפן
+# (src/integrations/supabase/client.ts) הוא בדיוק JWT כזה. כלומר פונקציה עם
+# verify_jwt = true ובלי בדיקת-תפקיד בקוד חשופה **בדיוק** כמו אחת עם false.
+#
+# זו הייתה הטעות שהשאירה את פונקציות-הייבוא פתוחות לכל אחד: import-series-content
+# הריצה lessons.delete() עם service_role על מזהה-סדרה שקריא מהאתר הציבורי,
+# והקוד אפילו תיעד את זה ("skip auth for internal tool usage").
+#
+# ➜ כל פונקציה שכותבת נתונים או חושפת PII **חייבת** לקרוא ל-requireAdmin()
+#   מ-_shared/admin-auth.ts. זו הבדיקה היחידה שקובעת. הערכים כאן הם שכבה
+#   נוספת בלבד — הם חוסכים הפעלה מיותרת, לא מגנים.
+# ══════════════════════════════════════════════════════════════════════════════
+
+# כל אלה עברו ל-verify_jwt = true (2.8.2026) + בדיקת אדמין בקוד.
+# כולן נקראות אך ורק מממשק-האדמין, שמצרף את טוקן-הסשן אוטומטית
+# (supabase.functions.invoke), ולכן המעבר אינו שובר אף זרימה קיימת.
+
 [functions.scan-audio-duration]
-verify_jwt = false
+verify_jwt = true
 
 [functions.migrate-content]
-verify_jwt = false
+verify_jwt = true
 
 [functions.migrate-html]
-verify_jwt = false
+verify_jwt = true
 
 [functions.enrich-products]
-verify_jwt = false
+verify_jwt = true
 
 [functions.import-parasha-articles]
-verify_jwt = false
+verify_jwt = true
 
 [functions.scan-umbraco-gaps]
-verify_jwt = false
+verify_jwt = true
 
 [functions.import-series-content]
-verify_jwt = false
+verify_jwt = true
 
 [functions.import-riddles]
-verify_jwt = false
+verify_jwt = true
 
 [functions.compare-content]
-verify_jwt = false
+verify_jwt = true
 
 [functions.ai-chat]
-verify_jwt = false
+verify_jwt = true
 
 [functions.ai-teacher-tools]
+verify_jwt = true
+
+# ה-webhooks של Grow הם קריאות שרת-לשרת מספק חיצוני — אין להן JWT, ולכן
+# verify_jwt חייב להישאר false. האימות שלהן הוא הסוד המשותף שנבדק בקוד
+# (GROW_WEBHOOK_SECRET / GROW_SYNC_SECRET), שנכשל סגור כשהמשתנה חסר.
+[functions.grow-webhook]
+verify_jwt = false
+
+[functions.grow-webhook-sync]
+verify_jwt = false
+
+[functions.grow-webhook-dedication]
 verify_jwt = false
