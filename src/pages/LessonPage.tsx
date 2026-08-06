@@ -26,6 +26,8 @@ import { useMediaProgress } from "@/hooks/useMediaProgress";
 import { saveLocalLastLesson } from "@/hooks/useLastLesson";
 import { pdfEmbedSrc } from "@/lib/pdfEmbed";
 import { formatLessonDate } from "@/lib/lessonDate";
+import { openLessonPrintWindow } from "@/lib/printLesson";
+import { useSiteSetting } from "@/hooks/useSiteSettings";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -94,6 +96,7 @@ const LessonPage = () => {
   const { user, signInWithGoogle } = useAuth();
   const { mediaRef: mediaProgressRef, flushPosition } = useMediaProgress(id);
   const { toast } = useToast();
+  const { data: printDedication } = useSiteSetting("print_dedication");
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
 
   const rabbiName = formatRabbiName(rabbi);
@@ -292,11 +295,26 @@ const LessonPage = () => {
                   <Share2 className="h-3.5 w-3.5" />
                   שיתוף
                 </Button>
+                {/* הערת נעם 5.8: "הדפסה" כאן הדפיסה את העמוד עם כל הגרפיקה —
+                    עכשיו מגיעה לאותה הדפסה מסודרת של פופאפ-השיעור (printLesson.ts) */}
                 <Button
                   variant="outline"
                   size="sm"
                   className="gap-1.5"
-                  onClick={() => window.print()}
+                  onClick={() =>
+                    openLessonPrintWindow({
+                      title: lesson.title,
+                      contentHtml: (lesson as any).content || lesson.description || "",
+                      metaParts: [
+                        rabbiName ? `מאת: ${rabbiName}` : "",
+                        formatDate(lesson.published_at) || "",
+                        formatDuration(lesson.duration) || "",
+                      ].filter(Boolean).join(" · "),
+                      seriesTitle: series?.title ?? null,
+                      dedicationText: printDedication,
+                      lessonUrl: `${window.location.origin}/lessons/${lesson.id}`,
+                    })
+                  }
                 >
                   <Printer className="h-3.5 w-3.5" />
                   הדפסה

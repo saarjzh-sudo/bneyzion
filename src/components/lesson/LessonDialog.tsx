@@ -22,6 +22,7 @@ import DedicationDialog from "@/components/lesson/DedicationDialog";
 import { pdfEmbedSrc } from "@/lib/pdfEmbed";
 import DedicationBadge from "@/components/lesson/DedicationBadge";
 import { formatLessonDate } from "@/lib/lessonDate";
+import { openLessonPrintWindow } from "@/lib/printLesson";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -144,178 +145,22 @@ const LessonDialog = ({ lessonId, open, onOpenChange }: LessonDialogProps) => {
   const lessonUrl = `${window.location.origin}/lessons/${lessonId}`;
   const shareText = lesson ? `${lesson.title}${rabbi ? ` - ${rabbi.name}` : ""}` : "";
 
+  // "ההדפסה המסודרת" — התבנית חולצה ל-src/lib/printLesson.ts (הערת נעם 5.8:
+  // גם עמוד השיעור הנפרד צריך להגיע לאותה הדפסה, לא ל-window.print גולמי).
   const handlePrint = () => {
-    const printWindow = window.open("", "_blank");
-    if (!printWindow || !lesson) return;
-    const content = (lesson as any).content || lesson.description || "";
-    const logoUrl = `${window.location.origin}/assets/logo-horizontal-color.png`;
-    const rabbiLine = rabbi ? `מאת: ${formatRabbiName(rabbi)}` : "";
-    const dateLine = formatDate(lesson.published_at) || "";
-    const durationLine = formatDuration(lesson.duration) || "";
-    const metaParts = [rabbiLine, dateLine, durationLine].filter(Boolean).join(" · ");
-
-    printWindow.document.write(`
-      <!DOCTYPE html>
-      <html dir="rtl" lang="he">
-      <head>
-        <meta charset="utf-8" />
-        <title>${lesson.title}</title>
-        <style>
-          @font-face { font-family: 'Kedem'; src: url('${window.location.origin}/fonts/kedem-bold.otf') format('opentype'); font-weight: 700; }
-          @font-face { font-family: 'Kedem'; src: url('${window.location.origin}/fonts/kedem-black.otf') format('opentype'); font-weight: 900; }
-          @font-face { font-family: 'Ploni'; src: url('${window.location.origin}/fonts/ploni-regular.otf') format('opentype'); font-weight: 400; }
-          @font-face { font-family: 'Ploni'; src: url('${window.location.origin}/fonts/ploni-bold.otf') format('opentype'); font-weight: 700; }
-
-          :root {
-            --primary: #3D8B7A;
-            --gold: #B8860B;
-            --bg: #FDF8F0;
-          }
-
-          * { margin: 0; padding: 0; box-sizing: border-box; }
-
-          body {
-            font-family: 'Ploni', 'David', serif;
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 0 32px;
-            color: #1a1a1a;
-            line-height: 1.9;
-            background: white;
-          }
-
-          .header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 24px 0 20px;
-            border-bottom: 3px solid var(--primary);
-            margin-bottom: 28px;
-          }
-
-          .header img {
-            height: 56px;
-          }
-
-          .header .site-name {
-            font-family: 'Kedem', serif;
-            font-weight: 900;
-            font-size: 14px;
-            color: var(--primary);
-            letter-spacing: 0.05em;
-          }
-
-          h1 {
-            font-family: 'Kedem', serif;
-            font-weight: 900;
-            font-size: 26px;
-            color: var(--primary);
-            margin-bottom: 8px;
-            line-height: 1.3;
-          }
-
-          .meta {
-            color: #666;
-            font-size: 13px;
-            margin-bottom: 6px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #e5e0d8;
-          }
-
-          .topics-badge {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 4px 14px;
-            border-radius: 20px;
-            margin-bottom: 24px;
-          }
-
-          .content {
-            font-size: 15px;
-            line-height: 2;
-          }
-
-          .content h2, .content h3 {
-            font-family: 'Kedem', serif;
-            font-weight: 700;
-            color: var(--primary);
-            margin-top: 28px;
-            margin-bottom: 8px;
-          }
-
-          .content h2 { font-size: 20px; }
-          .content h3 { font-size: 17px; }
-
-          .content p { margin-bottom: 12px; text-align: justify; }
-
-          .content strong {
-            font-weight: 700;
-            color: #111;
-          }
-
-          .content blockquote {
-            border-right: 4px solid var(--gold);
-            padding: 8px 16px;
-            margin: 16px 0;
-            background: #faf6ee;
-            border-radius: 4px;
-            font-style: italic;
-            color: #444;
-          }
-
-          .footer {
-            margin-top: 40px;
-            padding: 20px 0;
-            border-top: 2px solid var(--primary);
-            text-align: center;
-            color: #999;
-            font-size: 11px;
-          }
-
-          .footer .dedication {
-            font-family: 'Kedem', serif;
-            font-size: 13px;
-            color: var(--gold);
-            margin-bottom: 4px;
-          }
-
-          .footer .url {
-            color: var(--primary);
-            font-size: 10px;
-          }
-
-          @media print {
-            body { padding: 0 16px; }
-            .header { padding-top: 8px; }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="header">
-          <div class="site-name">בני ציון – אתר התנ״ך של ישראל</div>
-          <img src="${logoUrl}" alt="בני ציון" onerror="this.style.display='none'" />
-        </div>
-
-        <h1>${lesson.title}</h1>
-        <div class="meta">${metaParts}</div>
-
-        ${series ? `<span class="topics-badge">${(series as any).title}</span>` : ""}
-
-        <div class="content">${content}</div>
-
-        <div class="footer">
-          <div class="dedication">${dedicationText || ""}</div>
-          <div>בני ציון – אתר התנ״ך של ישראל</div>
-          <div class="url">${lessonUrl}</div>
-        </div>
-      </body>
-      </html>
-    `);
-    printWindow.document.close();
-    setTimeout(() => printWindow.print(), 400);
+    if (!lesson) return;
+    openLessonPrintWindow({
+      title: lesson.title,
+      contentHtml: (lesson as any).content || lesson.description || "",
+      metaParts: [
+        rabbi ? `מאת: ${formatRabbiName(rabbi)}` : "",
+        formatDate(lesson.published_at) || "",
+        formatDuration(lesson.duration) || "",
+      ].filter(Boolean).join(" · "),
+      seriesTitle: series ? (series as any).title : null,
+      dedicationText,
+      lessonUrl,
+    });
   };
 
   const handleWhatsApp = () => {
