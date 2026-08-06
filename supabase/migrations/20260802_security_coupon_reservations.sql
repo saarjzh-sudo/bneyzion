@@ -80,9 +80,11 @@ begin
 
   -- FOR UPDATE — כאן נוצר התור. בקשה מקבילה ממתינה עד ה-COMMIT של הראשונה,
   -- ואז רואה את השריון שלה. זה הלב של התיקון.
+  -- coupons.code מוסמך במפורש — 'code' לבדו מתנגש עם עמודת-הפלט באותו שם
+  -- (42702 ambiguous) והפיל כל קריאה לפונקציה.
   select * into v_coupon
   from public.coupons
-  where upper(btrim(code)) = upper(btrim(p_code))
+  where upper(btrim(coupons.code)) = upper(btrim(p_code))
   for update;
 
   if not found then
