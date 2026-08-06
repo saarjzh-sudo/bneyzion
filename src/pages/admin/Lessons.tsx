@@ -265,8 +265,16 @@ export function LessonsContent() {
     if (!form.title) return toast({ title: "יש להזין כותרת קודם", variant: "destructive" });
     setGeneratingImage(true);
     try {
+      // הנתיב דורש אדמין מאומת (אודיט M1) — מצרפים את טוקן-הסשן.
+      const { data: sessionData } = await supabase.auth.getSession();
       const res = await fetch("/api/generate-lesson-image", {
-        method: "POST", headers: { "Content-Type": "application/json" },
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(sessionData.session?.access_token
+            ? { Authorization: `Bearer ${sessionData.session.access_token}` }
+            : {}),
+        },
         body: JSON.stringify({ title: form.title, description: form.description }),
       });
       const data = await res.json();

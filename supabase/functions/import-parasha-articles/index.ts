@@ -1,3 +1,4 @@
+import { requireAdmin } from "../_shared/admin-auth.ts";
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
@@ -154,6 +155,13 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
+  // ── אבטחה (אודיט 2.8.2026) ──────────────────────────────────────────────
+  // H6 — כתיבות-תוכן בכמות עם service_role, verify_jwt=false, ללא בדיקת-קורא.
+  // הבדיקה חייבת להיות בקוד: verify_jwt ב-config.toml אינו אימות —
+  // ה-anon key הציבורי הוא JWT חתום ותקף. ראו _shared/admin-auth.ts.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
 
   try {
     const { startIndex = 0, batchSize = 5 } = await req.json();

@@ -36,10 +36,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   for (const orderId of orderIds) {
     const { data: order } = await supabase
       .from("orders")
-      .select("id, payment_status")
+      .select("id, payment_status, status")
       .eq("id", orderId)
       .maybeSingle();
     if (!order) continue;
+
+    // החזר/ביטול (אודיט M11): ממשק-האדמין כותב `status` בלבד ולא נוגע ב-
+    // `payment_status`, ולכן הזמנה שהוחזרה נשארה completed והמשיכה להנפיק
+    // signed URLs לנצח — ה-UUID נוסע ב-URL של דף-התודה (היסטוריית-דפדפן,
+    // Referer), אז "רק הרוכש מכיר אותו" מפסיק להחזיק אחרי ההחזר.
+    const fulfilmentStatus = String((order as any).status || "").toLowerCase();
+    if (["cancelled", "canceled", "refunded", "payment_failed"].includes(fulfilmentStatus)) {
+      console.warn("order-download: refusing download for cancelled/refunded order", {
+        orderId, status: fulfilmentStatus,
+      });
+      continue;
+    }
+    if (String((order as any).payment_status || "").toLowerCase() === "refunded") continue;
     const digital = await loadDigitalItems(supabase as any, orderId);
 
     // קורסים שההזמנה פותחת — דרך order_items → products.slug → community_courses

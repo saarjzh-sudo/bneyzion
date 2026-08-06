@@ -1,3 +1,4 @@
+import { requireAdmin } from "../_shared/admin-auth.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.1";
 
 const corsHeaders = {
@@ -126,6 +127,13 @@ async function findSeriesMatch(supabase: any, name: string, preferParentId?: str
 
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+  // ── אבטחה (אודיט 2.8.2026) ──────────────────────────────────────────────
+  // H6/סריקת-רוחב — כלי-השוואה עם service_role ו-verify_jwt=false.
+  // הבדיקה חייבת להיות בקוד: verify_jwt ב-config.toml אינו אימות —
+  // ה-anon key הציבורי הוא JWT חתום ותקף. ראו _shared/admin-auth.ts.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return auth.response;
+
 
   try {
     const authHeader = req.headers.get("Authorization");

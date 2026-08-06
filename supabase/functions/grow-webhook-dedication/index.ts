@@ -100,10 +100,22 @@ Deno.serve(async (req) => {
   let payload: any = null;
 
   try {
-    const secret = Deno.env.get("GROW_WEBHOOK_SECRET");
-    if (secret) {
+    // אודיט M2: היה כאן `if (secret) { check }` — כשהמשתנה חסר הבדיקה נדלגה
+    // לגמרי והפונקציה הפכה פתוחה. נכשל סגור: היעדר-קונפיגורציה = דחייה.
+    // הפונקציה מפעילה הקדשות (status='active') עם service_role, ולכן הפער
+    // אפשר להעלות הקדשה משולמת לאתר בלי לשלם.
+    const secret = (Deno.env.get("GROW_WEBHOOK_SECRET") || "").trim();
+    if (!secret) {
+      console.error("[grow-webhook-dedication] GROW_WEBHOOK_SECRET is not set — refusing the request.");
+      return json({ ok: false, error: "server not configured" }, 500);
+    }
+    {
       const url = new URL(req.url);
-      if (url.searchParams.get("secret") !== secret) return json({ ok: false, error: "bad secret" }, 401);
+      const provided = url.searchParams.get("secret") || "";
+      if (provided.length !== secret.length || provided !== secret) {
+        console.error("[grow-webhook-dedication] rejected: bad or missing secret");
+        return json({ ok: false, error: "bad secret" }, 401);
+      }
     }
 
     payload = await parseBody(req);

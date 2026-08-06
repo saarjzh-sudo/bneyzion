@@ -2,7 +2,12 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
 // NOTE: ".js" extension is required — package.json has "type":"module", so the
 // compiled function resolves ESM specifiers literally (coupon.ts → coupon.js).
-import { validateCoupon, computeCouponDiscount } from "../lib/coupon.js";
+import { computeCouponDiscount, reserveCoupon } from "../lib/coupon.js";
+import {
+  signOrderCallback,
+  isWebhookSecretConfigured,
+  WEBHOOK_TOKEN_PARAM,
+} from "../lib/webhook-auth.js";
 
 // .trim() everywhere — `vercel env add` via piping sometimes appends "\n",
 // which silently breaks downstream string routing/comparisons.
@@ -26,7 +31,12 @@ interface CreatePaymentBody {
   // keep working. New callers should send `product` in meta and let the
   // server resolve the flow type from payment_products.
   type: "product" | "donation" | "wallet" | "directDebit";
-  orderId?: string;
+  // SECURITY (audit C1, 2.8.2026): `orderId` is deliberately NOT part of the
+  // request contract. It used to be accepted from the body, which let a caller
+  // point a fresh ₪1 charge at an existing ₪440 order: supplying it skipped the
+  // whole row-creation block — the block the price floor lives in — while
+  // cField1 still closed the expensive row with a genuine Grow callback.
+  // The order id is now minted by this server only. Do not re-add it.
   installments?: number;
   successUrl: string;
   cancelUrl: string;
@@ -123,6 +133,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
+  // Fail closed, and fail EARLY. Without the secret we cannot sign the
+  // notifyUrl, so the webhook would reject the callback — the customer would be
+  // charged and receive nothing. Refusing to start the payment is the only safe
+  // behaviour. Set GROW_WEBHOOK_SECRET in the Vercel env (see webhook-auth.ts).
+  if (!isWebhookSecretConfigured()) {
+    console.error(
+      "create-payment: GROW_WEBHOOK_SECRET is not configured — refusing to create a payment " +
+        "that the webhook would be unable to authenticate."
+    );
+    return res.status(500).json({ error: "Payment gateway not configured" });
+  }
+
   try {
     const body = req.body as CreatePaymentBody;
     const {
@@ -139,10 +161,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       donationMeta,
       dedicationMeta,
     } = body;
-    let { orderId } = body;
+    // Server-owned. Never read from the request body — see the note on the
+    // CreatePaymentBody type. Assigned only by the insert blocks below.
+    let orderId: string | undefined;
 
     if (!sum || !description || !fullName || !phone || !type) {
       return res.status(400).json({ error: "Missing required fields" });
+    }
+    if (!Number.isFinite(sum) || sum <= 0) {
+      return res.status(400).json({ error: "Invalid sum" });
+    }
+    if ((body as any).orderId) {
+      // Loud, because the only reason to send this is to exploit the old bug.
+      console.warn("create-payment: client sent orderId — ignored (audit C1)", {
+        sent: (body as any).orderId,
+        ip: (req.headers["x-forwarded-for"] as string) || null,
+      });
     }
 
     // ───── ToS enforcement (server-side) ─────
@@ -186,8 +220,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // the discount, and reject any sum that doesn't add up (₪1 rounding grace).
     let couponDiscount = 0;
     let couponCode: string | null = null;
+    // Kept in scope so the cart block below can recompute the discount against
+    // the SERVER-priced subtotal rather than the client's pre_discount_sum.
+    let couponCheck: Awaited<ReturnType<typeof reserveCoupon>> | null = null;
+    let couponReservationId: string | null = null;
     if (meta?.coupon_code) {
-      const check = await validateCoupon(supabaseAdmin, meta.coupon_code);
+      // reserveCoupon, not validateCoupon (audit M10): the use is held under a
+      // row lock right now, so 20 parallel tabs can't all redeem a max_uses=1
+      // coupon during the minutes the buyer spends on Grow's card form.
+      const check = await reserveCoupon(supabaseAdmin, meta.coupon_code);
+      couponCheck = check;
+      couponReservationId = check.reservationId || null;
       if (!check.valid) {
         return res.status(400).json({ error: check.reason || "קוד הקופון אינו תקף" });
       }
@@ -295,6 +338,128 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // ───── Cart — server-side price authority (audit H2) ─────
+    // The /checkout flow sends meta.cart_items and NO meta.product, so
+    // productCfg stays null, isLegacyCart becomes true, and — before this block
+    // — no price check ran at all: orders.total and every unit_price were
+    // written verbatim from the request. A ₪440 digital book was purchasable
+    // for a real ₪1, and the genuine webhook then delivered it.
+    //
+    // Every line is now re-priced from `products.price` on the server. Client
+    // prices are used for nothing except the mismatch log.
+    const rawCartItems: Array<{
+      product_id?: string;
+      slug?: string;
+      title?: string;
+      quantity?: number;
+      unit_price?: number;
+    }> = Array.isArray(meta?.cart_items) ? meta!.cart_items!.slice(0, 50) : [];
+
+    /** Re-priced lines — the only source used for order_items and the total. */
+    let pricedCartItems: Array<{
+      product_id: string | null;
+      title: string;
+      quantity: number;
+      unit_price: number;
+      total_price: number;
+    }> = [];
+    let cartItemsTotal = 0;
+
+    if (rawCartItems.length) {
+      const ids = rawCartItems.map((c) => c.product_id).filter(Boolean) as string[];
+      const slugs = rawCartItems.map((c) => c.slug).filter(Boolean) as string[];
+
+      const [byId, bySlug] = await Promise.all([
+        ids.length
+          ? supabaseAdmin
+              .from("products")
+              .select("id, slug, title, price, status")
+              .in("id", ids)
+              .eq("status", "active")
+          : Promise.resolve({ data: [] as any[] }),
+        slugs.length
+          ? supabaseAdmin
+              .from("products")
+              .select("id, slug, title, price, status")
+              .in("slug", slugs)
+              .eq("status", "active")
+          : Promise.resolve({ data: [] as any[] }),
+      ]);
+
+      const catalog = new Map<string, any>();
+      for (const p of [...((byId as any).data ?? []), ...((bySlug as any).data ?? [])]) {
+        catalog.set(p.id, p);
+        if (p.slug) catalog.set(`slug:${p.slug}`, p);
+      }
+
+      for (const ci of rawCartItems) {
+        const product =
+          (ci.product_id && catalog.get(ci.product_id)) ||
+          (ci.slug && catalog.get(`slug:${ci.slug}`)) ||
+          null;
+
+        // Fail closed: an unresolvable line has no server price, so there is
+        // nothing to enforce against. Previously it was billed at whatever the
+        // client claimed.
+        if (!product) {
+          console.warn("create-payment: cart line does not resolve to an active product", {
+            product_id: ci.product_id, slug: ci.slug, title: ci.title,
+          });
+          return res.status(400).json({
+            error: "אחד המוצרים בסל אינו זמין יותר — רעננו את העמוד ונסו שוב",
+          });
+        }
+
+        // Quantity is an integer 1–100. Previously `Number(ci.quantity) || 1`
+        // accepted negatives (which subtract from the total), fractions, and
+        // 1e9 — order_items.quantity has no CHECK constraint to catch it.
+        const rawQty = Number(ci.quantity);
+        const qty =
+          Number.isFinite(rawQty) && rawQty >= 1 ? Math.min(100, Math.floor(rawQty)) : 1;
+
+        const unitPrice = Number(product.price) || 0;
+        const linePrice = unitPrice * qty;
+        cartItemsTotal += linePrice;
+
+        if (ci.unit_price != null && Math.abs(Number(ci.unit_price) - unitPrice) > 0.01) {
+          console.warn("create-payment: client unit_price differs from catalog — using catalog", {
+            product_id: product.id, slug: product.slug,
+            client: ci.unit_price, server: unitPrice,
+          });
+        }
+
+        pricedCartItems.push({
+          product_id: product.id,
+          title: String(product.title || ci.title || "פריט"),
+          quantity: qty,
+          unit_price: unitPrice,
+          total_price: linePrice,
+        });
+      }
+    }
+
+    // Enforce the server subtotal. A coupon is re-applied to the SERVER total
+    // (pre_discount_sum from the client is advisory only), and shipping can
+    // only ever add. Reject — never silently adjust — so the buyer sees a
+    // stale-cart error instead of being charged an amount they didn't approve.
+    if (pricedCartItems.length) {
+      if (couponCheck?.valid) {
+        couponDiscount = computeCouponDiscount(couponCheck, cartItemsTotal);
+      }
+      const shippingFee = Math.max(0, Number(meta?.shipping_fee) || 0);
+      const expectedTotal = cartItemsTotal - couponDiscount + shippingFee;
+      if (sum < expectedTotal - 1) {
+        console.warn("create-payment: cart total below server price authority", {
+          clientSum: sum, cartItemsTotal, couponDiscount, shippingFee, expectedTotal,
+          items: pricedCartItems.map((i) => ({ id: i.product_id, q: i.quantity, u: i.unit_price })),
+          ip: (req.headers["x-forwarded-for"] as string) || null,
+        });
+        return res.status(400).json({
+          error: "סכום התשלום אינו תואם את מחירי הפריטים בסל — רעננו את העמוד ונסו שוב",
+        });
+      }
+    }
+
     // ───── Dedication — server-side price authority ─────
     // The client shows the price, but the charged amount is verified HERE
     // against dedication_settings + the popularity/size rules. A tampered
@@ -344,6 +509,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return res.status(400).json({
           error: "סכום ההקדשה אינו תואם את המחיר — רעננו את העמוד ונסו שוב",
         });
+      }
+    }
+
+    // ───── Server-side price floor (anti price-tampering) ─────
+    // A fixed-price purchase (store product, or a one-time wallet book) must be
+    // charged at its DB price × quantity, minus only a server-validated coupon.
+    // Donations and variable-amount flows are untouched (default_amount there
+    // is a suggestion, not a price).
+    //
+    // Moved ABOVE the row-creation block (audit C1/H2): it used to sit after it,
+    // so a rejected request still left a stray `pending` order behind, and any
+    // path that skipped row creation skipped the floor with it.
+    const isFixedPriceProduct =
+      isStoreProduct || (productCfg?.type === "wallet" && Number(productCfg?.default_amount) > 0);
+    if (isFixedPriceProduct) {
+      const catalogPrice = Number(productCfg?.default_amount);
+      // Fail closed. Previously a missing/zero default_amount silently skipped
+      // the entire check, so an unpriced store product had no floor at all.
+      if (!Number.isFinite(catalogPrice) || catalogPrice <= 0) {
+        console.error("create-payment: fixed-price product has no usable catalog price", {
+          product: storeProductSlug ?? productSlug, default_amount: productCfg?.default_amount,
+        });
+        return res.status(400).json({ error: "המוצר אינו זמין לרכישה כרגע" });
+      }
+      const rawQty = Number(meta?.quantity);
+      const qty =
+        Number.isFinite(rawQty) && rawQty >= 1 ? Math.min(100, Math.floor(rawQty)) : 1;
+      const priceFloor = catalogPrice * qty - couponDiscount - 1; // ₪1 grace
+      if (sum < priceFloor) {
+        console.warn("create-payment price floor breach:", {
+          product: storeProductSlug ?? productSlug, expected: catalogPrice * qty,
+          couponDiscount, sum, ip: (req.headers["x-forwarded-for"] as string) || null,
+        });
+        return res
+          .status(400)
+          .json({ error: "סכום התשלום אינו תואם את מחיר המוצר — רעננו את העמוד ונסו שוב" });
       }
     }
 
@@ -495,6 +696,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (couponCode) {
           rawPayloadBase.coupon_code = couponCode;
           rawPayloadBase.coupon_discount = couponDiscount;
+          // The webhook consumes this exact reservation on success and releases
+          // it on failure — it never re-counts by code (audit M10).
+          rawPayloadBase.coupon_reservation_id = couponReservationId;
         }
         // For store products, stash the products-table id so webhook can write order_items
         if (isStoreProduct && productCfg?._store_product_id) {
@@ -504,11 +708,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
         // רמה 17 (יואב 14.7): רכישת-עגלה (/checkout) שולחת meta.cart_items —
         // בלעדיהם הזמנת-עגלה נוצרה בלי order_items, בלי גישה ובלי מסירת קובץ.
-        const cartItems: Array<{ product_id?: string; title?: string; quantity?: number; unit_price?: number }> =
-          Array.isArray(meta?.cart_items) ? meta.cart_items.slice(0, 50) : [];
+        // Re-priced above from products.price — the client's cart_items are not
+        // used for money anywhere below this point.
+        const cartItems = pricedCartItems;
         if (cartItems.length) {
           rawPayloadBase.product_source = "products";
           rawPayloadBase.cart_item_count = cartItems.length;
+          rawPayloadBase.server_cart_total = cartItemsTotal;
         }
 
         const { data: order, error: orderErr } = await supabaseAdmin
@@ -519,7 +725,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             customer_email: email || null,
             customer_phone: phone,
             // With a coupon: subtotal = products before discount, total = charged.
-            subtotal: meta?.pre_discount_sum ? Number(meta.pre_discount_sum) : sum,
+            // Cart orders use the SERVER-computed subtotal; pre_discount_sum is
+            // client input and must never reach the accounting columns.
+            subtotal: cartItems.length
+              ? cartItemsTotal
+              : meta?.pre_discount_sum
+                ? Number(meta.pre_discount_sum)
+                : sum,
             // orders.discount is NOT NULL — an explicit null overrides the column
             // default and violates the constraint, failing EVERY coupon-less
             // purchase ("Failed to create order record"). No coupon = 0, not null.
@@ -572,11 +784,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             await supabaseAdmin.from("order_items").insert(
               cartItems.map((ci) => ({
                 order_id: orderId,
-                product_id: ci.product_id || null,
-                title: String(ci.title || "פריט"),
-                quantity: Number(ci.quantity) || 1,
-                unit_price: Number(ci.unit_price) || 0,
-                total_price: (Number(ci.unit_price) || 0) * (Number(ci.quantity) || 1),
+                product_id: ci.product_id,
+                title: ci.title,
+                quantity: ci.quantity,
+                unit_price: ci.unit_price,
+                total_price: ci.total_price,
                 item_type: "product",
               })),
             );
@@ -584,27 +796,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             console.warn("create-payment: cart order_items insert failed (non-fatal):", e);
           }
         }
-      }
-    }
-
-    // ───── Server-side price floor (anti price-tampering) ─────
-    // A fixed-price purchase (store product, or a one-time wallet book) must be
-    // charged at its DB price × quantity, minus only a server-validated coupon.
-    // Closes the "₪440 product paid as ₪1" forgery class (audit 21.7). Donations
-    // and variable-amount flows are untouched (default_amount there is a suggestion).
-    const isFixedPriceProduct =
-      isStoreProduct || (productCfg?.type === "wallet" && Number(productCfg?.default_amount) > 0);
-    if (isFixedPriceProduct && Number(productCfg?.default_amount) > 0) {
-      const qty = Math.max(1, Number(meta?.quantity) || 1);
-      const priceFloor = Number(productCfg.default_amount) * qty - couponDiscount - 1; // ₪1 grace
-      if (sum < priceFloor) {
-        console.warn("create-payment price floor breach:", {
-          product: storeProductSlug ?? productSlug, expected: Number(productCfg.default_amount) * qty,
-          couponDiscount, sum,
-        });
-        return res
-          .status(400)
-          .json({ error: "סכום התשלום אינו תואם את מחיר המוצר — רעננו את העמוד ונסו שוב" });
       }
     }
 
@@ -659,12 +850,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // NOTE: do NOT include `x-vercel-set-bypass-cookie` — that triggers a 307
     // redirect that server-to-server callers (like Grow) cannot follow. Plain
     // bypass query alone returns 200 directly.
-    const bypassQuery = webhookBypass
-      ? `?x-vercel-protection-bypass=${webhookBypass}`
-      : "";
+    // Per-order callback token (audit H1). Grow does not sign its callbacks, so
+    // authenticity comes from the notifyUrl we hand it: only this server knows
+    // GROW_WEBHOOK_SECRET, so only a genuine Grow callback carries a token that
+    // verifies against this orderId. Fails closed — see webhook-auth.ts.
+    const callbackParams = new URLSearchParams();
+    if (webhookBypass) callbackParams.set("x-vercel-protection-bypass", webhookBypass);
+    callbackParams.set(WEBHOOK_TOKEN_PARAM, signOrderCallback(orderId!));
     const webhookUrl = `${
       req.headers["x-forwarded-proto"] || "https"
-    }://${req.headers.host}/api/grow/webhook${bypassQuery}`;
+    }://${req.headers.host}/api/grow/webhook?${callbackParams.toString()}`;
     formData.append("notifyUrl", webhookUrl);
 
     const response = await fetch(`${GROW_API_URL}/createPaymentProcess`, {

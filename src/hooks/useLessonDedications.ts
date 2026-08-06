@@ -58,8 +58,12 @@ export function useLessonDedications(lessonId?: string) {
   return useQuery({
     queryKey: ["lesson-dedications", "lesson", lessonId],
     queryFn: async () => {
+      // אודיט H8: קריאה מ-view ולא מהטבלה. RLS היא ברמת-שורה בלבד, ולכן
+      // `select("*")` על הטבלה החזיר גם dedicator_email, dedicator_phone,
+      // asmachta ו-raw_payload (payload התשלום הגולמי) לכל גולש אנונימי.
+      // ה-view חושף רק את מה שה-badge מרנדר; הטבלה נעולה ל-anon.
       const { data, error } = await supabase
-        .from("lesson_dedications")
+        .from("public_lesson_dedications" as never)
         .select("*")
         .eq("lesson_id", lessonId!)
         .eq("status", "active")
@@ -77,8 +81,9 @@ export function useSeriesDedications(seriesId?: string) {
   return useQuery({
     queryKey: ["lesson-dedications", "series", seriesId],
     queryFn: async () => {
+      // אודיט H8 — ראו ההערה ב-useLessonDedications למעלה.
       const { data, error } = await supabase
-        .from("lesson_dedications")
+        .from("public_lesson_dedications" as never)
         .select("*")
         .eq("series_id" as never, seriesId!)
         .eq("scope" as never, "series")

@@ -408,6 +408,14 @@ export function useCourseLessons(courseId: string | undefined) {
     queryKey: ["community-course-lessons", courseId],
     enabled: !!courseId,
     queryFn: async () => {
+      // אודיט H10: עד כה השאילתה הזו רצה ללא תנאי והחזירה video_url,
+      // audio_url, attachment_url, content, presentation_url ו-drive_folder_url
+      // לכל שיעור בתשלום — לכל גולש, בלי התחברות ובלי רכישה. ה-paywall היה
+      // תנאי-JSX בלבד (`grep has_access_tag` החזיר קורא אחד: קוד React).
+      //
+      // עכשיו RLS מחזירה את השורה המלאה רק לזכאים. אם אין גישה — נופלים
+      // לאינדקס הציבורי (כותרות ומספרי-שיעור בלבד), כדי שדף-המכירה ימשיך
+      // להציג "מה תקבלו" בלי לחשוף את התוכן עצמו.
       const { data, error } = await supabase
         .from("community_course_lessons")
         .select("*")
@@ -415,7 +423,14 @@ export function useCourseLessons(courseId: string | undefined) {
         .eq("status", "published")
         .order("lesson_number", { ascending: true });
       if (error) throw error;
-      return data;
+      if (data?.length) return data;
+
+      const { data: index } = await supabase
+        .from("public_course_lesson_index" as never)
+        .select("*")
+        .eq("course_id", courseId!)
+        .order("lesson_number", { ascending: true });
+      return (index ?? []) as typeof data;
     },
   });
 }

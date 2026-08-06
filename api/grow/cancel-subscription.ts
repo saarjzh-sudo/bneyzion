@@ -37,23 +37,48 @@ const MONDAY_COL_STATUS = "color_mm2fcgcg";
  */
 async function markCancelledInMonday(email: string): Promise<string> {
   if (!MONDAY_API_TOKEN || !email) return "skipped";
-  const gql = async (query: string) => {
+  // אודיט M3: המייל שורשר גולמית לתוך מחרוזת ה-GraphQL. מייל שמכיל `"` סוגר
+  // את המחרוזת ומאפשר להזריק ארגומנטים/שדות לשאילתה — והמייל מגיע מגוף
+  // create-payment, שאינו מאומת. עוברים ל-**משתני GraphQL**: הערך נוסע ב-JSON
+  // נפרד ולעולם אינו חלק מטקסט השאילתה, ולכן אין מה לברוח ממנו.
+  const gql = async (query: string, variables?: Record<string, unknown>) => {
     const r = await fetch("https://api.monday.com/v2", {
       method: "POST",
       headers: { Authorization: MONDAY_API_TOKEN, "Content-Type": "application/json" },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, variables: variables ?? {} }),
     });
     return r.json();
   };
   const find = await gql(
-    `query { items_page_by_column_values(board_id: ${MONDAY_BOARD_ID}, limit: 5, columns: [{column_id: "${MONDAY_COL_EMAIL}", column_values: ["${email}"]}]) { items { id name column_values(ids: ["${MONDAY_COL_STATUS}"]) { text } } } }`,
+    `query ($boardId: ID!, $emailCol: String!, $email: String!, $statusCol: String!) {
+       items_page_by_column_values(
+         board_id: $boardId, limit: 5,
+         columns: [{ column_id: $emailCol, column_values: [$email] }]
+       ) { items { id name column_values(ids: [$statusCol]) { text } } }
+     }`,
+    {
+      boardId: String(MONDAY_BOARD_ID),
+      emailCol: MONDAY_COL_EMAIL,
+      email: String(email),
+      statusCol: MONDAY_COL_STATUS,
+    },
   );
   const item = find?.data?.items_page_by_column_values?.items?.[0];
   if (!item) return "not_found_in_monday";
   const current = item.column_values?.[0]?.text || "";
   if (current === "ביטל" || current === "הסתיימה") return "already_cancelled";
   const upd = await gql(
-    `mutation { change_simple_column_value(board_id: ${MONDAY_BOARD_ID}, item_id: ${item.id}, column_id: "${MONDAY_COL_STATUS}", value: "ביטל") { id } }`,
+    `mutation ($boardId: ID!, $itemId: ID!, $statusCol: String!, $value: String!) {
+       change_simple_column_value(
+         board_id: $boardId, item_id: $itemId, column_id: $statusCol, value: $value
+       ) { id }
+     }`,
+    {
+      boardId: String(MONDAY_BOARD_ID),
+      itemId: String(item.id),
+      statusCol: MONDAY_COL_STATUS,
+      value: "ביטל",
+    },
   );
   return upd?.data?.change_simple_column_value ? "updated" : `failed: ${JSON.stringify(upd).slice(0, 120)}`;
 }

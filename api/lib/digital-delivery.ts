@@ -65,8 +65,18 @@ export async function signItems(
   for (const item of items) {
     const m = item.fileRef.match(/^storage:([^/]+)\/(.+)$/);
     if (!m) {
-      // fallback — קישור חיצוני ישן (Drive וכד'): נשלח כמו-שהוא
-      if (/^https?:\/\//.test(item.fileRef)) out.push({ title: item.title, url: item.fileRef });
+      // אודיט M13: כאן היה fallback ששלח `fileRef` כמו-שהוא כשהוא נראה כמו
+      // http(s). המשמעות: מוצר שהוגדר עם קישור Drive/ישיר הפך את
+      // products.digital_file_url — עמודה שקריאה ל-anon (useProducts.ts:55
+      // מושך select("*")) — לקובץ המלא עצמו. כלומר כל גולש יכול היה להוריד
+      // ספר בתשלום בלי לרכוש, בלי חתימה ובלי תפוגה.
+      //
+      // אין fallback יותר: מסירה מתבצעת אך ורק דרך storage: עם קישור חתום.
+      // הטופס באדמין חוסם ערכים אחרים (Products.tsx), וזו רשת-הביטחון בשרת.
+      console.error(
+        `[DigitalDelivery] refusing to deliver non-storage fileRef — set the product's ` +
+          `digital_file_url to "storage:<bucket>/<path>". Got: ${item.fileRef.slice(0, 80)}`
+      );
       continue;
     }
     const [, bucket, path] = m;

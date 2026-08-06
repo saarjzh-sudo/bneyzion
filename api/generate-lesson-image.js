@@ -8,6 +8,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import { requireAdmin } from './lib/admin-auth.js';
 
 // ── Watercolor style constants (matches image-designer-agent.md) ─────────────
 const STYLE_CONSTANTS = `Minimalist watercolor painting on white textured paper.
@@ -55,6 +56,13 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
+
+  // אודיט M1: לא הייתה כאן שום בדיקת-קורא. כל אחד יכול היה להפעיל יצירת
+  // תמונה ב-Imagen (עלות לחשבון שלנו) ולהעלות קבצים ל-Storage עם
+  // service_role, כולל createBucket. שם-הקובץ אמנם מסונן ל-ASCII ולכן אין
+  // path traversal — אבל הכתיבה עצמה הייתה פתוחה לציבור.
+  const auth = await requireAdmin(req);
+  if (!auth.ok) return res.status(auth.status).json({ error: auth.error });
 
   const { title, description } = req.body || {};
   if (!title) {

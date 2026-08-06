@@ -38,13 +38,40 @@ export function useCourseSessions(courseId: string | undefined) {
     queryKey: ["course-sessions", courseId],
     enabled: !!courseId,
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from("course_sessions" as any)
+      // אודיט H11: `select("*")` על course_sessions לפי courseId בלבד שלח את
+      // zoom_link ו-recording_url ל-payload של **כל** גולש; השער היחיד היה
+      // `{isEnrolled && ...}` ב-JSX, כלומר הסתרה ולא מניעה.
+      //
+      // עכשיו: לוח-הזמנים מגיע מ-view ציבורי בלי הקישורים, ובנוסף מנסים את
+      // טבלת-הבסיס — שה-RLS מחזירה ממנה שורות רק לנרשם/בעל-תגית/אדמין.
+      // הקומפוננטות ממשיכות לקרוא session.zoom_link כרגיל: הוא פשוט לא קיים
+      // למי שאינו זכאי. כך אי-אפשר לשכוח את התנאי בקומפוננטה חדשה.
+      const { data: publicRows, error } = await supabase
+        .from("public_course_sessions" as any)
         .select("*")
         .eq("course_id", courseId!)
         .order("session_number");
       if (error) throw error;
-      return (data as any[]) ?? [];
+
+      const sessions = ((publicRows as any[]) ?? []).map((s) => ({ ...s }));
+
+      // מותר להיכשל בשקט — היעדר גישה הוא התוצאה התקינה לרוב הגולשים.
+      const { data: privileged } = await supabase
+        .from("course_sessions" as any)
+        .select("id, zoom_link, recording_url")
+        .eq("course_id", courseId!);
+
+      if (privileged?.length) {
+        const byId = new Map(privileged.map((p: any) => [p.id, p]));
+        for (const s of sessions) {
+          const extra = byId.get(s.id);
+          if (extra) {
+            s.zoom_link = extra.zoom_link;
+            s.recording_url = extra.recording_url;
+          }
+        }
+      }
+      return sessions;
     },
   });
 }

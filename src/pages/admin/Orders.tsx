@@ -62,10 +62,39 @@ export default function Orders() {
   // העדכון חוזר עם 0 שורות ומוצגת שגיאה ברורה.
   const updateStatus = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {
+      // אודיט M11: עד כה נכתב `status` בלבד. `payment_status` נשאר 'completed',
+      // ולכן הזמנה שבוטלה/הוחזרה המשיכה להנפיק קישורי-הורדה חתומים מ-
+      // /api/store/order-download, ותגית-הגישה לקורס נשארה פעילה.
+      const isRevocation = ["cancelled", "canceled", "refunded"].includes(status);
+      const patch = isRevocation
+        ? { status, payment_status: "refunded" }
+        : { status };
+
       const { data, error } = await supabase
-        .from("orders").update({ status }).eq("id", id).select("id");
+        .from("orders").update(patch).eq("id", id).select("id");
       if (error) throw error;
       if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS)");
+
+      if (isRevocation) {
+        // ביטול תגיות-הגישה שההזמנה הזו העניקה. מסמנים cancelled_at ולא מוחקים —
+        // כך נשמר תיעוד, ושומר-45-הימים ב-webhook ממשיך לעבוד.
+        // `as never` — cancelled_at / cancel_note קיימות בטבלה (webhook.ts כותב
+        // אליהן), אבל טרם נוצרו מחדש ב-src/integrations/supabase/types.ts.
+        const { error: tagErr } = await supabase
+          .from("user_access_tags")
+          .update({
+            cancelled_at: new Date().toISOString(),
+            cancel_note: `בוטל אוטומטית עם ביטול/החזר ההזמנה ${id}`,
+          } as never)
+          .like("notes", `%orderId=${id}%`)
+          .is("cancelled_at" as never, null);
+        // לא חוסם את עדכון הסטטוס — אבל האדמין חייב לדעת שהגישה לא בוטלה.
+        if (tagErr) {
+          throw new Error(
+            `הסטטוס עודכן, אך ביטול הגישה לקורס נכשל (${tagErr.message}) — יש לבטל ידנית`
+          );
+        }
+      }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin-orders"] });
