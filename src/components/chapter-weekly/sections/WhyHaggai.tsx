@@ -12,23 +12,19 @@ import { SubscribeButton } from "@/components/chapter-weekly/SubscribeButton";
 const haggaiPoints = [
   {
     verse: "״שִׂימוּ לְבַבְכֶם עַל דַּרְכֵיכֶם״",
-    title: "חשבון הנפש המקורי של אלול",
-    desc: "פעמיים בפרק אחד חוזר חגי על הקריאה הזו. עצירה, התבוננות, ובדיקה מחודשת של הדרך — הרבה לפני שזה נהיה סדר העבודה של החודש הזה.",
+    title: "חשבון הנפש של אלול",
   },
   {
     verse: "״זְרַעְתֶּם הַרְבֵּה וְהָבֵא מְעָט״",
-    title: "כשמשקיעים — ולא רואים ברכה",
-    desc: "העם עובד, זורע, מתאמץ — והברכה לא מגיעה. חגי מלמד לקרוא את הסימנים: מתי הקושי הוא לא עונש, אלא הזמנה לשנות כיוון.",
+    title: "כשמתאמצים ולא רואים ברכה",
   },
   {
     verse: "״לֹא עֶת בֹּא״",
-    title: "האשליה של ׳עוד לא הגיע הזמן׳",
-    desc: "שמונה עשרה שנה עמד הבית חרב, והעם שכנע את עצמו שצריך לחכות. חגי מגלה להם שהשער כבר פתוח — רק צריך להעז להיכנס.",
+    title: "׳עוד לא הגיע הזמן׳",
   },
   {
     verse: "״אֲנִי אִתְּכֶם נְאֻם ה׳״",
-    title: "להתחיל לבנות בתנאים לא מושלמים",
-    desc: "רוב העם עוד בבבל, האויבים מסביב, והמשאבים דלים. ודווקא אז מגיעה ההבטחה — וההיענות של העם משנה את ההיסטוריה.",
+    title: "לבנות גם בתנאים לא מושלמים",
   },
 ];
 
@@ -47,18 +43,17 @@ const WhyHaggai = () => (
 
         <div className="max-w-3xl mx-auto space-y-4 text-right md:text-center">
           <p className="text-lg md:text-xl text-brown-light leading-relaxed">
-            שיבת ציון. העם חזר מגלות בבל למדינה קטנה וחלשה — ובית המקדש עומד חרב.
-            רוב העם נשאר בחוץ, האויבים עוצרים כל ניסיון לבנות,
-            וכולם שואלים את אותה שאלה: <span className="font-semibold text-foreground">האם זו בכלל הגאולה שהובטחה לנו?</span>
+            העם חזר מגלות בבל לארץ, ובית המקדש עדיין עומד חרב.
+            רוב העם נשאר בבבל, האויבים עוצרים כל ניסיון לבנות,
+            והשאלה המרחפת באוויר: <span className="font-semibold text-foreground">האם זו הגאולה שהובטחה לנו?</span>
           </p>
           <p className="text-lg md:text-xl text-brown-light leading-relaxed">
-            ואז, בראש חודש אלול, אחרי עשרות שנים של שתיקה נבואית —
+            בראש חודש אלול, אחרי עשרות שנים בלי נבואה,
             <span className="font-semibold text-foreground"> ״הָיָה דְבַר ה׳ בְּיַד חַגַּי הַנָּבִיא״.</span>
           </p>
           <p className="text-lg md:text-xl text-brown-light leading-relaxed">
-            חגי לא נותן לעם לחכות לתנאים מושלמים. הוא דוחף אותם להסתער קדימה —
-            ובכ״ד אלול, פחות מחודש אחרי, העם כבר עומד ובונה את בית המקדש.
-            <span className="font-semibold text-primary"> אלול אחד שינה את ההיסטוריה.</span>
+            חגי לא נותן לעם לחכות לתנאים המושלמים. הוא דוחף אותם לבנות ועכשיו,
+            ובכ״ד אלול, פחות מחודש אחר כך, העם כבר עומד ובונה את בית המקדש.
           </p>
         </div>
       </div>
@@ -84,18 +79,14 @@ const WhyHaggai = () => (
         {haggaiPoints.map((point, i) => (
           <div key={i} className="premium-card text-right">
             <p className="text-primary font-bold text-lg mb-1">{point.verse}</p>
-            <h4 className="font-bold text-foreground text-base mb-2">{point.title}</h4>
-            <p className="text-brown-light text-sm leading-relaxed">{point.desc}</p>
+            <h4 className="font-bold text-foreground text-base">{point.title}</h4>
           </div>
         ))}
       </div>
 
       <div className="premium-card bg-gradient-to-l from-primary/5 to-accent/5 border-primary/20 text-center mb-10">
         <p className="text-lg text-foreground leading-relaxed">
-          יותר מ-2,500 שנה אחרי שנאמרה הנבואה הזו באלול —
-          <span className="font-bold text-primary"> אנחנו פותחים את הספר בדיוק באותו חודש.</span>
-          <br className="hidden md:block" />
-          פרק בשבוע, עם שיעור חי של הרב יואב אוריאל, תכני העמקה ופורטל לימוד אישי.
+          פרק בשבוע, שיעור חי עם הרב יואב אוריאל, תכני העמקה ופורטל לימוד אישי.
         </p>
       </div>
 

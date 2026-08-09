@@ -29,13 +29,11 @@ const Hero = () => (
       <p className="text-lg md:text-xl lg:text-2xl text-cream/90 max-w-3xl mx-auto mb-6 leading-relaxed animate-fade-up" style={{ animationDelay: '0.15s' }}>
         הנבואה הראשונה בספר נאמרה <span className="text-gold font-semibold">בא׳ אלול</span>.
         <br className="hidden md:block" />
-        יותר מ-2,500 שנה אחריה – אנחנו פותחים אותו בדיוק באותו חודש.
+        יותר מ-2,500 שנה אחרי, אנחנו חוזרים לאותם הפסוקים.
       </p>
 
       <p className="text-base md:text-lg text-cream/95 max-w-2xl mx-auto mb-12 leading-relaxed animate-fade-up" style={{ animationDelay: '0.2s' }}>
-        לימוד מקיף, עמוק ורלוונטי – פרק בשבוע, עם הרב יואב אוריאל.
-        <br />
-        <span className="text-cream/90">השלב הבא בסדרת נביאי הבית השני: הנביא שהעיר אומה שלמה מהייאוש – בחודש אחד.</span>
+        פרק בשבוע עם הרב יואב אוריאל, סדרת נביאי הבית השני.
       </p>
 
       <SubscribeButton>
