@@ -90,10 +90,16 @@ async function fetchEichaSmooveEmails(): Promise<string[]> {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // נכשל סגור — ראו ההסבר ב-sync-smoove-subscribers.ts: בלי CRON_SECRET
+  // ההשוואה מתכווצת ל-"Bearer " וכל אחד עובר. הנתיב רץ עם service_role.
+  if (!CRON_SECRET) {
+    console.error("sync-monday-subscribers: CRON_SECRET is not configured — refusing the request.");
+    return res.status(500).json({ error: "server not configured" });
+  }
   const authHeader = req.headers["authorization"] || "";
   const querySecret = (req.query?.secret as string) || "";
   const isCronCall = authHeader === `Bearer ${CRON_SECRET}`;
-  const isManualTest = CRON_SECRET && querySecret === CRON_SECRET;
+  const isManualTest = querySecret === CRON_SECRET;
   if (!isCronCall && !isManualTest) {
     return res.status(401).json({ error: "Unauthorized" });
   }

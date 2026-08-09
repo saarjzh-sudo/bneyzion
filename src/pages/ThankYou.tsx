@@ -34,6 +34,7 @@ import logoColor from "@/assets/logo-horizontal-color.png";
 import { Seo } from "@/components/seo/Seo";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { hasMarketingConsent } from "@/lib/consent";
+import { supabase } from "@/integrations/supabase/client";
 
 // ─── Facebook pixel helper (unchanged logic) ────────────────────────────────
 function FbPixelLead() {
@@ -411,9 +412,17 @@ function DigitalDownloads() {
     async function poll() {
       attempts++;
       try {
+        // מצרפים את הטוקן כשהרוכש מחובר: השרת דורש בעלות על הזמנה שמשויכת
+        // למשתמש (ראו api/store/order-download.ts). רוכש-אורח נשאר בלי טוקן
+        // וממשיך לעבוד דרך ה-UUID של ההזמנה.
+        const { data: sess } = await supabase.auth.getSession();
+        const token = sess?.session?.access_token;
         const res = await fetch("/api/store/order-download", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
           body: JSON.stringify({ orderIds }),
         });
         const data = await res.json();

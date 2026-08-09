@@ -13,8 +13,24 @@ type Msg = {
 type Stage = "onboarding" | "followup-learning" | "followup-teacher" | "chat";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:streamGenerateContent?key=${GEMINI_KEY}&alt=sse`;
+// ⚠️ אבטחה — אל תחזירו את הקריאה הישירה ל-Gemini מהדפדפן.
+//
+// כאן היה:
+//   const GEMINI_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+//   const GEMINI_URL = `...:streamGenerateContent?key=${GEMINI_KEY}&alt=sse`;
+//
+// כל משתנה בתחילית `VITE_` נצרב לתוך ה-bundle בזמן ה-build ונקרא ע"י כל גולש
+// (DevTools → Sources). כלומר מפתח ה-Gemini היה מתפרסם לאינטרנט, וכל אחד היה
+// יכול לחייב את חשבון ה-Google שלנו ללא הגבלה.
+//
+// כרגע זה **לא** דלף: שתי נקודות-העגינה של הווידג'ט מכומתות בהערה
+// (App.tsx:336, LessonPage.tsx:601), ולכן Rollup מסלק אותו מה-bundle —
+// אומת מול dist/ (אין שום הופעה של generativelanguage). אבל ביטול ההערה
+// בשורה אחת היה מספיק כדי לפרסם את המפתח.
+//
+// להחזרת הווידג'ט לאוויר: לנתב דרך edge function בצד-שרת (כמו `navigation-bot`,
+// שמחזיק את המפתח ב-secret ולא חושף אותו), ולא לקרוא ל-Gemini מהקליינט.
+const AI_PROXY_ENDPOINT: string | null = null;
 const FIRST_VISIT_KEY = "bnz_first_visit";
 const PERSONA_KEY = "bnz_persona";
 
@@ -295,7 +311,12 @@ const AIChatWidget = ({ context }: { context?: string }) => {
       ];
 
       try {
-        const resp = await fetch(GEMINI_URL, {
+        // נכשל סגור: בלי proxy בצד-שרת אין למי לפנות. ראו ההערה ליד
+        // AI_PROXY_ENDPOINT — אסור להחזיר כאן קריאה ישירה ל-Gemini עם מפתח מהקליינט.
+        if (!AI_PROXY_ENDPOINT) {
+          throw new Error("AI chat is disabled: no server-side proxy configured");
+        }
+        const resp = await fetch(AI_PROXY_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

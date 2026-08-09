@@ -22,6 +22,7 @@ import {
 import DesignLayout from "@/components/layout-v2/DesignLayout";
 import { colors, fonts, gradients, radii, shadows } from "@/lib/designTokens";
 import { useProduct, useProducts } from "@/hooks/useProducts";
+import { sanitizeHtml } from "@/lib/sanitize";
 
 export default function DesignPreviewProduct() {
   const { slug } = useParams<{ slug?: string }>();
@@ -426,7 +427,11 @@ export default function DesignPreviewProduct() {
                 lineHeight: 1.95,
                 color: colors.textMid,
               }}
-              dangerouslySetInnerHTML={{ __html: product.content }}
+              // תוכן-מוצר נכתב באדמין, אבל הוא נשמר כ-HTML גולמי ומוזרק כאן.
+              // ProductPage.tsx כבר עובר דרך sanitizeHtml; הדף הזה נשאר מאחור.
+              // מנקים גם כאן כדי שאדמין-שנפרץ (או ייבוא-תוכן אוטומטי) לא יוכל
+              // להזריק סקריפט לגולשים.
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(product.content) }}
             />
             <style>{`
               .product-content h2 { font-family: ${fonts.display}; font-weight:900; color:${colors.textDark}; font-size:1.25rem; margin-top:2rem; margin-bottom:.85rem; }
