@@ -25,6 +25,9 @@ import DedicationBadge from "@/components/lesson/DedicationBadge";
 import { useMediaProgress } from "@/hooks/useMediaProgress";
 import { saveLocalLastLesson } from "@/hooks/useLastLesson";
 import { pdfEmbedSrc } from "@/lib/pdfEmbed";
+import { formatLessonDate } from "@/lib/lessonDate";
+import { openLessonPrintWindow } from "@/lib/printLesson";
+import { useSiteSetting } from "@/hooks/useSiteSettings";
 
 function formatDuration(seconds: number | null) {
   if (!seconds) return null;
@@ -47,8 +50,8 @@ function toSpotifyEmbed(url: string): string | null {
 }
 
 function formatDate(d: string | null) {
-  if (!d) return null;
-  return new Date(d).toLocaleDateString("he-IL", { year: "numeric", month: "long", day: "numeric" });
+  // תאריך עתידי (ארטיפקט ייבוא) לא מוצג — ראו lessonDate.ts
+  return formatLessonDate(d);
 }
 
 function LessonBreadcrumbs({ lesson, series }: { lesson: any; series: { id: string; title: string } | null }) {
@@ -93,6 +96,7 @@ const LessonPage = () => {
   const { user, signInWithGoogle } = useAuth();
   const { mediaRef: mediaProgressRef, flushPosition } = useMediaProgress(id);
   const { toast } = useToast();
+  const { data: printDedication } = useSiteSetting("print_dedication");
   const rabbi = lesson?.rabbis as { id: string; name: string; image_url: string | null; title: string | null } | null;
 
   const rabbiName = formatRabbiName(rabbi);
@@ -291,11 +295,26 @@ const LessonPage = () => {
                   <Share2 className="h-3.5 w-3.5" />
                   שיתוף
                 </Button>
+                {/* הערת נעם 5.8: "הדפסה" כאן הדפיסה את העמוד עם כל הגרפיקה —
+                    עכשיו מגיעה לאותה הדפסה מסודרת של פופאפ-השיעור (printLesson.ts) */}
                 <Button
                   variant="outline"
                   size="sm"
                   className="gap-1.5"
-                  onClick={() => window.print()}
+                  onClick={() =>
+                    openLessonPrintWindow({
+                      title: lesson.title,
+                      contentHtml: (lesson as any).content || lesson.description || "",
+                      metaParts: [
+                        rabbiName ? `מאת: ${rabbiName}` : "",
+                        formatDate(lesson.published_at) || "",
+                        formatDuration(lesson.duration) || "",
+                      ].filter(Boolean).join(" · "),
+                      seriesTitle: series?.title ?? null,
+                      dedicationText: printDedication,
+                      lessonUrl: `${window.location.origin}/lessons/${lesson.id}`,
+                    })
+                  }
                 >
                   <Printer className="h-3.5 w-3.5" />
                   הדפסה
@@ -554,7 +573,7 @@ const LessonPage = () => {
                   [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:font-heading [&_h2]:font-bold [&_h2]:text-primary [&_h2]:mt-10 [&_h2]:mb-4
                   [&_h3]:text-xl [&_h3]:md:text-2xl [&_h3]:font-heading [&_h3]:font-bold [&_h3]:text-primary [&_h3]:mt-8 [&_h3]:mb-3
                   [&_h4]:text-lg [&_h4]:md:text-xl [&_h4]:font-display [&_h4]:font-bold [&_h4]:text-foreground [&_h4]:mt-6 [&_h4]:mb-2
-                  [&_p]:text-foreground [&_p]:mb-4 [&_p]:leading-[1.9]
+                  [&_p]:text-foreground [&_p]:mb-4 [&_p]:leading-[1.9] [&_p]:text-justify
                   [&_strong]:text-foreground [&_strong]:font-bold
                   [&_a]:text-primary [&_a]:underline
                   [&_ol]:list-decimal [&_ol]:ps-6 [&_ol]:mb-4 [&_ul]:list-disc [&_ul]:ps-6 [&_ul]:mb-4 [&_li]:mb-1 [&_li]:leading-[1.8]

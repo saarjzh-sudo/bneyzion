@@ -5,7 +5,7 @@ const FinalCTA = () => (
   <section className="py-20 md:py-28 px-4 bg-background">
     <div className="max-w-3xl mx-auto text-center">
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-        בקיץ הזה – <span className="text-primary">הנבואה חוזרת אליך</span>
+        באלול הזה – <span className="text-primary">חגי מדבר אליך</span>
       </h2>
 
       <p className="text-lg md:text-xl text-foreground mb-8">

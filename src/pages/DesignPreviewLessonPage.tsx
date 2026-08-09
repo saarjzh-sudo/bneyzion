@@ -48,6 +48,7 @@ import {
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
+import { formatLessonDate } from "@/lib/lessonDate";
 
 export default function DesignPreviewLessonPage() {
   const { id } = useParams<{ id?: string }>();
@@ -269,12 +270,12 @@ export default function DesignPreviewLessonPage() {
               {lessonTypeLabel(lesson.source_type)}
             </div>
 
-            {lesson.published_at && (
+            {formatLessonDate(lesson.published_at, { year: "numeric", month: "numeric", day: "numeric" }) && (
               <>
                 <div style={{ width: 1, height: 18, background: "rgba(255,255,255,0.25)" }} />
                 <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem" }}>
                   <Calendar size={14} />
-                  {new Date(lesson.published_at).toLocaleDateString("he-IL")}
+                  {formatLessonDate(lesson.published_at, { year: "numeric", month: "numeric", day: "numeric" })}
                 </div>
               </>
             )}

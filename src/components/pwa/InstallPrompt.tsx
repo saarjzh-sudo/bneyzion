@@ -15,22 +15,41 @@ const SUPPRESSED_PATHS = [
   "/yehoshua-campaign", // future production route
 ];
 
+// הערת סוקר 2.8: הבאנר קפץ שוב אחרי סגירה ב-X. הדחייה נשמרת גם בזיכרון
+// (module-level) כך שגם אם localStorage חסום/נמחק — לא יופיע שוב באותו ביקור.
+let dismissedThisSession = false;
+
+const isDismissed = () => {
+  if (dismissedThisSession) return true;
+  try {
+    return !!localStorage.getItem("pwa-install-dismissed");
+  } catch {
+    return false;
+  }
+};
+
+const markDismissed = () => {
+  dismissedThisSession = true;
+  try {
+    localStorage.setItem("pwa-install-dismissed", "1");
+  } catch {
+    // localStorage חסום (מצב פרטי) — הדגל בזיכרון מכסה את הסשן
+  }
+};
+
 const InstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showBanner, setShowBanner] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
-  // Suppress on campaign pages
-  if (typeof window !== "undefined" && SUPPRESSED_PATHS.some((p) => window.location.pathname.startsWith(p))) {
-    return null;
-  }
+  const suppressed =
+    typeof window !== "undefined" && SUPPRESSED_PATHS.some((p) => window.location.pathname.startsWith(p));
 
   useEffect(() => {
     const handler = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      const dismissed = localStorage.getItem("pwa-install-dismissed");
-      if (!dismissed) setShowBanner(true);
+      if (!isDismissed()) setShowBanner(true);
     };
     window.addEventListener("beforeinstallprompt", handler);
 
@@ -50,14 +69,18 @@ const InstallPrompt = () => {
     if (!deferredPrompt) return;
     await deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    if (outcome === "accepted") setShowBanner(false);
+    // גם דחייה בדיאלוג הדפדפן = סגירת הבאנר ושמירת הדחייה
+    setShowBanner(false);
+    if (outcome !== "accepted") markDismissed();
     setDeferredPrompt(null);
   };
 
   const handleDismiss = () => {
     setShowBanner(false);
-    localStorage.setItem("pwa-install-dismissed", "1");
+    markDismissed();
   };
+
+  if (suppressed) return null;
 
   return (
     <>

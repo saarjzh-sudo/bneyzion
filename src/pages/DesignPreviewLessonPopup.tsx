@@ -33,6 +33,7 @@ import {
 import { useTopSeries } from "@/hooks/useTopSeries";
 import { useLessonsBySeries } from "@/hooks/useLessonsBySeries";
 import { TeacherContentBadge } from "@/components/ui/TeacherContentBadge";
+import { formatLessonDate } from "@/lib/lessonDate";
 
 export default function DesignPreviewLessonPopup() {
   const [open, setOpen] = useState(true);
@@ -75,9 +76,9 @@ export default function DesignPreviewLessonPopup() {
   const rabbiInitial = rabbiName ? (rabbiName.replace(/^הרב /, "")[0] || "ר") : "ר";
   const lessonType: "video" | "audio" = lesson.source_type === "audio" ? "audio" : "video";
   const lessonImage = lesson.thumbnail_url || cover;
-  const publishedAt = lesson.published_at
-    ? new Date(lesson.published_at).toLocaleDateString("he-IL")
-    : null;
+  const publishedAt = formatLessonDate(lesson.published_at, {
+    year: "numeric", month: "numeric", day: "numeric",
+  });
 
   return (
     <div
