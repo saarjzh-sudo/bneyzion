@@ -42,7 +42,7 @@ const Hero = () => (
           className="inline-flex items-center gap-2 md:gap-3 bg-gradient-to-l from-primary via-primary to-teal-600 text-white px-6 py-3 md:px-10 md:py-5 rounded-xl font-bold text-base md:text-xl transition-all duration-300 hover:shadow-xl hover:scale-105 animate-fade-up"
           style={{ animationDelay: '0.3s' }}
         >
-          אני מתחיל את חגי
+          אני רוצה לפגוש את ספר חגי
           <ArrowLeft className="w-5 h-5" />
         </button>
       </SubscribeButton>
