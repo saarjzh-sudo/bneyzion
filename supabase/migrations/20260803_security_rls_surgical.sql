@@ -47,6 +47,10 @@
 -- התיקון: לפצל את user_own לקריאה בלבד. יצירה ועדכון נעשים ממילא רק ב-
 -- create-payment / webhook עם service_role, שעוקף RLS.
 drop policy if exists "user_own" on public.orders;
+-- גם השם החדש נמחק תחילה — הקובץ חייב להיות בר-הרצה-חוזרת. הרצה שנכשלה
+-- באמצע משאירה חלק מהמדיניויות קיימות, ואז `create policy` נופל ב-42710
+-- ומונע את התיקון של כל היתר.
+drop policy if exists "orders_owner_read" on public.orders;
 
 create policy "orders_owner_read" on public.orders
   for select
@@ -65,6 +69,8 @@ create policy "orders_owner_read" on public.orders
 -- כולל קורס בתשלום. זה גם מה שהיה מנטרל את תיקוני H10/H11 למטה, שנשענים על
 -- "הרשמה פעילה" כדי להעניק גישה.
 drop policy if exists "user_own" on public.course_enrollments;
+drop policy if exists "course_enrollments_owner_read" on public.course_enrollments;
+drop policy if exists "course_enrollments_self_insert_open_only" on public.course_enrollments;
 
 create policy "course_enrollments_owner_read" on public.course_enrollments
   for select
@@ -103,6 +109,7 @@ create policy "course_enrollments_admin_all" on public.course_enrollments
 -- ה-paywall היה תנאי-JSX בלבד: `grep has_access_tag` מחזיר קורא אחד,
 -- src/hooks/useUserAccess.ts, קוד React.
 drop policy if exists "anon_read" on public.community_course_lessons;
+drop policy if exists "ccl_entitled_read" on public.community_course_lessons;
 
 create policy "ccl_entitled_read" on public.community_course_lessons
   for select
@@ -157,6 +164,8 @@ grant select on public.public_course_lesson_index to anon, authenticated;
 -- האפליקציה תלויה בכך שהשאילתה הלא-מסוננת עובדת עבור נרשמים, ולכן: view
 -- ציבורי ללוח-הזמנים + טבלת-בסיס מוגבלת-זכאות לקישורים. הקליינט ממזג.
 drop policy if exists "anon_read" on public.course_sessions;
+drop policy if exists "course_sessions_entitled_read" on public.course_sessions;
+drop policy if exists "course_sessions_admin_write" on public.course_sessions;
 
 create policy "course_sessions_entitled_read" on public.course_sessions
   for select
@@ -230,6 +239,8 @@ grant select on public.public_lesson_dedications to anon, authenticated;
 -- ייחוס של שיעורים וסדרות.
 drop policy if exists "auth_insert_series_rabbis" on public.series_rabbis;
 drop policy if exists "auth_insert_lesson_rabbis" on public.lesson_rabbis;
+drop policy if exists "series_rabbis_admin_write" on public.series_rabbis;
+drop policy if exists "lesson_rabbis_admin_write" on public.lesson_rabbis;
 
 create policy "series_rabbis_admin_write" on public.series_rabbis
   for all to authenticated
@@ -375,3 +386,65 @@ update storage.buckets
 -- ALTER ולא CREATE OR REPLACE — לא נוגעים בגוף הפונקציה, רק מקבעים את
 -- ההקשר. שינוי הגוף היה מסכן 40 מדיניויות בבת אחת.
 alter function public.has_role(uuid, app_role) set search_path = public, pg_temp;
+
+-- get_public_rabbis — נמצאה בסריקה כוללת (10.8) של כל פונקציות ה-SECURITY
+-- DEFINER ב-public. היא חמורה יותר מ-has_role משתי סיבות:
+--   • `grant execute ... to anon` — כל אחד עם המפתח הציבורי קורא לה.
+--   • הפניות לא-מוסמכות (`from rabbis`, `from series`), כלומר שמות הטבלאות
+--     נפתרים דרך ה-search_path של הקורא בזמן שהפונקציה רצה בהרשאות הבעלים.
+-- has_role לפחות הסמיכה `public.user_roles`. כאן אין שום הסמכה.
+alter function public.get_public_rabbis() set search_path = public, pg_temp;
+
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- 12. הרשאות ה-views — ברירת-המחדל של Supabase נותנת ALL, לא SELECT
+-- ────────────────────────────────────────────────────────────────────────────
+-- נמצא באימות שאחרי ההרצה (10.8): כל ששת ה-views שנוצרו למעלה קיבלו
+-- INSERT/UPDATE/DELETE/TRUNCATE ל-anon **ול-authenticated**, למרות ש-
+-- המיגרציה כתבה `grant select` בלבד — ואף למרות ש-public_donation_wall
+-- לא קיבל שום grant מפורש.
+--
+-- הסיבה: פרויקטי Supabase מוגדרים עם
+--     alter default privileges in schema public grant all on tables to anon, authenticated;
+-- ולכן כל טבלה או view שנוצרים ב-public מקבלים הרשאות מלאות אוטומטית.
+-- טבלאות שורדות את זה כי RLS חוסם בפועל. **ל-views אין RLS.**
+--
+-- והחמור: ה-views הוגדרו `security_invoker = false`, כלומר הם רצים בהרשאות
+-- הבעלים — ובעל-טבלה עוקף RLS. חמישה מהם הם select פשוט מטבלה אחת, כלומר
+-- auto-updatable, ולכן כתיבה דרך ה-view מגיעה לטבלת-הבסיס בעקיפת RLS:
+--     DELETE /rest/v1/public_course_sessions   → מוחק course_sessions אמיתי
+--
+-- כלומר המיגרציה הזו — שנועדה לסגור — פתחה חור חדש. REVOKE מפורש הוא
+-- החובה כאן; `grant select` לבדו אינו מספיק כשברירת-המחדל היא ALL.
+revoke all on public.public_course_lesson_index,
+              public.public_course_sessions,
+              public.public_lesson_dedications,
+              public.public_donation_stats,
+              public.public_donation_wall,
+              public.public_site_questions
+  from anon, authenticated;
+
+grant select on public.public_course_lesson_index,
+                public.public_course_sessions,
+                public.public_lesson_dedications,
+                public.public_donation_stats,
+                public.public_site_questions
+  to anon, authenticated;
+
+-- public_donation_wall נשאר ללא grant — הענקתו מפרסמת שמות תורמים וסכומים
+-- באתר. החלטת-מוצר, לא החלטת-אבטחה (ראו סעיף 7).
+
+-- אותה ברירת-מחדל פגעה גם בשני views ותיקים שקדמו לעבודה הזו. הם נקראים
+-- מהאתר החי (useCampaigns.ts) ולכן SELECT נשאר; הכתיבה יורדת.
+-- הם אגרגטים, כלומר כנראה לא auto-updatable ממילא — אבל הרשאה שגויה שלא
+-- ניתנת לניצול היום היא הרשאה שגויה שתנוצל אחרי השינוי הבא ב-view.
+revoke all on public.campaign_stats, public.campaign_tier_counts
+  from anon, authenticated;
+grant select on public.campaign_stats, public.campaign_tier_counts
+  to anon, authenticated;
+
+-- ⚠️ למה information_schema לא גילה את השניים האלה: role_table_grants מסנן
+-- להרשאות שבהן המשתמש הנוכחי הוא המעניק או המקבל. ה-views שלנו הוענקו ע"י
+-- postgres ולכן הופיעו; campaign_stats הוענק ע"י תפקיד אחר ונעלם מהשאילתה.
+-- לביקורת הרשאות יש להשתמש ב-pg_catalog (aclexplode על pg_class.relacl),
+-- שאינו מסונן. information_schema ידווח בחסר בשקט.

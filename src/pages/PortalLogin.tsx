@@ -27,8 +27,19 @@ export default function PortalLogin() {
   const [signingIn, setSigningIn] = useState(false);
 
   // next= — לאן לחזור אחרי login. default: /portal
+  //
+  // ה-next מגיע מה-URL, כלומר מהתוקף. חייב להיות נתיב פנימי בלבד:
+  // "//evil.com" ו-"https://evil.com" עוברים את sanitizeNext ב-googleSignIn
+  // (הוא חוסם רק לולאות-התחברות, לא יעדים חיצוניים). היום navigate() מגן
+  // במקרה — ה-History API זורק SecurityError על origin זר — אבל זו הגנה של
+  // הדפדפן, לא של הקוד. מעבר עתידי ל-window.location.href היה הופך את זה
+  // לפתח-הפניה אמיתי. הבדיקה כאן הופכת את הכוונה למפורשת.
   const rawNext = searchParams.get("next");
-  const next = rawNext ? decodeURIComponent(rawNext) : "/portal";
+  const decoded = rawNext ? decodeURIComponent(rawNext) : null;
+  const next =
+    decoded && decoded.startsWith("/") && !decoded.startsWith("//")
+      ? decoded
+      : "/portal";
 
   // אם כבר מחובר — redirect מיידי
   useEffect(() => {
