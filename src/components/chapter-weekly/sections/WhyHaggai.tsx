@@ -38,7 +38,7 @@ const WhyHaggai = () => (
         </div>
 
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-          הספר שכולו <span className="text-primary">אלול אחד</span>
+          אור חדש <span className="text-primary">בחודש אלול</span>
         </h2>
 
         <div className="max-w-3xl mx-auto space-y-4 text-right md:text-center">
@@ -49,7 +49,7 @@ const WhyHaggai = () => (
           </p>
           <p className="text-lg md:text-xl text-brown-light leading-relaxed">
             בראש חודש אלול, אחרי עשרות שנים בלי נבואה,
-            <span className="font-semibold text-foreground"> ״הָיָה דְבַר ה׳ בְּיַד חַגַּי הַנָּבִיא״.</span>
+            <span className="font-serif font-semibold text-foreground"> ״הָיָה דְבַר ה׳ בְּיַד חַגַּי הַנָּבִיא״.</span>
           </p>
           <p className="text-lg md:text-xl text-brown-light leading-relaxed">
             חגי לא נותן לעם לחכות לתנאים המושלמים. הוא דוחף אותם לבנות ועכשיו,
@@ -78,7 +78,7 @@ const WhyHaggai = () => (
       <div className="grid md:grid-cols-2 gap-4 mb-10">
         {haggaiPoints.map((point, i) => (
           <div key={i} className="premium-card text-right">
-            <p className="text-primary font-bold text-lg mb-1">{point.verse}</p>
+            <p className="font-serif text-primary font-bold text-xl mb-1">{point.verse}</p>
             <h4 className="font-bold text-foreground text-base">{point.title}</h4>
           </div>
         ))}
@@ -86,7 +86,7 @@ const WhyHaggai = () => (
 
       <div className="premium-card bg-gradient-to-l from-primary/5 to-accent/5 border-primary/20 text-center mb-10">
         <p className="text-lg text-foreground leading-relaxed">
-          פרק בשבוע, שיעור חי עם הרב יואב אוריאל, תכני העמקה ופורטל לימוד אישי.
+          פרק בשבוע, שיעור חי עם הרב יואב אוריאל ותכני העמקה בהירים.
         </p>
       </div>
 
@@ -96,7 +96,7 @@ const WhyHaggai = () => (
             type="button"
             className="inline-flex items-center gap-2 md:gap-3 bg-primary text-primary-foreground px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg transition-all hover:shadow-premium-lg hover:scale-105"
           >
-            אני פותח את אלול עם חגי
+            אני רוצה לפגוש את ספר חגי
             <ArrowLeft className="w-5 h-5" />
           </button>
         </SubscribeButton>
