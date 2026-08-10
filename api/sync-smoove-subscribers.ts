@@ -54,10 +54,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // ── Auth guard ──────────────────────────────────────────────────────────────
   // Vercel cron adds: Authorization: Bearer <CRON_SECRET>
   // Manual test:      ?secret=<CRON_SECRET>   (dev convenience)
+  // נכשל סגור: בלי CRON_SECRET הביטוי `Bearer ${CRON_SECRET}` מתכווץ ל-
+  // "Bearer " בדיוק, וכל אחד ששולח את הכותרת הזו היה עובר את השער. הנתיב רץ
+  // עם service_role ומסנכרן תגיות-גישה, אז זו הייתה פתיחה מלאה.
+  if (!CRON_SECRET) {
+    console.error("sync-smoove-subscribers: CRON_SECRET is not configured — refusing the request.");
+    return res.status(500).json({ error: "server not configured" });
+  }
   const authHeader = req.headers["authorization"] || "";
   const querySecret = (req.query?.secret as string) || "";
   const isCronCall = authHeader === `Bearer ${CRON_SECRET}`;
-  const isManualTest = CRON_SECRET && querySecret === CRON_SECRET;
+  const isManualTest = querySecret === CRON_SECRET;
 
   if (!isCronCall && !isManualTest) {
     return res.status(401).json({ error: "Unauthorized" });

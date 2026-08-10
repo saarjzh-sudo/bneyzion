@@ -28,6 +28,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!orderIds.length) return res.status(400).json({ error: "orderIds required" });
 
   const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
+
+  // מי הקורא (אם בכלל). אורח שרכש בלי חשבון לא ישלח טוקן — ואז נשארים במודל
+  // ה-capability (ה-UUID עצמו הוא הסוד). אבל אם ההזמנה **כן** משויכת למשתמש,
+  // נדרוש שהקורא יהיה אותו משתמש: ה-UUID נוסע ב-URL של דף-התודה ולכן דולף
+  // להיסטוריית-דפדפן, ל-Referer ולכל מי שמקבל קישור מועבר.
+  let callerId: string | null = null;
+  const authHeader = String(req.headers.authorization || "");
+  if (authHeader.toLowerCase().startsWith("bearer ")) {
+    const jwt = authHeader.slice(7).trim();
+    if (jwt) {
+      const { data: userData } = await supabase.auth.getUser(jwt);
+      callerId = userData?.user?.id ?? null;
+    }
+  }
+
   const items: Array<{ title: string; url: string }> = [];
   // יואב 22.7 (06:55): רוכש קורס מקבל בדף התודה כפתור כניסה ישיר לקורס
   const courses: Array<{ id: string; title: string }> = [];
@@ -36,10 +51,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   for (const orderId of orderIds) {
     const { data: order } = await supabase
       .from("orders")
-      .select("id, payment_status, status")
+      .select("id, payment_status, status, user_id")
       .eq("id", orderId)
       .maybeSingle();
     if (!order) continue;
+
+    // הזמנה משויכת → רק הבעלים. הזמנת-אורח (user_id ריק) נשארת capability.
+    const ownerId = (order as any).user_id ? String((order as any).user_id) : null;
+    if (ownerId && ownerId !== callerId) {
+      console.warn("order-download: refusing download — caller is not the order owner", {
+        orderId, hasCaller: Boolean(callerId),
+      });
+      continue;
+    }
 
     // החזר/ביטול (אודיט M11): ממשק-האדמין כותב `status` בלבד ולא נוגע ב-
     // `payment_status`, ולכן הזמנה שהוחזרה נשארה completed והמשיכה להנפיק
