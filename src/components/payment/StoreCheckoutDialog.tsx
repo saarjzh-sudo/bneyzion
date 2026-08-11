@@ -89,6 +89,15 @@ export function StoreCheckoutDialog({
       });
       return;
     }
+    // איסוף עצמי בלי בחירת נקודה = הזמנה בלי כתובת ובלי איש קשר (הרכישה של
+    // 11.8 נשמרה כ"איסוף עצמי" בלבד). כשיש נקודות מוגדרות — הבחירה חובה.
+    if (isPhysical && shippingMethod === "pickup" && salePoints.length > 0 && !pickupPoint) {
+      toast({
+        title: "יש לבחור נקודת איסוף",
+        variant: "destructive",
+      });
+      return;
+    }
     if (isPhysical && shippingMethod !== "pickup" && (!street || !city)) {
       toast({ title: "יש למלא כתובת למשלוח", variant: "destructive" });
       return;

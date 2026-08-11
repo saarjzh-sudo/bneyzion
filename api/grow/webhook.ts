@@ -785,6 +785,31 @@ async function runPostPurchaseSideEffects(args: {
     console.error("[AccessTag] Exception (non-fatal):", e);
   }
 
+  // התראת משרד על מצטרף חדש לתכנית הפרק השבועי (11.8, סבב ההשקה של חגי):
+  // עד עכשיו רק רכישת-חנות והקדשה שלחו התראה — מנוי חדש נכנס בשקט.
+  // הנתיב הזה רץ רק על הצטרפות טרייה מהאתר; חיובי-המשך החודשיים מגיעים
+  // מסנכרון-הלילה של Grow ולא עוברים כאן.
+  if (targetTable === "orders" && productSlug === "weekly-chapter-subscription") {
+    try {
+      const { sendSingleEmail } = await import("../lib/digital-delivery.js");
+      await sendSingleEmail(
+        "office@bneyzion.co.il",
+        "משרד בני ציון",
+        `מנוי חדש לפרק השבועי 🎉 ${fullName || ""}`,
+        `<div dir="rtl" style="font-family:Arial;font-size:15px;line-height:1.7">
+          <p><b>מצטרף חדש לתכנית הפרק השבועי.</b></p>
+          <p>שם: <b>${fullName || "—"}</b><br/>
+             מייל: ${email || "—"}<br/>
+             טלפון: ${phone || "—"}<br/>
+             סכום: ₪${Number((row as any).total || 0).toLocaleString()}</p>
+          <p style="font-size:13px"><a href="https://bneyzion.vercel.app/admin/orders">לטבלת ההזמנות באדמין »</a></p>
+        </div>`,
+      );
+    } catch (e) {
+      console.error("Webhook: new-subscriber office notification failed (non-fatal):", e);
+    }
+  }
+
   // ── מסירה דיגיטלית + התראת-משרד (רמה 17) ────────────────────────────────
   // חייב לרוץ לפני ה-return המוקדם של Smoove (מוצר בלי smoove_list_id יוצא שם).
   // deliverOrder אידמפוטנטי (raw_payload.digital_delivered_at) ובודק order_items —

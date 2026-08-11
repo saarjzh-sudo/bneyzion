@@ -171,6 +171,60 @@ export async function sendBuyerDeliveryEmail(params: {
 }
 
 /**
+ * מייל אישור-הזמנה לרוכש (11.8.2026, בקשת הרב יואב): עד עכשיו רוכש מוצר פיזי
+ * לא קיבל שום מייל — רק המשרד קיבל התראה. באיסוף עצמי הרוכש נשאר בלי כתובת
+ * ובלי איש קשר. המייל כולל את פריטי ההזמנה, הסכום, ובאיסוף עצמי — את פרטי
+ * נקודת האיסוף המלאים (כתובת + איש קשר לתיאום).
+ */
+export async function sendStoreConfirmationEmail(params: {
+  email: string;
+  name: string;
+  itemTitles: string[];
+  total: number;
+  orderNumber?: string | null;
+  isPickup: boolean;
+  pickupPoint?: { name: string; address: string | null; city: string | null; contact: string | null; notes: string | null } | null;
+  shippingAddress?: string | null;
+  shippingCity?: string | null;
+}): Promise<boolean> {
+  const p = params;
+  const firstName = (p.name || "").trim().split(/\s+/)[0] || "";
+  const itemsHtml = p.itemTitles.length
+    ? `<ul style="margin:8px 0;padding-inline-start:20px">${p.itemTitles.map((t) => `<li>${t}</li>`).join("")}</ul>`
+    : "";
+  let deliveryHtml: string;
+  if (p.isPickup) {
+    const sp = p.pickupPoint;
+    deliveryHtml = sp
+      ? `<div style="background:#FAF6F0;border-radius:10px;padding:14px 18px;margin:12px 0">
+           <p style="margin:0 0 6px"><b>איסוף עצמי — ${sp.name}</b></p>
+           ${sp.address || sp.city ? `<p style="margin:0 0 6px">כתובת: ${[sp.address, sp.city].filter(Boolean).join(", ")}</p>` : ""}
+           ${sp.contact ? `<p style="margin:0 0 6px">איש קשר לתיאום האיסוף: <b>${sp.contact}</b></p>` : ""}
+           ${sp.notes ? `<p style="margin:0;font-size:13px;color:#6B5C4A">${sp.notes}</p>` : ""}
+           <p style="margin:6px 0 0;font-size:13px;color:#6B5C4A">כדאי לתאם מראש לפני שמגיעים.</p>
+         </div>`
+      : `<p><b>איסוף עצמי</b> — ניצור איתך קשר לתיאום מועד האיסוף.</p>`;
+  } else {
+    deliveryHtml = `<p><b>משלוח:</b> ${[p.shippingAddress, p.shippingCity].filter(Boolean).join(", ") || "לפי הכתובת שמסרת"}.<br/>
+      ההזמנה תישלח בדואר רשום תוך 14 ימי עסקים.</p>`;
+  }
+  const inner = `
+    <p>שלום ${firstName || "וברכה"},</p>
+    <p>תודה על הרכישה! ההזמנה שלך התקבלה ואושרה.</p>
+    <p><b>מה הזמנת:</b></p>${itemsHtml}
+    <p><b>סכום:</b> ₪${Number(p.total).toLocaleString()}</p>
+    ${deliveryHtml}
+    ${p.orderNumber ? `<p style="font-size:12px;color:#A69882">אסמכתת הזמנה: ${p.orderNumber}</p>` : ""}
+    <p>בברכת התורה,<br/>צוות בני ציון</p>`;
+  return sendSingleEmail(
+    p.email,
+    p.name,
+    "ההזמנה שלך התקבלה — בני ציון",
+    emailShell(inner),
+  );
+}
+
+/**
  * מייל תודה לתורם (רמה 18, אודיט תרומות): עד עכשיו תורם קיבל רק קבלה מ-Grow —
  * בלי שום מילה חמה מהעמותה. נשלח פעם אחת, מיד אחרי אישור התשלום.
  */
@@ -262,7 +316,7 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
   const digitalItems = await loadDigitalItems(supabase, orderId);
   const { data: allItems } = await supabase
     .from("order_items")
-    .select("title, quantity, total_price, products:product_id (slug)")
+    .select("title, quantity, total_price, products:product_id (slug, is_digital)")
     .eq("order_id", orderId);
   const itemTitles = (allItems ?? [])
     .map((r: any) => {
@@ -300,6 +354,41 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
     }
   }
 
+  // מייל אישור-הזמנה לרוכש מוצר פיזי (11.8, בקשת הרב יואב): באיסוף עצמי —
+  // עם כתובת נקודת האיסוף ואיש הקשר. מוצר-דיגיטלי-בלבד מקבל ממילא את מייל
+  // הקבצים למעלה, ולכן מדלגים כדי לא לשלוח שני מיילים על אותה רכישה.
+  let buyerConfirmed = false;
+  const hasPhysical = (allItems ?? []).some((r: any) => !r.products?.is_digital);
+  if (hasPhysical && (order as any).customer_email && !rawPayload.buyer_confirmation_at) {
+    const shippingAddress = String((order as any).shipping_address || "");
+    const isPickup = shippingAddress.includes("איסוף עצמי");
+    let pickupPoint: any = null;
+    if (isPickup) {
+      // ההזמנה שומרת רק את שם הנקודה בתוך shipping_address — פרטי איש הקשר
+      // חיים ב-sale_points. התאמה לפי שם; נקודה פעילה יחידה משמשת כברירת מחדל
+      // להזמנות ישנות שנוצרו לפני שחובת הבחירה נאכפה בצ'קאאוט.
+      const { data: points } = await supabase
+        .from("sale_points")
+        .select("name, address, city, contact, notes")
+        .eq("is_active", true);
+      const active = (points ?? []) as any[];
+      pickupPoint =
+        active.find((sp) => sp.name && shippingAddress.includes(sp.name)) ||
+        (active.length === 1 ? active[0] : null);
+    }
+    buyerConfirmed = await sendStoreConfirmationEmail({
+      email: (order as any).customer_email,
+      name: (order as any).customer_name || "",
+      itemTitles,
+      total: Number((order as any).total || 0),
+      orderNumber: (order as any).order_number,
+      isPickup,
+      pickupPoint,
+      shippingAddress: (order as any).shipping_address,
+      shippingCity: (order as any).shipping_city,
+    });
+  }
+
   // התראת משרד — על כל הזמנת-חנות (עם order_items), לא על מנויים/תרומות
   let officeNotified = false;
   if (itemTitles.length) {
@@ -318,7 +407,7 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
     });
   }
 
-  if (deliveredToBuyer || officeNotified) {
+  if (deliveredToBuyer || officeNotified || buyerConfirmed) {
     await supabase
       .from("orders")
       .update({
@@ -326,9 +415,10 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
           ...rawPayload,
           ...(deliveredToBuyer ? { digital_delivered_at: new Date().toISOString() } : {}),
           ...(officeNotified ? { office_notified_at: new Date().toISOString() } : {}),
+          ...(buyerConfirmed ? { buyer_confirmation_at: new Date().toISOString() } : {}),
         },
       })
       .eq("id", orderId);
   }
-  console.log(`[DigitalDelivery] order=${orderId} buyerEmail=${deliveredToBuyer} office=${officeNotified} digitalItems=${digitalItems.length}`);
+  console.log(`[DigitalDelivery] order=${orderId} buyerEmail=${deliveredToBuyer} buyerConfirm=${buyerConfirmed} office=${officeNotified} digitalItems=${digitalItems.length}`);
 }

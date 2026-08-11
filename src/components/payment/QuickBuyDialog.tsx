@@ -57,10 +57,22 @@ export function QuickBuyDialog({
   const { startPayment, isLoading, isReady } = useGrowPayment();
   const { toast } = useToast();
 
+  // מנוי הפרק השבועי: המייל הוא המפתח לפורטל — תג הגישה נרשם על המייל
+  // ומתחבר לחשבון בכניסת Google הראשונה. בלי מייל המנוי משלם ולא מקבל גישה.
+  const emailRequired = product === "weekly-chapter-subscription";
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!fullName || !phone) {
       toast({ title: "יש למלא שם וטלפון", variant: "destructive" });
+      return;
+    }
+    if (emailRequired && !email.trim()) {
+      toast({
+        title: "יש למלא אימייל",
+        description: "עם המייל הזה נכנסים לפורטל הלימוד, ואליו נשלחים העדכונים",
+        variant: "destructive",
+      });
       return;
     }
     if (!tosAccepted) {
@@ -146,7 +158,9 @@ export function QuickBuyDialog({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="qb-email">אימייל (לשליחת קבלה)</Label>
+            <Label htmlFor="qb-email">
+              {emailRequired ? "אימייל (איתו נכנסים לפורטל הלימוד) *" : "אימייל (לשליחת קבלה)"}
+            </Label>
             <Input
               id="qb-email"
               type="email"
@@ -154,6 +168,7 @@ export function QuickBuyDialog({
               onChange={(e) => setEmail(e.target.value)}
               placeholder="name@example.com"
               dir="ltr"
+              required={emailRequired}
             />
           </div>
 
