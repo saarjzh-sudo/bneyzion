@@ -315,7 +315,8 @@ const GlobalChrome = () => {
       <CookieConsent />
       {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/*, /program/* and bare landing routes.
           10.7 (סער): "בחנות הוא מיותר" — מוסתר גם ב-/store, /checkout, /cart */}
-      <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/", "/store", "/checkout", "/cart"]} />
+      {/* 13.8 (סער): בדף המכירה של הפרק השבועי הבוט מסיח — מוסתר גם שם */}
+      <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/", "/store", "/checkout", "/cart", "/chapter-weekly"]} />
     </>
   );
 };

@@ -24,8 +24,9 @@ const FinalCTA = () => (
       </SubscribeButton>
 
       <div className="flex flex-wrap justify-center gap-6 text-foreground mb-8">
-        <a href="https://wa.me/972527203221" className="flex items-center gap-2 hover:text-primary transition-colors">
-          <Phone className="w-4 h-4" /> 052-720-3221
+        {/* 13.8 (סער): פניות וואטסאפ מהדף עוברות לאביה, לא לרב יואב */}
+        <a href="https://wa.me/972527471094" className="flex items-center gap-2 hover:text-primary transition-colors">
+          <Phone className="w-4 h-4" /> 052-747-1094
         </a>
         <a href="mailto:office@bneyzion.co.il" className="flex items-center gap-2 hover:text-primary transition-colors">
           <Mail className="w-4 h-4" /> office@bneyzion.co.il

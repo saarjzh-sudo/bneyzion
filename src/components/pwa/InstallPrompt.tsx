@@ -13,6 +13,7 @@ interface BeforeInstallPromptEvent extends Event {
 const SUPPRESSED_PATHS = [
   "/design-yehoshua-campaign",
   "/yehoshua-campaign", // future production route
+  "/chapter-weekly", // 13.8 (סער): דף מכירה — בלי באנר התקנת אפליקציה
 ];
 
 // הערת סוקר 2.8: הבאנר קפץ שוב אחרי סגירה ב-X. הדחייה נשמרת גם בזיכרון
