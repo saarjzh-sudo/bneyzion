@@ -733,6 +733,57 @@ async function grantAccessTag(params: {
   }
 }
 
+// ── Monday: הוספת מנוי חדש ללוח "מנויי הפרק השבועי" (הוראת סער 13.8) ─────
+// אותם מזהי לוח/עמודות כמו sync-monday-subscribers.ts ו-cancel-subscription.ts.
+// GraphQL עם משתנים בלבד (לקח אודיט M3 — בלי שרשור קלט לשאילתה).
+const MONDAY_API_TOKEN = (process.env.MONDAY_API_TOKEN || "").trim();
+const MONDAY_BOARD_ID = 5094750546;
+const MONDAY_COL_EMAIL = "email_mm2f6efy";
+const MONDAY_COL_PHONE = "phone_mm2f7xzf";
+const MONDAY_COL_STATUS = "color_mm2fcgcg";
+
+async function addSubscriberToMonday(args: {
+  fullName: string;
+  email: string;
+  phone: string;
+}): Promise<string> {
+  const { fullName, email, phone } = args;
+  if (!MONDAY_API_TOKEN || !email) return "skipped";
+  const gql = async (query: string, variables?: Record<string, unknown>) => {
+    const r = await fetch("https://api.monday.com/v2", {
+      method: "POST",
+      headers: { Authorization: MONDAY_API_TOKEN, "Content-Type": "application/json" },
+      body: JSON.stringify({ query, variables: variables ?? {} }),
+    });
+    return r.json();
+  };
+  // אידמפוטנטיות: אם המייל כבר בלוח (הוזן ידנית / חיוב קודם) — לא נוגעים.
+  const find = await gql(
+    `query ($boardId: ID!, $emailCol: String!, $email: String!) {
+       items_page_by_column_values(
+         board_id: $boardId, limit: 1,
+         columns: [{ column_id: $emailCol, column_values: [$email] }]
+       ) { items { id } }
+     }`,
+    { boardId: String(MONDAY_BOARD_ID), emailCol: MONDAY_COL_EMAIL, email: String(email) },
+  );
+  if (find?.data?.items_page_by_column_values?.items?.[0]) return "already_exists";
+  const colVals = JSON.stringify({
+    [MONDAY_COL_EMAIL]: { email, text: email },
+    [MONDAY_COL_PHONE]: phone || "",
+    [MONDAY_COL_STATUS]: { label: "פעילה" },
+  });
+  const created = await gql(
+    `mutation ($boardId: ID!, $name: String!, $colVals: JSON!) {
+       create_item(board_id: $boardId, item_name: $name, column_values: $colVals) { id }
+     }`,
+    { boardId: String(MONDAY_BOARD_ID), name: fullName || email, colVals },
+  );
+  return created?.data?.create_item?.id
+    ? `created_${created.data.create_item.id}`
+    : `failed: ${JSON.stringify(created).slice(0, 150)}`;
+}
+
 async function runPostPurchaseSideEffects(args: {
   supabase: ReturnType<typeof getSupabaseAdmin>;
   targetTable: string;
@@ -807,6 +858,17 @@ async function runPostPurchaseSideEffects(args: {
       );
     } catch (e) {
       console.error("Webhook: new-subscriber office notification failed (non-fatal):", e);
+    }
+
+    // הוספה אוטומטית ללוח Monday "מנויי הפרק השבועי" (הוראת סער 13.8):
+    // עד עכשיו ההוספה ללוח הייתה ידנית, וקרון sync-monday קטע גישה למי שלא
+    // הוזן תוך 7 ימים — גם אם שילם. מעכשיו כל מצטרף מהאתר נכנס ללוח מיד,
+    // אידמפוטנטי (חיפוש לפי מייל; קיים → לא נוגעים). כשל כאן לא מפיל את הזרימה.
+    try {
+      const added = await addSubscriberToMonday({ fullName, email, phone });
+      console.log(`[Monday] new subscriber ${email}: ${added}`);
+    } catch (e) {
+      console.error("[Monday] add subscriber failed (non-fatal):", e);
     }
   }
 

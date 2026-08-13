@@ -83,6 +83,32 @@ async function markCancelledInMonday(email: string): Promise<string> {
   return upd?.data?.change_simple_column_value ? "updated" : `failed: ${JSON.stringify(upd).slice(0, 120)}`;
 }
 
+// רשימת המנויים בסמוב — הסרה בביטול, כדי שהקלוד של הרב יואב (שמאזין לרשימה)
+// והדיוורים יפסיקו לראות את המבוטל. כשל כאן לא מפיל את הביטול.
+const SMOOVE_API_KEY = (process.env.SMOOVE_API_KEY || "").trim();
+const SMOOVE_SUBSCRIBERS_LIST = 1045078; // "הפרק השבועי - תכנית מנויים"
+
+async function removeFromSmooveList(email: string): Promise<string> {
+  if (!SMOOVE_API_KEY || !email) return "skipped";
+  try {
+    const r = await fetch(
+      `https://rest.smoove.io/v1/Contacts/${encodeURIComponent(email)}?by=Email`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${SMOOVE_API_KEY}`,
+          "Content-Type": "application/json",
+          "User-Agent": "Mozilla/5.0",
+        },
+        body: JSON.stringify({ email, lists_ToUnsubscribe: [SMOOVE_SUBSCRIBERS_LIST] }),
+      },
+    );
+    return r.ok ? "removed" : `failed_http_${r.status}`;
+  } catch (e: any) {
+    return `error: ${String(e?.message || e).slice(0, 80)}`;
+  }
+}
+
 function getSupabaseAdmin() {
   return createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 }
@@ -207,20 +233,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           console.warn("[CancelSub] Monday update failed (non-fatal):", e);
           mondayResult = "error";
         }
+        const smooveResult = await removeFromSmooveList(tagRow.email || "");
         await supabase
           .from("user_access_tags")
           .update({
             valid_until: now,
             cancelled_at: now,
-            cancel_note: `הו"ק בוטלה ב-Grow ע"י ${userData.user.email} (transactionId=${ids.transactionId}) · Monday: ${mondayResult}`,
+            cancel_note: `הו"ק בוטלה ב-Grow ע"י ${userData.user.email} (transactionId=${ids.transactionId}) · Monday: ${mondayResult} · Smoove: ${smooveResult}`,
           })
           .eq("id", tagId);
-        console.log(`[CancelSub] Grow cancel OK for ${who} | Monday: ${mondayResult}`);
-        return res.status(200).json({ ok: true, mode: "grow_cancelled", monday: mondayResult });
+        console.log(`[CancelSub] Grow cancel OK for ${who} | Monday: ${mondayResult} | Smoove: ${smooveResult}`);
+        return res.status(200).json({ ok: true, mode: "grow_cancelled", monday: mondayResult, smoove: smooveResult });
       }
 
       // Grow דחה — לא מעמידים פנים שבוטל
       console.error("[CancelSub] Grow updateDirectDebit failed:", JSON.stringify(growData));
+      await removeFromSmooveList(tagRow.email || "");
       await supabase
         .from("user_access_tags")
         .update({
@@ -237,6 +265,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // ── אין מזהי Grow — סימון + הפניה לביטול ידני ────────────────────
+    await removeFromSmooveList(tagRow.email || "");
     await supabase
       .from("user_access_tags")
       .update({
