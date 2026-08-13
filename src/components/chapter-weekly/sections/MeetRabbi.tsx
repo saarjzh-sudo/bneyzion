@@ -32,7 +32,9 @@ const MeetRabbi = () => (
         </div>
       </div>
 
-      <div className="premium-card bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground mb-12">
+      {/* לקח 13.8: premium-card כופה רקע לבן → הטקסט הקרם נעלם ("לבן על לבן").
+          עברנו לתבנית הזכוכית של PainAndDream — שקוף על הטורקיז. */}
+      <div className="rounded-2xl border p-6 md:p-8 shadow-xl bg-white/10 border-white/25 text-primary-foreground backdrop-blur-sm mb-12">
         <h4 className="font-bold text-accent text-xl mb-4 text-center">הגישה שלו – מה שהופך את הלימוד לחוויה אחרת לגמרי:</h4>
         <div className="grid md:grid-cols-2 gap-4">
           {[ 
