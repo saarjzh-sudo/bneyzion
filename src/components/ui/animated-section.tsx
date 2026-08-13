@@ -21,7 +21,10 @@ export function AnimatedSection({ children, className, delay = 0 }: AnimatedSect
       { threshold: 0 }
     );
     if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    // רשת ביטחון (13.8): דפדפן שמעכב IntersectionObserver (טאב ברקע, חוסמי
+    // סקריפטים, PWA ישן) לא ישאיר תוכן שקוף לנצח — אחרי 2.5ש' הכול נחשף.
+    const failsafe = window.setTimeout(() => setVisible(true), 2500);
+    return () => { observer.disconnect(); window.clearTimeout(failsafe); };
   }, []);
 
   return (
