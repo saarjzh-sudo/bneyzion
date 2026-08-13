@@ -67,6 +67,16 @@ export function QuickBuyDialog({
       toast({ title: "יש למלא שם וטלפון", variant: "destructive" });
       return;
     }
+    // לקח 13.8 (ערב כנס אלול, קרני): Grow דוחה שם של מילה אחת (שגיאה 717
+    // "לא נשלח שם וטלפון או שאינו תקין") — חובה שם פרטי + שם משפחה.
+    if (fullName.trim().split(/\s+/).length < 2) {
+      toast({
+        title: "יש למלא שם פרטי ושם משפחה",
+        description: "מערכת הסליקה דורשת את שניהם, למשל: ישראל ישראלי",
+        variant: "destructive",
+      });
+      return;
+    }
     if (emailRequired && !email.trim()) {
       toast({
         title: "יש למלא אימייל",
@@ -133,12 +143,14 @@ export function QuickBuyDialog({
 
         <form onSubmit={handleSubmit} className="space-y-4 mt-2">
           <div className="space-y-2">
-            <Label htmlFor="qb-name">שם מלא *</Label>
+            <Label htmlFor="qb-name">
+              שם פרטי <strong>ושם משפחה</strong> (חובה) *
+            </Label>
             <Input
               id="qb-name"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
-              placeholder="שם פרטי ושם משפחה"
+              placeholder="לדוגמה: ישראל ישראלי"
               required
               dir="rtl"
             />

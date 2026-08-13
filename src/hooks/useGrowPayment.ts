@@ -242,7 +242,14 @@ export function useGrowPayment() {
         const data = await response.json();
 
         if (!response.ok || (!data.authCode && !data.url)) {
-          throw new Error(data.error || "Failed to create payment");
+          // לקח 13.8: data.error יכול להיות אובייקט של Grow ({id, message}) —
+          // Error(אובייקט) הציג לרוכשת "[object Object]". מחלצים מחרוזת קריאה.
+          const rawErr = data.error;
+          const errMsg =
+            typeof rawErr === "string"
+              ? rawErr
+              : rawErr?.message || rawErr?.err?.message || "Failed to create payment";
+          throw new Error(errMsg);
         }
 
         // רמה 17: מזהה ההזמנה נשמר כדי שדף התודה יוכל למשוך קבצים דיגיטליים
