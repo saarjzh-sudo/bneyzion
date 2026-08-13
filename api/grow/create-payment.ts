@@ -688,6 +688,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } else {
         // Product / subscription flow → orders table
         const rawPayloadBase: Record<string, any> = { consent: consentAudit };
+        // תיוג מקור-תנועה (?src= בדף) — נשמר גם ב-page_name (גלוי באדמין).
+        // sanitize: אותיות/ספרות/מקף/קו-תחתון בלבד, עד 40 תווים — קלט לקוח.
+        const trafficSource = String((meta as any)?.source || "")
+          .replace(/[^a-zA-Z0-9_\-]/g, "")
+          .slice(0, 40) || null;
+        if (trafficSource) rawPayloadBase.traffic_source = trafficSource;
         // Keep the chosen shipping method structured (no dedicated column on orders)
         if (meta?.shipping_method) {
           rawPayloadBase.shipping_method = meta.shipping_method;
@@ -742,6 +748,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             product: productSlug || (cartItems.length ? "store-order" : null),
             description,
             payment_status: "pending",
+            page_name: trafficSource,
             raw_payload: rawPayloadBase,
             // Shipping — structured columns (previously only free-text in description)
             shipping_address: meta?.shipping_address || null,

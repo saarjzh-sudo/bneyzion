@@ -168,7 +168,7 @@ const Portal = () => {
                   עדכונים, שיתופים ודיונים עם כל חברי הקהילה
                 </p>
                 <a
-                  href="https://chat.whatsapp.com/L1PZWRh8kxdDojWmUDMBs3"
+                  href="https://chat.whatsapp.com/Ksiq3j37tPMI0zoDIHXDo2"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 rounded-xl text-lg font-bold inline-flex items-center gap-3 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"

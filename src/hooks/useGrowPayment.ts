@@ -209,6 +209,20 @@ export function useGrowPayment() {
 
   const startPayment = useCallback(
     async (params: StartPaymentParams): Promise<GrowSuccessResponse> => {
+      // תיוג מקור (הוראת סער 13.8): ?src= מכתובת הכניסה נשמר לכל הסשן
+      // ומוצמד לכל רכישה — כך רואים באדמין מאיזה ערוץ הגיע כל רוכש.
+      let trafficSource: string | undefined;
+      try {
+        const qs = new URLSearchParams(window.location.search);
+        const fromUrl = qs.get("src") || qs.get("utm_source");
+        if (fromUrl) sessionStorage.setItem("bz_traffic_src", fromUrl.slice(0, 40));
+        trafficSource = sessionStorage.getItem("bz_traffic_src") || undefined;
+      } catch {
+        /* sessionStorage לא זמין — ממשיכים בלי תיוג */
+      }
+      if (trafficSource) {
+        params = { ...params, meta: { ...(params.meta ?? {}), source: trafficSource } as any };
+      }
       setError(null);
       setIsLoading(true);
 

@@ -729,7 +729,7 @@ function SubscriptionThankYou() {
             <ArrowLeft size={16} aria-hidden />
           </a>
           <a
-            href="https://chat.whatsapp.com/L1PZWRh8kxdDojWmUDMBs3"
+            href="https://chat.whatsapp.com/Ksiq3j37tPMI0zoDIHXDo2"
             target="_blank"
             rel="noopener noreferrer"
             className="ty-btn ty-btn-olive"
