@@ -249,6 +249,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       // Grow דחה — לא מעמידים פנים שבוטל
       console.error("[CancelSub] Grow updateDirectDebit failed:", JSON.stringify(growData));
       await removeFromSmooveList(tagRow.email || "");
+      try { await markCancelledInMonday(tagRow.email || ""); } catch {}
       await supabase
         .from("user_access_tags")
         .update({
@@ -266,6 +267,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // ── אין מזהי Grow — סימון + הפניה לביטול ידני ────────────────────
     await removeFromSmooveList(tagRow.email || "");
+    try { await markCancelledInMonday(tagRow.email || ""); } catch {}
     await supabase
       .from("user_access_tags")
       .update({

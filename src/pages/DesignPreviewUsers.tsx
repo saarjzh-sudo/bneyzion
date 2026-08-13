@@ -192,17 +192,51 @@ export default function DesignPreviewUsers() {
     onError: (e: Error) => setToast(`שגיאה בהענקה: ${e.message}`),
   });
 
-  // הסרת גישה — קוטע את התוקף עכשיו (לא מוחק היסטוריה)
+  // הסרת גישה.
+  // מנוי הפרק השבועי עובר דרך שרשרת הביטול המלאה (/api/grow/cancel-subscription):
+  // ביטול הו"ק ב-Grow + "ביטל" ב-Monday + הסרה מרשימת סמוב + קטיעת גישה.
+  // לקח 13.8 (רותם מזרחי): הקטיעה המקומית כאן השאירה את המנוי חי בסמוב, במאנדיי
+  // ובהו"ק — ובחיוב הבא הגישה הייתה קמה לתחייה. tags אחרים (קורסים) נשארים מקומיים.
   const removeMutation = useMutation({
     mutationFn: async ({ email, tag }: { email: string; tag: string }) => {
+      if (tag === "program:weekly-chapter") {
+        const { data: tagRow, error: findErr } = await (supabase as any)
+          .from("user_access_tags")
+          .select("id")
+          .eq("email", email.toLowerCase())
+          .eq("tag", tag)
+          .maybeSingle();
+        if (findErr || !tagRow?.id) throw new Error(findErr?.message || "שורת המנוי לא נמצאה");
+        const { data: sessionData } = await supabase.auth.getSession();
+        const jwt = sessionData?.session?.access_token;
+        if (!jwt) throw new Error("אין סשן פעיל — התחבר מחדש");
+        const res = await fetch("/api/grow/cancel-subscription", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${jwt}` },
+          body: JSON.stringify({ tagId: tagRow.id }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data?.error || `שגיאת שרת (${res.status})`);
+        return data as { mode?: string };
+      }
       const { error } = await (supabase as any)
         .from("user_access_tags")
         .update({ valid_until: new Date().toISOString(), cancel_note: "הוסר ידנית מעמוד המשתמשים" })
         .eq("email", email.toLowerCase())
         .eq("tag", tag);
       if (error) throw new Error(error.message);
+      return {};
     },
-    onSuccess: () => { refresh(); setToast("הגישה הוסרה"); },
+    onSuccess: (data: { mode?: string }) => {
+      refresh();
+      if (data?.mode === "grow_cancelled") {
+        setToast("המנוי בוטל במלואו — Grow, מאנדיי, סמוב והגישה");
+      } else if (data?.mode === "manual_needed") {
+        setToast("הגישה נקטעה והוסר מסמוב/מאנדיי — אבל אין עסקת Grow מקושרת: לבטל את ההו\"ק ידנית בדשבורד Grow");
+      } else {
+        setToast("הגישה הוסרה");
+      }
+    },
     onError: (e: Error) => setToast(`שגיאה בהסרה: ${e.message}`),
   });
 
