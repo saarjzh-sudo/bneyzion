@@ -157,6 +157,7 @@ const Dedications = lazy(() => import("./pages/admin/Dedications"));
 const FamilyTanach = lazy(() => import("./pages/FamilyTanach"));
 const KenesShavuot2026 = lazy(() => import("./pages/KenesShavuot2026"));
 const KenesMilhamotHatanach = lazy(() => import("./pages/KenesMilhamotHatanach"));
+const KenesElul2026 = lazy(() => import("./pages/KenesElul2026"));
 const KenesArchive = lazy(() => import("./pages/KenesArchive"));
 const WeeklyProgramLibrary = lazy(() => import("./pages/WeeklyProgramLibrary"));
 const WeeklyBookDetail = lazy(() => import("./pages/WeeklyBookDetail"));
@@ -301,7 +302,7 @@ const queryClient = new QueryClient({
 
 // Routes that render as bare standalone landing pages — no site chrome
 // (no navigator bot "בנצי", no floating player, no install prompt, no cart).
-const BARE_CHROME_ROUTES = ["/kenes-2026-06"];
+const BARE_CHROME_ROUTES = ["/kenes-2026-06", "/kenes-2026-08"];
 const GlobalChrome = () => {
   const { pathname } = useLocation();
   if (BARE_CHROME_ROUTES.some((r) => pathname.startsWith(r))) return null;
@@ -393,6 +394,7 @@ const App = () => (
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
             <Route path="/kenes-2026-05" element={<Suspense fallback={<LazyFallback />}><KenesShavuot2026 /></Suspense>} />
             <Route path="/kenes-2026-06" element={<Suspense fallback={<LazyFallback />}><KenesMilhamotHatanach /></Suspense>} />
+            <Route path="/kenes-2026-08" element={<Suspense fallback={<LazyFallback />}><KenesElul2026 /></Suspense>} />
             <Route path="/kenes-archive" element={<Suspense fallback={<LazyFallback />}><KenesArchive /></Suspense>} />
             <Route path="/dor-haplaot" element={<Suspense fallback={<LazyFallback />}><DorHaplaot /></Suspense>} />
             <Route path="/family-tanach" element={<Suspense fallback={<LazyFallback />}><FamilyTanach /></Suspense>} />
