@@ -4,13 +4,13 @@
  * Route: /kenes-2026-08
  *
  * עמוד standalone (ללא Layout wrapper) — דף הקלטת הכנס, בתבנית KenesMilhamotHatanach.
- * הקלטה + מצגת + סיכום מורחב + תמלול מלא + CTA לתכנית הפרק השבועי (ספר חגי).
+ * הקלטה + מצגת + סיכום מורחב + CTA לתכנית הפרק השבועי (ספר חגי).
  */
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useState } from "react";
-import { Play, BookOpen, FileText, Presentation, ChevronDown, ChevronUp } from "lucide-react";
+import { Play, BookOpen, Presentation, ChevronDown, ChevronUp } from "lucide-react";
 import { useSEO } from "@/hooks/useSEO";
-import { SUMMARY_HTML, TRANSCRIPT_HTML } from "./kenesElul2026Content";
+import { SUMMARY_HTML } from "./kenesElul2026Content";
 
 const KENES_TITLE = "כנס אלול";
 const KENES_SUBTITLE = "איך ה׳ מדבר אלינו דרך התנ״ך?";
@@ -52,7 +52,7 @@ function Collapsible({
 export default function KenesElul2026() {
   useSEO({
     title: `${KENES_TITLE} — ${KENES_SUBTITLE} | בני ציון`,
-    description: `הקלטת כנס אלול של תנועת בני ציון: ${KENES_SUBTITLE} עם הרב יואב אוריאל, ליל ראש חודש אלול תשפ״ו. הקלטה מלאה, מצגת, סיכום מורחב ותמלול.`,
+    description: `הקלטת כנס אלול של תנועת בני ציון: ${KENES_SUBTITLE} עם הרב יואב אוריאל, ליל ראש חודש אלול תשפ״ו. הקלטה מלאה, מצגת וסיכום מורחב.`,
   });
 
   return (
@@ -94,7 +94,7 @@ export default function KenesElul2026() {
       <section className="py-10 md:py-14 px-4 bg-gradient-to-b from-[hsl(38_50%_93%)] to-[hsl(38_40%_88%)]">
         <div className="max-w-2xl mx-auto text-center">
           <p className="font-kedem text-[hsl(30_40%_25%)] text-lg md:text-xl leading-relaxed mb-3">
-            ערב לימוד מיוחד שהתקיים בליל ראש חודש אלול, בפתיחת לימוד ספר חגי
+            ערב לימוד מיוחד שהתקיים בליל ראש חודש אלול
           </p>
           <p className="font-ploni text-[hsl(30_30%_40%)] text-base leading-relaxed">
             שעה של לימוד עומק עם הרב יואב אוריאל: איך פסוקים שנכתבו לפני אלפי שנים
@@ -144,12 +144,6 @@ export default function KenesElul2026() {
             </div>
           </Collapsible>
 
-          <Collapsible title="תמלול מלא" icon={<FileText className="w-5 h-5" />}>
-            <div
-              className="font-ploni text-[hsl(30_30%_35%)] leading-relaxed text-sm max-h-[60vh] overflow-y-auto pl-2 [&_p]:mb-3"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(TRANSCRIPT_HTML) }}
-            />
-          </Collapsible>
         </div>
       </section>
 
