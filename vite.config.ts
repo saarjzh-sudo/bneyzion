@@ -21,7 +21,12 @@ export default defineConfig(() => ({
       registerType: "prompt",
       includeAssets: ["favicon.ico", "lovable-uploads/logo-bney-zion.png"],
       workbox: {
-        navigateFallbackDenylist: [/^\/~oauth/],
+        // דפי כנס/קמפיין הם יעדי-שיגור: קליינט עם SW ישן שמגיש index ישן מקבל
+        // עליהם 404 (לקח /campaign רמה 30 ודף הקלטת כנס אלול 14.8). ה-denylist
+        // מוציא אותם מ-navigateFallback כך שגרסאות SW מכאן והלאה תמיד יביאו
+        // אותם מהרשת. לא רטרואקטיבי — לקישורי שיגור משתמשים ב-alias נקי-SW
+        // (bneyzion-kenes.vercel.app).
+        navigateFallbackDenylist: [/^\/~oauth/, /^\/kenes/, /^\/campaign\//],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2,otf}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         // T08: pull Web Push handlers (push + notificationclick) into the

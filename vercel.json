@@ -11,6 +11,17 @@
       "has": [
         {
           "type": "host",
+          "value": "bneyzion-kenes.vercel.app"
+        }
+      ],
+      "destination": "/kenes-2026-08",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
           "value": "club.bneyzion.co.il"
         }
       ],
