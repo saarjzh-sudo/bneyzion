@@ -305,7 +305,10 @@ const queryClient = new QueryClient({
 const BARE_CHROME_ROUTES = ["/kenes-2026-06", "/kenes-2026-08"];
 const GlobalChrome = () => {
   const { pathname } = useLocation();
-  if (BARE_CHROME_ROUTES.some((r) => pathname.startsWith(r))) return null;
+  // גם בדפי-שיגור עירומים חייבים לבלום את חלון-ההתקנה הנייטיבי: בלי mount של
+  // InstallPrompt אין preventDefault על beforeinstallprompt והדפדפן קופץ לבד
+  // (הערת סער על דף הקלטת כנס אלול, 14.8).
+  if (BARE_CHROME_ROUTES.some((r) => pathname.startsWith(r))) return <InstallPrompt suppress />;
   return (
     <>
       <CartDrawer />

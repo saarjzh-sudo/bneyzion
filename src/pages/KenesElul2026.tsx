@@ -79,13 +79,21 @@ export default function KenesElul2026() {
             <p className="font-ploni text-[hsl(30_35%_35%)] text-sm md:text-base mb-8">
               {KENES_DATE}
             </p>
-            <a
-              href="#recording"
-              className="inline-flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
-            >
-              <Play className="w-5 h-5" fill="currentColor" />
-              לצפייה בהקלטה
-            </a>
+            <div className="flex flex-col sm:flex-row-reverse items-center justify-center gap-3">
+              <a
+                href="#recording"
+                className="inline-flex flex-row-reverse items-center gap-2 px-7 py-3.5 rounded-xl bg-[hsl(43_70%_47%)] text-white font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_40%)] hover:shadow-xl hover:scale-105"
+              >
+                <Play className="w-5 h-5" fill="currentColor" />
+                לצפייה בהקלטה
+              </a>
+              <a
+                href="#haggai"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl border-2 border-[hsl(43_70%_47%)] text-[hsl(30_40%_22%)] font-kedem font-bold text-base transition-all duration-300 hover:bg-[hsl(43_70%_47%/0.12)] hover:shadow-lg hover:scale-105"
+              >
+                לתכנית הפרק השבועי &gt;
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -149,7 +157,7 @@ export default function KenesElul2026() {
 
       {/* ===== CTA — תכנית הפרק השבועי: ספר חגי ===== */}
       <div className="h-8 bg-gradient-to-b from-[hsl(38_30%_85%)] to-[hsl(175_45%_18%)]" />
-      <section className="py-12 md:py-20 px-4 bg-[hsl(175_45%_18%)]">
+      <section id="haggai" className="py-12 md:py-20 px-4 bg-[hsl(175_45%_18%)]">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12">
             <div className="w-full md:w-2/5 shrink-0">

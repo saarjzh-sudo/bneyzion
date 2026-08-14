@@ -38,13 +38,16 @@ const markDismissed = () => {
   }
 };
 
-const InstallPrompt = () => {
+// suppress: מושתק מבחוץ (דפי-שיגור עירומים) — עדיין מאזין ל-beforeinstallprompt
+// ובולם עם preventDefault את חלון-ההתקנה הנייטיבי של הדפדפן, רק בלי להציג באנר.
+const InstallPrompt = ({ suppress = false }: { suppress?: boolean }) => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showBanner, setShowBanner] = useState(false);
   const [isOffline, setIsOffline] = useState(!navigator.onLine);
 
   const suppressed =
-    typeof window !== "undefined" && SUPPRESSED_PATHS.some((p) => window.location.pathname.startsWith(p));
+    suppress ||
+    (typeof window !== "undefined" && SUPPRESSED_PATHS.some((p) => window.location.pathname.startsWith(p)));
 
   useEffect(() => {
     const handler = (e: Event) => {
