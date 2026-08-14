@@ -741,13 +741,23 @@ const MONDAY_BOARD_ID = 5094750546;
 const MONDAY_COL_EMAIL = "email_mm2f6efy";
 const MONDAY_COL_PHONE = "phone_mm2f7xzf";
 const MONDAY_COL_STATUS = "color_mm2fcgcg";
+const MONDAY_COL_DATE = "date_mm2fsj8b"; // תאריך הקמה
+const MONDAY_COL_AMOUNT = "numeric_mm2f5mda"; // סכום עסקה
+const MONDAY_COL_ASMACHTA = "text_mm2fr1y8"; // אסמכתא Grow
+// create_item בלי group_id נוחת בקבוצה הראשונה בלוח — שהיא דווקא
+// "🔴 נטשו - קהל יעד חם" (דוח-הבקרה של אביה 13.8: שניר ברי + חיה בלוי).
+const MONDAY_GROUP_ACTIVE = "group_mm2fbv0a"; // 🟢 פעילים
+// סכום-עסקה בלוח = המחיר החודשי המלא (הקונבנציה בכל שורות הלוח), לא חיוב
+// חודש-הראשון המבצעי של 5 ₪ (ראה SubscribeButton.tsx).
+const WEEKLY_SUB_MONTHLY_ILS = 110;
 
 async function addSubscriberToMonday(args: {
   fullName: string;
   email: string;
   phone: string;
+  asmachta?: string;
 }): Promise<string> {
-  const { fullName, email, phone } = args;
+  const { fullName, email, phone, asmachta } = args;
   if (!MONDAY_API_TOKEN || !email) return "skipped";
   const gql = async (query: string, variables?: Record<string, unknown>) => {
     const r = await fetch("https://api.monday.com/v2", {
@@ -757,27 +767,63 @@ async function addSubscriberToMonday(args: {
     });
     return r.json();
   };
-  // אידמפוטנטיות: אם המייל כבר בלוח (הוזן ידנית / חיוב קודם) — לא נוגעים.
+  const today = new Date().toISOString().slice(0, 10);
   const find = await gql(
-    `query ($boardId: ID!, $emailCol: String!, $email: String!) {
+    `query ($boardId: ID!, $emailCol: String!, $email: String!, $cols: [String!]) {
        items_page_by_column_values(
          board_id: $boardId, limit: 1,
          columns: [{ column_id: $emailCol, column_values: [$email] }]
-       ) { items { id } }
+       ) { items { id group { id } column_values(ids: $cols) { id text } } }
      }`,
-    { boardId: String(MONDAY_BOARD_ID), emailCol: MONDAY_COL_EMAIL, email: String(email) },
+    {
+      boardId: String(MONDAY_BOARD_ID),
+      emailCol: MONDAY_COL_EMAIL,
+      email: String(email),
+      cols: [MONDAY_COL_DATE, MONDAY_COL_AMOUNT, MONDAY_COL_ASMACHTA],
+    },
   );
-  if (find?.data?.items_page_by_column_values?.items?.[0]) return "already_exists";
+  const existing = find?.data?.items_page_by_column_values?.items?.[0];
+  if (existing) {
+    // הנתיב הזה רץ רק על רכישה טרייה של המנוי — מי שכבר בלוח (נטש בעבר או
+    // הוזן ידנית) חזר עכשיו להיות משלם: סטטוס "פעילה", קבוצת פעילים,
+    // והשלמת עמודות ריקות בלבד (נתונים שהוזנו ידנית לא נדרסים).
+    const cv: Record<string, string> = {};
+    for (const c of existing.column_values ?? []) cv[c.id] = c.text || "";
+    const colVals: Record<string, unknown> = {
+      [MONDAY_COL_STATUS]: { label: "פעילה" },
+    };
+    if (!cv[MONDAY_COL_DATE]) colVals[MONDAY_COL_DATE] = { date: today };
+    if (!cv[MONDAY_COL_AMOUNT]) colVals[MONDAY_COL_AMOUNT] = String(WEEKLY_SUB_MONTHLY_ILS);
+    if (!cv[MONDAY_COL_ASMACHTA] && asmachta) colVals[MONDAY_COL_ASMACHTA] = String(asmachta);
+    await gql(
+      `mutation ($boardId: ID!, $itemId: ID!, $colVals: JSON!) {
+         change_multiple_column_values(board_id: $boardId, item_id: $itemId, column_values: $colVals) { id }
+       }`,
+      { boardId: String(MONDAY_BOARD_ID), itemId: String(existing.id), colVals: JSON.stringify(colVals) },
+    );
+    if (existing.group?.id !== MONDAY_GROUP_ACTIVE) {
+      await gql(
+        `mutation ($itemId: ID!, $groupId: String!) {
+           move_item_to_group(item_id: $itemId, group_id: $groupId) { id }
+         }`,
+        { itemId: String(existing.id), groupId: MONDAY_GROUP_ACTIVE },
+      );
+    }
+    return `reactivated_${existing.id}`;
+  }
   const colVals = JSON.stringify({
     [MONDAY_COL_EMAIL]: { email, text: email },
     [MONDAY_COL_PHONE]: phone || "",
     [MONDAY_COL_STATUS]: { label: "פעילה" },
+    [MONDAY_COL_DATE]: { date: today },
+    [MONDAY_COL_AMOUNT]: String(WEEKLY_SUB_MONTHLY_ILS),
+    ...(asmachta ? { [MONDAY_COL_ASMACHTA]: String(asmachta) } : {}),
   });
   const created = await gql(
-    `mutation ($boardId: ID!, $name: String!, $colVals: JSON!) {
-       create_item(board_id: $boardId, item_name: $name, column_values: $colVals) { id }
+    `mutation ($boardId: ID!, $groupId: String!, $name: String!, $colVals: JSON!) {
+       create_item(board_id: $boardId, group_id: $groupId, item_name: $name, column_values: $colVals) { id }
      }`,
-    { boardId: String(MONDAY_BOARD_ID), name: fullName || email, colVals },
+    { boardId: String(MONDAY_BOARD_ID), groupId: MONDAY_GROUP_ACTIVE, name: fullName || email, colVals },
   );
   return created?.data?.create_item?.id
     ? `created_${created.data.create_item.id}`
@@ -865,7 +911,12 @@ async function runPostPurchaseSideEffects(args: {
     // הוזן תוך 7 ימים — גם אם שילם. מעכשיו כל מצטרף מהאתר נכנס ללוח מיד,
     // אידמפוטנטי (חיפוש לפי מייל; קיים → לא נוגעים). כשל כאן לא מפיל את הזרימה.
     try {
-      const added = await addSubscriberToMonday({ fullName, email, phone });
+      const added = await addSubscriberToMonday({
+        fullName,
+        email,
+        phone,
+        asmachta: mergedPayload?.webhook?.data?.asmachta,
+      });
       console.log(`[Monday] new subscriber ${email}: ${added}`);
     } catch (e) {
       console.error("[Monday] add subscriber failed (non-fatal):", e);

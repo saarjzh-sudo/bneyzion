@@ -29,6 +29,8 @@ const MONDAY_API_TOKEN = (process.env.MONDAY_API_TOKEN || "").trim();
 const MONDAY_BOARD_ID = 5094750546;
 const MONDAY_COL_EMAIL = "email_mm2f6efy";
 const MONDAY_COL_STATUS = "color_mm2fcgcg";
+const MONDAY_COL_CHURN_DATE = "date_mm2fpfb5"; // תאריך נטישה
+const MONDAY_GROUP_CHURNED = "group_mm2fe8jx"; // 🔴 נטשו - קהל יעד חם
 
 /**
  * עדכון Monday אחרי ביטול הו"ק (הוראת סער 8.7, אידמפוטנטי):
@@ -67,20 +69,35 @@ async function markCancelledInMonday(email: string): Promise<string> {
   if (!item) return "not_found_in_monday";
   const current = item.column_values?.[0]?.text || "";
   if (current === "ביטל" || current === "הסתיימה") return "already_cancelled";
+  // ביטול = גם קבוצת "נטשו" + תאריך נטישה, בקונבנציית הלוח — לא רק סטטוס
+  // (תיקון-ראי ללקח דוח-הבקרה של אביה 13.8 על צד ההצטרפות).
   const upd = await gql(
-    `mutation ($boardId: ID!, $itemId: ID!, $statusCol: String!, $value: String!) {
-       change_simple_column_value(
-         board_id: $boardId, item_id: $itemId, column_id: $statusCol, value: $value
-       ) { id }
+    `mutation ($boardId: ID!, $itemId: ID!, $colVals: JSON!) {
+       change_multiple_column_values(board_id: $boardId, item_id: $itemId, column_values: $colVals) { id }
      }`,
     {
       boardId: String(MONDAY_BOARD_ID),
       itemId: String(item.id),
-      statusCol: MONDAY_COL_STATUS,
-      value: "ביטל",
+      colVals: JSON.stringify({
+        [MONDAY_COL_STATUS]: { label: "ביטל" },
+        [MONDAY_COL_CHURN_DATE]: { date: new Date().toISOString().slice(0, 10) },
+      }),
     },
   );
-  return upd?.data?.change_simple_column_value ? "updated" : `failed: ${JSON.stringify(upd).slice(0, 120)}`;
+  if (!upd?.data?.change_multiple_column_values) {
+    return `failed: ${JSON.stringify(upd).slice(0, 120)}`;
+  }
+  try {
+    await gql(
+      `mutation ($itemId: ID!, $groupId: String!) {
+         move_item_to_group(item_id: $itemId, group_id: $groupId) { id }
+       }`,
+      { itemId: String(item.id), groupId: MONDAY_GROUP_CHURNED },
+    );
+  } catch {
+    // מעבר-קבוצה הוא קוסמטי — כשל בו לא מפיל ביטול שכבר סומן
+  }
+  return "updated";
 }
 
 // רשימת המנויים בסמוב — הסרה בביטול, כדי שהקלוד של הרב יואב (שמאזין לרשימה)
