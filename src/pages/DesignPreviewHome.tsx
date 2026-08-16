@@ -13,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { useAuth } from "@/contexts/AuthContext";
+import { useUserAccess } from "@/hooks/useUserAccess";
 import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
@@ -193,6 +194,10 @@ function DesignHero() {
   // רמה 13 (מרכז שליטה): נוסחי ההירו נערכים מ-/admin/control-center;
   // ה-fallback = הנוסח המקודד, אפס שינוי עד עריכה בפועל.
   const copy = useSiteCopy();
+  // הערת אביה 13.8: מנוי שלוחץ על הכפתור השני נחת בדף השיווק של התכנית
+  // ונאלץ לחפש את הדרך פנימה דרך "הקורסים שלי". למנוי הכפתור מוביל ישר
+  // לספריית התכנית; לכל השאר הוא נשאר כפתור השיווק.
+  const { hasAccess: isSubscriber } = useUserAccess("program:weekly-chapter");
 
   const scrollToLearn = () => {
     document.getElementById("learn-start")?.scrollIntoView({ behavior: "smooth" });
@@ -264,13 +269,15 @@ function DesignHero() {
                      boxShadow: "0 4px 24px rgba(139,111,71,0.4)" }}>
             {copy("copy.home.hero_cta_primary", "התחילו ללמוד")}
           </button>
-          <button onClick={() => navigate("/chapter-weekly")}
+          <button onClick={() => navigate(isSubscriber ? "/program/weekly-chapter" : "/chapter-weekly")}
             style={{ padding: "0.75rem 1.8rem", borderRadius: "1rem",
                      border: "1.5px solid rgba(74,56,35,0.35)",
                      background: "rgba(255,255,255,0.38)", backdropFilter: "blur(8px)",
                      color: "#4A3823", fontFamily: "Paamon, serif", fontSize: "0.95rem",
                      fontWeight: 700, cursor: "pointer" }}>
-            {copy("copy.home.hero_cta_secondary", "לתכנית הפרק השבועי")}
+            {isSubscriber
+              ? "לאזור הלימוד שלי"
+              : copy("copy.home.hero_cta_secondary", "לתכנית הפרק השבועי")}
           </button>
         </div>
 
