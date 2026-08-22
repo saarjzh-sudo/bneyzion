@@ -73,16 +73,37 @@ export function QuickBuyDialog({
   // מנוי הפרק השבועי: המייל הוא המפתח לפורטל — תג הגישה נרשם על המייל
   // ומתחבר לחשבון בכניסת Google הראשונה. בלי מייל המנוי משלם ולא מקבל גישה.
   const emailRequired = product === "weekly-chapter-subscription";
+  // מנוי = הוראת-קבע ב-redirect לעמוד Grow — ה-SDK (gs.min.js) לא בשימוש,
+  // ולכן לא חוסמים את הטופס אם ה-CDN איטי/חסום (רשתות מסוננות). לקח 23.8.2026.
+  const needsSdk = product !== "weekly-chapter-subscription";
+
+  // טלפון: Grow מקבל רק נייד ישראלי 05XXXXXXXX (שגיאה 717 אחרת). לקח 16.8 (דבורה בר, 7 ספרות).
+  function normalizePhone(raw: string): string {
+    let p = raw.replace(/[\s\-().]/g, "");
+    if (p.startsWith("+972")) p = "0" + p.slice(4);
+    else if (p.startsWith("972")) p = "0" + p.slice(3);
+    return p;
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!fullName || !phone) {
+    const cleanName = fullName.trim().replace(/\s+/g, " ");
+    const cleanPhone = normalizePhone(phone);
+    if (!cleanName || !cleanPhone) {
       toast({ title: "יש למלא שם וטלפון", variant: "destructive" });
+      return;
+    }
+    if (!/^05\d{8}$/.test(cleanPhone)) {
+      toast({
+        title: "מספר הטלפון לא תקין",
+        description: "נא להזין נייד ישראלי בן 10 ספרות, למשל 0501234567",
+        variant: "destructive",
+      });
       return;
     }
     // לקח 13.8 (ערב כנס אלול, קרני): Grow דוחה שם של מילה אחת (שגיאה 717
     // "לא נשלח שם וטלפון או שאינו תקין") — חובה שם פרטי + שם משפחה.
-    if (fullName.trim().split(/\s+/).length < 2) {
+    if (cleanName.split(" ").length < 2) {
       toast({
         title: "יש למלא שם פרטי ושם משפחה",
         description: "מערכת הסליקה דורשת את שניהם, למשל: ישראל ישראלי",
@@ -113,7 +134,7 @@ export function QuickBuyDialog({
       });
       return;
     }
-    if (!isReady) {
+    if (needsSdk && !isReady) {
       toast({
         title: "מערכת התשלומים עדיין נטענת — נסו שוב בעוד רגע",
         variant: "destructive",
@@ -125,9 +146,9 @@ export function QuickBuyDialog({
       await startPayment({
         sum: amount,
         description,
-        fullName,
-        phone,
-        email: email || undefined,
+        fullName: cleanName,
+        phone: cleanPhone,
+        email: email.trim() || undefined,
         type: "product", // Server resolves real flow from meta.product
         installments: installments > 1 ? installments : undefined,
         thankYouType,
@@ -146,9 +167,13 @@ export function QuickBuyDialog({
       // (wallet); the hook handles both. We just close the dialog.
       setOpen(false);
     } catch (err: any) {
+      const msg: string = err?.message || "";
+      const friendly = /717|שם וטלפון/.test(msg)
+        ? "בדקו שהשם כולל שם פרטי ושם משפחה ושהטלפון הוא נייד ישראלי (05 ועוד 8 ספרות)"
+        : msg || "נסו שוב או צרו קשר";
       toast({
         title: "התשלום נכשל",
-        description: err?.message || "נסו שוב או צרו קשר",
+        description: friendly,
         variant: "destructive",
       });
     }
@@ -177,6 +202,7 @@ export function QuickBuyDialog({
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="לדוגמה: ישראל ישראלי"
+              autoComplete="name"
               required
               dir="rtl"
             />
@@ -187,9 +213,11 @@ export function QuickBuyDialog({
             <Input
               id="qb-phone"
               type="tel"
+              inputMode="numeric"
+              autoComplete="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="050-0000000"
+              placeholder="0501234567"
               required
               dir="ltr"
             />

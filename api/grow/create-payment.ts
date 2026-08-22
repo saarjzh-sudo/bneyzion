@@ -171,8 +171,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const {
       sum,
       description,
-      fullName,
-      phone,
+      fullName: rawFullName,
+      phone: rawPhone,
       email,
       type,
       installments,
@@ -186,8 +186,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // CreatePaymentBody type. Assigned only by the insert blocks below.
     let orderId: string | undefined;
 
-    if (!sum || !description || !fullName || !phone || !type) {
+    if (!sum || !description || !rawFullName || !rawPhone || !type) {
       return res.status(400).json({ error: "Missing required fields" });
+    }
+    // נרמול: Grow דוחה רווחים עודפים ודורש נייד ישראלי 05XXXXXXXX (717). לקח 13.8/16.8.2026.
+    const fullName = String(rawFullName).trim().replace(/\s+/g, " ");
+    const phone = String(rawPhone).replace(/[\s\-().]/g, "").replace(/^\+?972/, "0");
+    if (!/^05\d{8}$/.test(phone)) {
+      return res.status(400).json({ error: "נא להזין נייד ישראלי בן 10 ספרות, למשל 0501234567" });
     }
     if (!Number.isFinite(sum) || sum <= 0) {
       return res.status(400).json({ error: "Invalid sum" });
@@ -1024,6 +1030,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (data.status !== 1) {
       console.error("Grow createPaymentProcess error:", data);
+      // דחיית Grow ≠ נטישה: מסמנים את ההזמנה failed ושומרים את הסיבה, כדי שדוח-הנטישה
+      // יספור רק מי שבאמת קיבל url ולא שילם. לקח 23.8.2026 ("12 נוטשים" = טסטים + דחיות 717).
+      if (orderId) {
+        const { data: existing } = await supabaseAdmin
+          .from("orders")
+          .select("raw_payload")
+          .eq("id", orderId)
+          .maybeSingle();
+        const { error: markErr } = await supabaseAdmin
+          .from("orders")
+          .update({
+            payment_status: "failed",
+            raw_payload: { ...((existing?.raw_payload as Record<string, any>) || {}), gateway_error: data },
+          })
+          .eq("id", orderId);
+        if (markErr) console.error("orders failed-mark error:", markErr);
+      }
       return res.status(400).json({
         error: data.err || "Payment creation failed",
         details: data,
