@@ -75,37 +75,31 @@ export default function CampaignBanner() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        gap: "0.9rem",
+        gap: "1rem",
         flexWrap: "wrap",
         textDecoration: "none",
-        background: "linear-gradient(90deg, #0F1A30, #1A2744 45%, #0F1A30)",
-        color: "rgba(255,255,255,0.94)",
-        padding: "0.55rem 1rem",
+        background: "linear-gradient(90deg, hsl(215 62% 9%), hsl(215 55% 16%) 45%, hsl(215 62% 9%))",
+        borderBlockEnd: "2px solid hsl(43 85% 58%)",
+        color: "rgba(255,255,255,0.95)",
+        padding: "0.62rem 1rem",
         fontFamily: fonts.body,
         position: "relative",
+        boxShadow: "0 4px 18px hsl(215 60% 5% / 0.35)",
       }}
     >
-      <span
-        className="bz-campaign-banner-title"
-        style={{
-          fontSize: "0.85rem",
-          fontWeight: 700,
-          textAlign: "center",
-        }}
-      >
+      <span className="bz-campaign-banner-title" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontSize: "0.92rem", fontWeight: 800, textAlign: "center" }}>
+        <span aria-hidden style={{ fontSize: "1rem" }}>🕯️</span>
         {campaign.banner_title}
       </span>
 
-      <span
-        className="bz-campaign-banner-progress"
-        style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-      >
+      <span className="bz-campaign-banner-progress" style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
         <span
           style={{
-            width: 110,
-            height: 6,
+            width: 150,
+            height: 10,
             borderRadius: 999,
-            background: "rgba(255,255,255,0.18)",
+            background: "rgba(255,255,255,0.16)",
+            border: "1px solid hsl(43 85% 58% / 0.4)",
             overflow: "hidden",
           }}
         >
@@ -116,16 +110,27 @@ export default function CampaignBanner() {
               width: `${pct}%`,
               borderRadius: 999,
               background: `linear-gradient(90deg, ${colors.goldDark}, ${colors.goldShimmer})`,
+              boxShadow: "0 0 10px hsl(43 90% 60% / 0.7)",
               transition: "width 0.5s ease",
             }}
           />
         </span>
-        <span style={{ fontSize: "0.78rem", fontWeight: 700, color: colors.goldShimmer, whiteSpace: "nowrap" }}>
-          {pct}% מהיעד
+        <span style={{ fontSize: "0.95rem", fontWeight: 900, color: colors.goldShimmer, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
+          {pct}%
         </span>
         {daysLeft != null && (
-          <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "rgba(255,255,255,0.75)", whiteSpace: "nowrap" }}>
-            · נותרו {daysLeft} ימים
+          <span
+            style={{
+              background: "hsl(4 72% 34%)",
+              color: "white",
+              fontSize: "0.72rem",
+              fontWeight: 800,
+              borderRadius: 999,
+              padding: "0.22rem 0.65rem",
+              whiteSpace: "nowrap",
+            }}
+          >
+            נותרו {daysLeft} ימים
           </span>
         )}
       </span>
@@ -135,16 +140,17 @@ export default function CampaignBanner() {
           display: "inline-flex",
           alignItems: "center",
           gap: "0.35rem",
-          background: colors.goldShimmer,
+          background: `linear-gradient(135deg, hsl(43 90% 64%), ${colors.goldDark})`,
           color: colors.navyDeep,
           borderRadius: 999,
-          padding: "0.3rem 1rem",
-          fontSize: "0.8rem",
-          fontWeight: 800,
+          padding: "0.42rem 1.3rem",
+          fontSize: "0.88rem",
+          fontWeight: 900,
           whiteSpace: "nowrap",
+          boxShadow: "0 4px 14px hsl(38 80% 50% / 0.45)",
         }}
       >
-        לתרומה
+        לתרומה ←
       </span>
 
       <button
@@ -174,14 +180,15 @@ export default function CampaignBanner() {
         @media (max-width: 640px) {
           .bz-campaign-banner {
             padding-inline-end: 2.2rem;
-            gap: 0.5rem;
+            gap: 0.45rem;
           }
           .bz-campaign-banner-title {
-            font-size: 0.76rem;
+            font-size: 0.8rem;
             width: 100%;
+            justify-content: center;
           }
           .bz-campaign-banner-progress span:first-child {
-            width: 84px;
+            width: 96px;
           }
         }
       `}</style>

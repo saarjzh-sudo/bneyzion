@@ -70,14 +70,16 @@ export default function CampaignDedicationPicker({
   donorName,
   settings,
   onChange,
+  defaultOpen = false,
 }: {
   maxAmount: number;
   donorName: string;
   settings: DedicationSettings | undefined;
   onChange: (value: CompanionDedicationSelection | null) => void;
+  defaultOpen?: boolean;
 }) {
   const s = settings || DEFAULTS;
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(defaultOpen);
   const [scope, setScope] = useState<"lesson" | "series">(maxAmount >= s.series_price ? "series" : "lesson");
   const [term, setTerm] = useState("");
   const debouncedTerm = useDebouncedValue(term, 350);

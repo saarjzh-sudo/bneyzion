@@ -96,48 +96,86 @@ function useCountdown(endsAt: string | null) {
     days: Math.floor(diff / 86_400_000),
     hours: Math.floor((diff % 86_400_000) / 3_600_000),
     minutes: Math.floor((diff % 3_600_000) / 60_000),
+    seconds: Math.floor((diff % 60_000) / 1000),
   };
 }
 
-function CountdownBar({ endsAt }: { endsAt: string | null }) {
+function CountdownStrip({ endsAt }: { endsAt: string | null }) {
   const cd = useCountdown(endsAt);
   if (!cd) return null;
-  const urgent = cd.days === 0;
   const units: [string, number][] = [
     ["ימים", cd.days],
     ["שעות", cd.hours],
-    ["דק'", cd.minutes],
+    ["דקות", cd.minutes],
+    ["שניות", cd.seconds],
   ];
   return (
     <div
       role="timer"
       aria-live="polite"
       style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 12,
-        padding: "9px 18px",
-        borderRadius: 99,
-        background: urgent ? "hsl(6 65% 22% / 0.65)" : "hsl(38 75% 55% / 0.14)",
-        border: `1px solid ${urgent ? "hsl(6 70% 58% / 0.55)" : "hsl(38 75% 55% / 0.32)"}`,
-        marginBlockEnd: 22,
+        position: "relative",
+        background: "linear-gradient(90deg, hsl(4 68% 26%), hsl(4 74% 36%) 45%, hsl(4 68% 26%))",
+        borderBlockStart: "1px solid hsl(38 75% 55% / 0.45)",
+        borderBlockEnd: "3px solid hsl(38 75% 55%)",
+        padding: "13px 16px",
+        boxShadow: "0 -8px 32px hsl(215 55% 5% / 0.35)",
       }}
     >
-      <span style={{ fontSize: 12, fontWeight: 800, color: urgent ? "hsl(6 85% 80%)" : "hsl(38 85% 74%)", whiteSpace: "nowrap" }}>
-        הקמפיין מסתיים בעוד
-      </span>
-      <span style={{ display: "flex", gap: 8 }}>
-        {units.map(([label, val]) => (
-          <span key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 32 }}>
-            <span style={{ fontSize: 16, fontWeight: 900, color: "white", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
-              {String(val).padStart(2, "0")}
-            </span>
-            <span style={{ fontSize: 9, color: "hsl(215 10% 75%)", marginBlockStart: 2 }}>{label}</span>
-          </span>
-        ))}
-      </span>
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "clamp(12px, 3vw, 26px)",
+          flexWrap: "wrap",
+        }}
+      >
+        <span style={{ color: "white", fontWeight: 900, fontSize: "clamp(15px, 2vw, 20px)", whiteSpace: "nowrap", textShadow: "0 1px 4px hsl(4 60% 15%)" }}>
+          ⏳ הקמפיין מסתיים בעוד
+        </span>
+        <div style={{ display: "flex", gap: 8 }}>
+          {units.map(([label, val]) => (
+            <div
+              key={label}
+              style={{
+                background: "white",
+                borderRadius: 12,
+                minWidth: "clamp(50px, 8vw, 64px)",
+                padding: "7px 6px 5px",
+                textAlign: "center",
+                boxShadow: "0 4px 14px hsl(4 60% 15% / 0.45)",
+              }}
+            >
+              <div style={{ fontSize: "clamp(20px, 3.2vw, 28px)", fontWeight: 900, color: "hsl(4 72% 32%)", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
+                {String(val).padStart(2, "0")}
+              </div>
+              <div style={{ fontSize: 10, fontWeight: 700, color: "hsl(215 25% 40%)", marginBlockStart: 3 }}>{label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
+}
+
+/* ─── מונה-עולה למספר הגיוס (26.8ב — "המספר הוא הכוכב") ── */
+function useCountUp(target: number, duration = 1500) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    let raf = 0;
+    const t0 = performance.now();
+    const tick = (t: number) => {
+      const p = Math.min(1, (t - t0) / duration);
+      setVal(Math.round(target * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, duration]);
+  return val;
 }
 
 /* ─── Sticky nav ────────────────────────────────────────── */
@@ -234,37 +272,38 @@ function StickyNav({
   );
 }
 
-/* ─── Hero ──────────────────────────────────────────────── */
+/* ─── Hero (26.8ב — מבנה-המרה בהשראת givechak: המספר קודם) ── */
 function HeroSection({
   campaign,
   raised,
   supporters,
   progressPct,
   onSupportClick,
+  onDedicationClick,
 }: {
   campaign: CampaignRow;
   raised: number;
   supporters: number;
   progressPct: number;
   onSupportClick: () => void;
+  onDedicationClick?: () => void;
 }) {
+  const animatedRaised = useCountUp(raised);
+  const [barIn, setBarIn] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setBarIn(true), 120);
+    return () => clearTimeout(t);
+  }, []);
+  const shownPct = barIn ? progressPct : 0;
+
   return (
-    <section
-      style={{
-        position: "relative",
-        minHeight: "88vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "flex-end",
-        overflow: "hidden",
-      }}
-    >
+    <section style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, background: "hsl(215 55% 10%)" }}>
         {campaign.hero_image_url && (
           <img
             src={campaign.hero_image_url}
             alt={campaign.hero_title || campaign.title}
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%", opacity: 0.48 }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", opacity: 0.5 }}
           />
         )}
         <div
@@ -272,135 +311,198 @@ function HeroSection({
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to bottom, hsl(215 55% 12% / 0.2) 0%, hsl(215 55% 12% / 0.55) 40%, hsl(215 55% 12% / 0.95) 100%)",
+              "linear-gradient(to bottom, hsl(215 55% 12% / 0.35) 0%, hsl(215 55% 12% / 0.72) 45%, hsl(215 55% 11% / 0.97) 100%)",
           }}
         />
       </div>
 
-      <div style={{ position: "relative", zIndex: 1, maxWidth: 1100, margin: "0 auto", padding: "90px 24px 56px", width: "100%" }}>
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          maxWidth: 1000,
+          margin: "0 auto",
+          padding: "96px 22px 42px",
+          width: "100%",
+          textAlign: "center",
+        }}
+      >
         {campaign.hero_eyebrow && (
           <div
             style={{
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              padding: "5px 14px",
+              padding: "5px 16px",
               borderRadius: 99,
-              background: "hsl(38 75% 55% / 0.14)",
-              border: "1px solid hsl(38 75% 55% / 0.32)",
-              marginBlockEnd: 22,
+              background: "hsl(38 75% 55% / 0.16)",
+              border: "1px solid hsl(38 75% 55% / 0.38)",
+              marginBlockEnd: 16,
             }}
           >
             <span style={{ width: 6, height: 6, background: "hsl(38 75% 62%)", borderRadius: "50%" }} />
-            <span style={{ color: "hsl(38 85% 74%)", fontSize: 12, fontWeight: 700, letterSpacing: "0.05em" }}>
+            <span style={{ color: "hsl(38 85% 74%)", fontSize: 13, fontWeight: 800, letterSpacing: "0.05em" }}>
               {campaign.hero_eyebrow}
             </span>
           </div>
         )}
 
-        <div>
-          <CountdownBar endsAt={campaign.ends_at} />
-        </div>
-
-        <h1 style={{ margin: "0 0 20px", lineHeight: 1 }}>
-          {campaign.hero_title_small && (
-            <span
-              style={{
-                display: "block",
-                fontSize: "clamp(14px, 1.6vw, 18px)",
-                fontWeight: 500,
-                color: "hsl(215 10% 70%)",
-                letterSpacing: "0.1em",
-                marginBlockEnd: 8,
-              }}
-            >
-              {campaign.hero_title_small}
-            </span>
-          )}
+        <h1 style={{ margin: "0 0 6px", lineHeight: 1.08 }}>
           <span
             style={{
               display: "block",
-              fontSize: "clamp(48px, 7vw, 88px)",
+              fontSize: "clamp(28px, 4.6vw, 52px)",
               fontWeight: 900,
-              background: "linear-gradient(135deg, hsl(43 90% 72%) 0%, hsl(38 75% 52%) 100%)",
+              background: "linear-gradient(135deg, hsl(43 90% 74%) 0%, hsl(38 78% 55%) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              letterSpacing: "-0.03em",
-              lineHeight: 0.95,
+              letterSpacing: "-0.02em",
             }}
           >
             {campaign.hero_title || campaign.title}
           </span>
         </h1>
-
+        {campaign.hero_title_small && (
+          <div style={{ fontSize: "clamp(15px, 2vw, 20px)", fontWeight: 700, color: "white", marginBlockEnd: 4 }}>
+            {campaign.hero_title_small}
+          </div>
+        )}
         {campaign.hero_subtitle && (
-          <p style={{ fontSize: "clamp(17px, 2.2vw, 22px)", color: "hsl(215 10% 82%)", lineHeight: 1.5, maxWidth: 580, margin: "0 0 10px", fontWeight: 500 }}>
+          <p style={{ fontSize: "clamp(14px, 1.8vw, 17px)", color: "hsl(215 10% 78%)", margin: "0 auto", maxWidth: 560 }}>
             {campaign.hero_subtitle}
           </p>
         )}
-        {campaign.hero_subtitle_bold && (
-          <p style={{ fontSize: "clamp(17px, 2.2vw, 22px)", color: "white", lineHeight: 1.5, maxWidth: 580, margin: "0 0 32px", fontWeight: 700 }}>
-            {campaign.hero_subtitle_bold}
-          </p>
-        )}
 
-        {campaign.hero_quote && (
-          <blockquote style={{ margin: "0 0 36px", borderInlineEnd: "4px solid hsl(38 75% 55%)", paddingInlineEnd: 20, maxWidth: 520 }}>
-            <p style={{ fontStyle: "italic", fontSize: "clamp(18px, 2vw, 22px)", fontWeight: 700, color: "hsl(38 85% 74%)", margin: 0, lineHeight: 1.4 }}>
-              {campaign.hero_quote}
-            </p>
-            {campaign.hero_quote_cite && (
-              <cite style={{ display: "block", fontStyle: "normal", fontSize: 13, color: "hsl(215 10% 55%)", marginBlockStart: 8 }}>
-                {campaign.hero_quote_cite}
-              </cite>
-            )}
-          </blockquote>
-        )}
-
-        <div style={{ display: "flex", alignItems: "center", gap: 24, flexWrap: "wrap" }}>
-          <div style={{ flex: "1 1 260px", minWidth: 0 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBlockEnd: 8, gap: 8 }}>
-              <span style={{ color: "hsl(38 85% 70%)", fontWeight: 900, fontSize: 22 }}>₪{raised.toLocaleString()}</span>
-              {campaign.goal_amount > 0 && (
-                <span style={{ color: "hsl(215 10% 48%)", fontSize: 13 }}>מתוך ₪{Number(campaign.goal_amount).toLocaleString()}</span>
-              )}
-              <span style={{ color: "hsl(38 85% 68%)", fontWeight: 700, fontSize: 13 }}>{supporters} תומכים</span>
+        {/* ── בלוק המספרים — הכוכב של הדף ── */}
+        <div style={{ marginBlockStart: "clamp(22px, 4vw, 40px)" }}>
+          <div style={{ fontSize: "clamp(14px, 1.8vw, 18px)", fontWeight: 800, color: "hsl(38 85% 72%)", letterSpacing: "0.24em", marginBlockEnd: 2 }}>
+            הושג עד כה
+          </div>
+          <div
+            style={{
+              fontSize: "clamp(58px, 11vw, 116px)",
+              fontWeight: 900,
+              lineHeight: 1.02,
+              color: "white",
+              letterSpacing: "-0.02em",
+              fontVariantNumeric: "tabular-nums",
+              textShadow: "0 4px 32px hsl(215 55% 5% / 0.6)",
+            }}
+          >
+            <span style={{ fontSize: "0.45em", verticalAlign: "super", color: "hsl(38 85% 70%)" }}>₪</span>
+            {animatedRaised.toLocaleString()}
+          </div>
+          {campaign.goal_amount > 0 && (
+            <div style={{ fontSize: "clamp(16px, 2.4vw, 23px)", fontWeight: 700, color: "hsl(215 10% 82%)", marginBlockStart: 6 }}>
+              מתוך יעד <span style={{ color: "hsl(38 85% 70%)", fontWeight: 900 }}>₪{Number(campaign.goal_amount).toLocaleString()}</span>
+              <span style={{ margin: "0 10px", color: "hsl(215 10% 50%)" }}>·</span>
+              {supporters.toLocaleString()} תומכים
             </div>
-            <div style={{ height: 6, background: "hsl(215 20% 28%)", borderRadius: 6, overflow: "hidden" }}>
+          )}
+
+          {/* ── בר התקדמות גדול + בועת אחוז ── */}
+          {campaign.goal_amount > 0 && (
+            <div style={{ maxWidth: 720, margin: "clamp(20px, 3vw, 30px) auto 0", position: "relative", padding: "26px 0 8px" }}>
               <div
                 style={{
-                  height: "100%",
-                  width: `${progressPct}%`,
-                  background: "linear-gradient(90deg, hsl(43 85% 62%), hsl(38 75% 48%))",
-                  borderRadius: 6,
-                  transition: "width 1.4s ease-out",
+                  height: 18,
+                  background: "hsl(215 25% 88% / 0.22)",
+                  borderRadius: 99,
+                  overflow: "hidden",
+                  border: "1px solid hsl(38 75% 55% / 0.3)",
+                  boxShadow: "inset 0 2px 6px hsl(215 55% 5% / 0.4)",
                 }}
-              />
+              >
+                <div
+                  style={{
+                    height: "100%",
+                    width: `${shownPct}%`,
+                    background: "linear-gradient(90deg, hsl(43 92% 64%), hsl(38 80% 50%))",
+                    borderRadius: 99,
+                    transition: "width 1.6s cubic-bezier(0.22, 1, 0.36, 1)",
+                    boxShadow: "0 0 18px hsl(43 90% 60% / 0.55)",
+                  }}
+                />
+              </div>
+              <div
+                aria-hidden
+                style={{
+                  position: "absolute",
+                  insetBlockStart: 0,
+                  insetInlineStart: `${shownPct}%`,
+                  transform: "translateX(50%)",
+                  transition: "inset-inline-start 1.6s cubic-bezier(0.22, 1, 0.36, 1)",
+                }}
+              >
+                <div
+                  style={{
+                    width: 56,
+                    height: 56,
+                    borderRadius: "50%",
+                    background: "hsl(215 55% 14%)",
+                    border: "3px solid hsl(43 90% 62%)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 900,
+                    fontSize: 17,
+                    color: "hsl(43 90% 68%)",
+                    boxShadow: "0 6px 20px hsl(215 55% 5% / 0.6)",
+                    fontVariantNumeric: "tabular-nums",
+                  }}
+                >
+                  {progressPct}%
+                </div>
+              </div>
             </div>
-            {campaign.goal_amount > 0 && (
-              <div style={{ fontSize: 11, color: "hsl(215 10% 40%)", marginBlockStart: 4 }}>{progressPct}% מהיעד</div>
-            )}
-          </div>
+          )}
+        </div>
 
+        {/* ── CTA ── */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap", marginBlockStart: "clamp(22px, 3.4vw, 34px)" }}>
           <button
             onClick={onSupportClick}
             style={{
-              padding: "14px 34px",
+              padding: "17px 46px",
               background: GOLD_GRAD,
               color: "hsl(215 55% 12%)",
               border: "none",
               borderRadius: 99,
               fontWeight: 900,
-              fontSize: 17,
+              fontSize: "clamp(17px, 2.2vw, 20px)",
               cursor: "pointer",
               letterSpacing: "0.01em",
-              flexShrink: 0,
+              boxShadow: "0 10px 34px hsl(38 80% 50% / 0.45)",
+              whiteSpace: "nowrap",
             }}
           >
-            תמכו בקמפיין ↓
+            תרמו עכשיו ↓
           </button>
+          {onDedicationClick && (
+            <button
+              onClick={onDedicationClick}
+              style={{
+                padding: "15px 30px",
+                background: "hsl(215 55% 14% / 0.6)",
+                color: "hsl(38 85% 74%)",
+                border: "1.5px solid hsl(38 75% 55% / 0.55)",
+                borderRadius: 99,
+                fontWeight: 800,
+                fontSize: 15,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                backdropFilter: "blur(6px)",
+              }}
+            >
+              🕯️ אפשרויות ההנצחה
+            </button>
+          )}
         </div>
+      </div>
+
+      <div style={{ position: "relative", zIndex: 1, marginBlockStart: 10 }}>
+        <CountdownStrip endsAt={campaign.ends_at} />
       </div>
     </section>
   );
@@ -585,8 +687,8 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
       )}
 
       {tier.image_url && (
-        <div style={{ position: "relative", width: "100%", aspectRatio: "16 / 9", borderRadius: 10, overflow: "hidden", background: tier.highlight ? "hsl(215 30% 22%)" : "hsl(38 25% 96%)" }}>
-          <img src={tier.image_url} alt={tier.image_alt || tier.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "relative", width: "100%", aspectRatio: "1 / 1", borderRadius: 12, overflow: "hidden", background: tier.highlight ? "hsl(215 30% 22%)" : "hsl(205 60% 88%)" }}>
+          <img src={tier.image_url} alt={tier.image_alt || tier.name} style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }} />
           {tier.image_badge && (
             <div style={{ position: "absolute", top: 10, insetInlineEnd: 10, background: GOLD_GRAD, color: "hsl(215 55% 12%)", fontSize: 20, fontWeight: 900, padding: "4px 12px", borderRadius: 99, border: "2px solid white" }}>
               {tier.image_badge}
@@ -988,6 +1090,90 @@ function FaqSection({ campaign }: { campaign: CampaignRow }) {
   );
 }
 
+/* ─── אפשרויות ההנצחה (26.8ב — "לא ברור מה מקבלים") ─────
+ * כרטיסים מפורשים לפי מחירון dedication_settings; לחיצה פותחת את הצ'קאאוט
+ * עם הסכום המתאים וההקדשה כבר פתוחה. רקע: אקוורל "השלמת הבניין" (Nano Banana). */
+const DEDICATION_BG =
+  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/saadia-campaign/dedication-bg.png";
+
+function DedicationOptionsSection({
+  settings,
+  onPick,
+}: {
+  settings: import("@/hooks/useLessonDedications").DedicationSettings | undefined;
+  onPick: (amount: number, label: string) => void;
+}) {
+  const s = settings;
+  if (!s) return null;
+  const options = [
+    { icon: "🕯️", price: s.lesson_price, title: "הקדשת שיעור", desc: "בוחרים שיעור באתר — וההקדשה שלכם מופיעה לצידו, לכל לומד, לתמיד." },
+    { icon: "⭐", price: s.lesson_price_popular, title: "שיעור של רב מבוקש", desc: "הקדשת שיעור מהרבנים המבוקשים באתר — אלפי צפיות והאזנות." },
+    { icon: "📖", price: s.series_price, title: "הקדשת סדרה", desc: "סדרת שיעורים שלמה על שמכם — עד 20 שיעורים." },
+    { icon: "📚", price: s.series_price_mid, title: "סדרה בינונית", desc: "סדרה של 21 שיעורים ומעלה — נוכחות רחבה באתר." },
+    { icon: "🏛️", price: s.series_price_large, title: "סדרה גדולה", desc: "סדרה של 61 שיעורים ומעלה — הנצחה מרכזית באגף שלם." },
+  ];
+  return (
+    <section id="dedication-options" style={{ position: "relative", padding: "72px 22px 80px", overflow: "hidden" }}>
+      <div style={{ position: "absolute", inset: 0 }}>
+        <img src={DEDICATION_BG} alt="" aria-hidden style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, hsl(215 55% 10% / 0.88), hsl(215 55% 12% / 0.72) 45%, hsl(215 55% 10% / 0.92))" }} />
+      </div>
+      <div style={{ position: "relative", zIndex: 1, maxWidth: 1080, margin: "0 auto", textAlign: "center" }}>
+        <p style={{ color: "hsl(38 85% 66%)", fontWeight: 800, fontSize: 13, letterSpacing: "0.18em", margin: "0 0 10px" }}>הנצחה באתר התנ״ך</p>
+        <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 900, color: "white", margin: "0 0 12px", lineHeight: 1.15 }}>
+          ההקדשה שלכם — <span style={{ color: "hsl(38 85% 68%)" }}>באתר, לתמיד</span>
+        </h2>
+        <p style={{ color: "hsl(215 10% 82%)", fontSize: "clamp(15px, 1.9vw, 18px)", maxWidth: 640, margin: "0 auto 40px", lineHeight: 1.6 }}>
+          כל תורם בסכומים האלה בוחר תוכן באתר — שיעור או סדרה — וההקדשה, לעילוי נשמה או לכבוד יקיריכם,
+          מוצגת לצידו לכל המבקרים. כמו הקדשה בספר תורה — רק חיה, נלמדת, וגדלה.
+        </p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16, textAlign: "start" }}>
+          {options.map((o) => (
+            <div
+              key={o.title}
+              style={{
+                background: "hsl(215 50% 15% / 0.88)",
+                border: "1.5px solid hsl(38 75% 55% / 0.4)",
+                borderRadius: 16,
+                padding: "22px 18px 18px",
+                display: "flex",
+                flexDirection: "column",
+                gap: 10,
+                backdropFilter: "blur(8px)",
+              }}
+            >
+              <div style={{ fontSize: 30, lineHeight: 1 }}>{o.icon}</div>
+              <div style={{ fontSize: 17, fontWeight: 900, color: "white" }}>{o.title}</div>
+              <div style={{ fontSize: 24, fontWeight: 900, color: "hsl(38 85% 68%)" }}>₪{o.price.toLocaleString()}</div>
+              <div style={{ fontSize: 13, color: "hsl(215 10% 78%)", lineHeight: 1.55, flex: 1 }}>{o.desc}</div>
+              <button
+                onClick={() => onPick(o.price, o.title)}
+                style={{
+                  width: "100%",
+                  padding: "12px 0",
+                  borderRadius: 10,
+                  border: "none",
+                  background: GOLD_GRAD,
+                  color: "hsl(215 55% 12%)",
+                  fontWeight: 900,
+                  fontSize: 14,
+                  cursor: "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                להקדשה בתרומה זו
+              </button>
+            </div>
+          ))}
+        </div>
+        <p style={{ color: "hsl(215 10% 62%)", fontSize: 13, marginBlockStart: 22 }}>
+          ההקדשה נבחרת בתהליך התרומה עצמו, ללא חיוב נוסף · לעמותת בני ציון סעיף 46 — התרומה מוכרת למס
+        </p>
+      </div>
+    </section>
+  );
+}
+
 function FinalCTA({ supporters, progressPct, onSupportClick }: { supporters: number; progressPct: number; onSupportClick: () => void }) {
   return (
     <section style={{ background: "hsl(215 55% 12%)", padding: "72px 24px", textAlign: "center" }}>
@@ -1008,7 +1194,7 @@ function FinalCTA({ supporters, progressPct, onSupportClick }: { supporters: num
 }
 
 /* ─── Inline checkout modal (Grow) ──────────────────────── */
-function InlineCheckoutModal({ campaign, tier, onClose }: { campaign: CampaignRow; tier: CampaignTierRow; onClose: () => void }) {
+function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClose }: { campaign: CampaignRow; tier: CampaignTierRow; initialDedication?: boolean; onClose: () => void }) {
   const { user } = useAuth();
   const { toast } = useToast();
   const { startPayment, isReady: paymentReady, isLoading: paymentLoading, error: paymentError } = useGrowPayment();
@@ -1278,6 +1464,7 @@ function InlineCheckoutModal({ campaign, tier, onClose }: { campaign: CampaignRo
 
         {dedicationEligible && (
           <CampaignDedicationPicker
+            defaultOpen={initialDedication}
             maxAmount={tier.price}
             donorName={donorName}
             settings={dedicationSettings}
@@ -1382,6 +1569,43 @@ export default function CampaignPage() {
   const tierCounts = useLiveTierCounts(data?.campaign ? slug : undefined);
   const scrollY = useScrollY();
   const [checkoutTier, setCheckoutTier] = useState<CampaignTierRow | null>(null);
+  const [checkoutWithDedication, setCheckoutWithDedication] = useState(false);
+  const { data: pageDedicationSettings } = useDedicationSettings();
+  const openTier = useCallback((t: CampaignTierRow) => {
+    setCheckoutWithDedication(false);
+    setCheckoutTier(t);
+  }, []);
+  const openDedicationDonation = useCallback(
+    (amount: number, label: string) => {
+      const c = data?.campaign;
+      if (!c) return;
+      setCheckoutWithDedication(true);
+      setCheckoutTier({
+        id: "dedication-" + amount,
+        campaign_id: c.id,
+        tier_key: "tier-dedication-" + amount,
+        price: amount,
+        name: label,
+        headline: `תרומה של ₪${amount.toLocaleString()} הכוללת ${label}`,
+        badge: "כולל הקדשה",
+        note: null,
+        perks: ["ההקדשה שלכם מוצגת לצד התוכן שתבחרו — לתמיד"],
+        tier_limit: null,
+        image_url: c.hero_image_url,
+        image_alt: null,
+        image_badge: null,
+        highlight: false,
+        needs_shipping: false,
+        max_installments: 1,
+        is_active: true,
+        sort_order: 0,
+      });
+    },
+    [data?.campaign]
+  );
+  const scrollToDedications = useCallback(() => {
+    document.getElementById("dedication-options")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   useEffect(() => {
     if (data?.campaign) document.title = `${data.campaign.title} · בני ציון`;
@@ -1442,12 +1666,22 @@ export default function CampaignPage() {
 
       <StickyNav scrolled={scrollY > 80} title={campaign.hero_title || campaign.title} progressPct={progressPct} onSupportClick={scrollToTiers} />
 
-      {checkoutTier && <InlineCheckoutModal campaign={campaign} tier={checkoutTier} onClose={() => setCheckoutTier(null)} />}
+      {checkoutTier && <InlineCheckoutModal campaign={campaign} tier={checkoutTier} initialDedication={checkoutWithDedication} onClose={() => setCheckoutTier(null)} />}
 
-      <HeroSection campaign={campaign} raised={totalRaised} supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
+      <HeroSection
+        campaign={campaign}
+        raised={totalRaised}
+        supporters={totalSupporters}
+        progressPct={progressPct}
+        onSupportClick={scrollToTiers}
+        onDedicationClick={CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) ? scrollToDedications : undefined}
+      />
       <VideoSection campaign={campaign} />
       <ProofStrip campaign={campaign} supporters={totalSupporters} />
-      <TiersSection campaign={campaign} tiers={tiers} tierCounts={tierCounts} onSupport={setCheckoutTier} />
+      <TiersSection campaign={campaign} tiers={tiers} tierCounts={tierCounts} onSupport={openTier} />
+      {CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) && (
+        <DedicationOptionsSection settings={pageDedicationSettings} onPick={openDedicationDonation} />
+      )}
       <StorySection campaign={campaign} />
       <WhySection campaign={campaign} />
       <AuthorSection campaign={campaign} />

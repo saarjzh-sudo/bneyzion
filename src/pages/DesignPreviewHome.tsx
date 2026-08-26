@@ -18,6 +18,7 @@ import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
 import CampaignBanner from "@/components/common/CampaignBanner";
+import HomeCampaignStrip from "@/components/home/HomeCampaignStrip";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
 import { PromoProvider } from "@/components/promo";
@@ -2166,6 +2167,9 @@ export default function DesignPreviewHome() {
 
       {/* Stats bar — full-width, no sidebar */}
       <StatsBar />
+
+      {/* סקשן הקמפיין (26.8ב) — הפניה משמעותית לקמפיין המדוגל */}
+      <HomeCampaignStrip />
 
       {/* 8.7 (סער): באנר-תמונה — אחרי שורת המספרים ולפני התוכן */}
       <ImageBannerSlot placement="home" />

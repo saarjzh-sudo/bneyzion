@@ -236,7 +236,7 @@ export function useLiveCampaignStats(slug: string | undefined) {
 
     // realtime על donations (ה-view לא תומך realtime ישירות) + polling fallback
     const channel = supabase
-      .channel(`campaign-stats-${slug}`)
+      .channel(`campaign-stats-${slug}-${Math.random().toString(36).slice(2, 8)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "donations", filter: `product=eq.${slug}` },
