@@ -79,6 +79,8 @@ export interface CampaignTierRow {
   max_installments: number;
   is_active: boolean;
   sort_order: number;
+  /** מכירות בפלטפורמה החיצונית (givechak) — 26.8, לצד הספירה המקומית */
+  external_sold?: number | null;
 }
 
 export interface CampaignStats {

@@ -37,6 +37,37 @@ def fetch_givechak():
     return raised, donors
 
 
+TIER_MAP = {  # tickchak ticket title -> campaign_tiers.tier_key
+    "140": "tier-140", "270": "tier-270", "50*12": "tier-50x12",
+    "100*12": "tier-100x12", "180*12": "tier-180x12",
+    "100*36": "tier-100x36", "180*24": "tier-180x24",
+}
+
+
+def fetch_tier_sold():
+    """form/init מחזיר sold פר-חבילה + תרומה חופשית (877)."""
+    req = urllib.request.Request(
+        "https://givechak.co.il/ajax/form/init",
+        data=f"eid={GIVECHAK_EID}".encode(),
+        headers={
+            "Content-Type": "application/x-www-form-urlencoded",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/126",
+            "Referer": "https://givechak.co.il/Saadia",
+        },
+        method="POST",
+    )
+    data = json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
+    sold = {}
+    free = 0
+    for t in data.get("event", {}).get("tickets", []) or data.get("tickets", []):
+        title, n = t.get("title", ""), int(t.get("sold") or 0)
+        if title in TIER_MAP:
+            sold[TIER_MAP[title]] = n
+        elif "חופשית" in title:
+            free = n
+    return sold, free
+
+
 def update_campaign(raised, donors):
     token = os.environ.get("SUPABASE_ACCESS_TOKEN")
     if not token:
@@ -59,7 +90,38 @@ def update_campaign(raised, donors):
     return json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
 
 
+def update_tiers(sold, free):
+    # שער fail-closed (חוק-ברזל): תשובה בלי חבילות = לא נוגעים בדאטה הקיים
+    if not sold:
+        print("form/init returned no tier data — skipping tier update (kept previous values)")
+        return
+    token = os.environ.get("SUPABASE_ACCESS_TOKEN")
+    parts = []
+    if free > 0:
+        parts.append(
+            "update public.campaigns set external_free_donors=%d where slug='saadia' and external_source='givechak';" % free
+        )
+    for key, n in sold.items():
+        parts.append(
+            "update public.campaign_tiers t set external_sold=%d from public.campaigns c "
+            "where c.id=t.campaign_id and c.slug='saadia' and t.tier_key='%s';" % (n, key)
+        )
+    req = urllib.request.Request(
+        f"https://api.supabase.com/v1/projects/{PROJECT_REF}/database/query",
+        data=json.dumps({"query": "\n".join(parts)}).encode(),
+        headers={
+            "Authorization": f"Bearer {token}",
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/126",
+        },
+        method="POST",
+    )
+    urllib.request.urlopen(req, timeout=30).read()
+
+
 if __name__ == "__main__":
     raised, donors = fetch_givechak()
     result = update_campaign(raised, donors)
-    print(f"givechak: ₪{raised:,} / {donors:,} donors → campaigns.saadia updated: {result}")
+    sold, free = fetch_tier_sold()
+    update_tiers(sold, free)
+    print(f"givechak: ₪{raised:,} / {donors:,} donors, tiers {sold}, free {free} → updated: {result}")

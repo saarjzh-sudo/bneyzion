@@ -13,7 +13,7 @@
  * הדף הישן /design-yehoshua-campaign לא תלוי בקובץ הזה — נשאר כגיבוי חי.
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
 import { useAuth } from "@/contexts/AuthContext";
@@ -304,7 +304,7 @@ function HeroSection({
           <img
             src={campaign.hero_image_url}
             alt={campaign.hero_title || campaign.title}
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", opacity: 0.6 }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%", opacity: 0.9 }}
           />
         )}
         <div
@@ -312,7 +312,7 @@ function HeroSection({
             position: "absolute",
             inset: 0,
             background:
-              "linear-gradient(to bottom, hsl(215 55% 12% / 0.35) 0%, hsl(215 55% 12% / 0.72) 45%, hsl(215 55% 11% / 0.97) 100%)",
+              "linear-gradient(to bottom, hsl(215 55% 12% / 0.12) 0%, hsl(215 55% 12% / 0.42) 48%, hsl(215 55% 11% / 0.94) 100%)",
           }}
         />
       </div>
@@ -328,22 +328,6 @@ function HeroSection({
           textAlign: "center",
         }}
       >
-        {campaign.hero_image_url && (
-          <img
-            src={SAADIA_PORTRAIT}
-            alt="סעדיה יעקב דרעי הי״ד"
-            style={{
-              width: "clamp(108px, 14vw, 150px)",
-              aspectRatio: "3 / 4",
-              objectFit: "cover",
-              objectPosition: "center 12%",
-              borderRadius: 18,
-              border: "3px solid hsl(43 88% 62%)",
-              boxShadow: "0 12px 36px hsl(215 55% 5% / 0.6)",
-              marginBlockEnd: 14,
-            }}
-          />
-        )}
         {campaign.hero_eyebrow && (
           <div
             style={{
@@ -525,6 +509,108 @@ function HeroSection({
   );
 }
 
+/* ─── טוסטים של תורמים (26.8ג, בקשת סער) — דאטה אמיתית בלבד ────
+ * הפול נבנה ממוני-אמת: כמה בחרו כל חבילה (givechak+מקומי), סה"כ שותפים,
+ * ותרומה חופשית. בלי שמות מומצאים. תרומה חדשה באתר (raised עולה בזמן-אמת)
+ * מקפיצה טוסט מיידי. */
+function DonorPulseToasts({
+  campaign,
+  tiers,
+  tierCounts,
+  totalSupporters,
+  raised,
+}: {
+  campaign: CampaignRow;
+  tiers: CampaignTierRow[];
+  tierCounts: Record<string, number>;
+  totalSupporters: number;
+  raised: number;
+}) {
+  const [msg, setMsg] = useState<string | null>(null);
+  const [visible, setVisible] = useState(false);
+  const poolIdx = useRef(0);
+  const prevRaised = useRef<number | null>(null);
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const pool = useMemo(() => {
+    const msgs: string[] = [];
+    if (totalSupporters > 0) msgs.push(`🎗️ ${totalSupporters.toLocaleString()} שותפים כבר בקמפיין — מצטרפים?`);
+    for (const t of tiers) {
+      const joined = (tierCounts[t.tier_key] || 0) + (t.external_sold || 0);
+      if (joined >= 2) msgs.push(`❤️ ${joined.toLocaleString()} תורמים כבר בחרו "${t.name}"`);
+    }
+    const free = Number((campaign as CampaignRow & { external_free_donors?: number }).external_free_donors) || 0;
+    if (free > 0) msgs.push(`✨ ${free.toLocaleString()} תרמו בתרומה חופשית — כל סכום מקרב את היעד`);
+    if (campaign.goal_amount > 0) {
+      const left = Math.max(0, Number(campaign.goal_amount) - raised);
+      if (left > 0) msgs.push(`🏗️ נשארו ₪${left.toLocaleString()} להשלמת הבניין`);
+    }
+    return msgs;
+  }, [tiers, tierCounts, totalSupporters, raised, campaign]);
+
+  // רוטציה — כל ~11 שניות טוסט ל-6 שניות
+  useEffect(() => {
+    if (pool.length === 0) return;
+    let alive = true;
+    const showNext = () => {
+      if (!alive || document.hidden) return;
+      setMsg(pool[poolIdx.current % pool.length]);
+      poolIdx.current += 1;
+      setVisible(true);
+      flashTimer.current = setTimeout(() => setVisible(false), 6000);
+    };
+    const first = setTimeout(showNext, 3500);
+    const loop = setInterval(showNext, 11500);
+    return () => {
+      alive = false;
+      clearTimeout(first);
+      clearInterval(loop);
+      if (flashTimer.current) clearTimeout(flashTimer.current);
+    };
+  }, [pool]);
+
+  // תרומה חדשה בזמן-אמת → טוסט מיידי (raised מגיע חי מ-useLiveCampaignStats)
+  useEffect(() => {
+    if (prevRaised.current != null && raised > prevRaised.current) {
+      const diff = raised - prevRaised.current;
+      setMsg(`🎉 תרומה חדשה ממש עכשיו — ₪${diff.toLocaleString()}! תודה!`);
+      setVisible(true);
+      if (flashTimer.current) clearTimeout(flashTimer.current);
+      flashTimer.current = setTimeout(() => setVisible(false), 7000);
+    }
+    prevRaised.current = raised;
+  }, [raised]);
+
+  if (!msg) return null;
+  return (
+    <div
+      aria-live="polite"
+      style={{
+        position: "fixed",
+        insetBlockEnd: 96,
+        insetInlineStart: 16,
+        zIndex: 55,
+        maxWidth: "min(320px, calc(100vw - 32px))",
+        background: "linear-gradient(135deg, hsl(215 60% 12%), hsl(215 52% 18%))",
+        border: "1.5px solid hsl(43 85% 58% / 0.6)",
+        borderRadius: 14,
+        padding: "12px 18px",
+        color: "white",
+        fontSize: 14,
+        fontWeight: 700,
+        lineHeight: 1.45,
+        boxShadow: "0 12px 34px hsl(215 55% 5% / 0.55)",
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(14px)",
+        transition: "opacity 0.45s ease, transform 0.45s ease",
+        pointerEvents: "none",
+      }}
+    >
+      {msg}
+    </div>
+  );
+}
+
 /* ─── Video ─────────────────────────────────────────────── */
 function VideoSection({ campaign }: { campaign: CampaignRow }) {
   // ⚠️ hook לפני כל return מוקדם — סדר-hooks קבוע
@@ -652,6 +738,7 @@ function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporter
 
 /* ─── Tier card ─────────────────────────────────────────── */
 function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: number; onSupport: (t: CampaignTierRow) => void }) {
+  const totalJoined = sold + (tier.external_sold || 0);
   const limited = tier.tier_limit != null && tier.tier_limit > 0;
   const remaining = limited ? Math.max(0, (tier.tier_limit as number) - sold) : Infinity;
   const isSoldOut = limited && remaining === 0;
@@ -723,6 +810,11 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
           <div style={{ fontSize: 13, fontWeight: 600, color: tier.highlight ? "hsl(38 85% 76%)" : "hsl(215 35% 38%)" }}>{tier.headline}</div>
         )}
         {tier.note && <div style={{ fontSize: 12, color: tier.highlight ? "hsl(215 10% 64%)" : "hsl(215 20% 50%)" }}>{tier.note}</div>}
+        {totalJoined >= 2 && (
+          <div style={{ fontSize: 12.5, fontWeight: 800, color: tier.highlight ? "hsl(43 88% 68%)" : "hsl(38 65% 40%)", marginBlockStart: 2 }}>
+            ❤️ {totalJoined.toLocaleString()} כבר הצטרפו
+          </div>
+        )}
       </div>
 
       <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7, flex: 1 }}>
@@ -1725,6 +1817,7 @@ export default function CampaignPage() {
       {CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) && (
         <DedicationOptionsSection settings={pageDedicationSettings} onPick={openDedicationDonation} />
       )}
+      <DonorPulseToasts campaign={campaign} tiers={tiers} tierCounts={tierCounts} totalSupporters={totalSupporters} raised={totalRaised} />
       <StorySection campaign={campaign} />
       <WhySection campaign={campaign} />
       <AuthorSection campaign={campaign} />
