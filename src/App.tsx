@@ -309,18 +309,21 @@ const GlobalChrome = () => {
   // InstallPrompt אין preventDefault על beforeinstallprompt והדפדפן קופץ לבד
   // (הערת סער על דף הקלטת כנס אלול, 14.8).
   if (BARE_CHROME_ROUTES.some((r) => pathname.startsWith(r))) return <InstallPrompt suppress />;
+  // דפי קמפיין (26.8, סער): בלי חלון-התקנה — אבל עדיין suppress כדי שהדפדפן לא יקפוץ לבד
+  const onCampaignPage = pathname.startsWith("/campaign");
   return (
     <>
       <CartDrawer />
       <FloatingPlayer />
-      <InstallPrompt />
+      {onCampaignPage ? <InstallPrompt suppress /> : <InstallPrompt />}
       <UpdatePrompt />
       {/* הודעת עוגיות — גלובלית, מהעמוד הראשון שנכנסים אליו (הערת אלי 19.7; קודם חיה רק ב-Layout הישן) */}
       <CookieConsent />
       {/* Site navigator bot — gold floating button, RTL. Auto-hides on /admin, /design-*, /course/*, /program/* and bare landing routes.
           10.7 (סער): "בחנות הוא מיותר" — מוסתר גם ב-/store, /checkout, /cart */}
       {/* 13.8 (סער): בדף המכירה של הפרק השבועי הבוט מסיח — מוסתר גם שם */}
-      <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/", "/store", "/checkout", "/cart", "/chapter-weekly"]} />
+      {/* 26.8 (סער): בדף קמפיין הבוט לא שייך */}
+      <OnboardingBot disabledOnRoutes={["/admin", "/design-", "/course/", "/program/", "/store", "/checkout", "/cart", "/chapter-weekly", "/campaign"]} />
     </>
   );
 };

@@ -1708,7 +1708,6 @@ export default function CampaignPage() {
       `}</style>
 
       <CampaignBanner />
-      <StickyNav scrolled={scrollY > 80} title={campaign.hero_title || campaign.title} progressPct={progressPct} onSupportClick={scrollToTiers} />
 
       {checkoutTier && <InlineCheckoutModal campaign={campaign} tier={checkoutTier} initialDedication={checkoutWithDedication} onClose={() => setCheckoutTier(null)} />}
 
