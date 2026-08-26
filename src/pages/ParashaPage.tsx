@@ -213,39 +213,57 @@ const ParashaPage = () => {
     return items;
   }, [articlesWithContent, hasRiddle, hasAudio, otherItems.length]);
 
-  // 3 CTA cards
-  const ctaCards = useMemo<CtaCard[]>(
-    () => [
-      {
+  // עד 3 קוביות-עוגן (הערת אביה 25.8: תיקון-שורש). קודם הקוביה הראשונה תמיד
+  // אמרה "קריאה בטעמים" גם כשלפרשה הנוכחית אין הקלטת-טעמים בכלל — הלחיצה
+  // הובילה לסקשן "עוד תכנים לפרשה" עם כותרת מטעה. עכשיו: קוביית קריאה-בטעמים
+  // מוצגת רק כשיש בפועל תוכן טעמים (hasAudio); כשאין — במקומה מוצגת קוביית
+  // "עוד תכנים לפרשה" (אם יש תוכן כזה); וכשאין גם וגם — הקוביה מוסתרת לגמרי
+  // (אין לאן להוביל), והגריד מתכווץ בהתאם (לא נשאר חור ריק).
+  const ctaCards = useMemo<CtaCard[]>(() => {
+    const cards: CtaCard[] = [];
+
+    if (hasAudio) {
+      cards.push({
         id: "kriaa",
         icon: <ShofarIcon className="h-7 w-7" />,
         title: "קריאה בטעמים",
-        subtitle: hasAudio ? `${audioLessons.length} הקלטות קריאה` : "קריאה בטעמים ועם ביאור",
-        // יואב 17.7: העוגן מוביל עכשיו לסקשן קריאה-בטעמים בלבד (לא לכל התכנים)
-        anchor: hasAudio ? "audio" : "all-lessons",
+        subtitle: `${audioLessons.length} הקלטות קריאה`,
+        anchor: "audio",
         color: colors.goldDark,
-      },
-      {
-        id: "riddle",
-        icon: <ScrollIcon className="h-7 w-7" />,
-        title: "חידות לשולחן השבת",
-        subtitle: hasRiddle ? "חידות מגרות לילדים ולמבוגרים" : "חידות לפרשת השבוע",
-        anchor: hasRiddle ? "riddle" : undefined,
-        // No riddle matched this week → link to the riddle series of the current chumash
-        href: hasRiddle ? undefined : `/series/${riddleSeriesId}`,
-        color: colors.tealMain,
-      },
-      {
-        id: "all-parasha",
-        icon: <OpenBookIcon className="h-7 w-7" />,
-        title: "כל תכני הפרשה באתר",
-        subtitle: "כל השיעורים, המאמרים והחידות לפרשה",
-        href: parashaSeriesId ? `/series/${parashaSeriesId}` : "/series",
-        color: colors.oliveDark,
-      },
-    ],
-    [hasAudio, hasRiddle, audioLessons.length, parashaSeriesId, riddleSeriesId]
-  );
+      });
+    } else if (otherItems.length > 0) {
+      cards.push({
+        id: "more-content",
+        icon: <ShofarIcon className="h-7 w-7" />,
+        title: "עוד תכנים לפרשה",
+        subtitle: `${otherItems.length} תכנים לפרשה`,
+        anchor: "all-lessons",
+        color: colors.goldDark,
+      });
+    }
+
+    cards.push({
+      id: "riddle",
+      icon: <ScrollIcon className="h-7 w-7" />,
+      title: "חידות לשולחן השבת",
+      subtitle: hasRiddle ? "חידות מגרות לילדים ולמבוגרים" : "חידות לפרשת השבוע",
+      anchor: hasRiddle ? "riddle" : undefined,
+      // No riddle matched this week → link to the riddle series of the current chumash
+      href: hasRiddle ? undefined : `/series/${riddleSeriesId}`,
+      color: colors.tealMain,
+    });
+
+    cards.push({
+      id: "all-parasha",
+      icon: <OpenBookIcon className="h-7 w-7" />,
+      title: "כל תכני הפרשה באתר",
+      subtitle: "כל השיעורים, המאמרים והחידות לפרשה",
+      href: parashaSeriesId ? `/series/${parashaSeriesId}` : "/series",
+      color: colors.oliveDark,
+    });
+
+    return cards;
+  }, [hasAudio, hasRiddle, audioLessons.length, otherItems.length, parashaSeriesId, riddleSeriesId]);
 
   // Sticky TOC on scroll
   useEffect(() => {
@@ -422,12 +440,15 @@ const ParashaPage = () => {
             </motion.blockquote>
           )}
 
-          {/* 3 CTA Cards */}
+          {/* עד 3 קוביות-CTA — הרוחב מתכווץ דינמית לפי מספר הקוביות בפועל
+              (הערת אביה 25.8: קוביית "קריאה בטעמים" יכולה להיעדר בשבועות
+              בלי הקלטת-טעמים, ראו ctaCards למעלה). */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.45, duration: 0.5 }}
-            className="grid grid-cols-3 gap-3 mt-8 pb-0 print:hidden"
+            className="grid gap-3 mt-8 pb-0 print:hidden"
+            style={{ gridTemplateColumns: `repeat(${ctaCards.length}, minmax(0, 1fr))` }}
           >
             {ctaCards.map((card) => {
               const inner = (
