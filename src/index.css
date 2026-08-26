@@ -258,18 +258,21 @@
 
   html {
     direction: rtl;
-    /* T12 (מובייל): מניעת גלישה אופקית מתפריט-הצד הנשלף (off-canvas) וממכלי-תוכן
-       שחורגים מרוחב-המסך. שתי ההצהרות מכוונות ל-root בלבד כדי לשמור על
-       position: sticky של ה-header. הראשונה (hidden) היא גיבוי ל-Safari < 16;
-       השנייה (clip) גוברת בדפדפנים מודרניים ואינה יוצרת scroll-container. */
-    overflow-x: hidden;
-    overflow-x: clip;
   }
 
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     font-family: 'Ploni', sans-serif;
+    /* 26.8 (הערת אביה 24.8, וידאו): T12 (1.7) שם את המניעה הזו על <html>, וזה
+       שבר בפועל את position: sticky של ה-header במובייל (Safari) — ה-header
+       "נעלם" בגלילה למטה במקום להישאר קבוע. תוקן ע"י העברה ל-<body>: לפי
+       ה-CSS Overflow spec, overflow שמוגדר ישירות על אלמנט ה-root (<html>)
+       חל עליו כ"אב עם scrolling mechanism" (ומנטרל sticky של צאצאים) — בעוד
+       overflow שמוגדר על <body> "מוזרם" (propagates) לוויופורט עצמו, כך
+       שה-body נשאר ללא scrolling mechanism משלו וה-sticky נשמר. אותה חסימת
+       גלישה-אופקית מהמגירה הנשלפת (off-canvas) ותוכן רחב, בלי לשבור sticky. */
+    overflow-x: hidden;
   }
 }
 
