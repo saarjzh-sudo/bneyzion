@@ -27,7 +27,6 @@ import {
 } from "@/hooks/useCampaigns";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark, Hourglass, Heart, Sparkles, Building2, PartyPopper, Award, Zap, Users, HeartHandshake } from "lucide-react";
-import CampaignBanner from "@/components/common/CampaignBanner";
 import CampaignDedicationPicker, { type CompanionDedicationSelection } from "@/components/campaign/CampaignDedicationPicker";
 import { useDedicationSettings } from "@/hooks/useLessonDedications";
 
@@ -1840,7 +1839,6 @@ export default function CampaignPage() {
         .campaign-rich-text-dark p:last-child { margin-block-end: 0; }
       `}</style>
 
-      <CampaignBanner />
 
       {checkoutTier && <InlineCheckoutModal campaign={campaign} tier={checkoutTier} initialDedication={checkoutWithDedication} onClose={() => setCheckoutTier(null)} />}
 

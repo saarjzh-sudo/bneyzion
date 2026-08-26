@@ -26,7 +26,7 @@ function daysUntil(endsAt: string): number | null {
 // במלואו), ודפי-שיגור /kenes* — כולל /kenes ו-/kenes-archive שכן עוברים דרך
 // Layout.tsx הרגיל (רק kenes-2026-* עצמם בלי Layout כלל). בדיקה כאן, לא רק
 // במיקום-הרינדור, כדי לכסות את כל הנתיבים גם אם ייבנה עמוד-kenes עתידי נוסף.
-const HIDDEN_ROUTE_PREFIXES = ["/admin"];
+const HIDDEN_ROUTE_PREFIXES = ["/admin", "/campaign"];
 
 export default function CampaignBanner() {
   const { pathname } = useLocation();
