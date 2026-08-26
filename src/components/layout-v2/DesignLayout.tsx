@@ -14,6 +14,7 @@
 import { useState, type ReactNode } from "react";
 
 import DesignHeader from "./DesignHeader";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import TrialStrip from "@/components/common/TrialStrip";
 import DesignFooter from "./DesignFooter";
 import DesignMobileBottomNav from "./DesignMobileBottomNav";
@@ -53,6 +54,10 @@ export default function DesignLayout({
         background: colors.parchment,
       }}
     >
+      {/* 25.8 (הרב יואב): רצועת קמפיין דקה מעל ה-header — לא sticky, נגללת עם
+          הדף (ה-header עצמו נשאר sticky ותמיד גלוי, ר' הערת אביה 24.8). */}
+      <CampaignBanner />
+
       <DesignHeader
         transparentOnTop={transparentHeader}
         onSidebarToggle={sidebar ? () => setDrawerOpen((v) => !v) : undefined}

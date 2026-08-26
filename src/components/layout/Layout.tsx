@@ -12,6 +12,7 @@ import DesignHeader from "@/components/layout-v2/DesignHeader";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
 import DesignSidebar from "@/components/layout-v2/DesignSidebar";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import { PromoProvider } from "@/components/promo";
 import { colors } from "@/lib/designTokens";
 import SkipToContent, { MAIN_CONTENT_ID } from "@/components/a11y/SkipToContent";
@@ -40,6 +41,9 @@ const Layout = ({ children, sidebar = true }: LayoutProps) => {
           above the header; popup renders fixed, suppressed on product+learning). */}
       <SkipToContent />
       <PromoProvider />
+      {/* 25.8 (הרב יואב): רצועת קמפיין דקה מעל ה-header, נגללת עם הדף (לא sticky).
+          ה-header (DesignHeader) נשאר sticky ותמיד גלוי, ר' הערת אביה 24.8. */}
+      <CampaignBanner />
       <DesignHeader
         transparentOnTop={false}
         onSidebarToggle={sidebar ? () => setDrawerOpen((v) => !v) : undefined}

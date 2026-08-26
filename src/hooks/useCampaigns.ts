@@ -24,6 +24,9 @@ export interface CampaignRow {
   subtitle: string | null;
   goal_amount: number;
   is_active: boolean;
+  /** רצועת-קמפיין בראש האתר (25.8, אישור הרב יואב) — קמפיין אחד "מדוגל" מוצג לכל הדפים הציבוריים. */
+  show_site_banner: boolean;
+  banner_title: string | null;
   hero_eyebrow: string | null;
   hero_title: string | null;
   hero_title_small: string | null;
@@ -142,6 +145,40 @@ export function useCampaignBySlug(slug: string | undefined) {
         })),
       };
     },
+  });
+}
+
+/* ─── קמפיין "מדוגל" לרצועת-הבאנר בראש האתר (25.8, אישור הרב יואב) ───
+ * שאילתה קלה: קמפיין show_site_banner=true AND is_active=true, ה-slug/כותרת/יעד
+ * בלבד. הסכום שגויס נמשך בנפרד ע"י useLiveCampaignStats(slug) (realtime+polling,
+ * אותו דפוס שכבר קיים בדף הקמפיין עצמו) כדי לא לשכפל לוגיקת-חיות.
+ * fail-silent: אין קמפיין מדוגל / אין banner_title → null, הרצועה לא מרונדרת. */
+export interface SiteBannerCampaign {
+  slug: string;
+  banner_title: string;
+  goal_amount: number;
+}
+
+export function useSiteBannerCampaign() {
+  return useQuery<SiteBannerCampaign | null>({
+    queryKey: ["site-banner-campaign"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("campaigns" as never)
+        .select("slug, banner_title, goal_amount, show_site_banner, is_active, sort_order")
+        .eq("show_site_banner" as never, true)
+        .eq("is_active" as never, true)
+        .order("sort_order" as never, { ascending: true })
+        .limit(1)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) return null;
+      const c = data as unknown as { slug: string; banner_title: string | null; goal_amount: number };
+      if (!c.banner_title) return null;
+      return { slug: c.slug, banner_title: c.banner_title, goal_amount: Number(c.goal_amount) || 0 };
+    },
+    staleTime: 1000 * 60 * 5,
+    retry: false, // fail-silent: שגיאת-רשת/RLS לא תפיל את הרצועה על שאר האתר
   });
 }
 
