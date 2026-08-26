@@ -26,7 +26,7 @@ import {
   type CampaignTierRow,
 } from "@/hooks/useCampaigns";
 import { sanitizeHtml } from "@/lib/sanitize";
-import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark } from "lucide-react";
+import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark, Hourglass, Heart, Sparkles, Building2, PartyPopper, Award, Zap, Users, HeartHandshake } from "lucide-react";
 import CampaignBanner from "@/components/common/CampaignBanner";
 import CampaignDedicationPicker, { type CompanionDedicationSelection } from "@/components/campaign/CampaignDedicationPicker";
 import { useDedicationSettings } from "@/hooks/useLessonDedications";
@@ -137,7 +137,8 @@ function CountdownStrip({ endsAt }: { endsAt: string | null }) {
         }}
       >
         <span style={{ color: "white", fontWeight: 900, fontSize: "clamp(15px, 2vw, 20px)", whiteSpace: "nowrap", textShadow: "0 1px 4px hsl(4 60% 15%)" }}>
-          ⏳ הקמפיין מסתיים בעוד
+          <Hourglass size={17} style={{ verticalAlign: "-3px", marginInlineEnd: 6, display: "inline" }} />
+          הקמפיין מסתיים בעוד
         </span>
         <div style={{ display: "flex", gap: 8 }}>
           {units.map(([label, val]) => (
@@ -496,7 +497,8 @@ function HeroSection({
                 backdropFilter: "blur(6px)",
               }}
             >
-              🕯️ אפשרויות ההנצחה
+              <Flame size={15} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 6 }} />
+              אפשרויות ההנצחה
             </button>
           )}
         </div>
@@ -526,24 +528,25 @@ function DonorPulseToasts({
   totalSupporters: number;
   raised: number;
 }) {
-  const [msg, setMsg] = useState<string | null>(null);
+  const [msg, setMsg] = useState<{ Icon: typeof Heart; text: string } | null>(null);
   const [visible, setVisible] = useState(false);
   const poolIdx = useRef(0);
   const prevRaised = useRef<number | null>(null);
   const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  type ToastMsg = { Icon: typeof Heart; text: string };
   const pool = useMemo(() => {
-    const msgs: string[] = [];
-    if (totalSupporters > 0) msgs.push(`🎗️ ${totalSupporters.toLocaleString()} שותפים כבר בקמפיין — מצטרפים?`);
+    const msgs: ToastMsg[] = [];
+    if (totalSupporters > 0) msgs.push({ Icon: Award, text: `${totalSupporters.toLocaleString()} שותפים כבר בקמפיין — מצטרפים?` });
     for (const t of tiers) {
       const joined = (tierCounts[t.tier_key] || 0) + (t.external_sold || 0);
-      if (joined >= 2) msgs.push(`❤️ ${joined.toLocaleString()} תורמים כבר בחרו "${t.name}"`);
+      if (joined >= 2) msgs.push({ Icon: Heart, text: `${joined.toLocaleString()} תורמים כבר בחרו "${t.name}"` });
     }
     const free = Number((campaign as CampaignRow & { external_free_donors?: number }).external_free_donors) || 0;
-    if (free > 0) msgs.push(`✨ ${free.toLocaleString()} תרמו בתרומה חופשית — כל סכום מקרב את היעד`);
+    if (free > 0) msgs.push({ Icon: Sparkles, text: `${free.toLocaleString()} תרמו בתרומה חופשית — כל סכום מקרב את היעד` });
     if (campaign.goal_amount > 0) {
       const left = Math.max(0, Number(campaign.goal_amount) - raised);
-      if (left > 0) msgs.push(`🏗️ נשארו ₪${left.toLocaleString()} להשלמת הבניין`);
+      if (left > 0) msgs.push({ Icon: Building2, text: `נשארו ₪${left.toLocaleString()} להשלמת הבניין` });
     }
     return msgs;
   }, [tiers, tierCounts, totalSupporters, raised, campaign]);
@@ -573,7 +576,7 @@ function DonorPulseToasts({
   useEffect(() => {
     if (prevRaised.current != null && raised > prevRaised.current) {
       const diff = raised - prevRaised.current;
-      setMsg(`🎉 תרומה חדשה ממש עכשיו — ₪${diff.toLocaleString()}! תודה!`);
+      setMsg({ Icon: PartyPopper, text: `תרומה חדשה ממש עכשיו — ₪${diff.toLocaleString()}! תודה!` });
       setVisible(true);
       if (flashTimer.current) clearTimeout(flashTimer.current);
       flashTimer.current = setTimeout(() => setVisible(false), 7000);
@@ -604,9 +607,27 @@ function DonorPulseToasts({
         transform: visible ? "translateY(0)" : "translateY(14px)",
         transition: "opacity 0.45s ease, transform 0.45s ease",
         pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
       }}
     >
-      {msg}
+      <span
+        style={{
+          width: 34,
+          height: 34,
+          borderRadius: "50%",
+          background: "hsl(38 75% 55% / 0.16)",
+          border: "1px solid hsl(38 75% 55% / 0.5)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
+        <msg.Icon size={17} color="hsl(43 88% 64%)" strokeWidth={2} />
+      </span>
+      <span>{msg.text}</span>
     </div>
   );
 }
@@ -705,6 +726,13 @@ function VideoSection({ campaign }: { campaign: CampaignRow }) {
 }
 
 /* ─── Proof strip ───────────────────────────────────────── */
+const STAT_ICONS: Record<string, typeof BookOpen> = {
+  "📖": BookOpen,
+  "🕯️": Flame,
+  "👥": Users,
+  "🙌": HeartHandshake,
+};
+
 function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporters: number }) {
   const { ref, visible } = useInView();
   const stats = [
@@ -726,7 +754,20 @@ function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporter
               transition: `opacity 0.5s ease ${i * 0.1}s, transform 0.5s ease ${i * 0.1}s`,
             }}
           >
-            {s.icon && <div style={{ fontSize: 28, marginBlockEnd: 4 }}>{s.icon}</div>}
+            {s.icon && STAT_ICONS[s.icon] ? (
+              <div style={{ display: "flex", justifyContent: "center", marginBlockEnd: 8 }}>
+                {(() => {
+                  const I = STAT_ICONS[s.icon];
+                  return (
+                    <span style={{ width: 42, height: 42, borderRadius: "50%", background: "hsl(38 75% 55% / 0.14)", border: "1px solid hsl(38 75% 55% / 0.4)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <I size={20} color="hsl(43 88% 64%)" strokeWidth={1.8} />
+                    </span>
+                  );
+                })()}
+              </div>
+            ) : s.icon ? (
+              <div style={{ fontSize: 28, marginBlockEnd: 4 }}>{s.icon}</div>
+            ) : null}
             <div style={{ fontSize: 30, fontWeight: 900, color: "hsl(38 85% 68%)", lineHeight: 1, letterSpacing: "-0.02em" }}>{s.val}</div>
             <div style={{ fontSize: 12, color: "hsl(215 10% 52%)", marginBlockStart: 4 }}>{s.label}</div>
           </div>
@@ -781,7 +822,7 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
             boxShadow: "0 4px 14px hsl(38 75% 50% / 0.35)",
           }}
         >
-          ★ {tier.badge}
+          <Star size={11} style={{ display: "inline", verticalAlign: "-1px", marginInlineEnd: 4 }} /> {tier.badge}
         </div>
       )}
       {isSoldOut && (
@@ -812,7 +853,7 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
         {tier.note && <div style={{ fontSize: 12, color: tier.highlight ? "hsl(215 10% 64%)" : "hsl(215 20% 50%)" }}>{tier.note}</div>}
         {totalJoined >= 2 && (
           <div style={{ fontSize: 12.5, fontWeight: 800, color: tier.highlight ? "hsl(43 88% 68%)" : "hsl(38 65% 40%)", marginBlockStart: 2 }}>
-            ❤️ {totalJoined.toLocaleString()} כבר הצטרפו
+            <Heart size={13} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 4 }} fill="currentColor" /> {totalJoined.toLocaleString()} כבר הצטרפו
           </div>
         )}
       </div>
@@ -841,7 +882,7 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
           {isSoldOut
             ? "אזל — אין יותר מקומות"
             : almostGone
-            ? `⚡ נשארו רק ${remaining} מתוך ${tier.tier_limit}`
+            ? `נשארו רק ${remaining} מתוך ${tier.tier_limit}`
             : `נשארו ${remaining} מתוך ${tier.tier_limit}`}
         </div>
       )}

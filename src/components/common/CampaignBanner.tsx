@@ -10,6 +10,7 @@
  * סגירה (X) נזכרת ב-sessionStorage לפי slug, כדי שקמפיין חדש לא יישאר סגור.
  */
 import { Link, useLocation } from "react-router-dom";
+import { Flame } from "lucide-react";
 import { useSiteBannerCampaign, useLiveCampaignStats } from "@/hooks/useCampaigns";
 import { colors, fonts } from "@/lib/designTokens";
 
@@ -66,7 +67,7 @@ export default function CampaignBanner() {
       }}
     >
       <span className="bz-campaign-banner-title" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", fontSize: "0.92rem", fontWeight: 800, textAlign: "center" }}>
-        <span aria-hidden style={{ fontSize: "1rem" }}>🕯️</span>
+        <Flame size={15} aria-hidden style={{ flexShrink: 0, color: colors.goldShimmer }} />
         {campaign.banner_title}
       </span>
 

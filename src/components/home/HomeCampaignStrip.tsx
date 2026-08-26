@@ -6,6 +6,7 @@
  * בלי קמפיין מדוגל לא מרונדר כלום. רקע: אקוורל "השלמת הבניין" (Nano Banana Pro).
  */
 import { Link } from "react-router-dom";
+import { Hourglass } from "lucide-react";
 import { useSiteBannerCampaign, useLiveCampaignStats } from "@/hooks/useCampaigns";
 
 // 26.8 (סער): אותה תמונת-הירו כמו בדף הקמפיין — סעדיה בהרי יהודה
@@ -53,7 +54,7 @@ export default function HomeCampaignStrip() {
       >
         {days != null && (
           <div style={{ background: "hsl(4 72% 34%)", color: "white", fontWeight: 900, fontSize: 13, borderRadius: 99, padding: "5px 16px", boxShadow: "0 4px 14px hsl(4 60% 20% / 0.5)" }}>
-            ⏳ נותרו {days} ימים לסיום הקמפיין
+            <Hourglass size={13} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 5 }} /> נותרו {days} ימים לסיום הקמפיין
           </div>
         )}
         <h2 style={{ margin: 0, color: "white", fontWeight: 900, fontSize: "clamp(22px, 3.4vw, 36px)", lineHeight: 1.2, textShadow: "0 2px 16px hsl(215 55% 5% / 0.6)" }}>
