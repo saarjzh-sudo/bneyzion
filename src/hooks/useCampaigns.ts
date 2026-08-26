@@ -52,6 +52,12 @@ export interface CampaignRow {
   sort_order: number;
   created_at: string;
   updated_at: string;
+  /** מועד סיום (26.8, קמפיין סעדיה) — כשעתידי, דף הקמפיין מציג קאונטדאון. null = בלי מועד-סיום (יהושע). */
+  ends_at: string | null;
+  /** גיוס שבוצע בפלטפורמה חיצונית (givechak וכו') לפני המעבר לאתר — מתווסף לסכום/תומכים המוצגים. */
+  external_raised: number;
+  external_donors: number;
+  external_source: string | null;
 }
 
 export interface CampaignTierRow {
@@ -157,6 +163,11 @@ export interface SiteBannerCampaign {
   slug: string;
   banner_title: string;
   goal_amount: number;
+  /** גיוס חיצוני (givechak וכו') שנספר לתוך הסכום/האחוז המוצגים ברצועה (26.8). */
+  external_raised: number;
+  external_donors: number;
+  /** מועד סיום — הרצועה מציגה "נותרו X ימים" קטן כשעתידי (26.8). */
+  ends_at: string | null;
 }
 
 export function useSiteBannerCampaign() {
@@ -165,7 +176,7 @@ export function useSiteBannerCampaign() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("campaigns" as never)
-        .select("slug, banner_title, goal_amount, show_site_banner, is_active, sort_order")
+        .select("slug, banner_title, goal_amount, external_raised, external_donors, ends_at, show_site_banner, is_active, sort_order")
         .eq("show_site_banner" as never, true)
         .eq("is_active" as never, true)
         .order("sort_order" as never, { ascending: true })
@@ -173,9 +184,23 @@ export function useSiteBannerCampaign() {
         .maybeSingle();
       if (error) throw error;
       if (!data) return null;
-      const c = data as unknown as { slug: string; banner_title: string | null; goal_amount: number };
+      const c = data as unknown as {
+        slug: string;
+        banner_title: string | null;
+        goal_amount: number;
+        external_raised: number | null;
+        external_donors: number | null;
+        ends_at: string | null;
+      };
       if (!c.banner_title) return null;
-      return { slug: c.slug, banner_title: c.banner_title, goal_amount: Number(c.goal_amount) || 0 };
+      return {
+        slug: c.slug,
+        banner_title: c.banner_title,
+        goal_amount: Number(c.goal_amount) || 0,
+        external_raised: Number(c.external_raised) || 0,
+        external_donors: Number(c.external_donors) || 0,
+        ends_at: c.ends_at || null,
+      };
     },
     staleTime: 1000 * 60 * 5,
     retry: false, // fail-silent: שגיאת-רשת/RLS לא תפיל את הרצועה על שאר האתר

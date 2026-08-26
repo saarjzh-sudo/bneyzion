@@ -17,6 +17,13 @@ import { colors, fonts } from "@/lib/designTokens";
 
 const DISMISS_KEY = "bz_campaign_banner_dismissed_slug";
 
+/** ימים שלמים שנותרו עד ends_at, null אם כבר עבר. */
+function daysUntil(endsAt: string): number | null {
+  const ms = new Date(endsAt).getTime() - Date.now();
+  if (!Number.isFinite(ms) || ms <= 0) return null;
+  return Math.max(1, Math.ceil(ms / 86_400_000));
+}
+
 // אסור להציג: אדמין, דפי-קמפיין עצמם (הבאנר מיותר/מטעה בדף שכבר מציג את הקמפיין
 // במלואו), ודפי-שיגור /kenes* — כולל /kenes ו-/kenes-archive שכן עוברים דרך
 // Layout.tsx הרגיל (רק kenes-2026-* עצמם בלי Layout כלל). בדיקה כאן, לא רק
@@ -42,7 +49,10 @@ export default function CampaignBanner() {
   if (dismissed === slug) return null;
 
   const goal = campaign.goal_amount || 0;
-  const pct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
+  // גיוס כולל = מקומי (חי, useLiveCampaignStats) + חיצוני (givechak וכו', 26.8)
+  const totalRaised = raised + (campaign.external_raised || 0);
+  const pct = goal > 0 ? Math.min(100, Math.round((totalRaised / goal) * 100)) : 0;
+  const daysLeft = campaign.ends_at ? daysUntil(campaign.ends_at) : null;
 
   const onClose = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -113,6 +123,11 @@ export default function CampaignBanner() {
         <span style={{ fontSize: "0.78rem", fontWeight: 700, color: colors.goldShimmer, whiteSpace: "nowrap" }}>
           {pct}% מהיעד
         </span>
+        {daysLeft != null && (
+          <span style={{ fontSize: "0.72rem", fontWeight: 700, color: "rgba(255,255,255,0.75)", whiteSpace: "nowrap" }}>
+            · נותרו {daysLeft} ימים
+          </span>
+        )}
       </span>
 
       <span

@@ -81,6 +81,20 @@ interface CreatePaymentBody {
     // Campaign-specific routing (added by Donate.tsx when ?source= param exists)
     source?: string;   // e.g. "yehoshua-campaign"
     tier_id?: string;  // e.g. "tier-90"
+    // תרומה ⟵ הקדשה (26.8.2026, CampaignDedicationPicker.tsx): תורם בקמפיין
+    // מכוסה-הקדשה בוחר שיעור/סדרה פנויים לצרף לתרומה, בלי חיוב נוסף. השרת
+    // יוצר כאן שורת lesson_dedications "pending" (זהה ל-dedicationMeta הרגיל,
+    // אבל בלי תשלום Grow משלה — היא "נוסעת" על אותה תרומה) ואוכף שהתרומה
+    // מכסה את מחיר ההקדשה. ה-webhook מפעיל אותה כשהתרומה מאושרת (companion_dedication_id
+    // ב-raw_payload). ראו computeDedicationPrice למטה.
+    companion_dedication?: {
+      scope: "lesson" | "series";
+      lesson_id?: string;
+      series_id?: string;
+      dedication_type: string;
+      dedicated_name: string;
+      dedicator_name?: string;
+    };
   };
   // הקדשת שיעור/סדרה → lesson_dedications (products: dedication-lesson / dedication-series).
   // השרת יוצר את שורת ה-pending (service role — למשתמשים אין INSERT policy)
@@ -512,6 +526,79 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
     }
 
+    // ───── Companion dedication — "תרומה ⟵ הקדשה" (26.8.2026) ─────
+    // A campaign donation (target_table='donations') can ALSO reserve a free
+    // lesson/series dedication with NO second charge — CampaignDedicationPicker.tsx
+    // sends it as donationMeta.companion_dedication. Validated exactly like a
+    // standalone dedication (duplicate + price-covers-item), then inserted here
+    // as a 'pending' lesson_dedications row. The donation row (created below)
+    // carries this row's id in raw_payload.companion_dedication_id so the
+    // webhook can flip it to 'active' on the SAME callback that settles the
+    // donation (see webhook.ts). Fails closed BEFORE any row is created.
+    let companionDedicationId: string | null = null;
+    const companionDed = donationMeta?.companion_dedication;
+    const isCompanionDedicationFlow =
+      !!companionDed &&
+      (type === "donation" || type === "directDebit" || productCfg?.target_table === "donations");
+    if (isCompanionDedicationFlow) {
+      if (!companionDed!.dedicated_name?.trim()) {
+        return res.status(400).json({ error: "חסר שם המוקדש בהקדשה שנבחרה" });
+      }
+      if (companionDed!.scope === "series" ? !companionDed!.series_id : !companionDed!.lesson_id) {
+        return res.status(400).json({ error: "חסר פריט להקדשה" });
+      }
+      const active = ["active", "pending"];
+      if (companionDed!.scope === "series") {
+        const { data: dup } = await supabaseAdmin
+          .from("lesson_dedications").select("id")
+          .eq("series_id", companionDed!.series_id).in("status", active).limit(1);
+        if (dup && dup.length) return res.status(409).json({ error: "הסדרה שנבחרה כבר הוקדשה — בחרו פריט אחר" });
+      } else {
+        const { data: lessonRow } = await supabaseAdmin
+          .from("lessons").select("series_id").eq("id", companionDed!.lesson_id!).maybeSingle();
+        const sid = (lessonRow as any)?.series_id;
+        const { data: dupL } = await supabaseAdmin
+          .from("lesson_dedications").select("id")
+          .eq("lesson_id", companionDed!.lesson_id).in("status", active).limit(1);
+        if (dupL && dupL.length) return res.status(409).json({ error: "השיעור שנבחר כבר הוקדש — בחרו פריט אחר" });
+        if (sid) {
+          const { data: dupS } = await supabaseAdmin
+            .from("lesson_dedications").select("id")
+            .eq("series_id", sid).in("status", active).limit(1);
+          if (dupS && dupS.length) return res.status(409).json({ error: "הסדרה של השיעור שנבחר כבר הוקדשה — בחרו פריט אחר" });
+        }
+      }
+      const requiredPrice = await computeDedicationPrice(supabaseAdmin, companionDed!);
+      if (sum < requiredPrice - 1) {
+        return res.status(400).json({
+          error: `סכום התרומה קטן מהנדרש להקדשה שנבחרה (נדרש ₪${requiredPrice.toLocaleString()}) — רעננו ובחרו פריט זול יותר`,
+        });
+      }
+      const { data: pendingDed, error: pendingDedErr } = await supabaseAdmin
+        .from("lesson_dedications")
+        .insert({
+          scope: companionDed!.scope,
+          lesson_id: companionDed!.scope === "lesson" ? companionDed!.lesson_id ?? null : null,
+          series_id: companionDed!.scope === "series" ? companionDed!.series_id ?? null : null,
+          dedication_type: companionDed!.dedication_type || "iluy_neshama",
+          dedicated_name: companionDed!.dedicated_name.trim(),
+          dedicator_name: companionDed!.dedicator_name?.trim() || fullName,
+          dedicator_email: email || null,
+          dedicator_phone: phone,
+          amount: 0, // אין חיוב נפרד — כלולה בתרומת הקמפיין (ראו donation_amount ב-raw_payload)
+          status: "pending",
+          user_id: donationMeta?.user_id || meta?.user_id || null,
+          raw_payload: { consent: consentAudit, included_in_donation: true, donation_amount: sum },
+        })
+        .select("id")
+        .single();
+      if (pendingDedErr) {
+        console.error("Companion dedication insert error:", pendingDedErr);
+        return res.status(500).json({ error: "יצירת ההקדשה הנלווית לתרומה נכשלה" });
+      }
+      companionDedicationId = pendingDed.id;
+    }
+
     // ───── Server-side price floor (anti price-tampering) ─────
     // A fixed-price purchase (store product, or a one-time wallet book) must be
     // charged at its DB price × quantity, minus only a server-validated coupon.
@@ -666,7 +753,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             donor_tax_id: (donationMeta?.donor_tax_id || "").replace(/\D/g, "").slice(0, 9) || null,
             user_id: donationMeta?.user_id || meta?.user_id || null,
             payment_status: "pending",
-            raw_payload: { consent: consentAudit },
+            // תרומה ⟵ הקדשה: כשיש companion_dedication, ה-webhook קורא את
+            // ה-id הזה ומפעיל את שורת lesson_dedications "pending" שנוצרה למעלה
+            // באותו callback שמסמן את התרומה כמאושרת.
+            raw_payload: companionDedicationId
+              ? { consent: consentAudit, companion_dedication_id: companionDedicationId }
+              : { consent: consentAudit },
             // Shipping address (populated when the buyer receives a physical product)
             shipping_street: (donationMeta as any)?.shipping_street || null,
             shipping_house_number: (donationMeta as any)?.shipping_house_number || null,

@@ -27,6 +27,17 @@ import {
 } from "@/hooks/useCampaigns";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard } from "lucide-react";
+import CampaignDedicationPicker, { type CompanionDedicationSelection } from "@/components/campaign/CampaignDedicationPicker";
+import { useDedicationSettings } from "@/hooks/useLessonDedications";
+
+/**
+ * תרומה ⟵ הקדשה (26.8.2026): קמפיינים שבהם התרומה יכולה גם לקבוע הקדשה
+ * (בלי חיוב נוסף — ראו CampaignDedicationPicker + api/grow/create-payment.ts
+ * `donationMeta.companion_dedication`). Allowlist מפורש ולא לפי-מחיר, כדי
+ * שלא "יזלוג" לקמפיין יהושע הקיים (שיש בו חבילות ≥₪600 גם הן) — הדף הגנרי
+ * משותף לשני הקמפיינים ואסור לשנות את מראה יהושע.
+ */
+const CAMPAIGNS_WITH_DEDICATION = new Set(["saadia"]);
 
 /* ─── helpers ───────────────────────────────────────────── */
 function useScrollY() {
@@ -67,6 +78,67 @@ function useInView(threshold = 0.15) {
 }
 
 const GOLD_GRAD = "linear-gradient(135deg, hsl(43 85% 62%), hsl(38 75% 48%))";
+
+/* ─── Countdown (26.8) — "הקמפיין מסתיים בעוד X ימים · Y שעות · Z דקות" ───
+ * עדכון חי כל שנייה. null (בלי ends_at, או שהמועד כבר עבר) → לא מרונדר כלום
+ * (החלטת סער: אחרי המועד רק מסתירים את הטיימר, לא חוסמים רכישה). */
+function useCountdown(endsAt: string | null) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!endsAt) return;
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [endsAt]);
+  if (!endsAt) return null;
+  const diff = new Date(endsAt).getTime() - now;
+  if (!Number.isFinite(diff) || diff <= 0) return null;
+  return {
+    days: Math.floor(diff / 86_400_000),
+    hours: Math.floor((diff % 86_400_000) / 3_600_000),
+    minutes: Math.floor((diff % 3_600_000) / 60_000),
+  };
+}
+
+function CountdownBar({ endsAt }: { endsAt: string | null }) {
+  const cd = useCountdown(endsAt);
+  if (!cd) return null;
+  const urgent = cd.days === 0;
+  const units: [string, number][] = [
+    ["ימים", cd.days],
+    ["שעות", cd.hours],
+    ["דק'", cd.minutes],
+  ];
+  return (
+    <div
+      role="timer"
+      aria-live="polite"
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 12,
+        padding: "9px 18px",
+        borderRadius: 99,
+        background: urgent ? "hsl(6 65% 22% / 0.65)" : "hsl(38 75% 55% / 0.14)",
+        border: `1px solid ${urgent ? "hsl(6 70% 58% / 0.55)" : "hsl(38 75% 55% / 0.32)"}`,
+        marginBlockEnd: 22,
+      }}
+    >
+      <span style={{ fontSize: 12, fontWeight: 800, color: urgent ? "hsl(6 85% 80%)" : "hsl(38 85% 74%)", whiteSpace: "nowrap" }}>
+        הקמפיין מסתיים בעוד
+      </span>
+      <span style={{ display: "flex", gap: 8 }}>
+        {units.map(([label, val]) => (
+          <span key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", minWidth: 32 }}>
+            <span style={{ fontSize: 16, fontWeight: 900, color: "white", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
+              {String(val).padStart(2, "0")}
+            </span>
+            <span style={{ fontSize: 9, color: "hsl(215 10% 75%)", marginBlockStart: 2 }}>{label}</span>
+          </span>
+        ))}
+      </span>
+    </div>
+  );
+}
 
 /* ─── Sticky nav ────────────────────────────────────────── */
 function StickyNav({
@@ -226,6 +298,10 @@ function HeroSection({
           </div>
         )}
 
+        <div>
+          <CountdownBar endsAt={campaign.ends_at} />
+        </div>
+
         <h1 style={{ margin: "0 0 20px", lineHeight: 1 }}>
           {campaign.hero_title_small && (
             <span
@@ -332,8 +408,15 @@ function HeroSection({
 
 /* ─── Video ─────────────────────────────────────────────── */
 function VideoSection({ campaign }: { campaign: CampaignRow }) {
+  // ⚠️ hook לפני כל return מוקדם — סדר-hooks קבוע
+  const [embedStarted, setEmbedStarted] = useState(false);
   if (!campaign.video_url) return null;
   const isEmbed = /youtube\.com|youtu\.be|vimeo\.com|drive\.google\.com/.test(campaign.video_url);
+  // פוסטר ל-embed (26.8): video_poster_url אם יש, אחרת hero_image_url —
+  // כדי שה-iframe (יוטיוב וכו') לא ייטען עד לחיצה (קליק-לניגון), במקום
+  // להיטען אוטומטית עם הדף. לא נוגע בסניף ה-<video> (mp4 מקומי, יהושע) —
+  // שם כבר יש poster+preload="metadata" מלכתחילה, בלי שינוי התנהגות.
+  const embedPoster = campaign.video_poster_url || campaign.hero_image_url || null;
   return (
     <section style={{ background: "hsl(215 55% 12%)", padding: "64px 24px 56px", display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
       {campaign.video_title && (
@@ -345,13 +428,66 @@ function VideoSection({ campaign }: { campaign: CampaignRow }) {
       <div style={{ width: "100%", maxWidth: 760, borderRadius: 18, overflow: "hidden", border: "1px solid hsl(38 75% 55% / 0.25)", boxShadow: "0 24px 64px hsl(215 55% 5% / 0.6)" }}>
         {isEmbed ? (
           <div style={{ position: "relative", paddingBlockEnd: "56.25%" }}>
-            <iframe
-              src={campaign.video_url}
-              title={campaign.video_title || "סרטון הקמפיין"}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
-            />
+            {embedStarted ? (
+              <iframe
+                src={`${campaign.video_url}${campaign.video_url.includes("?") ? "&" : "?"}autoplay=1`}
+                title={campaign.video_title || "סרטון הקמפיין"}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: "none" }}
+              />
+            ) : (
+              <button
+                type="button"
+                onClick={() => setEmbedStarted(true)}
+                aria-label="נגן את סרטון הקמפיין"
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: "none",
+                  padding: 0,
+                  cursor: "pointer",
+                  background: embedPoster ? `hsl(215 55% 8%) url(${embedPoster}) center/cover no-repeat` : "hsl(215 45% 18%)",
+                }}
+              >
+                <span
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(hsl(215 55% 8% / 0.15), hsl(215 55% 8% / 0.45))",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 76,
+                      height: 76,
+                      borderRadius: "50%",
+                      background: GOLD_GRAD,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      boxShadow: "0 12px 32px hsl(215 55% 5% / 0.5)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 0,
+                        height: 0,
+                        borderTop: "13px solid transparent",
+                        borderBottom: "13px solid transparent",
+                        borderInlineStart: "22px solid hsl(215 55% 12%)",
+                        marginInlineStart: 4,
+                      }}
+                    />
+                  </span>
+                </span>
+              </button>
+            )}
           </div>
         ) : (
           <video controls playsInline preload="metadata" poster={campaign.video_poster_url || undefined} style={{ width: "100%", display: "block", background: "black" }}>
@@ -882,6 +1018,12 @@ function InlineCheckoutModal({ campaign, tier, onClose }: { campaign: CampaignRo
   const [donorEmail, setDonorEmail] = useState("");
   const [tosAccepted, setTosAccepted] = useState(false);
 
+  // תרומה ⟵ הקדשה (26.8) — רק לקמפיינים ב-allowlist, ורק מסכום שמכסה הקדשה
+  const { data: dedicationSettings } = useDedicationSettings();
+  const [dedicationSelection, setDedicationSelection] = useState<CompanionDedicationSelection | null>(null);
+  const dedicationEligible =
+    CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) && tier.price >= (dedicationSettings?.lesson_price ?? 600);
+
   const needsShipping = tier.needs_shipping;
   const [shippingStreet, setShippingStreet] = useState("");
   const [shippingHouseNumber, setShippingHouseNumber] = useState("");
@@ -958,6 +1100,19 @@ function InlineCheckoutModal({ campaign, tier, onClose }: { campaign: CampaignRo
           shipping_city: needsShipping ? shippingCity.trim() : undefined,
           shipping_zip: shippingZip.trim() || undefined,
           shipping_notes: shippingNotes.trim() || undefined,
+          // תרומה⟵הקדשה (26.8): שורת lesson_dedications "pending" נוצרת בשרת
+          // מאותה תרומה, בלי חיוב נוסף (ראו create-payment.ts). מכוסה ע"י
+          // ה-@ts-expect-error שמעל (source) — כל האובייקט מסומן כ-excess.
+          companion_dedication: dedicationSelection
+            ? {
+                scope: dedicationSelection.scope,
+                lesson_id: dedicationSelection.lesson_id,
+                series_id: dedicationSelection.series_id,
+                dedication_type: dedicationSelection.dedication_type,
+                dedicated_name: dedicationSelection.dedicated_name,
+                dedicator_name: dedicationSelection.dedicator_name,
+              }
+            : undefined,
         },
       });
 
@@ -966,7 +1121,7 @@ function InlineCheckoutModal({ campaign, tier, onClose }: { campaign: CampaignRo
     } catch (err: any) {
       toast({ title: "שגיאה בפתיחת חלון התשלום", description: err.message, variant: "destructive" });
     }
-  }, [donorName, donorPhone, donorEmail, tosAccepted, tier, campaign, user, startPayment, toast, onClose, needsShipping, shippingStreet, shippingHouseNumber, shippingCity, shippingZip, shippingNotes]);
+  }, [donorName, donorPhone, donorEmail, tosAccepted, tier, campaign, user, startPayment, toast, onClose, needsShipping, shippingStreet, shippingHouseNumber, shippingCity, shippingZip, shippingNotes, dedicationSelection]);
 
   const isProcessing = paymentLoading;
   const addressOk = !needsShipping || (!!shippingStreet.trim() && !!shippingHouseNumber.trim() && !!shippingCity.trim());
@@ -1121,6 +1276,15 @@ function InlineCheckoutModal({ campaign, tier, onClose }: { campaign: CampaignRo
           </div>
         </div>
 
+        {dedicationEligible && (
+          <CampaignDedicationPicker
+            maxAmount={tier.price}
+            donorName={donorName}
+            settings={dedicationSettings}
+            onChange={setDedicationSelection}
+          />
+        )}
+
         {needsShipping && (
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <div style={{ fontSize: 12, fontWeight: 700, color: "hsl(215 30% 42%)", paddingBlockEnd: 4, borderBlockEnd: "1px solid hsl(38 30% 88%)" }}>
@@ -1256,7 +1420,13 @@ export default function CampaignPage() {
 
   const { campaign, tiers } = data;
   const goal = Number(campaign.goal_amount) || 0;
-  const progressPct = goal > 0 ? Math.min(100, Math.round((raised / goal) * 100)) : 0;
+  // סכום/תומכים כוללים = מקומי (חי) + חיצוני (givechak וכו', 26.8). קמפיין
+  // בלי external (יהושע: 0/0) → זהה למה שהיה מוצג עד עכשיו.
+  const externalRaised = Number(campaign.external_raised) || 0;
+  const externalDonors = Number(campaign.external_donors) || 0;
+  const totalRaised = raised + externalRaised;
+  const totalSupporters = supporters + externalDonors;
+  const progressPct = goal > 0 ? Math.min(100, Math.round((totalRaised / goal) * 100)) : 0;
 
   return (
     <div dir="rtl" style={{ fontFamily: "'Ploni', 'Heebo', system-ui, sans-serif", background: "hsl(215 55% 12%)" }}>
@@ -1274,16 +1444,16 @@ export default function CampaignPage() {
 
       {checkoutTier && <InlineCheckoutModal campaign={campaign} tier={checkoutTier} onClose={() => setCheckoutTier(null)} />}
 
-      <HeroSection campaign={campaign} raised={raised} supporters={supporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
+      <HeroSection campaign={campaign} raised={totalRaised} supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
       <VideoSection campaign={campaign} />
-      <ProofStrip campaign={campaign} supporters={supporters} />
+      <ProofStrip campaign={campaign} supporters={totalSupporters} />
       <TiersSection campaign={campaign} tiers={tiers} tierCounts={tierCounts} onSupport={setCheckoutTier} />
       <StorySection campaign={campaign} />
       <WhySection campaign={campaign} />
       <AuthorSection campaign={campaign} />
       <TimelineSection campaign={campaign} />
       <FaqSection campaign={campaign} />
-      <FinalCTA supporters={supporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
+      <FinalCTA supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
 
       <footer style={{ background: "hsl(215 55% 11%)", padding: "32px 24px", textAlign: "center" }}>
         <p style={{ color: "white", fontWeight: 700, margin: "0 0 8px" }}>תנועת בני ציון ללימוד תנ"ך</p>

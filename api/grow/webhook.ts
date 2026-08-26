@@ -513,6 +513,48 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       } catch (e) {
         console.error("Webhook: donation thank-you email failed (non-fatal):", e);
       }
+
+      // תרומה ⟵ הקדשה (26.8.2026): כשהתרומה נוצרה עם CampaignDedicationPicker,
+      // raw_payload.companion_dedication_id מצביע על שורת lesson_dedications
+      // "pending" שנוצרה באותה קריאת create-payment (בלי חיוב Grow משלה — ראו
+      // שם). מפעילים אותה כאן, על אותו callback שמאשר את התרומה עצמה — לא
+      // ממציאים הקדשה פעילה בלי אישור-תשלום אמיתי (אותו עיקרון כמו למעלה),
+      // ומעדכנים רק שורה שעדיין 'pending' (idempotent, replay-safe).
+      const companionDedId = (mergedPayload as any)?.companion_dedication_id;
+      if (companionDedId) {
+        try {
+          const { data: activated } = await supabase
+            .from("lesson_dedications")
+            .update({
+              status: "active",
+              asmachta: txData.asmachta ? String(txData.asmachta) : null,
+              paid_at: new Date().toISOString(),
+            })
+            .eq("id", companionDedId)
+            .eq("status", "pending")
+            .select("dedicated_name, dedicator_name, dedication_type, scope")
+            .maybeSingle();
+          if (activated) {
+            const { sendSingleEmail } = await import("../lib/digital-delivery.js");
+            const d: any = activated;
+            await sendSingleEmail(
+              "office@bneyzion.co.il",
+              "משרד בני ציון",
+              `הקדשה חדשה עלתה לאתר (כלולה בתרומת קמפיין) — ${d.dedicated_name || ""}`,
+              `<div dir="rtl" style="font-family:Arial;font-size:15px;line-height:1.7">
+                <p><b>הקדשה חדשה עלתה לאתר, כלולה בתרומת קמפיין (בלי חיוב נוסף).</b></p>
+                <p>מוקדש: <b>${d.dedicated_name || "—"}</b><br/>
+                   מקדיש: ${d.dedicator_name || "—"}<br/>
+                   סוג: ${d.dedication_type || "—"} · היקף: ${d.scope === "series" ? "סדרה" : "שיעור"}</p>
+                <p>ההקדשה מוצגת עכשיו בעמוד השיעור/הסדרה. אם הנוסח לא מתאים —
+                   אפשר להעביר לארכיון מ<a href="https://bneyzion.vercel.app/admin/dedications">עמוד ההקדשות באדמין</a>.</p>
+              </div>`,
+            );
+          }
+        } catch (e) {
+          console.error("Webhook: companion dedication activation failed (non-fatal):", e);
+        }
+      }
     }
 
     return res.status(200).json({ received: true, processed: true });
