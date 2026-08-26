@@ -26,7 +26,8 @@ import {
   type CampaignTierRow,
 } from "@/hooks/useCampaigns";
 import { sanitizeHtml } from "@/lib/sanitize";
-import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard } from "lucide-react";
+import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark } from "lucide-react";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import CampaignDedicationPicker, { type CompanionDedicationSelection } from "@/components/campaign/CampaignDedicationPicker";
 import { useDedicationSettings } from "@/hooks/useLessonDedications";
 
@@ -78,6 +79,8 @@ function useInView(threshold = 0.15) {
 }
 
 const GOLD_GRAD = "linear-gradient(135deg, hsl(43 85% 62%), hsl(38 75% 48%))";
+const SAADIA_PORTRAIT =
+  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/saadia-campaign/hero-photo.png";
 
 /* ─── Countdown (26.8) — "הקמפיין מסתיים בעוד X ימים · Y שעות · Z דקות" ───
  * עדכון חי כל שנייה. null (בלי ends_at, או שהמועד כבר עבר) → לא מרונדר כלום
@@ -193,10 +196,8 @@ function StickyNav({
   return (
     <div
       style={{
-        position: "fixed",
+        position: "sticky",
         insetBlockStart: 0,
-        insetInlineStart: 0,
-        insetInlineEnd: 0,
         zIndex: 60,
         background: scrolled ? "hsl(215 55% 14% / 0.97)" : "transparent",
         backdropFilter: scrolled ? "blur(16px)" : "none",
@@ -303,7 +304,7 @@ function HeroSection({
           <img
             src={campaign.hero_image_url}
             alt={campaign.hero_title || campaign.title}
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", opacity: 0.5 }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 20%", opacity: 0.6 }}
           />
         )}
         <div
@@ -327,6 +328,22 @@ function HeroSection({
           textAlign: "center",
         }}
       >
+        {campaign.hero_image_url && (
+          <img
+            src={SAADIA_PORTRAIT}
+            alt="סעדיה יעקב דרעי הי״ד"
+            style={{
+              width: "clamp(108px, 14vw, 150px)",
+              aspectRatio: "3 / 4",
+              objectFit: "cover",
+              objectPosition: "center 12%",
+              borderRadius: 18,
+              border: "3px solid hsl(43 88% 62%)",
+              boxShadow: "0 12px 36px hsl(215 55% 5% / 0.6)",
+              marginBlockEnd: 14,
+            }}
+          />
+        )}
         {campaign.hero_eyebrow && (
           <div
             style={{
@@ -582,7 +599,7 @@ function VideoSection({ campaign }: { campaign: CampaignRow }) {
                         height: 0,
                         borderTop: "13px solid transparent",
                         borderBottom: "13px solid transparent",
-                        borderInlineStart: "22px solid hsl(215 55% 12%)",
+                        borderLeft: "22px solid hsl(215 55% 12%)", marginLeft: 6,
                         marginInlineStart: 4,
                       }}
                     />
@@ -697,24 +714,20 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
         </div>
       )}
 
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8 }}>
-        <div>
-          <div style={{ fontSize: 34, fontWeight: 900, lineHeight: 1, color: tier.highlight ? "hsl(38 85% 72%)" : "hsl(215 55% 22%)", letterSpacing: "-0.02em" }}>
-            ₪{Number(tier.price).toLocaleString()}
-          </div>
-          {tier.note && <div style={{ fontSize: 11, color: tier.highlight ? "hsl(215 10% 60%)" : "hsl(215 20% 50%)", marginBlockStart: 3 }}>{tier.note}</div>}
+      <div style={{ textAlign: "center", display: "flex", flexDirection: "column", gap: 4 }}>
+        <div style={{ fontSize: 17, fontWeight: 900, color: tier.highlight ? "white" : "hsl(215 55% 18%)", lineHeight: 1.2 }}>{tier.name}</div>
+        <div style={{ fontSize: 34, fontWeight: 900, lineHeight: 1.05, color: tier.highlight ? "hsl(38 85% 72%)" : "hsl(215 55% 22%)", letterSpacing: "-0.02em" }}>
+          ₪{Number(tier.price).toLocaleString()}
         </div>
-        <div style={{ textAlign: "start", flex: 1 }}>
-          <div style={{ fontSize: 15, fontWeight: 800, color: tier.highlight ? "white" : "hsl(215 55% 18%)", lineHeight: 1.25 }}>{tier.name}</div>
-          {tier.headline && (
-            <div style={{ fontSize: 13, fontWeight: 500, color: tier.highlight ? "hsl(38 85% 76%)" : "hsl(215 35% 38%)", marginBlockStart: 3 }}>{tier.headline}</div>
-          )}
-        </div>
+        {tier.headline && (
+          <div style={{ fontSize: 13, fontWeight: 600, color: tier.highlight ? "hsl(38 85% 76%)" : "hsl(215 35% 38%)" }}>{tier.headline}</div>
+        )}
+        {tier.note && <div style={{ fontSize: 12, color: tier.highlight ? "hsl(215 10% 64%)" : "hsl(215 20% 50%)" }}>{tier.note}</div>}
       </div>
 
       <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: 7, flex: 1 }}>
         {tier.perks.map((item, i) => (
-          <li key={i} style={{ fontSize: 14, display: "flex", alignItems: "flex-start", gap: 7, color: tier.highlight ? "hsl(215 10% 86%)" : "hsl(215 30% 28%)" }}>
+          <li key={i} style={{ fontSize: 13.5, display: "flex", alignItems: "flex-start", justifyContent: "center", textAlign: "center", gap: 7, color: tier.highlight ? "hsl(215 10% 86%)" : "hsl(215 30% 28%)" }}>
             <span style={{ color: "hsl(38 75% 55%)", fontWeight: 700, flexShrink: 0, marginBlockStart: 1 }}>✓</span>
             {item}
           </li>
@@ -1106,11 +1119,11 @@ function DedicationOptionsSection({
   const s = settings;
   if (!s) return null;
   const options = [
-    { icon: "🕯️", price: s.lesson_price, title: "הקדשת שיעור", desc: "בוחרים שיעור באתר — וההקדשה שלכם מופיעה לצידו, לכל לומד, לתמיד." },
-    { icon: "⭐", price: s.lesson_price_popular, title: "שיעור של רב מבוקש", desc: "הקדשת שיעור מהרבנים המבוקשים באתר — אלפי צפיות והאזנות." },
-    { icon: "📖", price: s.series_price, title: "הקדשת סדרה", desc: "סדרת שיעורים שלמה על שמכם — עד 20 שיעורים." },
-    { icon: "📚", price: s.series_price_mid, title: "סדרה בינונית", desc: "סדרה של 21 שיעורים ומעלה — נוכחות רחבה באתר." },
-    { icon: "🏛️", price: s.series_price_large, title: "סדרה גדולה", desc: "סדרה של 61 שיעורים ומעלה — הנצחה מרכזית באגף שלם." },
+    { Icon: Flame, price: s.lesson_price, title: "הקדשת שיעור", desc: "בוחרים שיעור באתר — וההקדשה שלכם מופיעה לצידו, לכל לומד, לתמיד." },
+    { Icon: Star, price: s.lesson_price_popular, title: "שיעור של רב מבוקש", desc: "הקדשת שיעור מהרבנים המבוקשים באתר — אלפי צפיות והאזנות." },
+    { Icon: BookOpen, price: s.series_price, title: "הקדשת סדרה", desc: "סדרת שיעורים שלמה על שמכם — עד 20 שיעורים." },
+    { Icon: Library, price: s.series_price_mid, title: "סדרה בינונית", desc: "סדרה של 21 שיעורים ומעלה — נוכחות רחבה באתר." },
+    { Icon: Landmark, price: s.series_price_large, title: "סדרה גדולה", desc: "סדרה של 61 שיעורים ומעלה — הנצחה מרכזית באגף שלם." },
   ];
   return (
     <section id="dedication-options" style={{ position: "relative", padding: "72px 22px 80px", overflow: "hidden" }}>
@@ -1119,10 +1132,27 @@ function DedicationOptionsSection({
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, hsl(215 55% 10% / 0.88), hsl(215 55% 12% / 0.72) 45%, hsl(215 55% 10% / 0.92))" }} />
       </div>
       <div style={{ position: "relative", zIndex: 1, maxWidth: 1080, margin: "0 auto", textAlign: "center" }}>
-        <p style={{ color: "hsl(38 85% 66%)", fontWeight: 800, fontSize: 13, letterSpacing: "0.18em", margin: "0 0 10px" }}>הנצחה באתר התנ״ך</p>
-        <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 900, color: "white", margin: "0 0 12px", lineHeight: 1.15 }}>
-          ההקדשה שלכם — <span style={{ color: "hsl(38 85% 68%)" }}>באתר, לתמיד</span>
-        </h2>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "clamp(16px, 3vw, 34px)", flexWrap: "wrap", marginBlockEnd: 10 }}>
+          <img
+            src={SAADIA_PORTRAIT}
+            alt="סעדיה יעקב דרעי הי״ד מחייך עם התנ״ך"
+            style={{
+              width: "clamp(96px, 12vw, 136px)",
+              aspectRatio: "3 / 4",
+              objectFit: "cover",
+              objectPosition: "center 12%",
+              borderRadius: 16,
+              border: "3px solid hsl(43 88% 62%)",
+              boxShadow: "0 10px 30px hsl(215 55% 5% / 0.55)",
+            }}
+          />
+          <div style={{ textAlign: "start" }}>
+            <p style={{ color: "hsl(38 85% 66%)", fontWeight: 800, fontSize: 13, letterSpacing: "0.18em", margin: "0 0 8px" }}>הנצחה באתר התנ״ך · לזכר סעדיה הי״ד</p>
+            <h2 style={{ fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 900, color: "white", margin: 0, lineHeight: 1.15 }}>
+              ההקדשה שלכם — <span style={{ color: "hsl(38 85% 68%)" }}>באתר, לתמיד</span>
+            </h2>
+          </div>
+        </div>
         <p style={{ color: "hsl(215 10% 82%)", fontSize: "clamp(15px, 1.9vw, 18px)", maxWidth: 640, margin: "0 auto 40px", lineHeight: 1.6 }}>
           כל תורם בסכומים האלה בוחר תוכן באתר — שיעור או סדרה — וההקדשה, לעילוי נשמה או לכבוד יקיריכם,
           מוצגת לצידו לכל המבקרים. כמו הקדשה בספר תורה — רק חיה, נלמדת, וגדלה.
@@ -1142,7 +1172,20 @@ function DedicationOptionsSection({
                 backdropFilter: "blur(8px)",
               }}
             >
-              <div style={{ fontSize: 30, lineHeight: 1 }}>{o.icon}</div>
+              <div
+                style={{
+                  width: 52,
+                  height: 52,
+                  borderRadius: "50%",
+                  background: "hsl(38 75% 55% / 0.14)",
+                  border: "1.5px solid hsl(38 75% 55% / 0.5)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <o.Icon size={26} color="hsl(43 88% 64%)" strokeWidth={1.8} />
+              </div>
               <div style={{ fontSize: 17, fontWeight: 900, color: "white" }}>{o.title}</div>
               <div style={{ fontSize: 24, fontWeight: 900, color: "hsl(38 85% 68%)" }}>₪{o.price.toLocaleString()}</div>
               <div style={{ fontSize: 13, color: "hsl(215 10% 78%)", lineHeight: 1.55, flex: 1 }}>{o.desc}</div>
@@ -1664,6 +1707,7 @@ export default function CampaignPage() {
         .campaign-rich-text-dark p:last-child { margin-block-end: 0; }
       `}</style>
 
+      <CampaignBanner />
       <StickyNav scrolled={scrollY > 80} title={campaign.hero_title || campaign.title} progressPct={progressPct} onSupportClick={scrollToTiers} />
 
       {checkoutTier && <InlineCheckoutModal campaign={campaign} tier={checkoutTier} initialDedication={checkoutWithDedication} onClose={() => setCheckoutTier(null)} />}
