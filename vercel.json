@@ -22,6 +22,17 @@
       "has": [
         {
           "type": "host",
+          "value": "bneyzion-saadia.vercel.app"
+        }
+      ],
+      "destination": "/campaign/saadia",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
           "value": "club.bneyzion.co.il"
         }
       ],
