@@ -497,9 +497,11 @@ function useEndSubscription() {
       if (data.mode === "grow_cancelled") {
         toast.success("ההו\"ק בוטלה ב-Grow והגישה נקטעה — הביטול מלא");
       } else {
+        // 20.8 (הערת אביה) / 21.8 (הבטחת סער): הבאנר נשאר עד סגירה ידנית —
+        // duration:Infinity (לא נעלם לבד) + closeButton:true (יש עם מה לסגור).
         toast.warning(
           "הגישה נקטעה, אבל לא נמצאה עסקת Grow לביטול אוטומטי — יש לבטל את ההו\"ק ידנית בדשבורד Grow",
-          { duration: 10000 },
+          { duration: Infinity, closeButton: true },
         );
       }
     },
