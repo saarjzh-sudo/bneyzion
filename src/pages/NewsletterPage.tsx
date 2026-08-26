@@ -10,6 +10,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import { useSEO } from "@/hooks/useSEO";
 import { hebrewDateLabel } from "@/lib/hebrewDate";
@@ -122,6 +123,7 @@ export default function NewsletterPage() {
 
   return (
     <div dir="rtl" style={{ background: PARCHMENT, minHeight: "100vh" }}>
+      <CampaignBanner />
       <DesignHeader />
 
       {/* Hero — parchment, light, dark readable text */}

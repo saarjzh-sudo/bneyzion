@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -164,6 +165,7 @@ export default function DailyVideoPage() {
 
   return (
     <div style={{ minHeight: "100vh", background: PARCHMENT, fontFamily: "Ploni, sans-serif" }}>
+      <CampaignBanner />
       <DesignHeader />
 
       {/* Hero */}

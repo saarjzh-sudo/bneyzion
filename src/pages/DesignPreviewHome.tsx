@@ -17,6 +17,7 @@ import { useUserAccess } from "@/hooks/useUserAccess";
 import logoColor from "@/assets/logo-horizontal-color.png";
 import logoBright from "@/assets/logo-horizontal-bright.png";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import DesignMobileBottomNav from "@/components/layout-v2/DesignMobileBottomNav";
 import { PromoProvider } from "@/components/promo";
@@ -2148,6 +2149,9 @@ export default function DesignPreviewHome() {
       {/* רמה 27 (יואב 16:31): רצועת "האתר בהרצה" — בדף הבית מעל ההדר, כי ההירו
           חופף להדר (marginTop:-96) ורצועה ביניהם הייתה נבלעת בו. */}
       <TrialStrip />
+
+      {/* פס הקמפיין (25.8) — מעל ההדר, מתחת לרצועת ההרצה */}
+      <CampaignBanner />
 
       {/* Global header — transparent over hero, burger opens drawer sidebar.
           10.7 (סער): ההירו בהיר (וידאו-אקוורל) → שורת ההדר בטקסט כהה, לא לבן */}

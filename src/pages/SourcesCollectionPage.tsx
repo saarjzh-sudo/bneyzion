@@ -17,6 +17,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, ScrollText, BookOpen } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import DesignHeader from "@/components/layout-v2/DesignHeader";
+import CampaignBanner from "@/components/common/CampaignBanner";
 import DesignFooter from "@/components/layout-v2/DesignFooter";
 import { useSEO } from "@/hooks/useSEO";
 import { sanitizeHtml } from "@/lib/sanitize";
@@ -191,6 +192,7 @@ export default function SourcesCollectionPage() {
 
   return (
     <div dir="rtl" style={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: PARCHMENT }}>
+      <CampaignBanner />
       <DesignHeader transparentOnTop={false} />
 
       {/* Hero — תמונת האקוורל של הפינה כרקע, עם שכבת-קרם לקריאות (יואב 17.7) */}
