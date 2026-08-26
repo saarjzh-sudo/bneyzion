@@ -8,8 +8,9 @@
 import { Link } from "react-router-dom";
 import { useSiteBannerCampaign, useLiveCampaignStats } from "@/hooks/useCampaigns";
 
+// 26.8 (סער): אותה תמונת-הירו כמו בדף הקמפיין — סעדיה בהרי יהודה
 const BG =
-  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/saadia-campaign/dedication-bg.png";
+  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/saadia-campaign/hero-saadia-wide.png";
 const GOLD_GRAD = "linear-gradient(135deg, hsl(43 90% 62%), hsl(38 78% 48%))";
 
 function daysLeft(endsAt: string | null): number | null {
@@ -32,8 +33,8 @@ export default function HomeCampaignStrip() {
   return (
     <section dir="rtl" style={{ position: "relative", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0 }}>
-        <img src={BG} alt="" aria-hidden style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%" }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, hsl(215 55% 10% / 0.94), hsl(215 55% 12% / 0.78) 55%, hsl(215 55% 10% / 0.55))" }} />
+        <img src={BG} alt="" aria-hidden style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "left 30%" }} />
+        <div className="bz-home-campaign-overlay" style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, hsl(215 58% 9% / 0.88), hsl(215 55% 11% / 0.72) 50%, hsl(215 55% 12% / 0.34) 82%, hsl(215 55% 12% / 0.15))" }} />
       </div>
 
       <div
@@ -88,6 +89,13 @@ export default function HomeCampaignStrip() {
           משלימים את הבניין — לתרומה ←
         </Link>
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .bz-home-campaign-overlay {
+            background: linear-gradient(to bottom, hsl(215 55% 10% / 0.72), hsl(215 55% 11% / 0.88)) !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

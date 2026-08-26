@@ -114,6 +114,7 @@ export default function CampaignBanner() {
       </span>
 
       <span
+        className="bz-campaign-banner-cta"
         style={{
           display: "inline-flex",
           alignItems: "center",
@@ -143,6 +144,10 @@ export default function CampaignBanner() {
           }
           .bz-campaign-banner-progress span:first-child {
             width: 96px;
+          }
+          /* בנייד כל הפס קליקבילי — הכפתור מיותר וגם נבלע מתחת להירו של דף הבית */
+          .bz-campaign-banner-cta {
+            display: none !important;
           }
         }
       `}</style>
