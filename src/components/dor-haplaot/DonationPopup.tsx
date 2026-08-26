@@ -6,7 +6,7 @@ const DONATION_URL = "https://givechak.co.il/Saadia?ref=r3";
 
 /**
  * פופאפ התרומה של דור הפלאות — קופץ אחרי 25 שניות או 65% גלילה.
- * אחרי לחיצה על "תרמו" נפתחת זרימת קבלת החוברת (70 הניסים) — כמו בפופאפ החוברת.
+ * אחרי לחיצה על "תרמו" נפתחת זרימת קבלת החוברת (78 הניסים) — כמו בפופאפ החוברת.
  */
 export default function DonationPopup() {
   const [show, setShow] = useState(false);
@@ -72,7 +72,7 @@ export default function DonationPopup() {
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px]">
                 עזרו לנו לבנות את אתר התנ״ך לזכר{" "}
                 <strong className="text-[hsl(0_60%_25%)]">סעדיה דרעי הי״ד</strong>{" "}
-                — ותקבלו את חוברת כל 70 הניסים להדפסה!
+                — ותקבלו את חוברת כל 78 הניסים להדפסה!
               </p>
               <a
                 href={DONATION_URL}
@@ -126,7 +126,7 @@ export default function DonationPopup() {
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px]">
                 <strong className="text-[hsl(142_50%_25%)]">תודה ענקית!</strong>
                 <br />
-                הנה החוברת המלאה להדפסה — 70 ניסים עם חיבור תנ״כי.
+                הנה החוברת המלאה להדפסה — 78 ניסים עם חיבור תנ״כי.
               </p>
               <a
                 href={BOOKLET_URL}

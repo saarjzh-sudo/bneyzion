@@ -503,14 +503,17 @@ export default function DorHaplaot() {
                 onClick={() => setBookletPopupOpen(true)}
                 className="group text-right rounded-2xl border border-[hsl(30_30%_82%)] bg-white overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 hover:border-[#C4A265]/50 w-full"
               >
+                {/* 26.8 (עדכון לחוברת v37, 78 ניסים): הכריכה החדשה פורטרט
+                    (1040×1477, הייתה landscape) — object-contain במקום
+                    object-cover כדי שהכריכה השלמה תיראה ולא תיחתך לפס דק. */}
                 <img
                   src={bookletCover}
                   alt="חוברת דור הפלאות להדפסה"
-                  className="w-full h-40 object-cover"
+                  className="w-full h-40 object-contain bg-[#1A2744]/[0.04] p-2"
                 />
                 <div className="p-5 md:p-6 flex flex-col items-center gap-3">
                   <h3 className="font-kedem font-bold text-base md:text-lg text-[#1A2744] text-center leading-tight">
-                    קבלו את כל 70 הניסים בחוברת מעוצבת להדפסה!
+                    קבלו את כל 78 הניסים בחוברת מעוצבת להדפסה!
                   </h3>
                   <p className="font-ploni font-bold text-sm text-[hsl(30_25%_30%)] leading-relaxed text-center">
                     תרמו לבניית אתר התנ״ך לזכר סעדיה הי״ד וקבלו את החוברת המלאה

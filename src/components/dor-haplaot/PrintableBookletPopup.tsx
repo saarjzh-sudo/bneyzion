@@ -3,9 +3,9 @@ import { X, Heart, CheckCircle, Download } from "lucide-react";
 import bookletCover from "@/assets/dor-haplaot-booklet-cover.webp";
 
 const DONATION_URL = "https://givechak.co.il/Saadia?ref=r3";
-// החוברת המעודכנת (70 ניסים, 8.7.2026) — על Storage של האתר (Rule 13), ?download= כופה הורדה
+// החוברת המעודכנת (78 ניסים, v37, 26.8.2026 — הערת אביה 24.8) — על Storage של האתר (Rule 13), ?download= כופה הורדה
 export const BOOKLET_URL =
-  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/dor-haplaot/dor-haplaot-booklet-70.pdf?download=dor-haplaot-70-nisim.pdf";
+  "https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/dor-haplaot/dor-haplaot-booklet-78.pdf?download=dor-haplaot-78-nisim.pdf";
 
 type Step = 1 | 2 | 3;
 
@@ -64,7 +64,7 @@ export default function PrintableBookletPopup({ open, onClose }: { open: boolean
                 <img src={bookletCover} alt="חוברת דור הפלאות" className="w-56 h-auto rounded-lg shadow-md" />
               </div>
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px] text-center">
-                מוזמנים לקבל את <strong className="text-[hsl(0_60%_25%)]">כל 70 הניסים בחוברת מעוצבת להדפסה</strong> — עם חיבור תנ״כי מרומם לכל נס!
+                מוזמנים לקבל את <strong className="text-[hsl(0_60%_25%)]">כל 78 הניסים בחוברת מעוצבת להדפסה</strong> — עם חיבור תנ״כי מרומם לכל נס!
               </p>
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px] text-center">
                 תרמו ל<strong className="text-[hsl(0_60%_25%)]">בניית אתר התנ״ך השלם לזכר סעדיה דרעי הי״ד</strong>{" "}
@@ -122,7 +122,7 @@ export default function PrintableBookletPopup({ open, onClose }: { open: boolean
               <p className="font-ploni text-[hsl(30_25%_20%)] leading-[1.8] text-[15px] text-center">
                 <strong className="text-[hsl(142_50%_25%)]">תודה ענקית!</strong>
                 <br />
-                הנה החוברת המלאה להדפסה — 70 ניסים עם חיבור תנ״כי.
+                הנה החוברת המלאה להדפסה — 78 ניסים עם חיבור תנ״כי.
                 <br />
                 שתפו עם חברים ומשפחה! 🇮🇱
               </p>
