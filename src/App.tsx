@@ -315,7 +315,10 @@ const GlobalChrome = () => {
     <>
       <CartDrawer />
       <FloatingPlayer />
-      {onCampaignPage ? <InstallPrompt suppress /> : <InstallPrompt />}
+      {/* 28.8 (סער): "לא רוצה כרגע בכלל שיקפוץ לשמור את האפליקציה עד שלא נעבור על זה".
+          suppress תמיד — עדיין mount כדי לבלום עם preventDefault את חלון-ההתקנה
+          הנייטיבי של הדפדפן. להחזרה: להחליף בחזרה ל-{onCampaignPage ? ... : <InstallPrompt />} */}
+      <InstallPrompt suppress />
       <UpdatePrompt />
       {/* הודעת עוגיות — גלובלית, מהעמוד הראשון שנכנסים אליו (הערת אלי 19.7; קודם חיה רק ב-Layout הישן) */}
       <CookieConsent />

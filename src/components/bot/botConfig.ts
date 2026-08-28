@@ -9,7 +9,7 @@ export const BOT_CONFIG = {
   edgeFunctionPath: "/functions/v1/navigation-bot",
 
   // First-visit popup delay (ms)
-  firstVisitDelayMs: 3000,
+  firstVisitDelayMs: 30000, // 28.8 (סער): 3 שניות היה מוקדם מדי — בנייד הפאנל כיסה את כל ההירו לפני שהספיקו לראות את הדף
 
   // localStorage keys
   storage: {

@@ -94,11 +94,12 @@ export default function CampaignBanner() {
             }}
           />
         </span>
-        <span style={{ fontSize: "0.95rem", fontWeight: 900, color: colors.goldShimmer, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
+        <span className="bz-campaign-banner-pct" style={{ fontSize: "0.95rem", fontWeight: 900, color: colors.goldShimmer, whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
           {pct}%
         </span>
         {daysLeft != null && (
           <span
+            className="bz-campaign-banner-days"
             style={{
               background: "hsl(4 72% 34%)",
               color: "white",
@@ -134,17 +135,34 @@ export default function CampaignBanner() {
       </span>
 
       <style>{`
+        /* נייד (סער 28.8): הפס תפס 84px בשתי שורות רפויות ונראה עמוס.
+           נשאר בשתי שורות — הכותרת ארוכה מדי לשורה אחת ואסור לקצץ את
+           "לזכר סעדיה דרעי הי״ד" — אבל הכל הודק ל-~56px. */
         @media (max-width: 640px) {
           .bz-campaign-banner {
-            gap: 0.45rem;
+            gap: 0.28rem !important;
+            padding: 0.45rem 0.7rem !important;
           }
           .bz-campaign-banner-title {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
+            line-height: 1.25;
             width: 100%;
             justify-content: center;
+            gap: 0.3rem;
           }
-          .bz-campaign-banner-progress span:first-child {
-            width: 96px;
+          .bz-campaign-banner-progress {
+            gap: 0.4rem !important;
+          }
+          .bz-campaign-banner-progress > span:first-child {
+            width: 104px !important;
+            height: 7px !important;
+          }
+          .bz-campaign-banner-pct {
+            font-size: 0.8rem !important;
+          }
+          .bz-campaign-banner-days {
+            font-size: 0.64rem !important;
+            padding: 0.14rem 0.5rem !important;
           }
           /* בנייד כל הפס קליקבילי — הכפתור מיותר וגם נבלע מתחת להירו של דף הבית */
           .bz-campaign-banner-cta {

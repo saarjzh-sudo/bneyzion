@@ -298,24 +298,41 @@ function StatsBar() {
     { num: copy("copy.home.stat3_num", "+1,300"),  label: copy("copy.home.stat3_label", "סדרות לימוד") },
   ];
   return (
-    <div dir="rtl" style={{ background: "linear-gradient(180deg, rgba(32,79,73,0.88) 0%, rgba(18,48,44,0.94) 100%), url('/family-bible/deep-texture.jpg') center / cover", padding: "1.25rem 1.5rem" }}>
-      <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex",
+    <div dir="rtl" className="bz-home-statsbar" style={{ background: "linear-gradient(180deg, rgba(32,79,73,0.88) 0%, rgba(18,48,44,0.94) 100%), url('/family-bible/deep-texture.jpg') center / cover", padding: "1.25rem 1.5rem" }}>
+      {/* נייד (סער 28.8): שלושת המספרים גלשו לשתי שורות — נמדד 273px תוכן + 64px
+          מרווחים מול מיכל של 327px, כלומר חריגה של 10px בלבד. הודקו המרווח,
+          הגופנים והפדינג כדי שייכנסו לשורה אחת גם במסך 320px. */}
+      <div className="bz-home-stats" style={{ maxWidth: 1280, margin: "0 auto", display: "flex",
                     justifyContent: "center", gap: "clamp(2rem, 6vw, 5rem)", flexWrap: "wrap" }}>
         {stats.map(({ num, label }) => (
           <div key={label} style={{ textAlign: "center" }}>
-            <div style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
+            <div className="bz-home-stat-num" style={{ fontFamily: "Kedem, Frank Ruhl Libre, serif", fontWeight: 900,
                           fontSize: "1.5rem",
                           background: `linear-gradient(135deg, ${GOLD_SHIMMER}, ${GOLD_LIGHT})`,
                           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
               {num}
             </div>
-            <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
+            <div className="bz-home-stat-label" style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.75rem",
                           color: "rgba(255,255,255,0.45)", marginTop: "0.15rem" }}>
               {label}
             </div>
           </div>
         ))}
       </div>
+      <style>{`
+        @media (max-width: 640px) {
+          .bz-home-statsbar { padding: 1.1rem 0.85rem !important; }
+          .bz-home-stats {
+            flex-wrap: nowrap !important;
+            gap: 1.05rem !important;
+          }
+          .bz-home-stat-num { font-size: 1.25rem !important; }
+          .bz-home-stat-label {
+            font-size: 0.68rem !important;
+            white-space: nowrap !important;
+          }
+        }
+      `}</style>
       {/* רמה 20 (הרב יואב 16.7 13:53): שורת הנצחה קבועה — נערכת ממרכז השליטה */}
       <div style={{ maxWidth: 1280, margin: "0.9rem auto 0", paddingTop: "0.75rem",
                     borderTop: "1px solid rgba(232,213,160,0.22)", textAlign: "center" }}>
