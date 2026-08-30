@@ -8661,3 +8661,12 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 **⚠️ לקח hooks:** הגרסה הראשונה שמה את ה-early-return לפני ה-`useMemo` של המחיר → "Rendered fewer hooks" → מסך "משהו השתבש" בכל דפי הסדרות. נתפס באימות-preview לפני alias (השער עבד). early-return בקומפוננטה עם hooks = תמיד אחרי הקריאה האחרונה.
 **אומת ב-preview + חי:** מוקדשת (b6eac28f) = תג בלי כפתור · לא-מוקדשת ("בין שאול לדוד" 0094d88d) = כפתור מוצג.
 **commits:** `e91e…`+fix · **tag:** `level21b-2026-07-17` · **prod:** `dpl_3K4DX5SP6WJUkVvST5PVtGpG7nJt` · **rollback:** alias ל-`dpl_GJZpfReTEuF1yh4UhhkQyWjqvCp7`.
+
+## 30.8.2026 — סבב SEO אחרי מעבר הדומיין + סיכום נעלם בכרטיס שיעור
+
+**סשן בנצי (וואן-מן-שואו). commits:** `90530ee7` · `c9ffb4cc` · `8b9ec10b` · `0a9f0dcc` — כולם על main (פרוד).
+
+1. **הפניות מהאתר הישן (הרב יואב: "יונדב זר בגוגל מוביל לכל הרבנים"):** עמוד רב אישי באתר הישן = `‎/מאגר-השיעורים-והמאמרים/רבנים?rav=<שם>‎`. הפרמטר נזרק גם בשרת (api/legacy-redirect.js) וגם בקליינט. תוקן בשלוש שכבות: (א) legacy-redirect.js — לוקאפ rav מול טבלת rabbis (exact → עם-תואר → ההתאמה הקצרה, בגלל עמוד-הצמד "יואב אוריאל ועמנואל בן ארצי") → 301 `/rabbis/:slug`, ופולבק `רבנים`→`/rabbis`; (ב) vercel.json — `trailingSlash:false` (כתובות club עם `/` סופי עקפו את כללי ה-redirect), catch-all club→apex, פרשות/נחיתה/media בשורש, rewrite `מאגר-עזרי-הלמידה/:path+`→legacy-redirect עם `fallback=/teachers`; (ג) **NotFound.tsx + legacyResolver.ts — אותה לוגיקה בצד-לקוח** (`LegacyRabbiRedirect`, `resolveRabbiSlug`), כי אצל מבקר חוזר ה-SW (`navigateFallback`) מגיש index.html והשרת לא נשאל בכלל.
+2. **🧠 לקח קבוע: כל תיקון ניווט/הפניה חייב אימות במסלול ה-SW (מבקר חוזר בדפדפן אמיתי), לא רק curl.** וגם: SW חדש מחכה (registerType:prompt) — משתמש קיים מקבל את התיקון רק אחרי סגירת כל טאבי האתר או אישור באנר-העדכון.
+3. **Search Console חובר:** נכס הדומיין bneyzion.co.il אומת (TXT ב-Vercel DNS), sitemap הוגש, 4 בקשות-אינדוקס (עמודי יונדב-זר ויואב-אוריאל החדשים + 2 הכתובות הישנות). לנכס דאטה היסטורית ~29K קליקים/3ח'. כלי אודיט חוזר: `scripts/bneyzion-seo-audit/` בריפו וואן-מן-שואו.
+4. **סיכום שיעור נעלם (אביה: "הקדמה לספר חגי בלי סיכום"):** הקובץ היה ב-DB כל הזמן (`community_course_lessons.attachment_url`, "סיכום שיעור - היציאה מבבל לארץ ישראל.pdf") — אבל `MediaCard` ב-WeeklyBookDetail מציג מדיה ראשית אחת (וידאו > שמע > צרופה), כך שצרופה לצד וידאו בלתי-נראית. תוקן: כפתור "סיכום" בכרטיס כשיש וידאו/שמע + צרופה (רוחבי לכל הספרים). אומת בבאנדל החי (`WeeklyBookDetail-vfYQT4NU.js`); תצוגת-משתמש דורשת גישת-מנוי, לא אומתה מחשבון אמיתי.
