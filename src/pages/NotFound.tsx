@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { BookOpen, Home, Search, Library } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import GlobalSearch from "@/components/search/GlobalSearch";
-import { isLegacyContentPath, resolveLegacyContentUrl } from "@/lib/legacyResolver";
+import { isLegacyContentPath, resolveLegacyContentUrl, resolveRabbiSlug } from "@/lib/legacyResolver";
 import { useSiteCopy } from "@/hooks/useSiteSettings";
 
 /**
@@ -102,6 +102,49 @@ const LegacyContentRedirect = ({ decodedPath }: { decodedPath: string }) => {
   );
 };
 
+/**
+ * Old-site personal rabbi pages were a query param on the rabbis index:
+ *   /מאגר-השיעורים-והמאמרים/רבנים?rav=הרב יונדב זר
+ * Resolves the name against the rabbis table → /rabbis/:slug (index page as
+ * fallback). Needed client-side because the PWA Service Worker serves cached
+ * index.html for navigations, so returning visitors never hit the server-side
+ * redirect in api/legacy-redirect.js.
+ */
+const LegacyRabbiRedirect = ({ rav }: { rav: string }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    let cancelled = false;
+    resolveRabbiSlug(rav)
+      .then((slug) => {
+        if (!cancelled) navigate(slug ? `/rabbis/${slug}` : "/rabbis", { replace: true });
+      })
+      .catch(() => {
+        if (!cancelled) navigate("/rabbis", { replace: true });
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [rav, navigate]);
+
+  return (
+    <div
+      dir="rtl"
+      className="min-h-screen flex flex-col items-center justify-center gap-5 section-gradient-warm"
+      role="status"
+      aria-live="polite"
+    >
+      <span
+        className="h-10 w-10 rounded-full border-[3px] border-accent/30 border-t-accent animate-spin"
+        aria-hidden="true"
+      />
+      <p className="font-serif text-base text-muted-foreground">
+        רק רגע, מאתרים בשבילכם את עמוד הרב…
+      </p>
+    </div>
+  );
+};
+
 const bookPages = [
   { text: "בְּרֵאשִׁית בָּרָא אֱלֹהִים", opacity: 0.15, y: -20 },
   { text: "אֵת הַשָּׁמַיִם וְאֵת הָאָֽרֶץ", opacity: 0.12, y: 10 },
@@ -124,6 +167,12 @@ const NotFound = () => {
   // Deep legacy content URL → exact series/lesson resolution (async, in-house).
   const isLegacyContent = isLegacyContentPath(decodedPath);
 
+  // Old personal rabbi page: /…/רבנים?rav=<name> (any depth, incl. top-level).
+  const ravParam = new URLSearchParams(location.search).get("rav");
+  const isRabbisPath = decodedPath
+    .split("/")
+    .some((s) => s.trim() === "רבנים");
+
   // Simple top-level legacy page → static map.
   const legacyTarget = isLegacyContent ? null : resolveLegacyPath(location.pathname);
 
@@ -132,6 +181,10 @@ const NotFound = () => {
       console.error("404 Error: User attempted to access non-existent route:", location.pathname);
     }
   }, [location.pathname, legacyTarget, isLegacyContent]);
+
+  if (ravParam && isRabbisPath) {
+    return <LegacyRabbiRedirect rav={ravParam} />;
+  }
 
   if (isLegacyContent) {
     return <LegacyContentRedirect decodedPath={decodedPath} />;

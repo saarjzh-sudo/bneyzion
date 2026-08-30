@@ -204,6 +204,36 @@ async function findLessonGlobal(slug: string, book: string | null): Promise<Less
   return preferPublished(matches);
 }
 
+/**
+ * Resolves an old-site rabbi name (the ?rav= query param of
+ * /מאגר-השיעורים-והמאמרים/רבנים?rav=הרב יונדב זר) to the new /rabbis/:slug.
+ * Mirrors api/legacy-redirect.js: exact name first, then the titled form,
+ * then the shortest ilike match (the individual rabbi, not a duo page).
+ */
+export async function resolveRabbiSlug(rawName: string): Promise<string | null> {
+  const name = rawName.trim();
+  if (!name) return null;
+  const stripped = name.replace(/^(הרב|הרבנית|רב)\s+/, "");
+  if (stripped.length < 2) return null;
+  const { data, error } = await supabase
+    .from("rabbis")
+    .select("slug,name")
+    .ilike("name", `%${escapeIlike(stripped)}%`)
+    .limit(5);
+  if (error || !data || data.length === 0) return null;
+  const rows = data as { slug: string; name: string }[];
+  const exact =
+    rows.find((r) => r.name === name) ??
+    rows.find(
+      (r) =>
+        r.name === `הרב ${stripped}` ||
+        r.name === `הרבנית ${stripped}` ||
+        r.name === stripped,
+    );
+  if (exact) return exact.slug;
+  return [...rows].sort((a, b) => a.name.length - b.name.length)[0].slug;
+}
+
 /** True when a decoded pathname belongs to a legacy content repository. */
 export function isLegacyContentPath(decodedPathname: string): boolean {
   const first = decodedPathname.replace(/^\/+/, "").split("/")[0] ?? "";
@@ -232,6 +262,12 @@ export async function resolveLegacyContentUrl(decodedPathname: string): Promise<
 
   // segs[0] = repository root; the rest describe the content tree.
   const rest = segs.slice(1);
+
+  // The old rabbis index (/root/רבנים, personal pages carried ?rav= which is
+  // handled earlier in NotFound) belongs on /rabbis, not in the series library.
+  if (rest.some((s) => normalizeSlug(s) === "רבנים")) {
+    return { target: "/rabbis", via: "library" };
+  }
 
   let book: string | null = null;
   let content: string[] = rest;
