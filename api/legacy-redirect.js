@@ -45,9 +45,18 @@ async function resolveRabbi(supabase, ravRaw) {
   const stripped = rav.replace(/^(הרב|הרבנית|רב)\s+/, '');
   if (stripped.length >= 3) {
     const fuzzy = await supabase
-      .from('rabbis').select('slug, name').ilike('name', `%${stripped}%`).limit(2);
-    // Accept only an unambiguous match
-    if (fuzzy.data?.length === 1) return fuzzy.data[0].slug;
+      .from('rabbis').select('slug, name').ilike('name', `%${stripped}%`).limit(5);
+    const rows = fuzzy.data || [];
+    if (rows.length === 1) return rows[0].slug;
+    if (rows.length > 1) {
+      // "יואב אוריאל" matches both "הרב יואב אוריאל" and the joint page
+      // "הרב יואב אוריאל והרב עמנואל בן ארצי" — prefer the titled exact name,
+      // otherwise the shortest match (the individual rabbi, not a duo).
+      const titled = rows.find(r =>
+        r.name === `הרב ${stripped}` || r.name === `הרבנית ${stripped}` || r.name === stripped);
+      if (titled) return titled.slug;
+      return rows.sort((a, b) => a.name.length - b.name.length)[0].slug;
+    }
   }
   return null;
 }
