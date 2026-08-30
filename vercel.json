@@ -1628,6 +1628,102 @@
       "source": "/%D7%9B%D7%A0%D7%A1/",
       "destination": "/kenes",
       "permanent": true
+    },
+    {
+      "source": "/product-tag/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/landing_page/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/category/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
+      "destination": "https://bneyzion.co.il/store",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%AA%D7%A7%D7%A0%D7%95%D7%9F-%D7%94%D7%90%D7%AA%D7%A8",
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
+      "destination": "https://bneyzion.co.il/terms",
+      "permanent": true
+    },
+    {
+      "source": "/lp-tanah",
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
+      "destination": "https://bneyzion.co.il/",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "club.bneyzion.co.il"
+        }
+      ],
+      "destination": "https://bneyzion.co.il/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A4%D7%A8%D7%A9%D7%AA-:slug",
+      "destination": "/parasha",
+      "permanent": true
+    },
+    {
+      "source": "/%D7%A4%D7%A8%D7%A9%D7%95%D7%AA-:slug",
+      "destination": "/parasha",
+      "permanent": true
+    },
+    {
+      "source": "/tehil91c",
+      "destination": "/series",
+      "permanent": true
+    },
+    {
+      "source": "/hafroshhashana",
+      "destination": "/parasha",
+      "permanent": true
+    },
+    {
+      "source": "/hafcitavo",
+      "destination": "/parasha",
+      "permanent": true
+    },
+    {
+      "source": "/media/:path*",
+      "destination": "/teachers",
+      "permanent": true
     }
   ],
   "rewrites": [
@@ -1664,8 +1760,13 @@
       "destination": "/api/legacy-redirect?path=:path"
     },
     {
+      "source": "/%D7%9E%D7%90%D7%92%D7%A8-%D7%A2%D7%96%D7%A8%D7%99-%D7%94%D7%9C%D7%9E%D7%99%D7%93%D7%94/:path+",
+      "destination": "/api/legacy-redirect?path=:path&fallback=/teachers"
+    },
+    {
       "source": "/((?!.*\\.).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "trailingSlash": false
 }
