@@ -802,6 +802,20 @@ function MediaCard({ lesson, featured, embeddedId, onEmbed, accent, completed, o
             </span>
           )}
         </div>
+        {/* שיעור עם וידאו/שמע וגם קובץ מצורף (סיכום/דף לימוד): הכרטיס מציג רק
+            מדיה ראשית אחת, אז הצרופה קיבלה קישור משלה — בלעדיו היא בלתי-נראית
+            (אביה 30.8: "לא מופיע הסיכום של הקדמה לספר חגי" — הקובץ היה ב-DB). */}
+        {kind !== "pdf" && lesson.attachment_url && (
+          <a
+            href={driveViewUrl(lesson.attachment_url) ?? lesson.attachment_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`פתיחת הסיכום המצורף לשיעור — ${lesson.title}`}
+            style={{ padding: "0.44rem 0.8rem", borderRadius: radii.md, background: "white", border: `1px solid ${accent}40`, color: accent, fontFamily: fonts.accent, fontWeight: 700, fontSize: "0.72rem", display: "inline-flex", alignItems: "center", gap: "0.3rem", flexShrink: 0, textDecoration: "none" }}
+          >
+            <FileText size={12} /> סיכום
+          </a>
+        )}
         {onToggleComplete && (
           <button
             type="button"
