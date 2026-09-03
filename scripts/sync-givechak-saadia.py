@@ -17,11 +17,14 @@ GIVECHAK_URL = "https://givechak.co.il/ajax/api/givechak_get"
 GIVECHAK_EID = "96762"
 PROJECT_REF = "pzvmwfexeiruelwiujxn"
 
+# קיר-התורמים בדף הקמפיין (3.9): כמה תורמים אחרונים לשמור ב-campaigns.external_recent_donors
+RECENT_DONORS_MAX = 48
 
-def fetch_givechak():
+
+def _givechak_post(body: str):
     req = urllib.request.Request(
         GIVECHAK_URL,
-        data=f"eid={GIVECHAK_EID}".encode(),
+        data=body.encode(),
         headers={
             "Content-Type": "application/x-www-form-urlencoded",
             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/126",
@@ -29,12 +32,43 @@ def fetch_givechak():
         },
         method="POST",
     )
-    data = json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
+    return json.loads(urllib.request.urlopen(req, timeout=30).read().decode())
+
+
+def fetch_givechak():
+    data = _givechak_post(f"eid={GIVECHAK_EID}")
     raised = int(round(float(data["total_stat"])))
     donors = int(data["total_donors"])
     if raised <= 0 or donors <= 0:
         raise RuntimeError(f"suspicious givechak payload: raised={raised} donors={donors}")
-    return raised, donors
+    return raised, donors, data.get("donors_list") or []
+
+
+def fetch_recent_donors(first_page):
+    """קיר התורמים: שמות+סכומים+ברכות שכבר ציבוריים בעמוד givechak.
+    דפדוף עם last_oid (12 לעמוד) עד RECENT_DONORS_MAX."""
+    rows = list(first_page)
+    while rows and len(rows) < RECENT_DONORS_MAX:
+        page = _givechak_post(f"eid={GIVECHAK_EID}&last_oid={rows[-1]['oid']}").get("donors_list") or []
+        if not page:
+            break
+        rows.extend(page)
+    out = []
+    for r in rows[:RECENT_DONORS_MAX]:
+        name = f"{r.get('name_first') or ''} {r.get('name_last') or ''}".strip() or "בעילום שם"
+        try:
+            amount = int(round(float(r.get("total_price") or 0)))
+        except (TypeError, ValueError):
+            amount = 0
+        if amount <= 0:
+            continue
+        out.append({
+            "name": name[:60],
+            "amount": amount,
+            "blessing": (r.get("value") or "").strip()[:140] or None,
+            "created": int(r.get("created") or 0),
+        })
+    return out
 
 
 TIER_MAP = {  # tickchak ticket title -> campaign_tiers.tier_key
@@ -68,14 +102,19 @@ def fetch_tier_sold():
     return sold, free
 
 
-def update_campaign(raised, donors):
+def update_campaign(raised, donors, recent_donors=None):
     token = os.environ.get("SUPABASE_ACCESS_TOKEN")
     if not token:
         sys.exit("SUPABASE_ACCESS_TOKEN missing from env (see api-keys.md)")
+    # שער fail-closed: רשימה ריקה/חסרה לא דורסת את קיר-התורמים הקיים
+    donors_sql = ""
+    if recent_donors:
+        donors_json = json.dumps(recent_donors, ensure_ascii=False).replace("'", "''")
+        donors_sql = f"external_recent_donors='{donors_json}'::jsonb, "
     sql = (
-        "update public.campaigns set external_raised=%d, external_donors=%d, "
+        "update public.campaigns set external_raised=%d, external_donors=%d, %s"
         "updated_at=now() where slug='saadia' and external_source='givechak' "
-        "returning external_raised, external_donors" % (raised, donors)
+        "returning external_raised, external_donors" % (raised, donors, donors_sql)
     )
     req = urllib.request.Request(
         f"https://api.supabase.com/v1/projects/{PROJECT_REF}/database/query",
@@ -120,8 +159,9 @@ def update_tiers(sold, free):
 
 
 if __name__ == "__main__":
-    raised, donors = fetch_givechak()
-    result = update_campaign(raised, donors)
+    raised, donors, first_page = fetch_givechak()
+    recent = fetch_recent_donors(first_page)
+    result = update_campaign(raised, donors, recent)
     sold, free = fetch_tier_sold()
     update_tiers(sold, free)
-    print(f"givechak: ₪{raised:,} / {donors:,} donors, tiers {sold}, free {free} → updated: {result}")
+    print(f"givechak: ₪{raised:,} / {donors:,} donors, {len(recent)} recent on wall, tiers {sold}, free {free} → updated: {result}")
