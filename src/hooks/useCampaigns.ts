@@ -9,7 +9,7 @@
  */
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
 export interface CampaignProofStat { val: string; label: string; icon?: string }
@@ -210,95 +210,102 @@ export function useSiteBannerCampaign() {
 }
 
 /* ─── סטטיסטיקות חיות לקמפיין (realtime + polling — דפוס useTierCounts) ─── */
+// 3.9.2026 (סבב העומס): הפולינג עבר ל-react-query. הפס העליון (CampaignBanner,
+// בכל דף), הרצועה בעמוד הבית והדף עצמו קראו כל אחד ל-hook הזה בנפרד — שלושה
+// setInterval של 30ש' לכל טאב, גם כשהטאב ברקע. עכשיו: queryKey משותף (קריאה
+// אחת לכל ה-consumers), 60ש' רק כשהטאב גלוי (refetchIntervalInBackground=false),
+// ורענון בחזרה לטאב. ה-realtime על donations נשאר — הוא מבטל את המטמון מיידית
+// למי שה-RLS מאפשר לו לראות את השורה (אדמינים).
+const LIVE_STATS_POLL_MS = 60_000;
+
 export function useLiveCampaignStats(slug: string | undefined) {
-  const [stats, setStats] = useState<{ raised: number; supporters: number; loading: boolean }>({
-    raised: 0,
-    supporters: 0,
-    loading: true,
-  });
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!slug) return;
-
-    async function fetchStats() {
+  const query = useQuery({
+    queryKey: ["campaign-stats", slug],
+    enabled: !!slug,
+    queryFn: async () => {
       const { data, error } = await supabase
         .from("campaign_stats" as never)
         .select("*")
         .eq("slug" as never, slug!)
         .maybeSingle();
-      if (!error && data) {
-        const row = data as unknown as CampaignStats;
-        setStats({ raised: Number(row.raised) || 0, supporters: row.supporters || 0, loading: false });
-      } else {
-        setStats((s) => ({ ...s, loading: false }));
-      }
-    }
+      if (error) throw error; // שומר על הערך הקודם במטמון במקום לאפס את הפס
+      const row = data as unknown as CampaignStats | null;
+      return { raised: Number(row?.raised) || 0, supporters: row?.supporters || 0 };
+    },
+    staleTime: 30_000,
+    refetchInterval: LIVE_STATS_POLL_MS,
+    refetchOnWindowFocus: true,
+    retry: false,
+  });
 
-    fetchStats();
-
-    // realtime על donations (ה-view לא תומך realtime ישירות) + polling fallback
+  useEffect(() => {
+    if (!slug) return;
+    // realtime על donations (ה-view לא תומך realtime ישירות)
     const channel = supabase
       .channel(`campaign-stats-${slug}-${Math.random().toString(36).slice(2, 8)}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "donations", filter: `product=eq.${slug}` },
-        () => fetchStats()
+        () => queryClient.invalidateQueries({ queryKey: ["campaign-stats", slug] })
       )
       .subscribe();
-    const poll = setInterval(fetchStats, 30_000);
-    const onVisible = () => {
-      if (document.visibilityState === "visible") fetchStats();
-    };
-    document.addEventListener("visibilitychange", onVisible);
-
     return () => {
       supabase.removeChannel(channel);
-      clearInterval(poll);
-      document.removeEventListener("visibilitychange", onVisible);
     };
-  }, [slug]);
+  }, [slug, queryClient]);
 
-  return stats;
+  return {
+    raised: query.data?.raised ?? 0,
+    supporters: query.data?.supporters ?? 0,
+    loading: query.isLoading,
+  };
 }
 
 /* ─── ספירת מכירות חיה לכל חבילה (remaining = tier_limit - sold) ─── */
+const EMPTY_TIER_COUNTS: Record<string, number> = {};
+
 export function useLiveTierCounts(slug: string | undefined): Record<string, number> {
-  const [counts, setCounts] = useState<Record<string, number>>({});
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    if (!slug) return;
-
-    async function fetchCounts() {
+  const query = useQuery({
+    queryKey: ["campaign-tier-counts", slug],
+    enabled: !!slug,
+    queryFn: async () => {
       const { data, error } = await supabase
         .from("campaign_tier_counts" as never)
         .select("tier_id, sold")
         .eq("slug" as never, slug!);
-      if (error || !data) return;
+      if (error) throw error;
       const map: Record<string, number> = {};
-      for (const row of data as unknown as { tier_id: string; sold: number }[]) {
+      for (const row of (data || []) as unknown as { tier_id: string; sold: number }[]) {
         map[row.tier_id] = row.sold;
       }
-      setCounts(map);
-    }
+      return map;
+    },
+    staleTime: 30_000,
+    refetchInterval: LIVE_STATS_POLL_MS,
+    refetchOnWindowFocus: true,
+    retry: false,
+  });
 
-    fetchCounts();
+  useEffect(() => {
+    if (!slug) return;
     const channel = supabase
       .channel(`campaign-tier-counts-${slug}`)
       .on(
         "postgres_changes",
         { event: "*", schema: "public", table: "donations", filter: `product=eq.${slug}` },
-        () => fetchCounts()
+        () => queryClient.invalidateQueries({ queryKey: ["campaign-tier-counts", slug] })
       )
       .subscribe();
-    const poll = setInterval(fetchCounts, 30_000);
-
     return () => {
       supabase.removeChannel(channel);
-      clearInterval(poll);
     };
-  }, [slug]);
+  }, [slug, queryClient]);
 
-  return counts;
+  return query.data ?? EMPTY_TIER_COUNTS;
 }
 
 /* ─── תרומות הקמפיין (אדמין — דרך policy admin_select_donations) ─── */

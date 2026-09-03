@@ -92,6 +92,10 @@ function titleMatchesParasha(title: string, terms: string[]): boolean {
   return false;
 }
 
+// Slow fallback poll (foreground tabs only — react-query pauses intervals in
+// background tabs). Realtime + focus refetch keep the page live in practice.
+const PARASHA_FALLBACK_POLL_MS = 5 * 60_000;
+
 export function useParasha() {
   const queryClient = useQueryClient();
 
@@ -136,9 +140,12 @@ export function useParasha() {
   // 11.6.2026: Added short-form fallback — "שלח לך" lessons are titled "פרשת שלח" in DB.
   const parashaLessonsQuery = useQuery({
     queryKey: ["parasha-lessons-all", parasha],
-    // Live updates — same approach the donation counter actually relies on:
-    // poll every 30s + refetch on tab focus (realtime push above is an instant bonus).
-    refetchInterval: 30_000,
+    // Live updates: the realtime push above (lessons/series are in the
+    // supabase_realtime publication and anon can read them) is the primary path,
+    // plus refetch on tab focus. The interval is only a slow safety net — each
+    // tick of these four queries costs 25-35 REST calls, and at 30s that was the
+    // bulk of ~185K requests/day after the domain move (3.9.2026).
+    refetchInterval: PARASHA_FALLBACK_POLL_MS,
     refetchOnWindowFocus: true,
     queryFn: async () => {
       if (!parasha) return [];
@@ -192,7 +199,7 @@ export function useParasha() {
   // Get audio lessons (Torah reading)
   const audioLessonsQuery = useQuery({
     queryKey: ["parasha-audio", parasha, chumash],
-    refetchInterval: 30_000,
+    refetchInterval: PARASHA_FALLBACK_POLL_MS,
     refetchOnWindowFocus: true,
     queryFn: async () => {
       if (!chumash) return [];
@@ -245,7 +252,7 @@ export function useParasha() {
   // Get article series and find matching lessons
   const articleSeriesQuery = useQuery({
     queryKey: ["parasha-article-series", parasha],
-    refetchInterval: 30_000,
+    refetchInterval: PARASHA_FALLBACK_POLL_MS,
     refetchOnWindowFocus: true,
     queryFn: async () => {
       const results: ParashaArticleSeries[] = [];
@@ -362,7 +369,7 @@ export function useParasha() {
   // Fallback: the legacy mixed series (c852edd8) when nothing matches.
   const riddleQuery = useQuery({
     queryKey: ["parasha-riddle", parasha, chumash],
-    refetchInterval: 30_000,
+    refetchInterval: PARASHA_FALLBACK_POLL_MS,
     refetchOnWindowFocus: true,
     queryFn: async () => {
       type RiddleLesson = { id: string; title: string; content: string | null; description: string | null; series_id: string };
