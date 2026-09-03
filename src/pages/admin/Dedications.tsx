@@ -26,7 +26,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-import { Heart, Plus, Trash2, CheckCircle2, Clock, Archive, Settings2, Download } from "lucide-react";
+import { Heart, Plus, Trash2, CheckCircle2, Clock, Archive, Settings2, Download, Search } from "lucide-react";
 import {
   useAllDedications,
   useDedicationTargets,
@@ -40,6 +40,13 @@ import {
   type DedicationScope,
   type DedicationType,
 } from "@/hooks/useLessonDedications";
+// בחירת שיעור/סדרה לפי שם (בקשת יואב 3.9, קבוצת מסתערים) — אותם hooks של בוחר-ההקדשות בדף הקמפיין
+import {
+  useDebouncedValue,
+  useDedicationLessonSearch,
+  useDedicationSeriesSearch,
+  useDedicationTakenIds,
+} from "@/hooks/useCampaignDedication";
 import { useToast } from "@/hooks/use-toast";
 
 const C = {
@@ -75,6 +82,8 @@ const emptySeedForm = () => ({
   message: "",
 });
 
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 export default function Dedications() {
   const { data: dedications, isLoading } = useAllDedications();
   const { data: targetNames } = useDedicationTargets(dedications);
@@ -92,6 +101,25 @@ export default function Dedications() {
 
   const [seedOpen, setSeedOpen] = useState(false);
   const [seedForm, setSeedForm] = useState(emptySeedForm());
+  // בקשת יואב (3.9): בחירת היעד לפי שם ולא לפי UUID
+  const [targetTerm, setTargetTerm] = useState("");
+  const debouncedTargetTerm = useDebouncedValue(targetTerm, 350);
+  const [seedTarget, setSeedTarget] = useState<{ id: string; title: string } | null>(null);
+  const { data: takenIds } = useDedicationTakenIds();
+  const { data: lessonSearch, isFetching: lessonSearching } = useDedicationLessonSearch(
+    debouncedTargetTerm,
+    seedOpen && !seedTarget && seedForm.scope === "lesson"
+  );
+  const { data: seriesSearch, isFetching: seriesSearching } = useDedicationSeriesSearch(
+    debouncedTargetTerm,
+    seedOpen && !seedTarget && seedForm.scope === "series"
+  );
+  const targetCandidates =
+    seedForm.scope === "lesson"
+      ? (lessonSearch ?? []).map((r) => ({ id: r.id, title: r.title, taken: !!takenIds?.lessons.has(r.id) }))
+      : (seriesSearch ?? []).map((r) => ({ id: r.id, title: r.title, taken: !!takenIds?.series.has(r.id) }));
+  const targetSearching = seedForm.scope === "lesson" ? lessonSearching : seriesSearching;
+  const termIsUuid = UUID_RE.test(targetTerm.trim());
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [lessonPrice, setLessonPrice] = useState(settings?.lesson_price ?? 600);
   const [seriesPrice, setSeriesPrice] = useState(settings?.series_price ?? 1800);
@@ -181,28 +209,30 @@ export default function Dedications() {
       toast({ title: "חסר", description: "נא למלא שם מוקדש", variant: "destructive" });
       return;
     }
-    if (seedForm.scope === "lesson" && !seedForm.lesson_id.trim()) {
-      toast({ title: "חסר", description: "נא למלא מזהה שיעור (lesson_id)", variant: "destructive" });
-      return;
-    }
-    if (seedForm.scope === "series" && !seedForm.series_id.trim()) {
-      toast({ title: "חסר", description: "נא למלא מזהה סדרה (series_id)", variant: "destructive" });
+    if (!seedTarget) {
+      toast({
+        title: "חסר",
+        description: seedForm.scope === "lesson" ? "נא לחפש ולבחור שיעור" : "נא לחפש ולבחור סדרה",
+        variant: "destructive",
+      });
       return;
     }
     try {
       await createDedication.mutateAsync({
         scope: seedForm.scope,
-        lesson_id: seedForm.scope === "lesson" ? seedForm.lesson_id.trim() : undefined,
-        series_id: seedForm.scope === "series" ? seedForm.series_id.trim() : undefined,
+        lesson_id: seedForm.scope === "lesson" ? seedTarget.id : undefined,
+        series_id: seedForm.scope === "series" ? seedTarget.id : undefined,
         dedication_type: seedForm.dedication_type,
         dedicated_name: seedForm.dedicated_name.trim(),
         dedicator_name: seedForm.dedicator_name.trim() || undefined,
         message: seedForm.message.trim() || undefined,
         status: "active", // seeding ידני = מאושר מיד, בלי תשלום
       });
-      toast({ title: "ההקדשה נוצרה ופעילה" });
+      toast({ title: "ההקדשה נוצרה ופעילה", description: seedTarget.title });
       setSeedOpen(false);
       setSeedForm(emptySeedForm());
+      setSeedTarget(null);
+      setTargetTerm("");
     } catch (e: any) {
       toast({ title: "שגיאה", description: e.message, variant: "destructive" });
     }
@@ -411,7 +441,11 @@ export default function Dedications() {
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => setSeedForm((f) => ({ ...f, scope: "lesson" }))}
+                onClick={() => {
+                  setSeedForm((f) => ({ ...f, scope: "lesson" }));
+                  setSeedTarget(null);
+                  setTargetTerm("");
+                }}
                 className="py-2 rounded-lg text-sm font-ploni border"
                 style={{
                   borderColor: seedForm.scope === "lesson" ? C.navy : C.goldShimmer,
@@ -423,7 +457,11 @@ export default function Dedications() {
               </button>
               <button
                 type="button"
-                onClick={() => setSeedForm((f) => ({ ...f, scope: "series" }))}
+                onClick={() => {
+                  setSeedForm((f) => ({ ...f, scope: "series" }));
+                  setSeedTarget(null);
+                  setTargetTerm("");
+                }}
                 className="py-2 rounded-lg text-sm font-ploni border"
                 style={{
                   borderColor: seedForm.scope === "series" ? C.navy : C.goldShimmer,
@@ -435,27 +473,87 @@ export default function Dedications() {
               </button>
             </div>
 
-            {seedForm.scope === "lesson" ? (
-              <div>
-                <Label>מזהה שיעור (lesson_id) *</Label>
-                <Input
-                  dir="ltr"
-                  value={seedForm.lesson_id}
-                  onChange={(e) => setSeedForm((f) => ({ ...f, lesson_id: e.target.value }))}
-                  placeholder="UUID מטבלת lessons"
-                  className="mt-1"
-                />
+            {/* בקשת יואב (3.9, מסתערים): בחירה לפי שם — חיפוש חי במקום הדבקת UUID */}
+            {seedTarget ? (
+              <div
+                className="flex items-center justify-between gap-2 rounded-lg border px-3 py-2"
+                style={{ borderColor: C.navy, background: "#eef2ff" }}
+              >
+                <span className="flex items-center gap-2 text-sm font-ploni font-medium" style={{ color: C.text }}>
+                  <CheckCircle2 className="h-4 w-4 shrink-0" style={{ color: C.green }} />
+                  {seedTarget.title}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSeedTarget(null);
+                    setTargetTerm("");
+                  }}
+                  className="text-xs font-ploni underline shrink-0"
+                  style={{ color: C.textMuted }}
+                >
+                  החלפה
+                </button>
               </div>
             ) : (
               <div>
-                <Label>מזהה סדרה (series_id) *</Label>
-                <Input
-                  dir="ltr"
-                  value={seedForm.series_id}
-                  onChange={(e) => setSeedForm((f) => ({ ...f, series_id: e.target.value }))}
-                  placeholder="UUID מטבלת series"
-                  className="mt-1"
-                />
+                <Label>{seedForm.scope === "lesson" ? "איזה שיעור להקדיש? *" : "איזו סדרה להקדיש? *"}</Label>
+                <div className="relative mt-1">
+                  <Search
+                    className="h-4 w-4 absolute top-3"
+                    style={{ insetInlineStart: 10, color: C.textMuted }}
+                  />
+                  <Input
+                    dir="rtl"
+                    value={targetTerm}
+                    onChange={(e) => setTargetTerm(e.target.value)}
+                    placeholder={seedForm.scope === "lesson" ? "הקלידו שם שיעור..." : "הקלידו שם סדרה..."}
+                    style={{ paddingInlineStart: 32 }}
+                  />
+                </div>
+                {debouncedTargetTerm.trim().length >= 2 && (
+                  <div className="mt-2 flex flex-col gap-1 max-h-52 overflow-y-auto">
+                    {targetSearching && (
+                      <p className="text-xs font-ploni text-center py-2" style={{ color: C.textMuted }}>
+                        מחפש…
+                      </p>
+                    )}
+                    {!targetSearching && termIsUuid && (
+                      <button
+                        type="button"
+                        onClick={() => setSeedTarget({ id: targetTerm.trim().toLowerCase(), title: `מזהה ידני: ${targetTerm.trim().slice(0, 8)}…` })}
+                        className="text-right rounded-lg border px-3 py-2 text-sm font-ploni"
+                        style={{ borderColor: C.goldShimmer, background: "#fff", color: C.text }}
+                      >
+                        שימוש במזהה שהודבק (UUID)
+                      </button>
+                    )}
+                    {!targetSearching && !termIsUuid && targetCandidates.length === 0 && (
+                      <p className="text-xs font-ploni text-center py-2" style={{ color: C.textMuted }}>
+                        לא נמצאו {seedForm.scope === "lesson" ? "שיעורים" : "סדרות"} בשם הזה
+                      </p>
+                    )}
+                    {targetCandidates.map((c) => (
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => setSeedTarget({ id: c.id, title: c.title })}
+                        className="flex items-center justify-between gap-2 text-right rounded-lg border px-3 py-2 text-sm font-ploni"
+                        style={{ borderColor: C.goldShimmer, background: "#fff", color: C.text }}
+                      >
+                        <span className="truncate">{c.title}</span>
+                        {c.taken && (
+                          <span
+                            className="text-[10px] font-bold shrink-0 rounded-full px-2 py-0.5"
+                            style={{ background: "#fef3c7", color: C.amber }}
+                          >
+                            כבר יש הקדשה
+                          </span>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
