@@ -1486,6 +1486,77 @@ function DedicationOptionsSection({
   );
 }
 
+/* ─── פס-תרומה תחתון דק (3.9, בקשת סער) ────────────────────
+ * כמו הדר נגרר — רק בתחתית המסך. מופיע אחרי שגוללים מעבר להירו (הסקשן
+ * השני) ומלווה את כל הדף: "נשארו ₪X" + כפתור תרומה קומפקטי + סעיף 46. */
+function StickyDonateBar({
+  visible,
+  remaining,
+  onSupportClick,
+}: {
+  visible: boolean;
+  remaining: number;
+  onSupportClick: () => void;
+}) {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        insetBlockEnd: 0,
+        insetInline: 0,
+        zIndex: 80,
+        background: "hsl(215 55% 12% / 0.96)",
+        backdropFilter: "blur(14px)",
+        borderBlockStart: "1px solid hsl(38 75% 55% / 0.45)",
+        boxShadow: "0 -6px 24px hsl(215 55% 5% / 0.45)",
+        transform: visible ? "translateY(0)" : "translateY(110%)",
+        transition: "transform 0.35s ease",
+        paddingBlockEnd: "env(safe-area-inset-bottom, 0px)",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          padding: "7px 14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "clamp(10px, 3vw, 22px)",
+        }}
+      >
+        {remaining > 0 && (
+          <span style={{ color: "hsl(43 90% 70%)", fontWeight: 800, fontSize: "clamp(12px, 1.6vw, 14px)", whiteSpace: "nowrap" }}>
+            נשארו ₪{remaining.toLocaleString()}
+          </span>
+        )}
+        <button
+          onClick={onSupportClick}
+          style={{
+            padding: "7px 22px",
+            background: GOLD_GRAD,
+            color: "hsl(215 55% 12%)",
+            border: "none",
+            borderRadius: 99,
+            fontWeight: 900,
+            fontSize: 14,
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+            boxShadow: "0 4px 14px hsl(38 80% 50% / 0.35)",
+          }}
+        >
+          <Heart size={13} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 6 }} fill="currentColor" />
+          לחצו כאן לתרומה
+        </button>
+        <span className="campaign-sticky-46" style={{ display: "flex", alignItems: "center", gap: 5, color: "hsl(215 10% 68%)", fontWeight: 700, fontSize: 12, whiteSpace: "nowrap" }}>
+          <ShieldCheck size={13} style={{ color: "hsl(38 85% 66%)" }} />
+          מוכר לסעיף 46
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function FinalCTA({ supporters, progressPct, onSupportClick }: { supporters: number; progressPct: number; onSupportClick: () => void }) {
   return (
     <section style={{ background: "hsl(215 55% 12%)", padding: "72px 24px", textAlign: "center" }}>
@@ -1990,6 +2061,10 @@ export default function CampaignPage() {
         @media (prefers-reduced-motion: reduce) {
           .campaign-remaining-shimmer { animation: none; background: hsl(43 90% 62% / 0.18); }
         }
+        /* בפס התחתון הדק — במסכים צרים מאוד מוותרים על צ'יפ סעיף 46 */
+        @media (max-width: 380px) {
+          .campaign-sticky-46 { display: none !important; }
+        }
       `}</style>
 
 
@@ -2021,9 +2096,15 @@ export default function CampaignPage() {
       <TimelineSection campaign={campaign} />
       <FaqSection campaign={campaign} />
       <FinalCTA supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
+      <StickyDonateBar
+        visible={scrollY > (typeof window !== "undefined" ? window.innerHeight * 0.75 : 600)}
+        remaining={Math.max(0, goal - totalRaised)}
+        onSupportClick={scrollToTiers}
+      />
 
       {/* פוטר עם כפתור תרומה + סעיף 46 (3.9, בקשת סער) */}
-      <footer style={{ background: "hsl(215 55% 11%)", borderBlockStart: "1px solid hsl(38 75% 55% / 0.18)", padding: "44px 24px 36px", textAlign: "center" }}>
+      {/* padding תחתון מוגדל — שהפס הדק הקבוע לא יכסה את פרטי הקשר */}
+      <footer style={{ background: "hsl(215 55% 11%)", borderBlockStart: "1px solid hsl(38 75% 55% / 0.18)", padding: "44px 24px 92px", textAlign: "center" }}>
         <button
           onClick={scrollToTiers}
           style={{
