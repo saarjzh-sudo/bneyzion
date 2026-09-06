@@ -7,7 +7,7 @@
  * שער: requireAdmin (JWT + role admin) — כמו api/yehoshua/donations. PII לא נשמר ב-cache.
  */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { requireAdmin, getServiceClient } from "../lib/admin-auth";
+import { requireAdmin, getServiceClient } from "../lib/admin-auth.js";
 
 const SITE_SOURCES = ["yehoshua-campaign", "saadia", "donate-page"];
 

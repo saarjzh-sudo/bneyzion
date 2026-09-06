@@ -12,7 +12,7 @@
  * הת"ז עובר ספרת-ביקורת לפני שמירה (Grow דוחה ת"ז לא תקין).
  */
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getServiceClient } from "../lib/admin-auth";
+import { getServiceClient } from "../lib/admin-auth.js";
 
 const SITE_SOURCES = ["yehoshua-campaign", "saadia", "donate-page"];
 
