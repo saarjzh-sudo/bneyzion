@@ -911,6 +911,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (email) {
       formData.append("pageField[email]", email);
     }
+    // ת"ז/ח.פ על הקבלה (זיכוי מס לפי סעיף 46). עד 6.9.2026 השדה נשמר רק אצלנו
+    // (donations.donor_tax_id) ולא נשלח ל-Grow, ולכן קבלות של תרומות מהאתר יצאו
+    // בלי מספר זהות והתורם לא ראה את התרומה באזור האישי ברשות המסים (הרב יואב, 6.9).
+    // שם השדה לפי תיעוד Grow createPaymentProcess: pageField[invoiceLicenseNumber].
+    const receiptTaxId = String(donationMeta?.donor_tax_id || "").replace(/\D/g, "").slice(0, 9);
+    if (receiptTaxId.length >= 8) {
+      formData.append("pageField[invoiceLicenseNumber]", receiptTaxId);
+    }
     if (safeInstallments > 1) {
       // maxPaymentNum lets the customer choose 1–N in Grow's UI.
       // paymentNum would have forced a fixed count (no choice for the buyer).

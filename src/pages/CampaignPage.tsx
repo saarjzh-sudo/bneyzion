@@ -1377,6 +1377,9 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
   const [donorName, setDonorName] = useState("");
   const [donorPhone, setDonorPhone] = useState("");
   const [donorEmail, setDonorEmail] = useState("");
+  // ת"ז לקבלה (זיכוי מס, סעיף 46) — לא חובה. נוסע ב-donationMeta.donor_tax_id
+  // ומגיע ל-Grow כ-pageField[invoiceLicenseNumber] (create-payment.ts, 6.9.2026).
+  const [donorTaxId, setDonorTaxId] = useState("");
   const [tosAccepted, setTosAccepted] = useState(false);
 
   // תרומה ⟵ הקדשה (26.8) — רק לקמפיינים ב-allowlist, ורק מסכום שמכסה הקדשה
@@ -1425,6 +1428,10 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
       toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
       return;
     }
+    if (donorTaxId && !/^\d{8,9}$/.test(donorTaxId.replace(/[-\s]/g, ""))) {
+      toast({ title: "מספר תעודת הזהות צריך להכיל 8-9 ספרות (או להישאר ריק)", variant: "destructive" });
+      return;
+    }
     if (needsShipping && (!shippingStreet.trim() || !shippingHouseNumber.trim() || !shippingCity.trim())) {
       toast({ title: "נא למלא כתובת למשלוח (רחוב, מספר בית, עיר)", variant: "destructive" });
       return;
@@ -1452,6 +1459,7 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
         donationMeta: {
           is_monthly: false,
           donor_email: donorEmail || undefined,
+          donor_tax_id: donorTaxId.replace(/[-\s]/g, "") || undefined,
           user_id: user?.id,
           // @ts-expect-error — שדות קמפיין מועברים ל-create-payment (source/tier_id/shipping)
           source: campaign.slug,
@@ -1635,6 +1643,11 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
             <label style={labelStyle}>אימייל</label>
             <input type="email" value={donorEmail} onChange={(e) => setDonorEmail(e.target.value)} placeholder="email@..." dir="ltr" style={inputStyle} />
           </div>
+        </div>
+
+        <div>
+          <label style={labelStyle}>תעודת זהות (לקבלה לזיכוי מס לפי סעיף 46)</label>
+          <input type="text" value={donorTaxId} onChange={(e) => setDonorTaxId(e.target.value)} placeholder="לא חובה — למי שרוצה שהתרומה תדווח לרשות המסים" inputMode="numeric" dir="ltr" style={{ ...inputStyle, textAlign: "right" }} maxLength={11} />
         </div>
 
         {dedicationEligible && (
