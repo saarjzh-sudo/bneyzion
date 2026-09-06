@@ -16,6 +16,8 @@ export interface CampaignProofStat { val: string; label: string; icon?: string }
 export interface CampaignWhyCard { num?: string; title: string; body: string }
 export interface CampaignPhase { label: string; sub?: string; done?: boolean; current?: boolean }
 export interface CampaignFaqItem { q: string; a: string }
+/** קיר-התורמים (3.9) — תורמים אחרונים מהפלטפורמה החיצונית (givechak), מסונכרן ע"י sync-givechak-saadia.py */
+export interface CampaignRecentDonor { name: string; amount: number; blessing?: string | null; created?: number }
 
 export interface CampaignRow {
   id: string;
@@ -58,6 +60,8 @@ export interface CampaignRow {
   external_raised: number;
   external_donors: number;
   external_source: string | null;
+  /** קיר-התורמים (3.9) — שמות/סכומים/ברכות שכבר ציבוריים בעמוד givechak. ריק = הסקשן לא מרונדר. */
+  external_recent_donors?: CampaignRecentDonor[] | null;
 }
 
 export interface CampaignTierRow {

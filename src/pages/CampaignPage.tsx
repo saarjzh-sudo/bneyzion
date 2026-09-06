@@ -24,6 +24,7 @@ import {
   useLiveTierCounts,
   type CampaignRow,
   type CampaignTierRow,
+  type CampaignRecentDonor,
 } from "@/hooks/useCampaigns";
 import { sanitizeHtml } from "@/lib/sanitize";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark, Hourglass, Heart, Sparkles, Building2, PartyPopper, Award, Zap, Users, HeartHandshake } from "lucide-react";
@@ -296,6 +297,7 @@ function HeroSection({
     return () => clearTimeout(t);
   }, []);
   const shownPct = barIn ? progressPct : 0;
+  const remaining = Math.max(0, Number(campaign.goal_amount) - raised);
 
   return (
     <section style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
@@ -407,6 +409,7 @@ function HeroSection({
             <div style={{ maxWidth: 720, margin: "clamp(20px, 3vw, 30px) auto 0", position: "relative", padding: "26px 0 8px" }}>
               <div
                 style={{
+                  position: "relative",
                   height: 18,
                   background: "hsl(215 25% 88% / 0.22)",
                   borderRadius: 99,
@@ -415,8 +418,21 @@ function HeroSection({
                   boxShadow: "inset 0 2px 6px hsl(215 55% 5% / 0.4)",
                 }}
               >
+                {/* החלק שחסר (3.9, בקשת סער) — גרדיאנט זהב נודד שמושך את העין לפער עד היעד */}
+                <div
+                  aria-hidden
+                  className="campaign-remaining-shimmer"
+                  style={{
+                    position: "absolute",
+                    insetBlock: 0,
+                    insetInlineStart: `${shownPct}%`,
+                    insetInlineEnd: 0,
+                    transition: "inset-inline-start 1.6s cubic-bezier(0.22, 1, 0.36, 1)",
+                  }}
+                />
                 <div
                   style={{
+                    position: "relative",
                     height: "100%",
                     width: `${shownPct}%`,
                     background: "linear-gradient(90deg, hsl(43 92% 64%), hsl(38 80% 50%))",
@@ -426,6 +442,11 @@ function HeroSection({
                   }}
                 />
               </div>
+              {remaining > 0 && (
+                <div style={{ marginBlockStart: 12, fontSize: "clamp(13px, 1.7vw, 16px)", fontWeight: 800, color: "hsl(43 90% 70%)", textShadow: "0 1px 6px hsl(215 55% 5% / 0.6)" }}>
+                  נשארו <span style={{ fontSize: "1.2em", fontWeight: 900 }}>₪{remaining.toLocaleString()}</span> להשלמת היעד
+                </div>
+              )}
               <div
                 aria-hidden
                 style={{
@@ -1017,6 +1038,122 @@ function TiersSection({
   );
 }
 
+/* ─── קיר-התורמים (3.9, בקשת סער — "כמו בגיבצ'ק") ─────────
+ * שמות+סכומים+ברכות מהעמוד הציבורי של givechak (campaigns.external_recent_donors,
+ * מסונכרן ע"י sync-givechak-saadia.py). ריק (יהושע) → הסקשן לא מרונדר. */
+const DONORS_WALL_INITIAL = 18;
+
+function DonorsWallSection({
+  donors,
+  totalSupporters,
+  onSupportClick,
+}: {
+  donors: CampaignRecentDonor[];
+  totalSupporters: number;
+  onSupportClick: () => void;
+}) {
+  const { ref, visible } = useInView(0.05);
+  const [expanded, setExpanded] = useState(false);
+  if (!donors.length) return null;
+  const shown = expanded ? donors : donors.slice(0, DONORS_WALL_INITIAL);
+  return (
+    <section ref={ref} style={{ background: "white", padding: "72px 24px 64px" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBlockEnd: 36 }}>
+          <p style={{ color: "hsl(38 75% 40%)", fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", marginBlockEnd: 8 }}>השותפים שלנו</p>
+          <h2 style={{ fontSize: "clamp(24px, 3.2vw, 36px)", fontWeight: 900, color: "hsl(215 55% 20%)", margin: "0 0 8px", lineHeight: 1.2 }}>
+            {totalSupporters.toLocaleString()} שותפים כבר הצטרפו
+            <Heart size={26} style={{ display: "inline", verticalAlign: "-3px", marginInlineStart: 10, color: "hsl(4 72% 50%)" }} fill="currentColor" />
+          </h2>
+          <p style={{ fontSize: 14, color: "hsl(215 25% 45%)", margin: 0 }}>התרומות האחרונות לקמפיין</p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(215px, 1fr))", gap: 14 }}>
+          {shown.map((d, i) => (
+            <div
+              key={`${d.name}-${d.created ?? i}`}
+              style={{
+                background: "linear-gradient(180deg, hsl(38 45% 98%) 0%, hsl(38 38% 95%) 100%)",
+                border: "1.5px solid hsl(38 50% 87%)",
+                borderRadius: 14,
+                padding: "14px 16px",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: 11,
+                opacity: visible ? 1 : 0,
+                transform: visible ? "none" : "translateY(10px)",
+                transition: `opacity 0.45s ease ${Math.min(i, 11) * 0.05}s, transform 0.45s ease ${Math.min(i, 11) * 0.05}s`,
+              }}
+            >
+              <span
+                style={{
+                  width: 34,
+                  height: 34,
+                  borderRadius: "50%",
+                  background: "hsl(4 72% 50% / 0.1)",
+                  border: "1px solid hsl(4 72% 50% / 0.28)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  marginBlockStart: 2,
+                }}
+              >
+                <Heart size={15} color="hsl(4 72% 50%)" fill="hsl(4 72% 50%)" />
+              </span>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontWeight: 800, fontSize: 14.5, color: "hsl(215 55% 20%)", lineHeight: 1.3 }}>{d.name}</div>
+                <div style={{ fontWeight: 900, fontSize: 16, color: "hsl(38 70% 38%)", marginBlockStart: 2, fontVariantNumeric: "tabular-nums" }}>
+                  ₪{d.amount.toLocaleString()}
+                </div>
+                {d.blessing && (
+                  <div style={{ fontSize: 12, color: "hsl(215 25% 42%)", lineHeight: 1.5, marginBlockStart: 4 }}>“{d.blessing}”</div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBlockStart: 28 }}>
+          {donors.length > DONORS_WALL_INITIAL && (
+            <button
+              onClick={() => setExpanded((v) => !v)}
+              style={{
+                padding: "11px 26px",
+                borderRadius: 99,
+                border: "1.5px solid hsl(38 60% 70%)",
+                background: "white",
+                color: "hsl(38 65% 36%)",
+                fontWeight: 800,
+                fontSize: 14,
+                cursor: "pointer",
+              }}
+            >
+              {expanded ? "להציג פחות" : `להצגת עוד שותפים (${donors.length - DONORS_WALL_INITIAL}+)`}
+            </button>
+          )}
+          <button
+            onClick={onSupportClick}
+            style={{
+              padding: "11px 28px",
+              borderRadius: 99,
+              border: "none",
+              background: GOLD_GRAD,
+              color: "hsl(215 55% 12%)",
+              fontWeight: 900,
+              fontSize: 14,
+              cursor: "pointer",
+            }}
+          >
+            <Heart size={14} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 6 }} fill="currentColor" />
+            מצטרפים לשותפים
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Story / Why / Author / Timeline / FAQ ─────────────── */
 function StorySection({ campaign }: { campaign: CampaignRow }) {
   const { ref, visible } = useInView(0.1);
@@ -1346,6 +1483,77 @@ function DedicationOptionsSection({
         </p>
       </div>
     </section>
+  );
+}
+
+/* ─── פס-תרומה תחתון דק (3.9, בקשת סער) ────────────────────
+ * כמו הדר נגרר — רק בתחתית המסך. מופיע אחרי שגוללים מעבר להירו (הסקשן
+ * השני) ומלווה את כל הדף: "נשארו ₪X" + כפתור תרומה קומפקטי + סעיף 46. */
+function StickyDonateBar({
+  visible,
+  remaining,
+  onSupportClick,
+}: {
+  visible: boolean;
+  remaining: number;
+  onSupportClick: () => void;
+}) {
+  return (
+    <div
+      style={{
+        position: "fixed",
+        insetBlockEnd: 0,
+        insetInline: 0,
+        zIndex: 80,
+        background: "hsl(215 55% 12% / 0.96)",
+        backdropFilter: "blur(14px)",
+        borderBlockStart: "1px solid hsl(38 75% 55% / 0.45)",
+        boxShadow: "0 -6px 24px hsl(215 55% 5% / 0.45)",
+        transform: visible ? "translateY(0)" : "translateY(110%)",
+        transition: "transform 0.35s ease",
+        paddingBlockEnd: "env(safe-area-inset-bottom, 0px)",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1100,
+          margin: "0 auto",
+          padding: "7px 14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "clamp(10px, 3vw, 22px)",
+        }}
+      >
+        {remaining > 0 && (
+          <span style={{ color: "hsl(43 90% 70%)", fontWeight: 800, fontSize: "clamp(12px, 1.6vw, 14px)", whiteSpace: "nowrap" }}>
+            נשארו ₪{remaining.toLocaleString()}
+          </span>
+        )}
+        <button
+          onClick={onSupportClick}
+          style={{
+            padding: "7px 22px",
+            background: GOLD_GRAD,
+            color: "hsl(215 55% 12%)",
+            border: "none",
+            borderRadius: 99,
+            fontWeight: 900,
+            fontSize: 14,
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+            boxShadow: "0 4px 14px hsl(38 80% 50% / 0.35)",
+          }}
+        >
+          <Heart size={13} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 6 }} fill="currentColor" />
+          לחצו כאן לתרומה
+        </button>
+        <span className="campaign-sticky-46" style={{ display: "flex", alignItems: "center", gap: 5, color: "hsl(215 10% 68%)", fontWeight: 700, fontSize: 12, whiteSpace: "nowrap" }}>
+          <ShieldCheck size={13} style={{ color: "hsl(38 85% 66%)" }} />
+          מוכר לסעיף 46
+        </span>
+      </div>
+    </div>
   );
 }
 
@@ -1850,6 +2058,26 @@ export default function CampaignPage() {
         .campaign-rich-text p:last-child { margin-block-end: 0; }
         .campaign-rich-text-dark p { margin: 0 0 14px; }
         .campaign-rich-text-dark p:last-child { margin-block-end: 0; }
+        /* גרדיאנט נודד על החלק שחסר בפס ההתקדמות (3.9) */
+        .campaign-remaining-shimmer {
+          background: linear-gradient(90deg,
+            hsl(43 90% 62% / 0.05) 0%,
+            hsl(43 92% 66% / 0.42) 50%,
+            hsl(43 90% 62% / 0.05) 100%);
+          background-size: 200% 100%;
+          animation: campaignRemainingShimmer 2.6s linear infinite;
+        }
+        @keyframes campaignRemainingShimmer {
+          0% { background-position: 130% 0; }
+          100% { background-position: -70% 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .campaign-remaining-shimmer { animation: none; background: hsl(43 90% 62% / 0.18); }
+        }
+        /* בפס התחתון הדק — במסכים צרים מאוד מוותרים על צ'יפ סעיף 46 */
+        @media (max-width: 380px) {
+          .campaign-sticky-46 { display: none !important; }
+        }
       `}</style>
 
 
@@ -1866,6 +2094,11 @@ export default function CampaignPage() {
       <VideoSection campaign={campaign} />
       <ProofStrip campaign={campaign} supporters={totalSupporters} />
       <TiersSection campaign={campaign} tiers={tiers} tierCounts={tierCounts} onSupport={openTier} />
+      <DonorsWallSection
+        donors={Array.isArray(campaign.external_recent_donors) ? campaign.external_recent_donors : []}
+        totalSupporters={totalSupporters}
+        onSupportClick={scrollToTiers}
+      />
       {CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) && (
         <DedicationOptionsSection settings={pageDedicationSettings} onPick={openDedicationDonation} />
       )}
@@ -1876,8 +2109,37 @@ export default function CampaignPage() {
       <TimelineSection campaign={campaign} />
       <FaqSection campaign={campaign} />
       <FinalCTA supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
+      <StickyDonateBar
+        visible={scrollY > (typeof window !== "undefined" ? window.innerHeight * 0.75 : 600)}
+        remaining={Math.max(0, goal - totalRaised)}
+        onSupportClick={scrollToTiers}
+      />
 
-      <footer style={{ background: "hsl(215 55% 11%)", padding: "32px 24px", textAlign: "center" }}>
+      {/* פוטר עם כפתור תרומה + סעיף 46 (3.9, בקשת סער) */}
+      {/* padding תחתון מוגדל — שהפס הדק הקבוע לא יכסה את פרטי הקשר */}
+      <footer style={{ background: "hsl(215 55% 11%)", borderBlockStart: "1px solid hsl(38 75% 55% / 0.18)", padding: "44px 24px 92px", textAlign: "center" }}>
+        <button
+          onClick={scrollToTiers}
+          style={{
+            padding: "16px 44px",
+            background: GOLD_GRAD,
+            color: "hsl(215 55% 12%)",
+            border: "none",
+            borderRadius: 99,
+            fontWeight: 900,
+            fontSize: 17,
+            cursor: "pointer",
+            letterSpacing: "0.01em",
+            boxShadow: "0 10px 30px hsl(38 80% 50% / 0.35)",
+          }}
+        >
+          <Heart size={16} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 8 }} fill="currentColor" />
+          לחצו כאן לתרומה
+        </button>
+        <p style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "hsl(38 85% 70%)", margin: "12px 0 26px" }}>
+          <ShieldCheck size={14} />
+          התרומה מוכרת למס לפי סעיף 46
+        </p>
         <p style={{ color: "white", fontWeight: 700, margin: "0 0 8px" }}>תנועת בני ציון ללימוד תנ"ך</p>
         <p style={{ fontSize: 13, color: "hsl(215 10% 48%)", margin: 0 }}>
           <a href="mailto:office@bneyzion.co.il" style={{ color: "hsl(38 75% 58%)", textDecoration: "none" }}>
