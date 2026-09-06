@@ -16,6 +16,7 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useGrowPayment } from "@/hooks/useGrowPayment";
+import { normalizeIsraeliId } from "@/lib/israeliId";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -1636,8 +1637,9 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
       toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
       return;
     }
-    if (donorTaxId && !/^\d{8,9}$/.test(donorTaxId.replace(/[-\s]/g, ""))) {
-      toast({ title: "מספר תעודת הזהות צריך להכיל 8-9 ספרות (או להישאר ריק)", variant: "destructive" });
+    const normalizedTaxId = donorTaxId.trim() ? normalizeIsraeliId(donorTaxId) : null;
+    if (donorTaxId.trim() && !normalizedTaxId) {
+      toast({ title: "מספר תעודת הזהות לא תקין. בדקו את הספרות, או השאירו ריק", variant: "destructive" });
       return;
     }
     if (needsShipping && (!shippingStreet.trim() || !shippingHouseNumber.trim() || !shippingCity.trim())) {
@@ -1667,7 +1669,7 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
         donationMeta: {
           is_monthly: false,
           donor_email: donorEmail || undefined,
-          donor_tax_id: donorTaxId.replace(/[-\s]/g, "") || undefined,
+          donor_tax_id: normalizedTaxId || undefined,
           user_id: user?.id,
           // @ts-expect-error — שדות קמפיין מועברים ל-create-payment (source/tier_id/shipping)
           source: campaign.slug,

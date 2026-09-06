@@ -6,6 +6,7 @@
  * controlled from the parent (impact tiers set it). Payment reuses
  * useGrowPayment: one-time → "donation", recurring → "directDebit".
  */
+import { normalizeIsraeliId } from "@/lib/israeliId";
 import { useCallback, useState } from "react";
 
 import { useToast } from "@/hooks/use-toast";
@@ -96,8 +97,9 @@ export default function DonateForm({
       toast({ title: "נא להזין מספר טלפון תקין (05XXXXXXXX)", variant: "destructive" });
       return;
     }
-    if (donorTaxId && !/^\d{8,9}$/.test(donorTaxId.replace(/[-\s]/g, ""))) {
-      toast({ title: "ת\"ז / ח.פ לא תקין — 8-9 ספרות (או להשאיר ריק)", variant: "destructive" });
+    const normalizedTaxId = donorTaxId.trim() ? normalizeIsraeliId(donorTaxId) : null;
+    if (donorTaxId.trim() && !normalizedTaxId) {
+      toast({ title: "מספר תעודת הזהות לא תקין. בדקו את הספרות, או השאירו ריק", variant: "destructive" });
       return;
     }
     if (!tosAccepted) {
@@ -132,7 +134,7 @@ export default function DonateForm({
           dedication_type: donationType,
           dedication_name: dedication || undefined,
           donor_email: donorEmail || undefined,
-          donor_tax_id: donorTaxId.replace(/[-\s]/g, "") || undefined,
+          donor_tax_id: normalizedTaxId || undefined,
           user_id: user?.id,
           ...(source && { source }),
           ...(tier && { tier_id: tier }),

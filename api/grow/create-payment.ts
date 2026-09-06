@@ -915,9 +915,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // (donations.donor_tax_id) ולא נשלח ל-Grow, ולכן קבלות של תרומות מהאתר יצאו
     // בלי מספר זהות והתורם לא ראה את התרומה באזור האישי ברשות המסים (הרב יואב, 6.9).
     // שם השדה לפי תיעוד Grow createPaymentProcess: pageField[invoiceLicenseNumber].
-    const receiptTaxId = String(donationMeta?.donor_tax_id || "").replace(/\D/g, "").slice(0, 9);
-    if (receiptTaxId.length >= 8) {
+    // ⚠️ Grow מאמת ספרת-ביקורת (שגיאה 782 "שדה ת.ז. לא תקין" מפילה את כל התשלום —
+    // אומת 6.9.2026 בבדיקה חיה). לכן: ת"ז שלא עובר ספרת-ביקורת לא נשלח, והתרומה ממשיכה בלעדיו.
+    const receiptTaxId = String(donationMeta?.donor_tax_id || "").replace(/\D/g, "").padStart(9, "0").slice(-9);
+    if (donationMeta?.donor_tax_id && isValidIsraeliId(receiptTaxId)) {
       formData.append("pageField[invoiceLicenseNumber]", receiptTaxId);
+    } else if (donationMeta?.donor_tax_id) {
+      console.warn("create-payment: donor_tax_id failed checksum — sent to Grow without it", { orderId });
     }
     if (safeInstallments > 1) {
       // maxPaymentNum lets the customer choose 1–N in Grow's UI.
@@ -1068,4 +1072,19 @@ async function computeDedicationPrice(
     }
   }
   return priceLesson;
+}
+
+/**
+ * ספרת-ביקורת של ת"ז/ח.פ ישראלי (9 ספרות, משקלים 1-2 לסירוגין, סכום ספרות המכפלות מתחלק ב-10).
+ * ת"ז קצר מ-9 ספרות מרופד באפסים משמאל לפני הבדיקה.
+ */
+function isValidIsraeliId(id: string): boolean {
+  if (!/^\d{9}$/.test(id)) return false;
+  let sum = 0;
+  for (let i = 0; i < 9; i++) {
+    let n = Number(id[i]) * ((i % 2) + 1);
+    if (n > 9) n -= 9;
+    sum += n;
+  }
+  return sum % 10 === 0;
 }

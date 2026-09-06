@@ -4,7 +4,7 @@ import {
   BarChart3, Ticket, CreditCard,
   UserCheck, Upload, CalendarDays, Megaphone,
   MessageCircle, Heart, SlidersHorizontal, HelpCircle,
-  Package, Bot, Link2, AlertTriangle, Target,
+  Package, Bot, Link2, AlertTriangle, Target, Receipt,
 } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/contexts/AuthContext";
@@ -70,6 +70,7 @@ const SECTIONS: NavSection[] = [
       // רמה 18: העמוד היה יתום — טבלת מעקב-משלוחים מלאה בלי שום קישור אליה
       { title: "הזמנות ומשלוחים", url: "/admin/orders",      icon: Package,     roles: ADMIN },
       { title: "הקדשות",        url: "/admin/dedications",   icon: Heart,       roles: ADMIN },
+      { title: "תיקון קבלות",    url: "/admin/receipt-fixes", icon: Receipt,     roles: ADMIN },
       { title: "אנליטיקס",      url: "/admin/analytics",     icon: BarChart3,   roles: ADMIN },
       { title: "קופונים",       url: "/admin/coupons",       icon: Ticket,      roles: ADMIN },
       { title: "קישורים מקוצרים", url: "/admin/short-links",  icon: Link2,       roles: CREATOR },
