@@ -86,6 +86,8 @@ export interface StartPaymentParams {
     dedication_type?: string;
     dedication_name?: string;
     donor_email?: string;
+    /** ת"ז לקבלה (סעיף 46) — נשלח ל-Grow כ-pageField[invoiceLicenseNumber] */
+    donor_tax_id?: string;
     user_id?: string;
   };
   /** הקדשת שיעור/סדרה — השרת יוצר את שורת ה-pending ואוכף את המחיר. */
