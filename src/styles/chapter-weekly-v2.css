@@ -1,0 +1,157 @@
+/**
+ * chapter-weekly-v2 — סגנונות ייעודיים לדף המשודרג.
+ *
+ * הקובץ מוסיף רק מחלקות בתחילית `.cw2-`, ונשען על משתני הצבע של
+ * `.chapter-weekly-theme` שכבר קיימים ב-chapter-weekly.css.
+ * אין כאן שום שינוי שנוגע לדף החי — הפרדה מכוונת.
+ */
+
+/* ── הירו: תנועת מצלמה איטית על תמונת הרקע ─────────────────────────────── */
+@keyframes cw2-ken-burns {
+  from {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+.cw2-kenburns {
+  animation: cw2-ken-burns 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* ── רצועת המלצות נעה ──────────────────────────────────────────────────── */
+@keyframes cw2-marquee-rtl {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+@keyframes cw2-marquee-ltr {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.cw2-marquee {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: cw2-marquee-rtl 72s linear infinite;
+  will-change: transform;
+}
+
+.cw2-marquee--reverse {
+  animation-name: cw2-marquee-ltr;
+  animation-duration: 88s;
+}
+
+.cw2-marquee-viewport:hover .cw2-marquee,
+.cw2-marquee-viewport:focus-within .cw2-marquee {
+  animation-play-state: paused;
+}
+
+/* דהייה בקצוות כדי שהרצועה לא תיחתך בחדות */
+.cw2-marquee-viewport {
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000 6rem,
+    #000 calc(100% - 6rem),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000 6rem,
+    #000 calc(100% - 6rem),
+    transparent
+  );
+}
+
+/* ── ציר הזמן השנתי ───────────────────────────────────────────────────── */
+.cw2-rail {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--gold) / 0.5) transparent;
+}
+
+.cw2-rail::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cw2-rail::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.4);
+  border-radius: 999px;
+}
+
+.cw2-rail::-webkit-scrollbar-thumb {
+  background: hsl(var(--gold) / 0.55);
+  border-radius: 999px;
+}
+
+/* ── מרקם נייר למכתב של הרב יואב ──────────────────────────────────────── */
+.cw2-paper {
+  background-color: #fdfaf4;
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(196, 162, 101, 0.13), transparent 55%),
+    radial-gradient(ellipse at 85% 100%, rgba(45, 125, 125, 0.08), transparent 55%);
+  box-shadow:
+    0 1px 2px rgba(45, 31, 14, 0.06),
+    0 18px 50px rgba(45, 31, 14, 0.13);
+}
+
+/* קו זהב דק שמפריד בין סקשנים כהים לבהירים */
+.cw2-hairline {
+  height: 1px;
+  background: linear-gradient(
+    to left,
+    transparent,
+    hsl(var(--gold) / 0.55),
+    transparent
+  );
+}
+
+/* ── פס תחתון דביק ────────────────────────────────────────────────────── */
+.cw2-dock {
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+}
+
+/* ── סמן גלילה בהירו ──────────────────────────────────────────────────── */
+@keyframes cw2-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.cw2-nudge {
+  animation: cw2-nudge 2.2s ease-in-out infinite;
+}
+
+/* ── כיבוד העדפת תנועה מופחתת ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cw2-kenburns,
+  .cw2-marquee,
+  .cw2-nudge {
+    animation: none !important;
+  }
+
+  .cw2-marquee {
+    /* בלי אנימציה הרצועה נשארת נגללת ידנית */
+    width: auto;
+    overflow-x: auto;
+  }
+}
