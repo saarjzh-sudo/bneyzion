@@ -22,6 +22,7 @@ import {
 } from "@/hooks/useAdminContent";
 import { SeriesCombobox } from "@/components/admin/SeriesCombobox";
 import { TopicCombobox } from "@/components/admin/TopicCombobox";
+import { RabbiCombobox } from "@/components/admin/RabbiCombobox";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -466,13 +467,13 @@ export function LessonsContent() {
 
                   <div>
                     <Label>רב</Label>
-                    <Select value={form.rabbi_id} onValueChange={v => setForm({ ...form, rabbi_id: v === "_none" ? "" : v })}>
-                      <SelectTrigger><SelectValue placeholder="בחר רב" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="_none">ללא רב</SelectItem>
-                        {rabbis?.map(r => <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>)}
-                      </SelectContent>
-                    </Select>
+                    {/* בורר עם חיפוש — ~212 רבנים ברשימה שטוחה היו בלתי-שמישים (יואב 14.9) */}
+                    <RabbiCombobox
+                      rabbis={rabbis ?? []}
+                      value={form.rabbi_id}
+                      onChange={id => setForm(f => ({ ...f, rabbi_id: id }))}
+                      placeholder="חפש ובחר רב"
+                    />
                   </div>
                   <div>
                     <Label>סדרה</Label>

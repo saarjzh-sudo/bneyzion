@@ -417,6 +417,38 @@ const ContentUpload = () => {
     setGeneratedCoverUrl(null);
   };
 
+  // אצוות (יואב 14.9): העלאה נוספת עם אותו שיוך — שומר רב/סדרה/קהל-יעד/ספר,
+  // מנקה כותרת/תיאור/תוכן/מדיה/נושאים/פרק. חוסך ~10 פעולות לכל פריט באצווה.
+  const resetKeepAssignment = () => {
+    setForm(f => ({
+      ...EMPTY,
+      rabbiIds: f.rabbiIds,
+      rabbiId: f.rabbiId,
+      seriesId: f.seriesId,
+      audienceTags: f.audienceTags,
+      bibleBook: f.bibleBook,
+      bookCategoryId: f.bookCategoryId,
+      sourceType: f.sourceType,
+    }));
+    // סדרה שנוצרה בשמירה הקודמת כבר קיימת (createSeries קיבע את ה-id בטופס) —
+    // ממירים את הבחירה ל"סדרה קיימת" כדי שלא תיווצר שוב.
+    setLocationValue(prev => {
+      if (prev?.mode === "new_series_in_node" && form.seriesId) {
+        return {
+          mode: "existing_series",
+          seriesId: form.seriesId,
+          seriesTitle: prev.seriesTitle || form.newSeriesTitle,
+          wing: prev.wing,
+        };
+      }
+      return prev;
+    });
+    setStep(1);
+    setDone(false);
+    setStepErrors({});
+    setGeneratedCoverUrl(null);
+  };
+
   // Feature 5 — AI cover generation handler
   const handleGenerateCover = async () => {
     if (!form.title.trim()) {
@@ -491,6 +523,20 @@ const ContentUpload = () => {
       set("newSeriesTitle", "");
       setCreatingNewSeries(false);
     }
+    // אגף המורים (יואב 14.9): שיוך לסדרת-מורים או לצומת מהמאגר מתייג את
+    // השיעור "מורים" אוטומטית — חוסך את הפעימה השנייה. ברירת המחדל ["general"]
+    // מוחלפת; בחירה מותאמת של המשתמש לא נדרסת, ואפשר לשנות בתגיות למטה.
+    if (loc.wing === "teachers" && !form.audienceTags.includes("teachers")) {
+      setForm(f => {
+        if (f.audienceTags.includes("teachers")) return f;
+        const isDefaultTags = f.audienceTags.length === 1 && f.audienceTags[0] === "general";
+        return { ...f, audienceTags: isDefaultTags ? ["teachers"] : [...f.audienceTags, "teachers"] };
+      });
+      toast({
+        title: 'קהל היעד סומן "מורים" לפי המיקום שנבחר',
+        description: "אפשר לשנות בתגיות קהל היעד בהמשך הדף.",
+      });
+    }
   };
 
   // ── book autocomplete handler ────────────────────────────────────
@@ -527,11 +573,21 @@ const ContentUpload = () => {
               ? "השיעור פורסם ויופיע באתר."
               : "המנהל יקבל התראה ויאשר את התוכן לפני הפרסום."}
           </p>
-          <div className="flex justify-center gap-3 pt-2">
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            {/* אצוות (יואב 14.9): ממשיכים לפריט הבא באותה סדרה בלי לבחור הכל מחדש */}
+            {locationValue && locationValue.mode !== "standalone" && (
+              <button
+                onClick={resetKeepAssignment}
+                className="px-6 py-2.5 rounded-xl text-sm font-display transition-colors"
+                style={{ background: `linear-gradient(135deg, ${GOLD} 0%, ${GOLD_L} 100%)`, color: "#fff" }}
+              >
+                העלה עוד לאותה סדרה
+              </button>
+            )}
             <button
               onClick={resetAll}
-              className="px-6 py-2.5 rounded-xl text-sm font-display transition-colors"
-              style={{ background: `linear-gradient(135deg, ${GOLD} 0%, ${GOLD_L} 100%)`, color: "#fff" }}
+              className="px-6 py-2.5 rounded-xl border text-sm font-display transition-colors"
+              style={{ borderColor: GOLD_L, color: GOLD, background: "#fff" }}
             >
               העלה תוכן נוסף
             </button>

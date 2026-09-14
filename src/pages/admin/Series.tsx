@@ -17,6 +17,7 @@ import {
   ADMIN_PAGE_SIZE, type AdminSeriesTab, type AdminAudienceFilter, type SeriesTreeRow,
 } from "@/hooks/useAdminContent";
 import { SeriesCombobox } from "@/components/admin/SeriesCombobox";
+import { RabbiCombobox } from "@/components/admin/RabbiCombobox";
 import { useRabbis } from "@/hooks/useRabbis";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
@@ -437,10 +438,13 @@ export function SeriesContent() {
                 <div><Label>תיאור</Label><Textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} /></div>
                 <div>
                   <Label>רב</Label>
-                  <Select value={form.rabbi_id} onValueChange={(v) => setForm({ ...form, rabbi_id: v })}>
-                    <SelectTrigger><SelectValue placeholder="בחר רב" /></SelectTrigger>
-                    <SelectContent>{rabbis?.map((r) => <SelectItem key={r.id} value={r.id}>{r.name}</SelectItem>)}</SelectContent>
-                  </Select>
+                  {/* בורר עם חיפוש — ~212 רבנים ברשימה שטוחה היו בלתי-שמישים (יואב 14.9) */}
+                  <RabbiCombobox
+                    rabbis={rabbis ?? []}
+                    value={form.rabbi_id}
+                    onChange={id => setForm(f => ({ ...f, rabbi_id: id }))}
+                    placeholder="חפש ובחר רב"
+                  />
                 </div>
                 <div>
                   <Label>סדרת אב (היררכיה)</Label>

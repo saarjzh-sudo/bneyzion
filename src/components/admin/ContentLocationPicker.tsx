@@ -15,7 +15,7 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Search, ChevronDown, ChevronLeft, AlertCircle, Plus, FolderOpen, Check, Loader2 } from "lucide-react";
-import { useContentSidebar } from "@/hooks/useContentSidebar";
+import { useContentSidebar, useTeachersMaagarTree, MAAGAR_EZREI_ROOT_ID } from "@/hooks/useContentSidebar";
 
 // ─── design tokens (match ContentUpload) ────────────────────────────
 const GOLD   = "#8B6F47";
@@ -34,6 +34,8 @@ export interface SelectedLocation {
   seriesTitle?: string;
   parentNodeId?: string;
   parentNodeTitle?: string;
+  /** "teachers" — נבחרה סדרת-מורים או צומת מאגף המורים; האשף מתייג קהל-יעד לפי זה */
+  wing?: "teachers";
 }
 
 interface ContentLocationPickerProps {
@@ -49,31 +51,36 @@ interface ContentLocationPickerProps {
 interface NodeSeriesPanelProps {
   nodeId: string;
   nodeTitle: string;
+  /** הצומת נבחר מלשונית אגף המורים */
+  wing?: "teachers";
   onSelect: (loc: SelectedLocation) => void;
   currentValue: SelectedLocation | null;
 }
 
-function NodeSeriesPanel({ nodeId, nodeTitle, onSelect, currentValue }: NodeSeriesPanelProps) {
+function NodeSeriesPanel({ nodeId, nodeTitle, wing, onSelect, currentValue }: NodeSeriesPanelProps) {
   const { useSeriesForNode } = useContentSidebar();
-  // leafOnly: מסנן צמתי-מיכל (קטגוריות בעץ) מרשימת הסדרות — כאן בוחרים סדרה בלבד
-  const { data: series, isLoading } = useSeriesForNode(nodeId, { leafOnly: true });
+  // leafOnly: מסנן צמתי-מיכל (קטגוריות בעץ) מרשימת הסדרות — כאן בוחרים סדרה בלבד.
+  // includeTeachers: באשף מציגים גם סדרות-מורים (יואב 14.9) — עם תג "מורים" על השורה;
+  // חלקן חיות תחת צמתים ציבוריים ("חוברות הרב גדי שר שלום" תחת במדבר).
+  const { data: series, isLoading } = useSeriesForNode(nodeId, { leafOnly: true, includeTeachers: true });
   const [creatingNew, setCreatingNew] = useState(false);
   const [newTitle, setNewTitle] = useState("");
 
-  const handleSelectExisting = (id: string, title: string) => {
-    onSelect({ mode: "existing_series", seriesId: id, seriesTitle: title });
+  const handleSelectExisting = (id: string, title: string, teachersOnly?: boolean) => {
+    const w = teachersOnly || wing === "teachers" ? ("teachers" as const) : undefined;
+    onSelect({ mode: "existing_series", seriesId: id, seriesTitle: title, wing: w });
   };
 
   const handleCreateNew = () => {
     const t = newTitle.trim();
     if (!t) return;
-    onSelect({ mode: "new_series_in_node", parentNodeId: nodeId, parentNodeTitle: nodeTitle });
+    onSelect({ mode: "new_series_in_node", parentNodeId: nodeId, parentNodeTitle: nodeTitle, wing });
     // We pass the title back via a special field the caller can read
     // Actually — caller needs newSeriesTitle separately. We expose it via parentNodeTitle
     // and the caller reads form.newSeriesTitle from its own state. So here just set the loc.
     // But spec says the caller needs the title for createSeries. We embed it in parentNodeTitle
     // using a delimiter the caller knows about — no, cleaner: add seriesTitle to loc too.
-    onSelect({ mode: "new_series_in_node", parentNodeId: nodeId, parentNodeTitle: nodeTitle, seriesTitle: t });
+    onSelect({ mode: "new_series_in_node", parentNodeId: nodeId, parentNodeTitle: nodeTitle, seriesTitle: t, wing });
     setCreatingNew(false);
     setNewTitle("");
   };
@@ -100,7 +107,7 @@ function NodeSeriesPanel({ nodeId, nodeTitle, onSelect, currentValue }: NodeSeri
               <li key={s.id}>
                 <button
                   type="button"
-                  onClick={() => handleSelectExisting(s.id, s.title)}
+                  onClick={() => handleSelectExisting(s.id, s.title, s.teachersOnly)}
                   className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-sm text-right transition-all"
                   style={{
                     background: isSelected ? `${GOLD}18` : "#fff",
@@ -109,7 +116,17 @@ function NodeSeriesPanel({ nodeId, nodeTitle, onSelect, currentValue }: NodeSeri
                   }}
                 >
                   <span className="flex-1 min-w-0 text-right">
-                    <span className="block truncate">{s.title}</span>
+                    <span className="flex items-center gap-1.5">
+                      <span className="truncate">{s.title}</span>
+                      {s.teachersOnly && (
+                        <span
+                          className="shrink-0 text-[10px] px-1.5 py-0.5 rounded-full font-display"
+                          style={{ background: "#4A5A2E18", color: "#4A5A2E", border: "1px solid #4A5A2E40" }}
+                        >
+                          מורים
+                        </span>
+                      )}
+                    </span>
                     {/* הרב המשויך לסדרה — יואב 20.7: "לא רואים שם איזה רב משויך לכל סידרה" */}
                     {s.rabbiName && (
                       <span className="block truncate text-xs" style={{ color: TXT_M }}>{s.rabbiName}</span>
@@ -192,8 +209,10 @@ export function ContentLocationPicker({
   value,
 }: ContentLocationPickerProps) {
   const { categories, extraSections, isLoading } = useContentSidebar();
+  // אגף המורים — עץ המיקומים של מאגר עזרי הלמידה (יואב 14.9)
+  const { data: teachersTree, isLoading: teachersLoading } = useTeachersMaagarTree();
 
-  type TabId = "tanach" | "topics" | "standalone";
+  type TabId = "tanach" | "topics" | "teachers" | "standalone";
   const [activeTab, setActiveTab] = useState<TabId>("tanach");
 
   // accordion open state: set of ids
@@ -201,6 +220,7 @@ export function ContentLocationPicker({
   const [openBooks, setOpenBooks] = useState<Set<string>>(new Set());
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
   const [selectedNodeTitle, setSelectedNodeTitle] = useState<string>("");
+  const [selectedNodeWing, setSelectedNodeWing] = useState<"teachers" | undefined>(undefined);
 
   // Feature 4 — search
   const [searchTerm, setSearchTerm] = useState("");
@@ -290,8 +310,32 @@ export function ContentLocationPicker({
       }
     }
 
+    // אגף המורים (יואב 14.9)
+    for (const section of teachersTree || []) {
+      if (section.title.toLowerCase().includes(lower)) {
+        results.push({
+          nodeId: section.id,
+          nodeTitle: section.title,
+          breadcrumb: `אגף המורים › ${section.title}`,
+          tabId: "teachers",
+          categoryId: section.id,
+        });
+      }
+      for (const child of section.children) {
+        if (child.title.toLowerCase().includes(lower)) {
+          results.push({
+            nodeId: child.id,
+            nodeTitle: child.title,
+            breadcrumb: `אגף המורים › ${section.title} › ${child.title}`,
+            tabId: "teachers",
+            categoryId: section.id,
+          });
+        }
+      }
+    }
+
     return results.slice(0, 12);
-  }, [searchTerm, categories, extraSections]);
+  }, [searchTerm, categories, extraSections, teachersTree]);
 
   const handleSearchResultClick = (result: SearchResult) => {
     setSearchTerm("");
@@ -300,8 +344,12 @@ export function ContentLocationPicker({
       if (result.categoryId) setOpenCategories(prev => new Set([...prev, result.categoryId!]));
       if (result.bookId) setOpenBooks(prev => new Set([...prev, result.bookId!]));
     }
+    if (result.tabId === "teachers" && result.categoryId) {
+      setOpenCategories(prev => new Set([...prev, result.categoryId!]));
+    }
     setSelectedNodeId(result.nodeId);
     setSelectedNodeTitle(result.nodeTitle);
+    setSelectedNodeWing(result.tabId === "teachers" ? "teachers" : undefined);
   };
 
   const toggleCategory = (id: string) => {
@@ -320,9 +368,10 @@ export function ContentLocationPicker({
     });
   };
 
-  const handleNodeClick = (nodeId: string, nodeTitle: string) => {
+  const handleNodeClick = (nodeId: string, nodeTitle: string, wing?: "teachers") => {
     setSelectedNodeId(nodeId);
     setSelectedNodeTitle(nodeTitle);
+    setSelectedNodeWing(wing);
   };
 
   const handleStandaloneSelect = () => {
@@ -333,6 +382,7 @@ export function ContentLocationPicker({
   const TABS: { id: TabId; label: string }[] = [
     { id: "tanach", label: 'תנ"ך' },
     { id: "topics", label: "נושאים ומועדים" },
+    { id: "teachers", label: "אגף המורים" },
     { id: "standalone", label: "ללא שיוך" },
   ];
 
@@ -573,6 +623,92 @@ export function ContentLocationPicker({
           </div>
         )}
 
+        {/* ── tab: אגף המורים (יואב 14.9) ───────────────────────── */}
+        {activeTab === "teachers" && (
+          <div className="space-y-1">
+            {/* השורש כולו — לסדרות שיושבות ישירות תחת המאגר */}
+            <button
+              type="button"
+              onClick={() => handleNodeClick(MAAGAR_EZREI_ROOT_ID, "מאגר עזרי הלמידה", "teachers")}
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-display transition-all"
+              style={{
+                color: selectedNodeId === MAAGAR_EZREI_ROOT_ID ? GOLD : TXT_M,
+                background: selectedNodeId === MAAGAR_EZREI_ROOT_ID ? `${GOLD}12` : "transparent",
+                border: `1px solid ${selectedNodeId === MAAGAR_EZREI_ROOT_ID ? GOLD_S : "transparent"}`,
+              }}
+            >
+              <FolderOpen className="h-3.5 w-3.5 shrink-0" />
+              מאגר עזרי הלמידה (כל האגף)
+              {selectedNodeId === MAAGAR_EZREI_ROOT_ID && <Check className="h-3 w-3 mr-auto" style={{ color: GOLD }} />}
+            </button>
+
+            {teachersLoading && (
+              <div className="flex items-center gap-2 px-3 py-2 text-xs" style={{ color: TXT_M }}>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                טוען את עץ אגף המורים...
+              </div>
+            )}
+
+            {(teachersTree || []).map(section => {
+              const open = openCategories.has(section.id);
+              return (
+                <div key={section.id}>
+                  <button
+                    type="button"
+                    onClick={() => toggleCategory(section.id)}
+                    className="w-full flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-sm font-display transition-colors"
+                    style={{
+                      color: open ? GOLD : TXT,
+                      background: open ? `${GOLD}08` : "transparent",
+                    }}
+                  >
+                    <span>{section.title}</span>
+                    {open
+                      ? <ChevronDown className="h-4 w-4 shrink-0" style={{ color: GOLD }} />
+                      : <ChevronLeft className="h-4 w-4 shrink-0" style={{ color: TXT_M }} />
+                    }
+                  </button>
+                  {open && (
+                    <div className="mr-3 mt-0.5 space-y-0.5">
+                      {/* section itself */}
+                      <button
+                        type="button"
+                        onClick={() => handleNodeClick(section.id, section.title, "teachers")}
+                        className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-display transition-all"
+                        style={{
+                          color: selectedNodeId === section.id ? GOLD : TXT_M,
+                          background: selectedNodeId === section.id ? `${GOLD}12` : "transparent",
+                          border: `1px solid ${selectedNodeId === section.id ? GOLD_S : "transparent"}`,
+                        }}
+                      >
+                        <FolderOpen className="h-3 w-3 shrink-0" />
+                        {section.title} (כולו)
+                        {selectedNodeId === section.id && <Check className="h-3 w-3 mr-auto" style={{ color: GOLD }} />}
+                      </button>
+                      {section.children.map(child => (
+                        <button
+                          key={child.id}
+                          type="button"
+                          onClick={() => handleNodeClick(child.id, child.title, "teachers")}
+                          className="w-full flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-display transition-all"
+                          style={{
+                            color: selectedNodeId === child.id ? GOLD : TXT,
+                            background: selectedNodeId === child.id ? `${GOLD}12` : "transparent",
+                            border: `1px solid ${selectedNodeId === child.id ? GOLD_S : "transparent"}`,
+                          }}
+                        >
+                          <span className="flex-1 text-right">{child.title}</span>
+                          {selectedNodeId === child.id && <Check className="h-3 w-3 shrink-0" style={{ color: GOLD }} />}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
         {/* ── tab: ללא שיוך ─────────────────────────────────────── */}
         {activeTab === "standalone" && (
           <div className="space-y-4 py-2">
@@ -607,6 +743,7 @@ export function ContentLocationPicker({
           <NodeSeriesPanel
             nodeId={selectedNodeId}
             nodeTitle={selectedNodeTitle}
+            wing={selectedNodeWing}
             onSelect={onSelect}
             currentValue={value}
           />

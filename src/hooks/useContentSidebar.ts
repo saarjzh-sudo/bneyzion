@@ -345,10 +345,11 @@ export function useContentSidebar() {
   //   - Else if only a draft copy exists (no active twin) → show it (mirrors old site)
   //   - Never show a draft that has an active/published twin (bad duplicate)
   // Excludes the root node itself and intermediate category nodes (status=category).
-  const useSeriesForNode = (nodeId: string | null, opts?: { leafOnly?: boolean }) => {
+  const useSeriesForNode = (nodeId: string | null, opts?: { leafOnly?: boolean; includeTeachers?: boolean }) => {
     const leafOnly = opts?.leafOnly ?? false;
+    const includeTeachers = opts?.includeTeachers ?? false;
     return useQuery({
-      queryKey: ["content-series-canonical", nodeId, leafOnly],
+      queryKey: ["content-series-canonical", nodeId, leafOnly, includeTeachers],
       queryFn: async () => {
         if (!nodeId) return [];
         const { data: descendants } = await supabase.rpc("get_series_descendant_ids", {
@@ -361,13 +362,19 @@ export function useContentSidebar() {
         // Exclude "category" nodes (those are sub-category containers, not leaf series)
         // §3: raise limit 200→1000 (כתובים root has 280+ series, psalms 151 series)
         // §0.3: dual-audience filter — keep general+teachers dual-tagged, exclude teachers-only
-        const { data: series } = await supabase
+        let seriesQuery = supabase
           .from("series")
-          .select("id, title, lesson_count, rabbi_id, description, status, image_url, parent_id, sort_order")
+          .select("id, title, lesson_count, rabbi_id, description, status, image_url, parent_id, sort_order, audience_tags")
           .in("id", allIds)
-          .in("status", ["active", "published", "draft"])
-          // §0.3: exclude teacher-only series from public category page
-          .not("audience_tags", "cs", "{teachers}")
+          .in("status", ["active", "published", "draft"]);
+        // §0.3: exclude teacher-only series from public category pages.
+        // includeTeachers (אשף ההעלאה באדמין, יואב 14.9): מציג גם סדרות-מורים —
+        // חלקן חיות דווקא תחת צמתים ציבוריים ("חוברות הרב גדי שר שלום" תחת במדבר),
+        // ובלי זה אי-אפשר לשייך אליהן שיעור מהאשף.
+        if (!includeTeachers) {
+          seriesQuery = seriesQuery.not("audience_tags", "cs", "{teachers}");
+        }
+        const { data: series } = await seriesQuery
           // §0.1 sort: sort_order band first, then title (canonical series order)
           .order("sort_order", { ascending: true, nullsFirst: false })
           .order("title", { ascending: true })
@@ -457,17 +464,22 @@ export function useContentSidebar() {
           return (b.lesson_count ?? 0) - (a.lesson_count ?? 0);
         });
 
-        return canonical.map((s) => ({
-          id: s.id,
-          title: s.title,
-          lessonCount: s.lesson_count,
-          rabbiId: s.rabbi_id ?? null,
-          rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
-          sourceType: null,
-          description: s.description,
-          imageUrl: (s as any).image_url ?? null,
-          isDraft: s.status === "draft",
-        })) as (SeriesRow & { rabbiId: string | null; imageUrl: string | null; isDraft: boolean })[];
+        return canonical.map((s) => {
+          const tags = ((s as any).audience_tags ?? []) as string[];
+          return {
+            id: s.id,
+            title: s.title,
+            lessonCount: s.lesson_count,
+            rabbiId: s.rabbi_id ?? null,
+            rabbiName: s.rabbi_id ? rabbiMap.get(s.rabbi_id) || null : null,
+            sourceType: null,
+            description: s.description,
+            imageUrl: (s as any).image_url ?? null,
+            isDraft: s.status === "draft",
+            // סימון "מורים" בפאנל האשף — סדרה שמתויגת teachers בלי general
+            teachersOnly: tags.includes("teachers") && !tags.includes("general"),
+          };
+        }) as (SeriesRow & { rabbiId: string | null; imageUrl: string | null; isDraft: boolean; teachersOnly: boolean })[];
       },
       enabled: !!nodeId,
       staleTime: 1000 * 60 * 5,
@@ -591,4 +603,55 @@ export function useContentSidebar() {
     useLessonsForNode,
     useSeriesForRabbi,
   };
+}
+
+// ─── אגף המורים — עץ המיקומים לאשף ההעלאה (יואב 14.9.2026) ─────────────────
+// "מאגר עזרי הלמידה" — שורש תכני-המורים. נטען רק מ-ContentLocationPicker
+// (אדמין/יוצר); הדפים הציבוריים לא נוגעים בו. הערה: חלק מסדרות המורים חיות
+// דווקא תחת צמתים ציבוריים (למשל "חוברות הרב גדי שר שלום" תחת במדבר) — אותן
+// מכסה includeTeachers של useSeriesForNode, לא העץ הזה.
+export const MAAGAR_EZREI_ROOT_ID = "6bfb7aaa-cd9e-4562-b087-a37fcc24d295";
+
+export interface TeachersTreeSection {
+  id: string;
+  title: string;
+  children: { id: string; title: string }[];
+}
+
+export function useTeachersMaagarTree() {
+  return useQuery({
+    queryKey: ["teachers-maagar-location-tree"],
+    queryFn: async (): Promise<TeachersTreeSection[]> => {
+      const { data: level1 } = await supabase
+        .from("series")
+        .select("id, title")
+        .eq("parent_id", MAAGAR_EZREI_ROOT_ID)
+        .order("title");
+      if (!level1 || level1.length === 0) return [];
+      const { data: level2 } = await supabase
+        .from("series")
+        .select("id, title, parent_id")
+        .in("parent_id", level1.map((s) => s.id))
+        .order("sort_order")
+        .order("title");
+      const byParent = new Map<string, { id: string; title: string }[]>();
+      for (const c of level2 || []) {
+        const arr = byParent.get(c.parent_id!) || [];
+        arr.push({ id: c.id, title: c.title });
+        byParent.set(c.parent_id!, arr);
+      }
+      // תורה→נביאים→כתובים בסדר קאנוני, אחריהם שאר הצמתים-עם-ילדים לפי א"ב.
+      // צמתי L1 בלי ילדים הם סדרות-עלה — נבחרים דרך שורת "כל האגף" בלשונית.
+      const CANON = ["תורה", "נביאים", "כתובים"];
+      const canonIdx = (t: string) => {
+        const i = CANON.indexOf(t.trim());
+        return i === -1 ? 99 : i;
+      };
+      return level1
+        .filter((s) => (byParent.get(s.id) || []).length > 0)
+        .sort((a, b) => canonIdx(a.title) - canonIdx(b.title) || a.title.localeCompare(b.title, "he"))
+        .map((s) => ({ id: s.id, title: s.title, children: byParent.get(s.id) || [] }));
+    },
+    staleTime: 1000 * 60 * 10,
+  });
 }
