@@ -81,6 +81,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import InstallPrompt from "./components/pwa/InstallPrompt";
 import UpdatePrompt from "./components/pwa/UpdatePrompt";
 import CookieConsent from "./components/legal/CookieConsent";
+import GaTracker from "./components/GaTracker";
 import ShabbatGate from "./components/common/ShabbatGate";
 import GlobalAIChat from "./components/ai/GlobalAIChat";
 
@@ -311,11 +312,18 @@ const GlobalChrome = () => {
   // גם בדפי-שיגור עירומים חייבים לבלום את חלון-ההתקנה הנייטיבי: בלי mount של
   // InstallPrompt אין preventDefault על beforeinstallprompt והדפדפן קופץ לבד
   // (הערת סער על דף הקלטת כנס אלול, 14.8).
-  if (BARE_CHROME_ROUTES.some((r) => pathname.startsWith(r))) return <InstallPrompt suppress />;
+  if (BARE_CHROME_ROUTES.some((r) => pathname.startsWith(r)))
+    return (
+      <>
+        <GaTracker />
+        <InstallPrompt suppress />
+      </>
+    );
   // דפי קמפיין (26.8, סער): בלי חלון-התקנה — אבל עדיין suppress כדי שהדפדפן לא יקפוץ לבד
   const onCampaignPage = pathname.startsWith("/campaign");
   return (
     <>
+      <GaTracker />
       <CartDrawer />
       <FloatingPlayer />
       {/* 28.8 (סער): "לא רוצה כרגע בכלל שיקפוץ לשמור את האפליקציה עד שלא נעבור על זה".
