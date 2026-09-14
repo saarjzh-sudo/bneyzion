@@ -59,7 +59,7 @@ const Letter = () => (
         <div className="cw2-hairline my-9" />
 
         <div className="text-center">
-          <Cta tone="teal">מצטרפים לשנת הנביאים</Cta>
+          <Cta tone="teal">מצטרפים ללימוד יהושע ושופטים</Cta>
           <PriceLine muted />
           <p className="text-xs text-foreground/55 mt-3">
             הלימוד נפתח {SEASON.startDateLabel}

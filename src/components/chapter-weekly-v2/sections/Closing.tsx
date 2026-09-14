@@ -1,6 +1,7 @@
 import { Mail, Phone } from "lucide-react";
 
 import { Cta, PriceLine } from "../Cta";
+import { ART } from "../art";
 import { CONTACT, SEASON } from "../data";
 
 /**
@@ -12,6 +13,23 @@ const Closing = () => (
     className="relative py-20 md:py-28 px-4 overflow-hidden"
     style={{ background: "linear-gradient(180deg, #0E1526 0%, #131C30 100%)" }}
   >
+    {/* איור השביל שמטפס אל האור — רקע רך מאחורי הסוגר, לא תמונה שמושכת תשומת לב.
+        נוסף 10.9 בעקבות הערת סער על "יותר המחשה" בדף. */}
+    <img
+      src={ART.photoStone}
+      alt=""
+      aria-hidden="true"
+      className="absolute inset-0 w-full h-full object-cover opacity-[0.22] pointer-events-none"
+      loading="lazy"
+      decoding="async"
+    />
+    <div
+      className="absolute inset-0 pointer-events-none"
+      style={{
+        background:
+          "radial-gradient(ellipse at 50% 40%, rgba(14,21,38,0.55) 0%, rgba(14,21,38,0.88) 70%, #0E1526 100%)",
+      }}
+    />
     <div
       className="absolute inset-0 opacity-[0.06] pointer-events-none"
       style={{
@@ -42,32 +60,32 @@ const Closing = () => (
 
       <div className="cw2-hairline mb-12" />
 
-      <Cta tone="gold">מצטרפים לשנת הנביאים</Cta>
+      <Cta tone="gold" />
       <PriceLine />
-      <p className="text-sm text-cream/55 mt-3">
-        הלימוד נפתח {SEASON.startDateLabel}, מיד אחרי החגים.
-      </p>
+      <p className="text-sm text-cream/55 mt-3">הלימוד נפתח {SEASON.startDateLabel}.</p>
 
-      <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-16 text-cream/70 text-sm">
+      {/* פוטר — 10.9: היה שורת טקסט זעירה ודהויה. עכשיו שני כפתורי יצירת-קשר
+          אמיתיים בגודל מגע תקין, וקו מפריד לפני שורת הזיכרון. */}
+      <div className="flex flex-col sm:flex-row justify-center gap-3 mt-16">
         <a
           href={CONTACT.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 hover:text-gold transition-colors"
+          className="cw2-footlink"
         >
-          <Phone className="w-4 h-4" aria-hidden="true" />
+          <Phone className="w-5 h-5" aria-hidden="true" />
           <span dir="ltr">{CONTACT.phone}</span>
         </a>
-        <a
-          href={`mailto:${CONTACT.email}`}
-          className="flex items-center gap-2 hover:text-gold transition-colors"
-        >
-          <Mail className="w-4 h-4" aria-hidden="true" />
+        <a href={`mailto:${CONTACT.email}`} className="cw2-footlink">
+          <Mail className="w-5 h-5" aria-hidden="true" />
           <span dir="ltr">{CONTACT.email}</span>
         </a>
       </div>
 
-      <p className="text-xs text-cream/40 mt-8">
+      <div className="cw2-hairline mt-10 mb-6" />
+
+      <p className="text-sm text-cream/65">תנ״ך · אנשים · חיים</p>
+      <p className="text-sm text-cream/50 mt-2">
         התכנית לעילוי נשמת מעין פלסר ז״ל · © {new Date().getFullYear()} תנועת בני ציון
       </p>
     </div>

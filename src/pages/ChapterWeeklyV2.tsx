@@ -21,52 +21,60 @@ import { AnimatedSection } from "@/components/ui/animated-section";
 
 import TopNav from "@/components/chapter-weekly-v2/sections/TopNav";
 import Hero from "@/components/chapter-weekly-v2/sections/Hero";
+import Pillars from "@/components/chapter-weekly-v2/sections/Pillars";
+import Offer from "@/components/chapter-weekly-v2/sections/Offer";
+import Dream from "@/components/chapter-weekly-v2/sections/Dream";
 import YearMap from "@/components/chapter-weekly-v2/sections/YearMap";
 import EarlyBird from "@/components/chapter-weekly-v2/sections/EarlyBird";
 import Letter from "@/components/chapter-weekly-v2/sections/Letter";
-import Friction from "@/components/chapter-weekly-v2/sections/Friction";
 import WeeklyRhythm from "@/components/chapter-weekly-v2/sections/WeeklyRhythm";
 import Voices from "@/components/chapter-weekly-v2/sections/Voices";
 import MeetRabbi from "@/components/chapter-weekly-v2/sections/MeetRabbi";
-import Pricing from "@/components/chapter-weekly-v2/sections/Pricing";
 import Faq from "@/components/chapter-weekly-v2/sections/Faq";
 import Closing from "@/components/chapter-weekly-v2/sections/Closing";
 import Dock from "@/components/chapter-weekly-v2/sections/Dock";
 
 const ChapterWeeklyV2 = () => {
   useSEO({
-    title: "השנה מתחילים את הנביאים | הפרק השבועי של בני ציון",
+    title: "השנה גם אתם לומדים את התנ״ך | תכנית הפרק השבועי",
     description:
-      "אחרי החגים פותחים את ספר יהושע — פרק בשבוע, שיעור זום חי עם הרב יואב אוריאל, תכני העמקה וקבוצה שלומדת יחד. 45 שבועות, יהושע ושופטים.",
+      "מתחילים מספר יהושע — פרק אחד בשבוע, שיעור זום חי עם הרב יואב אוריאל, סיכום ותכני העמקה וקהילה שלומדת יחד. חודש התנסות ב־5 ₪, וספר שופטים המודפס במתנה.",
     url: "https://bneyzion.co.il/chapter-weekly-v2",
   });
 
+  // ‎overflow-x-clip‎ = בלם בטיחות בלבד (נמדד 10.9: אין גלישה אופקית, ‎VW=SW‎).
+  // ‎clip‎ ולא ‎hidden‎ — ‎hidden‎ שובר את ה-sticky של ההדר.
   return (
-    <div className="chapter-weekly-theme min-h-screen bg-background text-foreground" dir="rtl">
+    <div
+      className="chapter-weekly-theme min-h-screen overflow-x-clip bg-background text-foreground"
+      dir="rtl"
+    >
       <TopNav />
 
       <main>
         <Hero />
+        <Pillars />
 
-        <AnimatedSection>
-          <YearMap />
+        {/* סדר הסקשנים, לפי הוראת סער 10.9: ההטבה והמחיר לפני הכול, ובוודאי
+            לפני התיאור של הרב יואב. קודם למה כדאי להצטרף — אחר כך מי מלמד. */}
+        <AnimatedSection animation="scale">
+          <Offer />
         </AnimatedSection>
 
-        {/* חלון ההרשמה המוקדמת — מרנדר null מעצמו אחרי תאריך פתיחת הלימוד. */}
         <AnimatedSection animation="scale">
           <EarlyBird />
         </AnimatedSection>
 
-        <AnimatedSection>
-          <Letter />
-        </AnimatedSection>
-
-        <AnimatedSection>
-          <Friction />
+        <AnimatedSection animation="fade-in">
+          <Dream />
         </AnimatedSection>
 
         <AnimatedSection>
           <WeeklyRhythm />
+        </AnimatedSection>
+
+        <AnimatedSection>
+          <YearMap />
         </AnimatedSection>
 
         <AnimatedSection animation="scale">
@@ -77,8 +85,8 @@ const ChapterWeeklyV2 = () => {
           <MeetRabbi />
         </AnimatedSection>
 
-        <AnimatedSection animation="scale">
-          <Pricing />
+        <AnimatedSection>
+          <Letter />
         </AnimatedSection>
 
         <AnimatedSection>
@@ -88,6 +96,7 @@ const ChapterWeeklyV2 = () => {
         <AnimatedSection animation="fade-in">
           <Closing />
         </AnimatedSection>
+
       </main>
 
       <Dock />

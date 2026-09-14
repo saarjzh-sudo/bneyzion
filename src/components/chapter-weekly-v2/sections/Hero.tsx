@@ -1,118 +1,96 @@
-import { ChevronDown } from "lucide-react";
-
-import jerusalemWalls from "@/assets/jerusalem-walls.webp";
-import { Cta, PriceLine } from "../Cta";
-import { BOOKS, SEASON, STATS } from "../data";
+import { Cta } from "../Cta";
+import { ART } from "../art";
+import { PRICE, SEASON } from "../data";
 import { useEarlyBird } from "../useEarlyBird";
 
 /**
- * הירו קולנועי: תמונת רקע בתנועה איטית, כותרת אחת גדולה, כפתור אחד.
- * בניגוד לגרסה הקודמת — אין כאן שלושה בלוקים של טקסט מכירתי מעל הקפל.
+ * ההירו — נבנה מחדש 10.9.2026 לפי הפלייר של סער.
+ *
+ * מה השתנה מהגרסה הקודמת, ולמה:
+ *  - רקע **צילומי ובהיר** (מרפסת אבן ירושלמית, ענפי זית, נוף ההרים) במקום תמונת
+ *    חומות כהה עם שכבת נייבי. סער: "שיהיה כיפי, הרבה נופים, חוויה של דף עוצמתי".
+ *  - **שני הספרים המודפסים כבר בהירו** — הבקשה המפורשת שלו.
+ *  - הכותרת חזרה לניסוח שלו: "השנה גם אתם לומדים את התנ״ך".
+ *  - שורת ה-CTA אומרת את כל העסקה במשפט אחד (5 ₪ + ספר מתנה), כי זו הנקודה.
+ *  - ירדו: ארבע פסקאות טקסט ושורת ארבעת המספרים. הן דחפו את הכפתור מתחת לקפל.
  */
 const Hero = () => {
   const earlyBird = useEarlyBird();
 
   return (
-  <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden">
-    <div className="absolute inset-0 overflow-hidden">
+    <section className="cw2-hero relative flex items-center justify-center overflow-hidden">
+      {/* הצילום — מקובע ל-viewport, מה שנותן את הפרלקס בגלילה */}
       <div
-        className="cw2-kenburns absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${jerusalemWalls})` }}
+        className="cw2-parallax absolute inset-0"
+        style={{ backgroundImage: `url(${ART.photoHero})` }}
         role="presentation"
       />
-    </div>
-
-    {/* התחתית נסגרת אל הנייבי של סקשן המסלול, ולא אל הקרם של הרקע —
-        אחרת נוצר פס בהיר שבולע את שורת המספרים. */}
-    {/* ⚠️ אטימות בטיילווינד חייבת להיות כפולה של 5. ‎/88 או ‎/92 נזרקים בשקט
-        והשכבה נעלמת — מה שהשאיר את הכותרת על שמיים בהירים. */}
-    <div className="absolute inset-0 bg-gradient-to-b from-[#0B1220]/85 via-[#0B1220]/70 to-[#131C30]" />
-    {/* בריכת צל רכה מתחת לעמודת הטקסט. ויניאטה רגילה מחשיכה דווקא את
-        השוליים ומשאירה את הכותרת על השמיים הבהירים. */}
-    <div
-      className="absolute inset-0"
-      style={{
-        background:
-          "radial-gradient(ellipse 90% 70% at 50% 45%, rgba(4,8,16,0.45) 0%, rgba(4,8,16,0.18) 60%, transparent 85%)",
-      }}
-    />
-
-    <div className="relative z-10 w-full max-w-5xl mx-auto text-center px-4 py-20 md:py-28">
+      {/* ⚠️ שכבת ההבהרה הראשונה (white/70) בלעה את הנוף — וזה בדיוק מה שסער ביקש
+          שיֵראה. עכשיו: וילון עדין בלבד למעלה, מעבר אל הקרם רק בתחתית, והילה
+          רכה ממוקדת מאחורי עמודת הטקסט כדי לשמור על קריאוּת. */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/10 to-[#FAF5EA]" />
       <div
-        className="inline-flex items-center gap-2.5 bg-black/40 backdrop-blur-sm px-5 py-2 rounded-full border border-gold/40 mb-8 animate-fade-up"
-        style={{ animationDelay: "0.05s" }}
-      >
-        <span className="w-1.5 h-1.5 bg-gold rounded-full animate-pulse" aria-hidden="true" />
-        <span className="text-sm font-medium text-cream tracking-wide">
-          {earlyBird.open ? (
-            <>
-              הרשמה מוקדמת · {earlyBird.label} · שנת {SEASON.hebrewYear}
-            </>
-          ) : (
-            <>תנועת בני ציון · הפרק השבועי · {SEASON.hebrewYear}</>
-          )}
-        </span>
-      </div>
+        className="absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 62% 46% at 50% 34%, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.45) 45%, transparent 78%)",
+        }}
+      />
 
-      <h1
-        className="text-4xl md:text-6xl lg:text-7xl font-bold text-cream mb-7 leading-[1.15] animate-fade-up"
-        style={{ animationDelay: "0.1s" }}
-      >
-        השנה מתחילים
-        <br />
-        <span className="text-transparent bg-clip-text bg-gradient-to-l from-[#E8D5A0] via-[#C4A265] to-[#E8D5A0]">
-          את הנביאים
-        </span>
-      </h1>
-
-      <p
-        className="text-lg md:text-2xl text-cream/90 max-w-2xl mx-auto mb-4 leading-relaxed animate-fade-up"
-        style={{ animationDelay: "0.15s" }}
-      >
-        {BOOKS.map((b) => b.name).join(" ו")} — {SEASON.totalWeeks} שבועות, פרק בכל שבוע,
-        עם שיעור חי וקבוצה שלומדת יחד.
-      </p>
-
-      <p
-        className="text-base md:text-lg text-cream/70 max-w-xl mx-auto mb-10 animate-fade-up"
-        style={{ animationDelay: "0.2s" }}
-      >
-        הלימוד נפתח {SEASON.startDateLabel}, מיד אחרי החגים.
-      </p>
-
-      <div className="animate-fade-up" style={{ animationDelay: "0.28s" }}>
-        <Cta tone="gold" size="lg" />
-        <PriceLine />
-      </div>
-
-      <dl
-        className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-7 max-w-3xl mx-auto mt-16 animate-fade-up"
-        style={{ animationDelay: "0.4s" }}
-      >
-        {STATS.map((s) => (
-          <div key={s.label} className="text-center">
-            <dt className="sr-only">{s.label}</dt>
-            <dd>
-              <span className="block text-3xl md:text-4xl font-bold text-gold leading-none">
-                {s.value}
-              </span>
-              <span className="block text-xs md:text-sm text-cream/70 mt-2 leading-snug px-1">
-                {s.label}
-              </span>
-            </dd>
+      <div className="relative z-10 w-full max-w-5xl mx-auto text-center px-4 pt-28 pb-14 md:pt-32 md:pb-16">
+        {earlyBird.open && (
+          <div className="cw2-pill animate-fade-up" style={{ animationDelay: "0.05s" }}>
+            <span className="cw2-pill-dot" aria-hidden="true" />
+            הרשמה מוקדמת · {earlyBird.label}
           </div>
-        ))}
-      </dl>
-    </div>
+        )}
 
-    <a
-      href="#המסלול"
-      aria-label="לגלול אל מסלול השנה"
-      className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10 text-cream/70 hover:text-gold transition-colors"
-    >
-      <ChevronDown className="cw2-nudge w-7 h-7" aria-hidden="true" />
-    </a>
-  </section>
+        <h1
+          className="cw2-h1 mt-7 font-black text-[#12314F] animate-fade-up"
+          style={{ animationDelay: "0.1s" }}
+        >
+          השנה גם אתם
+          <br />
+          לומדים את התנ״ך
+        </h1>
+
+        <p
+          className="mt-6 text-xl md:text-3xl font-bold text-[#1C4A79] animate-fade-up"
+          style={{ animationDelay: "0.15s" }}
+        >
+          <span className="cw2-rule">תכנית הפרק השבועי</span>
+        </p>
+
+        <p
+          className="mt-4 text-lg md:text-2xl text-[#2C4763] animate-fade-up"
+          style={{ animationDelay: "0.18s" }}
+        >
+          מתחילים מספר <b className="text-[#B8860B]">יהושע</b> · פרק אחד בשבוע.
+        </p>
+
+        {/* הספרים המודפסים — יושבים על מדף האבן שבצילום */}
+        <img
+          src={ART.booksGift}
+          alt="ספר יהושע וספר שופטים מאת הרב יואב אוריאל, מהדורת 2025"
+          className="cw2-hero-books animate-fade-up"
+          style={{ animationDelay: "0.24s" }}
+          width={1000}
+          height={753}
+          fetchPriority="high"
+        />
+
+        <div className="animate-fade-up" style={{ animationDelay: "0.3s" }}>
+          <Cta tone="gold" size="lg" />
+          <p className="mt-4 text-sm md:text-base text-[#42607D]">
+            החודש הראשון {PRICE.firstMonth} ₪ · אחר כך {PRICE.monthly} ₪ לחודש · ביטול בכל עת
+          </p>
+          {/* ‎startDateLabel‎ הוא כבר "מיד אחרי החגים" — הוספת המילים שוב יצרה כפילות. */}
+          <p className="mt-1.5 text-sm md:text-base text-[#42607D]">
+            הלימוד נפתח {SEASON.startDateLabel} · שנת {SEASON.hebrewYear}
+          </p>
+        </div>
+      </div>
+    </section>
   );
 };
 

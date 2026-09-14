@@ -25,22 +25,22 @@ const TopNav = () => {
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
         scrolled
           ? "cw2-dock bg-[#0E1526]/90 border-b border-gold/20 py-2"
-          : "bg-transparent py-4"
+          : "cw2-dock bg-[#0E1526]/45 border-b border-white/10 py-3"
       }`}
     >
       <div className="max-w-6xl mx-auto px-4 flex items-center justify-between">
         <a
           href="/"
-          className="flex items-center gap-4 md:gap-5"
+          className="flex items-center gap-3 md:gap-5 min-w-0"
           aria-label="לדף הבית של בני ציון"
         >
           <img
             src={logoBneyZion}
             alt="תנועת בני ציון"
-            className={`w-auto transition-all duration-300 ${scrolled ? "h-7" : "h-8 md:h-10"}`}
+            className={`w-auto transition-all duration-300 ${scrolled ? "h-6 md:h-7" : "h-6 md:h-10"}`}
           />
           <span
-            className={`w-px bg-cream/25 transition-all duration-300 ${
+            className={`w-px transition-all duration-300 ${scrolled ? "bg-cream/25" : "bg-cream/30"} ${
               scrolled ? "h-6" : "h-8 md:h-10"
             }`}
             aria-hidden="true"
@@ -48,16 +48,16 @@ const TopNav = () => {
           <img
             src={logoLivotTanach}
             alt="לחיות תנ״ך — הפרק השבועי"
-            className={`w-auto transition-all duration-300 ${scrolled ? "h-8" : "h-10 md:h-12"}`}
+            className={`w-auto transition-all duration-300 ${scrolled ? "h-7 md:h-8" : "h-8 md:h-12"}`}
           />
         </a>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm text-cream/80">
+        <nav className={`hidden md:flex items-center gap-7 text-sm ${scrolled ? "text-cream/80" : "text-cream/90"}`}>
+          <a href="#ההטבה" className="hover:text-gold transition-colors">
+            ההטבה
+          </a>
           <a href="#המסלול" className="hover:text-gold transition-colors">
             מסלול השנה
-          </a>
-          <a href="#מחיר" className="hover:text-gold transition-colors">
-            מחיר
           </a>
         </nav>
       </div>

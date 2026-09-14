@@ -1,22 +1,26 @@
 import { CalendarDays, Flag } from "lucide-react";
 
 import { Cta } from "../Cta";
-import { BOOKS, MILESTONES, SEASON } from "../data";
+import { ART } from "../art";
+import { BOOKS, MILESTONES, SEASON, WEEKS } from "../data";
 
 /**
  * ההבטחה השנתית — מסלול 45 השבועות במבט אחד.
  *
  * זה הסקשן שלא היה קיים בגרסה הקודמת: במקום להבטיח ״לימוד מסודר״ במילים,
  * הדף מראה את כל השנה על ציר אחד, עם התחנות הידועות מראש.
+ *
+ * 14.9 — סבב הרב יואב (13.9):
+ *  - הכותרת "שנה שלמה של נביאים, במבט אחד" → "תכנית שנתית של לימוד יהושע ושופטים"
+ *    ("קצת מופשט מדי").
+ *  - הציר: "לא כתוב על שום לבנה מה היא ומה התאריכים — יוצא סתמי מאד". עכשיו כל
+ *    שבוע הוא כרטיס קטן: מספר השבוע, הספר והפרק, והתאריך העברי של יום שישי
+ *    (השבוע נפתח בשישי — יואב). הכול מ-`WEEKS` ב-data.ts, מחושב ולא מוקלד.
+ *  - התחנות: "לא ברור מה הם כל הפרקים" → כותרת "תחנות בדרך", שם מלא "יהושע פרק א׳",
+ *    ושורה על מה שקורה בכל תחנה.
  */
 
-const WEEKS = Array.from({ length: SEASON.totalWeeks }, (_, i) => i + 1);
-type Milestone = (typeof MILESTONES)[number];
-const MILESTONE_BY_WEEK = new Map<number, Milestone>(MILESTONES.map((m) => [m.week, m]));
-
-function bookForWeek(week: number) {
-  return BOOKS.find((b) => week >= b.weekFrom && week <= b.weekTo) ?? BOOKS[0];
-}
+const MILESTONE_WEEKS = new Set(MILESTONES.map((m) => m.week));
 
 const YearMap = () => (
   <section
@@ -36,78 +40,96 @@ const YearMap = () => (
           מסלול {SEASON.hebrewYear}
         </span>
         <h2 className="text-3xl md:text-5xl font-bold text-cream mb-5 leading-tight">
-          שנה שלמה של נביאים,
-          <br className="hidden md:block" /> במבט אחד
+          תכנית שנתית של לימוד
+          <br className="hidden md:block" /> יהושע ושופטים
         </h2>
         <p className="text-lg text-cream/75 max-w-2xl mx-auto leading-relaxed">
-          מסלול אחד וברור, עם תחנות ידועות מראש. מי שמתחיל עכשיו יודע בדיוק לאן הוא הולך —
-          ומתי מגיעים לשם.
+          {SEASON.totalWeeks} שבועות, פרק בשבוע, לפי לוח ידוע מראש. מי שמתחיל עכשיו יודע
+          בדיוק לאן הוא הולך — ומתי מגיעים לשם.
         </p>
       </div>
 
-      {/* שני הספרים */}
+      {/* שני הספרים — עם האיור של כל ספר (הערת סער 10.9: "צריך יותר המחשה") */}
       <div className="grid md:grid-cols-2 gap-5 mb-14">
         {BOOKS.map((book) => (
           <article
             key={book.name}
-            className="relative rounded-2xl p-7 border border-white/10 bg-white/[0.04] backdrop-blur-sm overflow-hidden"
+            className="group relative rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-sm overflow-hidden"
           >
-            <span
-              className="absolute top-0 right-0 h-full w-1"
-              style={{ background: book.accent }}
-              aria-hidden="true"
-            />
-            <div className="flex items-baseline gap-3 mb-3">
-              <h3 className="text-2xl md:text-3xl font-bold text-cream">ספר {book.name}</h3>
-              <span className="text-sm text-gold font-semibold">{book.chapters} פרקים</span>
+            <div className="relative h-44 md:h-52 overflow-hidden">
+              <img
+                src={ART[book.art]}
+                alt={`איור אקוורל לספר ${book.name}`}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+                width={1376}
+                height={768}
+              />
+              {/* האיור נסגר אל הנייבי של הכרטיס כדי שהכותרת תשב על רקע אחיד */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0E1526] via-[#0E1526]/45 to-transparent" />
+              <span
+                className="absolute bottom-0 right-0 left-0 h-1"
+                style={{ background: book.accent }}
+                aria-hidden="true"
+              />
             </div>
-            <p className="text-cream/75 leading-relaxed mb-5">{book.blurb}</p>
-            <p className="text-xs text-cream/50">
-              שבועות {book.weekFrom}–{book.weekTo}
-            </p>
+
+            <div className="p-7">
+              <div className="flex items-baseline gap-3 mb-3">
+                <h3 className="text-2xl md:text-3xl font-bold text-cream">ספר {book.name}</h3>
+                <span className="text-sm text-gold font-semibold">{book.chapters} פרקים</span>
+              </div>
+              <p className="text-cream/75 leading-relaxed mb-5">{book.blurb}</p>
+              <p className="text-xs text-cream/50">
+                שבועות {book.weekFrom}–{book.weekTo} · פרק אחד בכל שבוע
+              </p>
+            </div>
           </article>
         ))}
       </div>
 
-      {/* ציר 45 השבועות */}
+      {/* ציר 45 השבועות — כל שבוע: מספר · ספר ופרק · תאריך עברי */}
       <div className="mb-4 flex items-center justify-between gap-4 px-1">
         <h3 className="text-sm font-semibold text-cream/80">
-          {SEASON.totalWeeks} שבועות ברצף
+          {SEASON.totalWeeks} שבועות ברצף · הפרק נפתח בכל יום {SEASON.weekOpensDay}
         </h3>
         <p className="text-xs text-cream/45">גללו לאורך הציר ←</p>
       </div>
 
-      <div className="cw2-rail overflow-x-auto pt-3 pb-4">
-        <ol
-          className="flex items-end gap-1.5 min-w-max px-1"
-          aria-label="מסלול השבועות של השנה"
-        >
-          {WEEKS.map((week) => {
-            const book = bookForWeek(week);
-            const milestone = MILESTONE_BY_WEEK.get(week);
+      <div className="cw2-rail overflow-x-auto pt-4 pb-4">
+        <ol className="cw2-weeks" aria-label="מסלול השבועות של השנה — ספר, פרק ותאריך">
+          {WEEKS.map((w) => {
+            const milestone = MILESTONE_WEEKS.has(w.week);
             return (
-              <li key={week} className="relative">
-                <div
-                  className={`w-[22px] md:w-[26px] rounded-[3px] transition-all duration-200 ${
-                    milestone ? "h-14" : "h-8 opacity-50 hover:opacity-90"
-                  }`}
-                  style={{ background: book.accent }}
-                  title={`שבוע ${week} · ספר ${book.name}`}
-                />
-                {milestone && (
-                  <span
-                    className="absolute -top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-gold ring-2 ring-[#0E1526]"
-                    aria-hidden="true"
-                  />
-                )}
+              <li
+                key={w.week}
+                className={`cw2-week ${milestone ? "cw2-week--milestone" : ""}`}
+                style={{ ["--accent" as string]: w.book.accent }}
+              >
+                <span className="cw2-week-bar" aria-hidden="true" />
+                <span className="cw2-week-num">שבוע {w.week}</span>
+                <span className="cw2-week-label">{w.label}</span>
+                <span className="cw2-week-date">{w.dateHeb}</span>
+                {milestone && <span className="cw2-week-dot" aria-hidden="true" />}
               </li>
             );
           })}
         </ol>
       </div>
 
-      {/* תחנות הדרך */}
-      <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-10">
+      <p className="text-xs text-cream/45 mt-1 px-1">
+        התאריכים לפי יום שישי של כל שבוע, ברצף מלא. שבוע הפסקה סביב חג דוחה את מה שאחריו בשבוע.
+      </p>
+
+      {/* תחנות בדרך */}
+      <div className="mt-12 mb-5 text-center">
+        <h3 className="text-xl md:text-2xl font-bold text-cream">תחנות בדרך</h3>
+        <p className="text-sm text-cream/60 mt-1">
+          כמה מהרגעים הגדולים של השנה, מתוך {SEASON.totalWeeks} הפרקים
+        </p>
+      </div>
+      <ul className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {MILESTONES.map((m) => (
           <li
             key={m.week}
@@ -120,7 +142,7 @@ const YearMap = () => (
             <p className="text-xs text-cream/60">
               שבוע {m.week} · {m.date}
             </p>
-            <p className="text-xs text-gold/80 mt-1">{m.note}</p>
+            <p className="text-sm text-gold/85 mt-1.5">{m.note}</p>
           </li>
         ))}
       </ul>

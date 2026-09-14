@@ -23,7 +23,7 @@ const SIZE_CLASS: Record<Size, string> = {
 };
 
 export function Cta({
-  children = "מצטרפים לשנת הנביאים",
+  children = `מצטרפים לפרק השבועי ב־${PRICE.firstMonth} ש״ח בלבד`,
   tone = "gold",
   size = "lg",
 }: {
