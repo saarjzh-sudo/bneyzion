@@ -1,0 +1,589 @@
+/**
+ * chapter-weekly-v2 — סגנונות ייעודיים לדף המשודרג.
+ *
+ * הקובץ מוסיף רק מחלקות בתחילית `.cw2-`, ונשען על משתני הצבע של
+ * `.chapter-weekly-theme` שכבר קיימים ב-chapter-weekly.css.
+ * אין כאן שום שינוי שנוגע לדף החי — הפרדה מכוונת.
+ */
+
+/* ── הירו: תנועת מצלמה איטית על תמונת הרקע ─────────────────────────────── */
+@keyframes cw2-ken-burns {
+  from {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+.cw2-kenburns {
+  animation: cw2-ken-burns 28s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* ── רצועת המלצות נעה ──────────────────────────────────────────────────── */
+@keyframes cw2-marquee-rtl {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(50%, 0, 0);
+  }
+}
+
+@keyframes cw2-marquee-ltr {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.cw2-marquee {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: cw2-marquee-rtl 72s linear infinite;
+  will-change: transform;
+}
+
+.cw2-marquee--reverse {
+  animation-name: cw2-marquee-ltr;
+  animation-duration: 88s;
+}
+
+.cw2-marquee-viewport:hover .cw2-marquee,
+.cw2-marquee-viewport:focus-within .cw2-marquee {
+  animation-play-state: paused;
+}
+
+/* דהייה בקצוות כדי שהרצועה לא תיחתך בחדות */
+.cw2-marquee-viewport {
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000 6rem,
+    #000 calc(100% - 6rem),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to left,
+    transparent,
+    #000 6rem,
+    #000 calc(100% - 6rem),
+    transparent
+  );
+}
+
+/* ── ציר הזמן השנתי ───────────────────────────────────────────────────── */
+.cw2-rail {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--gold) / 0.5) transparent;
+}
+
+.cw2-rail::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cw2-rail::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.4);
+  border-radius: 999px;
+}
+
+.cw2-rail::-webkit-scrollbar-thumb {
+  background: hsl(var(--gold) / 0.55);
+  border-radius: 999px;
+}
+
+/* ── מרקם נייר למכתב של הרב יואב ──────────────────────────────────────── */
+.cw2-paper {
+  background-color: #fdfaf4;
+  background-image:
+    radial-gradient(ellipse at 15% 0%, rgba(196, 162, 101, 0.13), transparent 55%),
+    radial-gradient(ellipse at 85% 100%, rgba(45, 125, 125, 0.08), transparent 55%);
+  box-shadow:
+    0 1px 2px rgba(45, 31, 14, 0.06),
+    0 18px 50px rgba(45, 31, 14, 0.13);
+}
+
+/* קו זהב דק שמפריד בין סקשנים כהים לבהירים */
+.cw2-hairline {
+  height: 1px;
+  background: linear-gradient(
+    to left,
+    transparent,
+    hsl(var(--gold) / 0.55),
+    transparent
+  );
+}
+
+/* ── פס תחתון דביק ────────────────────────────────────────────────────── */
+.cw2-dock {
+  backdrop-filter: saturate(1.4) blur(14px);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+}
+
+/* ── סמן גלילה בהירו ──────────────────────────────────────────────────── */
+@keyframes cw2-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.cw2-nudge {
+  animation: cw2-nudge 2.2s ease-in-out infinite;
+}
+
+/* ── כיבוד העדפת תנועה מופחתת ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cw2-kenburns,
+  .cw2-marquee,
+  .cw2-nudge {
+    animation: none !important;
+  }
+
+  .cw2-marquee {
+    /* בלי אנימציה הרצועה נשארת נגללת ידנית */
+    width: auto;
+    overflow-x: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   סבב ב׳ — 10.9.2026. השפה הצילומית הבהירה, לפי הפלייר של סער.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── פרלקס ────────────────────────────────────────────────────────────────
+   `background-attachment: fixed` = פרלקס בלי שורת JS אחת. iOS מתעלם ממנו
+   ומרנדר scroll רגיל — ולכן הרקע חייב להיראות טוב גם בלי התנועה. */
+.cw2-parallax {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@supports (-webkit-touch-callout: none) {
+  /* iOS: fixed שובר את הרקע לגמרי — חוזרים ל-scroll */
+  .cw2-parallax { background-attachment: scroll; }
+}
+
+/* ── הירו ─────────────────────────────────────────────────────────────────── */
+.cw2-hero { min-height: 100svh; }
+
+@media (max-width: 767px) {
+  .cw2-hero { min-height: auto; }
+}
+
+.cw2-hero-books {
+  width: min(430px, 82%);
+  height: auto;
+  margin: 1.75rem auto 2.25rem;
+  filter: drop-shadow(0 28px 34px rgba(18, 49, 79, 0.32));
+}
+
+/* קו זהב דק מתחת לשם התכנית */
+.cw2-rule { position: relative; display: inline-block; padding-bottom: 0.55rem; }
+.cw2-rule::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(to left, transparent, #C4A265, transparent);
+}
+
+/* ── תגית עגולה ───────────────────────────────────────────────────────────── */
+.cw2-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6B4E12;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(196, 162, 101, 0.55);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 20px rgba(18, 49, 79, 0.1);
+}
+
+.cw2-pill--gold {
+  color: #2B1C00;
+  background: linear-gradient(180deg, #F0C871, #C4A265);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.cw2-pill-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 999px;
+  background: #C4A265;
+  animation: cw2-pulse 2s ease-in-out infinite;
+}
+
+@keyframes cw2-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
+}
+
+/* ── כרטיסי ארבעת העמודים ─────────────────────────────────────────────────── */
+.cw2-card {
+  background: #fff;
+  border: 1px solid rgba(196, 162, 101, 0.3);
+  border-radius: 1.15rem;
+  box-shadow: 0 14px 34px -18px rgba(18, 49, 79, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cw2-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 44px -20px rgba(18, 49, 79, 0.45);
+}
+
+/* עוטף האייקון — מרובע רך שהאייקון המצויר "יושב" בתוכו, עם קפיצה קלה בריחוף */
+.cw2-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4.1rem;
+  height: 4.1rem;
+  border-radius: 1.3rem;
+  background: linear-gradient(150deg, #FBF6EA, #EFE4CE);
+  box-shadow: inset 0 -2px 0 rgba(196, 162, 101, 0.35), 0 8px 18px -10px rgba(18, 49, 79, 0.45);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cw2-card-icon svg { width: 2.5rem; height: 2.5rem; }
+
+.cw2-card:hover .cw2-card-icon { transform: translateY(-3px) rotate(-4deg) scale(1.06); }
+
+/* ── סקשן ההטבה ───────────────────────────────────────────────────────────── */
+.cw2-gold-text {
+  background: linear-gradient(to left, #F3D89B, #C4A265 55%, #F3D89B);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.cw2-anchor {
+  margin-top: 2.5rem;
+  border-radius: 1.35rem;
+  padding: 1.6rem 1.4rem 1.4rem;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(240, 200, 113, 0.3);
+  backdrop-filter: blur(8px);
+  text-align: start;
+}
+
+.cw2-anchor-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 0.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.16);
+}
+
+.cw2-anchor-row b { color: #fff; font-weight: 700; white-space: nowrap; }
+
+.cw2-anchor-row--sum {
+  border-bottom: 0;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+}
+
+.cw2-anchor-row--sum s { color: rgba(255, 255, 255, 0.55); }
+
+.cw2-anchor-hit {
+  margin-top: 1.1rem;
+  border-radius: 1rem;
+  padding: 1.4rem 1rem 1.5rem;
+  text-align: center;
+  background: linear-gradient(160deg, rgba(240, 200, 113, 0.16), rgba(196, 162, 101, 0.08));
+  border: 1px solid rgba(240, 200, 113, 0.45);
+}
+
+.cw2-anchor-hit-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #F0C871;
+}
+
+.cw2-anchor-hit-price {
+  margin-top: 0.2rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #fff;
+  font-size: 2.4rem;
+}
+
+.cw2-anchor-hit-price span {
+  font-size: 4.6rem;
+  color: #F3D89B;
+  margin-inline-end: 0.3rem;
+}
+
+.cw2-anchor-hit-gift {
+  margin-top: 0.7rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.cw2-anchor-hit-gift b { color: #F3D89B; }
+
+@media (min-width: 768px) {
+  .cw2-anchor { padding: 2rem 2rem 1.75rem; }
+  .cw2-anchor-row { font-size: 1.1rem; }
+  .cw2-anchor-hit-price { font-size: 3rem; }
+  .cw2-anchor-hit-price span { font-size: 6rem; }
+}
+
+/* ── קונפטי ───────────────────────────────────────────────────────────────── */
+.cw2-confetti {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cw2-confetto {
+  position: absolute;
+  top: -8%;
+  /* --i נקבע ב-JSX; מפזר את החלקיקים לרוחב ומשנה לכל אחד תזמון */
+  inset-inline-start: calc(var(--i) * 3.9%);
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: cw2-fall 9s linear infinite;
+  animation-delay: calc(var(--i) * -0.62s);
+}
+
+.cw2-c0 { background: #F0C871; }
+.cw2-c1 { background: #C4A265; }
+.cw2-c2 { background: #EAF2FA; width: 7px; height: 7px; border-radius: 999px; }
+.cw2-c3 { background: #2D7D7D; }
+
+/* התנועה נמדדת ביחס לגובה הסקשן (%), לא ל-vh — אחרת בחלון גבוה החלקיקים
+   עפים הרחק מתחת לסקשן ולא רואים אותם בכלל. */
+@keyframes cw2-fall {
+  0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  8% { opacity: 0.9; }
+  80% { opacity: 0.75; }
+  100% { transform: translate3d(-40px, 1150%, 0) rotate(540deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cw2-confetti { display: none; }
+  .cw2-pill-dot { animation: none; }
+  .cw2-parallax { background-attachment: scroll; }
+}
+
+/* הכותרת יושבת על צילום — הילה לבנה דקה שומרת עליה קריאה גם על ענפי הזית */
+.cw2-h1 {
+  /* clamp במקום מדרגות טיילווינד: ב-430px הכותרת גלשה מחוץ למסך. */
+  font-size: clamp(2rem, 8.2vw, 5.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75), 0 6px 34px rgba(255, 255, 255, 0.9);
+}
+
+.cw2-hero-books { width: min(480px, 86%); }
+
+/* ── פוטר: כפתורי יצירת-קשר בגודל מגע תקין ──────────────────────────────── */
+.cw2-footlink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #F5EFE2;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(196, 162, 101, 0.4);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.cw2-footlink:hover {
+  background: rgba(240, 200, 113, 0.14);
+  border-color: rgba(240, 200, 113, 0.7);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   14.9.2026 — סבב הרב יואב (13.9).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── ההטבה: המסגור החדש — חודש התנסות + מתנה נפרדת ─────────────────────── */
+.cw2-anchor-hit-sub {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.cw2-gift {
+  position: relative;
+  margin-top: 1.4rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 1.25rem;
+  text-align: start;
+  background: linear-gradient(160deg, rgba(240, 200, 113, 0.18), rgba(196, 162, 101, 0.07));
+  border: 1px dashed rgba(240, 200, 113, 0.6);
+}
+
+.cw2-gift-plus {
+  font-size: 2.6rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #F3D89B;
+}
+
+.cw2-gift-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #F0C871;
+}
+
+.cw2-gift-title {
+  margin-top: 0.25rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.25;
+}
+
+.cw2-gift-title b { color: #F3D89B; }
+
+.cw2-gift-text {
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.cw2-gift-price { color: rgba(255, 255, 255, 0.55); }
+
+.cw2-gift-img {
+  width: 4.2rem;
+  height: auto;
+  filter: drop-shadow(0 14px 18px rgba(0, 0, 0, 0.45));
+}
+
+@media (min-width: 768px) {
+  .cw2-gift { padding: 1.4rem 1.8rem; gap: 1.4rem; }
+  .cw2-gift-title { font-size: 1.6rem; }
+  .cw2-gift-img { width: 5.6rem; }
+}
+
+@media (max-width: 480px) {
+  .cw2-gift { grid-template-columns: auto 1fr; }
+  .cw2-gift-img { grid-column: 1 / -1; justify-self: center; width: 4.6rem; }
+}
+
+/* ── ציר השבועות: כרטיס לכל שבוע (יואב: "לא כתוב על שום לבנה מה היא") ─── */
+.cw2-weeks {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+  min-width: max-content;
+  padding: 0.5rem 0.25rem 0.25rem;
+}
+
+.cw2-week {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  width: 5.6rem;
+  padding: 0.55rem 0.35rem 0.6rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.cw2-week:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(196, 162, 101, 0.4);
+  transform: translateY(-2px);
+}
+
+.cw2-week-bar {
+  width: 100%;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  opacity: 0.85;
+  margin-bottom: 0.25rem;
+}
+
+.cw2-week-num {
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.cw2-week-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #F5EFE2;
+  white-space: nowrap;
+}
+
+.cw2-week-date {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.62);
+  white-space: nowrap;
+}
+
+.cw2-week--milestone {
+  background: rgba(196, 162, 101, 0.1);
+  border-color: rgba(196, 162, 101, 0.45);
+}
+
+.cw2-week--milestone .cw2-week-label { color: #F3D89B; }
+
+.cw2-week-dot {
+  position: absolute;
+  top: -0.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: #F0C871;
+  box-shadow: 0 0 0 3px #0E1526;
+}
+
+@media (min-width: 768px) {
+  .cw2-week { width: 6.4rem; }
+  .cw2-week-label { font-size: 1.02rem; }
+}

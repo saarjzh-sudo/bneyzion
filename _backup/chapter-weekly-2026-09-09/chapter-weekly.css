@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* OS Antidot TR Font Family */
+@font-face {
+  font-family: "OS Antidot TR";
+  src: url("/fonts/osantidottr-extralight-web.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OS Antidot TR";
+  src: url("/fonts/osantidottr-light-web.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OS Antidot TR";
+  src: url("/fonts/osantidottr-regular-web.woff2") format("woff2"),
+    url("/fonts/osantidottr-regular-web.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OS Antidot TR";
+  src: url("/fonts/osantidottr-semibold-web.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OS Antidot TR";
+  src: url("/fonts/osantidottr-bold-web.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  /* Scoped theme for the imported landing pages */
+  .chapter-weekly-theme {
+    /* Premium Color Palette - Warm & Elegant */
+    --background: 40 30% 97%;
+    --foreground: 30 20% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 20% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 25% 20%;
+
+    /* Deep Teal - Primary */
+    --primary: 175 60% 26%;
+    --primary-foreground: 40 30% 97%;
+
+    /* Warm Cream - Secondary */
+    --secondary: 40 40% 94%;
+    --secondary-foreground: 30 25% 20%;
+
+    --muted: 40 20% 90%;
+    --muted-foreground: 0 0% 25%;
+
+    /* Gold - Accent */
+    --accent: 43 70% 47%;
+    --accent-foreground: 30 25% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 175 60% 26%;
+
+    --radius: 1rem;
+
+    /* Custom Premium Colors */
+    --teal-deep: 175 60% 26%;
+    --teal-light: 175 40% 85%;
+    --gold: 43 70% 47%;
+    --gold-light: 43 60% 75%;
+    --cream: 40 30% 97%;
+    --cream-warm: 38 45% 92%;
+    --sand: 35 30% 85%;
+    --brown: 0 0% 10%;
+    --brown-light: 0 0% 20%;
+
+    /* Esther Theme Colors */
+    --crimson: 0 75% 45%;
+    --crimson-dark: 355 80% 35%;
+    --crimson-light: 5 65% 55%;
+    --royal-purple: 280 50% 30%;
+    --navy-deep: 230 40% 12%;
+    --navy-light: 230 30% 25%;
+  }
+
+  .chapter-weekly-theme {
+    font-family: "OS Antidot TR", "Ploni", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .chapter-weekly-theme h1,
+  .chapter-weekly-theme h2,
+  .chapter-weekly-theme h3,
+  .chapter-weekly-theme h4,
+  .chapter-weekly-theme h5,
+  .chapter-weekly-theme h6 {
+    font-family: "OS Antidot TR", "Ploni", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .chapter-weekly-theme .premium-card {
+    @apply bg-card rounded-2xl shadow-xl border border-border/50 p-6 md:p-8 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1;
+  }
+
+  .chapter-weekly-theme .premium-btn {
+    @apply bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-2xl hover:scale-105 inline-flex items-center gap-3;
+  }
+
+  .chapter-weekly-theme .premium-btn-gold {
+    @apply bg-accent text-accent-foreground px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:shadow-xl hover:scale-105 inline-flex items-center gap-3;
+  }
+
+  .chapter-weekly-theme .section-premium {
+    @apply py-16 md:py-24 px-4 md:px-8;
+  }
+
+  .chapter-weekly-theme .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-l from-primary to-accent;
+  }
+
+  .chapter-weekly-theme .gradient-text-gold {
+    @apply text-transparent bg-clip-text bg-gradient-to-l from-accent to-yellow-500;
+  }
+}
