@@ -363,9 +363,11 @@ const App = () => (
             {/* Teachers Wing parasha + worksheets — 2026-06-02 (F) */}
             <Route path="/teachers/parasha/:book/:parasha" element={<Suspense fallback={<LazyFallback />}><TeachersParashaPage /></Suspense>} />
             <Route path="/teachers/worksheets/:book" element={<Suspense fallback={<LazyFallback />}><TeachersWorksheetsPage /></Suspense>} />
-            <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
-            {/* תצוגה מקדימה של השדרוג (9.9.2026). הדף החי נשאר /chapter-weekly עד אישור סער. */}
+            {/* 14.9.2026: הדף המשודרג עלה במקום הישן, אחרי אישור הרב יואב וסער. */}
+            <Route path="/chapter-weekly" element={<Suspense fallback={<LazyFallback />}><ChapterWeeklyV2 /></Suspense>} />
             <Route path="/chapter-weekly-v2" element={<Suspense fallback={<LazyFallback />}><ChapterWeeklyV2 /></Suspense>} />
+            {/* גרסת קיץ תשפ״ו (חגי) — נשארת חיה בכתובת גיבוי, לרולבק מהיר בלבד. */}
+            <Route path="/chapter-weekly-legacy" element={<Suspense fallback={<LazyFallback />}><ChapterWeekly /></Suspense>} />
             <Route path="/megilat-esther" element={<Suspense fallback={<LazyFallback />}><MegilatEsther /></Suspense>} />
             <Route path="/proposal" element={<Suspense fallback={<LazyFallback />}><Proposal /></Suspense>} />
             <Route path="/s/:code" element={<Suspense fallback={<LazyFallback />}><ShortLinkRedirect /></Suspense>} />

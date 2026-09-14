@@ -39,7 +39,7 @@ const ChapterWeeklyV2 = () => {
     title: "השנה גם אתם לומדים את התנ״ך | תכנית הפרק השבועי",
     description:
       "מתחילים מספר יהושע — פרק אחד בשבוע, שיעור זום חי עם הרב יואב אוריאל, סיכום ותכני העמקה וקהילה שלומדת יחד. חודש התנסות ב־5 ₪, וספר שופטים המודפס במתנה.",
-    url: "https://bneyzion.co.il/chapter-weekly-v2",
+    url: "https://bneyzion.co.il/chapter-weekly",
   });
 
   // ‎overflow-x-clip‎ = בלם בטיחות בלבד (נמדד 10.9: אין גלישה אופקית, ‎VW=SW‎).
