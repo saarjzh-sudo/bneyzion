@@ -5,6 +5,9 @@
  * תוכן ומעורבות — שיעורים/סדרות/רבנים פופולריים, צפיות, מועדפים והיסטוריה.
  * מדדי מנויים, נטישה והכנסות עברו לדשבורד הראשי (/admin) ואינם כאן.
  * כל מדד נושא תגית מקור. שפת-העיצוב: gold/parchment/navy · RTL · CSS-only.
+ *
+ * 14.9.2026: נוסף סקשן "תנועה מחיפוש גוגל" — נתוני Search Console חיים דרך
+ * api/admin/search-console (service account קריאה-בלבד על נכס-הדומיין).
  */
 
 import { useQuery } from "@tanstack/react-query";
@@ -15,10 +18,11 @@ import { SourceBadge } from "@/components/admin/SourceBadge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Eye, TrendingUp, Users, BookOpen, Star, BarChart3, ChevronLeft,
+  MousePointerClick, Percent, ListOrdered, Search,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, PieChart, Pie, Cell,
+  ResponsiveContainer, PieChart, Pie, Cell, ComposedChart, Line, Legend,
 } from "recharts";
 
 /* ─── color tokens (mirror Dashboard.tsx) ──────────────────────── */
@@ -75,6 +79,179 @@ function KpiCard({ title, value, sub, icon: Icon, accent, bg = C.parchment, sour
       {sub && <p className="text-xs font-ploni" style={{ color: C.textSubtle }}>{sub}</p>}
       {source && <SourceBadge source={source} />}
     </div>
+  );
+}
+
+/* ─── Google Search Console — תנועה מחיפוש ─────────────────────── */
+interface GscPayload {
+  configured: boolean;
+  range?: { startDate: string; endDate: string };
+  totals?: { clicks: number; impressions: number; ctr: number; position: number | null };
+  days?: { date: string; clicks: number; impressions: number }[];
+  topQueries?: { query: string; clicks: number; impressions: number; position: number }[];
+  topPages?: { page: string; clicks: number; impressions: number }[];
+}
+
+function SearchConsoleSection() {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["admin-search-console"],
+    staleTime: 30 * 60 * 1000,
+    queryFn: async (): Promise<GscPayload> => {
+      const { data: s } = await supabase.auth.getSession();
+      const res = await fetch("/api/admin/search-console", {
+        headers: s.session?.access_token ? { Authorization: `Bearer ${s.session.access_token}` } : {},
+      });
+      if (!res.ok) throw new Error(`search-console ${res.status}`);
+      return res.json();
+    },
+  });
+
+  const fmtDay = (d: string) =>
+    new Date(d + "T00:00:00").toLocaleDateString("he-IL", { month: "short", day: "numeric" });
+  const days = (data?.days ?? []).map((d) => ({ ...d, label: fmtDay(d.date) }));
+  const t = data?.totals;
+  const fmtRange = (r?: { startDate: string; endDate: string }) =>
+    r ? `${fmtDay(r.startDate)} – ${fmtDay(r.endDate)}` : "";
+
+  const tooltipStyle = {
+    borderRadius: 12,
+    border: `1px solid ${C.goldShimmer}`,
+    background: C.parchment,
+    color: C.navy,
+    direction: "rtl" as const,
+    fontFamily: "Ploni",
+  };
+
+  const gscKpis: KpiProps[] = [
+    { title: "קליקים מחיפוש", value: isLoading ? "…" : (t?.clicks ?? 0).toLocaleString(), icon: MousePointerClick, accent: C.navy, source: "Search Console" },
+    { title: "הופעות בתוצאות", value: isLoading ? "…" : (t?.impressions ?? 0).toLocaleString(), icon: Eye, accent: C.gold, source: "Search Console" },
+    { title: "יחס הקלקה (CTR)", value: isLoading ? "…" : `${((t?.ctr ?? 0) * 100).toFixed(1)}%`, icon: Percent, accent: C.goldLight, source: "Search Console" },
+    { title: "מיקום ממוצע בגוגל", value: isLoading ? "…" : t?.position != null ? t.position.toFixed(1) : "—", icon: ListOrdered, accent: C.amber, source: "Search Console" },
+  ];
+
+  return (
+    <section className="space-y-4">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <h2 className="text-xl font-kedem font-bold flex items-center gap-2" style={{ color: C.navy }}>
+          <Search className="w-5 h-5" style={{ color: C.goldLight }} aria-hidden />
+          תנועה מחיפוש גוגל — 28 ימים
+        </h2>
+        <span className="text-xs font-ploni" style={{ color: C.textSubtle }}>
+          {fmtRange(data?.range)} <SourceBadge source="Search Console" note="sc-domain:bneyzion.co.il" />
+        </span>
+      </div>
+
+      {isError && (
+        <div className="rounded-2xl border p-4 font-ploni text-sm" style={{ borderColor: C.goldShimmer, color: C.red, background: C.parchment }}>
+          שגיאה בשליפת הנתונים מהקונסול. נסו לרענן — אם זה חוזר, בדקו את יומני השרת.
+        </div>
+      )}
+
+      {data && !data.configured && (
+        <div className="rounded-2xl border p-4 font-ploni text-sm" style={{ borderColor: C.goldShimmer, color: C.textMuted, background: C.parchment }}>
+          החיבור לקונסול של גוגל מוכן — נשאר רק להגדיר את מפתח הגישה בשרת. ברגע שיוגדר, הנתונים יופיעו כאן.
+        </div>
+      )}
+
+      {(!data || data.configured) && !isError && (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            {gscKpis.map((k) => <KpiCard key={k.title} {...k} />)}
+          </div>
+
+          <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
+            <CardHeader className="pb-2">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
+                  קליקים והופעות לפי יום
+                </CardTitle>
+                <SourceBadge source="Search Console" />
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={days}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={C.goldShimmer} opacity={0.5} />
+                    <XAxis dataKey="label" axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                    <YAxis yAxisId="clicks" orientation="right" axisLine={false} tickLine={false} tick={{ fill: C.textMuted, fontSize: 11, fontFamily: "Ploni" }} />
+                    <YAxis yAxisId="impressions" orientation="left" axisLine={false} tickLine={false} tick={{ fill: C.textSubtle, fontSize: 11, fontFamily: "Ploni" }} />
+                    <Tooltip contentStyle={tooltipStyle} />
+                    <Legend wrapperStyle={{ fontFamily: "Ploni", fontSize: 12 }} />
+                    <Bar yAxisId="clicks" dataKey="clicks" fill={C.goldLight} radius={[4, 4, 0, 0]} name="קליקים" />
+                    <Line yAxisId="impressions" type="monotone" dataKey="impressions" stroke={C.navy} strokeWidth={2} dot={false} name="הופעות" />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+
+          <div className="grid lg:grid-cols-2 gap-6">
+            <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
+                  שאילתות החיפוש המובילות
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm" dir="rtl">
+                    <thead>
+                      <tr style={{ color: C.textMuted, borderBottom: `1px solid ${C.goldShimmer}` }}>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">שאילתה</th>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">קליקים</th>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">הופעות</th>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">מיקום</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(data?.topQueries ?? []).map((q) => (
+                        <tr key={q.query} className="transition-colors hover:bg-amber-50/60" style={{ borderBottom: `1px solid ${C.goldShimmer}66` }}>
+                          <td className="py-2.5 px-3 font-ploni font-medium" style={{ color: C.text }}>{q.query}</td>
+                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.gold }}>{q.clicks.toLocaleString()}</td>
+                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.textMuted }}>{q.impressions.toLocaleString()}</td>
+                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.textSubtle }}>{q.position.toFixed(1)}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="rounded-2xl border shadow-sm" style={{ borderColor: C.goldShimmer }}>
+              <CardHeader className="pb-2">
+                <CardTitle className="text-lg font-kedem" style={{ color: C.navy }}>
+                  הדפים המובילים בחיפוש
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm" dir="rtl">
+                    <thead>
+                      <tr style={{ color: C.textMuted, borderBottom: `1px solid ${C.goldShimmer}` }}>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">דף</th>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">קליקים</th>
+                        <th className="text-right py-2 px-3 font-ploni font-bold">הופעות</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(data?.topPages ?? []).map((p) => (
+                        <tr key={p.page} className="transition-colors hover:bg-amber-50/60" style={{ borderBottom: `1px solid ${C.goldShimmer}66` }}>
+                          <td className="py-2.5 px-3 font-ploni font-medium" dir="ltr" style={{ color: C.text, textAlign: "right" }}>{p.page}</td>
+                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.gold }}>{p.clicks.toLocaleString()}</td>
+                          <td className="py-2.5 px-3 font-ploni" style={{ color: C.textMuted }}>{p.impressions.toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </>
+      )}
+    </section>
   );
 }
 
@@ -194,9 +371,9 @@ export default function Analytics() {
         {/* Header */}
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>אנליטיקס — תוכן ומעורבות</h1>
+            <h1 className="text-3xl font-kedem font-bold" style={{ color: C.navy }}>אנליטיקס — תנועה ותוכן</h1>
             <p className="font-ploni mt-1" style={{ color: C.textMuted }}>
-              מה נצפה, מה אהוב ומי מוביל — נתונים חיים <SourceBadge source="Supabase" />
+              תנועה מחיפוש גוגל, מה נצפה ומה אהוב — נתונים חיים
             </p>
           </div>
           <Link
@@ -209,7 +386,11 @@ export default function Analytics() {
           </Link>
         </div>
 
+        {/* Google Search Console — תנועה מחיפוש */}
+        <SearchConsoleSection />
+
         {/* Content-engagement KPIs */}
+        <h2 className="text-xl font-kedem font-bold" style={{ color: C.navy }}>תוכן ומעורבות באתר</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
           {contentKpis.map((k) => <KpiCard key={k.title} {...k} />)}
         </div>

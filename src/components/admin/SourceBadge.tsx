@@ -7,6 +7,7 @@ const SOURCE_COLORS: Record<string, { bg: string; color: string }> = {
   Monday:   { bg: "#EEF2FF", color: "#3730A3" }, // אינדיגו — לוח Monday של יואב
   Supabase: { bg: "#ECFDF5", color: "#065F46" }, // ירוק — ה-DB של האתר
   Grow:     { bg: "#FDF4E7", color: "#92400E" }, // ענבר — סליקה בפועל
+  "Search Console": { bg: "#EFF6FF", color: "#1D4ED8" }, // כחול — חיפוש גוגל
 };
 
 export function SourceBadge({ source, note }: { source: string; note?: string }) {
