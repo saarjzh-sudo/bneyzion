@@ -126,11 +126,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         impressions: r.impressions,
         position: r.position,
       })),
-      topPages: (byPage.rows ?? []).map((r) => ({
-        page: (r.keys?.[0] ?? "").replace(/^https?:\/\/(www\.)?bneyzion\.co\.il/, "") || "/",
-        clicks: r.clicks,
-        impressions: r.impressions,
-      })),
+      topPages: (byPage.rows ?? []).map((r) => {
+        const path = (r.keys?.[0] ?? "").replace(/^https?:\/\/(www\.)?bneyzion\.co\.il/, "") || "/";
+        // GSC מחזיר נתיבים מקודדי-URL; נתיב עברי מוצג אחרת כ-%D7%… במקום טקסט קריא.
+        let readable = path;
+        try { readable = decodeURIComponent(path); } catch { /* נתיב פגום — משאירים כמות שהוא */ }
+        return { page: readable, clicks: r.clicks, impressions: r.impressions };
+      }),
     };
     cache = { at: Date.now(), payload };
     return res.status(200).json(payload);
