@@ -71,7 +71,7 @@ const Hero = () => {
         {/* הספרים המודפסים — יושבים על מדף האבן שבצילום */}
         <img
           src={ART.booksGift}
-          alt="ספר יהושע וספר שופטים מאת הרב יואב אוריאל, מהדורת 2025"
+          alt="ספר יהושע וספר שופטים מאת הרב יואב אוריאל, מהדורת תשפ&quot;ה"
           className="cw2-hero-books animate-fade-up"
           style={{ animationDelay: "0.24s" }}
           width={1000}

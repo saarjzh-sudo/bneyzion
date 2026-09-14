@@ -92,13 +92,13 @@ const Offer = () => {
               {EARLY_BIRD.gift.name} — <b>בחינם</b>
             </p>
             <p className="cw2-gift-text">
-              הכרך המודפס של הרב יואב, מהדורת 2025
+              הכרך המודפס של הרב יואב, מהדורת תשפ"ה
               <span className="cw2-gift-price"> · בחנות {ANCHOR.bookPrice} ₪</span>
             </p>
           </div>
           <img
             src={ART.bookShoftim}
-            alt="ספר שופטים מאת הרב יואב אוריאל, מהדורת 2025 — המתנה למצטרפים"
+            alt="ספר שופטים מאת הרב יואב אוריאל, מהדורת תשפ&quot;ה — המתנה למצטרפים"
             className="cw2-gift-img"
             loading="lazy"
             decoding="async"

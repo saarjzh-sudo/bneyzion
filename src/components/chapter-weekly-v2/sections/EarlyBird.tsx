@@ -51,7 +51,7 @@ const EarlyBird = () => {
           <div className="p-6 md:p-9 grid sm:grid-cols-[auto_1fr] gap-6 md:gap-8 items-center">
             <img
               src={ART.bookShoftim}
-              alt="ספר שופטים מאת הרב יואב אוריאל, מהדורת 2025 — המתנה למצטרפים"
+              alt="ספר שופטים מאת הרב יואב אוריאל, מהדורת תשפ&quot;ה — המתנה למצטרפים"
               className="w-36 sm:w-44 mx-auto drop-shadow-xl"
               loading="lazy"
               decoding="async"
