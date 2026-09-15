@@ -310,6 +310,11 @@ function HeroSection({
 
   return (
     <section className={isProduct ? "campaign-hero-product" : undefined} style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      {isProduct ? (
+        /* מצב-מוצר (15.9, הערת הרב יואב "כהה מדי"): הירו בהיר — קרם חם,
+           ההדמיה מוצגת בשלמותה כבלוק, והטקסט נייבי. בלי תמונת-רקע חתוכה. */
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, hsl(40 45% 98%) 0%, hsl(38 42% 93%) 70%, hsl(38 30% 96%) 100%)" }} />
+      ) : (
       <div style={{ position: "absolute", inset: 0, background: "hsl(215 55% 10%)" }}>
         {campaign.hero_image_url && (
           <img
@@ -328,6 +333,7 @@ function HeroSection({
           }}
         />
       </div>
+      )}
 
       <div
         className="campaign-hero-content"
@@ -347,15 +353,16 @@ function HeroSection({
               display: "inline-flex",
               alignItems: "center",
               gap: 8,
-              padding: "5px 16px",
+              padding: isProduct ? "6px 18px" : "5px 16px",
               borderRadius: 99,
-              background: "hsl(38 75% 55% / 0.16)",
+              background: isProduct ? "hsl(215 45% 19%)" : "hsl(38 75% 55% / 0.16)",
               border: "1px solid hsl(38 75% 55% / 0.38)",
               marginBlockEnd: 16,
+              boxShadow: isProduct ? "0 4px 16px hsl(215 55% 20% / 0.25)" : "none",
             }}
           >
             <span style={{ width: 6, height: 6, background: "hsl(38 75% 62%)", borderRadius: "50%" }} />
-            <span style={{ color: "hsl(38 85% 74%)", fontSize: 13, fontWeight: 800, letterSpacing: "0.05em" }}>
+            <span style={{ color: isProduct ? "hsl(43 90% 70%)" : "hsl(38 85% 74%)", fontSize: 13, fontWeight: 800, letterSpacing: "0.05em" }}>
               {campaign.hero_eyebrow}
             </span>
           </div>
@@ -369,12 +376,13 @@ function HeroSection({
             src={campaign.hero_image_url}
             alt={campaign.hero_title || campaign.title}
             style={{
-              display: "none",
+              display: "block",
               width: "100%",
-              borderRadius: 14,
-              border: "1px solid hsl(38 75% 55% / 0.35)",
-              boxShadow: "0 14px 40px hsl(215 55% 5% / 0.5)",
-              marginBlockEnd: 20,
+              maxWidth: 780,
+              margin: "0 auto 22px",
+              borderRadius: 16,
+              border: "1px solid hsl(38 60% 78%)",
+              boxShadow: "0 18px 48px hsl(30 40% 40% / 0.22)",
             }}
           />
         )}
@@ -385,7 +393,9 @@ function HeroSection({
               display: "block",
               fontSize: "clamp(28px, 4.6vw, 52px)",
               fontWeight: 900,
-              background: "linear-gradient(135deg, hsl(43 90% 74%) 0%, hsl(38 78% 55%) 100%)",
+              background: isProduct
+                ? "linear-gradient(135deg, hsl(215 58% 28%) 0%, hsl(215 55% 14%) 100%)"
+                : "linear-gradient(135deg, hsl(43 90% 74%) 0%, hsl(38 78% 55%) 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -396,12 +406,12 @@ function HeroSection({
           </span>
         </h1>
         {campaign.hero_title_small && (
-          <div style={{ fontSize: "clamp(15px, 2vw, 20px)", fontWeight: 700, color: "white", marginBlockEnd: 4 }}>
+          <div style={{ fontSize: "clamp(15px, 2vw, 20px)", fontWeight: 700, color: isProduct ? "hsl(30 55% 32%)" : "white", marginBlockEnd: 4 }}>
             {campaign.hero_title_small}
           </div>
         )}
         {campaign.hero_subtitle && (
-          <p style={{ fontSize: "clamp(14px, 1.8vw, 17px)", color: "hsl(215 10% 78%)", margin: "0 auto", maxWidth: 560 }}>
+          <p style={{ fontSize: "clamp(14px, 1.8vw, 17px)", color: isProduct ? "hsl(215 35% 30%)" : "hsl(215 10% 78%)", margin: "0 auto", maxWidth: 560 }}>
             {campaign.hero_subtitle}
           </p>
         )}
@@ -1314,7 +1324,9 @@ function AuthorSection({ campaign }: { campaign: CampaignRow }) {
           </div>
         )}
         <div style={{ opacity: visible ? 1 : 0, transition: "opacity 0.7s ease 0.15s" }}>
-          <p style={{ color: "hsl(38 85% 66%)", fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", marginBlockEnd: 8 }}>מי מאחורי הקמפיין</p>
+          <p style={{ color: "hsl(38 85% 66%)", fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", marginBlockEnd: 8 }}>
+            {campaign.is_product ? "מי מאחורי החוברת" : "מי מאחורי הקמפיין"}
+          </p>
           {campaign.author_name && (
             <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 900, color: "white", margin: "0 0 16px" }}>{campaign.author_name}</h2>
           )}
@@ -1605,11 +1617,13 @@ function FinalCTA({ campaign, supporters, progressPct, onSupportClick }: { campa
   return (
     <section style={{ background: "hsl(215 55% 12%)", padding: "72px 24px", textAlign: "center" }}>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
+        {/* מצב-מוצר: הכותרת והשורה מגיעות מ-hero_quote/hero_quote_cite (שדות DB שאינם
+            מרונדרים בשום מקום אחר) — כך יואב/סער מנסחים את הסוגר בלי דיפלוי. */}
         <h2 style={{ fontSize: "clamp(24px, 3.4vw, 38px)", fontWeight: 900, color: "white", margin: "0 0 12px", lineHeight: 1.25 }}>
-          {isProduct ? (campaign.hero_title_small || campaign.subtitle || campaign.title) : `${supporters} תומכים כבר הצטרפו — ${progressPct}% מהיעד`}
+          {isProduct ? (campaign.hero_quote || campaign.hero_title_small || campaign.title) : `${supporters} תומכים כבר הצטרפו — ${progressPct}% מהיעד`}
         </h2>
         <p style={{ fontSize: 16, color: "hsl(215 10% 70%)", margin: "0 0 28px" }}>
-          {isProduct ? "הניסים קרו באמת. עכשיו הם כתובים, מאוירים ומחכים לשולחן שלכם." : "כל תמיכה מקרבת אותנו לסיום."}
+          {isProduct ? (campaign.hero_quote_cite || "") : "כל תמיכה מקרבת אותנו לסיום."}
         </p>
         <button
           onClick={onSupportClick}
@@ -2128,9 +2142,7 @@ export default function CampaignPage() {
         /* מצב-מוצר בנייד (15.9, בקשת סער): כותרת קטנה → ההדמיה בשלמותה → ההמשך.
            תמונת-הרקע החתוכה מוסתרת, והתמונה נכנסת כבלוק מלא אחרי ה-eyebrow. */
         @media (max-width: 767px) {
-          .campaign-hero-product .campaign-hero-bgimg { display: none !important; }
-          .campaign-hero-product .campaign-hero-inline-img { display: block !important; }
-          .campaign-hero-product .campaign-hero-content { padding-top: 72px !important; }
+          .campaign-hero-product .campaign-hero-content { padding-top: 64px !important; }
           /* המספרים שאחרי ההירו — תמיד בשורה אחת בנייד (flex basis-0 = שלישים שווים בלי הצפה) */
           .campaign-proof-grid { display: flex !important; }
           .campaign-proof-grid > div { flex: 1 1 0 !important; min-width: 0 !important; padding: 14px 4px !important; }
