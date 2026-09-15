@@ -3,6 +3,10 @@
     {
       "path": "/api/sync-monday-subscribers",
       "schedule": "30 3,13 * * *"
+    },
+    {
+      "path": "/api/admin/creator-publications-digest",
+      "schedule": "15 6 * * *"
     }
   ],
   "redirects": [

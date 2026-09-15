@@ -125,7 +125,10 @@ const uploadToStorage = async (file: File, folder: string): Promise<string> => {
 
 // ─── component ──────────────────────────────────────────────────────
 const ContentUpload = () => {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, isCreator } = useAuth();
+  // אפשרות א' של הרב יואב (15.9.2026): יוצרי תוכן מפרסמים ישירות, רק על שמם.
+  // הגבולות נאכפים ב-RLS (creator_insert_own / creator_update_own), לא רק כאן.
+  const canPublish = isAdmin || isCreator;
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -231,7 +234,8 @@ const ContentUpload = () => {
           title,
           // אדמין יוצר סדרה פעילה (מופיעה מיד בעץ); יוצר → draft עד אישור.
           // status="draft" הסתיר סדרות-אדמין חדשות + כל שיעוריהן מהסיידבר.
-          status: isAdmin ? "active" : "draft",
+          status: canPublish ? "active" : "draft",
+          submitted_by: user?.id ?? null,
           audience_tags: form.audienceTags,
           // Fix: attach parent_id from the picker node — previously always missing (orphan bug)
           parent_id: parentId || null,
@@ -305,8 +309,9 @@ const ContentUpload = () => {
         audience_tags:  form.audienceTags,
         bible_book:     form.bibleBook    || null,
         bible_chapter:  form.bibleChapter ? parseInt(form.bibleChapter) : null,
-        submitted_by:   intentStatus === "pending_review" ? user?.id : null,
-        submitted_at:   intentStatus === "pending_review" ? new Date().toISOString() : null,
+        // תמיד על שם המעלה — RLS של יוצרי תוכן דורש submitted_by = המשתמש
+        submitted_by:   user?.id ?? null,
+        submitted_at:   new Date().toISOString(),
         published_at:   intentStatus === "published" ? new Date().toISOString() : null,
       };
 
@@ -572,10 +577,10 @@ const ContentUpload = () => {
             <CheckCircle2 className="h-10 w-10 text-white" />
           </div>
           <h2 className="text-2xl font-heading" style={{ color: NAVY }}>
-            {isAdmin ? "התוכן הועלה בהצלחה" : "התוכן נשלח לאישור"}
+            {canPublish ? "התוכן הועלה בהצלחה" : "התוכן נשלח לאישור"}
           </h2>
           <p style={{ color: TXT_M }}>
-            {isAdmin
+            {canPublish
               ? "השיעור פורסם ויופיע באתר."
               : "המנהל יקבל התראה ויאשר את התוכן לפני הפרסום."}
           </p>
@@ -621,8 +626,8 @@ const ContentUpload = () => {
             העלאת תוכן חדש
           </h1>
           <p style={{ color: TXT_M, fontSize: 14 }}>
-            {isAdmin
-              ? "כאדמין תוכל לפרסם ישירות או לשמור כטיוטה"
+            {canPublish
+              ? "אפשר לפרסם ישירות או לשמור כטיוטה"
               : "התוכן יישלח לאישור מנהל לפני פרסום"}
           </p>
 
@@ -1179,7 +1184,7 @@ const ContentUpload = () => {
                 </div>
               )}
 
-              {!isAdmin && (
+              {!canPublish && (
                 <div
                   className="flex items-start gap-3 p-4 rounded-xl"
                   style={{ background: "#FFF7ED", border: "1px solid #FED7AA" }}
@@ -1193,7 +1198,7 @@ const ContentUpload = () => {
               )}
 
               <div className="flex flex-col gap-3 pt-2">
-                {isAdmin ? (
+                {canPublish ? (
                   <>
                     <ActionButton
                       onClick={() => submitLesson.mutate("published")}
