@@ -70,6 +70,7 @@ const EN_TO_HE: Record<string, string> = {
   "Parashat Behar-Bechukotai":     "בהר-בחוקותי",
   "Parashat Bamidbar":             "במדבר",
   "Parashat Naso":                 "נשא",
+  "Parashat Nasso":                "נשא",   // hebcal v6 spelling
   "Parashat Beha'alotcha":         "בהעלותך",
   "Parashat Sh'lach":              "שלח לך",
   "Parashat Korach":               "קורח",
@@ -90,6 +91,7 @@ const EN_TO_HE: Record<string, string> = {
   "Parashat Vayeilech":            "וילך",
   "Parashat Nitzavim-Vayeilech":   "נצבים-וילך",
   "Parashat Ha'Azinu":             "האזינו",
+  "Parashat Ha'azinu":             "האזינו", // hebcal v6 spelling — חסר, ולכן בשבוע האזינו האתר הציג "שלח לך" (15.9.2026)
   "Parashat Vezot Haberakhah":     "וזאת הברכה",
 };
 
@@ -114,25 +116,48 @@ export function getCurrentParasha(date: Date = new Date()): string {
 
     for (const ev of events) {
       // flags.PARSHA_HASHAVUA = 1024 in @hebcal/core v6
-      if (ev.getFlags() === 1024) {
+      if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
         const desc = ev.getDesc();
-        const he = EN_TO_HE[desc];
+        const he = lookupHe(desc);
         if (he) return he;
         // Unknown combined parasha — try to extract first name
         const match = desc.match(/^Parashat (.+?)(?:-|$)/);
-        if (match) {
-          const firstEn = "Parashat " + match[1];
-          return EN_TO_HE[firstEn] ?? "שלח לך";
-        }
-        return "שלח לך";
+        const first = match ? lookupHe("Parashat " + match[1]) : null;
+        if (first) return first;
+        // 15.9.2026: לא מחזירים יותר "שלח לך" קבוע — השם העברי של hebcal עצמו
+        return ev.render("he-x-NoNikud").replace(/^פרשת\s+/, "");
       }
     }
   } catch {
     // If @hebcal/core fails for any reason, fall through to fallback
   }
 
-  // Static fallback for edge cases (end of year / missing mapping)
+  // שבועות-חג (יום כיפור, סוכות): אין קריאת פרשה בחלון 9 הימים — מחפשים את
+  // הפרשה הבאה בלוח עד 45 יום קדימה, במקום טבלה סטטית שהתיישנה (15.9.2026).
+  try {
+    const from = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const events = HebrewCalendar.calendar({
+      start: from,
+      end: new Date(from.getTime() + 45 * 24 * 60 * 60 * 1000),
+      sedrot: true, il: true, noHolidays: true,
+    });
+    for (const ev of events) {
+      if (ev.getFlags() & flags.PARSHA_HASHAVUA) {
+        return lookupHe(ev.getDesc()) ?? ev.render("he-x-NoNikud").replace(/^פרשת\s+/, "");
+      }
+    }
+  } catch {
+    // נופלים לטבלה הסטטית רק אם hebcal עצמו נכשל
+  }
   return _fallbackParasha(date);
+}
+
+/** חיפוש לא-רגיש-לאותיות במפה (hebcal שינה איות בין גרסאות: Ha'Azinu→Ha'azinu, Naso→Nasso). */
+const EN_TO_HE_LOWER: Record<string, string> = Object.fromEntries(
+  Object.entries(EN_TO_HE).map(([k, v]) => [k.toLowerCase(), v]),
+);
+function lookupHe(desc: string): string | null {
+  return EN_TO_HE[desc] ?? EN_TO_HE_LOWER[desc.toLowerCase()] ?? null;
 }
 
 /**
