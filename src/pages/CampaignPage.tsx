@@ -2131,8 +2131,9 @@ export default function CampaignPage() {
           .campaign-hero-product .campaign-hero-bgimg { display: none !important; }
           .campaign-hero-product .campaign-hero-inline-img { display: block !important; }
           .campaign-hero-product .campaign-hero-content { padding-top: 72px !important; }
-          /* המספרים שאחרי ההירו — תמיד בשורה אחת בנייד */
-          .campaign-proof-grid { grid-auto-flow: column !important; grid-auto-columns: 1fr !important; grid-template-columns: none !important; }
+          /* המספרים שאחרי ההירו — תמיד בשורה אחת בנייד (flex basis-0 = שלישים שווים בלי הצפה) */
+          .campaign-proof-grid { display: flex !important; }
+          .campaign-proof-grid > div { flex: 1 1 0 !important; min-width: 0 !important; padding: 14px 4px !important; }
           .campaign-proof-grid .campaign-proof-val { font-size: 21px !important; }
           .campaign-proof-grid .campaign-proof-label { font-size: 10.5px !important; }
         }
