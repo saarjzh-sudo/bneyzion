@@ -28,7 +28,7 @@ import {
   type CampaignRecentDonor,
 } from "@/hooks/useCampaigns";
 import { sanitizeHtml } from "@/lib/sanitize";
-import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark, Hourglass, Heart, Sparkles, Building2, PartyPopper, Award, Zap, Users, HeartHandshake } from "lucide-react";
+import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark, Hourglass, Heart, Sparkles, Building2, PartyPopper, Award, Zap, Users, HeartHandshake, Flag } from "lucide-react";
 import CampaignDedicationPicker, { type CompanionDedicationSelection } from "@/components/campaign/CampaignDedicationPicker";
 import { useDedicationSettings } from "@/hooks/useLessonDedications";
 
@@ -309,10 +309,11 @@ function HeroSection({
   const remaining = Math.max(0, Number(campaign.goal_amount) - raised);
 
   return (
-    <section style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <section className={isProduct ? "campaign-hero-product" : undefined} style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       <div style={{ position: "absolute", inset: 0, background: "hsl(215 55% 10%)" }}>
         {campaign.hero_image_url && (
           <img
+            className="campaign-hero-bgimg"
             src={campaign.hero_image_url}
             alt={campaign.hero_title || campaign.title}
             style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 25%", opacity: 0.9 }}
@@ -329,6 +330,7 @@ function HeroSection({
       </div>
 
       <div
+        className="campaign-hero-content"
         style={{
           position: "relative",
           zIndex: 1,
@@ -357,6 +359,24 @@ function HeroSection({
               {campaign.hero_eyebrow}
             </span>
           </div>
+        )}
+
+        {/* מצב-מוצר בנייד (בקשת סער 15.9): אחרי הכותרת הקטנה רואים את ההדמיה
+            בשלמותה כתמונת-בלוק, ורק אז ההמשך. בדסקטופ נשארת תמונת-הרקע. */}
+        {isProduct && campaign.hero_image_url && (
+          <img
+            className="campaign-hero-inline-img"
+            src={campaign.hero_image_url}
+            alt={campaign.hero_title || campaign.title}
+            style={{
+              display: "none",
+              width: "100%",
+              borderRadius: 14,
+              border: "1px solid hsl(38 75% 55% / 0.35)",
+              boxShadow: "0 14px 40px hsl(215 55% 5% / 0.5)",
+              marginBlockEnd: 20,
+            }}
+          />
         )}
 
         <h1 style={{ margin: "0 0 6px", lineHeight: 1.08 }}>
@@ -760,6 +780,8 @@ const STAT_ICONS: Record<string, typeof BookOpen> = {
   "🕯️": Flame,
   "👥": Users,
   "🙌": HeartHandshake,
+  "✨": Sparkles,
+  "🇮🇱": Flag,
 };
 
 function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporters: number }) {
@@ -775,7 +797,7 @@ function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporter
   ];
   return (
     <div ref={ref} style={{ background: "hsl(215 55% 14%)", borderBlockEnd: "1px solid hsl(38 75% 55% / 0.12)", padding: "28px 24px" }}>
-      <div style={{ maxWidth: 860, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 0 }}>
+      <div className="campaign-proof-grid" style={{ maxWidth: 860, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 0 }}>
         {stats.map((s, i) => (
           <div
             key={s.label}
@@ -802,8 +824,8 @@ function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporter
             ) : s.icon ? (
               <div style={{ fontSize: 28, marginBlockEnd: 4 }}>{s.icon}</div>
             ) : null}
-            <div style={{ fontSize: 30, fontWeight: 900, color: "hsl(38 85% 68%)", lineHeight: 1, letterSpacing: "-0.02em" }}>{s.val}</div>
-            <div style={{ fontSize: 12, color: "hsl(215 10% 52%)", marginBlockStart: 4 }}>{s.label}</div>
+            <div className="campaign-proof-val" style={{ fontSize: 30, fontWeight: 900, color: "hsl(38 85% 68%)", lineHeight: 1, letterSpacing: "-0.02em" }}>{s.val}</div>
+            <div className="campaign-proof-label" style={{ fontSize: 12, color: "hsl(215 10% 52%)", marginBlockStart: 4 }}>{s.label}</div>
           </div>
         ))}
       </div>
@@ -2102,6 +2124,17 @@ export default function CampaignPage() {
         /* בפס התחתון הדק — במסכים צרים מאוד מוותרים על צ'יפ סעיף 46 */
         @media (max-width: 380px) {
           .campaign-sticky-46 { display: none !important; }
+        }
+        /* מצב-מוצר בנייד (15.9, בקשת סער): כותרת קטנה → ההדמיה בשלמותה → ההמשך.
+           תמונת-הרקע החתוכה מוסתרת, והתמונה נכנסת כבלוק מלא אחרי ה-eyebrow. */
+        @media (max-width: 767px) {
+          .campaign-hero-product .campaign-hero-bgimg { display: none !important; }
+          .campaign-hero-product .campaign-hero-inline-img { display: block !important; }
+          .campaign-hero-product .campaign-hero-content { padding-top: 72px !important; }
+          /* המספרים שאחרי ההירו — תמיד בשורה אחת בנייד */
+          .campaign-proof-grid { grid-auto-flow: column !important; grid-auto-columns: 1fr !important; grid-template-columns: none !important; }
+          .campaign-proof-grid .campaign-proof-val { font-size: 21px !important; }
+          .campaign-proof-grid .campaign-proof-label { font-size: 10.5px !important; }
         }
       `}</style>
 
