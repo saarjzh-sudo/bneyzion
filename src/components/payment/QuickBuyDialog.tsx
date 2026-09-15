@@ -227,9 +227,9 @@ export function QuickBuyDialog({
                   </option>
                 ))}
               </select>
-              {chosenPoint?.contact && (
-                <p className="text-xs text-muted-foreground">איש קשר בנקודה: {chosenPoint.contact}</p>
-              )}
+              {/* איש הקשר של הנקודה לא נחשף בבחירה (הרב יואב 15.9) — הוא נשלח
+                  לרוכש במייל האישור, רק אחרי שהתשלום עבר. */}
+              <p className="text-xs text-muted-foreground">פרטי איש הקשר בנקודה יישלחו אליכם במייל אחרי ההרשמה.</p>
             </div>
           )}
 

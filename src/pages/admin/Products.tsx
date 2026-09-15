@@ -19,7 +19,7 @@ import { RichTextEditor } from "@/components/admin/RichTextEditor";
 // רמה 18 (יואב 14.7): ניהול משלוחים אוחד לכאן — טאב "משלוח ואיסוף"
 import { ShippingOptionsEditor } from "@/components/admin/ShippingOptionsEditor";
 import { useProductCategories } from "@/hooks/useProducts";
-import { useSalePoints, useCreateSalePoint, useUpdateSalePoint, useDeleteSalePoint, type SalePoint } from "@/hooks/useSalePoints";
+import { useSalePoints, useCreateSalePoint, useUpdateSalePoint, useDeleteSalePoint, useSalePointContacts, saveSalePointContact, type SalePoint } from "@/hooks/useSalePoints";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -189,6 +189,8 @@ const emptySalePointForm = { name: "", address: "", city: "", contact: "", notes
 
 function SalePointsManager() {
   const { data: points, isLoading } = useSalePoints();
+  // אנשי הקשר בטבלה פרטית (15.9.2026) — לא נחשפים לרוכשים, נשלחים במייל האישור
+  const { data: contacts = {}, refetch: refetchContacts } = useSalePointContacts();
   const createSP = useCreateSalePoint();
   const updateSP = useUpdateSalePoint();
   const deleteSP = useDeleteSalePoint();
@@ -200,14 +202,23 @@ function SalePointsManager() {
   const resetForm = () => { setForm(emptySalePointForm); setEditing(null); };
   const openEdit = (p: SalePoint) => {
     setEditing(p);
-    setForm({ name: p.name, address: p.address || "", city: p.city || "", contact: p.contact || "", notes: p.notes || "", sort_order: String(p.sort_order), is_active: p.is_active });
+    setForm({ name: p.name, address: p.address || "", city: p.city || "", contact: contacts[p.id] || "", notes: p.notes || "", sort_order: String(p.sort_order), is_active: p.is_active });
     setDialogOpen(true);
   };
   const save = async () => {
-    const payload = { name: form.name, address: form.address || null, city: form.city || null, contact: form.contact || null, notes: form.notes || null, sort_order: Number(form.sort_order) || 0, is_active: form.is_active };
+    // contact לא נשמר על sale_points (שקריאה לציבור) — רק בטבלה הפרטית
+    const payload = { name: form.name, address: form.address || null, city: form.city || null, contact: null, notes: form.notes || null, sort_order: Number(form.sort_order) || 0, is_active: form.is_active };
     try {
-      if (editing) { await updateSP.mutateAsync({ id: editing.id, ...payload } as any); toast({ title: "נקודת המכירה עודכנה" }); }
-      else { await createSP.mutateAsync(payload as any); toast({ title: "נקודת המכירה נוספה" }); }
+      if (editing) {
+        await updateSP.mutateAsync({ id: editing.id, ...payload } as any);
+        await saveSalePointContact(editing.id, form.contact || null);
+        toast({ title: "נקודת המכירה עודכנה" });
+      } else {
+        const newId = await createSP.mutateAsync(payload as any);
+        if (newId) await saveSalePointContact(newId, form.contact || null);
+        toast({ title: "נקודת המכירה נוספה" });
+      }
+      refetchContacts();
       setDialogOpen(false); resetForm();
     } catch (e: any) { toast({ title: "שגיאה", description: e.message, variant: "destructive" }); }
   };
@@ -259,7 +270,7 @@ function SalePointsManager() {
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.name}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{[p.address, p.city].filter(Boolean).join(", ") || "—"}</TableCell>
-                  <TableCell className="text-sm text-muted-foreground" dir="ltr">{p.contact || "—"}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground" dir="ltr">{contacts[p.id] || "—"}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
                       <Switch checked={p.is_active} disabled={updateSP.isPending} onCheckedChange={() => toggleActive(p)} />

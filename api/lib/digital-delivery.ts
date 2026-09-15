@@ -225,6 +225,53 @@ export async function sendStoreConfirmationEmail(params: {
 }
 
 /**
+ * איש הקשר של נקודת איסוף (15.9.2026, בקשת הרב יואב): אנשי הקשר לא חשופים
+ * לציבור. הם יושבים בטבלה הפרטית sale_point_contacts (RLS אדמין בלבד), ונקראים
+ * כאן עם service role, רק כדי לשלוח אותם לרוכש אחרי שהתשלום עבר.
+ */
+export async function loadPickupContact(supabase: SupabaseAdmin, salePointId: string | null | undefined): Promise<string | null> {
+  if (!salePointId) return null;
+  const { data } = await supabase
+    .from("sale_point_contacts")
+    .select("contact")
+    .eq("sale_point_id", salePointId)
+    .maybeSingle();
+  return ((data as any)?.contact as string) || null;
+}
+
+/**
+ * מייל אישור נקודת איסוף (15.9.2026): מי שבחר נקודת איסוף (ספר המתנה של הפרק
+ * השבועי, או חוברות דור הפלאות) מקבל אחרי התשלום אישור עם שם הנקודה ואיש הקשר.
+ */
+export async function sendPickupConfirmationEmail(params: {
+  email: string;
+  name: string;
+  productLabel: string;
+  pickupPointName: string;
+  address?: string | null;
+  city?: string | null;
+  contact?: string | null;
+  notes?: string | null;
+}): Promise<boolean> {
+  const p = params;
+  if (!p.email) return false;
+  const firstName = (p.name || "").trim().split(/\s+/)[0] || "";
+  const place = [p.address, p.city].filter(Boolean).join(", ");
+  const inner = `
+    <p>שלום ${firstName || "וברכה"},</p>
+    <p>ההזמנה שלך התקבלה. ${p.productLabel} מחכה לך בנקודת האיסוף שבחרת:</p>
+    <div style="background:#FAF6F0;border-radius:10px;padding:14px 18px;margin:12px 0">
+      <p style="margin:0 0 6px"><b>${p.pickupPointName}</b></p>
+      ${place && !p.pickupPointName.includes(place) ? `<p style="margin:0 0 6px">כתובת: ${place}</p>` : ""}
+      ${p.contact ? `<p style="margin:0 0 6px">איש הקשר בנקודה: <b>${p.contact}</b></p>` : `<p style="margin:0 0 6px">נציג שלנו ייצור איתך קשר עם פרטי האיסוף.</p>`}
+      ${p.notes ? `<p style="margin:0;font-size:13px;color:#6B5C4A">${p.notes}</p>` : ""}
+    </div>
+    <p style="font-size:13px;color:#6B5C4A">כדאי לתאם מראש עם איש הקשר לפני שמגיעים.</p>
+    <p>בברכת התורה,<br/>צוות בני ציון</p>`;
+  return sendSingleEmail(p.email, p.name, "אישור נקודת האיסוף שלך — בני ציון", emailShell(inner));
+}
+
+/**
  * מייל תודה לתורם (רמה 18, אודיט תרומות): עד עכשיו תורם קיבל רק קבלה מ-Grow —
  * בלי שום מילה חמה מהעמותה. נשלח פעם אחת, מיד אחרי אישור התשלום.
  */
@@ -369,12 +416,13 @@ export async function deliverOrder(supabase: SupabaseAdmin, orderId: string): Pr
       // להזמנות ישנות שנוצרו לפני שחובת הבחירה נאכפה בצ'קאאוט.
       const { data: points } = await supabase
         .from("sale_points")
-        .select("name, address, city, contact, notes")
+        .select("id, name, address, city, notes")
         .eq("is_active", true);
       const active = (points ?? []) as any[];
       pickupPoint =
         active.find((sp) => sp.name && shippingAddress.includes(sp.name)) ||
         (active.length === 1 ? active[0] : null);
+      if (pickupPoint) pickupPoint = { ...pickupPoint, contact: await loadPickupContact(supabase, pickupPoint.id) };
     }
     buyerConfirmed = await sendStoreConfirmationEmail({
       email: (order as any).customer_email,

@@ -54,9 +54,34 @@ export function useCreateSalePoint() {
       const { data, error } = await (supabase as any).from("sale_points").insert(sp).select("id");
       if (error) throw error;
       if (!data?.length) throw new Error("הנקודה לא נוצרה — אין הרשאת עריכה (RLS). פנה לסער.");
+      return data[0].id as string;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["sale-points-admin"] }),
   });
+}
+
+/**
+ * אדמין — אנשי הקשר של הנקודות (15.9.2026). יושבים בטבלה הפרטית
+ * sale_point_contacts (RLS אדמין בלבד) כדי שלא ייחשפו לציבור בבחירת נקודה.
+ */
+export function useSalePointContacts() {
+  return useQuery({
+    queryKey: ["sale-point-contacts"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("sale_point_contacts")
+        .select("sale_point_id, contact");
+      if (error) throw error;
+      return Object.fromEntries(((data ?? []) as any[]).map((r) => [r.sale_point_id, r.contact as string | null])) as Record<string, string | null>;
+    },
+  });
+}
+
+export async function saveSalePointContact(salePointId: string, contact: string | null) {
+  const { error } = await (supabase as any)
+    .from("sale_point_contacts")
+    .upsert({ sale_point_id: salePointId, contact, updated_at: new Date().toISOString() }, { onConflict: "sale_point_id" });
+  if (error) throw error;
 }
 
 export function useUpdateSalePoint() {

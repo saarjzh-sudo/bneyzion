@@ -309,6 +309,58 @@ function HeroSection({
   const shownPct = barIn ? progressPct : 0;
   const remaining = Math.max(0, Number(campaign.goal_amount) - raised);
 
+  // מצב-מוצר (15.9 ערב, בקשת סער + לימוד מדפי ספרים כמו Atomic Habits):
+  // התמונה עצמה היא ההירו — ברוחב מלא ובבהירות רגילה, בלי שכבת הכהיה ובלי
+  // טקסט על החוברת. הכותרות מעליה, התיאור והכפתור מתחתיה. בנייד התמונה
+  // נחתכת סביב החוברת (4:5) כדי שהחוברת תופיע גדולה.
+  if (isProduct) {
+    return (
+      <section className="campaign-hero-product" style={{ position: "relative", background: "linear-gradient(180deg, hsl(40 45% 98%) 0%, hsl(38 40% 95%) 100%)" }}>
+        <div className="campaign-hero-product-top" style={{ maxWidth: 820, margin: "0 auto", padding: "92px 20px 22px", textAlign: "center" }}>
+          {campaign.hero_eyebrow && (
+            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 18px", borderRadius: 99, background: "hsl(215 45% 19%)", marginBlockEnd: 14, boxShadow: "0 4px 16px hsl(215 55% 20% / 0.2)" }}>
+              <span style={{ width: 6, height: 6, background: "hsl(38 75% 62%)", borderRadius: "50%" }} />
+              <span style={{ color: "hsl(43 90% 72%)", fontSize: 13, fontWeight: 800, letterSpacing: "0.04em" }}>{campaign.hero_eyebrow}</span>
+            </div>
+          )}
+          <h1 style={{ margin: "0 0 6px", lineHeight: 1.05, fontSize: "clamp(38px, 6.4vw, 72px)", fontWeight: 900, color: "hsl(215 55% 18%)", letterSpacing: "-0.02em" }}>
+            {campaign.hero_title || campaign.title}
+          </h1>
+          {campaign.hero_title_small && (
+            <div style={{ fontSize: "clamp(17px, 2.3vw, 24px)", fontWeight: 700, color: "hsl(30 55% 34%)" }}>
+              {campaign.hero_title_small}
+            </div>
+          )}
+        </div>
+
+        {campaign.hero_image_url && (
+          <div className="campaign-hero-product-media" style={{ maxWidth: 1240, margin: "0 auto", padding: "0 20px" }}>
+            <img
+              src={campaign.hero_image_url}
+              alt={campaign.hero_title || campaign.title}
+              fetchPriority="high"
+              style={{ display: "block", width: "100%", aspectRatio: "16 / 9", objectFit: "cover", objectPosition: "50% 55%", borderRadius: 20, boxShadow: "0 22px 60px hsl(30 40% 35% / 0.18)" }}
+            />
+          </div>
+        )}
+
+        <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 20px 44px", textAlign: "center" }}>
+          {campaign.hero_subtitle && (
+            <p style={{ fontSize: "clamp(15px, 1.9vw, 18px)", lineHeight: 1.7, color: "hsl(215 35% 28%)", margin: "0 0 22px" }}>
+              {campaign.hero_subtitle}
+            </p>
+          )}
+          <button
+            onClick={onSupportClick}
+            style={{ padding: "17px 46px", background: GOLD_GRAD, color: "hsl(215 55% 12%)", border: "none", borderRadius: 99, fontWeight: 900, fontSize: "clamp(17px, 2.2vw, 20px)", cursor: "pointer", boxShadow: "0 10px 34px hsl(38 80% 50% / 0.4)", whiteSpace: "nowrap" }}
+          >
+            להזמנת החוברת ↓
+          </button>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className={isProduct ? "campaign-hero-product" : undefined} style={{ position: "relative", display: "flex", flexDirection: "column", overflow: "hidden" }}>
       {isProduct ? (
@@ -1657,7 +1709,6 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
   const dedicationEligible =
     CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) && tier.price >= (dedicationSettings?.lesson_price ?? 600);
 
-  const needsShipping = tier.needs_shipping;
   const [shippingStreet, setShippingStreet] = useState("");
   const [shippingHouseNumber, setShippingHouseNumber] = useState("");
   const [shippingCity, setShippingCity] = useState("");
@@ -1669,7 +1720,12 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
   // והבחירה נשמרת מובנית על שורת ה-donations. אין נקודות פעילות ⇒ אין שדה.
   const { data: salePoints = [] } = usePublicSalePoints();
   const [pickupPointId, setPickupPointId] = useState("");
-  const needsPickup = !!campaign.is_product && !tier.needs_shipping && salePoints.length > 0;
+  // 15.9 ערב (שיחת סער והרב יואב): בחבילות עם משלוח כלול הרוכש בוחר —
+  // משלוח עד הבית (ברירת המחדל) או איסוף עצמי מאחת הנקודות הקיימות.
+  const canPickup = !!campaign.is_product && salePoints.length > 0;
+  const [deliveryMethod, setDeliveryMethod] = useState<"shipping" | "pickup">(tier.needs_shipping ? "shipping" : "pickup");
+  const needsShipping = tier.needs_shipping && !(canPickup && deliveryMethod === "pickup");
+  const needsPickup = canPickup && (!tier.needs_shipping || deliveryMethod === "pickup");
   const chosenPickup = salePoints.find((p) => p.id === pickupPointId);
 
   const [sdkTimedOut, setSdkTimedOut] = useState(false);
@@ -1945,6 +2001,30 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
           />
         )}
 
+        {canPickup && tier.needs_shipping && (
+          <div role="radiogroup" aria-label="אופן קבלת ההזמנה" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            {([
+              ["shipping", "משלוח עד הבית", "כלול במחיר"],
+              ["pickup", "איסוף עצמי", "מנקודה קרובה"],
+            ] as const).map(([key, title, sub]) => {
+              const on = deliveryMethod === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => setDeliveryMethod(key)}
+                  style={{ padding: "10px 8px", borderRadius: 12, cursor: "pointer", fontFamily: "inherit", textAlign: "center", border: on ? "2px solid hsl(38 75% 48%)" : "1.5px solid hsl(38 30% 82%)", background: on ? "hsl(43 80% 95%)" : "white" }}
+                >
+                  <div style={{ fontWeight: 800, fontSize: 14, color: "hsl(215 55% 20%)" }}>{title}</div>
+                  <div style={{ fontSize: 11.5, color: "hsl(215 25% 45%)" }}>{sub}</div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {needsPickup && (
           <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
             <label style={labelStyle}>נקודת איסוף *</label>
@@ -1958,9 +2038,8 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
                 <option key={p.id} value={p.id}>{p.name}</option>
               ))}
             </select>
-            {chosenPickup?.contact && (
-              <div style={{ fontSize: 12, color: "hsl(215 25% 45%)" }}>איש קשר בנקודה: {chosenPickup.contact}</div>
-            )}
+            {/* איש הקשר לא נחשף בבחירה (הרב יואב 15.9) — נשלח במייל האישור אחרי התשלום */}
+            <div style={{ fontSize: 12, color: "hsl(215 25% 45%)" }}>פרטי איש הקשר בנקודה יישלחו אליכם במייל אחרי ההזמנה.</div>
           </div>
         )}
 
@@ -2178,6 +2257,10 @@ export default function CampaignPage() {
            תמונת-הרקע החתוכה מוסתרת, והתמונה נכנסת כבלוק מלא אחרי ה-eyebrow. */
         @media (max-width: 767px) {
           .campaign-hero-product .campaign-hero-content { padding-top: 64px !important; }
+          /* הירו-מוצר בנייד: התמונה מקצה לקצה, חתוכה סביב החוברת כדי שתופיע גדולה */
+          .campaign-hero-product-top { padding-top: 72px !important; padding-bottom: 16px !important; }
+          .campaign-hero-product-media { padding: 0 !important; }
+          .campaign-hero-product-media img { aspect-ratio: 4 / 5 !important; object-position: 50% 60% !important; border-radius: 0 !important; box-shadow: none !important; }
           /* המספרים שאחרי ההירו — תמיד בשורה אחת בנייד (flex basis-0 = שלישים שווים בלי הצפה) */
           .campaign-proof-grid { display: flex !important; }
           .campaign-proof-grid > div { flex: 1 1 0 !important; min-width: 0 !important; padding: 14px 4px !important; }

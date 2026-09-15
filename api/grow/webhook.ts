@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { createClient } from "@supabase/supabase-js";
-import { deliverOrder, sendDonationThankYouEmail } from "../lib/digital-delivery.js";
+import { deliverOrder, sendDonationThankYouEmail, loadPickupContact, sendPickupConfirmationEmail } from "../lib/digital-delivery.js";
 import {
   verifyOrderCallback,
   isWebhookSecretConfigured,
@@ -498,11 +498,34 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       try {
         const { data: donationRow } = await supabase
           .from("donations")
-          .select("amount, donor_name, donor_email, is_monthly")
+          .select("amount, donor_name, donor_email, is_monthly, product, pickup_point_id, pickup_point_name")
           .eq("id", orderId)
           .maybeSingle();
         const donorEmail = (donationRow as any)?.donor_email || txData.payerEmail;
-        if (donorEmail) {
+        // קמפיין-מוצר (דור הפלאות): זו רכישה, לא תרומה — בלי מייל "תודה על תרומתך"
+        // ובלי אזכור סעיף 46 (15.9.2026). במקומו, מי שבחר נקודת איסוף מקבל אישור
+        // עם איש הקשר של הנקודה; משלוח עד הבית מכוסה בקבלה של Grow.
+        const productSlugForRow = (donationRow as any)?.product;
+        let isProductCampaign = false;
+        if (productSlugForRow) {
+          const { data: camp } = await supabase
+            .from("campaigns")
+            .select("is_product, title")
+            .eq("slug", productSlugForRow)
+            .maybeSingle();
+          isProductCampaign = !!(camp as any)?.is_product;
+          if (isProductCampaign && donorEmail && (donationRow as any)?.pickup_point_id) {
+            await sendPickupConfirmationForPoint({
+              supabase,
+              email: donorEmail,
+              name: (donationRow as any)?.donor_name || txData.fullName || "",
+              productLabel: `ההזמנה של ${(camp as any)?.title || "החוברת"}`,
+              salePointId: (donationRow as any).pickup_point_id,
+              fallbackName: (donationRow as any).pickup_point_name,
+            });
+          }
+        }
+        if (donorEmail && !isProductCampaign) {
           await sendDonationThankYouEmail({
             email: donorEmail,
             name: (donationRow as any)?.donor_name || txData.fullName || "",
@@ -872,6 +895,38 @@ async function addSubscriberToMonday(args: {
     : `failed: ${JSON.stringify(created).slice(0, 150)}`;
 }
 
+/** נקודה + איש קשר פרטי → מייל אישור. כשל כאן לא מפיל את ה-webhook. */
+async function sendPickupConfirmationForPoint(args: {
+  supabase: any;
+  email: string;
+  name: string;
+  productLabel: string;
+  salePointId: string;
+  fallbackName?: string | null;
+}) {
+  try {
+    const { data: sp } = await args.supabase
+      .from("sale_points")
+      .select("name, address, city, notes")
+      .eq("id", args.salePointId)
+      .maybeSingle();
+    const contact = await loadPickupContact(args.supabase, args.salePointId);
+    const ok = await sendPickupConfirmationEmail({
+      email: args.email,
+      name: args.name,
+      productLabel: args.productLabel,
+      pickupPointName: (sp as any)?.name || args.fallbackName || "נקודת האיסוף שבחרת",
+      address: (sp as any)?.address,
+      city: (sp as any)?.city,
+      contact,
+      notes: (sp as any)?.notes,
+    });
+    console.log(`[Pickup] confirmation to ${args.email} point=${args.salePointId} contact=${!!contact} sent=${ok}`);
+  } catch (e) {
+    console.error("[Pickup] confirmation failed (non-fatal):", e);
+  }
+}
+
 async function runPostPurchaseSideEffects(args: {
   supabase: ReturnType<typeof getSupabaseAdmin>;
   targetTable: string;
@@ -946,6 +1001,28 @@ async function runPostPurchaseSideEffects(args: {
       );
     } catch (e) {
       console.error("Webhook: new-subscriber office notification failed (non-fatal):", e);
+    }
+
+    // אישור נקודת איסוף לספר המתנה (15.9.2026, הרב יואב): מי שבחר נקודה בהרשמה
+    // מקבל מייל עם הנקודה ואיש הקשר שלה. איש הקשר לא מוצג בטופס עצמו.
+    try {
+      const { data: pickupRow } = await supabase
+        .from("orders")
+        .select("pickup_point_id, pickup_point_name")
+        .eq("id", orderId)
+        .maybeSingle();
+      if ((pickupRow as any)?.pickup_point_id) {
+        await sendPickupConfirmationForPoint({
+          supabase,
+          email,
+          name: fullName,
+          productLabel: "ספר המתנה של תכנית הפרק השבועי",
+          salePointId: (pickupRow as any).pickup_point_id,
+          fallbackName: (pickupRow as any).pickup_point_name,
+        });
+      }
+    } catch (e) {
+      console.error("Webhook: pickup confirmation email failed (non-fatal):", e);
     }
 
     // הוספה אוטומטית ללוח Monday "מנויי הפרק השבועי" (הוראת סער 13.8):
