@@ -8,7 +8,7 @@ import { useParasha } from "@/hooks/useParasha";
 import { useFamilyCards } from "@/hooks/useCommunity";
 import { useSiteCopy } from "@/hooks/useSiteSettings";
 import { getParashaVerse } from "@/lib/parashaCalendar";
-import { getUpcomingHoliday } from "@/lib/holidays";
+import { getUpcomingHoliday, getUpcomingHolidays } from "@/lib/holidays";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeHtml } from "@/lib/sanitize";
@@ -604,6 +604,12 @@ function DesignParashaHolidaySection() {
   const navigate = useNavigate();
 
   const holiday = useMemo(() => getUpcomingHoliday(60), []);
+  // סער 15.9.2026: "יש מועד קרוב יום כיפור ואחכ סוכות" — מציגים גם את המועד שאחרי
+  // המועד הקרוב, כשהוא בתוך 30 יום (יום כיפור → סוכות).
+  const nextHoliday = useMemo(() => {
+    const after = getUpcomingHolidays()[1];
+    return holiday && after && after.daysUntil <= 30 ? after : null;
+  }, [holiday]);
 
   const isYomHaatzmaout = holiday?.name === YOMHAATZMAOUT;
 
@@ -796,6 +802,12 @@ function DesignParashaHolidaySection() {
                     marginTop: "0.2rem" }}>
                     {holiday.hebrewDate} • שיעורים והכנה לחג
                   </div>
+                  {nextHoliday && (
+                    <div style={{ fontFamily: "Ploni, sans-serif", fontSize: "0.8rem", fontWeight: 700,
+                      color: onDark ? holidayAccentLight : GOLD_DARK, marginTop: "0.3rem" }}>
+                      ואחריו: {nextHoliday.name} · {nextHoliday.hebrewDate} · עוד {nextHoliday.daysUntil} ימים
+                    </div>
+                  )}
                 </div>
 
                 {/* Holiday lesson preview — parchment card on light, glass on dark */}
