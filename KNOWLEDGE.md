@@ -8765,3 +8765,7 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 5. **אנשי קשר פרטיים:** 🔴 התגלה ש-`sale_points.contact` קריא לציבור (פוליסי public_read). נוצרה `sale_point_contacts` (RLS אדמין, anon=permission denied — אומת ב-set role anon). 7 נקודות חדשות נוספו ל-sale_points **בלי** contact ציבורי (snapshot: `sale_points_bak_20260915_contacts`). אדמין קורא/כותב ממנה; `loadPickupContact` + `sendPickupConfirmationEmail` ב-digital-delivery; webhook שולח אישור נקודה גם לנרשמי הפרק השבועי (orders) וגם לדור הפלאות (donations).
 6. **באג שנתפס:** רוכשי קמפיין-מוצר קיבלו מייל "תודה על תרומתך" + סעיף 46 — עכשיו מדלג כש-is_product.
 7. **⬜ לפני פריסה:** אישור סער למחירים ולתצוגה → push ל-main → `UPDATE sale_points SET contact=NULL` (נחמה עדיין חשופה עד הקוד החדש) → החלת החבילות/סיפור/FAQ מהשכפול על `dor-haplaot` (snapshot קודם) → מחיקת/כיבוי השכפול → בדיקת create-payment חיה. חסר: טלפון לנקודת עלי ("אביה" בלי מספר), מספר פתח תקווה חסר ספרה (052404606).
+
+#### פריסה (15.9.2026 ערב) — אישור סער: "אוקי סע קדימה טפל בהכל בחכמה ורגישות פרוס"
+- דאטה קודם: snapshot `campaigns_bak_20260915c_dor` + `campaign_tiers_bak_20260915c_dor` → החלת eyebrow/story/faq מהשכפול, tier-1/2 כובו (לא נמחקו), 5/10 עודכנו ל-197/347, נוספו 20/50/100 (647/1,497/2,497). אנשי קשר של עלי ופתח תקווה אופסו (טלפון חסר/שגוי) — המייל אומר שנציג ייצור קשר עד שיגיעו מספרים נכונים.
+- קוד: push של `feat/dor-hero-pickup-contacts-2026-09-15` ל-main (fast-forward).
