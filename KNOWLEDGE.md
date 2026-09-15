@@ -8781,3 +8781,6 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 2. **אומת בהתחזות (rollback):** פרסום על שמו ✓ · על שם אחר → 42501 · עדכון שיעור של אחר → 0 שורות · מחיקה → 0 שורות · סדרה פעילה על שמו ✓ · anon → 42501.
 3. **קוד (ContentUpload):** `canPublish = isAdmin || isCreator` — "פרסם עכשיו"/"שמור כטיוטה" גם ליוצר; `submitted_by` תמיד המשתמש (גם בסדרה חדשה).
 4. **בקרה לאביה:** `api/admin/creator-publications-digest` (cron יומי 06:15 UTC) — מייל ל-tchvesua41@gmail.com עם כל מה שיוצרי תוכן העלו ב-24 שעות + קישורים; שותק כשאין כלום.
+
+### 15.9.2026 לילה — הירו דור הפלאות בסגנון דף-ספר (תצוגה מקדימה, טרם פרוס)
+סער: "ממש לא מבסוט על העיצוב של ההירו" + השראה: jamesclear.com/atomic-habits ודף הספרים של רובין שארמה (צילום מסך). הירו מפוצל: רקע שטוח בהיר (hsl 36 18% 95%), טקסט בצד ימין (eyebrow, H1 גדול, תת-כותרת, תיאור, כפתור נייבי מלבני, שורת 108 עמודים · הרב יואב), והחוברת כגזירה תלת-ממדית בשמאל עם drop-shadow. בנייד: כותרת → חוברת → תיאור וכפתור (grid-template-areas). התמונה: rembg על `hero-bright.webp` → `lesson-files/dor-haplaot-campaign/v3/book-cutout.webp` (529×800) בעמודה חדשה `campaigns.hero_product_image_url` (אדיטיבית; הקוד הישן מתעלם). תצוגה: bz-dor-preview.vercel.app/campaign/dor-haplaot (דאטה חי). ⬜ "פרוס" מסער.

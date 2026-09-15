@@ -309,53 +309,58 @@ function HeroSection({
   const shownPct = barIn ? progressPct : 0;
   const remaining = Math.max(0, Number(campaign.goal_amount) - raised);
 
-  // מצב-מוצר (15.9 ערב, בקשת סער + לימוד מדפי ספרים כמו Atomic Habits):
-  // התמונה עצמה היא ההירו — ברוחב מלא ובבהירות רגילה, בלי שכבת הכהיה ובלי
-  // טקסט על החוברת. הכותרות מעליה, התיאור והכפתור מתחתיה. בנייד התמונה
-  // נחתכת סביב החוברת (4:5) כדי שהחוברת תופיע גדולה.
+  // מצב-מוצר (15.9 לילה, סער: "לא מבסוט על ההירו" — השראה מ-Atomic Habits
+  // ומדף הספרים של רובין שארמה): הירו מפוצל על רקע שטוח ובהיר. הטקסט בצד
+  // תחילת-הקריאה (ימין), והחוברת כגזירה תלת-ממדית בלי רקע משלה — כך היא
+  // "יושבת" בתוך ההירו. בנייד: כותרת → חוברת → תיאור וכפתור.
   if (isProduct) {
+    const bookImg = (campaign as any).hero_product_image_url || campaign.hero_image_url;
     return (
-      <section className="campaign-hero-product" style={{ position: "relative", background: "linear-gradient(180deg, hsl(40 45% 98%) 0%, hsl(38 40% 95%) 100%)" }}>
-        <div className="campaign-hero-product-top" style={{ maxWidth: 820, margin: "0 auto", padding: "92px 20px 22px", textAlign: "center" }}>
-          {campaign.hero_eyebrow && (
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "6px 18px", borderRadius: 99, background: "hsl(215 45% 19%)", marginBlockEnd: 14, boxShadow: "0 4px 16px hsl(215 55% 20% / 0.2)" }}>
-              <span style={{ width: 6, height: 6, background: "hsl(38 75% 62%)", borderRadius: "50%" }} />
-              <span style={{ color: "hsl(43 90% 72%)", fontSize: 13, fontWeight: 800, letterSpacing: "0.04em" }}>{campaign.hero_eyebrow}</span>
-            </div>
-          )}
-          <h1 style={{ margin: "0 0 6px", lineHeight: 1.05, fontSize: "clamp(38px, 6.4vw, 72px)", fontWeight: 900, color: "hsl(215 55% 18%)", letterSpacing: "-0.02em" }}>
-            {campaign.hero_title || campaign.title}
-          </h1>
-          {campaign.hero_title_small && (
-            <div style={{ fontSize: "clamp(17px, 2.3vw, 24px)", fontWeight: 700, color: "hsl(30 55% 34%)" }}>
-              {campaign.hero_title_small}
-            </div>
-          )}
-        </div>
-
-        {campaign.hero_image_url && (
-          <div className="campaign-hero-product-media" style={{ maxWidth: 1240, margin: "0 auto", padding: "0 20px" }}>
-            <img
-              src={campaign.hero_image_url}
-              alt={campaign.hero_title || campaign.title}
-              fetchPriority="high"
-              style={{ display: "block", width: "100%", aspectRatio: "16 / 9", objectFit: "cover", objectPosition: "50% 55%", borderRadius: 20, boxShadow: "0 22px 60px hsl(30 40% 35% / 0.18)" }}
-            />
+      <section className="campaign-hero-product" style={{ position: "relative", background: "hsl(36 18% 95%)" }}>
+        <div className="dor-hero-grid">
+          <div className="dor-hero-head">
+            {campaign.hero_eyebrow && (
+              <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: "0.06em", color: "hsl(30 55% 34%)", marginBlockEnd: 12 }}>
+                {campaign.hero_eyebrow}
+              </div>
+            )}
+            <h1 style={{ margin: "0 0 10px", lineHeight: 1, fontSize: "clamp(46px, 6.2vw, 88px)", fontWeight: 900, color: "hsl(215 55% 16%)", letterSpacing: "-0.02em" }}>
+              {campaign.hero_title || campaign.title}
+            </h1>
+            {campaign.hero_title_small && (
+              <div style={{ fontSize: "clamp(18px, 2.1vw, 24px)", fontWeight: 700, color: "hsl(215 40% 22%)" }}>
+                {campaign.hero_title_small}
+              </div>
+            )}
           </div>
-        )}
 
-        <div style={{ maxWidth: 680, margin: "0 auto", padding: "24px 20px 44px", textAlign: "center" }}>
-          {campaign.hero_subtitle && (
-            <p style={{ fontSize: "clamp(15px, 1.9vw, 18px)", lineHeight: 1.7, color: "hsl(215 35% 28%)", margin: "0 0 22px" }}>
-              {campaign.hero_subtitle}
-            </p>
+          {bookImg && (
+            <div className="dor-hero-book">
+              <img
+                src={bookImg}
+                alt={`כריכת החוברת ${campaign.hero_title || campaign.title}`}
+                fetchPriority="high"
+                style={{ display: "block", width: "100%", height: "auto", filter: "drop-shadow(0 28px 36px hsl(30 30% 25% / 0.28))" }}
+              />
+            </div>
           )}
-          <button
-            onClick={onSupportClick}
-            style={{ padding: "17px 46px", background: GOLD_GRAD, color: "hsl(215 55% 12%)", border: "none", borderRadius: 99, fontWeight: 900, fontSize: "clamp(17px, 2.2vw, 20px)", cursor: "pointer", boxShadow: "0 10px 34px hsl(38 80% 50% / 0.4)", whiteSpace: "nowrap" }}
-          >
-            להזמנת החוברת ↓
-          </button>
+
+          <div className="dor-hero-body">
+            {campaign.hero_subtitle && (
+              <p style={{ fontSize: "clamp(16px, 1.5vw, 19px)", lineHeight: 1.75, color: "hsl(215 25% 25%)", margin: "0 0 26px", maxWidth: 560 }}>
+                {campaign.hero_subtitle}
+              </p>
+            )}
+            <button
+              onClick={onSupportClick}
+              style={{ padding: "16px 34px", background: "hsl(215 55% 16%)", color: "white", border: "none", borderRadius: 6, fontWeight: 800, fontSize: 18, cursor: "pointer", letterSpacing: "0.02em", whiteSpace: "nowrap" }}
+            >
+              להזמנת החוברת ←
+            </button>
+            <div style={{ marginBlockStart: 14, fontSize: 14, color: "hsl(215 15% 42%)" }}>
+              108 עמודים בצבע מלא · הרב יואב אוריאל
+            </div>
+          </div>
         </div>
       </section>
     );
@@ -2257,10 +2262,17 @@ export default function CampaignPage() {
            תמונת-הרקע החתוכה מוסתרת, והתמונה נכנסת כבלוק מלא אחרי ה-eyebrow. */
         @media (max-width: 767px) {
           .campaign-hero-product .campaign-hero-content { padding-top: 64px !important; }
-          /* הירו-מוצר בנייד: התמונה מקצה לקצה, חתוכה סביב החוברת כדי שתופיע גדולה */
-          .campaign-hero-product-top { padding-top: 72px !important; padding-bottom: 16px !important; }
-          .campaign-hero-product-media { padding: 0 !important; }
-          .campaign-hero-product-media img { aspect-ratio: 4 / 5 !important; object-position: 50% 60% !important; border-radius: 0 !important; box-shadow: none !important; }
+          /* הירו-מוצר בנייד: עמודה אחת — כותרת, חוברת, תיאור וכפתור */
+          .dor-hero-grid { grid-template-columns: 1fr !important; grid-template-areas: "head" "book" "body" !important; padding: 84px 20px 40px !important; row-gap: 22px !important; text-align: center; }
+          .dor-hero-book { max-width: 290px !important; }
+          .dor-hero-body p { margin-inline: auto !important; }
+        }
+        /* הירו-מוצר (15.9 לילה): טקסט בימין, חוברת בשמאל; ברירת מחדל = דסקטופ */
+        .dor-hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; grid-template-areas: "head book" "body book"; column-gap: 64px; align-items: center; max-width: 1180px; margin: 0 auto; padding: 118px 32px 72px; }
+        .dor-hero-head { grid-area: head; align-self: end; }
+        .dor-hero-body { grid-area: body; align-self: start; }
+        .dor-hero-book { grid-area: book; justify-self: center; width: 100%; max-width: 430px; }
+        @media (max-width: 767px) {
           /* המספרים שאחרי ההירו — תמיד בשורה אחת בנייד (flex basis-0 = שלישים שווים בלי הצפה) */
           .campaign-proof-grid { display: flex !important; }
           .campaign-proof-grid > div { flex: 1 1 0 !important; min-width: 0 !important; padding: 14px 4px !important; }
