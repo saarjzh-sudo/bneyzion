@@ -316,15 +316,38 @@ function HeroSection({
   if (isProduct) {
     const bookImg = (campaign as any).hero_product_image_url || campaign.hero_image_url;
     return (
-      <section className="campaign-hero-product" style={{ position: "relative", background: "hsl(36 18% 95%)" }}>
-        <div className="dor-hero-grid">
+      <section className="campaign-hero-product" style={{ position: "relative", overflow: "hidden", background: "hsl(40 45% 94%)" }}>
+        {/* רקע עוצמתי (סער 15.9: "לא חלק מעפן") — צבעי מים של זריחה מעל גבעות
+            ושדות, בפלטת הכריכה; שכבת שמנת בצד הטקסט כדי שהכתב יישאר קריא. */}
+        <img
+          className="dor-hero-bg"
+          src="https://pzvmwfexeiruelwiujxn.supabase.co/storage/v1/object/public/lesson-files/dor-haplaot-campaign/v3/hero-bg-sunrise.webp"
+          alt=""
+          aria-hidden
+          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "30% 40%" }}
+        />
+        <div className="dor-hero-veil" aria-hidden style={{ position: "absolute", inset: 0, background: "linear-gradient(to left, hsl(42 60% 97% / 0.88) 0%, hsl(42 60% 97% / 0.6) 42%, hsl(42 60% 97% / 0) 72%)" }} />
+        <div className="dor-hero-grid" style={{ position: "relative" }}>
           <div className="dor-hero-head">
             {campaign.hero_eyebrow && (
               <div style={{ fontSize: 15, fontWeight: 800, letterSpacing: "0.06em", color: "hsl(30 55% 34%)", marginBlockEnd: 12 }}>
                 {campaign.hero_eyebrow}
               </div>
             )}
-            <h1 style={{ margin: "0 0 10px", lineHeight: 1, fontSize: "clamp(46px, 6.2vw, 88px)", fontWeight: 900, color: "hsl(215 55% 16%)", letterSpacing: "-0.02em" }}>
+            {/* זהב מנצנץ כמו לוגו "בני ציון" בדף הבית (animate-shimmer, 8ש').
+                על רקע בהיר הזהב של דף הבית חיוור מדי — כאן גוון עמוק יותר לקריאות. */}
+            <h1
+              className="animate-shimmer"
+              style={{
+                margin: "0 0 10px", padding: "0.06em 0", lineHeight: 1.05, fontSize: "clamp(48px, 6.6vw, 94px)", fontWeight: 900, letterSpacing: "-0.01em",
+                backgroundImage: "linear-gradient(135deg, #6E5330 0%, #A9823F 22%, #E8D5A0 42%, #C4A265 55%, #8B6F47 75%, #6E5330 100%)",
+                backgroundSize: "300% 300%",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                filter: "drop-shadow(0 2px 0 hsl(40 60% 98% / 0.7)) drop-shadow(0 6px 18px hsl(30 40% 30% / 0.18))",
+              }}
+            >
               {campaign.hero_title || campaign.title}
             </h1>
             {campaign.hero_title_small && (
@@ -2265,6 +2288,8 @@ export default function CampaignPage() {
           /* הירו-מוצר בנייד: עמודה אחת — כותרת, חוברת, תיאור וכפתור */
           .dor-hero-grid { grid-template-columns: 1fr !important; grid-template-areas: "head" "book" "body" !important; padding: 84px 20px 40px !important; row-gap: 22px !important; text-align: center; }
           .dor-hero-book { max-width: 290px !important; }
+          .dor-hero-veil { background: linear-gradient(180deg, hsl(42 60% 97% / 0.78) 0%, hsl(42 60% 97% / 0.35) 38%, hsl(42 60% 97% / 0.35) 62%, hsl(42 60% 97% / 0.85) 100%) !important; }
+          .dor-hero-bg { object-position: 22% 30% !important; }
           .dor-hero-body p { margin-inline: auto !important; }
         }
         /* הירו-מוצר (15.9 לילה): טקסט בימין, חוברת בשמאל; ברירת מחדל = דסקטופ */
