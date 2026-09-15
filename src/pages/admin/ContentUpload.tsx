@@ -300,7 +300,13 @@ const ContentUpload = () => {
         content:        form.content || null,
         series_id:      effectiveSeriesId,
         rabbi_id:       form.rabbiId    || null,
-        source_type:    form.sourceType,
+        // הסוג נגזר ממה שהועלה בפועל (הרב מונדשיין 15.9: מאמר טקסט נשמר כ-audio
+        // ברירת-המחדל של האשף, ובאתר הופיע "האזן" במקום "קרא").
+        source_type:    videoUrl ? "video"
+                      : audioUrl ? "audio"
+                      : (form.content && form.content.replace(/<[^>]*>/g, "").trim()) ? "text"
+                      : attachmentUrl ? "document"
+                      : form.sourceType,
         audio_url:      audioUrl,
         video_url:      videoUrl,
         attachment_url: attachmentUrl,

@@ -58,7 +58,7 @@ export function useSeriesFlatLessons(seriesId: string | undefined) {
         const chunk = allSeriesIds.slice(i, i + chunkSize);
         const { data: lessons, error } = await supabase
           .from("lessons")
-          .select("id, title, duration, video_url, audio_url, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(name)")
+          .select("id, title, duration, video_url, audio_url, rabbi_id, series_id, rabbis!lessons_rabbi_id_fkey(id, name)")
           .in("series_id", chunk)
           .eq("status", "published")
           .not("audience_tags", "cs", "{teachers}") // R3 14.6.2026 (Saar): no teacher content in public

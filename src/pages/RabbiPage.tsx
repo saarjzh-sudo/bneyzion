@@ -313,8 +313,23 @@ const RabbiPage = () => {
     const hasRpi = rpiRows && rpiRows.length > 0;
 
     if (hasRpi) {
+      // תוכן חדש שעלה אחרי שהרשימה המסודרת נבנתה (הרב מונדשיין 15.9.2026: "השיעור
+      // לא מופיע בדף שלי") — סדרות ושיעורים עצמאיים שנוצרו אחרי הפריט האחרון ברשימה
+      // מוצגים בראש הדף. הסדר של הרשימה עצמה (1:1 מול האתר הישן) לא משתנה.
+      const cutoff = Math.max(...rpiRows.map((r: any) => (r.created_at ? Date.parse(r.created_at) : 0)));
+      const curatedSeries = new Set(rpiRows.map((r: any) => r.series_id).filter(Boolean));
+      const curatedLessons = new Set(rpiRows.map((r: any) => r.lesson_id).filter(Boolean));
+      const newer = (x: any) => x?.created_at && Date.parse(x.created_at) > cutoff;
+      const freshItems: FlatItem[] = [
+        ...(seriesList ?? [])
+          .filter((s: any) => newer(s) && !curatedSeries.has(s.id))
+          .map((s: any): FlatItem => ({ type: "series", id: s.id, title: s.title, image_url: s.image_url, lesson_count: s.lesson_count })),
+        ...(lessons ?? [])
+          .filter((l: any) => newer(l) && !l.series_id && !curatedLessons.has(l.id))
+          .map((l: any): FlatItem => ({ type: "lesson", id: l.id, title: l.title, duration: l.duration, audio_url: l.audio_url, video_url: l.video_url, attachment_url: l.attachment_url })),
+      ];
       // rabbi_page_items curated order
-      return rpiRows.map((row: any): FlatItem => {
+      return [...freshItems, ...rpiRows.map((row: any): FlatItem => {
         if (row.kind === "series" && row.series) {
           return {
             type: "series",
@@ -347,7 +362,7 @@ const RabbiPage = () => {
           video_url: l.video_url,
           attachment_url: l.attachment_url,
         };
-      });
+      })];
     }
 
     // Fallback: series first, then lessons — §0.1 ordering (already applied by hooks)

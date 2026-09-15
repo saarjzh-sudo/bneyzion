@@ -1909,12 +1909,18 @@ function LessonModal({
             {lesson.rabbis?.name && (
               <span>
                 <span style={{ color: colors.textSubtle }}>מאת </span>
-                <Link
-                  to={`/rabbis/${lesson.rabbis?.id || ""}`}
-                  style={{ color: colors.goldDark, fontWeight: 700, textDecoration: "none" }}
-                >
-                  {lesson.rabbis.name}
-                </Link>
+                {/* הרב יואב 15.9.2026: בלי מזהה-רב הקישור היה "/rabbis/" — דף כל הרבנים.
+                    עכשיו השאילתות מחזירות id; ובלעדיו מוצג שם בלי קישור. */}
+                {lesson.rabbis?.id ? (
+                  <Link
+                    to={`/rabbis/${lesson.rabbis.id}`}
+                    style={{ color: colors.goldDark, fontWeight: 700, textDecoration: "none" }}
+                  >
+                    {lesson.rabbis.name}
+                  </Link>
+                ) : (
+                  <span style={{ color: colors.goldDark, fontWeight: 700 }}>{lesson.rabbis.name}</span>
+                )}
               </span>
             )}
             {lesson.duration && (

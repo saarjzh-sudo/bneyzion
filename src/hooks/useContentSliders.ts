@@ -70,7 +70,7 @@ export function useSliderLessons(sourceId: string | undefined) {
       const ids = [sourceId!, ...((children ?? []) as any[]).map((c) => c.id)];
       const { data, error } = await (supabase as any)
         .from("lessons")
-        .select("id, title, content_type, video_url, audio_url, attachment_url, thumbnail_url, source_type, duration, series_id, rabbis!lessons_rabbi_id_fkey(name)")
+        .select("id, title, content_type, video_url, audio_url, attachment_url, thumbnail_url, source_type, duration, series_id, rabbis!lessons_rabbi_id_fkey(id, name)")
         .in("series_id", ids)
         .eq("status", "published")
         .order("created_at", { ascending: false })

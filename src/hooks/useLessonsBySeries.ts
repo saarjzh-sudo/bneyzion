@@ -40,7 +40,7 @@ export function useLessonsBySeries(seriesId: string | undefined, book?: string |
           const chunk = ids.slice(i, i + 400);
           const { data } = await supabase
             .from("lessons")
-            .select("*, rabbis!lessons_rabbi_id_fkey(name)")
+            .select("*, rabbis!lessons_rabbi_id_fkey(id, name)")
             .in("id", chunk);
           for (const l of data || []) byId.set(l.id, l);
         }
@@ -64,7 +64,7 @@ export function useLessonsBySeries(seriesId: string | undefined, book?: string |
       const fetchPage = async (from: number, to: number) => {
         let q = supabase
           .from("lessons")
-          .select("*, rabbis!lessons_rabbi_id_fkey(name)")
+          .select("*, rabbis!lessons_rabbi_id_fkey(id, name)")
           .eq("series_id", seriesId)
           .eq("status", "published");
         // §0.3 (REVERTED 14.6.2026 — Saar round-3): teacher content NEVER appears in public.

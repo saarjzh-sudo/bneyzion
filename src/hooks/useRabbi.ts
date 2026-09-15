@@ -61,7 +61,7 @@ export function useRabbiSeries(rabbiId: string | undefined) {
       // הערת סוקר 2.8: סדרות עם 0 שיעורים הופיעו בעמוד הרב — מסננים ריקות
       const { data: owned, error: ownedErr } = await supabase
         .from("series")
-        .select("id, title, description, image_url, lesson_count, status, sort_order, audience_tags")
+        .select("id, title, description, image_url, lesson_count, status, sort_order, audience_tags, created_at")
         .eq("rabbi_id", rabbiId!)
         .in("status", ["active", "published"])
         .gt("lesson_count", 0)
@@ -92,7 +92,7 @@ export function useRabbiPageItems(rabbiId: string | undefined) {
       // Table may not exist yet — catch the 42P01 error gracefully
       const { data, error } = await (supabase as any)
         .from("rabbi_page_items")
-        .select("id, kind, series_id, lesson_id, sort_order, series(id,title,image_url,lesson_count), lessons(id,title,duration,audio_url,video_url,attachment_url)")
+        .select("id, kind, series_id, lesson_id, sort_order, created_at, series(id,title,image_url,lesson_count), lessons(id,title,duration,audio_url,video_url,attachment_url)")
         .eq("rabbi_id", rabbiId!)
         .lt("sort_order", 9000) // 9000+ = parked rows (old-page extras kept for audit, not rendered)
         .order("sort_order", { ascending: true });
@@ -123,7 +123,7 @@ export function useRabbiLessons(rabbiId: string | undefined) {
       // teacher-tagged content shows here intentionally (it's HIS content).
       const { data, error } = await supabase
         .from("lessons")
-        .select("id, title, duration, thumbnail_url, published_at, audio_url, video_url, attachment_url, bible_chapter, series(id, title)")
+        .select("id, title, duration, thumbnail_url, published_at, audio_url, video_url, attachment_url, bible_chapter, created_at, series_id, series(id, title)")
         .eq("rabbi_id", rabbiId!)
         .eq("status", "published")
         .order("bible_chapter", { ascending: true, nullsFirst: false })

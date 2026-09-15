@@ -26,7 +26,7 @@ export function useSeriesLessons(seriesId: string | undefined | null, excludeId?
       // §5 R-LES2: order §0.1 (sort_order NULLS LAST, bible_chapter NULLS LAST, title) instead of published_at
       let query = supabase
         .from("lessons")
-        .select("id, title, duration, thumbnail_url, published_at, audience_tags, rabbis!lessons_rabbi_id_fkey(name)")
+        .select("id, title, duration, thumbnail_url, published_at, audience_tags, rabbis!lessons_rabbi_id_fkey(id, name)")
         .eq("series_id", seriesId!)
         .eq("status", "published")
         .order("sort_order", { ascending: true, nullsFirst: false })

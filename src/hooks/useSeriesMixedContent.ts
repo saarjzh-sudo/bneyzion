@@ -122,7 +122,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         const chunk = nonLeafSeriesIds.slice(i, i + chunkSize);
         const { data: lessons, error } = await supabase
           .from("lessons")
-          .select("id, title, description, duration, video_url, audio_url, rabbi_id, source_type, series_id, rabbis!lessons_rabbi_id_fkey(name)")
+          .select("id, title, description, duration, video_url, audio_url, rabbi_id, source_type, series_id, rabbis!lessons_rabbi_id_fkey(id, name)")
           .in("series_id", chunk)
           .eq("status", "published")
           // R3 14.6.2026 (Saar): exclude teacher content from public series pages.
@@ -165,7 +165,7 @@ export function useSeriesMixedContent(seriesId: string | undefined) {
         if (matchingTopic) {
           const { data: taggedLessons } = await supabase
             .from("lesson_topics")
-            .select("lesson_id, lessons!inner(id, title, description, duration, video_url, audio_url, source_type, status, rabbis!lessons_rabbi_id_fkey(name))")
+            .select("lesson_id, lessons!inner(id, title, description, duration, video_url, audio_url, source_type, status, rabbis!lessons_rabbi_id_fkey(id, name))")
             .eq("topic_id", matchingTopic.id)
             .eq("lessons.status", "published")
             // R3 14.6.2026 (Saar): topic-tagged inline lessons must also exclude teacher content.

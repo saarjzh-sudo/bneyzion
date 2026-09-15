@@ -76,7 +76,7 @@ export function useAdminLessonsPage({
       let q = supabase
         .from("lessons")
         .select(
-          "id, title, description, rabbi_id, series_id, source_type, status, thumbnail_url, review_note, created_at, rabbis!lessons_rabbi_id_fkey(name), series(title)",
+          "id, title, description, rabbi_id, series_id, source_type, status, thumbnail_url, review_note, created_at, rabbis!lessons_rabbi_id_fkey(id, name), series(title)",
           { count: "exact" },
         )
         .order("created_at", { ascending: false })

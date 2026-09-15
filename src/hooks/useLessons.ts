@@ -37,7 +37,7 @@ export function useLessons() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from("lessons")
-        .select("*, rabbis!lessons_rabbi_id_fkey(name), series(title)")
+        .select("*, rabbis!lessons_rabbi_id_fkey(id, name), series(title)")
         .order("created_at", { ascending: false });
       if (error) throw error;
       return data;
