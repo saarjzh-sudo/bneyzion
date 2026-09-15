@@ -8746,3 +8746,11 @@ edge-navigation-bot להתחיל לאכלס links_clicked בשטח (חי מרמ�
 3. **create-payment:** מאמת uuid מול sale_points וכותב את השם הקנוני מהטבלה (לא סומך על טקסט לקוח) → עמודות חדשות `orders.pickup_point_id`/`pickup_point_name` (DDL אדיטיבי) + `raw_payload.pickup_point`. שליפה: `SELECT customer_name, pickup_point_name FROM orders WHERE product='weekly-chapter-subscription'`.
 4. **דף יהושע:** ה-placeholder "[רשימת נקודות האיסוף — להשלמה]" (שהיה חשוף בפרודקשן) הוחלף ברשימה החיה ב-EarlyBird (hook לפני ה-return המוקדם — hooks rule).
 5. **אימות:** בדיקת-עשן חיה — create-payment עם pickup_point_id → שורת orders עם שתי העמודות מלאות בשם הקנוני → שורת-הטסט (pending) נמחקה. דיאלוג חי אומת ב-CDP-click: הבורר מוצג עם הנקודה. הדף מציג "נקודות איסוף: איסוף עצמי - ירושלים, קרית מנחם." (dump-dom; נדרש virtual-time גבוה — 45s — כי React-Query של sale_points מאוחר ל-hydration).
+
+### 15.9.2026 — דור הפלאות עבר לעמוד ה-Grow של המכירות (שאלת הרב יואב דרך סער; DB-only)
+
+- **הבעיה:** מנוע-הקמפיינים יוצר כל קמפיין עם `page_code_env='DONATIONS'` (ברירת-המחדל של הטריגר) — כלומר הסליקה רצה בחשבון-הסוחר של התרומות ("קבלת תרומה"). לדור הפלאות (מכירת מוצר) זה שגוי — קבלות תרומה על רכישה.
+- **התיקון:** `UPDATE payment_products SET page_code_env='PRODUCTS' WHERE id='dor-haplaot'` (snapshot: `payment_products_bak_20260915_dor`). ה-pageCode וה-userId נגזרים שניהם מהסיומת → הסליקה עברה לחשבון המכירות ("עם קבלה"), כמו החנות.
+- **למה זה בטוח:** (א) הטריגר `sync_campaign_payment_product` ב-on-conflict מעדכן רק display_name/active/max_installments — **לא** דורס page_code_env בעריכות-קמפיין עתידיות. (ב) ה-webhook פותר את טבלת-היעד מ-`payment_products.target_table` (נשאר `donations`) — אגנוסטי לעמוד. (ג) אומת בסליקה חיה אחרי המעבר: create-payment יצר process (34652823) דרך `GROW_PAGECODE_PRODUCTS`, שורת donations נוצרה תקין (כולל נקודת-איסוף) ונמחקה.
+- saadia / yehoshua-campaign נשארו DONATIONS (תרומות אמיתיות) — אומת.
+- ⚠️ **לקח לקמפיין-מוצר עתידי:** אחרי זריעת קמפיין עם `is_product=true` — לעדכן ידנית את page_code_env ל-PRODUCTS (או להרחיב את הטריגר).
