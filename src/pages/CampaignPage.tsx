@@ -31,6 +31,7 @@ import { sanitizeHtml } from "@/lib/sanitize";
 import { X, Loader2, ShieldCheck, CheckCircle2, CreditCard, Flame, Star, BookOpen, Library, Landmark, Hourglass, Heart, Sparkles, Building2, PartyPopper, Award, Zap, Users, HeartHandshake, Flag } from "lucide-react";
 import CampaignDedicationPicker, { type CompanionDedicationSelection } from "@/components/campaign/CampaignDedicationPicker";
 import { useDedicationSettings } from "@/hooks/useLessonDedications";
+import { usePublicSalePoints } from "@/hooks/useSalePoints";
 
 /**
  * תרומה ⟵ הקדשה (26.8.2026): קמפיינים שבהם התרומה יכולה גם לקבוע הקדשה
@@ -1663,6 +1664,14 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
   const [shippingZip, setShippingZip] = useState("");
   const [shippingNotes, setShippingNotes] = useState("");
 
+  // נקודת איסוף (15.9, בקשת סער): בקמפיין-מוצר, חבילה בלי משלוח = איסוף עצמי —
+  // הרוכש בוחר נקודה מ-sale_points (אותו מקור-אמת כמו החנות והפרק-השבועי),
+  // והבחירה נשמרת מובנית על שורת ה-donations. אין נקודות פעילות ⇒ אין שדה.
+  const { data: salePoints = [] } = usePublicSalePoints();
+  const [pickupPointId, setPickupPointId] = useState("");
+  const needsPickup = !!campaign.is_product && !tier.needs_shipping && salePoints.length > 0;
+  const chosenPickup = salePoints.find((p) => p.id === pickupPointId);
+
   const [sdkTimedOut, setSdkTimedOut] = useState(false);
   useEffect(() => {
     if (paymentReady) return;
@@ -1705,6 +1714,10 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
       toast({ title: "נא למלא כתובת למשלוח (רחוב, מספר בית, עיר)", variant: "destructive" });
       return;
     }
+    if (needsPickup && !chosenPickup) {
+      toast({ title: "יש לבחור נקודת איסוף", description: "כדי שנדע איפה ההזמנה מחכה לכם", variant: "destructive" });
+      return;
+    }
     if (!tosAccepted) {
       toast({ title: "יש לאשר את התקנון לפני המשך לתשלום", variant: "destructive" });
       return;
@@ -1738,6 +1751,9 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
           shipping_city: needsShipping ? shippingCity.trim() : undefined,
           shipping_zip: shippingZip.trim() || undefined,
           shipping_notes: shippingNotes.trim() || undefined,
+          // נקודת איסוף (חבילות איסוף עצמי) — השרת מאמת מול sale_points
+          pickup_point_id: chosenPickup?.id,
+          pickup_point_name: chosenPickup?.name,
           // תרומה⟵הקדשה (26.8): שורת lesson_dedications "pending" נוצרת בשרת
           // מאותה תרומה, בלי חיוב נוסף (ראו create-payment.ts). מכוסה ע"י
           // ה-@ts-expect-error שמעל (source) — כל האובייקט מסומן כ-excess.
@@ -1759,7 +1775,7 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
     } catch (err: any) {
       toast({ title: "שגיאה בפתיחת חלון התשלום", description: err.message, variant: "destructive" });
     }
-  }, [donorName, donorPhone, donorEmail, tosAccepted, tier, campaign, user, startPayment, toast, onClose, needsShipping, shippingStreet, shippingHouseNumber, shippingCity, shippingZip, shippingNotes, dedicationSelection]);
+  }, [donorName, donorPhone, donorEmail, tosAccepted, tier, campaign, user, startPayment, toast, onClose, needsShipping, shippingStreet, shippingHouseNumber, shippingCity, shippingZip, shippingNotes, dedicationSelection, needsPickup, chosenPickup]);
 
   const isProcessing = paymentLoading;
   const addressOk = !needsShipping || (!!shippingStreet.trim() && !!shippingHouseNumber.trim() && !!shippingCity.trim());
@@ -1927,6 +1943,25 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
             settings={dedicationSettings}
             onChange={setDedicationSelection}
           />
+        )}
+
+        {needsPickup && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+            <label style={labelStyle}>נקודת איסוף *</label>
+            <select
+              value={pickupPointId}
+              onChange={(e) => setPickupPointId(e.target.value)}
+              style={{ ...inputStyle, appearance: "auto" as const }}
+            >
+              <option value="">בחרו נקודת איסוף...</option>
+              {salePoints.map((p) => (
+                <option key={p.id} value={p.id}>{p.name}</option>
+              ))}
+            </select>
+            {chosenPickup?.contact && (
+              <div style={{ fontSize: 12, color: "hsl(215 25% 45%)" }}>איש קשר בנקודה: {chosenPickup.contact}</div>
+            )}
+          </div>
         )}
 
         {needsShipping && (
