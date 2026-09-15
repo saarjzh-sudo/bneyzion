@@ -75,10 +75,10 @@ const EarlyBird = () => {
                 {EARLY_BIRD.gift.tryLine}
               </p>
               <p className="mt-3 text-sm text-foreground/55">
-                {EARLY_BIRD.gift.terms}
-                {salePoints.length > 0 && (
-                  <> נקודות איסוף: {salePoints.map((p) => p.name).join(" · ")}.</>
-                )}
+                {/* סער 15.9: במקום "אוספים מנקודת איסוף. נקודות איסוף: איסוף עצמי..." — משפט אחד */}
+                {salePoints.length > 0
+                  ? <>אוספים את הספר מאחת מנקודות האיסוף: {salePoints.map((p) => p.name).join(" · ")}.</>
+                  : EARLY_BIRD.gift.terms}
               </p>
 
               <div className="mt-7">

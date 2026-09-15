@@ -359,7 +359,13 @@ const ContentUpload = () => {
     },
     onError: (err: unknown) => {
       setUploading(false);
-      const msg = err instanceof Error ? err.message : "שגיאה לא ידועה";
+      // שגיאת Supabase היא אובייקט רגיל ({message, code}), לא Error — בלי זה
+      // הוצג "שגיאה לא ידועה" (הרב מונדשיין 15.9: חסימת RLS על series).
+      const e = err as { message?: string; code?: string } | null;
+      const raw = err instanceof Error ? err.message : e?.message || "שגיאה לא ידועה";
+      const msg = e?.code === "42501" || /row-level security/i.test(raw)
+        ? "אין הרשאה לשמור את התוכן הזה. פנו למנהל האתר."
+        : raw;
       toast({ title: "שגיאה בהעלאה", description: msg, variant: "destructive" });
     },
   });
