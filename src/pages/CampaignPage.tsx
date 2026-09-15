@@ -189,11 +189,13 @@ function StickyNav({
   title,
   progressPct,
   onSupportClick,
+  isProduct = false,
 }: {
   scrolled: boolean;
   title: string;
   progressPct: number;
   onSupportClick: () => void;
+  isProduct?: boolean;
 }) {
   return (
     <div
@@ -239,17 +241,22 @@ function StickyNav({
         {scrolled && (
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <span style={{ color: "white", fontWeight: 800, fontSize: 14 }}>{title}</span>
-            <div style={{ width: 90, height: 4, background: "hsl(215 20% 32%)", borderRadius: 4, overflow: "hidden" }}>
-              <div
-                style={{
-                  height: "100%",
-                  width: `${progressPct}%`,
-                  background: "linear-gradient(90deg, hsl(43 85% 62%), hsl(38 75% 48%))",
-                  borderRadius: 4,
-                }}
-              />
-            </div>
-            <span style={{ fontSize: 12, color: "hsl(38 85% 68%)", fontWeight: 700 }}>{progressPct}%</span>
+            {/* מצב-מוצר: אין יעד ⇒ אין פס-התקדמות ואחוזים בניווט */}
+            {!isProduct && (
+              <>
+                <div style={{ width: 90, height: 4, background: "hsl(215 20% 32%)", borderRadius: 4, overflow: "hidden" }}>
+                  <div
+                    style={{
+                      height: "100%",
+                      width: `${progressPct}%`,
+                      background: "linear-gradient(90deg, hsl(43 85% 62%), hsl(38 75% 48%))",
+                      borderRadius: 4,
+                    }}
+                  />
+                </div>
+                <span style={{ fontSize: 12, color: "hsl(38 85% 68%)", fontWeight: 700 }}>{progressPct}%</span>
+              </>
+            )}
           </div>
         )}
 
@@ -268,7 +275,7 @@ function StickyNav({
             transition: "padding 0.3s, transform 0.15s",
           }}
         >
-          לתמיכה בקמפיין ↓
+          {isProduct ? "להזמנה ↓" : "לתמיכה בקמפיין ↓"}
         </button>
       </div>
     </div>
@@ -291,6 +298,7 @@ function HeroSection({
   onSupportClick: () => void;
   onDedicationClick?: () => void;
 }) {
+  const isProduct = !!campaign.is_product;
   const animatedRaised = useCountUp(raised);
   const [barIn, setBarIn] = useState(false);
   useEffect(() => {
@@ -378,8 +386,8 @@ function HeroSection({
           </p>
         )}
 
-        {/* ── בלוק המספרים — הכוכב של הדף ── */}
-        <div style={{ marginBlockStart: "clamp(22px, 4vw, 40px)" }}>
+        {/* ── בלוק המספרים — הכוכב של הדף. מצב-מוצר: אין "הושג עד כה" ואין יעד — הבלוק כולו מוסתר ── */}
+        {!isProduct && <div style={{ marginBlockStart: "clamp(22px, 4vw, 40px)" }}>
           <div style={{ fontSize: "clamp(14px, 1.8vw, 18px)", fontWeight: 800, color: "hsl(38 85% 72%)", letterSpacing: "0.24em", marginBlockEnd: 2 }}>
             הושג עד כה
           </div>
@@ -480,7 +488,7 @@ function HeroSection({
               </div>
             </div>
           )}
-        </div>
+        </div>}
 
         {/* ── CTA ── */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 14, flexWrap: "wrap", marginBlockStart: "clamp(22px, 3.4vw, 34px)" }}>
@@ -500,7 +508,7 @@ function HeroSection({
               whiteSpace: "nowrap",
             }}
           >
-            תרמו עכשיו ↓
+            {isProduct ? "להזמנת החוברת ↓" : "תרמו עכשיו ↓"}
           </button>
           {onDedicationClick && (
             <button
@@ -756,9 +764,14 @@ const STAT_ICONS: Record<string, typeof BookOpen> = {
 
 function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporters: number }) {
   const { ref, visible } = useInView();
+  // מצב-מוצר: "תומכים" הופך ל"הזמנות", ו-0 הזמנות לא מוצג בכלל (אנטי-הוכחה-חברתית)
   const stats = [
     ...(Array.isArray(campaign.proof_stats) ? campaign.proof_stats : []),
-    { val: String(supporters), label: "תומכים כבר הצטרפו", icon: "🙌" },
+    ...(campaign.is_product
+      ? supporters > 0
+        ? [{ val: String(supporters), label: "הזמנות כבר נקלטו", icon: "🙌" }]
+        : []
+      : [{ val: String(supporters), label: "תומכים כבר הצטרפו", icon: "🙌" }]),
   ];
   return (
     <div ref={ref} style={{ background: "hsl(215 55% 14%)", borderBlockEnd: "1px solid hsl(38 75% 55% / 0.12)", padding: "28px 24px" }}>
@@ -799,7 +812,7 @@ function ProofStrip({ campaign, supporters }: { campaign: CampaignRow; supporter
 }
 
 /* ─── Tier card ─────────────────────────────────────────── */
-function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: number; onSupport: (t: CampaignTierRow) => void }) {
+function TierCard({ tier, sold, onSupport, ctaLabel = "אני תומך" }: { tier: CampaignTierRow; sold: number; onSupport: (t: CampaignTierRow) => void; ctaLabel?: string }) {
   const totalJoined = sold + (tier.external_sold || 0);
   const limited = tier.tier_limit != null && tier.tier_limit > 0;
   const remaining = limited ? Math.max(0, (tier.tier_limit as number) - sold) : Infinity;
@@ -929,7 +942,7 @@ function TierCard({ tier, sold, onSupport }: { tier: CampaignTierRow; sold: numb
             letterSpacing: "0.01em",
           }}
         >
-          אני תומך
+          {ctaLabel}
         </button>
       )}
     </div>
@@ -980,9 +993,11 @@ function TiersSection({
     <section id="tiers" style={{ background: "hsl(38 30% 96%)", padding: "72px 24px 80px" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBlockEnd: 48 }}>
-          <p style={{ color: "hsl(38 75% 40%)", fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", marginBlockEnd: 8 }}>חבילות תמיכה</p>
+          <p style={{ color: "hsl(38 75% 40%)", fontWeight: 700, fontSize: 12, letterSpacing: "0.12em", marginBlockEnd: 8 }}>
+            {campaign.is_product ? "חבילות הזמנה" : "חבילות תמיכה"}
+          </p>
           <h2 style={{ fontSize: "clamp(26px, 3.5vw, 40px)", fontWeight: 900, color: "hsl(215 55% 20%)", margin: "0 0 10px", lineHeight: 1.2 }}>
-            בחרו את רמת התמיכה שלכם
+            {campaign.is_product ? "כמה תיקחו הביתה?" : "בחרו את רמת התמיכה שלכם"}
           </h2>
         </div>
 
@@ -990,7 +1005,7 @@ function TiersSection({
           {tiers
             .filter((t) => t.is_active)
             .map((tier) => (
-              <TierCard key={tier.id} tier={tier} sold={tierCounts[tier.tier_key] || 0} onSupport={onSupport} />
+              <TierCard key={tier.id} tier={tier} sold={tierCounts[tier.tier_key] || 0} onSupport={onSupport} ctaLabel={campaign.is_product ? "להזמנה" : "אני תומך"} />
             ))}
         </div>
 
@@ -1494,10 +1509,12 @@ function StickyDonateBar({
   visible,
   remaining,
   onSupportClick,
+  isProduct = false,
 }: {
   visible: boolean;
   remaining: number;
   onSupportClick: () => void;
+  isProduct?: boolean;
 }) {
   return (
     <div
@@ -1526,7 +1543,7 @@ function StickyDonateBar({
           gap: "clamp(10px, 3vw, 22px)",
         }}
       >
-        {remaining > 0 && (
+        {!isProduct && remaining > 0 && (
           <span style={{ color: "hsl(43 90% 70%)", fontWeight: 800, fontSize: "clamp(12px, 1.6vw, 14px)", whiteSpace: "nowrap" }}>
             נשארו ₪{remaining.toLocaleString()}
           </span>
@@ -1547,30 +1564,36 @@ function StickyDonateBar({
           }}
         >
           <Heart size={13} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 6 }} fill="currentColor" />
-          לחצו כאן לתרומה
+          {isProduct ? "להזמנת החוברת" : "לחצו כאן לתרומה"}
         </button>
-        <span className="campaign-sticky-46" style={{ display: "flex", alignItems: "center", gap: 5, color: "hsl(215 10% 68%)", fontWeight: 700, fontSize: 12, whiteSpace: "nowrap" }}>
-          <ShieldCheck size={13} style={{ color: "hsl(38 85% 66%)" }} />
-          מוכר לסעיף 46
-        </span>
+        {/* מצב-מוצר: רכישה אינה תרומה מוכרת-מס — אין להציג סעיף 46 */}
+        {!isProduct && (
+          <span className="campaign-sticky-46" style={{ display: "flex", alignItems: "center", gap: 5, color: "hsl(215 10% 68%)", fontWeight: 700, fontSize: 12, whiteSpace: "nowrap" }}>
+            <ShieldCheck size={13} style={{ color: "hsl(38 85% 66%)" }} />
+            מוכר לסעיף 46
+          </span>
+        )}
       </div>
     </div>
   );
 }
 
-function FinalCTA({ supporters, progressPct, onSupportClick }: { supporters: number; progressPct: number; onSupportClick: () => void }) {
+function FinalCTA({ campaign, supporters, progressPct, onSupportClick }: { campaign: CampaignRow; supporters: number; progressPct: number; onSupportClick: () => void }) {
+  const isProduct = !!campaign.is_product;
   return (
     <section style={{ background: "hsl(215 55% 12%)", padding: "72px 24px", textAlign: "center" }}>
       <div style={{ maxWidth: 640, margin: "0 auto" }}>
         <h2 style={{ fontSize: "clamp(24px, 3.4vw, 38px)", fontWeight: 900, color: "white", margin: "0 0 12px", lineHeight: 1.25 }}>
-          {supporters} תומכים כבר הצטרפו — {progressPct}% מהיעד
+          {isProduct ? (campaign.hero_title_small || campaign.subtitle || campaign.title) : `${supporters} תומכים כבר הצטרפו — ${progressPct}% מהיעד`}
         </h2>
-        <p style={{ fontSize: 16, color: "hsl(215 10% 70%)", margin: "0 0 28px" }}>כל תמיכה מקרבת אותנו לסיום.</p>
+        <p style={{ fontSize: 16, color: "hsl(215 10% 70%)", margin: "0 0 28px" }}>
+          {isProduct ? "הניסים קרו באמת. עכשיו הם כתובים, מאוירים ומחכים לשולחן שלכם." : "כל תמיכה מקרבת אותנו לסיום."}
+        </p>
         <button
           onClick={onSupportClick}
           style={{ padding: "15px 40px", background: GOLD_GRAD, color: "hsl(215 55% 12%)", border: "none", borderRadius: 99, fontWeight: 900, fontSize: 17, cursor: "pointer" }}
         >
-          תמכו בקמפיין ↑
+          {isProduct ? "להזמנת החוברת ↑" : "תמכו בקמפיין ↑"}
         </button>
       </div>
     </section>
@@ -1654,7 +1677,7 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
     try {
       await startPayment({
         sum: tier.price,
-        description: `תרומה — ${campaign.title}`,
+        description: `${campaign.is_product ? "הזמנה" : "תרומה"} — ${campaign.title}`,
         fullName: donorName,
         phone: donorPhone,
         email: donorEmail,
@@ -1856,8 +1879,8 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
         </div>
 
         <div>
-          <label style={labelStyle}>תעודת זהות (לקבלה לזיכוי מס לפי סעיף 46)</label>
-          <input type="text" value={donorTaxId} onChange={(e) => setDonorTaxId(e.target.value)} placeholder="לא חובה — למי שרוצה שהתרומה תדווח לרשות המסים" inputMode="numeric" dir="ltr" style={{ ...inputStyle, textAlign: "right" }} maxLength={11} />
+          <label style={labelStyle}>{campaign.is_product ? "תעודת זהות (לקבלה)" : "תעודת זהות (לקבלה לזיכוי מס לפי סעיף 46)"}</label>
+          <input type="text" value={donorTaxId} onChange={(e) => setDonorTaxId(e.target.value)} placeholder={campaign.is_product ? "לא חובה — למי שרוצה ת\"ז על הקבלה" : "לא חובה — למי שרוצה שהתרומה תדווח לרשות המסים"} inputMode="numeric" dir="ltr" style={{ ...inputStyle, textAlign: "right" }} maxLength={11} />
         </div>
 
         {dedicationEligible && (
@@ -2104,17 +2127,21 @@ export default function CampaignPage() {
       {CAMPAIGNS_WITH_DEDICATION.has(campaign.slug) && (
         <DedicationOptionsSection settings={pageDedicationSettings} onPick={openDedicationDonation} />
       )}
-      <DonorPulseToasts campaign={campaign} tiers={tiers} tierCounts={tierCounts} totalSupporters={totalSupporters} raised={totalRaised} />
+      {/* מצב-מוצר: בלי טוסטים של תורמים */}
+      {!campaign.is_product && (
+        <DonorPulseToasts campaign={campaign} tiers={tiers} tierCounts={tierCounts} totalSupporters={totalSupporters} raised={totalRaised} />
+      )}
       <StorySection campaign={campaign} />
       <WhySection campaign={campaign} />
       <AuthorSection campaign={campaign} />
       <TimelineSection campaign={campaign} />
       <FaqSection campaign={campaign} />
-      <FinalCTA supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
+      <FinalCTA campaign={campaign} supporters={totalSupporters} progressPct={progressPct} onSupportClick={scrollToTiers} />
       <StickyDonateBar
         visible={scrollY > (typeof window !== "undefined" ? window.innerHeight * 0.75 : 600)}
         remaining={Math.max(0, goal - totalRaised)}
         onSupportClick={scrollToTiers}
+        isProduct={!!campaign.is_product}
       />
 
       {/* פוטר עם כפתור תרומה + סעיף 46 (3.9, בקשת סער) */}
@@ -2136,12 +2163,15 @@ export default function CampaignPage() {
           }}
         >
           <Heart size={16} style={{ display: "inline", verticalAlign: "-2px", marginInlineEnd: 8 }} fill="currentColor" />
-          לחצו כאן לתרומה
+          {campaign.is_product ? "להזמנת החוברת" : "לחצו כאן לתרומה"}
         </button>
-        <p style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "hsl(38 85% 70%)", margin: "12px 0 26px" }}>
-          <ShieldCheck size={14} />
-          התרומה מוכרת למס לפי סעיף 46
-        </p>
+        {/* מצב-מוצר: רכישה אינה תרומה מוכרת-מס — שורת סעיף 46 מוסתרת */}
+        {!campaign.is_product && (
+          <p style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "hsl(38 85% 70%)", margin: "12px 0 26px" }}>
+            <ShieldCheck size={14} />
+            התרומה מוכרת למס לפי סעיף 46
+          </p>
+        )}
         <p style={{ color: "white", fontWeight: 700, margin: "0 0 8px" }}>תנועת בני ציון ללימוד תנ"ך</p>
         <p style={{ fontSize: 13, color: "hsl(215 10% 48%)", margin: 0 }}>
           <a href="mailto:office@bneyzion.co.il" style={{ color: "hsl(38 75% 58%)", textDecoration: "none" }}>

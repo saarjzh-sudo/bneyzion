@@ -62,6 +62,9 @@ export interface CampaignRow {
   external_source: string | null;
   /** קיר-התורמים (3.9) — שמות/סכומים/ברכות שכבר ציבוריים בעמוד givechak. ריק = הסקשן לא מרונדר. */
   external_recent_donors?: CampaignRecentDonor[] | null;
+  /** מצב-מוצר (14.9, דור הפלאות): הקמפיין מוכר מוצר ולא מגייס תרומות — שפת "הזמנה",
+   * בלי "הושג עד כה"/מוני-תורמים, ובלי אזכורי סעיף 46 (רכישה אינה תרומה מוכרת-מס). */
+  is_product?: boolean;
 }
 
 export interface CampaignTierRow {
