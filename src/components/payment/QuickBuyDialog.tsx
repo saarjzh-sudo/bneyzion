@@ -15,6 +15,7 @@ import { Loader2, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGrowPayment, type ThankYouType } from "@/hooks/useGrowPayment";
 import { useToast } from "@/hooks/use-toast";
+import { usePublicSalePoints } from "@/hooks/useSalePoints";
 
 export interface QuickBuyDialogProps {
   /** Slug of the row in payment_products. Drives Smoove list + pageCode + table. */
@@ -34,6 +35,13 @@ export interface QuickBuyDialogProps {
    * Defaults to "cart" if omitted.
    */
   thankYouType?: ThankYouType;
+  /**
+   * נקודת איסוף (15.9, בקשת סער): כשמועבר label — הטופס מציג בורר נקודת-איסוף
+   * מתוך sale_points הפעילות (אותו מקור-אמת כמו החנות), הבחירה חובה,
+   * ונשמרת מובנית על ההזמנה (orders.pickup_point_id/name) דרך meta.
+   * אין נקודות פעילות ⇒ השדה לא מוצג והתשלום עובר כרגיל.
+   */
+  pickupPointLabel?: string;
   /** Trigger button — anything clickable. */
   children: React.ReactNode;
 }
@@ -46,6 +54,7 @@ export function QuickBuyDialog({
   subtitle,
   maxInstallments = 1,
   thankYouType = "cart",
+  pickupPointLabel,
   children,
 }: QuickBuyDialogProps) {
   const [open, setOpen] = useState(false);
@@ -54,8 +63,12 @@ export function QuickBuyDialog({
   const [phone, setPhone] = useState("");
   const [installments, setInstallments] = useState(1);
   const [tosAccepted, setTosAccepted] = useState(false);
+  const [pickupPointId, setPickupPointId] = useState("");
   const { startPayment, isLoading, isReady } = useGrowPayment();
   const { toast } = useToast();
+  const { data: salePoints = [] } = usePublicSalePoints();
+  const showPickup = !!pickupPointLabel && salePoints.length > 0;
+  const chosenPoint = salePoints.find((p) => p.id === pickupPointId);
 
   // מנוי הפרק השבועי: המייל הוא המפתח לפורטל — תג הגישה נרשם על המייל
   // ומתחבר לחשבון בכניסת Google הראשונה. בלי מייל המנוי משלם ולא מקבל גישה.
@@ -81,6 +94,14 @@ export function QuickBuyDialog({
       toast({
         title: "יש למלא אימייל",
         description: "עם המייל הזה נכנסים לפורטל הלימוד, ואליו נשלחים העדכונים",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (showPickup && !chosenPoint) {
+      toast({
+        title: "יש לבחור נקודת איסוף",
+        description: "כדי שנדע איפה מחכה לכם ספר המתנה",
         variant: "destructive",
       });
       return;
@@ -114,6 +135,11 @@ export function QuickBuyDialog({
           product,
           tos_accepted: true,
           tos_accepted_at: new Date().toISOString(),
+          // נקודת האיסוף — השרת מאמת את ה-id מול sale_points וכותב
+          // עמודות מובנות על ההזמנה (pickup_point_id / pickup_point_name).
+          ...(chosenPoint
+            ? { pickup_point_id: chosenPoint.id, pickup_point_name: chosenPoint.name }
+            : {}),
         },
       });
       // On success the SDK either redirects (directDebit) or calls onSuccess
@@ -183,6 +209,29 @@ export function QuickBuyDialog({
               required={emailRequired}
             />
           </div>
+
+          {showPickup && (
+            <div className="space-y-2">
+              <Label htmlFor="qb-pickup">{pickupPointLabel} *</Label>
+              <select
+                id="qb-pickup"
+                value={pickupPointId}
+                onChange={(e) => setPickupPointId(e.target.value)}
+                required
+                className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+              >
+                <option value="">בחרו נקודת איסוף...</option>
+                {salePoints.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+              {chosenPoint?.contact && (
+                <p className="text-xs text-muted-foreground">איש קשר בנקודה: {chosenPoint.contact}</p>
+              )}
+            </div>
+          )}
 
           {maxInstallments > 1 && (
             <div className="space-y-2">

@@ -4,6 +4,7 @@ import { Cta, PriceLine } from "../Cta";
 import { ART } from "../art";
 import { EARLY_BIRD, SEASON } from "../data";
 import { useEarlyBird } from "../useEarlyBird";
+import { usePublicSalePoints } from "@/hooks/useSalePoints";
 
 /**
  * ההרשמה המוקדמת — נכתב מחדש 10.9 (סבב ג׳).
@@ -19,6 +20,9 @@ import { useEarlyBird } from "../useEarlyBird";
  */
 const EarlyBird = () => {
   const { open, daysLeft } = useEarlyBird();
+  // נקודות האיסוף החיות מהאתר (sale_points, מנוהלות באדמין) — אותו מקור-אמת
+  // כמו החנות וכמו שדה-הבחירה בטופס ההרשמה. חובה לפני ה-return המוקדם (hooks).
+  const { data: salePoints = [] } = usePublicSalePoints();
 
   if (!open) return null;
 
@@ -71,7 +75,10 @@ const EarlyBird = () => {
                 {EARLY_BIRD.gift.tryLine}
               </p>
               <p className="mt-3 text-sm text-foreground/55">
-                {EARLY_BIRD.gift.terms} נקודות איסוף: {EARLY_BIRD.gift.pickup}.
+                {EARLY_BIRD.gift.terms}
+                {salePoints.length > 0 && (
+                  <> נקודות איסוף: {salePoints.map((p) => p.name).join(" · ")}.</>
+                )}
               </p>
 
               <div className="mt-7">

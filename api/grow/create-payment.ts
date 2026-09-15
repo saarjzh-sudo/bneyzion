@@ -55,6 +55,10 @@ interface CreatePaymentBody {
     shipping_address?: string;
     shipping_city?: string;
     shipping_zip?: string;
+    // נקודת איסוף (15.9, מנוי הפרק השבועי — ספר המתנה): מאומתת מול sale_points
+    // ונשמרת מובנית ב-orders.pickup_point_id/pickup_point_name.
+    pickup_point_id?: string;
+    pickup_point_name?: string;
     // רמה 17: פריטי עגלה (/checkout) → order_items לכל פריט
     cart_items?: Array<{
       product_id?: string;
@@ -790,6 +794,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         if (meta?.shipping_method) {
           rawPayloadBase.shipping_method = meta.shipping_method;
         }
+        // נקודת איסוף (15.9): מאמתים את ה-id מול sale_points וכותבים את השם
+        // הקנוני מהטבלה (לא סומכים על טקסט מהלקוח). נקודה שלא נמצאה — נשמר
+        // שם-הלקוח מסונן בלבד, והתשלום לא נכשל בגלל שדה-תצוגה.
+        let pickupPointId: string | null = null;
+        let pickupPointName: string | null = null;
+        const rawPickupId = String(meta?.pickup_point_id || "");
+        if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(rawPickupId)) {
+          const { data: sp } = await supabaseAdmin
+            .from("sale_points")
+            .select("id, name, city")
+            .eq("id", rawPickupId)
+            .maybeSingle();
+          if (sp) {
+            pickupPointId = sp.id;
+            pickupPointName = sp.city && !String(sp.name).includes(sp.city) ? `${sp.name}, ${sp.city}` : sp.name;
+          }
+        }
+        if (!pickupPointName && meta?.pickup_point_name) {
+          pickupPointName = String(meta.pickup_point_name).replace(/[<>]/g, "").trim().slice(0, 120) || null;
+        }
+        if (pickupPointName) {
+          rawPayloadBase.pickup_point = pickupPointName;
+        }
         // Coupon audit trail — webhook increments used_count on confirmed payment
         if (couponCode) {
           rawPayloadBase.coupon_code = couponCode;
@@ -846,6 +873,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             shipping_address: meta?.shipping_address || null,
             shipping_city: meta?.shipping_city || null,
             shipping_zip: meta?.shipping_zip || null,
+            // נקודת איסוף לספר המתנה (15.9) — שליפה קלה: WHERE product=... ; SELECT pickup_point_name
+            pickup_point_id: pickupPointId,
+            pickup_point_name: pickupPointName,
           })
           .select("id")
           .single();
