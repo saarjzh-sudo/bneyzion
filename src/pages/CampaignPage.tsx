@@ -2040,7 +2040,7 @@ function InlineCheckoutModal({ campaign, tier, initialDedication = false, onClos
               מעבד תשלום...
             </>
           ) : (
-            <>תמוך ב-₪{Number(tier.price).toLocaleString("he-IL")}</>
+            <>{campaign.is_product ? `לתשלום · ₪${Number(tier.price).toLocaleString("he-IL")}` : `תמוך ב-₪${Number(tier.price).toLocaleString("he-IL")}`}</>
           )}
         </button>
 
