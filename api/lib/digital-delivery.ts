@@ -90,26 +90,49 @@ export async function signItems(
   return out;
 }
 
-/** שליחת מייל טרנזקציוני לנמען יחיד דרך Smoove (הדפוס המאומת). */
-export async function sendSingleEmail(
-  toEmail: string,
-  toName: string,
+/** תוצאת שליחה — נשמרת ב-DB כדי שכשל-בשקט של Smoove יהיה גלוי אחר-כך. */
+export interface MailResult {
+  ok: boolean;
+  /** מזהה הקמפיין ב-Smoove — הראיה היחידה שהשליחה התקבלה */
+  campaignId?: number;
+  error?: string;
+  at: string;
+  to: string[];
+}
+
+/**
+ * שליחת מייל טרנזקציוני לנמען אחד או יותר דרך Smoove (הדפוס המאומת).
+ *
+ * כל הנמענים יוצאים ב-**קמפיין אחד** ולא בקמפיין לנמען: לחשבון Smoove יש תקרת
+ * קמפיינים יומית שמפסיקה לשגר בשקט, וקמפיין-לכל-נמען שורף אותה פי-כמה.
+ */
+export async function sendEmailToRecipients(
+  recipients: { email: string; name?: string }[],
   subject: string,
   html: string,
-): Promise<boolean> {
+): Promise<MailResult> {
+  const at = new Date().toISOString();
+  const to = recipients
+    .map((r) => ({ email: (r.email || "").trim(), name: r.name || "" }))
+    .filter((r) => r.email.includes("@"));
+  const emails = to.map((r) => r.email);
+  if (!to.length) return { ok: false, error: "no valid recipients", at, to: emails };
+
   const apiKey = (process.env.SMOOVE_API_KEY || "").trim();
   if (!apiKey) {
     console.error("[DigitalDelivery] SMOOVE_API_KEY missing — email not sent");
-    return false;
+    return { ok: false, error: "SMOOVE_API_KEY missing", at, to: emails };
   }
   const headers = { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" };
-  const contactRes = await fetch(
-    `${SMOOVE_BASE}/Contacts?updateIfExists=true&restoreIfDeleted=true`,
-    { method: "POST", headers, body: JSON.stringify({ email: toEmail, firstName: toName }) },
-  );
-  if (!contactRes.ok) {
-    console.error("[DigitalDelivery] smoove contact upsert failed:", contactRes.status);
-    return false;
+  for (const r of to) {
+    const contactRes = await fetch(
+      `${SMOOVE_BASE}/Contacts?updateIfExists=true&restoreIfDeleted=true`,
+      { method: "POST", headers, body: JSON.stringify({ email: r.email, firstName: r.name }) },
+    );
+    if (!contactRes.ok) {
+      console.error("[DigitalDelivery] smoove contact upsert failed:", r.email, contactRes.status);
+      return { ok: false, error: `contact upsert ${contactRes.status} (${r.email})`, at, to: emails };
+    }
   }
   const campaignRes = await fetch(`${SMOOVE_BASE}/Campaigns?sendnow=true`, {
     method: "POST",
@@ -119,7 +142,7 @@ export async function sendSingleEmail(
       fromName: FROM_NAME,
       fromEmail: FROM_EMAIL,
       body: html,
-      toMembersByEmail: [toEmail],
+      toMembersByEmail: emails,
       customUnsubscribeMode: "None",
     }),
   });
@@ -128,9 +151,20 @@ export async function sendSingleEmail(
   try { campaignId = JSON.parse(bodyText || "{}")?.id; } catch { /* not json */ }
   if (!campaignRes.ok || !campaignId) {
     console.error("[DigitalDelivery] smoove campaign failed:", campaignRes.status, bodyText.slice(0, 200));
-    return false;
+    return { ok: false, error: `campaign ${campaignRes.status}: ${bodyText.slice(0, 150)}`, at, to: emails };
   }
-  return true;
+  return { ok: true, campaignId, at, to: emails };
+}
+
+/** שליחת מייל טרנזקציוני לנמען יחיד דרך Smoove (הדפוס המאומת). */
+export async function sendSingleEmail(
+  toEmail: string,
+  toName: string,
+  subject: string,
+  html: string,
+): Promise<boolean> {
+  const res = await sendEmailToRecipients([{ email: toEmail, name: toName }], subject, html);
+  return res.ok;
 }
 
 const emailShell = (inner: string) => `

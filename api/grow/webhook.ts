@@ -18,6 +18,17 @@ const SUPABASE_URL = (process.env.SUPABASE_URL || "").trim();
 const SUPABASE_SERVICE_ROLE_KEY = (process.env.SUPABASE_SERVICE_ROLE_KEY || "").trim();
 const SMOOVE_API_KEY = (process.env.SMOOVE_API_KEY || "").trim();
 
+// נמעני ההתראה "מנוי חדש לפרק השבועי" (16.9.2026). עד עכשיו ההתראה יצאה
+// לתיבת המשרד בלבד, ומצטרפת שנרשמה 16.9 בבוקר עברה בלי שאיש ידע — התיבה
+// הזו לא נצפית בפועל. ניתן לעקוף מ-Vercel בלי דיפלוי: OFFICE_NOTIFY_EMAILS.
+const OFFICE_NOTIFY_RECIPIENTS = (
+  process.env.OFFICE_NOTIFY_EMAILS || "office@bneyzion.co.il,tchvesua41@gmail.com"
+)
+  .split(",")
+  .map((e) => e.trim())
+  .filter((e) => e.includes("@"))
+  .map((email) => ({ email, name: email === "office@bneyzion.co.il" ? "משרד בני ציון" : "" }));
+
 // Disable Vercel's automatic body parser. Grow webhooks arrive as
 // application/x-www-form-urlencoded (and occasionally multipart/form-data)
 // with bracket-notation keys like data[transactionId] and
@@ -903,7 +914,7 @@ async function sendPickupConfirmationForPoint(args: {
   productLabel: string;
   salePointId: string;
   fallbackName?: string | null;
-}) {
+}): Promise<boolean> {
   try {
     const { data: sp } = await args.supabase
       .from("sale_points")
@@ -922,8 +933,10 @@ async function sendPickupConfirmationForPoint(args: {
       notes: (sp as any)?.notes,
     });
     console.log(`[Pickup] confirmation to ${args.email} point=${args.salePointId} contact=${!!contact} sent=${ok}`);
+    return ok;
   } catch (e) {
     console.error("[Pickup] confirmation failed (non-fatal):", e);
+    return false;
   }
 }
 
@@ -984,11 +997,15 @@ async function runPostPurchaseSideEffects(args: {
   // הנתיב הזה רץ רק על הצטרפות טרייה מהאתר; חיובי-המשך החודשיים מגיעים
   // מסנכרון-הלילה של Grow ולא עוברים כאן.
   if (targetTable === "orders" && productSlug === "weekly-chapter-subscription") {
+    // פנקס-המסירה של ההרשמה (16.9.2026): עד עכשיו כל ההתראות כאן היו
+    // fire-and-forget — כשל שקט של Smoove לא השאיר שום עקבה, ואי אפשר היה
+    // לענות אחר-כך על "יצא המייל או לא". כל תוצאה נכתבת ל-orders.notify_log.
+    const notifyLog: Record<string, unknown> = {};
+
     try {
-      const { sendSingleEmail } = await import("../lib/digital-delivery.js");
-      await sendSingleEmail(
-        "office@bneyzion.co.il",
-        "משרד בני ציון",
+      const { sendEmailToRecipients } = await import("../lib/digital-delivery.js");
+      const res = await sendEmailToRecipients(
+        OFFICE_NOTIFY_RECIPIENTS,
         `מנוי חדש לפרק השבועי 🎉 ${fullName || ""}`,
         `<div dir="rtl" style="font-family:Arial;font-size:15px;line-height:1.7">
           <p><b>מצטרף חדש לתכנית הפרק השבועי.</b></p>
@@ -999,7 +1016,14 @@ async function runPostPurchaseSideEffects(args: {
           <p style="font-size:13px"><a href="https://bneyzion.vercel.app/admin/orders">לטבלת ההזמנות באדמין »</a></p>
         </div>`,
       );
+      // בלי כתובות הנמענים: השורה קריאה גם לבעל-ההזמנה (orders_owner_read),
+      // ומייל פרטי של אנשי הצוות לא נכנס לעמודה שלקוח יכול למשוך.
+      notifyLog.office = {
+        ok: res.ok, campaignId: res.campaignId, recipients: res.to.length, error: res.error, at: res.at,
+      };
+      console.log(`[Notify] office new-subscriber: ${JSON.stringify(res)}`);
     } catch (e) {
+      notifyLog.office = { ok: false, error: String(e).slice(0, 200), at: new Date().toISOString() };
       console.error("Webhook: new-subscriber office notification failed (non-fatal):", e);
     }
 
@@ -1012,7 +1036,7 @@ async function runPostPurchaseSideEffects(args: {
         .eq("id", orderId)
         .maybeSingle();
       if ((pickupRow as any)?.pickup_point_id) {
-        await sendPickupConfirmationForPoint({
+        const ok = await sendPickupConfirmationForPoint({
           supabase,
           email,
           name: fullName,
@@ -1020,8 +1044,12 @@ async function runPostPurchaseSideEffects(args: {
           salePointId: (pickupRow as any).pickup_point_id,
           fallbackName: (pickupRow as any).pickup_point_name,
         });
+        notifyLog.pickup = { ok, at: new Date().toISOString() };
+      } else {
+        notifyLog.pickup = { skipped: "no pickup point" };
       }
     } catch (e) {
+      notifyLog.pickup = { ok: false, error: String(e).slice(0, 200), at: new Date().toISOString() };
       console.error("Webhook: pickup confirmation email failed (non-fatal):", e);
     }
 
@@ -1036,9 +1064,18 @@ async function runPostPurchaseSideEffects(args: {
         phone,
         asmachta: mergedPayload?.webhook?.data?.asmachta,
       });
+      notifyLog.monday = { result: added, at: new Date().toISOString() };
       console.log(`[Monday] new subscriber ${email}: ${added}`);
     } catch (e) {
+      notifyLog.monday = { ok: false, error: String(e).slice(0, 200), at: new Date().toISOString() };
       console.error("[Monday] add subscriber failed (non-fatal):", e);
+    }
+
+    // כתיבת הפנקס. העמודה אופציונלית — אם המיגרציה טרם רצה, זה לא מפיל כלום.
+    try {
+      await supabase.from("orders").update({ notify_log: notifyLog }).eq("id", orderId);
+    } catch (e) {
+      console.error("[Notify] failed to persist notify_log (non-fatal):", e);
     }
   }
 
