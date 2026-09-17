@@ -29,6 +29,29 @@ const OFFICE_NOTIFY_RECIPIENTS = (
   .filter((e) => e.includes("@"))
   .map((email) => ({ email, name: email === "office@bneyzion.co.il" ? "משרד בני ציון" : "" }));
 
+// נמעני ההתראה "רכישה חדשה בקמפיין" (17.9.2026). בנפרד מרשימת ההרשמות:
+// אביה ביקש מפורשות לא לקבל אותן למייל האישי ("אני אסתכל במייל המשרדי"),
+// אבל את התראות ההרשמה לפרק השבועי כן צריך לקבל שם. שליטה מ-Vercel בלי
+// דיפלוי: CAMPAIGN_NOTIFY_EMAILS.
+const CAMPAIGN_NOTIFY_RECIPIENTS = (
+  process.env.CAMPAIGN_NOTIFY_EMAILS || "office@bneyzion.co.il"
+)
+  .split(",")
+  .map((e) => e.trim())
+  .filter((e) => e.includes("@"))
+  .map((email) => ({ email, name: email === "office@bneyzion.co.il" ? "משרד בני ציון" : "" }));
+
+// תווית קריאה לערוץ ההגעה (ה-?src= מהביטלי). בלי זה ההתראה מציגה "wa-groups".
+const TRAFFIC_SOURCE_LABELS: Record<string, string> = {
+  "wa-groups": "הקבוצות שלנו",
+  "nekudot-atzmaiot": "פרויקט הנקודות",
+  "mail400": "מייל לתורמים",
+};
+function trafficSourceLabel(raw?: string | null): string {
+  if (!raw) return "ישיר";
+  return TRAFFIC_SOURCE_LABELS[raw] || raw;
+}
+
 // Disable Vercel's automatic body parser. Grow webhooks arrive as
 // application/x-www-form-urlencoded (and occasionally multipart/form-data)
 // with bracket-notation keys like data[transactionId] and
@@ -576,7 +599,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               .join(" ");
             const { sendEmailToRecipients } = await import("../lib/digital-delivery.js");
             const res = await sendEmailToRecipients(
-              OFFICE_NOTIFY_RECIPIENTS,
+              CAMPAIGN_NOTIFY_RECIPIENTS,
               `${isBuy ? "רכישה חדשה" : "תרומה חדשה"} — ${(campMeta as any).title || campSlug}: ${r.donor_name || ""}`,
               `<div dir="rtl" style="font-family:Arial;font-size:15px;line-height:1.7">
                 <p><b>${isBuy ? "רכישה חדשה" : "תרומה חדשה"} בקמפיין "${(campMeta as any).title || campSlug}".</b></p>
@@ -586,7 +609,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                    סכום: <b>₪${Number(r.amount || 0).toLocaleString()}</b><br/>
                    חבילה: ${r.tier_name || r.tier_id || "—"}<br/>
                    ${r.pickup_point_name ? `נקודת איסוף: <b>${r.pickup_point_name}</b>` : shipTo ? `משלוח עד הבית: ${shipTo}` : "אופן מסירה: —"}<br/>
-                   ערוץ הגעה: ${r.traffic_source || "ישיר"}</p>
+                   ערוץ הגעה: ${trafficSourceLabel(r.traffic_source)}</p>
                 <p style="font-size:13px"><a href="https://bneyzion.co.il/admin/campaigns/${campSlug}">לדשבורד הקמפיין באדמין »</a></p>
               </div>`,
             );

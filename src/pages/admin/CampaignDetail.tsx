@@ -46,6 +46,14 @@ const STATUS_LABEL: Record<string, { label: string; bg: string; color: string }>
   failed: { label: "נכשל", bg: "#fee2e2", color: "#b91c1c" },
 };
 
+// תווית קריאה לערוץ ההגעה (ה-?src= מקישור הביטלי) — במקום "wa-groups" גולמי.
+const TRAFFIC_SOURCE_LABELS: Record<string, string> = {
+  "wa-groups": "הקבוצות שלנו",
+  "nekudot-atzmaiot": "פרויקט הנקודות",
+  "mail400": "מייל לתורמים",
+};
+const trafficLabel = (raw?: string | null) => (raw ? TRAFFIC_SOURCE_LABELS[raw] || raw : "ישיר");
+
 function fmtDate(iso: string) {
   return new Date(iso).toLocaleString("he-IL", { day: "2-digit", month: "2-digit", year: "2-digit", hour: "2-digit", minute: "2-digit" });
 }
@@ -62,7 +70,7 @@ function exportCSV(slug: string, rows: CampaignDonationRow[], tierNames: Record<
       String(d.amount ?? ""),
       d.tier_name || (d.tier_id ? tierNames[d.tier_id] || d.tier_id : ""),
       d.pickup_point_name ?? "",
-      d.traffic_source ?? "",
+      trafficLabel(d.traffic_source),
       STATUS_LABEL[d.payment_status ?? ""]?.label ?? d.payment_status ?? "",
       d.asmachta ?? "",
       d.invoice_number ?? "",
@@ -286,7 +294,7 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
                           {address || (d.pickup_point_name ? `איסוף: ${d.pickup_point_name}` : "—")}
                           {d.shipping_notes && <div className="text-[11px]">{d.shipping_notes}</div>}
                         </TableCell>
-                        <TableCell className="text-xs" style={{ color: C.textMuted }}>{d.traffic_source || "ישיר"}</TableCell>
+                        <TableCell className="text-xs" style={{ color: C.textMuted }}>{trafficLabel(d.traffic_source)}</TableCell>
                         <TableCell className="text-xs" dir="ltr">
                           {d.asmachta ?? "—"}
                           {d.invoice_url && (
