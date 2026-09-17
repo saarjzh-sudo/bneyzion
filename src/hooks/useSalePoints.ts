@@ -47,16 +47,50 @@ export function useSalePoints() {
   });
 }
 
+/**
+ * החלפת סדר בין שתי נקודות (17.9.2026, בקשת הרב יואב): הוא מסדר את הנקודות
+ * לפי אזורים, וכל נקודה חדשה נחתה בסוף הרשימה. מחליפים sort_order בין שתי
+ * שורות שכנות — שתי כתיבות, בלי לגעת בשאר הרשימה.
+ */
+export function useSwapSalePointOrder() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ a, b }: { a: SalePoint; b: SalePoint }) => {
+      // sort_order שווה (או 0 על שתיהן) — החלפה לא תזיז כלום; נותנים ערכים מובחנים.
+      const aOrder = a.sort_order === b.sort_order ? a.sort_order + 1 : b.sort_order;
+      const bOrder = a.sort_order === b.sort_order ? b.sort_order : a.sort_order;
+      const now = new Date().toISOString();
+      const first = await (supabase as any).from("sale_points").update({ sort_order: aOrder, updated_at: now }).eq("id", a.id).select("id");
+      if (first.error) throw first.error;
+      if (!first.data?.length) throw new Error("הסדר לא נשמר — אין הרשאת עריכה (RLS). פנה לסער.");
+      const second = await (supabase as any).from("sale_points").update({ sort_order: bOrder, updated_at: now }).eq("id", b.id).select("id");
+      if (second.error) throw second.error;
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["sale-points-admin"] });
+      qc.invalidateQueries({ queryKey: ["sale-points-public"] });
+    },
+  });
+}
+
 export function useCreateSalePoint() {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (sp: Partial<SalePoint>) => {
-      const { data, error } = await (supabase as any).from("sale_points").insert(sp).select("id");
+      // בלי sort_order מפורש הנקודה נכנסת לסוף הרשימה (ברירת המחדל 0 הקפיצה
+      // אותה לראש) — משם אפשר להזיז אותה למעלה עם החיצים.
+      let row = sp;
+      if (sp.sort_order === undefined || sp.sort_order === null) {
+        const { data: last } = await (supabase as any)
+          .from("sale_points").select("sort_order").order("sort_order", { ascending: false }).limit(1);
+        row = { ...sp, sort_order: Number(last?.[0]?.sort_order ?? 0) + 1 };
+      }
+      const { data, error } = await (supabase as any).from("sale_points").insert(row).select("id");
       if (error) throw error;
       if (!data?.length) throw new Error("הנקודה לא נוצרה — אין הרשאת עריכה (RLS). פנה לסער.");
       return data[0].id as string;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["sale-points-admin"] }),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["sale-points-admin"] }); qc.invalidateQueries({ queryKey: ["sale-points-public"] }); },
   });
 }
 
@@ -96,7 +130,7 @@ export function useUpdateSalePoint() {
       if (error) throw error;
       if (!data?.length) throw new Error("העדכון לא נשמר — אין הרשאת עריכה (RLS). פנה לסער.");
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["sale-points-admin"] }),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["sale-points-admin"] }); qc.invalidateQueries({ queryKey: ["sale-points-public"] }); },
   });
 }
 
@@ -108,6 +142,6 @@ export function useDeleteSalePoint() {
       if (error) throw error;
       if (!data?.length) throw new Error("המחיקה לא בוצעה — אין הרשאת מחיקה (RLS). פנה לסער.");
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["sale-points-admin"] }),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ["sale-points-admin"] }); qc.invalidateQueries({ queryKey: ["sale-points-public"] }); },
   });
 }

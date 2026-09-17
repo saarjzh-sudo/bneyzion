@@ -530,7 +530,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
               supabase,
               email: donorEmail,
               name: (donationRow as any)?.donor_name || txData.fullName || "",
-              productLabel: `ההזמנה של ${(camp as any)?.title || "החוברת"}`,
+              // ניסוח הרב יואב (17.9.2026): לא "ההזמנה מחכה לך" — היא עוד לא
+              // מחכה. הספר יגיע לנקודה, ואז נודיע. הניסוח המלא ב-digital-delivery.
+              productLabel: (camp as any)?.title ? `הספר "${(camp as any).title}"` : "הספר",
               salePointId: (donationRow as any).pickup_point_id,
               fallbackName: (donationRow as any).pickup_point_name,
             });
@@ -546,6 +548,53 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         }
       } catch (e) {
         console.error("Webhook: donation thank-you email failed (non-fatal):", e);
+      }
+
+      // התראת משרד על רכישה/תרומה בקמפיין באתר (17.9.2026, בקשת הרב יואב):
+      // "יש התראות על מנויים או על מכירות בחנות, אבל בקמפיינים של האתר אין".
+      // רץ רק כשה-product של השורה הוא slug של קמפיין קיים, ורק על התשלום
+      // הראשון (ה-webhook הזה לא רץ על חיובי-המשך של הו"ק). כשל כאן לא מפיל
+      // את הזרימה — הרוכש כבר שילם.
+      try {
+        const { data: campaignRow } = await supabase
+          .from("donations")
+          .select("amount, donor_name, donor_email, phone, product, tier_name, tier_id, pickup_point_name, traffic_source, shipping_street, shipping_house_number, shipping_city")
+          .eq("id", orderId)
+          .maybeSingle();
+        const campSlug = (campaignRow as any)?.product;
+        if (campSlug) {
+          const { data: campMeta } = await supabase
+            .from("campaigns")
+            .select("title, is_product")
+            .eq("slug", campSlug)
+            .maybeSingle();
+          if (campMeta) {
+            const r = campaignRow as any;
+            const isBuy = !!(campMeta as any).is_product;
+            const shipTo = [r.shipping_street, r.shipping_house_number, r.shipping_city]
+              .filter(Boolean)
+              .join(" ");
+            const { sendEmailToRecipients } = await import("../lib/digital-delivery.js");
+            const res = await sendEmailToRecipients(
+              OFFICE_NOTIFY_RECIPIENTS,
+              `${isBuy ? "רכישה חדשה" : "תרומה חדשה"} — ${(campMeta as any).title || campSlug}: ${r.donor_name || ""}`,
+              `<div dir="rtl" style="font-family:Arial;font-size:15px;line-height:1.7">
+                <p><b>${isBuy ? "רכישה חדשה" : "תרומה חדשה"} בקמפיין "${(campMeta as any).title || campSlug}".</b></p>
+                <p>שם: <b>${r.donor_name || "—"}</b><br/>
+                   מייל: ${r.donor_email || "—"}<br/>
+                   טלפון: ${r.phone || "—"}<br/>
+                   סכום: <b>₪${Number(r.amount || 0).toLocaleString()}</b><br/>
+                   חבילה: ${r.tier_name || r.tier_id || "—"}<br/>
+                   ${r.pickup_point_name ? `נקודת איסוף: <b>${r.pickup_point_name}</b>` : shipTo ? `משלוח עד הבית: ${shipTo}` : "אופן מסירה: —"}<br/>
+                   ערוץ הגעה: ${r.traffic_source || "ישיר"}</p>
+                <p style="font-size:13px"><a href="https://bneyzion.co.il/admin/campaigns/${campSlug}">לדשבורד הקמפיין באדמין »</a></p>
+              </div>`,
+            );
+            console.log(`[Notify] office campaign-purchase: ${JSON.stringify(res)}`);
+          }
+        }
+      } catch (e) {
+        console.error("Webhook: campaign purchase office alert failed (non-fatal):", e);
       }
 
       // תרומה ⟵ הקדשה (26.8.2026): כשהתרומה נוצרה עם CampaignDedicationPicker,

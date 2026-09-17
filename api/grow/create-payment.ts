@@ -769,6 +769,44 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const donationSource = donationMeta?.source || null;
         const donationTierId = donationMeta?.tier_id || null;
 
+        // מקור-רכישה (17.9.2026, בקשת סער): ה-?src= מקישור הביטלי נשמר ב-
+        // useGrowPayment תחת meta.source. עד עכשיו הוא נכתב רק בענף ההזמנות
+        // (orders), ולכן כל רכישת-קמפיין נראתה זהה (source = slug הקמפיין)
+        // ושני קישורי הביטלי של דור הפלאות לא הבדילו בין ערוץ לערוץ.
+        // עמודה נפרדת בכוונה: donations.source הוא מפתח סמנטי שזרימת תיקון
+        // הקבלות מסננת לפיו (api/donations/tax-id.ts), ואסור לדרוס אותו.
+        const donationTrafficSource =
+          String((meta as any)?.source || "")
+            .replace(/[^a-zA-Z0-9_\-]/g, "")
+            .slice(0, 40) || null;
+
+        // שם החבילה (17.9.2026, שאלת הרב יואב "האם כל הנתונים נאספים?"):
+        // עד עכשיו נשמר tier_id בלבד, ובייצוא לא היה אפשר לדעת כמה ספרים הוזמנו.
+        let donationTierName: string | null = null;
+        let donationTierPerks: unknown = null;
+        if (donationTierId) {
+          const tierCampaignSlug = productSlug || donationSource;
+          if (tierCampaignSlug) {
+            const { data: campRow } = await supabaseAdmin
+              .from("campaigns")
+              .select("id")
+              .eq("slug", tierCampaignSlug)
+              .maybeSingle();
+            if ((campRow as any)?.id) {
+              const { data: tierRow } = await supabaseAdmin
+                .from("campaign_tiers")
+                .select("name, perks")
+                .eq("campaign_id", (campRow as any).id)
+                .eq("tier_key", donationTierId)
+                .maybeSingle();
+              if (tierRow) {
+                donationTierName = (tierRow as any).name ?? null;
+                donationTierPerks = (tierRow as any).perks ?? null;
+              }
+            }
+          }
+        }
+
         const { data: donation, error: donationErr } = await supabaseAdmin
           .from("donations")
           .insert({
@@ -779,7 +817,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             description,
             product: productSlug || donationSource || null,
             source: donationSource,
+            traffic_source: donationTrafficSource,
             tier_id: donationTierId,
+            tier_name: donationTierName,
+            tier_perks: (donationTierPerks as any) ?? null,
             // flowType is "directDebit" for ALL donate-page payments (it routes to the
             // donations merchant page) — it does NOT mean the donor chose monthly.
             // The recurring signal is the explicit donationMeta flag / request type.
@@ -793,9 +834,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             // תרומה ⟵ הקדשה: כשיש companion_dedication, ה-webhook קורא את
             // ה-id הזה ומפעיל את שורת lesson_dedications "pending" שנוצרה למעלה
             // באותו callback שמסמן את התרומה כמאושרת.
-            raw_payload: companionDedicationId
-              ? { consent: consentAudit, companion_dedication_id: companionDedicationId }
-              : { consent: consentAudit },
+            raw_payload: {
+              consent: consentAudit,
+              ...(companionDedicationId ? { companion_dedication_id: companionDedicationId } : {}),
+              ...(donationTrafficSource ? { traffic_source: donationTrafficSource } : {}),
+            },
             // Shipping address (populated when the buyer receives a physical product)
             shipping_street: (donationMeta as any)?.shipping_street || null,
             shipping_house_number: (donationMeta as any)?.shipping_house_number || null,
