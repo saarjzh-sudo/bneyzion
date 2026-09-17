@@ -11,7 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Plus, Search, Pencil, Trash2, FolderOpen, Sparkles, Loader2, MapPin } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, FolderOpen, Sparkles, Loader2, MapPin, ArrowUp, ArrowDown } from "lucide-react";
 import { toast as sonnerToast } from "sonner";
 import { ImageUpload } from "@/components/admin/ImageUpload";
 // רמה 18 (יואב 14.7): עריכת תוכן מוצר בעורך ויזואלי — לא HTML גולמי
@@ -19,7 +19,7 @@ import { RichTextEditor } from "@/components/admin/RichTextEditor";
 // רמה 18 (יואב 14.7): ניהול משלוחים אוחד לכאן — טאב "משלוח ואיסוף"
 import { ShippingOptionsEditor } from "@/components/admin/ShippingOptionsEditor";
 import { useProductCategories } from "@/hooks/useProducts";
-import { useSalePoints, useCreateSalePoint, useUpdateSalePoint, useDeleteSalePoint, useSalePointContacts, saveSalePointContact, type SalePoint } from "@/hooks/useSalePoints";
+import { useSalePoints, useCreateSalePoint, useUpdateSalePoint, useDeleteSalePoint, useSalePointContacts, saveSalePointContact, type SalePoint, useSwapSalePointOrder } from "@/hooks/useSalePoints";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
@@ -194,6 +194,7 @@ function SalePointsManager() {
   const createSP = useCreateSalePoint();
   const updateSP = useUpdateSalePoint();
   const deleteSP = useDeleteSalePoint();
+  const swapSP = useSwapSalePointOrder();
   const { toast } = useToast();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<any>(null);
@@ -222,6 +223,17 @@ function SalePointsManager() {
       setDialogOpen(false); resetForm();
     } catch (e: any) { toast({ title: "שגיאה", description: e.message, variant: "destructive" }); }
   };
+  // הזזת נקודה למעלה/למטה (17.9.2026, בקשת הרב יואב): הוא מסדר לפי אזורים,
+  // ונקודה חדשה תמיד נחתה בסוף. חיצים ולא גרירה — עובד גם בנייד.
+  const move = async (index: number, dir: -1 | 1) => {
+    const list = points ?? [];
+    const target = list[index + dir];
+    if (!target) return;
+    try {
+      await swapSP.mutateAsync({ a: list[index], b: target });
+    } catch (e: any) { toast({ title: "שגיאה", description: e.message, variant: "destructive" }); }
+  };
+
   const toggleActive = async (p: SalePoint) => {
     try { await updateSP.mutateAsync({ id: p.id, is_active: !p.is_active }); toast({ title: !p.is_active ? "הנקודה הופעלה — מוצגת לרוכשים" : "הנקודה הוסתרה מהרוכשים" }); }
     catch (e: any) { toast({ title: "שגיאה", description: e.message, variant: "destructive" }); }
@@ -232,7 +244,7 @@ function SalePointsManager() {
       <CardHeader className="flex flex-row items-center justify-between pb-3">
         <div>
           <h2 className="font-heading text-lg">נקודות מכירה ואיסוף עצמי</h2>
-          <p className="text-xs text-muted-foreground mt-1">רק נקודות "פעילות" מוצגות לרוכשים בסליקה, תחת "איסוף עצמי".</p>
+          <p className="text-xs text-muted-foreground mt-1">רק נקודות "פעילות" מוצגות לרוכשים בסליקה, תחת "איסוף עצמי". החיצים מזיזים נקודה למעלה ולמטה, וזה הסדר שהרוכשים רואים.</p>
         </div>
         <Dialog open={dialogOpen} onOpenChange={(o) => { setDialogOpen(o); if (!o) resetForm(); }}>
           <DialogTrigger asChild><Button size="sm" className="font-display"><Plus className="h-4 w-4 ml-1" />נקודה חדשה</Button></DialogTrigger>
@@ -266,7 +278,7 @@ function SalePointsManager() {
               <TableHead className="text-right">פעולות</TableHead>
             </TableRow></TableHeader>
             <TableBody>
-              {points?.map((p) => (
+              {points?.map((p, i) => (
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.name}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">{[p.address, p.city].filter(Boolean).join(", ") || "—"}</TableCell>
@@ -279,6 +291,8 @@ function SalePointsManager() {
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-1">
+                      <Button variant="ghost" size="icon" title="הזז למעלה" disabled={i === 0 || swapSP.isPending} onClick={() => move(i, -1)}><ArrowUp className="h-4 w-4" /></Button>
+                      <Button variant="ghost" size="icon" title="הזז למטה" disabled={i === (points?.length ?? 0) - 1 || swapSP.isPending} onClick={() => move(i, 1)}><ArrowDown className="h-4 w-4" /></Button>
                       <Button variant="ghost" size="icon" onClick={() => openEdit(p)}><Pencil className="h-4 w-4" /></Button>
                       <Button variant="ghost" size="icon" onClick={() => { if (confirm(`למחוק את "${p.name}"?`)) deleteSP.mutate(p.id); }}><Trash2 className="h-4 w-4 text-destructive" /></Button>
                     </div>

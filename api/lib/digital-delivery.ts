@@ -275,7 +275,7 @@ export async function loadPickupContact(supabase: SupabaseAdmin, salePointId: st
 
 /**
  * מייל אישור נקודת איסוף (15.9.2026): מי שבחר נקודת איסוף (ספר המתנה של הפרק
- * השבועי, או חוברות דור הפלאות) מקבל אחרי התשלום אישור עם שם הנקודה ואיש הקשר.
+ * השבועי, או ספרי דור הפלאות) מקבל אחרי התשלום אישור עם שם הנקודה ואיש הקשר.
  */
 export async function sendPickupConfirmationEmail(params: {
   email: string;
@@ -293,14 +293,14 @@ export async function sendPickupConfirmationEmail(params: {
   const place = [p.address, p.city].filter(Boolean).join(", ");
   const inner = `
     <p>שלום ${firstName || "וברכה"},</p>
-    <p>ההזמנה שלך התקבלה. ${p.productLabel} מחכה לך בנקודת האיסוף שבחרת:</p>
+    <p>ההזמנה שלך התקבלה. ${p.productLabel} יגיע אליך לנקודת האיסוף שבחרת:</p>
     <div style="background:#FAF6F0;border-radius:10px;padding:14px 18px;margin:12px 0">
       <p style="margin:0 0 6px"><b>${p.pickupPointName}</b></p>
       ${place && !p.pickupPointName.includes(place) ? `<p style="margin:0 0 6px">כתובת: ${place}</p>` : ""}
       ${p.contact ? `<p style="margin:0 0 6px">איש הקשר בנקודה: <b>${p.contact}</b></p>` : `<p style="margin:0 0 6px">נציג שלנו ייצור איתך קשר עם פרטי האיסוף.</p>`}
       ${p.notes ? `<p style="margin:0;font-size:13px;color:#6B5C4A">${p.notes}</p>` : ""}
     </div>
-    <p style="font-size:13px;color:#6B5C4A">כדאי לתאם מראש עם איש הקשר לפני שמגיעים.</p>
+    <p>נודיע לך כשהספר יגיע לנקודת האיסוף, ואז אפשר יהיה לתאם עם איש הקשר ולבוא לקחת אותו.</p>
     <p>בברכת התורה,<br/>צוות בני ציון</p>`;
   return sendSingleEmail(p.email, p.name, "אישור נקודת האיסוף שלך — בני ציון", emailShell(inner));
 }

@@ -52,7 +52,7 @@ function fmtDate(iso: string) {
 
 /* ─── ייצוא CSV (BOM ל-Excel עברית — דפוס אדמין-יהושע) ─── */
 function exportCSV(slug: string, rows: CampaignDonationRow[], tierNames: Record<string, string>) {
-  const header = ["תאריך", "שם", "טלפון", "אימייל", "סכום", "חבילה", "סטטוס", "אסמכתא", "חשבונית", "רחוב", "מס' בית", "עיר", "מיקוד", "הערות משלוח"];
+  const header = ["תאריך", "שם", "טלפון", "אימייל", "סכום", "חבילה", "נקודת איסוף", "ערוץ הגעה", "סטטוס", "אסמכתא", "חשבונית", "רחוב", "מס' בית", "עיר", "מיקוד", "הערות משלוח"];
   const lines = rows.map((d) =>
     [
       fmtDate(d.created_at),
@@ -60,7 +60,9 @@ function exportCSV(slug: string, rows: CampaignDonationRow[], tierNames: Record<
       d.phone ?? "",
       d.donor_email ?? "",
       String(d.amount ?? ""),
-      d.tier_id ? tierNames[d.tier_id] || d.tier_id : "",
+      d.tier_name || (d.tier_id ? tierNames[d.tier_id] || d.tier_id : ""),
+      d.pickup_point_name ?? "",
+      d.traffic_source ?? "",
       STATUS_LABEL[d.payment_status ?? ""]?.label ?? d.payment_status ?? "",
       d.asmachta ?? "",
       d.invoice_number ?? "",
@@ -120,7 +122,7 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
   const visible = !q
     ? byStatus
     : byStatus.filter((d) =>
-        [d.donor_name, d.donor_email, d.phone, d.asmachta, d.shipping_city, d.tier_id ? tierNames[d.tier_id] : null]
+        [d.donor_name, d.donor_email, d.phone, d.asmachta, d.shipping_city, d.pickup_point_name, d.traffic_source, d.tier_name || (d.tier_id ? tierNames[d.tier_id] : null)]
           .some((v) => v && v.toLowerCase().includes(q))
       );
 
@@ -258,7 +260,8 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
                     <TableHead className="text-right font-ploni">סכום</TableHead>
                     <TableHead className="text-right font-ploni">חבילה</TableHead>
                     <TableHead className="text-right font-ploni">סטטוס</TableHead>
-                    <TableHead className="text-right font-ploni">משלוח</TableHead>
+                    <TableHead className="text-right font-ploni">משלוח / איסוף</TableHead>
+                    <TableHead className="text-right font-ploni">ערוץ הגעה</TableHead>
                     <TableHead className="text-right font-ploni">אסמכתא</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -275,12 +278,15 @@ function DashboardTab({ campaign, tiers }: { campaign: CampaignRow; tiers: Campa
                         </TableCell>
                         <TableCell dir="ltr" className="text-left text-xs">{d.phone ?? "—"}</TableCell>
                         <TableCell className="font-bold" style={{ color: C.navy }}>₪{Number(d.amount).toLocaleString()}</TableCell>
-                        <TableCell className="text-xs">{d.tier_id ? tierNames[d.tier_id] || d.tier_id : "—"}</TableCell>
+                        <TableCell className="text-xs">{d.tier_name || (d.tier_id ? tierNames[d.tier_id] || d.tier_id : "—")}</TableCell>
                         <TableCell><Badge style={{ background: st.bg, color: st.color }}>{st.label}</Badge></TableCell>
+                        {/* 17.9.2026 — נקודת האיסוף נאספה מאז 15.9 אבל לא הוצגה כאן,
+                            ולכן נראה כאילו היא לא נשמרת (שאלת הרב יואב). */}
                         <TableCell className="text-xs" style={{ color: C.textMuted }}>
-                          {address || "—"}
+                          {address || (d.pickup_point_name ? `איסוף: ${d.pickup_point_name}` : "—")}
                           {d.shipping_notes && <div className="text-[11px]">{d.shipping_notes}</div>}
                         </TableCell>
+                        <TableCell className="text-xs" style={{ color: C.textMuted }}>{d.traffic_source || "ישיר"}</TableCell>
                         <TableCell className="text-xs" dir="ltr">
                           {d.asmachta ?? "—"}
                           {d.invoice_url && (

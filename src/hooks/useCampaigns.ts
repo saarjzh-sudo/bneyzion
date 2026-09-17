@@ -337,6 +337,11 @@ export interface CampaignDonationRow {
   shipping_city: string | null;
   shipping_zip: string | null;
   shipping_notes: string | null;
+  /* 17.9.2026 — הרב יואב: "האם נקודת המכירה שבה כל אחד קנה נאספת?" היא נאספה,
+     אבל לא נמשכה לאדמין ולכן לא הופיעה בייצוא. אלה שלוש העמודות החסרות. */
+  tier_name: string | null;
+  pickup_point_name: string | null;
+  traffic_source: string | null;
 }
 
 export function useCampaignDonations(slug: string | undefined) {
@@ -347,7 +352,7 @@ export function useCampaignDonations(slug: string | undefined) {
       const { data, error } = await supabase
         .from("donations")
         .select(
-          "id, created_at, donor_name, donor_email, phone, amount, payment_status, payment_method, payment_id, asmachta, card_suffix, tier_id, description, invoice_number, invoice_url, shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes"
+          "id, created_at, donor_name, donor_email, phone, amount, payment_status, payment_method, payment_id, asmachta, card_suffix, tier_id, tier_name, description, invoice_number, invoice_url, shipping_street, shipping_house_number, shipping_city, shipping_zip, shipping_notes, pickup_point_name, traffic_source"
         )
         .eq("product", slug!)
         .order("created_at", { ascending: false });
