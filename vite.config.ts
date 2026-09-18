@@ -26,7 +26,7 @@ export default defineConfig(() => ({
         // מוציא אותם מ-navigateFallback כך שגרסאות SW מכאן והלאה תמיד יביאו
         // אותם מהרשת. לא רטרואקטיבי — לקישורי שיגור משתמשים ב-alias נקי-SW
         // (bneyzion-kenes.vercel.app).
-        navigateFallbackDenylist: [/^\/~oauth/, /^\/kenes/, /^\/campaign\//],
+        navigateFallbackDenylist: [/^\/~oauth/, /^\/kenes/, /^\/campaign\//, /^\/nekudot/],
         globPatterns: ["**/*.{js,css,html,ico,png,svg,woff,woff2,otf}"],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         // T08: pull Web Push handlers (push + notificationclick) into the
