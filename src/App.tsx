@@ -21,6 +21,7 @@ import RabbiPage from "./pages/RabbiPage";
 // 27.5.2026 — SeriesList route removed per Saar. Import preserved for potential rollback.
 // import SeriesList from "./pages/SeriesList";
 const SeriesLibrary = lazy(() => import("./pages/SeriesLibrary"));
+const SalePointsBoard = lazy(() => import("./pages/SalePointsBoard"));
 import RabbisList from "./pages/RabbisList";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
@@ -414,6 +415,8 @@ const App = () => (
             {/* ROLLOUT T05 (2.7.2026): דף התרומות החדש חי ב-/donate. הישן נשמר ב-Donate.tsx — החזרה = החלפת הקומפוננטה. */}
             <Route path="/donate" element={<Suspense fallback={<LazyFallback />}><DesignPreviewDonate /></Suspense>} />
             {/* רמה 30: דף קמפיין-גיוס גנרי מונע-DB (campaigns/campaign_tiers) */}
+            {/* לוח נקודות האיסוף לשגרירי דור הפלאות (18.9.2026) — פתוח, בלי כניסה */}
+            <Route path="/nekudot" element={<Suspense fallback={<LazyFallback />}><SalePointsBoard /></Suspense>} />
             <Route path="/campaign/:slug" element={<Suspense fallback={<LazyFallback />}><CampaignPage /></Suspense>} />
             <Route path="/checkout" element={<Suspense fallback={<LazyFallback />}><Checkout /></Suspense>} />
             <Route path="/kenes" element={<Suspense fallback={<LazyFallback />}><KnesPage /></Suspense>} />
