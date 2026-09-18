@@ -13,7 +13,7 @@
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, MapPin, BookOpen, TrendingUp, Trophy, X } from "lucide-react";
+import { Search, MapPin, BookOpen, TrendingUp, Trophy, Truck, X } from "lucide-react";
 
 const C = {
   navy: "#1A2744",
@@ -30,6 +30,32 @@ interface BoardRow {
   region: string | null;
   books: number;
   orders: number;
+}
+
+interface Summary {
+  total_books: number;
+  total_orders: number;
+  direct_books: number;
+  direct_orders: number;
+}
+
+/**
+ * הסך-הכול נקרא בנפרד, ולא כסכום השורות (18.9.2026, הערת נחמה): הזמנות של
+ * 5 ספרים ומעלה כוללות משלוח עד הבית ואין להן נקודת איסוף, ולכן הן לא מופיעות
+ * בשום שורה בלוח. סכימת השורות בלבד החסירה 35 ספרים מתוך 133.
+ */
+function useSummary() {
+  return useQuery<Summary>({
+    queryKey: ["dor-books-summary"],
+    queryFn: async () => {
+      const { data, error } = await (supabase as any)
+        .from("v_dor_books_summary").select("*").maybeSingle();
+      if (error) throw error;
+      return (data ?? { total_books: 0, total_orders: 0, direct_books: 0, direct_orders: 0 }) as Summary;
+    },
+    staleTime: 1000 * 60,
+    refetchOnWindowFocus: true,
+  });
 }
 
 function useLeaderboard() {
@@ -62,20 +88,22 @@ function normalize(s: string) {
 
 export default function SalePointsBoard() {
   const { data: rows, isLoading, isError } = useLeaderboard();
+  const { data: summary } = useSummary();
   const [q, setQ] = useState("");
 
   const stats = useMemo(() => {
     const list = rows ?? [];
-    const totalBooks = list.reduce((s, r) => s + r.books, 0);
+    const pointBooks = list.reduce((s, r) => s + r.books, 0);
     const active = list.filter((r) => r.books > 0);
     return {
-      totalBooks,
+      // הסך-הכול מכל המכירות, כולל משלוחים עד הבית שאינם משויכים לנקודה.
+      totalBooks: summary?.total_books ?? pointBooks,
       points: list.length,
       top: list[0]?.books ?? 0,
-      // ממוצע על הנקודות שכבר מכרו — ממוצע על כולן מעוות כלפי מטה ומדכא.
-      avg: active.length ? Math.round((totalBooks / active.length) * 10) / 10 : 0,
+      // הממוצע נשאר על נקודות האיסוף בלבד — זו ההשוואה הרלוונטית לשגריר.
+      avg: active.length ? Math.round((pointBooks / active.length) * 10) / 10 : 0,
     };
-  }, [rows]);
+  }, [rows, summary]);
 
   const needle = normalize(q);
   const matches = useMemo(() => {
@@ -235,6 +263,33 @@ export default function SalePointsBoard() {
             );
           })}
         </ol>
+
+        {!!summary?.direct_books && !needle && (
+          <div
+            style={{
+              display: "flex", alignItems: "center", gap: 11, marginTop: 8,
+              background: "#fff", border: `1px dashed ${C.goldSoft}`, borderRadius: 12, padding: "11px 13px",
+            }}
+          >
+            <span style={{ minWidth: 30, height: 30, borderRadius: 8, flexShrink: 0, background: C.cream, display: "grid", placeItems: "center" }}>
+              <Truck size={15} color={C.muted} aria-hidden />
+            </span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span className="font-heading" style={{ display: "block", fontSize: 15, fontWeight: 800, color: C.navy, lineHeight: 1.3 }}>
+                משלוח עד הבית
+              </span>
+              <span className="font-ploni" style={{ fontSize: 12.5, color: C.muted }}>
+                הזמנות של 5 ספרים ומעלה, בלי נקודת איסוף
+              </span>
+            </span>
+            <span style={{ textAlign: "center", flexShrink: 0 }}>
+              <span className="font-heading" style={{ display: "block", fontSize: 19, fontWeight: 900, color: C.muted, lineHeight: 1 }}>
+                {summary.direct_books}
+              </span>
+              <span className="font-ploni" style={{ fontSize: 11, color: C.muted }}>ספרים</span>
+            </span>
+          </div>
+        )}
 
         {!isLoading && !isError && (
           <p className="font-ploni" style={{ fontSize: 12.5, color: C.muted, textAlign: "center", marginTop: 20, lineHeight: 1.8 }}>
